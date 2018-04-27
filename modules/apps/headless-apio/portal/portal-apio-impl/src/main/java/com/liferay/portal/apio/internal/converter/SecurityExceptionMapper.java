@@ -12,31 +12,29 @@
  * details.
  */
 
-package com.liferay.folder.apio.internal.converter;
+package com.liferay.portal.apio.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
+import static javax.ws.rs.core.Response.Status.FORBIDDEN;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code DuplicateFolderNameException} to its {@link APIError}
- * representation.
+ * Converts a {@code SecurityException} to its {@link APIError} representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class DuplicateFolderNameExceptionConverter
-	implements ExceptionConverter<DuplicateFolderNameException> {
+public class SecurityExceptionMapper
+	implements ExceptionMapper<SecurityException> {
 
 	@Override
-	public APIError convert(DuplicateFolderNameException dfne) {
+	public APIError map(SecurityException se) {
 		return new APIError(
-			dfne, "Duplicate folder", "bad-request",
-			BAD_REQUEST.getStatusCode());
+			se, "Not permitted to access", "forbidden",
+			FORBIDDEN.getStatusCode());
 	}
 
 }

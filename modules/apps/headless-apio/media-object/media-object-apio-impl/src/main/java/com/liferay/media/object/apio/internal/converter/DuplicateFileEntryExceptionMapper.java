@@ -12,29 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.apio.internal.converter;
+package com.liferay.media.object.apio.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.FORBIDDEN;
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
+import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code SecurityException} to its {@link APIError} representation.
+ * Converts a {@code DuplicateFileEntryException} to its {@link APIError}
+ * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class SecurityExceptionConverter
-	implements ExceptionConverter<SecurityException> {
+public class DuplicateFileEntryExceptionMapper
+	implements ExceptionMapper<DuplicateFileEntryException> {
 
 	@Override
-	public APIError convert(SecurityException se) {
+	public APIError map(DuplicateFileEntryException dfee) {
 		return new APIError(
-			se, "Not permitted to access", "forbidden",
-			FORBIDDEN.getStatusCode());
+			dfee, "Duplicate entry", "bad-request",
+			BAD_REQUEST.getStatusCode());
 	}
 
 }

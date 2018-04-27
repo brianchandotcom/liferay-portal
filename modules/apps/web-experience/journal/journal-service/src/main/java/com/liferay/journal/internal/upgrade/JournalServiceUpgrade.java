@@ -42,7 +42,6 @@ import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeJournalArticleLocalize
 import com.liferay.journal.internal.upgrade.v1_1_1.UpgradeFileUploadsConfiguration;
 import com.liferay.journal.internal.upgrade.v1_1_2.UpgradeCheckIntervalConfiguration;
 import com.liferay.journal.internal.upgrade.v1_1_2.UpgradeJournalServiceVerify;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
@@ -150,8 +149,8 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"1.1.1", "1.1.2",
 			new UpgradeCheckIntervalConfiguration(_configurationAdmin),
 			new UpgradeJournalServiceVerify(
-				_assetEntryLocalService, _journalArticleLocalService,
-				_portal, _resourceLocalService, _systemEventLocalService));
+				_assetEntryLocalService, _ddmStructureLocalService, _portal,
+				_resourceLocalService, _systemEventLocalService));
 	}
 
 	protected void deleteTempImages() throws Exception {
@@ -302,10 +301,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private DLAppLocalService _dlAppLocalService;
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
-
-	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
-
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

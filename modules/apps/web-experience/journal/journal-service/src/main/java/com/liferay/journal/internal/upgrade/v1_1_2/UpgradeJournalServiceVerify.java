@@ -16,22 +16,22 @@ package com.liferay.journal.internal.upgrade.v1_1_2;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -56,7 +57,9 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -68,15 +71,18 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	public UpgradeJournalServiceVerify(
 		AssetEntryLocalService assetEntryLocalService,
-		JournalArticleLocalService journalArticleLocalService,
-		Portal portal, ResourceLocalService resourceLocalService,
+		DDMStructureLocalService ddmStructureLocalService, Portal portal,
+		ResourceLocalService resourceLocalService,
 		SystemEventLocalService systemEventLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-		_journalArticleLocalService = journalArticleLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
 		_portal = portal;
 		_resourceLocalService = resourceLocalService;
 		_systemEventLocalService = systemEventLocalService;
+
+		_journalArticleClassNameId = _portal.getClassNameId(
+			JournalArticle.class);
 	}
 
 	@Override
@@ -206,138 +212,131 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		}
 	}
 
-	protected void updateResourcePrimKey() throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_journalArticleLocalService.getActionableDynamicQuery();
+	protected void updateResourcePrimKey() throws Exception {
+		try (PreparedStatement selectArticlePS = connection.prepareStatement(
+				"select distinct companyId, groupId, articleId from " +
+					"JournalArticle where resourcePrimKey <= 0");
+			PreparedStatement selectResourcePS = connection.prepareStatement(
+				"select resourcePrimKey from JournalArticleResource where " +
+					"groupId = ? and articleId = ?");
+			PreparedStatement insertResourcePS = connection.prepareStatement(
+				"insert into JournalArticleResource (resourcePrimKey, " +
+					"companyId, groupId, articleId) values (?, ?, ?, ?)");
+			PreparedStatement updateArticlePS =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update JournalArticle set resourcePrimKey = ? where " +
+							"groupId = ? and articleId = ?"));
+			ResultSet articleRS = selectArticlePS.executeQuery()) {
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			while (articleRS.next()) {
+				long companyId = articleRS.getLong("companyId");
+				long groupId = articleRS.getLong("groupId");
+				String articleId = articleRS.getString("articleId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property resourcePrimKey = PropertyFactoryUtil.forName(
-						"resourcePrimKey");
+				selectResourcePS.setLong(1, groupId);
+				selectResourcePS.setString(2, articleId);
 
-					dynamicQuery.add(resourcePrimKey.le(0L));
+				try (ResultSet resourceRS = selectResourcePS.executeQuery()) {
+					long resourcePrimKey = 0;
+
+					if (resourceRS.next()) {
+						resourcePrimKey = resourceRS.getLong("resourcePrimKey");
+					}
+					else {
+						resourcePrimKey = increment();
+
+						insertResourcePS.setLong(1, resourcePrimKey);
+						insertResourcePS.setLong(2, companyId);
+						insertResourcePS.setLong(3, groupId);
+						insertResourcePS.setString(4, articleId);
+
+						insertResourcePS.executeUpdate();
+					}
+
+					updateArticlePS.setLong(1, resourcePrimKey);
+					updateArticlePS.setLong(2, groupId);
+					updateArticlePS.setString(3, articleId);
+
+					updateArticlePS.addBatch();
 				}
+			}
 
-			});
-
-		if (_log.isDebugEnabled()) {
-			long count = actionableDynamicQuery.performCount();
-
-			_log.debug(
-				"Processing " + count +
-					" default article versions in draft mode");
+			updateArticlePS.executeBatch();
 		}
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
-
-				@Override
-				public void performAction(JournalArticle article)
-					throws PortalException {
-
-					long groupId = article.getGroupId();
-					String articleId = article.getArticleId();
-					double version = article.getVersion();
-
-					_journalArticleLocalService.checkArticleResourcePrimKey(
-						groupId, articleId, version);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
 	}
 
 	protected void verifyArticleAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<JournalArticle> journalArticles =
-				_journalArticleLocalService.getNoAssetArticles();
+			try (PreparedStatement ps = connection.prepareStatement(
+					StringBundler.concat(
+						"select * from JournalArticle left join AssetEntry on ",
+						"(AssetEntry.classNameId = ",
+						String.valueOf(_journalArticleClassNameId),
+						") AND (AssetEntry.classPK = ",
+						"JournalArticle.resourcePrimKey) where ",
+						"AssetEntry.classPK is null"));
+				ResultSet rs = ps.executeQuery()) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + journalArticles.size() +
-						" articles with no asset");
-			}
+				while (rs.next()) {
+					String uuid = rs.getString("uuid_");
+					long id = rs.getLong("id_");
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					long groupId = rs.getLong("groupId");
+					long userId = rs.getLong("userId");
+					Date createDate = rs.getTimestamp("createDate");
+					Date modifiedDate = rs.getTimestamp("modifiedDate");
+					long classNameId = rs.getLong("classNameId");
+					String articleId = rs.getString("articleId");
+					double version = rs.getDouble("version");
+					String ddmStructureKey = rs.getString("DDMStructureKey");
+					String defaultLanguageId = rs.getString(
+						"defaultLanguageId");
+					String layoutUuid = rs.getString("layoutUuid");
+					Date displayDate = rs.getTimestamp("displayDate");
+					Date expirationDate = rs.getTimestamp("expirationDate");
+					boolean indexable = rs.getBoolean("indexable");
+					int status = rs.getInt("status");
 
-			for (JournalArticle journalArticle : journalArticles) {
-				try {
-					_journalArticleLocalService.updateAsset(
-						journalArticle.getUserId(), journalArticle, null, null,
-						null, null);
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to update asset for article ",
-								String.valueOf(journalArticle.getId()), ": ",
-								e.getMessage()));
+					try {
+						_updateAsset(
+							uuid, id, resourcePrimKey, groupId, userId,
+							createDate, modifiedDate, classNameId, articleId,
+							version, ddmStructureKey, defaultLanguageId,
+							layoutUuid, displayDate, expirationDate, indexable,
+							status);
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Unable to update asset for article ",
+									String.valueOf(id), ": ", e.getMessage()));
+						}
 					}
 				}
 			}
 
-			ActionableDynamicQuery actionableDynamicQuery =
-				_journalArticleLocalService.getActionableDynamicQuery();
+			try (PreparedStatement ps = connection.prepareStatement(
+					StringBundler.concat(
+						"select resourcePrimKey, indexable from ",
+						"JournalArticle where version = ",
+						String.valueOf(JournalArticleConstants.VERSION_DEFAULT),
+						" and status = ",
+						String.valueOf(WorkflowConstants.STATUS_DRAFT)));
+				ResultSet rs = ps.executeQuery()) {
 
-			actionableDynamicQuery.setAddCriteriaMethod(
-				new ActionableDynamicQuery.AddCriteriaMethod() {
+				while (rs.next()) {
+					long resourcePrimKey = rs.getLong("resourcePrimKey");
+					boolean indexable = rs.getBoolean("indexable");
 
-					@Override
-					public void addCriteria(DynamicQuery dynamicQuery) {
-						Property versionProperty = PropertyFactoryUtil.forName(
-							"version");
+					AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+						JournalArticle.class.getName(), resourcePrimKey);
 
-						dynamicQuery.add(
-							versionProperty.eq(
-								JournalArticleConstants.VERSION_DEFAULT));
-
-						Property statusProperty = PropertyFactoryUtil.forName(
-							"status");
-
-						dynamicQuery.add(
-							statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
-					}
-
-				});
-
-			if (_log.isDebugEnabled()) {
-				long count = actionableDynamicQuery.performCount();
-
-				_log.debug(
-					"Processing " + count +
-						" default article versions in draft mode");
-			}
-
-			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.
-					PerformActionMethod<JournalArticle>() {
-
-					@Override
-					public void performAction(JournalArticle article)
-						throws PortalException {
-
-						AssetEntry assetEntry =
-							_assetEntryLocalService.fetchEntry(
-								JournalArticle.class.getName(),
-								article.getResourcePrimKey());
-
-						boolean listable =
-							_journalArticleLocalService.isListable(article);
-
-						_assetEntryLocalService.updateEntry(
-							assetEntry.getClassName(), assetEntry.getClassPK(),
-							null, null, listable, assetEntry.isVisible());
-					}
-
-				});
-
-			actionableDynamicQuery.performActions();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Assets verified for articles");
+					_assetEntryLocalService.updateEntry(
+						assetEntry.getClassName(), assetEntry.getClassPK(),
+						null, null, indexable, assetEntry.isVisible());
+				}
 			}
 
 			updateResourcePrimKey();
@@ -346,38 +345,41 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	protected void verifyArticleContents() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select id_ from JournalArticle where (content like " +
-					"'%link_to_layout%') and DDMStructureKey != ''");
-			ResultSet rs = ps.executeQuery()) {
+			PreparedStatement selectPS = connection.prepareStatement(
+				"select id_, groupId, content from JournalArticle where " +
+					"(content like '%link_to_layout%') and DDMStructureKey " +
+						"!= ''");
+			PreparedStatement updatePS =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update JournalArticle set content = ? where id_ = ?"));
+			ResultSet rs = selectPS.executeQuery()) {
 
 			while (rs.next()) {
 				long id = rs.getLong("id_");
-
-				JournalArticle article = _journalArticleLocalService.getArticle(
-					id);
+				long groupId = rs.getLong("groupId");
+				String content = rs.getString("content");
 
 				try {
-					Document document = SAXReaderUtil.read(
-						article.getContent());
+					Document document = SAXReaderUtil.read(content);
 
 					Element rootElement = document.getRootElement();
 
 					for (Element element : rootElement.elements()) {
-						updateElement(article.getGroupId(), element);
+						updateElement(groupId, element);
 					}
 
-					article.setContent(document.asXML());
+					updatePS.setString(1, document.asXML());
+					updatePS.setLong(2, id);
 
-					_journalArticleLocalService.updateJournalArticle(article);
+					updatePS.addBatch();
 				}
 				catch (Exception e) {
-					_log.error(
-						"Unable to update content for article " +
-							article.getId(),
-						e);
+					_log.error("Unable to update content for article " + id, e);
 				}
 			}
+
+			updatePS.executeBatch();
 		}
 	}
 
@@ -431,56 +433,35 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		}
 	}
 
-	protected void verifyArticleStructures() throws PortalException {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_journalArticleLocalService.getActionableDynamicQuery();
+	protected void verifyArticleStructures() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement selectPS = connection.prepareStatement(
+				"select id_, groupId, DDMStructureKey from JournalArticle " +
+					"where DDMStructureKey != null and DDMStructureKey != ''");
+			PreparedStatement updatePS =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update JournalArticle set DDMStructureKey = '', " +
+							"DDMTemplateKey = '' where id_ = ?"));
+			ResultSet rs = selectPS.executeQuery()) {
 
-			if (_log.isDebugEnabled()) {
-				long count = actionableDynamicQuery.performCount();
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				String ddmStructureKey = rs.getString("DDMStructureKey");
 
-				_log.debug(
-					StringBundler.concat(
-						"Processing ", String.valueOf(count),
-						" articles for invalid structures and dynamic ",
-						"elements"));
+				DDMStructure ddmStructure =
+					_ddmStructureLocalService.fetchStructure(
+						_portal.getSiteGroupId(groupId),
+						_journalArticleClassNameId, ddmStructureKey, true);
+
+				if (ddmStructure == null) {
+					updatePS.setLong(1, rs.getLong("id_"));
+
+					updatePS.addBatch();
+				}
 			}
 
-			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.
-					PerformActionMethod<JournalArticle>() {
-
-					@Override
-					public void performAction(JournalArticle article) {
-						try {
-							_journalArticleLocalService.checkStructure(
-								article.getGroupId(), article.getArticleId(),
-								article.getVersion());
-						}
-						catch (NoSuchStructureException nsse) {
-							if (_log.isWarnEnabled()) {
-								_log.warn(
-									"Removing reference to missing structure " +
-										"for article " + article.getId());
-							}
-
-							article.setDDMStructureKey(StringPool.BLANK);
-							article.setDDMTemplateKey(StringPool.BLANK);
-
-							_journalArticleLocalService.updateJournalArticle(
-								article);
-						}
-						catch (Exception e) {
-							_log.error(
-								"Unable to check the structure for article " +
-									article.getId(),
-								e);
-						}
-					}
-
-				});
-
-			actionableDynamicQuery.performActions();
+			updatePS.executeBatch();
 		}
 	}
 
@@ -560,8 +541,7 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 				"classNameId");
 
 			dynamicQuery.add(
-				classNameIdProperty.eq(
-					_portal.getClassNameId(JournalArticle.class)));
+				classNameIdProperty.eq(_journalArticleClassNameId));
 
 			Property typeProperty = PropertyFactoryUtil.forName("type");
 
@@ -609,16 +589,22 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 					continue;
 				}
 
-				JournalArticle journalArticle =
-					_journalArticleLocalService.fetchArticle(
-						systemEvent.getGroupId(), articleId,
-						extraDataJSONObject.getDouble("version"));
+				try (PreparedStatement ps = connection.prepareStatement(
+						"select 1 from JournalArticle where groupId = ? and " +
+							"articleId = ? and version = ? and status = ?")) {
 
-				if ((journalArticle == null) || journalArticle.isInTrash()) {
-					continue;
+					ps.setLong(1, systemEvent.getGroupId());
+					ps.setString(2, articleId);
+					ps.setDouble(3, extraDataJSONObject.getDouble("version"));
+					ps.setInt(4, WorkflowConstants.STATUS_IN_TRASH);
+
+					try (ResultSet rs = ps.executeQuery()) {
+						if (rs.next()) {
+							_systemEventLocalService.deleteSystemEvent(
+								systemEvent);
+						}
+					}
 				}
-
-				_systemEventLocalService.deleteSystemEvent(systemEvent);
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -628,16 +614,128 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		}
 	}
 
-	protected void verifyPermissions() throws PortalException {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<JournalArticle> articles =
-				_journalArticleLocalService.getNoPermissionArticles();
+	protected void verifyPermissions() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				StringBundler.concat(
+					"select JournalArticle.companyId, ",
+					"JournalArticle.resourcePrimKey from JournalArticle left ",
+					"join ResourcePermission on (ResourcePermission.companyId ",
+					"= JournalArticle.companyId) and (ResourcePermission.name ",
+					"= '", JournalArticle.class.getName(),
+					"') and (ResourcePermission.primKeyId = ",
+					"JournalArticle.resourcePrimKey) and ",
+					"(ResourcePermission.scope = ",
+					String.valueOf(ResourceConstants.SCOPE_INDIVIDUAL),
+					") where ResourcePermission.primKey is null"));
+			ResultSet rs = ps.executeQuery()) {
 
-			for (JournalArticle article : articles) {
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				long resourcePrimKey = rs.getLong("resourcePrimKey");
+
 				_resourceLocalService.addResources(
-					article.getCompanyId(), 0, 0,
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey(), false, false, false);
+					companyId, 0, 0, JournalArticle.class.getName(),
+					resourcePrimKey, false, false, false);
+			}
+		}
+	}
+
+	private void _updateAsset(
+			String uuid, long id, long resourcePrimKey, long groupId,
+			long userId, Date createDate, Date modifiedDate, long classNameId,
+			String articleId, double version, String ddmStructureKey,
+			String defaultLanguageId, String layoutUuid, Date displayDate,
+			Date expirationDate, boolean indexable, int status)
+		throws Exception {
+
+		boolean visible = false;
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			visible = true;
+		}
+
+		if (classNameId != JournalArticleConstants.CLASSNAME_ID_DEFAULT) {
+			visible = false;
+		}
+
+		boolean addDraftAssetEntry = false;
+
+		if ((status != WorkflowConstants.STATUS_APPROVED) &&
+			(version != JournalArticleConstants.VERSION_DEFAULT)) {
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select 1 from JournalArticle where groupId = ? and " +
+						"articleId = ? and status in (?, ?, ?)")) {
+
+				ps.setLong(1, groupId);
+				ps.setString(2, articleId);
+				ps.setInt(3, WorkflowConstants.STATUS_APPROVED);
+				ps.setInt(4, WorkflowConstants.STATUS_EXPIRED);
+				ps.setInt(5, WorkflowConstants.STATUS_SCHEDULED);
+
+				try (ResultSet rs = ps.executeQuery()) {
+					if (rs.next()) {
+						addDraftAssetEntry = true;
+					}
+				}
+			}
+		}
+
+		Map<String, String> titleMap = new HashMap<>();
+		Map<String, String> descriptionMap = new HashMap<>();
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select languageId, title, description from " +
+					"JournalArticleLocalization where articlePK = " + id);
+			ResultSet rs = ps.executeQuery()) {
+
+			String languageId = rs.getString("languageId");
+
+			titleMap.put(languageId, rs.getString("title"));
+			descriptionMap.put(languageId, rs.getString("description"));
+		}
+
+		String title = LocalizationUtil.getXml(
+			titleMap, defaultLanguageId, "Title");
+		String description = LocalizationUtil.getXml(
+			descriptionMap, defaultLanguageId, "Description");
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			groupId, classNameId, ddmStructureKey, true);
+
+		long classTypeId = ddmStructure.getStructureId();
+
+		if (addDraftAssetEntry) {
+			_assetEntryLocalService.updateEntry(
+				userId, groupId, createDate, modifiedDate,
+				JournalArticle.class.getName(), id, uuid, classTypeId, null,
+				null, indexable, false, null, null, null, expirationDate,
+				ContentTypes.TEXT_HTML, title, description, description, null,
+				layoutUuid, 0, 0, null);
+		}
+		else {
+			try (PreparedStatement ps = connection.prepareStatement(
+					"select uuid_ from JournalArticleResource where " +
+						"resourcePrimKey = " + resourcePrimKey);
+				ResultSet rs = ps.executeQuery()) {
+
+				if (rs.next()) {
+					uuid = rs.getString("uuid_");
+				}
+
+				Date publishDate = null;
+
+				if (status == WorkflowConstants.STATUS_APPROVED) {
+					publishDate = displayDate;
+				}
+
+				_assetEntryLocalService.updateEntry(
+					userId, groupId, createDate, modifiedDate,
+					JournalArticle.class.getName(), resourcePrimKey, uuid,
+					classTypeId, null, null, indexable, visible, null, null,
+					publishDate, expirationDate, ContentTypes.TEXT_HTML, title,
+					description, description, null, layoutUuid, 0, 0, null);
 			}
 		}
 	}
@@ -646,7 +744,8 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		UpgradeJournalServiceVerify.class);
 
 	private final AssetEntryLocalService _assetEntryLocalService;
-	private final JournalArticleLocalService _journalArticleLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
+	private final long _journalArticleClassNameId;
 	private final Portal _portal;
 	private final ResourceLocalService _resourceLocalService;
 	private final SystemEventLocalService _systemEventLocalService;

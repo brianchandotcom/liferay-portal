@@ -62,7 +62,7 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see MBMessageLocalServiceUtil
- * @see MBMessageLocalServiceBaseImpl
+ * @see com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBMessageLocalServiceImpl
  * @generated
  */

@@ -2694,7 +2694,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	}
 
 	/**
-	 * Returns the message boards mailing list with the primary key or throws a {@link NoSuchModelException} if it could not be found.
+	 * Returns the message boards mailing list with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the message boards mailing list
 	 * @return the message boards mailing list

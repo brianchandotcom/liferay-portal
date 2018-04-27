@@ -46,7 +46,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see MBMessageServiceUtil
- * @see MBMessageServiceBaseImpl
+ * @see com.liferay.message.boards.service.base.MBMessageServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBMessageServiceImpl
  * @generated
  */

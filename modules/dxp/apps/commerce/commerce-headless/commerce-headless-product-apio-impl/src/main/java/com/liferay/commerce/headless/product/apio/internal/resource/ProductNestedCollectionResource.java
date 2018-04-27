@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -140,7 +139,10 @@ public class ProductNestedCollectionResource
 					ArrayUtil.toLongArray(
 						productCreatorForm.getAssetCategoryIds()));
 
-			return _indexer.getDocument(cpDefinition);
+			Indexer<CPDefinition> indexer = _productDefinitionHelper.getIndexer(
+				CPDefinition.class);
+
+			return indexer.getDocument(cpDefinition);
 		}
 		catch (CPDefinitionProductTypeNameException cpdptne) {
 			throw new NotFoundException(
@@ -163,7 +165,10 @@ public class ProductNestedCollectionResource
 					String.valueOf(cpDefinitionId), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null, serviceContext);
 
-			Hits hits = _indexer.search(searchContext);
+			Indexer<CPDefinition> indexer = _productDefinitionHelper.getIndexer(
+				CPDefinition.class);
+
+			Hits hits = indexer.search(searchContext);
 
 			if (hits.getLength() == 0) {
 				throw new NotFoundException(
@@ -179,7 +184,7 @@ public class ProductNestedCollectionResource
 				CPDefinition cpDefinition =
 					_cpDefinitionService.getCPDefinition(cpDefinitionId);
 
-				return _indexer.getDocument(cpDefinition);
+				return indexer.getDocument(cpDefinition);
 			}
 
 			List<Document> documents = hits.toList();
@@ -205,7 +210,10 @@ public class ProductNestedCollectionResource
 					null, pagination.getStartPosition(),
 					pagination.getEndPosition(), null, serviceContext);
 
-			Hits hits = _indexer.search(searchContext);
+			Indexer<CPDefinition> indexer = _productDefinitionHelper.getIndexer(
+				CPDefinition.class);
+
+			Hits hits = indexer.search(searchContext);
 
 			List<Document> documents = hits.toList();
 
@@ -224,9 +232,6 @@ public class ProductNestedCollectionResource
 
 	@Reference
 	private HasPermission _hasPermission;
-
-	private final Indexer<CPDefinition> _indexer =
-		IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
 
 	@Reference
 	private ProductDefinitionHelper _productDefinitionHelper;

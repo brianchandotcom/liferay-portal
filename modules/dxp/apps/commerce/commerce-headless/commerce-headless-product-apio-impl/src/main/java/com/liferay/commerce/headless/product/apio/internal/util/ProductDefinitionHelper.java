@@ -17,8 +17,11 @@ package com.liferay.commerce.headless.product.apio.internal.util;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -37,6 +40,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -156,6 +161,17 @@ public class ProductDefinitionHelper {
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, true, serviceContext);
+	}
+
+	public <T extends BaseModel> Indexer<T> getIndexer(Class<T> clazz) {
+		Indexer<T> indexer = IndexerRegistryUtil.getIndexer(clazz.getName());
+
+		if (indexer == null) {
+			throw new NotFoundException(
+				"Unable to get indexer for " + clazz.getName());
+		}
+
+		return indexer;
 	}
 
 	public ServiceContext getServiceContext() throws PortalException {

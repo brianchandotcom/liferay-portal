@@ -53,36 +53,43 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 	}
 </aui:script>
 
-<aui:script use="liferay-item-selector-dialog">
+<aui:script>
 	<portlet:renderURL var="viewFileEntryTypeURL">
 		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 		<portlet:param name="browseBy" value="file-entry-type" />
 		<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
 	</portlet:renderURL>
 
-	window.<portlet:namespace />openDocumentTypesSelector = function() {
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-			{
-				eventName: '<portlet:namespace />selectFileEntryType',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItem = event.newVal;
+	Liferay.provide(
+		window,
+		'<portlet:namespace />openDocumentTypesSelector',
+		function() {
+			var A = AUI();
 
-						if (selectedItem) {
-							var uri = '<%= viewFileEntryTypeURL %>';
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectFileEntryType',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
 
-							uri = Liferay.Util.addParams('<portlet:namespace />fileEntryTypeId=' + selectedItem, uri);
+							if (selectedItem) {
+								var uri = '<%= viewFileEntryTypeURL %>';
 
-							location.href = uri;
+								uri = Liferay.Util.addParams('<portlet:namespace />fileEntryTypeId=' + selectedItem, uri);
+
+								location.href = uri;
+							}
 						}
-					}
-				},
-				'strings.add': '<liferay-ui:message key="done" />',
-				title: '<liferay-ui:message key="select-document-type" />',
-				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_file_entry_type.jsp" /><portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" /></portlet:renderURL>'
-			}
-		);
+					},
+					'strings.add': '<liferay-ui:message key="done" />',
+					title: '<liferay-ui:message key="select-document-type" />',
+					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_file_entry_type.jsp" /><portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" /></portlet:renderURL>'
+				}
+			);
 
-		itemSelectorDialog.open();
-	}
+			itemSelectorDialog.open();
+		},
+		['aui-base', 'liferay-item-selector-dialog']
+	);
 </aui:script>

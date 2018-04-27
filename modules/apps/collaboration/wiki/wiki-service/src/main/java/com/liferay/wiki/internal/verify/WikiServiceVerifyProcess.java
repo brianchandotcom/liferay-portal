@@ -49,7 +49,6 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyCreateDate();
 		verifyNoAssetPages();
-		verifyUUIDModels();
 	}
 
 	@Reference(unbind = "-")
@@ -141,12 +140,6 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Assets verified for pages");
 			}
-		}
-	}
-
-	protected void verifyUUIDModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			VerifyUUID.verify(new WikiPageResourceVerifiableModel());
 		}
 	}
 

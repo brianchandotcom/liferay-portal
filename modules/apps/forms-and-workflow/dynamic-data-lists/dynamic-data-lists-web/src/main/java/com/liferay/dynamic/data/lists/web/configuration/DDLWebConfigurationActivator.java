@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.configuration;
+package com.liferay.dynamic.data.lists.web.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
@@ -27,23 +27,23 @@ import org.osgi.service.component.annotations.Modified;
  * @author Leonardo Barros
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.mapping.form.web.configuration.DDMFormWebConfiguration",
+	configurationPid = "com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationActivator",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = DDMFormWebConfigurationActivator.class
+	service = DDLWebConfigurationActivator.class
 )
-public class DDMFormWebConfigurationActivator {
+public class DDLWebConfigurationActivator {
 
-	public DDMFormWebConfiguration getDDMFormWebConfiguration() {
-		return _formWebConfiguration;
+	public DDLWebConfiguration getDDLWebConfiguration() {
+		return _ddlWebConfiguration;
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_formWebConfiguration = ConfigurableUtil.createConfigurable(
-			DDMFormWebConfiguration.class, properties);
+		_ddlWebConfiguration = ConfigurableUtil.createConfigurable(
+			DDLWebConfiguration.class, properties);
 	}
 
-	private volatile DDMFormWebConfiguration _formWebConfiguration;
+	private volatile DDLWebConfiguration _ddlWebConfiguration;
 
 }

@@ -259,6 +259,3 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 <%
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 %>
-
-<%!
-%>

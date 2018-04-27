@@ -17,10 +17,10 @@ package com.liferay.commerce.cloud.server;
 import com.liferay.commerce.cloud.server.constants.ContentTypes;
 import com.liferay.commerce.cloud.server.handler.ActiveProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.GetForecastConfigurationHandler;
-import com.liferay.commerce.cloud.server.handler.PostOrdersHandler;
+import com.liferay.commerce.cloud.server.handler.PostForecastOrdersHandler;
 import com.liferay.commerce.cloud.server.handler.PutForecastConfigurationHandler;
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
-import com.liferay.commerce.cloud.server.service.OrderService;
+import com.liferay.commerce.cloud.server.service.ForecastOrderService;
 import com.liferay.commerce.cloud.server.service.ProjectService;
 import com.liferay.commerce.cloud.server.util.CommerceCloudUtil;
 
@@ -66,7 +66,8 @@ public class HttpServerVerticle extends AbstractVerticle {
 		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastConfigurationService forecastConfigurationService) {
 
-		Route route = router.get("/projects/:projectId/configuration/");
+		Route route = router.get(
+			"/projects/:projectId/forecast/configuration/");
 
 		route.handler(activeProjectAuthHandler);
 
@@ -78,15 +79,15 @@ public class HttpServerVerticle extends AbstractVerticle {
 
 	private void _addRoutePostOrders(
 		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
-		OrderService orderService) {
+		ForecastOrderService forecastOrderService) {
 
-		Route route = router.post("/projects/:projectId/orders/");
+		Route route = router.post("/projects/:projectId/forecast/orders/");
 
 		route.handler(BodyHandler.create());
 
 		route.handler(activeProjectAuthHandler);
 
-		route.handler(new PostOrdersHandler(orderService));
+		route.handler(new PostForecastOrdersHandler(forecastOrderService));
 
 		route.consumes(ContentTypes.APPLICATION_JSON);
 	}
@@ -95,7 +96,8 @@ public class HttpServerVerticle extends AbstractVerticle {
 		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastConfigurationService forecastConfigurationService) {
 
-		Route route = router.put("/projects/:projectId/configuration/");
+		Route route = router.put(
+			"/projects/:projectId/forecast/configuration/");
 
 		route.handler(BodyHandler.create());
 
@@ -116,7 +118,8 @@ public class HttpServerVerticle extends AbstractVerticle {
 
 		ForecastConfigurationService forecastConfigurationService =
 			ForecastConfigurationService.createProxy(vertx);
-		OrderService orderService = OrderService.createProxy(vertx);
+		ForecastOrderService forecastOrderService =
+			ForecastOrderService.createProxy(vertx);
 		ProjectService projectService = ProjectService.createProxy(vertx);
 
 		ActiveProjectAuthHandler activeProjectAuthHandler =
@@ -124,7 +127,8 @@ public class HttpServerVerticle extends AbstractVerticle {
 
 		_addRouteGetForecastConfiguration(
 			router, activeProjectAuthHandler, forecastConfigurationService);
-		_addRoutePostOrders(router, activeProjectAuthHandler, orderService);
+		_addRoutePostOrders(
+			router, activeProjectAuthHandler, forecastOrderService);
 		_addRoutePutForecastConfiguration(
 			router, activeProjectAuthHandler, forecastConfigurationService);
 

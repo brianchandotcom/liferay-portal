@@ -15,9 +15,9 @@
 package com.liferay.commerce.cloud.server.handler;
 
 import com.liferay.commerce.cloud.server.constants.WebKeys;
-import com.liferay.commerce.cloud.server.model.Order;
+import com.liferay.commerce.cloud.server.model.ForecastOrder;
 import com.liferay.commerce.cloud.server.model.Project;
-import com.liferay.commerce.cloud.server.service.OrderService;
+import com.liferay.commerce.cloud.server.service.ForecastOrderService;
 import com.liferay.commerce.cloud.server.util.VertxUtil;
 
 import io.vertx.core.Handler;
@@ -31,38 +31,42 @@ import java.util.List;
 /**
  * @author Andrea Di Giorgi
  */
-public class PostOrdersHandler implements Handler<RoutingContext> {
+public class PostForecastOrdersHandler implements Handler<RoutingContext> {
 
-	public PostOrdersHandler(OrderService orderService) {
-		_orderService = orderService;
+	public PostForecastOrdersHandler(
+		ForecastOrderService forecastOrderService) {
+
+		_forecastOrderService = forecastOrderService;
 	}
 
 	@Override
 	public void handle(RoutingContext routingContext) {
 		Project project = routingContext.get(WebKeys.PROJECT);
 
-		List<Order> orders = _getOrders(routingContext);
+		List<ForecastOrder> forecastOrders = _getForecastOrders(routingContext);
 
-		_orderService.addOrders(
-			project, orders,
+		_forecastOrderService.addForecastOrders(
+			project, forecastOrders,
 			asyncResult -> VertxUtil.handleHttpResponse(
 				asyncResult, routingContext));
 	}
 
-	private List<Order> _getOrders(RoutingContext routingContext) {
+	private List<ForecastOrder> _getForecastOrders(
+		RoutingContext routingContext) {
+
 		JsonArray jsonArray = routingContext.getBodyAsJsonArray();
 
-		List<Order> orders = new ArrayList<>(jsonArray.size());
+		List<ForecastOrder> forecastOrders = new ArrayList<>(jsonArray.size());
 
 		for (int i = 0; i < jsonArray.size(); i++) {
 			JsonObject jsonObject = jsonArray.getJsonObject(i);
 
-			orders.add(new Order(jsonObject));
+			forecastOrders.add(new ForecastOrder(jsonObject));
 		}
 
-		return orders;
+		return forecastOrders;
 	}
 
-	private final OrderService _orderService;
+	private final ForecastOrderService _forecastOrderService;
 
 }

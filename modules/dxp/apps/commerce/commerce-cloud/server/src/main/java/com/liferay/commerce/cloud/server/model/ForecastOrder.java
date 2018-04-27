@@ -23,13 +23,13 @@ import java.util.List;
  * @author Andrea Di Giorgi
  */
 @DataObject(generateConverter = true, publicConverter = false)
-public class Order implements JsonSerializable {
+public class ForecastOrder implements JsonSerializable {
 
-	public Order() {
+	public ForecastOrder() {
 	}
 
-	public Order(JsonObject jsonObject) {
-		OrderConverter.fromJson(jsonObject, this);
+	public ForecastOrder(JsonObject jsonObject) {
+		ForecastOrderConverter.fromJson(jsonObject, this);
 	}
 
 	public long getCompanyId() {
@@ -48,7 +48,7 @@ public class Order implements JsonSerializable {
 		return _orderId;
 	}
 
-	public List<OrderItem> getOrderItems() {
+	public List<ForecastOrderItem> getOrderItems() {
 		return _orderItems;
 	}
 
@@ -64,19 +64,19 @@ public class Order implements JsonSerializable {
 		_customerId = customerId;
 	}
 
-	public void setOrderId(long orderId) {
-		_orderId = orderId;
+	public void setForecastOrderItems(List<ForecastOrderItem> orderItems) {
+		_orderItems = orderItems;
 	}
 
-	public void setOrderItems(List<OrderItem> orderItems) {
-		_orderItems = orderItems;
+	public void setOrderId(long orderId) {
+		_orderId = orderId;
 	}
 
 	@Override
 	public JsonObject toJson() {
 		JsonObject jsonObject = new JsonObject();
 
-		OrderConverter.toJson(this, jsonObject);
+		ForecastOrderConverter.toJson(this, jsonObject);
 
 		return jsonObject;
 	}
@@ -85,6 +85,6 @@ public class Order implements JsonSerializable {
 	private long _createTime;
 	private long _customerId;
 	private long _orderId;
-	private List<OrderItem> _orderItems;
+	private List<ForecastOrderItem> _orderItems;
 
 }

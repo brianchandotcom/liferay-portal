@@ -15,9 +15,9 @@
 package com.liferay.commerce.cloud.server.service.impl;
 
 import com.liferay.commerce.cloud.server.constants.ContentTypes;
-import com.liferay.commerce.cloud.server.model.Order;
+import com.liferay.commerce.cloud.server.model.ForecastOrder;
 import com.liferay.commerce.cloud.server.model.Project;
-import com.liferay.commerce.cloud.server.service.OrderService;
+import com.liferay.commerce.cloud.server.service.ForecastOrderService;
 import com.liferay.commerce.cloud.server.util.VertxUtil;
 
 import io.vertx.core.AsyncResult;
@@ -35,20 +35,22 @@ import java.util.List;
 /**
  * @author Andrea Di Giorgi
  */
-public class WeDeployOrderServiceImpl
-	extends BaseWeDeployServiceImpl implements OrderService {
+public class WeDeployForecastOrderServiceImpl
+	extends BaseWeDeployServiceImpl implements ForecastOrderService {
 
-	public WeDeployOrderServiceImpl(Vertx vertx, String host, String token) {
+	public WeDeployForecastOrderServiceImpl(
+		Vertx vertx, String host, String token) {
+
 		super(vertx, host, token);
 	}
 
 	@Override
-	public void addOrders(
-		Project project, List<Order> orders,
+	public void addForecastOrders(
+		Project project, List<ForecastOrder> forecastOrders,
 		Handler<AsyncResult<Void>> handler) {
 
 		HttpRequest<Void> httpRequest = webClient.post(
-			"/orders"
+			"/forecast_orders"
 		).as(
 			BodyCodec.none()
 		);
@@ -57,10 +59,11 @@ public class WeDeployOrderServiceImpl
 
 		JsonArray jsonArray = new JsonArray();
 
-		for (Order order : orders) {
-			JsonObject jsonObject = order.toJson();
+		for (ForecastOrder forecastOrder : forecastOrders) {
+			JsonObject jsonObject = forecastOrder.toJson();
 
-			jsonObject.put("id", project.getId() + "-" + order.getOrderId());
+			jsonObject.put(
+				"id", project.getId() + "-" + forecastOrder.getOrderId());
 			jsonObject.put("processed", false);
 			jsonObject.put("projectId", project.getId());
 

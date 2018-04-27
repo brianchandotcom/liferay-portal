@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.cloud.server.service;
 
-import com.liferay.commerce.cloud.server.model.Order;
+import com.liferay.commerce.cloud.server.model.ForecastOrder;
 import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.util.CommerceCloudUtil;
 
@@ -29,17 +29,17 @@ import java.util.List;
  * @author Andrea Di Giorgi
  */
 @ProxyGen
-public interface OrderService {
+public interface ForecastOrderService {
 
 	public static final String ADDRESS = CommerceCloudUtil.getServiceAddress(
-		OrderService.class);
+		ForecastOrderService.class);
 
-	public static OrderService createProxy(Vertx vertx) {
-		return new OrderServiceVertxEBProxy(vertx, ADDRESS);
+	public static ForecastOrderService createProxy(Vertx vertx) {
+		return new ForecastOrderServiceVertxEBProxy(vertx, ADDRESS);
 	}
 
-	public void addOrders(
-		Project project, List<Order> orders,
+	public void addForecastOrders(
+		Project project, List<ForecastOrder> forecastOrders,
 		Handler<AsyncResult<Void>> handler);
 
 }

@@ -16,8 +16,8 @@ package com.liferay.commerce.cloud.server.eleflow.util;
 
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowOrder;
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowOrderItems;
-import com.liferay.commerce.cloud.server.model.Order;
-import com.liferay.commerce.cloud.server.model.OrderItem;
+import com.liferay.commerce.cloud.server.model.ForecastOrder;
+import com.liferay.commerce.cloud.server.model.ForecastOrderItem;
 
 import java.util.List;
 import java.util.function.Function;
@@ -27,26 +27,31 @@ import java.util.stream.Stream;
 /**
  * @author Andrea Di Giorgi
  */
-public class EleflowOrderEncoder implements Function<Order, EleflowOrder> {
+public class EleflowOrderEncoder
+	implements Function<ForecastOrder, EleflowOrder> {
 
 	@Override
-	public EleflowOrder apply(Order order) {
+	public EleflowOrder apply(ForecastOrder forecastOrder) {
 		EleflowOrder eleflowOrder = new EleflowOrder();
 
-		eleflowOrder.setCompanyId(String.valueOf(order.getCompanyId()));
+		eleflowOrder.setCompanyId(String.valueOf(forecastOrder.getCompanyId()));
 		eleflowOrder.setCreateDate(
-			EleflowUtil.getOffsetDateTime(order.getCreateTime()));
-		eleflowOrder.setCustomerId(String.valueOf(order.getCustomerId()));
-		eleflowOrder.setItems(_encodeOrderItems(order));
-		eleflowOrder.setOrderId(String.valueOf(order.getOrderId()));
+			EleflowUtil.getOffsetDateTime(forecastOrder.getCreateTime()));
+		eleflowOrder.setCustomerId(
+			String.valueOf(forecastOrder.getCustomerId()));
+		eleflowOrder.setItems(_encodeEleflowOrderItems(forecastOrder));
+		eleflowOrder.setOrderId(String.valueOf(forecastOrder.getOrderId()));
 
 		return eleflowOrder;
 	}
 
-	private List<EleflowOrderItems> _encodeOrderItems(Order order) {
-		List<OrderItem> orderItems = order.getOrderItems();
+	private List<EleflowOrderItems> _encodeEleflowOrderItems(
+		ForecastOrder forecastOrder) {
 
-		Stream<OrderItem> stream = orderItems.stream();
+		List<ForecastOrderItem> forecastOrderItems =
+			forecastOrder.getOrderItems();
+
+		Stream<ForecastOrderItem> stream = forecastOrderItems.stream();
 
 		return stream.map(
 			_eleflowOrderItemEncoder
@@ -55,7 +60,7 @@ public class EleflowOrderEncoder implements Function<Order, EleflowOrder> {
 		);
 	}
 
-	private static final Function<OrderItem, EleflowOrderItems>
+	private static final Function<ForecastOrderItem, EleflowOrderItems>
 		_eleflowOrderItemEncoder = new EleflowOrderItemEncoder();
 
 }

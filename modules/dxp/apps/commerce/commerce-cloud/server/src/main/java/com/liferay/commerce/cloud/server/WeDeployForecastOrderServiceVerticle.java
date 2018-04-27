@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.cloud.server;
 
-import com.liferay.commerce.cloud.server.service.OrderService;
-import com.liferay.commerce.cloud.server.service.impl.WeDeployOrderServiceImpl;
+import com.liferay.commerce.cloud.server.service.ForecastOrderService;
+import com.liferay.commerce.cloud.server.service.impl.WeDeployForecastOrderServiceImpl;
 import com.liferay.commerce.cloud.server.util.CommerceCloudUtil;
 
 import io.vertx.core.json.JsonObject;
@@ -25,8 +25,8 @@ import io.vertx.core.logging.LoggerFactory;
 /**
  * @author Andrea Di Giorgi
  */
-public class WeDeployOrderServiceVerticle
-	extends BaseServiceVerticle<OrderService> {
+public class WeDeployForecastOrderServiceVerticle
+	extends BaseServiceVerticle<ForecastOrderService> {
 
 	@Override
 	protected Logger getLogger() {
@@ -34,26 +34,27 @@ public class WeDeployOrderServiceVerticle
 	}
 
 	@Override
-	protected OrderService getServiceImpl(JsonObject configJsonObject) {
+	protected ForecastOrderService getServiceImpl(JsonObject configJsonObject) {
 		String host = CommerceCloudUtil.getWeDeployDataServiceHost(
 			configJsonObject);
 		String token = CommerceCloudUtil.getWeDeployToken(configJsonObject);
 
 		if (_logger.isInfoEnabled()) {
 			_logger.info(
-				"Using WeDeploy order service implementation pointing to {0}",
+				"Using WeDeploy forecast order service implementation " +
+					"pointing to {0}",
 				host);
 		}
 
-		return new WeDeployOrderServiceImpl(vertx, host, token);
+		return new WeDeployForecastOrderServiceImpl(vertx, host, token);
 	}
 
 	@Override
-	protected Class<OrderService> getServiceInterface() {
-		return OrderService.class;
+	protected Class<ForecastOrderService> getServiceInterface() {
+		return ForecastOrderService.class;
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(
-		WeDeployOrderServiceVerticle.class);
+		WeDeployForecastOrderServiceVerticle.class);
 
 }

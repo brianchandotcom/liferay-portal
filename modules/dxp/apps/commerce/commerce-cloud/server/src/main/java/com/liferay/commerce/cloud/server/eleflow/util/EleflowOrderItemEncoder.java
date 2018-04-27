@@ -15,7 +15,7 @@
 package com.liferay.commerce.cloud.server.eleflow.util;
 
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowOrderItems;
-import com.liferay.commerce.cloud.server.model.OrderItem;
+import com.liferay.commerce.cloud.server.model.ForecastOrderItem;
 
 import java.math.BigDecimal;
 
@@ -25,16 +25,17 @@ import java.util.function.Function;
  * @author Andrea Di Giorgi
  */
 public class EleflowOrderItemEncoder
-	implements Function<OrderItem, EleflowOrderItems> {
+	implements Function<ForecastOrderItem, EleflowOrderItems> {
 
 	@Override
-	public EleflowOrderItems apply(OrderItem orderItem) {
+	public EleflowOrderItems apply(ForecastOrderItem forecastOrderItem) {
 		EleflowOrderItems eleflowOrderItems = new EleflowOrderItems();
 
-		eleflowOrderItems.setPrice(new BigDecimal(orderItem.getPrice()));
+		eleflowOrderItems.setPrice(
+			new BigDecimal(forecastOrderItem.getPrice()));
 		eleflowOrderItems.setQuantity(
-			BigDecimal.valueOf(orderItem.getQuantity()));
-		eleflowOrderItems.setSku(orderItem.getSku());
+			BigDecimal.valueOf(forecastOrderItem.getQuantity()));
+		eleflowOrderItems.setSku(forecastOrderItem.getSku());
 
 		return eleflowOrderItems;
 	}

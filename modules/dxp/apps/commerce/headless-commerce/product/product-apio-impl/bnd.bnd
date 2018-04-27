@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Product Apio Implementation
-Bundle-SymbolicName: com.liferay.product.apio.impl
-Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.portal.kernel.model;version="[1.0.2,4)",\
-	\
-	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Site Management

@@ -179,7 +179,7 @@ public class ProductNestedCollectionResource
 					"Unable to find product with Id: " + cpDefinitionId);
 			}
 			else if (hits.getLength() > 1) {
-				if (_log._log.isWarnEnabled()) {
+				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"More than one index found for product with Id: " +
 							cpDefinitionId);

@@ -113,7 +113,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 
 		upgrade(new UpgradeMobileDeviceRules());
 
-		verifyUUIDModels()
+		verifyUUIDModels();
 
 		clearIndexesCache();
 	}

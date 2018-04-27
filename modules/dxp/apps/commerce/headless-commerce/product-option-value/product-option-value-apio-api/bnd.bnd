@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Product Option Value Apio API
-Bundle-SymbolicName: com.liferay.product.option.value.apio.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.product.option.value.apio.identifier

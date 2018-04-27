@@ -67,7 +67,11 @@
 	{@param? translatedValues: int}
 	{@param? translationKeys: int}
 
-	<a class="dropdown-item" data-languageid="{$languageId}" data-onclick="_handleLanguageChange">
+	<a
+		class="dropdown-item fragments-editor__translation-status-item"
+		data-languageid="{$languageId}"
+		data-onclick="_handleLanguageChange"
+	>
 		<span class="inline-item inline-item-before">
 			{call .lexiconIcon}
 				{param name: $languageIcon ?: '' /}

@@ -2,6 +2,10 @@ $gridSize: 6px;
 $translatedColor: #3DC513;
 $untranslatedColor: #A7A9BC;
 
+.fragments-editor__translation-status-item {
+	cursor: pointer;
+}
+
 .fragments-editor__fragment-entry-links {
 	lfr-editable {
 		display: block;

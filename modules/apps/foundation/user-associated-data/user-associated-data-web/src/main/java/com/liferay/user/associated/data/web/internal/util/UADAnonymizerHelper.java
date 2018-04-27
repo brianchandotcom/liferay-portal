@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfigurationTracker;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,9 +30,29 @@ import org.osgi.service.component.annotations.Reference;
 public class UADAnonymizerHelper {
 
 	public User getAnonymousUser() throws PortalException {
-		return _userLocalService.getDefaultUser(
-			CompanyThreadLocal.getCompanyId());
+		return getAnonymousUser(CompanyThreadLocal.getCompanyId());
 	}
+
+	public User getAnonymousUser(long companyId) throws PortalException {
+		if (companyId == 0) {
+			return null;
+		}
+
+		long userId = _anonymousUserConfigurationTracker.getAnonymousUserId(
+			companyId);
+
+		User anonymousUser = _userLocalService.fetchUser(userId);
+
+		if (anonymousUser != null) {
+			return anonymousUser;
+		}
+
+		return _userLocalService.getDefaultUser(companyId);
+	}
+
+	@Reference
+	private AnonymousUserConfigurationTracker
+		_anonymousUserConfigurationTracker;
 
 	@Reference
 	private UserLocalService _userLocalService;

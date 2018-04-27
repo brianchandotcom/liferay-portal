@@ -43,13 +43,14 @@ public abstract class BaseFailureMessageGenerator
 
 		Map<String, String> pullRequestDetailsMap = null;
 
-		if (topLevelBuild instanceof SourceFormatBuild){
-			SourceFormatBuild sourceFormatBuild = (SourceFormatBuild)topLevelBuild;
+		if (topLevelBuild instanceof SourceFormatBuild) {
+			SourceFormatBuild sourceFormatBuild =
+				(SourceFormatBuild)topLevelBuild;
 
 			pullRequestDetailsMap = getDetailsMapFromPullRequest(
 				sourceFormatBuild.getPullRequest());
 		}
-		else{
+		else {
 			pullRequestDetailsMap =
 				topLevelBuild.getBaseGitRepositoryDetailsTempMap();
 		}
@@ -61,8 +62,7 @@ public abstract class BaseFailureMessageGenerator
 		sb.append("/");
 		sb.append(baseRepositoryName);
 		sb.append("/tree/");
-		sb.append(
-			pullRequestDetailsMap.get("github.sender.branch.name"));
+		sb.append(pullRequestDetailsMap.get("github.sender.branch.name"));
 
 		String url = sb.toString();
 
@@ -70,8 +70,7 @@ public abstract class BaseFailureMessageGenerator
 
 		sb.append(pullRequestDetailsMap.get("github.origin.name"));
 		sb.append("/");
-		sb.append(
-			pullRequestDetailsMap.get("github.sender.branch.name"));
+		sb.append(pullRequestDetailsMap.get("github.sender.branch.name"));
 
 		return Dom4JUtil.getNewAnchorElement(url, sb.toString());
 	}
@@ -177,8 +176,6 @@ public abstract class BaseFailureMessageGenerator
 	private String _getConsoleTextSnippet(
 		String consoleText, boolean truncateTop, int start, int end) {
 
-		System.out.println("CONSOLETEXT: " + consoleText);
-
 		if ((end - start) > 2500) {
 			if (truncateTop) {
 				start = end - 2500;
@@ -193,8 +190,6 @@ public abstract class BaseFailureMessageGenerator
 				if (newlineEnd != -1) {
 					end = newlineEnd;
 				}
-
-				System.out.println("LAST END: " + String.valueOf(end));
 			}
 		}
 

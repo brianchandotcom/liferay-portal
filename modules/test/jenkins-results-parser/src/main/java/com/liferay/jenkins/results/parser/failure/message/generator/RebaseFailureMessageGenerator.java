@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
-import com.liferay.jenkins.results.parser.SourceFormatBuild;
 
 import org.dom4j.Element;
 
@@ -35,13 +34,22 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 			return null;
 		}
 
-		int end = consoleText.indexOf(_TOKEN_REBASE_END);
-
-		end = consoleText.lastIndexOf("\n", end);
-
-		int start = consoleText.lastIndexOf(_TOKEN_REBASE_START, end);
+		int start = consoleText.lastIndexOf(_TOKEN_REBASE_START);
 
 		start = consoleText.lastIndexOf("\n", start);
+
+		int end = consoleText.indexOf(_TOKEN_REBASE_END, start);
+
+		if (end != -1) {
+			end = consoleText.lastIndexOf("\n", end);
+
+			if (end == -1) {
+				end = consoleText.length();
+			}
+		}
+		else {
+			end = consoleText.length();
+		}
 
 		return Dom4JUtil.getNewElement(
 			"div", null,

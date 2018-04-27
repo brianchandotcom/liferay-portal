@@ -42,11 +42,11 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
@@ -137,7 +137,7 @@ public class ProductNestedCollectionResource
 					webSiteId, productCreatorForm.getTitleMap(),
 					productCreatorForm.getDescriptionMap(),
 					productCreatorForm.getProductTypeName(),
-					_getAssetCategoryIds(
+					ArrayUtil.toLongArray(
 						productCreatorForm.getAssetCategoryIds()));
 
 			return _indexer.getDocument(cpDefinition);
@@ -151,14 +151,6 @@ public class ProductNestedCollectionResource
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
-	}
-
-	private long[] _getAssetCategoryIds(List<Long> assetCategoryIdList) {
-		Stream<Long> assetCategoryIdStream = assetCategoryIdList.stream();
-
-		return assetCategoryIdStream.mapToLong(
-			Long::longValue
-		).toArray();
 	}
 
 	private Document _getCPDefinition(Long cpDefinitionId) {

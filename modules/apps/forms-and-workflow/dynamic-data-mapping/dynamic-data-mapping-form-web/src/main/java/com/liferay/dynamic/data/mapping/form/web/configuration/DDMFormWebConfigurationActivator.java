@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class DDMFormWebConfigurationActivator {
 
-	public DDMFormWebConfiguration getDDLFormWebConfiguration() {
+	public DDMFormWebConfiguration getDDMFormWebConfiguration() {
 		return _formWebConfiguration;
 	}
 

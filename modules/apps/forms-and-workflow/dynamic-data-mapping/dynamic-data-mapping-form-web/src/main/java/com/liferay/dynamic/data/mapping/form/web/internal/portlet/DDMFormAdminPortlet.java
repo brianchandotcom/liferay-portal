@@ -202,7 +202,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 					_ddmExporterFactory,
 					_ddmFormWebConfigurationActivator.
-						getDDLFormWebConfiguration(),
+						getDDMFormWebConfiguration(),
 					_ddmFormInstanceRecordLocalService, _ddmFormInstanceService,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
@@ -244,7 +244,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 					_ddmExporterFactory,
 					_ddmFormWebConfigurationActivator.
-						getDDLFormWebConfiguration(),
+						getDDMFormWebConfiguration(),
 					_ddmFormInstanceRecordLocalService, _ddmFormInstanceService,
 					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
@@ -254,8 +254,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void unsetDDLFormWebConfigurationActivator(
-		DDMFormWebConfigurationActivator ddlFormWebConfigurationActivator) {
+	protected void unsetDDMFormWebConfigurationActivator(
+		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator) {
 
 		_ddmFormWebConfigurationActivator = null;
 	}
@@ -299,7 +299,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetDDLFormWebConfigurationActivator"
+		unbind = "unsetDDMFormWebConfigurationActivator"
 	)
 	private volatile DDMFormWebConfigurationActivator
 		_ddmFormWebConfigurationActivator;

@@ -16,8 +16,11 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.PullRequest;
+import com.liferay.jenkins.results.parser.SourceFormatBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,27 +41,36 @@ public abstract class BaseFailureMessageGenerator
 
 		sb.append("https://github.com/");
 
+		Map<String, String> pullRequestDetailsMap = null;
+
+		if (topLevelBuild instanceof SourceFormatBuild) {
+			SourceFormatBuild sourceFormatBuild =
+				(SourceFormatBuild)topLevelBuild;
+
+			pullRequestDetailsMap = getDetailsMapFromPullRequest(
+				sourceFormatBuild.getPullRequest());
+		}
+		else {
+			pullRequestDetailsMap =
+				topLevelBuild.getBaseGitRepositoryDetailsTempMap();
+		}
+
 		String baseRepositoryName = topLevelBuild.getBaseRepositoryName();
 
-		Map<String, String> baseRepositoryGitDetailsTempMap =
-			topLevelBuild.getBaseGitRepositoryDetailsTempMap();
-
-		sb.append(baseRepositoryGitDetailsTempMap.get("github.origin.name"));
+		sb.append(pullRequestDetailsMap.get("github.origin.name"));
 
 		sb.append("/");
 		sb.append(baseRepositoryName);
 		sb.append("/tree/");
-		sb.append(
-			baseRepositoryGitDetailsTempMap.get("github.sender.branch.name"));
+		sb.append(pullRequestDetailsMap.get("github.sender.branch.name"));
 
 		String url = sb.toString();
 
 		sb = new StringBuilder();
 
-		sb.append(baseRepositoryGitDetailsTempMap.get("github.origin.name"));
+		sb.append(pullRequestDetailsMap.get("github.origin.name"));
 		sb.append("/");
-		sb.append(
-			baseRepositoryGitDetailsTempMap.get("github.sender.branch.name"));
+		sb.append(pullRequestDetailsMap.get("github.sender.branch.name"));
 
 		return Dom4JUtil.getNewAnchorElement(url, sb.toString());
 	}
@@ -101,6 +113,18 @@ public abstract class BaseFailureMessageGenerator
 
 		return Dom4JUtil.toCodeSnippetElement(
 			_getConsoleTextSnippet(consoleText, truncateTop, start, end));
+	}
+
+	protected Map<String, String> getDetailsMapFromPullRequest(
+		PullRequest pullRequest) {
+
+		Map<String, String> detailsMap = new HashMap<>();
+
+		detailsMap.put("github.origin.name", pullRequest.getSenderUsername());
+		detailsMap.put(
+			"github.sender.branch.name", pullRequest.getSenderBranchName());
+
+		return detailsMap;
 	}
 
 	protected Element getGitCommitPluginsAnchorElement(
@@ -161,7 +185,11 @@ public abstract class BaseFailureMessageGenerator
 			else {
 				end = start + 2500;
 
-				end = consoleText.lastIndexOf("\n", end);
+				int newlineEnd = consoleText.lastIndexOf("\n", end);
+
+				if (newlineEnd != -1) {
+					end = newlineEnd;
+				}
 			}
 		}
 

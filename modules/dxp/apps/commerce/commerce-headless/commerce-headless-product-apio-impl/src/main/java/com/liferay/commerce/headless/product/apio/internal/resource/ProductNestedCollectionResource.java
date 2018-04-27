@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.NotFoundException;
@@ -215,7 +216,11 @@ public class ProductNestedCollectionResource
 
 			Hits hits = indexer.search(searchContext);
 
-			List<Document> documents = hits.toList();
+			List<Document> documents = Collections.<Document>emptyList();
+
+			if (hits.getLength() > 0) {
+				documents = hits.toList();
+			}
 
 			return new PageItems<>(documents, hits.getLength());
 		}

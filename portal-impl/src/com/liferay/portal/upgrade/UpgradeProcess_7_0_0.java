@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
@@ -53,6 +54,28 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeSharding;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
+import com.liferay.portal.verify.VerifyUUID;
+import com.liferay.portal.verify.model.AddressVerifiableModel;
+import com.liferay.portal.verify.model.AssetTagVerifiableModel;
+import com.liferay.portal.verify.model.DLFileVersionVerifiableModel;
+import com.liferay.portal.verify.model.EmailAddressVerifiableModel;
+import com.liferay.portal.verify.model.GroupVerifiableModel;
+import com.liferay.portal.verify.model.JournalArticleResourceVerifiableModel;
+import com.liferay.portal.verify.model.LayoutPrototypeVerifiableModel;
+import com.liferay.portal.verify.model.LayoutSetPrototypeVerifiableModel;
+import com.liferay.portal.verify.model.MBBanVerifiableModel;
+import com.liferay.portal.verify.model.MBDiscussionVerifiableModel;
+import com.liferay.portal.verify.model.MBThreadFlagVerifiableModel;
+import com.liferay.portal.verify.model.MBThreadVerifiableModel;
+import com.liferay.portal.verify.model.OrganizationVerifiableAuditedModel;
+import com.liferay.portal.verify.model.PasswordPolicyVerifiableModel;
+import com.liferay.portal.verify.model.PhoneVerifiableModel;
+import com.liferay.portal.verify.model.PollsVoteVerifiableModel;
+import com.liferay.portal.verify.model.RatingsEntryVerifiableModel;
+import com.liferay.portal.verify.model.RoleVerifiableModel;
+import com.liferay.portal.verify.model.TeamVerifiableModel;
+import com.liferay.portal.verify.model.UserGroupVerifiableModel;
+import com.liferay.portal.verify.model.WebSiteVerifiableModel;
 
 /**
  * @author Julio Camarero
@@ -108,7 +131,17 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 
 		upgrade(new UpgradeMobileDeviceRules());
 
+		verifyUUIDModels()
+
 		clearIndexesCache();
 	}
 
+	protected void verifyUUIDModels() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			VerifyUUID.verify(
+				new AssetTagVerifiableModel(),
+				new RatingsEntryVerifiableModel(), new TeamVerifiableModel());
+		}
+	}
+	
 }

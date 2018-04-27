@@ -40,10 +40,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -90,11 +87,6 @@ public class DLAdminManagementToolbarDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_permissionChecker = _themeDisplay.getPermissionChecker();
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			liferayPortletRequest);
 
 		_dlTrashUtil = (DLTrashUtil)_request.getAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
@@ -657,8 +649,6 @@ public class DLAdminManagementToolbarDisplayContext {
 	private final DLTrashUtil _dlTrashUtil;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final PermissionChecker _permissionChecker;
-	private final PortalPreferences _portalPreferences;
 	private final HttpServletRequest _request;
 	private final ThemeDisplay _themeDisplay;
 

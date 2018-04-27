@@ -14,20 +14,10 @@
 
 package com.liferay.bookmarks.uad.anonymizer;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noah Sherrill
@@ -38,47 +28,5 @@ import org.osgi.service.component.annotations.Reference;
 	service = UADAnonymizer.class
 )
 public class BookmarksEntryUADAnonymizer
-	extends DynamicQueryUADAnonymizer<BookmarksEntry> {
-
-	@Override
-	public void autoAnonymize(
-			BookmarksEntry bookmarksEntry, long userId, User anonymousUser)
-		throws PortalException {
-
-		if (bookmarksEntry.getStatusByUserId() == userId) {
-			bookmarksEntry.setStatusByUserId(anonymousUser.getUserId());
-			bookmarksEntry.setStatusByUserName(anonymousUser.getScreenName());
-		}
-
-		if (bookmarksEntry.getUserId() == userId) {
-			bookmarksEntry.setUserId(anonymousUser.getUserId());
-			bookmarksEntry.setUserName(anonymousUser.getFullName());
-		}
-
-		_bookmarksEntryLocalService.updateBookmarksEntry(bookmarksEntry);
-	}
-
-	@Override
-	public void delete(BookmarksEntry bookmarksEntry) throws PortalException {
-		_bookmarksEntryLocalService.deleteEntry(bookmarksEntry);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("description", "name", "url");
-	}
-
-	@Override
-	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return _bookmarksEntryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	protected String[] doGetUserIdFieldNames() {
-		return BookmarksUADConstants.USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY;
-	}
-
-	@Reference
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-
+	extends BaseBookmarksEntryUADAnonymizer {
 }

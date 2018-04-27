@@ -809,6 +809,8 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
+		final int previousOrderStatus = commerceOrder.getOrderStatus();
+
 		validateOrderStatus(commerceOrder.getCommerceOrderId(), orderStatus);
 
 		commerceOrder.setOrderStatus(orderStatus);
@@ -827,6 +829,7 @@ public class CommerceOrderLocalServiceImpl
 					message.put(
 						"commerceOrderId", commerceOrder.getCommerceOrderId());
 					message.put("orderStatus", commerceOrder.getOrderStatus());
+					message.put("previousOrderStatus", previousOrderStatus);
 
 					MessageBusUtil.sendMessage(
 						CommerceDestinationNames.ORDER_STATUS, message);

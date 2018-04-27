@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portlet.PortletResponseImpl;
-import com.liferay.portlet.RenderResponseImpl;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -53,21 +51,19 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 				LiferayPortletRequest liferayPortletRequest,
 				LiferayPortletResponse liferayPortletResponse) {
 
-				RenderResponseImpl renderResponseImpl =
-					(RenderResponseImpl)PortletResponseImpl.
-						getPortletResponseImpl(liferayPortletResponse);
+				Locale locale = portal.getLocale(liferayPortletRequest);
 
 				String viewStructuresTitle = DDLDDMDisplay.this.getTitle(
-					renderResponseImpl.getLocale());
+					locale);
 
 				if (Objects.equals(
-						viewStructuresTitle, renderResponseImpl.getTitle())) {
+						viewStructuresTitle,
+						portal.getPortletTitle(liferayPortletResponse))) {
 
 					return viewStructuresTitle;
 				}
 				else {
-					return getViewTemplatesTitle(
-						null, liferayPortletRequest.getLocale());
+					return getViewTemplatesTitle(null, locale);
 				}
 			}
 

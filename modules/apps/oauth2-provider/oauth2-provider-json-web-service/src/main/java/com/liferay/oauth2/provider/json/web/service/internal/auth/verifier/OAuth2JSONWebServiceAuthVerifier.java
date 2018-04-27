@@ -223,16 +223,13 @@ public class OAuth2JSONWebServiceAuthVerifier implements AuthVerifier {
 				oAuth2ApplicationScopeAliases.getScopeAliasesList();
 		}
 
-		BearerTokenProvider.AccessToken accessToken =
-			new BearerTokenProvider.AccessToken(
-				oAuth2Application, new ArrayList<>(), StringPool.BLANK,
-				expiresIn, new HashMap<>(), StringPool.BLANK, StringPool.BLANK,
-				issuedAt, StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
-				StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
-				accessTokenContent, _BEARER, oAuth2Authorization.getUserId(),
-				oAuth2Authorization.getUserName());
-
-		return accessToken;
+		return new BearerTokenProvider.AccessToken(
+			oAuth2Application, new ArrayList<>(), StringPool.BLANK, expiresIn,
+			new HashMap<>(), StringPool.BLANK, StringPool.BLANK, issuedAt,
+			StringPool.BLANK, StringPool.BLANK, new HashMap<>(),
+			StringPool.BLANK, StringPool.BLANK, scopeAliasesList,
+			accessTokenContent, _BEARER, oAuth2Authorization.getUserId(),
+			oAuth2Authorization.getUserName());
 	}
 
 	private static final String _BEARER = "Bearer";

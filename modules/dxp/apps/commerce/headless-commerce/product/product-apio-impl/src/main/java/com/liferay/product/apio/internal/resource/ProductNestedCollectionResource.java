@@ -56,8 +56,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose <a
- * href="http://schema.org/Product">Product </a> resources through a web API.
- * The resources are mapped from the internal model {@code CPDefinition}.
+ * href="http://schema.org/Product">Product</a> resources through a web API. The
+ * resources are mapped from the internal model {@code CPDefinition}.
  *
  * @author Zoltán Takács
  */

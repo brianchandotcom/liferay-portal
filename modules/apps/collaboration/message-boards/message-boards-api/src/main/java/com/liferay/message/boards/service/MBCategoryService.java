@@ -40,7 +40,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see MBCategoryServiceUtil
- * @see MBCategoryServiceBaseImpl
+ * @see com.liferay.message.boards.service.base.MBCategoryServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBCategoryServiceImpl
  * @generated
  */

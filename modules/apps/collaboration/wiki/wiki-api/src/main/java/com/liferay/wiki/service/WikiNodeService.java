@@ -42,7 +42,7 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see WikiNodeServiceUtil
- * @see WikiNodeServiceBaseImpl
+ * @see com.liferay.wiki.service.base.WikiNodeServiceBaseImpl
  * @see com.liferay.wiki.service.impl.WikiNodeServiceImpl
  * @generated
  */

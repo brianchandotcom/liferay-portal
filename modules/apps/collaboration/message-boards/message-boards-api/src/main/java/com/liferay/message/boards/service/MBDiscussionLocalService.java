@@ -50,7 +50,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see MBDiscussionLocalServiceUtil
- * @see MBDiscussionLocalServiceBaseImpl
+ * @see com.liferay.message.boards.service.base.MBDiscussionLocalServiceBaseImpl
  * @see com.liferay.message.boards.service.impl.MBDiscussionLocalServiceImpl
  * @generated
  */

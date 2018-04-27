@@ -14,16 +14,10 @@
 
 package com.liferay.announcements.uad.exporter;
 
-import com.liferay.announcements.kernel.model.AnnouncementsFlag;
-import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Noah Sherrill
@@ -34,42 +28,5 @@ import org.osgi.service.component.annotations.Reference;
 	service = UADExporter.class
 )
 public class AnnouncementsFlagUADExporter
-	extends DynamicQueryUADExporter<AnnouncementsFlag> {
-
-	@Override
-	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return _announcementsFlagLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	protected String[] doGetUserIdFieldNames() {
-		return AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG;
-	}
-
-	@Override
-	protected String toXmlString(AnnouncementsFlag announcementsFlag) {
-		StringBundler sb = new StringBundler(12);
-
-		sb.append("<model><model-name>");
-		sb.append("com.liferay.announcements.kernel.model.AnnouncementsFlag");
-		sb.append("</model-name>");
-
-		sb.append("<column><column-name>flagId</column-name>");
-		sb.append("<column-value><![CDATA[");
-		sb.append(announcementsFlag.getFlagId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("<column><column-name>userId</column-name>");
-		sb.append("<column-value><![CDATA[");
-		sb.append(announcementsFlag.getUserId());
-		sb.append("]]></column-value></column>");
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
-	@Reference
-	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
-
+	extends BaseAnnouncementsFlagUADExporter {
 }

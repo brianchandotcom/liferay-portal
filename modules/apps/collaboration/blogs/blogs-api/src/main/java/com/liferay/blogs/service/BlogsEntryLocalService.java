@@ -60,7 +60,7 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  * @see BlogsEntryLocalServiceUtil
- * @see BlogsEntryLocalServiceBaseImpl
+ * @see com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl
  * @see com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl
  * @generated
  */

@@ -128,6 +128,7 @@ if (ddmDisplay.getTitle(locale) != null) {
 					cssClass="table-cell-content"
 					href="<%= rowHREF %>"
 					name="description"
+					truncate="<%= true %>"
 					value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
 				/>
 

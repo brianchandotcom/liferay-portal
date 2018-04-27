@@ -158,6 +158,7 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="description"
+				truncate="<% true %>"
 				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
 			/>
 

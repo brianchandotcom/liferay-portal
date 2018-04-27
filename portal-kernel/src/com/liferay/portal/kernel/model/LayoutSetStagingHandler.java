@@ -72,6 +72,10 @@ public class LayoutSetStagingHandler
 
 			String methodName = method.getName();
 
+			if (methodName.equals("clone")) {
+				return _clone();
+			}
+
 			if (methodName.equals("getWrappedModel")) {
 				return _layoutSet;
 			}
@@ -82,10 +86,6 @@ public class LayoutSetStagingHandler
 				}
 
 				return _toEscapedModel();
-			}
-
-			if (methodName.equals("clone")) {
-				return _clone();
 			}
 
 			Object bean = _layoutSet;

@@ -35,11 +35,102 @@ import java.util.List;
 public class FragmentEntryLinkFinderImpl
 	extends FragmentEntryLinkFinderBaseImpl implements FragmentEntryLinkFinder {
 
+	public static final String COUNT_BY_G_F =
+		FragmentEntryLinkFinder.class.getName() + ".countByG_F";
+
+	public static final String COUNT_BY_G_F_C =
+		FragmentEntryLinkFinder.class.getName() + ".countByG_F_C";
+
 	public static final String COUNT_BY_G_F_C_L =
 		FragmentEntryLinkFinder.class.getName() + ".countByG_F_C_L";
 
+	public static final String FIND_BY_G_F =
+		FragmentEntryLinkFinder.class.getName() + ".findByG_F";
+
+	public static final String FIND_BY_G_F_C =
+		FragmentEntryLinkFinder.class.getName() + ".findByG_F_C";
+
 	public static final String FIND_BY_G_F_C_L =
 		FragmentEntryLinkFinder.class.getName() + ".findByG_F_C_L";
+
+	@Override
+	public int countByG_F(long groupId, long fragmentEntryId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_F);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(fragmentEntryId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countByG_F_C(
+		long groupId, long fragmentEntryId, long classNameId) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_F_C);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(fragmentEntryId);
+			qPos.add(classNameId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public int countByG_F_C_L(
@@ -75,6 +166,69 @@ public class FragmentEntryLinkFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<FragmentEntryLink> findByG_F(
+		long groupId, long fragmentEntryId, int start, int end,
+		OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_G_F);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("FragmentEntryLink", FragmentEntryLinkImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(fragmentEntryId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<FragmentEntryLink> findByG_F_C(
+		long groupId, long fragmentEntryId, long classNameId, int start,
+		int end, OrderByComparator<FragmentEntryLink> orderByComparator) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_G_F_C);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("FragmentEntryLink", FragmentEntryLinkImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(fragmentEntryId);
+			qPos.add(classNameId);
+
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

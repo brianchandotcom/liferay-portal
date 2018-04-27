@@ -89,6 +89,7 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 				<aui:button-row>
 					<c:if test="<%= Validator.isNotNull(checkoutDisplayContext.getPreviousCheckoutStepName()) %>">
 						<portlet:renderURL var="previousStepURL">
+							<portlet:param name="commerceOrderId" value="<%= String.valueOf(checkoutDisplayContext.getCommerceOrderId()) %>" />
 							<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviousCheckoutStepName() %>" />
 						</portlet:renderURL>
 

@@ -63,7 +63,8 @@ public class HttpImplTest extends PowerMockito {
 
 				return Arrays.asList(
 					HttpImpl.class.getDeclaredMethod(
-						"_shortenURL", String.class, int.class));
+						"_shortenURL", String.class, int.class, String.class,
+						String.class, String.class));
 			}
 
 		};
@@ -541,48 +542,6 @@ public class HttpImplTest extends PowerMockito {
 							URLCodec.encodeURL("www.liferay.com?key1=value1")),
 			_httpImpl.shortenURL(
 				"www.liferay.com?redirect=" + encodedURL3 + "&key1=value1"));
-
-		// Undecodable parameter
-
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					HttpImpl.class.getName(), Level.FINE)) {
-
-			Assert.assertEquals(
-				"www.google.com",
-				_httpImpl.shortenURL(
-					"www.google.com?redirect=%xy" + paramValue));
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertEquals(logRecords.toString(), 1, logRecords.size());
-
-			LogRecord logRecord = logRecords.get(0);
-
-			Assert.assertEquals(
-				"Skipping undecodable parameter redirect=%xy" + paramValue,
-				logRecord.getMessage());
-
-			Throwable throwable = logRecord.getThrown();
-
-			Assert.assertSame(
-				IllegalArgumentException.class, throwable.getClass());
-			Assert.assertEquals("x is not a hex char", throwable.getMessage());
-		}
-
-		try (CaptureHandler captureHandler =
-				JDKLoggerTestUtil.configureJDKLogger(
-					HttpImpl.class.getName(), Level.OFF)) {
-
-			Assert.assertEquals(
-				"www.google.com",
-				_httpImpl.shortenURL(
-					"www.google.com?redirect=%xy" + paramValue));
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
-		}
 	}
 
 	protected void testDecodeURLWithInvalidURLEncoding(String url) {

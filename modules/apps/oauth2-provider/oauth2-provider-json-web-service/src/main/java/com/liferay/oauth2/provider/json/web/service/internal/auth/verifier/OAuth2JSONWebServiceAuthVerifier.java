@@ -174,21 +174,22 @@ public class OAuth2JSONWebServiceAuthVerifier implements AuthVerifier {
 			return null;
 		}
 
-		String token = authorizationParts[1];
+		String accessTokenContent = authorizationParts[1];
 
-		if (Validator.isBlank(token)) {
+		if (Validator.isBlank(accessTokenContent)) {
 			return null;
 		}
 
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.
-				fetchOAuth2AuthorizationByAccessTokenContent(token);
+				fetchOAuth2AuthorizationByAccessTokenContent(
+					accessTokenContent);
 
 		if (oAuth2Authorization == null) {
 			return null;
 		}
 
-		String accessTokenContent = oAuth2Authorization.getAccessTokenContent();
+		accessTokenContent = oAuth2Authorization.getAccessTokenContent();
 
 		if (OAuth2ProviderConstants.EXPIRED_TOKEN.equals(accessTokenContent)) {
 			return null;

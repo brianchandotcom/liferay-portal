@@ -33,62 +33,19 @@
 />
 
 <%
-List<AMImageConfigurationEntry> selectedConfigurationEntries = (List)request.getAttribute(AMWebKeys.CONFIGURATION_ENTRIES_LIST);
+AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	creationMenu="<%= amManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= amManagementToolbarDisplayContext.isDisabled() %>"
+	filterItems="<%= amManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
 	searchContainerId="imageConfigurationEntries"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			disabled="<%= (selectedConfigurationEntries.size() <= 0) %>"
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-display-buttons
-			disabled="<%= true %>"
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
-			selectedDisplayStyle="list"
-		/>
-
-		<portlet:renderURL var="addImageConfigurationEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "add-image-resolution") %>'
-				url="<%= addImageConfigurationEntryURL %>"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-
-	<%
-	String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "all");
-	%>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			disabled='<%= (selectedConfigurationEntries.size() <= 0) && entriesNavigation.equals("all") %>'
-			navigationKeys='<%= new String[] {"all", "enabled", "disabled"} %>'
-			navigationParam="entriesNavigation"
-			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	showSearch="<%= false %>"
+	totalItems="<%= amManagementToolbarDisplayContext.getTotalItems() %>"
+	viewTypes="<%= amManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -138,6 +95,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 			currentBackgroundTaskConfigurationEntryUuids.add(configurationEntryUuid);
 		}
+
+		List<AMImageConfigurationEntry> selectedConfigurationEntries = amManagementToolbarDisplayContext.getSelectedConfigurationEntries();
 		%>
 
 		<aui:form action="<%= deleteImageConfigurationEntryURL.toString() %>" method="post" name="fm">

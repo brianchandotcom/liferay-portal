@@ -36,7 +36,6 @@ dependencies {
 	compile group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.9.5"
 	compile group: "io.swagger", name: "swagger-annotations", version: "1.5.18"
 	compile group: "io.vertx", name: "vertx-config", version: "3.5.1"
-	compile group: "io.vertx", name: "vertx-mongo-client", version: "3.5.1"
 	compile group: "io.vertx", name: "vertx-service-factory", version: "3.5.1"
 	compile group: "io.vertx", name: "vertx-service-proxy", version: "3.5.1"
 	compile group: "io.vertx", name: "vertx-web", version: "3.5.1"

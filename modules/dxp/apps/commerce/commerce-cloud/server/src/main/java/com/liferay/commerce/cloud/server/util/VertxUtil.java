@@ -27,8 +27,6 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.serviceproxy.ServiceException;
 
-import java.util.function.Function;
-
 /**
  * @author Andrea Di Giorgi
  */
@@ -96,41 +94,6 @@ public class VertxUtil {
 		}
 
 		handler.handle(Future.succeededFuture(httpResponse.body()));
-	}
-
-	public static <T> void handleServiceJsonObject(
-		AsyncResult<JsonObject> asyncResult, Handler<AsyncResult<T>> handler,
-		Function<JsonObject, T> function) {
-
-		if (asyncResult.failed()) {
-			Throwable t = asyncResult.cause();
-
-			JsonObject jsonObject = new JsonObject();
-
-			jsonObject.put("stackTrace", StackTraceUtil.getStackTrace(t));
-
-			handler.handle(
-				ServiceException.fail(
-					HttpResponseStatus.INTERNAL_SERVER_ERROR.code(),
-					t.getMessage(), jsonObject));
-
-			return;
-		}
-
-		JsonObject jsonObject = asyncResult.result();
-
-		if (jsonObject == null) {
-			handler.handle(
-				ServiceException.fail(
-					HttpResponseStatus.NOT_FOUND.code(),
-					"Unable to get object"));
-
-			return;
-		}
-
-		T object = function.apply(jsonObject);
-
-		handler.handle(Future.succeededFuture(object));
 	}
 
 }

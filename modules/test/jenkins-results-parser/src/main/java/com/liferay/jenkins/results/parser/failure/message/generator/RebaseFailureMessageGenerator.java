@@ -44,7 +44,9 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 			end = consoleText.lastIndexOf("\n", end);
 
 			if (end == -1) {
-				end = consoleText.length();
+				end = Math.min(
+					consoleText.length(),
+					start + CONSOLE_TEXT_SNIPPET_MAX_LENGTH);
 			}
 		}
 		else {

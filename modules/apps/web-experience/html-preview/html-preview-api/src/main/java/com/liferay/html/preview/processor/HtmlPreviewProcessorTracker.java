@@ -14,42 +14,11 @@
 
 package com.liferay.html.preview.processor;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-
 /**
- * @author Pavel Savinov
+ * @author Lance Ji
  */
-@Component(immediate = true, service = HtmlPreviewProcessorTracker.class)
-public class HtmlPreviewProcessorTracker {
+public interface HtmlPreviewProcessorTracker {
 
-	public HtmlPreviewProcessor getHtmlPreviewProcessor(String mimeType) {
-		return _htmlPreviewProcessors.get(mimeType);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "unsetHtmlPreviewProcessor"
-	)
-	protected void setHtmlPreviewProcessor(
-		HtmlPreviewProcessor htmlPreviewProcessor) {
-
-		_htmlPreviewProcessors.put(
-			htmlPreviewProcessor.getMimeType(), htmlPreviewProcessor);
-	}
-
-	protected void unsetHtmlPreviewProcessor(
-		HtmlPreviewProcessor htmlPreviewProcessor) {
-
-		_htmlPreviewProcessors.remove(htmlPreviewProcessor.getMimeType());
-	}
-
-	private final Map<String, HtmlPreviewProcessor> _htmlPreviewProcessors =
-		new ConcurrentHashMap<>();
+	public HtmlPreviewProcessor getHtmlPreviewProcessor(String mimeType);
 
 }

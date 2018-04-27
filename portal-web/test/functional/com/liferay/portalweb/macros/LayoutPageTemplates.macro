@@ -9,6 +9,16 @@
 		<execute macro="Modal#submit" />
 	</command>
 
+	<command name="editFragmentText">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute function="Type#typeEditor" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT" value1="${text}">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+	</command>
+
 	<command name="expandFragmentCollection">
 		<if>
 			<condition function="IsElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED">
@@ -103,6 +113,12 @@
 
 	<command name="viewEditorEmpty">
 		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_EMPTY_MESSAGE" />
+	</command>
+
+	<command name="viewFragment">
+		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
 	</command>
 
 	<command name="viewFragmentOrder">

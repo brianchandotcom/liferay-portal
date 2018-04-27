@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT</td>
+	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]//div[contains(@class,'cke_editable_inline')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_HEADER</td>
 	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]</td>
 	<td></td>

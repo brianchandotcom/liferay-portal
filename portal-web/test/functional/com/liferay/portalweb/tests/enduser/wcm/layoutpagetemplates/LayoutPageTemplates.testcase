@@ -102,6 +102,65 @@
 		<execute macro="LayoutPageTemplates#viewEditorEmpty" />
 	</command>
 
+	<command name="ChangeEditableText" priority="5">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<var name="htmlSnippet"><![CDATA[
+<div>${line.separator}
+<lfr-editable id="test" type="text">Edit Me</lfr-editable>${line.separator}
+</div>${line.separator}]]></var>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Page Templates" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionName" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#editFragmentText">
+			<var name="fragmentName" value="Fragment Name" />
+			<var name="id" value="test" />
+			<var name="text" value="Editing Finished" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewFragment">
+			<var name="fragmentName" value="Editing Finished" />
+		</execute>
+	</command>
+
 	<command name="DeleteCollection" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />

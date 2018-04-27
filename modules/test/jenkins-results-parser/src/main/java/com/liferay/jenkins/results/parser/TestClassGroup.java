@@ -23,6 +23,8 @@ import java.util.List;
  */
 public interface TestClassGroup {
 
+	public List<TestClass> getTestClasses();
+
 	public List<File> getTestClassFiles();
 
 }

@@ -45,25 +45,25 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
-		_setTestClassFiles();
+		_setTestClasses();
 
 		_setAxisTestClassGroups();
 	}
 
 	private void _setAxisTestClassGroups() {
-		if (!testClassFiles.isEmpty()) {
+		if (!testClasses.isEmpty()) {
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
 				this, 0);
 
-			for (File testClassFile : testClassFiles) {
-				axisTestClassGroup.addTestClassFile(testClassFile);
+			for (TestClass testClass : testClasses) {
+				axisTestClassGroup.addTestClass(testClass);
 			}
 
 			axisTestClassGroups.put(0, axisTestClassGroup);
 		}
 	}
 
-	private void _setTestClassFiles() {
+	private void _setTestClasses() {
 		if (testRelevantChanges) {
 			try {
 				List<File> moduleDirs =
@@ -71,7 +71,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 						getModifiedNPMTestModuleDirsList();
 
 				for (File moduleDir : moduleDirs) {
-					testClassFiles.add(moduleDir);
+					testClasses.add(new TestClass(moduleDir));
 				}
 			}
 			catch (IOException ioe) {
@@ -79,10 +79,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 			}
 		}
 		else {
-			testClassFiles.add(
-				new File(
-					portalGitWorkingDirectory.getWorkingDirectory(),
-					"modules"));
+			File modulesDir = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+			testClasses.add(new TestClass(modulesDir));
 		}
 	}
 

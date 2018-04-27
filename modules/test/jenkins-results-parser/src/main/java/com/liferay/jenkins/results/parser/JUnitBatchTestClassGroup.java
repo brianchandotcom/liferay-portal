@@ -47,7 +47,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
-		setTestClassFiles();
+		setTestClasses();
 
 		_setIncludeAutoBalanceTests();
 
@@ -104,7 +104,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return relevantTestClassNameRelativeGlobs;
 	}
 
-	protected void setTestClassFiles() {
+	protected void setTestClasses() {
 		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
 		try {
@@ -132,14 +132,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 						if (_pathIncluded(filePath) &&
 							!_pathExcluded(filePath)) {
 
-							testClassFiles.add(
-								_getPackagePathClassFile(filePath));
+							testClasses.add(_getPackagePathClassFile(filePath));
 						}
 
 						return FileVisitResult.CONTINUE;
 					}
 
-					private File _getPackagePathClassFile(Path path) {
+					private TestClass _getPackagePathClassFile(Path path) {
 						String filePath = path.toString();
 
 						Matcher matcher = _packagePathPattern.matcher(filePath);
@@ -150,10 +149,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 							packagePath = packagePath.replace(
 								".java", ".class");
 
-							return new File(packagePath);
+							return new TestClass(new File(packagePath));
 						}
 
-						return new File(filePath.replace(".java", ".class"));
+						return new TestClass(
+							new File(filePath.replace(".java", ".class")));
 					}
 
 					private boolean _pathExcluded(Path path) {
@@ -187,7 +187,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				ioe);
 		}
 
-		Collections.sort(testClassFiles);
+		Collections.sort(testClasses);
 	}
 
 	protected final List<PathMatcher> testClassNamesExcludesPathMatchers =
@@ -242,7 +242,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _setIncludeAutoBalanceTests() {
-		if (!testClassFiles.isEmpty()) {
+		if (!testClasses.isEmpty()) {
 			includeAutoBalanceTests = true;
 
 			return;

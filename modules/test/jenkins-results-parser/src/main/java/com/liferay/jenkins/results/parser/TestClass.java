@@ -16,28 +16,26 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * @author Peter Yoo
+ * @author Michael Hashimoto
  */
-public abstract class BaseTestClassGroup implements TestClassGroup {
+public class TestClass implements Comparable {
 
-	public List<TestClass> getTestClasses() {
-		return testClasses;
+	public TestClass(File file) {
+		_file = file;
 	}
 
-	public List<File> getTestClassFiles() {
-		List<File> testClassFiles = new ArrayList<>();
+	@Override
+	public int compareTo(Object o) {
+		TestClass testClass = (TestClass)o;
 
-		for (TestClass testClass : testClasses) {
-			testClassFiles.add(testClass.getFile());
-		}
-
-		return testClassFiles;
+		return _file.compareTo(testClass.getFile());
 	}
 
-	protected final List<TestClass> testClasses = new ArrayList<>();
+	public File getFile() {
+		return _file;
+	}
+
+	private final File _file;
 
 }

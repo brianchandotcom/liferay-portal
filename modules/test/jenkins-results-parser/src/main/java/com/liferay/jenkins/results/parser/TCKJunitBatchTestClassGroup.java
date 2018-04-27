@@ -58,12 +58,12 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		_testClassNameIncludePathMatchers = _getTestClassNamesPathMatchers(
 			"test.batch.class.names.includes");
 
-		setTestClassFiles();
+		setTestClasses();
 
 		setAxisTestClassGroups();
 	}
 
-	protected void setTestClassFiles() {
+	protected void setTestClasses() {
 		try {
 			Files.walkFileTree(
 				_tckHomeDirectory.toPath(),
@@ -79,7 +79,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 						}
 
 						if (_pathIncluded(filePath)) {
-							testClassFiles.add(filePath.toFile());
+							testClasses.add(new TestClass(filePath.toFile()));
 						}
 
 						return FileVisitResult.CONTINUE;
@@ -116,7 +116,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 				ioe);
 		}
 
-		Collections.sort(testClassFiles);
+		Collections.sort(testClasses);
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(

@@ -164,9 +164,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected void setAxisTestClassGroups() {
-		int testClassFileCount = testClassFiles.size();
+		int testClassCount = testClasses.size();
 
-		if (testClassFileCount == 0) {
+		if (testClassCount == 0) {
 			if (includeAutoBalanceTests && !autoBalanceTestFiles.isEmpty()) {
 				int id = 0;
 
@@ -176,7 +176,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				axisTestClassGroups.put(id, axisTestClassGroup);
 
 				for (File autoBalanceTestFile : autoBalanceTestFiles) {
-					axisTestClassGroup.addTestClassFile(autoBalanceTestFile);
+					axisTestClassGroup.addTestClass(
+						new TestClass(autoBalanceTestFile));
 				}
 			}
 
@@ -185,28 +186,28 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		int axisMaxSize = getAxisMaxSize();
 
-		int axisCount = (int)Math.ceil(
-			(double)testClassFileCount / axisMaxSize);
+		int axisCount = (int)Math.ceil((double)testClassCount / axisMaxSize);
 
-		int axisSize = (int)Math.ceil((double)testClassFileCount / axisCount);
+		int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
 
 		int id = 0;
 
-		for (List<File> axisTestClassFiles :
-				Lists.partition(testClassFiles, axisSize)) {
+		for (List<TestClass> axisTestClasses :
+				Lists.partition(testClasses, axisSize)) {
 
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
 				this, id);
 
 			axisTestClassGroups.put(id, axisTestClassGroup);
 
-			for (File axisTestClassFile : axisTestClassFiles) {
-				axisTestClassGroup.addTestClassFile(axisTestClassFile);
+			for (TestClass axisTestClass : axisTestClasses) {
+				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 
 			if (includeAutoBalanceTests) {
 				for (File autoBalanceTestFile : autoBalanceTestFiles) {
-					axisTestClassGroup.addTestClassFile(autoBalanceTestFile);
+					axisTestClassGroup.addTestClass(
+						new TestClass(autoBalanceTestFile));
 				}
 			}
 

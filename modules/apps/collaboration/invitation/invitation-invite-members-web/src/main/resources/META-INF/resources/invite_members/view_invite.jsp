@@ -123,6 +123,8 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 		<aui:button-row>
 			<aui:button type="submit" value="send-invitations" />
+
+			<aui:button type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

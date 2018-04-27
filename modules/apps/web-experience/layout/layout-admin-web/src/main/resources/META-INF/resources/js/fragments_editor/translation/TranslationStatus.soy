@@ -28,7 +28,7 @@
 		</button>
 
 		{if isNonnull($translationStatus)}
-			<div class="dropdown-menu dropdown-menu-indicator-end">
+			<div class="dropdown-menu dropdown-menu-indicator-end fragments-editor__translation-status-list">
 				{call .translationStatusItem}
 					{param isDefault: true /}
 					{param languageIcon: $availableLanguages[$defaultLanguageId].languageIcon /}
@@ -83,13 +83,22 @@
 		</span>
 		<span class="dropdown-item-indicator">
 			{if $isDefault}
-				<span class="label label-info">{msg desc=""}default{/msg}</span>
+				<span class="fragments-editor__translation-status-item__label label label-info">
+					{msg desc=""}default{/msg}
+				</span>
 			{elseif $translatedValues == 0}
-				<span class="label label-secondary">{msg desc=""}not-translated{/msg}</span>
+				<span class="fragments-editor__translation-status-item__label label label-secondary">
+					{msg desc=""}not-translated{/msg}
+				</span>
 			{elseif $translatedValues < $translationKeys}
-				<span class="label label-warning">{msg desc=""}translating{/msg}{sp}{$translatedValues}/{$translationKeys}</span>
+				<span class="fragments-editor__translation-status-item__label label label-warning">
+					{msg desc=""}translating{/msg}{sp}
+					{$translatedValues}/{$translationKeys}
+				</span>
 			{elseif $translatedValues == $translationKeys}
-				<span class="label label-success">{msg desc=""}translated{/msg}</span>
+				<span class="fragments-editor__translation-status-item__label label label-success">
+					{msg desc=""}translated{/msg}
+				</span>
 			{/if}
 		</span>
 	</a>

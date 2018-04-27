@@ -2,8 +2,16 @@ $gridSize: 6px;
 $translatedColor: #3DC513;
 $untranslatedColor: #A7A9BC;
 
+.fragments-editor__translation-status-list {
+	min-width: 35ch;
+}
+
 .fragments-editor__translation-status-item {
 	cursor: pointer;
+
+	&__label {
+		text-transform: uppercase;
+	}
 }
 
 .fragments-editor__fragment-entry-links {

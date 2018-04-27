@@ -166,34 +166,35 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 </c:choose>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />displayInputDate',
-		function() {
-			var A = AUI();
+	var <portlet:namespace />displayInputDate = Liferay.lazyLoad(
+		'metal-dom/src/dom',
+		function(dom) {
+			var form = document.querySelector('#<portlet:namespace />fm1');
 
-			var checkbox = A.one('#<portlet:namespace />addDueDate');
+			if (form) {
+				var addDueDate = form.querySelector('#<portlet:namespace />addDueDate');
+				var dueDateToggle = form.querySelector('#toggleDueDate');
 
-			if (checkbox) {
-				var checkboxValue = checkbox.get('value');
-				var dueDateToggle = A.one('#toggleDueDate');
+				if (addDueDate && dueDateToggle) {
+					var addDueDateVal = 'true';
 
-				if (checkboxValue == 'true') {
-					checkbox.set('value', false);
-					dueDateToggle.html('<%= LanguageUtil.get(request, "add-due-date") %>');
+					var dueDateLabel = '<liferay-ui:message key="remove-due-date" />';
+
+					if (addDueDate.value == 'true') {
+						addDueDateVal = 'false';
+
+						dueDateLabel = '<liferay-ui:message key="add-due-date" />';
+					}
+
+					addDueDate.value = addDueDateVal;
+
+					dueDateToggle.textContent = dueDateLabel;
 				}
-				else {
-					checkbox.set('value', true);
-					dueDateToggle.html('<%= LanguageUtil.get(request, "remove-due-date") %>');
-				}
-			}
 
-			var inputs = A.one('.<%= dueDateControlGroupCssClass %>');
+				var dueDate = document.querySelector('.<%= dueDateControlGroupCssClass %>');
 
-			if (inputs) {
-				inputs.toggleClass('hide');
+				dom.toggleClasses(dueDate, 'hide');
 			}
-		},
-		['aui-base']
+		}
 	);
 </aui:script>

@@ -45,16 +45,17 @@ public class AnonymizeUADEntitiesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long selectedUserId = getSelectedUserId(actionRequest);
+		User selectedUser = getSelectedUser(actionRequest);
 
 		UADAnonymizer uadAnonymizer = getUADAnonymizer(actionRequest);
 
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
+		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser(
+			selectedUser.getCompanyId());
 
 		doMultipleAction(
 			actionRequest,
 			entity -> uadAnonymizer.autoAnonymize(
-				entity, selectedUserId, anonymousUser));
+				entity, selectedUser.getUserId(), anonymousUser));
 	}
 
 	@Reference

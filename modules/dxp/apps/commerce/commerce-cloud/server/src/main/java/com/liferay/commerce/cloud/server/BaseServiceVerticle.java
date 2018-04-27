@@ -33,18 +33,16 @@ public abstract class BaseServiceVerticle<T> extends AbstractVerticle {
 	public void start(Future<Void> startFuture) throws Exception {
 		ConfigRetriever configRetriever = ConfigRetriever.create(vertx);
 
-		configRetriever.getConfig(
-			asyncResult -> {
-				if (asyncResult.failed()) {
-					startFuture.fail(asyncResult.cause());
-
-					return;
-				}
-
-				_registerService(asyncResult.result());
+		ConfigRetriever.getConfigAsFuture(
+			configRetriever
+		).compose(
+			configJsonObject -> {
+				_registerService(configJsonObject);
 
 				startFuture.complete();
-			});
+			},
+			startFuture
+		);
 	}
 
 	@Override

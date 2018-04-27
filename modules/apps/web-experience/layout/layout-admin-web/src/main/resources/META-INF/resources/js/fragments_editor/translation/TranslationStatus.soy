@@ -30,6 +30,7 @@
 		{if isNonnull($translationStatus)}
 			<div class="dropdown-menu dropdown-menu-indicator-end fragments-editor__translation-status-list">
 				{call .translationStatusItem}
+					{param isCurrent: $defaultLanguageId == $languageId /}
 					{param isDefault: true /}
 					{param languageIcon: $availableLanguages[$defaultLanguageId].languageIcon /}
 					{param languageId: $defaultLanguageId /}
@@ -40,6 +41,7 @@
 				{foreach $languageTranslationStatus in $translationStatus.languageValues}
 					{if $languageTranslationStatus.languageId != $defaultLanguageId}
 						{call .translationStatusItem}
+							{param isCurrent: $languageTranslationStatus.languageId == $languageId /}
 							{param isDefault: false /}
 							{param languageIcon: $availableLanguages[$languageTranslationStatus.languageId].languageIcon /}
 							{param languageId: $languageTranslationStatus.languageId /}
@@ -59,6 +61,7 @@
  * Translation Status item
  */
 {template .translationStatusItem}
+	{@param isCurrent: bool}
 	{@param isDefault: bool}
 	{@param languageId: string}
 	{@param spritemap: string}
@@ -78,9 +81,13 @@
 				{param spritemap: $spritemap /}
 			{/call}
 		</span>
-		<span>
-			{$languageLabel}
-		</span>
+
+		{if $isCurrent}
+			<strong>{$languageLabel}</strong>
+		{else}
+			<span>{$languageLabel}</span>
+		{/if}
+
 		<span class="dropdown-item-indicator">
 			{let $labelClasses kind="text"}
 				fragments-editor__translation-status-item__label

@@ -131,30 +131,6 @@
 		}
 	}
 
-	.form-builder-controls-trigger,
-	.form-builder-controls-trigger.disabled:hover {
-		color: #B0BEC9;
-	}
-
-	.form-builder-controls-trigger {
-		display: block;
-		font-size: 20px;
-		line-height: 0;
-		padding: 32px;
-		position: absolute;
-		right: 0;
-		text-decoration: none;
-		top: 0;
-
-		&.disabled {
-			cursor: not-allowed;
-		}
-
-		&:hover {
-			color: #4A90E2;
-		}
-	}
-
 	.form-builder-field {
 		border-radius: 0;
 		border-width: 0;
@@ -366,6 +342,13 @@
 		}
 	}
 
+	.form-builder-pages-header .form-builder-controls-trigger {
+		padding: 32px;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
 	.form-builder-pages-lexicon {
 		position: relative;
 		text-align: center;
@@ -376,13 +359,30 @@
 	}
 
 	.form-builder-tabview {
-		border-bottom: 1px solid #DEE4E9;
-		padding: 20px 70px 11px 34px;
-		position: relative;
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding: 30px 36px 0 52px;
+		width: 100%;
+
+		@media (max-width: 767.98px) {
+			.multi-step-nav-collapse-sm {
+				flex-wrap: nowrap;
+				margin-bottom: 30px;
+			}
+		}
+
+		.multi-step-nav-collapse-sm {
+			width: 100%;
+		}
 
 		.form-builder-controls-trigger {
-			margin: 0;
-			top: 13px;
+			display: block;
+			font-size: 20px;
+			line-height: 0;
+			padding: 0 0 0 32px;
+			text-decoration: none;
 		}
 	}
 

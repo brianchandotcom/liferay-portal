@@ -120,7 +120,7 @@ AUI.add(
 					TPL_PAGE_CONTROL_TRIGGER:
 						'<div class="' + CSS_FORM_BUILDER_CONTROLS_TRIGGER + '">' +
 						'<div class="dropdown dropdown-action">' +
-						'<a class="dropdown-toggle" data-position="{position}" href="javascript:;">' +
+						'<a class="component-action dropdown-toggle btn btn-unstyled" data-position="{position}" href="javascript:;">' +
 							Liferay.Util.getLexiconIconTpl('ellipsis-v') +
 						'</a>' +
 						'</div>' +
@@ -287,6 +287,28 @@ AUI.add(
 						instance._toggleNodeDisabled(titleNode, disabled);
 					},
 
+					_addPopoverClass: function(successPage) {
+						var instance = this;
+
+						var popover = A.one('.form-builder-page-manager-popover-header');
+
+						if (instance.get('mode') === 'wizard') {
+							if (instance.get('pagesQuantity') > 1 || successPage) {
+								popover.addClass('popover-wizard');
+								popover.removeClass('popover-pagination');
+							}
+							else {
+								popover.removeClass('popover-wizard');
+								popover.removeClass('popover-pagination');
+								popover.addClass('popover-one-page');
+							}
+						}
+						else {
+							popover.addClass('popover-pagination');
+							popover.removeClass('popover-wizard');
+						}
+					},
+
 					_addWizardPage: function() {
 						var instance = this;
 
@@ -302,6 +324,8 @@ AUI.add(
 						else {
 							pagination.set('page', activePageNumber);
 						}
+
+						instance._addPopoverClass();
 					},
 
 					_afterEditingLanguageIdChange: function(event) {
@@ -427,6 +451,8 @@ AUI.add(
 
 						var strings = instance.get('strings');
 
+						var popoverClass = '';
+
 						var popover = new A.Popover(
 							{
 								bodyContent: A.Lang.sub(
@@ -440,11 +466,13 @@ AUI.add(
 									}
 								),
 								constrain: true,
-								cssClass: 'form-builder-page-manager-popover-header',
+								cssClass: 'form-builder-page-manager-popover-header ' + popoverClass,
 								visible: false,
 								zIndex: 50
 							}
 						).render();
+
+						instance._addPopoverClass();
 
 						var popoverBoundingBox = popover.get('boundingBox');
 
@@ -602,7 +630,9 @@ AUI.add(
 							instance._pagination.get('boundingBox').delegate('click', A.bind(instance._onClickItemPagination, instance), 'li');
 						}
 
-						if (!instance._popover) {
+						var paginationContent = instance._pagination.get('contentBox');
+
+						if (paginationContent.hasClass('pagination-content') && !instance._popover) {
 							instance._popover = instance._createPopover();
 						}
 
@@ -706,6 +736,8 @@ AUI.add(
 						instance._resetSuccessPage();
 
 						instance._getPopover().hide();
+
+						instance._addPopoverClass(wizard.get('successPage'));
 					},
 
 					_onClickItemPagination: function(event) {
@@ -846,6 +878,8 @@ AUI.add(
 						else {
 							instance._removeSuccessPage();
 						}
+
+						instance._addPopoverClass();
 					},
 
 					_onRemoveSuccessPageClick: function() {
@@ -874,11 +908,13 @@ AUI.add(
 								wizard.set('items', items);
 								pagination.set('page', totalPages + 1);
 							}
+
 							instance.set('mode', 'wizard');
 							wizard.set('selected', paginationSelected - 1);
 						}
 						else {
 							instance.set('mode', 'pagination');
+
 							if (wizard.get('successPage') && wizard.isSuccessPageSelected()) {
 								pagination.set('page', totalPages + 1);
 								wizard.set('selected', totalPages);
@@ -888,6 +924,8 @@ AUI.add(
 								pagination.getItem(wizardSelected + 1).addClass('active');
 							}
 						}
+
+						instance._addPopoverClass();
 					},
 
 					_onTitleInputValueChange: function(event) {
@@ -961,6 +999,8 @@ AUI.add(
 						instance._syncPopoverContent();
 
 						instance._showLayout();
+
+						instance._addPopoverClass(wizard.get('successPage'));
 					},
 
 					_removeWizardPage: function(index) {

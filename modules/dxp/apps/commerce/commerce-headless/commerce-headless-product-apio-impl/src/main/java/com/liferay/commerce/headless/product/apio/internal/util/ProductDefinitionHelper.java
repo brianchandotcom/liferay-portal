@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -179,11 +178,12 @@ public class ProductDefinitionHelper {
 			long groupId, long[] assetCategoryIds)
 		throws PortalException {
 
-		Optional<ServiceContext> serviceContextOptional = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext());
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-		ServiceContext serviceContext = serviceContextOptional.orElse(
-			new ServiceContext());
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
 
 		User user = _userService.getUserById(PrincipalThreadLocal.getUserId());
 

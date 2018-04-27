@@ -166,12 +166,6 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 </c:choose>
 
 <aui:script>
-	function <portlet:namespace />getSuggestionsContent() {
-		var content = document.<portlet:namespace />fm1.<portlet:namespace />title.value + ' ';
-
-		return content;
-	}
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />displayInputDate',

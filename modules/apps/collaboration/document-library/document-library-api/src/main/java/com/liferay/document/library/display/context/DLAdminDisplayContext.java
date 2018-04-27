@@ -14,37 +14,19 @@
 
 package com.liferay.document.library.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.repository.model.Folder;
-
-import java.util.List;
-
-import javax.portlet.PortletURL;
 
 /**
  * @author Alejandro Tardín
  */
 public interface DLAdminDisplayContext {
 
-	public List<DropdownItem> getActionDropdownItems();
-
-	public String getClearResultsURL();
-
-	public CreationMenu getCreationMenu();
-
 	public String getDisplayStyle();
-
-	public List<DropdownItem> getFilterDropdownItems();
 
 	public Folder getFolder();
 
 	public long getFolderId();
-
-	public List<NavigationItem> getNavigationItems();
 
 	public String getOrderByCol();
 
@@ -58,22 +40,8 @@ public interface DLAdminDisplayContext {
 
 	public SearchContainer getSearchContainer();
 
-	public PortletURL getSearchURL();
-
-	public PortletURL getSortingURL();
-
-	public int getTotalItems();
-
-	public ViewTypeItemList getViewTypes();
-
 	public boolean isDefaultFolderView();
 
-	public boolean isDisabled();
-
-	public boolean isSelectable();
-
-	public boolean isShowSearch();
-
-	public boolean isShowSearchInfo();
+	public boolean isSearch();
 
 }

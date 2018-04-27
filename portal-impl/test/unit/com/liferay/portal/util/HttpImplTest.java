@@ -184,6 +184,8 @@ public class HttpImplTest extends PowerMockito {
 	@Test
 	public void testGetDomainWithValidURLs() {
 		Assert.assertEquals("foo.com", _httpImpl.getDomain("foo.com"));
+		Assert.assertEquals("foo.com", _httpImpl.getDomain(" foo.com"));
+		Assert.assertEquals("foo.com", _httpImpl.getDomain("foo.com "));
 		Assert.assertEquals("foo.com", _httpImpl.getDomain("https://foo.com"));
 		Assert.assertEquals(
 			"www.foo.com", _httpImpl.getDomain("https://www.foo.com"));
@@ -203,6 +205,12 @@ public class HttpImplTest extends PowerMockito {
 		Assert.assertEquals(
 			"www.foo.com",
 			_httpImpl.getDomain("https://test:test@www.foo.com:8080"));
+		Assert.assertEquals(
+			"www.foo.com",
+			_httpImpl.getDomain(" https://test:test@www.foo.com:8080"));
+		Assert.assertEquals(
+			"www.foo.com",
+			_httpImpl.getDomain("https://test:test@www.foo.com:8080 "));
 		Assert.assertEquals(
 			"www.foo.com",
 			_httpImpl.getDomain("https://www.foo.com/a/b?key1=value1#anchor"));

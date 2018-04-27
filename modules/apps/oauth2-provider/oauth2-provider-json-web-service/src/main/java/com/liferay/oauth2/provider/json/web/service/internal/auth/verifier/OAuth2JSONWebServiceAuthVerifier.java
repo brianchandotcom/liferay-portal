@@ -80,15 +80,15 @@ public class OAuth2JSONWebServiceAuthVerifier implements AuthVerifier {
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
 		try {
-			BearerTokenProvider.AccessToken accessToken = getAccessToken(
+			BearerTokenProvider.AccessToken bearerAccessToken = getAccessToken(
 				accessControlContext);
 
-			if (accessToken == null) {
+			if (bearerAccessToken == null) {
 				return authVerifierResult;
 			}
 
 			OAuth2Application oAuth2Application =
-				accessToken.getOAuth2Application();
+				bearerAccessToken.getOAuth2Application();
 
 			long companyId = oAuth2Application.getCompanyId();
 
@@ -100,13 +100,13 @@ public class OAuth2JSONWebServiceAuthVerifier implements AuthVerifier {
 				return authVerifierResult;
 			}
 
-			if (!bearerTokenProvider.isValid(accessToken)) {
+			if (!bearerTokenProvider.isValid(bearerAccessToken)) {
 				return authVerifierResult;
 			}
 
 			Set<String> scopes = new HashSet<>();
 
-			for (String accessTokenScope : accessToken.getScopes()) {
+			for (String accessTokenScope : bearerAccessToken.getScopes()) {
 				Collection<LiferayOAuth2Scope> liferayOAuth2Scopes =
 					_scopeLocator.getLiferayOAuth2Scopes(
 						companyId, accessTokenScope,
@@ -135,10 +135,11 @@ public class OAuth2JSONWebServiceAuthVerifier implements AuthVerifier {
 			Map<String, Object> settings = authVerifierResult.getSettings();
 
 			settings.put(
-				BearerTokenProvider.AccessToken.class.getName(), accessToken);
+				BearerTokenProvider.AccessToken.class.getName(),
+				bearerAccessToken);
 
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
-			authVerifierResult.setUserId(accessToken.getUserId());
+			authVerifierResult.setUserId(bearerAccessToken.getUserId());
 
 			return authVerifierResult;
 		}

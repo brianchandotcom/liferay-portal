@@ -428,17 +428,21 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
+		Group group = getGroup();
+
 		return new NavigationItemList() {
 			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "pages"));
-						navigationItem.setHref(
-							getPortletURL(), "tabs1", "pages");
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "pages"));
-					});
+				if (!group.isCompany()) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								Objects.equals(getTabs1(), "pages"));
+							navigationItem.setHref(
+								getPortletURL(), "tabs1", "pages");
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "pages"));
+						});
+				}
 
 				add(
 					navigationItem -> {
@@ -450,15 +454,17 @@ public class LayoutsAdminDisplayContext {
 							LanguageUtil.get(_request, "page-templates"));
 					});
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "display-pages"));
-						navigationItem.setHref(
-							getPortletURL(), "tabs1", "display-pages");
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "display-pages"));
-					});
+				if (!group.isCompany()) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								Objects.equals(getTabs1(), "display-pages"));
+							navigationItem.setHref(
+								getPortletURL(), "tabs1", "display-pages");
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "display-pages"));
+						});
+				}
 			}
 		};
 	}
@@ -731,7 +737,11 @@ public class LayoutsAdminDisplayContext {
 			return _tabs1;
 		}
 
-		_tabs1 = ParamUtil.getString(_liferayPortletRequest, "tabs1", "pages");
+		Group group = getGroup();
+
+		_tabs1 = ParamUtil.getString(
+			_liferayPortletRequest, "tabs1",
+			group.isCompany() ? "page-templates" : "pages");
 
 		return _tabs1;
 	}

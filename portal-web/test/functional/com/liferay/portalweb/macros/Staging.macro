@@ -135,6 +135,9 @@
 
 		<execute function="Pause" locator1="5000" />
 
+		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="The tunneling servlet shared secret is not set." />
+		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
+		<execute function="AssertConsoleTextNotPresent" value1="Please configure tunneling.servlet.shared.secret" />
 		<execute function="AssertConsoleTextNotPresent" value1="javax.portlet.PortletException: java.lang.NullPointerException" />
 	</command>
 

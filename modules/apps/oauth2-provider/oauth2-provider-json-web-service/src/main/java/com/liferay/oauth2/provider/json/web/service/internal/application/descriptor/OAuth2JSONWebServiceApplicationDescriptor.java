@@ -40,15 +40,15 @@ public class OAuth2JSONWebServiceApplicationDescriptor
 
 	@Override
 	public String describeApplication(Locale locale) {
-		String description = ResourceBundleUtil.getString(
+		String applicationDescription = ResourceBundleUtil.getString(
 			_resourceBundleLoader.loadResourceBundle(locale),
 			_applicationDescription);
 
-		if (description == null) {
+		if (applicationDescription == null) {
 			return _applicationDescription;
 		}
 
-		return description;
+		return applicationDescription;
 	}
 
 	@Activate

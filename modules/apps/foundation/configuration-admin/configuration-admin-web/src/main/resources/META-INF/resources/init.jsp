@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.configuration.admin.category.ConfigurationCategory" %><%@
+page import="com.liferay.configuration.admin.display.ConfigurationScreen" %><%@
 page import="com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay" %><%@
 page import="com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay" %><%@

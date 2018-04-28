@@ -21,6 +21,8 @@ import com.liferay.commerce.product.service.base.CPFriendlyURLEntryLocalServiceB
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -199,8 +201,8 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			String languageId, String urlTitle)
 		throws PortalException {
 
-		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-			urlTitle);
+		String normalizedUrlTitle =
+			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(urlTitle);
 
 		validate(groupId, classNameId, classPK, languageId, normalizedUrlTitle);
 
@@ -244,8 +246,8 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		long groupId, long classNameId, long classPK, String languageId,
 		String urlTitle) {
 
-		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-			urlTitle);
+		String normalizedUrlTitle =
+			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(urlTitle);
 
 		int maxLength = ModelHintsUtil.getMaxLength(
 			CPFriendlyURLEntry.class.getName(), "urlTitle");
@@ -304,8 +306,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		if (classPK > 0) {
 			CPFriendlyURLEntry cpFriendlyURLEntry =
 				cpFriendlyURLEntryPersistence.fetchByG_C_C_L_U(
-					groupId, classNameId, classPK, languageId,
-					normalizedUrlTitle);
+					groupId, classNameId, classPK, languageId, urlTitle);
 
 			if (cpFriendlyURLEntry != null) {
 				return;

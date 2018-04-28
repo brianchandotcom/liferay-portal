@@ -17,25 +17,22 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.io.IOException;
 
 /**
  * @author Jorge Ferrer
@@ -64,7 +61,7 @@ public class ViewCategoryMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
-				_configurationModelRetriever.
+				_configurationEntryRetriever.
 					getConfigurationCategoryMenuDisplay(
 						configurationCategory, themeDisplay.getLanguageId());
 
@@ -97,7 +94,7 @@ public class ViewCategoryMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private ConfigurationModelRetriever _configurationModelRetriever;
+	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private Portal _portal;

@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationCategor
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.DDMFormRendererHelper;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
@@ -103,7 +104,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 		if (configurationModel != null) {
 			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
-				_configurationModelRetriever.
+				_configurationEntryRetriever.
 					getConfigurationCategoryMenuDisplay(
 						configurationModel.getCategory(),
 						themeDisplay.getLanguageId());
@@ -165,6 +166,9 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 		_renderCommands.remove(properties.get("configurationPid"));
 	}
+
+	@Reference
+	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;

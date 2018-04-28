@@ -6,6 +6,7 @@ create index IX_8FCB620E on Address (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BA4413D5 on AnnouncementsDelivery (userId, type_[$COLUMN_LENGTH:75$]);
 
 create index IX_14F06A6B on AnnouncementsEntry (classNameId, classPK, alert);
+create index IX_459BE01B on AnnouncementsEntry (companyId, classNameId, classPK, alert);
 create index IX_D49C2E66 on AnnouncementsEntry (userId);
 create index IX_F2949120 on AnnouncementsEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 

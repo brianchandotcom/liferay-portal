@@ -129,6 +129,12 @@ public class AnnouncementsEntryLocalServiceUtil {
 		getService().deleteEntries(classNameId, classPK);
 	}
 
+	public static void deleteEntries(long companyId, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEntries(companyId, classNameId, classPK);
+	}
+
 	public static void deleteEntry(
 		com.liferay.announcements.kernel.model.AnnouncementsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -324,9 +330,22 @@ public class AnnouncementsEntryLocalServiceUtil {
 			alert, flagValue, start, end);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
+	boolean, int, int)}
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
 		long classNameId, long classPK, boolean alert, int start, int end) {
 		return getService().getEntries(classNameId, classPK, alert, start, end);
+	}
+
+	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end) {
+		return getService()
+				   .getEntries(companyId, classNameId, classPK, alert, start,
+			end);
 	}
 
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
@@ -364,9 +383,20 @@ public class AnnouncementsEntryLocalServiceUtil {
 			alert, flagValue);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, boolean)}
+	*/
+	@Deprecated
 	public static int getEntriesCount(long classNameId, long classPK,
 		boolean alert) {
 		return getService().getEntriesCount(classNameId, classPK, alert);
+	}
+
+	public static int getEntriesCount(long companyId, long classNameId,
+		long classPK, boolean alert) {
+		return getService()
+				   .getEntriesCount(companyId, classNameId, classPK, alert);
 	}
 
 	public static int getEntriesCount(long userId, long classNameId,

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,6 +60,7 @@ import com.liferay.portlet.announcements.service.base.AnnouncementsEntryLocalSer
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -193,6 +195,19 @@ public class AnnouncementsEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteEntries(long companyId, long classNameId, long classPK)
+		throws PortalException {
+
+		List<AnnouncementsEntry> entries =
+			announcementsEntryPersistence.findByC_C_C(
+				companyId, classNameId, classPK);
+
+		for (AnnouncementsEntry entry : entries) {
+			deleteEntry(entry);
+		}
+	}
+
+	@Override
 	public void deleteEntry(AnnouncementsEntry entry) throws PortalException {
 
 		// Entry
@@ -237,19 +252,41 @@ public class AnnouncementsEntryLocalServiceImpl
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end) {
 
+		User user = userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return Collections.emptyList();
+		}
+
 		return announcementsEntryFinder.findByScopes(
-			userId, scopes, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, alert, flagValue, start, end);
+			user.getCompanyId(), userId, scopes, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, alert, flagValue, start,
+			end);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
+	 *             boolean, int, int)}
+	 */
+	@Deprecated
 	@Override
 	public List<AnnouncementsEntry> getEntries(
 		long classNameId, long classPK, boolean alert, int start, int end) {
 
-		return announcementsEntryPersistence.findByC_C_A(
-			classNameId, classPK, alert, start, end);
+		return getEntries(
+			CompanyThreadLocal.getCompanyId(), classNameId, classPK, alert,
+			start, end);
+	}
+
+	@Override
+	public List<AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end) {
+
+		return announcementsEntryPersistence.findByC_C_C_A(
+			companyId, classNameId, classPK, alert, start, end);
 	}
 
 	@Override
@@ -261,12 +298,18 @@ public class AnnouncementsEntryLocalServiceImpl
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end) {
 
+		User user = userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return Collections.emptyList();
+		}
+
 		return announcementsEntryFinder.findByScope(
-			userId, classNameId, classPKs, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, alert, flagValue, start,
-			end);
+			user.getCompanyId(), userId, classNameId, classPKs,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, alert,
+			flagValue, start, end);
 	}
 
 	@Override
@@ -286,17 +329,36 @@ public class AnnouncementsEntryLocalServiceImpl
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue) {
 
+		User user = userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return 0;
+		}
+
 		return announcementsEntryFinder.countByScopes(
-			userId, scopes, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, alert, flagValue);
+			user.getCompanyId(), userId, scopes, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, alert, flagValue);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	 *             long, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public int getEntriesCount(long classNameId, long classPK, boolean alert) {
+		return getEntriesCount(
+			CompanyThreadLocal.getCompanyId(), classNameId, classPK, alert);
 	}
 
 	@Override
-	public int getEntriesCount(long classNameId, long classPK, boolean alert) {
-		return announcementsEntryPersistence.countByC_C_A(
-			classNameId, classPK, alert);
+	public int getEntriesCount(
+		long companyId, long classNameId, long classPK, boolean alert) {
+
+		return announcementsEntryPersistence.countByC_C_C_A(
+			companyId, classNameId, classPK, alert);
 	}
 
 	@Override
@@ -317,11 +379,18 @@ public class AnnouncementsEntryLocalServiceImpl
 		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue) {
 
+		User user = userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return 0;
+		}
+
 		return announcementsEntryFinder.countByScope(
-			userId, classNameId, classPKs, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, alert, flagValue);
+			user.getCompanyId(), userId, classNameId, classPKs,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, alert,
+			flagValue);
 	}
 
 	@Override

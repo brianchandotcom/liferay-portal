@@ -34,11 +34,18 @@ public class AutoDeleteFileInputStream extends FileInputStream {
 
 	@Override
 	public void close() throws IOException {
+		if (_closed) {
+			return;
+		}
+
+		_closed = true;
+
 		super.close();
 
 		Files.deleteIfExists(_file.toPath());
 	}
 
+	private boolean _closed;
 	private final File _file;
 
 }

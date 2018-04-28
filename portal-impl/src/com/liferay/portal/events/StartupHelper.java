@@ -14,17 +14,20 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcessUtil;
@@ -58,6 +61,21 @@ public class StartupHelper {
 
 	public boolean isVerified() {
 		return _verified;
+	}
+
+	public void printPatchLevel() {
+		if (_log.isInfoEnabled() && !PatcherUtil.hasInconsistentPatchLevels()) {
+			String installedPatches = StringUtil.merge(
+				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
+
+			if (Validator.isNull(installedPatches)) {
+				_log.info("There are no patches installed");
+			}
+			else {
+				_log.info(
+					"The following patches are installed: " + installedPatches);
+			}
+		}
 	}
 
 	public void setDbNew(boolean dbNew) {

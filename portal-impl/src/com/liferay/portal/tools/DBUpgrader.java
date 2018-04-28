@@ -99,6 +99,8 @@ public class DBUpgrader {
 
 			InitUtil.initWithSpring(true, false);
 
+			StartupHelperUtil.printPatchLevel();
+
 			upgrade();
 			verify();
 

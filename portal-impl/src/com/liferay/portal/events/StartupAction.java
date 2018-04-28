@@ -15,7 +15,6 @@
 package com.liferay.portal.events;
 
 import com.liferay.petra.executor.PortalExecutorManager;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHan
 import com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.proxy.IntrabandProxyDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.rpc.RPCDatagramReceiveHandler;
-import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
@@ -48,8 +46,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.tools.DBUpgrader;
@@ -109,20 +105,7 @@ public class StartupAction extends SimpleAction {
 
 		System.out.println("Starting " + ReleaseInfo.getReleaseInfo() + "\n");
 
-		// Installed patches
-
-		if (_log.isInfoEnabled() && !PatcherUtil.hasInconsistentPatchLevels()) {
-			String installedPatches = StringUtil.merge(
-				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
-
-			if (Validator.isNull(installedPatches)) {
-				_log.info("There are no patches installed");
-			}
-			else {
-				_log.info(
-					"The following patches are installed: " + installedPatches);
-			}
-		}
+		StartupHelperUtil.printPatchLevel();
 
 		// Portal resiliency
 

@@ -38,6 +38,14 @@ public interface DDMFormWebConfiguration {
 	public int autosaveInterval();
 
 	@Meta.AD(
+		deflt = "enabled-with-warning", name = "csv-export",
+		optionLabels = {"Enabled", "enabled-with-warning", "Disabled"},
+		optionValues = {"enabled", "enabled-with-warning", "disabled"},
+		required = false
+	)
+	public String csvExport();
+
+	@Meta.AD(
 		deflt = "descriptive", name = "default-display-view",
 		optionLabels = {"Descriptive", "List"},
 		optionValues = {"descriptive", "list"}, required = false

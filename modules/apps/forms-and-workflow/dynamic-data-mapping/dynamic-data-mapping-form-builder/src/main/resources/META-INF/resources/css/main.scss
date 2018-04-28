@@ -11,6 +11,14 @@
 
 @import "form-builder-drag-and-drop";
 
+.modal-content {
+	max-height: fit-content;
+
+	.modal-body {
+		height: auto;
+	}
+}
+
 .multi-step-item.success-page {
 	&.complete {
 		.multi-step-divider {

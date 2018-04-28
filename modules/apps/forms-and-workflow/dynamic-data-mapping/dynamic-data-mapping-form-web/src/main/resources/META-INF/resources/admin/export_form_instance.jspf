@@ -14,13 +14,29 @@
  */
 --%>
 
+<%
+String csvExport = "enabled-with-warning";
+
+if (Validator.isNotNull(ddmFormAdminDisplayContext.getCSVExport())) {
+	csvExport = ddmFormAdminDisplayContext.getCSVExport();
+}
+
+boolean csvExportDisabled = StringUtil.equals("disabled", csvExport);
+boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
+%>
+
 <div class="hide" id="<portlet:namespace />exportFormInstance">
+	<div id="<portlet:namespace />csvWarning"></div>
+
 	<aui:select label="file-extension" name="fileExtension">
 
 		<%
 		Map<String, String> availableExportFormats = ddmFormAdminDisplayContext.getAvailableExportFormats();
 
 		for (Map.Entry<String, String> entry : availableExportFormats.entrySet()) {
+			if (Objects.equals(entry.getValue(), "csv") && csvExportDisabled) {
+				continue;
+			}
 		%>
 
 			<aui:option value="<%= entry.getValue() %>"><%= entry.getKey() %></aui:option>
@@ -45,7 +61,37 @@
 
 			var content = A.one('#<portlet:namespace />exportFormInstance');
 
+			var fileExtensionSelect = A.one('#<portlet:namespace />fileExtension');
+
+			var showCSVWarning = function() {
+				var csvWarning = A.one('#<portlet:namespace />csvWarning');
+
+				if ((fileExtensionSelect.val() === 'csv') && <%= showCSVWarning %>) {
+					csvWarning.show();
+
+					new A.Alert(
+						{
+							bodyContent: '<liferay-ui:message key="csv-warning-message" />',
+							boundingBox: '#<portlet:namespace />csvWarning',
+							closeable: false,
+							cssClass: 'alert-warning',
+							destroyOnHide: false,
+							render: true
+						}
+					);
+				}
+				else {
+					csvWarning.hide();
+				}
+			};
+
 			if (content) {
+				if (fileExtensionSelect) {
+					showCSVWarning();
+
+					fileExtensionSelect.on('change', showCSVWarning);
+				}
+
 				form.append(content);
 
 				content.show();
@@ -55,7 +101,6 @@
 				{
 					dialog: {
 						bodyContent: form,
-						height: 275,
 						resizable: false,
 						toolbars: {
 							footer: [
@@ -81,7 +126,7 @@
 								}
 							]
 						},
-						width: 300
+						width: 600
 					},
 					title: '<%= UnicodeLanguageUtil.get(request, "export") %>'
 				}

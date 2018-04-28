@@ -15,11 +15,13 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
+import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -194,18 +197,29 @@ public class ConfigurationModelRetrieverImpl
 	public Set<ConfigurationEntry> getConfigurationEntries(
 		String configurationCategory, String languageId) {
 
-		Set<ConfigurationModel> configurationModels = getConfigurationModels(
-			configurationCategory, languageId);
-
 		Set<ConfigurationEntry> configurationEntries = new TreeSet(
 			getConfigurationEntryComparator());
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
+		Set<ConfigurationModel> configurationModels = getConfigurationModels(
+			configurationCategory, languageId);
+
 		for (ConfigurationModel configurationModel : configurationModels) {
 			ConfigurationEntry configurationEntry =
 				new ConfigurationModelConfigurationEntry(
 					configurationModel, locale, _resourceBundleLoaderProvider);
+
+			configurationEntries.add(configurationEntry);
+		}
+
+		Set<ConfigurationScreen> configurationScreens = getConfigurationScreens(
+			configurationCategory);
+
+		for (ConfigurationScreen configurationScreen : configurationScreens) {
+			ConfigurationEntry configurationEntry =
+				new ConfigurationScreenConfigurationEntry(
+					configurationScreen, locale);
 
 			configurationEntries.add(configurationEntry);
 		}
@@ -319,6 +333,15 @@ public class ConfigurationModelRetrieverImpl
 
 					emitter.emit(configurationCategory.getCategoryKey());
 				});
+		_configurationScreensServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ConfigurationScreen.class, null,
+				(serviceReference, emitter) -> {
+					ConfigurationScreen configurationScreen =
+						bundleContext.getService(serviceReference);
+
+					emitter.emit(configurationScreen.getCategoryKey());
+				});
 	}
 
 	protected void collectConfigurationModels(
@@ -422,6 +445,25 @@ public class ConfigurationModelRetrieverImpl
 		return new ConfigurationModelComparator();
 	}
 
+	protected Set<ConfigurationScreen> getConfigurationScreens(
+		String configurationCategoryKey) {
+
+		List<ConfigurationScreen> configurationCategories =
+			_configurationScreensServiceTrackerMap.getService(
+				configurationCategoryKey);
+
+		Set<ConfigurationScreen> configurationCategoriesSet;
+
+		if (configurationCategories != null) {
+			configurationCategoriesSet = new HashSet<>(configurationCategories);
+		}
+		else {
+			configurationCategoriesSet = Collections.emptySet();
+		}
+
+		return configurationCategoriesSet;
+	}
+
 	protected Configuration[] getFactoryConfigurations(String factoryPid)
 		throws IOException {
 
@@ -495,6 +537,8 @@ public class ConfigurationModelRetrieverImpl
 		_configurationCategoriesServiceTrackerMap;
 	private ServiceTrackerMap<String, ConfigurationCategory>
 		_configurationCategoryServiceTrackerMap;
+	private ServiceTrackerMap<String, List<ConfigurationScreen>>
+		_configurationScreensServiceTrackerMap;
 
 	@Reference
 	private ExtendedMetaTypeService _extendedMetaTypeService;

@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.internal.util;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
+import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
@@ -61,6 +62,9 @@ public interface ConfigurationModelRetriever {
 
 	public Set<ConfigurationModel> getConfigurationModels(
 		String configurationCategory, String languageId);
+
+	public ConfigurationScreen getConfigurationScreen(
+		String configurationScreenKey);
 
 	public List<ConfigurationModel> getFactoryInstances(
 			ConfigurationModel factoryConfigurationModel)

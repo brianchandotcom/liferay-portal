@@ -73,10 +73,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteAdminDisplayContext {
 
 	public SiteAdminDisplayContext(
-			HttpServletRequest request,
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws PortalException {
+		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
@@ -189,7 +187,7 @@ public class SiteAdminDisplayContext {
 		return getPendingRequestsCount(getGroup());
 	}
 
-	public int getPendingRequestsCount(Group group) throws PortalException {
+	public int getPendingRequestsCount(Group group) {
 		int pendingRequests = 0;
 
 		if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
@@ -200,7 +198,7 @@ public class SiteAdminDisplayContext {
 		return pendingRequests;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
@@ -214,7 +212,7 @@ public class SiteAdminDisplayContext {
 			_liferayPortletRequest, getPortletURL());
 	}
 
-	public PortletURL getSearchURL() throws PortalException {
+	public PortletURL getSearchURL() {
 		PortletURL searchURL = _liferayPortletResponse.createRenderURL();
 
 		searchURL.setParameter("groupId", String.valueOf(getGroupId()));

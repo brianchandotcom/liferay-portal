@@ -19,6 +19,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import java.nio.file.Files;
+
 /**
  * @author Shuyang Zhou
  */
@@ -34,9 +36,7 @@ public class AutoDeleteFileInputStream extends FileInputStream {
 	public void close() throws IOException {
 		super.close();
 
-		if (_file.exists() && !_file.delete()) {
-			_file.deleteOnExit();
-		}
+		Files.deleteIfExists(_file.toPath());
 	}
 
 	private final File _file;

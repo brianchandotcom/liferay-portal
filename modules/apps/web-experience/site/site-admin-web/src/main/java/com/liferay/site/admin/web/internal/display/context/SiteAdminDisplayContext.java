@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -96,15 +95,6 @@ public class SiteAdminDisplayContext {
 			themeDisplay.getCompanyId(), group.getGroupId(), true);
 	}
 
-	public PortletURL getCurrentURL() {
-		PortletURL currentURL = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
-
-		currentURL.setParameter("displayStyle", getDisplayStyle());
-
-		return currentURL;
-	}
-
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -138,14 +128,6 @@ public class SiteAdminDisplayContext {
 		return _groupId;
 	}
 
-	public String getKeywords() {
-		if (_keywords == null) {
-			_keywords = ParamUtil.getString(_request, "keywords");
-		}
-
-		return _keywords;
-	}
-
 	public List<NavigationItem> getNavigationItems() {
 		return new NavigationItemList() {
 			{
@@ -159,10 +141,6 @@ public class SiteAdminDisplayContext {
 					});
 			}
 		};
-	}
-
-	public int getOrganizationsCount() throws PortalException {
-		return getOrganizationsCount(getGroup());
 	}
 
 	public int getOrganizationsCount(Group group) {
@@ -181,10 +159,6 @@ public class SiteAdminDisplayContext {
 			company.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null,
 			null, organizationParams);
-	}
-
-	public int getPendingRequestsCount() throws PortalException {
-		return getPendingRequestsCount(getGroup());
 	}
 
 	public int getPendingRequestsCount(Group group) {

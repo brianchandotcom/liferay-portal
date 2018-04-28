@@ -159,7 +159,7 @@ public class ProjectTemplateFilesTest {
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
 			Path archetypeResourcesDirPath, Properties bndProperties,
-			boolean requireAuthorProperty,
+			boolean requireAuthorProperty, String archetypePostGenerateGroovy,
 			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
@@ -253,7 +253,9 @@ public class ProjectTemplateFilesTest {
 			Assert.assertTrue(
 				"Unused \"" + name + "\" required property in " +
 					archetypeMetadataXmlPath,
-				archetypeResourcePropertyNames.contains(name));
+				archetypeResourcePropertyNames.contains(name) ||
+				archetypePostGenerateGroovy.contains(
+					"request.properties.get(\"" + name + "\")"));
 		}
 
 		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
@@ -313,6 +315,19 @@ public class ProjectTemplateFilesTest {
 				declaredVariables.contains(name) ||
 				requiredPropertyNames.contains(name));
 		}
+	}
+
+	private String _testArchetypePostGenerateGroovy(Path projectTemplateDirPath)
+		throws IOException {
+
+		Path path = projectTemplateDirPath.resolve(
+			"src/main/resources/META-INF/archetype-post-generate.groovy");
+
+		if (Files.notExists(path)) {
+			return "";
+		}
+
+		return _testTextFile(path);
 	}
 
 	private Properties _testBndBnd(Path projectTemplateDirPath)
@@ -846,10 +861,14 @@ public class ProjectTemplateFilesTest {
 
 			});
 
+		String archetypePostGenerateGroovy = _testArchetypePostGenerateGroovy(
+			projectTemplateDirPath);
+
 		_testArchetypeMetadataXml(
 			projectTemplateDirPath, projectTemplateDirName,
 			archetypeResourcesDirPath, bndProperties,
-			requireAuthorProperty.get(), archetypeResourcePropertyNames);
+			requireAuthorProperty.get(), archetypePostGenerateGroovy,
+			archetypeResourcePropertyNames);
 	}
 
 	private void _testPropertyValue(
@@ -860,11 +879,7 @@ public class ProjectTemplateFilesTest {
 			properties.getProperty(key));
 	}
 
-	private void _testTextFile(
-			Path path, String fileName, String extension,
-			Set<String> archetypeResourcePropertyNames)
-		throws IOException {
-
+	private String _testTextFile(Path path) throws IOException {
 		String text = FileUtil.read(path);
 
 		Assert.assertEquals(
@@ -883,6 +898,16 @@ public class ProjectTemplateFilesTest {
 					Character.isWhitespace(line.charAt(line.length() - 1)));
 			}
 		}
+
+		return text;
+	}
+
+	private void _testTextFile(
+			Path path, String fileName, String extension,
+			Set<String> archetypeResourcePropertyNames)
+		throws IOException {
+
+		String text = _testTextFile(path);
 
 		Matcher matcher = _velocityDirectivePattern.matcher(text);
 

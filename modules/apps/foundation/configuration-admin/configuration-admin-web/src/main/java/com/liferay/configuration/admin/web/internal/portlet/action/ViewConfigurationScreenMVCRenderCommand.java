@@ -20,24 +20,22 @@ import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdmin
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Jorge Ferrer
@@ -66,11 +64,11 @@ public class ViewConfigurationScreenMVCRenderCommand
 			WebKeys.THEME_DISPLAY);
 
 		ConfigurationScreen configurationScreen =
-			_configurationModelRetriever.getConfigurationScreen(
+			_configurationEntryRetriever.getConfigurationScreen(
 				configurationScreenKey);
 
 		ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
-			_configurationModelRetriever.getConfigurationCategoryMenuDisplay(
+			_configurationEntryRetriever.getConfigurationCategoryMenuDisplay(
 				configurationScreen.getCategoryKey(),
 				themeDisplay.getLanguageId());
 
@@ -99,7 +97,7 @@ public class ViewConfigurationScreenMVCRenderCommand
 	private BundleContext _bundleContext;
 
 	@Reference
-	private ConfigurationModelRetriever _configurationModelRetriever;
+	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private Portal _portal;

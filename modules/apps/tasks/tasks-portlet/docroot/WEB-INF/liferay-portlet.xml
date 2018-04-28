@@ -10,7 +10,7 @@
 		<user-notification-handler-class>com.liferay.tasks.notifications.TasksUserNotificationHandler</user-notification-handler-class>
 		<asset-renderer-factory>com.liferay.tasks.asset.TasksEntryAssetRendererFactory</asset-renderer-factory>
 		<header-portlet-css>/tasks/css/main.css</header-portlet-css>
-		<header-portlet-javascript>/tasks/js/main.js</header-portlet-javascript>
+		<footer-portlet-javascript>/tasks/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>tasks-portlet</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
@@ -18,7 +18,7 @@
 		<portlet-name>2</portlet-name>
 		<icon>/tasks/icon.png</icon>
 		<header-portlet-css>/tasks/css/main.css</header-portlet-css>
-		<header-portlet-javascript>/tasks/js/main.js</header-portlet-javascript>
+		<footer-portlet-javascript>/tasks/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>upcoming-tasks-portlet</css-class-wrapper>
 	</portlet>
 	<role-mapper>

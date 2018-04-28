@@ -16,8 +16,12 @@ package com.liferay.commerce.discount.service.impl;
 
 import com.liferay.commerce.discount.exception.CommerceDiscountDisplayDateException;
 import com.liferay.commerce.discount.exception.CommerceDiscountExpirationDateException;
+import com.liferay.commerce.discount.exception.CommerceDiscountTargetException;
+import com.liferay.commerce.discount.exception.CommerceDiscountTitleException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.base.CommerceDiscountLocalServiceBaseImpl;
+import com.liferay.commerce.discount.target.CommerceDiscountTargetType;
+import com.liferay.commerce.discount.target.CommerceDiscountTargetTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,10 +44,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -66,11 +72,11 @@ public class CommerceDiscountLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceDiscount addCommerceDiscount(
-			String title, String target, String type, String typeSettings,
-			boolean useCouponCode, String couponCode, String limitationType,
-			int limitationTimes, int numberOfUse, boolean cumulative,
-			boolean usePercentage, BigDecimal level1, BigDecimal level2,
-			BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
+			String title, String target, boolean useCouponCode,
+			String couponCode, boolean usePercentage,
+			BigDecimal maximumDiscountAmount, BigDecimal level1,
+			BigDecimal level2, BigDecimal level3, String limitationType,
+			int limitationTimes, boolean cumulative, boolean active,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -82,6 +88,8 @@ public class CommerceDiscountLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(title, target, limitationType);
 
 		Date now = new Date();
 
@@ -111,19 +119,16 @@ public class CommerceDiscountLocalServiceImpl
 		commerceDiscount.setUserName(user.getFullName());
 		commerceDiscount.setTitle(title);
 		commerceDiscount.setTarget(target);
-		commerceDiscount.setType(type);
-		commerceDiscount.setTypeSettings(typeSettings);
 		commerceDiscount.setUseCouponCode(useCouponCode);
 		commerceDiscount.setCouponCode(couponCode);
-		commerceDiscount.setLimitationType(limitationType);
-		commerceDiscount.setLimitationTimes(limitationTimes);
-		commerceDiscount.setNumberOfUse(numberOfUse);
-		commerceDiscount.setCumulative(cumulative);
 		commerceDiscount.setUsePercentage(usePercentage);
+		commerceDiscount.setMaximumDiscountAmount(maximumDiscountAmount);
 		commerceDiscount.setLevel1(level1);
 		commerceDiscount.setLevel2(level2);
 		commerceDiscount.setLevel3(level3);
-		commerceDiscount.setMaximumDiscountAmount(maximumDiscountAmount);
+		commerceDiscount.setLimitationType(limitationType);
+		commerceDiscount.setLimitationTimes(limitationTimes);
+		commerceDiscount.setCumulative(cumulative);
 		commerceDiscount.setActive(active);
 		commerceDiscount.setDisplayDate(displayDate);
 		commerceDiscount.setExpirationDate(expirationDate);
@@ -165,16 +170,21 @@ public class CommerceDiscountLocalServiceImpl
 			CommerceDiscount commerceDiscount)
 		throws PortalException {
 
-		// Commerce discount user segment rels
+		// Commerce discount rels
 
-		commerceDiscountUserSegmentRelLocalService.
-			deleteCommerceDiscountUserSegmentRelsByCommerceDiscountId(
-				commerceDiscount.getCommerceDiscountId());
+		commerceDiscountRelLocalService.deleteCommerceDiscountRels(
+			commerceDiscount.getCommerceDiscountId());
 
 		// Commerce discount rules
 
 		commerceDiscountRuleLocalService.deleteCommerceDiscountRules(
 			commerceDiscount.getCommerceDiscountId());
+
+		// Commerce discount user segment rels
+
+		commerceDiscountUserSegmentRelLocalService.
+			deleteCommerceDiscountUserSegmentRelsByCommerceDiscountId(
+				commerceDiscount.getCommerceDiscountId());
 
 		// Commerce discount
 
@@ -225,6 +235,36 @@ public class CommerceDiscountLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceDiscount> getCommerceDiscounts(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceDiscount> orderByComparator) {
+
+		return commerceDiscountPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceDiscountsCount(long groupId) {
+		return commerceDiscountPersistence.countByGroupId(groupId);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceDiscount incrementCommerceDiscountNumberOfUse(
+			long commerceDiscountId)
+		throws PortalException {
+
+		CommerceDiscount commerceDiscount =
+			commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
+
+		commerceDiscount.setNumberOfUse(commerceDiscount.getNumberOfUse() + 1);
+
+		commerceDiscountPersistence.update(commerceDiscount);
+
+		return commerceDiscount;
+	}
+
+	@Override
 	public BaseModelSearchResult<CommerceDiscount> searchCommerceDiscounts(
 			long companyId, long groupId, String keywords, int status,
 			int start, int end, Sort sort)
@@ -239,12 +279,11 @@ public class CommerceDiscountLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceDiscount updateCommerceDiscount(
-			long commerceDiscountId, String title, String target, String type,
-			String typeSettings, boolean useCouponCode, String couponCode,
-			String limitationType, int limitationTimes, int numberOfUse,
-			boolean cumulative, boolean usePercentage, BigDecimal level1,
-			BigDecimal level2, BigDecimal level3,
-			BigDecimal maximumDiscountAmount, boolean active,
+			long commerceDiscountId, String title, String target,
+			boolean useCouponCode, String couponCode, boolean usePercentage,
+			BigDecimal maximumDiscountAmount, BigDecimal level1,
+			BigDecimal level2, BigDecimal level3, String limitationType,
+			int limitationTimes, boolean cumulative, boolean active,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -255,6 +294,8 @@ public class CommerceDiscountLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		CommerceDiscount commerceDiscount =
 			commerceDiscountPersistence.findByPrimaryKey(commerceDiscountId);
+
+		validate(title, target, limitationType);
 
 		Date now = new Date();
 
@@ -274,19 +315,16 @@ public class CommerceDiscountLocalServiceImpl
 
 		commerceDiscount.setTitle(title);
 		commerceDiscount.setTarget(target);
-		commerceDiscount.setType(type);
-		commerceDiscount.setTypeSettings(typeSettings);
 		commerceDiscount.setUseCouponCode(useCouponCode);
 		commerceDiscount.setCouponCode(couponCode);
-		commerceDiscount.setLimitationType(limitationType);
-		commerceDiscount.setLimitationTimes(limitationTimes);
-		commerceDiscount.setNumberOfUse(numberOfUse);
-		commerceDiscount.setCumulative(cumulative);
 		commerceDiscount.setUsePercentage(usePercentage);
+		commerceDiscount.setMaximumDiscountAmount(maximumDiscountAmount);
 		commerceDiscount.setLevel1(level1);
 		commerceDiscount.setLevel2(level2);
 		commerceDiscount.setLevel3(level3);
-		commerceDiscount.setMaximumDiscountAmount(maximumDiscountAmount);
+		commerceDiscount.setLimitationType(limitationType);
+		commerceDiscount.setLimitationTimes(limitationTimes);
+		commerceDiscount.setCumulative(cumulative);
 		commerceDiscount.setActive(active);
 		commerceDiscount.setDisplayDate(displayDate);
 		commerceDiscount.setExpirationDate(expirationDate);
@@ -520,10 +558,34 @@ public class CommerceDiscountLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
+	protected void validate(String title, String target, String limitationType)
+		throws PortalException {
+
+		if (Validator.isNull(title)) {
+			throw new CommerceDiscountTitleException();
+		}
+
+		CommerceDiscountTargetType commerceDiscountTargetType =
+			_commerceDiscountTargetTypeRegistry.getCommerceDiscountTargetType(
+				target);
+
+		if (commerceDiscountTargetType == null) {
+			throw new CommerceDiscountTargetException();
+		}
+
+		if (Validator.isNull(limitationType)) {
+			throw new CommerceDiscountTargetException();
+		}
+	}
+
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountLocalServiceImpl.class);
+
+	@ServiceReference(type = CommerceDiscountTargetTypeRegistry.class)
+	private CommerceDiscountTargetTypeRegistry
+		_commerceDiscountTargetTypeRegistry;
 
 }

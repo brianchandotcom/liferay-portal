@@ -60,6 +60,64 @@ public class NumericDDMFormFieldValueRendererTest {
 		Assert.assertEquals("1,25", ptRenderedValue);
 	}
 
+	@Test
+	public void testRenderShouldNotHaveDecimalLimit() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"Numeric", "Numeric", "numeric", "double", false, false, false);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"Numeric", new UnlocalizedValue("3.141592"));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		String enRenderedValue = _numericDDMFormFieldValueRenderer.render(
+			ddmFormFieldValue, LocaleUtil.US);
+
+		Assert.assertEquals("3.141592", enRenderedValue);
+
+		String ptRenderedValue = _numericDDMFormFieldValueRenderer.render(
+			ddmFormFieldValue, LocaleUtil.BRAZIL);
+
+		Assert.assertEquals("3,141592", ptRenderedValue);
+	}
+
+	@Test
+	public void testRenderShouldNotHaveGroupingSymbols() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			"Numeric", "Numeric", "numeric", "double", false, false, false);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"Numeric", new UnlocalizedValue("111222333.25"));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		String enRenderedValue = _numericDDMFormFieldValueRenderer.render(
+			ddmFormFieldValue, LocaleUtil.US);
+
+		Assert.assertEquals("111222333.25", enRenderedValue);
+
+		String ptRenderedValue = _numericDDMFormFieldValueRenderer.render(
+			ddmFormFieldValue, LocaleUtil.BRAZIL);
+
+		Assert.assertEquals("111222333,25", ptRenderedValue);
+	}
+
 	private final NumericDDMFormFieldValueRenderer
 		_numericDDMFormFieldValueRenderer =
 			new NumericDDMFormFieldValueRenderer();

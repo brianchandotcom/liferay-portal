@@ -18,8 +18,11 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationRes
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.type.BaseDDMFormFieldTypeSettingsTestCase;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -104,6 +107,50 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 			"double",
 			_numericDDMFormFieldTemplateContextContributor.getDataType(
 				ddmFormField, ddmFormFieldRenderingContext));
+	}
+
+	@Test
+	public void testGetDecimalSymbolsWithAmericanLocale() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		ddmFormField.setProperty("dataType", "double");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+
+		Map<String, Object> parameters =
+			_numericDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		Map<String, String> separatorSymbolsMap =
+			(Map<String, String>)parameters.get("symbols");
+
+		Assert.assertEquals(".", separatorSymbolsMap.get("decimalSymbol"));
+		Assert.assertEquals(",", separatorSymbolsMap.get("thousandsSeparator"));
+	}
+
+	@Test
+	public void testGetDecimalSymbolsWithBrazilianLocale() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		ddmFormField.setProperty("dataType", "double");
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setLocale(LocaleUtil.BRAZIL);
+
+		Map<String, Object> parameters =
+			_numericDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		Map<String, String> separatorSymbolsMap =
+			(Map<String, String>)parameters.get("symbols");
+
+		Assert.assertEquals(",", separatorSymbolsMap.get("decimalSymbol"));
+		Assert.assertEquals(".", separatorSymbolsMap.get("thousandsSeparator"));
 	}
 
 	private final NumericDDMFormFieldTemplateContextContributor

@@ -36,6 +36,9 @@ public class NumericDDMFormFieldValueRenderer
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
+		numberFormat.setGroupingUsed(false);
+		numberFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+
 		Number number = getNumber(ddmFormFieldValue.getValue(), locale);
 
 		return numberFormat.format(number);

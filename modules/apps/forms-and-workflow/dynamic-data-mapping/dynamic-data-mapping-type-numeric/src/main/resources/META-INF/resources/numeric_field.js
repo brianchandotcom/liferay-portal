@@ -29,6 +29,13 @@ AUI.add(
 						value: ''
 					},
 
+					symbols: {
+						value: {
+							decimalSymbol: '.',
+							thousandsSeparator: ','
+						}
+					},
+
 					type: {
 						value: 'numeric'
 					}
@@ -87,28 +94,28 @@ AUI.add(
 						return 'input';
 					},
 
-					getEvaluationContext: function(context) {
-						return {
-							dataType: context.dataType
-						}
-					},
-
 					getDecimalMaskConfig: function() {
 						var instance = this;
 
+						var symbols = instance.get('symbols');
+
 						return {
 							allowDecimal: true,
-							decimalLimit: 6,
-							decimalSymbol: ',',
-							includeThousandsSeparator: true,
-							prefix: '',
-							thousandsSeparatorSymbol: '.'
+							allowLeadingZeroes: true,
+							decimalLimit: null,
+							decimalSymbol: symbols.decimalSymbol,
+							includeThousandsSeparator: false,
+							prefix: ''
+						};
+					},
+
+					getEvaluationContext: function(context) {
+						return {
+							dataType: context.dataType
 						};
 					},
 
 					getIntegerMaskConfig: function() {
-						var instance = this;
-
 						return {
 							allowLeadingZeroes: true,
 							includeThousandsSeparator: false,
@@ -130,21 +137,7 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						var inputNode = instance.getInputNode();
-
-						var value = inputNode.val();
-
-						if (value === '') {
-							return value;
-						}
-
-						var dataType = instance.get('dataType');
-
-						if (dataType === 'integer') {
-							return parseInt(value, 10);
-						}
-
-						return parseFloat(value);
+						return instance.get('value');
 					},
 
 					showErrorMessage: function() {
@@ -159,11 +152,11 @@ AUI.add(
 						var fieldNode = instance.getInputNode();
 						var fieldSidebar = A.one('.' + CSS_SETTINGS_SIDEBAR + ' .liferay-ddm-form-field-numeric');
 
-						if ((instance.maskedInputController) && (instance.get('dataType') == instance.lastDataType)) {
+						if (instance.maskedInputController && (instance.get('dataType') == instance.lastDataType)) {
 							return;
 						}
 
-						if ((instance.maskedInputController) && (fieldSidebar)) {
+						if (instance.maskedInputController && fieldSidebar) {
 							fieldNode = fieldSidebar.one('input');
 						}
 

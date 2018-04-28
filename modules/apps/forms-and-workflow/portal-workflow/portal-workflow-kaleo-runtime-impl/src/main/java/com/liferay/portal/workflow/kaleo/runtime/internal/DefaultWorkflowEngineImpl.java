@@ -406,7 +406,8 @@ public class DefaultWorkflowEngineImpl
 		try {
 			Definition definition = getDefinition(bytes);
 
-			String definitionName = getDefinitionName(definition, name);
+			String definitionName = _getDefinitionNameOnSaving(
+				definition, name, serviceContext);
 
 			return _workflowDeployer.save(
 				title, definitionName, definition, serviceContext);
@@ -760,6 +761,28 @@ public class DefaultWorkflowEngineImpl
 
 	@ServiceReference(type = PortalUUID.class)
 	protected PortalUUID portalUUID;
+
+	private String _getDefinitionNameOnSaving(
+		Definition definition, String name, ServiceContext serviceContext) {
+
+		if (Validator.isNotNull(name)) {
+			return name;
+		}
+
+		if (Validator.isNotNull(definition.getName())) {
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionLocalService.fetchKaleoDefinition(
+					definition.getName(), serviceContext);
+
+			if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
+				return portalUUID.generate();
+			}
+
+			return definition.getName();
+		}
+
+		return portalUUID.generate();
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultWorkflowEngineImpl.class);

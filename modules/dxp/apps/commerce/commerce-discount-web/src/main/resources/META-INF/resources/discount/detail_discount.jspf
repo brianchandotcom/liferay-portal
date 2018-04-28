@@ -1,0 +1,263 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+boolean useCouponCode = BeanParamUtil.getBoolean(commerceDiscount, request, "useCouponCode");
+boolean usePercentage = BeanParamUtil.getBoolean(commerceDiscount, request, "usePercentage", true);
+
+String levelSuffix = StringPool.PERCENT;
+
+if ((commerceDiscount != null) && !commerceDiscount.getUsePercentage()) {
+	levelSuffix = commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode();
+}
+%>
+
+<div id="<portlet:namespace />couponCodeContainer">
+	<div class="use-coupon-code-header">
+		<aui:input checked="<%= useCouponCode %>" name="useCouponCode" type="toggle-switch" value="<%= useCouponCode %>" />
+	</div>
+
+	<%
+	String couponCodeCssClass = "use-coupon-code-content";
+
+	if (!useCouponCode) {
+		couponCodeCssClass+= " hide";
+	}
+	%>
+
+	<div class="<%= couponCodeCssClass %>">
+		<aui:input name="couponCode" />
+	</div>
+</div>
+
+<aui:input checked="<%= usePercentage %>" name="usePercentage" type="toggle-switch" value="<%= usePercentage %>" />
+
+<%
+boolean level2Disabled = true;
+boolean level3Disabled = true;
+
+if (commerceDiscount != null) {
+	level2Disabled = commerceDiscount.getLevel2().doubleValue() <= 0;
+	level3Disabled = commerceDiscount.getLevel3().doubleValue() <= 0;
+}
+
+String level2CssClass = "form-group level2Container";
+String level3CssClass = "form-group level3Container";
+
+if (level2Disabled) {
+	level2CssClass += " hide";
+}
+
+if (level3Disabled) {
+	level3CssClass += " hide";
+}
+
+String itemRetractableCssClass = "input-item-retractable";
+String level1Label = LanguageUtil.get(request, "level1");
+
+if (!usePercentage) {
+	itemRetractableCssClass += " hide";
+	level1Label = LanguageUtil.get(request, "discount-amount");
+}
+%>
+
+<div id="<portlet:namespace />maximumDiscountAmountContainer">
+	<div class="<%= itemRetractableCssClass %>">
+		<aui:input name="maximumDiscountAmount" suffix="<%= commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode() %>" type="text" value="<%= (commerceDiscount == null) ? StringPool.BLANK : commerceDiscount.getMaximumDiscountAmount().toPlainString() %>" />
+	</div>
+</div>
+
+<div id="<portlet:namespace />levelsContainer">
+	<div class="form-group">
+		<label for="<portlet:namespace />level1" id="<portlet:namespace />level1Label"><%= level1Label %></label>
+
+		<div class="input-group">
+			<aui:input label="" name="level1" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? StringPool.BLANK : commerceDiscount.getLevel1().toPlainString() %>" wrapperCssClass="input-group-append input-group-item" />
+
+			<div class="input-group-item input-group-item-shrink">
+				<aui:button name="level1PlusButton" value="+" />
+			</div>
+
+			<div class="input-group-item input-group-item-shrink">
+				<aui:button cssClass='<%= (level2Disabled) ? "hide" : StringPool.BLANK %>' name="level1MinusButton" value="-" />
+			</div>
+		</div>
+	</div>
+
+	<div class="<%= level2CssClass %>">
+		<label for="<portlet:namespace />level2"><liferay-ui:message key="level2" /></label>
+
+		<div class="input-group">
+			<aui:input disabled="<%= level2Disabled %>" label="" name="level2" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? StringPool.BLANK : commerceDiscount.getLevel2().toPlainString() %>" wrapperCssClass="input-group-append input-group-item" />
+
+			<div class="input-group-item input-group-item-shrink">
+				<aui:button name="level2PlusButton" value="+" />
+			</div>
+
+			<div class="input-group-item input-group-item-shrink">
+				<aui:button cssClass='<%= (level2Disabled) ? "hide" : StringPool.BLANK %>' name="level2MinusButton" value="-" />
+			</div>
+		</div>
+	</div>
+
+	<div class="<%= level3CssClass %>">
+		<aui:input disabled="<%= level3Disabled %>" name="level3" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? StringPool.BLANK : commerceDiscount.getLevel3().toPlainString() %>" />
+	</div>
+</div>
+
+<aui:select name="limitationType">
+
+	<%
+	for (String limitationType : CommerceDiscountLimitationConstants.TYPES) {
+	%>
+
+		<aui:option label="<%= LanguageUtil.get(request, limitationType) %>" selected="<%= (commerceDiscount != null) && limitationType.equals(commerceDiscount.getLimitationType()) %>" value="<%= limitationType %>" />
+
+	<%
+	}
+	%>
+
+</aui:select>
+
+<%
+String limitationTimesWrapperCssClass = "limitation-times-input-wrapper hide";
+
+if ((commerceDiscount != null) && !Objects.equals(commerceDiscount.getLimitationType(), CommerceDiscountLimitationConstants.TYPE_UNLIMITED)) {
+	limitationTimesWrapperCssClass = "limitation-times-input-wrapper";
+}
+%>
+
+<aui:input name="limitationTimes" wrapperCssClass="<%= limitationTimesWrapperCssClass %>" />
+
+<aui:input name="cumulative" />
+
+<aui:input name="active" />
+
+<aui:script use="aui-toggler">
+	new A.Toggler(
+		{
+			animated: true,
+			content: '#<portlet:namespace />couponCodeContainer .use-coupon-code-content',
+			expanded: <%= useCouponCode %>,
+			header: '#<portlet:namespace />couponCodeContainer .use-coupon-code-header',
+			on: {
+				animatingChange: function(event) {
+					var instance = this;
+
+					var expanded = !instance.get('expanded');
+
+					if (expanded) {
+						A.one('#<portlet:namespace />couponCodeContainer .use-coupon-code-content').removeClass('hide');
+					}
+					else {
+						A.one('#<portlet:namespace />couponCodeContainer .use-coupon-code-content').addClass('hide');
+					}
+				}
+			}
+		}
+	);
+</aui:script>
+
+<aui:script use="aui-base">
+	var A = AUI();
+
+	A.one('#<portlet:namespace />usePercentage').on(
+		'change',
+		function(event) {
+			if (this.attr('checked')) {
+				A.one('#<portlet:namespace />maximumDiscountAmount').attr('disabled', false);
+
+				A.all('#<portlet:namespace />levelsContainer .input-group-addon').html('<%= StringPool.PERCENT %>');
+				A.one('#<portlet:namespace />level1Label').html('<liferay-ui:message key="level1" />');
+
+				A.all('#<portlet:namespace />maximumDiscountAmountContainer .input-item-retractable').removeClass('hide');
+				A.all('#<portlet:namespace />levelsContainer .input-group-item-shrink').removeClass('hide');
+			}
+			else {
+				A.one('#<portlet:namespace />maximumDiscountAmount').attr('disabled', true);
+
+				A.all('#<portlet:namespace />maximumDiscountAmountContainer .input-item-retractable').addClass('hide');
+				A.all('#<portlet:namespace />levelsContainer .input-group-item-shrink').addClass('hide');
+
+				A.all('#<portlet:namespace />levelsContainer .input-group-addon').html('<%= commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode() %>');
+				A.one('#<portlet:namespace />level1Label').html('<liferay-ui:message key="discount-amount" />');
+			}
+		}
+	);
+
+	A.one('#<portlet:namespace />level1PlusButton').on(
+		'click',
+		function() {
+			A.one('#<portlet:namespace />level2').attr('disabled', false);
+
+			A.one('#<portlet:namespace />level1MinusButton').removeClass('hide');
+			A.one('#<portlet:namespace />levelsContainer .level2Container').removeClass('hide');
+		}
+	);
+
+	A.one('#<portlet:namespace />level1MinusButton').on(
+		'click',
+		function() {
+			A.one('#<portlet:namespace />levelsContainer .level2Container').addClass('hide');
+			A.one('#<portlet:namespace />level1MinusButton').addClass('hide');
+
+			A.one('#<portlet:namespace />level2').attr('disabled', true);
+
+			if (!A.one('#<portlet:namespace />levelsContainer .level3Container').hasClass('hide')) {
+				A.one('#<portlet:namespace />levelsContainer .level3Container').addClass('hide');
+				A.one('#<portlet:namespace />level2MinusButton').addClass('hide');
+
+				A.one('#<portlet:namespace />level3').attr('disabled', true);
+			}
+		}
+	);
+
+	A.one('#<portlet:namespace />level2PlusButton').on(
+		'click',
+		function() {
+			A.one('#<portlet:namespace />level3').attr('disabled', false);
+
+			A.one('#<portlet:namespace />level2MinusButton').removeClass('hide');
+			A.one('#<portlet:namespace />levelsContainer .level3Container').removeClass('hide');
+		}
+	);
+
+	A.one('#<portlet:namespace />level2MinusButton').on(
+		'click',
+		function() {
+			A.one('#<portlet:namespace />levelsContainer .level3Container').addClass('hide');
+			A.one('#<portlet:namespace />level2MinusButton').addClass('hide');
+
+			A.one('#<portlet:namespace />level3').attr('disabled', true);
+		}
+	);
+
+	A.one('#<portlet:namespace />limitationType').on(
+		'change',
+		function(event) {
+			if (this.val() == '<%= CommerceDiscountLimitationConstants.TYPE_UNLIMITED %>') {
+				A.all('.limitation-times-input-wrapper').addClass('hide');
+
+				A.one('#<portlet:namespace />limitationTimes').attr('disabled', true);
+			}
+			else {
+				A.one('#<portlet:namespace />limitationTimes').attr('disabled', false);
+
+				A.all('.limitation-times-input-wrapper').removeClass('hide');
+			}
+		}
+	);
+</aui:script>

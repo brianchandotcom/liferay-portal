@@ -5,8 +5,10 @@ Export-Package:\
 	com.liferay.commerce.discount.constants,\
 	com.liferay.commerce.discount.exception,\
 	com.liferay.commerce.discount.model,\
+	com.liferay.commerce.discount.rule.type,\
 	com.liferay.commerce.discount.service,\
 	com.liferay.commerce.discount.service.persistence,\
+	com.liferay.commerce.discount.target,\
 	com.liferay.commerce.discount.util.comparator
 Import-Package:\
 	com.liferay.portal.kernel.model;version="[1.0.0,1.2.0)",\

@@ -203,10 +203,19 @@ renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()));
 					eventName: 'productDefinitionsSelectItem',
 					on: {
 						selectedItemChange: function(event) {
+							var <portlet:namespace />addCPDefinitionIds = [];
+
 							var selectedItems = event.newVal;
 
 							if (selectedItems) {
-								$('#<portlet:namespace />entryCPDefinitionIds').val(selectedItems);
+								A.Array.each(
+									selectedItems,
+									function(item, index, selectedItems) {
+										<portlet:namespace />addCPDefinitionIds.push(item.cpDefinitionId);
+									}
+								);
+
+								$('#<portlet:namespace />entryCPDefinitionIds').val(<portlet:namespace />addCPDefinitionIds.join(','));
 
 								var addCPDefinitionGroupedEntryFm = $('#<portlet:namespace />addCPDefinitionGroupedEntryFm');
 

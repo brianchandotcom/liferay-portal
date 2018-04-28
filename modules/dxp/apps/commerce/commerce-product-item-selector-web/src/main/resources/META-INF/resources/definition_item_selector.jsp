@@ -68,6 +68,13 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 		>
 
 			<%
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("cp-definition-id", cpDefinition.getCPDefinitionId());
+			data.put("title", cpDefinition.getTitle(themeDisplay.getLanguageId()));
+
+			row.setData(data);
+
 			CPType cpType = cpDefinitionItemSelectorViewDisplayContext.getCPType(cpDefinition.getProductTypeName());
 			%>
 
@@ -132,10 +139,23 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
+			var allSelectedElements = event.elements.allSelectedElements
+			var arr = [];
+
+			allSelectedElements.each(
+				function() {
+					var row = this.ancestor('tr');
+
+					var data = row.getDOM().dataset;
+
+					arr.push({cpDefinitionId : data.cpDefinitionId, title : data.title});
+				}
+			);
+
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 				{
-					data: Liferay.Util.listCheckedExcept(cpDefinitionSelectorWrapper, '<portlet:namespace />allRowIds')
+					data: arr
 				}
 			);
 		}

@@ -204,10 +204,19 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 					eventName: 'productDefinitionsSelectItem',
 					on: {
 						selectedItemChange: function(event) {
+							var <portlet:namespace />addCPDefinitionIds = [];
+
 							var selectedItems = event.newVal;
 
 							if (selectedItems) {
-								$('#<portlet:namespace />cpDefinitionIds').val(selectedItems);
+								A.Array.each(
+									selectedItems,
+									function(item, index, selectedItems) {
+										<portlet:namespace />addCPDefinitionIds.push(item.cpDefinitionId);
+									}
+								);
+
+								$('#<portlet:namespace />cpDefinitionIds').val(<portlet:namespace />addCPDefinitionIds.join(','));
 
 								var addCPDefinitionLinkFm = $('#<portlet:namespace />addCPDefinitionLinkFm');
 

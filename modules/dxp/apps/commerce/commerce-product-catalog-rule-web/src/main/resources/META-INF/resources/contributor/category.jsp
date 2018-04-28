@@ -19,14 +19,12 @@
 <%
 CPCatalogRuleDisplayContext cpCatalogRuleDisplayContext = (CPCatalogRuleDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CPRule cpRule = cpCatalogRuleDisplayContext.getCPRule();
-
-String typeSettings = BeanParamUtil.getString(cpRule, request, "typeSettings");
+String assetCategoryIds = cpCatalogRuleDisplayContext.getAssetCategoryIds();
 %>
 
 <liferay-ui:asset-categories-error />
 
 <liferay-asset:asset-categories-selector
-	categoryIds="<%= typeSettings %>"
-	hiddenInput="typeSettings"
+	categoryIds="<%= assetCategoryIds %>"
+	hiddenInput="assetCategoryIds"
 />

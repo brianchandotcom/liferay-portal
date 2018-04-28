@@ -22,6 +22,7 @@ import com.liferay.commerce.product.catalog.rule.web.internal.display.context.ut
 import com.liferay.commerce.product.catalog.rule.web.internal.util.CPCatalogRulePortletUtil;
 import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.model.CPRuleUserSegmentRel;
+import com.liferay.commerce.product.service.CPRuleAssetCategoryRelService;
 import com.liferay.commerce.product.service.CPRuleService;
 import com.liferay.commerce.product.service.CPRuleUserSegmentRelService;
 import com.liferay.commerce.product.util.comparator.CPRuleUserSegmentRelCreateDateComparator;
@@ -29,6 +30,7 @@ import com.liferay.commerce.user.segment.item.selector.criterion.CommerceUserSeg
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -61,12 +63,14 @@ import javax.servlet.http.HttpServletRequest;
 public class CPCatalogRuleDisplayContext {
 
 	public CPCatalogRuleDisplayContext(
+		CPRuleAssetCategoryRelService cpRuleAssetCategoryRelService,
 		CPRuleService cpRuleService,
 		CPRuleTypeJSPContributorRegistry cpRuleTypeJSPContributorRegistry,
 		CPRuleTypeRegistry cpRuleTypeRegistry,
 		CPRuleUserSegmentRelService cpRuleUserSegmentRelService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
+		_cpRuleAssetCategoryRelService = cpRuleAssetCategoryRelService;
 		_cpRuleService = cpRuleService;
 		_cpRuleTypeJSPContributorRegistry = cpRuleTypeJSPContributorRegistry;
 		_cpRuleTypeRegistry = cpRuleTypeRegistry;
@@ -77,6 +81,17 @@ public class CPCatalogRuleDisplayContext {
 			httpServletRequest);
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			httpServletRequest);
+	}
+
+	public String getAssetCategoryIds() throws PortalException {
+		if (getCPRuleId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		long[] assetCategoryIds =
+			_cpRuleAssetCategoryRelService.getAssetCategoryIds(getCPRuleId());
+
+		return StringUtil.merge(assetCategoryIds, StringPool.COMMA);
 	}
 
 	public CPRule getCPRule() throws PortalException {
@@ -403,6 +418,7 @@ public class CPCatalogRuleDisplayContext {
 
 	private final CPCatalogRuleRequestHelper _cpCatalogRuleRequestHelper;
 	private CPRule _cpRule;
+	private final CPRuleAssetCategoryRelService _cpRuleAssetCategoryRelService;
 	private final CPRuleService _cpRuleService;
 	private final CPRuleTypeJSPContributorRegistry
 		_cpRuleTypeJSPContributorRegistry;

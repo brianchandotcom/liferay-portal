@@ -18,6 +18,7 @@ import com.liferay.commerce.product.catalog.rule.CPRuleTypeJSPContributorRegistr
 import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
 import com.liferay.commerce.product.catalog.rule.web.internal.display.context.CPCatalogRuleDisplayContext;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.service.CPRuleAssetCategoryRelService;
 import com.liferay.commerce.product.service.CPRuleService;
 import com.liferay.commerce.product.service.CPRuleUserSegmentRelService;
 import com.liferay.item.selector.ItemSelector;
@@ -75,15 +76,19 @@ public class CPCatalogRulePortlet extends MVCPortlet {
 
 		CPCatalogRuleDisplayContext cpCatalogRuleDisplayContext =
 			new CPCatalogRuleDisplayContext(
-				_cpRuleService, _cpRuleTypeJSPContributorRegistry,
-				_cpRuleTypeRegistry, _cpRuleUserSegmentRelService,
-				httpServletRequest, _itemSelector);
+				_cpRuleAssetCategoryRelService, _cpRuleService,
+				_cpRuleTypeJSPContributorRegistry, _cpRuleTypeRegistry,
+				_cpRuleUserSegmentRelService, httpServletRequest,
+				_itemSelector);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpCatalogRuleDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private CPRuleAssetCategoryRelService _cpRuleAssetCategoryRelService;
 
 	@Reference
 	private CPRuleService _cpRuleService;

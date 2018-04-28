@@ -10,21 +10,21 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="title" type="String" />
+		<field name="title" type="String">
+			<validator name="required" />
+		</field>
 		<field name="target" type="String" />
-		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
 		<field name="useCouponCode" type="boolean" />
 		<field name="couponCode" type="String" />
+		<field name="usePercentage" type="boolean" />
+		<field name="maximumDiscountAmount" type="BigDecimal" />
+		<field name="level1" type="BigDecimal" />
+		<field name="level2" type="BigDecimal" />
+		<field name="level3" type="BigDecimal" />
 		<field name="limitationType" type="String" />
 		<field name="limitationTimes" type="int" />
 		<field name="numberOfUse" type="int" />
 		<field name="cumulative" type="boolean" />
-		<field name="usePercentage" type="boolean" />
-		<field name="level1" type="BigDecimal" />
-		<field name="level2" type="BigDecimal" />
-		<field name="level3" type="BigDecimal" />
-		<field name="maximumDiscountAmount" type="BigDecimal" />
 		<field name="active" type="boolean" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
@@ -33,6 +33,18 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.commerce.discount.model.CommerceDiscountRel">
+		<field name="commerceDiscountRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceDiscountId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
 	</model>
 	<model name="com.liferay.commerce.discount.model.CommerceDiscountRule">
 		<field name="commerceDiscountRuleId" type="long" />
@@ -44,7 +56,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceDiscountId" type="long" />
 		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel">
 		<field name="commerceDiscountUserSegmentRelId" type="long" />

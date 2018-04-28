@@ -296,6 +296,11 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		int exceptionType = CPFriendlyURLEntryImpl.validate(normalizedUrlTitle);
 
 		if (exceptionType > 0) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"urlTitle: " + urlTitle + " is not valid " + exceptionType);
+			}
+
 			throw new CPFriendlyURLEntryException(exceptionType);
 		}
 
@@ -310,5 +315,8 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPFriendlyURLEntryLocalServiceImpl.class);
 
 }

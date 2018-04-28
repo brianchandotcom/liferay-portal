@@ -54,8 +54,8 @@ TABLE_COLUMNS_MAP.put("hostname", Types.VARCHAR);
 	public static final String TABLE_SQL_DROP = "drop table VirtualHost";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_A083D394 on VirtualHost (companyId, layoutSetId)",
-		"create unique index IX_431A3960 on VirtualHost (hostname[$COLUMN_LENGTH:200$])"
+		"create unique index IX_A083D394 on VirtualHost (companyId, layoutSetId);",
+		"create unique index IX_431A3960 on VirtualHost (hostname[$COLUMN_LENGTH:200$]);"
 	};
 
 }

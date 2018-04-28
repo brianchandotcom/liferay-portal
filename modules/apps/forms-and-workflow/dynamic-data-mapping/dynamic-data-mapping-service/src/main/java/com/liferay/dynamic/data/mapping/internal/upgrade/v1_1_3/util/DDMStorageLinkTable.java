@@ -59,10 +59,10 @@ TABLE_COLUMNS_MAP.put("structureVersionId", Types.BIGINT);
 	public static final String TABLE_SQL_DROP = "drop table DDMStorageLink";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_702D1AD5 on DDMStorageLink (classPK)",
-		"create index IX_81776090 on DDMStorageLink (structureId)",
-		"create index IX_14DADA22 on DDMStorageLink (structureVersionId)",
-		"create index IX_DB81EB42 on DDMStorageLink (uuid_[$COLUMN_LENGTH:75$], companyId)"
+		"create unique index IX_702D1AD5 on DDMStorageLink (classPK);",
+		"create index IX_81776090 on DDMStorageLink (structureId);",
+		"create index IX_14DADA22 on DDMStorageLink (structureVersionId);",
+		"create index IX_DB81EB42 on DDMStorageLink (uuid_[$COLUMN_LENGTH:75$], companyId);"
 	};
 
 }

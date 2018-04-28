@@ -66,10 +66,10 @@ TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table Country";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_717B97E1 on Country (a2[$COLUMN_LENGTH:75$])",
-		"create unique index IX_717B9BA2 on Country (a3[$COLUMN_LENGTH:75$])",
-		"create index IX_25D734CD on Country (active_)",
-		"create unique index IX_19DA007B on Country (name[$COLUMN_LENGTH:75$])"
+		"create unique index IX_717B97E1 on Country (a2[$COLUMN_LENGTH:75$]);",
+		"create unique index IX_717B9BA2 on Country (a3[$COLUMN_LENGTH:75$]);",
+		"create index IX_25D734CD on Country (active_);",
+		"create unique index IX_19DA007B on Country (name[$COLUMN_LENGTH:75$]);"
 	};
 
 }

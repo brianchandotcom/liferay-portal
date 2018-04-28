@@ -63,12 +63,12 @@ TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	public static final String TABLE_SQL_DROP = "drop table ExpandoValue";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_B29FEF17 on ExpandoValue (classNameId, classPK)",
-		"create unique index IX_9DDD21E5 on ExpandoValue (columnId, rowId_)",
-		"create index IX_9112A7A0 on ExpandoValue (rowId_)",
-		"create index IX_1BD3F4C on ExpandoValue (tableId, classPK)",
-		"create unique index IX_D27B03E7 on ExpandoValue (tableId, columnId, classPK)",
-		"create index IX_B71E92D5 on ExpandoValue (tableId, rowId_)"
+		"create index IX_B29FEF17 on ExpandoValue (classNameId, classPK);",
+		"create unique index IX_9DDD21E5 on ExpandoValue (columnId, rowId_);",
+		"create index IX_9112A7A0 on ExpandoValue (rowId_);",
+		"create index IX_1BD3F4C on ExpandoValue (tableId, classPK);",
+		"create unique index IX_D27B03E7 on ExpandoValue (tableId, columnId, classPK);",
+		"create index IX_B71E92D5 on ExpandoValue (tableId, rowId_);"
 	};
 
 }

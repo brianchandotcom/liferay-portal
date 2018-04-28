@@ -72,7 +72,7 @@ TABLE_COLUMNS_MAP.put("testString", Types.VARCHAR);
 	public static final String TABLE_SQL_DROP = "drop table Release_";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_8BD6BCA7 on Release_ (servletContextName[$COLUMN_LENGTH:75$])"
+		"create unique index IX_8BD6BCA7 on Release_ (servletContextName[$COLUMN_LENGTH:75$]);"
 	};
 
 }

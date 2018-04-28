@@ -226,10 +226,6 @@ public class UpgradeTableBuilder {
 
 					String sql = line.trim();
 
-					if (sql.endsWith(";")) {
-						sql = sql.substring(0, sql.length() - 1);
-					}
-
 					addIndexes.add(sql);
 				}
 			}

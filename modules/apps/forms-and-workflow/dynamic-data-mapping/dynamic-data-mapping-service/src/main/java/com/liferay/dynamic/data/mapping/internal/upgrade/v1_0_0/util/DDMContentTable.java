@@ -72,10 +72,10 @@ TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	public static final String TABLE_SQL_DROP = "drop table DDMContent";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_E3BAF436 on DDMContent (companyId)",
-		"create index IX_50BF1038 on DDMContent (groupId)",
-		"create index IX_3A9C0626 on DDMContent (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_EB9BDE28 on DDMContent (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create index IX_E3BAF436 on DDMContent (companyId);",
+		"create index IX_50BF1038 on DDMContent (groupId);",
+		"create index IX_3A9C0626 on DDMContent (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_EB9BDE28 on DDMContent (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

@@ -72,9 +72,9 @@ TABLE_COLUMNS_MAP.put("statusId", Types.BIGINT);
 	public static final String TABLE_SQL_DROP = "drop table MembershipRequest";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_C28C72EC on MembershipRequest (groupId, statusId)",
-		"create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId)",
-		"create index IX_66D70879 on MembershipRequest (userId)"
+		"create index IX_C28C72EC on MembershipRequest (groupId, statusId);",
+		"create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId);",
+		"create index IX_66D70879 on MembershipRequest (userId);"
 	};
 
 }

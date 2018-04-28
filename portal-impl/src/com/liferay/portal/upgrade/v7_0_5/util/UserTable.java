@@ -165,20 +165,20 @@ TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	public static final String TABLE_SQL_DROP = "drop table User_";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_BCFDA257 on User_ (companyId, createDate, modifiedDate)",
-		"create index IX_C6EA4F34 on User_ (companyId, defaultUser, status)",
-		"create unique index IX_615E9F7A on User_ (companyId, emailAddress[$COLUMN_LENGTH:254$])",
-		"create index IX_1D731F03 on User_ (companyId, facebookId)",
-		"create index IX_B6E3AE1 on User_ (companyId, googleUserId[$COLUMN_LENGTH:75$])",
-		"create index IX_EE8ABD19 on User_ (companyId, modifiedDate)",
-		"create index IX_89509087 on User_ (companyId, openId[$COLUMN_LENGTH:1024$])",
-		"create unique index IX_C5806019 on User_ (companyId, screenName[$COLUMN_LENGTH:75$])",
-		"create index IX_F6039434 on User_ (companyId, status)",
-		"create unique index IX_9782AD88 on User_ (companyId, userId)",
-		"create unique index IX_5ADBE171 on User_ (contactId)",
-		"create index IX_762F63C6 on User_ (emailAddress[$COLUMN_LENGTH:254$])",
-		"create index IX_A18034A4 on User_ (portraitId)",
-		"create index IX_405CC0E on User_ (uuid_[$COLUMN_LENGTH:75$], companyId)"
+		"create index IX_BCFDA257 on User_ (companyId, createDate, modifiedDate);",
+		"create index IX_C6EA4F34 on User_ (companyId, defaultUser, status);",
+		"create unique index IX_615E9F7A on User_ (companyId, emailAddress[$COLUMN_LENGTH:254$]);",
+		"create index IX_1D731F03 on User_ (companyId, facebookId);",
+		"create index IX_B6E3AE1 on User_ (companyId, googleUserId[$COLUMN_LENGTH:75$]);",
+		"create index IX_EE8ABD19 on User_ (companyId, modifiedDate);",
+		"create index IX_89509087 on User_ (companyId, openId[$COLUMN_LENGTH:1024$]);",
+		"create unique index IX_C5806019 on User_ (companyId, screenName[$COLUMN_LENGTH:75$]);",
+		"create index IX_F6039434 on User_ (companyId, status);",
+		"create unique index IX_9782AD88 on User_ (companyId, userId);",
+		"create unique index IX_5ADBE171 on User_ (contactId);",
+		"create index IX_762F63C6 on User_ (emailAddress[$COLUMN_LENGTH:254$]);",
+		"create index IX_A18034A4 on User_ (portraitId);",
+		"create index IX_405CC0E on User_ (uuid_[$COLUMN_LENGTH:75$], companyId);"
 	};
 
 }

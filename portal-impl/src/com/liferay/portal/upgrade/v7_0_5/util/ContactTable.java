@@ -126,9 +126,9 @@ TABLE_COLUMNS_MAP.put("hoursOfOperation", Types.VARCHAR);
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_B8C28C53 on Contact_ (accountId)",
-		"create index IX_791914FA on Contact_ (classNameId, classPK)",
-		"create index IX_66D496A3 on Contact_ (companyId)"
+		"create index IX_B8C28C53 on Contact_ (accountId);",
+		"create index IX_791914FA on Contact_ (classNameId, classPK);",
+		"create index IX_66D496A3 on Contact_ (companyId);"
 	};
 
 }

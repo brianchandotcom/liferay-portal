@@ -43,11 +43,11 @@ public class DLFileEntryTypeTable {
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryType";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_4501FD9C on DLFileEntryType (groupId)",
-		"create unique index IX_5B6BEF5F on DLFileEntryType (groupId, fileEntryTypeKey)",
-		"create index IX_90724726 on DLFileEntryType (uuid_)",
-		"create index IX_5B03E942 on DLFileEntryType (uuid_, companyId)",
-		"create unique index IX_1399D844 on DLFileEntryType (uuid_, groupId)"
+		"create index IX_4501FD9C on DLFileEntryType (groupId);",
+		"create unique index IX_5B6BEF5F on DLFileEntryType (groupId, fileEntryTypeKey);",
+		"create index IX_90724726 on DLFileEntryType (uuid_);",
+		"create index IX_5B03E942 on DLFileEntryType (uuid_, companyId);",
+		"create unique index IX_1399D844 on DLFileEntryType (uuid_, groupId);"
 	};
 
 }

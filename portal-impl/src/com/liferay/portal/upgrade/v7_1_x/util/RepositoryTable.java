@@ -87,9 +87,9 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String TABLE_SQL_DROP = "drop table Repository";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_60C8634C on Repository (groupId, name[$COLUMN_LENGTH:200$], portletId[$COLUMN_LENGTH:200$])",
-		"create index IX_F543EA4 on Repository (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_11641E26 on Repository (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create unique index IX_60C8634C on Repository (groupId, name[$COLUMN_LENGTH:200$], portletId[$COLUMN_LENGTH:200$]);",
+		"create index IX_F543EA4 on Repository (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_11641E26 on Repository (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

@@ -81,9 +81,9 @@ TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table Phone";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_812CE07A on Phone (companyId, classNameId, classPK, primary_)",
-		"create index IX_F202B9CE on Phone (userId)",
-		"create index IX_B271FA88 on Phone (uuid_[$COLUMN_LENGTH:75$], companyId)"
+		"create index IX_812CE07A on Phone (companyId, classNameId, classPK, primary_);",
+		"create index IX_F202B9CE on Phone (userId);",
+		"create index IX_B271FA88 on Phone (uuid_[$COLUMN_LENGTH:75$], companyId);"
 	};
 
 }

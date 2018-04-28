@@ -57,7 +57,7 @@ TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 	public static final String TABLE_SQL_DROP = "drop table ServiceComponent";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_4F0315B8 on ServiceComponent (buildNamespace[$COLUMN_LENGTH:75$], buildNumber)"
+		"create unique index IX_4F0315B8 on ServiceComponent (buildNamespace[$COLUMN_LENGTH:75$], buildNumber);"
 	};
 
 }

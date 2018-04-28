@@ -46,11 +46,11 @@ public class RepositoryTable {
 	public static final String TABLE_SQL_DROP = "drop table Repository";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_5253B1FA on Repository (groupId)",
-		"create unique index IX_60C8634C on Repository (groupId, name, portletId)",
-		"create index IX_74C17B04 on Repository (uuid_)",
-		"create index IX_F543EA4 on Repository (uuid_, companyId)",
-		"create unique index IX_11641E26 on Repository (uuid_, groupId)"
+		"create index IX_5253B1FA on Repository (groupId);",
+		"create unique index IX_60C8634C on Repository (groupId, name, portletId);",
+		"create index IX_74C17B04 on Repository (uuid_);",
+		"create index IX_F543EA4 on Repository (uuid_, companyId);",
+		"create unique index IX_11641E26 on Repository (uuid_, groupId);"
 	};
 
 }

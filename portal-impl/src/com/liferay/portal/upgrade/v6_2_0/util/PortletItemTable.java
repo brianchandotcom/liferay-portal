@@ -42,12 +42,12 @@ public class PortletItemTable {
 	public static final String TABLE_SQL_DROP = "drop table PortletItem";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_96BDD537 on PortletItem (groupId, classNameId)",
-		"create index IX_D699243F on PortletItem (groupId, name, portletId, classNameId)",
-		"create index IX_2C61314E on PortletItem (groupId, portletId)",
-		"create index IX_E922D6C0 on PortletItem (groupId, portletId, classNameId)",
-		"create index IX_8E71167F on PortletItem (groupId, portletId, classNameId, name)",
-		"create index IX_33B8CE8D on PortletItem (groupId, portletId, name)"
+		"create index IX_96BDD537 on PortletItem (groupId, classNameId);",
+		"create index IX_D699243F on PortletItem (groupId, name, portletId, classNameId);",
+		"create index IX_2C61314E on PortletItem (groupId, portletId);",
+		"create index IX_E922D6C0 on PortletItem (groupId, portletId, classNameId);",
+		"create index IX_8E71167F on PortletItem (groupId, portletId, classNameId, name);",
+		"create index IX_33B8CE8D on PortletItem (groupId, portletId, name);"
 	};
 
 }

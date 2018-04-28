@@ -75,8 +75,8 @@ TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table LayoutPrototype";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_557A639F on LayoutPrototype (companyId, active_)",
-		"create index IX_63ED2532 on LayoutPrototype (uuid_[$COLUMN_LENGTH:75$], companyId)"
+		"create index IX_557A639F on LayoutPrototype (companyId, active_);",
+		"create index IX_63ED2532 on LayoutPrototype (uuid_[$COLUMN_LENGTH:75$], companyId);"
 	};
 
 }

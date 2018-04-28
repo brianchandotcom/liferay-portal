@@ -96,7 +96,7 @@ TABLE_COLUMNS_MAP.put("satClose", Types.INTEGER);
 	public static final String TABLE_SQL_DROP = "drop table OrgLabor";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_6AF0D434 on OrgLabor (organizationId)"
+		"create index IX_6AF0D434 on OrgLabor (organizationId);"
 	};
 
 }

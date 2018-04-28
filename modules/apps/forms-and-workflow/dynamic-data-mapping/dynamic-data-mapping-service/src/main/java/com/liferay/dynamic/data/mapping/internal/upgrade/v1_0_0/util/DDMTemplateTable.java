@@ -117,17 +117,17 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_[$COLUMN_LENGTH:75$])",
-		"create index IX_32F83D16 on DDMTemplate (classPK)",
-		"create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_[$COLUMN_LENGTH:75$], mode_[$COLUMN_LENGTH:75$])",
-		"create unique index IX_E6DFAB84 on DDMTemplate (groupId, classNameId, templateKey[$COLUMN_LENGTH:75$])",
-		"create index IX_B1C33EA6 on DDMTemplate (groupId, classPK)",
-		"create index IX_33BEF579 on DDMTemplate (language[$COLUMN_LENGTH:75$])",
-		"create index IX_127A35B0 on DDMTemplate (smallImageId)",
-		"create index IX_CAE41A28 on DDMTemplate (templateKey[$COLUMN_LENGTH:75$])",
-		"create index IX_C4F283C8 on DDMTemplate (type_[$COLUMN_LENGTH:75$])",
-		"create index IX_D4C2C221 on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], companyId)",
-		"create unique index IX_1AA75CE3 on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], groupId)"
+		"create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_[$COLUMN_LENGTH:75$]);",
+		"create index IX_32F83D16 on DDMTemplate (classPK);",
+		"create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_[$COLUMN_LENGTH:75$], mode_[$COLUMN_LENGTH:75$]);",
+		"create unique index IX_E6DFAB84 on DDMTemplate (groupId, classNameId, templateKey[$COLUMN_LENGTH:75$]);",
+		"create index IX_B1C33EA6 on DDMTemplate (groupId, classPK);",
+		"create index IX_33BEF579 on DDMTemplate (language[$COLUMN_LENGTH:75$]);",
+		"create index IX_127A35B0 on DDMTemplate (smallImageId);",
+		"create index IX_CAE41A28 on DDMTemplate (templateKey[$COLUMN_LENGTH:75$]);",
+		"create index IX_C4F283C8 on DDMTemplate (type_[$COLUMN_LENGTH:75$]);",
+		"create index IX_D4C2C221 on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], companyId);",
+		"create unique index IX_1AA75CE3 on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], groupId);"
 	};
 
 }

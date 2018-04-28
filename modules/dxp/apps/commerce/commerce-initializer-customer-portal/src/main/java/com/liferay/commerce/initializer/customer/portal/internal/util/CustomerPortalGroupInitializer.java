@@ -14,14 +14,29 @@
 
 package com.liferay.commerce.initializer.customer.portal.internal.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
-import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
+import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -37,6 +52,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -46,8 +62,11 @@ import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -62,10 +81,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
@@ -90,11 +115,134 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	public static final String KEY = "customer-portal-initializer";
 
-	public void createSampleData(ServiceContext serviceContext)
+	public long[] addAssetCategories(
+			long vocabularyId, JSONArray jsonArray,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		_cpDemoDataCreator.create(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), true);
+		List<Long> assetCategoryIdsList = new ArrayList<>();
+
+		long classNameId = _portal.getClassNameId(AssetCategory.class);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			String title = jsonArray.getString(i);
+
+			AssetCategory assetCategory =
+				_assetCategoryLocalService.fetchCategory(
+					serviceContext.getScopeGroupId(),
+					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, title,
+					vocabularyId);
+
+			if (assetCategory == null) {
+				Map<Locale, String> titleMap = Collections.singletonMap(
+					LocaleUtil.getSiteDefault(), title);
+
+				assetCategory = _assetCategoryLocalService.addCategory(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+					null, vocabularyId, new String[0], serviceContext);
+			}
+
+			assetCategoryIdsList.add(assetCategory.getCategoryId());
+
+			List<CPFriendlyURLEntry> cpFriendlyURLEntries =
+				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
+					serviceContext.getScopeGroupId(), classNameId,
+					assetCategory.getCategoryId());
+
+			if (cpFriendlyURLEntries.isEmpty()) {
+				Map<Locale, String> urlTitleMap = _getUniqueUrlTitles(
+					assetCategory);
+
+				_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
+					serviceContext.getScopeGroupId(),
+					serviceContext.getCompanyId(), AssetCategory.class,
+					assetCategory.getCategoryId(), urlTitleMap);
+			}
+		}
+
+		return ListUtil.toLongArray(assetCategoryIdsList, Long::longValue);
+	}
+
+	public void addCPDefinitionAttachmentFileEntry(
+			long cpDefinitionId, String fileName, ServiceContext serviceContext)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		long classNameId = _portal.getClassNameId(CPDefinition.class);
+
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			serviceContext.getLocale(), fileName);
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			_DEPENDENCY_PATH + "images/" + fileName);
+
+		if (inputStream == null) {
+			return;
+		}
+
+		File file = null;
+		FileEntry fileEntry = null;
+
+		try {
+			file = FileUtil.createTempFile(inputStream);
+
+			fileEntry = _dlAppService.addFileEntry(
+				serviceContext.getScopeGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+				_mimeTypes.getContentType(file), fileName, StringPool.BLANK,
+				StringPool.BLANK, file, serviceContext);
+		}
+		catch (IOException ioe) {
+			throw new SystemException("Unable to write temporary file", ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		displayCalendar.add(Calendar.YEAR, -1);
+
+		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
+		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = displayCalendar.get(Calendar.YEAR);
+		int displayDateHour = displayCalendar.get(Calendar.HOUR);
+		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
+		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		expirationCalendar.add(Calendar.MONTH, 1);
+
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
+		int expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
+
+		if (expirationDateAmPm == Calendar.PM) {
+			expirationDateHour += 12;
+		}
+
+		_cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
+			classNameId, cpDefinitionId, fileEntry.getFileEntryId(),
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, true,
+			titleMap, null, 0, CPAttachmentFileEntryConstants.TYPE_IMAGE,
+			serviceContext);
 	}
 
 	@Override
@@ -160,7 +308,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			createRoles(serviceContext);
 
-			createSampleData(serviceContext);
+			importProducts(serviceContext);
 
 			setThemePortletSettings(serviceContext);
 		}
@@ -212,6 +360,60 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		}
 	}
 
+	protected CPDefinition createCPDefinition(
+			String title, String description, String sku,
+			long[] assetCategoryIds, ServiceContext serviceContext)
+		throws PortalException {
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		displayCalendar.add(Calendar.YEAR, -1);
+
+		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
+		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = displayCalendar.get(Calendar.YEAR);
+		int displayDateHour = displayCalendar.get(Calendar.HOUR);
+		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
+		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		expirationCalendar.add(Calendar.MONTH, 1);
+
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
+		int expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
+
+		if (expirationDateAmPm == Calendar.PM) {
+			expirationDateHour += 12;
+		}
+
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			serviceContext.getLocale(), title);
+		Map<Locale, String> descriptionMap = Collections.singletonMap(
+			serviceContext.getLocale(), description);
+
+		return _cpDefinitionLocalService.addCPDefinition(
+			titleMap, null, descriptionMap, titleMap, null, null, null,
+			"simple", true, true, false, false, 0, 10, 10, 10, 10, 0, false,
+			false, null, true, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, true, sku,
+			serviceContext);
+	}
+
 	protected void createLayouts(ServiceContext serviceContext)
 		throws Exception {
 
@@ -261,6 +463,64 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			_DEPENDENCY_PATH + "theme-portlet-settings.json", true);
 
 		return _jsonFactory.createJSONArray(themePortletSettingsJSON);
+	}
+
+	protected void importProducts(ServiceContext serviceContext)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		String productsJSON = StringUtil.read(
+			clazz.getClassLoader(), _DEPENDENCY_PATH + "products.json", false);
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(productsJSON);
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), _COMMERCE_VOCABULARY);
+
+		if (assetVocabulary == null) {
+			assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				_COMMERCE_VOCABULARY, serviceContext);
+		}
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String description = jsonObject.getString("Description");
+			String sku = jsonObject.getString("Sku");
+			String name = jsonObject.getString("Name");
+			String image = jsonObject.getString("Image");
+
+			JSONArray categories = jsonObject.getJSONArray("Categories");
+
+			//Asset categories
+
+			long[] assetCategoryIds = addAssetCategories(
+				assetVocabulary.getVocabularyId(), categories, serviceContext);
+
+			// Commerce product definition
+
+			CPDefinition cpDefinition = createCPDefinition(
+				name, description, sku, assetCategoryIds, serviceContext);
+
+			// Commerce product definition inventory
+
+			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
+				cpDefinition.getCPDefinitionId(), null, null, false, false, 0,
+				true, CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY,
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_ORDER_QUANTITY,
+				serviceContext);
+
+			// Commerce product attachment file entry
+
+			if (Validator.isNotNull(image)) {
+				addCPDefinitionAttachmentFileEntry(
+					cpDefinition.getCPDefinitionId(), image, serviceContext);
+			}
+		}
 	}
 
 	protected void setCPContentPortletSettings(
@@ -552,6 +812,29 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		return properties;
 	}
 
+	private Map<Locale, String> _getUniqueUrlTitles(
+		AssetCategory assetCategory) {
+
+		Map<Locale, String> urlTitleMap = new HashMap<>();
+
+		Map<Locale, String> titleMap = assetCategory.getTitleMap();
+
+		long classNameId = _portal.getClassNameId(AssetCategory.class);
+
+		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
+			String languageId = LocaleUtil.toLanguageId(titleEntry.getKey());
+
+			String urlTitle = _cpFriendlyURLEntryLocalService.buildUrlTitle(
+				assetCategory.getGroupId(), classNameId,
+				assetCategory.getCategoryId(), languageId,
+				titleEntry.getValue());
+
+			urlTitleMap.put(titleEntry.getKey(), urlTitle);
+		}
+
+		return urlTitleMap;
+	}
+
 	private void _setPlidPortletPreferences(
 			long plid, String portletId, ServiceContext serviceContext)
 		throws Exception {
@@ -594,6 +877,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		"com.liferay.commerce.user.web.internal.configuration." +
 			"CommerceRoleGroupServiceConfiguration";
 
+	private static final String _COMMERCE_VOCABULARY = "Commerce";
+
 	private static final String _CP_CONTENT_PORTLET_NAME =
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPContentPortlet";
@@ -628,16 +913,36 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		CustomerPortalGroupInitializer.class);
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
-	private CPDemoDataCreator _cpDemoDataCreator;
+	private CPAttachmentFileEntryLocalService
+		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPFileImporter _cpFileImporter;
+
+	@Reference
+	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -647,6 +952,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private MimeTypes _mimeTypes;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

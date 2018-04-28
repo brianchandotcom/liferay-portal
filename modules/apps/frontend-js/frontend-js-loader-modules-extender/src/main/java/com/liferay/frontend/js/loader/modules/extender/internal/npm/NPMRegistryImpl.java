@@ -152,11 +152,18 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 		String packageName = jsPackageDependency.getPackageName();
 
+		Range range = Range.from(
+			jsPackageDependency.getVersionConstraints(), true);
+
 		List<JSPackage> jsPackages = new ArrayList<>();
 
 		for (JSPackage jsPackage : _jsPackages.values()) {
 			if (packageName.equals(jsPackage.getName())) {
-				jsPackages.add(jsPackage);
+				Version version = Version.from(jsPackage.getVersion(), true);
+
+				if (range.test(version)) {
+					jsPackages.add(jsPackage);
+				}
 			}
 		}
 
@@ -176,15 +183,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 			});
 
-		Range range = Range.from(
-			jsPackageDependency.getVersionConstraints(), true);
-
 		for (JSPackage jsPackage : jsPackages) {
-			Version version = Version.from(jsPackage.getVersion(), true);
-
-			if (range.test(version)) {
-				return jsPackage;
-			}
+			return jsPackage;
 		}
 
 		return null;

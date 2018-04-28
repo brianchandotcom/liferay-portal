@@ -151,6 +151,10 @@
 		<execute function="AssertTextEquals" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 	</command>
 
+	<command name="viewSearchHidden">
+		<execute function="AssertElementNotPresent" locator1="Search#TEMPLATE_SEARCH_BAR" />
+	</command>
+
 	<command name="viewSearchNoAssetTitle">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 

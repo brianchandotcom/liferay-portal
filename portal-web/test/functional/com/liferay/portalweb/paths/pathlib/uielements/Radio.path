@@ -94,6 +94,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAME_LOOK</td>
+	<td>//input[contains(@id,'InheritLookAndFeel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_LOOK</td>
+	<td>//input[contains(@id,'UniqueLookAndFeel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOCIAL_BOOKMARKS_DISPLAY_STYLE</td>
 	<td>//label[contains(.,'${key_displayStyle}')]/input[@type='radio']</td>
 	<td></td>

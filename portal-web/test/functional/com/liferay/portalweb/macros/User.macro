@@ -964,9 +964,7 @@
 
 				<execute macro="Button#clickSave" />
 
-				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The password cannot be blank. Please enter a password." />
+				<execute macro="Alert#viewRequiredField" />
 
 				<execute macro="User#logoutPG" />
 

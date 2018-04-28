@@ -136,8 +136,10 @@
 		<weight>2</weight>
 		<permissions>
 			<supports>
+				<action-key>ADD_COMMERCE_PRODUCT_RULE_CATEGORY_REL</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_RULE_USER_SEGMENT</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>DELETE_COMMERCE_PRODUCT_RULE_CATEGORY_REL</action-key>
 				<action-key>DELETE_COMMERCE_PRODUCT_RULE_USER_SEGMENT</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
@@ -146,8 +148,10 @@
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>ADD_COMMERCE_PRODUCT_RULE_CATEGORY_REL</action-key>
 				<action-key>ADD_COMMERCE_PRODUCT_RULE_USER_SEGMENT</action-key>
 				<action-key>DELETE</action-key>
+				<action-key>DELETE_COMMERCE_PRODUCT_RULE_CATEGORY_REL</action-key>
 				<action-key>DELETE_COMMERCE_PRODUCT_RULE_USER_SEGMENT</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>

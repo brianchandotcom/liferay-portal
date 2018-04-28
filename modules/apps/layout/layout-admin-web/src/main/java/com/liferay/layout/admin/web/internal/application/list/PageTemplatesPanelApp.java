@@ -17,20 +17,20 @@ package com.liferay.layout.admin.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Pavel Savinov
  */
 @Component(
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=300",
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_SITES
+		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_NAVIGATION
 	},
 	service = PanelApp.class
 )
@@ -38,12 +38,12 @@ public class PageTemplatesPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE;
+		return LayoutAdminPortletKeys.GROUP_PAGES;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE + ")",
+		target = "(javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

@@ -203,6 +203,11 @@
 			<finder-column name="version" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_ED_ST" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="expirationDate" />
+			<finder-column name="status" />
+		</finder>
 
 		<!-- References -->
 

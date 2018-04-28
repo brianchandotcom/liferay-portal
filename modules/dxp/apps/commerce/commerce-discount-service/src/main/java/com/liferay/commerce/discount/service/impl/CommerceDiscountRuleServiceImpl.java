@@ -14,14 +14,17 @@
 
 package com.liferay.commerce.discount.service.impl;
 
-import com.liferay.commerce.discount.constants.CommerceDiscountActionKeys;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRuleServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -37,8 +40,7 @@ public class CommerceDiscountRuleServiceImpl
 		throws PortalException {
 
 		_commerceDiscountResourcePermission.check(
-			getPermissionChecker(), commerceDiscountId,
-			CommerceDiscountActionKeys.MANAGE_COMMERCE_DISCOUNT_RULES);
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
 
 		return commerceDiscountRuleLocalService.addCommerceDiscountRule(
 			commerceDiscountId, type, typeSettings, serviceContext);
@@ -54,11 +56,50 @@ public class CommerceDiscountRuleServiceImpl
 
 		_commerceDiscountResourcePermission.check(
 			getPermissionChecker(),
-			commerceDiscountRule.getCommerceDiscountId(),
-			CommerceDiscountActionKeys.MANAGE_COMMERCE_DISCOUNT_RULES);
+			commerceDiscountRule.getCommerceDiscountId(), ActionKeys.UPDATE);
 
 		commerceDiscountRuleLocalService.deleteCommerceDiscountRule(
 			commerceDiscountRule);
+	}
+
+	@Override
+	public CommerceDiscountRule getCommerceDiscountRule(
+			long commerceDiscountRuleId)
+		throws PortalException {
+
+		CommerceDiscountRule commerceDiscountRule =
+			commerceDiscountRuleLocalService.getCommerceDiscountRule(
+				commerceDiscountRuleId);
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(),
+			commerceDiscountRule.getCommerceDiscountId(), ActionKeys.UPDATE);
+
+		return commerceDiscountRule;
+	}
+
+	@Override
+	public List<CommerceDiscountRule> getCommerceDiscountRules(
+			long commerceDiscountId, int start, int end,
+			OrderByComparator<CommerceDiscountRule> orderByComparator)
+		throws PortalException {
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRuleLocalService.getCommerceDiscountRules(
+			commerceDiscountId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceDiscountRulesCount(long commerceDiscountId)
+		throws PortalException {
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountRuleLocalService.getCommerceDiscountRulesCount(
+			commerceDiscountId);
 	}
 
 	@Override
@@ -72,8 +113,7 @@ public class CommerceDiscountRuleServiceImpl
 
 		_commerceDiscountResourcePermission.check(
 			getPermissionChecker(),
-			commerceDiscountRule.getCommerceDiscountId(),
-			CommerceDiscountActionKeys.MANAGE_COMMERCE_DISCOUNT_RULES);
+			commerceDiscountRule.getCommerceDiscountId(), ActionKeys.UPDATE);
 
 		return commerceDiscountRuleLocalService.updateCommerceDiscountRule(
 			commerceDiscountRuleId, type, typeSettings);

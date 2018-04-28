@@ -14,11 +14,19 @@
 
 package com.liferay.commerce.discount.service.impl;
 
+import com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeException;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
+import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
+import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
 import com.liferay.commerce.discount.service.base.CommerceDiscountRuleLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -36,6 +44,8 @@ public class CommerceDiscountRuleLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
+		validate(type);
+
 		long commerceDiscountRuleId = counterLocalService.increment();
 
 		CommerceDiscountRule commerceDiscountRule =
@@ -47,7 +57,13 @@ public class CommerceDiscountRuleLocalServiceImpl
 		commerceDiscountRule.setUserName(user.getFullName());
 		commerceDiscountRule.setCommerceDiscountId(commerceDiscountId);
 		commerceDiscountRule.setType(type);
-		commerceDiscountRule.setTypeSettings(typeSettings);
+
+		UnicodeProperties settingsProperties =
+			commerceDiscountRule.getSettingsProperties();
+
+		settingsProperties.put(type, typeSettings);
+
+		commerceDiscountRule.setSettingsProperties(settingsProperties);
 
 		commerceDiscountRulePersistence.update(commerceDiscountRule);
 
@@ -56,7 +72,22 @@ public class CommerceDiscountRuleLocalServiceImpl
 
 	@Override
 	public void deleteCommerceDiscountRules(long commerceDiscountId) {
-		commerceDiscountRulePersistence.removeBycommerceDiscountId(
+		commerceDiscountRulePersistence.removeByCommerceDiscountId(
+			commerceDiscountId);
+	}
+
+	@Override
+	public List<CommerceDiscountRule> getCommerceDiscountRules(
+		long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountRule> orderByComparator) {
+
+		return commerceDiscountRulePersistence.findByCommerceDiscountId(
+			commerceDiscountId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceDiscountRulesCount(long commerceDiscountId) {
+		return commerceDiscountRulePersistence.countByCommerceDiscountId(
 			commerceDiscountId);
 	}
 
@@ -69,12 +100,32 @@ public class CommerceDiscountRuleLocalServiceImpl
 			commerceDiscountRulePersistence.findByPrimaryKey(
 				commerceDiscountRuleId);
 
+		validate(type);
+
 		commerceDiscountRule.setType(type);
-		commerceDiscountRule.setTypeSettings(typeSettings);
+
+		UnicodeProperties settingsProperties =
+			commerceDiscountRule.getSettingsProperties();
+
+		settingsProperties.put(type, typeSettings);
+
+		commerceDiscountRule.setSettingsProperties(settingsProperties);
 
 		commerceDiscountRulePersistence.update(commerceDiscountRule);
 
 		return commerceDiscountRule;
 	}
+
+	protected void validate(String type) throws PortalException {
+		CommerceDiscountRuleType commerceDiscountRuleType =
+			_commerceDiscountRuleTypeRegistry.getCommerceDiscountRuleType(type);
+
+		if (commerceDiscountRuleType == null) {
+			throw new CommerceDiscountRuleTypeException();
+		}
+	}
+
+	@ServiceReference(type = CommerceDiscountRuleTypeRegistry.class)
+	private CommerceDiscountRuleTypeRegistry _commerceDiscountRuleTypeRegistry;
 
 }

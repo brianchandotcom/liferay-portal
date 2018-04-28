@@ -32,6 +32,7 @@
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
+				<action-key>MANAGE_COMMERCE_DISCOUNT_RELS</action-key>
 				<action-key>MANAGE_COMMERCE_DISCOUNT_RULES</action-key>
 				<action-key>MANAGE_COMMERCE_DISCOUNT_USER_SEGMENTS</action-key>
 				<action-key>PERMISSIONS</action-key>
@@ -44,6 +45,7 @@
 			</guest-defaults>
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
+				<action-key>MANAGE_COMMERCE_DISCOUNT_RELS</action-key>
 				<action-key>MANAGE_COMMERCE_DISCOUNT_RULES</action-key>
 				<action-key>MANAGE_COMMERCE_DISCOUNT_USER_SEGMENTS</action-key>
 				<action-key>PERMISSIONS</action-key>

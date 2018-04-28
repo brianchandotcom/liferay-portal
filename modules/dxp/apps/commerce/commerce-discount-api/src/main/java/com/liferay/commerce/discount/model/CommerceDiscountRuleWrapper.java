@@ -227,6 +227,16 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 		return _commerceDiscountRule.getPrimaryKeyObj();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
+		return _commerceDiscountRule.getSettingsProperties();
+	}
+
+	@Override
+	public String getSettingsProperty(String key) {
+		return _commerceDiscountRule.getSettingsProperty(key);
+	}
+
 	/**
 	* Returns the type of this commerce discount rule.
 	*
@@ -401,6 +411,12 @@ public class CommerceDiscountRuleWrapper implements CommerceDiscountRule,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceDiscountRule.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public void setSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
+		_commerceDiscountRule.setSettingsProperties(settingsProperties);
 	}
 
 	/**

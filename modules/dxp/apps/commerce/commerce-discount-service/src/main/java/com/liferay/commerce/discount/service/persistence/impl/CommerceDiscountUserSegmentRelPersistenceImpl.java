@@ -96,7 +96,7 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 		new FinderPath(CommerceDiscountUserSegmentRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountUserSegmentRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountUserSegmentRelImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBycommerceDiscountId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -108,13 +108,13 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 			CommerceDiscountUserSegmentRelModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountUserSegmentRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBycommerceDiscountId", new String[] { Long.class.getName() },
+			"findByCommerceDiscountId", new String[] { Long.class.getName() },
 			CommerceDiscountUserSegmentRelModelImpl.COMMERCEDISCOUNTID_COLUMN_BITMASK |
 			CommerceDiscountUserSegmentRelModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCEDISCOUNTID = new FinderPath(CommerceDiscountUserSegmentRelModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountUserSegmentRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBycommerceDiscountId", new String[] { Long.class.getName() });
+			"countByCommerceDiscountId", new String[] { Long.class.getName() });
 
 	/**
 	 * Returns all the commerce discount user segment rels where commerceDiscountId = &#63;.
@@ -123,9 +123,9 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @return the matching commerce discount user segment rels
 	 */
 	@Override
-	public List<CommerceDiscountUserSegmentRel> findBycommerceDiscountId(
+	public List<CommerceDiscountUserSegmentRel> findByCommerceDiscountId(
 		long commerceDiscountId) {
-		return findBycommerceDiscountId(commerceDiscountId, QueryUtil.ALL_POS,
+		return findByCommerceDiscountId(commerceDiscountId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -142,9 +142,9 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @return the range of matching commerce discount user segment rels
 	 */
 	@Override
-	public List<CommerceDiscountUserSegmentRel> findBycommerceDiscountId(
+	public List<CommerceDiscountUserSegmentRel> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end) {
-		return findBycommerceDiscountId(commerceDiscountId, start, end, null);
+		return findByCommerceDiscountId(commerceDiscountId, start, end, null);
 	}
 
 	/**
@@ -161,10 +161,10 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @return the ordered range of matching commerce discount user segment rels
 	 */
 	@Override
-	public List<CommerceDiscountUserSegmentRel> findBycommerceDiscountId(
+	public List<CommerceDiscountUserSegmentRel> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator) {
-		return findBycommerceDiscountId(commerceDiscountId, start, end,
+		return findByCommerceDiscountId(commerceDiscountId, start, end,
 			orderByComparator, true);
 	}
 
@@ -183,7 +183,7 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @return the ordered range of matching commerce discount user segment rels
 	 */
 	@Override
-	public List<CommerceDiscountUserSegmentRel> findBycommerceDiscountId(
+	public List<CommerceDiscountUserSegmentRel> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator,
 		boolean retrieveFromCache) {
@@ -299,11 +299,11 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @throws NoSuchDiscountUserSegmentRelException if a matching commerce discount user segment rel could not be found
 	 */
 	@Override
-	public CommerceDiscountUserSegmentRel findBycommerceDiscountId_First(
+	public CommerceDiscountUserSegmentRel findByCommerceDiscountId_First(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator)
 		throws NoSuchDiscountUserSegmentRelException {
-		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel = fetchBycommerceDiscountId_First(commerceDiscountId,
+		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel = fetchByCommerceDiscountId_First(commerceDiscountId,
 				orderByComparator);
 
 		if (commerceDiscountUserSegmentRel != null) {
@@ -330,10 +330,10 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @return the first matching commerce discount user segment rel, or <code>null</code> if a matching commerce discount user segment rel could not be found
 	 */
 	@Override
-	public CommerceDiscountUserSegmentRel fetchBycommerceDiscountId_First(
+	public CommerceDiscountUserSegmentRel fetchByCommerceDiscountId_First(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator) {
-		List<CommerceDiscountUserSegmentRel> list = findBycommerceDiscountId(commerceDiscountId,
+		List<CommerceDiscountUserSegmentRel> list = findByCommerceDiscountId(commerceDiscountId,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -352,11 +352,11 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @throws NoSuchDiscountUserSegmentRelException if a matching commerce discount user segment rel could not be found
 	 */
 	@Override
-	public CommerceDiscountUserSegmentRel findBycommerceDiscountId_Last(
+	public CommerceDiscountUserSegmentRel findByCommerceDiscountId_Last(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator)
 		throws NoSuchDiscountUserSegmentRelException {
-		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel = fetchBycommerceDiscountId_Last(commerceDiscountId,
+		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel = fetchByCommerceDiscountId_Last(commerceDiscountId,
 				orderByComparator);
 
 		if (commerceDiscountUserSegmentRel != null) {
@@ -383,16 +383,16 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @return the last matching commerce discount user segment rel, or <code>null</code> if a matching commerce discount user segment rel could not be found
 	 */
 	@Override
-	public CommerceDiscountUserSegmentRel fetchBycommerceDiscountId_Last(
+	public CommerceDiscountUserSegmentRel fetchByCommerceDiscountId_Last(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator) {
-		int count = countBycommerceDiscountId(commerceDiscountId);
+		int count = countByCommerceDiscountId(commerceDiscountId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceDiscountUserSegmentRel> list = findBycommerceDiscountId(commerceDiscountId,
+		List<CommerceDiscountUserSegmentRel> list = findByCommerceDiscountId(commerceDiscountId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -412,7 +412,7 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @throws NoSuchDiscountUserSegmentRelException if a commerce discount user segment rel with the primary key could not be found
 	 */
 	@Override
-	public CommerceDiscountUserSegmentRel[] findBycommerceDiscountId_PrevAndNext(
+	public CommerceDiscountUserSegmentRel[] findByCommerceDiscountId_PrevAndNext(
 		long commerceDiscountUserSegmentRelId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator)
 		throws NoSuchDiscountUserSegmentRelException {
@@ -425,13 +425,13 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 
 			CommerceDiscountUserSegmentRel[] array = new CommerceDiscountUserSegmentRelImpl[3];
 
-			array[0] = getBycommerceDiscountId_PrevAndNext(session,
+			array[0] = getByCommerceDiscountId_PrevAndNext(session,
 					commerceDiscountUserSegmentRel, commerceDiscountId,
 					orderByComparator, true);
 
 			array[1] = commerceDiscountUserSegmentRel;
 
-			array[2] = getBycommerceDiscountId_PrevAndNext(session,
+			array[2] = getByCommerceDiscountId_PrevAndNext(session,
 					commerceDiscountUserSegmentRel, commerceDiscountId,
 					orderByComparator, false);
 
@@ -445,7 +445,7 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 		}
 	}
 
-	protected CommerceDiscountUserSegmentRel getBycommerceDiscountId_PrevAndNext(
+	protected CommerceDiscountUserSegmentRel getByCommerceDiscountId_PrevAndNext(
 		Session session,
 		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel,
 		long commerceDiscountId,
@@ -560,8 +560,8 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @param commerceDiscountId the commerce discount ID
 	 */
 	@Override
-	public void removeBycommerceDiscountId(long commerceDiscountId) {
-		for (CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel : findBycommerceDiscountId(
+	public void removeByCommerceDiscountId(long commerceDiscountId) {
+		for (CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel : findByCommerceDiscountId(
 				commerceDiscountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(commerceDiscountUserSegmentRel);
 		}
@@ -574,7 +574,7 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	 * @return the number of matching commerce discount user segment rels
 	 */
 	@Override
-	public int countBycommerceDiscountId(long commerceDiscountId) {
+	public int countByCommerceDiscountId(long commerceDiscountId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMMERCEDISCOUNTID;
 
 		Object[] finderArgs = new Object[] { commerceDiscountId };

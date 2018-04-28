@@ -26,7 +26,11 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceDiscountRule. Methods of this
@@ -57,6 +61,20 @@ public interface CommerceDiscountRuleService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceDiscountRule(long commerceDiscountRuleId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceDiscountRule getCommerceDiscountRule(
+		long commerceDiscountRuleId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscountRule> getCommerceDiscountRules(
+		long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountRule> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceDiscountRulesCount(long commerceDiscountId)
 		throws PortalException;
 
 	/**

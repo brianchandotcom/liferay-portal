@@ -227,6 +227,14 @@ public class CommerceDiscountRuleLocalServiceUtil {
 		return getService().getCommerceDiscountRules(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.discount.model.CommerceDiscountRule> getCommerceDiscountRules(
+		long commerceDiscountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscountRule> orderByComparator) {
+		return getService()
+				   .getCommerceDiscountRules(commerceDiscountId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce discount rules.
 	*
@@ -234,6 +242,10 @@ public class CommerceDiscountRuleLocalServiceUtil {
 	*/
 	public static int getCommerceDiscountRulesCount() {
 		return getService().getCommerceDiscountRulesCount();
+	}
+
+	public static int getCommerceDiscountRulesCount(long commerceDiscountId) {
+		return getService().getCommerceDiscountRulesCount(commerceDiscountId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

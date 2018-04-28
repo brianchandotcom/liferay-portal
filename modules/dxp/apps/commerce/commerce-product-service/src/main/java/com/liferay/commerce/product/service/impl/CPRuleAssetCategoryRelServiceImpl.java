@@ -63,9 +63,7 @@ public class CPRuleAssetCategoryRelServiceImpl
 	}
 
 	@Override
-	public List<Long> getAssetCategoryIds(long cpRuleId)
-		throws PortalException {
-
+	public long[] getAssetCategoryIds(long cpRuleId) throws PortalException {
 		_cpRuleResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.VIEW);
 

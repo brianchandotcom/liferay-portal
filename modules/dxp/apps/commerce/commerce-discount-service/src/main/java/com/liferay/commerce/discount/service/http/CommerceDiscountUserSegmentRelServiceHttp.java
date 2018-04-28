@@ -120,6 +120,41 @@ public class CommerceDiscountUserSegmentRelServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel> getCommerceDiscountUserSegmentRels(
+		HttpPrincipal httpPrincipal, long commerceDiscountId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceDiscountUserSegmentRelServiceUtil.class,
+					"getCommerceDiscountUserSegmentRels",
+					_getCommerceDiscountUserSegmentRelsParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceDiscountId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceDiscountUserSegmentRelServiceHttp.class);
 	private static final Class<?>[] _addCommerceDiscountUserSegmentRelParameterTypes0 =
 		new Class[] {
@@ -128,4 +163,9 @@ public class CommerceDiscountUserSegmentRelServiceHttp {
 		};
 	private static final Class<?>[] _deleteCommerceDiscountUserSegmentRelParameterTypes1 =
 		new Class[] { long.class };
+	private static final Class<?>[] _getCommerceDiscountUserSegmentRelsParameterTypes2 =
+		new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
 }

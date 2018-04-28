@@ -208,6 +208,11 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 	public List<CommerceDiscountRule> getCommerceDiscountRules(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscountRule> getCommerceDiscountRules(
+		long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountRule> orderByComparator);
+
 	/**
 	* Returns the number of commerce discount rules.
 	*
@@ -215,6 +220,9 @@ public interface CommerceDiscountRuleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceDiscountRulesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceDiscountRulesCount(long commerceDiscountId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

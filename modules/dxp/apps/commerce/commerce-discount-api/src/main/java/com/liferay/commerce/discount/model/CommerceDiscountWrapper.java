@@ -72,19 +72,17 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
 		attributes.put("target", getTarget());
-		attributes.put("type", getType());
-		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("useCouponCode", isUseCouponCode());
 		attributes.put("couponCode", getCouponCode());
+		attributes.put("usePercentage", isUsePercentage());
+		attributes.put("maximumDiscountAmount", getMaximumDiscountAmount());
+		attributes.put("level1", getLevel1());
+		attributes.put("level2", getLevel2());
+		attributes.put("level3", getLevel3());
 		attributes.put("limitationType", getLimitationType());
 		attributes.put("limitationTimes", getLimitationTimes());
 		attributes.put("numberOfUse", getNumberOfUse());
 		attributes.put("cumulative", isCumulative());
-		attributes.put("usePercentage", isUsePercentage());
-		attributes.put("level1", getLevel1());
-		attributes.put("level2", getLevel2());
-		attributes.put("level3", getLevel3());
-		attributes.put("maximumDiscountAmount", getMaximumDiscountAmount());
 		attributes.put("active", isActive());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -159,18 +157,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 			setTarget(target);
 		}
 
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
 		Boolean useCouponCode = (Boolean)attributes.get("useCouponCode");
 
 		if (useCouponCode != null) {
@@ -181,6 +167,37 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 
 		if (couponCode != null) {
 			setCouponCode(couponCode);
+		}
+
+		Boolean usePercentage = (Boolean)attributes.get("usePercentage");
+
+		if (usePercentage != null) {
+			setUsePercentage(usePercentage);
+		}
+
+		BigDecimal maximumDiscountAmount = (BigDecimal)attributes.get(
+				"maximumDiscountAmount");
+
+		if (maximumDiscountAmount != null) {
+			setMaximumDiscountAmount(maximumDiscountAmount);
+		}
+
+		BigDecimal level1 = (BigDecimal)attributes.get("level1");
+
+		if (level1 != null) {
+			setLevel1(level1);
+		}
+
+		BigDecimal level2 = (BigDecimal)attributes.get("level2");
+
+		if (level2 != null) {
+			setLevel2(level2);
+		}
+
+		BigDecimal level3 = (BigDecimal)attributes.get("level3");
+
+		if (level3 != null) {
+			setLevel3(level3);
 		}
 
 		String limitationType = (String)attributes.get("limitationType");
@@ -205,37 +222,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 
 		if (cumulative != null) {
 			setCumulative(cumulative);
-		}
-
-		Boolean usePercentage = (Boolean)attributes.get("usePercentage");
-
-		if (usePercentage != null) {
-			setUsePercentage(usePercentage);
-		}
-
-		BigDecimal level1 = (BigDecimal)attributes.get("level1");
-
-		if (level1 != null) {
-			setLevel1(level1);
-		}
-
-		BigDecimal level2 = (BigDecimal)attributes.get("level2");
-
-		if (level2 != null) {
-			setLevel2(level2);
-		}
-
-		BigDecimal level3 = (BigDecimal)attributes.get("level3");
-
-		if (level3 != null) {
-			setLevel3(level3);
-		}
-
-		BigDecimal maximumDiscountAmount = (BigDecimal)attributes.get(
-				"maximumDiscountAmount");
-
-		if (maximumDiscountAmount != null) {
-			setMaximumDiscountAmount(maximumDiscountAmount);
 		}
 
 		Boolean active = (Boolean)attributes.get("active");
@@ -565,26 +551,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	@Override
 	public String getTitle() {
 		return _commerceDiscount.getTitle();
-	}
-
-	/**
-	* Returns the type of this commerce discount.
-	*
-	* @return the type of this commerce discount
-	*/
-	@Override
-	public String getType() {
-		return _commerceDiscount.getType();
-	}
-
-	/**
-	* Returns the type settings of this commerce discount.
-	*
-	* @return the type settings of this commerce discount
-	*/
-	@Override
-	public String getTypeSettings() {
-		return _commerceDiscount.getTypeSettings();
 	}
 
 	/**
@@ -1081,26 +1047,6 @@ public class CommerceDiscountWrapper implements CommerceDiscount,
 	@Override
 	public void setTitle(String title) {
 		_commerceDiscount.setTitle(title);
-	}
-
-	/**
-	* Sets the type of this commerce discount.
-	*
-	* @param type the type of this commerce discount
-	*/
-	@Override
-	public void setType(String type) {
-		_commerceDiscount.setType(type);
-	}
-
-	/**
-	* Sets the type settings of this commerce discount.
-	*
-	* @param typeSettings the type settings of this commerce discount
-	*/
-	@Override
-	public void setTypeSettings(String typeSettings) {
-		_commerceDiscount.setTypeSettings(typeSettings);
 	}
 
 	/**

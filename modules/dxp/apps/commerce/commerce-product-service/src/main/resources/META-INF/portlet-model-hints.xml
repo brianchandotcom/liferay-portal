@@ -358,9 +358,17 @@
 		</field>
 		<field name="active" type="boolean" />
 		<field name="type" type="String" />
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
+	</model>
+	<model name="com.liferay.commerce.product.model.CPRuleAssetCategoryRel">
+		<field name="CPRuleAssetCategoryRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="CPRuleId" type="long" />
+		<field name="assetCategoryId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPRuleUserSegmentRel">
 		<field name="CPRuleUserSegmentRelId" type="long" />

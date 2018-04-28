@@ -50,6 +50,15 @@ public class CommerceDiscountUserSegmentRelServiceWrapper
 		_commerceDiscountUserSegmentRelService.deleteCommerceDiscountUserSegmentRel(commerceDiscountUserSegmentRelId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel> getCommerceDiscountUserSegmentRels(
+		long commerceDiscountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceDiscountUserSegmentRelService.getCommerceDiscountUserSegmentRels(commerceDiscountId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

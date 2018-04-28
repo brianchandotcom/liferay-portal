@@ -237,6 +237,14 @@ public class CommerceDiscountRuleLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.discount.model.CommerceDiscountRule> getCommerceDiscountRules(
+		long commerceDiscountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscountRule> orderByComparator) {
+		return _commerceDiscountRuleLocalService.getCommerceDiscountRules(commerceDiscountId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce discount rules.
 	*
@@ -245,6 +253,11 @@ public class CommerceDiscountRuleLocalServiceWrapper
 	@Override
 	public int getCommerceDiscountRulesCount() {
 		return _commerceDiscountRuleLocalService.getCommerceDiscountRulesCount();
+	}
+
+	@Override
+	public int getCommerceDiscountRulesCount(long commerceDiscountId) {
+		return _commerceDiscountRuleLocalService.getCommerceDiscountRulesCount(commerceDiscountId);
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import com.liferay.commerce.product.service.base.CPRuleAssetCategoryRelLocalServ
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -71,8 +72,10 @@ public class CPRuleAssetCategoryRelLocalServiceImpl
 	}
 
 	@Override
-	public List<Long> getAssetCategoryIds(long cpRuleId) {
-		return cpRuleAssetCategoryRelFinder.getAssetCategoryIds(cpRuleId);
+	public long[] getAssetCategoryIds(long cpRuleId) {
+		return ListUtil.toLongArray(
+			cpRuleAssetCategoryRelPersistence.findByCPRuleId(cpRuleId),
+			CPRuleAssetCategoryRel::getAssetCategoryId);
 	}
 
 	@Override

@@ -140,8 +140,6 @@ public class CPRulePersistenceTest {
 
 		newCPRule.setType(RandomTestUtil.randomString());
 
-		newCPRule.setTypeSettings(RandomTestUtil.randomString());
-
 		_cpRules.add(_persistence.update(newCPRule));
 
 		CPRule existingCPRule = _persistence.findByPrimaryKey(newCPRule.getPrimaryKey());
@@ -163,8 +161,6 @@ public class CPRulePersistenceTest {
 		Assert.assertEquals(existingCPRule.getName(), newCPRule.getName());
 		Assert.assertEquals(existingCPRule.isActive(), newCPRule.isActive());
 		Assert.assertEquals(existingCPRule.getType(), newCPRule.getType());
-		Assert.assertEquals(existingCPRule.getTypeSettings(),
-			newCPRule.getTypeSettings());
 	}
 
 	@Test
@@ -419,8 +415,6 @@ public class CPRulePersistenceTest {
 		cpRule.setActive(RandomTestUtil.randomBoolean());
 
 		cpRule.setType(RandomTestUtil.randomString());
-
-		cpRule.setTypeSettings(RandomTestUtil.randomString());
 
 		_cpRules.add(_persistence.update(cpRule));
 

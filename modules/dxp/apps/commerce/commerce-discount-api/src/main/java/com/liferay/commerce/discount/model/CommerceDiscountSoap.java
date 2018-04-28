@@ -46,19 +46,17 @@ public class CommerceDiscountSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setTarget(model.getTarget());
-		soapModel.setType(model.getType());
-		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setUseCouponCode(model.isUseCouponCode());
 		soapModel.setCouponCode(model.getCouponCode());
+		soapModel.setUsePercentage(model.isUsePercentage());
+		soapModel.setMaximumDiscountAmount(model.getMaximumDiscountAmount());
+		soapModel.setLevel1(model.getLevel1());
+		soapModel.setLevel2(model.getLevel2());
+		soapModel.setLevel3(model.getLevel3());
 		soapModel.setLimitationType(model.getLimitationType());
 		soapModel.setLimitationTimes(model.getLimitationTimes());
 		soapModel.setNumberOfUse(model.getNumberOfUse());
 		soapModel.setCumulative(model.isCumulative());
-		soapModel.setUsePercentage(model.isUsePercentage());
-		soapModel.setLevel1(model.getLevel1());
-		soapModel.setLevel2(model.getLevel2());
-		soapModel.setLevel3(model.getLevel3());
-		soapModel.setMaximumDiscountAmount(model.getMaximumDiscountAmount());
 		soapModel.setActive(model.isActive());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -201,22 +199,6 @@ public class CommerceDiscountSoap implements Serializable {
 		_target = target;
 	}
 
-	public String getType() {
-		return _type;
-	}
-
-	public void setType(String type) {
-		_type = type;
-	}
-
-	public String getTypeSettings() {
-		return _typeSettings;
-	}
-
-	public void setTypeSettings(String typeSettings) {
-		_typeSettings = typeSettings;
-	}
-
 	public boolean getUseCouponCode() {
 		return _useCouponCode;
 	}
@@ -235,6 +217,50 @@ public class CommerceDiscountSoap implements Serializable {
 
 	public void setCouponCode(String couponCode) {
 		_couponCode = couponCode;
+	}
+
+	public boolean getUsePercentage() {
+		return _usePercentage;
+	}
+
+	public boolean isUsePercentage() {
+		return _usePercentage;
+	}
+
+	public void setUsePercentage(boolean usePercentage) {
+		_usePercentage = usePercentage;
+	}
+
+	public BigDecimal getMaximumDiscountAmount() {
+		return _maximumDiscountAmount;
+	}
+
+	public void setMaximumDiscountAmount(BigDecimal maximumDiscountAmount) {
+		_maximumDiscountAmount = maximumDiscountAmount;
+	}
+
+	public BigDecimal getLevel1() {
+		return _level1;
+	}
+
+	public void setLevel1(BigDecimal level1) {
+		_level1 = level1;
+	}
+
+	public BigDecimal getLevel2() {
+		return _level2;
+	}
+
+	public void setLevel2(BigDecimal level2) {
+		_level2 = level2;
+	}
+
+	public BigDecimal getLevel3() {
+		return _level3;
+	}
+
+	public void setLevel3(BigDecimal level3) {
+		_level3 = level3;
 	}
 
 	public String getLimitationType() {
@@ -271,50 +297,6 @@ public class CommerceDiscountSoap implements Serializable {
 
 	public void setCumulative(boolean cumulative) {
 		_cumulative = cumulative;
-	}
-
-	public boolean getUsePercentage() {
-		return _usePercentage;
-	}
-
-	public boolean isUsePercentage() {
-		return _usePercentage;
-	}
-
-	public void setUsePercentage(boolean usePercentage) {
-		_usePercentage = usePercentage;
-	}
-
-	public BigDecimal getLevel1() {
-		return _level1;
-	}
-
-	public void setLevel1(BigDecimal level1) {
-		_level1 = level1;
-	}
-
-	public BigDecimal getLevel2() {
-		return _level2;
-	}
-
-	public void setLevel2(BigDecimal level2) {
-		_level2 = level2;
-	}
-
-	public BigDecimal getLevel3() {
-		return _level3;
-	}
-
-	public void setLevel3(BigDecimal level3) {
-		_level3 = level3;
-	}
-
-	public BigDecimal getMaximumDiscountAmount() {
-		return _maximumDiscountAmount;
-	}
-
-	public void setMaximumDiscountAmount(BigDecimal maximumDiscountAmount) {
-		_maximumDiscountAmount = maximumDiscountAmount;
 	}
 
 	public boolean getActive() {
@@ -395,19 +377,17 @@ public class CommerceDiscountSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _title;
 	private String _target;
-	private String _type;
-	private String _typeSettings;
 	private boolean _useCouponCode;
 	private String _couponCode;
+	private boolean _usePercentage;
+	private BigDecimal _maximumDiscountAmount;
+	private BigDecimal _level1;
+	private BigDecimal _level2;
+	private BigDecimal _level3;
 	private String _limitationType;
 	private int _limitationTimes;
 	private int _numberOfUse;
 	private boolean _cumulative;
-	private boolean _usePercentage;
-	private BigDecimal _level1;
-	private BigDecimal _level2;
-	private BigDecimal _level3;
-	private BigDecimal _maximumDiscountAmount;
 	private boolean _active;
 	private Date _displayDate;
 	private Date _expirationDate;

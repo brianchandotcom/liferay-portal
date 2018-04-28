@@ -243,21 +243,6 @@ public interface CPRuleModel extends BaseModel<CPRule>, GroupedModel,
 	 */
 	public void setType(String type);
 
-	/**
-	 * Returns the type settings of this cp rule.
-	 *
-	 * @return the type settings of this cp rule
-	 */
-	@AutoEscape
-	public String getTypeSettings();
-
-	/**
-	 * Sets the type settings of this cp rule.
-	 *
-	 * @param typeSettings the type settings of this cp rule
-	 */
-	public void setTypeSettings(String typeSettings);
-
 	@Override
 	public boolean isNew();
 

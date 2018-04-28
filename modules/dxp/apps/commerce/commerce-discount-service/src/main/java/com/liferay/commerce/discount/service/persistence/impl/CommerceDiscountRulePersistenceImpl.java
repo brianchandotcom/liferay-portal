@@ -94,7 +94,7 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 		new FinderPath(CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBycommerceDiscountId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
 				Long.class.getName(),
 				
@@ -106,13 +106,13 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED,
 			CommerceDiscountRuleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBycommerceDiscountId", new String[] { Long.class.getName() },
+			"findByCommerceDiscountId", new String[] { Long.class.getName() },
 			CommerceDiscountRuleModelImpl.COMMERCEDISCOUNTID_COLUMN_BITMASK |
 			CommerceDiscountRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCEDISCOUNTID = new FinderPath(CommerceDiscountRuleModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceDiscountRuleModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBycommerceDiscountId", new String[] { Long.class.getName() });
+			"countByCommerceDiscountId", new String[] { Long.class.getName() });
 
 	/**
 	 * Returns all the commerce discount rules where commerceDiscountId = &#63;.
@@ -121,9 +121,9 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @return the matching commerce discount rules
 	 */
 	@Override
-	public List<CommerceDiscountRule> findBycommerceDiscountId(
+	public List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId) {
-		return findBycommerceDiscountId(commerceDiscountId, QueryUtil.ALL_POS,
+		return findByCommerceDiscountId(commerceDiscountId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -140,9 +140,9 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @return the range of matching commerce discount rules
 	 */
 	@Override
-	public List<CommerceDiscountRule> findBycommerceDiscountId(
+	public List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end) {
-		return findBycommerceDiscountId(commerceDiscountId, start, end, null);
+		return findByCommerceDiscountId(commerceDiscountId, start, end, null);
 	}
 
 	/**
@@ -159,10 +159,10 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @return the ordered range of matching commerce discount rules
 	 */
 	@Override
-	public List<CommerceDiscountRule> findBycommerceDiscountId(
+	public List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountRule> orderByComparator) {
-		return findBycommerceDiscountId(commerceDiscountId, start, end,
+		return findByCommerceDiscountId(commerceDiscountId, start, end,
 			orderByComparator, true);
 	}
 
@@ -181,7 +181,7 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @return the ordered range of matching commerce discount rules
 	 */
 	@Override
-	public List<CommerceDiscountRule> findBycommerceDiscountId(
+	public List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountRule> orderByComparator,
 		boolean retrieveFromCache) {
@@ -297,11 +297,11 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @throws NoSuchDiscountRuleException if a matching commerce discount rule could not be found
 	 */
 	@Override
-	public CommerceDiscountRule findBycommerceDiscountId_First(
+	public CommerceDiscountRule findByCommerceDiscountId_First(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws NoSuchDiscountRuleException {
-		CommerceDiscountRule commerceDiscountRule = fetchBycommerceDiscountId_First(commerceDiscountId,
+		CommerceDiscountRule commerceDiscountRule = fetchByCommerceDiscountId_First(commerceDiscountId,
 				orderByComparator);
 
 		if (commerceDiscountRule != null) {
@@ -328,10 +328,10 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @return the first matching commerce discount rule, or <code>null</code> if a matching commerce discount rule could not be found
 	 */
 	@Override
-	public CommerceDiscountRule fetchBycommerceDiscountId_First(
+	public CommerceDiscountRule fetchByCommerceDiscountId_First(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator) {
-		List<CommerceDiscountRule> list = findBycommerceDiscountId(commerceDiscountId,
+		List<CommerceDiscountRule> list = findByCommerceDiscountId(commerceDiscountId,
 				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -350,11 +350,11 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @throws NoSuchDiscountRuleException if a matching commerce discount rule could not be found
 	 */
 	@Override
-	public CommerceDiscountRule findBycommerceDiscountId_Last(
+	public CommerceDiscountRule findByCommerceDiscountId_Last(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws NoSuchDiscountRuleException {
-		CommerceDiscountRule commerceDiscountRule = fetchBycommerceDiscountId_Last(commerceDiscountId,
+		CommerceDiscountRule commerceDiscountRule = fetchByCommerceDiscountId_Last(commerceDiscountId,
 				orderByComparator);
 
 		if (commerceDiscountRule != null) {
@@ -381,16 +381,16 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @return the last matching commerce discount rule, or <code>null</code> if a matching commerce discount rule could not be found
 	 */
 	@Override
-	public CommerceDiscountRule fetchBycommerceDiscountId_Last(
+	public CommerceDiscountRule fetchByCommerceDiscountId_Last(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator) {
-		int count = countBycommerceDiscountId(commerceDiscountId);
+		int count = countByCommerceDiscountId(commerceDiscountId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceDiscountRule> list = findBycommerceDiscountId(commerceDiscountId,
+		List<CommerceDiscountRule> list = findByCommerceDiscountId(commerceDiscountId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -410,7 +410,7 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @throws NoSuchDiscountRuleException if a commerce discount rule with the primary key could not be found
 	 */
 	@Override
-	public CommerceDiscountRule[] findBycommerceDiscountId_PrevAndNext(
+	public CommerceDiscountRule[] findByCommerceDiscountId_PrevAndNext(
 		long commerceDiscountRuleId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws NoSuchDiscountRuleException {
@@ -423,13 +423,13 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 
 			CommerceDiscountRule[] array = new CommerceDiscountRuleImpl[3];
 
-			array[0] = getBycommerceDiscountId_PrevAndNext(session,
+			array[0] = getByCommerceDiscountId_PrevAndNext(session,
 					commerceDiscountRule, commerceDiscountId,
 					orderByComparator, true);
 
 			array[1] = commerceDiscountRule;
 
-			array[2] = getBycommerceDiscountId_PrevAndNext(session,
+			array[2] = getByCommerceDiscountId_PrevAndNext(session,
 					commerceDiscountRule, commerceDiscountId,
 					orderByComparator, false);
 
@@ -443,7 +443,7 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 		}
 	}
 
-	protected CommerceDiscountRule getBycommerceDiscountId_PrevAndNext(
+	protected CommerceDiscountRule getByCommerceDiscountId_PrevAndNext(
 		Session session, CommerceDiscountRule commerceDiscountRule,
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator,
@@ -557,8 +557,8 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @param commerceDiscountId the commerce discount ID
 	 */
 	@Override
-	public void removeBycommerceDiscountId(long commerceDiscountId) {
-		for (CommerceDiscountRule commerceDiscountRule : findBycommerceDiscountId(
+	public void removeByCommerceDiscountId(long commerceDiscountId) {
+		for (CommerceDiscountRule commerceDiscountRule : findByCommerceDiscountId(
 				commerceDiscountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(commerceDiscountRule);
 		}
@@ -571,7 +571,7 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	 * @return the number of matching commerce discount rules
 	 */
 	@Override
-	public int countBycommerceDiscountId(long commerceDiscountId) {
+	public int countByCommerceDiscountId(long commerceDiscountId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMMERCEDISCOUNTID;
 
 		Object[] finderArgs = new Object[] { commerceDiscountId };

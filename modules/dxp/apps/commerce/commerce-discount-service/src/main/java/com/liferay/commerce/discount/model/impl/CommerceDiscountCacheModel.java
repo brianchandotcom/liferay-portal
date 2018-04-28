@@ -67,7 +67,7 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,14 +89,20 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		sb.append(title);
 		sb.append(", target=");
 		sb.append(target);
-		sb.append(", type=");
-		sb.append(type);
-		sb.append(", typeSettings=");
-		sb.append(typeSettings);
 		sb.append(", useCouponCode=");
 		sb.append(useCouponCode);
 		sb.append(", couponCode=");
 		sb.append(couponCode);
+		sb.append(", usePercentage=");
+		sb.append(usePercentage);
+		sb.append(", maximumDiscountAmount=");
+		sb.append(maximumDiscountAmount);
+		sb.append(", level1=");
+		sb.append(level1);
+		sb.append(", level2=");
+		sb.append(level2);
+		sb.append(", level3=");
+		sb.append(level3);
 		sb.append(", limitationType=");
 		sb.append(limitationType);
 		sb.append(", limitationTimes=");
@@ -105,16 +111,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		sb.append(numberOfUse);
 		sb.append(", cumulative=");
 		sb.append(cumulative);
-		sb.append(", usePercentage=");
-		sb.append(usePercentage);
-		sb.append(", level1=");
-		sb.append(level1);
-		sb.append(", level2=");
-		sb.append(level2);
-		sb.append(", level3=");
-		sb.append(level3);
-		sb.append(", maximumDiscountAmount=");
-		sb.append(maximumDiscountAmount);
 		sb.append(", active=");
 		sb.append(active);
 		sb.append(", displayDate=");
@@ -187,20 +183,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 			commerceDiscountImpl.setTarget(target);
 		}
 
-		if (type == null) {
-			commerceDiscountImpl.setType("");
-		}
-		else {
-			commerceDiscountImpl.setType(type);
-		}
-
-		if (typeSettings == null) {
-			commerceDiscountImpl.setTypeSettings("");
-		}
-		else {
-			commerceDiscountImpl.setTypeSettings(typeSettings);
-		}
-
 		commerceDiscountImpl.setUseCouponCode(useCouponCode);
 
 		if (couponCode == null) {
@@ -209,6 +191,12 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		else {
 			commerceDiscountImpl.setCouponCode(couponCode);
 		}
+
+		commerceDiscountImpl.setUsePercentage(usePercentage);
+		commerceDiscountImpl.setMaximumDiscountAmount(maximumDiscountAmount);
+		commerceDiscountImpl.setLevel1(level1);
+		commerceDiscountImpl.setLevel2(level2);
+		commerceDiscountImpl.setLevel3(level3);
 
 		if (limitationType == null) {
 			commerceDiscountImpl.setLimitationType("");
@@ -220,11 +208,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		commerceDiscountImpl.setLimitationTimes(limitationTimes);
 		commerceDiscountImpl.setNumberOfUse(numberOfUse);
 		commerceDiscountImpl.setCumulative(cumulative);
-		commerceDiscountImpl.setUsePercentage(usePercentage);
-		commerceDiscountImpl.setLevel1(level1);
-		commerceDiscountImpl.setLevel2(level2);
-		commerceDiscountImpl.setLevel3(level3);
-		commerceDiscountImpl.setMaximumDiscountAmount(maximumDiscountAmount);
 		commerceDiscountImpl.setActive(active);
 
 		if (displayDate == Long.MIN_VALUE) {
@@ -287,11 +270,15 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		modifiedDate = objectInput.readLong();
 		title = objectInput.readUTF();
 		target = objectInput.readUTF();
-		type = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
 
 		useCouponCode = objectInput.readBoolean();
 		couponCode = objectInput.readUTF();
+
+		usePercentage = objectInput.readBoolean();
+		maximumDiscountAmount = (BigDecimal)objectInput.readObject();
+		level1 = (BigDecimal)objectInput.readObject();
+		level2 = (BigDecimal)objectInput.readObject();
+		level3 = (BigDecimal)objectInput.readObject();
 		limitationType = objectInput.readUTF();
 
 		limitationTimes = objectInput.readInt();
@@ -299,12 +286,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		numberOfUse = objectInput.readInt();
 
 		cumulative = objectInput.readBoolean();
-
-		usePercentage = objectInput.readBoolean();
-		level1 = (BigDecimal)objectInput.readObject();
-		level2 = (BigDecimal)objectInput.readObject();
-		level3 = (BigDecimal)objectInput.readObject();
-		maximumDiscountAmount = (BigDecimal)objectInput.readObject();
 
 		active = objectInput.readBoolean();
 		displayDate = objectInput.readLong();
@@ -360,20 +341,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 			objectOutput.writeUTF(target);
 		}
 
-		if (type == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(type);
-		}
-
-		if (typeSettings == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(typeSettings);
-		}
-
 		objectOutput.writeBoolean(useCouponCode);
 
 		if (couponCode == null) {
@@ -382,6 +349,12 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		else {
 			objectOutput.writeUTF(couponCode);
 		}
+
+		objectOutput.writeBoolean(usePercentage);
+		objectOutput.writeObject(maximumDiscountAmount);
+		objectOutput.writeObject(level1);
+		objectOutput.writeObject(level2);
+		objectOutput.writeObject(level3);
 
 		if (limitationType == null) {
 			objectOutput.writeUTF("");
@@ -395,12 +368,6 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 		objectOutput.writeInt(numberOfUse);
 
 		objectOutput.writeBoolean(cumulative);
-
-		objectOutput.writeBoolean(usePercentage);
-		objectOutput.writeObject(level1);
-		objectOutput.writeObject(level2);
-		objectOutput.writeObject(level3);
-		objectOutput.writeObject(maximumDiscountAmount);
 
 		objectOutput.writeBoolean(active);
 		objectOutput.writeLong(displayDate);
@@ -431,19 +398,17 @@ public class CommerceDiscountCacheModel implements CacheModel<CommerceDiscount>,
 	public long modifiedDate;
 	public String title;
 	public String target;
-	public String type;
-	public String typeSettings;
 	public boolean useCouponCode;
 	public String couponCode;
+	public boolean usePercentage;
+	public BigDecimal maximumDiscountAmount;
+	public BigDecimal level1;
+	public BigDecimal level2;
+	public BigDecimal level3;
 	public String limitationType;
 	public int limitationTimes;
 	public int numberOfUse;
 	public boolean cumulative;
-	public boolean usePercentage;
-	public BigDecimal level1;
-	public BigDecimal level2;
-	public BigDecimal level3;
-	public BigDecimal maximumDiscountAmount;
 	public boolean active;
 	public long displayDate;
 	public long expirationDate;

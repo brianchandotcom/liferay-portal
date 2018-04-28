@@ -95,5 +95,23 @@ public class CommerceDiscountUserSegmentRelServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRelSoap[] getCommerceDiscountUserSegmentRels(
+		long commerceDiscountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel> returnValue =
+				CommerceDiscountUserSegmentRelServiceUtil.getCommerceDiscountUserSegmentRels(commerceDiscountId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceDiscountUserSegmentRelServiceSoap.class);
 }

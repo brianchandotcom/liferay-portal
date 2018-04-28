@@ -84,11 +84,10 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceDiscount addCommerceDiscount(String title, String target,
-		String type, String typeSettings, boolean useCouponCode,
-		String couponCode, String limitationType, int limitationTimes,
-		int numberOfUse, boolean cumulative, boolean usePercentage,
-		BigDecimal level1, BigDecimal level2, BigDecimal level3,
-		BigDecimal maximumDiscountAmount, boolean active, int displayDateMonth,
+		boolean useCouponCode, String couponCode, boolean usePercentage,
+		BigDecimal maximumDiscountAmount, BigDecimal level1, BigDecimal level2,
+		BigDecimal level3, String limitationType, int limitationTimes,
+		boolean cumulative, boolean active, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
@@ -251,6 +250,10 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getCommerceDiscounts(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscount> getCommerceDiscounts(long groupId, int start,
+		int end, OrderByComparator<CommerceDiscount> orderByComparator);
+
 	/**
 	* Returns all the commerce discounts matching the UUID and company.
 	*
@@ -286,6 +289,9 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	public int getCommerceDiscountsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceDiscountsCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -304,6 +310,10 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceDiscount incrementCommerceDiscountNumberOfUse(
+		long commerceDiscountId) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceDiscount> searchCommerceDiscounts(
 		long companyId, long groupId, String keywords, int status, int start,
@@ -321,15 +331,14 @@ public interface CommerceDiscountLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceDiscount updateCommerceDiscount(long commerceDiscountId,
-		String title, String target, String type, String typeSettings,
-		boolean useCouponCode, String couponCode, String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, BigDecimal level1, BigDecimal level2,
-		BigDecimal level3, BigDecimal maximumDiscountAmount, boolean active,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		String title, String target, boolean useCouponCode, String couponCode,
+		boolean usePercentage, BigDecimal maximumDiscountAmount,
+		BigDecimal level1, BigDecimal level2, BigDecimal level3,
+		String limitationType, int limitationTimes, boolean cumulative,
+		boolean active, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

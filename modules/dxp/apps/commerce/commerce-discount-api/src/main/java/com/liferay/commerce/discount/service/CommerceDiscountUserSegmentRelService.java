@@ -26,7 +26,11 @@ import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceDiscountUserSegmentRel. Methods of this
@@ -58,6 +62,12 @@ public interface CommerceDiscountUserSegmentRelService extends BaseService {
 
 	public void deleteCommerceDiscountUserSegmentRel(
 		long commerceDiscountUserSegmentRelId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscountUserSegmentRel> getCommerceDiscountUserSegmentRels(
+		long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

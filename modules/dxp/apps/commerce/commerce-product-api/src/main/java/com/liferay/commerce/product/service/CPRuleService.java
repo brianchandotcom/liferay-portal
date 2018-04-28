@@ -60,8 +60,7 @@ public interface CPRuleService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPRuleServiceUtil} to access the cp rule remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPRuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPRule addCPRule(String name, boolean active, String type,
-		String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPRule deleteCPRule(long cpRuleId) throws PortalException;
 
@@ -92,6 +91,5 @@ public interface CPRuleService extends BaseService {
 		SearchContext searchContext) throws PortalException;
 
 	public CPRule updateCPRule(long cpRuleId, String name, boolean active,
-		String type, String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+		String type, ServiceContext serviceContext) throws PortalException;
 }

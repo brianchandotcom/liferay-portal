@@ -47,7 +47,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @param commerceDiscountId the commerce discount ID
 	* @return the matching commerce discount rules
 	*/
-	public java.util.List<CommerceDiscountRule> findBycommerceDiscountId(
+	public java.util.List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId);
 
 	/**
@@ -62,7 +62,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @param end the upper bound of the range of commerce discount rules (not inclusive)
 	* @return the range of matching commerce discount rules
 	*/
-	public java.util.List<CommerceDiscountRule> findBycommerceDiscountId(
+	public java.util.List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end);
 
 	/**
@@ -78,7 +78,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce discount rules
 	*/
-	public java.util.List<CommerceDiscountRule> findBycommerceDiscountId(
+	public java.util.List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRule> orderByComparator);
 
@@ -96,7 +96,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce discount rules
 	*/
-	public java.util.List<CommerceDiscountRule> findBycommerceDiscountId(
+	public java.util.List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRule> orderByComparator,
 		boolean retrieveFromCache);
@@ -109,7 +109,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @return the first matching commerce discount rule
 	* @throws NoSuchDiscountRuleException if a matching commerce discount rule could not be found
 	*/
-	public CommerceDiscountRule findBycommerceDiscountId_First(
+	public CommerceDiscountRule findByCommerceDiscountId_First(
 		long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws NoSuchDiscountRuleException;
@@ -121,7 +121,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce discount rule, or <code>null</code> if a matching commerce discount rule could not be found
 	*/
-	public CommerceDiscountRule fetchBycommerceDiscountId_First(
+	public CommerceDiscountRule fetchByCommerceDiscountId_First(
 		long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRule> orderByComparator);
 
@@ -133,7 +133,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @return the last matching commerce discount rule
 	* @throws NoSuchDiscountRuleException if a matching commerce discount rule could not be found
 	*/
-	public CommerceDiscountRule findBycommerceDiscountId_Last(
+	public CommerceDiscountRule findByCommerceDiscountId_Last(
 		long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws NoSuchDiscountRuleException;
@@ -145,7 +145,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce discount rule, or <code>null</code> if a matching commerce discount rule could not be found
 	*/
-	public CommerceDiscountRule fetchBycommerceDiscountId_Last(
+	public CommerceDiscountRule fetchByCommerceDiscountId_Last(
 		long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRule> orderByComparator);
 
@@ -158,7 +158,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @return the previous, current, and next commerce discount rule
 	* @throws NoSuchDiscountRuleException if a commerce discount rule with the primary key could not be found
 	*/
-	public CommerceDiscountRule[] findBycommerceDiscountId_PrevAndNext(
+	public CommerceDiscountRule[] findByCommerceDiscountId_PrevAndNext(
 		long commerceDiscountRuleId, long commerceDiscountId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws NoSuchDiscountRuleException;
@@ -168,7 +168,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	*
 	* @param commerceDiscountId the commerce discount ID
 	*/
-	public void removeBycommerceDiscountId(long commerceDiscountId);
+	public void removeByCommerceDiscountId(long commerceDiscountId);
 
 	/**
 	* Returns the number of commerce discount rules where commerceDiscountId = &#63;.
@@ -176,7 +176,7 @@ public interface CommerceDiscountRulePersistence extends BasePersistence<Commerc
 	* @param commerceDiscountId the commerce discount ID
 	* @return the number of matching commerce discount rules
 	*/
-	public int countBycommerceDiscountId(long commerceDiscountId);
+	public int countByCommerceDiscountId(long commerceDiscountId);
 
 	/**
 	* Caches the commerce discount rule in the entity cache if it is enabled.

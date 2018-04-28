@@ -95,6 +95,53 @@ public class CommerceDiscountRuleServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.discount.model.CommerceDiscountRuleSoap getCommerceDiscountRule(
+		long commerceDiscountRuleId) throws RemoteException {
+		try {
+			com.liferay.commerce.discount.model.CommerceDiscountRule returnValue =
+				CommerceDiscountRuleServiceUtil.getCommerceDiscountRule(commerceDiscountRuleId);
+
+			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.discount.model.CommerceDiscountRuleSoap[] getCommerceDiscountRules(
+		long commerceDiscountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscountRule> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.discount.model.CommerceDiscountRule> returnValue =
+				CommerceDiscountRuleServiceUtil.getCommerceDiscountRules(commerceDiscountId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.discount.model.CommerceDiscountRuleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceDiscountRulesCount(long commerceDiscountId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceDiscountRuleServiceUtil.getCommerceDiscountRulesCount(commerceDiscountId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.discount.model.CommerceDiscountRuleSoap updateCommerceDiscountRule(
 		long commerceDiscountRuleId, String type, String typeSettings)
 		throws RemoteException {

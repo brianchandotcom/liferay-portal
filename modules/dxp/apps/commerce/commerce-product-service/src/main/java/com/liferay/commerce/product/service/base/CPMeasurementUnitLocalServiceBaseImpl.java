@@ -35,6 +35,7 @@ import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersist
 import com.liferay.commerce.product.service.persistence.CPOptionCategoryPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionPersistence;
 import com.liferay.commerce.product.service.persistence.CPOptionValuePersistence;
+import com.liferay.commerce.product.service.persistence.CPRuleAssetCategoryRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPRulePersistence;
 import com.liferay.commerce.product.service.persistence.CPRuleUserSegmentRelPersistence;
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionPersistence;
@@ -1062,6 +1063,44 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the cp rule asset category rel local service.
+	 *
+	 * @return the cp rule asset category rel local service
+	 */
+	public com.liferay.commerce.product.service.CPRuleAssetCategoryRelLocalService getCPRuleAssetCategoryRelLocalService() {
+		return cpRuleAssetCategoryRelLocalService;
+	}
+
+	/**
+	 * Sets the cp rule asset category rel local service.
+	 *
+	 * @param cpRuleAssetCategoryRelLocalService the cp rule asset category rel local service
+	 */
+	public void setCPRuleAssetCategoryRelLocalService(
+		com.liferay.commerce.product.service.CPRuleAssetCategoryRelLocalService cpRuleAssetCategoryRelLocalService) {
+		this.cpRuleAssetCategoryRelLocalService = cpRuleAssetCategoryRelLocalService;
+	}
+
+	/**
+	 * Returns the cp rule asset category rel persistence.
+	 *
+	 * @return the cp rule asset category rel persistence
+	 */
+	public CPRuleAssetCategoryRelPersistence getCPRuleAssetCategoryRelPersistence() {
+		return cpRuleAssetCategoryRelPersistence;
+	}
+
+	/**
+	 * Sets the cp rule asset category rel persistence.
+	 *
+	 * @param cpRuleAssetCategoryRelPersistence the cp rule asset category rel persistence
+	 */
+	public void setCPRuleAssetCategoryRelPersistence(
+		CPRuleAssetCategoryRelPersistence cpRuleAssetCategoryRelPersistence) {
+		this.cpRuleAssetCategoryRelPersistence = cpRuleAssetCategoryRelPersistence;
+	}
+
+	/**
 	 * Returns the cp rule user segment rel local service.
 	 *
 	 * @return the cp rule user segment rel local service
@@ -1404,6 +1443,10 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	protected com.liferay.commerce.product.service.CPRuleLocalService cpRuleLocalService;
 	@BeanReference(type = CPRulePersistence.class)
 	protected CPRulePersistence cpRulePersistence;
+	@BeanReference(type = com.liferay.commerce.product.service.CPRuleAssetCategoryRelLocalService.class)
+	protected com.liferay.commerce.product.service.CPRuleAssetCategoryRelLocalService cpRuleAssetCategoryRelLocalService;
+	@BeanReference(type = CPRuleAssetCategoryRelPersistence.class)
+	protected CPRuleAssetCategoryRelPersistence cpRuleAssetCategoryRelPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService.class)
 	protected com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService cpRuleUserSegmentRelLocalService;
 	@BeanReference(type = CPRuleUserSegmentRelPersistence.class)

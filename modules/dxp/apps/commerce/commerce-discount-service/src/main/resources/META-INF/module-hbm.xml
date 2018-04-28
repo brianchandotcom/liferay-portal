@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.discount.model.CommerceDiscount" />
+	<import class="com.liferay.commerce.discount.model.CommerceDiscountRel" />
 	<import class="com.liferay.commerce.discount.model.CommerceDiscountRule" />
 	<import class="com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel" />
 	<class name="com.liferay.commerce.discount.model.impl.CommerceDiscountImpl" table="CommerceDiscount">
@@ -18,19 +19,17 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="target" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="useCouponCode" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="couponCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="usePercentage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="maximumDiscountAmount" type="org.hibernate.type.BigDecimalType" />
+		<property name="level1" type="org.hibernate.type.BigDecimalType" />
+		<property name="level2" type="org.hibernate.type.BigDecimalType" />
+		<property name="level3" type="org.hibernate.type.BigDecimalType" />
 		<property name="limitationType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="limitationTimes" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="numberOfUse" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="cumulative" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="usePercentage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="level1" type="org.hibernate.type.BigDecimalType" />
-		<property name="level2" type="org.hibernate.type.BigDecimalType" />
-		<property name="level3" type="org.hibernate.type.BigDecimalType" />
-		<property name="maximumDiscountAmount" type="org.hibernate.type.BigDecimalType" />
 		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
@@ -39,6 +38,20 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.commerce.discount.model.impl.CommerceDiscountRelImpl" table="CommerceDiscountRel">
+		<id name="commerceDiscountRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceDiscountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.commerce.discount.model.impl.CommerceDiscountRuleImpl" table="CommerceDiscountRule">
 		<id name="commerceDiscountRuleId" type="long">
@@ -52,7 +65,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commerceDiscountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.commerce.discount.model.impl.CommerceDiscountUserSegmentRelImpl" table="CommerceDiscountUserSegmentRel">
 		<id column="CDiscountUserSegmentRelId" name="commerceDiscountUserSegmentRelId" type="long">

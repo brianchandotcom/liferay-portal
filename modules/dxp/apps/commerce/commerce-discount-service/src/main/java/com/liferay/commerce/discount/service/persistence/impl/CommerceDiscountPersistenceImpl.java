@@ -3503,7 +3503,6 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("uuid", "uuid_");
-			dbColumnNames.put("type", "type_");
 			dbColumnNames.put("active", "active_");
 
 			field.set(this, dbColumnNames);
@@ -3929,19 +3928,17 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 		commerceDiscountImpl.setModifiedDate(commerceDiscount.getModifiedDate());
 		commerceDiscountImpl.setTitle(commerceDiscount.getTitle());
 		commerceDiscountImpl.setTarget(commerceDiscount.getTarget());
-		commerceDiscountImpl.setType(commerceDiscount.getType());
-		commerceDiscountImpl.setTypeSettings(commerceDiscount.getTypeSettings());
 		commerceDiscountImpl.setUseCouponCode(commerceDiscount.isUseCouponCode());
 		commerceDiscountImpl.setCouponCode(commerceDiscount.getCouponCode());
+		commerceDiscountImpl.setUsePercentage(commerceDiscount.isUsePercentage());
+		commerceDiscountImpl.setMaximumDiscountAmount(commerceDiscount.getMaximumDiscountAmount());
+		commerceDiscountImpl.setLevel1(commerceDiscount.getLevel1());
+		commerceDiscountImpl.setLevel2(commerceDiscount.getLevel2());
+		commerceDiscountImpl.setLevel3(commerceDiscount.getLevel3());
 		commerceDiscountImpl.setLimitationType(commerceDiscount.getLimitationType());
 		commerceDiscountImpl.setLimitationTimes(commerceDiscount.getLimitationTimes());
 		commerceDiscountImpl.setNumberOfUse(commerceDiscount.getNumberOfUse());
 		commerceDiscountImpl.setCumulative(commerceDiscount.isCumulative());
-		commerceDiscountImpl.setUsePercentage(commerceDiscount.isUsePercentage());
-		commerceDiscountImpl.setLevel1(commerceDiscount.getLevel1());
-		commerceDiscountImpl.setLevel2(commerceDiscount.getLevel2());
-		commerceDiscountImpl.setLevel3(commerceDiscount.getLevel3());
-		commerceDiscountImpl.setMaximumDiscountAmount(commerceDiscount.getMaximumDiscountAmount());
 		commerceDiscountImpl.setActive(commerceDiscount.isActive());
 		commerceDiscountImpl.setDisplayDate(commerceDiscount.getDisplayDate());
 		commerceDiscountImpl.setExpirationDate(commerceDiscount.getExpirationDate());
@@ -4384,6 +4381,6 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceDiscount exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceDiscountPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "type", "active"
+				"uuid", "active"
 			});
 }

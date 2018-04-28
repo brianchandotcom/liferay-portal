@@ -10,6 +10,9 @@
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountLocalService" />
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountService" />
 	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRelLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRelLocalService" />
+	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRelServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRelService" />
+	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRelPersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRuleLocalServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService" />
 	<bean class="com.liferay.commerce.discount.service.impl.CommerceDiscountRuleServiceImpl" id="com.liferay.commerce.discount.service.CommerceDiscountRuleService" />
 	<bean class="com.liferay.commerce.discount.service.persistence.impl.CommerceDiscountRulePersistenceImpl" id="com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence" parent="basePersistence" />

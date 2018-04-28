@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountPersistence;
+import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelPersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountUserSegmentRelPersistence;
 
@@ -365,6 +366,44 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce discount rel local service.
+	 *
+	 * @return the commerce discount rel local service
+	 */
+	public com.liferay.commerce.discount.service.CommerceDiscountRelLocalService getCommerceDiscountRelLocalService() {
+		return commerceDiscountRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce discount rel local service.
+	 *
+	 * @param commerceDiscountRelLocalService the commerce discount rel local service
+	 */
+	public void setCommerceDiscountRelLocalService(
+		com.liferay.commerce.discount.service.CommerceDiscountRelLocalService commerceDiscountRelLocalService) {
+		this.commerceDiscountRelLocalService = commerceDiscountRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce discount rel persistence.
+	 *
+	 * @return the commerce discount rel persistence
+	 */
+	public CommerceDiscountRelPersistence getCommerceDiscountRelPersistence() {
+		return commerceDiscountRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce discount rel persistence.
+	 *
+	 * @param commerceDiscountRelPersistence the commerce discount rel persistence
+	 */
+	public void setCommerceDiscountRelPersistence(
+		CommerceDiscountRelPersistence commerceDiscountRelPersistence) {
+		this.commerceDiscountRelPersistence = commerceDiscountRelPersistence;
+	}
+
+	/**
 	 * Returns the commerce discount rule local service.
 	 *
 	 * @return the commerce discount rule local service
@@ -609,6 +648,10 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 	protected com.liferay.commerce.discount.service.CommerceDiscountLocalService commerceDiscountLocalService;
 	@BeanReference(type = CommerceDiscountPersistence.class)
 	protected CommerceDiscountPersistence commerceDiscountPersistence;
+	@BeanReference(type = com.liferay.commerce.discount.service.CommerceDiscountRelLocalService.class)
+	protected com.liferay.commerce.discount.service.CommerceDiscountRelLocalService commerceDiscountRelLocalService;
+	@BeanReference(type = CommerceDiscountRelPersistence.class)
+	protected CommerceDiscountRelPersistence commerceDiscountRelPersistence;
 	@BeanReference(type = CommerceDiscountRuleLocalService.class)
 	protected CommerceDiscountRuleLocalService commerceDiscountRuleLocalService;
 	@BeanReference(type = CommerceDiscountRulePersistence.class)

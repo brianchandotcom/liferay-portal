@@ -119,9 +119,9 @@ public class CommerceDiscountRuleUtil {
 	* @param commerceDiscountId the commerce discount ID
 	* @return the matching commerce discount rules
 	*/
-	public static List<CommerceDiscountRule> findBycommerceDiscountId(
+	public static List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId) {
-		return getPersistence().findBycommerceDiscountId(commerceDiscountId);
+		return getPersistence().findByCommerceDiscountId(commerceDiscountId);
 	}
 
 	/**
@@ -136,10 +136,10 @@ public class CommerceDiscountRuleUtil {
 	* @param end the upper bound of the range of commerce discount rules (not inclusive)
 	* @return the range of matching commerce discount rules
 	*/
-	public static List<CommerceDiscountRule> findBycommerceDiscountId(
+	public static List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end) {
 		return getPersistence()
-				   .findBycommerceDiscountId(commerceDiscountId, start, end);
+				   .findByCommerceDiscountId(commerceDiscountId, start, end);
 	}
 
 	/**
@@ -155,11 +155,11 @@ public class CommerceDiscountRuleUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce discount rules
 	*/
-	public static List<CommerceDiscountRule> findBycommerceDiscountId(
+	public static List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountRule> orderByComparator) {
 		return getPersistence()
-				   .findBycommerceDiscountId(commerceDiscountId, start, end,
+				   .findByCommerceDiscountId(commerceDiscountId, start, end,
 			orderByComparator);
 	}
 
@@ -177,12 +177,12 @@ public class CommerceDiscountRuleUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce discount rules
 	*/
-	public static List<CommerceDiscountRule> findBycommerceDiscountId(
+	public static List<CommerceDiscountRule> findByCommerceDiscountId(
 		long commerceDiscountId, int start, int end,
 		OrderByComparator<CommerceDiscountRule> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findBycommerceDiscountId(commerceDiscountId, start, end,
+				   .findByCommerceDiscountId(commerceDiscountId, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
@@ -194,12 +194,12 @@ public class CommerceDiscountRuleUtil {
 	* @return the first matching commerce discount rule
 	* @throws NoSuchDiscountRuleException if a matching commerce discount rule could not be found
 	*/
-	public static CommerceDiscountRule findBycommerceDiscountId_First(
+	public static CommerceDiscountRule findByCommerceDiscountId_First(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountRuleException {
 		return getPersistence()
-				   .findBycommerceDiscountId_First(commerceDiscountId,
+				   .findByCommerceDiscountId_First(commerceDiscountId,
 			orderByComparator);
 	}
 
@@ -210,11 +210,11 @@ public class CommerceDiscountRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce discount rule, or <code>null</code> if a matching commerce discount rule could not be found
 	*/
-	public static CommerceDiscountRule fetchBycommerceDiscountId_First(
+	public static CommerceDiscountRule fetchByCommerceDiscountId_First(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator) {
 		return getPersistence()
-				   .fetchBycommerceDiscountId_First(commerceDiscountId,
+				   .fetchByCommerceDiscountId_First(commerceDiscountId,
 			orderByComparator);
 	}
 
@@ -226,12 +226,12 @@ public class CommerceDiscountRuleUtil {
 	* @return the last matching commerce discount rule
 	* @throws NoSuchDiscountRuleException if a matching commerce discount rule could not be found
 	*/
-	public static CommerceDiscountRule findBycommerceDiscountId_Last(
+	public static CommerceDiscountRule findByCommerceDiscountId_Last(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountRuleException {
 		return getPersistence()
-				   .findBycommerceDiscountId_Last(commerceDiscountId,
+				   .findByCommerceDiscountId_Last(commerceDiscountId,
 			orderByComparator);
 	}
 
@@ -242,11 +242,11 @@ public class CommerceDiscountRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce discount rule, or <code>null</code> if a matching commerce discount rule could not be found
 	*/
-	public static CommerceDiscountRule fetchBycommerceDiscountId_Last(
+	public static CommerceDiscountRule fetchByCommerceDiscountId_Last(
 		long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator) {
 		return getPersistence()
-				   .fetchBycommerceDiscountId_Last(commerceDiscountId,
+				   .fetchByCommerceDiscountId_Last(commerceDiscountId,
 			orderByComparator);
 	}
 
@@ -259,12 +259,12 @@ public class CommerceDiscountRuleUtil {
 	* @return the previous, current, and next commerce discount rule
 	* @throws NoSuchDiscountRuleException if a commerce discount rule with the primary key could not be found
 	*/
-	public static CommerceDiscountRule[] findBycommerceDiscountId_PrevAndNext(
+	public static CommerceDiscountRule[] findByCommerceDiscountId_PrevAndNext(
 		long commerceDiscountRuleId, long commerceDiscountId,
 		OrderByComparator<CommerceDiscountRule> orderByComparator)
 		throws com.liferay.commerce.discount.exception.NoSuchDiscountRuleException {
 		return getPersistence()
-				   .findBycommerceDiscountId_PrevAndNext(commerceDiscountRuleId,
+				   .findByCommerceDiscountId_PrevAndNext(commerceDiscountRuleId,
 			commerceDiscountId, orderByComparator);
 	}
 
@@ -273,8 +273,8 @@ public class CommerceDiscountRuleUtil {
 	*
 	* @param commerceDiscountId the commerce discount ID
 	*/
-	public static void removeBycommerceDiscountId(long commerceDiscountId) {
-		getPersistence().removeBycommerceDiscountId(commerceDiscountId);
+	public static void removeByCommerceDiscountId(long commerceDiscountId) {
+		getPersistence().removeByCommerceDiscountId(commerceDiscountId);
 	}
 
 	/**
@@ -283,8 +283,8 @@ public class CommerceDiscountRuleUtil {
 	* @param commerceDiscountId the commerce discount ID
 	* @return the number of matching commerce discount rules
 	*/
-	public static int countBycommerceDiscountId(long commerceDiscountId) {
-		return getPersistence().countBycommerceDiscountId(commerceDiscountId);
+	public static int countByCommerceDiscountId(long commerceDiscountId) {
+		return getPersistence().countByCommerceDiscountId(commerceDiscountId);
 	}
 
 	/**

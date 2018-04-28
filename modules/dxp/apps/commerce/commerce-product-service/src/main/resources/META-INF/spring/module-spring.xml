@@ -53,6 +53,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPRuleLocalServiceImpl" id="com.liferay.commerce.product.service.CPRuleLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPRuleServiceImpl" id="com.liferay.commerce.product.service.CPRuleService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPRulePersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPRulePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPRuleAssetCategoryRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPRuleAssetCategoryRelLocalService" />
+	<bean class="com.liferay.commerce.product.service.impl.CPRuleAssetCategoryRelServiceImpl" id="com.liferay.commerce.product.service.CPRuleAssetCategoryRelService" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPRuleAssetCategoryRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPRuleAssetCategoryRelPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.product.service.impl.CPRuleUserSegmentRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPRuleUserSegmentRelServiceImpl" id="com.liferay.commerce.product.service.CPRuleUserSegmentRelService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPRuleUserSegmentRelPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPRuleUserSegmentRelPersistence" parent="basePersistence" />

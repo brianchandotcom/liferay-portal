@@ -1,0 +1,621 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.commerce.product.service.persistence;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.commerce.product.model.CPRuleAssetCategoryRel;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
+
+import java.util.List;
+
+/**
+ * The persistence utility for the cp rule asset category rel service. This utility wraps {@link com.liferay.commerce.product.service.persistence.impl.CPRuleAssetCategoryRelPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ *
+ * <p>
+ * Caching information and settings can be found in <code>portal.properties</code>
+ * </p>
+ *
+ * @author Marco Leo
+ * @see CPRuleAssetCategoryRelPersistence
+ * @see com.liferay.commerce.product.service.persistence.impl.CPRuleAssetCategoryRelPersistenceImpl
+ * @generated
+ */
+@ProviderType
+public class CPRuleAssetCategoryRelUtil {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
+	 */
+	public static void clearCache() {
+		getPersistence().clearCache();
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void clearCache(CPRuleAssetCategoryRel cpRuleAssetCategoryRel) {
+		getPersistence().clearCache(cpRuleAssetCategoryRel);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 */
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
+		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 */
+	public static List<CPRuleAssetCategoryRel> findWithDynamicQuery(
+		DynamicQuery dynamicQuery) {
+		return getPersistence().findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 */
+	public static List<CPRuleAssetCategoryRel> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 */
+	public static List<CPRuleAssetCategoryRel> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator) {
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static CPRuleAssetCategoryRel update(
+		CPRuleAssetCategoryRel cpRuleAssetCategoryRel) {
+		return getPersistence().update(cpRuleAssetCategoryRel);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
+	 */
+	public static CPRuleAssetCategoryRel update(
+		CPRuleAssetCategoryRel cpRuleAssetCategoryRel,
+		ServiceContext serviceContext) {
+		return getPersistence().update(cpRuleAssetCategoryRel, serviceContext);
+	}
+
+	/**
+	* Returns all the cp rule asset category rels where CPRuleId = &#63;.
+	*
+	* @param CPRuleId the cp rule ID
+	* @return the matching cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findByCPRuleId(long CPRuleId) {
+		return getPersistence().findByCPRuleId(CPRuleId);
+	}
+
+	/**
+	* Returns a range of all the cp rule asset category rels where CPRuleId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPRuleId the cp rule ID
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @return the range of matching cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findByCPRuleId(long CPRuleId,
+		int start, int end) {
+		return getPersistence().findByCPRuleId(CPRuleId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp rule asset category rels where CPRuleId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPRuleId the cp rule ID
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findByCPRuleId(long CPRuleId,
+		int start, int end,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator) {
+		return getPersistence()
+				   .findByCPRuleId(CPRuleId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp rule asset category rels where CPRuleId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param CPRuleId the cp rule ID
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findByCPRuleId(long CPRuleId,
+		int start, int end,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCPRuleId(CPRuleId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp rule asset category rel in the ordered set where CPRuleId = &#63;.
+	*
+	* @param CPRuleId the cp rule ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp rule asset category rel
+	* @throws NoSuchCPRuleAssetCategoryRelException if a matching cp rule asset category rel could not be found
+	*/
+	public static CPRuleAssetCategoryRel findByCPRuleId_First(long CPRuleId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPRuleAssetCategoryRelException {
+		return getPersistence().findByCPRuleId_First(CPRuleId, orderByComparator);
+	}
+
+	/**
+	* Returns the first cp rule asset category rel in the ordered set where CPRuleId = &#63;.
+	*
+	* @param CPRuleId the cp rule ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp rule asset category rel, or <code>null</code> if a matching cp rule asset category rel could not be found
+	*/
+	public static CPRuleAssetCategoryRel fetchByCPRuleId_First(long CPRuleId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByCPRuleId_First(CPRuleId, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp rule asset category rel in the ordered set where CPRuleId = &#63;.
+	*
+	* @param CPRuleId the cp rule ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp rule asset category rel
+	* @throws NoSuchCPRuleAssetCategoryRelException if a matching cp rule asset category rel could not be found
+	*/
+	public static CPRuleAssetCategoryRel findByCPRuleId_Last(long CPRuleId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPRuleAssetCategoryRelException {
+		return getPersistence().findByCPRuleId_Last(CPRuleId, orderByComparator);
+	}
+
+	/**
+	* Returns the last cp rule asset category rel in the ordered set where CPRuleId = &#63;.
+	*
+	* @param CPRuleId the cp rule ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp rule asset category rel, or <code>null</code> if a matching cp rule asset category rel could not be found
+	*/
+	public static CPRuleAssetCategoryRel fetchByCPRuleId_Last(long CPRuleId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator) {
+		return getPersistence().fetchByCPRuleId_Last(CPRuleId, orderByComparator);
+	}
+
+	/**
+	* Returns the cp rule asset category rels before and after the current cp rule asset category rel in the ordered set where CPRuleId = &#63;.
+	*
+	* @param CPRuleAssetCategoryRelId the primary key of the current cp rule asset category rel
+	* @param CPRuleId the cp rule ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp rule asset category rel
+	* @throws NoSuchCPRuleAssetCategoryRelException if a cp rule asset category rel with the primary key could not be found
+	*/
+	public static CPRuleAssetCategoryRel[] findByCPRuleId_PrevAndNext(
+		long CPRuleAssetCategoryRelId, long CPRuleId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPRuleAssetCategoryRelException {
+		return getPersistence()
+				   .findByCPRuleId_PrevAndNext(CPRuleAssetCategoryRelId,
+			CPRuleId, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp rule asset category rels where CPRuleId = &#63; from the database.
+	*
+	* @param CPRuleId the cp rule ID
+	*/
+	public static void removeByCPRuleId(long CPRuleId) {
+		getPersistence().removeByCPRuleId(CPRuleId);
+	}
+
+	/**
+	* Returns the number of cp rule asset category rels where CPRuleId = &#63;.
+	*
+	* @param CPRuleId the cp rule ID
+	* @return the number of matching cp rule asset category rels
+	*/
+	public static int countByCPRuleId(long CPRuleId) {
+		return getPersistence().countByCPRuleId(CPRuleId);
+	}
+
+	/**
+	* Returns all the cp rule asset category rels where assetCategoryId = &#63;.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the matching cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId) {
+		return getPersistence().findByAssetCategoryId(assetCategoryId);
+	}
+
+	/**
+	* Returns a range of all the cp rule asset category rels where assetCategoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetCategoryId the asset category ID
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @return the range of matching cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end) {
+		return getPersistence()
+				   .findByAssetCategoryId(assetCategoryId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp rule asset category rels where assetCategoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetCategoryId the asset category ID
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator) {
+		return getPersistence()
+				   .findByAssetCategoryId(assetCategoryId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp rule asset category rels where assetCategoryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param assetCategoryId the asset category ID
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByAssetCategoryId(assetCategoryId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cp rule asset category rel in the ordered set where assetCategoryId = &#63;.
+	*
+	* @param assetCategoryId the asset category ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp rule asset category rel
+	* @throws NoSuchCPRuleAssetCategoryRelException if a matching cp rule asset category rel could not be found
+	*/
+	public static CPRuleAssetCategoryRel findByAssetCategoryId_First(
+		long assetCategoryId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPRuleAssetCategoryRelException {
+		return getPersistence()
+				   .findByAssetCategoryId_First(assetCategoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first cp rule asset category rel in the ordered set where assetCategoryId = &#63;.
+	*
+	* @param assetCategoryId the asset category ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp rule asset category rel, or <code>null</code> if a matching cp rule asset category rel could not be found
+	*/
+	public static CPRuleAssetCategoryRel fetchByAssetCategoryId_First(
+		long assetCategoryId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByAssetCategoryId_First(assetCategoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp rule asset category rel in the ordered set where assetCategoryId = &#63;.
+	*
+	* @param assetCategoryId the asset category ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp rule asset category rel
+	* @throws NoSuchCPRuleAssetCategoryRelException if a matching cp rule asset category rel could not be found
+	*/
+	public static CPRuleAssetCategoryRel findByAssetCategoryId_Last(
+		long assetCategoryId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPRuleAssetCategoryRelException {
+		return getPersistence()
+				   .findByAssetCategoryId_Last(assetCategoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp rule asset category rel in the ordered set where assetCategoryId = &#63;.
+	*
+	* @param assetCategoryId the asset category ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp rule asset category rel, or <code>null</code> if a matching cp rule asset category rel could not be found
+	*/
+	public static CPRuleAssetCategoryRel fetchByAssetCategoryId_Last(
+		long assetCategoryId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByAssetCategoryId_Last(assetCategoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the cp rule asset category rels before and after the current cp rule asset category rel in the ordered set where assetCategoryId = &#63;.
+	*
+	* @param CPRuleAssetCategoryRelId the primary key of the current cp rule asset category rel
+	* @param assetCategoryId the asset category ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp rule asset category rel
+	* @throws NoSuchCPRuleAssetCategoryRelException if a cp rule asset category rel with the primary key could not be found
+	*/
+	public static CPRuleAssetCategoryRel[] findByAssetCategoryId_PrevAndNext(
+		long CPRuleAssetCategoryRelId, long assetCategoryId,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPRuleAssetCategoryRelException {
+		return getPersistence()
+				   .findByAssetCategoryId_PrevAndNext(CPRuleAssetCategoryRelId,
+			assetCategoryId, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp rule asset category rels where assetCategoryId = &#63; from the database.
+	*
+	* @param assetCategoryId the asset category ID
+	*/
+	public static void removeByAssetCategoryId(long assetCategoryId) {
+		getPersistence().removeByAssetCategoryId(assetCategoryId);
+	}
+
+	/**
+	* Returns the number of cp rule asset category rels where assetCategoryId = &#63;.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the number of matching cp rule asset category rels
+	*/
+	public static int countByAssetCategoryId(long assetCategoryId) {
+		return getPersistence().countByAssetCategoryId(assetCategoryId);
+	}
+
+	/**
+	* Caches the cp rule asset category rel in the entity cache if it is enabled.
+	*
+	* @param cpRuleAssetCategoryRel the cp rule asset category rel
+	*/
+	public static void cacheResult(
+		CPRuleAssetCategoryRel cpRuleAssetCategoryRel) {
+		getPersistence().cacheResult(cpRuleAssetCategoryRel);
+	}
+
+	/**
+	* Caches the cp rule asset category rels in the entity cache if it is enabled.
+	*
+	* @param cpRuleAssetCategoryRels the cp rule asset category rels
+	*/
+	public static void cacheResult(
+		List<CPRuleAssetCategoryRel> cpRuleAssetCategoryRels) {
+		getPersistence().cacheResult(cpRuleAssetCategoryRels);
+	}
+
+	/**
+	* Creates a new cp rule asset category rel with the primary key. Does not add the cp rule asset category rel to the database.
+	*
+	* @param CPRuleAssetCategoryRelId the primary key for the new cp rule asset category rel
+	* @return the new cp rule asset category rel
+	*/
+	public static CPRuleAssetCategoryRel create(long CPRuleAssetCategoryRelId) {
+		return getPersistence().create(CPRuleAssetCategoryRelId);
+	}
+
+	/**
+	* Removes the cp rule asset category rel with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param CPRuleAssetCategoryRelId the primary key of the cp rule asset category rel
+	* @return the cp rule asset category rel that was removed
+	* @throws NoSuchCPRuleAssetCategoryRelException if a cp rule asset category rel with the primary key could not be found
+	*/
+	public static CPRuleAssetCategoryRel remove(long CPRuleAssetCategoryRelId)
+		throws com.liferay.commerce.product.exception.NoSuchCPRuleAssetCategoryRelException {
+		return getPersistence().remove(CPRuleAssetCategoryRelId);
+	}
+
+	public static CPRuleAssetCategoryRel updateImpl(
+		CPRuleAssetCategoryRel cpRuleAssetCategoryRel) {
+		return getPersistence().updateImpl(cpRuleAssetCategoryRel);
+	}
+
+	/**
+	* Returns the cp rule asset category rel with the primary key or throws a {@link NoSuchCPRuleAssetCategoryRelException} if it could not be found.
+	*
+	* @param CPRuleAssetCategoryRelId the primary key of the cp rule asset category rel
+	* @return the cp rule asset category rel
+	* @throws NoSuchCPRuleAssetCategoryRelException if a cp rule asset category rel with the primary key could not be found
+	*/
+	public static CPRuleAssetCategoryRel findByPrimaryKey(
+		long CPRuleAssetCategoryRelId)
+		throws com.liferay.commerce.product.exception.NoSuchCPRuleAssetCategoryRelException {
+		return getPersistence().findByPrimaryKey(CPRuleAssetCategoryRelId);
+	}
+
+	/**
+	* Returns the cp rule asset category rel with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param CPRuleAssetCategoryRelId the primary key of the cp rule asset category rel
+	* @return the cp rule asset category rel, or <code>null</code> if a cp rule asset category rel with the primary key could not be found
+	*/
+	public static CPRuleAssetCategoryRel fetchByPrimaryKey(
+		long CPRuleAssetCategoryRelId) {
+		return getPersistence().fetchByPrimaryKey(CPRuleAssetCategoryRelId);
+	}
+
+	public static java.util.Map<java.io.Serializable, CPRuleAssetCategoryRel> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
+	* Returns all the cp rule asset category rels.
+	*
+	* @return the cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findAll() {
+		return getPersistence().findAll();
+	}
+
+	/**
+	* Returns a range of all the cp rule asset category rels.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @return the range of cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findAll(int start, int end) {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cp rule asset category rels.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findAll(int start, int end,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator) {
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cp rule asset category rels.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPRuleAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of cp rule asset category rels
+	* @param end the upper bound of the range of cp rule asset category rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of cp rule asset category rels
+	*/
+	public static List<CPRuleAssetCategoryRel> findAll(int start, int end,
+		OrderByComparator<CPRuleAssetCategoryRel> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Removes all the cp rule asset category rels from the database.
+	*/
+	public static void removeAll() {
+		getPersistence().removeAll();
+	}
+
+	/**
+	* Returns the number of cp rule asset category rels.
+	*
+	* @return the number of cp rule asset category rels
+	*/
+	public static int countAll() {
+		return getPersistence().countAll();
+	}
+
+	public static CPRuleAssetCategoryRelPersistence getPersistence() {
+		return _serviceTracker.getService();
+	}
+
+	private static ServiceTracker<CPRuleAssetCategoryRelPersistence, CPRuleAssetCategoryRelPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CPRuleAssetCategoryRelPersistence.class);
+
+		ServiceTracker<CPRuleAssetCategoryRelPersistence, CPRuleAssetCategoryRelPersistence> serviceTracker =
+			new ServiceTracker<CPRuleAssetCategoryRelPersistence, CPRuleAssetCategoryRelPersistence>(bundle.getBundleContext(),
+				CPRuleAssetCategoryRelPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
+}

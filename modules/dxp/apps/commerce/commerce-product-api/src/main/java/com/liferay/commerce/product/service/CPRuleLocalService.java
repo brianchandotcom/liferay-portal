@@ -78,8 +78,7 @@ public interface CPRuleLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPRule addCPRule(String name, boolean active, String type,
-		String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new cp rule with the primary key. Does not add the cp rule to the database.
@@ -259,6 +258,5 @@ public interface CPRuleLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPRule updateCPRule(long cpRuleId, String name, boolean active,
-		String type, String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
+		String type, ServiceContext serviceContext) throws PortalException;
 }

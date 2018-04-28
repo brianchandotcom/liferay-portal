@@ -168,10 +168,10 @@ public class CommerceDiscountUserSegmentRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountBycommerceDiscountId() throws Exception {
-		_persistence.countBycommerceDiscountId(RandomTestUtil.nextLong());
+	public void testCountByCommerceDiscountId() throws Exception {
+		_persistence.countByCommerceDiscountId(RandomTestUtil.nextLong());
 
-		_persistence.countBycommerceDiscountId(0L);
+		_persistence.countByCommerceDiscountId(0L);
 	}
 
 	@Test

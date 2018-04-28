@@ -1261,7 +1261,6 @@ public class CPRulePersistenceImpl extends BasePersistenceImpl<CPRule>
 		cpRuleImpl.setName(cpRule.getName());
 		cpRuleImpl.setActive(cpRule.isActive());
 		cpRuleImpl.setType(cpRule.getType());
-		cpRuleImpl.setTypeSettings(cpRule.getTypeSettings());
 
 		return cpRuleImpl;
 	}

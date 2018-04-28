@@ -84,6 +84,9 @@ create unique index IX_1D633ACB on CPOptionValue (uuid_[$COLUMN_LENGTH:75$], gro
 
 create index IX_B4B2EAFB on CPRule (groupId);
 
+create index IX_5AF83912 on CPRuleAssetCategoryRel (CPRuleId);
+create index IX_D8DFC5F on CPRuleAssetCategoryRel (assetCategoryId);
+
 create index IX_EADE9B38 on CPRuleUserSegmentRel (CPRuleId);
 create index IX_617DFD14 on CPRuleUserSegmentRel (commerceUserSegmentEntryId);
 

@@ -43,11 +43,10 @@ public class CPRuleServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPRuleServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.model.CPRule addCPRule(
-		String name, boolean active, String type, String typeSettings,
+		String name, boolean active, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCPRule(name, active, type, typeSettings, serviceContext);
+		return getService().addCPRule(name, active, type, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPRule deleteCPRule(
@@ -99,12 +98,10 @@ public class CPRuleServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPRule updateCPRule(
 		long cpRuleId, String name, boolean active, String type,
-		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPRule(cpRuleId, name, active, type, typeSettings,
-			serviceContext);
+				   .updateCPRule(cpRuleId, name, active, type, serviceContext);
 	}
 
 	public static CPRuleService getService() {

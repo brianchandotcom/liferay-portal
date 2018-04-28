@@ -241,6 +241,14 @@ public class CommerceDiscountUserSegmentRelLocalServiceUtil {
 		return getService().getCommerceDiscountUserSegmentRels(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel> getCommerceDiscountUserSegmentRels(
+		long commerceDiscountId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel> orderByComparator) {
+		return getService()
+				   .getCommerceDiscountUserSegmentRels(commerceDiscountId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of commerce discount user segment rels.
 	*

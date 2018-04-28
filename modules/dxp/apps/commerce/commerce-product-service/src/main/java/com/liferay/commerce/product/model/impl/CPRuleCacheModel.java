@@ -64,7 +64,7 @@ public class CPRuleCacheModel implements CacheModel<CPRule>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{CPRuleId=");
 		sb.append(CPRuleId);
@@ -86,8 +86,6 @@ public class CPRuleCacheModel implements CacheModel<CPRule>, Externalizable {
 		sb.append(active);
 		sb.append(", type=");
 		sb.append(type);
-		sb.append(", typeSettings=");
-		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -139,13 +137,6 @@ public class CPRuleCacheModel implements CacheModel<CPRule>, Externalizable {
 			cpRuleImpl.setType(type);
 		}
 
-		if (typeSettings == null) {
-			cpRuleImpl.setTypeSettings("");
-		}
-		else {
-			cpRuleImpl.setTypeSettings(typeSettings);
-		}
-
 		cpRuleImpl.resetOriginalValues();
 
 		return cpRuleImpl;
@@ -167,7 +158,6 @@ public class CPRuleCacheModel implements CacheModel<CPRule>, Externalizable {
 
 		active = objectInput.readBoolean();
 		type = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
 	}
 
 	@Override
@@ -206,13 +196,6 @@ public class CPRuleCacheModel implements CacheModel<CPRule>, Externalizable {
 		else {
 			objectOutput.writeUTF(type);
 		}
-
-		if (typeSettings == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(typeSettings);
-		}
 	}
 
 	public long CPRuleId;
@@ -225,5 +208,4 @@ public class CPRuleCacheModel implements CacheModel<CPRule>, Externalizable {
 	public String name;
 	public boolean active;
 	public String type;
-	public String typeSettings;
 }

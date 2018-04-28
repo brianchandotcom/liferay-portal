@@ -86,19 +86,17 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "title", Types.VARCHAR },
 			{ "target", Types.VARCHAR },
-			{ "type_", Types.VARCHAR },
-			{ "typeSettings", Types.VARCHAR },
 			{ "useCouponCode", Types.BOOLEAN },
 			{ "couponCode", Types.VARCHAR },
+			{ "usePercentage", Types.BOOLEAN },
+			{ "maximumDiscountAmount", Types.DECIMAL },
+			{ "level1", Types.DECIMAL },
+			{ "level2", Types.DECIMAL },
+			{ "level3", Types.DECIMAL },
 			{ "limitationType", Types.VARCHAR },
 			{ "limitationTimes", Types.INTEGER },
 			{ "numberOfUse", Types.INTEGER },
 			{ "cumulative", Types.BOOLEAN },
-			{ "usePercentage", Types.BOOLEAN },
-			{ "level1", Types.DECIMAL },
-			{ "level2", Types.DECIMAL },
-			{ "level3", Types.DECIMAL },
-			{ "maximumDiscountAmount", Types.DECIMAL },
 			{ "active_", Types.BOOLEAN },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
@@ -121,19 +119,17 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("target", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("useCouponCode", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("couponCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("usePercentage", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("maximumDiscountAmount", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("level1", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("level2", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("level3", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("limitationType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("limitationTimes", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("numberOfUse", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("cumulative", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("usePercentage", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("level1", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("level2", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("level3", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("maximumDiscountAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
@@ -144,7 +140,7 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceDiscount (uuid_ VARCHAR(75) null,commerceDiscountId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,target VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,useCouponCode BOOLEAN,couponCode VARCHAR(75) null,limitationType VARCHAR(75) null,limitationTimes INTEGER,numberOfUse INTEGER,cumulative BOOLEAN,usePercentage BOOLEAN,level1 DECIMAL(30, 16) null,level2 DECIMAL(30, 16) null,level3 DECIMAL(30, 16) null,maximumDiscountAmount DECIMAL(30, 16) null,active_ BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceDiscount (uuid_ VARCHAR(75) null,commerceDiscountId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,target VARCHAR(75) null,useCouponCode BOOLEAN,couponCode VARCHAR(75) null,usePercentage BOOLEAN,maximumDiscountAmount DECIMAL(30, 16) null,level1 DECIMAL(30, 16) null,level2 DECIMAL(30, 16) null,level3 DECIMAL(30, 16) null,limitationType VARCHAR(75) null,limitationTimes INTEGER,numberOfUse INTEGER,cumulative BOOLEAN,active_ BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceDiscount";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceDiscount.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceDiscount.createDate DESC";
@@ -191,19 +187,17 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setTitle(soapModel.getTitle());
 		model.setTarget(soapModel.getTarget());
-		model.setType(soapModel.getType());
-		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setUseCouponCode(soapModel.isUseCouponCode());
 		model.setCouponCode(soapModel.getCouponCode());
+		model.setUsePercentage(soapModel.isUsePercentage());
+		model.setMaximumDiscountAmount(soapModel.getMaximumDiscountAmount());
+		model.setLevel1(soapModel.getLevel1());
+		model.setLevel2(soapModel.getLevel2());
+		model.setLevel3(soapModel.getLevel3());
 		model.setLimitationType(soapModel.getLimitationType());
 		model.setLimitationTimes(soapModel.getLimitationTimes());
 		model.setNumberOfUse(soapModel.getNumberOfUse());
 		model.setCumulative(soapModel.isCumulative());
-		model.setUsePercentage(soapModel.isUsePercentage());
-		model.setLevel1(soapModel.getLevel1());
-		model.setLevel2(soapModel.getLevel2());
-		model.setLevel3(soapModel.getLevel3());
-		model.setMaximumDiscountAmount(soapModel.getMaximumDiscountAmount());
 		model.setActive(soapModel.isActive());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
@@ -287,19 +281,17 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("title", getTitle());
 		attributes.put("target", getTarget());
-		attributes.put("type", getType());
-		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("useCouponCode", isUseCouponCode());
 		attributes.put("couponCode", getCouponCode());
+		attributes.put("usePercentage", isUsePercentage());
+		attributes.put("maximumDiscountAmount", getMaximumDiscountAmount());
+		attributes.put("level1", getLevel1());
+		attributes.put("level2", getLevel2());
+		attributes.put("level3", getLevel3());
 		attributes.put("limitationType", getLimitationType());
 		attributes.put("limitationTimes", getLimitationTimes());
 		attributes.put("numberOfUse", getNumberOfUse());
 		attributes.put("cumulative", isCumulative());
-		attributes.put("usePercentage", isUsePercentage());
-		attributes.put("level1", getLevel1());
-		attributes.put("level2", getLevel2());
-		attributes.put("level3", getLevel3());
-		attributes.put("maximumDiscountAmount", getMaximumDiscountAmount());
 		attributes.put("active", isActive());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
@@ -377,18 +369,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 			setTarget(target);
 		}
 
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
 		Boolean useCouponCode = (Boolean)attributes.get("useCouponCode");
 
 		if (useCouponCode != null) {
@@ -399,6 +379,37 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 		if (couponCode != null) {
 			setCouponCode(couponCode);
+		}
+
+		Boolean usePercentage = (Boolean)attributes.get("usePercentage");
+
+		if (usePercentage != null) {
+			setUsePercentage(usePercentage);
+		}
+
+		BigDecimal maximumDiscountAmount = (BigDecimal)attributes.get(
+				"maximumDiscountAmount");
+
+		if (maximumDiscountAmount != null) {
+			setMaximumDiscountAmount(maximumDiscountAmount);
+		}
+
+		BigDecimal level1 = (BigDecimal)attributes.get("level1");
+
+		if (level1 != null) {
+			setLevel1(level1);
+		}
+
+		BigDecimal level2 = (BigDecimal)attributes.get("level2");
+
+		if (level2 != null) {
+			setLevel2(level2);
+		}
+
+		BigDecimal level3 = (BigDecimal)attributes.get("level3");
+
+		if (level3 != null) {
+			setLevel3(level3);
 		}
 
 		String limitationType = (String)attributes.get("limitationType");
@@ -423,37 +434,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 		if (cumulative != null) {
 			setCumulative(cumulative);
-		}
-
-		Boolean usePercentage = (Boolean)attributes.get("usePercentage");
-
-		if (usePercentage != null) {
-			setUsePercentage(usePercentage);
-		}
-
-		BigDecimal level1 = (BigDecimal)attributes.get("level1");
-
-		if (level1 != null) {
-			setLevel1(level1);
-		}
-
-		BigDecimal level2 = (BigDecimal)attributes.get("level2");
-
-		if (level2 != null) {
-			setLevel2(level2);
-		}
-
-		BigDecimal level3 = (BigDecimal)attributes.get("level3");
-
-		if (level3 != null) {
-			setLevel3(level3);
-		}
-
-		BigDecimal maximumDiscountAmount = (BigDecimal)attributes.get(
-				"maximumDiscountAmount");
-
-		if (maximumDiscountAmount != null) {
-			setMaximumDiscountAmount(maximumDiscountAmount);
 		}
 
 		Boolean active = (Boolean)attributes.get("active");
@@ -693,38 +673,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 	@JSON
 	@Override
-	public String getType() {
-		if (_type == null) {
-			return "";
-		}
-		else {
-			return _type;
-		}
-	}
-
-	@Override
-	public void setType(String type) {
-		_type = type;
-	}
-
-	@JSON
-	@Override
-	public String getTypeSettings() {
-		if (_typeSettings == null) {
-			return "";
-		}
-		else {
-			return _typeSettings;
-		}
-	}
-
-	@Override
-	public void setTypeSettings(String typeSettings) {
-		_typeSettings = typeSettings;
-	}
-
-	@JSON
-	@Override
 	public boolean getUseCouponCode() {
 		return _useCouponCode;
 	}
@@ -754,6 +702,67 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 	@Override
 	public void setCouponCode(String couponCode) {
 		_couponCode = couponCode;
+	}
+
+	@JSON
+	@Override
+	public boolean getUsePercentage() {
+		return _usePercentage;
+	}
+
+	@JSON
+	@Override
+	public boolean isUsePercentage() {
+		return _usePercentage;
+	}
+
+	@Override
+	public void setUsePercentage(boolean usePercentage) {
+		_usePercentage = usePercentage;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getMaximumDiscountAmount() {
+		return _maximumDiscountAmount;
+	}
+
+	@Override
+	public void setMaximumDiscountAmount(BigDecimal maximumDiscountAmount) {
+		_maximumDiscountAmount = maximumDiscountAmount;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getLevel1() {
+		return _level1;
+	}
+
+	@Override
+	public void setLevel1(BigDecimal level1) {
+		_level1 = level1;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getLevel2() {
+		return _level2;
+	}
+
+	@Override
+	public void setLevel2(BigDecimal level2) {
+		_level2 = level2;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getLevel3() {
+		return _level3;
+	}
+
+	@Override
+	public void setLevel3(BigDecimal level3) {
+		_level3 = level3;
 	}
 
 	@JSON
@@ -809,67 +818,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 	@Override
 	public void setCumulative(boolean cumulative) {
 		_cumulative = cumulative;
-	}
-
-	@JSON
-	@Override
-	public boolean getUsePercentage() {
-		return _usePercentage;
-	}
-
-	@JSON
-	@Override
-	public boolean isUsePercentage() {
-		return _usePercentage;
-	}
-
-	@Override
-	public void setUsePercentage(boolean usePercentage) {
-		_usePercentage = usePercentage;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getLevel1() {
-		return _level1;
-	}
-
-	@Override
-	public void setLevel1(BigDecimal level1) {
-		_level1 = level1;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getLevel2() {
-		return _level2;
-	}
-
-	@Override
-	public void setLevel2(BigDecimal level2) {
-		_level2 = level2;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getLevel3() {
-		return _level3;
-	}
-
-	@Override
-	public void setLevel3(BigDecimal level3) {
-		_level3 = level3;
-	}
-
-	@JSON
-	@Override
-	public BigDecimal getMaximumDiscountAmount() {
-		return _maximumDiscountAmount;
-	}
-
-	@Override
-	public void setMaximumDiscountAmount(BigDecimal maximumDiscountAmount) {
-		_maximumDiscountAmount = maximumDiscountAmount;
 	}
 
 	@JSON
@@ -1146,19 +1094,17 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		commerceDiscountImpl.setModifiedDate(getModifiedDate());
 		commerceDiscountImpl.setTitle(getTitle());
 		commerceDiscountImpl.setTarget(getTarget());
-		commerceDiscountImpl.setType(getType());
-		commerceDiscountImpl.setTypeSettings(getTypeSettings());
 		commerceDiscountImpl.setUseCouponCode(isUseCouponCode());
 		commerceDiscountImpl.setCouponCode(getCouponCode());
+		commerceDiscountImpl.setUsePercentage(isUsePercentage());
+		commerceDiscountImpl.setMaximumDiscountAmount(getMaximumDiscountAmount());
+		commerceDiscountImpl.setLevel1(getLevel1());
+		commerceDiscountImpl.setLevel2(getLevel2());
+		commerceDiscountImpl.setLevel3(getLevel3());
 		commerceDiscountImpl.setLimitationType(getLimitationType());
 		commerceDiscountImpl.setLimitationTimes(getLimitationTimes());
 		commerceDiscountImpl.setNumberOfUse(getNumberOfUse());
 		commerceDiscountImpl.setCumulative(isCumulative());
-		commerceDiscountImpl.setUsePercentage(isUsePercentage());
-		commerceDiscountImpl.setLevel1(getLevel1());
-		commerceDiscountImpl.setLevel2(getLevel2());
-		commerceDiscountImpl.setLevel3(getLevel3());
-		commerceDiscountImpl.setMaximumDiscountAmount(getMaximumDiscountAmount());
 		commerceDiscountImpl.setActive(isActive());
 		commerceDiscountImpl.setDisplayDate(getDisplayDate());
 		commerceDiscountImpl.setExpirationDate(getExpirationDate());
@@ -1315,22 +1261,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 			commerceDiscountCacheModel.target = null;
 		}
 
-		commerceDiscountCacheModel.type = getType();
-
-		String type = commerceDiscountCacheModel.type;
-
-		if ((type != null) && (type.length() == 0)) {
-			commerceDiscountCacheModel.type = null;
-		}
-
-		commerceDiscountCacheModel.typeSettings = getTypeSettings();
-
-		String typeSettings = commerceDiscountCacheModel.typeSettings;
-
-		if ((typeSettings != null) && (typeSettings.length() == 0)) {
-			commerceDiscountCacheModel.typeSettings = null;
-		}
-
 		commerceDiscountCacheModel.useCouponCode = isUseCouponCode();
 
 		commerceDiscountCacheModel.couponCode = getCouponCode();
@@ -1340,6 +1270,16 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		if ((couponCode != null) && (couponCode.length() == 0)) {
 			commerceDiscountCacheModel.couponCode = null;
 		}
+
+		commerceDiscountCacheModel.usePercentage = isUsePercentage();
+
+		commerceDiscountCacheModel.maximumDiscountAmount = getMaximumDiscountAmount();
+
+		commerceDiscountCacheModel.level1 = getLevel1();
+
+		commerceDiscountCacheModel.level2 = getLevel2();
+
+		commerceDiscountCacheModel.level3 = getLevel3();
 
 		commerceDiscountCacheModel.limitationType = getLimitationType();
 
@@ -1354,16 +1294,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		commerceDiscountCacheModel.numberOfUse = getNumberOfUse();
 
 		commerceDiscountCacheModel.cumulative = isCumulative();
-
-		commerceDiscountCacheModel.usePercentage = isUsePercentage();
-
-		commerceDiscountCacheModel.level1 = getLevel1();
-
-		commerceDiscountCacheModel.level2 = getLevel2();
-
-		commerceDiscountCacheModel.level3 = getLevel3();
-
-		commerceDiscountCacheModel.maximumDiscountAmount = getMaximumDiscountAmount();
 
 		commerceDiscountCacheModel.active = isActive();
 
@@ -1420,7 +1350,7 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1442,14 +1372,20 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(getTitle());
 		sb.append(", target=");
 		sb.append(getTarget());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", typeSettings=");
-		sb.append(getTypeSettings());
 		sb.append(", useCouponCode=");
 		sb.append(isUseCouponCode());
 		sb.append(", couponCode=");
 		sb.append(getCouponCode());
+		sb.append(", usePercentage=");
+		sb.append(isUsePercentage());
+		sb.append(", maximumDiscountAmount=");
+		sb.append(getMaximumDiscountAmount());
+		sb.append(", level1=");
+		sb.append(getLevel1());
+		sb.append(", level2=");
+		sb.append(getLevel2());
+		sb.append(", level3=");
+		sb.append(getLevel3());
 		sb.append(", limitationType=");
 		sb.append(getLimitationType());
 		sb.append(", limitationTimes=");
@@ -1458,16 +1394,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(getNumberOfUse());
 		sb.append(", cumulative=");
 		sb.append(isCumulative());
-		sb.append(", usePercentage=");
-		sb.append(isUsePercentage());
-		sb.append(", level1=");
-		sb.append(getLevel1());
-		sb.append(", level2=");
-		sb.append(getLevel2());
-		sb.append(", level3=");
-		sb.append(getLevel3());
-		sb.append(", maximumDiscountAmount=");
-		sb.append(getMaximumDiscountAmount());
 		sb.append(", active=");
 		sb.append(isActive());
 		sb.append(", displayDate=");
@@ -1491,7 +1417,7 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(97);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.discount.model.CommerceDiscount");
@@ -1538,20 +1464,32 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(getTarget());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
-		sb.append(getTypeSettings());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>useCouponCode</column-name><column-value><![CDATA[");
 		sb.append(isUseCouponCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>couponCode</column-name><column-value><![CDATA[");
 		sb.append(getCouponCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>usePercentage</column-name><column-value><![CDATA[");
+		sb.append(isUsePercentage());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>maximumDiscountAmount</column-name><column-value><![CDATA[");
+		sb.append(getMaximumDiscountAmount());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>level1</column-name><column-value><![CDATA[");
+		sb.append(getLevel1());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>level2</column-name><column-value><![CDATA[");
+		sb.append(getLevel2());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>level3</column-name><column-value><![CDATA[");
+		sb.append(getLevel3());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>limitationType</column-name><column-value><![CDATA[");
@@ -1568,26 +1506,6 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 		sb.append(
 			"<column><column-name>cumulative</column-name><column-value><![CDATA[");
 		sb.append(isCumulative());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>usePercentage</column-name><column-value><![CDATA[");
-		sb.append(isUsePercentage());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>level1</column-name><column-value><![CDATA[");
-		sb.append(getLevel1());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>level2</column-name><column-value><![CDATA[");
-		sb.append(getLevel2());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>level3</column-name><column-value><![CDATA[");
-		sb.append(getLevel3());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>maximumDiscountAmount</column-name><column-value><![CDATA[");
-		sb.append(getMaximumDiscountAmount());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
@@ -1647,19 +1565,17 @@ public class CommerceDiscountModelImpl extends BaseModelImpl<CommerceDiscount>
 	private boolean _setModifiedDate;
 	private String _title;
 	private String _target;
-	private String _type;
-	private String _typeSettings;
 	private boolean _useCouponCode;
 	private String _couponCode;
+	private boolean _usePercentage;
+	private BigDecimal _maximumDiscountAmount;
+	private BigDecimal _level1;
+	private BigDecimal _level2;
+	private BigDecimal _level3;
 	private String _limitationType;
 	private int _limitationTimes;
 	private int _numberOfUse;
 	private boolean _cumulative;
-	private boolean _usePercentage;
-	private BigDecimal _level1;
-	private BigDecimal _level2;
-	private BigDecimal _level3;
-	private BigDecimal _maximumDiscountAmount;
 	private boolean _active;
 	private Date _displayDate;
 	private Date _originalDisplayDate;

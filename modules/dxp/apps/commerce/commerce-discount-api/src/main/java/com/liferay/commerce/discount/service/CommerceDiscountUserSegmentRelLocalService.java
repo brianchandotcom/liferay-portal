@@ -212,6 +212,11 @@ public interface CommerceDiscountUserSegmentRelLocalService
 	public List<CommerceDiscountUserSegmentRel> getCommerceDiscountUserSegmentRels(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscountUserSegmentRel> getCommerceDiscountUserSegmentRels(
+		long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountUserSegmentRel> orderByComparator);
+
 	/**
 	* Returns the number of commerce discount user segment rels.
 	*

@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPRuleServiceHttp {
 	public static com.liferay.commerce.product.model.CPRule addCPRule(
 		HttpPrincipal httpPrincipal, String name, boolean active, String type,
-		String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -65,7 +64,7 @@ public class CPRuleServiceHttp {
 					"addCPRule", _addCPRuleParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					active, type, typeSettings, serviceContext);
+					active, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -283,7 +282,7 @@ public class CPRuleServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPRule updateCPRule(
 		HttpPrincipal httpPrincipal, long cpRuleId, String name,
-		boolean active, String type, String typeSettings,
+		boolean active, String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -291,7 +290,7 @@ public class CPRuleServiceHttp {
 					"updateCPRule", _updateCPRuleParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpRuleId, name, active, type, typeSettings, serviceContext);
+					cpRuleId, name, active, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -317,7 +316,7 @@ public class CPRuleServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CPRuleServiceHttp.class);
 	private static final Class<?>[] _addCPRuleParameterTypes0 = new Class[] {
-			String.class, boolean.class, String.class, String.class,
+			String.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCPRuleParameterTypes1 = new Class[] {
@@ -341,7 +340,7 @@ public class CPRuleServiceHttp {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
 	private static final Class<?>[] _updateCPRuleParameterTypes7 = new Class[] {
-			long.class, String.class, boolean.class, String.class, String.class,
+			long.class, String.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

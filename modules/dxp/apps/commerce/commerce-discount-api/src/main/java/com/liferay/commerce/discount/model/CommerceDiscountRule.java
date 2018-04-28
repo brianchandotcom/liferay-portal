@@ -55,4 +55,11 @@ public interface CommerceDiscountRule extends CommerceDiscountRuleModel,
 				return CommerceDiscountRule.class;
 			}
 		};
+
+	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
+
+	public String getSettingsProperty(String key);
+
+	public void setSettingsProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties);
 }

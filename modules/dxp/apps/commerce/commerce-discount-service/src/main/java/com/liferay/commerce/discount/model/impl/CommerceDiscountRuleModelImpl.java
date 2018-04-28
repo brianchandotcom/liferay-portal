@@ -79,7 +79,7 @@ public class CommerceDiscountRuleModelImpl extends BaseModelImpl<CommerceDiscoun
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceDiscountId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
-			{ "typeSettings", Types.VARCHAR }
+			{ "typeSettings", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -93,10 +93,10 @@ public class CommerceDiscountRuleModelImpl extends BaseModelImpl<CommerceDiscoun
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceDiscountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceDiscountRule (commerceDiscountRuleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceDiscountId LONG,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceDiscountRule (commerceDiscountRuleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceDiscountId LONG,type_ VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceDiscountRule";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceDiscountRule.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceDiscountRule.createDate DESC";

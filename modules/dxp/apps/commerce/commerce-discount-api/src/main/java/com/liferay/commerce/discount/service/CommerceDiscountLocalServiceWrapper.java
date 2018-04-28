@@ -48,12 +48,11 @@ public class CommerceDiscountLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscount addCommerceDiscount(
-		String title, String target, String type, String typeSettings,
-		boolean useCouponCode, String couponCode, String limitationType,
-		int limitationTimes, int numberOfUse, boolean cumulative,
-		boolean usePercentage, java.math.BigDecimal level1,
-		java.math.BigDecimal level2, java.math.BigDecimal level3,
-		java.math.BigDecimal maximumDiscountAmount, boolean active,
+		String title, String target, boolean useCouponCode, String couponCode,
+		boolean usePercentage, java.math.BigDecimal maximumDiscountAmount,
+		java.math.BigDecimal level1, java.math.BigDecimal level2,
+		java.math.BigDecimal level3, String limitationType,
+		int limitationTimes, boolean cumulative, boolean active,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -61,13 +60,13 @@ public class CommerceDiscountLocalServiceWrapper
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceDiscountLocalService.addCommerceDiscount(title, target,
-			type, typeSettings, useCouponCode, couponCode, limitationType,
-			limitationTimes, numberOfUse, cumulative, usePercentage, level1,
-			level2, level3, maximumDiscountAmount, active, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			useCouponCode, couponCode, usePercentage, maximumDiscountAmount,
+			level1, level2, level3, limitationType, limitationTimes,
+			cumulative, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
@@ -290,6 +289,14 @@ public class CommerceDiscountLocalServiceWrapper
 		return _commerceDiscountLocalService.getCommerceDiscounts(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.discount.model.CommerceDiscount> getCommerceDiscounts(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.discount.model.CommerceDiscount> orderByComparator) {
+		return _commerceDiscountLocalService.getCommerceDiscounts(groupId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns all the commerce discounts matching the UUID and company.
 	*
@@ -333,6 +340,11 @@ public class CommerceDiscountLocalServiceWrapper
 	}
 
 	@Override
+	public int getCommerceDiscountsCount(long groupId) {
+		return _commerceDiscountLocalService.getCommerceDiscountsCount(groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _commerceDiscountLocalService.getExportActionableDynamicQuery(portletDataContext);
@@ -361,6 +373,13 @@ public class CommerceDiscountLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.discount.model.CommerceDiscount incrementCommerceDiscountNumberOfUse(
+		long commerceDiscountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceDiscountLocalService.incrementCommerceDiscountNumberOfUse(commerceDiscountId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.discount.model.CommerceDiscount> searchCommerceDiscounts(
 		long companyId, long groupId, String keywords, int status, int start,
 		int end, com.liferay.portal.kernel.search.Sort sort)
@@ -383,12 +402,12 @@ public class CommerceDiscountLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.discount.model.CommerceDiscount updateCommerceDiscount(
-		long commerceDiscountId, String title, String target, String type,
-		String typeSettings, boolean useCouponCode, String couponCode,
-		String limitationType, int limitationTimes, int numberOfUse,
-		boolean cumulative, boolean usePercentage, java.math.BigDecimal level1,
-		java.math.BigDecimal level2, java.math.BigDecimal level3,
-		java.math.BigDecimal maximumDiscountAmount, boolean active,
+		long commerceDiscountId, String title, String target,
+		boolean useCouponCode, String couponCode, boolean usePercentage,
+		java.math.BigDecimal maximumDiscountAmount,
+		java.math.BigDecimal level1, java.math.BigDecimal level2,
+		java.math.BigDecimal level3, String limitationType,
+		int limitationTimes, boolean cumulative, boolean active,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -396,13 +415,13 @@ public class CommerceDiscountLocalServiceWrapper
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceDiscountLocalService.updateCommerceDiscount(commerceDiscountId,
-			title, target, type, typeSettings, useCouponCode, couponCode,
-			limitationType, limitationTimes, numberOfUse, cumulative,
-			usePercentage, level1, level2, level3, maximumDiscountAmount,
-			active, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			title, target, useCouponCode, couponCode, usePercentage,
+			maximumDiscountAmount, level1, level2, level3, limitationType,
+			limitationTimes, cumulative, active, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Override

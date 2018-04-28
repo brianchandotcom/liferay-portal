@@ -44,7 +44,6 @@ public class CPRuleSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setActive(model.isActive());
 		soapModel.setType(model.getType());
-		soapModel.setTypeSettings(model.getTypeSettings());
 
 		return soapModel;
 	}
@@ -181,14 +180,6 @@ public class CPRuleSoap implements Serializable {
 		_type = type;
 	}
 
-	public String getTypeSettings() {
-		return _typeSettings;
-	}
-
-	public void setTypeSettings(String typeSettings) {
-		_typeSettings = typeSettings;
-	}
-
 	private long _CPRuleId;
 	private long _groupId;
 	private long _companyId;
@@ -199,5 +190,4 @@ public class CPRuleSoap implements Serializable {
 	private String _name;
 	private boolean _active;
 	private String _type;
-	private String _typeSettings;
 }

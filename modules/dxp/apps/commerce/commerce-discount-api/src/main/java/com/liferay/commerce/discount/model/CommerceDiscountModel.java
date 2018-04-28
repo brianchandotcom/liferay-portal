@@ -243,36 +243,6 @@ public interface CommerceDiscountModel extends BaseModel<CommerceDiscount>,
 	public void setTarget(String target);
 
 	/**
-	 * Returns the type of this commerce discount.
-	 *
-	 * @return the type of this commerce discount
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this commerce discount.
-	 *
-	 * @param type the type of this commerce discount
-	 */
-	public void setType(String type);
-
-	/**
-	 * Returns the type settings of this commerce discount.
-	 *
-	 * @return the type settings of this commerce discount
-	 */
-	@AutoEscape
-	public String getTypeSettings();
-
-	/**
-	 * Sets the type settings of this commerce discount.
-	 *
-	 * @param typeSettings the type settings of this commerce discount
-	 */
-	public void setTypeSettings(String typeSettings);
-
-	/**
 	 * Returns the use coupon code of this commerce discount.
 	 *
 	 * @return the use coupon code of this commerce discount
@@ -307,6 +277,83 @@ public interface CommerceDiscountModel extends BaseModel<CommerceDiscount>,
 	 * @param couponCode the coupon code of this commerce discount
 	 */
 	public void setCouponCode(String couponCode);
+
+	/**
+	 * Returns the use percentage of this commerce discount.
+	 *
+	 * @return the use percentage of this commerce discount
+	 */
+	public boolean getUsePercentage();
+
+	/**
+	 * Returns <code>true</code> if this commerce discount is use percentage.
+	 *
+	 * @return <code>true</code> if this commerce discount is use percentage; <code>false</code> otherwise
+	 */
+	public boolean isUsePercentage();
+
+	/**
+	 * Sets whether this commerce discount is use percentage.
+	 *
+	 * @param usePercentage the use percentage of this commerce discount
+	 */
+	public void setUsePercentage(boolean usePercentage);
+
+	/**
+	 * Returns the maximum discount amount of this commerce discount.
+	 *
+	 * @return the maximum discount amount of this commerce discount
+	 */
+	public BigDecimal getMaximumDiscountAmount();
+
+	/**
+	 * Sets the maximum discount amount of this commerce discount.
+	 *
+	 * @param maximumDiscountAmount the maximum discount amount of this commerce discount
+	 */
+	public void setMaximumDiscountAmount(BigDecimal maximumDiscountAmount);
+
+	/**
+	 * Returns the level1 of this commerce discount.
+	 *
+	 * @return the level1 of this commerce discount
+	 */
+	public BigDecimal getLevel1();
+
+	/**
+	 * Sets the level1 of this commerce discount.
+	 *
+	 * @param level1 the level1 of this commerce discount
+	 */
+	public void setLevel1(BigDecimal level1);
+
+	/**
+	 * Returns the level2 of this commerce discount.
+	 *
+	 * @return the level2 of this commerce discount
+	 */
+	public BigDecimal getLevel2();
+
+	/**
+	 * Sets the level2 of this commerce discount.
+	 *
+	 * @param level2 the level2 of this commerce discount
+	 */
+	public void setLevel2(BigDecimal level2);
+
+	/**
+	 * Returns the level3 of this commerce discount.
+	 *
+	 * @return the level3 of this commerce discount
+	 */
+	public BigDecimal getLevel3();
+
+	/**
+	 * Sets the level3 of this commerce discount.
+	 *
+	 * @param level3 the level3 of this commerce discount
+	 */
+	public void setLevel3(BigDecimal level3);
 
 	/**
 	 * Returns the limitation type of this commerce discount.
@@ -371,83 +418,6 @@ public interface CommerceDiscountModel extends BaseModel<CommerceDiscount>,
 	 * @param cumulative the cumulative of this commerce discount
 	 */
 	public void setCumulative(boolean cumulative);
-
-	/**
-	 * Returns the use percentage of this commerce discount.
-	 *
-	 * @return the use percentage of this commerce discount
-	 */
-	public boolean getUsePercentage();
-
-	/**
-	 * Returns <code>true</code> if this commerce discount is use percentage.
-	 *
-	 * @return <code>true</code> if this commerce discount is use percentage; <code>false</code> otherwise
-	 */
-	public boolean isUsePercentage();
-
-	/**
-	 * Sets whether this commerce discount is use percentage.
-	 *
-	 * @param usePercentage the use percentage of this commerce discount
-	 */
-	public void setUsePercentage(boolean usePercentage);
-
-	/**
-	 * Returns the level1 of this commerce discount.
-	 *
-	 * @return the level1 of this commerce discount
-	 */
-	public BigDecimal getLevel1();
-
-	/**
-	 * Sets the level1 of this commerce discount.
-	 *
-	 * @param level1 the level1 of this commerce discount
-	 */
-	public void setLevel1(BigDecimal level1);
-
-	/**
-	 * Returns the level2 of this commerce discount.
-	 *
-	 * @return the level2 of this commerce discount
-	 */
-	public BigDecimal getLevel2();
-
-	/**
-	 * Sets the level2 of this commerce discount.
-	 *
-	 * @param level2 the level2 of this commerce discount
-	 */
-	public void setLevel2(BigDecimal level2);
-
-	/**
-	 * Returns the level3 of this commerce discount.
-	 *
-	 * @return the level3 of this commerce discount
-	 */
-	public BigDecimal getLevel3();
-
-	/**
-	 * Sets the level3 of this commerce discount.
-	 *
-	 * @param level3 the level3 of this commerce discount
-	 */
-	public void setLevel3(BigDecimal level3);
-
-	/**
-	 * Returns the maximum discount amount of this commerce discount.
-	 *
-	 * @return the maximum discount amount of this commerce discount
-	 */
-	public BigDecimal getMaximumDiscountAmount();
-
-	/**
-	 * Sets the maximum discount amount of this commerce discount.
-	 *
-	 * @param maximumDiscountAmount the maximum discount amount of this commerce discount
-	 */
-	public void setMaximumDiscountAmount(BigDecimal maximumDiscountAmount);
 
 	/**
 	 * Returns the active of this commerce discount.

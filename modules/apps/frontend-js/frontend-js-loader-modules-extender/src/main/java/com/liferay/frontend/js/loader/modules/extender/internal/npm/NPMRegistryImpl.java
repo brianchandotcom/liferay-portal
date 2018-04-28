@@ -37,7 +37,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -155,36 +154,15 @@ public class NPMRegistryImpl implements NPMRegistry {
 		Range range = Range.from(
 			jsPackageDependency.getVersionConstraints(), true);
 
-		List<JSPackage> jsPackages = new ArrayList<>();
+		for (JSPackageVersion jsPackageVersion : _jsPackageVersions) {
+			JSPackage jsPackage = jsPackageVersion._jsPackage;
+			Version version = jsPackageVersion._version;
 
-		for (JSPackage jsPackage : _jsPackages.values()) {
-			if (packageName.equals(jsPackage.getName())) {
-				Version version = Version.from(jsPackage.getVersion(), true);
+			if (packageName.equals(jsPackage.getName()) &&
+				range.test(version)) {
 
-				if (range.test(version)) {
-					jsPackages.add(jsPackage);
-				}
+				return jsPackage;
 			}
-		}
-
-		Collections.sort(
-			jsPackages,
-			new Comparator<JSPackage>() {
-
-				@Override
-				public int compare(JSPackage jsPackage1, JSPackage jsPackage2) {
-					Version version1 = Version.from(
-						jsPackage1.getVersion(), true);
-					Version version2 = Version.from(
-						jsPackage2.getVersion(), true);
-
-					return version2.compareTo(version1);
-				}
-
-			});
-
-		for (JSPackage jsPackage : jsPackages) {
-			return jsPackage;
 		}
 
 		return null;
@@ -311,6 +289,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private synchronized void _refreshJSModuleCaches() {
 		Map<String, JSModule> jsModules = new HashMap<>();
 		Map<String, JSPackage> jsPackages = new HashMap<>();
+		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
 		Map<String, JSModule> resolvedJSModules = new HashMap<>();
 		Map<String, JSPackage> resolvedJSPackages = new HashMap<>();
 
@@ -319,6 +298,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 				jsPackages.put(jsPackage.getId(), jsPackage);
 				resolvedJSPackages.put(jsPackage.getResolvedId(), jsPackage);
 
+				jsPackageVersions.add(new JSPackageVersion(jsPackage));
+
 				for (JSModule jsModule : jsPackage.getJSModules()) {
 					jsModules.put(jsModule.getId(), jsModule);
 					resolvedJSModules.put(jsModule.getResolvedId(), jsModule);
@@ -326,8 +307,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 			}
 		}
 
+		Comparator<JSPackageVersion> comparator = Comparator.comparing(
+			JSPackageVersion::getVersion);
+
+		jsPackageVersions.sort(comparator.reversed());
+
 		_jsModules = jsModules;
 		_jsPackages = jsPackages;
+		_jsPackageVersions = jsPackageVersions;
 		_resolvedJSModules = resolvedJSModules;
 		_resolvedJSPackages = resolvedJSPackages;
 	}
@@ -374,8 +361,26 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private JSONFactory _jsonFactory;
 
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
+	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();
 	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();
+
+	private static class JSPackageVersion {
+
+		public Version getVersion() {
+			return _version;
+		}
+
+		private JSPackageVersion(JSPackage jsPackage) {
+			_jsPackage = jsPackage;
+
+			_version = Version.from(jsPackage.getVersion(), true);
+		}
+
+		private final JSPackage _jsPackage;
+		private final Version _version;
+
+	}
 
 	private class NPMRegistryBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<JSBundle> {

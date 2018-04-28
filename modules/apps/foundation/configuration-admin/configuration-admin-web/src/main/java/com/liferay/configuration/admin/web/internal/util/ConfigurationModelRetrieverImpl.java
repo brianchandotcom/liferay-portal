@@ -286,6 +286,14 @@ public class ConfigurationModelRetrieverImpl
 	}
 
 	@Override
+	public ConfigurationScreen getConfigurationScreen(
+		String configurationScreenKey) {
+
+		return _configurationScreenServiceTrackerMap.getService(
+			configurationScreenKey);
+	}
+
+	@Override
 	public List<ConfigurationModel> getFactoryInstances(
 			ConfigurationModel factoryConfigurationModel)
 		throws IOException {
@@ -332,6 +340,16 @@ public class ConfigurationModelRetrieverImpl
 						bundleContext.getService(serviceReference);
 
 					emitter.emit(configurationCategory.getCategoryKey());
+				});
+
+		_configurationScreenServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ConfigurationScreen.class, null,
+				(serviceReference, emitter) -> {
+					ConfigurationScreen configurationScreen =
+						bundleContext.getService(serviceReference);
+
+					emitter.emit(configurationScreen.getKey());
 				});
 		_configurationScreensServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
@@ -537,6 +555,8 @@ public class ConfigurationModelRetrieverImpl
 		_configurationCategoriesServiceTrackerMap;
 	private ServiceTrackerMap<String, ConfigurationCategory>
 		_configurationCategoryServiceTrackerMap;
+	private ServiceTrackerMap<String, ConfigurationScreen>
+		_configurationScreenServiceTrackerMap;
 	private ServiceTrackerMap<String, List<ConfigurationScreen>>
 		_configurationScreensServiceTrackerMap;
 

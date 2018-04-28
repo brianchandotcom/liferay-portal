@@ -51,6 +51,10 @@ public class StartupHelperUtil {
 		return getStartupHelper().isVerified();
 	}
 
+	public static void printPatchLevel() {
+		getStartupHelper().printPatchLevel();
+	}
+
 	public static void setDbNew(boolean dbNew) {
 		getStartupHelper().setDbNew(dbNew);
 	}

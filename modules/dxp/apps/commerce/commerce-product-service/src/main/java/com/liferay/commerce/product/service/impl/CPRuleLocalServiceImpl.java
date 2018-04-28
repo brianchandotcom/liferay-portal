@@ -59,7 +59,7 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPRule addCPRule(
-			String name, boolean active, String type, String typeSettings,
+			String name, boolean active, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -81,7 +81,6 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 		cpRule.setName(name);
 		cpRule.setActive(active);
 		cpRule.setType(type);
-		cpRule.setTypeSettings(typeSettings);
 		cpRule.setExpandoBridgeAttributes(serviceContext);
 
 		cpRulePersistence.update(cpRule);
@@ -97,6 +96,11 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPRule deleteCPRule(CPRule cpRule) throws PortalException {
+
+		// Commerce product rule asset category rels
+
+		cpRuleAssetCategoryRelLocalService.
+			deleteCPRuleAssetCategoryRelsByCPRuleId(cpRule.getCPRuleId());
 
 		// Commerce product rule user segment rels
 
@@ -187,7 +191,7 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 	@Override
 	public CPRule updateCPRule(
 			long cpRuleId, String name, boolean active, String type,
-			String typeSettings, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPRule cpRule = cpRulePersistence.findByPrimaryKey(cpRuleId);
@@ -197,7 +201,6 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 		cpRule.setName(name);
 		cpRule.setActive(active);
 		cpRule.setType(type);
-		cpRule.setTypeSettings(typeSettings);
 		cpRule.setExpandoBridgeAttributes(serviceContext);
 
 		return cpRulePersistence.update(cpRule);

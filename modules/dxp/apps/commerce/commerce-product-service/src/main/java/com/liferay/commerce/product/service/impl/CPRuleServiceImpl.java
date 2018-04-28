@@ -40,7 +40,7 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 
 	@Override
 	public CPRule addCPRule(
-			String name, boolean active, String type, String typeSettings,
+			String name, boolean active, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -48,8 +48,7 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CPActionKeys.ADD_COMMERCE_PRODUCT_RULE);
 
-		return cpRuleLocalService.addCPRule(
-			name, active, type, typeSettings, serviceContext);
+		return cpRuleLocalService.addCPRule(name, active, type, serviceContext);
 	}
 
 	@Override
@@ -112,14 +111,14 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 	@Override
 	public CPRule updateCPRule(
 			long cpRuleId, String name, boolean active, String type,
-			String typeSettings, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_cpRuleResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.UPDATE);
 
 		return cpRuleLocalService.updateCPRule(
-			cpRuleId, name, active, type, typeSettings, serviceContext);
+			cpRuleId, name, active, type, serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CPRule>

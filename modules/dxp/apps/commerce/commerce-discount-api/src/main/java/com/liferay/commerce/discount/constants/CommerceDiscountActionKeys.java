@@ -21,12 +21,6 @@ public class CommerceDiscountActionKeys {
 
 	public static final String ADD_COMMERCE_DISCOUNT = "ADD_COMMERCE_DISCOUNT";
 
-	public static final String MANAGE_COMMERCE_DISCOUNT_RULES =
-		"MANAGE_COMMERCE_DISCOUNT_RULES";
-
-	public static final String MANAGE_COMMERCE_DISCOUNT_USER_SEGMENTS =
-		"MANAGE_COMMERCE_DISCOUNT_USER_SEGMENTS";
-
 	public static final String VIEW_COMMERCE_DISCOUNTS =
 		"VIEW_COMMERCE_DISCOUNTS";
 

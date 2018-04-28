@@ -41,6 +41,10 @@ AUI.add(
 
 		var TPL_CONFIRM_DELETE_FIELD = '<p>' + Liferay.Language.get('are-you-sure-you-want-to-delete-this-field') + '</p>';
 
+		var TPL_REPEATABLE_ADD = '<a class="icon-plus-sign lfr-ddm-form-field-repeatable-add-button" href="javascript:;"></a>';
+
+		var TPL_REPEATABLE_TOOLBAR = '<div class="lfr-ddm-form-field-repeatable-toolbar">' + TPL_REPEATABLE_ADD + '</div>';
+
 		var TPL_REQURIED_FIELDS = '<label class="hide required-warning">{message}</label>';
 
 		var Util = Liferay.DDM.Renderer.Util;
@@ -738,6 +742,14 @@ AUI.add(
 						);
 					},
 
+					_addRepeatableIcon: function(field) {
+						var instance = this;
+
+						var container = field.get('container');
+
+						container.append(TPL_REPEATABLE_TOOLBAR);
+					},
+
 					_afterActivePageNumberChange: function(event) {
 						var instance = this;
 
@@ -815,6 +827,7 @@ AUI.add(
 						instance._renderFields();
 						instance._renderPages();
 						instance._renderRequiredFieldsWarning();
+						instance._renderRepeatableFieldsIcon();
 						instance._syncRequiredFieldsWarning();
 						instance._syncRowsLastColumnUI();
 						instance._traverseFormPages();
@@ -924,6 +937,7 @@ AUI.add(
 					_getFieldActionsLayout: function() {
 						var instance = this;
 
+						instance._toggleRepeatableIcon();
 						instance._toggleRequiredMessage();
 
 						return '<div class="lfr-ddm-field-actions-container"> ' +
@@ -1237,6 +1251,26 @@ AUI.add(
 						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
 					},
 
+					_renderRepeatableFieldsIcon: function() {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+
+						var visitor = instance.get('visitor');
+
+						visitor.set('pages', instance.get('layouts'));
+
+						instance.eachFields(
+							function(field) {
+								var fieldVisible = boundingBox.contains(field.get('container'));
+
+								if (fieldVisible && field.get('repeatable')) {
+									instance._addRepeatableIcon(field);
+								}
+							}
+						);
+					},
+
 					_renderRequiredFieldsWarning: function() {
 						var instance = this;
 
@@ -1358,6 +1392,20 @@ AUI.add(
 						var rows = instance.getActiveLayout().get('rows');
 
 						rows.forEach(instance._syncRowLastColumnUI);
+					},
+
+					_toggleRepeatableIcon: function() {
+						var instance = this;
+
+						var sidebarField = instance.get('fieldSettingsPanel').get('field');
+
+						if (sidebarField) {
+							var repeatable = sidebarField.get('repeatable');
+
+							if (repeatable) {
+								instance._addRepeatableIcon(sidebarField);
+							}
+						}
 					},
 
 					_toggleRequiredMessage: function() {

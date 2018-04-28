@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.product.service.CPRuleAssetCategoryRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +47,10 @@ public class AssetCategoryModelListener
 			_cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(
 				assetCategory.getGroupId(), AssetCategory.class,
 				assetCategory.getCategoryId());
+
+			_cpRuleAssetCategoryRelLocalService.
+				deleteCPRuleAssetCategoryRelsByAssetCategoryId(
+					assetCategory.getCategoryId());
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
@@ -66,5 +71,9 @@ public class AssetCategoryModelListener
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+
+	@Reference
+	private CPRuleAssetCategoryRelLocalService
+		_cpRuleAssetCategoryRelLocalService;
 
 }

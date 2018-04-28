@@ -290,10 +290,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 			String urlTitle)
 		throws PortalException {
 
-		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
-			urlTitle);
-
-		int exceptionType = CPFriendlyURLEntryImpl.validate(normalizedUrlTitle);
+		int exceptionType = CPFriendlyURLEntryImpl.validate(urlTitle);
 
 		if (exceptionType > 0) {
 			if (_log.isDebugEnabled()) {

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.constants;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPActionKeys {
 
@@ -37,6 +38,9 @@ public class CPActionKeys {
 	public static final String ADD_COMMERCE_PRODUCT_RULE =
 		"ADD_COMMERCE_PRODUCT_RULE";
 
+	public static final String ADD_COMMERCE_PRODUCT_RULE_CATEGORY_REL =
+		"ADD_COMMERCE_PRODUCT_RULE_CATEGORY_REL";
+
 	public static final String ADD_COMMERCE_PRODUCT_RULE_USER_SEGMENT =
 		"ADD_COMMERCE_PRODUCT_RULE_USER_SEGMENT";
 
@@ -48,6 +52,9 @@ public class CPActionKeys {
 
 	public static final String DELETE_COMMERCE_PRODUCT_OPTION_VALUE =
 		"DELETE_COMMERCE_PRODUCT_OPTION_VALUE";
+
+	public static final String DELETE_COMMERCE_PRODUCT_RULE_CATEGORY_REL =
+		"DELETE_COMMERCE_PRODUCT_RULE_CATEGORY_REL";
 
 	public static final String DELETE_COMMERCE_PRODUCT_RULE_USER_SEGMENT =
 		"DELETE_COMMERCE_PRODUCT_RULE_USER_SEGMENT";

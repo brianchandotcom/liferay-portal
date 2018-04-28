@@ -26,19 +26,17 @@
 
 		<column name="title" type="String" />
 		<column name="target" type="String" />
-		<column name="type" type="String" />
-		<column name="typeSettings" type="String" />
 		<column name="useCouponCode" type="boolean" />
 		<column name="couponCode" type="String" />
+		<column name="usePercentage" type="boolean" />
+		<column name="maximumDiscountAmount" type="BigDecimal" />
+		<column name="level1" type="BigDecimal" />
+		<column name="level2" type="BigDecimal" />
+		<column name="level3" type="BigDecimal" />
 		<column name="limitationType" type="String" />
 		<column name="limitationTimes" type="int" />
 		<column name="numberOfUse" type="int" />
 		<column name="cumulative" type="boolean" />
-		<column name="usePercentage" type="boolean" />
-		<column name="level1" type="BigDecimal" />
-		<column name="level2" type="BigDecimal" />
-		<column name="level3" type="BigDecimal" />
-		<column name="maximumDiscountAmount" type="BigDecimal" />
 		<column name="active" type="boolean" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
@@ -73,6 +71,50 @@
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CommerceDiscountRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceDiscountRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceDiscountId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="CD_CN" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="CN_CPK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceDiscountRule" remote-service="true">
 
 		<!-- PK fields -->
@@ -105,7 +147,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="commerceDiscountId" return-type="Collection">
+		<finder name="CommerceDiscountId" return-type="Collection">
 			<finder-column name="commerceDiscountId" />
 		</finder>
 	</entity>
@@ -140,7 +182,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="commerceDiscountId" return-type="Collection">
+		<finder name="CommerceDiscountId" return-type="Collection">
 			<finder-column name="commerceDiscountId" />
 		</finder>
 		<finder name="CommerceUserSegmentEntryId" return-type="Collection">
@@ -150,5 +192,9 @@
 	<exceptions>
 		<exception>CommerceDiscountDisplayDate</exception>
 		<exception>CommerceDiscountExpirationDate</exception>
+		<exception>CommerceDiscountLimitationType</exception>
+		<exception>CommerceDiscountRuleType</exception>
+		<exception>CommerceDiscountTarget</exception>
+		<exception>CommerceDiscountTitle</exception>
 	</exceptions>
 </service-builder>

@@ -128,6 +128,38 @@ public class CPDefinitionLocalServiceUtil {
 		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
 		String productTypeName, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, String ddmStructureKey, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, String defaultSku,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCPDefinition(titleMap, shortDescriptionMap,
+			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, productTypeName, ignoreSKUCombinations,
+			shippable, freeShipping, shipSeparately, shippingExtraPrice, width,
+			height, depth, weight, cpTaxCategoryId, taxExempt,
+			telcoOrElectronics, ddmStructureKey, published, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, defaultSku, serviceContext);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> shortDescriptionMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.util.Map<java.util.Locale, String> urlTitleMap,
+		java.util.Map<java.util.Locale, String> metaTitleMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
+		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		String productTypeName, boolean ignoreSKUCombinations,
 		String ddmStructureKey, boolean published, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -504,7 +536,8 @@ public class CPDefinitionLocalServiceUtil {
 	/**
 	* Moves the commerce product definition to the recycle bin.
 	*
-	* @param userId the primary key of the user moving the commerce product definition
+	* @param userId the primary key of the user moving the commerce product
+	definition
 	* @param cpDefinition the commerce product definition to be moved
 	* @return the moved commerce product definition
 	*/
@@ -518,8 +551,10 @@ public class CPDefinitionLocalServiceUtil {
 	/**
 	* Moves the commerce product definition with the ID to the recycle bin.
 	*
-	* @param userId the primary key of the user moving the commerce product definition
-	* @param cpDefinitionId the primary key of the commerce product definition to be moved
+	* @param userId the primary key of the user moving the commerce product
+	definition
+	* @param cpDefinitionId the primary key of the commerce product definition
+	to be moved
 	* @return the moved commerce product definition
 	*/
 	public static com.liferay.commerce.product.model.CPDefinition moveCPDefinitionToTrash(
@@ -529,10 +564,13 @@ public class CPDefinitionLocalServiceUtil {
 	}
 
 	/**
-	* Restores the commerce product definition with the ID from the recycle bin.
+	* Restores the commerce product definition with the ID from the recycle
+	* bin.
 	*
-	* @param userId the primary key of the user restoring the commerce product definition
-	* @param cpDefinitionId the primary key of the commerce product definition to be restored
+	* @param userId the primary key of the user restoring the commerce product
+	definition
+	* @param cpDefinitionId the primary key of the commerce product definition
+	to be restored
 	* @return the restored commerce product definition from the recycle bin
 	*/
 	public static com.liferay.commerce.product.model.CPDefinition restoreCPDefinitionFromTrash(

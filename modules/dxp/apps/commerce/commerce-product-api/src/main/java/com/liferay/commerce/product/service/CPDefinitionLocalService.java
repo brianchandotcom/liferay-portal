@@ -114,6 +114,23 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+		Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
+		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics, String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		String defaultSku, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
 		Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
@@ -403,7 +420,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	/**
 	* Moves the commerce product definition to the recycle bin.
 	*
-	* @param userId the primary key of the user moving the commerce product definition
+	* @param userId the primary key of the user moving the commerce product
+	definition
 	* @param cpDefinition the commerce product definition to be moved
 	* @return the moved commerce product definition
 	*/
@@ -414,18 +432,23 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	/**
 	* Moves the commerce product definition with the ID to the recycle bin.
 	*
-	* @param userId the primary key of the user moving the commerce product definition
-	* @param cpDefinitionId the primary key of the commerce product definition to be moved
+	* @param userId the primary key of the user moving the commerce product
+	definition
+	* @param cpDefinitionId the primary key of the commerce product definition
+	to be moved
 	* @return the moved commerce product definition
 	*/
 	public CPDefinition moveCPDefinitionToTrash(long userId, long cpDefinitionId)
 		throws PortalException;
 
 	/**
-	* Restores the commerce product definition with the ID from the recycle bin.
+	* Restores the commerce product definition with the ID from the recycle
+	* bin.
 	*
-	* @param userId the primary key of the user restoring the commerce product definition
-	* @param cpDefinitionId the primary key of the commerce product definition to be restored
+	* @param userId the primary key of the user restoring the commerce product
+	definition
+	* @param cpDefinitionId the primary key of the commerce product definition
+	to be restored
 	* @return the restored commerce product definition from the recycle bin
 	*/
 	@Indexable(type = IndexableType.REINDEX)

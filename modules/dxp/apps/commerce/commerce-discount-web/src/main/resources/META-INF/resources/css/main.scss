@@ -1,0 +1,17 @@
+.portlet-commerce-discount {
+	.discount-detail-header {
+		background-color: #FFF;
+	}
+
+	.breadcrumb {
+		margin-bottom: 0;
+
+		& > li {
+			text-transform: capitalize;
+
+			a {
+				font-size: 0.9rem;
+			}
+		}
+	}
+}

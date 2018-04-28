@@ -17,15 +17,10 @@ package com.liferay.commerce.checkout.web.internal.util;
 import com.liferay.commerce.checkout.web.internal.display.context.BaseAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
-import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -89,18 +84,8 @@ public class BillingAddressCommerceCheckoutStep
 
 	@Override
 	protected void updateCommerceOrderAddress(
-			User user, CommerceOrder commerceOrder, long commerceAddressId)
+			CommerceOrder commerceOrder, long commerceAddressId)
 		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		if (!CommerceOrderPermission.contains(
-				permissionChecker, commerceOrder,
-				CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS)) {
-
-			return;
-		}
 
 		commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder.getCommerceOrderId(), commerceAddressId,

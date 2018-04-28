@@ -17,6 +17,7 @@ package com.liferay.commerce.checkout.web.internal.util;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.BaseAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.exception.CommerceAddressCityException;
 import com.liferay.commerce.exception.CommerceAddressCountryException;
 import com.liferay.commerce.exception.CommerceAddressNameException;
@@ -25,12 +26,12 @@ import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -153,12 +154,18 @@ public abstract class BaseAddressCommerceCheckoutStep
 			commerceAddressId = commerceAddress.getCommerceAddressId();
 		}
 
-		updateCommerceOrderAddress(
-			themeDisplay.getUser(), commerceOrder, commerceAddressId);
+		if (!CommerceOrderPermission.contains(
+				themeDisplay.getPermissionChecker(), commerceOrder,
+				CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS)) {
+
+			return;
+		}
+
+		updateCommerceOrderAddress(commerceOrder, commerceAddressId);
 	}
 
 	protected abstract void updateCommerceOrderAddress(
-			User user, CommerceOrder commerceOrder, long commerceAddressId)
+			CommerceOrder commerceOrder, long commerceAddressId)
 		throws Exception;
 
 	@Reference

@@ -3379,6 +3379,36 @@ classpath.
 - [LPS-80091]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.17.
 
+## 5.3.94 - 2018-04-25
+
+### Changed
+- [LPS-79963]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.18.
+
+## 5.3.95 - 2018-04-25
+
+### Changed
+- [LPS-79388]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.19.
+
+## 5.3.96 - 2018-04-26
+
+### Changed
+- [LPS-80184]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.20.
+
+## 5.3.97 - 2018-04-26
+
+### Changed
+- [LPS-80125]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.21.
+
+## 5.3.98 - 2018-04-26
+
+### Changed
+- [LPS-80123]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.22.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3751,6 +3781,7 @@ classpath.
 [LPS-79360]: https://issues.liferay.com/browse/LPS-79360
 [LPS-79365]: https://issues.liferay.com/browse/LPS-79365
 [LPS-79386]: https://issues.liferay.com/browse/LPS-79386
+[LPS-79388]: https://issues.liferay.com/browse/LPS-79388
 [LPS-79450]: https://issues.liferay.com/browse/LPS-79450
 [LPS-79576]: https://issues.liferay.com/browse/LPS-79576
 [LPS-79623]: https://issues.liferay.com/browse/LPS-79623
@@ -3760,8 +3791,12 @@ classpath.
 [LPS-79799]: https://issues.liferay.com/browse/LPS-79799
 [LPS-79919]: https://issues.liferay.com/browse/LPS-79919
 [LPS-79953]: https://issues.liferay.com/browse/LPS-79953
+[LPS-79963]: https://issues.liferay.com/browse/LPS-79963
 [LPS-80055]: https://issues.liferay.com/browse/LPS-80055
 [LPS-80091]: https://issues.liferay.com/browse/LPS-80091
+[LPS-80123]: https://issues.liferay.com/browse/LPS-80123
+[LPS-80125]: https://issues.liferay.com/browse/LPS-80125
+[LPS-80184]: https://issues.liferay.com/browse/LPS-80184
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

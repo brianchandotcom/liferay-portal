@@ -104,7 +104,7 @@ portletURL.setParameter("tabs2", tabs2);
 	</table>
 </div>
 
-<aui:script>
+<aui:script use="liferay-tasks">
 	Liferay.Tasks.init(
 		{
 			baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.ACTION_PHASE) %>',

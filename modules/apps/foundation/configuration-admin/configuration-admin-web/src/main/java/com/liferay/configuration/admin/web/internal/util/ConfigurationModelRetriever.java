@@ -14,11 +14,6 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
-import com.liferay.configuration.admin.category.ConfigurationCategory;
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
-import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay;
-import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 
 import java.io.IOException;
@@ -40,18 +35,6 @@ public interface ConfigurationModelRetriever {
 
 	public Configuration getConfiguration(String pid);
 
-	public ConfigurationCategory getConfigurationCategory(
-		String configurationCategoryKey);
-
-	public ConfigurationCategoryMenuDisplay getConfigurationCategoryMenuDisplay(
-		String configurationCategory, String languageId);
-
-	public List<ConfigurationCategorySectionDisplay>
-		getConfigurationCategorySectionDisplays();
-
-	public Set<ConfigurationEntry> getConfigurationEntries(
-		String configurationCategory, String languageId);
-
 	public Map<String, ConfigurationModel> getConfigurationModels();
 
 	public Map<String, ConfigurationModel> getConfigurationModels(
@@ -62,9 +45,6 @@ public interface ConfigurationModelRetriever {
 
 	public Set<ConfigurationModel> getConfigurationModels(
 		String configurationCategory, String languageId);
-
-	public ConfigurationScreen getConfigurationScreen(
-		String configurationScreenKey);
 
 	public List<ConfigurationModel> getFactoryInstances(
 			ConfigurationModel factoryConfigurationModel)

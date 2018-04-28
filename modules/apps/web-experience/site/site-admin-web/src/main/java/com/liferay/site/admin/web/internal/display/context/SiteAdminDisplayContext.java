@@ -499,6 +499,7 @@ public class SiteAdminDisplayContext {
 			{
 				add(
 					dropdownItem -> {
+						dropdownItem.setActive(true);
 						dropdownItem.setHref(
 							getPortletURL(), "orderByCol", "name");
 						dropdownItem.setLabel(

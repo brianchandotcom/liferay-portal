@@ -50,9 +50,27 @@ if (group != null) {
 }
 %>
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="sites" />
-</liferay-util:include>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= siteAdminDisplayContext.getNavigationItems() %>"
+/>
+
+<clay:management-toolbar
+	actionItems="<%= siteAdminDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= siteAdminDisplayContext.getClearResultsURL() %>"
+	componentId="siteAdminWebManagementToolbar"
+	creationMenu="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) ? siteAdminDisplayContext.getCreationMenu() : null %>"
+	filterItems="<%= siteAdminDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	searchActionURL="<%= siteAdminDisplayContext.getSearchActionURL() %>"
+	searchContainerId="sites"
+	searchFormName="searchFm"
+	showInfoButton="<%= true %>"
+	sortingOrder="<%= siteAdminDisplayContext.getOrderByType() %>"
+	sortingURL="<%= siteAdminDisplayContext.getSortingURL() %>"
+	totalItems="<%= siteAdminDisplayContext.getTotalItems() %>"
+	viewTypes="<%= siteAdminDisplayContext.getViewTypeItems() %>"
+/>
 
 <div id="<portlet:namespace />sitesContainer">
 	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
@@ -120,6 +138,14 @@ if (group != null) {
 		</div>
 	</div>
 </div>
+
+<aui:script>
+	window.<portlet:namespace />deleteSites = function() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			submitForm(AUI.$(document.<portlet:namespace />fm));
+		}
+	}
+</aui:script>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_site_admin_web.view_jsp");

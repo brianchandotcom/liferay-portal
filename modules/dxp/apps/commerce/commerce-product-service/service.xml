@@ -828,7 +828,6 @@
 		<column name="name" type="String" />
 		<column name="active" type="boolean" />
 		<column name="type" type="String" />
-		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 
@@ -845,6 +844,44 @@
 		<!-- References -->
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CPRuleAssetCategoryRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="CPRuleAssetCategoryRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="CPRuleId" type="long" />
+		<column name="assetCategoryId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CPRuleId" return-type="Collection">
+			<finder-column name="CPRuleId" />
+		</finder>
+		<finder name="AssetCategoryId" return-type="Collection">
+			<finder-column name="assetCategoryId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CPRuleUserSegmentRel" remote-service="true">
 

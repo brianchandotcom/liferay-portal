@@ -27,7 +27,6 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -142,7 +141,7 @@ public class PaymentMethodCommerceCheckoutStep
 			commerceOrderId);
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(themeDisplay.getUser());
+			themeDisplay.getPermissionChecker();
 
 		if (!CommerceOrderPermission.contains(
 				permissionChecker, commerceOrder,

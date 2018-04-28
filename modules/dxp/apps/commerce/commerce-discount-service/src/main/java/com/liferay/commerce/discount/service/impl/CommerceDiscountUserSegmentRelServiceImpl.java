@@ -14,14 +14,17 @@
 
 package com.liferay.commerce.discount.service.impl;
 
-import com.liferay.commerce.discount.constants.CommerceDiscountActionKeys;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel;
 import com.liferay.commerce.discount.service.base.CommerceDiscountUserSegmentRelServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -37,8 +40,7 @@ public class CommerceDiscountUserSegmentRelServiceImpl
 		throws PortalException {
 
 		_commerceDiscountResourcePermission.check(
-			getPermissionChecker(), commerceDiscountId,
-			CommerceDiscountActionKeys.MANAGE_COMMERCE_DISCOUNT_USER_SEGMENTS);
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
 
 		return commerceDiscountUserSegmentRelLocalService.
 			addCommerceDiscountUserSegmentRel(
@@ -58,11 +60,27 @@ public class CommerceDiscountUserSegmentRelServiceImpl
 		_commerceDiscountResourcePermission.check(
 			getPermissionChecker(),
 			commerceDiscountUserSegmentRel.getCommerceDiscountId(),
-			CommerceDiscountActionKeys.MANAGE_COMMERCE_DISCOUNT_USER_SEGMENTS);
+			ActionKeys.UPDATE);
 
 		commerceDiscountUserSegmentRelLocalService.
 			deleteCommerceDiscountUserSegmentRel(
 				commerceDiscountUserSegmentRel);
+	}
+
+	@Override
+	public List<CommerceDiscountUserSegmentRel>
+			getCommerceDiscountUserSegmentRels(
+				long commerceDiscountId, int start, int end,
+				OrderByComparator<CommerceDiscountUserSegmentRel>
+					orderByComparator)
+		throws PortalException {
+
+		_commerceDiscountResourcePermission.check(
+			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
+
+		return commerceDiscountUserSegmentRelLocalService.
+			getCommerceDiscountUserSegmentRels(
+				commerceDiscountId, start, end, orderByComparator);
 	}
 
 	private static volatile ModelResourcePermission<CommerceDiscount>

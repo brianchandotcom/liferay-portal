@@ -19,6 +19,9 @@ import com.liferay.commerce.discount.service.base.CommerceDiscountUserSegmentRel
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Marco Leo
@@ -61,7 +64,7 @@ public class CommerceDiscountUserSegmentRelLocalServiceImpl
 	public void deleteCommerceDiscountUserSegmentRelsByCommerceDiscountId(
 		long commerceDiscountId) {
 
-		commerceDiscountUserSegmentRelPersistence.removeBycommerceDiscountId(
+		commerceDiscountUserSegmentRelPersistence.removeByCommerceDiscountId(
 			commerceDiscountId);
 	}
 
@@ -72,6 +75,18 @@ public class CommerceDiscountUserSegmentRelLocalServiceImpl
 
 		commerceDiscountUserSegmentRelPersistence.
 			removeByCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
+	}
+
+	@Override
+	public List<CommerceDiscountUserSegmentRel>
+		getCommerceDiscountUserSegmentRels(
+			long commerceDiscountId, int start, int end,
+			OrderByComparator<CommerceDiscountUserSegmentRel>
+				orderByComparator) {
+
+		return
+			commerceDiscountUserSegmentRelPersistence.findByCommerceDiscountId(
+				commerceDiscountId, start, end, orderByComparator);
 	}
 
 }

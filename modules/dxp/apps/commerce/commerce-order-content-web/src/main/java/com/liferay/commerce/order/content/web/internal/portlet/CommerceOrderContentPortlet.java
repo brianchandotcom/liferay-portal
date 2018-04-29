@@ -15,8 +15,8 @@
 package com.liferay.commerce.order.content.web.internal.portlet;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

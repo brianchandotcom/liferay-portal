@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.item.selector.web.internal;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.item.selector.criterion.CommerceOrderItemItemSelectorCriterion;
 import com.liferay.commerce.item.selector.web.internal.display.context.CommerceOrderItemItemSelectorViewDisplayContext;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;

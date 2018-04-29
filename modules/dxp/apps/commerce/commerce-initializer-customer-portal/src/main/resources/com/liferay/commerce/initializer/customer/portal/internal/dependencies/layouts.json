@@ -5,7 +5,7 @@
 		"portlets": []
 	},
 	{
-		"layoutTemplateId": "1_2_columns_i",
+		"layoutTemplateId": "catalog_1_2_columns",
 		"name": "Catalog",
 		"portlets": [
 			{

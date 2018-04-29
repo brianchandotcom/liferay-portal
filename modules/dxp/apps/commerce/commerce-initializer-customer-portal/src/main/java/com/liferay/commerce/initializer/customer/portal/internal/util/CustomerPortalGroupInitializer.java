@@ -366,8 +366,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			_commerceWarehouseLocalService.addCommerceWarehouse(
 				"Thief River Falls, Minnesota", StringPool.BLANK, true,
 				"1101 MN-1", "", "", "Thief River Falls", "56701",
-				commerceCountry.getCommerceCountryId(),
-				commerceRegion.getCommerceRegionId(), 48.1252560, -96.1635400,
+				commerceRegion.getCommerceRegionId(),
+				commerceCountry.getCommerceCountryId(), 48.1252560, -96.1635400,
 				serviceContext));
 
 		commerceRegion = _commerceRegionLocalService.getCommerceRegion(
@@ -377,8 +377,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			_commerceWarehouseLocalService.addCommerceWarehouse(
 				"Des Moines, Iowa", StringPool.BLANK, true, "1330 Grand Ave",
 				"", "", "Des Moines", "50309",
-				commerceCountry.getCommerceCountryId(),
-				commerceRegion.getCommerceRegionId(), 41.5853130, -93.6345580,
+				commerceRegion.getCommerceRegionId(),
+				commerceCountry.getCommerceCountryId(), 41.5853130, -93.6345580,
 				serviceContext));
 
 		commerceRegion = _commerceRegionLocalService.getCommerceRegion(
@@ -388,8 +388,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			_commerceWarehouseLocalService.addCommerceWarehouse(
 				"Twin Falls, Idaho", StringPool.BLANK, true, "660 Park Ave", "",
 				"", "Twin Falls", "83301",
-				commerceCountry.getCommerceCountryId(),
-				commerceRegion.getCommerceRegionId(), 42.5408580, -114.4663890,
+				commerceRegion.getCommerceRegionId(),
+				commerceCountry.getCommerceCountryId(), 42.5408580, -114.4663890,
 				serviceContext));
 
 		return commerceWarehouses;
@@ -551,12 +551,13 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			BigDecimal cost = BigDecimal.valueOf(jsonObject.getDouble("cost"));
+			BigDecimal cost = BigDecimal.valueOf(
+				jsonObject.getDouble("Cost", 0));
 			String description = jsonObject.getString("Description");
 			String image = jsonObject.getString("Image");
 			String name = jsonObject.getString("Name");
 			BigDecimal price = BigDecimal.valueOf(
-				jsonObject.getDouble("Price"));
+				jsonObject.getDouble("Price", 0));
 			String sku = jsonObject.getString("Sku");
 
 			int[] warehouseQuantities = {

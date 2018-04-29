@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -164,7 +166,11 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			commerceOrder = _getUserCurrentCommerceOrder(themeDisplay);
 		}
 
-		if ((commerceOrder != null) && !commerceOrder.isOpen()) {
+		if ((commerceOrder != null) &&
+			!_commerceOrderModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), commerceOrder,
+				ActionKeys.UPDATE)) {
+
 			return null;
 		}
 
@@ -195,6 +201,16 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		httpSession.setAttribute(
 			_getCookieName(commerceOrder.getGroupId()),
 			commerceOrder.getUuid());
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<CommerceOrder> modelResourcePermission) {
+
+		_commerceOrderModelResourcePermission = modelResourcePermission;
 	}
 
 	private CommerceOrder _checkGuestOrder(
@@ -387,6 +403,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			themeDisplay.getRequest(), themeDisplay.getResponse(), cookie);
 	}
 
+	private static ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
 	private static final ThreadLocal<CommerceOrder>
 		_commerceOrderUuidThreadLocal = new CentralizedThreadLocal<>(
 			CommerceOrderHttpHelperImpl.class.getName());

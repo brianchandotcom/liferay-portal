@@ -111,6 +111,13 @@ public class CommerceRegionLocalServiceImpl
 	}
 
 	@Override
+	public CommerceRegion getCommerceRegion(long commerceCountryId, String code)
+		throws PortalException {
+
+		return commerceRegionPersistence.findByC_C(commerceCountryId, code);
+	}
+
+	@Override
 	public List<CommerceRegion> getCommerceRegions(
 		long commerceCountryId, boolean active) {
 

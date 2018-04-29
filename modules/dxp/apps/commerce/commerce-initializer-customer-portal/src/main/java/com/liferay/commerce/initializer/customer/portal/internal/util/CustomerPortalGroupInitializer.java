@@ -483,7 +483,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(layoutsJSON);
 
-		_cpFileImporter.createLayouts(jsonArray, false, serviceContext);
+		_cpFileImporter.createLayouts(
+			jsonArray, false, clazz.getClassLoader(), _DEPENDENCY_PATH,
+			serviceContext);
 	}
 
 	protected void createRoles(ServiceContext serviceContext) throws Exception {

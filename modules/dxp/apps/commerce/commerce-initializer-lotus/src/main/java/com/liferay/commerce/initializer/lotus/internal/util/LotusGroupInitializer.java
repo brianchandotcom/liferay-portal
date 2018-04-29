@@ -214,7 +214,9 @@ public class LotusGroupInitializer implements GroupInitializer {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(layoutsJSON);
 
-		_cpFileImporter.createLayouts(jsonArray, false, serviceContext);
+		_cpFileImporter.createLayouts(
+			jsonArray, false, clazz.getClassLoader(), _DEPENDENCY_PATH,
+			serviceContext);
 	}
 
 	protected DDMTemplate getDDMTemplate(ServiceContext serviceContext)

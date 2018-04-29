@@ -20,16 +20,27 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
+import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceCountryLocalService;
+import com.liferay.commerce.service.CommerceRegionLocalService;
+import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
+import com.liferay.commerce.service.CommerceWarehouseLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -80,6 +91,8 @@ import com.liferay.site.initializer.GroupInitializer;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -335,6 +348,53 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		return true;
 	}
 
+	protected List<CommerceWarehouse> addCommerceWarehouses(
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceCountry commerceCountry =
+			_commerceCountryLocalService.fetchCommerceCountry(
+				serviceContext.getScopeGroupId(), 840);
+
+		CommerceRegion commerceRegion =
+			_commerceRegionLocalService.getCommerceRegion(
+				commerceCountry.getCommerceCountryId(), "MN");
+
+		List<CommerceWarehouse> commerceWarehouses = new ArrayList<>();
+
+		commerceWarehouses.add(
+			_commerceWarehouseLocalService.addCommerceWarehouse(
+				"Thief River Falls, Minnesota", StringPool.BLANK, true,
+				"1101 MN-1", "", "", "Thief River Falls", "56701",
+				commerceCountry.getCommerceCountryId(),
+				commerceRegion.getCommerceRegionId(), 48.1252560, -96.1635400,
+				serviceContext));
+
+		commerceRegion = _commerceRegionLocalService.getCommerceRegion(
+			commerceCountry.getCommerceCountryId(), "IA");
+
+		commerceWarehouses.add(
+			_commerceWarehouseLocalService.addCommerceWarehouse(
+				"Des Moines, Iowa", StringPool.BLANK, true, "1330 Grand Ave",
+				"", "", "Des Moines", "50309",
+				commerceCountry.getCommerceCountryId(),
+				commerceRegion.getCommerceRegionId(), 41.5853130, -93.6345580,
+				serviceContext));
+
+		commerceRegion = _commerceRegionLocalService.getCommerceRegion(
+			commerceCountry.getCommerceCountryId(), "ID");
+
+		commerceWarehouses.add(
+			_commerceWarehouseLocalService.addCommerceWarehouse(
+				"Twin Falls, Idaho", StringPool.BLANK, true, "660 Park Ave", "",
+				"", "Twin Falls", "83301",
+				commerceCountry.getCommerceCountryId(),
+				commerceRegion.getCommerceRegionId(), 42.5408580, -114.4663890,
+				serviceContext));
+
+		return commerceWarehouses;
+	}
+
 	protected void configureB2BSite(long groupId, ServiceContext serviceContext)
 		throws Exception {
 
@@ -485,13 +545,24 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 				_COMMERCE_VOCABULARY, serviceContext);
 		}
 
+		List<CommerceWarehouse> commerceWarehouses = addCommerceWarehouses(
+			serviceContext);
+
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			BigDecimal cost = BigDecimal.valueOf(jsonObject.getDouble("cost"));
 			String description = jsonObject.getString("Description");
-			String sku = jsonObject.getString("Sku");
-			String name = jsonObject.getString("Name");
 			String image = jsonObject.getString("Image");
+			String name = jsonObject.getString("Name");
+			BigDecimal price = BigDecimal.valueOf(
+				jsonObject.getDouble("Price"));
+			String sku = jsonObject.getString("Sku");
+
+			int[] warehouseQuantities = {
+				jsonObject.getInt("Warehouse1"),
+				jsonObject.getInt("Warehouse2"), jsonObject.getInt("Warehouse3")
+			};
 
 			JSONArray categories = jsonObject.getJSONArray("Categories");
 
@@ -504,6 +575,27 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			CPDefinition cpDefinition = createCPDefinition(
 				name, description, sku, assetCategoryIds, serviceContext);
+
+			// Commerce product instance
+
+			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+				cpDefinition.getCPDefinitionId(), sku);
+
+			cpInstance.setPrice(price);
+			cpInstance.setCost(cost);
+
+			_cpInstanceLocalService.updateCPInstance(cpInstance);
+
+			// Commerce warehouse item
+
+			for (int j = 0; j < commerceWarehouses.size(); j++) {
+				CommerceWarehouse commerceWarehouse = commerceWarehouses.get(j);
+
+				_commerceWarehouseItemLocalService.addCommerceWarehouseItem(
+					commerceWarehouse.getCommerceWarehouseId(),
+					cpInstance.getCPInstanceId(), warehouseQuantities[j],
+					serviceContext);
+			}
 
 			// Commerce product definition inventory
 
@@ -919,7 +1011,20 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
+	private CommerceCountryLocalService _commerceCountryLocalService;
+
+	@Reference
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
+
+	@Reference
+	private CommerceRegionLocalService _commerceRegionLocalService;
+
+	@Reference
+	private CommerceWarehouseItemLocalService
+		_commerceWarehouseItemLocalService;
+
+	@Reference
+	private CommerceWarehouseLocalService _commerceWarehouseLocalService;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
@@ -936,10 +1041,21 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
+	private CPDefinitionSpecificationOptionValueLocalService
+		_cpDefinitionSpecificationOptionValueLocalService;
+
+	@Reference
 	private CPFileImporter _cpFileImporter;
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPSpecificationOptionLocalService
+		_cpSpecificationOptionLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

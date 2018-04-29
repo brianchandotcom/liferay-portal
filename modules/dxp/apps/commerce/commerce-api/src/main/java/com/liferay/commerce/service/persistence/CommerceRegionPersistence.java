@@ -504,6 +504,56 @@ public interface CommerceRegionPersistence extends BasePersistence<CommerceRegio
 	public int countByCommerceCountryId(long commerceCountryId);
 
 	/**
+	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @return the matching commerce region
+	* @throws NoSuchRegionException if a matching commerce region could not be found
+	*/
+	public CommerceRegion findByC_C(long commerceCountryId, String code)
+		throws NoSuchRegionException;
+
+	/**
+	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	*/
+	public CommerceRegion fetchByC_C(long commerceCountryId, String code);
+
+	/**
+	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	*/
+	public CommerceRegion fetchByC_C(long commerceCountryId, String code,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the commerce region where commerceCountryId = &#63; and code = &#63; from the database.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @return the commerce region that was removed
+	*/
+	public CommerceRegion removeByC_C(long commerceCountryId, String code)
+		throws NoSuchRegionException;
+
+	/**
+	* Returns the number of commerce regions where commerceCountryId = &#63; and code = &#63;.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @return the number of matching commerce regions
+	*/
+	public int countByC_C(long commerceCountryId, String code);
+
+	/**
 	* Returns all the commerce regions where commerceCountryId = &#63; and active = &#63;.
 	*
 	* @param commerceCountryId the commerce country ID
@@ -650,56 +700,6 @@ public interface CommerceRegionPersistence extends BasePersistence<CommerceRegio
 	* @return the number of matching commerce regions
 	*/
 	public int countByC_A(long commerceCountryId, boolean active);
-
-	/**
-	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @return the matching commerce region
-	* @throws NoSuchRegionException if a matching commerce region could not be found
-	*/
-	public CommerceRegion findByC_C(long commerceCountryId, String code)
-		throws NoSuchRegionException;
-
-	/**
-	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
-	*/
-	public CommerceRegion fetchByC_C(long commerceCountryId, String code);
-
-	/**
-	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
-	*/
-	public CommerceRegion fetchByC_C(long commerceCountryId, String code,
-		boolean retrieveFromCache);
-
-	/**
-	* Removes the commerce region where commerceCountryId = &#63; and code = &#63; from the database.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @return the commerce region that was removed
-	*/
-	public CommerceRegion removeByC_C(long commerceCountryId, String code)
-		throws NoSuchRegionException;
-
-	/**
-	* Returns the number of commerce regions where commerceCountryId = &#63; and code = &#63;.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @return the number of matching commerce regions
-	*/
-	public int countByC_C(long commerceCountryId, String code);
 
 	/**
 	* Caches the commerce region in the entity cache if it is enabled.

@@ -112,7 +112,7 @@ public class CommerceCloudOrderForecastSyncWrapper
 	}
 
 	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CommerceCloudOrderForecastSyncWrapper((CommerceCloudOrderForecastSync)_commerceCloudOrderForecastSync.clone());
 	}
 
@@ -340,7 +340,7 @@ public class CommerceCloudOrderForecastSyncWrapper
 	}
 
 	@Override
-	public java.lang.String toString() {
+	public String toString() {
 		return _commerceCloudOrderForecastSync.toString();
 	}
 
@@ -350,7 +350,7 @@ public class CommerceCloudOrderForecastSyncWrapper
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
+	public String toXmlString() {
 		return _commerceCloudOrderForecastSync.toXmlString();
 	}
 

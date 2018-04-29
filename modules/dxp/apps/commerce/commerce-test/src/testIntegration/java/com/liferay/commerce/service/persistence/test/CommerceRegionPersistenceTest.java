@@ -223,20 +223,20 @@ public class CommerceRegionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_A() throws Exception {
-		_persistence.countByC_A(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
-
-		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(RandomTestUtil.nextLong(), "");
 
 		_persistence.countByC_C(0L, "null");
 
 		_persistence.countByC_C(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByC_A() throws Exception {
+		_persistence.countByC_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_A(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

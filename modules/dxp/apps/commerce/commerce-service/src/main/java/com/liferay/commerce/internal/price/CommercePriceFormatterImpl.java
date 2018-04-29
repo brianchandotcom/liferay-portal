@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
  */
-@Component(immediate = true)
+@Component(immediate = true, service = CommercePriceFormatter.class)
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
@@ -84,9 +84,6 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private RoundingTypeServicesTracker _roundingTypeServicesTracker;

@@ -677,6 +677,67 @@ public class CommerceRegionUtil {
 	}
 
 	/**
+	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @return the matching commerce region
+	* @throws NoSuchRegionException if a matching commerce region could not be found
+	*/
+	public static CommerceRegion findByC_C(long commerceCountryId, String code)
+		throws com.liferay.commerce.exception.NoSuchRegionException {
+		return getPersistence().findByC_C(commerceCountryId, code);
+	}
+
+	/**
+	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	*/
+	public static CommerceRegion fetchByC_C(long commerceCountryId, String code) {
+		return getPersistence().fetchByC_C(commerceCountryId, code);
+	}
+
+	/**
+	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	*/
+	public static CommerceRegion fetchByC_C(long commerceCountryId,
+		String code, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_C(commerceCountryId, code, retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce region where commerceCountryId = &#63; and code = &#63; from the database.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @return the commerce region that was removed
+	*/
+	public static CommerceRegion removeByC_C(long commerceCountryId, String code)
+		throws com.liferay.commerce.exception.NoSuchRegionException {
+		return getPersistence().removeByC_C(commerceCountryId, code);
+	}
+
+	/**
+	* Returns the number of commerce regions where commerceCountryId = &#63; and code = &#63;.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param code the code
+	* @return the number of matching commerce regions
+	*/
+	public static int countByC_C(long commerceCountryId, String code) {
+		return getPersistence().countByC_C(commerceCountryId, code);
+	}
+
+	/**
 	* Returns all the commerce regions where commerceCountryId = &#63; and active = &#63;.
 	*
 	* @param commerceCountryId the commerce country ID
@@ -851,67 +912,6 @@ public class CommerceRegionUtil {
 	*/
 	public static int countByC_A(long commerceCountryId, boolean active) {
 		return getPersistence().countByC_A(commerceCountryId, active);
-	}
-
-	/**
-	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @return the matching commerce region
-	* @throws NoSuchRegionException if a matching commerce region could not be found
-	*/
-	public static CommerceRegion findByC_C(long commerceCountryId, String code)
-		throws com.liferay.commerce.exception.NoSuchRegionException {
-		return getPersistence().findByC_C(commerceCountryId, code);
-	}
-
-	/**
-	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
-	*/
-	public static CommerceRegion fetchByC_C(long commerceCountryId, String code) {
-		return getPersistence().fetchByC_C(commerceCountryId, code);
-	}
-
-	/**
-	* Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
-	*/
-	public static CommerceRegion fetchByC_C(long commerceCountryId,
-		String code, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByC_C(commerceCountryId, code, retrieveFromCache);
-	}
-
-	/**
-	* Removes the commerce region where commerceCountryId = &#63; and code = &#63; from the database.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @return the commerce region that was removed
-	*/
-	public static CommerceRegion removeByC_C(long commerceCountryId, String code)
-		throws com.liferay.commerce.exception.NoSuchRegionException {
-		return getPersistence().removeByC_C(commerceCountryId, code);
-	}
-
-	/**
-	* Returns the number of commerce regions where commerceCountryId = &#63; and code = &#63;.
-	*
-	* @param commerceCountryId the commerce country ID
-	* @param code the code
-	* @return the number of matching commerce regions
-	*/
-	public static int countByC_C(long commerceCountryId, String code) {
-		return getPersistence().countByC_C(commerceCountryId, code);
 	}
 
 	/**

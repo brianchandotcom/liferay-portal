@@ -2006,6 +2006,260 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 	private static final String _FINDER_COLUMN_COMMERCECOUNTRYID_COMMERCECOUNTRYID_2 =
 		"commerceRegion.commerceCountryId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
+			CommerceRegionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			new String[] { Long.class.getName(), String.class.getName() },
+			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.CODE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the commerce region where commerceCountryId = &#63; and code = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param code the code
+	 * @return the matching commerce region
+	 * @throws NoSuchRegionException if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion findByC_C(long commerceCountryId, String code)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = fetchByC_C(commerceCountryId, code);
+
+		if (commerceRegion == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("commerceCountryId=");
+			msg.append(commerceCountryId);
+
+			msg.append(", code=");
+			msg.append(code);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchRegionException(msg.toString());
+		}
+
+		return commerceRegion;
+	}
+
+	/**
+	 * Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param code the code
+	 * @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByC_C(long commerceCountryId, String code) {
+		return fetchByC_C(commerceCountryId, code, true);
+	}
+
+	/**
+	 * Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param code the code
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
+	 */
+	@Override
+	public CommerceRegion fetchByC_C(long commerceCountryId, String code,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { commerceCountryId, code };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommerceRegion) {
+			CommerceRegion commerceRegion = (CommerceRegion)result;
+
+			if ((commerceCountryId != commerceRegion.getCommerceCountryId()) ||
+					!Objects.equals(code, commerceRegion.getCode())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_COMMERCECOUNTRYID_2);
+
+			boolean bindCode = false;
+
+			if (code == null) {
+				query.append(_FINDER_COLUMN_C_C_CODE_1);
+			}
+			else if (code.equals("")) {
+				query.append(_FINDER_COLUMN_C_C_CODE_3);
+			}
+			else {
+				bindCode = true;
+
+				query.append(_FINDER_COLUMN_C_C_CODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceCountryId);
+
+				if (bindCode) {
+					qPos.add(code);
+				}
+
+				List<CommerceRegion> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C, finderArgs,
+						list);
+				}
+				else {
+					CommerceRegion commerceRegion = list.get(0);
+
+					result = commerceRegion;
+
+					cacheResult(commerceRegion);
+
+					if ((commerceRegion.getCommerceCountryId() != commerceCountryId) ||
+							(commerceRegion.getCode() == null) ||
+							!commerceRegion.getCode().equals(code)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
+							finderArgs, commerceRegion);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceRegion)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce region where commerceCountryId = &#63; and code = &#63; from the database.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param code the code
+	 * @return the commerce region that was removed
+	 */
+	@Override
+	public CommerceRegion removeByC_C(long commerceCountryId, String code)
+		throws NoSuchRegionException {
+		CommerceRegion commerceRegion = findByC_C(commerceCountryId, code);
+
+		return remove(commerceRegion);
+	}
+
+	/**
+	 * Returns the number of commerce regions where commerceCountryId = &#63; and code = &#63;.
+	 *
+	 * @param commerceCountryId the commerce country ID
+	 * @param code the code
+	 * @return the number of matching commerce regions
+	 */
+	@Override
+	public int countByC_C(long commerceCountryId, String code) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
+
+		Object[] finderArgs = new Object[] { commerceCountryId, code };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEREGION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_COMMERCECOUNTRYID_2);
+
+			boolean bindCode = false;
+
+			if (code == null) {
+				query.append(_FINDER_COLUMN_C_C_CODE_1);
+			}
+			else if (code.equals("")) {
+				query.append(_FINDER_COLUMN_C_C_CODE_3);
+			}
+			else {
+				bindCode = true;
+
+				query.append(_FINDER_COLUMN_C_C_CODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(commerceCountryId);
+
+				if (bindCode) {
+					qPos.add(code);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_COMMERCECOUNTRYID_2 = "commerceRegion.commerceCountryId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_CODE_1 = "commerceRegion.code IS NULL";
+	private static final String _FINDER_COLUMN_C_C_CODE_2 = "commerceRegion.code = ?";
+	private static final String _FINDER_COLUMN_C_C_CODE_3 = "(commerceRegion.code IS NULL OR commerceRegion.code = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_A = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -2553,260 +2807,6 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 	private static final String _FINDER_COLUMN_C_A_COMMERCECOUNTRYID_2 = "commerceRegion.commerceCountryId = ? AND ";
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "commerceRegion.active = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_C = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED,
-			CommerceRegionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] { Long.class.getName(), String.class.getName() },
-			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
-			CommerceRegionModelImpl.CODE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(CommerceRegionModelImpl.ENTITY_CACHE_ENABLED,
-			CommerceRegionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] { Long.class.getName(), String.class.getName() });
-
-	/**
-	 * Returns the commerce region where commerceCountryId = &#63; and code = &#63; or throws a {@link NoSuchRegionException} if it could not be found.
-	 *
-	 * @param commerceCountryId the commerce country ID
-	 * @param code the code
-	 * @return the matching commerce region
-	 * @throws NoSuchRegionException if a matching commerce region could not be found
-	 */
-	@Override
-	public CommerceRegion findByC_C(long commerceCountryId, String code)
-		throws NoSuchRegionException {
-		CommerceRegion commerceRegion = fetchByC_C(commerceCountryId, code);
-
-		if (commerceRegion == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("commerceCountryId=");
-			msg.append(commerceCountryId);
-
-			msg.append(", code=");
-			msg.append(code);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchRegionException(msg.toString());
-		}
-
-		return commerceRegion;
-	}
-
-	/**
-	 * Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceCountryId the commerce country ID
-	 * @param code the code
-	 * @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
-	 */
-	@Override
-	public CommerceRegion fetchByC_C(long commerceCountryId, String code) {
-		return fetchByC_C(commerceCountryId, code, true);
-	}
-
-	/**
-	 * Returns the commerce region where commerceCountryId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param commerceCountryId the commerce country ID
-	 * @param code the code
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching commerce region, or <code>null</code> if a matching commerce region could not be found
-	 */
-	@Override
-	public CommerceRegion fetchByC_C(long commerceCountryId, String code,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { commerceCountryId, code };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C,
-					finderArgs, this);
-		}
-
-		if (result instanceof CommerceRegion) {
-			CommerceRegion commerceRegion = (CommerceRegion)result;
-
-			if ((commerceCountryId != commerceRegion.getCommerceCountryId()) ||
-					!Objects.equals(code, commerceRegion.getCode())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_COMMERCEREGION_WHERE);
-
-			query.append(_FINDER_COLUMN_C_C_COMMERCECOUNTRYID_2);
-
-			boolean bindCode = false;
-
-			if (code == null) {
-				query.append(_FINDER_COLUMN_C_C_CODE_1);
-			}
-			else if (code.equals("")) {
-				query.append(_FINDER_COLUMN_C_C_CODE_3);
-			}
-			else {
-				bindCode = true;
-
-				query.append(_FINDER_COLUMN_C_C_CODE_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(commerceCountryId);
-
-				if (bindCode) {
-					qPos.add(code);
-				}
-
-				List<CommerceRegion> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C, finderArgs,
-						list);
-				}
-				else {
-					CommerceRegion commerceRegion = list.get(0);
-
-					result = commerceRegion;
-
-					cacheResult(commerceRegion);
-
-					if ((commerceRegion.getCommerceCountryId() != commerceCountryId) ||
-							(commerceRegion.getCode() == null) ||
-							!commerceRegion.getCode().equals(code)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, commerceRegion);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceRegion)result;
-		}
-	}
-
-	/**
-	 * Removes the commerce region where commerceCountryId = &#63; and code = &#63; from the database.
-	 *
-	 * @param commerceCountryId the commerce country ID
-	 * @param code the code
-	 * @return the commerce region that was removed
-	 */
-	@Override
-	public CommerceRegion removeByC_C(long commerceCountryId, String code)
-		throws NoSuchRegionException {
-		CommerceRegion commerceRegion = findByC_C(commerceCountryId, code);
-
-		return remove(commerceRegion);
-	}
-
-	/**
-	 * Returns the number of commerce regions where commerceCountryId = &#63; and code = &#63;.
-	 *
-	 * @param commerceCountryId the commerce country ID
-	 * @param code the code
-	 * @return the number of matching commerce regions
-	 */
-	@Override
-	public int countByC_C(long commerceCountryId, String code) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
-
-		Object[] finderArgs = new Object[] { commerceCountryId, code };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_COMMERCEREGION_WHERE);
-
-			query.append(_FINDER_COLUMN_C_C_COMMERCECOUNTRYID_2);
-
-			boolean bindCode = false;
-
-			if (code == null) {
-				query.append(_FINDER_COLUMN_C_C_CODE_1);
-			}
-			else if (code.equals("")) {
-				query.append(_FINDER_COLUMN_C_C_CODE_3);
-			}
-			else {
-				bindCode = true;
-
-				query.append(_FINDER_COLUMN_C_C_CODE_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(commerceCountryId);
-
-				if (bindCode) {
-					qPos.add(code);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_C_COMMERCECOUNTRYID_2 = "commerceRegion.commerceCountryId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CODE_1 = "commerceRegion.code IS NULL";
-	private static final String _FINDER_COLUMN_C_C_CODE_2 = "commerceRegion.code = ?";
-	private static final String _FINDER_COLUMN_C_C_CODE_3 = "(commerceRegion.code IS NULL OR commerceRegion.code = '')";
 
 	public CommerceRegionPersistenceImpl() {
 		setModelClass(CommerceRegion.class);

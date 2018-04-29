@@ -27,6 +27,7 @@ import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
+import com.liferay.commerce.organization.order.web.internal.configuration.CommerceOrganizationOpenOrderPortletInstanceConfiguration;
 import com.liferay.commerce.organization.order.web.internal.display.context.util.CommerceOrganizationOrderRequestHelper;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderSearch;
@@ -69,6 +70,7 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -168,6 +170,13 @@ public class CommerceOrganizationOrderDisplayContext {
 		_keywords = ParamUtil.getString(renderRequest, "keywords");
 		_showFilter = ParamUtil.getBoolean(renderRequest, "showFilter");
 		_tabs1 = ParamUtil.getString(renderRequest, "tabs1", "pending");
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		_commerceOrganizationOpenOrderPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				CommerceOrganizationOpenOrderPortletInstanceConfiguration.
+					class);
 	}
 
 	public List<KeyValuePair> getAvailableAdvanceStatusKVPs()
@@ -455,6 +464,28 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		return _commercePriceFormatter.format(
 			commerceOrder.getSiteGroupId(), value);
+	}
+
+	public String getDisplayStyle() {
+		return _commerceOrganizationOpenOrderPortletInstanceConfiguration.
+			displayStyle();
+	}
+
+	public long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId > 0) {
+			return _displayStyleGroupId;
+		}
+
+		_displayStyleGroupId =
+			_commerceOrganizationOpenOrderPortletInstanceConfiguration.
+				displayStyleGroupId();
+
+		if (_displayStyleGroupId <= 0) {
+			_displayStyleGroupId =
+				_commerceOrganizationOrderRequestHelper.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
@@ -891,6 +922,8 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final long _commerceOrderNoteId;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderService _commerceOrderService;
+	private final CommerceOrganizationOpenOrderPortletInstanceConfiguration
+		_commerceOrganizationOpenOrderPortletInstanceConfiguration;
 	private final CommerceOrganizationOrderRequestHelper
 		_commerceOrganizationOrderRequestHelper;
 	private final CommercePriceCalculationLocalService
@@ -900,6 +933,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		_commerceShippingEngineRegistry;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CommerceOrder _currentCommerceOrder;
+	private long _displayStyleGroupId;
 	private final JSONFactory _jsonFactory;
 	private final String _keywords;
 	private final ModelResourcePermission<CommerceOrder>

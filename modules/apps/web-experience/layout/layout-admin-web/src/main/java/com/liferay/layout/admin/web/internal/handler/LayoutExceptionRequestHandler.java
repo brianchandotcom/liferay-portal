@@ -46,27 +46,44 @@ public class LayoutExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
+
+		JSONObject jsonObject = null;
 
 		if (pe instanceof LayoutNameException) {
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(
-					themeDisplay.getLocale());
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					resourceBundle, "please-enter-a-valid-name-for-the-page"));
+			jsonObject = _handleLayoutNameException(resourceBundle);
 		}
 		else {
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
+			jsonObject = _handleUnexpectedException(themeDisplay);
 		}
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+	}
+
+	private JSONObject _handleLayoutNameException(
+		ResourceBundle resourceBundle) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"error",
+			LanguageUtil.get(
+				resourceBundle, "please-enter-a-valid-name-for-the-page"));
+
+		return jsonObject;
+	}
+
+	private JSONObject _handleUnexpectedException(ThemeDisplay themeDisplay) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"error",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "an-unexpected-error-occurred"));
+
+		return jsonObject;
 	}
 
 	@Reference(

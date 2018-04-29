@@ -39,8 +39,8 @@ public interface CPFileImporter {
 		throws Exception;
 
 	public void createLayouts(
-			JSONArray jsonArray, boolean privateLayout,
-			ServiceContext serviceContext)
+			JSONArray jsonArray, boolean privateLayout, ClassLoader classLoader,
+			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception;
 
 	public void createRoles(JSONArray jsonArray, ServiceContext serviceContext)

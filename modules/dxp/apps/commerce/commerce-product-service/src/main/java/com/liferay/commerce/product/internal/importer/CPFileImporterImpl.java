@@ -125,11 +125,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Override
 	public void createLayouts(
-			JSONArray jsonArray, boolean privateLayout,
-			ServiceContext serviceContext)
+			JSONArray jsonArray, boolean privateLayout, ClassLoader classLoader,
+			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
-		createLayouts(jsonArray, null, privateLayout, serviceContext);
+		createLayouts(
+			jsonArray, null, privateLayout, classLoader, dependenciesFilePath,
+			serviceContext);
 	}
 
 	@Override
@@ -321,6 +323,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	protected void createLayout(
 			JSONObject jsonObject, Layout parentLayout, boolean privateLayout,
+			ClassLoader classLoader, String dependenciesFilePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -328,6 +331,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 		String layoutTemplateId = jsonObject.getString("layoutTemplateId");
 		String layoutType = jsonObject.getString("layoutType");
 		String name = jsonObject.getString("name");
+		String icon = jsonObject.getString("icon");
 
 		long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
@@ -352,6 +356,17 @@ public class CPFileImporterImpl implements CPFileImporter {
 			privateLayout, parentLayoutId, name, name, StringPool.BLANK,
 			layoutType, hidden, friendlyURL, serviceContext);
 
+		if (Validator.isNotNull(icon)) {
+			String filePath = dependenciesFilePath + "layout_icons/" + icon;
+
+			InputStream is = classLoader.getResourceAsStream(filePath);
+
+			byte[] byteArray = FileUtil.getBytes(is);
+
+			layout = _layoutLocalService.updateIconImage(
+				layout.getPlid(), byteArray);
+		}
+
 		JSONArray portletsJSONArray = jsonObject.getJSONArray("portlets");
 
 		if ((portletsJSONArray != null) && (portletsJSONArray.length() > 0)) {
@@ -369,12 +384,14 @@ public class CPFileImporterImpl implements CPFileImporter {
 			(sublayoutsJSONArray.length() > 0)) {
 
 			createLayouts(
-				sublayoutsJSONArray, layout, privateLayout, serviceContext);
+				sublayoutsJSONArray, layout, privateLayout, classLoader,
+				dependenciesFilePath, serviceContext);
 		}
 	}
 
 	protected void createLayouts(
 			JSONArray jsonArray, Layout parentLayout, boolean privateLayout,
+			ClassLoader classLoader, String dependenciesFilePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -382,7 +399,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			createLayout(
-				jsonObject, parentLayout, privateLayout, serviceContext);
+				jsonObject, parentLayout, privateLayout, classLoader,
+				dependenciesFilePath, serviceContext);
 		}
 	}
 

@@ -21,16 +21,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -102,14 +108,29 @@ public class LayoutExceptionRequestHandler {
 			errorMessage = "pages-of-type-x-cannot-be-selected";
 		}
 
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			actionRequest);
+
 		String type = ParamUtil.getString(actionRequest, "type");
+
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+		ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(),
+			layoutTypeController.getClass());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
 			"error",
 			LanguageUtil.format(
-				resourceBundle, errorMessage, new String[] {type}));
+				resourceBundle, errorMessage,
+				new String[] {
+					LanguageUtil.get(
+						request, layoutTypeResourceBundle,
+						"layout.types." + type)
+				}));
 
 		return jsonObject;
 	}
@@ -124,6 +145,9 @@ public class LayoutExceptionRequestHandler {
 
 		return jsonObject;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)",

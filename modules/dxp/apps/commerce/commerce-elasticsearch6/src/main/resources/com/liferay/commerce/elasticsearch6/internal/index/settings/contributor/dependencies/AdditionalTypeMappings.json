@@ -6,9 +6,20 @@
 					"store": true,
 					"type": "keyword"
 				},
-				"match": "ATTRIBUTE_*_VALUES_NAMES",
+				"match": "*_VALUES_NAMES",
 				"match_mapping_type": "string"
 			}
+		},
+		{
+			"template_commerce_attribute_id": {
+				"mapping": {
+					"store": true,
+					"type": "keyword"
+				},
+				"match": "*_VALUE_ID",
+				"match_mapping_type": "string"
+			}
+
 		}
 	],
 	"properties": {
@@ -29,6 +40,14 @@
 			"type": "keyword"
 		},
 		"productTypeName": {
+			"store": true,
+			"type": "keyword"
+		},
+		"specificationOptionsIds": {
+			"store": true,
+			"type": "keyword"
+		},
+		"specificationOptionsNames": {
 			"store": true,
 			"type": "keyword"
 		}

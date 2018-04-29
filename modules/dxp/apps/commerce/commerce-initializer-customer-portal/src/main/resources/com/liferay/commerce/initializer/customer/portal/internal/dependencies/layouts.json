@@ -9,14 +9,14 @@
 		"name": "Catalog",
 		"portlets": [
 			{
-				"layoutColumnId": "column-1",
+				"layoutColumnId": "column-2",
 				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet"
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
 			},
 			{
 				"layoutColumnId": "column-2",
-				"layoutColumnPos": "0",
-				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
+				"layoutColumnPos": "1",
+				"portletName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 			},
 			{
 				"layoutColumnId": "column-3",

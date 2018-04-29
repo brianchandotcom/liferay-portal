@@ -172,6 +172,7 @@ public class CPSpecificationOptionFacetsPortlet
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(themeDisplay.getCompanyId());
+		searchContext.setGroupIds(new long[] {themeDisplay.getScopeGroupId()});
 		searchContext.setLayout(themeDisplay.getLayout());
 		searchContext.setLocale(themeDisplay.getLocale());
 		searchContext.setTimeZone(themeDisplay.getTimeZone());

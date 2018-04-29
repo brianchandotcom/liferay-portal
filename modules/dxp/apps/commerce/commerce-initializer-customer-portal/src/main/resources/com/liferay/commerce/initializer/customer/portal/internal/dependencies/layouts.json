@@ -1,10 +1,12 @@
 [
 	{
+		"icon" : "icon-cards.png",
 		"layoutTemplateId": "1_column",
-		"name": "Home",
+		"name": "Dashboard",
 		"portlets": []
 	},
 	{
+		"icon" : "icon-cube.png",
 		"layoutTemplateId": "catalog_1_2_columns",
 		"name": "Catalog",
 		"portlets": [
@@ -53,6 +55,7 @@
 		]
 	},
 	{
+		"icon" : "icon-keyboard.png",
 		"layoutTemplateId": "1_column",
 		"name": "Orders",
 		"portlets": [
@@ -77,6 +80,7 @@
 	},
 	{
 		"hidden": true,
+		"icon" : "icon-map-marker.png",
 		"layoutTemplateId": "1_column",
 		"name": "Shipments",
 		"portlets": [

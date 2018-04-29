@@ -29,14 +29,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
@@ -239,9 +237,6 @@ public class CPSpecificationOptionFacetsPortlet
 	}
 
 	@Reference
-	protected AssetEntriesFacetFactory assetEntriesFacetFactory;
-
-	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -253,8 +248,5 @@ public class CPSpecificationOptionFacetsPortlet
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
-
-	@Reference
-	private Portal _portal;
 
 }

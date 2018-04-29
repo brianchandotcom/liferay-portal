@@ -736,6 +736,24 @@ a[type="button"] {
 
 	.portlet-search-bar {
 		@extend %portlet-search-bar-inset;
+
+		.input-group{
+			display: block;
+		}
+
+		.lfr-ddm-field-group-inline{
+			display: block;
+		}
+	}
+
+	.product-list-info-compare{
+		.form-group{
+			margin-bottom: 0;
+
+			label {
+				font-weight: 200;
+			}
+		}
 	}
 }
 

@@ -195,6 +195,10 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	public CPSpecificationOption fetchCPSpecificationOption(
 		long CPSpecificationOptionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPSpecificationOption fetchCPSpecificationOption(long groupId,
+		String key);
+
 	/**
 	* Returns the cp specification option matching the UUID and group.
 	*

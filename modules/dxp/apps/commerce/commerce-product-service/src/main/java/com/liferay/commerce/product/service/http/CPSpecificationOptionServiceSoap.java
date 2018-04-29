@@ -106,6 +106,37 @@ public class CPSpecificationOptionServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPSpecificationOptionSoap fetchCPSpecificationOption(
+		long cpSpecificationOptionId) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPSpecificationOption returnValue =
+				CPSpecificationOptionServiceUtil.fetchCPSpecificationOption(cpSpecificationOptionId);
+
+			return com.liferay.commerce.product.model.CPSpecificationOptionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPSpecificationOptionSoap fetchCPSpecificationOption(
+		long groupId, String key) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPSpecificationOption returnValue =
+				CPSpecificationOptionServiceUtil.fetchCPSpecificationOption(groupId,
+					key);
+
+			return com.liferay.commerce.product.model.CPSpecificationOptionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPSpecificationOptionSoap getCPSpecificationOption(
 		long cpSpecificationOptionId) throws RemoteException {
 		try {

@@ -97,13 +97,15 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCPDefinitionSpecificationOptionValues(long cpDefinitionId) {
+	public void deleteCPDefinitionSpecificationOptionValues(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_cpDefinitionSpecificationOptionValueLocalService.deleteCPDefinitionSpecificationOptionValues(cpDefinitionId);
 	}
 
 	@Override
 	public void deleteCPSpecificationOptionDefinitionValues(
-		long cpSpecificationOptionId) {
+		long cpSpecificationOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_cpDefinitionSpecificationOptionValueLocalService.deleteCPSpecificationOptionDefinitionValues(cpSpecificationOptionId);
 	}
 
@@ -336,6 +338,12 @@ public class CPDefinitionSpecificationOptionValueLocalServiceWrapper
 	@Override
 	public int getCPDefinitionSpecificationOptionValuesCount() {
 		return _cpDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValuesCount();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPSpecificationOptionDefinitionValues(
+		long cpSpecificationOptionId) {
+		return _cpDefinitionSpecificationOptionValueLocalService.getCPSpecificationOptionDefinitionValues(cpSpecificationOptionId);
 	}
 
 	@Override

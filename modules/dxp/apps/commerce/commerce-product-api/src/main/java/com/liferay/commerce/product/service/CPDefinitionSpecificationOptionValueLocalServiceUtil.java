@@ -106,12 +106,14 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 	}
 
 	public static void deleteCPDefinitionSpecificationOptionValues(
-		long cpDefinitionId) {
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCPDefinitionSpecificationOptionValues(cpDefinitionId);
 	}
 
 	public static void deleteCPSpecificationOptionDefinitionValues(
-		long cpSpecificationOptionId) {
+		long cpSpecificationOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteCPSpecificationOptionDefinitionValues(cpSpecificationOptionId);
 	}
@@ -332,6 +334,12 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 	*/
 	public static int getCPDefinitionSpecificationOptionValuesCount() {
 		return getService().getCPDefinitionSpecificationOptionValuesCount();
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPSpecificationOptionDefinitionValues(
+		long cpSpecificationOptionId) {
+		return getService()
+				   .getCPSpecificationOptionDefinitionValues(cpSpecificationOptionId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

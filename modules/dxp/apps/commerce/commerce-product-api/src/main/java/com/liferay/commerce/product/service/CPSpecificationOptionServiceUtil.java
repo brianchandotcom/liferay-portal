@@ -59,6 +59,18 @@ public class CPSpecificationOptionServiceUtil {
 		getService().deleteCPSpecificationOption(cpSpecificationOptionId);
 	}
 
+	public static com.liferay.commerce.product.model.CPSpecificationOption fetchCPSpecificationOption(
+		long cpSpecificationOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCPSpecificationOption(cpSpecificationOptionId);
+	}
+
+	public static com.liferay.commerce.product.model.CPSpecificationOption fetchCPSpecificationOption(
+		long groupId, String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCPSpecificationOption(groupId, key);
+	}
+
 	public static com.liferay.commerce.product.model.CPSpecificationOption getCPSpecificationOption(
 		long cpSpecificationOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

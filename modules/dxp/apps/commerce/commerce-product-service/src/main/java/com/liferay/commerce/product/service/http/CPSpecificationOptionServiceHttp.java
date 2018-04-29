@@ -122,13 +122,79 @@ public class CPSpecificationOptionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPSpecificationOption fetchCPSpecificationOption(
+		HttpPrincipal httpPrincipal, long cpSpecificationOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
+					"fetchCPSpecificationOption",
+					_fetchCPSpecificationOptionParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpSpecificationOptionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPSpecificationOption)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPSpecificationOption fetchCPSpecificationOption(
+		HttpPrincipal httpPrincipal, long groupId, String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
+					"fetchCPSpecificationOption",
+					_fetchCPSpecificationOptionParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					key);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPSpecificationOption)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPSpecificationOption getCPSpecificationOption(
 		HttpPrincipal httpPrincipal, long cpSpecificationOptionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"getCPSpecificationOption",
-					_getCPSpecificationOptionParameterTypes2);
+					_getCPSpecificationOptionParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpSpecificationOptionId);
@@ -162,7 +228,7 @@ public class CPSpecificationOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"getCPSpecificationOptions",
-					_getCPSpecificationOptionsParameterTypes3);
+					_getCPSpecificationOptionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -194,7 +260,7 @@ public class CPSpecificationOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"getCPSpecificationOptionsCount",
-					_getCPSpecificationOptionsCountParameterTypes4);
+					_getCPSpecificationOptionsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -224,7 +290,7 @@ public class CPSpecificationOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"searchCPSpecificationOptions",
-					_searchCPSpecificationOptionsParameterTypes5);
+					_searchCPSpecificationOptionsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, keywords, start, end, sort);
@@ -262,7 +328,7 @@ public class CPSpecificationOptionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPSpecificationOptionServiceUtil.class,
 					"updateCPSpecificationOption",
-					_updateCPSpecificationOptionParameterTypes6);
+					_updateCPSpecificationOptionParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpSpecificationOptionId, cpOptionCategoryId, titleMap,
@@ -298,21 +364,27 @@ public class CPSpecificationOptionServiceHttp {
 	private static final Class<?>[] _deleteCPSpecificationOptionParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPSpecificationOptionParameterTypes2 = new Class[] {
+	private static final Class<?>[] _fetchCPSpecificationOptionParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPSpecificationOptionsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _fetchCPSpecificationOptionParameterTypes3 = new Class[] {
+			long.class, String.class
+		};
+	private static final Class<?>[] _getCPSpecificationOptionParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCPSpecificationOptionsParameterTypes5 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCPSpecificationOptionsCountParameterTypes4 =
+	private static final Class<?>[] _getCPSpecificationOptionsCountParameterTypes6 =
 		new Class[] { long.class };
-	private static final Class<?>[] _searchCPSpecificationOptionsParameterTypes5 =
+	private static final Class<?>[] _searchCPSpecificationOptionsParameterTypes7 =
 		new Class[] {
 			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCPSpecificationOptionParameterTypes6 = new Class[] {
+	private static final Class<?>[] _updateCPSpecificationOptionParameterTypes8 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

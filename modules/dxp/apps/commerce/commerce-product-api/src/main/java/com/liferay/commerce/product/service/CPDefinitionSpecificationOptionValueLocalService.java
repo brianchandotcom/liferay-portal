@@ -113,10 +113,11 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	public CPDefinitionSpecificationOptionValue deleteCPDefinitionSpecificationOptionValue(
 		long CPDefinitionSpecificationOptionValueId) throws PortalException;
 
-	public void deleteCPDefinitionSpecificationOptionValues(long cpDefinitionId);
+	public void deleteCPDefinitionSpecificationOptionValues(long cpDefinitionId)
+		throws PortalException;
 
 	public void deleteCPSpecificationOptionDefinitionValues(
-		long cpSpecificationOptionId);
+		long cpSpecificationOptionId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -285,6 +286,10 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionSpecificationOptionValuesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionSpecificationOptionValue> getCPSpecificationOptionDefinitionValues(
+		long cpSpecificationOptionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

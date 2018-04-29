@@ -18,6 +18,7 @@ import com.liferay.commerce.product.item.selector.web.internal.CPDefinitionItemS
 import com.liferay.commerce.product.item.selector.web.internal.search.CPDefinitionItemSelectorChecker;
 import com.liferay.commerce.product.item.selector.web.internal.util.CPItemSelectorViewUtil;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -25,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -146,6 +149,18 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		}
 
 		return searchContainer;
+	}
+
+	public String getSku(CPDefinition cpDefinition, Locale locale) {
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
+
+		if (cpInstances.size() > 1) {
+			return LanguageUtil.get(locale, "multiple-skus");
+		}
+
+		CPInstance cpInstance = cpInstances.get(0);
+
+		return cpInstance.getSku();
 	}
 
 	protected long[] getCheckedCPDefinitionIds() {

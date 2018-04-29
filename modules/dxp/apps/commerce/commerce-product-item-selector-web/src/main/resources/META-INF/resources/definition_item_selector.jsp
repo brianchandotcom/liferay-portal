@@ -52,6 +52,14 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 			orderColumns='<%= new String[] {"title", "modified-date", "display-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= String.valueOf(portletURL) %>" name="searchFm">
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
@@ -76,7 +84,24 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 			row.setData(data);
 
 			CPType cpType = cpDefinitionItemSelectorViewDisplayContext.getCPType(cpDefinition.getProductTypeName());
+
+			String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 			%>
+
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
+					<liferay-ui:search-container-column-image
+						name="image"
+						src="<%= thumbnailSrc %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-icon
+						icon="documents-and-media"
+						name="image"
+					/>
+				</c:otherwise>
+			</c:choose>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
@@ -96,14 +121,8 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="author"
-				property="userName"
-			/>
-
-			<liferay-ui:search-container-column-status
-				cssClass="table-cell-content"
-				name="status"
-				status="<%= cpDefinition.getStatus() %>"
+				name="sku"
+				value="<%= cpDefinitionItemSelectorViewDisplayContext.getSku(cpDefinition, locale) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
@@ -112,10 +131,10 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 				property="modifiedDate"
 			/>
 
-			<liferay-ui:search-container-column-date
+			<liferay-ui:search-container-column-status
 				cssClass="table-cell-content"
-				name="display-date"
-				property="displayDate"
+				name="status"
+				status="<%= cpDefinition.getStatus() %>"
 			/>
 		</liferay-ui:search-container-row>
 

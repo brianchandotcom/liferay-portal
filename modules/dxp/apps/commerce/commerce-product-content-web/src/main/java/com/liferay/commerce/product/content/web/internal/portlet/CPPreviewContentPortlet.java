@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet;
 
-import com.liferay.commerce.price.CommercePriceFormatter;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.web.internal.display.context.CPPreviewContentDisplayContext;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;

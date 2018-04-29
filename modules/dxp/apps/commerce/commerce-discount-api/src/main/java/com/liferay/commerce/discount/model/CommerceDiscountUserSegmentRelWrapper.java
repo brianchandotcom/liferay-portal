@@ -165,6 +165,12 @@ public class CommerceDiscountUserSegmentRelWrapper
 		return _commerceDiscountUserSegmentRel.getCommerceDiscountUserSegmentRelId();
 	}
 
+	@Override
+	public com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry getCommerceUserSegmentEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceDiscountUserSegmentRel.getCommerceUserSegmentEntry();
+	}
+
 	/**
 	* Returns the commerce user segment entry ID of this commerce discount user segment rel.
 	*

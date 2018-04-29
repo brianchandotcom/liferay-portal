@@ -16,6 +16,10 @@ package com.liferay.commerce.discount.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Marco Leo
  */
@@ -24,6 +28,14 @@ public class CommerceDiscountUserSegmentRelImpl
 	extends CommerceDiscountUserSegmentRelBaseImpl {
 
 	public CommerceDiscountUserSegmentRelImpl() {
+	}
+
+	@Override
+	public CommerceUserSegmentEntry getCommerceUserSegmentEntry()
+		throws PortalException {
+
+		return CommerceUserSegmentEntryLocalServiceUtil.
+			getCommerceUserSegmentEntry(getCommerceUserSegmentEntryId());
 	}
 
 }

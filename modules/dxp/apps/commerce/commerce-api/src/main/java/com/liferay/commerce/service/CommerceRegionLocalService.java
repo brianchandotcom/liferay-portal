@@ -209,6 +209,10 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public CommerceRegion getCommerceRegion(long commerceRegionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceRegion getCommerceRegion(long commerceCountryId, String code)
+		throws PortalException;
+
 	/**
 	* Returns the commerce region matching the UUID and group.
 	*

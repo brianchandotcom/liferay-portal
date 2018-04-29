@@ -231,6 +231,15 @@ public class CommerceRegionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_C(0L, "null");
+
+		_persistence.countByC_C(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceRegion newCommerceRegion = addCommerceRegion();
 
@@ -469,6 +478,14 @@ public class CommerceRegionPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingCommerceRegion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceRegion,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
+				existingCommerceRegion.getCommerceCountryId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceRegion,
+				"getOriginalCommerceCountryId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingCommerceRegion.getCode(),
+				ReflectionTestUtil.invoke(existingCommerceRegion,
+					"getOriginalCode", new Class<?>[0])));
 	}
 
 	protected CommerceRegion addCommerceRegion() throws Exception {

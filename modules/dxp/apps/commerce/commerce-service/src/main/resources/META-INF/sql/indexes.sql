@@ -46,6 +46,7 @@ create index IX_1FB6FD31 on CommercePaymentMethod (groupId, active_);
 create unique index IX_B0FDFD55 on CommercePaymentMethod (groupId, engineKey[$COLUMN_LENGTH:75$]);
 
 create index IX_49C93338 on CommerceRegion (commerceCountryId, active_);
+create unique index IX_2D8BEE31 on CommerceRegion (commerceCountryId, code_[$COLUMN_LENGTH:75$]);
 create index IX_3BC85C89 on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_DBA0714B on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], groupId);
 

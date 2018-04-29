@@ -123,11 +123,12 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceRegion"),
 			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
-	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 2L;
-	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long CODE_COLUMN_BITMASK = 2L;
+	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 4L;
+	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -532,7 +533,17 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 
 	@Override
 	public void setCode(String code) {
+		_columnBitmask |= CODE_COLUMN_BITMASK;
+
+		if (_originalCode == null) {
+			_originalCode = _code;
+		}
+
 		_code = code;
+	}
+
+	public String getOriginalCode() {
+		return GetterUtil.getString(_originalCode);
 	}
 
 	@JSON
@@ -722,6 +733,8 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 		commerceRegionModelImpl._originalCommerceCountryId = commerceRegionModelImpl._commerceCountryId;
 
 		commerceRegionModelImpl._setOriginalCommerceCountryId = false;
+
+		commerceRegionModelImpl._originalCode = commerceRegionModelImpl._code;
 
 		commerceRegionModelImpl._originalActive = commerceRegionModelImpl._active;
 
@@ -940,6 +953,7 @@ public class CommerceRegionModelImpl extends BaseModelImpl<CommerceRegion>
 	private boolean _setOriginalCommerceCountryId;
 	private String _name;
 	private String _code;
+	private String _originalCode;
 	private double _priority;
 	private boolean _active;
 	private boolean _originalActive;

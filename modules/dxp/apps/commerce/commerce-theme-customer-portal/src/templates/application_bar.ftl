@@ -7,7 +7,7 @@
 				</span>
 			</span>
 		<#else>
-			<img alt="Customer Portal Logo" class="b2b-logo-image" src="${images_folder}/placeholder-customer-portal-logo.png">
+			<img alt="Customer Portal Logo" class="b2b-logo-image" src="${images_folder}/beryl-logo.png">
 		</#if>
 	</h1>
 

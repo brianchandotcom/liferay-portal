@@ -2,7 +2,7 @@
 	<header class="autofit-row b2b-login-header">
 		<div class="autofit-col b2b-login-header-logo">
 			<div class="b2b-logo">
-				<img alt="Customer Portal Logo" class="b2b-logo-image" src="${images_folder}/placeholder-customer-portal-logo.png">
+				<img alt="Customer Portal Logo" class="b2b-logo-image" src="${images_folder}/beryl-logo.png">
 			</div>
 		</div>
 

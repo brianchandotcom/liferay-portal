@@ -166,6 +166,12 @@ public class JournalContentDisplayContext {
 				WorkflowConstants.STATUS_ANY);
 		}
 
+		if ((_article != null) && _article.isExpired()) {
+			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				_article.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
+				true);
+		}
+
 		return _article;
 	}
 

@@ -422,13 +422,7 @@ a[type="button"] {
 }
 
 .b2b-overlay-scanline {
-	background-image: repeating-linear-gradient(
-		45deg,
-		rgba(0, 0, 0, 0.3),
-		rgba(0, 0, 0, 0.3) 0.0625rem,
-		rgba(0, 0, 0, 0.2) 0.0625rem,
-		rgba(0, 0, 0, 0.2) 0.3125rem
-	);
+	background-size: cover;
 }
 
 .b2b-login-bg {

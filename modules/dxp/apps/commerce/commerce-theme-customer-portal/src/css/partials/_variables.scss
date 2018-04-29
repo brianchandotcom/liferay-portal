@@ -52,9 +52,9 @@ $b2b-site-navigation-bg: #393B4A !default;
 
 // Footer
 
-$footer-bg: #2F313E !default;
-$footer-color: #FFF !default;
-$footer-height: 373px !default;
+$footer-bg: #FFF !default;
+$footer-color: #2F313E !default;
+$footer-height: 100px !default;
 
 $footer-main-list-title: (
 	color: #FFF,
@@ -78,8 +78,8 @@ $footer-main-social-media-link: (
 ) !default;
 
 $footer-secondary-link: (
-	color: #FFF,
-	hover-color: #FFF
+	color: #2F313E,
+	hover-color: #2F313E
 ) !default;
 
 // Orders

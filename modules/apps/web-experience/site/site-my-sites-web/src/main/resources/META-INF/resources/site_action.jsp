@@ -20,8 +20,6 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 Group group = (Group)row.getObject();
-
-String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 %>
 
 <liferay-ui:icon-menu
@@ -32,7 +30,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:choose>
-		<c:when test='<%= tabs1.equals("my-sites") %>'>
+		<c:when test='<%= Objects.equals(siteMySitesDisplayContext.getTabs1(), "my-sites") %>'>
 			<c:if test="<%= LayoutServiceUtil.getLayoutsCount(group.getGroupId(), false) > 0 %>">
 				<liferay-ui:icon
 					message="go-to-public-pages"

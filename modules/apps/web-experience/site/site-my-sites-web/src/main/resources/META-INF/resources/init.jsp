@@ -22,12 +22,10 @@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.exception.MembershipRequestCommentsException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -35,28 +33,19 @@ page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.GroupConstants" %><%@
 page import="com.liferay.portal.kernel.model.MembershipRequest" %><%@
 page import="com.liferay.portal.kernel.model.MembershipRequestConstants" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.liveusers.LiveUsers" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
+page import="com.liferay.site.my.sites.web.internal.display.context.SiteMySitesDisplayContext" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.LinkedHashMap" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
@@ -66,5 +55,9 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+SiteMySitesDisplayContext siteMySitesDisplayContext = new SiteMySitesDisplayContext(renderRequest, renderResponse);
+%>
 
 <%@ include file="/init-ext.jsp" %>

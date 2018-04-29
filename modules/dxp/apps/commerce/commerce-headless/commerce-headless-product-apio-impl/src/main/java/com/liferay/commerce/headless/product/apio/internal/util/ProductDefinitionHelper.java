@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -164,7 +164,7 @@ public class ProductDefinitionHelper {
 	}
 
 	public <T extends BaseModel> Indexer<T> getIndexer(Class<T> clazz) {
-		Indexer<T> indexer = IndexerRegistryUtil.getIndexer(clazz.getName());
+		Indexer<T> indexer = _indexerRegistry.getIndexer(clazz.getName());
 
 		if (indexer == null) {
 			throw new NotFoundException(
@@ -214,6 +214,9 @@ public class ProductDefinitionHelper {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private UserService _userService;

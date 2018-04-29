@@ -38,11 +38,12 @@ public class CommerceOrderPermission {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long entryId, String actionId)
+			PermissionChecker permissionChecker, long commerceOrderId,
+			String actionId)
 		throws PortalException {
 
 		return _commerceOrderModelResourcePermission.contains(
-			permissionChecker, entryId, actionId);
+			permissionChecker, commerceOrderId, actionId);
 	}
 
 	@Reference(

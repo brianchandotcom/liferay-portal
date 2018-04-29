@@ -387,10 +387,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		commerceWarehouses.add(
 			_commerceWarehouseLocalService.addCommerceWarehouse(
 				"Twin Falls, Idaho", StringPool.BLANK, true, "660 Park Ave", "",
-				"", "Twin Falls", "83301",
-				commerceRegion.getCommerceRegionId(),
-				commerceCountry.getCommerceCountryId(), 42.5408580, -114.4663890,
-				serviceContext));
+				"", "Twin Falls", "83301", commerceRegion.getCommerceRegionId(),
+				commerceCountry.getCommerceCountryId(), 42.5408580,
+				-114.4663890, serviceContext));
 
 		return commerceWarehouses;
 	}

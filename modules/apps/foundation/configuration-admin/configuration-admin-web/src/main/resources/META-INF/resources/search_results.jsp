@@ -19,8 +19,8 @@
 <%
 String redirect = renderRequest.getParameter("redirect");
 
+ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRetriever)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
-ConfigurationModelRetriever configurationModelRetriever = (ConfigurationModelRetriever)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_RETRIEVER);
 ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -112,7 +112,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 			>
 
 				<%
-				ConfigurationCategory configurationCategory = configurationModelRetriever.getConfigurationCategory(configurationModel.getCategory());
+				ConfigurationCategory configurationCategory = configurationEntryRetriever.getConfigurationCategory(configurationModel.getCategory());
 
 				String categorySection = null;
 				String category = null;

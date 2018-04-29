@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.price;
+package com.liferay.commerce.currency.util;
 
 import aQute.bnd.annotation.ProviderType;
 

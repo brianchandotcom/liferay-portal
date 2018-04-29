@@ -12,24 +12,21 @@
  * details.
  */
 
-package com.liferay.commerce.internal.price;
+package com.liferay.commerce.currency.internal.util;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
-import com.liferay.commerce.price.CommercePriceFormatter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.Portal;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
 import java.text.DecimalFormat;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo

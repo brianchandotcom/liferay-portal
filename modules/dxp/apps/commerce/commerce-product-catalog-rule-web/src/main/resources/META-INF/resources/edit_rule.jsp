@@ -18,6 +18,9 @@
 
 <%
 CPCatalogRuleDisplayContext cpCatalogRuleDisplayContext = (CPCatalogRuleDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 %>
 
 <liferay-frontend:screen-navigation

@@ -523,6 +523,10 @@
 		<finder name="CommerceCountryId" return-type="Collection">
 			<finder-column name="commerceCountryId" />
 		</finder>
+		<finder name="C_C" return-type="CommerceRegion" unique="true">
+			<finder-column name="commerceCountryId" />
+			<finder-column name="code" />
+		</finder>
 		<finder name="C_A" return-type="Collection">
 			<finder-column name="commerceCountryId" />
 			<finder-column name="active" />

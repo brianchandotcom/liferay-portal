@@ -15,8 +15,7 @@
 
 	<div class="b2b-login-body">
 		<div class="b2b-login-bg">
-			<img alt="Liferay Design Team being creative" class="b2b-login-bg-image h-100" src="${images_folder}/placeholder-customer-portal-login.jpg">
-			<div class="b2b-login-overlay b2b-overlay-scanline"></div>
+			<div class="b2b-login-overlay b2b-overlay-scanline" style="background-image: url('${images_folder}/beryl_login.jpg')"></div>
 		</div>
 
 		<div class="b2b-login-card card">

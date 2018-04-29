@@ -85,20 +85,20 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 			cpDefinitionSpecificationOptionValues =
 				getCPDefinitionSpecificationOptionValues(cpDefinitionId);
 
+		// Commerce product definition specification option value
+
 		for (CPDefinitionSpecificationOptionValue
 				cpDefinitionSpecificationOptionValue :
 					cpDefinitionSpecificationOptionValues) {
 
-			// Commerce product definition specification option value
-
 			cpDefinitionSpecificationOptionValueLocalService.
 				deleteCPDefinitionSpecificationOptionValue(
 					cpDefinitionSpecificationOptionValue);
-
-			// Commerce product definition
-
-			reindexCPDefinition(cpDefinitionSpecificationOptionValue);
 		}
+
+		// Commerce product definition
+
+		reindexCPDefinition(cpDefinitionId);
 	}
 
 	@Override
@@ -111,11 +111,11 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 				getCPSpecificationOptionDefinitionValues(
 					cpSpecificationOptionId);
 
+		// Commerce product definition specification option value
+
 		for (CPDefinitionSpecificationOptionValue
 				cpDefinitionSpecificationOptionValue :
 					cpDefinitionSpecificationOptionValues) {
-
-			// Commerce product definition specification option value
 
 			cpDefinitionSpecificationOptionValueLocalService.
 				deleteCPDefinitionSpecificationOptionValue(
@@ -123,7 +123,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 			// Commerce product definition
 
-			reindexCPDefinition(cpDefinitionSpecificationOptionValue);
+			reindexCPDefinition(
+				cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 		}
 	}
 
@@ -188,7 +189,8 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionSpecificationOptionValue);
+		reindexCPDefinition(
+			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 
 		return cpDefinitionSpecificationOptionValue;
 	}
@@ -214,22 +216,19 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		// Commerce product definition
 
-		reindexCPDefinition(cpDefinitionSpecificationOptionValue);
+		reindexCPDefinition(
+			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
 
 		return cpDefinitionSpecificationOptionValue;
 	}
 
-	protected void reindexCPDefinition(
-			CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue)
+	protected void reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPDefinition.class);
 
-		indexer.reindex(
-			CPDefinition.class.getName(),
-			cpDefinitionSpecificationOptionValue.getCPDefinitionId());
+		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
 	}
 
 }

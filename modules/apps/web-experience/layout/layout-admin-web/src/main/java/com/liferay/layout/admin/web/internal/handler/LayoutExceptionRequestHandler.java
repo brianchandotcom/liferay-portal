@@ -14,13 +14,16 @@
 
 package com.liferay.layout.admin.web.internal.handler;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutNameException;
+import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -54,6 +57,11 @@ public class LayoutExceptionRequestHandler {
 		if (pe instanceof LayoutNameException) {
 			jsonObject = _handleLayoutNameException(resourceBundle);
 		}
+		else if (pe instanceof LayoutTypeException) {
+			jsonObject = _handleLayoutTypeException(
+				actionRequest, (LayoutTypeException)pe, themeDisplay,
+				resourceBundle);
+		}
 		else {
 			jsonObject = _handleUnexpectedException(themeDisplay);
 		}
@@ -71,6 +79,37 @@ public class LayoutExceptionRequestHandler {
 			"error",
 			LanguageUtil.get(
 				resourceBundle, "please-enter-a-valid-name-for-the-page"));
+
+		return jsonObject;
+	}
+
+	private JSONObject _handleLayoutTypeException(
+		ActionRequest actionRequest, LayoutTypeException lte,
+		ThemeDisplay themeDisplay, ResourceBundle resourceBundle) {
+
+		if (!((lte.getType() == LayoutTypeException.FIRST_LAYOUT) ||
+			  (lte.getType() == LayoutTypeException.NOT_INSTANCEABLE))) {
+
+			return _handleUnexpectedException(themeDisplay);
+		}
+
+		String errorMessage = StringPool.BLANK;
+
+		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT) {
+			errorMessage = "the-first-page-cannot-be-of-type-x";
+		}
+		else if (lte.getType() == LayoutTypeException.NOT_INSTANCEABLE) {
+			errorMessage = "pages-of-type-x-cannot-be-selected";
+		}
+
+		String type = ParamUtil.getString(actionRequest, "type");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put(
+			"error",
+			LanguageUtil.format(
+				resourceBundle, errorMessage, new String[] {type}));
 
 		return jsonObject;
 	}

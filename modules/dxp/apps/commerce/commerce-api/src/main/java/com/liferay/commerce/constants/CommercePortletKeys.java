@@ -47,6 +47,10 @@ public class CommercePortletKeys {
 		"com_liferay_commerce_order_content_web_internal_portlet_" +
 			"CommerceOrderContentPortlet";
 
+	public static final String COMMERCE_ORGANIZATION_OPEN_ORDER =
+		"com_liferay_commerce_organization_order_web_internal_portlet_" +
+			"CommerceOrganizationOpenOrderPortlet";
+
 	public static final String COMMERCE_ORGANIZATION_ORDER =
 		"com_liferay_commerce_organization_order_web_internal_portlet_" +
 			"CommerceOrganizationOrderPortlet";

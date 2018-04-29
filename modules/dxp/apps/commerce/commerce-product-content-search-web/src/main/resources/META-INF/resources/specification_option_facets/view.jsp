@@ -30,8 +30,18 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 for (Facet facet : cpSpecificationOptionFacetsDisplayContext.getFacets()) {
 %>
 
-	<liferay-ui:panel-container extended="<%= true %>" markupView="lexicon" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" markupView="lexicon" persistState="<%= true %>" title="<%= cpSpecificationOptionFacetsDisplayContext.getCPSpecificationOptionTitle(facet.getFieldName()) %>">
+	<liferay-ui:panel-container
+		extended="<%= true %>"
+		markupView="lexicon"
+		persistState="<%= true %>"
+	>
+		<liferay-ui:panel
+			collapsible="<%= true %>"
+			cssClass="search-facet"
+			markupView="lexicon"
+			persistState="<%= true %>"
+			title="<%= cpSpecificationOptionFacetsDisplayContext.getCPSpecificationOptionTitle(facet.getFieldName()) %>"
+		>
 			<aui:form method="post" name='<%= "assetEntriesFacetForm_" + facet.getFieldName() %>'>
 				<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= cpSpecificationOptionFacetsDisplayContext.getCPSpecificationOptionKey(facet.getFieldName()) %>" />
 

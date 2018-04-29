@@ -22,6 +22,7 @@ import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.util.List;
@@ -60,7 +61,7 @@ public class CPSpecificationOptionFacetsDisplayContext {
 				getCPSpecificationOptionIdFromIndexFieldName(fieldName);
 
 		return _cpSpecificationOptionService.fetchCPSpecificationOption(
-			Long.parseLong(cpSpecificationOptionId));
+			GetterUtil.getLong(cpSpecificationOptionId));
 	}
 
 	public long getCPSpecificationOptionKey(String fieldName)
@@ -88,7 +89,7 @@ public class CPSpecificationOptionFacetsDisplayContext {
 			cpDefinitionSpecificationOptionValue =
 				_cpDefinitionSpecificationOptionValueService.
 					fetchCPDefinitionSpecificationOptionValue(
-						Long.parseLong(key));
+						GetterUtil.getLong(key));
 
 		return cpDefinitionSpecificationOptionValue.getValue(locale);
 	}

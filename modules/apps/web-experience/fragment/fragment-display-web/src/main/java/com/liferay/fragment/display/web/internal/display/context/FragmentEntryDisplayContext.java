@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -58,6 +59,9 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Pavel Savinov
@@ -246,9 +250,15 @@ public class FragmentEntryDisplayContext {
 
 		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
 
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_renderRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			_renderResponse);
+
 		soyContext.putHTML(
 			"content",
-			FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink));
+			FragmentEntryRenderUtil.renderFragmentEntryLink(
+				fragmentEntryLink, request, response));
 		soyContext.put(
 			"editableValues",
 			JSONFactoryUtil.createJSONObject(

@@ -14,8 +14,13 @@
 
 package com.liferay.site.my.sites.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -59,6 +64,14 @@ public class SiteMySitesDisplayContext {
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -68,6 +81,28 @@ public class SiteMySitesDisplayContext {
 			_renderRequest, "displayStyle", "descriptive");
 
 		return _displayStyle;
+	}
+
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public GroupSearch getGroupSearchContainer() {
@@ -200,6 +235,22 @@ public class SiteMySitesDisplayContext {
 		return portletURL;
 	}
 
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
 	public String getTabs1() {
 		if (_tabs1 != null) {
 			return _tabs1;
@@ -212,6 +263,52 @@ public class SiteMySitesDisplayContext {
 		}
 
 		return _tabs1;
+	}
+
+	public int getTotalItems() {
+		GroupSearch groupSearch = getGroupSearchContainer();
+
+		return groupSearch.getTotal();
+	}
+
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
+					});
+			}
+		};
 	}
 
 	private String _displayStyle;

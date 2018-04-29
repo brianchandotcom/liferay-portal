@@ -24,40 +24,18 @@
 	items="<%= siteMySitesDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= siteMySitesDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= siteMySitesDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= siteMySitesDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= siteMySitesDisplayContext.getOrderByCol() %>"
-			orderByType="<%= siteMySitesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= siteMySitesDisplayContext.getPortletURL() %>"
-		/>
-
-		<li>
-			<aui:form action="<%= siteMySitesDisplayContext.getPortletURL() %>" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="portletURL" />
-
-				<liferay-ui:input-search
-					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= siteMySitesDisplayContext.getClearResultsURL() %>"
+	componentId="siteMySitesWebManagementToolbar"
+	filterItems="<%= siteMySitesDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= siteMySitesDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	sortingOrder="<%= siteMySitesDisplayContext.getOrderByType() %>"
+	sortingURL="<%= siteMySitesDisplayContext.getSortingURL() %>"
+	totalItems="<%= siteMySitesDisplayContext.getTotalItems() %>"
+	viewTypes="<%= siteMySitesDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= siteMySitesDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="get" name="fm">
 	<liferay-ui:search-container

@@ -104,13 +104,8 @@
 								<#if isIgnoreSKUCombinations>
 									<div class="autofit-row">
 										<div class="autofit-col autofit-col-expand">
-											<div class="custom-control custom-checkbox">
-												<label>
-													<input class="custom-control-input" type="checkbox">
-													<span class="custom-control-label">
-														<span class="custom-control-label-text"><@liferay_ui["message"] key="compare" /></span>
-													</span>
-												</label>
+											<div class="product-list-info-compare">
+												<@liferay_commerce["compare-product"] CPDefinitionId=cpDefinitionId />
 											</div>
 										</div>
 

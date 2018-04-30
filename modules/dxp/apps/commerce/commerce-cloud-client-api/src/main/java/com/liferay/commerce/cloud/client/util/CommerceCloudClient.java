@@ -28,7 +28,7 @@ import java.util.List;
 @ProviderType
 public interface CommerceCloudClient {
 
-	public JSONObject getServerConfiguration()
+	public JSONObject getOrderForecastConfiguration()
 		throws CommerceCloudClientException;
 
 	public void syncOrders(
@@ -36,7 +36,7 @@ public interface CommerceCloudClient {
 				commerceCloudOrderForecastSyncs)
 		throws CommerceCloudClientException;
 
-	public void updateServerConfiguration(JSONObject jsonObject)
+	public void updateOrderForecastConfiguration(JSONObject jsonObject)
 		throws CommerceCloudClientException;
 
 }

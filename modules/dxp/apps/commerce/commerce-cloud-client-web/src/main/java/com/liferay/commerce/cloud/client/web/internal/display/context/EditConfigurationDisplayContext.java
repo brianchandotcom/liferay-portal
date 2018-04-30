@@ -83,12 +83,13 @@ public class EditConfigurationDisplayContext {
 		return _commerceCloudClientConfiguration;
 	}
 
-	public JSONObject getCommerceCloudServerConfiguration() {
-		if (_commerceCloudServerConfiguration == null) {
+	public JSONObject getCommerceCloudOrderForecastConfiguration() {
+		if (_commerceCloudOrderForecastConfiguration == null) {
 			JSONObject jsonObject = null;
 
 			try {
-				jsonObject = _commerceCloudClient.getServerConfiguration();
+				jsonObject =
+					_commerceCloudClient.getOrderForecastConfiguration();
 			}
 			catch (CommerceCloudClientException.MustBeConfigured mbc) {
 			}
@@ -100,13 +101,16 @@ public class EditConfigurationDisplayContext {
 				jsonObject.putException(ccce);
 			}
 
-			_commerceCloudServerConfiguration = Optional.ofNullable(jsonObject);
+			_commerceCloudOrderForecastConfiguration = Optional.ofNullable(
+				jsonObject);
 		}
 
-		return _commerceCloudServerConfiguration.orElse(null);
+		return _commerceCloudOrderForecastConfiguration.orElse(null);
 	}
 
-	public String getCommerceCloudServerConfigurationLabel(String value) {
+	public String getCommerceCloudOrderForecastConfigurationLabel(
+		String value) {
+
 		value = StringUtil.toLowerCase(value);
 
 		return StringUtil.replace(value, CharPool.UNDERLINE, CharPool.DASH);
@@ -166,7 +170,7 @@ public class EditConfigurationDisplayContext {
 	private final CommerceCloudClient _commerceCloudClient;
 	private CommerceCloudClientConfiguration _commerceCloudClientConfiguration;
 	private final ResourceBundleLoader _commerceCloudClientResourceBundleLoader;
-	private Optional<JSONObject> _commerceCloudServerConfiguration;
+	private Optional<JSONObject> _commerceCloudOrderForecastConfiguration;
 	private final ResourceBundleLoader _commerceOrderResourceBundleLoader;
 	private final ConfigurationProvider _configurationProvider;
 	private final HttpServletRequest _httpServletRequest;

@@ -20,7 +20,7 @@
 EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceCloudClientConfiguration commerceCloudClientConfiguration = editConfigurationDisplayContext.getCommerceCloudClientConfiguration();
-JSONObject commerceCloudServerConfigurationJSONObject = editConfigurationDisplayContext.getCommerceCloudServerConfiguration();
+JSONObject commerceCloudOrderForecastConfigurationJSONObject = editConfigurationDisplayContext.getCommerceCloudOrderForecastConfiguration();
 String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 %>
 
@@ -29,7 +29,7 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 <div class="sheet">
 	<aui:fieldset>
 		<c:choose>
-			<c:when test='<%= commerceCloudServerConfigurationJSONObject.has("exception") %>'>
+			<c:when test='<%= commerceCloudOrderForecastConfigurationJSONObject.has("exception") %>'>
 				<div class="alert alert-danger">
 					<liferay-ui:message key="commerce-cloud-is-temporarily-unavailable-or-not-configured-properly" />
 				</div>
@@ -62,7 +62,7 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 						<liferay-util:param name="values" value="<%= StringUtil.merge(CommerceCloudClientConstants.ORDER_FORECAST_PERIODS) %>" />
 					</liferay-util:include>
 
-					<aui:input helpMessage="periods-ahead-help" label="periods-ahead" name="ahead" value='<%= commerceCloudServerConfigurationJSONObject.getInt("ahead") %>'>
+					<aui:input helpMessage="periods-ahead-help" label="periods-ahead" name="ahead" value='<%= commerceCloudOrderForecastConfigurationJSONObject.getInt("ahead") %>'>
 						<aui:validator name="digits" />
 						<aui:validator name="min">1</aui:validator>
 					</aui:input>
@@ -73,7 +73,7 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 						for (String frequency : CommerceCloudClientConstants.ORDER_FORECAST_FREQUENCIES) {
 						%>
 
-							<aui:option label="<%= StringUtil.toLowerCase(frequency) %>" selected='<%= frequency.equals(commerceCloudServerConfigurationJSONObject.get("frequency")) %>' value="<%= frequency %>" />
+							<aui:option label="<%= StringUtil.toLowerCase(frequency) %>" selected='<%= frequency.equals(commerceCloudOrderForecastConfigurationJSONObject.get("frequency")) %>' value="<%= frequency %>" />
 
 						<%
 						}
@@ -91,7 +91,7 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 						<liferay-util:param name="values" value="<%= StringUtil.merge(CommerceCloudClientConstants.ORDER_FORECAST_TARGETS) %>" />
 					</liferay-util:include>
 
-					<aui:input helpMessage="time-zone-offset-help" name="timeZoneOffset" value='<%= commerceCloudServerConfigurationJSONObject.getString("timeZoneOffset") %>' />
+					<aui:input helpMessage="time-zone-offset-help" name="timeZoneOffset" value='<%= commerceCloudOrderForecastConfigurationJSONObject.getString("timeZoneOffset") %>' />
 				</div>
 			</c:otherwise>
 		</c:choose>

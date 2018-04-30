@@ -64,7 +64,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 				updateCommerceCloudClientConfiguration(actionRequest);
 			}
 			else if (cmd.equals("ordersForecasting")) {
-				updateCommerceCloudServerConfiguration(actionRequest);
+				updateCommerceCloudOrderForecastConfiguration(actionRequest);
 
 				updateCommerceCloudClientConfiguration(actionRequest);
 			}
@@ -123,7 +123,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 			CommerceCloudClientConfiguration.class, properties);
 	}
 
-	protected void updateCommerceCloudServerConfiguration(
+	protected void updateCommerceCloudOrderForecastConfiguration(
 			ActionRequest actionRequest)
 		throws Exception {
 
@@ -146,7 +146,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		jsonObject.put("targets", toJSONArray(targets));
 		jsonObject.put("timeZoneOffset", timeZoneOffset);
 
-		_commerceCloudClient.updateServerConfiguration(jsonObject);
+		_commerceCloudClient.updateOrderForecastConfiguration(jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

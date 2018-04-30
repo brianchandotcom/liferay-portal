@@ -26,10 +26,10 @@ String label = ParamUtil.getString(request, "label", name);
 
 String[] chosenValues = null;
 
-JSONObject commerceCloudServerConfigurationJSONObject = editConfigurationDisplayContext.getCommerceCloudServerConfiguration();
+JSONObject commerceCloudOrderForecastConfigurationJSONObject = editConfigurationDisplayContext.getCommerceCloudOrderForecastConfiguration();
 
-if (commerceCloudServerConfigurationJSONObject != null) {
-	chosenValues = ArrayUtil.toStringArray(commerceCloudServerConfigurationJSONObject.getJSONArray(name));
+if (commerceCloudOrderForecastConfigurationJSONObject != null) {
+	chosenValues = ArrayUtil.toStringArray(commerceCloudOrderForecastConfigurationJSONObject.getJSONArray(name));
 }
 %>
 
@@ -40,7 +40,7 @@ if (commerceCloudServerConfigurationJSONObject != null) {
 	%>
 
 		<div class="form-check">
-			<aui:input checked="<%= ArrayUtil.contains(chosenValues, value) %>" label="<%= editConfigurationDisplayContext.getCommerceCloudServerConfigurationLabel(value) %>" name="<%= name %>" type="checkbox" value="<%= value %>" />
+			<aui:input checked="<%= ArrayUtil.contains(chosenValues, value) %>" label="<%= editConfigurationDisplayContext.getCommerceCloudOrderForecastConfigurationLabel(value) %>" name="<%= name %>" type="checkbox" value="<%= value %>" />
 		</div>
 
 	<%

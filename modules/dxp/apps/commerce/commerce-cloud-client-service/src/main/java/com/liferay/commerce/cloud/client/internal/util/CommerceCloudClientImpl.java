@@ -60,11 +60,11 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 	@Override
-	public JSONObject getServerConfiguration()
+	public JSONObject getOrderForecastConfiguration()
 		throws CommerceCloudClientException {
 
 		try {
-			return doGetServerConfiguration();
+			return doGetOrderForecastConfiguration();
 		}
 		catch (CommerceCloudClientException ccce) {
 			throw ccce;
@@ -92,7 +92,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	@Override
-	public void updateServerConfiguration(JSONObject jsonObject)
+	public void updateOrderForecastConfiguration(JSONObject jsonObject)
 		throws CommerceCloudClientException {
 
 		String location = getLocation("/forecast/configuration/");
@@ -117,7 +117,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 			CommerceCloudClientConfiguration.class, properties);
 	}
 
-	protected JSONObject doGetServerConfiguration() throws Exception {
+	protected JSONObject doGetOrderForecastConfiguration() throws Exception {
 		String location = getLocation("/forecast/configuration/");
 
 		Http.Options options = new Http.Options();

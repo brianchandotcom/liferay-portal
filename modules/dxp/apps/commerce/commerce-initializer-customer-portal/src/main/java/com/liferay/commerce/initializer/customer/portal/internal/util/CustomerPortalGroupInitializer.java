@@ -47,7 +47,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -209,9 +208,6 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 				_mimeTypes.getContentType(file), fileName, StringPool.BLANK,
 				StringPool.BLANK, file, serviceContext);
-		}
-		catch (IOException ioe) {
-			throw new SystemException("Unable to write temporary file", ioe);
 		}
 		finally {
 			FileUtil.delete(file);

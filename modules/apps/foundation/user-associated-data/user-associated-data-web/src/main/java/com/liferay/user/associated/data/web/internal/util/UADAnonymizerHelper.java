@@ -41,6 +41,21 @@ public class UADAnonymizerHelper {
 		return _getAnonymousUser(companyId);
 	}
 
+	public boolean isAnonymousUser(User user) {
+		try {
+			User anonymousUser = getAnonymousUser(user.getCompanyId());
+
+			if (user.getUserId() == anonymousUser.getUserId()) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
 	private User _getAnonymousUser(long companyId) throws Exception {
 		Optional<Configuration> configurationOptional =
 			_anonymousUserConfigurationRetriever.getOptional(companyId);

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPrototypePermissionUtil;
@@ -438,6 +439,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	protected void addTeamRoles(long userId, Group group, Set<Long> roleIds)
 		throws Exception {
+
+		int count = TeamLocalServiceUtil.countByGroupId(group.getGroupId());
+
+		if (count == 0) {
+			return;
+		}
 
 		List<Role> roles = RoleLocalServiceUtil.getUserTeamRoles(
 			userId, group.getGroupId());

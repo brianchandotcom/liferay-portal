@@ -60,7 +60,7 @@ List<ObjectValuePair<Long, String>> transitionOVPs = commerceOrganizationOrderDi
 						String transitionName = transitionOVP.getValue();
 					%>
 
-						<a class="dropdown-item transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionName %>" data-workflowTaskId="<%= firstTransitionOVP.getKey() %>" href="javascript:;"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(transitionName) %></a>
+						<a class="dropdown-item transition-link" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionName %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" href="javascript:;"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderTransitionMessage(transitionName) %></a>
 
 					<%
 					}

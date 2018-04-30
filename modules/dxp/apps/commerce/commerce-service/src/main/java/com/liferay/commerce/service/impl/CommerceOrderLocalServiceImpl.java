@@ -415,7 +415,7 @@ public class CommerceOrderLocalServiceImpl
 		if (!workflowTask.isAssignedToSingleUser()) {
 			workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
 				companyId, userId, workflowTask.getWorkflowTaskId(), userId,
-				null, null, null);
+				comment, null, null);
 		}
 
 		_workflowTaskManager.completeWorkflowTask(

@@ -641,6 +641,14 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ED_ST() throws Exception {
+		_persistence.countByC_ED_ST(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_ED_ST(0L, RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		JournalArticle newJournalArticle = addJournalArticle();
 

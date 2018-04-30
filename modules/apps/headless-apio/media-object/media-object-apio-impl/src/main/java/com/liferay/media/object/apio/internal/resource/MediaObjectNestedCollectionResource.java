@@ -111,12 +111,13 @@ public class MediaObjectNestedCollectionResource
 	}
 
 	private BinaryFile _getBinaryFile(FileEntry fileEntry) {
-		Try<BinaryFile> binaryFileTry = Try.fromFallible(
+		return Try.fromFallible(
 			() -> new BinaryFile(
 				fileEntry.getContentStream(), fileEntry.getSize(),
-				fileEntry.getMimeType()));
-
-		return binaryFileTry.orElse(null);
+				fileEntry.getMimeType())
+		).orElse(
+			null
+		);
 	}
 
 	private PageItems<FileEntry> _getPageItems(

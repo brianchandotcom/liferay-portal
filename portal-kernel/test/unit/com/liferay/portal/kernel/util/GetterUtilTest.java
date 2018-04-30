@@ -74,14 +74,14 @@ public class GetterUtilTest {
 
 		Assert.assertEquals(
 			Double.MAX_VALUE,
-			GetterUtil.getDouble(Double.toString(Double.MAX_VALUE)),
+			GetterUtil.getDouble(String.valueOf(Double.MAX_VALUE)),
 			GetterUtil.DEFAULT_DOUBLE);
 
 		// Minimum double
 
 		Assert.assertEquals(
 			Double.MIN_VALUE,
-			GetterUtil.getDouble(Double.toString(Double.MIN_VALUE)),
+			GetterUtil.getDouble(String.valueOf(Double.MIN_VALUE)),
 			GetterUtil.DEFAULT_DOUBLE);
 
 		// Locale aware
@@ -248,14 +248,14 @@ public class GetterUtilTest {
 		// Larger than maximum short
 
 		result = GetterUtil.get(
-			Short.toString(Short.MAX_VALUE) + "0", (short)-1);
+			String.valueOf(Short.MAX_VALUE) + "0", (short)-1);
 
 		Assert.assertEquals((short)-1, result);
 
 		// Smaller than minimum short
 
 		result = GetterUtil.get(
-			Short.toString(Short.MIN_VALUE) + "0", (short)-1);
+			String.valueOf(Short.MIN_VALUE) + "0", (short)-1);
 
 		Assert.assertEquals((short)-1, result);
 	}

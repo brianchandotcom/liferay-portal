@@ -115,8 +115,8 @@ public class DDMFormInstanceVersionLocalServiceImpl
 			throw new NoSuchFormInstanceVersionException(
 				StringBundler.concat(
 					"No form instance versions found for form instance ID ",
-					Long.toString(formInstanceId), " with status ",
-					Integer.toString(status)));
+					String.valueOf(formInstanceId), " with status ",
+					String.valueOf(status)));
 		}
 
 		formInstanceVersions = ListUtil.copy(formInstanceVersions);

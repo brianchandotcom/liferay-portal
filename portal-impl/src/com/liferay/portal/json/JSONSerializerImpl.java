@@ -130,7 +130,7 @@ public class JSONSerializerImpl implements JSONSerializer {
 
 		@Override
 		public void serialize(JsonContext jsonContext, Long value) {
-			jsonContext.writeString(Long.toString(value));
+			jsonContext.writeString(String.valueOf(value));
 		}
 
 	}

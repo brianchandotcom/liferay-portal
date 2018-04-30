@@ -503,11 +503,11 @@ public class BatchBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement(
 			"div", null, Dom4JUtil.getNewElement("h6", null, "Job Results:"),
 			Dom4JUtil.getNewElement(
-				"p", null, Integer.toString(successCount),
+				"p", null, String.valueOf(successCount),
 				JenkinsResultsParserUtil.getNounForm(
 					successCount, " Tests", " Test"),
 				" Passed.", Dom4JUtil.getNewElement("br"),
-				Integer.toString(failCount),
+				String.valueOf(failCount),
 				JenkinsResultsParserUtil.getNounForm(
 					failCount, " Tests", " Test"),
 				" Failed.", getFailureMessageElement()));

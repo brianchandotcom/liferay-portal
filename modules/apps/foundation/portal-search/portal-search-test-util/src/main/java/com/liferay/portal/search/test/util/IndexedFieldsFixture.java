@@ -84,7 +84,7 @@ public class IndexedFieldsFixture {
 
 		List<Role> roles = _resourcePermissionLocalService.getRoles(
 			companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-			Long.toString(classPK), viewActionId);
+			String.valueOf(classPK), viewActionId);
 
 		List<String> groupRoleIds = new ArrayList<>();
 		List<String> roleIds = new ArrayList<>();

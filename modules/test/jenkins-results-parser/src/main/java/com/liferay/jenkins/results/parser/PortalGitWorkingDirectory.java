@@ -221,7 +221,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		@Override
 		public String toString() {
 			return JenkinsResultsParserUtil.combine(
-				Integer.toString(_priority), " ", _file.toString());
+				String.valueOf(_priority), " ", _file.toString());
 		}
 
 		private Module(File file, int priority) {

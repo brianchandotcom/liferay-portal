@@ -456,7 +456,7 @@ public class WatchTask extends DefaultTask {
 
 			File outputFile = getOutputFile();
 
-			String bundleIdString = Long.toString(bundleId);
+			String bundleIdString = String.valueOf(bundleId);
 
 			Files.write(
 				outputFile.toPath(),

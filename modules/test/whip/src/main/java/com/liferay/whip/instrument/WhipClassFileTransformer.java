@@ -178,7 +178,7 @@ public class WhipClassFileTransformer implements ClassFileTransformer {
 		String processId = null;
 
 		if (index == -1) {
-			processId = Long.toString(System.currentTimeMillis());
+			processId = String.valueOf(System.currentTimeMillis());
 		}
 		else {
 			processId = name.substring(0, index);

@@ -174,7 +174,7 @@ public class AxisBuild extends BaseBuild {
 
 		if (fromArchive) {
 			return JenkinsResultsParserUtil.combine(
-				jobURL, "/", axisVariable, "/", Integer.toString(buildNumber),
+				jobURL, "/", axisVariable, "/", String.valueOf(buildNumber),
 				"/");
 		}
 
@@ -186,7 +186,7 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		String buildURL = JenkinsResultsParserUtil.combine(
-			jobURL, "/", axisVariable, "/", Integer.toString(buildNumber), "/");
+			jobURL, "/", axisVariable, "/", String.valueOf(buildNumber), "/");
 
 		try {
 			return JenkinsResultsParserUtil.encode(buildURL);
@@ -238,7 +238,7 @@ public class AxisBuild extends BaseBuild {
 	@Override
 	public String getDisplayName() {
 		return JenkinsResultsParserUtil.combine(
-			getAxisVariable(), " #", Integer.toString(getBuildNumber()));
+			getAxisVariable(), " #", String.valueOf(getBuildNumber()));
 	}
 
 	@Override
@@ -450,7 +450,7 @@ public class AxisBuild extends BaseBuild {
 			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/",
 			topLevelBuildJenkinsMaster.getName(), "/",
 			topLevelBuild.getJobName(), "/",
-			Integer.toString(topLevelBuild.getBuildNumber()), "/", getJobName(),
+			String.valueOf(topLevelBuild.getBuildNumber()), "/", getJobName(),
 			"/", getAxisVariable(), "/", getParameterValue("JOB_VARIANT"), "/",
 			"stop.properties");
 	}

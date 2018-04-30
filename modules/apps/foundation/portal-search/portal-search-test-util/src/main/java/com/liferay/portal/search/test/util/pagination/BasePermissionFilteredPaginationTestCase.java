@@ -431,7 +431,7 @@ public abstract class BasePermissionFilteredPaginationTestCase
 
 			addDocument(
 				DocumentCreationHelpers.singleKeyword(
-					Field.ENTRY_CLASS_PK, Long.toString(entryClassPK)));
+					Field.ENTRY_CLASS_PK, String.valueOf(entryClassPK)));
 		}
 	}
 

@@ -57,7 +57,7 @@ public class LiferayInputStreamTest {
 								File.class.getMethod("createTempFile"))) {
 
 							_file = java.io.File.createTempFile(
-								"temp", Long.toString(System.nanoTime()));
+								"temp", String.valueOf(System.nanoTime()));
 
 							return _file;
 						}

@@ -85,7 +85,7 @@ public class LocalGitSyncUtil {
 		gitWorkingDirectory.pushToRemote(
 			true, localBranch,
 			JenkinsResultsParserUtil.combine(
-				localBranch.getName(), "-", Long.toString(timestamp)),
+				localBranch.getName(), "-", String.valueOf(timestamp)),
 			remote);
 	}
 
@@ -241,9 +241,9 @@ public class LocalGitSyncUtil {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Found ", Integer.toString(branchCount), " cache branches on ",
-				remote.getRemoteURL(), " ", Integer.toString(deleteCount),
-				" were deleted. ", Integer.toString(branchCount - deleteCount),
+				"Found ", String.valueOf(branchCount), " cache branches on ",
+				remote.getRemoteURL(), " ", String.valueOf(deleteCount),
+				" were deleted. ", String.valueOf(branchCount - deleteCount),
 				" remain. The oldest branch is ",
 				JenkinsResultsParserUtil.toDurationString(oldestBranchAge),
 				" old."));
@@ -516,14 +516,14 @@ public class LocalGitSyncUtil {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Deleted ", remoteBranchName, " on ",
-					Integer.toString(remotes.size()), " git nodes in ",
+					String.valueOf(remotes.size()), " git nodes in ",
 					JenkinsResultsParserUtil.toDurationString(duration)));
 		}
 		else {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Pushed ", localBranch.getName(), " to ", remoteBranchName,
-					" on ", Integer.toString(remotes.size()), " git nodes in ",
+					" on ", String.valueOf(remotes.size()), " git nodes in ",
 					JenkinsResultsParserUtil.toDurationString(duration)));
 		}
 
@@ -764,7 +764,7 @@ public class LocalGitSyncUtil {
 
 				String newTimestampBranchName =
 					JenkinsResultsParserUtil.combine(
-						cacheBranchName, "-", Long.toString(currentTimestamp));
+						cacheBranchName, "-", String.valueOf(currentTimestamp));
 
 				System.out.println(
 					JenkinsResultsParserUtil.combine(

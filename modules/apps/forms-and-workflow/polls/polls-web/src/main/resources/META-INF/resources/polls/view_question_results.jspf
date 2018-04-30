@@ -101,7 +101,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 
 			ResourceURL resourceURL = renderResponse.createResourceURL();
 
-			resourceURL.setParameter("questionId", Long.toString(question.getQuestionId()));
+			resourceURL.setParameter("questionId", String.valueOf(question.getQuestionId()));
 			resourceURL.setParameter("chartType", TextFormatter.format(chart, TextFormatter.N));
 			resourceURL.setResourceID("/polls/view_chart");
 

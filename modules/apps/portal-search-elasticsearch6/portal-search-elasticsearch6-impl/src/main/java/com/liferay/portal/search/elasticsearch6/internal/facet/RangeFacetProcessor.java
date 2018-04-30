@@ -24,7 +24,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Optional;
+
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator.Range;
@@ -38,19 +41,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "class.name=com.liferay.portal.kernel.search.facet.RangeFacet"
+	property = "class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
+	service = FacetProcessor.class
 )
 public class RangeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
 	@Override
-	public void processFacet(
-		SearchRequestBuilder searchRequestBuilder, Facet facet) {
-
+	public Optional<AggregationBuilder> processFacet(Facet facet) {
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
 		RangeAggregationBuilder rangeAggregationBuilder =
-			AggregationBuilders.range(facetConfiguration.getFieldName());
+			AggregationBuilders.range(FacetUtil.getAggregationName(facet));
 
 		rangeAggregationBuilder.field(facetConfiguration.getFieldName());
 
@@ -58,9 +60,11 @@ public class RangeFacetProcessor
 
 		addCustomRange(facet, rangeAggregationBuilder);
 
-		if (ListUtil.isNotEmpty(rangeAggregationBuilder.ranges())) {
-			searchRequestBuilder.addAggregation(rangeAggregationBuilder);
+		if (ListUtil.isEmpty(rangeAggregationBuilder.ranges())) {
+			return Optional.empty();
 		}
+
+		return Optional.of(rangeAggregationBuilder);
 	}
 
 	protected void addConfigurationRanges(
@@ -104,9 +108,7 @@ public class RangeFacetProcessor
 	}
 
 	protected Range createRange(String key, String[] range) {
-		return new Range(
-			key, Double.valueOf(range[0]), range[0], Double.valueOf(range[1]),
-			range[1]);
+		return new Range(key, range[0], range[1]);
 	}
 
 }

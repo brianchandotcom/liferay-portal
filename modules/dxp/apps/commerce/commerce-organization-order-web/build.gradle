@@ -3,6 +3,7 @@ targetCompatibility = "1.8"
 
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20180131.001308-11"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0-20180131.001441-5"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"

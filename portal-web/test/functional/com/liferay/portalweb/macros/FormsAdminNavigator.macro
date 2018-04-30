@@ -3,7 +3,7 @@
 	<var name="rowIndexNumber" value="1" />
 
 	<command name="gotoAddDataProvider">
-		<execute function="Click" locator1="FormsAdmin#DATA_PROVIDER_PLUS_BUTTON" />
+		<execute macro="LexiconEntry#gotoAdd" />
 	</command>
 
 	<command name="gotoAddForm">

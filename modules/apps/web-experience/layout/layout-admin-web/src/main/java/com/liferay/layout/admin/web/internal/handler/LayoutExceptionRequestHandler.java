@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.handler;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,9 +24,8 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
@@ -36,10 +34,7 @@ import java.util.ResourceBundle;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -55,61 +50,48 @@ public class LayoutExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
-
-		JSONObject jsonObject = null;
+		String errorMessage = null;
 
 		if (pe instanceof LayoutNameException) {
-			jsonObject = _handleLayoutNameException(resourceBundle);
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"please-enter-a-valid-name-for-the-page");
 		}
 		else if (pe instanceof LayoutTypeException) {
-			jsonObject = _handleLayoutTypeException(
-				actionRequest, (LayoutTypeException)pe, themeDisplay,
-				resourceBundle);
+			LayoutTypeException lte = (LayoutTypeException)pe;
+
+			if ((lte.getType() == LayoutTypeException.FIRST_LAYOUT) ||
+				(lte.getType() == LayoutTypeException.NOT_INSTANCEABLE)) {
+
+				errorMessage = _handleLayoutTypeException(
+					actionRequest, lte.getType());
+			}
 		}
-		else {
-			jsonObject = _handleUnexpectedException(themeDisplay);
+
+		if (Validator.isNull(errorMessage)) {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("error", errorMessage);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private JSONObject _handleLayoutNameException(
-		ResourceBundle resourceBundle) {
+	private String _handleLayoutTypeException(
+		ActionRequest actionRequest, int exceptionType) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		jsonObject.put(
-			"error",
-			LanguageUtil.get(
-				resourceBundle, "please-enter-a-valid-name-for-the-page"));
+		String errorMessage = "pages-of-type-x-cannot-be-selected";
 
-		return jsonObject;
-	}
-
-	private JSONObject _handleLayoutTypeException(
-		ActionRequest actionRequest, LayoutTypeException lte,
-		ThemeDisplay themeDisplay, ResourceBundle resourceBundle) {
-
-		if (!((lte.getType() == LayoutTypeException.FIRST_LAYOUT) ||
-			  (lte.getType() == LayoutTypeException.NOT_INSTANCEABLE))) {
-
-			return _handleUnexpectedException(themeDisplay);
-		}
-
-		String errorMessage = StringPool.BLANK;
-
-		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT) {
+		if (exceptionType == LayoutTypeException.FIRST_LAYOUT) {
 			errorMessage = "the-first-page-cannot-be-of-type-x";
 		}
-		else if (lte.getType() == LayoutTypeException.NOT_INSTANCEABLE) {
-			errorMessage = "pages-of-type-x-cannot-be-selected";
-		}
-
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			actionRequest);
 
 		String type = ParamUtil.getString(actionRequest, "type");
 
@@ -120,39 +102,11 @@ public class LayoutExceptionRequestHandler {
 			"content.Language", themeDisplay.getLocale(),
 			layoutTypeController.getClass());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		String layoutTypeName = LanguageUtil.get(
+			layoutTypeResourceBundle, "layout.types." + type);
 
-		jsonObject.put(
-			"error",
-			LanguageUtil.format(
-				resourceBundle, errorMessage,
-				new String[] {
-					LanguageUtil.get(
-						request, layoutTypeResourceBundle,
-						"layout.types." + type)
-				}));
-
-		return jsonObject;
+		return LanguageUtil.format(
+			themeDisplay.getRequest(), errorMessage, layoutTypeName);
 	}
-
-	private JSONObject _handleUnexpectedException(ThemeDisplay themeDisplay) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put(
-			"error",
-			LanguageUtil.get(
-				themeDisplay.getLocale(), "an-unexpected-error-occurred"));
-
-		return jsonObject;
-	}
-
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

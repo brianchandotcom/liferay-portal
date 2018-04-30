@@ -409,9 +409,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
-
 		return new DropdownItemList() {
 			{
 				add(
@@ -468,9 +465,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	protected DropdownItemList getOrderByDropdownItemList() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			_renderRequest);
-
 		return new DropdownItemList() {
 			{
 				add(

@@ -816,8 +816,8 @@ public class DDMFormAdminDisplayContext {
 
 		return orderByComparator;
 	}
-	protected DDMFormInstanceRecord getDDMFormInstanceRecord() {
 
+	protected DDMFormInstanceRecord getDDMFormInstanceRecord() {
 		long formInstanceRecordId = ParamUtil.getLong(
 			_renderRequest, "formInstanceRecordId");
 

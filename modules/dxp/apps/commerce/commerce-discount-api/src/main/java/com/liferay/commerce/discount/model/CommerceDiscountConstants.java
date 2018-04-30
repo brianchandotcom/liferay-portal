@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.commerce.discount.constants;
+package com.liferay.commerce.discount.model;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
-public class CommerceDiscountTargetConstants {
+public class CommerceDiscountConstants {
 
-	public static final String TYPE_CATEGORIES = "categories";
+	public static final String TARGET_CATEGORIES = "categories";
 
-	public static final String TYPE_PRODUCT = "product";
+	public static final String TARGET_PRODUCT = "product";
 
-	public static final String TYPE_SHIPMENT = "shipment";
+	public static final String TARGET_SHIPMENT = "shipment";
 
-	public static final String TYPE_SUBTOTAL = "subtotal";
+	public static final String TARGET_SUBTOTAL = "subtotal";
 
-	public static final String TYPE_TOTAL = "total";
+	public static final String TARGET_TOTAL = "total";
 
 }

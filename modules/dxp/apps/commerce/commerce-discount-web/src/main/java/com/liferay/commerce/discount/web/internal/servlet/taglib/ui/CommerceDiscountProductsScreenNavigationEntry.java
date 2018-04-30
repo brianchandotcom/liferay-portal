@@ -15,8 +15,8 @@
 package com.liferay.commerce.discount.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.discount.constants.CommerceDiscountTargetConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.model.CommerceDiscountConstants;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelService;
@@ -95,7 +95,7 @@ public class CommerceDiscountProductsScreenNavigationEntry
 
 		String target = commerceDiscount.getTarget();
 
-		if (!target.equals(CommerceDiscountTargetConstants.TYPE_PRODUCT)) {
+		if (!target.equals(CommerceDiscountConstants.TARGET_PRODUCT)) {
 			return false;
 		}
 

@@ -19,6 +19,7 @@ import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext;
 import com.liferay.commerce.service.CommerceTaxMethodService;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -45,18 +46,21 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=20",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=20",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CPTaxCategoryScreenNavigationEntry
-	implements ScreenNavigationEntry<CommerceAdminModule> {
+	implements ScreenNavigationCategory,
+			   ScreenNavigationEntry<CommerceAdminModule> {
 
 	public static final String ENTRY_KEY = "tax-categories";
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceTaxScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_TAXES_DETAIL;
+		return "tax-categories";
 	}
 
 	@Override

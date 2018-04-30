@@ -383,7 +383,7 @@ public class JournalDisplayContext {
 
 							String label = "folder";
 
-							if (getFolder() == null) {
+							if (getFolder() != null) {
 								label = "subfolder";
 							}
 

@@ -15,7 +15,7 @@
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F_C">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT Layout.plid) AS COUNT_VALUE
+				COUNT(DISTINCT FragmentEntryLink.classPK) AS COUNT_VALUE
 			FROM
 				FragmentEntryLink
 			INNER JOIN
@@ -31,7 +31,7 @@
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F_C_L">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT LayoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE
+				COUNT(DISTINCT FragmentEntryLink.classPK) AS COUNT_VALUE
 			FROM
 				FragmentEntryLink
 			INNER JOIN

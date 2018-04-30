@@ -20,6 +20,8 @@
 renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 %>
 
+<liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-collection-cannot-be-deleted-because-it-contains-a-fragment-required-by-one-or-more-templates" />
+
 <clay:navigation-bar
 	inverted="<%= true %>"
 	items="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"

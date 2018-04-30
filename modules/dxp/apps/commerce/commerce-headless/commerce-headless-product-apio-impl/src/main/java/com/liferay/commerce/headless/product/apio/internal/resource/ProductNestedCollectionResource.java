@@ -30,6 +30,7 @@ import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameExcepti
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -124,8 +125,15 @@ public class ProductNestedCollectionResource
 			document -> GetterUtil.getLong(document.get(Field.USER_ID))
 		).addString(
 			"description",
-			document -> !Validator.isBlank(document.get(Field.DESCRIPTION)) ?
-				document.get(Field.DESCRIPTION) : "-"
+			document -> {
+				String description = document.get(Field.DESCRIPTION);
+
+				if (Validator.isNull(description)) {
+					description = StringPool.DASH;
+				}
+
+				return description;
+			}
 		).addStringList(
 			"skus", document -> Arrays.asList(document.getValues("skus"))
 		).addString(

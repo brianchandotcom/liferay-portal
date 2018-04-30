@@ -543,6 +543,10 @@ public class ModularBlogsEntryLocalServiceWrapper
 		return _blogsEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	/**
+	 * @deprecated As of 1.1.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> getNoAssetEntries() {
 		return ModelAdapterUtil.adapt(

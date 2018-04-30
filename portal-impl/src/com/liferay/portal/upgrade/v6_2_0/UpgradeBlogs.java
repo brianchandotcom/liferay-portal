@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.upgrade.v6_2_0.util.BlogsEntryTable;
 import com.liferay.portal.upgrade.v6_2_0.util.RSSUtil;
 
@@ -35,6 +36,7 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 		super.doUpgrade();
 
 		updateEntries();
+		updateStatus();
 	}
 
 	@Override
@@ -47,6 +49,15 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 			alter(
 				BlogsEntryTable.class,
 				new AlterColumnType("description", "STRING null"));
+		}
+	}
+
+	protected void updateStatus() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				"update BlogsEntry set status = " +
+					WorkflowConstants.STATUS_APPROVED +
+						" where status is null");
 		}
 	}
 

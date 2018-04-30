@@ -15,8 +15,6 @@
 package com.liferay.portal.blogs.compat.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntryTitleException;
@@ -540,25 +538,6 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testGetGroupUserEntriesNotInTrash() throws Exception {
 		testGetGroupUserEntries(false);
-	}
-
-	@Test
-	public void testGetNoAssetEntries() throws Exception {
-		BlogsEntry entry = addEntry(false);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			com.liferay.blogs.model.BlogsEntry.class.getName(),
-			entry.getEntryId());
-
-		Assert.assertNotNull(assetEntry);
-
-		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
-
-		List<BlogsEntry> entries =
-			BlogsEntryLocalServiceUtil.getNoAssetEntries();
-
-		Assert.assertEquals(entries.toString(), 1, entries.size());
-		Assert.assertEquals(entry, entries.get(0));
 	}
 
 	@Test

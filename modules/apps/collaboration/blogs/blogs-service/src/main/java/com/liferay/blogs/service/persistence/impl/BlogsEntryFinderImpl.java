@@ -259,6 +259,10 @@ public class BlogsEntryFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 1.1.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByNoAssets() {
 		Session session = null;

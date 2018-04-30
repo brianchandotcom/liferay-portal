@@ -197,6 +197,10 @@ public class WikiPageFinderImpl
 			groupId, nodeId, createDate, before, start, end, false);
 	}
 
+	/**
+	 * @deprecated As of 2.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<WikiPage> findByNoAssets() {
 		Session session = null;

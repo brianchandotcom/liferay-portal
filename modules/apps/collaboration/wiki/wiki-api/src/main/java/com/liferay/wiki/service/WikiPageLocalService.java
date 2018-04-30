@@ -353,6 +353,10 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public WikiPage getLatestPage(long nodeId, String title, int status,
 		boolean preferApproved) throws PortalException;
 
+	/**
+	* @deprecated As of 2.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getNoAssetPages();
 

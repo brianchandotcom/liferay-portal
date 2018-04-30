@@ -545,29 +545,6 @@ public class WikiPageLocalServiceTest {
 	}
 
 	@Test
-	public void testGetNoAssetPages() throws Exception {
-		List<WikiPage> initialPages = _getGroupNoAssetPages();
-
-		WikiTestUtil.addPage(_group.getGroupId(), _node.getNodeId(), true);
-
-		WikiPage page = WikiTestUtil.addPage(
-			_group.getGroupId(), _node.getNodeId(), true);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			WikiPage.class.getName(), page.getResourcePrimKey());
-
-		Assert.assertNotNull(assetEntry);
-
-		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
-
-		List<WikiPage> pages = _getGroupNoAssetPages();
-
-		Assert.assertEquals(
-			pages.toString(), initialPages.size() + 1, pages.size());
-		Assert.assertEquals(page, pages.get(pages.size() - 1));
-	}
-
-	@Test
 	public void testGetPage() throws Exception {
 		WikiPage page = WikiTestUtil.addPage(
 			_group.getGroupId(), _node.getNodeId(), true);
@@ -1105,12 +1082,6 @@ public class WikiPageLocalServiceTest {
 		Arrays.sort(actualArray);
 
 		Assert.assertArrayEquals(expectedArray, actualArray);
-	}
-
-	private List<WikiPage> _getGroupNoAssetPages() {
-		return ListUtil.filter(
-			WikiPageLocalServiceUtil.getNoAssetPages(),
-			page -> page.getGroupId() == _group.getGroupId());
 	}
 
 	@DeleteAfterTestRun

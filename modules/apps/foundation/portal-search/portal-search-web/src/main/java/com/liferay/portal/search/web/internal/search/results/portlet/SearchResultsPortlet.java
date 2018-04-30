@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -312,6 +313,8 @@ public class SearchResultsPortlet
 			assetRendererFactoryLookup);
 		searchResultSummaryDisplayBuilder.setCurrentURL(portletURL.toString());
 		searchResultSummaryDisplayBuilder.setDocument(document);
+		searchResultSummaryDisplayBuilder.setFastDateFormatFactory(
+			fastDateFormatFactory);
 		searchResultSummaryDisplayBuilder.setHighlightEnabled(
 			searchResultsPortletPreferences.isHighlightEnabled());
 		searchResultSummaryDisplayBuilder.setImageRequested(true);
@@ -443,6 +446,9 @@ public class SearchResultsPortlet
 	protected AssetEntryLocalService assetEntryLocalService;
 
 	protected AssetRendererFactoryLookup assetRendererFactoryLookup;
+
+	@Reference
+	protected FastDateFormatFactory fastDateFormatFactory;
 
 	@Reference
 	protected Http http;

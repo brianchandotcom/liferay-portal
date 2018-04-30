@@ -34,11 +34,12 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FastDateFormatConstants;
+import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.summary.Summary;
 import com.liferay.portal.search.summary.SummaryBuilder;
@@ -47,21 +48,26 @@ import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.display.context.SearchResultPreferences;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultFieldDisplayContext;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
+import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.internal.util.SearchUtil;
 import com.liferay.portal.search.web.search.result.SearchResultImage;
 import com.liferay.portal.search.web.search.result.SearchResultImageContributor;
 
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
@@ -109,6 +115,12 @@ public class SearchResultSummaryDisplayBuilder {
 
 	public void setDocument(Document document) {
 		_document = document;
+	}
+
+	public void setFastDateFormatFactory(
+		FastDateFormatFactory fastDateFormatFactory) {
+
+		_fastDateFormatFactory = fastDateFormatFactory;
 	}
 
 	public void setHighlightEnabled(boolean highlightEnabled) {
@@ -289,13 +301,18 @@ public class SearchResultSummaryDisplayBuilder {
 	protected void buildCreationDateString(
 		SearchResultSummaryDisplayContext searchResultSummaryDisplayContext) {
 
-		String creation = StringUtil.trim(_document.get(Field.CREATE_DATE));
+		Optional<String> dateStringOptional = SearchStringUtil.maybe(
+			_document.get(Field.CREATE_DATE));
 
-		if (!Validator.isBlank(creation)) {
-			searchResultSummaryDisplayContext.setCreationDateString(
-				formatDate(creation));
-			searchResultSummaryDisplayContext.setCreationDateVisible(true);
-		}
+		Optional<Date> dateOptional = dateStringOptional.map(
+			this::parseDateStringFieldValue);
+
+		dateOptional.ifPresent(
+			date -> {
+				searchResultSummaryDisplayContext.setCreationDateString(
+					formatCreationDate(date));
+				searchResultSummaryDisplayContext.setCreationDateVisible(true);
+			});
 	}
 
 	protected void buildCreatorUserName(
@@ -483,19 +500,12 @@ public class SearchResultSummaryDisplayBuilder {
 		searchResultSummaryDisplayContext.setViewURL(viewURL);
 	}
 
-	protected String formatDate(String dateString) {
-		SimpleDateFormat simpleDateFormatInput = new SimpleDateFormat(
-			"yyyyMMddHHmmss");
-		SimpleDateFormat simpleDateFormatOutput = new SimpleDateFormat(
-			"MMM dd yyyy, h:mm a");
+	protected String formatCreationDate(Date date) {
+		Format format = _fastDateFormatFactory.getDateTime(
+			FastDateFormatConstants.MEDIUM, FastDateFormatConstants.SHORT,
+			_locale, _themeDisplay.getTimeZone());
 
-		try {
-			return simpleDateFormatOutput.format(
-				simpleDateFormatInput.parse(dateString));
-		}
-		catch (ParseException pe) {
-			throw new RuntimeException(pe);
-		}
+		return format.format(date);
 	}
 
 	protected long getAssetEntryUserId(AssetEntry assetEntry) {
@@ -663,6 +673,18 @@ public class SearchResultSummaryDisplayBuilder {
 		return false;
 	}
 
+	protected Date parseDateStringFieldValue(String dateStringFieldValue) {
+		try {
+			return _DATE_STRING_FIELD_DATE_FORMAT.parse(dateStringFieldValue);
+		}
+		catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	private static final DateFormat _DATE_STRING_FIELD_DATE_FORMAT =
+		new SimpleDateFormat("yyyyMMddHHmmss");
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchResultSummaryDisplayBuilder.class);
 
@@ -671,6 +693,7 @@ public class SearchResultSummaryDisplayBuilder {
 	private AssetRendererFactoryLookup _assetRendererFactoryLookup;
 	private String _currentURL;
 	private Document _document;
+	private FastDateFormatFactory _fastDateFormatFactory;
 	private boolean _highlightEnabled;
 	private boolean _imageRequested;
 	private IndexerRegistry _indexerRegistry;

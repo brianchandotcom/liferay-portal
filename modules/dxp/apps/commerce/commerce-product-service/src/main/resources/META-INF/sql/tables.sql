@@ -99,9 +99,9 @@ create table CPDefinitionLocalization (
 	title STRING null,
 	shortDescription STRING null,
 	description TEXT null,
-	metaTitle VARCHAR(75) null,
-	metaKeywords VARCHAR(75) null,
-	metaDescription VARCHAR(75) null
+	metaTitle VARCHAR(255) null,
+	metaKeywords VARCHAR(255) null,
+	metaDescription VARCHAR(255) null
 );
 
 create table CPDefinitionOptionRel (

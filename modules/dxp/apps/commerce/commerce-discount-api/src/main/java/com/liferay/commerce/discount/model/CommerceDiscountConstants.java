@@ -19,6 +19,18 @@ package com.liferay.commerce.discount.model;
  */
 public class CommerceDiscountConstants {
 
+	public static final String LIMITATION_TYPE_LIMITED = "limited";
+
+	public static final String LIMITATION_TYPE_LIMITED_FOR_USERS =
+		"limited-for-users";
+
+	public static final String LIMITATION_TYPE_UNLIMITED = "unlimited";
+
+	public static final String[] LIMITATION_TYPES = {
+		LIMITATION_TYPE_UNLIMITED, LIMITATION_TYPE_LIMITED,
+		LIMITATION_TYPE_LIMITED_FOR_USERS
+	};
+
 	public static final String TARGET_CATEGORIES = "categories";
 
 	public static final String TARGET_PRODUCT = "product";

@@ -121,7 +121,7 @@ if (!usePercentage) {
 <aui:select name="limitationType">
 
 	<%
-	for (String limitationType : CommerceDiscountLimitationConstants.TYPES) {
+	for (String limitationType : CommerceDiscountConstants.LIMITATION_TYPES) {
 	%>
 
 		<aui:option label="<%= LanguageUtil.get(request, limitationType) %>" selected="<%= (commerceDiscount != null) && limitationType.equals(commerceDiscount.getLimitationType()) %>" value="<%= limitationType %>" />
@@ -135,7 +135,7 @@ if (!usePercentage) {
 <%
 String limitationTimesWrapperCssClass = "limitation-times-input-wrapper hide";
 
-if ((commerceDiscount != null) && !Objects.equals(commerceDiscount.getLimitationType(), CommerceDiscountLimitationConstants.TYPE_UNLIMITED)) {
+if ((commerceDiscount != null) && !Objects.equals(commerceDiscount.getLimitationType(), CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED)) {
 	limitationTimesWrapperCssClass = "limitation-times-input-wrapper";
 }
 %>
@@ -248,7 +248,7 @@ if ((commerceDiscount != null) && !Objects.equals(commerceDiscount.getLimitation
 	A.one('#<portlet:namespace />limitationType').on(
 		'change',
 		function(event) {
-			if (this.val() == '<%= CommerceDiscountLimitationConstants.TYPE_UNLIMITED %>') {
+			if (this.val() == '<%= CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED %>') {
 				A.all('.limitation-times-input-wrapper').addClass('hide');
 
 				A.one('#<portlet:namespace />limitationTimes').attr('disabled', true);

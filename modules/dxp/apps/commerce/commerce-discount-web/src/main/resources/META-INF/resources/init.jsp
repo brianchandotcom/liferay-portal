@@ -27,12 +27,12 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
-page import="com.liferay.commerce.discount.constants.CommerceDiscountLimitationConstants" %><%@
 page import="com.liferay.commerce.discount.exception.CommerceDiscountRuleTypeException" %><%@
 page import="com.liferay.commerce.discount.exception.NoSuchDiscountException" %><%@
 page import="com.liferay.commerce.discount.exception.NoSuchDiscountRelException" %><%@
 page import="com.liferay.commerce.discount.exception.NoSuchDiscountRuleException" %><%@
 page import="com.liferay.commerce.discount.model.CommerceDiscount" %><%@
+page import="com.liferay.commerce.discount.model.CommerceDiscountConstants" %><%@
 page import="com.liferay.commerce.discount.model.CommerceDiscountRel" %><%@
 page import="com.liferay.commerce.discount.model.CommerceDiscountRule" %><%@
 page import="com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel" %><%@

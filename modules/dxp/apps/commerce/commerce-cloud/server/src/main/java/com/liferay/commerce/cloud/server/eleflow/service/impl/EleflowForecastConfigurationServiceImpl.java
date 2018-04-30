@@ -27,8 +27,6 @@ import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.client.HttpRequest;
-import io.vertx.ext.web.client.WebClient;
-import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.ext.web.codec.BodyCodec;
 import io.vertx.ext.web.codec.impl.BodyCodecImpl;
 
@@ -40,34 +38,27 @@ import java.util.function.Function;
  * @author Andrea Di Giorgi
  */
 public class EleflowForecastConfigurationServiceImpl
-	implements ForecastConfigurationService {
+	extends BaseEleflowServiceImpl implements ForecastConfigurationService {
 
 	public EleflowForecastConfigurationServiceImpl(
 		Vertx vertx, String callbackURL, String host, String path) {
 
+		super(vertx, host, path);
+
 		_callbackURL = Objects.requireNonNull(callbackURL);
-		_path = Objects.requireNonNull(path);
-
-		WebClientOptions webClientOptions = new WebClientOptions();
-
-		webClientOptions.setDefaultHost(Objects.requireNonNull(host));
-		webClientOptions.setDefaultPort(443);
-		webClientOptions.setSsl(true);
-
-		_webClient = WebClient.create(vertx, webClientOptions);
 	}
 
 	@Override
 	public void getForecastConfiguration(
 		Project project, Handler<AsyncResult<ForecastConfiguration>> handler) {
 
-		HttpRequest<ForecastConfiguration> httpRequest = _webClient.get(
-			_path + "/scheduler"
+		HttpRequest<ForecastConfiguration> httpRequest = webClient.get(
+			path + "/scheduler"
 		).as(
 			_bodyCodec
 		);
 
-		_addAuthorization(httpRequest, project);
+		addAuthorization(httpRequest, project);
 
 		httpRequest.send(
 			asyncResult -> VertxUtil.handleServiceHttpResponse(
@@ -79,13 +70,13 @@ public class EleflowForecastConfigurationServiceImpl
 		Project project, ForecastConfiguration forecastConfiguration,
 		Handler<AsyncResult<Void>> handler) {
 
-		HttpRequest<Void> httpRequest = _webClient.put(
-			_path + "/scheduler"
+		HttpRequest<Void> httpRequest = webClient.put(
+			path + "/scheduler"
 		).as(
 			BodyCodec.none()
 		);
 
-		_addAuthorization(httpRequest, project);
+		addAuthorization(httpRequest, project);
 
 		String callbackURL = _callbackURL.replace(
 			":projectId", project.getId());
@@ -98,12 +89,6 @@ public class EleflowForecastConfigurationServiceImpl
 			eleflowForecastScheduler,
 			asyncResult -> VertxUtil.handleServiceHttpResponse(
 				asyncResult, handler));
-	}
-
-	private void _addAuthorization(
-		HttpRequest<?> httpRequest, Project project) {
-
-		httpRequest.putHeader("x-api-key", project.getApiKey());
 	}
 
 	private static final BodyCodec<ForecastConfiguration> _bodyCodec;
@@ -124,7 +109,5 @@ public class EleflowForecastConfigurationServiceImpl
 	}
 
 	private final String _callbackURL;
-	private final String _path;
-	private final WebClient _webClient;
 
 }

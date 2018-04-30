@@ -16,7 +16,11 @@ package com.liferay.commerce.product.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
@@ -26,6 +30,7 @@ import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValue
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -41,9 +46,79 @@ import java.util.TreeSet;
 /**
  * @author Marco Leo
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
 public class CPDefinitionImpl extends CPDefinitionBaseImpl {
+
+	public static CPDefinitionMetaDescriptionException validateMetaDescription(
+		String value) {
+
+		return validateMetaDescription(value, true);
+	}
+
+	public static CPDefinitionMetaDescriptionException validateMetaDescription(
+		String value, boolean checkMaxLength) {
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			CPDefinitionLocalization.class.getName(), "metaDescription");
+
+		if (checkMaxLength && (value.length() > maxLength)) {
+			return new CPDefinitionMetaDescriptionException();
+		}
+
+		return null;
+	}
+
+	public static CPDefinitionMetaKeywordsException validateMetaKeyword(
+		String value) {
+
+		return validateMetaKeyword(value, true);
+	}
+
+	public static CPDefinitionMetaKeywordsException validateMetaKeyword(
+		String value, boolean checkMaxLength) {
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			CPDefinitionLocalization.class.getName(), "metaKeyword");
+
+		if (checkMaxLength && (value.length() > maxLength)) {
+			return new CPDefinitionMetaKeywordsException();
+		}
+
+		return null;
+	}
+
+	public static CPDefinitionMetaTitleException validateMetaTitle(
+		String value) {
+
+		return validateMetaTitle(value, true);
+	}
+
+	public static CPDefinitionMetaTitleException validateMetaTitle(
+		String value, boolean checkMaxLength) {
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			CPDefinitionLocalization.class.getName(), "metaTitle");
+
+		if (checkMaxLength && (value.length() > maxLength)) {
+			return new CPDefinitionMetaTitleException();
+		}
+
+		return null;
+	}
 
 	public CPDefinitionImpl() {
 	}

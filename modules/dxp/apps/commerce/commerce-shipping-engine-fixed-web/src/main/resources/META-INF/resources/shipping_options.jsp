@@ -180,6 +180,15 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 
 	Liferay.provide(
 		window,
+		'refreshPortlet',
+		function() {
+			location.href = '<%= currentURL %>';
+		},
+		['aui-dialog', 'aui-dialog-iframe']
+	);
+
+	Liferay.provide(
+		window,
 		'closePopup',
 		function(dialogId) {
 			var dialog = Liferay.Util.Window.getById(dialogId);

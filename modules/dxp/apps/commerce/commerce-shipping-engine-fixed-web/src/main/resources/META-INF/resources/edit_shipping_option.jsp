@@ -45,7 +45,7 @@ if (commerceShippingFixedOption != null) {
 		<aui:input name="description" />
 
 		<c:if test="<%= commerceShippingFixedOptionsDisplayContext.isFixed() %>">
-			<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOption == null) ? StringPool.BLANK : commerceShippingFixedOption.getAmount().toPlainString() %>" />
+			<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOption == null) ? BigDecimal.ZERO.toPlainString() : commerceShippingFixedOption.getAmount().toPlainString() %>" />
 		</c:if>
 
 		<aui:input name="priority" />
@@ -75,8 +75,7 @@ if (commerceShippingFixedOption != null) {
 					method: 'POST',
 					on: {
 						success: function() {
-							Liferay.Portlet.refresh('#p_p_id<portlet:namespace/>');
-
+							Liferay.Util.getOpener().refreshPortlet();
 							Liferay.Util.getOpener().closePopup('editShippingFixedOptionDialog');
 						}
 					}

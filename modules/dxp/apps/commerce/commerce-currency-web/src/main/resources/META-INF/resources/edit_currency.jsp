@@ -98,7 +98,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 				%>
 
 				<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
-					<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? StringPool.BLANK : commerceCurrency.getRate().toPlainString() %>" />
+					<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? BigDecimal.ZERO.toPlainString() : commerceCurrency.getRate().toPlainString() %>" />
 				</div>
 
 				<aui:input name="priority" />

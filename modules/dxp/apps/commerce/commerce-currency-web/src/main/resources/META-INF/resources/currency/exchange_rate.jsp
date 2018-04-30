@@ -34,48 +34,24 @@ boolean autoUpdate = exchangeRateProviderGroupServiceConfiguration.autoUpdate();
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<div class="exchange-rate-update-header">
-					<aui:input id="exchangeRateConfiguration--autoUpdate--" name="exchangeRateConfiguration--autoUpdate--" type="checkbox" value="<%= autoUpdate %>" />
-				</div>
+				<aui:input id="exchangeRateConfiguration--autoUpdate--" name="exchangeRateConfiguration--autoUpdate--" type="checkbox" value="<%= autoUpdate %>" />
 
-				<div class="exchange-rate-update-content">
-					<aui:select id="exchangeRateConfiguration--defaultExchangeRateProviderKey--" label="exchange-rate-provider" name="exchangeRateConfiguration--defaultExchangeRateProviderKey--" showEmptyOption="<%= true %>">
+				<aui:select id="exchangeRateConfiguration--defaultExchangeRateProviderKey--" label="exchange-rate-provider" name="exchangeRateConfiguration--defaultExchangeRateProviderKey--" showEmptyOption="<%= true %>">
 
-						<%
-						for (String exchangeRateProviderKey : commerceCurrenciesDisplayContext.getExchangeRateProviderKeys()) {
-						%>
+					<%
+					for (String exchangeRateProviderKey : commerceCurrenciesDisplayContext.getExchangeRateProviderKeys()) {
+					%>
 
-							<aui:option label="<%= LanguageUtil.get(request, exchangeRateProviderKey) %>" selected="<%= exchangeRateProviderKey.equals(exchangeRateProviderGroupServiceConfiguration.defaultExchangeRateProviderKey()) %>" value="<%= exchangeRateProviderKey %>" />
+						<aui:option label="<%= LanguageUtil.get(request, exchangeRateProviderKey) %>" selected="<%= exchangeRateProviderKey.equals(exchangeRateProviderGroupServiceConfiguration.defaultExchangeRateProviderKey()) %>" value="<%= exchangeRateProviderKey %>" />
 
-						<%
-						}
-						%>
+					<%
+					}
+					%>
 
-					</aui:select>
-				</div>
+				</aui:select>
 			</aui:fieldset>
 		</aui:fieldset-group>
 
 		<aui:button name="saveButton" type="submit" value="save" />
 	</aui:form>
 </div>
-
-<aui:script use="aui-toggler">
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />exchangeRateContainer .exchange-rate-update-content',
-			expanded: <%= autoUpdate %>,
-			header: '#<portlet:namespace />exchangeRateContainer .exchange-rate-update-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
-
-					var expanded = !instance.get('expanded');
-
-					A.one('#<portlet:namespace />exchangeRateConfiguration--autoUpdate--').attr('checked', expanded);
-				}
-			}
-		}
-	);
-</aui:script>

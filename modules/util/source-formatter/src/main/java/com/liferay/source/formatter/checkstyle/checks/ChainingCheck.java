@@ -15,7 +15,9 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
@@ -29,6 +31,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Hugo Huijser
@@ -75,6 +78,8 @@ public class ChainingCheck extends BaseCheck {
 					continue;
 				}
 			}
+
+			_checkAllowedChaining(methodCallAST);
 
 			if (_isInsideAnonymousClassVariableDefinition(methodCallAST)) {
 				continue;
@@ -150,6 +155,77 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkAllowedChaining(DetailAST methodCallAST) {
+		DetailAST parentAST = methodCallAST.getParent();
+
+		while (true) {
+			if ((parentAST.getType() == TokenTypes.DOT) ||
+				(parentAST.getType() == TokenTypes.METHOD_CALL)) {
+
+				parentAST = parentAST.getParent();
+
+				continue;
+			}
+
+			break;
+		}
+
+		if (parentAST.getType() != TokenTypes.EXPR) {
+			return;
+		}
+
+		parentAST = parentAST.getParent();
+
+		if (parentAST.getType() != TokenTypes.ASSIGN) {
+			return;
+		}
+
+		parentAST = parentAST.getParent();
+
+		if (parentAST.getType() != TokenTypes.VARIABLE_DEF) {
+			return;
+		}
+
+		String classOrVariableName = _getClassOrVariableName(methodCallAST);
+
+		if (!Objects.equals(classOrVariableName, "Optional") &&
+			!Objects.equals(classOrVariableName, "Stream") &&
+			!Objects.equals(classOrVariableName, "Try")) {
+
+			return;
+		}
+
+		DetailAST variableNameAST = parentAST.findFirstToken(TokenTypes.IDENT);
+
+		String variableName = variableNameAST.getText();
+
+		String variableTypeName = DetailASTUtil.getVariableTypeName(
+			methodCallAST, variableName, false);
+
+		if (!classOrVariableName.equals(variableTypeName)) {
+			return;
+		}
+
+		List<DetailAST> identASTList = _getIdentASTList(
+			parentAST.getParent(), variableName);
+
+		if ((identASTList.size() == 2) &&
+			Objects.equals(
+				_findFirstParent(
+					identASTList.get(0), TokenTypes.ELIST,
+					TokenTypes.LITERAL_IF),
+				_findFirstParent(
+					identASTList.get(1), TokenTypes.ELIST,
+					TokenTypes.LITERAL_IF))) {
+
+			log(
+				methodCallAST.getLineNo(), _MSG_ALLOWED_CHAINING,
+				StringBundler.concat(
+					classOrVariableName, StringPool.PERIOD,
+					DetailASTUtil.getMethodName(methodCallAST)));
+		}
+	}
+
 	private void _checkMethodName(
 		List<String> chainedMethodNames, String methodName,
 		DetailAST methodCallAST, DetailAST detailAST) {
@@ -188,6 +264,22 @@ public class ChainingCheck extends BaseCheck {
 			DetailASTUtil.getMethodName(methodCallAST));
 	}
 
+	private DetailAST _findFirstParent(DetailAST detailAST, int... types) {
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST == null) {
+				return null;
+			}
+
+			if (ArrayUtil.contains(types, parentAST.getType())) {
+				return parentAST;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+	}
+
 	private List<String> _getChain(DetailAST methodCallAST) {
 		List<String> chain = new ArrayList<>();
 
@@ -216,6 +308,46 @@ public class ChainingCheck extends BaseCheck {
 
 			chain.add(DetailASTUtil.getMethodName(methodCallAST));
 		}
+	}
+
+	private String _getClassOrVariableName(DetailAST methodCallAST) {
+		DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotAST == null) {
+			return null;
+		}
+
+		DetailAST nameAST = null;
+
+		DetailAST firstChild = dotAST.getFirstChild();
+
+		if (firstChild.getType() == TokenTypes.LITERAL_NEW) {
+			nameAST = firstChild.findFirstToken(TokenTypes.IDENT);
+		}
+		else {
+			nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
+		}
+
+		if (nameAST != null) {
+			return nameAST.getText();
+		}
+
+		return null;
+	}
+
+	private List<DetailAST> _getIdentASTList(DetailAST detailAST, String name) {
+		List<DetailAST> identASTList = new ArrayList<>();
+
+		for (DetailAST identAST :
+				DetailASTUtil.getAllChildTokens(
+					detailAST, true, TokenTypes.IDENT)) {
+
+			if (name.equals(identAST.getText())) {
+				identASTList.add(identAST);
+			}
+		}
+
+		return identASTList;
 	}
 
 	private DetailAST _getOuterMethodCallAST(DetailAST detailAST) {
@@ -317,20 +449,9 @@ public class ChainingCheck extends BaseCheck {
 			return false;
 		}
 
-		DetailAST nameAST = null;
+		String classOrVariableName = _getClassOrVariableName(methodCallAST);
 
-		DetailAST firstChild = dotAST.getFirstChild();
-
-		if (firstChild.getType() == TokenTypes.LITERAL_NEW) {
-			nameAST = firstChild.findFirstToken(TokenTypes.IDENT);
-		}
-		else {
-			nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
-		}
-
-		if (nameAST != null) {
-			String classOrVariableName = nameAST.getText();
-
+		if (classOrVariableName != null) {
 			if (_isLambdaVariable(methodCallAST, classOrVariableName)) {
 				return true;
 			}
@@ -440,6 +561,8 @@ public class ChainingCheck extends BaseCheck {
 
 		return false;
 	}
+
+	private static final String _MSG_ALLOWED_CHAINING = "chaining.allowed";
 
 	private static final String _MSG_AVOID_CHAINING = "chaining.avoid";
 

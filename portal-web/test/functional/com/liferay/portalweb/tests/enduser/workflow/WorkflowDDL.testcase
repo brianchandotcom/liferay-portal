@@ -29,9 +29,8 @@
 	</tear-down>
 
 	<command name="EditDDLRecordViaMyWorkflowTasks" priority="5">
-		<property name="portal.acceptance" value="false" />
-
 		<description message="This is a use case for LPS-61212." />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -385,7 +385,7 @@
 			<var name="userLastName" value="Test" />
 		</execute>
 
-		<!-- Logout SP and verify SP is logged out-->
+		<!-- Logout SP and verify SP is logged out -->
 
 		<execute macro="User#logoutPG">
 			<var name="specificURL" value="http://www.able.com:9080" />
@@ -445,7 +445,7 @@
 			<var name="userLastName" value="Test" />
 		</execute>
 
-		<!-- Logout SP and verify SP is logged out-->
+		<!-- Logout SP and verify SP is logged out -->
 
 		<execute macro="User#logoutPG">
 			<var name="specificURL" value="http://www.able.com:9080" />
@@ -500,7 +500,9 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute function="AssertConsoleTextPresent" value1="Sending SAML message &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;_&lt;saml2p:Response Destination=&quot;http://www.able.com:9080/c/portal/saml/acs&quot;" />
+		<var name="consoleText"><![CDATA[Sending SAML message &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;_&lt;saml2p:Response Destination=&quot;http://www.able.com:9080/c/portal/saml/acs&quot;]]></var>
+
+		<execute function="AssertConsoleTextPresent" value1="${consoleText}" />
 
 		<execute macro="User#logoutPG">
 			<var name="specificURL" value="http://www.able.com:9080" />
@@ -632,7 +634,7 @@
 			<var name="userLastName" value="Test" />
 		</execute>
 
-		<!-- Logout SP and verify SP is logged out-->
+		<!-- Logout SP and verify SP is logged out -->
 
 		<execute macro="User#logoutPG">
 			<var name="specificURL" value="http://www.able.com:9080" />

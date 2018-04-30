@@ -1660,7 +1660,7 @@
 			<var name="customURL" value="this-should-redirect-to-the-previous-entry" />
 		</execute>
 
-		<execute function="SelectFrame#selectFrameTop" />
+		<execute function="SelectFrameTop" />
 
 		<execute macro="PortletEntry#publish" />
 

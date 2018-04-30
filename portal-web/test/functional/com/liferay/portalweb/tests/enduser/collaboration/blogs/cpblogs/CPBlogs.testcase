@@ -202,7 +202,7 @@
 
 		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle">&amp; &lt; &gt; &quot; Escape Characters Entry</var>
+			<var name="entryTitle"><![CDATA[&amp; &lt; &gt; &quot; Escape Characters Entry]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -214,12 +214,12 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle">&amp; &lt; &gt; &quot; Escape Characters Entry</var>
+			<var name="entryTitle"><![CDATA[&amp; &lt; &gt; &quot; Escape Characters Entry]]></var>
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle">&amp; &lt; &gt; &quot; Escape Characters Entry</var>
+			<var name="entryTitle"><![CDATA[&amp; &lt; &gt; &quot; Escape Characters Entry]]></var>
 		</execute>
 	</command>
 

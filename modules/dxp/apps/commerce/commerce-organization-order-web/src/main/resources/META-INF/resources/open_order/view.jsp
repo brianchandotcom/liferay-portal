@@ -49,14 +49,16 @@ List<CommerceOrder> results = searchContainer.getResults();
 								<div class="col-md-8">
 									<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showLabel="<%= false %>" status="<%= commerceOrder.getStatus() %>" />
 
-									<h4 class="order-id" ><aui:a href="#" label="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" /></h4>
+									<h4 class="order-id"><aui:a href="<%= commerceOrganizationOrderDisplayContext.getOrderDetailURL(commerceOrder) %>" label="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" /></h4>
 
 									<h4><%= commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder) %></h4>
 								</div>
+
 								<div class="col-md-4">
 									<p class="text-muted"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) + StringPool.SPACE + commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %></p>
+
 									<%
-										request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
+									request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
 									%>
 
 									<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />

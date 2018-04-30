@@ -17,3 +17,20 @@
 		max-width: none;
 	}
 }
+
+.portlet-commerce-organization-open-order {
+
+	.row{
+		flex-wrap: nowrap;
+		overflow: auto;
+	}
+
+	.order-card{
+		background-color: #F6F6F8;
+		padding: 20px;
+
+		.order-id{
+			margin-top: 10px;
+		}
+	}
+}

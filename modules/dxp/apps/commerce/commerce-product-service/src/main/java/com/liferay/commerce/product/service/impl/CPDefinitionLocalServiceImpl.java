@@ -20,6 +20,9 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
@@ -28,6 +31,7 @@ import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceConstants;
+import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -202,7 +206,9 @@ public class CPDefinitionLocalServiceImpl
 				CPDefinitionExpirationDateException.class);
 		}
 
-		validate(groupId, ddmStructureKey, productTypeName);
+		validate(
+			groupId, ddmStructureKey, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, productTypeName);
 
 		long cpDefinitionId = counterLocalService.increment();
 
@@ -907,7 +913,9 @@ public class CPDefinitionLocalServiceImpl
 				CPDefinitionExpirationDateException.class);
 		}
 
-		validate(groupId, ddmStructureKey, cpDefinition.getProductTypeName());
+		validate(
+			groupId, ddmStructureKey, metaTitleMap, metaKeywordsMap,
+			metaDescriptionMap, cpDefinition.getProductTypeName());
 
 		cpDefinition.setIgnoreSKUCombinations(ignoreSKUCombinations);
 		cpDefinition.setShippable(shippable);
@@ -1410,7 +1418,10 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	protected void validate(
-			long groupId, String ddmStructureKey, String productTypeName)
+			long groupId, String ddmStructureKey,
+			Map<Locale, String> metaTitleMap,
+			Map<Locale, String> metaKeywordsMap,
+			Map<Locale, String> metaDescriptionMap, String productTypeName)
 		throws PortalException {
 
 		if (Validator.isNotNull(ddmStructureKey)) {
@@ -1423,6 +1434,35 @@ public class CPDefinitionLocalServiceImpl
 
 			if (ddmStructure == null) {
 				throw new NoSuchStructureException();
+			}
+		}
+
+		for (Map.Entry<Locale, String> entry : metaTitleMap.entrySet()) {
+			CPDefinitionMetaTitleException cpDefinitionMetaTitleException =
+				CPDefinitionImpl.validateMetaTitle(entry.getValue());
+
+			if (cpDefinitionMetaTitleException != null) {
+				throw cpDefinitionMetaTitleException;
+			}
+		}
+
+		for (Map.Entry<Locale, String> entry : metaKeywordsMap.entrySet()) {
+			CPDefinitionMetaKeywordsException
+				cpDefinitionMetaKeywordsException =
+					CPDefinitionImpl.validateMetaKeyword(entry.getValue());
+
+			if (cpDefinitionMetaKeywordsException != null) {
+				throw cpDefinitionMetaKeywordsException;
+			}
+		}
+
+		for (Map.Entry<Locale, String> entry : metaDescriptionMap.entrySet()) {
+			CPDefinitionMetaDescriptionException
+				cpDefinitionMetaDescriptionException =
+					CPDefinitionImpl.validateMetaDescription(entry.getValue());
+
+			if (cpDefinitionMetaDescriptionException != null) {
+				throw cpDefinitionMetaDescriptionException;
 			}
 		}
 

@@ -98,7 +98,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>
@@ -186,7 +186,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>
@@ -505,7 +505,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>
@@ -777,7 +777,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>
@@ -789,7 +789,7 @@
 	</command>
 
 	<command name="viewViewTab">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>

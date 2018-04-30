@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 import com.liferay.users.admin.user.action.contributor.BaseUserActionContributor;
 import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 
@@ -65,7 +66,9 @@ public class ErasePersonalDataUserActionContributor
 	public boolean isShow(
 		PortletRequest portletRequest, User user, User selectedUser) {
 
-		if (_omniadmin.isOmniadmin(selectedUser)) {
+		if (_omniadmin.isOmniadmin(selectedUser) ||
+			_uadAnonymizerHelper.isAnonymousUser(selectedUser)) {
+
 			return false;
 		}
 
@@ -77,5 +80,8 @@ public class ErasePersonalDataUserActionContributor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UADAnonymizerHelper _uadAnonymizerHelper;
 
 }

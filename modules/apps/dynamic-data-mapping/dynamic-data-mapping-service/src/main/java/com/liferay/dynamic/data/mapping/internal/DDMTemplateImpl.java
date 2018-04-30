@@ -388,6 +388,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
+	public String toString() {
+		return _ddmTemplate.toString();
+	}
+
+	@Override
 	public String toXmlString() {
 		return _ddmTemplate.toXmlString();
 	}

@@ -643,11 +643,11 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String getProtocol(String url) {
+		url = url.trim();
+
 		int index = _getProtocolDelimiterIndex(url);
 
 		if (index > 0) {
-			url = url.trim();
-
 			return url.substring(0, index);
 		}
 
@@ -1093,11 +1093,11 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String removeProtocol(String url) {
+		url = url.trim();
+
 		int index = _getProtocolDelimiterIndex(url);
 
 		if (index > 0) {
-			url = url.trim();
-
 			return url.substring(index + PROTOCOL_DELIMITER.length());
 		}
 
@@ -1974,8 +1974,6 @@ public class HttpImpl implements Http {
 		if (Validator.isNull(url)) {
 			return -1;
 		}
-
-		url = url.trim();
 
 		// Define protocol as "[a-zA-Z][a-zA-Z0-9]*://"
 

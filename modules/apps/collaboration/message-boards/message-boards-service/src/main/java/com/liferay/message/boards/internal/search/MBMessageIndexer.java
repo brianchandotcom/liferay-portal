@@ -345,7 +345,12 @@ public class MBMessageIndexer
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(document, Field.TITLE, Field.CONTENT);
+		String languageId = LocaleUtil.toLanguageId(locale);
+		
+		String title = LocalizationUtil.getLocalizedName(Field.TITLE, languageId);
+		String content = LocalizationUtil.getLocalizedName(Field.CONTENT, languageId);
+		
+		Summary summary = createSummary(document, title, content);
 
 		summary.setMaxContentLength(200);
 

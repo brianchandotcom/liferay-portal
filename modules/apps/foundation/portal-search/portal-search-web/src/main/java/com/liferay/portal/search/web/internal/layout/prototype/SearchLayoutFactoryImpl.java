@@ -122,7 +122,8 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAttribute("layoutPrototypeLinkEnabled", Boolean.TRUE);
+		serviceContext.setAttribute(
+			"layoutPrototypeLinkEnabled", Boolean.FALSE);
 
 		serviceContext.setAttribute(
 			"layoutPrototypeUuid", layoutPrototype.getUuid());

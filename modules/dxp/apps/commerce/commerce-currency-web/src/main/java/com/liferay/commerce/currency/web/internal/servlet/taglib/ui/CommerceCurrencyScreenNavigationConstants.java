@@ -19,8 +19,11 @@ package com.liferay.commerce.currency.web.internal.servlet.taglib.ui;
  */
 public class CommerceCurrencyScreenNavigationConstants {
 
-	public static final String CATEGORY_KEY_COMMERCE_CURRENCY_DETAILS =
-		"details";
+	public static final String CATEGORY_KEY_COMMERCE_CURRENCY_CURRENCIES =
+		"currencies";
+
+	public static final String CATEGORY_KEY_COMMERCE_CURRENCY_EXCHANGE_RATE =
+		"exchange-rate";
 
 	public static final String ENTRY_KEY_COMMERCE_CURRENCY_CURRENCIES =
 		"currencies";

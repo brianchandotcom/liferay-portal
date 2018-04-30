@@ -18,6 +18,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -45,16 +46,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=10",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CommerceCurrencyCurrenciesScreenNavigationEntry
-	implements ScreenNavigationEntry {
+	implements ScreenNavigationCategory, ScreenNavigationEntry {
 
 	@Override
 	public String getCategoryKey() {
 		return CommerceCurrencyScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_CURRENCY_DETAILS;
+			CATEGORY_KEY_COMMERCE_CURRENCY_CURRENCIES;
 	}
 
 	@Override
@@ -68,7 +72,10 @@ public class CommerceCurrencyCurrenciesScreenNavigationEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "currencies");
+		return LanguageUtil.get(
+			resourceBundle,
+			CommerceCurrencyScreenNavigationConstants.
+				ENTRY_KEY_COMMERCE_CURRENCY_CURRENCIES);
 	}
 
 	@Override

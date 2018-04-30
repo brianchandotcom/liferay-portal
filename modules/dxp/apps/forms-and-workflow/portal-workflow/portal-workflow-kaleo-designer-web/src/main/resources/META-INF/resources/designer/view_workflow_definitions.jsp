@@ -84,6 +84,8 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<liferay-util:include page="/designer/add_button.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -164,18 +166,3 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 		/>
 	</liferay-ui:search-container>
 </div>
-
-<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, null) %>">
-	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editKaleoDefinitionVersionURL">
-		<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="clearSessionMessage" value="true" />
-	</liferay-portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item
-			title='<%= LanguageUtil.get(request, "new-workflow") %>'
-			url="<%= editKaleoDefinitionVersionURL.toString() %>"
-		/>
-	</liferay-frontend:add-menu>
-</c:if>

@@ -1012,6 +1012,27 @@ app.server.type=@{app.server.type}]]></echo>
 						</then>
 					</if>
 
+					<get-testcase-property property.name="osgi.app.includes" />
+
+					<if>
+						<and>
+							<isset property="env.CI_TEST_SUITE" />
+							<not>
+								<contains string="${osgi.app.includes}" substring="portal-search-solr" />
+							</not>
+						</and>
+						<then>
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+
+							<if>
+								<equals arg1="${search.engine}" arg2="solr" />
+								<then>
+									<prepare-search-engine search.engine="${search.engine}" />
+								</then>
+							</if>
+						</then>
+					</if>
+
 					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 				</test-set-up>
 
@@ -1022,6 +1043,13 @@ app.server.type=@{app.server.type}]]></echo>
 							<antcall target="stop-app-server" />
 
 							<delete failonerror="false" file=".testable.portal.started" />
+						</then>
+					</if>
+
+					<if>
+						<isset property="search.engine" />
+						<then>
+							<stop-search-engine />
 						</then>
 					</if>
 				</test-tear-down>
@@ -1064,7 +1092,25 @@ app.server.type=@{app.server.type}]]></echo>
 							<prepare-test-build />
 						</else>
 					</if>
+
+					<if>
+						<isset property="env.CI_TEST_SUITE" />
+						<then>
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+
+							<prepare-search-engine search.engine="${search.engine}" />
+						</then>
+					</if>
 				</test-set-up>
+
+				<test-tear-down>
+					<if>
+						<isset property="search.engine" />
+						<then>
+							<stop-search-engine />
+						</then>
+					</if>
+				</test-tear-down>
 			</run-batch-test>
 		</sequential>
 	</macrodef>
@@ -1613,6 +1659,15 @@ app.server.type=@{app.server.type}]]></echo>
 					</if>
 
 					<if>
+						<isset property="env.CI_TEST_SUITE" />
+						<then>
+							<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="search.engine" silent="true" />
+
+							<prepare-search-engine search.engine="${search.engine}" />
+						</then>
+					</if>
+
+					<if>
 						<equals arg1="@{subrepository.name}" arg2="" />
 						<then>
 							<antcall inheritAll="false" target="record-test-class-file-names">
@@ -1629,6 +1684,15 @@ app.server.type=@{app.server.type}]]></echo>
 						</else>
 					</if>
 				</test-set-up>
+
+				<test-tear-down>
+					<if>
+						<isset property="search.engine" />
+						<then>
+							<stop-search-engine />
+						</then>
+					</if>
+				</test-tear-down>
 			</run-batch-test>
 		</sequential>
 	</macrodef>

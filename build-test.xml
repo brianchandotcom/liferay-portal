@@ -1857,6 +1857,23 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-search-engine">
+		<attribute name="search.engine" />
+
+		<sequential>
+			<echo>Preparing search engine: @{search.engine}</echo>
+
+			<if>
+				<equals arg1="@{search.engine}" arg2="solr" />
+				<then>
+					<ant antfile="build-test-solr.xml" inheritAll="false" target="deploy-solr" />
+
+					<ant antfile="build-test-solr.xml" inheritAll="false" target="start-solr" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-bundles">
 		<attribute name="unit" />
 		<sequential>
@@ -3865,6 +3882,17 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<socket port="@{app.server.leading.port.number}080" server="localhost" />
 				</not>
 			</waitfor>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-search-engine">
+		<sequential>
+			<if>
+				<equals arg1="${search.engine}" arg2="solr" />
+				<then>
+					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

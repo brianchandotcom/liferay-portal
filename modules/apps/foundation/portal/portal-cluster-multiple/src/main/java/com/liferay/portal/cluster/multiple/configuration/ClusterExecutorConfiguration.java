@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ClusterExecutorConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(deflt = "false", name = "debug-enabled", required = false)
 	public boolean debugEnabled();
 
 }

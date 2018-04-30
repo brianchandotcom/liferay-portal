@@ -365,6 +365,10 @@ public abstract class BaseDB implements DB {
 			boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
+		if (!template.endsWith(StringPool.SEMICOLON)) {
+			template = template + StringPool.SEMICOLON;
+		}
+
 		template = applyMaxStringIndexLengthLimitation(template);
 
 		if (evaluate) {

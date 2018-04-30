@@ -45,7 +45,7 @@ if (commerceShippingFixedOption != null) {
 		<aui:input name="description" />
 
 		<c:if test="<%= commerceShippingFixedOptionsDisplayContext.isFixed() %>">
-			<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" />
+			<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOption == null) ? StringPool.BLANK : commerceShippingFixedOption.getAmount().toPlainString() %>" />
 		</c:if>
 
 		<aui:input name="priority" />

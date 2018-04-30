@@ -171,9 +171,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 					</div>
 				</div>
 
-				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" />
+				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? StringPool.BLANK : commerceShippingFixedOptionRel.getFixedPrice().toPlainString() %>" />
 
-				<aui:input name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" />
+				<aui:input name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? StringPool.BLANK : commerceShippingFixedOptionRel.getRateUnitWeightPrice().toPlainString() %>" />
 
 				<aui:input name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
 			</aui:fieldset>

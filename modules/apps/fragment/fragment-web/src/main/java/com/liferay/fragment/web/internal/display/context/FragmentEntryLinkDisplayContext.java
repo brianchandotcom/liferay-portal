@@ -359,6 +359,16 @@ public class FragmentEntryLinkDisplayContext {
 		return _searchContainer;
 	}
 
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
 	public List<ViewTypeItem> getViewTypeItems() {
 		return new ViewTypeItemList(getPortletURL(), "list") {
 			{

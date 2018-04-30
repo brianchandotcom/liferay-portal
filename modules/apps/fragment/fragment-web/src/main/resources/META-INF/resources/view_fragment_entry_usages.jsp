@@ -119,7 +119,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					searchContainerId="fragmentEntryLinks"
 					showSearch="<%= false %>"
 					sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
-					sortingURL="<%= currentURL %>"
+					sortingURL="<%= fragmentEntryLinkDisplayContext.getSortingURL() %>"
 					totalItems="<%= fragmentEntry.getUsageCount() %>"
 					viewTypes="<%= fragmentEntryLinkDisplayContext.getViewTypeItems() %>"
 				/>

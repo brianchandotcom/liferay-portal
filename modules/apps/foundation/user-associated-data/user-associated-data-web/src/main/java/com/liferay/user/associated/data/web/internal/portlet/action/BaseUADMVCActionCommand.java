@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
+import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,13 +75,20 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 	protected User getSelectedUser(ActionRequest actionRequest)
 		throws PortalException {
 
+		User selectedUser = portal.getSelectedUser(actionRequest);
+
+		if (uadAnonymizerHelper.isAnonymousUser(selectedUser)) {
+			throw new PortalException(
+				"The selected user cannot be the same as the anonymous user.");
+		}
+
 		return portal.getSelectedUser(actionRequest);
 	}
 
 	protected long getSelectedUserId(ActionRequest actionRequest)
 		throws PortalException {
 
-		User selectedUser = portal.getSelectedUser(actionRequest);
+		User selectedUser = getSelectedUser(actionRequest);
 
 		return selectedUser.getUserId();
 	}
@@ -99,6 +107,9 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	protected Portal portal;
+
+	@Reference
+	protected UADAnonymizerHelper uadAnonymizerHelper;
 
 	@Reference
 	protected UADRegistry uadRegistry;

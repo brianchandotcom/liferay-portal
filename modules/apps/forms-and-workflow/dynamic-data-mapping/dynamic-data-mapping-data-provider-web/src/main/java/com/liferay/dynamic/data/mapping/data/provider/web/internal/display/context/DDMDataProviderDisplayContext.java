@@ -41,6 +41,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -232,7 +233,7 @@ public class DDMDataProviderDisplayContext {
 		return _displayStyle;
 	}
 
-	public DropdownItemList getFilterItemsDropdownItemList() {
+	public List<DropdownItem> getFilterItemsDropdownItems() {
 		HttpServletRequest request = _ddmDataProviderRequestHelper.getRequest();
 
 		return new DropdownItemList() {
@@ -388,7 +389,7 @@ public class DDMDataProviderDisplayContext {
 			_ddmDataProviderRequestHelper.getThemeDisplay());
 	}
 
-	public ViewTypeItemList getViewTypesItemList() {
+	public List<ViewTypeItem> getViewTypesItems() {
 		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 
 			{

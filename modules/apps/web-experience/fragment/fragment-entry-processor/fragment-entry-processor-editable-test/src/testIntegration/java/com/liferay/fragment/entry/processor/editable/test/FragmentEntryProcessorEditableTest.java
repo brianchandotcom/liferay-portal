@@ -48,7 +48,6 @@ import org.jsoup.nodes.Element;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +70,6 @@ public class FragmentEntryProcessorEditableTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Ignore
 	@Test
 	public void testFragmentEntryProcessorEditable() throws Exception {
 		ServiceContext serviceContext =
@@ -93,12 +91,35 @@ public class FragmentEntryProcessorEditableTest {
 
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		JSONObject editableFragmentEntryProcessorJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("editable_img", "sample.jpg");
-		jsonObject.put("editable_text", "test");
+		JSONObject editableValuesJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
-		fragmentEntryLink.setEditableValues(jsonObject.toString());
+		JSONObject editableImageDefaultValueJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		editableImageDefaultValueJSONObject.put("defaultValue", "sample.jpg");
+
+		editableValuesJSONObject.put(
+			"editable_img", editableImageDefaultValueJSONObject);
+
+		JSONObject editableTextDefaultValueJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		editableTextDefaultValueJSONObject.put("defaultValue", "test");
+
+		editableValuesJSONObject.put(
+			"editable_text", editableTextDefaultValueJSONObject);
+
+		editableFragmentEntryProcessorJSONObject.put(
+			"com.liferay.fragment.entry.processor.editable." +
+				"EditableFragmentEntryProcessor",
+			editableValuesJSONObject);
+
+		fragmentEntryLink.setEditableValues(
+			editableFragmentEntryProcessorJSONObject.toString());
 
 		Document document = Jsoup.parseBodyFragment(
 			_getFileAsString("processed_fragment_entry.html"));

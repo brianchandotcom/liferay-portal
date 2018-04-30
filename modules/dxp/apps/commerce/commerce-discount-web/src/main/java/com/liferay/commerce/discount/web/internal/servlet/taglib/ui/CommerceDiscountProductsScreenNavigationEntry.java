@@ -93,13 +93,13 @@ public class CommerceDiscountProductsScreenNavigationEntry
 			return false;
 		}
 
-		String target = commerceDiscount.getTarget();
+		if (CommerceDiscountConstants.TARGET_PRODUCT.equals(
+				commerceDiscount.getTarget())) {
 
-		if (!target.equals(CommerceDiscountConstants.TARGET_PRODUCT)) {
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

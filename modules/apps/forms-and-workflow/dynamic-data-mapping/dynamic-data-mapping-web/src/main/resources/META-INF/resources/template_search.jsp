@@ -21,15 +21,12 @@ TemplateDisplayTerms displayTerms = new TemplateDisplayTerms(renderRequest);
 %>
 
 <liferay-ui:search-toggle
-	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_ddm_template_search"
 	markupView="lexicon"
 >
 	<aui:fieldset cssClass="lfr-ddm-search-form">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" name="<%= TemplateDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
-
 		<aui:input inlineField="<%= true %>" name="<%= TemplateDisplayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

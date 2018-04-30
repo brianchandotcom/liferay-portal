@@ -1117,9 +1117,7 @@ public class OrganizationLocalServiceImpl
 	 * </p>
 	 *
 	 * @param companyId the primary key of the organization's company
-	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
-	@Deprecated
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
 		TreePathUtil.rebuildTree(

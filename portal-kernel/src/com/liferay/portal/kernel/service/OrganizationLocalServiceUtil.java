@@ -916,9 +916,7 @@ public class OrganizationLocalServiceUtil {
 	* </p>
 	*
 	* @param companyId the primary key of the organization's company
-	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@Deprecated
 	public static void rebuildTree(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().rebuildTree(companyId);

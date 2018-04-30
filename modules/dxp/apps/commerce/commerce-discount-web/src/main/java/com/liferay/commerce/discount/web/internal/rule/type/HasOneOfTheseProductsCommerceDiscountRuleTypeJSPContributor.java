@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class HasOneOfTheseProductsCommerceDiscountRuleTypeJSPContributor
 	implements CommerceDiscountRuleTypeJSPContributor {
 
+	@Override
 	public void render(
 			long commerceDiscountId, long commerceDiscountRuleId,
 			HttpServletRequest httpServletRequest,

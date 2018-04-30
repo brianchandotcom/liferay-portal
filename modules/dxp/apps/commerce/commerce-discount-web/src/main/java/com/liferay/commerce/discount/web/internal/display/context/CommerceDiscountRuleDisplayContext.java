@@ -185,6 +185,7 @@ public class CommerceDiscountRuleDisplayContext
 		return cpDefinitions;
 	}
 
+	@Override
 	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(

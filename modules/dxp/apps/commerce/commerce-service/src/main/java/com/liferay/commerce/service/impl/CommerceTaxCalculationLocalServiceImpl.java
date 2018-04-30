@@ -28,6 +28,7 @@ import java.util.List;
 public class CommerceTaxCalculationLocalServiceImpl
 	extends CommerceTaxCalculationLocalServiceBaseImpl {
 
+	@Override
 	public List<CommerceTaxRate> getCommerceTaxRates(
 		long siteGroupId, long userId, long cpTaxCategoryId) {
 

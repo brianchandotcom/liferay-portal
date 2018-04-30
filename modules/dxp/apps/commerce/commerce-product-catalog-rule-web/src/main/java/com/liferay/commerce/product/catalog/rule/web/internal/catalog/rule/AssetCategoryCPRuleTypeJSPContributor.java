@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetCategoryCPRuleTypeJSPContributor
 	implements CPRuleTypeJSPContributor {
 
+	@Override
 	public void render(
 			long cpRuleId, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

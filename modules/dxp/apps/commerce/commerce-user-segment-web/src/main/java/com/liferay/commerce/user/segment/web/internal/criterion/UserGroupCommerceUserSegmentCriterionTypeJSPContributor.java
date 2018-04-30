@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 public class UserGroupCommerceUserSegmentCriterionTypeJSPContributor
 	implements CommerceUserSegmentCriterionTypeJSPContributor {
 
+	@Override
 	public void render(
 			long commerceUserSegmentEntryId,
 			long commerceUserSegmentCriterionId,

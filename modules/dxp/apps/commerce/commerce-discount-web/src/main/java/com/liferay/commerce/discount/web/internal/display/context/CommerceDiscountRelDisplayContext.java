@@ -136,6 +136,7 @@ public class CommerceDiscountRelDisplayContext
 		return _searchContainer;
 	}
 
+	@Override
 	public String getItemSelectorUrl() throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(

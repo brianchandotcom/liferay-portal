@@ -36,6 +36,7 @@ public class
 	HadPurchasedAllOfTheseProductsCommerceDiscountRuleTypeJSPContributor
 		implements CommerceDiscountRuleTypeJSPContributor {
 
+	@Override
 	public void render(
 			long commerceDiscountId, long commerceDiscountRuleId,
 			HttpServletRequest httpServletRequest,

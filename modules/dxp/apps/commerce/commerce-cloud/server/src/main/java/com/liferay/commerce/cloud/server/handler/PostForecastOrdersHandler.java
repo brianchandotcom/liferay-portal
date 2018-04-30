@@ -18,14 +18,12 @@ import com.liferay.commerce.cloud.server.constants.WebKeys;
 import com.liferay.commerce.cloud.server.model.ForecastOrder;
 import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
+import com.liferay.commerce.cloud.server.util.JsonUtil;
 import com.liferay.commerce.cloud.server.util.VertxUtil;
 
 import io.vertx.core.Handler;
-import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,28 +41,13 @@ public class PostForecastOrdersHandler implements Handler<RoutingContext> {
 	public void handle(RoutingContext routingContext) {
 		Project project = routingContext.get(WebKeys.PROJECT);
 
-		List<ForecastOrder> forecastOrders = _getForecastOrders(routingContext);
+		List<ForecastOrder> forecastOrders = JsonUtil.fromJsonArray(
+			routingContext.getBodyAsJsonArray(), ForecastOrder::new);
 
 		_forecastOrderService.addForecastOrders(
 			project.getId(), forecastOrders,
 			asyncResult -> VertxUtil.handleHttpResponse(
 				asyncResult, routingContext));
-	}
-
-	private List<ForecastOrder> _getForecastOrders(
-		RoutingContext routingContext) {
-
-		JsonArray jsonArray = routingContext.getBodyAsJsonArray();
-
-		List<ForecastOrder> forecastOrders = new ArrayList<>(jsonArray.size());
-
-		for (int i = 0; i < jsonArray.size(); i++) {
-			JsonObject jsonObject = jsonArray.getJsonObject(i);
-
-			forecastOrders.add(new ForecastOrder(jsonObject));
-		}
-
-		return forecastOrders;
 	}
 
 	private final ForecastOrderService _forecastOrderService;

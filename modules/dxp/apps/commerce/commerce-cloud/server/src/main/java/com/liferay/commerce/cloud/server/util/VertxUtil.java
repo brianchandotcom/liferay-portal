@@ -80,7 +80,9 @@ public class VertxUtil {
 
 		int statusCode = httpResponse.statusCode();
 
-		if (statusCode != HttpResponseStatus.OK.code()) {
+		if ((statusCode != HttpResponseStatus.NO_CONTENT.code()) &&
+			(statusCode != HttpResponseStatus.OK.code())) {
+
 			JsonObject jsonObject = new JsonObject();
 
 			jsonObject.put("response", httpResponse.bodyAsJsonObject());

@@ -41,4 +41,12 @@ public interface ForecastOrderService {
 		String projectId, List<ForecastOrder> forecastOrders,
 		Handler<AsyncResult<Void>> handler);
 
+	public void getForecastOrders(
+		String projectId, boolean processed,
+		Handler<AsyncResult<List<ForecastOrder>>> handler);
+
+	public void updateProcessed(
+		String projectId, long orderId, boolean processed,
+		Handler<AsyncResult<Void>> handler);
+
 }

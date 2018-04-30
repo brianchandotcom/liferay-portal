@@ -8,8 +8,6 @@
 			<var name="key_actionsDescription" value="${actionsDescription}" />
 		</execute>
 
-		<execute macro="Alert#viewSuccessMessage" />
-
 		<var name="pauseCount" value="0" />
 
 		<while>

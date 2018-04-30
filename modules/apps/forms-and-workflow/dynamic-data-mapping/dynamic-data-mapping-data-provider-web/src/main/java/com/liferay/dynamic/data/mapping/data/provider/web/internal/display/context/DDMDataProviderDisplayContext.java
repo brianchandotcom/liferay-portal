@@ -144,26 +144,19 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		CreationMenu creationMenu = null;
-
-		if (isShowAddDataProviderButton()) {
-			creationMenu =
-				new CreationMenu() {
-
-					{
-						for (String ddmDataProviderType :
-								getDDMDataProviderTypes()) {
-
-							addPrimaryDropdownItem(
-								getCreationMenuDropdownItem(
-									ddmDataProviderType));
-						}
-					}
-
-				};
+		if (!isShowAddDataProviderButton()) {
+			return null;
 		}
 
-		return creationMenu;
+		return new CreationMenu() {
+			{
+				for (String ddmDataProviderType : getDDMDataProviderTypes()) {
+					addPrimaryDropdownItem(
+						getCreationMenuDropdownItem(ddmDataProviderType));
+				}
+			}
+
+		};
 	}
 
 	public String getDataProviderInstanceDDMFormHTML() throws PortalException {

@@ -117,6 +117,11 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 		_teamLocalService.clearUserTeams(userId);
 	}
 
+	@Override
+	public int countByGroupId(long groupId) {
+		return _teamLocalService.countByGroupId(groupId);
+	}
+
 	/**
 	* Creates a new team with the primary key. Does not add the team to the database.
 	*

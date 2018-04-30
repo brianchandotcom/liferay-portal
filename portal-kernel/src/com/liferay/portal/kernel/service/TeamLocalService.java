@@ -103,6 +103,8 @@ public interface TeamLocalService extends BaseLocalService,
 
 	public void clearUserTeams(long userId);
 
+	public int countByGroupId(long groupId);
+
 	/**
 	* Creates a new team with the primary key. Does not add the team to the database.
 	*

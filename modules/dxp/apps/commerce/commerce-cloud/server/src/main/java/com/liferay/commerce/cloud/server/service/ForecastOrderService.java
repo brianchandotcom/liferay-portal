@@ -15,7 +15,6 @@
 package com.liferay.commerce.cloud.server.service;
 
 import com.liferay.commerce.cloud.server.model.ForecastOrder;
-import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.util.CommerceCloudUtil;
 
 import io.vertx.codegen.annotations.ProxyGen;
@@ -39,7 +38,7 @@ public interface ForecastOrderService {
 	}
 
 	public void addForecastOrders(
-		Project project, List<ForecastOrder> forecastOrders,
+		String projectId, List<ForecastOrder> forecastOrders,
 		Handler<AsyncResult<Void>> handler);
 
 }

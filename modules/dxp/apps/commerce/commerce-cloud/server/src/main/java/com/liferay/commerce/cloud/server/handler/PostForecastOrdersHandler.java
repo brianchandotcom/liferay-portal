@@ -46,7 +46,7 @@ public class PostForecastOrdersHandler implements Handler<RoutingContext> {
 		List<ForecastOrder> forecastOrders = _getForecastOrders(routingContext);
 
 		_forecastOrderService.addForecastOrders(
-			project, forecastOrders,
+			project.getId(), forecastOrders,
 			asyncResult -> VertxUtil.handleHttpResponse(
 				asyncResult, routingContext));
 	}

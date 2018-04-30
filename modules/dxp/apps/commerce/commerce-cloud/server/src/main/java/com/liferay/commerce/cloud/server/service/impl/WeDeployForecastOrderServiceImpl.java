@@ -16,7 +16,6 @@ package com.liferay.commerce.cloud.server.service.impl;
 
 import com.liferay.commerce.cloud.server.constants.ContentTypes;
 import com.liferay.commerce.cloud.server.model.ForecastOrder;
-import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
 import com.liferay.commerce.cloud.server.util.VertxUtil;
 
@@ -46,7 +45,7 @@ public class WeDeployForecastOrderServiceImpl
 
 	@Override
 	public void addForecastOrders(
-		Project project, List<ForecastOrder> forecastOrders,
+		String projectId, List<ForecastOrder> forecastOrders,
 		Handler<AsyncResult<Void>> handler) {
 
 		HttpRequest<Void> httpRequest = webClient.post(
@@ -62,10 +61,9 @@ public class WeDeployForecastOrderServiceImpl
 		for (ForecastOrder forecastOrder : forecastOrders) {
 			JsonObject jsonObject = forecastOrder.toJson();
 
-			jsonObject.put(
-				"id", project.getId() + "-" + forecastOrder.getOrderId());
+			jsonObject.put("id", _getId(projectId, forecastOrder.getOrderId()));
 			jsonObject.put("processed", false);
-			jsonObject.put("projectId", project.getId());
+			jsonObject.put("projectId", projectId);
 
 			jsonArray.add(jsonObject);
 		}
@@ -77,6 +75,10 @@ public class WeDeployForecastOrderServiceImpl
 			Buffer.buffer(jsonArray.encode()),
 			asyncResult -> VertxUtil.handleServiceHttpResponse(
 				asyncResult, handler));
+	}
+
+	private static String _getId(String projectId, long orderId) {
+		return projectId + "-" + orderId;
 	}
 
 }

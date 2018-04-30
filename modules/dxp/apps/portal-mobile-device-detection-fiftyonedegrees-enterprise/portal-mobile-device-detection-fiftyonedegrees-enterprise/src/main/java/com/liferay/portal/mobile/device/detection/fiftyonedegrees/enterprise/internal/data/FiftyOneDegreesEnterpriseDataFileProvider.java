@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -56,15 +55,7 @@ public class FiftyOneDegreesEnterpriseDataFileProvider
 
 		URL url = bundle.getResource(fileName);
 
-		if (url == null) {
-			return _dataFileProvider.getDataFileInputStream();
-		}
-
 		InputStream inputStream = url.openStream();
-
-		if (inputStream == null) {
-			return _dataFileProvider.getDataFileInputStream();
-		}
 
 		if (fileName.endsWith(".gz")) {
 			return new GZIPInputStream(inputStream);
@@ -93,10 +84,6 @@ public class FiftyOneDegreesEnterpriseDataFileProvider
 	}
 
 	private BundleContext _bundleContext;
-
-	@Reference(target = "(service.ranking=1)")
-	private DataFileProvider _dataFileProvider;
-
 	private volatile String _fileName;
 
 }

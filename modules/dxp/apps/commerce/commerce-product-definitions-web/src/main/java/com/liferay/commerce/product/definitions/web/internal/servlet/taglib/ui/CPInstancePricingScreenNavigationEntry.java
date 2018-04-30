@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstancePricingInfoDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstanceScreenNavigationConstants;
@@ -99,8 +100,9 @@ public class CPInstancePricingScreenNavigationEntry
 				cpInstancePricingInfoDisplayContext =
 					new CPInstancePricingInfoDisplayContext(
 						_actionHelper, httpServletRequest,
-						_cpDefinitionOptionRelService, _cpInstanceService,
-						_cpInstanceHelper, _commerceCurrencyService);
+						_commercePriceFormatter, _cpDefinitionOptionRelService,
+						_cpInstanceService, _cpInstanceHelper,
+						_commerceCurrencyService);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -117,6 +119,9 @@ public class CPInstancePricingScreenNavigationEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstancePricingScreenNavigationEntry.class);
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private ActionHelper _actionHelper;

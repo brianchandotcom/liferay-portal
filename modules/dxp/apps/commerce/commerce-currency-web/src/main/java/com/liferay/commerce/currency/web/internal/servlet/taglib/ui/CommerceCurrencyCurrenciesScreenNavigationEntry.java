@@ -15,6 +15,7 @@
 package com.liferay.commerce.currency.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
@@ -99,9 +100,9 @@ public class CommerceCurrencyCurrenciesScreenNavigationEntry
 
 		CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext =
 			new CommerceCurrenciesDisplayContext(
-				_commerceCurrencyService, _configurationProvider,
-				_exchangeRateProviderRegistry, _roundingTypeServicesTracker,
-				renderRequest, renderResponse);
+				_commerceCurrencyService, _commercePriceFormatter,
+				_configurationProvider, _exchangeRateProviderRegistry,
+				_roundingTypeServicesTracker, renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCurrenciesDisplayContext);
@@ -110,6 +111,9 @@ public class CommerceCurrencyCurrenciesScreenNavigationEntry
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/currency/currencies.jsp");
 	}
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;

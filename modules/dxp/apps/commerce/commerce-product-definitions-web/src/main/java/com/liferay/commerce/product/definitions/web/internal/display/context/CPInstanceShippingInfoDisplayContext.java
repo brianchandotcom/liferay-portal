@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
@@ -35,6 +36,7 @@ public class CPInstanceShippingInfoDisplayContext
 
 	public CPInstanceShippingInfoDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+			CommercePriceFormatter commercePriceFormatter,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPInstanceService cpInstanceService,
 			CPInstanceHelper cpInstanceHelper,
@@ -42,8 +44,8 @@ public class CPInstanceShippingInfoDisplayContext
 		throws PortalException {
 
 		super(
-			actionHelper, httpServletRequest, cpDefinitionOptionRelService,
-			cpInstanceService, cpInstanceHelper);
+			actionHelper, httpServletRequest, commercePriceFormatter,
+			cpDefinitionOptionRelService, cpInstanceService, cpInstanceHelper);
 
 		_cpMeasurementUnitService = cpMeasurementUnitService;
 	}

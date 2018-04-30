@@ -34,7 +34,9 @@ import com.liferay.journal.content.web.internal.constants.JournalContentWebKeys;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -156,15 +158,16 @@ public class JournalContentDisplayContext {
 			return _article;
 		}
 
-		if (articleResourcePrimKey > 0) {
-			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-				articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true);
+		if (articleResourcePrimKey == 0) {
+			JournalArticleResource articleResource =
+				JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+					getArticleGroupId(), getArticleId());
+
+			articleResourcePrimKey = articleResource.getResourcePrimKey();
 		}
-		else {
-			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-				getArticleGroupId(), getArticleId(),
-				WorkflowConstants.STATUS_ANY);
-		}
+
+		_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+			articleResourcePrimKey, WorkflowConstants.STATUS_ANY, true);
 
 		return _article;
 	}

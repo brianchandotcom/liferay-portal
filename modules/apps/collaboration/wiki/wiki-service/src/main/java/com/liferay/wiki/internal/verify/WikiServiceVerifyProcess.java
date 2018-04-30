@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.VerifyUUID;
-import com.liferay.wiki.internal.verify.model.WikiPageResourceVerifiableModel;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -49,7 +47,6 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyCreateDate();
 		verifyNoAssetPages();
-		verifyUUIDModels();
 	}
 
 	@Reference(unbind = "-")
@@ -141,12 +138,6 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Assets verified for pages");
 			}
-		}
-	}
-
-	protected void verifyUUIDModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			VerifyUUID.verify(new WikiPageResourceVerifiableModel());
 		}
 	}
 

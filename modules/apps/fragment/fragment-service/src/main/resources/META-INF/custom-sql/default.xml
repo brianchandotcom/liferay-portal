@@ -67,8 +67,6 @@
 								(tempFragmentEntryLink.fragmentEntryId = FragmentEntryLink.fragmentEntryId)
 						)
 				)
-			ORDER BY
-				FragmentEntryLink.fragmentEntryLinkId
 		]]>
 	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByG_F_C">
@@ -98,8 +96,6 @@
 								(tempFragmentEntryLink.fragmentEntryId = FragmentEntryLink.fragmentEntryId)
 						)
 				)
-			ORDER BY
-				FragmentEntryLink.fragmentEntryLinkId
 		]]>
 	</sql>
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.findByG_F_C_L">
@@ -130,8 +126,6 @@
 								(tempFragmentEntryLink.fragmentEntryId = FragmentEntryLink.fragmentEntryId)
 						)
 				)
-			ORDER BY
-				FragmentEntryLink.fragmentEntryLinkId
 		]]>
 	</sql>
 </custom-sql>

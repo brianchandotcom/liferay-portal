@@ -96,7 +96,7 @@ public class TrashDisplayContext {
 		return ParamUtil.getLong(_request, "classPK");
 	}
 
-	public String getContainerModelRedirectURL() throws PortalException {
+	public String getContainerModelRedirectURL() {
 		if (Validator.isNotNull(_containerModelRedirectURL)) {
 			return _containerModelRedirectURL;
 		}
@@ -208,7 +208,7 @@ public class TrashDisplayContext {
 		return _orderByType;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		long trashEntryId = getTrashEntryId();

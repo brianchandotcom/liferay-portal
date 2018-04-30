@@ -60,7 +60,7 @@ public class
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/orders_forecasting.jsp";
+		return "/configuration/order_forecast.jsp";
 	}
 
 }

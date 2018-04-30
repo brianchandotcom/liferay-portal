@@ -117,18 +117,15 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					property="code"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					name="exchange-rate"
-					property="rate"
+					value="<%= commerceCurrenciesDisplayContext.format(commerceCurrency.getRate()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					name="primary"
 				>
 					<c:if test="<%= commerceCurrency.isPrimary() %>">
@@ -141,7 +138,6 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					name="active"
 				>
 					<c:choose>
@@ -163,7 +159,6 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					property="priority"
 				/>
 

@@ -18,6 +18,7 @@ import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServ
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -50,17 +53,23 @@ public class CommerceCurrenciesDisplayContext {
 
 	public CommerceCurrenciesDisplayContext(
 		CommerceCurrencyService commerceCurrencyService,
+		CommercePriceFormatter commercePriceFormatter,
 		ConfigurationProvider configurationProvider,
 		ExchangeRateProviderRegistry exchangeRateProviderRegistry,
 		RoundingTypeServicesTracker roundingTypeServicesTracker,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceCurrencyService = commerceCurrencyService;
+		_commercePriceFormatter = commercePriceFormatter;
 		_configurationProvider = configurationProvider;
 		_exchangeRateProviderRegistry = exchangeRateProviderRegistry;
 		_roundingTypeServicesTracker = roundingTypeServicesTracker;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public String format(BigDecimal rate) {
+		return _commercePriceFormatter.format(rate);
 	}
 
 	public CommerceCurrency getCommerceCurrency() throws PortalException {
@@ -215,6 +224,7 @@ public class CommerceCurrenciesDisplayContext {
 
 	private CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyService _commerceCurrencyService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final ConfigurationProvider _configurationProvider;
 	private final ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 	private CommerceCurrency _primaryCommerceCurrency;

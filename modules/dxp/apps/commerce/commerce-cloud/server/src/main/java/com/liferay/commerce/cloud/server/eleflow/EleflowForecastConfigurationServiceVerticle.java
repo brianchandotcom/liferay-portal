@@ -66,7 +66,7 @@ public class EleflowForecastConfigurationServiceVerticle
 
 		sb.append("https://");
 		sb.append(CommerceCloudUtil.getHost(configJsonObject));
-		sb.append("/projects/:projectId/callback");
+		sb.append("/projects/:projectId/forecast/callback");
 
 		return sb.toString();
 	}

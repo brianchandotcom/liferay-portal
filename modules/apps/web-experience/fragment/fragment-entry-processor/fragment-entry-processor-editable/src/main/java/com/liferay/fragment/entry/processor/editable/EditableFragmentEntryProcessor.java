@@ -107,7 +107,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
 				clazz.getName());
 
-			if (jsonObject.isNull(clazz.getName()) ||
+			if ((editableValuesJSONObject == null) ||
 				!editableValuesJSONObject.has(id)) {
 
 				continue;

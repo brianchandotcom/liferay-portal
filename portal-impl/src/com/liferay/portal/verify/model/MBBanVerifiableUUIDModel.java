@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 /**
  * @author Miguel Pastor
  */
-public class MBBan62VerifiableModel implements VerifiableUUIDModel {
+public class MBBanVerifiableUUIDModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {

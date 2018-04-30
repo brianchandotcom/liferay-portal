@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Dictionary;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,42 +64,37 @@ public class AnonymousUserConfigurationModelListener
 	private void _validateUniqueConfiguration(String pid, long companyId)
 		throws Exception {
 
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.factoryPid=com.liferay.user.associated.data.web." +
-				"internal.configuration.AnonymousUserConfiguration)");
+		Optional<Configuration> configurationOptional =
+			_anonymousUserConfigurationRetriever.getOptional(companyId);
 
-		if (configurations == null) {
+		if (!configurationOptional.isPresent()) {
 			return;
 		}
 
-		for (Configuration configuration : configurations) {
-			if (pid.equals(configuration.getPid())) {
-				continue;
-			}
+		Configuration configuration = configurationOptional.get();
 
-			Dictionary<String, Object> properties =
-				configuration.getProperties();
-
-			if (companyId == (long)properties.get("companyId")) {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language",
-					LocaleThreadLocal.getThemeDisplayLocale(), getClass());
-
-				String message = ResourceBundleUtil.getString(
-					resourceBundle,
-					"an-anonymous-user-is-already-defined-for-the-company-x",
-					String.valueOf(companyId));
-
-				throw new Exception(message);
-			}
+		if (pid.equals(configuration.getPid())) {
+			return;
 		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
+			getClass());
+
+		String message = ResourceBundleUtil.getString(
+			resourceBundle,
+			"an-anonymous-user-is-already-defined-for-the-company-x",
+			String.valueOf(companyId));
+
+		throw new Exception(message);
 	}
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
+	private AnonymousUserConfigurationRetriever
+		_anonymousUserConfigurationRetriever;
 
 	@Reference
-	private ConfigurationAdmin _configurationAdmin;
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

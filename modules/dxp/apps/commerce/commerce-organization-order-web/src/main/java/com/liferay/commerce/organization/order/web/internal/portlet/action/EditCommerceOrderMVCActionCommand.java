@@ -22,6 +22,7 @@ import com.liferay.commerce.organization.service.CommerceOrganizationLocalServic
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -37,7 +38,10 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,6 +99,43 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		portletURL.setParameter(
 			"commerceOrderId", String.valueOf(commerceOrderId));
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
+	}
+
+	protected void checkoutOrSubmitCommerceOrder(
+			ActionRequest actionRequest, CommerceOrder commerceOrder)
+		throws Exception {
+
+		if (commerceOrder.isOpen() && !commerceOrder.isPending()) {
+			checkoutCommerceOrder(
+				actionRequest, commerceOrder.getCommerceOrderId());
+
+			return;
+		}
+
+		PortletURL portletURL = null;
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+		long plid = _portal.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
+
+		if (plid > 0) {
+			portletURL = _portletURLFactory.create(
+				httpServletRequest,
+				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER, plid,
+				PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = _portletURLFactory.create(
+				httpServletRequest,
+				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER,
+				PortletRequest.RENDER_PHASE);
+		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
@@ -219,8 +260,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		CommerceOrder commerceOrder =
 			_commerceOrderService.reorderCommerceOrder(commerceOrderId);
 
-		checkoutCommerceOrder(
-			actionRequest, commerceOrder.getCommerceOrderId());
+		checkoutOrSubmitCommerceOrder(actionRequest, commerceOrder);
 	}
 
 	protected void setCurrentCommerceOrder(ActionRequest actionRequest)
@@ -254,6 +294,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	@Reference
 	private WorkflowInstanceManager _workflowInstanceManager;

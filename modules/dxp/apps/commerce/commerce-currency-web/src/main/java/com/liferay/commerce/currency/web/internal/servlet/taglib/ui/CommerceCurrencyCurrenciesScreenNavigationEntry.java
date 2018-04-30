@@ -113,10 +113,10 @@ public class CommerceCurrencyCurrenciesScreenNavigationEntry
 	}
 
 	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

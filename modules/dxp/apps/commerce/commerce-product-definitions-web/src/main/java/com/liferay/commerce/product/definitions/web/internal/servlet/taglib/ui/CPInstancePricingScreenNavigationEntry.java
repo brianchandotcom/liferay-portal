@@ -121,13 +121,13 @@ public class CPInstancePricingScreenNavigationEntry
 		CPInstancePricingScreenNavigationEntry.class);
 
 	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
-
-	@Reference
 	private ActionHelper _actionHelper;
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;

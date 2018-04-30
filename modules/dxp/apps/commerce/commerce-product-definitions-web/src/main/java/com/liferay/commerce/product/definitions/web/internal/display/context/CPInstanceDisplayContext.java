@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.math.BigDecimal;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -81,7 +82,7 @@ public class CPInstanceDisplayContext
 	}
 
 	public String formatPrice(long groupId, BigDecimal price)
-		throws PortalException{
+		throws PortalException {
 
 		return _commercePriceFormatter.format(groupId, price);
 	}

@@ -124,7 +124,7 @@ public class ProductNestedCollectionResource
 			document -> GetterUtil.getLong(document.get(Field.USER_ID))
 		).addString(
 			"description",
-			document -> !Validator.isBlank(document.get(Field.DESCRIPTION))? document.get(Field.DESCRIPTION) : "-"
+			document -> !Validator.isBlank(document.get(Field.DESCRIPTION)) ? document.get(Field.DESCRIPTION) : "-"
 		).addStringList(
 			"skus", document -> Arrays.asList(document.getValues("skus"))
 		).addString(

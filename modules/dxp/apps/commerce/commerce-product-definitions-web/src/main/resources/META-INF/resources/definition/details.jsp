@@ -52,6 +52,10 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 			<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 
+			<liferay-ui:error exception="<%= CPDefinitionMetaDescriptionException.class %>" message="the-meta-description-is-too-long" />
+			<liferay-ui:error exception="<%= CPDefinitionMetaKeywordsException.class %>" message="the-meta-keywords-are-too-long" />
+			<liferay-ui:error exception="<%= CPDefinitionMetaTitleException.class %>" message="the-meta-title-is-too-long" />
+
 			<liferay-ui:error exception="<%= CPFriendlyURLEntryException.class %>">
 
 				<%

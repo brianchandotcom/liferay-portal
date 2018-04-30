@@ -22,6 +22,9 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
+import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
+import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -165,6 +168,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (e instanceof AssetCategoryException ||
 					 e instanceof AssetTagException ||
+					 e instanceof CPDefinitionMetaDescriptionException ||
+					 e instanceof CPDefinitionMetaKeywordsException ||
+					 e instanceof CPDefinitionMetaTitleException ||
 					 e instanceof CPFriendlyURLEntryException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);

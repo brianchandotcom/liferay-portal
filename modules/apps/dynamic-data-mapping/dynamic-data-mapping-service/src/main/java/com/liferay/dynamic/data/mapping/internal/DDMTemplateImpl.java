@@ -25,6 +25,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -60,7 +61,7 @@ public class DDMTemplateImpl implements DDMTemplate {
 		DDMTemplate ddmTemplate = (DDMTemplate)obj;
 
 		if ((getTemplateId() == ddmTemplate.getTemplateId()) &&
-			getScript().equals(ddmTemplate.getScript())) {
+			Objects.equals(getScript(), ddmTemplate.getScript())) {
 
 			return true;
 		}

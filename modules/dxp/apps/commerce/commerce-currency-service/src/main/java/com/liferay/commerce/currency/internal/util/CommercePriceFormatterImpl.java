@@ -39,6 +39,17 @@ import org.osgi.service.component.annotations.Reference;
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
+	public String format(BigDecimal price) {
+		DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+		decimalFormat.setMaximumFractionDigits(2);
+		decimalFormat.setMinimumFractionDigits(2);
+		decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
+
+		return decimalFormat.format(price);
+	}
+
+	@Override
 	public String format(CommerceCurrency commerceCurrency, BigDecimal price) {
 		String roundingTypeName = null;
 

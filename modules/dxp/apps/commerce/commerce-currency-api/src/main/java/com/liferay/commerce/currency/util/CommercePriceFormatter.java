@@ -28,6 +28,8 @@ import java.math.BigDecimal;
 @ProviderType
 public interface CommercePriceFormatter {
 
+	public String format(BigDecimal price);
+
 	public String format(CommerceCurrency commerceCurrency, BigDecimal price);
 
 	public String format(long groupId, BigDecimal price) throws PortalException;

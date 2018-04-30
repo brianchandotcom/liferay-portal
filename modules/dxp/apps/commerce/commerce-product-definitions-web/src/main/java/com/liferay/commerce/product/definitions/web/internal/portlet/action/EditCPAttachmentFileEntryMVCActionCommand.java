@@ -103,6 +103,10 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCPAttachmentFileEntry(actionRequest);
+
+				redirect = ParamUtil.getString(actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCPAttachmentFileEntry(actionRequest);

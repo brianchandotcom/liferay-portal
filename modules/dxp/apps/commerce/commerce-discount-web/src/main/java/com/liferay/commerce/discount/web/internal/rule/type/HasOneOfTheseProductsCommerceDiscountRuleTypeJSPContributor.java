@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.discount.web.internal.rule.type;
 
-import com.liferay.commerce.discount.constants.CommerceDiscountRuleConstants;
+import com.liferay.commerce.discount.model.CommerceDiscountRuleConstants;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContributor;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 

@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.verify.model;
+package com.liferay.portal.verify.model;
 
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
-public class MBBanVerifiableModel implements VerifiableUUIDModel {
+public class MBThreadVerifiableUUIDModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "banId";
+		return "threadId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "MBBan";
+		return "MBThread";
 	}
 
 }

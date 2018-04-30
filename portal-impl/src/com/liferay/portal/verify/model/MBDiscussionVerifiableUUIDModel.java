@@ -12,27 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portal.verify.model;
+
+import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
- * @author Alexander Chow
+ * @author Miguel Pastor
  */
-public class VerifyProcessSuite extends VerifyProcess {
+public class MBDiscussionVerifiableUUIDModel implements VerifiableUUIDModel {
 
 	@Override
-	protected void doVerify() throws Exception {
-		verify(new VerifyProperties());
+	public String getPrimaryKeyColumnName() {
+		return "discussionId";
+	}
 
-		verify(new VerifyPermission());
-		verify(new VerifyGroup());
-		verify(new VerifyRole());
-
-		verify(new VerifyAuditedModel());
-		verify(new VerifyLayout());
-		verify(new VerifyResourceActions());
-		verify(new VerifyResourcePermissions());
-		verify(new VerifyUser());
-		verify(new VerifyWorkflow());
+	@Override
+	public String getTableName() {
+		return "MBDiscussion";
 	}
 
 }

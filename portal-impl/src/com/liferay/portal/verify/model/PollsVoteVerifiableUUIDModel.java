@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.wiki.internal.verify.model;
+package com.liferay.portal.verify.model;
 
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
  */
-public class WikiPageResourceVerifiableModel implements VerifiableUUIDModel {
+public class PollsVoteVerifiableUUIDModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "resourcePrimKey";
+		return "voteId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "WikiPageResource";
+		return "PollsVote";
 	}
 
 }

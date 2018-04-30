@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.VerifyUUID;
-import com.liferay.wiki.internal.verify.model.WikiPageResourceVerifiableModel;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -47,7 +45,6 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyCreateDate();
-		verifyUUIDModels();
 	}
 
 	@Reference(unbind = "-")
@@ -108,12 +105,6 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 
 				_wikiPageLocalService.updateWikiPage(page);
 			}
-		}
-	}
-
-	protected void verifyUUIDModels() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			VerifyUUID.verify(new WikiPageResourceVerifiableModel());
 		}
 	}
 

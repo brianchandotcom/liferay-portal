@@ -20,8 +20,8 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelService;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetType;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetTypeRegistry;
+import com.liferay.commerce.discount.target.CommerceDiscountTarget;
+import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.util.comparator.CommerceDiscountUserSegmentRelCreateDateComparator;
 import com.liferay.commerce.discount.web.internal.display.context.util.CommerceDiscountRequestHelper;
 import com.liferay.commerce.discount.web.internal.util.CommerceDiscountPortletUtil;
@@ -66,15 +66,14 @@ public class CommerceDiscountDisplayContext {
 	public CommerceDiscountDisplayContext(
 		CommerceCurrencyService commerceCurrencyService,
 		CommerceDiscountService commerceDiscountService,
-		CommerceDiscountTargetTypeRegistry commerceDiscountTargetTypeRegistry,
+		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
 		CommerceDiscountUserSegmentRelService
 			commerceDiscountUserSegmentRelService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		_commerceCurrencyService = commerceCurrencyService;
 		_commerceDiscountService = commerceDiscountService;
-		_commerceDiscountTargetTypeRegistry =
-			commerceDiscountTargetTypeRegistry;
+		_commerceDiscountTargetRegistry = commerceDiscountTargetRegistry;
 		_commerceDiscountUserSegmentRelService =
 			commerceDiscountUserSegmentRelService;
 
@@ -112,9 +111,8 @@ public class CommerceDiscountDisplayContext {
 		return commerceDiscount.getCommerceDiscountId();
 	}
 
-	public List<CommerceDiscountTargetType> getCommerceDiscountTargetTypes() {
-		return _commerceDiscountTargetTypeRegistry.
-			getCommerceDiscountTargetTypes();
+	public List<CommerceDiscountTarget> getCommerceDiscountTargets() {
+		return _commerceDiscountTargetRegistry.getCommerceDiscountTargets();
 	}
 
 	public List<CommerceDiscountUserSegmentRel>
@@ -391,8 +389,8 @@ public class CommerceDiscountDisplayContext {
 	private final CommerceCurrencyService _commerceCurrencyService;
 	private CommerceDiscount _commerceDiscount;
 	private final CommerceDiscountService _commerceDiscountService;
-	private final CommerceDiscountTargetTypeRegistry
-		_commerceDiscountTargetTypeRegistry;
+	private final CommerceDiscountTargetRegistry
+		_commerceDiscountTargetRegistry;
 	private final CommerceDiscountUserSegmentRelService
 		_commerceDiscountUserSegmentRelService;
 	private String _keywords;

@@ -23,7 +23,7 @@ import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelService;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetTypeRegistry;
+import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.web.internal.util.CommerceDiscountPortletUtil;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -65,7 +65,7 @@ public class CommerceDiscountRuleDisplayContext
 			commerceDiscountRuleTypeJSPContributorRegistry,
 		CommerceDiscountRuleTypeRegistry commerceDiscountRuleTypeRegistry,
 		CommerceDiscountService commerceDiscountService,
-		CommerceDiscountTargetTypeRegistry commerceDiscountTargetTypeRegistry,
+		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
 		CommerceDiscountUserSegmentRelService
 			commerceDiscountUserSegmentRelService,
 		CPDefinitionService cpDefinitionService,
@@ -73,7 +73,7 @@ public class CommerceDiscountRuleDisplayContext
 
 		super(
 			commerceCurrencyService, commerceDiscountService,
-			commerceDiscountTargetTypeRegistry,
+			commerceDiscountTargetRegistry,
 			commerceDiscountUserSegmentRelService, httpServletRequest,
 			itemSelector);
 

@@ -20,7 +20,7 @@ import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelService;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetTypeRegistry;
+import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.discount.util.comparator.CommerceDiscountRelCreateDateComparator;
 import com.liferay.commerce.discount.web.internal.util.CommerceDiscountPortletUtil;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
@@ -59,7 +59,7 @@ public class CommerceDiscountRelDisplayContext
 		CommerceCurrencyService commerceCurrencyService,
 		CommerceDiscountRelService commerceDiscountRelService,
 		CommerceDiscountService commerceDiscountService,
-		CommerceDiscountTargetTypeRegistry commerceDiscountTargetTypeRegistry,
+		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
 		CommerceDiscountUserSegmentRelService
 			commerceDiscountUserSegmentRelService,
 		CPDefinitionService cpDefinitionService,
@@ -67,7 +67,7 @@ public class CommerceDiscountRelDisplayContext
 
 		super(
 			commerceCurrencyService, commerceDiscountService,
-			commerceDiscountTargetTypeRegistry,
+			commerceDiscountTargetRegistry,
 			commerceDiscountUserSegmentRelService, httpServletRequest,
 			itemSelector);
 

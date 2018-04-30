@@ -20,8 +20,8 @@ import com.liferay.commerce.discount.exception.CommerceDiscountTargetException;
 import com.liferay.commerce.discount.exception.CommerceDiscountTitleException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.base.CommerceDiscountLocalServiceBaseImpl;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetType;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetTypeRegistry;
+import com.liferay.commerce.discount.target.CommerceDiscountTarget;
+import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -565,11 +565,10 @@ public class CommerceDiscountLocalServiceImpl
 			throw new CommerceDiscountTitleException();
 		}
 
-		CommerceDiscountTargetType commerceDiscountTargetType =
-			_commerceDiscountTargetTypeRegistry.getCommerceDiscountTargetType(
-				target);
+		CommerceDiscountTarget commerceDiscountTarget =
+			_commerceDiscountTargetRegistry.getCommerceDiscountTarget(target);
 
-		if (commerceDiscountTargetType == null) {
+		if (commerceDiscountTarget == null) {
 			throw new CommerceDiscountTargetException();
 		}
 
@@ -584,8 +583,7 @@ public class CommerceDiscountLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountLocalServiceImpl.class);
 
-	@ServiceReference(type = CommerceDiscountTargetTypeRegistry.class)
-	private CommerceDiscountTargetTypeRegistry
-		_commerceDiscountTargetTypeRegistry;
+	@ServiceReference(type = CommerceDiscountTargetRegistry.class)
+	private CommerceDiscountTargetRegistry _commerceDiscountTargetRegistry;
 
 }

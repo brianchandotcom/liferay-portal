@@ -15,7 +15,7 @@
 package com.liferay.commerce.discount.internal.target;
 
 import com.liferay.commerce.discount.model.CommerceDiscountConstants;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetType;
+import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
@@ -28,13 +28,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.discount.target.type.key=" + CommerceDiscountConstants.TARGET_SUBTOTAL,
-		"commerce.discount.target.type.order:Integer=40"
+		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_SUBTOTAL,
+		"commerce.discount.target.order:Integer=40"
 	},
-	service = CommerceDiscountTargetType.class
+	service = CommerceDiscountTarget.class
 )
-public class ApplyToSubtotalCommerceDiscountTargetTypeImpl
-	implements CommerceDiscountTargetType {
+public class ApplyToSubtotalCommerceDiscountTargetImpl
+	implements CommerceDiscountTarget {
 
 	@Override
 	public String getKey() {

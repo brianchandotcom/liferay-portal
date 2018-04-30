@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.discount.internal.target.comparator;
 
-import com.liferay.commerce.discount.target.CommerceDiscountTargetType;
+import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -25,29 +25,29 @@ import java.util.Comparator;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceDiscountTargetTypeOrderComparator
-	implements Comparator <ServiceWrapper<CommerceDiscountTargetType>>,
+public class CommerceDiscountTargetOrderComparator
+	implements Comparator <ServiceWrapper<CommerceDiscountTarget>>,
 			   Serializable {
 
-	public CommerceDiscountTargetTypeOrderComparator() {
+	public CommerceDiscountTargetOrderComparator() {
 		this(true);
 	}
 
-	public CommerceDiscountTargetTypeOrderComparator(boolean ascending) {
+	public CommerceDiscountTargetOrderComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		ServiceWrapper<CommerceDiscountTargetType> serviceWrapper1,
-		ServiceWrapper<CommerceDiscountTargetType> serviceWrapper2) {
+		ServiceWrapper<CommerceDiscountTarget> serviceWrapper1,
+		ServiceWrapper<CommerceDiscountTarget> serviceWrapper2) {
 
 		int displayOrder1 = MapUtil.getInteger(
-			serviceWrapper1.getProperties(),
-			"commerce.discount.target.type.order", Integer.MAX_VALUE);
+			serviceWrapper1.getProperties(), "commerce.discount.target.order",
+			Integer.MAX_VALUE);
 		int displayOrder2 = MapUtil.getInteger(
-			serviceWrapper2.getProperties(),
-			"commerce.discount.target.type.order", Integer.MAX_VALUE);
+			serviceWrapper2.getProperties(), "commerce.discount.target.order",
+			Integer.MAX_VALUE);
 
 		int value = Integer.compare(displayOrder1, displayOrder2);
 

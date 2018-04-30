@@ -22,7 +22,7 @@ import java.util.Locale;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public interface CommerceDiscountTargetType {
+public interface CommerceDiscountTarget {
 
 	public String getKey();
 

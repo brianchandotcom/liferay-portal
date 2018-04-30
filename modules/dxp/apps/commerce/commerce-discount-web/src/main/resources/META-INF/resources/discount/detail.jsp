@@ -21,7 +21,7 @@ CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscoun
 
 CommerceDiscount commerceDiscount = commerceDiscountDisplayContext.getCommerceDiscount();
 long commerceDiscountId = commerceDiscountDisplayContext.getCommerceDiscountId();
-List<CommerceDiscountTargetType> commerceDiscountTargetTypes = commerceDiscountDisplayContext.getCommerceDiscountTargetTypes();
+List<CommerceDiscountTarget> commerceDiscountTargets = commerceDiscountDisplayContext.getCommerceDiscountTargets();
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
@@ -66,11 +66,11 @@ if ((commerceDiscount != null) && (commerceDiscount.getExpirationDate() != null)
 				<aui:select name="target">
 
 					<%
-					for (CommerceDiscountTargetType commerceDiscountTargetType : commerceDiscountTargetTypes) {
-						String commerceDiscountTargetTypeKey = commerceDiscountTargetType.getKey();
+					for (CommerceDiscountTarget commerceDiscountTarget : commerceDiscountTargets) {
+						String commerceDiscountTargetKey = commerceDiscountTarget.getKey();
 					%>
 
-						<aui:option label="<%= commerceDiscountTargetType.getLabel(locale) %>" selected="<%= (commerceDiscount != null) && commerceDiscountTargetTypeKey.equals(commerceDiscount.getTarget()) %>" value="<%= commerceDiscountTargetTypeKey %>" />
+						<aui:option label="<%= commerceDiscountTarget.getLabel(locale) %>" selected="<%= (commerceDiscount != null) && commerceDiscountTargetKey.equals(commerceDiscount.getTarget()) %>" value="<%= commerceDiscountTargetKey %>" />
 
 					<%
 					}

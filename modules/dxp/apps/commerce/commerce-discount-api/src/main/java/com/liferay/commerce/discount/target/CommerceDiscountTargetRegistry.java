@@ -22,10 +22,10 @@ import java.util.List;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public interface CommerceDiscountTargetTypeRegistry {
+public interface CommerceDiscountTargetRegistry {
 
-	public CommerceDiscountTargetType getCommerceDiscountTargetType(String key);
+	public CommerceDiscountTarget getCommerceDiscountTarget(String key);
 
-	public List<CommerceDiscountTargetType> getCommerceDiscountTargetTypes();
+	public List<CommerceDiscountTarget> getCommerceDiscountTargets();
 
 }

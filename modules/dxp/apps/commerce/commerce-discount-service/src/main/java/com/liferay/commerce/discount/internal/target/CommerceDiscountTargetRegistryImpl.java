@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.discount.internal.target;
 
-import com.liferay.commerce.discount.internal.target.comparator.CommerceDiscountTargetTypeOrderComparator;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetType;
-import com.liferay.commerce.discount.target.CommerceDiscountTargetTypeRegistry;
+import com.liferay.commerce.discount.internal.target.comparator.CommerceDiscountTargetOrderComparator;
+import com.liferay.commerce.discount.target.CommerceDiscountTarget;
+import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -39,60 +39,58 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true)
-public class CommerceDiscountTargetTypeRegistryImpl
-	implements CommerceDiscountTargetTypeRegistry {
+public class CommerceDiscountTargetRegistryImpl
+	implements CommerceDiscountTargetRegistry {
 
 	@Override
-	public CommerceDiscountTargetType getCommerceDiscountTargetType(
-		String key) {
-
-		ServiceWrapper<CommerceDiscountTargetType>
-			commerceDiscountTargetTypeServiceWrapper =
+	public CommerceDiscountTarget getCommerceDiscountTarget(String key) {
+		ServiceWrapper<CommerceDiscountTarget>
+			commerceDiscountTargetServiceWrapper =
 				_serviceTrackerMap.getService(key);
 
-		if (commerceDiscountTargetTypeServiceWrapper == null) {
+		if (commerceDiscountTargetServiceWrapper == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No CommerceDiscountTargetType registered with key " + key);
+					"No CommerceDiscountTarget registered with key " + key);
 			}
 
 			return null;
 		}
 
-		return commerceDiscountTargetTypeServiceWrapper.getService();
+		return commerceDiscountTargetServiceWrapper.getService();
 	}
 
 	@Override
-	public List<CommerceDiscountTargetType> getCommerceDiscountTargetTypes() {
-		List<CommerceDiscountTargetType> commerceDiscountTargetTypes =
+	public List<CommerceDiscountTarget> getCommerceDiscountTargets() {
+		List<CommerceDiscountTarget> commerceDiscountTargets =
 			new ArrayList<>();
 
-		List<ServiceWrapper<CommerceDiscountTargetType>>
-			commerceDiscountTargetTypeServiceWrappers = ListUtil.fromCollection(
+		List<ServiceWrapper<CommerceDiscountTarget>>
+			commerceDiscountTargetServiceWrappers = ListUtil.fromCollection(
 				_serviceTrackerMap.values());
 
 		Collections.sort(
-			commerceDiscountTargetTypeServiceWrappers,
-			_commerceDiscountTargetTypeServiceWrapperOrderComparator);
+			commerceDiscountTargetServiceWrappers,
+			_commerceDiscountTargetServiceWrapperOrderComparator);
 
-		for (ServiceWrapper<CommerceDiscountTargetType>
-				commerceDiscountTargetTypeServiceWrapper :
-					commerceDiscountTargetTypeServiceWrappers) {
+		for (ServiceWrapper<CommerceDiscountTarget>
+				commerceDiscountTargetServiceWrapper :
+					commerceDiscountTargetServiceWrappers) {
 
-			commerceDiscountTargetTypes.add(
-				commerceDiscountTargetTypeServiceWrapper.getService());
+			commerceDiscountTargets.add(
+				commerceDiscountTargetServiceWrapper.getService());
 		}
 
-		return Collections.unmodifiableList(commerceDiscountTargetTypes);
+		return Collections.unmodifiableList(commerceDiscountTargets);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommerceDiscountTargetType.class,
-			"commerce.discount.target.type.key",
+			bundleContext, CommerceDiscountTarget.class,
+			"commerce.discount.target.key",
 			ServiceTrackerCustomizerFactory.
-				<CommerceDiscountTargetType>serviceWrapper(bundleContext));
+				<CommerceDiscountTarget>serviceWrapper(bundleContext));
 	}
 
 	@Deactivate
@@ -101,12 +99,12 @@ public class CommerceDiscountTargetTypeRegistryImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceDiscountTargetTypeRegistryImpl.class);
+		CommerceDiscountTargetRegistryImpl.class);
 
-	private final Comparator<ServiceWrapper<CommerceDiscountTargetType>>
-		_commerceDiscountTargetTypeServiceWrapperOrderComparator =
-			new CommerceDiscountTargetTypeOrderComparator();
+	private final Comparator<ServiceWrapper<CommerceDiscountTarget>>
+		_commerceDiscountTargetServiceWrapperOrderComparator =
+			new CommerceDiscountTargetOrderComparator();
 	private ServiceTrackerMap<String,
-		ServiceWrapper<CommerceDiscountTargetType>> _serviceTrackerMap;
+		ServiceWrapper<CommerceDiscountTarget>> _serviceTrackerMap;
 
 }

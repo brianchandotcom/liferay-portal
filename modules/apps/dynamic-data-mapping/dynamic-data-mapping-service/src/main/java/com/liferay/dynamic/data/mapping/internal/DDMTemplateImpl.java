@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -321,9 +322,9 @@ public class DDMTemplateImpl implements DDMTemplate {
 
 	@Override
 	public int hashCode() {
-		String script = getScript();
+		int hash = HashUtil.hash(0, getTemplateId());
 
-		return Long.hashCode(getTemplateId()) * 11 + script.hashCode();
+		return HashUtil.hash(hash, getScript());
 	}
 
 	@Override

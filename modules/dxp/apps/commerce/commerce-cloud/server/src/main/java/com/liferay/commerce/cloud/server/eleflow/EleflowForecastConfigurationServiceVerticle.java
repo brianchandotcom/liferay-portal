@@ -16,6 +16,7 @@ package com.liferay.commerce.cloud.server.eleflow;
 
 import com.liferay.commerce.cloud.server.BaseServiceVerticle;
 import com.liferay.commerce.cloud.server.eleflow.service.impl.EleflowForecastConfigurationServiceImpl;
+import com.liferay.commerce.cloud.server.eleflow.util.EleflowUtil;
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
 import com.liferay.commerce.cloud.server.util.CommerceCloudUtil;
 
@@ -40,10 +41,8 @@ public class EleflowForecastConfigurationServiceVerticle
 
 		String callbackURL = _getCallbackURL(configJsonObject);
 
-		String host = configJsonObject.getString(
-			"ELEFLOW_HOST", _DEFAULT_ELEFLOW_HOST);
-		String path = configJsonObject.getString(
-			"ELEFLOW_PATH", _DEFAULT_ELEFLOW_PATH);
+		String host = EleflowUtil.getHost(configJsonObject);
+		String path = EleflowUtil.getPath(configJsonObject);
 
 		if (_logger.isInfoEnabled()) {
 			_logger.info(
@@ -70,11 +69,6 @@ public class EleflowForecastConfigurationServiceVerticle
 
 		return sb.toString();
 	}
-
-	private static final String _DEFAULT_ELEFLOW_HOST =
-		"b2l9j0pz3i.execute-api.us-west-2.amazonaws.com";
-
-	private static final String _DEFAULT_ELEFLOW_PATH = "/Prod";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		EleflowForecastConfigurationServiceVerticle.class);

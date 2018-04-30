@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.cloud.server.eleflow.util;
 
+import io.vertx.core.json.JsonObject;
+
 import java.math.BigDecimal;
 
 import java.time.Instant;
@@ -54,6 +56,11 @@ public class EleflowUtil {
 		return enumSet;
 	}
 
+	public static String getHost(JsonObject configJsonObject) {
+		return configJsonObject.getString(
+			"ELEFLOW_HOST", _DEFAULT_ELEFLOW_HOST);
+	}
+
 	public static int getInteger(BigDecimal bigDecimal) {
 		return bigDecimal.intValue();
 	}
@@ -62,6 +69,11 @@ public class EleflowUtil {
 		Instant instant = Instant.ofEpochMilli(time);
 
 		return OffsetDateTime.ofInstant(instant, ZoneId.of("UTC"));
+	}
+
+	public static String getPath(JsonObject configJsonObject) {
+		return configJsonObject.getString(
+			"ELEFLOW_PATH", _DEFAULT_ELEFLOW_PATH);
 	}
 
 	public static String getString(BigDecimal bigDecimal) {
@@ -90,5 +102,10 @@ public class EleflowUtil {
 
 		return list;
 	}
+
+	private static final String _DEFAULT_ELEFLOW_HOST =
+		"b2l9j0pz3i.execute-api.us-west-2.amazonaws.com";
+
+	private static final String _DEFAULT_ELEFLOW_PATH = "/Prod";
 
 }

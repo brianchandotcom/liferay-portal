@@ -127,6 +127,8 @@ public class WeDeployForecastOrderServiceImpl
 			BodyCodec.none()
 		);
 
+		addAuthorization(httpRequest);
+
 		JsonObject jsonObject = JsonUtil.getJsonObject("processed", processed);
 
 		httpRequest.sendJsonObject(

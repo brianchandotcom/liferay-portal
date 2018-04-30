@@ -157,7 +157,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 
 							<liferay-ui:search-container-column-text
-								property="price"
+								title="price"
+								value="<%= cpInstanceDisplayContext.formatPrice(scopeGroupId, cpInstance.getPrice())%>"
 							/>
 
 							<liferay-ui:search-container-column-text

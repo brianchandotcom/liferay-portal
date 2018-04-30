@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsSearchContainerDisplayContext;
 import com.liferay.commerce.product.definitions.web.internal.util.CPDefinitionsPortletUtil;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -61,6 +63,7 @@ public class CPInstanceDisplayContext
 
 	public CPInstanceDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+			CommercePriceFormatter commercePriceFormatter,
 			CPDefinitionOptionRelService cpDefinitionOptionRelService,
 			CPInstanceService cpInstanceService,
 			CPInstanceHelper cpInstanceHelper)
@@ -71,9 +74,16 @@ public class CPInstanceDisplayContext
 
 		setDefaultOrderByCol("sku");
 
+		_commercePriceFormatter = commercePriceFormatter;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceService = cpInstanceService;
 		_cpInstanceHelper = cpInstanceHelper;
+	}
+
+	public String formatPrice(long groupId, BigDecimal price)
+		throws PortalException{
+
+		return _commercePriceFormatter.format(groupId, price);
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
@@ -312,6 +322,7 @@ public class CPInstanceDisplayContext
 			true, renderRequest, renderResponse);
 	}
 
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private CPInstance _cpInstance;
 	private final CPInstanceHelper _cpInstanceHelper;

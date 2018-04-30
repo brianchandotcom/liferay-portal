@@ -25,7 +25,6 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 %>
 
 	<liferay-ui:search-container-column-text
-		cssClass="table-cell-content"
 		name="<%= cpDefinitionOptionRel.getTitle(languageId) %>"
 	>
 
@@ -49,18 +48,16 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 %>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	property="price"
+	title="price"
+	value="<%= cpInstanceDisplayContext.formatPrice(scopeGroupId, cpInstance.getPrice())%>"
 />
 
 <liferay-ui:search-container-column-status
-	cssClass="table-cell-content"
 	name="status"
 	status="<%= cpInstance.getStatus() %>"
 />
 
 <liferay-ui:search-container-column-date
-	cssClass="table-cell-content"
 	name="modified-date"
 	property="modifiedDate"
 />

@@ -19,6 +19,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
+import com.liferay.commerce.cloud.server.service.ForecastProcessorService;
 import com.liferay.commerce.cloud.server.service.ProjectService;
 
 import io.vertx.core.AbstractVerticle;
@@ -38,7 +39,11 @@ public class CommerceCloudServerVerticle extends AbstractVerticle {
 		CompositeFuture.all(
 			_deployVerticle(ForecastConfigurationService.ADDRESS),
 			_deployVerticle(ForecastOrderService.ADDRESS),
+			_deployVerticle(ForecastProcessorService.ADDRESS),
 			_deployVerticle(ProjectService.ADDRESS)
+		).compose(
+			__ -> _deployVerticle(
+				"com.liferay.commerce.cloud.server.forecast.processor")
 		).compose(
 			__ -> _deployVerticle("com.liferay.commerce.cloud.server.http")
 		).compose(

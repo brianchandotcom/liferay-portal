@@ -175,7 +175,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		if (getFileVersionIds().contains(
 				destinationFileVersion.getFileVersionId())) {
 
-			String processIdentity = Long.toString(
+			String processIdentity = String.valueOf(
 				destinationFileVersion.getFileVersionId());
 
 			destroyProcess(processIdentity);
@@ -513,7 +513,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			binPathSegment = previewType;
 		}
 		else {
-			binPathSegment = Integer.toString(fileIndex + 1);
+			binPathSegment = String.valueOf(fileIndex + 1);
 		}
 
 		String binPath = getBinPath(
@@ -1033,7 +1033,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			binPathSegment = previewType;
 		}
 		else {
-			binPathSegment = Integer.toString(fileIndex + 1);
+			binPathSegment = String.valueOf(fileIndex + 1);
 		}
 
 		StringBundler sb = new StringBundler(4);

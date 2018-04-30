@@ -381,7 +381,7 @@ public class JenkinsResultsParserUtil {
 			System.out.println(
 				combine(
 					"Response from ", urlObject.toString(), ": ",
-					Integer.toString(httpURLConnection.getResponseCode()), " ",
+					String.valueOf(httpURLConnection.getResponseCode()), " ",
 					httpURLConnection.getResponseMessage()));
 		}
 		catch (IOException ioe) {
@@ -839,7 +839,7 @@ public class JenkinsResultsParserUtil {
 				"${baseInvocationURL}", baseInvocationURL);
 
 		loadBalancerServiceURL = loadBalancerServiceURL.replace(
-			"${invokedBatchSize}", Integer.toString(invokedBatchSize));
+			"${invokedBatchSize}", String.valueOf(invokedBatchSize));
 
 		try {
 			JSONObject jsonObject = toJSONObject(loadBalancerServiceURL);
@@ -1742,7 +1742,7 @@ public class JenkinsResultsParserUtil {
 	private static File _getCacheFile(String key) {
 		String fileName = combine(
 			System.getProperty("java.io.tmpdir"), "/jenkins-cached-files/",
-			Integer.toString(key.hashCode()), ".txt");
+			String.valueOf(key.hashCode()), ".txt");
 
 		return new File(fileName);
 	}

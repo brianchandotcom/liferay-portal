@@ -86,7 +86,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void print(double d) {
-		String redactedString = _redact(Double.toString(d));
+		String redactedString = _redact(String.valueOf(d));
 
 		if (redactedString != null) {
 			_printStream.print(redactedString);
@@ -99,7 +99,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void print(float f) {
-		String redactedString = _redact(Float.toString(f));
+		String redactedString = _redact(String.valueOf(f));
 
 		if (redactedString != null) {
 			_printStream.print(redactedString);
@@ -112,7 +112,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void print(int i) {
-		String redactedString = _redact(Integer.toString(i));
+		String redactedString = _redact(String.valueOf(i));
 
 		if (redactedString != null) {
 			_printStream.print(redactedString);
@@ -125,7 +125,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void print(long l) {
-		String redactedString = _redact(Long.toString(l));
+		String redactedString = _redact(String.valueOf(l));
 
 		if (redactedString != null) {
 			_printStream.println(redactedString);
@@ -196,7 +196,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void println(double d) {
-		String redactedString = _redact(Double.toString(d));
+		String redactedString = _redact(String.valueOf(d));
 
 		if (redactedString != null) {
 			_printStream.println(redactedString);
@@ -209,7 +209,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void println(float f) {
-		String redactedString = _redact(Float.toString(f));
+		String redactedString = _redact(String.valueOf(f));
 
 		if (redactedString != null) {
 			_printStream.println(redactedString);
@@ -222,7 +222,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void println(int i) {
-		String redactedString = _redact(Integer.toString(i));
+		String redactedString = _redact(String.valueOf(i));
 
 		if (redactedString != null) {
 			_printStream.println(redactedString);
@@ -235,7 +235,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void println(long l) {
-		String redactedString = _redact(Long.toString(l));
+		String redactedString = _redact(String.valueOf(l));
 
 		if (redactedString != null) {
 			_printStream.println(redactedString);
@@ -305,7 +305,7 @@ public class SecurePrintStream extends PrintStream {
 
 	@Override
 	public void write(int b) {
-		String redactedString = _redact(Integer.toString(b));
+		String redactedString = _redact(String.valueOf(b));
 
 		if (redactedString != null) {
 			_printStream.print(redactedString);

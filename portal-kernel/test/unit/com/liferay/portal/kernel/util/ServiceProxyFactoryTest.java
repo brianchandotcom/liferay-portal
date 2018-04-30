@@ -347,7 +347,7 @@ public class ServiceProxyFactoryTest {
 	private void _testBlockingProxy(boolean proxyService) throws Exception {
 		System.setProperty(
 			ServiceProxyFactory.class.getName() + ".timeout",
-			Long.toString(Long.MAX_VALUE));
+			String.valueOf(Long.MAX_VALUE));
 
 		final TestService testService =
 			ServiceProxyFactory.newServiceTrackedInstance(

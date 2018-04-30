@@ -1525,7 +1525,7 @@ public class HttpImpl implements Http {
 			basicClientCookie.setExpiryDate(expiryDate);
 
 			basicClientCookie.setAttribute(
-				ClientCookie.MAX_AGE_ATTR, Integer.toString(maxAge));
+				ClientCookie.MAX_AGE_ATTR, String.valueOf(maxAge));
 		}
 
 		basicClientCookie.setPath(cookie.getPath());

@@ -80,7 +80,7 @@ public class HttpPrincipalTestUtil {
 			login = user.getScreenName();
 		}
 		else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-			login = Long.toString(TestPropsValues.getUserId());
+			login = String.valueOf(TestPropsValues.getUserId());
 		}
 
 		return login;

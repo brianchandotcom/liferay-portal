@@ -249,7 +249,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 		parameterMap.put("email", user.getEmailAddress());
 		parameterMap.put("first_name", user.getFirstName());
 		parameterMap.put("last_name", user.getLastName());
-		parameterMap.put("type", Integer.toString(_USER_TYPE_PRO));
+		parameterMap.put("type", String.valueOf(_USER_TYPE_PRO));
 
 		JSONObject responseJSONObject = execute(
 			powwowServer, "user", "custcreate", parameterMap);

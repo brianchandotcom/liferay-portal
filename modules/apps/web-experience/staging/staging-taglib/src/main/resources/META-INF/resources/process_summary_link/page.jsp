@@ -18,7 +18,7 @@
 
 <liferay-portlet:renderURL portletName="<%= ExportImportPortletKeys.EXPORT_IMPORT %>" var="processSummaryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="showProcessSummary" />
-	<portlet:param name="backgroundTaskId" value="<%= Long.toString(backgroundTask.getBackgroundTaskId()) %>" />
+	<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 </liferay-portlet:renderURL>
 
 <%

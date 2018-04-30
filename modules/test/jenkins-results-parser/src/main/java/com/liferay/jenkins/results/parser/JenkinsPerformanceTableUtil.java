@@ -71,7 +71,7 @@ public class JenkinsPerformanceTableUtil {
 			tableElement.add(
 				_createRowElement(
 					"td", result.getAxis(), result.getClassName(),
-					Float.toString(result.getDuration()), result.getJobName(),
+					String.valueOf(result.getDuration()), result.getJobName(),
 					result.getName(), result.getStatus(), result.getUrl()));
 		}
 

@@ -107,7 +107,7 @@ public class JenkinsPerformanceTableUtilTest
 				urlSuffix = "/api/json";
 			}
 			else {
-				fileSuffix = Integer.toString(count);
+				fileSuffix = String.valueOf(count);
 				urlSuffix = "/testReport/api/json";
 			}
 

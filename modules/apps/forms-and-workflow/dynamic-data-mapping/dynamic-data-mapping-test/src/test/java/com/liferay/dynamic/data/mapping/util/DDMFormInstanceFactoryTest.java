@@ -64,31 +64,31 @@ public class DDMFormInstanceFactoryTest {
 
 		primitiveTypesDDMFormFieldValue.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"double", Double.toString(expectedDoubleValue)));
+				"double", String.valueOf(expectedDoubleValue)));
 
 		float expectedFloatValue = 3.5F;
 
 		primitiveTypesDDMFormFieldValue.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"float", Float.toString(expectedFloatValue)));
+				"float", String.valueOf(expectedFloatValue)));
 
 		int expectedIntegerValue = 2015;
 
 		primitiveTypesDDMFormFieldValue.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"integer", Integer.toString(expectedIntegerValue)));
+				"integer", String.valueOf(expectedIntegerValue)));
 
 		long expectedLongValue = 1000L;
 
 		primitiveTypesDDMFormFieldValue.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"long", Long.toString(expectedLongValue)));
+				"long", String.valueOf(expectedLongValue)));
 
 		short expectedShortValue = 5;
 
 		primitiveTypesDDMFormFieldValue.addNestedDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"short", Short.toString(expectedShortValue)));
+				"short", String.valueOf(expectedShortValue)));
 
 		String expectedStringValue = "Frank Sinatra";
 
@@ -259,31 +259,31 @@ public class DDMFormInstanceFactoryTest {
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"double", Double.toString(expectedDoubleValue)));
+				"double", String.valueOf(expectedDoubleValue)));
 
 		float expectedFloatValue = 3.5F;
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"float", Float.toString(expectedFloatValue)));
+				"float", String.valueOf(expectedFloatValue)));
 
 		int expectedIntegerValue = 2015;
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"integer", Integer.toString(expectedIntegerValue)));
+				"integer", String.valueOf(expectedIntegerValue)));
 
 		long expectedLongValue = 1000L;
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"long", Long.toString(expectedLongValue)));
+				"long", String.valueOf(expectedLongValue)));
 
 		short expectedShortValue = 5;
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"short", Short.toString(expectedShortValue)));
+				"short", String.valueOf(expectedShortValue)));
 
 		String expectedStringValue = "Frank Sinatra";
 

@@ -826,8 +826,8 @@ AUI.add(
 						instance._renderArrowActions();
 						instance._renderFields();
 						instance._renderPages();
-						instance._renderRequiredFieldsWarning();
 						instance._renderRepeatableFieldsIcon();
+						instance._renderRequiredFieldsWarning();
 						instance._syncRequiredFieldsWarning();
 						instance._syncRowsLastColumnUI();
 						instance._traverseFormPages();

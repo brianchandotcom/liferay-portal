@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -288,7 +287,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 			mock(DDMFormValuesMerger.class),
 			mock(DDMStructureLocalService.class),
 			mock(DDMStructureService.class), mock(JSONFactory.class),
-			mock(StorageEngine.class), mock(WorkflowEngineManager.class));
+			mock(StorageEngine.class));
 	}
 
 	protected void setUpLanguageUtil() {

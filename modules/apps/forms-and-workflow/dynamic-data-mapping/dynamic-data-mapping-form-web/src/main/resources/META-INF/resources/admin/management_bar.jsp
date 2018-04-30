@@ -17,64 +17,24 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
-
 String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionItems="<%= ddmFormAdminDisplayContext.getActionItemsDropdownItemList() %>"
+	clearResultsURL="<%= ddmFormAdminDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= ddmFormAdminDisplayContext.getCreationMenu() %>"
+	disabled="<%= ddmFormAdminDisplayContext.isDisabledManagementBar() %>"
+	filterItems="<%= ddmFormAdminDisplayContext.getFilterItemsDropdownItemList() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= ddmFormAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
-
-		<liferay-util:include page="/admin/display_add_menu.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= ddmFormAdminDisplayContext.getOrderByCol() %>"
-			orderByType="<%= ddmFormAdminDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<c:if test="<%= ddmFormAdminDisplayContext.isShowSearch() %>">
-				<aui:form action="<%= ddmFormAdminDisplayContext.getPortletURL() %>" method="post" name="fm1">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</c:if>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<c:choose>
-			<c:when test='<%= currentTab.equals("forms") %>'>
-				<liferay-frontend:management-bar-button
-					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteFormInstances();" %>'
-					icon="trash"
-					label="delete"
-				/>
-			</c:when>
-			<c:when test='<%= currentTab.equals("element-set") %>'>
-				<liferay-frontend:management-bar-button
-					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteStructures();" %>'
-					icon="trash"
-					label="delete"
-				/>
-			</c:when>
-		</c:choose>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="fm1"
+	sortingOrder="<%= ddmFormAdminDisplayContext.getOrderByType() %>"
+	sortingURL="<%= ddmFormAdminDisplayContext.getSortingURL() %>"
+	totalItems="<%= ddmFormAdminDisplayContext.getTotalItems() %>"
+	viewTypes="<%= ddmFormAdminDisplayContext.getViewTypesItemList() %>"
+/>
 
 <c:choose>
 	<c:when test='<%= currentTab.equals("forms") %>'>

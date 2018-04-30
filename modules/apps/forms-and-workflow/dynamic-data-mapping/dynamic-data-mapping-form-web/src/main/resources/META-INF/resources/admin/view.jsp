@@ -22,7 +22,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 
 <liferay-util:include page="/admin/navigation_bar.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/admin/management_bar.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test='<%= currentTab.equals("forms") %>'>

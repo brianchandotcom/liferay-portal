@@ -17,10 +17,10 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.ViewUADApplicationsSummaryDisplay;
+import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 import com.liferay.user.associated.data.web.internal.util.UADApplicationSummaryHelper;
 
 import javax.portlet.PortletException;
@@ -50,7 +50,8 @@ public class ViewUADApplicationsSummaryMVCRenderCommand
 		throws PortletException {
 
 		try {
-			User selectedUser = _portal.getSelectedUser(renderRequest);
+			User selectedUser = _selectedUserHelper.getSelectedUser(
+				renderRequest);
 
 			ViewUADApplicationsSummaryDisplay
 				viewUADApplicationsSummaryDisplay =
@@ -81,7 +82,7 @@ public class ViewUADApplicationsSummaryMVCRenderCommand
 	}
 
 	@Reference
-	private Portal _portal;
+	private SelectedUserHelper _selectedUserHelper;
 
 	@Reference
 	private UADApplicationSummaryHelper _uadApplicationSummaryHelper;

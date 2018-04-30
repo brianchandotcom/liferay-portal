@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.SiteConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -48,64 +49,68 @@ public class GroupExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		String errorMessage = null;
 
 		if (pe instanceof DuplicateGroupException) {
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(), "please-enter-a-unique-name"));
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(), "please-enter-a-unique-name");
 		}
 		else if (pe instanceof GroupInheritContentException) {
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"this-site-cannot-inherit-content-from-its-parent-site"));
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"this-site-cannot-inherit-content-from-its-parent-site");
 		}
 		else if (pe instanceof GroupKeyException) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(
-				LanguageUtil.format(
-					themeDisplay.getLocale(),
-					"the-x-cannot-be-x-or-a-reserved-word-such-as-x",
-					new String[] {
-						SiteConstants.NAME_LABEL,
-						SiteConstants.getNameGeneralRestrictions(
-							themeDisplay.getLocale()),
-						SiteConstants.NAME_RESERVED_WORDS
-					}));
-
-			sb.append(StringPool.SPACE);
-
-			sb.append(
-				LanguageUtil.format(
-					themeDisplay.getLocale(),
-					"the-x-cannot-contain-the-following-invalid-characters-x",
-					new String[] {
-						SiteConstants.NAME_LABEL,
-						SiteConstants.NAME_INVALID_CHARACTERS
-					}));
-
-			jsonObject.put("error", sb.toString());
+			errorMessage = _handleGroupKeyException(actionRequest);
 		}
 		else if (pe instanceof GroupParentException.MustNotBeOwnParent) {
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(),
-					"this-site-cannot-inherit-content-from-its-parent-site"));
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"this-site-cannot-inherit-content-from-its-parent-site");
 		}
-		else {
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
+
+		if (Validator.isNull(errorMessage)) {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("error", errorMessage);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+	}
+
+	private String _handleGroupKeyException(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(
+			LanguageUtil.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-be-x-or-a-reserved-word-such-as-x",
+				new String[] {
+					SiteConstants.NAME_LABEL,
+					SiteConstants.getNameGeneralRestrictions(
+						themeDisplay.getLocale()),
+					SiteConstants.NAME_RESERVED_WORDS
+				}));
+
+		sb.append(StringPool.SPACE);
+
+		sb.append(
+			LanguageUtil.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-contain-the-following-invalid-characters-x",
+				new String[] {
+					SiteConstants.NAME_LABEL,
+					SiteConstants.NAME_INVALID_CHARACTERS
+				}));
+
+		return sb.toString();
 	}
 
 }

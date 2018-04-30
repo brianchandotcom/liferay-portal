@@ -100,7 +100,8 @@ public class ProductDefinitionHelper {
 
 		queryConfig.addSelectedFieldNames(
 			Field.CREATE_DATE, Field.ENTRY_CLASS_PK, Field.DESCRIPTION,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID);
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID,
+			"skus");
 
 		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);

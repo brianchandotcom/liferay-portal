@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.Arrays;
@@ -123,8 +124,7 @@ public class ProductNestedCollectionResource
 			document -> GetterUtil.getLong(document.get(Field.USER_ID))
 		).addString(
 			"description",
-			document -> GetterUtil.getString(
-				document.get(Field.DESCRIPTION), "-")
+			document -> !Validator.isBlank(document.get(Field.DESCRIPTION))? document.get(Field.DESCRIPTION) : "-"
 		).addStringList(
 			"skus", document -> Arrays.asList(document.getValues("skus"))
 		).addString(

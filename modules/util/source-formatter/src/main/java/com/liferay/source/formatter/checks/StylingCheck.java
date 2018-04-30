@@ -41,7 +41,12 @@ public abstract class StylingCheck extends BaseFileCheck {
 		content = _formatStyling(
 			content, "String.valueOf(true)", "Boolean.TRUE.toString()");
 
+		content = _formatToStringMethodCall(content, "Double");
+		content = _formatToStringMethodCall(content, "Float");
+		content = _formatToStringMethodCall(content, "Integer");
+		content = _formatToStringMethodCall(content, "Long");
 		content = _formatToStringMethodCall(content, "Objects");
+		content = _formatToStringMethodCall(content, "Short");
 
 		return content;
 	}

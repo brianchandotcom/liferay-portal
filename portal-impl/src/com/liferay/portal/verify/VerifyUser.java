@@ -14,34 +14,17 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.ContactConstants;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.GroupImpl;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -51,7 +34,6 @@ public class VerifyUser extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyInactive();
-		verifyNoContacts();
 	}
 
 	protected void verifyInactive() throws Exception {
@@ -93,80 +75,5 @@ public class VerifyUser extends VerifyProcess {
 			FinderCacheUtil.clearCache(GroupImpl.class.getName());
 		}
 	}
-
-	protected void verifyNoContacts() throws PortalException {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<User> users = UserLocalServiceUtil.getNoContacts();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + users.size() + " users with no contacts");
-			}
-
-			for (User user : users) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Creating contact for user " + user.getUserId());
-				}
-
-				long contactId = CounterLocalServiceUtil.increment();
-
-				Contact contact = ContactLocalServiceUtil.createContact(
-					contactId);
-
-				Company company = CompanyLocalServiceUtil.getCompanyById(
-					user.getCompanyId());
-
-				contact.setCompanyId(user.getCompanyId());
-				contact.setUserId(user.getUserId());
-				contact.setUserName(StringPool.BLANK);
-				contact.setAccountId(company.getAccountId());
-				contact.setParentContactId(
-					ContactConstants.DEFAULT_PARENT_CONTACT_ID);
-				contact.setFirstName(user.getFirstName());
-				contact.setMiddleName(user.getMiddleName());
-				contact.setLastName(user.getLastName());
-				contact.setPrefixId(0);
-				contact.setSuffixId(0);
-				contact.setJobTitle(user.getJobTitle());
-
-				ContactLocalServiceUtil.updateContact(contact);
-
-				user.setContactId(contactId);
-
-				UserLocalServiceUtil.updateUser(user);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Contacts verified for users");
-			}
-
-			users = UserLocalServiceUtil.getNoGroups();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing " + users.size() + " users with no groups");
-			}
-
-			for (User user : users) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Creating group for user " + user.getUserId());
-				}
-
-				GroupLocalServiceUtil.addGroup(
-					user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-					User.class.getName(), user.getUserId(),
-					GroupConstants.DEFAULT_LIVE_GROUP_ID,
-					(Map<Locale, String>)null, null, 0, true,
-					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
-					StringPool.SLASH + user.getScreenName(), false, true, null);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Groups verified for users");
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(VerifyUser.class);
 
 }

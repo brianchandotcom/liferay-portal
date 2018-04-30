@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -121,7 +122,11 @@ public class ProductNestedCollectionResource
 			"author", PersonIdentifier.class,
 			document -> GetterUtil.getLong(document.get(Field.USER_ID))
 		).addString(
-			"description", document -> document.get(Field.DESCRIPTION)
+			"description",
+			document -> GetterUtil.getString(
+				document.get(Field.DESCRIPTION), "-")
+		).addStringList(
+			"skus", document -> Arrays.asList(document.getValues("skus"))
 		).addString(
 			"title", document -> document.get(Field.TITLE)
 		).build();

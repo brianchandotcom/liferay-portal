@@ -187,6 +187,8 @@ public class FragmentEntryLinkFinderImpl
 
 			String sql = _customSQL.get(getClass(), FIND_BY_G_F);
 
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("FragmentEntryLink", FragmentEntryLinkImpl.class);
@@ -217,6 +219,8 @@ public class FragmentEntryLinkFinderImpl
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), FIND_BY_G_F_C);
+
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -250,6 +254,8 @@ public class FragmentEntryLinkFinderImpl
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), FIND_BY_G_F_C_L);
+
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

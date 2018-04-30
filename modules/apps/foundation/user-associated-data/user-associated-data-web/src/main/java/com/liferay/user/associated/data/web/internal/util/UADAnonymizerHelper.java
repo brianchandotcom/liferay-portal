@@ -14,12 +14,16 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfigurationTracker;
+import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfiguration;
+import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfigurationRetriever;
 
+import java.util.Optional;
+
+import org.osgi.service.cm.Configuration;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -29,30 +33,37 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UADAnonymizerHelper.class)
 public class UADAnonymizerHelper {
 
-	public User getAnonymousUser() throws PortalException {
-		return getAnonymousUser(CompanyThreadLocal.getCompanyId());
+	public User getAnonymousUser() throws Exception {
+		return _getAnonymousUser(CompanyThreadLocal.getCompanyId());
 	}
 
-	public User getAnonymousUser(long companyId) throws PortalException {
-		if (companyId == 0) {
-			return null;
-		}
+	public User getAnonymousUser(long companyId) throws Exception {
+		return _getAnonymousUser(companyId);
+	}
 
-		long userId = _anonymousUserConfigurationTracker.getAnonymousUserId(
-			companyId);
+	private User _getAnonymousUser(long companyId) throws Exception {
+		Optional<Configuration> configurationOptional =
+			_anonymousUserConfigurationRetriever.getOptional(companyId);
 
-		User anonymousUser = _userLocalService.fetchUser(userId);
+		User anonymousUser = configurationOptional.map(
+			Configuration::getProperties
+		).map(
+			properties -> ConfigurableUtil.createConfigurable(
+				AnonymousUserConfiguration.class, properties)
+		).map(
+			AnonymousUserConfiguration::userId
+		).map(
+			_userLocalService::fetchUser
+		).orElse(
+			_userLocalService.getDefaultUser(companyId)
+		);
 
-		if (anonymousUser != null) {
-			return anonymousUser;
-		}
-
-		return _userLocalService.getDefaultUser(companyId);
+		return anonymousUser;
 	}
 
 	@Reference
-	private AnonymousUserConfigurationTracker
-		_anonymousUserConfigurationTracker;
+	private AnonymousUserConfigurationRetriever
+		_anonymousUserConfigurationRetriever;
 
 	@Reference
 	private UserLocalService _userLocalService;

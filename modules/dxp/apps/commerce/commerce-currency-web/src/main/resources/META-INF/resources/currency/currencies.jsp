@@ -117,6 +117,7 @@ boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.conta
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					property="code"
 				/>
 

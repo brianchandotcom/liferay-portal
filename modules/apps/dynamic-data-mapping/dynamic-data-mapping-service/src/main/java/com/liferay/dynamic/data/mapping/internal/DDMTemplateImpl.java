@@ -48,6 +48,31 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMTemplate)) {
+			return false;
+		}
+
+		DDMTemplate ddmTemplate = (DDMTemplate)obj;
+
+		if ((getTemplateId() == ddmTemplate.getTemplateId()) &&
+			getScript().equals(ddmTemplate.getScript())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean getCacheable() {
 		return _ddmTemplate.getCacheable();
 	}
@@ -295,6 +320,13 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public String getWebDavURL(ThemeDisplay themeDisplay, String webDAVToken) {
 		return _ddmTemplate.getWebDavURL(themeDisplay, webDAVToken);
+	}
+
+	@Override
+	public int hashCode() {
+		String script = getScript();
+
+		return Long.hashCode(getTemplateId()) * 11 + script.hashCode();
 	}
 
 	@Override

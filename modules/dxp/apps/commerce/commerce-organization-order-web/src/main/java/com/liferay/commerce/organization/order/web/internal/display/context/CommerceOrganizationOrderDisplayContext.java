@@ -16,6 +16,7 @@ package com.liferay.commerce.organization.order.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -76,6 +78,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -93,6 +96,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
@@ -123,6 +127,7 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		_commerceAddressService = commerceAddressService;
 		_commerceOrderHelper = commerceOrderHelper;
+		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
@@ -465,6 +470,33 @@ public class CommerceOrganizationOrderDisplayContext {
 		navigationItems.add(_getNavigationItem("archived", 0));
 
 		return navigationItems;
+	}
+
+	public String getOrderDetailURL(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		long groupId =
+			_commerceOrganizationOrderRequestHelper.getScopeGroupId();
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
+
+		if (plid > 0) {
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				_commerceOrganizationOrderRequestHelper.getRequest(),
+				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER, plid,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName", "editCommerceOrder");
+			portletURL.setParameter(
+				"commerceOrderId",
+				String.valueOf(commerceOrder.getCommerceOrderId()));
+
+			return portletURL.toString();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public Organization getOrganization() {
@@ -849,6 +881,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final Format _commerceOrderDateFormatDateTime;
 	private final Format _commerceOrderDateFormatTime;
 	private final CommerceOrderHelper _commerceOrderHelper;
+	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private final long _commerceOrderId;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private SearchContainer<CommerceOrderItem>

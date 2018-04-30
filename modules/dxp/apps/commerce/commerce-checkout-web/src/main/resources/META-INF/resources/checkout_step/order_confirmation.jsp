@@ -58,7 +58,7 @@ if (commerceOrderPayment != null) {
 			<liferay-ui:message key="you-will-be-redirected-in-a-few-seconds" />
 
 			<aui:button-row>
-				<aui:button primary="<%= true %>" type="submit" value="go-to-order-details" />
+				<aui:button href="<%= orderConfirmationCheckoutStepDisplayContext.getOrderDetailURL() %>" primary="<%= true %>" type="submit" value="go-to-order-details" />
 			</aui:button-row>
 		</c:otherwise>
 	</c:choose>

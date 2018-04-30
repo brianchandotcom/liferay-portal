@@ -98,7 +98,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>
@@ -186,7 +186,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>
@@ -505,7 +505,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>
@@ -765,10 +765,19 @@
 
 		<var name="key_line" value="${line}" />
 
-		<execute function="AssertTextEquals#assertPartialTextAceEditor" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT" value1="${kdSourceXML}" />
+		<if>
+			<equals arg1="${invalid}" arg2="true" />
+			<then>
+				<execute function="AssertTextNotPresent" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT" value1="${kdSourceXML}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertPartialTextAceEditor" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT" value1="${kdSourceXML}" />
+			</else>
+		</if>
+
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>
@@ -780,7 +789,7 @@
 	</command>
 
 	<command name="viewViewTab">
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#VIEW_TAB" value1="View" />
+		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#DIAGRAM_TAB" value1="Diagram" />
 
 		<execute function="Pause" locator1="1000" />
 	</command>

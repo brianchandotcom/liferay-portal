@@ -1015,6 +1015,9 @@
 		<exception>CPDefinitionDisplayDate</exception>
 		<exception>CPDefinitionExpirationDate</exception>
 		<exception>CPDefinitionIgnoreSKUCombinations</exception>
+		<exception>CPDefinitionMetaDescription</exception>
+		<exception>CPDefinitionMetaKeywords</exception>
+		<exception>CPDefinitionMetaTitle</exception>
 		<exception>CPDefinitionOptionValueRelKey</exception>
 		<exception>CPDefinitionProductTypeName</exception>
 		<exception>CPFriendlyURLEntry</exception>

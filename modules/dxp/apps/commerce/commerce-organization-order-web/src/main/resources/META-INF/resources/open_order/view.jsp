@@ -43,21 +43,25 @@ List<CommerceOrder> results = searchContainer.getResults();
 				for (CommerceOrder commerceOrder : results) {
 				%>
 
-					<div class="col-md-4">
-						<div class="card">
-							<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showLabel="<%= false %>" status="<%= commerceOrder.getStatus() %>" />
+					<div class="col-md-3">
+						<div class="order-card">
+							<div class="row">
+								<div class="col-md-8">
+									<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showLabel="<%= false %>" status="<%= commerceOrder.getStatus() %>" />
 
-							<aui:a href="#" label="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+									<h4 class="order-id" ><aui:a href="#" label="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" /></h4>
 
-							<h4><%= commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder) %></h4>
+									<h4><%= commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder) %></h4>
+								</div>
+								<div class="col-md-4">
+									<p class="text-muted"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) + StringPool.SPACE + commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %></p>
+									<%
+										request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
+									%>
 
-							<p class="text-muted"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) + StringPool.SPACE + commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %></p>
-
-							<%
-							request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
-							%>
-
-							<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />
+									<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />
+								</div>
+							</div>
 						</div>
 					</div>
 

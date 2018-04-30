@@ -110,7 +110,7 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 			}
 		}
 	}
-	
+
 	protected void verifyUUIDModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(new WikiPageResourceVerifiableModel());

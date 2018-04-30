@@ -4058,8 +4058,10 @@ public class ServiceBuilder {
 				_uadOutputPath, "/uad/anonymizer/", entity.getName(),
 				"UADAnonymizer.java"));
 
-		ToolsUtil.writeFile(
-			file, content, _author, _jalopySettings, _modifiedFileNames);
+		if (!file.exists()) {
+			ToolsUtil.writeFile(
+				file, content, _author, _jalopySettings, _modifiedFileNames);
+		}
 	}
 
 	private void _createUADAnonymizerTest(Entity entity) throws Exception {

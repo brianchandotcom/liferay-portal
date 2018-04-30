@@ -90,6 +90,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		CommerceOrder commerceOrder = getCurrentCommerceOrder(
+			httpServletRequest);
+
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 		long plid = _portal.getPlidFromPortletId(
@@ -99,9 +102,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			PortletURL portletURL = _getPortletURL(
 				httpServletRequest,
 				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
-
-			CommerceOrder commerceOrder = getCurrentCommerceOrder(
-				httpServletRequest);
 
 			if (commerceOrder != null) {
 				portletURL.setParameter(
@@ -114,8 +114,13 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			return portletURL;
 		}
 
+		if (commerceOrder.isOpen()) {
+			return _getPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_CART_CONTENT);
+		}
+
 		return _getPortletURL(
-			httpServletRequest, CommercePortletKeys.COMMERCE_CART_CONTENT);
+			httpServletRequest, CommercePortletKeys.COMMERCE_ORDER_CONTENT);
 	}
 
 	@Override

@@ -686,6 +686,8 @@ AUI.add(
 					);
 				}
 
+				instance._renderRepeatableFieldsIcon();
+
 				instance._clearStack();
 
 				setTimeout(

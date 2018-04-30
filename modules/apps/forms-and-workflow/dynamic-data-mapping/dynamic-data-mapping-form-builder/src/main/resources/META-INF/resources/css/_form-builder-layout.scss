@@ -45,6 +45,16 @@
 		}
 	}
 
+	.form-builder-field-list-container {
+		a.lfr-ddm-form-field-repeatable-add-button {
+			cursor: inherit;
+			position: absolute;
+			right: 10px;
+			text-decoration: none;
+			top: 10px;
+		}
+	}
+
 	.layout-builder-resize-col-draggable {
 		@include transition(opacity 0.2s linear);
 	}

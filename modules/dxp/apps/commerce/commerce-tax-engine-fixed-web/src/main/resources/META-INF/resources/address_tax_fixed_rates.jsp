@@ -130,7 +130,7 @@ boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(perm
 				cssClass="table-cell-content"
 				name="zip"
 			>
-				<%= Validator.isBlank(commerceTaxFixedRateAddressRel.getZip()) ? StringPool.STAR : HtmlUtil.escape(commerceTaxFixedRateAddressRel.getZip()) %>
+				<%= Validator.isNull(commerceTaxFixedRateAddressRel.getZip()) ? StringPool.STAR : HtmlUtil.escape(commerceTaxFixedRateAddressRel.getZip()) %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text

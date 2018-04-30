@@ -12,5 +12,5 @@
 	"targets": [
 		"REVENUE"
 	],
-	"timeZoneId": "+03:00"
+	"timeZoneOffset": "+03:00"
 }

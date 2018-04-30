@@ -49,7 +49,7 @@ public class AnonymizeApplicationUADEntitiesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long selectedUserId = getSelectedUserId(actionRequest);
+		User selectedUser = getSelectedUser(actionRequest);
 
 		String applicationName = ParamUtil.getString(
 			actionRequest, "applicationName");
@@ -58,10 +58,12 @@ public class AnonymizeApplicationUADEntitiesMVCActionCommand
 			_uadApplicationSummaryHelper.getApplicationUADAnonymizers(
 				applicationName);
 
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
+		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser(
+			selectedUser.getCompanyId());
 
 		for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
-			uadAnonymizer.autoAnonymizeAll(selectedUserId, anonymousUser);
+			uadAnonymizer.autoAnonymizeAll(
+				selectedUser.getUserId(), anonymousUser);
 		}
 	}
 

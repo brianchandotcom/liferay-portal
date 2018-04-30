@@ -14,68 +14,25 @@
 
 package com.liferay.user.associated.data.web.internal.user.action.contributor;
 
-import com.liferay.admin.kernel.util.Omniadmin;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
-import com.liferay.users.admin.user.action.contributor.BaseUserActionContributor;
 import com.liferay.users.admin.user.action.contributor.UserActionContributor;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
  */
 @Component(immediate = true, service = UserActionContributor.class)
 public class ErasePersonalDataUserActionContributor
-	extends BaseUserActionContributor {
+	extends BaseUADUserActionContributor {
 
 	@Override
-	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"delete-personal-data");
+	protected String getKey() {
+		return "delete-personal-data";
 	}
 
 	@Override
-	public String getURL(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		User user, User selectedUser) {
-
-		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			portletRequest, UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-			PortletRequest.RENDER_PHASE);
-
-		liferayPortletURL.setParameter(
-			"p_u_i_d", String.valueOf(selectedUser.getUserId()));
-		liferayPortletURL.setParameter(
-			"mvcRenderCommandName", "/view_uad_summary");
-
-		return liferayPortletURL.toString();
+	protected String getMVCRenderCommandName() {
+		return "/view_uad_summary";
 	}
-
-	@Override
-	public boolean isShow(
-		PortletRequest portletRequest, User user, User selectedUser) {
-
-		if (_omniadmin.isOmniadmin(selectedUser)) {
-			return false;
-		}
-
-		return _omniadmin.isOmniadmin(user);
-	}
-
-	@Reference
-	private Omniadmin _omniadmin;
-
-	@Reference
-	private Portal _portal;
 
 }

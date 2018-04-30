@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 
 import java.util.Locale;
 import java.util.Map;
@@ -52,7 +52,7 @@ public class ForgetPersonalSiteMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		User selectedUser = _portal.getSelectedUser(actionRequest);
+		User selectedUser = _selectedUserHelper.getSelectedUser(actionRequest);
 
 		if (selectedUser.isDefaultUser()) {
 			throw new RequiredUserException();
@@ -72,6 +72,6 @@ public class ForgetPersonalSiteMVCActionCommand
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private Portal _portal;
+	private SelectedUserHelper _selectedUserHelper;
 
 }

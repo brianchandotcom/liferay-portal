@@ -186,7 +186,7 @@ public class UADApplicationSummaryHelper {
 		baseURL.setParameter("orderByCol", getOrderByCol(renderRequest));
 		baseURL.setParameter("orderByType", getOrderByType(renderRequest));
 
-		User user = _portal.getSelectedUser(renderRequest);
+		User user = _selectedUserHelper.getSelectedUser(renderRequest);
 
 		long userId = user.getUserId();
 
@@ -403,6 +403,9 @@ public class UADApplicationSummaryHelper {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SelectedUserHelper _selectedUserHelper;
 
 	@Reference
 	private UADRegistry _uadRegistry;

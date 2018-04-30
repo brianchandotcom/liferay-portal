@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.File;
+import java.io.IOException;
 
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.nio.file.Files;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -36,99 +38,63 @@ public class AutoDeleteFileInputStreamTest {
 	public static final CodeCoverageAssertor codeCoverageAssertor =
 		CodeCoverageAssertor.INSTANCE;
 
+	@Before
+	public void setUp() throws IOException {
+		Files.deleteIfExists(_tempFile.toPath());
+
+		Assert.assertTrue(_tempFile.createNewFile());
+	}
+
+	@After
+	public void tearDown() throws IOException {
+		Files.deleteIfExists(_tempFile.toPath());
+	}
+
 	@Test
-	public void testAutoRemoveFileInputStream() throws Exception {
+	public void testCloseWithFileChannel() throws IOException {
+		try (AutoDeleteFileInputStream autoRemoveFileInputStream =
+				new AutoDeleteFileInputStream(_tempFile)) {
 
-		// Normal close
+			Assert.assertNotNull(autoRemoveFileInputStream.getChannel());
 
-		File tempFile = new File("tempFile");
-
-		Assert.assertTrue(tempFile.createNewFile());
-
-		AutoDeleteFileInputStream autoRemoveFileInputStream =
-			new AutoDeleteFileInputStream(tempFile);
-
-		final AtomicInteger checkDeleteCount = new AtomicInteger();
-
-		SwappableSecurityManager swappableSecurityManager =
-			new SwappableSecurityManager() {
-
-				@Override
-				public void checkDelete(String file) {
-					if (file.contains("tempFile")) {
-						checkDeleteCount.getAndIncrement();
-					}
-				}
-
-			};
-
-		try (SwappableSecurityManager autoCloseSwappableSecurityManager =
-				swappableSecurityManager) {
-
-			autoCloseSwappableSecurityManager.install();
-
-			autoRemoveFileInputStream.close();
+			Assert.assertTrue(_tempFile.exists());
 		}
 
-		Assert.assertFalse(tempFile.exists());
-		Assert.assertEquals(1, checkDeleteCount.get());
+		Assert.assertFalse(_tempFile.exists());
+	}
 
-		// File already not exist on close
+	@Test
+	public void testFileNotExistOnClose() throws IOException {
+		try (AutoDeleteFileInputStream autoRemoveFileInputStream =
+				new AutoDeleteFileInputStream(_tempFile)) {
 
-		checkDeleteCount.set(0);
-
-		Assert.assertTrue(tempFile.createNewFile());
-
-		autoRemoveFileInputStream = new AutoDeleteFileInputStream(tempFile);
-
-		Assert.assertTrue(tempFile.delete());
-
-		try (SwappableSecurityManager autoCloseSwappableSecurityManager =
-				swappableSecurityManager) {
-
-			autoCloseSwappableSecurityManager.install();
-
-			autoRemoveFileInputStream.close();
+			ReflectionTestUtil.setFieldValue(
+				autoRemoveFileInputStream, "_file", new File("NotExist"));
 		}
 
-		Assert.assertFalse(tempFile.exists());
-		Assert.assertEquals(0, checkDeleteCount.get());
+		Assert.assertTrue(_tempFile.exists());
+	}
 
-		Set<String> files = ReflectionTestUtil.getFieldValue(
-			Class.forName("java.io.DeleteOnExitHook"), "files");
+	@Test
+	public void testNormalClose() throws IOException {
+		try (AutoDeleteFileInputStream autoRemoveFileInputStream =
+				new AutoDeleteFileInputStream(_tempFile)) {
 
-		Assert.assertFalse(files.toString(), files.contains(tempFile));
+			Assert.assertTrue(_tempFile.exists());
+		}
 
-		// Unable to delete on close
+		Assert.assertFalse(_tempFile.exists());
+	}
 
-		checkDeleteCount.set(0);
-
-		Assert.assertTrue(tempFile.createNewFile());
-
-		autoRemoveFileInputStream = new AutoDeleteFileInputStream(tempFile);
-
-		String path = ReflectionTestUtil.getFieldValue(tempFile, "path");
-
+	@Test
+	public void testUnableToDeleteOnClose() throws IOException {
 		try (SwappableSecurityManager autoCloseSwappableSecurityManager =
 				new SwappableSecurityManager() {
 
 					@Override
 					public void checkDelete(String file) {
-						if (file.contains("tempFile")) {
-							ReflectionTestUtil.setFieldValue(
-								tempFile, "path", "\u0000");
-
-							ReflectionTestUtil.setFieldValue(
-								tempFile, "status", null);
-
-							checkDeleteCount.getAndIncrement();
-						}
-						else if (file.equals("\u0000")) {
-							ReflectionTestUtil.setFieldValue(
-								tempFile, "path", path);
-
-							ReflectionTestUtil.setFieldValue(
-								tempFile, "status", null);
+						if (file.equals(_tempFile.getPath())) {
+							throw new SecurityException("Unable to delete");
 						}
 					}
 
@@ -136,32 +102,21 @@ public class AutoDeleteFileInputStreamTest {
 
 			autoCloseSwappableSecurityManager.install();
 
-			autoRemoveFileInputStream.close();
+			try (AutoDeleteFileInputStream autoRemoveFileInputStream =
+					new AutoDeleteFileInputStream(_tempFile)) {
+
+				Assert.assertTrue(_tempFile.exists());
+			}
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+			Assert.assertEquals("Unable to delete", se.getMessage());
 		}
 
-		Assert.assertTrue(tempFile.delete());
-		Assert.assertEquals(1, checkDeleteCount.get());
-		Assert.assertTrue(files.toString(), files.contains(tempFile.getPath()));
-
-		// Close with FileChannel
-
-		Assert.assertTrue(tempFile.createNewFile());
-
-		autoRemoveFileInputStream = new AutoDeleteFileInputStream(tempFile);
-
-		Assert.assertNotNull(autoRemoveFileInputStream.getChannel());
-
-		try (SwappableSecurityManager autoCloseSwappableSecurityManager =
-				swappableSecurityManager) {
-
-			autoCloseSwappableSecurityManager.install();
-
-			autoRemoveFileInputStream.close();
-		}
-
-		Assert.assertFalse(tempFile.exists());
-		Assert.assertEquals(2, checkDeleteCount.get());
-		Assert.assertFalse(files.toString(), files.contains(tempFile));
+		Assert.assertTrue(_tempFile.exists());
 	}
+
+	private final File _tempFile = new File("tempFile");
 
 }

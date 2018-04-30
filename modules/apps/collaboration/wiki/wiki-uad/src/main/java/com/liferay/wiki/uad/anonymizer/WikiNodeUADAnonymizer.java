@@ -14,66 +14,18 @@
 
 package com.liferay.wiki.uad.anonymizer;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-
-import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-
-import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-@Component(immediate = true, property =  {
-	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADAnonymizer.class)
-public class WikiNodeUADAnonymizer extends DynamicQueryUADAnonymizer<WikiNode> {
-	@Override
-	public void autoAnonymize(WikiNode wikiNode, long userId, User anonymousUser)
-		throws PortalException {
-		if (wikiNode.getUserId() == userId) {
-			wikiNode.setUserId(anonymousUser.getUserId());
-			wikiNode.setUserName(anonymousUser.getFullName());
-		}
-
-		if (wikiNode.getStatusByUserId() == userId) {
-			wikiNode.setStatusByUserId(anonymousUser.getUserId());
-			wikiNode.setStatusByUserName(anonymousUser.getFullName());
-		}
-
-		_wikiNodeLocalService.updateWikiNode(wikiNode);
-	}
-
-	@Override
-	public void delete(WikiNode wikiNode) throws PortalException {
-		_wikiNodeLocalService.deleteNode(wikiNode);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("name", "description");
-	}
-
-	@Override
-	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return _wikiNodeLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	protected String[] doGetUserIdFieldNames() {
-		return WikiUADConstants.USER_ID_FIELD_NAMES_WIKI_NODE;
-	}
-
-	@Reference
-	private WikiNodeLocalService _wikiNodeLocalService;
+@Component(
+	immediate = true,
+	property = "model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE,
+	service = UADAnonymizer.class
+)
+public class WikiNodeUADAnonymizer extends BaseWikiNodeUADAnonymizer {
 }

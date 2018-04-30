@@ -48,8 +48,7 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 %>
 
 <liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	name="price"
+	title="price"
 	value="<%= cpInstanceDisplayContext.formatPrice(scopeGroupId, cpInstance.getPrice()) %>"
 />
 

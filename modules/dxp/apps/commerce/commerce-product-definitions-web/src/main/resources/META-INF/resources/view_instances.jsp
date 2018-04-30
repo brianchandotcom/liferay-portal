@@ -147,25 +147,21 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							%>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								property="sku"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
 								name="product"
 								value="<%= cpDefinition.getTitle(languageId) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
-								name="price"
+								title="price"
 								value="<%= cpInstanceDisplayContext.formatPrice(scopeGroupId, cpInstance.getPrice()) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
 								name="options"
 								value="<%= HtmlUtil.escape(cpInstanceDisplayContext.getOptions(cpInstance.getDDMContent(), locale)) %>"
 							/>

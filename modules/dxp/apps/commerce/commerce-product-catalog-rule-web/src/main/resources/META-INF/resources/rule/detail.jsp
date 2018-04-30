@@ -78,7 +78,7 @@ String type = BeanParamUtil.getString(cpRule, request, "type");
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= renderResponse.createRenderURL() %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

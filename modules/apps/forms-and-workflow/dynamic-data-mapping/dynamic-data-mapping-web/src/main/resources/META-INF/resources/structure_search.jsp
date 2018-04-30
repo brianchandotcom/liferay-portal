@@ -21,14 +21,13 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 %>
 
 <liferay-ui:search-toggle
-	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_ddm_structure_search"
 	markupView="lexicon"
 >
 	<aui:fieldset cssClass="lfr-ddm-search-form">
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" name="<%= StructureDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+		<aui:input inlineField="<%= true %>" name="<%= StructureDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
 		<aui:input inlineField="<%= true %>" name="<%= StructureDisplayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
 

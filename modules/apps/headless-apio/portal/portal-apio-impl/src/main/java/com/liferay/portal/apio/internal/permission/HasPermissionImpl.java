@@ -54,12 +54,12 @@ public class HasPermissionImpl implements HasPermission {
 		Class<?> clazz) {
 
 		return (credentials, groupId) -> {
-			Try<String> stringTry = Try.success(clazz.getName());
-
 			Try<PermissionChecker> permissionCheckerTry =
 				getPermissionCheckerTry(credentials);
 
-			return stringTry.map(
+			return Try.success(
+				clazz.getName()
+			).map(
 				_portletResourcePermissions::getService
 			).flatMap(
 				portletResourcePermission -> permissionCheckerTry.map(
@@ -75,12 +75,12 @@ public class HasPermissionImpl implements HasPermission {
 	public Boolean forAddingRootJournalArticle(
 		Credentials credentials, Long groupId) {
 
-		Try<String> stringTry = Try.success(JournalFolder.class.getName());
-
 		Try<PermissionChecker> permissionCheckerTry = getPermissionCheckerTry(
 			credentials);
 
-		return stringTry.map(
+		return Try.success(
+			JournalFolder.class.getName()
+		).map(
 			_modelResourcePermissions::getService
 		).flatMap(
 			modelResourcePermission -> permissionCheckerTry.map(
@@ -109,12 +109,12 @@ public class HasPermissionImpl implements HasPermission {
 		Class<? extends ClassedModel> clazz) {
 
 		return (credentials, identifier) -> {
-			Try<String> stringTry = Try.success(clazz.getName());
-
 			Try<PermissionChecker> permissionCheckerTry =
 				getPermissionCheckerTry(credentials);
 
-			return stringTry.map(
+			return Try.success(
+				clazz.getName()
+			).map(
 				_modelResourcePermissions::getService
 			).flatMap(
 				modelResourcePermission -> permissionCheckerTry.map(
@@ -144,12 +144,12 @@ public class HasPermissionImpl implements HasPermission {
 		Class<? extends ClassedModel> clazz) {
 
 		return (credentials, identifier) -> {
-			Try<String> stringTry = Try.success(clazz.getName());
-
 			Try<PermissionChecker> permissionCheckerTry =
 				getPermissionCheckerTry(credentials);
 
-			return stringTry.map(
+			return Try.success(
+				clazz.getName()
+			).map(
 				_modelResourcePermissions::getService
 			).flatMap(
 				modelResourcePermission -> permissionCheckerTry.map(
@@ -165,9 +165,9 @@ public class HasPermissionImpl implements HasPermission {
 	public Try<PermissionChecker> getPermissionCheckerTry(
 		Credentials credentials) {
 
-		Try<String> stringTry = Try.success(credentials.get());
-
-		return stringTry.map(
+		return Try.success(
+			credentials.get()
+		).map(
 			Long::valueOf
 		).map(
 			_userService::getUserById

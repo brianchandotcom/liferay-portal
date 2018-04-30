@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -67,10 +68,10 @@ public class AnnouncementsEntryFinderImpl
 
 	@Override
 	public int countByScope(
-		long userId, long classNameId, long[] classPKs, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		long companyId, long userId, long classNameId, long[] classPKs,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue) {
 
 		Session session = null;
@@ -98,6 +99,8 @@ public class AnnouncementsEntryFinderImpl
 				qPos.add(userId);
 				qPos.add(AnnouncementsFlagConstants.HIDDEN);
 			}
+
+			qPos.add(companyId);
 
 			setClassPKs(qPos, classNameId, classPKs);
 
@@ -134,12 +137,55 @@ public class AnnouncementsEntryFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #countByScope(
+	 *             long, long, long, long[], int, int, int, int, int, int, int,
+	 *             int, int, int, boolean, int)}
+	 */
+	@Deprecated
+	@Override
+	public int countByScope(
+		long userId, long classNameId, long[] classPKs, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue) {
+
+		return countByScope(
+			CompanyThreadLocal.getCompanyId(), userId, classNameId, classPKs,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, alert,
+			flagValue);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #countByScopes(long, long,
+	 *             LinkedHashMap, int, int, int, int, int, int, int, int, int,
+	 *             int, boolean, int)}
+	 */
+	@Deprecated
 	@Override
 	public int countByScopes(
 		long userId, LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue) {
+
+		return countByScopes(
+			CompanyThreadLocal.getCompanyId(), userId, scopes, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, alert, flagValue);
+	}
+
+	@Override
+	public int countByScopes(
+		long companyId, long userId, LinkedHashMap<Long, long[]> scopes,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue) {
 
 		Session session = null;
@@ -166,6 +212,8 @@ public class AnnouncementsEntryFinderImpl
 				qPos.add(userId);
 				qPos.add(AnnouncementsFlagConstants.HIDDEN);
 			}
+
+			qPos.add(companyId);
 
 			setClassPKs(qPos, scopes);
 
@@ -237,10 +285,10 @@ public class AnnouncementsEntryFinderImpl
 
 	@Override
 	public List<AnnouncementsEntry> findByScope(
-		long userId, long classNameId, long[] classPKs, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		long companyId, long userId, long classNameId, long[] classPKs,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end) {
 
@@ -272,6 +320,8 @@ public class AnnouncementsEntryFinderImpl
 				qPos.add(AnnouncementsFlagConstants.HIDDEN);
 			}
 
+			qPos.add(companyId);
+
 			setDates(
 				qPos, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
@@ -296,12 +346,58 @@ public class AnnouncementsEntryFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #findByScope(long, long,
+	 *             long, long[], int, int, int, int, int, int, int, int, int,
+	 *             int, boolean, int, int, int)}
+	 */
+	@Deprecated
+	@Override
+	public List<AnnouncementsEntry> findByScope(
+		long userId, long classNameId, long[] classPKs, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end) {
+
+		return findByScope(
+			CompanyThreadLocal.getCompanyId(), userId, classNameId, classPKs,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, alert,
+			flagValue, start, end);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #findByScopes(long, long,
+	 *             LinkedHashMap, int, int, int, int, int, int, int, int, int,
+	 *             int, boolean, int, int, int)}
+	 */
+	@Deprecated
 	@Override
 	public List<AnnouncementsEntry> findByScopes(
 		long userId, LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
 		int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean alert, int flagValue, int start,
+		int end) {
+
+		return findByScopes(
+			CompanyThreadLocal.getCompanyId(), userId, scopes, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, alert, flagValue, start,
+			end);
+	}
+
+	@Override
+	public List<AnnouncementsEntry> findByScopes(
+		long companyId, long userId, LinkedHashMap<Long, long[]> scopes,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end) {
 
@@ -329,6 +425,8 @@ public class AnnouncementsEntryFinderImpl
 				qPos.add(userId);
 				qPos.add(AnnouncementsFlagConstants.HIDDEN);
 			}
+
+			qPos.add(companyId);
 
 			setClassPKs(qPos, scopes);
 

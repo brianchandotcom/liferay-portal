@@ -131,6 +131,13 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteEntries(long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_announcementsEntryLocalService.deleteEntries(companyId, classNameId,
+			classPK);
+	}
+
+	@Override
 	public void deleteEntry(
 		com.liferay.announcements.kernel.model.AnnouncementsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -345,11 +352,24 @@ public class AnnouncementsEntryLocalServiceWrapper
 			alert, flagValue, start, end);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
+	boolean, int, int)}
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
 		long classNameId, long classPK, boolean alert, int start, int end) {
 		return _announcementsEntryLocalService.getEntries(classNameId, classPK,
 			alert, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end) {
+		return _announcementsEntryLocalService.getEntries(companyId,
+			classNameId, classPK, alert, start, end);
 	}
 
 	@Override
@@ -389,10 +409,22 @@ public class AnnouncementsEntryLocalServiceWrapper
 			alert, flagValue);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, boolean)}
+	*/
+	@Deprecated
 	@Override
 	public int getEntriesCount(long classNameId, long classPK, boolean alert) {
 		return _announcementsEntryLocalService.getEntriesCount(classNameId,
 			classPK, alert);
+	}
+
+	@Override
+	public int getEntriesCount(long companyId, long classNameId, long classPK,
+		boolean alert) {
+		return _announcementsEntryLocalService.getEntriesCount(companyId,
+			classNameId, classPK, alert);
 	}
 
 	@Override

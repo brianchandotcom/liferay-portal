@@ -78,7 +78,18 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="C_C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="C_C_A" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="alert" />
+		</finder>
+		<finder name="C_C_C_A" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="alert" />

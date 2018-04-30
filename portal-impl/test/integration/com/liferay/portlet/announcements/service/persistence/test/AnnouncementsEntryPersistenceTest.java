@@ -226,11 +226,28 @@ public class AnnouncementsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_C() throws Exception {
+		_persistence.countByC_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_C_C(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_C_A() throws Exception {
 		_persistence.countByC_C_A(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_C_A(0L, 0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByC_C_C_A() throws Exception {
+		_persistence.countByC_C_C_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByC_C_C_A(0L, 0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test

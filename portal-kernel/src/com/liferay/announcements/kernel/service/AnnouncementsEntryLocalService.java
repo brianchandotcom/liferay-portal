@@ -129,6 +129,9 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	public void deleteEntries(long classNameId, long classPK)
 		throws PortalException;
 
+	public void deleteEntries(long companyId, long classNameId, long classPK)
+		throws PortalException;
+
 	public void deleteEntry(AnnouncementsEntry entry) throws PortalException;
 
 	public void deleteEntry(long entryId) throws PortalException;
@@ -275,9 +278,18 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
+	boolean, int, int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long classNameId, long classPK,
 		boolean alert, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AnnouncementsEntry> getEntries(long companyId,
+		long classNameId, long classPK, boolean alert, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long userId, long classNameId,
@@ -298,8 +310,17 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
+	long, boolean)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long classNameId, long classPK, boolean alert);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getEntriesCount(long companyId, long classNameId, long classPK,
+		boolean alert);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long userId, long classNameId, long[] classPKs,

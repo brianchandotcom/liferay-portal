@@ -11,6 +11,7 @@
 				AnnouncementsFlag ON
 					AnnouncementsFlag.entryId = AnnouncementsEntry.entryId
 			WHERE
+				(AnnouncementsEntry.companyId = ?) AND
 				([$CLASS_PKS$]) AND
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
@@ -31,6 +32,7 @@
 					(AnnouncementsFlag.userId = ?) AND
 					(AnnouncementsFlag.value = ?)
 			WHERE
+				(AnnouncementsEntry.companyId = ?) AND
 				([$CLASS_PKS$]) AND
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
@@ -59,6 +61,7 @@
 				AnnouncementsFlag ON
 					AnnouncementsFlag.entryId = AnnouncementsEntry.entryId
 			WHERE
+				(AnnouncementsEntry.companyId = ?) AND
 				([$CLASS_PKS$]) AND
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND
@@ -82,6 +85,7 @@
 					(AnnouncementsFlag.userId = ?) AND
 					(AnnouncementsFlag.value = ?)
 			WHERE
+				(AnnouncementsEntry.companyId = ?) AND
 				([$CLASS_PKS$]) AND
 				(AnnouncementsEntry.displayDate <= ? [$AND_OR_NULL_CHECK$]) AND
 				(AnnouncementsEntry.expirationDate >= ? [$AND_OR_NULL_CHECK$]) AND

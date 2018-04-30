@@ -3874,6 +3874,999 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "announcementsEntry.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "announcementsEntry.classPK = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_C = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			AnnouncementsEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.CLASSPK_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.PRIORITY_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			});
+
+	/**
+	 * Returns all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching announcements entries
+	 */
+	@Override
+	public List<AnnouncementsEntry> findByC_C_C(long companyId,
+		long classNameId, long classPK) {
+		return findByC_C_C(companyId, classNameId, classPK, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @return the range of matching announcements entries
+	 */
+	@Override
+	public List<AnnouncementsEntry> findByC_C_C(long companyId,
+		long classNameId, long classPK, int start, int end) {
+		return findByC_C_C(companyId, classNameId, classPK, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching announcements entries
+	 */
+	@Override
+	public List<AnnouncementsEntry> findByC_C_C(long companyId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+		return findByC_C_C(companyId, classNameId, classPK, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching announcements entries
+	 */
+	@Override
+	public List<AnnouncementsEntry> findByC_C_C(long companyId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C;
+			finderArgs = new Object[] { companyId, classNameId, classPK };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_C;
+			finderArgs = new Object[] {
+					companyId, classNameId, classPK,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<AnnouncementsEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AnnouncementsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AnnouncementsEntry announcementsEntry : list) {
+					if ((companyId != announcementsEntry.getCompanyId()) ||
+							(classNameId != announcementsEntry.getClassNameId()) ||
+							(classPK != announcementsEntry.getClassPK())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				if (!pagination) {
+					list = (List<AnnouncementsEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AnnouncementsEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching announcements entry
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
+	 */
+	@Override
+	public AnnouncementsEntry findByC_C_C_First(long companyId,
+		long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AnnouncementsEntry announcementsEntry = fetchByC_C_C_First(companyId,
+				classNameId, classPK, orderByComparator);
+
+		if (announcementsEntry != null) {
+			return announcementsEntry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
+	 */
+	@Override
+	public AnnouncementsEntry fetchByC_C_C_First(long companyId,
+		long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+		List<AnnouncementsEntry> list = findByC_C_C(companyId, classNameId,
+				classPK, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching announcements entry
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
+	 */
+	@Override
+	public AnnouncementsEntry findByC_C_C_Last(long companyId,
+		long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AnnouncementsEntry announcementsEntry = fetchByC_C_C_Last(companyId,
+				classNameId, classPK, orderByComparator);
+
+		if (announcementsEntry != null) {
+			return announcementsEntry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
+	 */
+	@Override
+	public AnnouncementsEntry fetchByC_C_C_Last(long companyId,
+		long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+		int count = countByC_C_C(companyId, classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AnnouncementsEntry> list = findByC_C_C(companyId, classNameId,
+				classPK, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the announcements entries before and after the current announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param entryId the primary key of the current announcements entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next announcements entry
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
+	 */
+	@Override
+	public AnnouncementsEntry[] findByC_C_C_PrevAndNext(long entryId,
+		long companyId, long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AnnouncementsEntry[] array = new AnnouncementsEntryImpl[3];
+
+			array[0] = getByC_C_C_PrevAndNext(session, announcementsEntry,
+					companyId, classNameId, classPK, orderByComparator, true);
+
+			array[1] = announcementsEntry;
+
+			array[2] = getByC_C_C_PrevAndNext(session, announcementsEntry,
+					companyId, classNameId, classPK, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AnnouncementsEntry getByC_C_C_PrevAndNext(Session session,
+		AnnouncementsEntry announcementsEntry, long companyId,
+		long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AnnouncementsEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(announcementsEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AnnouncementsEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching announcements entries that the user has permission to view
+	 */
+	@Override
+	public List<AnnouncementsEntry> filterFindByC_C_C(long companyId,
+		long classNameId, long classPK) {
+		return filterFindByC_C_C(companyId, classNameId, classPK,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @return the range of matching announcements entries that the user has permission to view
+	 */
+	@Override
+	public List<AnnouncementsEntry> filterFindByC_C_C(long companyId,
+		long classNameId, long classPK, int start, int end) {
+		return filterFindByC_C_C(companyId, classNameId, classPK, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the announcements entries that the user has permissions to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching announcements entries that the user has permission to view
+	 */
+	@Override
+	public List<AnnouncementsEntry> filterFindByC_C_C(long companyId,
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_C_C(companyId, classNameId, classPK, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AnnouncementsEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, AnnouncementsEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, AnnouncementsEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			return (List<AnnouncementsEntry>)QueryUtil.list(q, getDialect(),
+				start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param entryId the primary key of the current announcements entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next announcements entry
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
+	 */
+	@Override
+	public AnnouncementsEntry[] filterFindByC_C_C_PrevAndNext(long entryId,
+		long companyId, long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_C_C_PrevAndNext(entryId, companyId, classNameId,
+				classPK, orderByComparator);
+		}
+
+		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AnnouncementsEntry[] array = new AnnouncementsEntryImpl[3];
+
+			array[0] = filterGetByC_C_C_PrevAndNext(session,
+					announcementsEntry, companyId, classNameId, classPK,
+					orderByComparator, true);
+
+			array[1] = announcementsEntry;
+
+			array[2] = filterGetByC_C_C_PrevAndNext(session,
+					announcementsEntry, companyId, classNameId, classPK,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AnnouncementsEntry filterGetByC_C_C_PrevAndNext(Session session,
+		AnnouncementsEntry announcementsEntry, long companyId,
+		long classNameId, long classPK,
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AnnouncementsEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, AnnouncementsEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, AnnouncementsEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(announcementsEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AnnouncementsEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 */
+	@Override
+	public void removeByC_C_C(long companyId, long classNameId, long classPK) {
+		for (AnnouncementsEntry announcementsEntry : findByC_C_C(companyId,
+				classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(announcementsEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching announcements entries
+	 */
+	@Override
+	public int countByC_C_C(long companyId, long classNameId, long classPK) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_C;
+
+		Object[] finderArgs = new Object[] { companyId, classNameId, classPK };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching announcements entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_C_C(long companyId, long classNameId, long classPK) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_C_C(companyId, classNameId, classPK);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AnnouncementsEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_C_C_COMPANYID_2 = "announcementsEntry.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 = "announcementsEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_2 = "announcementsEntry.classPK = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_A = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,
 			AnnouncementsEntryImpl.class,
@@ -4864,6 +5857,1061 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	private static final String _FINDER_COLUMN_C_C_A_CLASSNAMEID_2 = "announcementsEntry.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_A_CLASSPK_2 = "announcementsEntry.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_A_ALERT_2 = "announcementsEntry.alert = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_C_A = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_A",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_A =
+		new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED,
+			AnnouncementsEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_A",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			},
+			AnnouncementsEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.CLASSPK_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.ALERT_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.PRIORITY_COLUMN_BITMASK |
+			AnnouncementsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_C_C_A = new FinderPath(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AnnouncementsEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_A",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			});
+
+	/**
+	 * Returns all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @return the matching announcements entries
+	 */
+	@Override
+	public List<AnnouncementsEntry> findByC_C_C_A(long companyId,
+		long classNameId, long classPK, boolean alert) {
+		return findByC_C_C_A(companyId, classNameId, classPK, alert,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @return the range of matching announcements entries
+	 */
+	@Override
+	public List<AnnouncementsEntry> findByC_C_C_A(long companyId,
+		long classNameId, long classPK, boolean alert, int start, int end) {
+		return findByC_C_C_A(companyId, classNameId, classPK, alert, start,
+			end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching announcements entries
+	 */
+	@Override
+	public List<AnnouncementsEntry> findByC_C_C_A(long companyId,
+		long classNameId, long classPK, boolean alert, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+		return findByC_C_C_A(companyId, classNameId, classPK, alert, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching announcements entries
+	 */
+	@Override
+	public List<AnnouncementsEntry> findByC_C_C_A(long companyId,
+		long classNameId, long classPK, boolean alert, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_A;
+			finderArgs = new Object[] { companyId, classNameId, classPK, alert };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_C_A;
+			finderArgs = new Object[] {
+					companyId, classNameId, classPK, alert,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<AnnouncementsEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AnnouncementsEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AnnouncementsEntry announcementsEntry : list) {
+					if ((companyId != announcementsEntry.getCompanyId()) ||
+							(classNameId != announcementsEntry.getClassNameId()) ||
+							(classPK != announcementsEntry.getClassPK()) ||
+							(alert != announcementsEntry.isAlert())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_A_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_A_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_A_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_A_ALERT_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(alert);
+
+				if (!pagination) {
+					list = (List<AnnouncementsEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AnnouncementsEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching announcements entry
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
+	 */
+	@Override
+	public AnnouncementsEntry findByC_C_C_A_First(long companyId,
+		long classNameId, long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AnnouncementsEntry announcementsEntry = fetchByC_C_C_A_First(companyId,
+				classNameId, classPK, alert, orderByComparator);
+
+		if (announcementsEntry != null) {
+			return announcementsEntry;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(", alert=");
+		msg.append(alert);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
+	 */
+	@Override
+	public AnnouncementsEntry fetchByC_C_C_A_First(long companyId,
+		long classNameId, long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+		List<AnnouncementsEntry> list = findByC_C_C_A(companyId, classNameId,
+				classPK, alert, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching announcements entry
+	 * @throws NoSuchEntryException if a matching announcements entry could not be found
+	 */
+	@Override
+	public AnnouncementsEntry findByC_C_C_A_Last(long companyId,
+		long classNameId, long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AnnouncementsEntry announcementsEntry = fetchByC_C_C_A_Last(companyId,
+				classNameId, classPK, alert, orderByComparator);
+
+		if (announcementsEntry != null) {
+			return announcementsEntry;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classPK=");
+		msg.append(classPK);
+
+		msg.append(", alert=");
+		msg.append(alert);
+
+		msg.append("}");
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
+	 */
+	@Override
+	public AnnouncementsEntry fetchByC_C_C_A_Last(long companyId,
+		long classNameId, long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+		int count = countByC_C_C_A(companyId, classNameId, classPK, alert);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AnnouncementsEntry> list = findByC_C_C_A(companyId, classNameId,
+				classPK, alert, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the announcements entries before and after the current announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param entryId the primary key of the current announcements entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next announcements entry
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
+	 */
+	@Override
+	public AnnouncementsEntry[] findByC_C_C_A_PrevAndNext(long entryId,
+		long companyId, long classNameId, long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AnnouncementsEntry[] array = new AnnouncementsEntryImpl[3];
+
+			array[0] = getByC_C_C_A_PrevAndNext(session, announcementsEntry,
+					companyId, classNameId, classPK, alert, orderByComparator,
+					true);
+
+			array[1] = announcementsEntry;
+
+			array[2] = getByC_C_C_A_PrevAndNext(session, announcementsEntry,
+					companyId, classNameId, classPK, alert, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AnnouncementsEntry getByC_C_C_A_PrevAndNext(Session session,
+		AnnouncementsEntry announcementsEntry, long companyId,
+		long classNameId, long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		query.append(_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_CLASSPK_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_ALERT_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AnnouncementsEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		qPos.add(alert);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(announcementsEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AnnouncementsEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @return the matching announcements entries that the user has permission to view
+	 */
+	@Override
+	public List<AnnouncementsEntry> filterFindByC_C_C_A(long companyId,
+		long classNameId, long classPK, boolean alert) {
+		return filterFindByC_C_C_A(companyId, classNameId, classPK, alert,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @return the range of matching announcements entries that the user has permission to view
+	 */
+	@Override
+	public List<AnnouncementsEntry> filterFindByC_C_C_A(long companyId,
+		long classNameId, long classPK, boolean alert, int start, int end) {
+		return filterFindByC_C_C_A(companyId, classNameId, classPK, alert,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the announcements entries that the user has permissions to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param start the lower bound of the range of announcements entries
+	 * @param end the upper bound of the range of announcements entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching announcements entries that the user has permission to view
+	 */
+	@Override
+	public List<AnnouncementsEntry> filterFindByC_C_C_A(long companyId,
+		long classNameId, long classPK, boolean alert, int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_C_C_A(companyId, classNameId, classPK, alert, start,
+				end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_C_C_C_A_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_CLASSPK_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_ALERT_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AnnouncementsEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, AnnouncementsEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, AnnouncementsEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			qPos.add(alert);
+
+			return (List<AnnouncementsEntry>)QueryUtil.list(q, getDialect(),
+				start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param entryId the primary key of the current announcements entry
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next announcements entry
+	 * @throws NoSuchEntryException if a announcements entry with the primary key could not be found
+	 */
+	@Override
+	public AnnouncementsEntry[] filterFindByC_C_C_A_PrevAndNext(long entryId,
+		long companyId, long classNameId, long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator)
+		throws NoSuchEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_C_C_A_PrevAndNext(entryId, companyId, classNameId,
+				classPK, alert, orderByComparator);
+		}
+
+		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AnnouncementsEntry[] array = new AnnouncementsEntryImpl[3];
+
+			array[0] = filterGetByC_C_C_A_PrevAndNext(session,
+					announcementsEntry, companyId, classNameId, classPK, alert,
+					orderByComparator, true);
+
+			array[1] = announcementsEntry;
+
+			array[2] = filterGetByC_C_C_A_PrevAndNext(session,
+					announcementsEntry, companyId, classNameId, classPK, alert,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AnnouncementsEntry filterGetByC_C_C_A_PrevAndNext(
+		Session session, AnnouncementsEntry announcementsEntry, long companyId,
+		long classNameId, long classPK, boolean alert,
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_C_C_C_A_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_CLASSPK_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_ALERT_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_ANNOUNCEMENTSENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(AnnouncementsEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AnnouncementsEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, AnnouncementsEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, AnnouncementsEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classPK);
+
+		qPos.add(alert);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(announcementsEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AnnouncementsEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 */
+	@Override
+	public void removeByC_C_C_A(long companyId, long classNameId, long classPK,
+		boolean alert) {
+		for (AnnouncementsEntry announcementsEntry : findByC_C_C_A(companyId,
+				classNameId, classPK, alert, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(announcementsEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @return the number of matching announcements entries
+	 */
+	@Override
+	public int countByC_C_C_A(long companyId, long classNameId, long classPK,
+		boolean alert) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_C_A;
+
+		Object[] finderArgs = new Object[] {
+				companyId, classNameId, classPK, alert
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_C_A_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_A_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_A_CLASSPK_2);
+
+			query.append(_FINDER_COLUMN_C_C_C_A_ALERT_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classPK);
+
+				qPos.add(alert);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param alert the alert
+	 * @return the number of matching announcements entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_C_C_A(long companyId, long classNameId,
+		long classPK, boolean alert) {
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_C_C_A(companyId, classNameId, classPK, alert);
+		}
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_CLASSPK_2);
+
+		query.append(_FINDER_COLUMN_C_C_C_A_ALERT_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				AnnouncementsEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			qPos.add(alert);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_C_C_A_COMPANYID_2 = "announcementsEntry.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_C_A_CLASSNAMEID_2 = "announcementsEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_C_A_CLASSPK_2 = "announcementsEntry.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_C_A_ALERT_2 = "announcementsEntry.alert = ?";
 
 	public AnnouncementsEntryPersistenceImpl() {
 		setModelClass(AnnouncementsEntry.class);
@@ -5194,6 +7242,16 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 				args);
 
 			args = new Object[] {
+					announcementsEntryModelImpl.getCompanyId(),
+					announcementsEntryModelImpl.getClassNameId(),
+					announcementsEntryModelImpl.getClassPK()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C,
+				args);
+
+			args = new Object[] {
 					announcementsEntryModelImpl.getClassNameId(),
 					announcementsEntryModelImpl.getClassPK(),
 					announcementsEntryModelImpl.isAlert()
@@ -5201,6 +7259,17 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_A, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_A,
+				args);
+
+			args = new Object[] {
+					announcementsEntryModelImpl.getCompanyId(),
+					announcementsEntryModelImpl.getClassNameId(),
+					announcementsEntryModelImpl.getClassPK(),
+					announcementsEntryModelImpl.isAlert()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_A, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_A,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -5286,6 +7355,29 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 			}
 
 			if ((announcementsEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						announcementsEntryModelImpl.getOriginalCompanyId(),
+						announcementsEntryModelImpl.getOriginalClassNameId(),
+						announcementsEntryModelImpl.getOriginalClassPK()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C,
+					args);
+
+				args = new Object[] {
+						announcementsEntryModelImpl.getCompanyId(),
+						announcementsEntryModelImpl.getClassNameId(),
+						announcementsEntryModelImpl.getClassPK()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C,
+					args);
+			}
+
+			if ((announcementsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						announcementsEntryModelImpl.getOriginalClassNameId(),
@@ -5305,6 +7397,31 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_A, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_A,
+					args);
+			}
+
+			if ((announcementsEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						announcementsEntryModelImpl.getOriginalCompanyId(),
+						announcementsEntryModelImpl.getOriginalClassNameId(),
+						announcementsEntryModelImpl.getOriginalClassPK(),
+						announcementsEntryModelImpl.getOriginalAlert()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_A,
+					args);
+
+				args = new Object[] {
+						announcementsEntryModelImpl.getCompanyId(),
+						announcementsEntryModelImpl.getClassNameId(),
+						announcementsEntryModelImpl.getClassPK(),
+						announcementsEntryModelImpl.isAlert()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_C_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C_C_A,
 					args);
 			}
 		}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.configuration;
+package com.liferay.dynamic.data.mapping.form.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.dynamic.data.mapping.form.web.configuration.DDMFormWebConfiguration",
+	id = "com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration",
 	localization = "content/Language", name = "ddm-form-web-configuration-name"
 )
 public interface DDMFormWebConfiguration {

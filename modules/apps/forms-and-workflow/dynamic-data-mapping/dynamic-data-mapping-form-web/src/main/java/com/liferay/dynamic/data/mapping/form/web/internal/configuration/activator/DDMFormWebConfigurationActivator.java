@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.configuration;
+package com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator;
 
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
@@ -27,13 +28,13 @@ import org.osgi.service.component.annotations.Modified;
  * @author Leonardo Barros
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.mapping.form.web.configuration.DDMFormWebConfiguration",
+	configurationPid = "com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = DDMFormWebConfigurationActivator.class
 )
 public class DDMFormWebConfigurationActivator {
 
-	public DDMFormWebConfiguration getDDLFormWebConfiguration() {
+	public DDMFormWebConfiguration getDDMFormWebConfiguration() {
 		return _formWebConfiguration;
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.request.scope.checker.filter;
+package com.liferay.oauth2.provider.rest.internal.spi.request.scope.checker.filter;
 
 import static junit.framework.TestCase.assertTrue;
 
@@ -21,6 +21,7 @@ import com.liferay.oauth2.provider.rest.spi.request.scope.checker.filter.Request
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Request;
 
+import com.liferay.oauth2.provider.rest.spi.request.scope.checker.filter.TestScopeChecker;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

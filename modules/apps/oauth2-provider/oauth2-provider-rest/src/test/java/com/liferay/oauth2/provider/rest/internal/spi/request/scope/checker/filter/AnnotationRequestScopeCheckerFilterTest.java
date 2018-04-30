@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.request.scope.checker.filter;
+package com.liferay.oauth2.provider.rest.internal.spi.request.scope.checker.filter;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 import com.liferay.oauth2.provider.rest.spi.request.scope.checker.filter.RequestScopeCheckerFilter;
+import com.liferay.oauth2.provider.rest.spi.request.scope.checker.filter.TestScopeChecker;
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 

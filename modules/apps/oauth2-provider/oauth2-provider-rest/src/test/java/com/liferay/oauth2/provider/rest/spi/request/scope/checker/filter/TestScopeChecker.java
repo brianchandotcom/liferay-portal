@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.internal.request.scope.checker.filter;
+package com.liferay.oauth2.provider.rest.spi.request.scope.checker.filter;
 
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 

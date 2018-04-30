@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"commerce.discount.target.key=" + CommerceDiscountConstants.TARGET_TOTAL,
 		"commerce.discount.target.order:Integer=50"
-	},
-	service = CommerceDiscountTarget.class
+	}
 )
 public class ApplyToTotalCommerceDiscountTargetImpl
 	implements CommerceDiscountTarget {

@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -42,6 +45,7 @@ public class UpgradeMySQL extends UpgradeProcess {
 			(db.getDBType() == DBType.MYSQL)) {
 
 			upgradeDatetimePrecision();
+			upgradeTableEngine();
 		}
 	}
 
@@ -130,6 +134,46 @@ public class UpgradeMySQL extends UpgradeProcess {
 				}
 
 				statement.executeUpdate(sql);
+			}
+		}
+	}
+
+	protected void upgradeTableEngine() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("show table status")) {
+
+			while (rs.next()) {
+				String tableName = rs.getString("Name");
+
+				if (!isPortal62TableName(tableName)) {
+					continue;
+				}
+
+				String engine = GetterUtil.getString(rs.getString("Engine"));
+				String comment = GetterUtil.getString(rs.getString("Comment"));
+
+				if (StringUtil.equalsIgnoreCase(comment, "VIEW")) {
+					continue;
+				}
+
+				if (StringUtil.equalsIgnoreCase(
+						engine, PropsValues.DATABASE_MYSQL_ENGINE)) {
+
+					continue;
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						StringBundler.concat(
+							"Updating table ", tableName, " to use engine ",
+							PropsValues.DATABASE_MYSQL_ENGINE));
+				}
+
+				statement.executeUpdate(
+					StringBundler.concat(
+						"alter table ", tableName, " engine ",
+						PropsValues.DATABASE_MYSQL_ENGINE));
 			}
 		}
 	}

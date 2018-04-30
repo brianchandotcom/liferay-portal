@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.util.DDL;
-import com.liferay.dynamic.data.lists.web.internal.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.internal.configuration.activator.DDLWebConfigurationActivator;
 import com.liferay.dynamic.data.lists.web.internal.display.context.DDLDisplayContext;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
@@ -278,7 +277,6 @@ public class DDLPortlet extends MVCPortlet {
 	private DDLRecordService _ddlRecordService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordSetService _ddlRecordSetService;
-	private volatile DDLWebConfiguration _ddlWebConfiguration;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

@@ -23,13 +23,12 @@ import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.util.DDL;
-import com.liferay.dynamic.data.lists.web.internal.configuration.DDLWebConfiguration;
+import com.liferay.dynamic.data.lists.web.internal.configuration.activator.DDLWebConfigurationActivator;
 import com.liferay.dynamic.data.lists.web.internal.display.context.DDLDisplayContext;
 import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.log.Log;
@@ -44,8 +43,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Map;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -53,18 +50,17 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-lists-display",
@@ -108,7 +104,8 @@ public class DDLDisplayPortlet extends MVCPortlet {
 				renderRequest);
 
 			DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(
-				request, _ddl, _ddlRecordSetLocalService, _ddlWebConfiguration,
+				request, _ddl, _ddlRecordSetLocalService,
+				_ddlWebConfigurationActivator.getDDLWebConfiguration(),
 				_ddmDisplayRegistry, _ddmPermissionSupport,
 				_ddmTemplateLocalService, _storageEngine);
 
@@ -172,13 +169,6 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	public void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ddlWebConfiguration = ConfigurableUtil.createConfigurable(
-			DDLWebConfiguration.class, properties);
 	}
 
 	@Override
@@ -251,6 +241,12 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
+	protected void unsetDDLWebConfigurationActivator(
+		DDLWebConfigurationActivator ddlWebConfigurationActivator) {
+
+		_ddlWebConfigurationActivator = null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLDisplayPortlet.class);
 
@@ -258,7 +254,15 @@ public class DDLDisplayPortlet extends MVCPortlet {
 	private DDLRecordService _ddlRecordService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordSetService _ddlRecordSetService;
-	private volatile DDLWebConfiguration _ddlWebConfiguration;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "unsetDDLWebConfigurationActivator"
+	)
+	private volatile DDLWebConfigurationActivator _ddlWebConfigurationActivator;
+
 	private DDMDisplayRegistry _ddmDisplayRegistry;
 	private DDMPermissionSupport _ddmPermissionSupport;
 	private DDMTemplateLocalService _ddmTemplateLocalService;

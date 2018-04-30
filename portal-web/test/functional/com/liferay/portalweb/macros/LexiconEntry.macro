@@ -145,6 +145,12 @@
 		</execute>
 	</command>
 
+	<command name="viewActiveDisplayStyle">
+		<execute function="AssertElementPresent" locator1="Icon#CURRENT_DISPLAY_STYLE_ACTIVE">
+			<var name="key_displayStyle" value="${displayStyle}" />
+		</execute>
+	</command>
+
 	<command name="viewEntryName">
 		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME" value1="${rowEntry}">
 			<var name="key_rowEntry" value="${rowEntry}" />

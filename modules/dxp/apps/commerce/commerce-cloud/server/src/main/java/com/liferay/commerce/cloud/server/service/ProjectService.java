@@ -22,6 +22,8 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 
+import java.util.List;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -40,5 +42,8 @@ public interface ProjectService {
 
 	public void getProject(
 		String projectId, Handler<AsyncResult<Project>> handler);
+
+	public void getProjects(
+		boolean active, Handler<AsyncResult<List<Project>>> handler);
 
 }

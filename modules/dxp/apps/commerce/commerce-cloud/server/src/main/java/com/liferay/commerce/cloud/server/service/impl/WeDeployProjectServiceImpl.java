@@ -16,14 +16,18 @@ package com.liferay.commerce.cloud.server.service.impl;
 
 import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.service.ProjectService;
+import com.liferay.commerce.cloud.server.util.JsonUtil;
 import com.liferay.commerce.cloud.server.util.VertxUtil;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonArray;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.codec.BodyCodec;
 import io.vertx.ext.web.codec.impl.BodyCodecImpl;
+
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -70,7 +74,34 @@ public class WeDeployProjectServiceImpl
 				asyncResult, handler));
 	}
 
+	@Override
+	public void getProjects(
+		boolean active, Handler<AsyncResult<List<Project>>> handler) {
+
+		HttpRequest<List<Project>> httpRequest = webClient.get(
+			"/projects"
+		).as(
+			_listBodyCodec
+		);
+
+		addAuthorization(httpRequest);
+
+		JsonArray filterJsonArray = new JsonArray();
+
+		filterJsonArray.add(JsonUtil.getFilterJsonObject("active", active));
+
+		httpRequest.setQueryParam("filter", filterJsonArray.encode());
+
+		httpRequest.send(
+			asyncResult -> VertxUtil.handleServiceHttpResponse(
+				asyncResult, handler));
+	}
+
 	private static final BodyCodec<Project> _bodyCodec = BodyCodec.create(
 		BodyCodecImpl.JSON_OBJECT_DECODER.andThen(Project::new));
+	private static final BodyCodec<List<Project>> _listBodyCodec =
+		BodyCodec.create(
+			BodyCodecImpl.JSON_ARRAY_DECODER.andThen(
+				jsonArray -> JsonUtil.fromJsonArray(jsonArray, Project::new)));
 
 }

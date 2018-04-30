@@ -54,14 +54,14 @@ import com.liferay.portal.verify.model.GroupVerifiableModel;
 import com.liferay.portal.verify.model.JournalArticleResourceVerifiableModel;
 import com.liferay.portal.verify.model.LayoutPrototypeVerifiableModel;
 import com.liferay.portal.verify.model.LayoutSetPrototypeVerifiableModel;
-import com.liferay.portal.verify.model.MBBan62VerifiableModel;
-import com.liferay.portal.verify.model.MBDiscussion62VerifiableModel;
-import com.liferay.portal.verify.model.MBThread62VerifiableModel;
-import com.liferay.portal.verify.model.MBThreadFlag62VerifiableModel;
+import com.liferay.portal.verify.model.MBBanVerifiableUUIDModel;
+import com.liferay.portal.verify.model.MBDiscussionVerifiableUUIDModel;
+import com.liferay.portal.verify.model.MBThreadVerifiableUUIDModel;
+import com.liferay.portal.verify.model.MBThreadFlagVerifiableUUIDModel;
 import com.liferay.portal.verify.model.OrganizationVerifiableAuditedModel;
 import com.liferay.portal.verify.model.PasswordPolicyVerifiableModel;
 import com.liferay.portal.verify.model.PhoneVerifiableModel;
-import com.liferay.portal.verify.model.PollsVote62VerifiableModel;
+import com.liferay.portal.verify.model.PollsVoteVerifiableUUIDModel;
 import com.liferay.portal.verify.model.RoleVerifiableModel;
 import com.liferay.portal.verify.model.UserGroupVerifiableModel;
 import com.liferay.portal.verify.model.WebSiteVerifiableModel;
@@ -125,11 +125,11 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 				new JournalArticleResourceVerifiableModel(),
 				new LayoutPrototypeVerifiableModel(),
 				new LayoutSetPrototypeVerifiableModel(),
-				new MBBan62VerifiableModel(),
-				new MBDiscussion62VerifiableModel(),
-				new MBThreadFlag62VerifiableModel(),
-				new MBThread62VerifiableModel(),
-				new PollsVote62VerifiableModel(),
+				new MBBanVerifiableUUIDModel(),
+				new MBDiscussionVerifiableUUIDModel(),
+				new MBThreadFlagVerifiableUUIDModel(),
+				new MBThreadVerifiableUUIDModel(),
+				new PollsVoteVerifiableUUIDModel(),
 				new OrganizationVerifiableAuditedModel(),
 				new PasswordPolicyVerifiableModel(), new PhoneVerifiableModel(),
 				new RoleVerifiableModel(), new UserGroupVerifiableModel(),

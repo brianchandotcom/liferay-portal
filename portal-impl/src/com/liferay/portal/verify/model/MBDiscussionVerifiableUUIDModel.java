@@ -19,16 +19,16 @@ import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 /**
  * @author Miguel Pastor
  */
-public class PollsVote62VerifiableModel implements VerifiableUUIDModel {
+public class MBDiscussionVerifiableUUIDModel implements VerifiableUUIDModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "voteId";
+		return "discussionId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "PollsVote";
+		return "MBDiscussion";
 	}
 
 }

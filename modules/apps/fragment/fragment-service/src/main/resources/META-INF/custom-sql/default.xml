@@ -4,7 +4,7 @@
 	<sql id="com.liferay.fragment.service.persistence.FragmentEntryLinkFinder.countByG_F">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT FragmentEntryLink.fragmentEntryId) AS COUNT_VALUE
+				COUNT(DISTINCT FragmentEntryLink.classNameId, FragmentEntryLink.classPK) AS COUNT_VALUE
 			FROM
 				FragmentEntryLink
 			WHERE

@@ -1315,7 +1315,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String location = bundle.getLocation();
 
-			if (!location.contains("static=true")) {
+			if (!location.contains("protocol=jar&static=true")) {
 				continue;
 			}
 

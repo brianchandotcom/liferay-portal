@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.PreparedStatement;
@@ -55,24 +54,12 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 		List<Future<Void>> futures = executorService.invokeAll(
 			Arrays.asList(
-				this::rebuildTree, this::updateOrganizationAssets,
+				this::updateOrganizationAssets,
 				this::updateOrganizationAssetEntries));
 
 		executorService.shutdown();
 
 		UnsafeConsumer.accept(futures, Future::get, Exception.class);
-	}
-
-	protected Void rebuildTree() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-			for (long companyId : companyIds) {
-				_organizationLocalService.rebuildTree(companyId);
-			}
-		}
-
-		return null;
 	}
 
 	protected Void updateOrganizationAssetEntries() throws Exception {

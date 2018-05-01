@@ -4,7 +4,7 @@ targetCompatibility = "1.8"
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile project(":apps:forms-and-workflow:calendar:calendar-api")
+	testIntegrationCompile project(":apps:calendar:calendar-api")
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")

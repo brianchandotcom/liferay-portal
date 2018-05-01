@@ -3751,7 +3751,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder(4);
+		StringBuilder sb = new StringBuilder();
 
 		sb.append("modules/suites/");
 		sb.append(liferayRelengSuite);

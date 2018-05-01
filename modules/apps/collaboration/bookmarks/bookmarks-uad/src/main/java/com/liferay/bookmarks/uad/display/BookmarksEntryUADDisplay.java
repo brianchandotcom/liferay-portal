@@ -14,67 +14,18 @@
 
 package com.liferay.bookmarks.uad.display;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.display.UADDisplay;
 
-import java.util.Locale;
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author William Newbury
+ * @author Noah Sherrill
  */
 @Component(
 	immediate = true,
 	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
 	service = UADDisplay.class
 )
-public class BookmarksEntryUADDisplay implements UADDisplay<BookmarksEntry> {
-
-	public String getApplicationName() {
-		return BookmarksUADConstants.APPLICATION_NAME;
-	}
-
-	public String[] getDisplayFieldNames() {
-		return _bookmarksEntryUADDisplayHelper.getDisplayFieldNames();
-	}
-
-	public String getEditURL(
-			BookmarksEntry bookmarksEntry,
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
-		return _bookmarksEntryUADDisplayHelper.getBookmarksEntryEditURL(
-			bookmarksEntry, liferayPortletRequest, liferayPortletResponse);
-	}
-
-	public String getKey() {
-		return BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY;
-	}
-
-	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(
-		BookmarksEntry bookmarksEntry) {
-
-		return _bookmarksEntryUADDisplayHelper.getNonanonymizableFieldValues(
-			bookmarksEntry);
-	}
-
-	public String getTypeDescription() {
-		return "A link to another page or website";
-	}
-
-	public String getTypeName(Locale locale) {
-		return "BookmarksEntry";
-	}
-
-	@Reference
-	private BookmarksEntryUADDisplayHelper _bookmarksEntryUADDisplayHelper;
-
+public class BookmarksEntryUADDisplay extends BaseBookmarksEntryUADDisplay {
 }

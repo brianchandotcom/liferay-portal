@@ -21,24 +21,34 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.model.TrashEntryList;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.trash.service.TrashEntryServiceUtil;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
+import com.liferay.trash.web.internal.search.EntrySearch;
+import com.liferay.trash.web.internal.search.EntrySearchTerms;
 
 import java.util.List;
 import java.util.Objects;
@@ -57,10 +67,11 @@ import javax.servlet.http.HttpServletRequest;
 public class TrashDisplayContext {
 
 	public TrashDisplayContext(
-		HttpServletRequest request,
+		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		_request = request;
+		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 	}
 
@@ -177,6 +188,87 @@ public class TrashDisplayContext {
 		return _displayStyle;
 	}
 
+	public EntrySearch getEntrySearch() throws PortalException {
+		if (_entrySearch != null) {
+			return _entrySearch;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		EntrySearch entrySearch = new EntrySearch(
+			_liferayPortletRequest, getPortletURL());
+
+		EntrySearchTerms searchTerms =
+			(EntrySearchTerms)entrySearch.getSearchTerms();
+
+		List trashEntries = null;
+
+		if (Validator.isNotNull(searchTerms.getKeywords())) {
+			Sort sort = SortFactoryUtil.getSort(
+				TrashEntry.class, entrySearch.getOrderByCol(),
+				entrySearch.getOrderByType());
+
+			BaseModelSearchResult<TrashEntry> baseModelSearchResult =
+				TrashEntryLocalServiceUtil.searchTrashEntries(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					themeDisplay.getUserId(), searchTerms.getKeywords(),
+					entrySearch.getStart(), entrySearch.getEnd(), sort);
+
+			entrySearch.setTotal(baseModelSearchResult.getLength());
+
+			trashEntries = baseModelSearchResult.getBaseModels();
+		}
+		else {
+			TrashEntryList trashEntryList = null;
+
+			if (Objects.equals(getNavigation(), "all")) {
+				trashEntryList = TrashEntryServiceUtil.getEntries(
+					themeDisplay.getScopeGroupId(), entrySearch.getStart(),
+					entrySearch.getEnd(), entrySearch.getOrderByComparator());
+			}
+			else {
+				trashEntryList = TrashEntryServiceUtil.getEntries(
+					themeDisplay.getScopeGroupId(), getNavigation(),
+					entrySearch.getStart(), entrySearch.getEnd(),
+					entrySearch.getOrderByComparator());
+			}
+
+			entrySearch.setTotal(trashEntryList.getCount());
+
+			trashEntries = trashEntryList.getOriginalTrashEntries();
+
+			_approximate = trashEntryList.isApproximate();
+		}
+
+		entrySearch.setResults(trashEntries);
+
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_liferayPortletResponse);
+
+		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(
+			"^(?!.*" + _liferayPortletResponse.getNamespace() +
+				"redirect).*^(?!.*/entry/)");
+
+		entrySearch.setRowChecker(emptyOnClickRowChecker);
+
+		if ((entrySearch.getTotal() == 0) &&
+			Validator.isNotNull(searchTerms.getKeywords())) {
+
+			entrySearch.setEmptyResultsMessage(
+				LanguageUtil.format(
+					_request,
+					"no-entries-were-found-that-matched-the-keywords-x",
+					"<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) +
+						"</strong>",
+					false));
+		}
+
+		_entrySearch = entrySearch;
+
+		return _entrySearch;
+	}
+
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -214,6 +306,16 @@ public class TrashDisplayContext {
 					});
 			}
 		};
+	}
+
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
 	}
 
 	public String getNavigation() {
@@ -308,6 +410,12 @@ public class TrashDisplayContext {
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL.toString();
+	}
+
+	public int getTotalItems() throws PortalException {
+		EntrySearch entrySearch = getEntrySearch();
+
+		return entrySearch.getTotal();
 	}
 
 	public TrashEntry getTrashEntry() {
@@ -420,6 +528,10 @@ public class TrashDisplayContext {
 		};
 	}
 
+	public boolean isApproximate() {
+		return _approximate;
+	}
+
 	public boolean isDescriptiveView() {
 		if (Objects.equals(getDisplayStyle(), "descriptive")) {
 			return true;
@@ -498,8 +610,12 @@ public class TrashDisplayContext {
 		};
 	}
 
+	private boolean _approximate;
 	private String _containerModelRedirectURL;
 	private String _displayStyle;
+	private EntrySearch _entrySearch;
+	private String _keywords;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _navigation;
 	private String _orderByCol;

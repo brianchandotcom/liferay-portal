@@ -57,6 +57,7 @@ public class DeleteTrashPortletConfigurationIcon
 		try {
 			TrashDisplayContext trashDisplayContext = new TrashDisplayContext(
 				_portal.getHttpServletRequest(portletRequest),
+				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse));
 
 			PortletURL deleteURL = _portal.getControlPanelPortletURL(
@@ -88,7 +89,7 @@ public class DeleteTrashPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		TrashDisplayContext trashDisplayContext = new TrashDisplayContext(
-			_portal.getHttpServletRequest(portletRequest), null);
+			_portal.getHttpServletRequest(portletRequest), null, null);
 
 		TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 

@@ -59,6 +59,7 @@ public class RestoreTrashPortletConfigurationIcon
 		try {
 			TrashDisplayContext trashDisplayContext = new TrashDisplayContext(
 				_portal.getHttpServletRequest(portletRequest),
+				_portal.getLiferayPortletRequest(portletRequest),
 				_portal.getLiferayPortletResponse(portletResponse));
 
 			TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
@@ -117,7 +118,7 @@ public class RestoreTrashPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		TrashDisplayContext trashDisplayContext = new TrashDisplayContext(
-			_portal.getHttpServletRequest(portletRequest), null);
+			_portal.getHttpServletRequest(portletRequest), null, null);
 
 		TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 

@@ -44,38 +44,16 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	%>'
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "in-progress", "successful", "failed"} %>'
-			portletURL="<%= PortletURLUtil.clone(uadExportProcessDisplayContext.getPortletURL(), renderResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= uadExportProcessDisplayContext.getOrderByCol() %>"
-			orderByType="<%= uadExportProcessDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "name"} %>'
-			portletURL="<%= PortletURLUtil.clone(uadExportProcessDisplayContext.getPortletURL(), renderResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<portlet:renderURL var="addExportProcessesURL">
-				<portlet:param name="mvcRenderCommandName" value="/add_uad_export_processes" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
-				<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "add-export-processes") %>'
-				url="<%= addExportProcessesURL.toString() %>"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	creationMenu="<%= uadExportProcessDisplayContext.getCreationMenu() %>"
+	filterItems="<%= uadExportProcessDisplayContext.getDropdownItems() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	selectable="<%= false %>"
+	showCreationMenu="<%= true %>"
+	showSearch="<%= false %>"
+	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
+	sortingURL="<%= uadExportProcessDisplayContext.getSortingURL() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280">
 	<div id="<portlet:namespace />exportProcesses">

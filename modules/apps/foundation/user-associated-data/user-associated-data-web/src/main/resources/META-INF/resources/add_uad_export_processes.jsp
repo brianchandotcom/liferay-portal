@@ -46,9 +46,11 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					<liferay-ui:message key="please-select-the-applications-for-which-you-want-to-start-an-export-process" />
 				</div>
 
-				<liferay-frontend:management-bar
-					includeCheckBox="<%= true %>"
+				<clay:management-toolbar
+					namespace="<%= renderResponse.getNamespace() %>"
 					searchContainerId="uadApplicationExportDisplay"
+					selectable="<%= true %>"
+					showSearch="<%= false %>"
 				/>
 
 				<liferay-ui:search-container

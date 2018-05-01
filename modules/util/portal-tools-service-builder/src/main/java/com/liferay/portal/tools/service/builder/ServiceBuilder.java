@@ -6363,7 +6363,7 @@ public class ServiceBuilder {
 		_deleteFile(
 			StringBundler.concat(
 				_uadOutputPath, "/uad/display/Base", entity.getName(),
-				"UADDisplayHelper.java"));
+				"UADDisplay.java"));
 	}
 
 	private void _removeBaseUADExporter(Entity entity) {

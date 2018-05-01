@@ -12,17 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
- * @author Shinn Lok
+ * @author Jonathan McCann
  */
-public class VerifyWorkflow extends VerifyProcess {
+public class UpgradeWorkflow extends UpgradeProcess {
 
 	protected void deleteOrphaned() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -74,7 +75,7 @@ public class VerifyWorkflow extends VerifyProcess {
 	}
 
 	@Override
-	protected void doVerify() throws Exception {
+	protected void doUpgrade() throws Exception {
 		deleteOrphaned();
 	}
 

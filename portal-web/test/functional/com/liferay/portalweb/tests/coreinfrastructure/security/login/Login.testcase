@@ -267,7 +267,7 @@
 		</execute>
 	</command>
 
-	<command name="OpenSSOSmoke" priority="5">
+	<command ignore="true" name="OpenSSOSmoke" priority="5">
 		<property name="openam.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenSSOSmoke" />
 

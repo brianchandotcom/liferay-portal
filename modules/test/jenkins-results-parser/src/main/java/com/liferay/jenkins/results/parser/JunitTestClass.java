@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +27,9 @@ import java.util.regex.Pattern;
  */
 public class JunitTestClass extends TestClass {
 
-	public JunitTestClass(File file, File srcFile) {
+	public JunitTestClass(
+		GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
+
 		super(file);
 
 		String srcFileName = srcFile.getName();
@@ -34,6 +38,7 @@ public class JunitTestClass extends TestClass {
 			throw new RuntimeException("Invalid Junit Test Class");
 		}
 
+		_gitWorkingDirectory = gitWorkingDirectory;
 		_srcFile = srcFile;
 
 		try {
@@ -42,6 +47,10 @@ public class JunitTestClass extends TestClass {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	public File getSrcFile() {
+		return _srcFile;
 	}
 
 	private void _initTestMethods() throws IOException {
@@ -64,6 +73,7 @@ public class JunitTestClass extends TestClass {
 			"\\t(?<annotations>(@[\\s\\S]+?))public\\s+void\\s+",
 			"(?<methodName>[^\\(\\s]+)"));
 
+	private final GitWorkingDirectory _gitWorkingDirectory;
 	private final File _srcFile;
 
 }

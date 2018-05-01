@@ -3417,7 +3417,7 @@ classpath.
 
 ## 5.3.102 - 2018-05-01
 
-### Changed
+### Added
 - [LPS-80332]: Update the `-include` instruction for projects that have a `suite.bnd`
 file.
 

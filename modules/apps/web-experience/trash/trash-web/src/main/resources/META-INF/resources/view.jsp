@@ -81,7 +81,21 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 	items="<%= trashDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+<clay:management-toolbar
+	actionItems="<%= trashDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= trashDisplayContext.getClearResultsURL() %>"
+	componentId="trashWebManagementToolbar"
+	filterItems="<%= trashDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	searchActionURL="<%= trashDisplayContext.getSearchActionURL() %>"
+	searchContainerId="trash"
+	searchFormName="searchFm"
+	showInfoButton="<%= true %>"
+	sortingOrder="<%= trashDisplayContext.getOrderByType() %>"
+	sortingURL="<%= trashDisplayContext.getSortingURL() %>"
+	totalItems="<%= entrySearch.getTotal() %>"
+	viewTypes="<%= trashDisplayContext.getViewTypeItems() %>"
+/>
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
@@ -333,3 +347,11 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 		</aui:form>
 	</div>
 </div>
+
+<aui:script>
+	window.<portlet:namespace/>deleteSelectedEntries = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
+		}
+	}
+</aui:script>

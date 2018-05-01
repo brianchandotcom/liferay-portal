@@ -605,7 +605,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 		_layoutLocalServiceStagingAdviceMethodNames.add("createLayout");
 		_layoutLocalServiceStagingAdviceMethodNames.add("deleteLayout");
 		_layoutLocalServiceStagingAdviceMethodNames.add("getLayouts");
-		_layoutLocalServiceStagingAdviceMethodNames.add("updateLayout");
+		_layoutLocalServiceStagingAdviceMethodNames.add("updateLayoutUuid");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateLookAndFeel");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateName");
 	}
@@ -670,7 +670,7 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 				return wrapReturnValue(
 					_invoke(method, arguments), showIncomplete);
 			}
-			else if (methodName.equals("updateLayout") &&
+			else if (methodName.equals("updateLayoutUuid") &&
 					 (arguments.length == 15)) {
 
 				Map<Locale, String> friendlyURLMap = null;

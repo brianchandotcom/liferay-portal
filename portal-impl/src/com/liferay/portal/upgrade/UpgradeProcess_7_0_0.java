@@ -54,11 +54,11 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeSharding;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeWorkflow;
 import com.liferay.portal.verify.VerifyUUID;
 import com.liferay.portal.verify.model.AssetTagVerifiableModel;
 import com.liferay.portal.verify.model.RatingsEntryVerifiableModel;
 import com.liferay.portal.verify.model.TeamVerifiableModel;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeWorkflow;
 
 /**
  * @author Julio Camarero

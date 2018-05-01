@@ -14,59 +14,16 @@
 
 package com.liferay.blogs.uad.display;
 
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.uad.constants.BlogsUADConstants;
-
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import com.liferay.user.associated.data.display.UADDisplay;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADDisplay.class)
-public class BlogsEntryUADDisplay implements UADDisplay<BlogsEntry> {
-	public String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
-	}
-
-	public String[] getDisplayFieldNames() {
-		return _blogsEntryUADDisplayHelper.getDisplayFieldNames();
-	}
-
-	@Override
-	public String getEditURL(BlogsEntry blogsEntry,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-		return _blogsEntryUADDisplayHelper.getBlogsEntryEditURL(blogsEntry,
-			liferayPortletRequest, liferayPortletResponse);
-	}
-
-	public String getKey() {
-		return BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY;
-	}
-
-	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(
-		BlogsEntry blogsEntry) {
-		return _blogsEntryUADDisplayHelper.getUADEntityNonanonymizableFieldValues(blogsEntry);
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "BlogsEntry";
-	}
-
-	@Reference
-	private BlogsEntryUADDisplayHelper _blogsEntryUADDisplayHelper;
+public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 }

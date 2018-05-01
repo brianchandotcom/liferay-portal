@@ -421,7 +421,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 1.1.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getNoAssetEntries();
 

@@ -29,7 +29,11 @@ public class TestClass implements Comparable {
 	}
 
 	public void addTestMethod(String methodName) {
-		_testMethods.add(new TestMethod(methodName, this));
+		addTestMethod(new TestMethod(methodName, this));
+	}
+
+	public void addTestMethod(TestMethod testMethod) {
+		_testMethods.add(testMethod);
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +38,50 @@ public class TestClassFactory {
 		_junitTestClass.put(file, junitTestClass);
 
 		return junitTestClass;
+	}
+
+	public static JunitTestClass newJunitTestClass(
+		GitWorkingDirectory gitWorkingDirectory, String fullClassName) {
+
+		String filePath = fullClassName.substring(
+			0, fullClassName.lastIndexOf("."));
+
+		filePath = filePath.replace(".", "/");
+
+		String simpleClassName = fullClassName.substring(
+			fullClassName.lastIndexOf(".") + 1);
+
+		File file = new File(filePath, simpleClassName + ".class");
+
+		if (_junitTestClass.containsKey(file)) {
+			return _junitTestClass.get(file);
+		}
+
+		String srcFileName = simpleClassName + ".java";
+
+		List<File> srcFiles = JenkinsResultsParserUtil.findFiles(
+			gitWorkingDirectory.getWorkingDirectory(), srcFileName);
+
+		File matchingSrcFile = null;
+
+		for (File srcFile : srcFiles) {
+			String srcFilePath = srcFile.toString();
+
+			if (srcFilePath.contains(filePath)) {
+				matchingSrcFile = srcFile;
+
+				break;
+			}
+		}
+
+		if (matchingSrcFile == null) {
+			throw new RuntimeException("No matching files found.");
+		}
+
+		if (srcFiles.size() > 1) {
+		}
+
+		return newJunitTestClass(gitWorkingDirectory, file, matchingSrcFile);
 	}
 
 	private static final Map<File, JunitTestClass> _junitTestClass =

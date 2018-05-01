@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskManagerUtil;
 
+import java.util.Objects;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -86,14 +88,24 @@ public class UADExportProcessDisplayContext {
 	public DropdownItemList getFilterItems() throws PortalException {
 		DropdownItemList filterItems = new DropdownItemList();
 
-		PortletURL portletURL = getPortletURL();
+		PortletURL navigationPortletURL = getPortletURL();
 
 		filterItems.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					getNavigationFilterItems(portletURL));
+					getNavigationFilterItems(navigationPortletURL));
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_request, "filter-by-navigation"));
+			});
+
+		PortletURL orderByPortletURL = getPortletURL();
+
+		filterItems.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					getOrderByFilterItems(orderByPortletURL));
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_request, "order-by"));
 			});
 
 		return filterItems;
@@ -136,6 +148,24 @@ public class UADExportProcessDisplayContext {
 			_request, "orderByCol", "create-date");
 
 		return _orderByCol;
+	}
+
+	public DropdownItemList getOrderByFilterItems(PortletURL portletURL) {
+		DropdownItemList orderByFilterItems = new DropdownItemList();
+
+		for (String orderByCol : new String[] {"create-date", "name"}) {
+			orderByFilterItems.add(
+				dropdownItem -> {
+					dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
+					dropdownItem.setLabel(
+						LanguageUtil.get(_request, orderByCol));
+					dropdownItem.setHref(
+						portletURL, "orderByCol", orderByCol, "orderByType",
+						getOrderByType());
+				});
+		}
+
+		return orderByFilterItems;
 	}
 
 	public String getOrderByType() {
@@ -232,6 +262,23 @@ public class UADExportProcessDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
+	}
+
+	public String getSortingURL() throws PortalException {
+		PortletURL sortingURL = getPortletURL();
+
+		String orderByType;
+
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByType = "desc";
+		}
+		else {
+			orderByType = "asc";
+		}
+
+		sortingURL.setParameter("orderByType", orderByType);
+
+		return sortingURL.toString();
 	}
 
 	private String _navigation;

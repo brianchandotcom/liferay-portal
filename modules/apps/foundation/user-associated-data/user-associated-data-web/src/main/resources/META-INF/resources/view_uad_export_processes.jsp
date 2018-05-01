@@ -50,18 +50,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	namespace="<%= renderResponse.getNamespace() %>"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"
+	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
+	sortingURL="<%= uadExportProcessDisplayContext.getSortingURL() %>"
 />
-
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= uadExportProcessDisplayContext.getOrderByCol() %>"
-			orderByType="<%= uadExportProcessDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "name"} %>'
-			portletURL="<%= PortletURLUtil.clone(uadExportProcessDisplayContext.getPortletURL(), renderResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280">
 	<div id="<portlet:namespace />exportProcesses">

@@ -14,40 +14,21 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Michael Hashimoto
  */
-public class TestClass implements Comparable {
+public class TestMethod {
 
-	public TestClass(File file) {
-		_file = file;
+	public TestMethod(String name, TestClass testClass) {
+		_name = name;
+		_testClass = testClass;
 	}
 
-	public void addTestMethod(String methodName) {
-		_testMethods.add(new TestMethod(methodName, this));
+	public String getName() {
+		return _name;
 	}
 
-	@Override
-	public int compareTo(Object o) {
-		TestClass testClass = (TestClass)o;
-
-		return _file.compareTo(testClass.getFile());
-	}
-
-	public File getFile() {
-		return _file;
-	}
-
-	public List<TestMethod> getTestMethods() {
-		return _testMethods;
-	}
-
-	private final File _file;
-	private final List<TestMethod> _testMethods = new ArrayList<>();
+	private final String _name;
+	private final TestClass _testClass;
 
 }

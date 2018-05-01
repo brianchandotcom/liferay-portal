@@ -48,6 +48,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	creationMenu="<%= uadExportProcessDisplayContext.getCreationMenu() %>"
 	filterItems="<%= uadExportProcessDisplayContext.getFilterItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
+	selectable="<%= false %>"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"
 	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'

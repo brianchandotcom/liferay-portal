@@ -15,8 +15,6 @@
 package com.liferay.user.associated.data.display;
 
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -27,20 +25,6 @@ import java.util.Set;
  */
 public abstract class BaseModelUADDisplay<T extends BaseModel>
 	implements UADDisplay<T> {
-
-	@Override
-	public String[] getColumnFieldNames() {
-		return getDisplayFieldNames();
-	}
-
-	@Override
-	public String getEditURL(
-			T t, LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
-		return null;
-	}
 
 	public Map<String, Object> getFieldValues(T t, String[] fieldNames) {
 		Map<String, Object> modelAttributes = t.getModelAttributes();

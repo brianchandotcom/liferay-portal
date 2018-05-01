@@ -19,7 +19,7 @@
 <%
 PortletURL refererURL = renderResponse.createActionURL();
 
-refererURL.setParameter("updateLayout", "true");
+refererURL.setParameter("updateLayoutUuid", "true");
 %>
 
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_layout?p_auth=" + AuthTokenUtil.getToken(request) + "&p_l_id=" + plid + "&p_v_l_s_g_id=" + themeDisplay.getSiteGroupId() %>' method="post" name="addApplicationForm">

@@ -19,6 +19,24 @@ package com.liferay.gradle.plugins.defaults.internal.util;
  */
 public class StringUtil extends com.liferay.gradle.util.StringUtil {
 
+	public static String merge(Iterable<String> iterable, String separator) {
+		StringBuilder sb = new StringBuilder();
+
+		boolean first = true;
+
+		for (String s : iterable) {
+			if (!first) {
+				sb.append(separator);
+			}
+
+			first = false;
+
+			sb.append(s);
+		}
+
+		return sb.toString();
+	}
+
 	public static String uncapitalize(String s) {
 		char firstChar = s.charAt(0);
 

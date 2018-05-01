@@ -1832,10 +1832,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					FileUtil.getRelativePath(project, suiteBndFile));
 			}
 
-			String value = StringUtil.merge(
-				relativePaths.toArray(new String[relativePaths.size()]), ",");
-
-			bundleDefaultInstructions.put(Constants.INCLUDE, value);
+			bundleDefaultInstructions.put(
+				Constants.INCLUDE, StringUtil.merge(relativePaths, ","));
 		}
 
 		File packageJsonFile = project.file("package.json");

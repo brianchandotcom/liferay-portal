@@ -40,8 +40,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -117,7 +117,7 @@ public class DDMDataProviderDisplayContext {
 		return _ddmDataProviderInstance;
 	}
 
-	public DropdownItemList getActionItemsDropdownItemList() {
+	public List<DropdownItem> getActionItemsDropdownItems() {
 		return new DropdownItemList() {
 
 			{
@@ -249,7 +249,7 @@ public class DDMDataProviderDisplayContext {
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							getOrderByDropdownItemList());
+							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(request, "order-by"));
 					});
@@ -546,7 +546,7 @@ public class DDMDataProviderDisplayContext {
 		};
 	}
 
-	protected DropdownItemList getOrderByDropdownItemList() {
+	protected List<DropdownItem> getOrderByDropdownItems() {
 		return new DropdownItemList() {
 
 			{

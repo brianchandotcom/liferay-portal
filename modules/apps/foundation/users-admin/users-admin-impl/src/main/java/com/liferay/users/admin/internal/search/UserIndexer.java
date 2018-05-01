@@ -144,6 +144,7 @@ public class UserIndexer extends BaseIndexer<User> {
 		addSearchTerm(searchQuery, searchContext, "emailAddress", false);
 		addSearchTerm(searchQuery, searchContext, "firstName", false);
 		addSearchTerm(searchQuery, searchContext, "fullName", false);
+		addSearchTerm(searchQuery, searchContext, "jobTitle", false);
 		addSearchTerm(searchQuery, searchContext, "lastName", false);
 		addSearchTerm(searchQuery, searchContext, "middleName", false);
 		addSearchTerm(searchQuery, searchContext, "region", false);

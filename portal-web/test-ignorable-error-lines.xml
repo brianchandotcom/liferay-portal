@@ -64,14 +64,6 @@
 			<contains>JBREM00200:</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-28954">
-			<contains>[org.apache.axis.utils.XMLUtils.ThreadLocalDocumentBuilder]</contains>
-			<matches>.*The web application \[/wsrp-portlet\] created a ThreadLocal with key of type.*</matches>
-		</ignore-error>
-		<ignore-error description="LPS-28954">
-			<contains>[org.apache.xml.security.utils.UnsyncByteArrayOutputStream$1]</contains>
-			<matches>.*The web application \[/wsrp-portlet\] created a ThreadLocal with key of type.*</matches>
-		</ignore-error>
 		<ignore-error description="LPS-37574">
 			<contains>java.util.zip.ZipException: ZipFile closed</contains>
 			<matches></matches>

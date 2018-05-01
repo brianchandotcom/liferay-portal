@@ -750,34 +750,4 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 	private final ResourceLocalService _resourceLocalService;
 	private final SystemEventLocalService _systemEventLocalService;
 
-	private static class JournalArticleResourceVerifiableModel
-		implements VerifiableUUIDModel {
-
-		@Override
-		public String getPrimaryKeyColumnName() {
-			return "resourcePrimKey";
-		}
-
-		@Override
-		public String getTableName() {
-			return "JournalArticleResource";
-		}
-
-	}
-
-	private static class JournalFeedVerifiableModel
-		implements VerifiableUUIDModel {
-
-		@Override
-		public String getPrimaryKeyColumnName() {
-			return "id_";
-		}
-
-		@Override
-		public String getTableName() {
-			return "JournalFeed";
-		}
-
-	}
-
 }

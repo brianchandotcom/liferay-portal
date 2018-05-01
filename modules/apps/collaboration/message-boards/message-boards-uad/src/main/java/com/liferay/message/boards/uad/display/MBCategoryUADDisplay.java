@@ -14,59 +14,16 @@
 
 package com.liferay.message.boards.uad.display;
 
-import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
-
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
 import com.liferay.user.associated.data.display.UADDisplay;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + MBUADConstants.CLASS_NAME_MB_CATEGORY}, service = UADDisplay.class)
-public class MBCategoryUADDisplay implements UADDisplay<MBCategory> {
-	public String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
-	}
-
-	public String[] getDisplayFieldNames() {
-		return _mbCategoryUADDisplayHelper.getDisplayFieldNames();
-	}
-
-	@Override
-	public String getEditURL(MBCategory mbCategory,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-		return _mbCategoryUADDisplayHelper.getMBCategoryEditURL(mbCategory,
-			liferayPortletRequest, liferayPortletResponse);
-	}
-
-	public String getKey() {
-		return MBUADConstants.CLASS_NAME_MB_CATEGORY;
-	}
-
-	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(
-		MBCategory mbCategory) {
-		return _mbCategoryUADDisplayHelper.getUADEntityNonanonymizableFieldValues(mbCategory);
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "MBCategory";
-	}
-
-	@Reference
-	private MBCategoryUADDisplayHelper _mbCategoryUADDisplayHelper;
+public class MBCategoryUADDisplay extends BaseMBCategoryUADDisplay {
 }

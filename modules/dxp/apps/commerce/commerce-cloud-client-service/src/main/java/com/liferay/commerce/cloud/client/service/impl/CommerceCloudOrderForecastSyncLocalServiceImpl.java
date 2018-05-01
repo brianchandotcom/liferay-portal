@@ -62,6 +62,7 @@ public class CommerceCloudOrderForecastSyncLocalServiceImpl
 		commerceCloudOrderForecastSync.setGroupId(commerceOrder.getGroupId());
 		commerceCloudOrderForecastSync.setCompanyId(
 			commerceOrder.getCompanyId());
+		commerceCloudOrderForecastSync.setCreateDate(new Date());
 		commerceCloudOrderForecastSync.setCommerceOrderId(
 			commerceOrder.getCommerceOrderId());
 

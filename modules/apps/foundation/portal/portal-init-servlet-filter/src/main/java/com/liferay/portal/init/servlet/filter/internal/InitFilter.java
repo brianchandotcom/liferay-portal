@@ -14,7 +14,6 @@
 
 package com.liferay.portal.init.servlet.filter.internal;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import java.util.concurrent.CountDownLatch;

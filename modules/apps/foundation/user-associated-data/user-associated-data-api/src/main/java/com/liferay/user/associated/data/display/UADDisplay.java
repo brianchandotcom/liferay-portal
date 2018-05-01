@@ -27,6 +27,8 @@ public interface UADDisplay<T> {
 
 	public String getApplicationName();
 
+	public String[] getColumnFieldNames();
+
 	public String[] getDisplayFieldNames();
 
 	public String getEditURL(
@@ -34,9 +36,9 @@ public interface UADDisplay<T> {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception;
 
-	public String getKey();
+	public Map<String, Object> getFieldValues(T t, String[] fieldNames);
 
-	public Map<String, Object> getNonanonymizableFieldValues(T t);
+	public String getKey();
 
 	public String getTypeName(Locale locale);
 

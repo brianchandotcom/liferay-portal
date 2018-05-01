@@ -1821,18 +1821,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		File appBndFile = _getAppBndFile(project, portalRootDir);
 
 		if (appBndFile != null) {
-			List<String> paths = new ArrayList<>();
+			List<String> relativePaths = new ArrayList<>();
 
-			paths.add(FileUtil.getRelativePath(project, appBndFile));
+			relativePaths.add(FileUtil.getRelativePath(project, appBndFile));
 
 			File suiteBndFile = _getSuiteBndFile(appBndFile, portalRootDir);
 
 			if (suiteBndFile != null) {
-				paths.add(FileUtil.getRelativePath(project, suiteBndFile));
+				relativePaths.add(
+					FileUtil.getRelativePath(project, suiteBndFile));
 			}
 
 			String value = StringUtil.merge(
-				paths.toArray(new String[paths.size()]), ",");
+				relativePaths.toArray(new String[relativePaths.size()]), ",");
 
 			bundleDefaultInstructions.put(Constants.INCLUDE, value);
 		}

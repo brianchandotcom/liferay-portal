@@ -28,9 +28,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -103,9 +100,6 @@ public class ViewConfigurationScreenMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
-
-	private final Map<String, MVCRenderCommand> _renderCommands =
-		new HashMap<>();
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;

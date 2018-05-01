@@ -46,6 +46,7 @@ import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.model.TrashEntryList;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.service.TrashEntryServiceUtil;
+import com.liferay.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import com.liferay.trash.web.internal.search.EntrySearch;
 import com.liferay.trash.web.internal.search.EntrySearchTerms;
@@ -199,6 +200,28 @@ public class TrashDisplayContext {
 		EntrySearch entrySearch = new EntrySearch(
 			_liferayPortletRequest, getPortletURL());
 
+		entrySearch.setOrderByCol(getOrderByCol());
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
+
+		entrySearch.setOrderByComparator(
+			new EntryCreateDateComparator(orderByAsc));
+
+		entrySearch.setOrderByType(getOrderByType());
+
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_liferayPortletResponse);
+
+		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(
+			"^(?!.*" + _liferayPortletResponse.getNamespace() +
+				"redirect).*^(?!.*/entry/)");
+
+		entrySearch.setRowChecker(emptyOnClickRowChecker);
+
 		EntrySearchTerms searchTerms =
 			(EntrySearchTerms)entrySearch.getSearchTerms();
 
@@ -242,15 +265,6 @@ public class TrashDisplayContext {
 		}
 
 		entrySearch.setResults(trashEntries);
-
-		EmptyOnClickRowChecker emptyOnClickRowChecker =
-			new EmptyOnClickRowChecker(_liferayPortletResponse);
-
-		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(
-			"^(?!.*" + _liferayPortletResponse.getNamespace() +
-				"redirect).*^(?!.*/entry/)");
-
-		entrySearch.setRowChecker(emptyOnClickRowChecker);
 
 		if ((entrySearch.getTotal() == 0) &&
 			Validator.isNotNull(searchTerms.getKeywords())) {

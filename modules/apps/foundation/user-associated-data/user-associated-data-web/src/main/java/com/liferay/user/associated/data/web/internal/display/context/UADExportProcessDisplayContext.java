@@ -85,30 +85,30 @@ public class UADExportProcessDisplayContext {
 		return creationMenu;
 	}
 
-	public DropdownItemList getFilterItems() throws PortalException {
-		DropdownItemList filterItems = new DropdownItemList();
+	public DropdownItemList getDropdownItems() throws PortalException {
+		DropdownItemList dropdownItems = new DropdownItemList();
 
 		PortletURL navigationPortletURL = getPortletURL();
 
-		filterItems.addGroup(
+		dropdownItems.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					getNavigationFilterItems(navigationPortletURL));
+					getNavigationDropdownItems(navigationPortletURL));
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_request, "filter-by-navigation"));
 			});
 
 		PortletURL orderByPortletURL = getPortletURL();
 
-		filterItems.addGroup(
+		dropdownItems.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					getOrderByFilterItems(orderByPortletURL));
+					getOrderByDropdownItems(orderByPortletURL));
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_request, "order-by"));
 			});
 
-		return filterItems;
+		return dropdownItems;
 	}
 
 	public String getNavigation() {
@@ -121,13 +121,13 @@ public class UADExportProcessDisplayContext {
 		return _navigation;
 	}
 
-	public DropdownItemList getNavigationFilterItems(PortletURL portletURL) {
-		DropdownItemList navigationFilterItems = new DropdownItemList();
+	public DropdownItemList getNavigationDropdownItems(PortletURL portletURL) {
+		DropdownItemList navigationDropdownItems = new DropdownItemList();
 
 		for (String navigation :
 				new String[] {"all", "in-progress", "successful", "failed"}) {
 
-			navigationFilterItems.add(
+			navigationDropdownItems.add(
 				dropdownItem -> {
 					dropdownItem.setActive(navigation.equals(getNavigation()));
 					dropdownItem.setLabel(
@@ -136,7 +136,7 @@ public class UADExportProcessDisplayContext {
 				});
 		}
 
-		return navigationFilterItems;
+		return navigationDropdownItems;
 	}
 
 	public String getOrderByCol() {
@@ -150,11 +150,11 @@ public class UADExportProcessDisplayContext {
 		return _orderByCol;
 	}
 
-	public DropdownItemList getOrderByFilterItems(PortletURL portletURL) {
-		DropdownItemList orderByFilterItems = new DropdownItemList();
+	public DropdownItemList getOrderByDropdownItems(PortletURL portletURL) {
+		DropdownItemList orderByDropdownItems = new DropdownItemList();
 
 		for (String orderByCol : new String[] {"create-date", "name"}) {
-			orderByFilterItems.add(
+			orderByDropdownItems.add(
 				dropdownItem -> {
 					dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
 					dropdownItem.setLabel(
@@ -165,7 +165,7 @@ public class UADExportProcessDisplayContext {
 				});
 		}
 
-		return orderByFilterItems;
+		return orderByDropdownItems;
 	}
 
 	public String getOrderByType() {

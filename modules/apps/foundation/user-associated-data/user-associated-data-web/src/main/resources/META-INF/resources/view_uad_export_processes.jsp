@@ -46,7 +46,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <clay:management-toolbar
 	creationMenu="<%= uadExportProcessDisplayContext.getCreationMenu() %>"
-	filterItems="<%= uadExportProcessDisplayContext.getFilterItems() %>"
+	filterItems="<%= uadExportProcessDisplayContext.getDropdownItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	selectable="<%= false %>"
 	showCreationMenu="<%= true %>"

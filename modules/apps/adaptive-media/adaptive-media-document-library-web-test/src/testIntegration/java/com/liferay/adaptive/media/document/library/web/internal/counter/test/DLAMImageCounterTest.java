@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -206,7 +207,8 @@ public class DLAMImageCounterTest {
 			_user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
-			ContentTypes.APPLICATION_OCTET_STREAM, RandomTestUtil.randomBytes(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 
 		Assert.assertEquals(

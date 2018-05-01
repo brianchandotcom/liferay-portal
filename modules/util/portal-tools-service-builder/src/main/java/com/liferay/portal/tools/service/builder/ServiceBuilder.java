@@ -916,25 +916,25 @@ public class ServiceBuilder {
 									entity.
 										getUADNonanonymizableEntityColumns())) {
 
+								_removeBaseUADDisplay(entity);
 								_removeUADDisplay(entity);
-								_removeUADDisplayHelper(entity);
 								_removeUADDisplayTest(entity);
 							}
 							else {
+								_createBaseUADDisplay(entity);
 								_createUADDisplay(entity);
-								_createUADDisplayHelper(entity);
 								_createUADDisplayTest(entity);
 							}
 						}
 						else {
 							//_removeBaseUADAnonymizer(entity);
+							//_removeBaseUADDisplay(entity);
 							//_removeBaseUADExporter(entity);
 							//_removeUADAggregator(entity);
 							//_removeUADAggregatorTest(entity);
 							//_removeUADAnonymizer(entity);
 							//_removeUADAnonymizerTest(entity);
 							//_removeUADDisplay(entity);
-							//_removeUADDisplayHelper(entity);
 							//_removeUADDisplayTest(entity);
 							//_removeUADExporter(entity);
 							//_removeUADExporterTest(entity);
@@ -2169,6 +2169,26 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_uadOutputPath, "/uad/anonymizer/Base", entity.getName(),
 				"UADAnonymizer.java"));
+
+		ToolsUtil.writeFile(
+			file, content, _author, _jalopySettings, _modifiedFileNames);
+	}
+
+	private void _createBaseUADDisplay(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplBaseUADDisplay, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/display/Base", entity.getName(),
+				"UADDisplay.java"));
 
 		ToolsUtil.writeFile(
 			file, content, _author, _jalopySettings, _modifiedFileNames);
@@ -4136,26 +4156,6 @@ public class ServiceBuilder {
 			StringBundler.concat(
 				_uadOutputPath, "/uad/display/", entity.getName(),
 				"UADDisplay.java"));
-
-		ToolsUtil.writeFile(
-			file, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
-	private void _createUADDisplayHelper(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADDisplayHelper, context);
-
-		// Write file
-
-		File file = new File(
-			StringBundler.concat(
-				_uadOutputPath, "/uad/display/", entity.getName(),
-				"UADDisplayHelper.java"));
 
 		if (!file.exists()) {
 			ToolsUtil.writeFile(
@@ -6359,6 +6359,13 @@ public class ServiceBuilder {
 				"UADAnonymizer.java"));
 	}
 
+	private void _removeBaseUADDisplay(Entity entity) {
+		_deleteFile(
+			StringBundler.concat(
+				_uadOutputPath, "/uad/display/Base", entity.getName(),
+				"UADDisplayHelper.java"));
+	}
+
 	private void _removeBaseUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6647,13 +6654,6 @@ public class ServiceBuilder {
 				"UADDisplay.java"));
 	}
 
-	private void _removeUADDisplayHelper(Entity entity) {
-		_deleteFile(
-			StringBundler.concat(
-				_uadOutputPath, "/uad/display/", entity.getName(),
-				"UADDisplayHelper.java"));
-	}
-
 	private void _removeUADDisplayTest(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
@@ -6779,6 +6779,7 @@ public class ServiceBuilder {
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";
 	private String _tplBaseUADAnonymizer = _TPL_ROOT + "base_uad_anonymizer.ftl";
+	private String _tplBaseUADDisplay = _TPL_ROOT + "base_uad_display.ftl";
 	private String _tplBaseUADExporter = _TPL_ROOT + "base_uad_exporter.ftl";
 	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
 	private String _tplEjbPK = _TPL_ROOT + "ejb_pk.ftl";
@@ -6825,7 +6826,6 @@ public class ServiceBuilder {
 	private String _tplUADBnd = _TPL_ROOT + "uad_bnd.ftl";
 	private String _tplUADConstants = _TPL_ROOT + "uad_constants.ftl";
 	private String _tplUADDisplay = _TPL_ROOT + "uad_display.ftl";
-	private String _tplUADDisplayHelper = _TPL_ROOT + "uad_display_helper.ftl";
 	private String _tplUADDisplayTest = _TPL_ROOT + "uad_display_test.ftl";
 	private String _tplUADExporter = _TPL_ROOT + "uad_exporter.ftl";
 	private String _tplUADExporterTest = _TPL_ROOT + "uad_exporter_test.ftl";

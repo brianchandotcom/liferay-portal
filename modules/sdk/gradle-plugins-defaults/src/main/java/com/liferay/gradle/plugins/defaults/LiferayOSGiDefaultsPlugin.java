@@ -100,6 +100,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -1820,9 +1821,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		File appBndFile = _getAppBndFile(project, portalRootDir);
 
 		if (appBndFile != null) {
-			bundleDefaultInstructions.put(
-				Constants.INCLUDE,
-				FileUtil.getRelativePath(project, appBndFile));
+			List<String> paths = new ArrayList<>();
+
+			paths.add(FileUtil.getRelativePath(project, appBndFile));
+
+			File suiteBndFile = _getSuiteBndFile(appBndFile, portalRootDir);
+
+			if (suiteBndFile != null) {
+				paths.add(FileUtil.getRelativePath(project, suiteBndFile));
+			}
+
+			String value = StringUtil.merge(
+				paths.toArray(new String[paths.size()]), ",");
+
+			bundleDefaultInstructions.put(Constants.INCLUDE, value);
 		}
 
 		File packageJsonFile = project.file("package.json");
@@ -3725,6 +3737,30 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return "project(\"" + project.getPath() + "\")";
 	}
 
+	private File _getSuiteBndFile(File appBndFile, File portalRootDir) {
+		if (appBndFile == null) {
+			return null;
+		}
+
+		Properties properties = GUtil.loadProperties(appBndFile);
+
+		String liferayRelengSuite = properties.getProperty(
+			"Liferay-Releng-Suite");
+
+		if (Validator.isNull(liferayRelengSuite)) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder(4);
+
+		sb.append("modules/suites/");
+		sb.append(liferayRelengSuite);
+		sb.append("/");
+		sb.append(_SUITE_BND_FILE_NAME);
+
+		return new File(portalRootDir, sb.toString());
+	}
+
 	private Version _getVersion(Object version) {
 		try {
 			return Version.parseVersion(String.valueOf(version));
@@ -4153,6 +4189,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _SOURCE_FORMATTER_PORTAL_TOOL_NAME =
 		"com.liferay.source.formatter";
+
+	private static final String _SUITE_BND_FILE_NAME = "suite.bnd";
 
 	private static final String
 		_UPDATE_FILE_VERSIONS_EXACT_VERSION_PROPERTY_NAME = "exactVersion";

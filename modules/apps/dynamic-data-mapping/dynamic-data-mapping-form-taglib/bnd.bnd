@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Dynamic Data Mapping Form Taglib
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.taglib
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/form";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /dynamic-data-mapping-form-taglib

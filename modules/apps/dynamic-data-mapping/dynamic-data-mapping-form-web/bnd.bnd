@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Dynamic Data Mapping Form Web
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.web
+Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/admin/js/config.js
+Web-ContextPath: /dynamic-data-mapping-form-web
+-dsannotations-options: inherit

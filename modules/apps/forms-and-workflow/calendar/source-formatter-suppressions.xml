@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="EnumConstantOrderCheck" files="modules/apps/forms-and-workflow/calendar/calendar-api/src/main/java/com/liferay/calendar/notification/NotificationTemplateType\.java" />
-		<suppress checks="EnumConstantOrderCheck" files="modules/apps/forms-and-workflow/calendar/calendar-api/src/main/java/com/liferay/calendar/recurrence/Weekday\.java" />
-	</checkstyle>
-</suppressions>

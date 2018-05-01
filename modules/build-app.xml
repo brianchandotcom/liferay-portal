@@ -34,7 +34,7 @@
 	</target>
 
 	<target name="build-app-all">
-		<fail message="Please provide a comma delimited list of app names.${line.separator}(e.g. -Dapp.names=collaboration,forms-and-workflow,foundation,static,web-experience)">
+		<fail message="Please provide a comma delimited list of app names.${line.separator}(e.g. -Dapp.names=collaboration,foundation,static,web-experience)">
 			<condition>
 				<not>
 					<isset property="app.names" />

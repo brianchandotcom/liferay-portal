@@ -1,0 +1,67 @@
+import org.apache.tools.ant.filters.FixCrLfFilter
+
+apply plugin: "antlr"
+
+String parserDirName = "com/liferay/dynamic/data/mapping/form/values/query/internal/parser"
+
+cleanGenerateGrammarSource {
+	delete "src/main/java/" + parserDirName
+	delete "src/main/resources/" + parserDirName
+}
+
+compileJava {
+	dependsOn.remove "generateGrammarSource"
+}
+
+dependencies {
+	antlr group: "org.antlr", name: "antlr4", version: "4.3"
+
+	compileInclude group: "org.abego.treelayout", name: "org.abego.treelayout.core", version: "1.0.1"
+	compileInclude group: "org.antlr", name: "antlr4-runtime", version: "4.3"
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "org.antlr", name: "antlr4", version: "4.3"
+	compileOnly group: "org.antlr", name: "antlr4-annotations", version: "4.3"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":core:petra:petra-string")
+
+	testCompile project(":core:petra:petra-lang")
+}
+
+generateGrammarSource {
+	dependsOn cleanGenerateGrammarSource
+
+	doLast {
+		copy {
+			filter {
+				String line ->
+
+				line - (parserDirName.replace("/" as char, File.separatorChar) + File.separatorChar)
+			}
+
+			filter(FixCrLfFilter, javafiles: true, tab: FixCrLfFilter.AddAsisRemove.newInstance("add"))
+
+			from outputDirectory
+			include "**/*.java"
+			into "src/main/java"
+		}
+
+		File sourceFormatterIgnoreFile = file("src/main/java/${parserDirName}/source_formatter.ignore")
+
+		sourceFormatterIgnoreFile.createNewFile()
+
+		copy {
+			from outputDirectory
+			exclude "**/*.java"
+			into "src/main/resources"
+		}
+	}
+
+	ext {
+		autoClean = false
+	}
+
+	maxHeapSize = "1024m"
+	outputDirectory = new File(temporaryDir, "generated")
+}

@@ -35,12 +35,29 @@ public class UpgradeLayout extends UpgradeProcess {
 		}
 	}
 
+	protected void deleteOrphanedFriendlyURL() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				"delete from LayoutFriendlyURL where plid not in (select " +
+					"plid from Layout)");
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		deleteLinkedOrphanedLayouts();
+		deleteOrphanedFriendlyURL();
+		updateLayoutPrototypeLinkEnabled();
 		updateUnlinkedOrphanedLayouts();
-		verifyFriendlyURL();
-		verifyLayoutPrototypeLinkEnabled();
+	}
+
+	protected void updateLayoutPrototypeLinkEnabled() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				"update Layout set layoutPrototypeLinkEnabled = [$FALSE$] " +
+					"where type_ = 'link_to_layout' and " +
+						"layoutPrototypeLinkEnabled = [$TRUE$]");
+		}
 	}
 
 	protected void updateUnlinkedOrphanedLayouts() throws Exception {
@@ -53,23 +70,6 @@ public class UpgradeLayout extends UpgradeProcess {
 			sb.append("layoutPrototypeLinkEnabled = FALSE");
 
 			runSQL(sb.toString());
-		}
-	}
-
-	protected void verifyFriendlyURL() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL(
-				"delete from LayoutFriendlyURL where plid not in (select " +
-					"plid from Layout)");
-		}
-	}
-
-	protected void verifyLayoutPrototypeLinkEnabled() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			runSQL(
-				"update Layout set layoutPrototypeLinkEnabled = [$FALSE$] " +
-					"where type_ = 'link_to_layout' and " +
-						"layoutPrototypeLinkEnabled = [$TRUE$]");
 		}
 	}
 

@@ -24,13 +24,13 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class UpgradeUuid extends UpgradeProcess {
 
 	protected void doUpgrade() throws Exception {
-		verifyUuid();
+		updateLayoutUuid();
 
-		verifyUuid("AssetEntry");
-		verifyUuid("JournalArticle");
+		updateLayoutUuid("AssetEntry");
+		updateLayoutUuid("JournalArticle");
 	}
 
-	protected void verifyUuid() throws Exception {
+	protected void updateLayoutUuid() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				"update Layout set uuid_ = sourcePrototypeLayoutUuid where " +
@@ -39,7 +39,7 @@ public class UpgradeUuid extends UpgradeProcess {
 		}
 	}
 
-	protected void verifyUuid(String tableName) throws Exception {
+	protected void updateLayoutUuid(String tableName) throws Exception {
 		StringBundler sb = new StringBundler(12);
 
 		sb.append("update ");

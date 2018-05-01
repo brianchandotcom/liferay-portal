@@ -22,12 +22,15 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Neil Griffin
  */
 public interface LayoutTypePortlet extends LayoutType {
 
 	public void addModeAboutPortletId(String portletId);
 
 	public void addModeConfigPortletId(String portletId);
+
+	public void addModeCustomPortletId(String portletId, String portletMode);
 
 	public void addModeEditDefaultsPortletId(String portletId);
 
@@ -68,6 +71,8 @@ public interface LayoutTypePortlet extends LayoutType {
 		List<Portlet> portlets, List<Portlet> startPortlets,
 		List<Portlet> endPortlets);
 
+	public String getAddedCustomPortletMode();
+
 	public List<Portlet> getAllPortlets();
 
 	public List<Portlet> getAllPortlets(boolean includeSystem);
@@ -89,6 +94,8 @@ public interface LayoutTypePortlet extends LayoutType {
 	public String getModeAbout();
 
 	public String getModeConfig();
+
+	public String getModeCustom(String portletMode);
 
 	public String getModeEdit();
 
@@ -121,6 +128,8 @@ public interface LayoutTypePortlet extends LayoutType {
 	public boolean hasModeAboutPortletId(String portletId);
 
 	public boolean hasModeConfigPortletId(String portletId);
+
+	public boolean hasModeCustomPortletId(String portletId, String portletMode);
 
 	public boolean hasModeEditDefaultsPortletId(String portletId);
 
@@ -223,6 +232,8 @@ public interface LayoutTypePortlet extends LayoutType {
 	public void setModeAbout(String modeAbout);
 
 	public void setModeConfig(String modeConfig);
+
+	public void setModeCustom(String modeCustom, String portletMode);
 
 	public void setModeEdit(String modeEdit);
 

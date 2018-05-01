@@ -44,6 +44,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	%>'
 />
 
+<clay:management-toolbar
+	creationMenu="<%= uadExportProcessDisplayContext.getCreationMenu() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	showCreationMenu="<%= true %>"
+	showSearch="<%= false %>"
+/>
+
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -58,23 +65,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			portletURL="<%= PortletURLUtil.clone(uadExportProcessDisplayContext.getPortletURL(), renderResponse) %>"
 		/>
 	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<portlet:renderURL var="addExportProcessesURL">
-				<portlet:param name="mvcRenderCommandName" value="/add_uad_export_processes" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
-				<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "add-export-processes") %>'
-				url="<%= addExportProcessesURL.toString() %>"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280">

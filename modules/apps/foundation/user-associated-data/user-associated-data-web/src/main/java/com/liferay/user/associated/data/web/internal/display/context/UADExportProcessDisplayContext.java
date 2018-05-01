@@ -15,6 +15,7 @@
 package com.liferay.user.associated.data.web.internal.display.context;
 
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -60,6 +61,24 @@ public class UADExportProcessDisplayContext {
 		}
 
 		return 0;
+	}
+
+	public CreationMenu getCreationMenu() throws PortalException {
+		CreationMenu creationMenu = new CreationMenu();
+
+		User selectedUser = PortalUtil.getSelectedUser(_request);
+
+		creationMenu.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/add_uad_export_processes", "backURL",
+					PortalUtil.getCurrentURL(_request), "p_u_i_d",
+					String.valueOf(selectedUser.getUserId()));
+				dropdownItem.setLabel("add-export-processes");
+			});
+
+		return creationMenu;
 	}
 
 	public String getNavigation() {

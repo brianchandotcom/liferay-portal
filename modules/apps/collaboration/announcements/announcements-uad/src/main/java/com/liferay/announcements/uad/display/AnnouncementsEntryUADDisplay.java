@@ -18,16 +18,19 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.display.UADDisplay;
 
-import java.util.Locale;
-import java.util.Map;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author William Newbury
+ * @author Noah Sherrill
  */
 @Component(
 	immediate = true,
@@ -35,48 +38,33 @@ import org.osgi.service.component.annotations.Reference;
 	service = UADDisplay.class
 )
 public class AnnouncementsEntryUADDisplay
-	implements UADDisplay<AnnouncementsEntry> {
+	extends BaseAnnouncementsEntryUADDisplay {
 
-	public String getApplicationName() {
-		return AnnouncementsUADConstants.APPLICATION_NAME;
-	}
-
-	public String[] getDisplayFieldNames() {
-		return _announcementsEntryUADDisplayHelper.getDisplayFieldNames();
-	}
-
+	@Override
 	public String getEditURL(
 			AnnouncementsEntry announcementsEntry,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		return _announcementsEntryUADDisplayHelper.getAnnouncementsEntryEditURL(
-			announcementsEntry, liferayPortletRequest, liferayPortletResponse);
-	}
+		String portletId = PortletProviderUtil.getPortletId(
+			AnnouncementsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-	public String getKey() {
-		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY;
-	}
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest), portletId,
+			PortletRequest.RENDER_PHASE);
 
-	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(
-		AnnouncementsEntry announcementsEntry) {
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/announcements/edit_entry");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter(
+			"entryId", String.valueOf(announcementsEntry.getEntryId()));
 
-		return _announcementsEntryUADDisplayHelper.
-			getUADEntityNonanonymizableFieldValues(announcementsEntry);
-	}
-
-	public String getTypeDescription() {
-		return "Announcements posted by the user";
-	}
-
-	public String getTypeName(Locale locale) {
-		return "AnnouncementsEntry";
+		return portletURL.toString();
 	}
 
 	@Reference
-	private AnnouncementsEntryUADDisplayHelper
-		_announcementsEntryUADDisplayHelper;
+	protected Portal portal;
 
 }

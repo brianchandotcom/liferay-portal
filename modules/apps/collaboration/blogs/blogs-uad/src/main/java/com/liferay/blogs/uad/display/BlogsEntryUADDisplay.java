@@ -16,57 +16,52 @@ package com.liferay.blogs.uad.display;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.uad.constants.BlogsUADConstants;
-
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.display.UADDisplay;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-@Component(immediate = true, property =  {
-	"model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY}, service = UADDisplay.class)
-public class BlogsEntryUADDisplay implements UADDisplay<BlogsEntry> {
-	public String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
-	}
-
-	public String[] getDisplayFieldNames() {
-		return _blogsEntryUADDisplayHelper.getDisplayFieldNames();
-	}
+@Component(
+	immediate = true,
+	property = "model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY,
+	service = UADDisplay.class
+)
+public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 
 	@Override
-	public String getEditURL(BlogsEntry blogsEntry,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse)
+	public String getEditURL(
+			BlogsEntry blogsEntry, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _blogsEntryUADDisplayHelper.getBlogsEntryEditURL(blogsEntry,
-			liferayPortletRequest, liferayPortletResponse);
-	}
 
-	public String getKey() {
-		return BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY;
-	}
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(
-		BlogsEntry blogsEntry) {
-		return _blogsEntryUADDisplayHelper.getUADEntityNonanonymizableFieldValues(blogsEntry);
-	}
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest), portletId,
+			PortletRequest.RENDER_PHASE);
 
-	@Override
-	public String getTypeName(Locale locale) {
-		return "BlogsEntry";
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter(
+			"entryId", String.valueOf(blogsEntry.getEntryId()));
+
+		return portletURL.toString();
 	}
 
 	@Reference
-	private BlogsEntryUADDisplayHelper _blogsEntryUADDisplayHelper;
+	protected Portal portal;
+
 }

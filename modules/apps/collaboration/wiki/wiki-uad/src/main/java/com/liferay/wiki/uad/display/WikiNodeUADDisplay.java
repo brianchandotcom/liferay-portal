@@ -16,56 +16,47 @@ package com.liferay.wiki.uad.display;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.display.UADDisplay;
-
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-@Component(immediate = true, property =  {
-	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADDisplay.class)
-public class WikiNodeUADDisplay implements UADDisplay<WikiNode> {
-	public String getApplicationName() {
-		return WikiUADConstants.APPLICATION_NAME;
-	}
-
-	public String[] getDisplayFieldNames() {
-		return _wikiNodeUADDisplayHelper.getDisplayFieldNames();
-	}
+@Component(
+	immediate = true,
+	property = "model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE,
+	service = UADDisplay.class
+)
+public class WikiNodeUADDisplay extends BaseWikiNodeUADDisplay {
 
 	@Override
-	public String getEditURL(WikiNode wikiNode,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse)
+	public String getEditURL(
+			WikiNode wikiNode, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _wikiNodeUADDisplayHelper.getWikiNodeEditURL(wikiNode,
-			liferayPortletRequest, liferayPortletResponse);
-	}
 
-	public String getKey() {
-		return WikiUADConstants.CLASS_NAME_WIKI_NODE;
-	}
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest),
+			WikiPortletKeys.WIKI_ADMIN, PortletRequest.RENDER_PHASE);
 
-	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(WikiNode wikiNode) {
-		return _wikiNodeUADDisplayHelper.getUADEntityNonanonymizableFieldValues(wikiNode);
-	}
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_node");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter("nodeId", String.valueOf(wikiNode.getNodeId()));
 
-	@Override
-	public String getTypeName(Locale locale) {
-		return "WikiNode";
+		return portletURL.toString();
 	}
 
 	@Reference
-	private WikiNodeUADDisplayHelper _wikiNodeUADDisplayHelper;
+	protected Portal portal;
+
 }

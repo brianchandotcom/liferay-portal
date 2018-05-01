@@ -14,58 +14,49 @@
 
 package com.liferay.contacts.uad.display;
 
+import com.liferay.contacts.constants.ContactsPortletKeys;
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
-
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.display.UADDisplay;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-@Component(immediate = true, property =  {
-	"model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY}, service = UADDisplay.class)
-public class EntryUADDisplay implements UADDisplay<Entry> {
-	public String getApplicationName() {
-		return ContactsUADConstants.APPLICATION_NAME;
-	}
-
-	public String[] getDisplayFieldNames() {
-		return _entryUADDisplayHelper.getDisplayFieldNames();
-	}
+@Component(
+	immediate = true,
+	property = "model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY,
+	service = UADDisplay.class
+)
+public class EntryUADDisplay extends BaseEntryUADDisplay {
 
 	@Override
-	public String getEditURL(Entry entry,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse)
+	public String getEditURL(
+			Entry entry, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
-		return _entryUADDisplayHelper.getEntryEditURL(entry,
-			liferayPortletRequest, liferayPortletResponse);
-	}
 
-	public String getKey() {
-		return ContactsUADConstants.CLASS_NAME_ENTRY;
-	}
+		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
+			portal.getControlPanelPlid(liferayPortletRequest),
+			ContactsPortletKeys.CONCTACTS_CENTER, PortletRequest.RENDER_PHASE);
 
-	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(Entry entry) {
-		return _entryUADDisplayHelper.getUADEntityNonanonymizableFieldValues(entry);
-	}
+		portletURL.setParameter("mvcPath", "/contacts_center/edit_entry");
+		portletURL.setParameter(
+			"redirect", portal.getCurrentURL(liferayPortletRequest));
+		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
-	@Override
-	public String getTypeName(Locale locale) {
-		return "Entry";
+		return portletURL.toString();
 	}
 
 	@Reference
-	private EntryUADDisplayHelper _entryUADDisplayHelper;
+	protected Portal portal;
+
 }

@@ -191,10 +191,10 @@ public class PQLQuery extends PQLEntity {
 
 		if (operatorIndex != -1) {
 			String entity1 = ListUtil.toString(
-				tokens.subList(0, operatorIndex), null, " ");
+				tokens.subList(0, operatorIndex), " ");
 			String operator = tokens.get(operatorIndex);
 			String entity2 = ListUtil.toString(
-				tokens.subList(operatorIndex + 1, tokens.size()), null, " ");
+				tokens.subList(operatorIndex + 1, tokens.size()), " ");
 
 			if (entity1.equals("") || entity2.equals("")) {
 				return null;

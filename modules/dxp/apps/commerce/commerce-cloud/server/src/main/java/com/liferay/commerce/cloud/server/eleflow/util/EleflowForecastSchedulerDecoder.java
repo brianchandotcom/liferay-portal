@@ -20,6 +20,8 @@ import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Level;
 import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Period;
 import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Target;
 
+import io.vertx.core.json.JsonObject;
+
 import java.util.function.Function;
 
 /**
@@ -32,7 +34,8 @@ public class EleflowForecastSchedulerDecoder
 	public ForecastConfiguration apply(
 		EleflowForecastScheduler eleflowForecastScheduler) {
 
-		ForecastConfiguration forecastScheduler = new ForecastConfiguration();
+		ForecastConfiguration forecastScheduler = new ForecastConfiguration(
+			new JsonObject());
 
 		forecastScheduler.setAhead(
 			EleflowUtil.getInteger(eleflowForecastScheduler.getAhead()));

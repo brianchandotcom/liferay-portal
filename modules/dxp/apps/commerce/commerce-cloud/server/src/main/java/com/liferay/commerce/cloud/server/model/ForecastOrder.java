@@ -25,9 +25,6 @@ import java.util.List;
 @DataObject(generateConverter = true, publicConverter = false)
 public class ForecastOrder implements JsonSerializable {
 
-	public ForecastOrder() {
-	}
-
 	public ForecastOrder(JsonObject jsonObject) {
 		ForecastOrderConverter.fromJson(jsonObject, this);
 	}

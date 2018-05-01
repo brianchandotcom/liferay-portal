@@ -25,9 +25,6 @@ import java.util.Set;
 @DataObject(generateConverter = true, publicConverter = false)
 public class ForecastConfiguration implements JsonSerializable {
 
-	public ForecastConfiguration() {
-	}
-
 	public ForecastConfiguration(JsonObject jsonObject) {
 		ForecastConfigurationConverter.fromJson(jsonObject, this);
 	}

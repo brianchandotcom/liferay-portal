@@ -23,9 +23,6 @@ import io.vertx.core.json.JsonObject;
 @DataObject(generateConverter = true, publicConverter = false)
 public class ForecastOrderItem implements JsonSerializable {
 
-	public ForecastOrderItem() {
-	}
-
 	public ForecastOrderItem(JsonObject jsonObject) {
 		ForecastOrderItemConverter.fromJson(jsonObject, this);
 	}

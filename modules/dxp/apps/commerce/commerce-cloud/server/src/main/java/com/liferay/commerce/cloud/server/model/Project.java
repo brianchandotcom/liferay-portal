@@ -23,9 +23,6 @@ import io.vertx.core.json.JsonObject;
 @DataObject(generateConverter = true, publicConverter = false)
 public class Project implements JsonSerializable {
 
-	public Project() {
-	}
-
 	public Project(JsonObject jsonObject) {
 		ProjectConverter.fromJson(jsonObject, this);
 	}

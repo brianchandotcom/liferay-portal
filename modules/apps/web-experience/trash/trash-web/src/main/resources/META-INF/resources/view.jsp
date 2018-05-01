@@ -72,8 +72,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle
 if (Validator.isNotNull(keywords)) {
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + keywords, currentURL);
 }
-
-request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 %>
 
 <clay:navigation-bar

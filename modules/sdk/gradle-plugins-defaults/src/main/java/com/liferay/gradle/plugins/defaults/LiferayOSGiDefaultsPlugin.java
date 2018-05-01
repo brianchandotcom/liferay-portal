@@ -1821,7 +1821,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		File appBndFile = _getAppBndFile(project, portalRootDir);
 
 		if (appBndFile != null) {
-			List<String> relativePaths = new ArrayList<>();
+			List<String> relativePaths = new ArrayList<>(2);
 
 			relativePaths.add(FileUtil.getRelativePath(project, appBndFile));
 

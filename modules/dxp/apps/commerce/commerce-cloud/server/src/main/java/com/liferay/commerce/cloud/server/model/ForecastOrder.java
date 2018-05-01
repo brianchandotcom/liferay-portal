@@ -61,12 +61,12 @@ public class ForecastOrder implements JsonSerializable {
 		_customerId = customerId;
 	}
 
-	public void setForecastOrderItems(List<ForecastOrderItem> orderItems) {
-		_orderItems = orderItems;
-	}
-
 	public void setOrderId(long orderId) {
 		_orderId = orderId;
+	}
+
+	public void setOrderItems(List<ForecastOrderItem> orderItems) {
+		_orderItems = orderItems;
 	}
 
 	@Override

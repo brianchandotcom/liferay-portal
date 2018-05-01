@@ -100,13 +100,6 @@ public class IconDeleteTag extends IconTag {
 				HtmlUtil.escapeJS(url)).concat("');");
 		}
 
-		if (url.startsWith("wsrp_rewrite?")) {
-			url = StringUtil.replace(
-				url, "/wsrp_rewrite",
-				"&wsrp-extensions=encodeURL/wsrp_rewrite");
-			url = "submitForm(document.hrefFm, '".concat(url).concat("');");
-		}
-
 		if (!_trash) {
 			StringBundler sb = new StringBundler(5);
 

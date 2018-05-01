@@ -108,7 +108,6 @@
 /portal-web/docroot/WEB-INF/tld/ddm.tld
 /portal-web/docroot/WEB-INF/tld/liferay-*.tld
 /portal-web/docroot/WEB-INF/tmp
-/portal-web/docroot/wsrp
 /portal-web/liferay-portal.war
 /portal-web/portal-web.war
 /portal-web/portal-web.war.asc

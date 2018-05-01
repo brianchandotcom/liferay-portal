@@ -135,6 +135,9 @@ public class AnnotationsExtendedObjectClassDefinition
 			map.put(
 				"factoryInstanceLabelAttribute",
 				extendedObjectClassDefinition.factoryInstanceLabelAttribute());
+			map.put(
+				"generateUI",
+				Boolean.toString(extendedObjectClassDefinition.generateUI()));
 
 			ExtendedObjectClassDefinition.Scope scope =
 				extendedObjectClassDefinition.scope();

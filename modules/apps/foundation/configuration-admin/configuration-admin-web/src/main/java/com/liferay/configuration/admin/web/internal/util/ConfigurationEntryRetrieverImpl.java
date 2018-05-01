@@ -147,11 +147,14 @@ public class ConfigurationEntryRetrieverImpl
 				configurationCategory, languageId);
 
 		for (ConfigurationModel configurationModel : configurationModels) {
-			ConfigurationEntry configurationEntry =
-				new ConfigurationModelConfigurationEntry(
-					configurationModel, locale, _resourceBundleLoaderProvider);
+			if (configurationModel.isGenerateUI()) {
+				ConfigurationEntry configurationEntry =
+					new ConfigurationModelConfigurationEntry(
+						configurationModel, locale,
+						_resourceBundleLoaderProvider);
 
-			configurationEntries.add(configurationEntry);
+				configurationEntries.add(configurationEntry);
+			}
 		}
 
 		Set<ConfigurationScreen> configurationScreens = getConfigurationScreens(

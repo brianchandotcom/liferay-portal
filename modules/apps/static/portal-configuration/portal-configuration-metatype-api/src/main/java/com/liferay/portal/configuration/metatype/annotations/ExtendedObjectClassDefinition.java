@@ -44,6 +44,8 @@ public @interface ExtendedObjectClassDefinition {
 
 	public String factoryInstanceLabelAttribute() default "";
 
+	public boolean generateUI() default true;
+
 	public Scope scope() default Scope.SYSTEM;
 
 	public String settingsId() default "";

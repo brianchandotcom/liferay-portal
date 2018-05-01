@@ -356,7 +356,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 2.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getNoAssetPages();
 

@@ -14,58 +14,16 @@
 
 package com.liferay.wiki.uad.display;
 
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-
 import com.liferay.user.associated.data.display.UADDisplay;
 
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @Component(immediate = true, property =  {
 	"model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE}, service = UADDisplay.class)
-public class WikiNodeUADDisplay implements UADDisplay<WikiNode> {
-	public String getApplicationName() {
-		return WikiUADConstants.APPLICATION_NAME;
-	}
-
-	public String[] getDisplayFieldNames() {
-		return _wikiNodeUADDisplayHelper.getDisplayFieldNames();
-	}
-
-	@Override
-	public String getEditURL(WikiNode wikiNode,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-		return _wikiNodeUADDisplayHelper.getWikiNodeEditURL(wikiNode,
-			liferayPortletRequest, liferayPortletResponse);
-	}
-
-	public String getKey() {
-		return WikiUADConstants.CLASS_NAME_WIKI_NODE;
-	}
-
-	@Override
-	public Map<String, Object> getNonanonymizableFieldValues(WikiNode wikiNode) {
-		return _wikiNodeUADDisplayHelper.getUADEntityNonanonymizableFieldValues(wikiNode);
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "WikiNode";
-	}
-
-	@Reference
-	private WikiNodeUADDisplayHelper _wikiNodeUADDisplayHelper;
+public class WikiNodeUADDisplay extends BaseWikiNodeUADDisplay {
 }

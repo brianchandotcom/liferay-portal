@@ -45,13 +45,6 @@ public class InitFilter extends BasePortalFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		if (GetterUtil.getBoolean(request.getParameter("wsrp"))) {
-			processFilter(
-				InitFilter.class.getName(), request, response, filterChain);
-
-			return;
-		}
-
 		_countDownLatch.await();
 
 		synchronized (this) {

@@ -100,15 +100,6 @@ public class RenderURLParamsTag extends TagSupport {
 
 		String url = portletURL.toString();
 
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		if (ParamUtil.getBoolean(request, "wsrp")) {
-			int x = url.indexOf("/wsrp_rewrite");
-
-			url = url.substring(0, x);
-		}
-
 		JspWriter jspWriter = pageContext.getOut();
 
 		String queryString = HttpUtil.getQueryString(url);

@@ -3415,6 +3415,12 @@ classpath.
 - [LPS-80123]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.23.
 
+## 5.3.102 - 2018-05-01
+
+### Changed
+- [LPS-80332]: Update the `-include` instruction for projects that have a `suite.bnd`
+file.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3803,6 +3809,7 @@ classpath.
 [LPS-80123]: https://issues.liferay.com/browse/LPS-80123
 [LPS-80125]: https://issues.liferay.com/browse/LPS-80125
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184
+[LPS-80332]: https://issues.liferay.com/browse/LPS-80332
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

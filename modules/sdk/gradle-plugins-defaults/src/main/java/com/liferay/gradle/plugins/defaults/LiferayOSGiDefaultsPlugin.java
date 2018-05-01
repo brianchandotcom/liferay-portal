@@ -3755,7 +3755,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		sb.append("modules/suites/");
 		sb.append(liferayRelengSuite);
-		sb.append("/");
+		sb.append('/');
 		sb.append(_SUITE_BND_FILE_NAME);
 
 		return new File(portalRootDir, sb.toString());

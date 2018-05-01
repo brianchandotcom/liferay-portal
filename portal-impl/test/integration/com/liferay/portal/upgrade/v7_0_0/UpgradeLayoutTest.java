@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.verify.test;
+package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -23,22 +23,23 @@ import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
-@RunWith(Arquillian.class)
-public class VerifyLayoutTest extends BaseVerifyProcessTestCase {
+public class UpgradeLayoutTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new VerifyLayout();
+
+	@Test
+	public void testUpgrade() throws Exception {
+		new UpgradeLayout().upgrade();
 	}
 
 }

@@ -99,8 +99,12 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 							File file = filePath.toFile();
 
-							testClasses.add(
-								new TestClass(file.getParentFile()));
+							TestClass testClass = new TestClass(
+								file.getParentFile());
+
+							testClass.addTestMethod(batchName);
+
+							testClasses.add(testClass);
 						}
 
 						return FileVisitResult.CONTINUE;

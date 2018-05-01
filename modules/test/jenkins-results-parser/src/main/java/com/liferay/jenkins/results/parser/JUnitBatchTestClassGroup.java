@@ -149,11 +149,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 							packagePath = packagePath.replace(
 								".java", ".class");
 
-							return new TestClass(new File(packagePath));
+							return new JunitTestClass(
+								new File(packagePath), path.toFile());
 						}
 
-						return new TestClass(
-							new File(filePath.replace(".java", ".class")));
+						return new JunitTestClass(
+							new File(filePath.replace(".java", ".class")),
+							path.toFile());
 					}
 
 					private boolean _pathExcluded(Path path) {

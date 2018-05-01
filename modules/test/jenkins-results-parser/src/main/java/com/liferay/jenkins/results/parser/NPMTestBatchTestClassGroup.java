@@ -64,25 +64,29 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	private void _setTestClasses() {
-		if (testRelevantChanges) {
-			try {
-				List<File> moduleDirs =
+		try {
+			List<File> moduleDirs;
+
+			if (testRelevantChanges) {
+				moduleDirs =
 					portalGitWorkingDirectory.
 						getModifiedNPMTestModuleDirsList();
-
-				for (File moduleDir : moduleDirs) {
-					testClasses.add(new TestClass(moduleDir));
-				}
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
+			else {
+				moduleDirs =
+					portalGitWorkingDirectory.getNPMTestModuleDirsList();
+			}
+
+			for (File moduleDir : moduleDirs) {
+				TestClass testClass = new TestClass(moduleDir);
+
+				testClass.addTestMethod(batchName);
+
+				testClasses.add(testClass);
 			}
 		}
-		else {
-			File modulesDir = new File(
-				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
-
-			testClasses.add(new TestClass(modulesDir));
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
 		}
 	}
 

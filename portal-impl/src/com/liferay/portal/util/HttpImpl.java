@@ -1173,7 +1173,9 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		return _shortenURL(url, 0);
+		return _shortenURL(
+			url, 0, StringPool.QUESTION, StringPool.AMPERSAND,
+			StringPool.EQUAL);
 	}
 
 	/**
@@ -1998,37 +2000,49 @@ public class HttpImpl implements Http {
 		return pos;
 	}
 
-	private String _shortenURL(String url, int currentLength) {
-		int index = url.indexOf(CharPool.QUESTION);
+	private String _shortenURL(
+		String encodedURL, int currentLength, String encodedQuestion,
+		String encodedAmpersand, String encodedEqual) {
+
+		if ((currentLength + encodedURL.length()) <= Http.URL_MAXIMUM_LENGTH) {
+			return encodedURL;
+		}
+
+		int index = encodedURL.indexOf(encodedQuestion);
 
 		if (index == -1) {
-			return url;
+			return encodedURL;
 		}
 
 		StringBundler sb = new StringBundler();
 
-		sb.append(url.substring(0, index));
-		sb.append(StringPool.QUESTION);
+		sb.append(encodedURL.substring(0, index));
+		sb.append(encodedQuestion);
 
-		String queryString = url.substring(index + 1);
+		String queryString = encodedURL.substring(
+			index + encodedQuestion.length());
 
-		String[] params = StringUtil.split(queryString, CharPool.AMPERSAND);
+		String[] params = StringUtil.split(queryString, encodedAmpersand);
 
 		params = ArrayUtil.unique(params);
 
-		List<String> redirectParams = new ArrayList<>();
+		List<String> encodedRedirectParams = new ArrayList<>();
+
+		String backURLParam = "_backURL" + encodedEqual;
+		String redirectParam = "_redirect" + encodedEqual;
+		String returnToFullPageURLParam = "_returnToFullPageURL" + encodedEqual;
 
 		for (String param : params) {
-			if (param.contains("_backURL=") || param.contains("_redirect=") ||
-				param.contains("_returnToFullPageURL=") ||
+			if (param.contains(backURLParam) || param.contains(redirectParam) ||
+				param.contains(returnToFullPageURLParam) ||
 				(param.startsWith("redirect") &&
-				 (param.indexOf(CharPool.EQUAL) != -1))) {
+				 (param.indexOf(encodedEqual) != -1))) {
 
-				redirectParams.add(param);
+				encodedRedirectParams.add(param);
 			}
 			else {
 				sb.append(param);
-				sb.append(StringPool.AMPERSAND);
+				sb.append(encodedAmpersand);
 			}
 		}
 
@@ -2038,32 +2052,24 @@ public class HttpImpl implements Http {
 			return sb.toString();
 		}
 
-		for (String redirectParam : redirectParams) {
-			int pos = redirectParam.indexOf(CharPool.EQUAL);
+		for (String encodedRedirectParam : encodedRedirectParams) {
+			int pos = encodedRedirectParam.indexOf(encodedEqual);
 
-			String key = redirectParam.substring(0, pos);
+			String key = encodedRedirectParam.substring(0, pos);
 
-			String redirect = redirectParam.substring(pos + 1);
-
-			try {
-				redirect = URLCodec.decodeURL(redirect, StringPool.UTF8);
-			}
-			catch (IllegalArgumentException iae) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Skipping undecodable parameter " + redirectParam, iae);
-				}
-
-				continue;
-			}
+			String redirect = encodedRedirectParam.substring(
+				pos + encodedEqual.length());
 
 			sb.append(key);
-			sb.append(StringPool.EQUAL);
+			sb.append(encodedEqual);
 
 			int newLength = sb.length();
 
-			redirect = URLCodec.encodeURL(
-				_shortenURL(redirect, currentLength + newLength));
+			redirect = _shortenURL(
+				redirect, currentLength + newLength,
+				URLCodec.encodeURL(encodedQuestion),
+				URLCodec.encodeURL(encodedAmpersand),
+				URLCodec.encodeURL(encodedEqual));
 
 			newLength += redirect.length();
 
@@ -2072,7 +2078,7 @@ public class HttpImpl implements Http {
 			}
 			else {
 				sb.append(redirect);
-				sb.append(StringPool.AMPERSAND);
+				sb.append(encodedAmpersand);
 			}
 		}
 

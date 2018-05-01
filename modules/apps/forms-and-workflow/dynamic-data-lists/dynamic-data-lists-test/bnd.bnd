@@ -6,8 +6,6 @@ Import-Package:\
 	!org.apache.poi.ss.usermodel.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Dynamic Data Lists
 -includeresource:\
 	test-classes/integration,\
 	@lib/poi.jar

@@ -11,7 +11,5 @@ Import-Package:\
 	!org.codehaus.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Calendar
 Liferay-Require-SchemaVersion: 3.0.0
 Liferay-Service: true

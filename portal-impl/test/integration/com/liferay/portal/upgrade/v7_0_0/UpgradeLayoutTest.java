@@ -14,17 +14,12 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.VerifyLayout;
-import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña

@@ -30,7 +30,7 @@ public class TestClassGroupFactory {
 		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		if (batchName.startsWith("functional-")) {
+		if (batchName.contains("functional-")) {
 			return new FunctionalBatchTestClassGroup(
 				batchName, portalGitWorkingDirectory, testSuiteName);
 		}

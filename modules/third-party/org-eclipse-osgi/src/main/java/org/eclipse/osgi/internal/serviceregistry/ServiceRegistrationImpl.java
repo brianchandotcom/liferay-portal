@@ -282,7 +282,7 @@ public class ServiceRegistrationImpl<S> implements ServiceRegistration<S>, Compa
 		 */
 		synchronized (registrationLock) {
 			if (reference == null) {
-				throw new IllegalStateException(Msg.SERVICE_ALREADY_UNREGISTERED_EXCEPTION);
+				throw new IllegalStateException(Msg.SERVICE_ALREADY_UNREGISTERED_EXCEPTION + " " + properties);
 			}
 
 			return reference;

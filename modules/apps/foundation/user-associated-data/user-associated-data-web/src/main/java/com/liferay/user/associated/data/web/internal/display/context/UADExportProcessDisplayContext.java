@@ -16,10 +16,12 @@ package com.liferay.user.associated.data.web.internal.display.context;
 
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -81,6 +83,22 @@ public class UADExportProcessDisplayContext {
 		return creationMenu;
 	}
 
+	public DropdownItemList getFilterItems() throws PortalException {
+		DropdownItemList filterItems = new DropdownItemList();
+
+		PortletURL portletURL = getPortletURL();
+
+		filterItems.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					getNavigationFilterItems(portletURL));
+				dropdownGroupItem.setLabel(
+					LanguageUtil.get(_request, "filter-by-navigation"));
+			});
+
+		return filterItems;
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -89,6 +107,24 @@ public class UADExportProcessDisplayContext {
 		_navigation = ParamUtil.getString(_request, "navigation", "all");
 
 		return _navigation;
+	}
+
+	public DropdownItemList getNavigationFilterItems(PortletURL portletURL) {
+		DropdownItemList navigationFilterItems = new DropdownItemList();
+
+		for (String navigation :
+				new String[] {"all", "in-progress", "successful", "failed"}) {
+
+			navigationFilterItems.add(
+				dropdownItem -> {
+					dropdownItem.setActive(navigation.equals(getNavigation()));
+					dropdownItem.setLabel(
+						LanguageUtil.get(_request, navigation));
+					dropdownItem.setHref(portletURL, "navigation", navigation);
+				});
+		}
+
+		return navigationFilterItems;
 	}
 
 	public String getOrderByCol() {

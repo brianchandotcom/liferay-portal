@@ -46,6 +46,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <clay:management-toolbar
 	creationMenu="<%= uadExportProcessDisplayContext.getCreationMenu() %>"
+	filterItems="<%= uadExportProcessDisplayContext.getFilterItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"
@@ -53,11 +54,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "in-progress", "successful", "failed"} %>'
-			portletURL="<%= PortletURLUtil.clone(uadExportProcessDisplayContext.getPortletURL(), renderResponse) %>"
-		/>
-
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= uadExportProcessDisplayContext.getOrderByCol() %>"
 			orderByType="<%= uadExportProcessDisplayContext.getOrderByType() %>"

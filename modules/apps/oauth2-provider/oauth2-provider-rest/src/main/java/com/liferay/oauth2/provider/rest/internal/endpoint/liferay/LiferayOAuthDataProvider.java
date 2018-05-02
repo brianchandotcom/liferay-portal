@@ -511,6 +511,7 @@ public class LiferayOAuthDataProvider
 		List<String> accessTokens = newRefreshToken.getAccessTokens();
 
 		accessTokens.add(accessToken.getTokenKey());
+
 		try {
 			_invokeTransactionally(
 				() -> {

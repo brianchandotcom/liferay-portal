@@ -1887,12 +1887,12 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="" />
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
 			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
 
 		<execute macro="MessageboardsThread#viewNoXSSPG">
-			<var name="threadBody" value="" />
+			<var name="threadBody"><![CDATA[<script>alert(123);</script>]]></var>
 			<var name="threadSubject"><![CDATA[<script>alert(123);</script>]]></var>
 		</execute>
 

@@ -32,9 +32,9 @@ import java.util.List;
  *
  * <p>
  * As an example, see the <a
- * href="https://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/blogs/blogs-item-selector-api/src/main/java/com/liferay/blogs/item/selector/criterion/BlogsItemSelectorCriterion.java">BlogsItemSelectorCriterion</a>
+ * href="https://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/blogs/blogs-item-selector-api/src/main/java/com/liferay/blogs/item/selector/criterion/BlogsItemSelectorCriterion.java">BlogsItemSelectorCriterion</a>
  * class and how <a
- * href="https://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/blogs/blogs-editor-configuration/src/main/java/com/liferay/blogs/editor/configuration/internal/BlogsContentEditorConfigContributor.java">BlogsContentEditorConfigContributor's
+ * href="https://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/blogs/blogs-editor-configuration/src/main/java/com/liferay/blogs/editor/configuration/internal/BlogsContentEditorConfigContributor.java">BlogsContentEditorConfigContributor's
  * populateFileBrowserURL</a> method populates an instance of it and uses it.
  * </p>
  *

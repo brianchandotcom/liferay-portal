@@ -44,11 +44,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Luca Pellizzon
+ * Test <code>CPDefinition</code> in 4 different ways, based on
+ * <code>ignoreSKUCombinations</code> and <code>hasDefaultInstance</code>
+ * parameters, split in 5 tests.
  *
- * Test CPDefinition in 4 different ways,
- * based on ignoreSKUCombinations and hasDefaultInstance parameters,
- * split in 5 tests.
+ * @author Luca Pellizzon
  */
 @RunWith(Arquillian.class)
 public class CPDefinitionAddTest {
@@ -64,9 +64,14 @@ public class CPDefinitionAddTest {
 	}
 
 	/**
-	 * testAddCPDefinition, where both ignoreSKUCombinations
-	 * and hasDefaultInstance are set to false
-	 * The expected result is: the CPDefinition status is set to Draft
+	 * Test adding a <code>CPDefinition</code>, where both
+	 * <code>ignoreSKUCombinations</code> and <code>hasDefaultInstance</code>
+	 * are <code>false</code>.
+	 *
+	 * <p>
+	 * Expected result: the <code>CPDefinition</code> status is
+	 * <code>DRAFT</code>.
+	 * </p>
 	 *
 	 * @throws Exception
 	 */
@@ -80,10 +85,14 @@ public class CPDefinitionAddTest {
 	}
 
 	/**
-	 * testAddCPDefinitionWithDefaultInstance, where ignoreSKUCombinations
-	 * is set to false and hasDefaultInstance is set to true
-	 * The expected result is: the CPDefinition status is set to Draft and
-	 * the default CPInstance is set to Inactive
+	 * Test adding a <code>CPDefinition</code>, where
+	 * <code>ignoreSKUCombinations</code> is <code>false</code> and
+	 * <code>hasDefaultInstance</code> is <code>true</code>.
+	 *
+	 * <p>
+	 * Expected result: the <code>CPDefinition</code> is <code>DRAFT</code> and
+	 * the default <code>CPInstance</code> is <code>INACTIVE</code>.
+	 * </p>
 	 *
 	 * @throws Exception
 	 */
@@ -108,12 +117,19 @@ public class CPDefinitionAddTest {
 	}
 
 	/**
-	 * testAddCPDefinitionWithDefaultInstanceAndSKUs, like the one before,
-	 * but with some SKUs (CPInstance) associated to the CPDefinition.
-	 * The SKUs are created by setting up some CPOptions for the CPDefinition
-	 * with the skuContributor set to true
-	 * The expected result is: the CPDefinition status is set to Approved and
-	 * the default CPInstance is set to Inactive
+	 * Test adding a <code>CPDefinition</code>, where
+	 * <code>ignoreSKUCombinations</code> is <code>false</code> and
+	 * <code>hasDefaultInstance</code> is <code>true</code>, and with some SKUs
+	 * (<code>CPInstance</code>) associated to the <code>CPDefinition</code>.
+	 * The SKUs are created by setting up some <code>CPOptions</code> for the
+	 * <code>CPDefinition</code> with <code>skuContributor</code> set to
+	 * <code>true</code>.
+	 *
+	 * <p>
+	 * Expected result: the <code>CPDefinition</code> status is
+	 * <code>APPROVED</code> and the default <code>CPInstance</code> is
+	 * <code>INACTIVE</code>.
+	 * </p>
 	 *
 	 * @throws Exception
 	 */
@@ -163,10 +179,14 @@ public class CPDefinitionAddTest {
 	}
 
 	/**
-	 * testAddCPDefinitionWithIgnoreSKUCombinations, where ignoreSKUCombinations
-	 * is set to true and hasDefaultInstance is set to false
-	 * The expected result is: the CPDefinition status is set to Draft and
-	 * there is no CPInstance associated to it
+	 * Test adding a <code>CPDefinition</code>, where
+	 * <code>ignoreSKUCombinations</code> is <code>true</code> and
+	 * <code>hasDefaultInstance</code> is <code>false</code>.
+	 *
+	 * <p>
+	 * Expected result: the <code>CPDefinition</code> is <code>DRAFT</code> and
+	 * there is no <code>CPInstance</code> associated to it.
+	 * </p>
 	 *
 	 * @throws Exception
 	 */
@@ -187,10 +207,15 @@ public class CPDefinitionAddTest {
 	}
 
 	/**
-	 * testAddCPDefinitionWithIgnoreSKUCombinationsAndDefaultInstance,
-	 * where both ignoreSKUCombinations and hasDefaultInstance are set to true
-	 * The expected result is: the CPDefinition status is set to Approved and
-	 * the default CPInstance status is set to Approved
+	 * Test adding a <code>CPDefinition</code>, where both
+	 * <code>ignoreSKUCombinations</code> and <code>hasDefaultInstance</code>
+	 * are <code>true</code>.
+	 *
+	 * <p>
+	 * Expected result: the <code>CPDefinition</code> status is
+	 * <code>APPROVED</code> and the default <code>CPInstance</code> status is
+	 * <code>APPROVED</code>.
+	 * </p>
 	 *
 	 * @throws Exception
 	 */

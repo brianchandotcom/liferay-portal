@@ -15,6 +15,7 @@
 package com.liferay.commerce.headless.product.apio.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -99,9 +100,11 @@ public class ProductDefinitionHelper {
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.addSelectedFieldNames(
-			Field.CREATE_DATE, Field.ENTRY_CLASS_PK, Field.DESCRIPTION,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID,
-			"skus");
+			CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID,
+			CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME,
+			CPDefinitionIndexer.FIELD_SKUS, Field.CREATE_DATE,
+			Field.ENTRY_CLASS_PK, Field.DESCRIPTION, Field.GROUP_ID,
+			Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID);
 
 		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);

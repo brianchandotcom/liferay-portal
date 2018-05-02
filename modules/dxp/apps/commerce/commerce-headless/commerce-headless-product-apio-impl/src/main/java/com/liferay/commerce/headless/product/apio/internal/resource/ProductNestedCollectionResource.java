@@ -28,7 +28,9 @@ import com.liferay.commerce.headless.product.apio.internal.form.ProductCreatorFo
 import com.liferay.commerce.headless.product.apio.internal.util.ProductDefinitionHelper;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.media.object.apio.identifier.FileEntryIdentifier;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -123,12 +125,23 @@ public class ProductNestedCollectionResource
 		).addLinkedModel(
 			"author", PersonIdentifier.class,
 			document -> GetterUtil.getLong(document.get(Field.USER_ID))
+		).addLinkedModel(
+			"defaultImage", FileEntryIdentifier.class,
+			document -> GetterUtil.getLong(
+				document.get(
+					CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID))
 		).addString(
 			"description", this::_getSafeDescription
 		).addString(
+			"productType",
+			document -> document.get(
+				CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME)
+		).addString(
 			"title", document -> document.get(Field.TITLE)
 		).addStringList(
-			"skus", document -> Arrays.asList(document.getValues("skus"))
+			"skus",
+			document -> Arrays.asList(
+				document.getValues(CPDefinitionIndexer.FIELD_SKUS))
 		).build();
 	}
 

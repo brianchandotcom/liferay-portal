@@ -4,6 +4,7 @@ targetCompatibility = "1.8"
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.apio.architect.api", version: "1.0.0-20180417.142404-27"
+	compileOnly group: "com.liferay", name: "com.liferay.media.object.apio.api", version: "1.0.0-20180424.162840-1"
 	compileOnly group: "com.liferay", name: "com.liferay.person.apio.api", version: "1.0.0-20180424.162900-1"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.apio.api", version: "1.0.0-20180424.162921-1"

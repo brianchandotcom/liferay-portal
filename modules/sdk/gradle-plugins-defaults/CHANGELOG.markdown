@@ -3418,8 +3418,14 @@ classpath.
 ## 5.3.102 - 2018-05-01
 
 ### Added
-- [LPS-80332]: Update the `-include` instruction for projects that have a `suite.bnd`
-file.
+- [LPS-80332]: Update the `-include` instruction for projects that have a
+`suite.bnd` file.
+
+## 5.3.105 - 2018-05-02
+
+### Changed
+- [LPS-80394]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.2.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -3810,6 +3816,7 @@ file.
 [LPS-80125]: https://issues.liferay.com/browse/LPS-80125
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184
 [LPS-80332]: https://issues.liferay.com/browse/LPS-80332
+[LPS-80394]: https://issues.liferay.com/browse/LPS-80394
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

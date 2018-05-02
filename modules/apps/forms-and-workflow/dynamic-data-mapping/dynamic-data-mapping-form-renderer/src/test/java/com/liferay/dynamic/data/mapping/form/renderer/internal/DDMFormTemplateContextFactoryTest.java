@@ -114,6 +114,7 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 		String containerId = StringUtil.randomString();
 
 		ddmFormRenderingContext.setContainerId(containerId);
+
 		ddmFormRenderingContext.setHttpServletRequest(_request);
 
 		Map<String, Object> templateContext =

@@ -63,6 +63,7 @@ public class PortalClassPathUtil {
 			_portalProcessConfig.getBootstrapClassPath());
 
 		builder.setBootstrapClassPath(classpath);
+
 		builder.setProcessLogConsumer(
 			processLog -> {
 				if (Level.DEBUG == processLog.getLevel()) {

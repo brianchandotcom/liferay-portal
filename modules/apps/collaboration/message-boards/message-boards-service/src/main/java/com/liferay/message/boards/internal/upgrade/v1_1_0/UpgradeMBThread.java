@@ -45,10 +45,12 @@ public class UpgradeMBThread extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long threadId = rs.getLong(1);
 				String title = rs.getString(2);
 
 				ps2.setString(1, title);
+
+				long threadId = rs.getLong(1);
+
 				ps2.setLong(2, threadId);
 
 				ps2.addBatch();

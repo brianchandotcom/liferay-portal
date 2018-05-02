@@ -2333,6 +2333,7 @@ public class ProjectTemplatesTest {
 		List<File> archetypesDirs = Arrays.asList(archetypesDir);
 
 		projectTemplatesArgs.setArchetypesDirs(archetypesDirs);
+
 		projectTemplatesArgs.setAuthor(author);
 		projectTemplatesArgs.setClassName(className);
 		projectTemplatesArgs.setContributorType(contributorType);

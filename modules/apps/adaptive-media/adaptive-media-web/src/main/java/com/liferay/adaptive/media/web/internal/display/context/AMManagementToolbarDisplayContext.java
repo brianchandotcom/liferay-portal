@@ -145,6 +145,7 @@ public class AMManagementToolbarDisplayContext {
 							dropdownItem.setHref(
 								allImageConfigurationEntriesURL,
 								"entriesNavigation", "all");
+
 							dropdownItem.setActive(
 								entriesNavigation.equals("all"));
 							dropdownItem.setLabel(
@@ -160,6 +161,7 @@ public class AMManagementToolbarDisplayContext {
 							dropdownItem.setHref(
 								enabledImageConfigurationEntriesURL,
 								"entriesNavigation", "enabled");
+
 							dropdownItem.setActive(
 								entriesNavigation.equals("enabled"));
 							dropdownItem.setLabel(
@@ -175,6 +177,7 @@ public class AMManagementToolbarDisplayContext {
 							dropdownItem.setHref(
 								disabledImageConfigurationEntriesURL,
 								"entriesNavigation", "disabled");
+
 							dropdownItem.setActive(
 								entriesNavigation.equals("disabled"));
 							dropdownItem.setLabel(

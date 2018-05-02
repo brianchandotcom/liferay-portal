@@ -248,11 +248,12 @@ public class FragmentEntryDisplayContext {
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			_renderResponse);
+
+		FragmentEntryLink fragmentEntryLink = getFragmentEntryLink();
 
 		soyContext.putHTML(
 			"content",

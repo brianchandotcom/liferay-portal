@@ -58,8 +58,6 @@ public abstract class BaseUADDisplayTestCase<T> {
 
 	protected abstract String getApplicationName();
 
-	protected abstract String getTypeDescription();
-
 	protected abstract UADAggregator<T> getUADAggregator();
 
 	protected abstract UADDisplay<T> getUADDisplay();

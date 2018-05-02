@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace;
 
+import com.liferay.gradle.plugins.workspace.configurators.ExtProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.ModulesProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.PluginsProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
@@ -45,6 +46,7 @@ public class WorkspaceExtension {
 	public WorkspaceExtension(Settings settings) {
 		_gradle = settings.getGradle();
 
+		_projectConfigurators.add(new ExtProjectConfigurator(settings));
 		_projectConfigurators.add(new ModulesProjectConfigurator(settings));
 		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));

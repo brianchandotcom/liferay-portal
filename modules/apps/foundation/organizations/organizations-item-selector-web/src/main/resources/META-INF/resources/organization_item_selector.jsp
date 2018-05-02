@@ -102,14 +102,12 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 </div>
 
 <aui:script use="liferay-search-container">
-	var organizationSelectorWrapper = A.one('#<portlet:namespace />organizationSelectorWrapper');
-
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizations');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
-			var allSelectedElements = event.elements.allSelectedElements
+			var allSelectedElements = event.elements.allSelectedElements;
 			var arr = [];
 
 			allSelectedElements.each(
@@ -118,7 +116,7 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 
 					var data = row.getDOM().dataset;
 
-					arr.push({id : data.id, name : data.name});
+					arr.push({id: data.id, name: data.name});
 				}
 			);
 

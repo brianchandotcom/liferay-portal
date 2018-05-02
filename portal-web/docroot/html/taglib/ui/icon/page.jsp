@@ -20,58 +20,17 @@
 boolean urlIsNotNull = Validator.isNotNull(url);
 %>
 
-<liferay-util:buffer
-	var="linkContent"
->
-	<c:choose>
-		<c:when test="<%= Validator.isNotNull(icon) %>">
-			<aui:icon cssClass="<%= iconCssClass %>" image="<%= icon %>" markupView="<%= markupView %>" />
-		</c:when>
-		<c:when test="<%= auiImage %>">
-			<aui:icon image="<%= image.substring(_AUI_PATH.length()) %>" />
-		</c:when>
-		<c:otherwise>
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(src) %>">
-					<c:choose>
-						<c:when test="<%= Validator.isNotNull(id) %>">
-							<img id="<%= id %>" src="<%= src %>" <%= details %> />
-						</c:when>
-						<c:otherwise>
-							<img src="<%= src %>" <%= details %> />
-						</c:otherwise>
-					</c:choose>
-				</c:when>
-				<c:otherwise>
-					<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
-						<i class="<%= iconCssClass %>"></i>
-					</c:if>
-				</c:otherwise>
-			</c:choose>
-		</c:otherwise>
-	</c:choose>
-
-	<c:choose>
-		<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">
-			<span class="taglib-text-icon"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
-		</c:when>
-		<c:otherwise>
-			<span class="taglib-text <%= label ? StringPool.BLANK : "hide-accessible" %>"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
-		</c:otherwise>
-	</c:choose>
-</liferay-util:buffer>
-
 <c:choose>
 	<c:when test="<%= (iconListIconCount != null) && ((iconListSingleIcon == null) || iconListShowWhenSingleIcon) %>">
 		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="menuitem" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
-						<%= linkContent %>
+						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
 					</aui:a>
 				</c:when>
 				<c:otherwise>
-					<%= linkContent %>
+					<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
 				</c:otherwise>
 			</c:choose>
 		</li>
@@ -81,11 +40,13 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="menuitem" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
-						<%= linkContent %>
+						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
 					</aui:a>
 				</c:when>
 				<c:otherwise>
-					<span class="taglib-icon"><%= linkContent %></span>
+					<span class="taglib-icon">
+						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
+					</span>
 				</c:otherwise>
 			</c:choose>
 		</li>
@@ -100,11 +61,11 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="<%= ariaRole %>" cssClass="<%= linkCssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick="<%= onClick %>" target="<%= target %>">
-						<%= linkContent %>
+						<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
 					</aui:a>
 				</c:when>
 				<c:otherwise>
-					<%= linkContent %>
+					<%@ include file="/html/taglib/ui/icon/link_content.jspf" %>
 				</c:otherwise>
 			</c:choose>
 		</span>

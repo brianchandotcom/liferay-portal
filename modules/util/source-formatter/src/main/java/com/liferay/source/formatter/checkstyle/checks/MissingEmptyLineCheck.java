@@ -41,29 +41,22 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST parentAST = detailAST.getParent();
+		String variableName = _getVariableName(detailAST);
 
-		DetailAST nameAST = null;
-
-		if (parentAST.getType() == TokenTypes.EXPR) {
-			nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
-		}
-		else if (parentAST.getType() == TokenTypes.VARIABLE_DEF) {
-			nameAST = parentAST.findFirstToken(TokenTypes.IDENT);
-		}
-
-		if (nameAST == null) {
+		if (variableName == null) {
 			return;
 		}
 
+		DetailAST parentAST = detailAST.getParent();
+
 		_checkMissingEmptyLineAfterReferencingVariable(
-			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
+			parentAST, variableName, DetailASTUtil.getEndLine(detailAST));
 		_checkMissingEmptyLineBetweenAssigningAndUsingVariable(
-			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
+			parentAST, variableName, DetailASTUtil.getEndLine(detailAST));
 	}
 
 	private void _checkMissingEmptyLineAfterReferencingVariable(
-		DetailAST detailAST, String name, int endLine) {
+		DetailAST detailAST, String variableName, int endLine) {
 
 		boolean referenced = false;
 
@@ -85,20 +78,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				return;
 			}
 
-			boolean expressionReferencesVariable = false;
-
-			List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
-				nextSibling, true, TokenTypes.IDENT);
-
-			for (DetailAST identAST : identASTList) {
-				String identName = identAST.getText();
-
-				if (identName.equals(name)) {
-					expressionReferencesVariable = true;
-				}
-			}
-
-			if (!expressionReferencesVariable) {
+			if (!_containsVariableName(nextSibling, variableName)) {
 				if (!referenced) {
 					return;
 				}
@@ -113,7 +93,7 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				log(
 					startLineNextExpression,
 					_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
-					startLineNextExpression, name);
+					startLineNextExpression, variableName);
 
 				return;
 			}
@@ -165,6 +145,46 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					_MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
 			}
 		}
+	}
+
+	private boolean _containsVariableName(
+		DetailAST detailAST, String variableName) {
+
+		if (variableName == null) {
+			return false;
+		}
+
+		List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST identAST : identASTList) {
+			String identName = identAST.getText();
+
+			if (identName.equals(variableName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private String _getVariableName(DetailAST assignAST) {
+		DetailAST nameAST = null;
+
+		DetailAST parentAST = assignAST.getParent();
+
+		if (parentAST.getType() == TokenTypes.EXPR) {
+			nameAST = assignAST.findFirstToken(TokenTypes.IDENT);
+		}
+		else if (parentAST.getType() == TokenTypes.VARIABLE_DEF) {
+			nameAST = parentAST.findFirstToken(TokenTypes.IDENT);
+		}
+
+		if (nameAST != null) {
+			return nameAST.getText();
+		}
+
+		return null;
 	}
 
 	private boolean _isExpressionAssignsVariable(

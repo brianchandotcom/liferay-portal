@@ -96,14 +96,12 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 </div>
 
 <aui:script use="aui-parse-content,liferay-search-container">
-	var roleSelectorWrapper = A.one('#<portlet:namespace />roleSelectorWrapper');
-
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />roles');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
-			var allSelectedElements = event.elements.allSelectedElements
+			var allSelectedElements = event.elements.allSelectedElements;
 			var arr = [];
 
 			allSelectedElements.each(
@@ -112,7 +110,7 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 
 					var data = row.getDOM().dataset;
 
-					arr.push({id : data.id, name : data.name});
+					arr.push({id: data.id, name: data.name});
 				}
 			);
 

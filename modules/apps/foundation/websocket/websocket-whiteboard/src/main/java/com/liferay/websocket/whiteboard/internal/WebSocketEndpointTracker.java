@@ -206,7 +206,9 @@ public class WebSocketEndpointTracker {
 
 	@Deactivate
 	protected void deactivate() {
-		_serverEndpointConfigWrapperServiceTracker.close();
+		if (_serverEndpointConfigWrapperServiceTracker != null) {
+			_serverEndpointConfigWrapperServiceTracker.close();
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

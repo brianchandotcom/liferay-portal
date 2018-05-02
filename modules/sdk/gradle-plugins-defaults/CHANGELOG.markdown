@@ -2955,6 +2955,8 @@ version 2.2.0.
 
 ### Changed
 - [LPS-78050]: Update the [Liferay Gradle Plugins] dependency to version 3.8.8.
+- [LPS-78537]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.1.
 
 ## 5.3.19 - 2018-03-07
 
@@ -3772,6 +3774,7 @@ file.
 [LPS-78459]: https://issues.liferay.com/browse/LPS-78459
 [LPS-78477]: https://issues.liferay.com/browse/LPS-78477
 [LPS-78493]: https://issues.liferay.com/browse/LPS-78493
+[LPS-78537]: https://issues.liferay.com/browse/LPS-78537
 [LPS-78558]: https://issues.liferay.com/browse/LPS-78558
 [LPS-78571]: https://issues.liferay.com/browse/LPS-78571
 [LPS-78669]: https://issues.liferay.com/browse/LPS-78669

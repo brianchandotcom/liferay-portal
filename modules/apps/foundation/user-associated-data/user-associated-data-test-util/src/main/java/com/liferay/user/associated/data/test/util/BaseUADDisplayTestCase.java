@@ -91,15 +91,6 @@ public abstract class BaseUADDisplayTestCase<T> {
 
 	protected abstract UADDisplay<T> getUADDisplay();
 
-	private T _createBaseModel() throws Exception {
-		addBaseModel(_user.getUserId());
-
-		List<T> baseModels = _uadDisplay.getRange(
-			_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		return baseModels.get(0);
-	}
-
 	private UADDisplay<T> _uadDisplay;
 
 	@DeleteAfterTestRun

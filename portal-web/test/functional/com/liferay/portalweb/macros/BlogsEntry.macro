@@ -505,7 +505,7 @@
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
-		<execute function="Click" locator1="Ratings#THUMBS_DOWN" />
+		<execute function="Click" locator1="Ratings#THUMB_DOWN" />
 	</command>
 
 	<command name="rateThumbsUp">
@@ -513,7 +513,7 @@
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
-		<execute function="Click" locator1="Ratings#THUMBS_UP" />
+		<execute function="Click" locator1="Ratings#THUMB_UP" />
 	</command>
 
 	<command name="removeViewPermissionsPG">
@@ -1199,7 +1199,7 @@
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Ratings#THUMBS_DOWN" value1="${voteCount}" />
+		<execute function="AssertTextEquals" locator1="Ratings#THUMB_DOWN" value1="${voteCount}" />
 	</command>
 
 	<command name="viewThumbsUp">
@@ -1207,7 +1207,7 @@
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Ratings#THUMBS_UP" value1="${voteCount}" />
+		<execute function="AssertTextEquals" locator1="Ratings#THUMB_UP" value1="${voteCount}" />
 	</command>
 
 	<command name="viewTitle">

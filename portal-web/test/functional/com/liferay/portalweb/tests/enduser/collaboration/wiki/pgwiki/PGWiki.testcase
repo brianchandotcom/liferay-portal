@@ -868,7 +868,7 @@
 		</execute>
 
 		<execute macro="WikiPage#addInlineImageViaEdit">
-			<var name="navTab" value="Page Attachments" />
+			<var name="navTab" value="Upload Image" />
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 

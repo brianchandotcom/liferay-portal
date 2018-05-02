@@ -2217,10 +2217,10 @@ public class ProjectTemplatesTest {
 
 			System.arraycopy(taskPaths, 0, arguments, 2, taskPaths.length);
 
-			gradleRunner.withArguments(arguments);
+			gradleRunner.withArguments(arguments + "--stacktrace");
 		}
 		else {
-			gradleRunner.withArguments(taskPaths);
+			gradleRunner.withArguments(taskPaths + "--stacktrace");
 		}
 
 		gradleRunner.withGradleDistribution(_gradleDistribution);

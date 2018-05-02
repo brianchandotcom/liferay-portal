@@ -176,6 +176,15 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 
 	Liferay.provide(
 		window,
+		'<portlet:namespace />refreshPortlet',
+		function() {
+			location.href = '<%= currentURL %>';
+		},
+		['aui-dialog', 'aui-dialog-iframe']
+	);
+
+	Liferay.provide(
+		window,
 		'<portlet:namespace />toggleFilter',
 		function(state) {
 			var A = AUI();

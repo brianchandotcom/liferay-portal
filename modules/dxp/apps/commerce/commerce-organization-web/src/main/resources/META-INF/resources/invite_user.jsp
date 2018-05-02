@@ -33,9 +33,7 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 
 	<div class="lfr-form-content">
 		<div class="form-group-autofit">
-			<aui:input label="" name="emailAddress" type="text" wrapperCssClass="form-group-item">
-				<aui:validator name="required" />
-			</aui:input>
+			<aui:input label="" name="emailAddress" type="text" wrapperCssClass="form-group-item" />
 
 			<aui:button cssClass="form-group-item-shrink" name="addButton" onClick='<%= renderResponse.getNamespace() + "addMember();" %>' value="add" />
 		</div>
@@ -100,6 +98,8 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 					if (userInvitationContent) {
 						userInvitationContent.append(content);
 					}
+
+					emailAddress.val('');
 				}
 			}
 		},
@@ -111,6 +111,15 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 		'<portlet:namespace />submitFm',
 		function() {
 			var A = AUI();
+
+			var loadingMask = new A.LoadingMask(
+				{
+					'strings.loading': '<%= UnicodeLanguageUtil.get(request, "users-are-being-invited") %>',
+					target: A.getBody()
+				}
+			);
+
+			loadingMask.show();
 
 			var arrayEmailAddresses = [];
 
@@ -141,15 +150,16 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 					method: 'POST',
 					on: {
 						success: function() {
-							Liferay.Util.getOpener().<portlet:namespace />closePopup('inviteUserDialog');
+							loadingMask.hide();
 
-							Liferay.Util.getOpener().Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
+							Liferay.Util.getOpener().<portlet:namespace />closePopup('inviteUserDialog');
+							Liferay.Util.getOpener().<portlet:namespace />refreshPortlet();
 						}
 					}
 				}
 			);
 		},
-		['aui-io-request']
+		['aui-io-request', 'aui-loading-mask-deprecated']
 	);
 </aui:script>
 

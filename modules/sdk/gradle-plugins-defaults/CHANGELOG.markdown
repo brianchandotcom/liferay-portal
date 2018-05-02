@@ -3420,8 +3420,8 @@ classpath.
 ## 5.3.102 - 2018-05-01
 
 ### Added
-- [LPS-80332]: Update the `-include` instruction for projects that have a `suite.bnd`
-file.
+- [LPS-80332]: Update the `-include` instruction for projects that have a
+`suite.bnd` file.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report

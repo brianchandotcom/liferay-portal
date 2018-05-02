@@ -148,6 +148,12 @@ body .ddm-user-view-content {
 		background-image: none;
 	}
 
+	.has-error {
+		td, th {
+			color: #DA1414;
+		}
+	}
+
 	.lfr-ddm-form-field-repeatable-toolbar a {
 		color: #65B6F0;
 		text-decoration: none;

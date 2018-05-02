@@ -262,7 +262,7 @@
 			<var name="dmDocumentTitle" value="Potato Document" />
 		</execute>
 
-		<var method="DateUtil#getFormattedDate(0,'MMM d YYYY')" name="currentDate" />
+		<var method="DateUtil#getFormattedDate(0,'MMM d, YYYY')" name="currentDate" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Search Page" />

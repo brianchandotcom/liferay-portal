@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Michael Hashimoto
  */
-public class TestClass implements Comparable {
+public class TestClass implements Comparable<TestClass> {
 
 	public TestClass(File file) {
 		_file = file;
@@ -37,8 +37,10 @@ public class TestClass implements Comparable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		TestClass testClass = (TestClass)o;
+	public int compareTo(TestClass testClass) {
+		if (testClass == null) {
+			throw new NullPointerException("test class is NULL");
+		}
 
 		return _file.compareTo(testClass.getFile());
 	}

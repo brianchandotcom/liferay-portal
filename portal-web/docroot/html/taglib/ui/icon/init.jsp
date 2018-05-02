@@ -88,7 +88,7 @@ if (toolTip) {
 	cssClass += " lfr-portal-tooltip";
 }
 
-linkCssClass += " lfr-icon-item";
+linkCssClass += " lfr-icon-item taglib-icon";
 %>
 
 <%!

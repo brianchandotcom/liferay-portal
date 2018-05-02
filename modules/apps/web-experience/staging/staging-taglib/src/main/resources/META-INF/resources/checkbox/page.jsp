@@ -29,6 +29,14 @@
 					title="<%= label %>"
 				/>
 
+				<c:if test="<%= items > 0 %>">
+					<span class="staging-taglib-checkbox-items"><%= items + StringPool.SPACE + LanguageUtil.get(request, "items") %></span>
+				</c:if>
+
+				<c:if test="<%= deletions > 0 %>">
+					<span class="deletions staging-taglib-checkbox-deletions"><%= deletions + StringPool.SPACE + LanguageUtil.get(request, "deletions") %></span>
+				</c:if>
+
 				<c:if test="<%= Validator.isNotNull(description) %>">
 					<span class="staging-taglib-checkbox-description"><%= HtmlUtil.escape(description) %></span>
 				</c:if>

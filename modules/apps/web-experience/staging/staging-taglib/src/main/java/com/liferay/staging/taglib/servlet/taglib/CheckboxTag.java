@@ -38,6 +38,10 @@ public class CheckboxTag extends BaseCssTag {
 		_checked = checked;
 	}
 
+	public void setDeletions(long deletions) {
+		_deletions = deletions;
+	}
+
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -48,6 +52,10 @@ public class CheckboxTag extends BaseCssTag {
 
 	public void setId(String id) {
 		_id = id;
+	}
+
+	public void setItems(long items) {
+		_items = items;
 	}
 
 	public void setLabel(String label) {
@@ -82,9 +90,11 @@ public class CheckboxTag extends BaseCssTag {
 		super.cleanUp();
 
 		_checked = false;
+		_deletions = 0;
 		_description = StringPool.BLANK;
 		_disabled = false;
 		_id = StringPool.BLANK;
+		_items = 0;
 		_label = StringPool.BLANK;
 		_name = StringPool.BLANK;
 		_popover = StringPool.BLANK;
@@ -100,10 +110,12 @@ public class CheckboxTag extends BaseCssTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-staging:checkbox:checked", _checked);
+		request.setAttribute("liferay-staging:checkbox:deletions", _deletions);
 		request.setAttribute(
 			"liferay-staging:checkbox:description", _description);
 		request.setAttribute("liferay-staging:checkbox:disabled", _disabled);
 		request.setAttribute("liferay-staging:checkbox:id", _id);
+		request.setAttribute("liferay-staging:checkbox:items", _items);
 		request.setAttribute("liferay-staging:checkbox:label", _label);
 		request.setAttribute("liferay-staging:checkbox:name", _name);
 		request.setAttribute("liferay-staging:checkbox:popover", _popover);
@@ -115,9 +127,11 @@ public class CheckboxTag extends BaseCssTag {
 	private static final String _PAGE = "/checkbox/page.jsp";
 
 	private boolean _checked;
+	private long _deletions;
 	private String _description = StringPool.BLANK;
 	private boolean _disabled;
 	private String _id = StringPool.BLANK;
+	private long _items;
 	private String _label = StringPool.BLANK;
 	private String _name = StringPool.BLANK;
 	private String _popover = StringPool.BLANK;

@@ -2,6 +2,19 @@
 	font-weight: normal;
 }
 
+.staging-taglib-checkbox-items, .staging-taglib-checkbox-deletions {
+	&:after {
+		content: ')'
+	}
+
+	&:before {
+		content: '('
+	}
+
+	color: #6B6C7E;
+	font-style: italic;
+}
+
 .staging-taglib-checkbox-suggestion {
 	font-weight: normal;
 }

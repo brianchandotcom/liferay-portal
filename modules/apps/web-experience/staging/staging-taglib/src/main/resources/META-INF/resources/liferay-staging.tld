@@ -47,6 +47,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The number of deletions. It is displayed after the label when it is greater than zero.</description>
+			<name>deletions</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The language key of the checkbox's description text. It is displayed after the label.</description>
 			<name>description</name>
 			<required>false</required>
@@ -61,6 +67,12 @@
 		<attribute>
 			<description>The HTML input's ID. It is added to the portlet ID when creating the DOM ID.</description>
 			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The number of items. It is displayed after the label when it is greater than zero.</description>
+			<name>items</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

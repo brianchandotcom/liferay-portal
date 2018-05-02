@@ -18,9 +18,11 @@
 
 <%
 boolean checked = GetterUtil.getBoolean(request.getAttribute("liferay-staging:checkbox:checked"));
+long deletions = GetterUtil.getLong(request.getAttribute("liferay-staging:checkbox:deletions"));
 String descriptionKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:description"));
 boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-staging:checkbox:disabled"));
 String id = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:id"));
+long items = GetterUtil.getLong(request.getAttribute("liferay-staging:checkbox:items"));
 String labelKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:label"));
 String name = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:name"));
 String popoverTextKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:popover"));

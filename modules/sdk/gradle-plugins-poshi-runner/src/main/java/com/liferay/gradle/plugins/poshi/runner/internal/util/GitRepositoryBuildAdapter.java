@@ -36,7 +36,6 @@ import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
-import org.gradle.util.Clock;
 
 /**
  * @author Andrea Di Giorgi
@@ -101,7 +100,7 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 			return gitRepositoryBag;
 		}
 
-		Clock clock = new Clock();
+		long start = System.currentTimeMillis();
 
 		try (Repository repository = RepositoryCache.open(
 				FileKey.exact(_getGitDir(rootDir), FS.DETECTED))) {
@@ -115,8 +114,9 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 
 			if (_logger.isInfoEnabled()) {
 				_logger.info(
-					"Getting data from Git repository in \"{}\" took {}.",
-					repository.getDirectory(), clock.getTime());
+					"Getting data from Git repository in \"{}\" took {} ms.",
+					repository.getDirectory(),
+					System.currentTimeMillis() - start);
 			}
 
 			return gitRepositoryBag;

@@ -6573,20 +6573,6 @@ public class ServiceBuilder {
 		_deleteFile(outputPath + "/service/ServletContextUtil.java");
 	}
 
-	private void _removeUADAggregator(Entity entity) {
-		_deleteFile(
-			StringBundler.concat(
-				_uadOutputPath, "/uad/aggregator/", entity.getName(),
-				"UADAggregator.java"));
-	}
-
-	private void _removeUADAggregatorTest(Entity entity) {
-		_deleteFile(
-			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/aggregator/test/",
-				entity.getName(), "UADAggregatorTest.java"));
-	}
-
 	private void _removeUADAnonymizer(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(

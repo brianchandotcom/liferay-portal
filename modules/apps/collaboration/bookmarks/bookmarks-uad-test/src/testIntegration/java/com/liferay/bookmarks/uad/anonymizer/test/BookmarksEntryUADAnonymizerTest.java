@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
@@ -85,11 +84,6 @@ public class BookmarksEntryUADAnonymizerTest
 	}
 
 	@Override
-	protected UADAggregator getUADAggregator() {
-		return _uadAggregator;
-	}
-
-	@Override
 	protected UADAnonymizer getUADAnonymizer() {
 		return _uadAnonymizer;
 	}
@@ -133,11 +127,6 @@ public class BookmarksEntryUADAnonymizerTest
 
 	@Inject
 	private BookmarksEntryUADTestHelper _bookmarksEntryUADTestHelper;
-
-	@Inject(
-		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
-	)
-	private UADAggregator _uadAggregator;
 
 	@Inject(
 		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY

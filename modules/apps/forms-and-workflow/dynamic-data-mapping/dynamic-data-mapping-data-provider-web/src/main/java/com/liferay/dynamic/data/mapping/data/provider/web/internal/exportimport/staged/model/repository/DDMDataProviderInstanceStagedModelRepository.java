@@ -136,6 +136,14 @@ public class DDMDataProviderInstanceStagedModelRepository
 	}
 
 	@Override
+	public DDMDataProviderInstance getStagedModel(long dataProviderInstanceId)
+		throws PortalException {
+
+		return _ddmDataProviderInstanceLocalService.getDDMDataProviderInstance(
+			dataProviderInstanceId);
+	}
+
+	@Override
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext,
 			DDMDataProviderInstance dataProviderInstance)

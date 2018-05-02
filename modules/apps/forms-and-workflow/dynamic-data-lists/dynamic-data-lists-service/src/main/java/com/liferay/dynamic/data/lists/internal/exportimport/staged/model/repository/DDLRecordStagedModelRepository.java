@@ -178,6 +178,11 @@ public class DDLRecordStagedModelRepository
 	}
 
 	@Override
+	public DDLRecord getStagedModel(long recordId) throws PortalException {
+		return _ddlRecordLocalService.getDDLRecord(recordId);
+	}
+
+	@Override
 	public DDLRecord saveStagedModel(DDLRecord ddlRecord)
 		throws PortalException {
 

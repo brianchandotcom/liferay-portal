@@ -130,6 +130,13 @@ public class BookmarksFolderStagedModelRepository
 	}
 
 	@Override
+	public BookmarksFolder getStagedModel(long folderId)
+		throws PortalException {
+
+		return _bookmarksFolderLocalService.getBookmarksFolder(folderId);
+	}
+
+	@Override
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext,
 			BookmarksFolder bookmarksFolder)

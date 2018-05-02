@@ -124,6 +124,14 @@ public class FragmentEntryLinkStagedModelRepository
 	}
 
 	@Override
+	public FragmentEntryLink getStagedModel(long fragmentEntryLinkId)
+		throws PortalException {
+
+		return _fragmentEntryLinkLocalService.getFragmentEntryLink(
+			fragmentEntryLinkId);
+	}
+
+	@Override
 	public FragmentEntryLink saveStagedModel(
 		FragmentEntryLink fragmentEntryLink) {
 

@@ -126,6 +126,14 @@ public class FriendlyURLEntryStagedModelRepository
 	}
 
 	@Override
+	public FriendlyURLEntry getStagedModel(long friendlyURLEntryId)
+		throws PortalException {
+
+		return _friendlyURLEntryLocalService.getFriendlyURLEntry(
+			friendlyURLEntryId);
+	}
+
+	@Override
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext, FriendlyURLEntry stagedModel)
 		throws PortletDataException {

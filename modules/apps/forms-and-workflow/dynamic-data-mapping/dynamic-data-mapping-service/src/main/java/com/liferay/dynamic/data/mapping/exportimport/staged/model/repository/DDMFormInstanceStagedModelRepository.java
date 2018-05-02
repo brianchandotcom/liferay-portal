@@ -160,6 +160,14 @@ public class DDMFormInstanceStagedModelRepository
 	}
 
 	@Override
+	public DDMFormInstance getStagedModel(long ddmFormInstanceId)
+		throws PortalException {
+
+		return _ddmFormInstanceLocalService.getDDMFormInstance(
+			ddmFormInstanceId);
+	}
+
+	@Override
 	public DDMFormInstance saveStagedModel(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 

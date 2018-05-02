@@ -211,6 +211,11 @@ public class DDLRecordSetStagedModelRepository
 	}
 
 	@Override
+	public DDLRecordSet getStagedModel(long classPK) throws PortalException {
+		return _ddlRecordSetLocalService.getDDLRecordSet(classPK);
+	}
+
+	@Override
 	public DDLRecordSet saveStagedModel(DDLRecordSet ddlRecordSet)
 		throws PortalException {
 

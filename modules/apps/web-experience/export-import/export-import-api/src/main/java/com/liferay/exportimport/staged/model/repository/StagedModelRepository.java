@@ -153,6 +153,10 @@ public interface StagedModelRepository<T extends StagedModel> {
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
+	public default T getStagedModel(long classPK) throws PortalException {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Restores the staged model from the portal instance's trash.
 	 *

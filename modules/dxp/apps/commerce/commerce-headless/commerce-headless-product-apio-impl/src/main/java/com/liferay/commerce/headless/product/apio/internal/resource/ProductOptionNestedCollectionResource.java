@@ -105,7 +105,7 @@ public class ProductOptionNestedCollectionResource
 				() -> document.getDate(Field.MODIFIED_DATE)
 			).getUnchecked()
 		).addString(
-			"title", document -> document.get(Field.TITLE)
+			"name", document -> document.get(Field.TITLE)
 		).addString(
 			"description", document -> document.get(Field.DESCRIPTION)
 		).build();
@@ -139,11 +139,11 @@ public class ProductOptionNestedCollectionResource
 							"with ID " + cpDefinitionOptionRelId);
 				}
 
-				CPDefinitionOptionRel cpDefinition =
+				CPDefinitionOptionRel cpDefinitionOptionRel =
 					_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
 						cpDefinitionOptionRelId);
 
-				return indexer.getDocument(cpDefinition);
+				return indexer.getDocument(cpDefinitionOptionRel);
 			}
 
 			List<Document> documents = hits.toList();

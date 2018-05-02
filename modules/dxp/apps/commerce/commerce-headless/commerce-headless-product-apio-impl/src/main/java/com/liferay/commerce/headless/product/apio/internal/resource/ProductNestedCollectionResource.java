@@ -138,7 +138,7 @@ public class ProductNestedCollectionResource
 			document -> document.get(
 				CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME)
 		).addString(
-			"title", document -> document.get(Field.TITLE)
+			"name", document -> document.get(Field.TITLE)
 		).addStringList(
 			"skus",
 			document -> Arrays.asList(

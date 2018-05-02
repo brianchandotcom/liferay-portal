@@ -3447,6 +3447,13 @@ classpath.
 - [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.27.
 
+## 5.3.105 - 2018-05-02
+
+### Changed
+
+### Fixed
+- [LPS-65633]: If the module is `private`, search for the public `app.bnd`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3469,6 +3476,7 @@ classpath.
 [LPS-63943]: https://issues.liferay.com/browse/LPS-63943
 [LPS-64098]: https://issues.liferay.com/browse/LPS-64098
 [LPS-65179]: https://issues.liferay.com/browse/LPS-65179
+[LPS-65633]: https://issues.liferay.com/browse/LPS-65633
 [LPS-65930]: https://issues.liferay.com/browse/LPS-65930
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762

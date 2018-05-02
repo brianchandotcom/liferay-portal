@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
@@ -92,11 +91,6 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 	}
 
 	@Override
-	protected UADAggregator getUADAggregator() {
-		return _uadAggregator;
-	}
-
-	@Override
 	protected UADAnonymizer getUADAnonymizer() {
 		return _uadAnonymizer;
 	}
@@ -136,8 +130,6 @@ public class MBThreadUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBThrea
 	private MBThreadLocalService _mbThreadLocalService;
 	@Inject
 	private MBThreadUADTestHelper _mbThreadUADTestHelper;
-	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)
-	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)
 	private UADAnonymizer _uadAnonymizer;
 }

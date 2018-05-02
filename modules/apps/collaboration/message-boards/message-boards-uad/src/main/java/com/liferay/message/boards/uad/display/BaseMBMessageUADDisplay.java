@@ -15,10 +15,19 @@
 package com.liferay.message.boards.uad.display;
 
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
 
+import org.osgi.service.component.annotations.Reference;
+
+import java.io.Serializable;
+
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -34,21 +43,23 @@ import java.util.Locale;
  * @generated
  */
 public abstract class BaseMBMessageUADDisplay extends BaseModelUADDisplay<MBMessage> {
+	@Override
+	public MBMessage get(Serializable primaryKey) throws PortalException {
+		return mbMessageLocalService.getMBMessage(Long.valueOf(
+				primaryKey.toString()));
+	}
+
+	@Override
 	public String getApplicationName() {
 		return MBUADConstants.APPLICATION_NAME;
 	}
 
-	/**
-	 * Returns an ordered string array of the fields' names to be displayed.
-	 * Each field name corresponds to a table column based on the order they are
-	 * specified.
-	 *
-	 * @return the array of field names to display
-	 */
+	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "subject", "body" };
 	}
 
+	@Override
 	public String getKey() {
 		return MBUADConstants.CLASS_NAME_MB_MESSAGE;
 	}
@@ -57,4 +68,28 @@ public abstract class BaseMBMessageUADDisplay extends BaseModelUADDisplay<MBMess
 	public String getTypeName(Locale locale) {
 		return "MBMessage";
 	}
+
+	@Override
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return mbMessageLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	@Override
+	protected DynamicQuery doGetDynamicQuery() {
+		return mbMessageLocalService.dynamicQuery();
+	}
+
+	@Override
+	protected List<MBMessage> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return mbMessageLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return MBUADConstants.USER_ID_FIELD_NAMES_MB_MESSAGE;
+	}
+
+	@Reference
+	protected MBMessageLocalService mbMessageLocalService;
 }

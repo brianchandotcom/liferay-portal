@@ -96,14 +96,12 @@ PortletURL portletURL = userGroupItemSelectorViewDisplayContext.getPortletURL();
 </div>
 
 <aui:script use="liferay-search-container">
-	var userGroupSelectorWrapper = A.one('#<portlet:namespace />userGroupSelectorWrapper');
-
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />userGroups');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
-			var allSelectedElements = event.elements.allSelectedElements
+			var allSelectedElements = event.elements.allSelectedElements;
 			var arr = [];
 
 			allSelectedElements.each(
@@ -112,7 +110,7 @@ PortletURL portletURL = userGroupItemSelectorViewDisplayContext.getPortletURL();
 
 					var data = row.getDOM().dataset;
 
-					arr.push({id : data.id, name : data.name});
+					arr.push({id: data.id, name: data.name});
 				}
 			);
 

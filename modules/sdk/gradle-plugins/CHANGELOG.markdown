@@ -4315,6 +4315,44 @@ version 2.1.23.
 - [LPS-80123]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.206.
 
+## 3.11.24 - 2018-04-30
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.143.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.616.
+
+## 3.11.25 - 2018-04-30
+
+### Changed
+- [LPS-80122]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.24.
+- [LPS-80122]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.207.
+
+## 3.11.26 - 2018-05-01
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.144.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.617.
+- [LPS-79959]: Update the default value of the
+`liferay.appServers.jboss.version` property to `7.1.0`.
+- [LPS-80184]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.25.
+- [LPS-80184]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.208.
+
+## 3.11.27 - 2018-05-02
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.145.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.618.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -4676,10 +4714,12 @@ version 1.0.206.
 [LPS-79799]: https://issues.liferay.com/browse/LPS-79799
 [LPS-79919]: https://issues.liferay.com/browse/LPS-79919
 [LPS-79953]: https://issues.liferay.com/browse/LPS-79953
+[LPS-79959]: https://issues.liferay.com/browse/LPS-79959
 [LPS-79963]: https://issues.liferay.com/browse/LPS-79963
 [LPS-80055]: https://issues.liferay.com/browse/LPS-80055
 [LPS-80064]: https://issues.liferay.com/browse/LPS-80064
 [LPS-80091]: https://issues.liferay.com/browse/LPS-80091
+[LPS-80122]: https://issues.liferay.com/browse/LPS-80122
 [LPS-80123]: https://issues.liferay.com/browse/LPS-80123
 [LPS-80125]: https://issues.liferay.com/browse/LPS-80125
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184

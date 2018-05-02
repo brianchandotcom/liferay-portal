@@ -2955,6 +2955,8 @@ version 2.2.0.
 
 ### Changed
 - [LPS-78050]: Update the [Liferay Gradle Plugins] dependency to version 3.8.8.
+- [LPS-78537]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.1.
 
 ## 5.3.19 - 2018-03-07
 
@@ -3415,11 +3417,42 @@ classpath.
 - [LPS-80123]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.23.
 
+## 5.3.100 - 2018-04-30
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.24.
+
+## 5.3.101 - 2018-04-30
+
+### Changed
+- [LPS-80122]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.25.
+
 ## 5.3.102 - 2018-05-01
 
 ### Added
-- [LPS-80332]: Update the `-include` instruction for projects that have a `suite.bnd`
-file.
+- [LPS-80332]: Update the `-include` instruction for projects that have a
+`suite.bnd` file.
+
+## 5.3.103 - 2018-05-01
+
+### Changed
+- [LPS-80184]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.26.
+
+## 5.3.104 - 2018-05-02
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.27.
+
+## 5.3.105 - 2018-05-02
+
+### Changed
+
+### Fixed
+- [LPS-65633]: If the module is `private`, search for the public `app.bnd`.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -3443,6 +3476,7 @@ file.
 [LPS-63943]: https://issues.liferay.com/browse/LPS-63943
 [LPS-64098]: https://issues.liferay.com/browse/LPS-64098
 [LPS-65179]: https://issues.liferay.com/browse/LPS-65179
+[LPS-65633]: https://issues.liferay.com/browse/LPS-65633
 [LPS-65930]: https://issues.liferay.com/browse/LPS-65930
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762
@@ -3772,6 +3806,7 @@ file.
 [LPS-78459]: https://issues.liferay.com/browse/LPS-78459
 [LPS-78477]: https://issues.liferay.com/browse/LPS-78477
 [LPS-78493]: https://issues.liferay.com/browse/LPS-78493
+[LPS-78537]: https://issues.liferay.com/browse/LPS-78537
 [LPS-78558]: https://issues.liferay.com/browse/LPS-78558
 [LPS-78571]: https://issues.liferay.com/browse/LPS-78571
 [LPS-78669]: https://issues.liferay.com/browse/LPS-78669
@@ -3806,6 +3841,7 @@ file.
 [LPS-79963]: https://issues.liferay.com/browse/LPS-79963
 [LPS-80055]: https://issues.liferay.com/browse/LPS-80055
 [LPS-80091]: https://issues.liferay.com/browse/LPS-80091
+[LPS-80122]: https://issues.liferay.com/browse/LPS-80122
 [LPS-80123]: https://issues.liferay.com/browse/LPS-80123
 [LPS-80125]: https://issues.liferay.com/browse/LPS-80125
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184

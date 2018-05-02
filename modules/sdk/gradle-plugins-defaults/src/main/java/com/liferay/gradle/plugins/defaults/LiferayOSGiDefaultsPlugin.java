@@ -3514,8 +3514,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		String path = FileUtil.relativize(
 			project.getProjectDir(), modulesPrivateDir);
 
-		if (File.pathSeparatorChar != '/') {
-			path = path.replace(File.pathSeparatorChar, '/');
+		if (File.separatorChar != '/') {
+			path = path.replace(File.separatorChar, '/');
 		}
 
 		while (true) {

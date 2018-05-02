@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.display.UADDisplay;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,6 +40,36 @@ public abstract class BaseUADDisplayTestCase<T> {
 	public void setUp() throws Exception {
 		_uadDisplay = getUADDisplay();
 		_user = UserTestUtil.addUser();
+	}
+
+	@Test
+	public void testCount() throws Exception {
+		addBaseModel(_user.getUserId());
+
+		Assert.assertEquals(1, _uadDisplay.count(_user.getUserId()));
+	}
+
+	@Test
+	public void testGetAllByStatusByUserId() throws Exception {
+		Assume.assumeTrue(this instanceof WhenHasStatusByUserIdField);
+
+		WhenHasStatusByUserIdField<T> whenHasStatusByUserIdField =
+			(WhenHasStatusByUserIdField)this;
+
+		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
+			TestPropsValues.getUserId(), _user.getUserId());
+
+		List<T> baseModels = _uadDisplay.getRange(
+			_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(baseModels.toString(), 1, baseModels.size());
+
+		Assert.assertEquals(baseModel, baseModels.get(0));
+	}
+
+	@Test
+	public void testGetAllWithNoBaseModel() throws Exception {
+		Assert.assertEquals(0, _uadDisplay.count(_user.getUserId()));
 	}
 
 	@Test

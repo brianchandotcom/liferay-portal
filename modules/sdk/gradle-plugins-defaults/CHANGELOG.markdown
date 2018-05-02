@@ -3452,6 +3452,12 @@ classpath.
 ### Fixed
 - [LPS-65633]: If the module is `private`, search for the public `app.bnd`.
 
+## 5.3.106 - 2018-05-02
+
+### Changed
+- [LPS-80394]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.3.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3844,6 +3850,7 @@ classpath.
 [LPS-80125]: https://issues.liferay.com/browse/LPS-80125
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184
 [LPS-80332]: https://issues.liferay.com/browse/LPS-80332
+[LPS-80394]: https://issues.liferay.com/browse/LPS-80394
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

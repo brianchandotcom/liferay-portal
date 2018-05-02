@@ -124,6 +124,7 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 			assetVocabulary.getDescriptionMap());
 
 		document.addText(Field.NAME, assetVocabulary.getName());
+
 		addLocalizedField(
 			document, Field.TITLE, siteDefaultLocale,
 			assetVocabulary.getTitleMap());

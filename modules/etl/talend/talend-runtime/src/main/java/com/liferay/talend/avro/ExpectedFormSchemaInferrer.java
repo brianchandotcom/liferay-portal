@@ -63,6 +63,7 @@ public class ExpectedFormSchemaInferrer {
 			AvroConstants.ID, AvroUtils._string(), null, (Object)null);
 
 		designField.addProp(SchemaConstants.TALEND_IS_LOCKED, "true");
+
 		schemaFields.add(designField);
 
 		Schema schema = Schema.createRecord(

@@ -180,9 +180,11 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 			assetCategory.getDescriptionMap());
 
 		document.addText(Field.NAME, assetCategory.getName());
+
 		addLocalizedField(
 			document, Field.TITLE, siteDefaultLocale,
 			assetCategory.getTitleMap());
+
 		document.addKeyword(
 			"leftCategoryId", assetCategory.getLeftCategoryId());
 

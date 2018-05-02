@@ -350,6 +350,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 				variableVariableDependencies.addAffectedVariable(
 					variableDependencies.getVariableName());
+
 				variableDependencies.addRequiredVariable(
 					variableVariableDependencies.getVariableName());
 			}

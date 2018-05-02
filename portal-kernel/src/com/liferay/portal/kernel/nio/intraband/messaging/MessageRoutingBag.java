@@ -88,6 +88,7 @@ public class MessageRoutingBag implements Externalizable {
 			}
 			finally {
 				_message.put(MESSAGE_ROUTING_BAG, this);
+
 				_message = null;
 			}
 		}

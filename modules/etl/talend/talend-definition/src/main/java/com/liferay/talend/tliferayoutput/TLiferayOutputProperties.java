@@ -235,6 +235,7 @@ public class TLiferayOutputProperties
 
 					if (_log.isTraceEnabled()) {
 						_log.trace("Schema details:\n" + schema.toString());
+
 						DebugUtils.logCurrentStackTrace(_log);
 					}
 

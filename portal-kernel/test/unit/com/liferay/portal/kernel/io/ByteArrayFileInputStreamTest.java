@@ -180,6 +180,7 @@ public class ByteArrayFileInputStreamTest {
 		byteArrayFileInputStream.read();
 
 		byteArrayFileInputStream.close();
+
 		Assert.assertNull(byteArrayFileInputStream.data);
 		Assert.assertNull(byteArrayFileInputStream.file);
 		Assert.assertNull(byteArrayFileInputStream.fileInputStream);

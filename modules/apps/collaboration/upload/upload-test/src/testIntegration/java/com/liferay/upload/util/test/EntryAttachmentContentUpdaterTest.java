@@ -341,9 +341,11 @@ public class EntryAttachmentContentUpdaterTest {
 		StringBundler sb = new StringBundler(7 + attributes.size());
 
 		sb.append("<img ");
+
 		attributes.forEach(
 			(name, value) -> sb.append(
 				String.format("%s=\"%s\" ", name, value)));
+
 		sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 		sb.append("=\"");
 		sb.append(dataImageId);

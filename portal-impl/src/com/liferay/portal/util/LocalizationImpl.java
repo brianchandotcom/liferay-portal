@@ -994,6 +994,7 @@ public class LocalizationImpl implements Localization {
 				xmlStreamWriter.writeEndDocument();
 
 				xmlStreamWriter.close();
+
 				xmlStreamWriter = null;
 
 				xml = unsyncStringWriter.toString();
@@ -1213,6 +1214,7 @@ public class LocalizationImpl implements Localization {
 			xmlStreamWriter.writeEndDocument();
 
 			xmlStreamWriter.close();
+
 			xmlStreamWriter = null;
 
 			xml = unsyncStringWriter.toString();

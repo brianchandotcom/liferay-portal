@@ -100,14 +100,12 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 </div>
 
 <aui:script use="liferay-search-container">
-	var userSelectorWrapper = A.one('#<portlet:namespace />userSelectorWrapper');
-
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
-			var allSelectedElements = event.elements.allSelectedElements
+			var allSelectedElements = event.elements.allSelectedElements;
 			var arr = [];
 
 			allSelectedElements.each(
@@ -116,7 +114,7 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 
 					var data = row.getDOM().dataset;
 
-					arr.push({id : data.id, name : data.name});
+					arr.push({id: data.id, name: data.name});
 				}
 			);
 

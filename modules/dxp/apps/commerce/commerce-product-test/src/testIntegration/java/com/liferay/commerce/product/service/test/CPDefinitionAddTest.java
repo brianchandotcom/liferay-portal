@@ -136,36 +136,35 @@ public class CPDefinitionAddTest {
 			"default product instance should be INACTIVE"
 		);
 
-		int numberOfOptions = 2;
-		int numberOfValues = 2;
+		int cpOptionsCount = 2;
+		int cpOptionValuesCount = 2;
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 			_group.getGroupId(), SimpleCPTypeConstants.NAME, false, true);
 
-		for (int i = 0; i < numberOfOptions; i++) {
+		for (int i = 0; i < cpOptionsCount; i++) {
 			CPOption cpOption = CPTestUtil.addCPOption(
 				_group.getGroupId(), true);
 
-			_createOptionsValues(cpOption.getCPOptionId(), numberOfValues);
+			for (int j = 0; j < cpOptionValuesCount; i++) {
+				CPTestUtil.addCPOptionValue(cpOption);
+			}
 
 			CPTestUtil.addCPDefinitionOptionRel(
 				_group.getGroupId(), cpDefinition.getCPDefinitionId(),
 				cpOption.getCPOptionId());
 		}
 
-		int cpOptionCount = _cpOptionLocalService.getCPOptionsCount(
-			_group.getGroupId());
+		Assert.assertEquals(
+			cpOptionsCount,
+			_cpOptionLocalService.getCPOptionsCount(_group.getGroupId()));
 
-		Assert.assertEquals(numberOfOptions, cpOptionCount);
-
-		int cpDefinitionOptionRelCount =
+		Assert.assertEquals(
+			cpOptionsCount,
 			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
-				cpDefinition.getCPDefinitionId());
+				cpDefinition.getCPDefinitionId()));
 
-		Assert.assertEquals(numberOfOptions, cpDefinitionOptionRelCount);
-
-		CPTestUtil.buildCPInstances(
-			_group.getGroupId(), cpDefinition.getCPDefinitionId());
+		CPTestUtil.buildCPInstances(cpDefinition);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, cpDefinition.getStatus());
@@ -235,27 +234,19 @@ public class CPDefinitionAddTest {
 			_cpInstanceLocalService.getCPDefinitionInstances(
 				cpDefinition.getCPDefinitionId());
 
-		int onlyOneApproved = 0;
+		int approvedCPInstances = 0;
 
 		for (CPInstance cpInstance : cpInstances) {
-			if (cpInstance.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				onlyOneApproved++;
+			if (cpInstance.isApproved()) {
+				approvedCPInstances++;
 			}
 		}
 
-		Assert.assertEquals(1, onlyOneApproved);
+		Assert.assertEquals(1, approvedCPInstances);
 	}
 
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();
-
-	private void _createOptionsValues(long cpOptionId, int numberOfValues)
-		throws Exception {
-
-		for (int i = 0; i < numberOfValues; i++) {
-			CPTestUtil.addCPOptionValue(_group.getGroupId(), cpOptionId);
-		}
-	}
 
 	@Inject
 	private static CPDefinitionOptionRelLocalService

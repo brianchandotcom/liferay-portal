@@ -117,26 +117,26 @@ public class CPTestUtil {
 			skuContributor, RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public static CPOptionValue addCPOptionValue(long groupId, long cpOptionId)
+	public static CPOptionValue addCPOptionValue(CPOption cpOption)
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(cpOption.getGroupId());
 
 		return CPOptionValueLocalServiceUtil.addCPOptionValue(
-			cpOptionId, RandomTestUtil.randomLocaleStringMap(),
+			cpOption.getCPOptionId(), RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
 			serviceContext);
 	}
 
-	public static void buildCPInstances(long groupId, long cpDefinitionId)
+	public static void buildCPInstances(CPDefinition cpDefinition)
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(cpDefinition.getGroupId());
 
 		CPInstanceLocalServiceUtil.buildCPInstances(
-			cpDefinitionId, serviceContext);
+			cpDefinition.getCPDefinitionId(), serviceContext);
 	}
 
 	private static CPDefinition _addCPDefinition(

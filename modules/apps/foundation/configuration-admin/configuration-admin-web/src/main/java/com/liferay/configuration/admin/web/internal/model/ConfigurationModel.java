@@ -225,6 +225,14 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 		return _factory;
 	}
 
+	public boolean isGenerateUI() {
+		Map<String, String> extensionAttributes =
+			_extendedObjectClassDefinition.getExtensionAttributes(
+				XML_NAMESPACE);
+
+		return GetterUtil.get(extensionAttributes.get("generateUI"), true);
+	}
+
 	public boolean isGroupScope() {
 		return Objects.equals(getScope(), Scope.GROUP);
 	}

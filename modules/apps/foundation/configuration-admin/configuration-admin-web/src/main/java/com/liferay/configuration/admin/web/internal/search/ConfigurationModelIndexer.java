@@ -17,6 +17,7 @@ package com.liferay.configuration.admin.web.internal.search;
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -198,7 +199,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		document.addKeyword(Field.COMPANY_ID, CompanyConstants.SYSTEM);
 
 		ConfigurationCategory configurationCategory =
-			_configurationModelRetriever.getConfigurationCategory(
+			_configurationEntryRetriever.getConfigurationCategory(
 				configurationModel.getCategory());
 
 		if (configurationCategory != null) {
@@ -334,6 +335,9 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 		return values;
 	}
+
+	@Reference
+	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;

@@ -15,25 +15,24 @@
 package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.display.ConfigurationScreen;
+import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategoryMenuDisplay;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
+import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
+import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.IOException;
-
 import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletResponse;
-
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,62 +43,65 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
-		"mvc.command.name=/view_category",
+		"mvc.command.name=/view_configuration_screen",
 		"service.ranking:Integer=" + Integer.MAX_VALUE
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewCategoryMVCRenderCommand implements MVCRenderCommand {
+public class ViewConfigurationScreenMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		String configurationScreenKey = ParamUtil.getString(
+			renderRequest, "configurationScreenKey");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String configurationCategory = ParamUtil.getString(
-			renderRequest, "configurationCategory");
+		ConfigurationScreen configurationScreen =
+			_configurationEntryRetriever.getConfigurationScreen(
+				configurationScreenKey);
 
-		try {
-			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
-				_configurationEntryRetriever.
-					getConfigurationCategoryMenuDisplay(
-						configurationCategory, themeDisplay.getLanguageId());
+		ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
+			_configurationEntryRetriever.getConfigurationCategoryMenuDisplay(
+				configurationScreen.getCategoryKey(),
+				themeDisplay.getLanguageId());
 
-			String redirectURL = null;
+		renderRequest.setAttribute(
+			ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY,
+			configurationCategoryMenuDisplay);
 
-			if (!configurationCategoryMenuDisplay.isEmpty()) {
-				ConfigurationEntry configurationEntry =
-					configurationCategoryMenuDisplay.
-						getFirstConfigurationEntry();
+		renderRequest.setAttribute(
+			ConfigurationAdminWebKeys.CONFIGURATION_SCREEN,
+			configurationScreen);
 
-				redirectURL = configurationEntry.getEditURL(
-					renderRequest, renderResponse);
-			}
-			else {
-				PortletURL portletURL = renderResponse.createRenderURL();
+		ConfigurationEntry configurationEntry =
+			new ConfigurationScreenConfigurationEntry(
+				configurationScreen, _portal.getLocale(renderRequest));
 
-				redirectURL = portletURL.toString();
-			}
+		renderRequest.setAttribute(
+			ConfigurationAdminWebKeys.CONFIGURATION_ENTRY, configurationEntry);
 
-			HttpServletResponse response = _portal.getHttpServletResponse(
-				renderResponse);
+		renderRequest.setAttribute(
+			ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
+			_resourceBundleLoaderProvider);
 
-			response.sendRedirect(redirectURL);
-		}
-		catch (IOException ioe) {
-			throw new PortletException(ioe);
-		}
-
-		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		return "/view_configuration_screen.jsp";
 	}
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

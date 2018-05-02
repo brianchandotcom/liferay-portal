@@ -18,6 +18,7 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.search.FieldNames;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
@@ -116,12 +117,11 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 				new ConfigurationModelIterator(searchResults);
 
 			renderRequest.setAttribute(
+				ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER,
+				_configurationEntryRetriever);
+			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR,
 				configurationModelIterator);
-
-			renderRequest.setAttribute(
-				ConfigurationAdminWebKeys.CONFIGURATION_MODEL_RETRIEVER,
-				_configurationModelRetriever);
 			renderRequest.setAttribute(
 				ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
 				_resourceBundleLoaderProvider);
@@ -132,6 +132,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 
 		return "/search_results.jsp";
 	}
+
+	@Reference
+	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;

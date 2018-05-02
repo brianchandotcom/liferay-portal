@@ -27,6 +27,9 @@ public class ConfigurationAdminWebKeys {
 
 	public static final String CONFIGURATION_ENTRY = "CONFIGURATION_ENTRY";
 
+	public static final String CONFIGURATION_ENTRY_RETRIEVER =
+		"CONFIGURATION_ENTRY_RETRIEVER";
+
 	public static final String CONFIGURATION_MODEL = "CONFIGURATION_MODEL";
 
 	public static final String CONFIGURATION_MODEL_FORM_HTML =
@@ -35,8 +38,7 @@ public class ConfigurationAdminWebKeys {
 	public static final String CONFIGURATION_MODEL_ITERATOR =
 		"CONFIGURATION_MODEL_ITERATOR";
 
-	public static final String CONFIGURATION_MODEL_RETRIEVER =
-		"CONFIGURATION_MODEL_RETRIEVER";
+	public static final String CONFIGURATION_SCREEN = "CONFIGURATION_SCREEN";
 
 	public static final String FACTORY_CONFIGURATION_MODEL =
 		"FACTORY_CONFIGURATION_MODEL";

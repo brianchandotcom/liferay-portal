@@ -3,8 +3,8 @@ targetCompatibility = "1.8"
 
 dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testCompile project(":apps:forms-and-workflow:calendar:calendar-api")
-	testCompile project(":apps:forms-and-workflow:calendar:calendar-service")
+	testCompile project(":apps:calendar:calendar-api")
+	testCompile project(":apps:calendar:calendar-service")
 	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testCompile project(":core:petra:petra-lang")
 

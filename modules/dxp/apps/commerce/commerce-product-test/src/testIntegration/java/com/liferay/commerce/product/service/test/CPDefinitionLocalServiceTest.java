@@ -49,7 +49,7 @@ import org.junit.runner.RunWith;
  * @author Luca Pellizzon
  */
 @RunWith(Arquillian.class)
-public class CPDefinitionAddTest {
+public class CPDefinitionLocalServiceTest {
 
 	@ClassRule
 	@Rule

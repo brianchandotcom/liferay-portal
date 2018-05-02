@@ -38,6 +38,10 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		return testClassFiles;
 	}
 
+	protected void addTestClass(TestClass testClass) {
+		testClasses.add(testClass);
+	}
+
 	protected final List<TestClass> testClasses = new ArrayList<>();
 
 }

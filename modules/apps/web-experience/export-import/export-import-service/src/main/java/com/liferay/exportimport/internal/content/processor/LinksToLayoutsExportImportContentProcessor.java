@@ -259,6 +259,7 @@ public class LinksToLayoutsExportImportContentProcessor
 					"privateLayout", String.valueOf(privateLayout));
 
 				eicve.setLayoutReferenceParameters(layoutReferenceParameters);
+
 				eicve.setType(
 					ExportImportContentValidationException.LAYOUT_NOT_FOUND);
 

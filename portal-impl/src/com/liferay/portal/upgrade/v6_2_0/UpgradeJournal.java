@@ -826,6 +826,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 						processedArticleIds);
 
 					ps2.setString(1, normalizedURLTitle);
+
 					ps2.setString(2, urlTitle);
 
 					ps2.addBatch();

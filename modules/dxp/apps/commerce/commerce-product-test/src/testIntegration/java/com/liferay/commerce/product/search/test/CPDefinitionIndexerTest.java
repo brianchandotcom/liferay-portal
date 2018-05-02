@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -61,48 +62,27 @@ public class CPDefinitionIndexerTest {
 	}
 
 	@Test
-	public void testAddCPDefinition() throws Exception {
+	public void testSearch() throws Exception {
 		long groupId = _group.getGroupId();
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(groupId);
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		Class<?> cpDefinitionClass = cpDefinition.getModelClass();
-
-		String cpDefinitionClassName = cpDefinitionClass.getName();
-
-		Hits hits = _searchCPDefinitions(
-			cpDefinition.getCompanyId(), groupId, cpDefinitionClassName);
-
-		int check = 0;
-
-		for (Document document : hits.getDocs()) {
-			if (cpDefinitionClassName.equals(
-					document.getField(Field.ENTRY_CLASS_NAME).getValue())) {
-
-				if (cpDefinition.getTitle().equals(
-						document.getField(Field.TITLE).getValue())) {
-
-					check++;
-				}
-			}
-		}
-
-		Assert.assertEquals(1, check);
-	}
-
-	private Hits _searchCPDefinitions(
-			long companyId, long groupId, String className)
-		throws Exception {
-
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(companyId);
-		searchContext.setEntryClassNames(new String[] {className});
-		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setCompanyId(_group.getCompanyId());
+		searchContext.setEntryClassNames(
+			new String[] {CPDefinition.class.getName()});
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
 
-		return _indexer.search(searchContext);
+		Hits hits = _indexer.search(searchContext);
+
+		Document document = HitsAssert.assertOnlyOne(hits);
+
+		Assert.assertEquals(
+			cpDefinition.getCPDefinitionId(),
+			document.get(Field.ENTRY_CLASS_PK));
 	}
 
 	private static Indexer<CPDefinition> _indexer;

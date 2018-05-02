@@ -588,6 +588,7 @@ public class StripFilter extends BasePortalFilter {
 			}
 
 			outputOpenTag(oldCharBuffer, writer, _MARKER_TEXTAREA_OPEN);
+
 			return;
 		}
 

@@ -274,6 +274,7 @@ public class LiferayOAuthDataProvider
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to populate access token", pe);
+
 			throw new OAuthServiceException(pe);
 		}
 	}
@@ -852,6 +853,7 @@ public class LiferayOAuthDataProvider
 			catch (PortalException pe) {
 				_log.error(
 					"Unable to find associated application scope aliases", pe);
+
 				throw new OAuthServiceException(pe);
 			}
 		}
@@ -978,6 +980,7 @@ public class LiferayOAuthDataProvider
 
 			_oAuth2AuthorizationLocalService.updateOAuth2Authorization(
 				oAuth2Authorization);
+
 			return;
 		}
 

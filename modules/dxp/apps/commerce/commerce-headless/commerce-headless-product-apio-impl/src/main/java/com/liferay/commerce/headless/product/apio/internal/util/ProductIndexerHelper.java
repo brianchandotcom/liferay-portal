@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ProductIndexerHelper.class)
 public class ProductIndexerHelper {
 
-	public <T extends BaseModel> Indexer<T> getIndexer(Class<T> clazz) {
+	public <T extends BaseModel<T>> Indexer<T> getIndexer(Class<T> clazz) {
 		Indexer<T> indexer = _indexerRegistry.getIndexer(clazz.getName());
 
 		if (indexer == null) {

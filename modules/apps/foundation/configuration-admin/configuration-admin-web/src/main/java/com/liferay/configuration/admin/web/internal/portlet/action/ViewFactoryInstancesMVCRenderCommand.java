@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationCategor
 import com.liferay.configuration.admin.web.internal.display.ConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationModelConfigurationEntry;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
@@ -84,7 +85,7 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 				configurationModels.get(factoryPid);
 
 			ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay =
-				_configurationModelRetriever.
+				_configurationEntryRetriever.
 					getConfigurationCategoryMenuDisplay(
 						factoryConfigurationModel.getCategory(),
 						themeDisplay.getLanguageId());
@@ -144,6 +145,9 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 
 		_renderCommands.remove(properties.get("configurationPid"));
 	}
+
+	@Reference
+	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;

@@ -17,7 +17,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.display.ConfigurationCategorySectionDisplay;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
 import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
@@ -48,7 +48,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		List<ConfigurationCategorySectionDisplay>
 			configurationCategorySectionDisplays =
-				_configurationModelRetriever.
+				_configurationEntryRetriever.
 					getConfigurationCategorySectionDisplays();
 
 		renderRequest.setAttribute(
@@ -63,7 +63,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private ConfigurationModelRetriever _configurationModelRetriever;
+	private ConfigurationEntryRetriever _configurationEntryRetriever;
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;

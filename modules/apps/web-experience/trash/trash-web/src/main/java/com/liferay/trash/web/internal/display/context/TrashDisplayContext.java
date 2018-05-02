@@ -175,6 +175,52 @@ public class TrashDisplayContext {
 		return redirect;
 	}
 
+	public String getContentClearResultsURL() {
+		PortletURL clearResultsURL = getContentPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
+	public List<DropdownItem> getContentFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getContentFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
+					});
+			}
+		};
+	}
+
+	public PortletURL getContentPortletURL() {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		String displayStyle = getDisplayStyle();
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
+
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		return portletURL;
+	}
+
+	public String getContentSearchActionURL() {
+		PortletURL searchActionURL = getContentPortletURL();
+
+		return searchActionURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -568,6 +614,22 @@ public class TrashDisplayContext {
 		}
 
 		return false;
+	}
+
+	private List<DropdownItem> _getContentFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getNavigation(), "all"));
+						dropdownItem.setHref(
+							getPortletURL(), "navigation", "all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
+					});
+			}
+		};
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

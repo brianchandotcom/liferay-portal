@@ -380,6 +380,10 @@ public class ToolsUtil {
 			String packagePath)
 		throws IOException {
 
+		if (!file.exists()) {
+			_write(file, StringPool.BLANK);
+		}
+
 		if (Validator.isNull(packagePath)) {
 			packagePath = getPackagePath(file);
 		}

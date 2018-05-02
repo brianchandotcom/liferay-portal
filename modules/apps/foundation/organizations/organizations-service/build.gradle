@@ -13,6 +13,7 @@ dependencies {
 	compileOnly project(":apps:foundation:organizations:organizations-api")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

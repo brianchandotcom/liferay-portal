@@ -23,7 +23,10 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Dictionary;
 import java.util.ResourceBundle;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
@@ -41,7 +44,11 @@ public class OrganizationTypeConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			_validateNameExists((String)properties.get("name"));
+			String name = (String)properties.get("name");
+
+			_validateNameExists(name);
+
+			_validateUniqueConfiguration(pid, name);
 		}
 		catch (Exception e) {
 			throw new ConfigurationModelListenerException(
@@ -50,19 +57,55 @@ public class OrganizationTypeConfigurationModelListener
 		}
 	}
 
+	private ResourceBundle _getResourceBundle() {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
+			getClass());
+	}
+
 	private void _validateNameExists(String name) throws Exception {
 		if (Validator.isNotNull(name)) {
 			return;
 		}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
-			getClass());
+		ResourceBundle resourceBundle = _getResourceBundle();
 
 		String message = ResourceBundleUtil.getString(
 			resourceBundle, "an-organization-type-must-have-a-valid-name");
 
 		throw new Exception(message);
 	}
+
+	private void _validateUniqueConfiguration(String pid, String name)
+		throws Exception {
+
+		String filterString = String.format(
+			"(&(service.factoryPid=%s)(name=%s))",
+			OrganizationTypeConfiguration.class.getName(), name);
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filterString);
+
+		if (configurations == null) {
+			return;
+		}
+
+		Configuration configuration = configurations[0];
+
+		if (pid.equals(configuration.getPid())) {
+			return;
+		}
+
+		ResourceBundle resourceBundle = _getResourceBundle();
+
+		String message = ResourceBundleUtil.getString(
+			resourceBundle,
+			"there-is-already-an-organization-type-with-the-name-x", name);
+
+		throw new Exception(message);
+	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 }

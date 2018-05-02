@@ -270,6 +270,7 @@ public class ModifiableServletContextAdapter
 			_logger.log(
 				Logger.LOG_ERROR,
 				"Bundle " + _bundle + " is unable to load filter " + clazz);
+
 			throw new ServletException(t);
 		}
 	}

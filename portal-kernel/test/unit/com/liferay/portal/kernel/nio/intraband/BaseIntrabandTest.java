@@ -73,9 +73,11 @@ public class BaseIntrabandTest {
 				assertClasses.add(ChannelContext.class);
 				assertClasses.add(ClosedIntrabandException.class);
 				assertClasses.add(CompletionHandler.class);
+
 				Collections.addAll(
 					assertClasses,
 					CompletionHandler.class.getDeclaredClasses());
+
 				assertClasses.add(Datagram.class);
 				assertClasses.add(DatagramReceiveHandler.class);
 			}

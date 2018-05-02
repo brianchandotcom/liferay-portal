@@ -155,6 +155,7 @@ public class TunnelAuthenticationManagerImpl
 
 		httpAuthorizationHeader.setAuthParameter(
 			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME, login);
+
 		httpURLConnection.setRequestProperty(
 			HttpHeaders.AUTHORIZATION, httpAuthorizationHeader.toString());
 	}

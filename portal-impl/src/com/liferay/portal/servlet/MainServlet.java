@@ -666,6 +666,7 @@ public class MainServlet extends ActionServlet {
 		PropsValues.SESSION_TIMEOUT = timeout;
 
 		I18nServlet.setLanguageIds(root);
+
 		I18nFilter.setLanguageIds(I18nServlet.getLanguageIds());
 	}
 

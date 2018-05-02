@@ -37,6 +37,7 @@ public class SoyTofuCacheTest {
 	@Before
 	public void setUp() throws Exception {
 		_soyTestHelper.setUp();
+
 		_soyTofuCacheHandler = new SoyTofuCacheHandler(
 			_soyTestHelper.mockPortalCache());
 	}

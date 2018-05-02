@@ -279,7 +279,9 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 		Assert.assertEquals(2, charBuffer.position());
 		Assert.assertEquals(2, charBuffer.limit());
+
 		charBuffer.position(0);
+
 		Assert.assertEquals("ab", charBuffer.toString());
 
 		charBuffer = CharBuffer.allocate(5);
@@ -290,8 +292,10 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 		Assert.assertEquals(4, charBuffer.position());
 		Assert.assertEquals(5, charBuffer.limit());
+
 		charBuffer.position(0);
 		charBuffer.limit(4);
+
 		Assert.assertEquals("abcd", charBuffer.toString());
 
 		charBuffer = CharBuffer.allocate(0);
@@ -302,7 +306,9 @@ public class UnsyncCharArrayWriterTest extends BaseWriterTestCase {
 
 		Assert.assertEquals(0, charBuffer.position());
 		Assert.assertEquals(0, charBuffer.limit());
+
 		charBuffer.position(0);
+
 		Assert.assertEquals("", charBuffer.toString());
 
 		ByteArrayOutputStream byteArrayOutputStream =

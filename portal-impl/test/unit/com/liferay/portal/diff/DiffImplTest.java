@@ -60,6 +60,7 @@ public class DiffImplTest {
 		changedLines.add("bbb");
 		changedLines.add("ccc");
 		changedLines.add(Diff.CONTEXT_LINE);
+
 		expectedSource.add(new DiffResult(2, changedLines));
 
 		changedLines = new ArrayList<>();
@@ -67,6 +68,7 @@ public class DiffImplTest {
 		changedLines.add("bbb");
 		changedLines.add("ccc");
 		changedLines.add(Diff.OPEN_INS + "aee" + Diff.CLOSE_INS);
+
 		expectedTarget.add(new DiffResult(2, changedLines));
 
 		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);
@@ -235,12 +237,14 @@ public class DiffImplTest {
 
 		changedLines.add(
 			StringBundler.concat("bb", Diff.OPEN_DEL, "e", Diff.CLOSE_DEL));
+
 		expectedSource.add(new DiffResult(2, changedLines));
 
 		changedLines = new ArrayList<>();
 
 		changedLines.add(
 			StringBundler.concat("bb", Diff.OPEN_INS, "b", Diff.CLOSE_INS));
+
 		expectedTarget.add(new DiffResult(1, changedLines));
 
 		List<DiffResult>[] actual = _diffImpl.diff(reader1, reader2);

@@ -196,6 +196,7 @@ public class ByteArrayFileInputStreamTest {
 		byteArrayFileInputStream.read();
 
 		byteArrayFileInputStream.close();
+
 		Assert.assertNull(_dataField.get(byteArrayFileInputStream));
 		Assert.assertNull(_fileField.get(byteArrayFileInputStream));
 		Assert.assertNull(_fileInputStreamField.get(byteArrayFileInputStream));

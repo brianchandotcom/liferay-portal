@@ -62,16 +62,19 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 
 		if (booleanClauseOccur.equals(BooleanClauseOccur.MUST)) {
 			boolQuery.must(queryBuilder);
+
 			return;
 		}
 
 		if (booleanClauseOccur.equals(BooleanClauseOccur.MUST_NOT)) {
 			boolQuery.mustNot(queryBuilder);
+
 			return;
 		}
 
 		if (booleanClauseOccur.equals(BooleanClauseOccur.SHOULD)) {
 			boolQuery.should(queryBuilder);
+
 			return;
 		}
 

@@ -2466,6 +2466,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 						"Unable to find the binary file with path \"%s\" " +
 							"referenced by %s",
 						filePath, getModelInfo()));
+
 				throw pe;
 			}
 		}

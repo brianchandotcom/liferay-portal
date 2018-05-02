@@ -195,7 +195,9 @@ public class UnsyncCharArrayWriterTest {
 
 		Assert.assertEquals(2, charBuffer.position());
 		Assert.assertEquals(2, charBuffer.limit());
+
 		charBuffer.position(0);
+
 		Assert.assertEquals("ab", charBuffer.toString());
 
 		ByteArrayOutputStream byteArrayOutputStream =

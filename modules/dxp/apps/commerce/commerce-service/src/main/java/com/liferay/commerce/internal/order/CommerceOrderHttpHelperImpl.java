@@ -179,9 +179,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			return null;
 		}
 
-		commerceOrder = _checkGuestOrder(themeDisplay, commerceOrder);
-
-		return commerceOrder;
+		return _checkGuestOrder(themeDisplay, commerceOrder);
 	}
 
 	@Override

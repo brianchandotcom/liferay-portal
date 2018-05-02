@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -57,7 +59,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		}
 
 		viewTypeItem.setIcon("cards2");
-		viewTypeItem.setLabel("cards");
+		viewTypeItem.setLabel(
+			LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "cards"));
 
 		add(viewTypeItem);
 
@@ -81,7 +84,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		}
 
 		viewTypeItem.setIcon("list");
-		viewTypeItem.setLabel("list");
+		viewTypeItem.setLabel(
+			LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "list"));
 
 		add(viewTypeItem);
 
@@ -104,7 +108,8 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 		}
 
 		viewTypeItem.setIcon("table");
-		viewTypeItem.setLabel("table");
+		viewTypeItem.setLabel(
+			LanguageUtil.get(LocaleUtil.getMostRelevantLocale(), "table"));
 
 		add(viewTypeItem);
 

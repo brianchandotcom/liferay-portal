@@ -4,5 +4,3 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.social.activity.configuration,\
 	com.liferay.social.activity.configuration.definition
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Social

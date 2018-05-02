@@ -6,5 +6,3 @@ Export-Package:\
 	com.liferay.document.library.file.rank.model,\
 	com.liferay.document.library.file.rank.service,\
 	com.liferay.document.library.file.rank.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library

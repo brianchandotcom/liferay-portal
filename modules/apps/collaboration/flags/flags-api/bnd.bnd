@@ -4,5 +4,3 @@ Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.flags.configuration,\
 	com.liferay.flags.service
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

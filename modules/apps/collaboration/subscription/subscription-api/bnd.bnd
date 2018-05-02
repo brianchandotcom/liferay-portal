@@ -8,5 +8,3 @@ Export-Package:\
 	com.liferay.subscription.service.persistence,\
 	com.liferay.subscription.util,\
 	com.liferay.subscription.util.comparator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Subscriptions

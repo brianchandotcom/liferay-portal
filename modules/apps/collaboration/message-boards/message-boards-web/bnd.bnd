@@ -5,6 +5,4 @@ Import-Package:\
 	com.liferay.message.boards.util,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Message Boards
 Web-ContextPath: /message-boards-web

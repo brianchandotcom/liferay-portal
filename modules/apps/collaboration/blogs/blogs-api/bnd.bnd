@@ -13,5 +13,3 @@ Export-Package:\
 	com.liferay.blogs.settings,\
 	com.liferay.blogs.social,\
 	com.liferay.blogs.util.comparator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Blogs

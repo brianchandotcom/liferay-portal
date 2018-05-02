@@ -124,16 +124,7 @@ public class ProductNestedCollectionResource
 			"author", PersonIdentifier.class,
 			document -> GetterUtil.getLong(document.get(Field.USER_ID))
 		).addString(
-			"description",
-			document -> {
-				String description = document.get(Field.DESCRIPTION);
-
-				if (Validator.isNull(description)) {
-					description = StringPool.DASH;
-				}
-
-				return description;
-			}
+			"description", this::_getSafeDescription
 		).addStringList(
 			"skus", document -> Arrays.asList(document.getValues("skus"))
 		).addString(
@@ -241,6 +232,16 @@ public class ProductNestedCollectionResource
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
+	}
+
+	private String _getSafeDescription(Document document) {
+		String description = document.get(Field.DESCRIPTION);
+
+		if (Validator.isNull(description)) {
+			description = StringPool.DASH;
+		}
+
+		return description;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

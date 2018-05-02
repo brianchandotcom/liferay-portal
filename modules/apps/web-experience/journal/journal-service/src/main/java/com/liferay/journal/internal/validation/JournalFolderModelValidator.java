@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.validator;
+package com.liferay.journal.internal.validation;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;

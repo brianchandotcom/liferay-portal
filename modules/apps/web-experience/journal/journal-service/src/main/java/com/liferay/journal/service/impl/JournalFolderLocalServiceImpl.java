@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.exception.NoSuchFolderException;
-import com.liferay.journal.internal.validator.JournalFolderModelValidator;
+import com.liferay.journal.internal.validation.JournalFolderModelValidator;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;

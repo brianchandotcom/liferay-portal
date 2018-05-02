@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.validator;
+package com.liferay.journal.internal.validation;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;

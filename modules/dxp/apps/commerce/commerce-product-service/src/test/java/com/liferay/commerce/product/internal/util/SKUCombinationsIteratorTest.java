@@ -56,13 +56,11 @@ public class SKUCombinationsIteratorTest {
 	public void testSKUCombinationsIterator() throws Exception {
 		int optionsAndValuesCount = 2;
 
-		Map<CPDefinitionOptionRel, CPDefinitionOptionValueRel[]>
-			combinationGeneratorMap = new HashMap<>();
-
 		CPDefinition cpDefinition = _createCPDefinition();
 
-		_prepareData(
-			optionsAndValuesCount, combinationGeneratorMap, cpDefinition);
+		Map<CPDefinitionOptionRel, CPDefinitionOptionValueRel[]>
+			combinationGeneratorMap = _createCombinationGeneratorMap(
+				optionsAndValuesCount, cpDefinition);
 
 		Assert.assertEquals(
 			combinationGeneratorMap.toString(), optionsAndValuesCount,
@@ -83,6 +81,34 @@ public class SKUCombinationsIteratorTest {
 		Assert.assertEquals(
 			(int)Math.pow(optionsAndValuesCount, optionsAndValuesCount + 1),
 			count);
+	}
+
+	private Map<CPDefinitionOptionRel, CPDefinitionOptionValueRel[]>
+		_createCombinationGeneratorMap(
+			int optionsAndValuesCount, CPDefinition cpDefinition) {
+
+		Map<CPDefinitionOptionRel, CPDefinitionOptionValueRel[]>
+			combinationGeneratorMap = new HashMap<>();
+
+		for (int i = 0; i < optionsAndValuesCount; i++) {
+			CPDefinitionOptionValueRel[] cpDefinitionOptionValueRelArray =
+				new CPDefinitionOptionValueRel[optionsAndValuesCount];
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				_createCPDefinitionOptionRel(cpDefinition);
+
+			for (int j = 0; j < optionsAndValuesCount; j++) {
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					_createCPDefinitionOptionValueRel(cpDefinitionOptionRel);
+
+				cpDefinitionOptionValueRelArray[j] = cpDefinitionOptionValueRel;
+			}
+
+			combinationGeneratorMap.put(
+				cpDefinitionOptionRel, cpDefinitionOptionValueRelArray);
+		}
+
+		return combinationGeneratorMap;
 	}
 
 	private CPDefinition _createCPDefinition() {
@@ -152,30 +178,6 @@ public class SKUCombinationsIteratorTest {
 		cpDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
 
 		return cpDefinitionOptionValueRel;
-	}
-
-	private void _prepareData(
-		int optionsAndValuesCount, Map<CPDefinitionOptionRel,
-			CPDefinitionOptionValueRel[]> combinationGeneratorMap,
-		CPDefinition cpDefinition) {
-
-		for (int i = 0; i < optionsAndValuesCount; i++) {
-			CPDefinitionOptionValueRel[] cpDefinitionOptionValueRelArray =
-				new CPDefinitionOptionValueRelImpl[optionsAndValuesCount];
-
-			CPDefinitionOptionRel cpDefinitionOptionRel =
-				_createCPDefinitionOptionRel(cpDefinition);
-
-			for (int j = 0; j < optionsAndValuesCount; j++) {
-				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-					_createCPDefinitionOptionValueRel(cpDefinitionOptionRel);
-
-				cpDefinitionOptionValueRelArray[j] = cpDefinitionOptionValueRel;
-			}
-
-			combinationGeneratorMap.put(
-				cpDefinitionOptionRel, cpDefinitionOptionValueRelArray);
-		}
 	}
 
 }

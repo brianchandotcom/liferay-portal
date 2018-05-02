@@ -39,16 +39,19 @@ public class ChainableMethodAdviceInjectorCollector {
 			chainableMethodAdviceInjectorCollector =
 				new ChainableMethodAdviceInjectorCollector();
 
-		String[] beanNames =
+		List<String> beanNames =
+			chainableMethodAdviceInjectorCollector._beanNames;
+
+		String[] names =
 			configurableListableBeanFactory.getBeanDefinitionNames();
 
-		for (String beanName : beanNames) {
-			if (!beanName.contains(SpringFactoryUtil.class.getName())) {
+		for (String name : names) {
+			if (!name.contains(SpringFactoryUtil.class.getName())) {
 				continue;
 			}
 
 			BeanDefinition beanDefinition =
-				configurableListableBeanFactory.getBeanDefinition(beanName);
+				configurableListableBeanFactory.getBeanDefinition(name);
 
 			ConstructorArgumentValues constructorArgumentValues =
 				beanDefinition.getConstructorArgumentValues();
@@ -56,26 +59,24 @@ public class ChainableMethodAdviceInjectorCollector {
 			List<ConstructorArgumentValues.ValueHolder> valueHolders =
 				constructorArgumentValues.getGenericArgumentValues();
 
-			if (valueHolders.isEmpty()) {
-				continue;
-			}
+			if (!valueHolders.isEmpty()) {
+				ConstructorArgumentValues.ValueHolder valueHolder =
+					valueHolders.get(0);
 
-			ConstructorArgumentValues.ValueHolder valueHolder =
-				valueHolders.get(0);
+				TypedStringValue typedStringValue =
+					(TypedStringValue)valueHolder.getValue();
 
-			TypedStringValue typedStringValue =
-				(TypedStringValue)valueHolder.getValue();
+				String className = typedStringValue.getValue();
 
-			String className = typedStringValue.getValue();
+				if (className.contains(
+						ChainableMethodAdviceInjector.class.getSimpleName())) {
 
-			if (className.contains(
-					ChainableMethodAdviceInjector.class.getSimpleName())) {
-
-				chainableMethodAdviceInjectorCollector.addBeanName(beanName);
+					beanNames.add(name);
+				}
 			}
 		}
 
-		if (!chainableMethodAdviceInjectorCollector.hasBeanNames()) {
+		if (!beanNames.isEmpty()) {
 			configurableListableBeanFactory.registerSingleton(
 				BEAN_NAME, chainableMethodAdviceInjectorCollector);
 		}
@@ -83,14 +84,6 @@ public class ChainableMethodAdviceInjectorCollector {
 
 	public List<String> getBeanNames() {
 		return _beanNames;
-	}
-
-	protected void addBeanName(String beanName) {
-		_beanNames.add(beanName);
-	}
-
-	protected boolean hasBeanNames() {
-		return _beanNames.isEmpty();
 	}
 
 	private ChainableMethodAdviceInjectorCollector() {

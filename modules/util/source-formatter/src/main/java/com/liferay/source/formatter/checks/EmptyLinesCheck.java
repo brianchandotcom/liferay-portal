@@ -545,7 +545,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
 		"\n(.*\\) \\{)\n[\t ]*[^ \n\t\\}]");
 	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
-		"[^{:/\n]\n\t*(for|if|try) \\(");
+		"[^{:/\n]\n\t*(for|if|try) [({]");
 	private final Pattern _missingEmptyLinePattern5 = Pattern.compile(
 		"[\t\n]\\}\n[\t ]*(?!(/\\*|\\}|\\)|//|catch |else |finally |while ))" +
 			"\\S");

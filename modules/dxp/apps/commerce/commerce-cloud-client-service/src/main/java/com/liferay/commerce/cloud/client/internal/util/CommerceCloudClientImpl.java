@@ -197,14 +197,15 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("companyId", commerceOrder.getCompanyId());
+		jsonObject.put("companyId", Long.valueOf(commerceOrder.getCompanyId()));
 
 		Date createDate = commerceCloudOrderForecastSync.getCreateDate();
 
-		jsonObject.put("createTime", createDate.getTime());
+		jsonObject.put("createTime", Long.valueOf(createDate.getTime()));
 
-		jsonObject.put("customerId", commerceOrder.getClassPK());
-		jsonObject.put("orderId", commerceOrder.getCommerceOrderId());
+		jsonObject.put("customerId", Long.valueOf(commerceOrder.getClassPK()));
+		jsonObject.put(
+			"orderId", Long.valueOf(commerceOrder.getCommerceOrderId()));
 
 		JSONArray orderItemsJSONArray = _jsonFactory.createJSONArray();
 

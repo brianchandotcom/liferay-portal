@@ -42,7 +42,7 @@ public class AppendCheck extends StringConcatenationCheck {
 		for (int i = 0; i < methodCallASTList.size(); i++) {
 			DetailAST methodCallAST = methodCallASTList.get(i);
 
-			String variableName = _getVariableName(methodCallAST);
+			String variableName = DetailASTUtil.getVariableName(methodCallAST);
 
 			String variableTypeName = DetailASTUtil.getVariableTypeName(
 				methodCallAST, variableName, false);
@@ -73,7 +73,9 @@ public class AppendCheck extends StringConcatenationCheck {
 
 			DetailAST previousMethodCallAST = methodCallASTList.get(i - 1);
 
-			if (!variableName.equals(_getVariableName(previousMethodCallAST))) {
+			if (!variableName.equals(
+					DetailASTUtil.getVariableName(previousMethodCallAST))) {
+
 				continue;
 			}
 
@@ -199,22 +201,6 @@ public class AppendCheck extends StringConcatenationCheck {
 		}
 
 		return exprAST.getFirstChild();
-	}
-
-	private String _getVariableName(DetailAST methodCallAST) {
-		DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
-
-		if (dotAST == null) {
-			return null;
-		}
-
-		DetailAST nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
-
-		if (nameAST == null) {
-			return null;
-		}
-
-		return nameAST.getText();
 	}
 
 	private boolean _hasIncorrectLineBreaks(DetailAST methodCallAST) {

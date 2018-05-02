@@ -266,6 +266,22 @@ public class DetailASTUtil {
 		return sb.toString();
 	}
 
+	public static String getVariableName(DetailAST methodCallAST) {
+		DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotAST == null) {
+			return null;
+		}
+
+		DetailAST nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
+
+		if (nameAST == null) {
+			return null;
+		}
+
+		return nameAST.getText();
+	}
+
 	public static DetailAST getVariableTypeAST(
 		DetailAST detailAST, String variableName) {
 

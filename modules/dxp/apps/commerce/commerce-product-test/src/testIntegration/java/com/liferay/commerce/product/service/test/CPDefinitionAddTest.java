@@ -36,6 +36,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
+import org.frutilla.FrutillaRule;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -44,10 +46,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Test <code>CPDefinition</code> in 4 different ways, based on
- * <code>ignoreSKUCombinations</code> and <code>hasDefaultInstance</code>
- * parameters, split in 5 tests.
- *
  * @author Luca Pellizzon
  */
 @RunWith(Arquillian.class)
@@ -63,20 +61,20 @@ public class CPDefinitionAddTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	/**
-	 * Test adding a <code>CPDefinition</code>, where both
-	 * <code>ignoreSKUCombinations</code> and <code>hasDefaultInstance</code>
-	 * are <code>false</code>.
-	 *
-	 * <p>
-	 * Expected result: the <code>CPDefinition</code> status is
-	 * <code>DRAFT</code>.
-	 * </p>
-	 *
-	 * @throws Exception
-	 */
 	@Test
 	public void testAddCPDefinition() throws Exception {
+		frutillaRule.scenario(
+			"Add product definition"
+		).given(
+			"I add a product definition"
+		).when(
+			"ignoreSKUCombinations is false"
+		).and(
+			"hasDefaultInstance is false"
+		).then(
+			"product definition should be DRAFT"
+		);
+
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 			_group.getGroupId(), SimpleCPTypeConstants.NAME, false, false);
 
@@ -84,20 +82,22 @@ public class CPDefinitionAddTest {
 			WorkflowConstants.STATUS_DRAFT, cpDefinition.getStatus());
 	}
 
-	/**
-	 * Test adding a <code>CPDefinition</code>, where
-	 * <code>ignoreSKUCombinations</code> is <code>false</code> and
-	 * <code>hasDefaultInstance</code> is <code>true</code>.
-	 *
-	 * <p>
-	 * Expected result: the <code>CPDefinition</code> is <code>DRAFT</code> and
-	 * the default <code>CPInstance</code> is <code>INACTIVE</code>.
-	 * </p>
-	 *
-	 * @throws Exception
-	 */
 	@Test
 	public void testAddCPDefinitionWithDefaultInstance() throws Exception {
+		frutillaRule.scenario(
+			"Add product definition"
+		).given(
+			"I add a product definition"
+		).when(
+			"ignoreSKUCombinations is false"
+		).and(
+			"hasDefaultInstance is true"
+		).then(
+			"product definition should be DRAFT"
+		).and(
+			"default product instance should be INACTIVE"
+		);
+
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 			_group.getGroupId(), SimpleCPTypeConstants.NAME, false, true);
 
@@ -116,26 +116,25 @@ public class CPDefinitionAddTest {
 			WorkflowConstants.STATUS_INACTIVE, cpInstance.getStatus());
 	}
 
-	/**
-	 * Test adding a <code>CPDefinition</code>, where
-	 * <code>ignoreSKUCombinations</code> is <code>false</code> and
-	 * <code>hasDefaultInstance</code> is <code>true</code>, and with some SKUs
-	 * (<code>CPInstance</code>) associated to the <code>CPDefinition</code>.
-	 * The SKUs are created by setting up some <code>CPOptions</code> for the
-	 * <code>CPDefinition</code> with <code>skuContributor</code> set to
-	 * <code>true</code>.
-	 *
-	 * <p>
-	 * Expected result: the <code>CPDefinition</code> status is
-	 * <code>APPROVED</code> and the default <code>CPInstance</code> is
-	 * <code>INACTIVE</code>.
-	 * </p>
-	 *
-	 * @throws Exception
-	 */
 	@Test
 	public void testAddCPDefinitionWithDefaultInstanceAndSKUs()
 		throws Exception {
+
+		frutillaRule.scenario(
+			"Add product definition"
+		).given(
+			"I add a product definition"
+		).when(
+			"ignoreSKUCombinations is false"
+		).and(
+			"hasDefaultInstance is true"
+		).and(
+			"some product instances are added to the definition"
+		).then(
+			"product definition should be APPROVED"
+		).and(
+			"default product instance should be INACTIVE"
+		);
 
 		int numberOfOptions = 2;
 		int numberOfValues = 2;
@@ -178,21 +177,23 @@ public class CPDefinitionAddTest {
 			WorkflowConstants.STATUS_INACTIVE, cpInstance.getStatus());
 	}
 
-	/**
-	 * Test adding a <code>CPDefinition</code>, where
-	 * <code>ignoreSKUCombinations</code> is <code>true</code> and
-	 * <code>hasDefaultInstance</code> is <code>false</code>.
-	 *
-	 * <p>
-	 * Expected result: the <code>CPDefinition</code> is <code>DRAFT</code> and
-	 * there is no <code>CPInstance</code> associated to it.
-	 * </p>
-	 *
-	 * @throws Exception
-	 */
 	@Test
 	public void testAddCPDefinitionWithIgnoreSKUCombinations()
 		throws Exception {
+
+		frutillaRule.scenario(
+			"Add product definition"
+		).given(
+			"I add a product definition"
+		).when(
+			"ignoreSKUCombinations is true"
+		).and(
+			"hasDefaultInstance is false"
+		).then(
+			"product definition should be DRAFT"
+		).and(
+			"product definition should have no instances"
+		);
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 			_group.getGroupId(), SimpleCPTypeConstants.NAME, true, false);
@@ -206,22 +207,23 @@ public class CPDefinitionAddTest {
 		Assert.assertEquals(0, count);
 	}
 
-	/**
-	 * Test adding a <code>CPDefinition</code>, where both
-	 * <code>ignoreSKUCombinations</code> and <code>hasDefaultInstance</code>
-	 * are <code>true</code>.
-	 *
-	 * <p>
-	 * Expected result: the <code>CPDefinition</code> status is
-	 * <code>APPROVED</code> and the default <code>CPInstance</code> status is
-	 * <code>APPROVED</code>.
-	 * </p>
-	 *
-	 * @throws Exception
-	 */
 	@Test
 	public void testAddCPDefinitionWithIgnoreSKUCombinationsAndDefaultInstance()
 		throws Exception {
+
+		frutillaRule.scenario(
+			"Add product definition"
+		).given(
+			"I add a product definition"
+		).when(
+			"ignoreSKUCombinations is true"
+		).and(
+			"hasDefaultInstance is true"
+		).then(
+			"product definition should be APPROVED"
+		).and(
+			"default product instance should be APPROVED"
+		);
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 			_group.getGroupId(), SimpleCPTypeConstants.NAME, true, true);
@@ -243,6 +245,9 @@ public class CPDefinitionAddTest {
 
 		Assert.assertEquals(1, onlyOneApproved);
 	}
+
+	@Rule
+	public final FrutillaRule frutillaRule = new FrutillaRule();
 
 	private void _createOptionsValues(long cpOptionId, int numberOfValues)
 		throws Exception {

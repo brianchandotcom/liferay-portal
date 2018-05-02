@@ -28,11 +28,17 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.ASSIGN};
+		return new int[] {TokenTypes.ASSIGN, TokenTypes.METHOD_CALL};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
+			_checkMissingEmptyLineAfterMethodCall(detailAST);
+
+			return;
+		}
+
 		DetailAST firstChildAST = detailAST.getFirstChild();
 
 		if ((firstChildAST == null) ||
@@ -53,6 +59,58 @@ public class MissingEmptyLineCheck extends BaseCheck {
 			parentAST, variableName, DetailASTUtil.getEndLine(detailAST));
 		_checkMissingEmptyLineBetweenAssigningAndUsingVariable(
 			parentAST, variableName, DetailASTUtil.getEndLine(detailAST));
+	}
+
+	private void _checkMissingEmptyLineAfterMethodCall(DetailAST detailAST) {
+		String variableName = DetailASTUtil.getVariableName(detailAST);
+
+		if (variableName == null) {
+			return;
+		}
+
+		DetailAST parentAST = detailAST.getParent();
+
+		if (parentAST.getType() != TokenTypes.EXPR) {
+			return;
+		}
+
+		DetailAST nextSiblingAST = parentAST.getNextSibling();
+
+		if ((nextSiblingAST == null) ||
+			(nextSiblingAST.getType() != TokenTypes.SEMI)) {
+
+			return;
+		}
+
+		nextSiblingAST = nextSiblingAST.getNextSibling();
+
+		if (nextSiblingAST == null) {
+			return;
+		}
+
+		int endLine = DetailASTUtil.getEndLine(detailAST);
+
+		int startLineNextExpression = DetailASTUtil.getStartLine(
+			nextSiblingAST);
+
+		if ((endLine + 1) != startLineNextExpression) {
+			return;
+		}
+
+		if (nextSiblingAST.getType() == TokenTypes.EXPR) {
+			DetailAST firstChildAST = nextSiblingAST.getFirstChild();
+
+			if ((firstChildAST.getType() == TokenTypes.METHOD_CALL) &&
+				variableName.equals(
+					DetailASTUtil.getVariableName(firstChildAST))) {
+
+				return;
+			}
+		}
+
+		if (_containsVariableName(nextSiblingAST, variableName)) {
+			log(endLine, _MSG_MISSING_EMPTY_LINE_AFTER_METHOD_CALL, endLine);
+		}
 	}
 
 	private void _checkMissingEmptyLineAfterReferencingVariable(
@@ -234,6 +292,9 @@ public class MissingEmptyLineCheck extends BaseCheck {
 
 		return false;
 	}
+
+	private static final String _MSG_MISSING_EMPTY_LINE_AFTER_METHOD_CALL =
+		"empty.line.missing.after.method.call";
 
 	private static final String
 		_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE =

@@ -37,14 +37,13 @@ public class ProductOptionHelper {
 	 * Builds the SearchContext for finding {@link CPDefinitionOptionRel}'s
 	 * {@link com.liferay.portal.kernel.search.Document}
 	 *
-	 * @param entryClassPK
-	 * @param cpDefinitionId
-	 * @param keywords
-	 * @param start
-	 * @param end
-	 * @param sort
-	 * @param serviceContext
-	 *
+	 * @param  entryClassPK
+	 * @param  cpDefinitionId
+	 * @param  keywords
+	 * @param  start
+	 * @param  end
+	 * @param  sort
+	 * @param  serviceContext
 	 * @return ServiceContext
 	 */
 	public static SearchContext buildSearchContext(

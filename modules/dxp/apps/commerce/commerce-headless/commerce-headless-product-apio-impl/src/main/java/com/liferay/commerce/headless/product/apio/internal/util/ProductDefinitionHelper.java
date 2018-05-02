@@ -48,13 +48,12 @@ public class ProductDefinitionHelper {
 	 * Builds the SearchContext for finding {@link CPDefinition}'s {@link
 	 * com.liferay.portal.kernel.search.Document}
 	 *
-	 * @param entryClassPK
-	 * @param keywords
-	 * @param start
-	 * @param end
-	 * @param sort
-	 * @param serviceContext
-	 *
+	 * @param  entryClassPK
+	 * @param  keywords
+	 * @param  start
+	 * @param  end
+	 * @param  sort
+	 * @param  serviceContext
 	 * @return ServiceContext
 	 */
 	public SearchContext buildSearchContext(

@@ -14,9 +14,14 @@
 
 package com.liferay.user.associated.data.display;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,6 +31,12 @@ import java.util.Set;
 public abstract class BaseModelUADDisplay<T extends BaseModel>
 	implements UADDisplay<T> {
 
+	@Override
+	public long count(long userId) {
+		return doCount(_getDynamicQuery(userId));
+	}
+
+	@Override
 	public Map<String, Object> getFieldValues(T t, String[] fieldNames) {
 		Map<String, Object> modelAttributes = t.getModelAttributes();
 
@@ -34,6 +45,30 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 		modelAttributesKeySet.retainAll(Arrays.asList(fieldNames));
 
 		return modelAttributes;
+	}
+
+	@Override
+	public Serializable getPrimaryKey(T baseModel) {
+		return baseModel.getPrimaryKeyObj();
+	}
+
+	@Override
+	public List<T> getRange(long userId, int start, int end) {
+		return doGetRange(_getDynamicQuery(userId), start, end);
+	}
+
+	protected abstract long doCount(DynamicQuery dynamicQuery);
+
+	protected abstract DynamicQuery doGetDynamicQuery();
+
+	protected abstract List<T> doGetRange(
+		DynamicQuery dynamicQuery, int start, int end);
+
+	protected abstract String[] doGetUserIdFieldNames();
+
+	private DynamicQuery _getDynamicQuery(long userId) {
+		return UADDynamicQueryUtil.addDynamicQueryCriteria(
+			doGetDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}
 
 }

@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Calendar Service
+Bundle-SymbolicName: com.liferay.calendar.service
+Bundle-Version: 3.0.0
+Import-Package:\
+	!edu.emory.*,\
+	\
+	!groovy.*,\
+	\
+	!net.fortuna.*,\
+	\
+	!org.codehaus.*,\
+	\
+	*
+Liferay-Require-SchemaVersion: 3.0.0
+Liferay-Service: true

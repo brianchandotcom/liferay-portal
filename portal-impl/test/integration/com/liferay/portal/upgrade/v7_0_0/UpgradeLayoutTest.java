@@ -14,8 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
@@ -31,7 +31,6 @@ public class UpgradeLayoutTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
 
 	@Test
 	public void testUpgrade() throws Exception {

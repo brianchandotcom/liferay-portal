@@ -195,7 +195,8 @@ public class ProductNestedCollectionResource
 				throw new NotFoundException(
 					"Unable to find product with ID " + cpDefinitionId);
 			}
-			else if (hits.getLength() > 1) {
+
+			if (hits.getLength() > 1) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"More than one document found for product with ID " +

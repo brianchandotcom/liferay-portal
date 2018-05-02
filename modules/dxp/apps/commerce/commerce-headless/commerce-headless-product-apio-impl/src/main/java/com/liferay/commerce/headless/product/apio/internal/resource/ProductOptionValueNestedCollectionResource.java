@@ -135,7 +135,8 @@ public class ProductOptionValueNestedCollectionResource
 					"Unable to find product option value with ID " +
 						cpDefinitionOptionValueRelId);
 			}
-			else if (hits.getLength() > 1) {
+
+			if (hits.getLength() > 1) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"More than one document found for product option " +

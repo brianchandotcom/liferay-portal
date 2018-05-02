@@ -2206,19 +2206,19 @@ public class ProjectTemplatesTest {
 
 		GradleRunner gradleRunner = GradleRunner.create();
 
-		List<String> newTaskPaths = new ArrayList<>(Arrays.asList(taskPaths));
+		List<String> arguments = new ArrayList<>(Arrays.asList(taskPaths));
 
-		newTaskPaths.add(0, "--stacktrace");
+		arguments.add(0, "--stacktrace");
 
 		String httpProxyHost = mavenExecutor.getHttpProxyHost();
 		int httpProxyPort = mavenExecutor.getHttpProxyPort();
 
 		if (Validator.isNotNull(httpProxyHost) && (httpProxyPort > 0)) {
-			newTaskPaths.add(1, "-Dhttp.proxyHost=" + httpProxyHost);
-			newTaskPaths.add(2, "-Dhttp.proxyPort=" + httpProxyPort);
+			arguments.add(1, "-Dhttp.proxyHost=" + httpProxyHost);
+			arguments.add(2, "-Dhttp.proxyPort=" + httpProxyPort);
 		}
 
-		gradleRunner.withArguments(newTaskPaths);
+		gradleRunner.withArguments(arguments);
 		gradleRunner.withGradleDistribution(_gradleDistribution);
 		gradleRunner.withProjectDir(projectDir);
 

@@ -8,6 +8,10 @@ deploy {
 	from ("properties") {
 		include "*.properties"
 	}
+	from ("scripts") {
+		include "*.bat"
+		include "*.sh"
+	}
 }
 
 distributions {
@@ -15,6 +19,11 @@ distributions {
 		contents {
 			from("properties") {
 				include "*.properties"
+				into "lib"
+			}
+			from ("scripts") {
+				include "*.bat"
+				include "*.sh"
 				into "lib"
 			}
 		}

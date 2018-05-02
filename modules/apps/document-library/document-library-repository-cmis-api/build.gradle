@@ -11,6 +11,6 @@ dependencies {
 	testCompile group: "org.apache.lucene", name: "lucene-queries", version: "5.2.1"
 	testCompile group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
 	testCompile group: "org.apache.lucene", name: "lucene-sandbox", version: "5.2.1"
-	testCompile project(":apps:collaboration:document-library:document-library-repository-search")
+	testCompile project(":apps:document-library:document-library-repository-search")
 	testCompile project(":core:petra:petra-lang")
 }

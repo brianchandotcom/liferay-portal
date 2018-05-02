@@ -7,6 +7,6 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-api");
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api");
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-item-selector-api");
-	compileOnly project(":apps:collaboration:item-selector:item-selector-api")
-	compileOnly project(":apps:collaboration:item-selector:item-selector-criteria-api")
+	compileOnly project(":apps:item-selector:item-selector-api")
+	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 }

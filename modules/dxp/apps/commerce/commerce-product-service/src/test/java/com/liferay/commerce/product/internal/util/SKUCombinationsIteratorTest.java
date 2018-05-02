@@ -23,9 +23,7 @@ import com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Collections;
@@ -73,35 +71,18 @@ public class SKUCombinationsIteratorTest {
 		Iterator<CPDefinitionOptionValueRel[]> iterator =
 			new SKUCombinationsIterator(combinationGeneratorMap);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		int count = 0;
 
 		while (iterator.hasNext()) {
 			CPDefinitionOptionValueRel[]
 				cpDefinitionOptionValueRels = iterator.next();
 
-			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-					cpDefinitionOptionValueRels) {
-
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray();
-
-				valueJSONArray.put(String.valueOf(cpDefinitionOptionValueRel.
-					getCPDefinitionOptionValueRelId()));
-
-				jsonObject.put(
-					"key",
-					cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-				jsonObject.put("value", valueJSONArray);
-
-				jsonArray.put(jsonObject);
-			}
+			count += cpDefinitionOptionValueRels.length;
 		}
 
-		double expectedResult = Math.pow(
-			optionsAndValuesCount, optionsAndValuesCount + 1);
-
-		Assert.assertEquals(expectedResult, jsonArray.length(), 0.01);
+		Assert.assertEquals(
+			(int)Math.pow(optionsAndValuesCount, optionsAndValuesCount + 1),
+			count);
 	}
 
 	private CPDefinition _createCPDefinition() {

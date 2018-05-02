@@ -26,6 +26,7 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.headless.product.apio.identifier.ProductDefinitionIdentifier;
 import com.liferay.commerce.headless.product.apio.internal.form.ProductCreatorForm;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductDefinitionHelper;
+import com.liferay.commerce.headless.product.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
@@ -158,7 +159,7 @@ public class ProductNestedCollectionResource
 					ArrayUtil.toLongArray(
 						productCreatorForm.getAssetCategoryIds()));
 
-			Indexer<CPDefinition> indexer = _productDefinitionHelper.getIndexer(
+			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
 				CPDefinition.class);
 
 			return indexer.getDocument(cpDefinition);
@@ -177,14 +178,15 @@ public class ProductNestedCollectionResource
 	private Document _getCPDefinition(Long cpDefinitionId) {
 		try {
 			ServiceContext serviceContext =
-				_productDefinitionHelper.getServiceContext();
+				_productIndexerHelper.getServiceContext();
 
 			SearchContext searchContext =
 				_productDefinitionHelper.buildSearchContext(
+					String.valueOf(cpDefinitionId),
 					String.valueOf(cpDefinitionId), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null, serviceContext);
 
-			Indexer<CPDefinition> indexer = _productDefinitionHelper.getIndexer(
+			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
 				CPDefinition.class);
 
 			Hits hits = indexer.search(searchContext);
@@ -216,20 +218,18 @@ public class ProductNestedCollectionResource
 	}
 
 	private PageItems<Document> _getPageItems(
-			Pagination pagination, Long webSiteId)
-		throws PortalException {
+		Pagination pagination, Long webSiteId) {
 
 		try {
 			ServiceContext serviceContext =
-				_productDefinitionHelper.getServiceContext(
-					webSiteId, new long[0]);
+				_productIndexerHelper.getServiceContext(webSiteId, new long[0]);
 
 			SearchContext searchContext =
 				_productDefinitionHelper.buildSearchContext(
-					null, pagination.getStartPosition(),
+					null, null, pagination.getStartPosition(),
 					pagination.getEndPosition(), null, serviceContext);
 
-			Indexer<CPDefinition> indexer = _productDefinitionHelper.getIndexer(
+			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
 				CPDefinition.class);
 
 			Hits hits = indexer.search(searchContext);
@@ -268,5 +268,8 @@ public class ProductNestedCollectionResource
 
 	@Reference
 	private ProductDefinitionHelper _productDefinitionHelper;
+
+	@Reference
+	private ProductIndexerHelper _productIndexerHelper;
 
 }

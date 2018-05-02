@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.headless.product.apio.internal.resource;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -22,14 +23,27 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.headless.product.apio.identifier.ProductDefinitionIdentifier;
 import com.liferay.commerce.headless.product.apio.identifier.ProductOptionIdentifier;
+import com.liferay.commerce.headless.product.apio.internal.util.ProductIndexerHelper;
+import com.liferay.commerce.headless.product.apio.internal.util.ProductOptionHelper;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
-import com.liferay.commerce.product.model.CPDefinitionOptionRelModel;
+import com.liferay.commerce.product.search.CPDefinitionOptionRelIndexer;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Collections;
 import java.util.List;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,12 +55,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class ProductOptionNestedCollectionResource
 	implements
-		NestedCollectionResource<CPDefinitionOptionRel, Long,
+		NestedCollectionResource<Document, Long,
 			ProductOptionIdentifier, Long, ProductDefinitionIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<CPDefinitionOptionRel, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<CPDefinitionOptionRel, Long> builder) {
+	public NestedCollectionRoutes<Document, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Document, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -59,8 +73,8 @@ public class ProductOptionNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<CPDefinitionOptionRel, Long> itemRoutes(
-		ItemRoutes.Builder<CPDefinitionOptionRel, Long> builder) {
+	public ItemRoutes<Document, Long> itemRoutes(
+		ItemRoutes.Builder<Document, Long> builder) {
 
 		return builder.addGetter(
 			this::_getCPDefinitionOptionRel
@@ -68,65 +82,117 @@ public class ProductOptionNestedCollectionResource
 	}
 
 	@Override
-	public Representor<CPDefinitionOptionRel, Long> representor(
-		Representor.Builder<CPDefinitionOptionRel, Long> builder) {
+	public Representor<Document, Long> representor(
+		Representor.Builder<Document, Long> builder) {
 
 		return builder.types(
 			"ProductOption"
 		).identifier(
-			CPDefinitionOptionRel::getCPDefinitionOptionRelId
+			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
 		).addBidirectionalModel(
 			"product", "productOptions", ProductDefinitionIdentifier.class,
-			CPDefinitionOptionRelModel::getCPDefinitionId
+			document -> GetterUtil.getLong(
+				document.get(
+					CPDefinitionOptionRelIndexer.FIELD_CP_DEFINITION_ID))
 		).addDate(
-			"dateCreated", CPDefinitionOptionRel::getCreateDate
+			"dateCreated",
+			document -> Try.fromFallible(
+				() -> document.getDate(Field.CREATE_DATE)
+			).getUnchecked()
 		).addDate(
-			"dateModified", CPDefinitionOptionRel::getModifiedDate
-		).addNumber(
-			"priority", CPDefinitionOptionRel::getPriority
+			"dateModified",
+			document -> Try.fromFallible(
+				() -> document.getDate(Field.MODIFIED_DATE)
+			).getUnchecked()
 		).addString(
-			"title", this::_getTitle
+			"title", document -> document.get(Field.TITLE)
 		).addString(
-			"description", CPDefinitionOptionRel::getDescription
+			"description", document -> document.get(Field.DESCRIPTION)
 		).build();
 	}
 
-	private CPDefinitionOptionRel _getCPDefinitionOptionRel(
-		Long cpDefinitionOptionRelId) {
-
+	private Document _getCPDefinitionOptionRel(Long cpDefinitionOptionRelId) {
 		try {
-			return _cpDefinitionOptionRelService.getCPDefinitionOptionRel(
-				cpDefinitionOptionRelId);
+			ServiceContext serviceContext =
+				_productIndexerHelper.getServiceContext();
+
+			SearchContext searchContext =
+				ProductOptionHelper.buildSearchContext(
+					String.valueOf(cpDefinitionOptionRelId), null,
+					String.valueOf(cpDefinitionOptionRelId), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null, serviceContext);
+
+			Indexer<CPDefinitionOptionRel> indexer =
+				_productIndexerHelper.getIndexer(CPDefinitionOptionRel.class);
+
+			Hits hits = indexer.search(searchContext);
+
+			if (hits.getLength() == 0) {
+				throw new NotFoundException(
+					"Unable to find product option with ID " +
+						cpDefinitionOptionRelId);
+			}
+			else if (hits.getLength() > 1) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"More than one document found for product option " +
+							"with ID " + cpDefinitionOptionRelId);
+				}
+
+				CPDefinitionOptionRel cpDefinition =
+					_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
+						cpDefinitionOptionRelId);
+
+				return indexer.getDocument(cpDefinition);
+			}
+
+			List<Document> documents = hits.toList();
+
+			return documents.get(0);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private PageItems<CPDefinitionOptionRel> _getPageItems(
+	private PageItems<Document> _getPageItems(
 		Pagination pagination, Long cpDefinitionId) {
 
 		try {
-			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-				_cpDefinitionOptionRelService.getCPDefinitionOptionRels(
-					cpDefinitionId, pagination.getStartPosition(),
-					pagination.getEndPosition());
-			int count =
-				_cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
-					cpDefinitionId);
+			ServiceContext serviceContext =
+				_productIndexerHelper.getServiceContext();
 
-			return new PageItems<>(cpDefinitionOptionRels, count);
+			SearchContext searchContext =
+				ProductOptionHelper.buildSearchContext(
+					null, String.valueOf(cpDefinitionId), null,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null, serviceContext);
+
+			Indexer<CPDefinitionOptionRel> indexer =
+				_productIndexerHelper.getIndexer(CPDefinitionOptionRel.class);
+
+			Hits hits = indexer.search(searchContext);
+
+			List<Document> documents = Collections.<Document>emptyList();
+
+			if (hits.getLength() > 0) {
+				documents = hits.toList();
+			}
+
+			return new PageItems<>(documents, hits.getLength());
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private String _getTitle(CPDefinitionOptionRel cpDefinitionOptionRel) {
-		return cpDefinitionOptionRel.getTitle(LocaleUtil.getSiteDefault());
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProductOptionNestedCollectionResource.class);
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+
+	@Reference
+	private ProductIndexerHelper _productIndexerHelper;
 
 }

@@ -18,18 +18,11 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -41,8 +34,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,22 +48,31 @@ public class ProductDefinitionHelper {
 	 * Builds the SearchContext for finding {@link CPDefinition}'s {@link
 	 * com.liferay.portal.kernel.search.Document}
 	 *
-	 * @param  keywords
-	 * @param  start
-	 * @param  end
-	 * @param  sort
-	 * @param  serviceContext
-	 * @return SearchContext
+	 * @param entryClassPK
+	 * @param keywords
+	 * @param start
+	 * @param end
+	 * @param sort
+	 * @param serviceContext
+	 *
+	 * @return ServiceContext
 	 */
 	public SearchContext buildSearchContext(
-		String keywords, int start, int end, Sort sort,
+		String entryClassPK, String keywords, int start, int end, Sort sort,
 		ServiceContext serviceContext) {
 
 		SearchContext searchContext = new SearchContext();
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
+		if (Validator.isNotNull(entryClassPK)) {
+			attributes.put(Field.ENTRY_CLASS_PK, entryClassPK);
+		}
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
@@ -91,10 +91,6 @@ public class ProductDefinitionHelper {
 
 		if (groupId != 0) {
 			searchContext.setGroupIds(new long[] {groupId});
-		}
-
-		if (Validator.isNotNull(keywords)) {
-			searchContext.setKeywords(keywords);
 		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
@@ -123,7 +119,7 @@ public class ProductDefinitionHelper {
 			long[] assetCategoryIds)
 		throws PortalException {
 
-		ServiceContext serviceContext = getServiceContext(
+		ServiceContext serviceContext = _productIndexerHelper.getServiceContext(
 			groupId, assetCategoryIds);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
@@ -167,62 +163,10 @@ public class ProductDefinitionHelper {
 			expirationDateHour, expirationDateMinute, true, serviceContext);
 	}
 
-	public <T extends BaseModel> Indexer<T> getIndexer(Class<T> clazz) {
-		Indexer<T> indexer = _indexerRegistry.getIndexer(clazz.getName());
-
-		if (indexer == null) {
-			throw new NotFoundException(
-				"Unable to get indexer for " + clazz.getName());
-		}
-
-		return indexer;
-	}
-
-	public ServiceContext getServiceContext() throws PortalException {
-		return getServiceContext(0, new long[0]);
-	}
-
-	/**
-	 * Compose the ServiceContext object which is needed to add or update a
-	 * {@link CPDefinition}
-	 *
-	 * @param  groupId
-	 * @param  assetCategoryIds
-	 * @return ServiceContext
-	 * @throws PortalException
-	 * @see    BaseCPDemoDataCreatorHelper
-	 */
-	public ServiceContext getServiceContext(
-			long groupId, long[] assetCategoryIds)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			serviceContext = new ServiceContext();
-		}
-
-		User user = _userService.getUserById(PrincipalThreadLocal.getUserId());
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
-		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setTimeZone(user.getTimeZone());
-		serviceContext.setUserId(user.getUserId());
-
-		return serviceContext;
-	}
-
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private IndexerRegistry _indexerRegistry;
-
-	@Reference
-	private UserService _userService;
+	private ProductIndexerHelper _productIndexerHelper;
 
 }

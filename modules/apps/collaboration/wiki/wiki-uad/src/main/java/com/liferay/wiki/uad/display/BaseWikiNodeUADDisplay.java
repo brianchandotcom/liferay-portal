@@ -14,11 +14,20 @@
 
 package com.liferay.wiki.uad.display;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
 
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.uad.constants.WikiUADConstants;
 
+import org.osgi.service.component.annotations.Reference;
+
+import java.io.Serializable;
+
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -34,21 +43,23 @@ import java.util.Locale;
  * @generated
  */
 public abstract class BaseWikiNodeUADDisplay extends BaseModelUADDisplay<WikiNode> {
+	@Override
+	public WikiNode get(Serializable primaryKey) throws PortalException {
+		return wikiNodeLocalService.getWikiNode(Long.valueOf(
+				primaryKey.toString()));
+	}
+
+	@Override
 	public String getApplicationName() {
 		return WikiUADConstants.APPLICATION_NAME;
 	}
 
-	/**
-	 * Returns an ordered string array of the fields' names to be displayed.
-	 * Each field name corresponds to a table column based on the order they are
-	 * specified.
-	 *
-	 * @return the array of field names to display
-	 */
+	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "name", "description" };
 	}
 
+	@Override
 	public String getKey() {
 		return WikiUADConstants.CLASS_NAME_WIKI_NODE;
 	}
@@ -57,4 +68,28 @@ public abstract class BaseWikiNodeUADDisplay extends BaseModelUADDisplay<WikiNod
 	public String getTypeName(Locale locale) {
 		return "WikiNode";
 	}
+
+	@Override
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return wikiNodeLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	@Override
+	protected DynamicQuery doGetDynamicQuery() {
+		return wikiNodeLocalService.dynamicQuery();
+	}
+
+	@Override
+	protected List<WikiNode> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return wikiNodeLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return WikiUADConstants.USER_ID_FIELD_NAMES_WIKI_NODE;
+	}
+
+	@Reference
+	protected WikiNodeLocalService wikiNodeLocalService;
 }

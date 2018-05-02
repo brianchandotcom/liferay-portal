@@ -15,6 +15,8 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMExporterFactory;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormExporter;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -34,6 +37,9 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -65,6 +71,16 @@ public class ExportFormInstanceMVCResourceCommand
 
 		String fileExtension = ParamUtil.getString(
 			resourceRequest, "fileExtension");
+
+		DDMFormWebConfiguration ddmFormWebConfiguration =
+			_ddmFormWebConfigurationActivator.getDDMFormWebConfiguration();
+
+		if (StringUtil.equals(fileExtension, "csv") &&
+			StringUtil.equals(
+				ddmFormWebConfiguration.csvExport(), "disabled")) {
+
+			return;
+		}
 
 		String fileName =
 			formInstance.getName(themeDisplay.getLocale()) + CharPool.PERIOD +
@@ -98,7 +114,23 @@ public class ExportFormInstanceMVCResourceCommand
 		_formInstanceService = formInstanceService;
 	}
 
+	protected void unsetDDMFormWebConfigurationActivator(
+		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator) {
+
+		_ddmFormWebConfigurationActivator = null;
+	}
+
 	private DDMExporterFactory _ddmExporterFactory;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "unsetDDMFormWebConfigurationActivator"
+	)
+	private volatile DDMFormWebConfigurationActivator
+		_ddmFormWebConfigurationActivator;
+
 	private DDMFormInstanceService _formInstanceService;
 
 }

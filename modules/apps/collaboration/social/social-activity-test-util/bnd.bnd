@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Social Activity Test Utilities
-Bundle-SymbolicName: com.liferay.social.activity.test.util
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.social.activity.test.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Social

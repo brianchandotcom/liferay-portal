@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Upload API
+Bundle-SymbolicName: com.liferay.upload.api
+Bundle-Version: 2.0.0
+Export-Package: com.liferay.upload
+-dsannotations-options: inherit

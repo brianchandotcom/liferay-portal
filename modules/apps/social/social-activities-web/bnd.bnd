@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Social Activities Web
+Bundle-SymbolicName: com.liferay.social.activities.web
+Bundle-Version: 3.0.0
+Web-ContextPath: /social-activities-web

@@ -28,6 +28,10 @@ public class TestMethod {
 		return _name;
 	}
 
+	public TestClass getTestClass() {
+		return _testClass;
+	}
+
 	private final String _name;
 	private final TestClass _testClass;
 

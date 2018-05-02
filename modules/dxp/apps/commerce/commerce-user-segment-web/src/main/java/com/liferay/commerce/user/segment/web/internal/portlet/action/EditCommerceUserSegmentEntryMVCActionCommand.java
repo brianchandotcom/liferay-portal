@@ -73,6 +73,7 @@ public class EditCommerceUserSegmentEntryMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		String key = ParamUtil.getString(actionRequest, "key", name);
+
 		boolean active = ParamUtil.getBoolean(actionRequest, "active", true);
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 

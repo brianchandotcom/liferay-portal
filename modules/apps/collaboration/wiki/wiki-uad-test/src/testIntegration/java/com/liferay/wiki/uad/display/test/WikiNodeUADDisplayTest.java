@@ -16,13 +16,11 @@ package com.liferay.wiki.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
@@ -44,13 +42,13 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase {
+public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase<WikiNode> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected WikiNode addBaseModel(long userId) throws Exception {
 		WikiNode wikiNode = _wikiNodeUADTestHelper.addWikiNode(userId);
 
 		_wikiNodes.add(wikiNode);
@@ -61,11 +59,6 @@ public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase {
 	@Override
 	protected String getApplicationName() {
 		return WikiUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
-	protected UADAggregator getUADAggregator() {
-		return _uadAggregator;
 	}
 
 	@Override
@@ -82,9 +75,6 @@ public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase {
 	private final List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
 	@Inject
 	private WikiNodeUADTestHelper _wikiNodeUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE)
-	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
 	WikiUADConstants.CLASS_NAME_WIKI_NODE)
 	private UADDisplay _uadDisplay;

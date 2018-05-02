@@ -73,36 +73,11 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
-<liferay-frontend:management-bar
-	searchContainerId="workflowDefinitions"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= displayStyleURL %>"
-			selectedDisplayStyle="list"
-		/>
-
-		<liferay-util:include page="/definition/add_button.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "published", "not-published"} %>'
-			navigationParam="definitionsNavigation"
-			portletURL="<%= navigationPortletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title", "last-modified"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-util:include page="/search.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	creationMenu="<%= workflowDefinitionDisplayContext.getCreationMenu(pageContext) %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	selectable="<%= false %>"
+/>
 
 <div class="container-fluid-1280 workflow-definition-container">
 	<liferay-ui:search-container

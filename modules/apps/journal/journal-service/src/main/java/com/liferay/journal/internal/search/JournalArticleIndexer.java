@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.batch.BatchIndexingHelper;
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.trash.TrashHelper;
 
@@ -859,6 +860,10 @@ public class JournalArticleIndexer
 				_journalArticleLocalService.
 					getIndexableActionableDynamicQuery();
 
+			indexableActionableDynamicQuery.setInterval(
+				_batchIndexingHelper.getBulkSize(
+					JournalArticle.class.getName()));
+
 			indexableActionableDynamicQuery.setPerformActionMethod(
 				new ActionableDynamicQuery.
 					PerformActionMethod<JournalArticle>() {
@@ -887,6 +892,10 @@ public class JournalArticleIndexer
 			indexableActionableDynamicQuery =
 				_journalArticleResourceLocalService.
 					getIndexableActionableDynamicQuery();
+
+			indexableActionableDynamicQuery.setInterval(
+				_batchIndexingHelper.getBulkSize(
+					JournalArticleResource.class.getName()));
 
 			indexableActionableDynamicQuery.setPerformActionMethod(
 				new ActionableDynamicQuery.
@@ -1009,6 +1018,9 @@ public class JournalArticleIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleIndexer.class);
+
+	@Reference
+	private BatchIndexingHelper _batchIndexingHelper;
 
 	private ConfigurationProvider _configurationProvider;
 	private DDMIndexer _ddmIndexer;

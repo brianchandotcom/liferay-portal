@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPCreationMenu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -58,6 +59,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Leonardo Barros
@@ -95,6 +97,23 @@ public class WorkflowDefinitionDisplayContext {
 		WorkflowDefinition firstWorkflowDefinition = workflowDefinitions.get(0);
 
 		return firstWorkflowDefinition.getModifiedDate();
+	}
+
+	public JSPCreationMenu getCreationMenu(PageContext pageContext) {
+		LiferayPortletResponse response =
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
+
+		return new JSPCreationMenu(pageContext) {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							response.createRenderURL(), "mvcPath",
+							"/definition/edit_workflow_definition.jsp");
+						dropdownItem.setLabel("new-workflow");
+					});
+			}
+		};
 	}
 
 	public String getCreatorUserName(WorkflowDefinition workflowDefinition)

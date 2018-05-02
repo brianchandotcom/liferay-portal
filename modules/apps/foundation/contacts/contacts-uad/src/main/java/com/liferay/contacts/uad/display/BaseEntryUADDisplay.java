@@ -15,10 +15,19 @@
 package com.liferay.contacts.uad.display;
 
 import com.liferay.contacts.model.Entry;
+import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
 
+import org.osgi.service.component.annotations.Reference;
+
+import java.io.Serializable;
+
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -34,21 +43,22 @@ import java.util.Locale;
  * @generated
  */
 public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
+	@Override
+	public Entry get(Serializable primaryKey) throws PortalException {
+		return entryLocalService.getEntry(Long.valueOf(primaryKey.toString()));
+	}
+
+	@Override
 	public String getApplicationName() {
 		return ContactsUADConstants.APPLICATION_NAME;
 	}
 
-	/**
-	 * Returns an ordered string array of the fields' names to be displayed.
-	 * Each field name corresponds to a table column based on the order they are
-	 * specified.
-	 *
-	 * @return the array of field names to display
-	 */
+	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "fullName", "emailAddress", "comments" };
 	}
 
+	@Override
 	public String getKey() {
 		return ContactsUADConstants.CLASS_NAME_ENTRY;
 	}
@@ -57,4 +67,28 @@ public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
 	public String getTypeName(Locale locale) {
 		return "Entry";
 	}
+
+	@Override
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return entryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	@Override
+	protected DynamicQuery doGetDynamicQuery() {
+		return entryLocalService.dynamicQuery();
+	}
+
+	@Override
+	protected List<Entry> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return entryLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return ContactsUADConstants.USER_ID_FIELD_NAMES_ENTRY;
+	}
+
+	@Reference
+	protected EntryLocalService entryLocalService;
 }

@@ -46,10 +46,6 @@ public abstract class BaseAnnouncementsEntryUADDisplay
 		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY;
 	}
 
-	public String getTypeDescription() {
-		return "Announcements posted by the user";
-	}
-
 	public String getTypeName(Locale locale) {
 		return "AnnouncementsEntry";
 	}

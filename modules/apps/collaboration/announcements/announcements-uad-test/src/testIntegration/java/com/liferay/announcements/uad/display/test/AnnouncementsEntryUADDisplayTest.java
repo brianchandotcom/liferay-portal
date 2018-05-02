@@ -61,11 +61,6 @@ public class AnnouncementsEntryUADDisplayTest
 	}
 
 	@Override
-	protected String getTypeDescription() {
-		return "Announcements posted by the user";
-	}
-
-	@Override
 	protected UADAggregator<AnnouncementsEntry> getUADAggregator() {
 		return _uadAggregator;
 	}

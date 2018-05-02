@@ -11,20 +11,27 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="getConsumerKeyAndSecret" returns="consumerKey,consumerSecret">
+	<command name="getApplicationCredentials" returns="applicationCredentials">
 		<var name="key_applicationName" value="${applicationName}" />
 
 		<execute function="AssertClick" locator1="TestOAuth#OAUTH_ADMIN_TABLE_NAME" value1="${applicationName}" />
 
 		<var method="selenium#getText(TestOAuth#OAUTH_ADMIN_APPLICATION_CREDENTIALS)" name="applicationCredentials" />
 
-		<var method="StringUtil#stripBetween('${applicationCredentials}', 'Application', 'Secret: ')" name="consumerSecret" />
+		<return name="applicationCredentials" value="${applicationCredentials}" />
+	</command>
 
+	<command name="getConsumerKey" returns="consumerKey">
 		<var method="StringUtil#stripBetween('${applicationCredentials}', 'Application', 'Key: ')" name="strippedResult" />
 
 		<var method="StringUtil#stripBetween('${strippedResult}', ' Consumer', '${consumerSecret}')" name="consumerKey" />
 
 		<return name="consumerKey" value="${consumerKey}" />
+	</command>
+
+	<command name="getConsumerSecret" returns="consumerSecret">
+		<var method="StringUtil#stripBetween('${applicationCredentials}', 'Application', 'Secret: ')" name="consumerSecret" />
+
 		<return name="consumerSecret" value="${consumerSecret}" />
 	</command>
 

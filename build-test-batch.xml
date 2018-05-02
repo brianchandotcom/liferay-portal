@@ -1491,7 +1491,9 @@ app.server.type=@{app.server.type}]]></echo>
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">
+										<param name="test.batch.run.type" value="single" />
 										<param name="test.class" value="PortalSmoke#Smoke" />
+										<param name="test.skip.tear.down" value="false" />
 									</antcall>
 								</try>
 
@@ -1531,7 +1533,9 @@ app.server.type=@{app.server.type}]]></echo>
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">
+										<param name="test.batch.run.type" value="single" />
 										<param name="test.class" value="PortalSmoke#Smoke" />
+										<param name="test.skip.tear.down" value="false" />
 									</antcall>
 								</try>
 
@@ -1571,7 +1575,9 @@ app.server.type=@{app.server.type}]]></echo>
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">
+										<param name="test.batch.run.type" value="single" />
 										<param name="test.class" value="PortalSmoke#Smoke" />
+										<param name="test.skip.tear.down" value="false" />
 									</antcall>
 								</try>
 

@@ -17,63 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String keywords = ParamUtil.getString(request, "keywords");
-
 PortletURL portletURL = trashDisplayContext.getPortletURL();
-
-boolean approximate = false;
-
-EntrySearch entrySearch = new EntrySearch(renderRequest, portletURL);
-
-EntrySearchTerms searchTerms = (EntrySearchTerms)entrySearch.getSearchTerms();
-
-List trashEntries = null;
-
-if (Validator.isNotNull(searchTerms.getKeywords())) {
-	Sort sort = SortFactoryUtil.getSort(TrashEntry.class, entrySearch.getOrderByCol(), entrySearch.getOrderByType());
-
-	BaseModelSearchResult<TrashEntry> baseModelSearchResult = TrashEntryLocalServiceUtil.searchTrashEntries(company.getCompanyId(), themeDisplay.getScopeGroupId(), user.getUserId(), searchTerms.getKeywords(), entrySearch.getStart(), entrySearch.getEnd(), sort);
-
-	entrySearch.setTotal(baseModelSearchResult.getLength());
-
-	trashEntries = baseModelSearchResult.getBaseModels();
-}
-else {
-	TrashEntryList trashEntryList = null;
-
-	if (Objects.equals(trashDisplayContext.getNavigation(), "all")) {
-		trashEntryList = TrashEntryServiceUtil.getEntries(themeDisplay.getScopeGroupId(), entrySearch.getStart(), entrySearch.getEnd(), entrySearch.getOrderByComparator());
-	}
-	else {
-		trashEntryList = TrashEntryServiceUtil.getEntries(themeDisplay.getScopeGroupId(), trashDisplayContext.getNavigation(), entrySearch.getStart(), entrySearch.getEnd(), entrySearch.getOrderByComparator());
-	}
-
-	entrySearch.setTotal(trashEntryList.getCount());
-
-	trashEntries = trashEntryList.getOriginalTrashEntries();
-
-	approximate = trashEntryList.isApproximate();
-}
-
-entrySearch.setResults(trashEntries);
-
-EmptyOnClickRowChecker emptyOnClickRowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*^(?!.*/entry/)");
-
-entrySearch.setRowChecker(emptyOnClickRowChecker);
-
-if ((entrySearch.getTotal() == 0) && Validator.isNotNull(searchTerms.getKeywords())) {
-	entrySearch.setEmptyResultsMessage(LanguageUtil.format(request, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) + "</strong>", false));
-}
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle-bin"), portletURL.toString());
 
-if (Validator.isNotNull(keywords)) {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + keywords, currentURL);
+if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search") + ": " + trashDisplayContext.getKeywords(), currentURL);
 }
-
-request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 %>
 
 <clay:navigation-bar
@@ -81,7 +31,21 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 	items="<%= trashDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+<clay:management-toolbar
+	actionItems="<%= trashDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= trashDisplayContext.getClearResultsURL() %>"
+	componentId="trashWebManagementToolbar"
+	filterItems="<%= trashDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	searchActionURL="<%= trashDisplayContext.getSearchActionURL() %>"
+	searchContainerId="trash"
+	searchFormName="searchFm"
+	showInfoButton="<%= true %>"
+	sortingOrder="<%= trashDisplayContext.getOrderByType() %>"
+	sortingURL="<%= trashDisplayContext.getSortingURL() %>"
+	totalItems="<%= trashDisplayContext.getTotalItems() %>"
+	viewTypes="<%= trashDisplayContext.getViewTypeItems() %>"
+/>
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
@@ -162,7 +126,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 		<aui:form action="<%= deleteEntriesURL %>" name="fm">
 			<liferay-ui:search-container
 				id="trash"
-				searchContainer="<%= entrySearch %>"
+				searchContainer="<%= trashDisplayContext.getEntrySearch() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.trash.model.TrashEntry"
@@ -327,9 +291,17 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 				<liferay-ui:search-iterator
 					displayStyle="<%= trashDisplayContext.getDisplayStyle() %>"
 					markupView="lexicon"
-					type='<%= approximate ? "more" : "regular" %>'
+					type='<%= trashDisplayContext.isApproximate() ? "more" : "regular" %>'
 				/>
 			</liferay-ui:search-container>
 		</aui:form>
 	</div>
 </div>
+
+<aui:script>
+	window.<portlet:namespace/>deleteSelectedEntries = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
+		}
+	}
+</aui:script>

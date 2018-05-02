@@ -53,7 +53,18 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 			items="<%= trashDisplayContext.getNavigationItems() %>"
 		/>
 
-		<liferay-util:include page="/view_content_toolbar.jsp" servletContext="<%= application %>" />
+		<clay:management-toolbar
+			clearResultsURL="<%= trashDisplayContext.getContentClearResultsURL() %>"
+			componentId="trashContentWebManagementToolbar"
+			filterItems="<%= trashDisplayContext.getContentFilterDropdownItems() %>"
+			infoPanelId="infoPanelId"
+			searchActionURL="<%= trashDisplayContext.getContentSearchActionURL() %>"
+			searchFormName="searchFm"
+			selectable="<%= false %>"
+			showInfoButton="<%= true %>"
+			totalItems="<%= trashHandler.getTrashModelsCount(classPK) %>"
+			viewTypes="<%= trashDisplayContext.getViewTypeItems() %>"
+		/>
 
 		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/trash/info_panel" var="sidebarPanelURL" />

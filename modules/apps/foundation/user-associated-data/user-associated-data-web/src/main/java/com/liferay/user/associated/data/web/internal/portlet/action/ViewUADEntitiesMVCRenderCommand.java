@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
@@ -102,7 +101,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setSearchContainer(
 				_getSearchContainer(
-					renderRequest, currentURL, uadRegistryKey, uadDisplay,
+					renderRequest, currentURL, uadDisplay,
 					selectedUser.getUserId(), liferayPortletResponse));
 			viewUADEntitiesDisplay.setTypeName(
 				uadDisplay.getTypeName(
@@ -123,13 +122,13 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private <T> UADEntity<T> _constructUADEntity(
-			T entity, UADAggregator<T> uadAggregator, UADDisplay<T> uadDisplay,
+			T entity, UADDisplay<T> uadDisplay,
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
 		UADEntity<T> uadEntity = new UADEntity(
-			entity, uadAggregator.getPrimaryKey(entity),
+			entity, uadDisplay.getPrimaryKey(entity),
 			uadDisplay.getEditURL(
 				entity, liferayPortletRequest, liferayPortletResponse));
 
@@ -204,7 +203,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 	private SearchContainer<UADEntity> _getSearchContainer(
 			RenderRequest renderRequest, PortletURL currentURL,
-			String uadRegistryKey, UADDisplay uadDisplay, long selectedUserId,
+			UADDisplay uadDisplay, long selectedUserId,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
@@ -214,10 +213,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
 			renderRequest, currentURL, null, null);
 
-		UADAggregator uadAggregator = _uadRegistry.getUADAggregator(
-			uadRegistryKey);
-
-		List<Object> entities = uadAggregator.getRange(
+		List<Object> entities = uadDisplay.getRange(
 			selectedUserId, searchContainer.getStart(),
 			searchContainer.getEnd());
 
@@ -226,14 +222,14 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		for (Object entity : entities) {
 			uadEntities.add(
 				_constructUADEntity(
-					entity, uadAggregator, uadDisplay, liferayPortletRequest,
+					entity, uadDisplay, liferayPortletRequest,
 					liferayPortletResponse));
 		}
 
 		searchContainer.setResults(uadEntities);
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(liferayPortletResponse));
-		searchContainer.setTotal((int)uadAggregator.count(selectedUserId));
+		searchContainer.setTotal((int)uadDisplay.count(selectedUserId));
 
 		return searchContainer;
 	}

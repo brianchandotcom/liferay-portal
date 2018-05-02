@@ -125,10 +125,10 @@ public class ProductNestedCollectionResource
 			document -> GetterUtil.getLong(document.get(Field.USER_ID))
 		).addString(
 			"description", this::_getSafeDescription
-		).addStringList(
-			"skus", document -> Arrays.asList(document.getValues("skus"))
 		).addString(
 			"title", document -> document.get(Field.TITLE)
+		).addStringList(
+			"skus", document -> Arrays.asList(document.getValues("skus"))
 		).build();
 	}
 

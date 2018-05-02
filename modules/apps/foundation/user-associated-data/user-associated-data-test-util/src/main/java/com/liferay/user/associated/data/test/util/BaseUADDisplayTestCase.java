@@ -14,12 +14,12 @@
 
 package com.liferay.user.associated.data.test.util;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADDisplay;
 
 import java.util.List;
@@ -36,7 +36,6 @@ public abstract class BaseUADDisplayTestCase<T> {
 
 	@Before
 	public void setUp() throws Exception {
-		_uadAggregator = getUADAggregator();
 		_uadDisplay = getUADDisplay();
 		_user = UserTestUtil.addUser();
 	}
@@ -58,19 +57,17 @@ public abstract class BaseUADDisplayTestCase<T> {
 
 	protected abstract String getApplicationName();
 
-	protected abstract UADAggregator<T> getUADAggregator();
-
 	protected abstract UADDisplay<T> getUADDisplay();
 
 	private T _createBaseModel() throws Exception {
 		addBaseModel(_user.getUserId());
 
-		List<T> baseModels = _uadAggregator.getAll(_user.getUserId());
+		List<T> baseModels = _uadDisplay.getRange(
+			_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return baseModels.get(0);
 	}
 
-	private UADAggregator<T> _uadAggregator;
 	private UADDisplay<T> _uadDisplay;
 
 	@DeleteAfterTestRun

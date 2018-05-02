@@ -88,11 +88,14 @@ public class SKUCombinationsIteratorTest {
 	private CPDefinition _createCPDefinition() {
 		CPDefinition cpDefinition = new CPDefinitionImpl();
 
-		cpDefinition.setCPDefinitionId(111);
-
 		Map<Locale, String> map = Collections.singletonMap(
 			Locale.US, "Title-Description");
 
+		cpDefinition.setCPDefinitionId(RandomTestUtil.randomLong());
+		cpDefinition.setGroupId(RandomTestUtil.randomLong());
+		cpDefinition.setCompanyId(RandomTestUtil.randomLong());
+		cpDefinition.setUserId(RandomTestUtil.randomLong());
+		cpDefinition.setUserName(RandomTestUtil.randomString());
 		cpDefinition.setTitleMap(map);
 		cpDefinition.setDescriptionMap(map);
 
@@ -109,10 +112,10 @@ public class SKUCombinationsIteratorTest {
 
 		cpDefinitionOptionRel.setCPDefinitionOptionRelId(
 			RandomTestUtil.randomLong());
-		cpDefinitionOptionRel.setGroupId(_GROUP_ID);
-		cpDefinitionOptionRel.setCompanyId(_COMPANY_ID);
-		cpDefinitionOptionRel.setUserId(_USER_ID);
-		cpDefinitionOptionRel.setUserName(_USER_NAME);
+		cpDefinitionOptionRel.setGroupId(cpDefinition.getGroupId());
+		cpDefinitionOptionRel.setCompanyId(cpDefinition.getCompanyId());
+		cpDefinitionOptionRel.setUserId(cpDefinition.getUserId());
+		cpDefinitionOptionRel.setUserName(cpDefinition.getUserName());
 		cpDefinitionOptionRel.setCreateDate(now);
 		cpDefinitionOptionRel.setModifiedDate(now);
 		cpDefinitionOptionRel.setCPDefinitionId(
@@ -134,10 +137,13 @@ public class SKUCombinationsIteratorTest {
 
 		cpDefinitionOptionValueRel.setCPDefinitionOptionValueRelId(
 			RandomTestUtil.randomLong());
-		cpDefinitionOptionValueRel.setGroupId(_GROUP_ID);
-		cpDefinitionOptionValueRel.setCompanyId(_COMPANY_ID);
-		cpDefinitionOptionValueRel.setUserId(_USER_ID);
-		cpDefinitionOptionValueRel.setUserName(_USER_NAME);
+		cpDefinitionOptionValueRel.setGroupId(
+			cpDefinitionOptionRel.getGroupId());
+		cpDefinitionOptionValueRel.setCompanyId(
+			cpDefinitionOptionRel.getCompanyId());
+		cpDefinitionOptionValueRel.setUserId(cpDefinitionOptionRel.getUserId());
+		cpDefinitionOptionValueRel.setUserName(
+			cpDefinitionOptionRel.getUserName());
 		cpDefinitionOptionValueRel.setCreateDate(now);
 		cpDefinitionOptionValueRel.setModifiedDate(now);
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
@@ -171,13 +177,5 @@ public class SKUCombinationsIteratorTest {
 				cpDefinitionOptionRel, cpDefinitionOptionValueRelArray);
 		}
 	}
-
-	private static final long _COMPANY_ID = 222;
-
-	private static final long _GROUP_ID = 111;
-
-	private static final long _USER_ID = 123456789;
-
-	private static final String _USER_NAME = "UserName";
 
 }

@@ -904,8 +904,6 @@ public class ServiceBuilder {
 						if (entity.isUADEnabled()) {
 							_createBaseUADAnonymizer(entity);
 							_createBaseUADExporter(entity);
-							_createUADAggregator(entity);
-							_createUADAggregatorTest(entity);
 							_createUADAnonymizer(entity);
 							_createUADAnonymizerTest(entity);
 							_createUADExporter(entity);
@@ -930,8 +928,6 @@ public class ServiceBuilder {
 							//_removeBaseUADAnonymizer(entity);
 							//_removeBaseUADDisplay(entity);
 							//_removeBaseUADExporter(entity);
-							//_removeUADAggregator(entity);
-							//_removeUADAggregatorTest(entity);
 							//_removeUADAnonymizer(entity);
 							//_removeUADAnonymizerTest(entity);
 							//_removeUADDisplay(entity);
@@ -4022,46 +4018,6 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createUADAggregator(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADAggregator, context);
-
-		// Write file
-
-		File file = new File(
-			StringBundler.concat(
-				_uadOutputPath, "/uad/aggregator/", entity.getName(),
-				"UADAggregator.java"));
-
-		ToolsUtil.writeFile(
-			file, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
-	private void _createUADAggregatorTest(Entity entity) throws Exception {
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		// Content
-
-		String content = _processTemplate(_tplUADAggregatorTest, context);
-
-		// Write file
-
-		File file = new File(
-			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/aggregator/test/",
-				entity.getName(), "UADAggregatorTest.java"));
-
-		ToolsUtil.writeFile(
-			file, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
 	private void _createUADAnonymizer(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -6815,9 +6771,6 @@ public class ServiceBuilder {
 	private String _tplServletContextUtil =
 		_TPL_ROOT + "servlet_context_util.ftl";
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
-	private String _tplUADAggregator = _TPL_ROOT + "uad_aggregator.ftl";
-	private String _tplUADAggregatorTest =
-		_TPL_ROOT + "uad_aggregator_test.ftl";
 	private String _tplUADAnonymizer = _TPL_ROOT + "uad_anonymizer.ftl";
 	private String _tplUADAnonymizerTest =
 		_TPL_ROOT + "uad_anonymizer_test.ftl";

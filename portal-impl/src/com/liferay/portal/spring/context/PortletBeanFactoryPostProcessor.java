@@ -15,7 +15,6 @@
 package com.liferay.portal.spring.context;
 
 import com.liferay.portal.kernel.spring.util.SpringFactoryUtil;
-import com.liferay.portal.spring.aop.ChainableMethodAdviceInjectorCollector;
 
 import java.util.Map;
 
@@ -36,9 +35,6 @@ public class PortletBeanFactoryPostProcessor
 	@Override
 	public void postProcessBeanFactory(
 		ConfigurableListableBeanFactory configurableListableBeanFactory) {
-
-		ChainableMethodAdviceInjectorCollector.collect(
-			configurableListableBeanFactory);
 
 		ClassLoader classLoader = getClassLoader();
 

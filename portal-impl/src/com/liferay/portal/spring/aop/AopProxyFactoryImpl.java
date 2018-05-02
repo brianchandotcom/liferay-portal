@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.spring.aop.AopProxyFactory;
 
-import java.util.List;
 import java.util.Map;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -52,32 +51,6 @@ public class AopProxyFactoryImpl implements AopProxyFactory, BeanFactoryAware {
 				chainableMethodAdviceInjectors.values()) {
 
 			chainableMethodAdviceInjector.inject();
-		}
-
-		if (!listableBeanFactory.containsBean(
-				ChainableMethodAdviceInjectorCollector.BEAN_NAME)) {
-
-			return;
-		}
-
-		ChainableMethodAdviceInjectorCollector
-			chainableMethodAdviceInjectorCollector =
-				(ChainableMethodAdviceInjectorCollector)
-					listableBeanFactory.getBean(
-						ChainableMethodAdviceInjectorCollector.BEAN_NAME);
-
-		List<String> beanNames =
-			chainableMethodAdviceInjectorCollector.getBeanNames();
-
-		for (String beanName : beanNames) {
-			Object bean = listableBeanFactory.getBean(beanName);
-
-			if (bean instanceof ChainableMethodAdviceInjector) {
-				ChainableMethodAdviceInjector chainableMethodAdviceInjector =
-					(ChainableMethodAdviceInjector)bean;
-
-				chainableMethodAdviceInjector.inject();
-			}
 		}
 	}
 

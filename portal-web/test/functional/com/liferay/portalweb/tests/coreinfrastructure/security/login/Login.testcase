@@ -125,7 +125,7 @@
 		</execute>
 	</command>
 
-	<command name="GoogleSSOSmoke" priority="4">
+	<command ignore="true" name="GoogleSSOSmoke" priority="4">
 		<property name="test.name.skip.portal.instance" value="Login#GoogleSSOSmoke" />
 
 		<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />

@@ -63,6 +63,7 @@ public class CommerceOrganizationMembersDisplayContext
 			httpServletRequest, portal);
 
 		setDefaultOrderByCol("name");
+		setDefaultOrderByType("asc");
 	}
 
 	public String getEditURL(User user) throws PortalException {

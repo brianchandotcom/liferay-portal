@@ -58,6 +58,8 @@ public class MissingEmptyLineCheck extends BaseCheck {
 	private void _checkMissingEmptyLineAfterReferencingVariable(
 		DetailAST detailAST, String variableName, int endLine) {
 
+		String lastAssignedVariableName = null;
+		DetailAST previousAST = null;
 		boolean referenced = false;
 
 		DetailAST nextSibling = detailAST.getNextSibling();
@@ -90,6 +92,14 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					return;
 				}
 
+				if (_containsVariableName(
+						previousAST, lastAssignedVariableName) &&
+					_containsVariableName(
+						nextSibling, lastAssignedVariableName)) {
+
+					return;
+				}
+
 				log(
 					startLineNextExpression,
 					_MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
@@ -98,9 +108,19 @@ public class MissingEmptyLineCheck extends BaseCheck {
 				return;
 			}
 
+			List<DetailAST> assignASTList = DetailASTUtil.getAllChildTokens(
+				nextSibling, false, TokenTypes.ASSIGN);
+
+			if (assignASTList.size() == 1) {
+				lastAssignedVariableName = _getVariableName(
+					assignASTList.get(0));
+			}
+
 			referenced = true;
 
 			endLine = DetailASTUtil.getEndLine(nextSibling);
+
+			previousAST = nextSibling;
 
 			nextSibling = nextSibling.getNextSibling();
 		}

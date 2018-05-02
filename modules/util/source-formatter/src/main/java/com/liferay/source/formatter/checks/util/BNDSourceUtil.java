@@ -66,6 +66,9 @@ public class BNDSourceUtil {
 		fileSpecificDefinitionKeysMap.put(
 			"subsystem.bnd",
 			_populateDefinitionKeysMap(_SUBSYSTEM_BND_DEFINITION_KEYS));
+		fileSpecificDefinitionKeysMap.put(
+			"suite.bnd",
+			_populateDefinitionKeysMap(_SUITE_BND_DEFINITION_KEYS));
 
 		return fileSpecificDefinitionKeysMap;
 	}
@@ -97,7 +100,8 @@ public class BNDSourceUtil {
 		"Liferay-Releng-Fix-Delivery-Method", "Liferay-Releng-Labs",
 		"Liferay-Releng-Marketplace", "Liferay-Releng-Portal-Required",
 		"Liferay-Releng-Public", "Liferay-Releng-Restart-Required",
-		"Liferay-Releng-Support-Url", "Liferay-Releng-Supported"
+		"Liferay-Releng-Suite", "Liferay-Releng-Support-Url",
+		"Liferay-Releng-Supported"
 	};
 
 	private static final String[] _BND_BND_DEFINITION_KEYS = {
@@ -127,5 +131,8 @@ public class BNDSourceUtil {
 
 	private static final String[] _SUBSYSTEM_BND_DEFINITION_KEYS =
 		{"Liferay-Releng-Marketplace", "Liferay-Releng-Subsystem-Title"};
+
+	private static final String[] _SUITE_BND_DEFINITION_KEYS =
+		{"Liferay-Releng-Suite-Description", "Liferay-Releng-Suite-Title"};
 
 }

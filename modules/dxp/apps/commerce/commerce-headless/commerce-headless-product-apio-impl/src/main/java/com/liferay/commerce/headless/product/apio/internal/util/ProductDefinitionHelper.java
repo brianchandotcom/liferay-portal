@@ -46,7 +46,7 @@ public class ProductDefinitionHelper {
 
 	/**
 	 * Builds the SearchContext for finding {@link CPDefinition}'s {@link
-	 * com.liferay.portal.kernel.search.Document}
+	 * com.liferay.portal.kernel.search.Document}.
 	 *
 	 * @param  entryClassPK
 	 * @param  keywords

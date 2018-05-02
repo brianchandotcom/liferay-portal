@@ -35,7 +35,7 @@ public class ProductOptionHelper {
 
 	/**
 	 * Builds the SearchContext for finding {@link CPDefinitionOptionRel}'s
-	 * {@link com.liferay.portal.kernel.search.Document}
+	 * {@link com.liferay.portal.kernel.search.Document}.
 	 *
 	 * @param  entryClassPK
 	 * @param  cpDefinitionId

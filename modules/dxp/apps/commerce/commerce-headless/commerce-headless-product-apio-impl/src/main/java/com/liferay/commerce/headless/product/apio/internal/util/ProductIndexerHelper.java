@@ -52,7 +52,7 @@ public class ProductIndexerHelper {
 
 	/**
 	 * Compose the ServiceContext object which needed for operation on Product
-	 * related resources
+	 * related resources.
 	 *
 	 * @param  groupId
 	 * @param  assetCategoryIds

@@ -84,7 +84,18 @@ AUI.add(
 						}
 
 						if (fieldName === 'name') {
-							settingsFormFieldContext.value = copy.generateFieldName(instance.get('fieldName'));
+							var oldFieldName = instance.get('fieldName');
+
+							var newFieldName = Lang.sub(
+								Liferay.Language.get('copy-of-x'),
+								[
+									oldFieldName
+								]
+							);
+
+							newFieldName = newFieldName.replace(/\s/g, '');
+
+							settingsFormFieldContext.value = copy.generateFieldName(newFieldName);
 						}
 					}
 				);

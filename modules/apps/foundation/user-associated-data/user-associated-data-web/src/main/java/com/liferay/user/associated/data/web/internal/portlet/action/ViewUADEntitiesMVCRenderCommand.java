@@ -133,18 +133,10 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			uadDisplay.getEditURL(
 				entity, liferayPortletRequest, liferayPortletResponse));
 
-		Map<String, Object> nonanonymizableFieldValues =
-			uadDisplay.getNonanonymizableFieldValues(entity);
+		Map<String, Object> columnFieldValues = uadDisplay.getFieldValues(
+			entity, uadDisplay.getColumnFieldNames());
 
-		for (String displayFieldName : uadDisplay.getDisplayFieldNames()) {
-			Object nonanonymizableFieldValue = nonanonymizableFieldValues.get(
-				displayFieldName);
-
-			if (nonanonymizableFieldValue != null) {
-				uadEntity.addColumnEntry(
-					displayFieldName, nonanonymizableFieldValue);
-			}
-		}
+		columnFieldValues.forEach(uadEntity::addColumnEntry);
 
 		return uadEntity;
 	}

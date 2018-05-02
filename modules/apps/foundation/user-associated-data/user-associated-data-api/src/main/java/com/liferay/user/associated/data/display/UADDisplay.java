@@ -27,16 +27,23 @@ public interface UADDisplay<T> {
 
 	public String getApplicationName();
 
+	public default String[] getColumnFieldNames() {
+		return getDisplayFieldNames();
+	}
+
 	public String[] getDisplayFieldNames();
 
-	public String getEditURL(
+	public default String getEditURL(
 			T t, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)
-		throws Exception;
+		throws Exception {
+
+		return null;
+	}
+
+	public Map<String, Object> getFieldValues(T t, String[] fieldNames);
 
 	public String getKey();
-
-	public Map<String, Object> getNonanonymizableFieldValues(T t);
 
 	public String getTypeName(Locale locale);
 

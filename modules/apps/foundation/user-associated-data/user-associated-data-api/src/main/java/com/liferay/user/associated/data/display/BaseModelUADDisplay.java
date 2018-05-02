@@ -12,20 +12,28 @@
  * details.
  */
 
-package com.liferay.bookmarks.uad.display;
+package com.liferay.user.associated.data.display;
 
-import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
-import com.liferay.user.associated.data.display.UADDisplay;
+import com.liferay.portal.kernel.model.BaseModel;
 
-import org.osgi.service.component.annotations.Component;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * @author Noah Sherrill
+ * @author Pei-Jung Lan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
-	service = UADDisplay.class
-)
-public class BookmarksEntryUADDisplay extends BaseBookmarksEntryUADDisplay {
+public abstract class BaseModelUADDisplay<T extends BaseModel>
+	implements UADDisplay<T> {
+
+	public Map<String, Object> getFieldValues(T t, String[] fieldNames) {
+		Map<String, Object> modelAttributes = t.getModelAttributes();
+
+		Set<String> modelAttributesKeySet = modelAttributes.keySet();
+
+		modelAttributesKeySet.retainAll(Arrays.asList(fieldNames));
+
+		return modelAttributes;
+	}
+
 }

@@ -235,7 +235,7 @@ public class UADApplicationSummaryHelper {
 		return new DropdownItemList() {
 			{
 				for (String navigation :
-						new String[] {"all", "in-progress", "done"}) {
+						new String[] {"all", "pending", "done"}) {
 
 					add(
 						dropdownItem -> {
@@ -296,7 +296,7 @@ public class UADApplicationSummaryHelper {
 	public Predicate<UADApplicationSummaryDisplay> getPredicate(
 		String navigation) {
 
-		if (navigation.equals("in-progress")) {
+		if (navigation.equals("pending")) {
 			return display -> display.getCount() > 0;
 		}
 		else if (navigation.equals("done")) {

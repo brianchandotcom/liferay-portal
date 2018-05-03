@@ -26,6 +26,11 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class Base${entity.name}UADExporter extends DynamicQueryUADExporter<${entity.name}> {
 
 	@Override
+	public String getApplicationName() {
+		return ${portletShortName}UADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return ${entity.varName}LocalService.getActionableDynamicQuery();
 	}

@@ -107,7 +107,6 @@ public class UserIndexer extends BaseIndexer<User> {
 		}
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			String key = entry.getKey();
 			Object value = entry.getValue();
 
 			if (value == null) {
@@ -125,7 +124,7 @@ public class UserIndexer extends BaseIndexer<User> {
 			}
 
 			addContextQueryParams(
-				contextBooleanFilter, searchContext, key, value);
+				contextBooleanFilter, searchContext, entry.getKey(), value);
 		}
 	}
 

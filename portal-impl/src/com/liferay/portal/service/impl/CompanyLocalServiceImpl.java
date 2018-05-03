@@ -1181,12 +1181,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			List<String> resetKeys = new ArrayList<>();
 
 			for (Map.Entry<String, String> entry : properties.entrySet()) {
-				String key = entry.getKey();
 				String value = entry.getValue();
 
 				if (value.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 					continue;
 				}
+
+				String key = entry.getKey();
 
 				String propsUtilValue = PropsUtil.get(key);
 

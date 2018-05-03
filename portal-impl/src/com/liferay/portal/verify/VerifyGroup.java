@@ -159,7 +159,6 @@ public class VerifyGroup extends VerifyProcess {
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
-					long groupId = rs.getLong("groupId");
 					String name = rs.getString("name");
 
 					if (name.endsWith(
@@ -181,6 +180,8 @@ public class VerifyGroup extends VerifyProcess {
 							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
 
 					ps2.setString(1, newName);
+
+					long groupId = rs.getLong("groupId");
 
 					ps2.setLong(2, groupId);
 

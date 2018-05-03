@@ -64,7 +64,6 @@ public class LockMethodImpl implements Method {
 		}
 
 		HttpServletRequest request = webDAVRequest.getHttpServletRequest();
-		HttpServletResponse response = webDAVRequest.getHttpServletResponse();
 
 		Lock lock = null;
 		Status status = null;
@@ -162,6 +161,8 @@ public class LockMethodImpl implements Method {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Response XML\n" + xml);
 		}
+
+		HttpServletResponse response = webDAVRequest.getHttpServletResponse();
 
 		String lockToken = StringBundler.concat(
 			"<", WebDAVUtil.TOKEN_PREFIX, lock.getUuid(), ">");

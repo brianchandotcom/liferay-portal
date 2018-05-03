@@ -107,8 +107,6 @@ public class GitUtil {
 
 		String baseDirName = ArgumentsUtil.getString(
 			arguments, "git.base.dir", "./");
-		String markerFileName = ArgumentsUtil.getString(
-			arguments, "git.marker.file", null);
 		String type = ArgumentsUtil.getString(
 			arguments, "git.type", "current-branch");
 
@@ -131,6 +129,9 @@ public class GitUtil {
 			else {
 				throw new IllegalArgumentException();
 			}
+
+			String markerFileName = ArgumentsUtil.getString(
+				arguments, "git.marker.file", null);
 
 			if (Validator.isNotNull(markerFileName)) {
 				fileNames = getDirNames(baseDirName, fileNames, markerFileName);

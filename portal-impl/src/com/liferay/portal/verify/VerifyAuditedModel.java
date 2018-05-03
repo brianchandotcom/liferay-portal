@@ -294,8 +294,6 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 				while (rs.next()) {
 					long companyId = rs.getLong("companyId");
-					long primKey = rs.getLong(
-						verifiableAuditedModel.getPrimaryKeyColumnName());
 					long previousUserId = rs.getLong("userId");
 
 					if (verifiableAuditedModel.getJoinByTableName() != null) {
@@ -318,6 +316,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 					if (auditedModelArray == null) {
 						continue;
 					}
+
+					long primKey = rs.getLong(
+						verifiableAuditedModel.getPrimaryKeyColumnName());
 
 					verifyAuditedModel(
 						con, ps2, verifiableAuditedModel.getTableName(),

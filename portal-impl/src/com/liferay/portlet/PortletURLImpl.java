@@ -494,12 +494,14 @@ public class PortletURLImpl
 			for (Map.Entry<String, String[]> entry : params.entrySet()) {
 				try {
 					String key = entry.getKey();
-					String[] value = entry.getValue();
 
 					if (key == null) {
 						throw new IllegalArgumentException();
 					}
-					else if (value == null) {
+
+					String[] value = entry.getValue();
+
+					if (value == null) {
 						throw new IllegalArgumentException();
 					}
 
@@ -875,7 +877,6 @@ public class PortletURLImpl
 
 		for (Map.Entry<String, String[]> entry : renderParams.entrySet()) {
 			String name = entry.getKey();
-			String[] values = entry.getValue();
 
 			if (isParameterIncludedInPath(name)) {
 				continue;
@@ -890,7 +891,7 @@ public class PortletURLImpl
 				}
 			}
 
-			for (String value : values) {
+			for (String value : entry.getValue()) {
 				_appendNamespaceAndEncode(sb, name);
 
 				sb.append(StringPool.EQUAL);

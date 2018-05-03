@@ -347,14 +347,15 @@ public class PluginsSummaryBuilder {
 
 		String fullScreenshotsDirName =
 			fullWebInfDirName + "releng/screenshots/";
-		String relativeScreenshotsDirName =
-			relativeWebInfDirName + "releng/screenshots/";
 
 		if (FileUtil.exists(fullScreenshotsDirName)) {
 			String[] screenshotsFileNames = FileUtil.listFiles(
 				fullScreenshotsDirName);
 
 			Arrays.sort(screenshotsFileNames);
+
+			String relativeScreenshotsDirName =
+				relativeWebInfDirName + "releng/screenshots/";
 
 			for (String screenshotsFileName : screenshotsFileNames) {
 				if (screenshotsFileName.equals("Thumbs.db") ||

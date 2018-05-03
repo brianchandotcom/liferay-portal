@@ -101,11 +101,8 @@ public class UpgradeLayout extends UpgradeProcess {
 				// it.
 
 				while (rs.next()) {
-					long plid = rs.getLong("plid");
 					String layoutPrototypeUuid = rs.getString(
 						"layoutPrototypeUuid");
-					String sourcePrototypeLayoutUuid = rs.getString(
-						"sourcePrototypeLayoutUuid");
 
 					long groupId = getLayoutPrototypeGroupId(
 						layoutPrototypeUuid);
@@ -114,8 +111,13 @@ public class UpgradeLayout extends UpgradeProcess {
 						continue;
 					}
 
+					String sourcePrototypeLayoutUuid = rs.getString(
+						"sourcePrototypeLayoutUuid");
+
 					if (isGroupPrivateLayout(
 							groupId, sourcePrototypeLayoutUuid)) {
+
+						long plid = rs.getLong("plid");
 
 						runSQL(
 							"update Layout set sourcePrototypeLayoutUuid = " +

@@ -664,7 +664,6 @@ public class PDFProcessorImpl
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
 		File decryptedFile = getDecryptedTempFile(tempFileId);
-		File thumbnailFile = getThumbnailTempFile(tempFileId);
 
 		int previewFilesCount = _getPreviewFilesCount(file, decryptedFile);
 
@@ -675,6 +674,8 @@ public class PDFProcessorImpl
 
 			return;
 		}
+
+		File thumbnailFile = getThumbnailTempFile(tempFileId);
 
 		File[] previewFiles = new File[previewFilesCount];
 

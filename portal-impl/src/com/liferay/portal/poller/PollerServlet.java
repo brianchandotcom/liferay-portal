@@ -69,7 +69,6 @@ public class PollerServlet extends HttpServlet {
 	}
 
 	protected String getContent(HttpServletRequest request) throws Exception {
-		long companyId = PortalUtil.getCompanyId(request);
 		long userId = PortalUtil.getUserId(request);
 
 		if (userId == 0) {
@@ -92,6 +91,8 @@ public class PollerServlet extends HttpServlet {
 
 		SynchronousPollerChannelListener synchronousPollerChannelListener =
 			new SynchronousPollerChannelListener();
+
+		long companyId = PortalUtil.getCompanyId(request);
 
 		ChannelHubManagerUtil.getChannel(companyId, userId, true);
 

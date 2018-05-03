@@ -250,8 +250,6 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 
 		String login = httpAuthorizationHeader.getAuthParameter(
 			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_USERNAME);
-		String password = httpAuthorizationHeader.getAuthParameter(
-			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD);
 
 		// Strip @uid and @sn for backwards compatibility
 
@@ -267,6 +265,9 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 		}
 
 		try {
+			String password = httpAuthorizationHeader.getAuthParameter(
+				HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD);
+
 			return AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
 				httpServletRequest, login, password, null);
 		}

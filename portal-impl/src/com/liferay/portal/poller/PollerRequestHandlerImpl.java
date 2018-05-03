@@ -400,14 +400,8 @@ public class PollerRequestHandlerImpl
 
 		Map<String, Object> pollerRequestChunk = pollerRequestChunks[0];
 
-		long browserKey = GetterUtil.getLong(
-			String.valueOf(pollerRequestChunk.get("browserKey")));
 		long companyId = GetterUtil.getLong(
 			String.valueOf(pollerRequestChunk.get("companyId")));
-		Map<String, Boolean> portletIdsMap =
-			(Map<String, Boolean>)pollerRequestChunk.get("portletIdsMap");
-		boolean startPolling = GetterUtil.getBoolean(
-			String.valueOf(pollerRequestChunk.get("startPolling")));
 		String userIdString = GetterUtil.getString(
 			String.valueOf(pollerRequestChunk.get("userId")));
 
@@ -416,6 +410,13 @@ public class PollerRequestHandlerImpl
 		if (userId == 0) {
 			return null;
 		}
+
+		long browserKey = GetterUtil.getLong(
+			String.valueOf(pollerRequestChunk.get("browserKey")));
+		Map<String, Boolean> portletIdsMap =
+			(Map<String, Boolean>)pollerRequestChunk.get("portletIdsMap");
+		boolean startPolling = GetterUtil.getBoolean(
+			String.valueOf(pollerRequestChunk.get("startPolling")));
 
 		return new PollerHeader(
 			companyId, userId, browserKey, portletIdsMap, startPolling);

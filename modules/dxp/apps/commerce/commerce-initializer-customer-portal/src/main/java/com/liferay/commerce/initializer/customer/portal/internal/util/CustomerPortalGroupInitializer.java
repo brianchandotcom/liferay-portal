@@ -466,7 +466,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, true, sku,
-			serviceContext);
+			StringPool.BLANK, serviceContext);
 	}
 
 	protected void createLayouts(ServiceContext serviceContext)

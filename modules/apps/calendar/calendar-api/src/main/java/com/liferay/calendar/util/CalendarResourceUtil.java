@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.util;
 
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,7 +66,9 @@ public class CalendarResourceUtil {
 		if (calendarResource != null) {
 			return calendarResource;
 		}
-		else if (group.hasStagingGroup()) {
+		else if (group.hasStagingGroup() &&
+				 group.isStagedPortlet(CalendarPortletKeys.CALENDAR)) {
+
 			return null;
 		}
 

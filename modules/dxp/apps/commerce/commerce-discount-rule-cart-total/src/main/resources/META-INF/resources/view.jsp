@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,24 +12,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.commerce.discount.model;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Alessio Antonio Rendina
- */
-public class CommerceDiscountRuleConstants {
+<%
+CartTotalCommerceDiscountRuleDisplayContext cartTotalCommerceDiscountRuleDisplayContext = (CartTotalCommerceDiscountRuleDisplayContext)request.getAttribute("view.jsp-cartTotalCommerceDiscountRuleDisplayContext");
+%>
 
-	public static final String TYPE_ADDED_ALL = "added-all";
-
-	public static final String TYPE_ADDED_ANY = "added-any";
-
-	public static final String TYPE_CART_TOTAL = "cart-total";
-
-	public static final String TYPE_PURCHASED_ALL = "purchased-all";
-
-	public static final String TYPE_PURCHASED_ANY = "purchased-any";
-
-	public static final String TYPE_SPENT_AMOUNT = "spent-amount";
-
-}
+<aui:input label="cart-total-minimum-amount" name="typeSettings" suffix="<%= cartTotalCommerceDiscountRuleDisplayContext.getDefaultCommerceCurrencyCode() %>" type="text" value="<%= cartTotalCommerceDiscountRuleDisplayContext.getTypeSettings() %>" />

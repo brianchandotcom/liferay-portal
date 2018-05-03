@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Commerce Discount Rule Cart Total
+Bundle-SymbolicName: com.liferay.commerce.discount.rule.cart.total
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
+	\
+	*
+Web-ContextPath: /commerce-discount-rule-cart-total

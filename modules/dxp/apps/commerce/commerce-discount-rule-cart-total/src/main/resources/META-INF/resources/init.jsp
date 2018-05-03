@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,24 +12,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.commerce.discount.model;
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-/**
- * @author Alessio Antonio Rendina
- */
-public class CommerceDiscountRuleConstants {
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-	public static final String TYPE_ADDED_ALL = "added-all";
+<%@ page import="com.liferay.commerce.discount.rule.cart.total.internal.display.context.CartTotalCommerceDiscountRuleDisplayContext" %>
 
-	public static final String TYPE_ADDED_ANY = "added-any";
+<liferay-frontend:defineObjects />
 
-	public static final String TYPE_CART_TOTAL = "cart-total";
+<liferay-theme:defineObjects />
 
-	public static final String TYPE_PURCHASED_ALL = "purchased-all";
-
-	public static final String TYPE_PURCHASED_ANY = "purchased-any";
-
-	public static final String TYPE_SPENT_AMOUNT = "spent-amount";
-
-}
+<portlet:defineObjects />

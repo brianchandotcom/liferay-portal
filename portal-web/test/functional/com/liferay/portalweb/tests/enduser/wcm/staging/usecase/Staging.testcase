@@ -712,7 +712,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -1153,7 +1153,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 

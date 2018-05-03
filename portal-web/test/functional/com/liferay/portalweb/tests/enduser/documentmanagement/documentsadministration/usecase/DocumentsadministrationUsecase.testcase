@@ -137,7 +137,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -416,7 +416,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -661,7 +661,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -681,7 +681,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -698,7 +698,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -932,7 +932,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -1053,7 +1053,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -1627,7 +1627,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -1840,7 +1840,7 @@
 			<var name="pageName" value="Documents and Media Page - Global" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -2011,7 +2011,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -2261,7 +2261,7 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 
@@ -2306,7 +2306,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 

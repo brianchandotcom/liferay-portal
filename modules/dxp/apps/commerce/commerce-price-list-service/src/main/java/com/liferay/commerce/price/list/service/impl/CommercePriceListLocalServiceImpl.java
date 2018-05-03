@@ -291,7 +291,7 @@ public class CommercePriceListLocalServiceImpl
 	@Override
 	public int getCommercePriceListsCount(long groupId, int status) {
 		if (status == WorkflowConstants.STATUS_ANY) {
-			commercePriceListPersistence.countByG_NotS(
+			return commercePriceListPersistence.countByG_NotS(
 				groupId, WorkflowConstants.STATUS_IN_TRASH);
 		}
 

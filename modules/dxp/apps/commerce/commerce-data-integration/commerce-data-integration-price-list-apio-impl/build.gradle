@@ -12,6 +12,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180420.222824-3"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
+	compileOnly project(":private:apps:commerce:commerce-currency-api")
 	compileOnly project(":private:apps:commerce:commerce-data-integration:commerce-data-integration-price-list-apio-api")
 	compileOnly project(":private:apps:commerce:commerce-price-list-api")
 	compileOnly project(":private:apps:commerce:commerce-price-list-service")

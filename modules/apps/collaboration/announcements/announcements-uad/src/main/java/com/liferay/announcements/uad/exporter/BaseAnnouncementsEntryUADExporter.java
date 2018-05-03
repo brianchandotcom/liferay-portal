@@ -38,6 +38,11 @@ public abstract class BaseAnnouncementsEntryUADExporter
 	extends DynamicQueryUADExporter<AnnouncementsEntry> {
 
 	@Override
+	public String getApplicationName() {
+		return AnnouncementsUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return announcementsEntryLocalService.getActionableDynamicQuery();
 	}

@@ -68,6 +68,8 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 	renderResponse.setTitle(headerTitle);
 }
+
+KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, portletConfig);
 %>
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
@@ -78,6 +80,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 <clay:management-toolbar
 	clearResultsURL="<%= String.valueOf(searchURL) %>"
+	creationMenu="<%= kbAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= kbObjects.isEmpty() %>"
 	infoPanelId="infoPanelId"
 	searchActionURL="<%= String.valueOf(searchURL) %>"
@@ -104,8 +107,6 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				portletURL="<%= displayStyleURL %>"
 				selectedDisplayStyle="descriptive"
 			/>
-
-			<liferay-util:include page="/admin/add_button.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:management-bar-buttons>
 	</c:if>
 

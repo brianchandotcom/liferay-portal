@@ -54,11 +54,21 @@ public class SourceFormatBuild extends TopLevelBuild {
 	public Element getTopGitHubMessageElement() {
 		update();
 
-		Element detailsElement = getDetailsElement();
-		Element rootElement = Dom4JUtil.getNewElement(
-			"html", null, getResultElement());
+		Element detailsElement = Dom4JUtil.getNewElement(
+			"details", null,
+			Dom4JUtil.getNewElement(
+				"summary", null, "Click here for more details."),
+			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
+			getBaseBranchDetailsElement(),
+			Dom4JUtil.getNewElement("h4", null, "Sender Branch:"),
+			getSenderBranchDetailsElement());
 
-		Dom4JUtil.addToElement(rootElement, detailsElement);
+		if (_pullRequest.getUpstreamBranchName().contains("-private")) {
+			Dom4JUtil.addToElement(
+				detailsElement,
+				Dom4JUtil.getNewElement("h4", null, "Companion Branch:"),
+				getCompanionBranchDetailsElement());
+		}
 
 		String result = getResult();
 		int successCount = 0;
@@ -88,7 +98,8 @@ public class SourceFormatBuild extends TopLevelBuild {
 				detailsElement, (Object[])getBuildFailureElements());
 		}
 
-		return rootElement;
+		return Dom4JUtil.getNewElement(
+			"html", null, getResultElement(), detailsElement);
 	}
 
 	protected SourceFormatBuild(String url) {
@@ -99,26 +110,6 @@ public class SourceFormatBuild extends TopLevelBuild {
 		super(url, topLevelBuild);
 
 		_pullRequest = new PullRequest(getParameterValue("PULL_REQUEST_URL"));
-	}
-
-	protected Element getDetailsElement() {
-		Element detailsElement = Dom4JUtil.getNewElement(
-			"details", null,
-			Dom4JUtil.getNewElement(
-				"summary", null, "Click here for more details."),
-			Dom4JUtil.getNewElement("h4", null, "Base Branch:"),
-			getBaseBranchDetailsElement(),
-			Dom4JUtil.getNewElement("h4", null, "Sender Branch:"),
-			getSenderBranchDetailsElement());
-
-		if (_pullRequest.getUpstreamBranchName().contains("-private")) {
-			Dom4JUtil.addToElement(
-				detailsElement,
-				Dom4JUtil.getNewElement("h4", null, "Companion Branch:"),
-				getCompanionBranchDetailsElement());
-		}
-
-		return detailsElement;
 	}
 
 	@Override

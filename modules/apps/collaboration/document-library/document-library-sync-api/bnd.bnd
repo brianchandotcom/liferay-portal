@@ -7,5 +7,3 @@ Export-Package:\
 	com.liferay.document.library.sync.model,\
 	com.liferay.document.library.sync.service,\
 	com.liferay.document.library.sync.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library

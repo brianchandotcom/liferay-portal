@@ -10,5 +10,3 @@ Import-Package:\
 	com.liferay.portal.kernel.repository.model;version="[7.2.0,7.3.0)",\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library

@@ -27,5 +27,3 @@ Import-Package:\
 	!org.relaxng.datatype.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library

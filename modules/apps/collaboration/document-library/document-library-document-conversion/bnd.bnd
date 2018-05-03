@@ -14,8 +14,6 @@ Import-Package:\
 	!org.joda.time.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library
 -includeresource:\
 	@google-collections-[0-9]*.jar,\
 	@gson-[0-9]*.jar,\

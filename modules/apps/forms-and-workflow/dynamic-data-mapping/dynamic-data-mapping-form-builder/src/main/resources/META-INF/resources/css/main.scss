@@ -11,11 +11,11 @@
 
 @import "form-builder-drag-and-drop";
 
-.modal-content {
+.ddm-form-export-modal-content.modal-content {
 	max-height: fit-content;
 
 	.modal-body {
-		height: auto;
+		height: auto !important;
 	}
 }
 

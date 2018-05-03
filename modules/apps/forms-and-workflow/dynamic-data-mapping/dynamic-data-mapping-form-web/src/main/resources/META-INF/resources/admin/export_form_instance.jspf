@@ -101,6 +101,7 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 				{
 					dialog: {
 						bodyContent: form,
+						cssClass: 'ddm-form-export-modal',
 						resizable: false,
 						toolbars: {
 							footer: [

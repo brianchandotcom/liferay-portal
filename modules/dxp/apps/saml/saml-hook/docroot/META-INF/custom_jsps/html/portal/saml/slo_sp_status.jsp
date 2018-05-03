@@ -32,7 +32,7 @@ int status = samlSloRequestInfoJSONObject.getInt("status");
 	<c:choose>
 		<c:when test="<%= status == 2 %>">
 			<div class="portlet-msg-success">
-				<liferay-ui:message arguments="name" key="you-have-successfully-signed-out-from-x" />
+				<liferay-ui:message arguments="<%= name %>" key="you-have-successfully-signed-out-from-x" />
 			</div>
 		</c:when>
 		<c:when test="<%= status == 3 %>">

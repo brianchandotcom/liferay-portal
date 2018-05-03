@@ -77,7 +77,7 @@ public class EleflowUtil {
 	}
 
 	public static String getString(BigDecimal bigDecimal) {
-		return bigDecimal.toString();
+		return bigDecimal.toPlainString();
 	}
 
 	public static <D extends Enum<D>, E extends Enum<E>> E toEleflow(

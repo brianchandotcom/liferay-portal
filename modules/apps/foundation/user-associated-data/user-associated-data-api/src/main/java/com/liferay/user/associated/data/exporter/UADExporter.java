@@ -32,4 +32,8 @@ public interface UADExporter<T> {
 
 	public File exportAll(long userId) throws PortalException;
 
+	public default String getApplicationName() {
+		return "other";
+	}
+
 }

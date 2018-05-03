@@ -41,11 +41,11 @@ public class ForecastConfiguration implements JsonSerializable {
 		return _levels;
 	}
 
-	public Set<Period> getPeriods() {
+	public Set<ForecastPeriod> getPeriods() {
 		return _periods;
 	}
 
-	public Set<Target> getTargets() {
+	public Set<ForecastTarget> getTargets() {
 		return _targets;
 	}
 
@@ -65,11 +65,11 @@ public class ForecastConfiguration implements JsonSerializable {
 		_levels = levels;
 	}
 
-	public void setPeriods(Set<Period> periods) {
+	public void setPeriods(Set<ForecastPeriod> periods) {
 		_periods = periods;
 	}
 
-	public void setTargets(Set<Target> targets) {
+	public void setTargets(Set<ForecastTarget> targets) {
 		_targets = targets;
 	}
 
@@ -98,23 +98,11 @@ public class ForecastConfiguration implements JsonSerializable {
 
 	}
 
-	public enum Period {
-
-		MONTHLY, WEEKLY
-
-	}
-
-	public enum Target {
-
-		QUANTITY, REVENUE
-
-	}
-
 	private int _ahead;
 	private Frequency _frequency;
 	private Set<Level> _levels;
-	private Set<Period> _periods;
-	private Set<Target> _targets;
+	private Set<ForecastPeriod> _periods;
+	private Set<ForecastTarget> _targets;
 	private String _timeZoneOffset;
 
 }

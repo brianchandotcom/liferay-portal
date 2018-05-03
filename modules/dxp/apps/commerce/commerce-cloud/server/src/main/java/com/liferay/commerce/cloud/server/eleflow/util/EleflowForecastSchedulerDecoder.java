@@ -17,8 +17,8 @@ package com.liferay.commerce.cloud.server.eleflow.util;
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler;
 import com.liferay.commerce.cloud.server.model.ForecastConfiguration;
 import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Level;
-import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Period;
-import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Target;
+import com.liferay.commerce.cloud.server.model.ForecastPeriod;
+import com.liferay.commerce.cloud.server.model.ForecastTarget;
 
 import io.vertx.core.json.JsonObject;
 
@@ -48,10 +48,10 @@ public class EleflowForecastSchedulerDecoder
 				eleflowForecastScheduler.getLevels(), Level.class));
 		forecastScheduler.setPeriods(
 			EleflowUtil.fromEleflow(
-				eleflowForecastScheduler.getPeriods(), Period.class));
+				eleflowForecastScheduler.getPeriods(), ForecastPeriod.class));
 		forecastScheduler.setTargets(
 			EleflowUtil.fromEleflow(
-				eleflowForecastScheduler.getTargets(), Target.class));
+				eleflowForecastScheduler.getTargets(), ForecastTarget.class));
 		forecastScheduler.setTimeZoneOffset(
 			eleflowForecastScheduler.getTimezone());
 

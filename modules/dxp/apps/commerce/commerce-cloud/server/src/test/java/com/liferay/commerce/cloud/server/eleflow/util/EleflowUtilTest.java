@@ -20,8 +20,8 @@ import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler.
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler.TargetsEnum;
 import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Frequency;
 import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Level;
-import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Period;
-import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Target;
+import com.liferay.commerce.cloud.server.model.ForecastPeriod;
+import com.liferay.commerce.cloud.server.model.ForecastTarget;
 
 import java.util.function.Function;
 
@@ -43,10 +43,10 @@ public class EleflowUtilTest {
 
 	@Test
 	public void testToEleflow() {
+		_testToEleflow(ForecastPeriod.values(), PeriodsEnum::fromValue);
+		_testToEleflow(ForecastTarget.values(), TargetsEnum::fromValue);
 		_testToEleflow(Frequency.values(), FrequencyEnum::fromValue);
 		_testToEleflow(Level.values(), LevelsEnum::fromValue);
-		_testToEleflow(Period.values(), PeriodsEnum::fromValue);
-		_testToEleflow(Target.values(), TargetsEnum::fromValue);
 	}
 
 	private <E extends Enum<E>> void _testFromEleflow(

@@ -49,13 +49,10 @@ public class ForecastConfigurationTest {
 			Collections.singleton(ForecastConfiguration.Level.COMPANY),
 			forecastScheduler.getLevels());
 		Assert.assertEquals(
-			EnumSet.of(
-				ForecastConfiguration.Period.MONTHLY,
-				ForecastConfiguration.Period.WEEKLY),
+			EnumSet.of(ForecastPeriod.MONTHLY, ForecastPeriod.WEEKLY),
 			forecastScheduler.getPeriods());
 		Assert.assertEquals(
-			EnumSet.of(ForecastConfiguration.Target.REVENUE),
-			forecastScheduler.getTargets());
+			EnumSet.of(ForecastTarget.REVENUE), forecastScheduler.getTargets());
 		Assert.assertEquals("+03:00", forecastScheduler.getTimeZoneOffset());
 	}
 

@@ -6,6 +6,7 @@
 function getFormKey(form) {
 	return (
 		form.dataset.analyticsAssetId ||
+		form.dataset.analyticsFormId ||
 		form.id ||
 		form.getAttribute('name') ||
 		form.action
@@ -39,7 +40,11 @@ function getFormPayload(form) {
  * @return {boolean} True if the form is trackable.
  */
 function isTrackableForm(form) {
-	return 'analyticsAssetId' in form.dataset && !!getFormKey(form);
+	return (
+		('analyticsAssetId' in form.dataset ||
+			'analyticsFormId' in form.dataset) &&
+		!!getFormKey(form)
+	);
 }
 
 /**

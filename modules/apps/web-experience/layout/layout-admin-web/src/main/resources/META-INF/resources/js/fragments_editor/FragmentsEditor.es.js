@@ -640,33 +640,24 @@ class FragmentsEditor extends Component {
 		editableValueId,
 		editableValueContent
 	) {
+		const component = this._getFragmentEntryLinkComponent(
+			fragmentEntryLinkId
+		);
+
 		const index = this.fragmentEntryLinks.findIndex(
 			fragmentEntryLink => fragmentEntryLinkId ===
 				fragmentEntryLink.fragmentEntryLinkId
 		);
 
-		if (index !== -1) {
-			const fragmentEntryLink = this.fragmentEntryLinks[index];
-
-			const editableValues = fragmentEntryLink.editableValues || {};
-
-			const editableValue = editableValues[editableValueId] || {};
-
-			const newEditableValue = Object.assign(
-				{},
-				editableValue,
+		if (component && index !== -1) {
+			const newEditableValues = component.setEditableValue(
+				editableValueId,
 				editableValueContent
-			);
-
-			const newEditableValues = Object.assign(
-				{},
-				editableValues,
-				{[editableValueId]: newEditableValue}
 			);
 
 			const newFragmentEntryLink = Object.assign(
 				{},
-				fragmentEntryLink,
+				this.fragmentEntryLinks[index],
 				{editableValues: newEditableValues}
 			);
 

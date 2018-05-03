@@ -133,6 +133,6 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 				}
 			);
 		},
-		['liferay-util-window']
+		['aui-alert', 'liferay-util-window']
 	);
 </aui:script>

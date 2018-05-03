@@ -12,7 +12,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:collaboration:bookmarks:bookmarks-api")
-	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:foundation:xstream:xstream-configurator-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")
 	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")

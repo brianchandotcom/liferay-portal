@@ -10,7 +10,7 @@ dependencies {
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-api")
-	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":apps:web-experience:journal:journal-api")

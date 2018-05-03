@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentTotalDisplayContext" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet" %><%@
+page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentPortlet" %><%@
 page import="com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentTotalPortlet" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderValidatorException" %><%@
 page import="com.liferay.commerce.model.CommerceOrderItem" %><%@

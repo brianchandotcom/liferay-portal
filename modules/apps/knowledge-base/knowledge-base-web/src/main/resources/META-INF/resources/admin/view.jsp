@@ -24,28 +24,7 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey",
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-SearchContainer kbObjectsSearchContainer = new KBObjectsSearch(renderRequest, PortletURLUtil.clone(currentURLObj, renderResponse));
-
 boolean kbFolderView = (parentResourceClassNameId == kbFolderClassNameId);
-
-if (Validator.isNotNull(keywords)) {
-	KBArticleSearchDisplay kbArticleSearchDisplay = KBArticleServiceUtil.getKBArticleSearchDisplay(scopeGroupId, keywords, keywords, WorkflowConstants.STATUS_ANY, null, null, false, new int[0], kbObjectsSearchContainer.getCur(), kbObjectsSearchContainer.getDelta(), kbObjectsSearchContainer.getOrderByComparator());
-
-	kbObjectsSearchContainer.setResults(kbArticleSearchDisplay.getResults());
-	kbObjectsSearchContainer.setTotal(kbArticleSearchDisplay.getTotal());
-}
-else if (kbFolderView) {
-	kbObjectsSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
-	kbObjectsSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbObjectsSearchContainer.getStart(), kbObjectsSearchContainer.getEnd(), kbObjectsSearchContainer.getOrderByComparator()));
-}
-else {
-	kbObjectsSearchContainer.setTotal(KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
-	kbObjectsSearchContainer.setResults(KBArticleServiceUtil.getKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbObjectsSearchContainer.getStart(), kbObjectsSearchContainer.getEnd(), kbObjectsSearchContainer.getOrderByComparator()));
-}
-
-kbObjectsSearchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
-
-List kbObjects = kbObjectsSearchContainer.getResults();
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 
@@ -69,44 +48,26 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	renderResponse.setTitle(headerTitle);
 }
 
-KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, portletConfig);
+KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, portletConfig, renderRequest, renderResponse);
 %>
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/admin/search.jsp" />
-</liferay-portlet:renderURL>
-
 <clay:management-toolbar
 	actionItems="<%= kbAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= String.valueOf(searchURL) %>"
+	clearResultsURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	creationMenu="<%= kbAdminManagementToolbarDisplayContext.getCreationMenu() %>"
-	disabled="<%= kbObjects.isEmpty() %>"
+	disabled="<%= kbAdminManagementToolbarDisplayContext.isDisabled() %>"
+	filterItems="<%= kbAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
-	searchActionURL="<%= String.valueOf(searchURL) %>"
+	searchActionURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="kbObjects"
 	selectable="<%= true %>"
 	showInfoButton="<%= Validator.isNull(keywords) %>"
-	totalItems="<%= kbObjectsSearchContainer.getTotal() %>"
+	sortingOrder="<%= kbAdminManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSortingURL()) %>"
+	totalItems="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"
 />
-
-<liferay-frontend:management-bar
-	disabled="<%= kbObjects.isEmpty() %>"
-	includeCheckBox="<%= true %>"
-	searchContainerId="kbObjects"
->
-	<liferay-frontend:management-bar-filters>
-		<c:if test="<%= Validator.isNull(keywords) %>">
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= kbObjectsSearchContainer.getOrderByCol() %>"
-				orderByType="<%= kbObjectsSearchContainer.getOrderByType() %>"
-				orderColumns='<%= new String[] {"priority", "modified-date", "title", "view-count"} %>'
-				portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
-			/>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="infoPanel" var="sidebarPanelURL">
@@ -173,7 +134,7 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 
 			<liferay-ui:search-container
 				id="kbObjects"
-				searchContainer="<%= kbObjectsSearchContainer %>"
+				searchContainer="<%= kbAdminManagementToolbarDisplayContext.getSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="Object"

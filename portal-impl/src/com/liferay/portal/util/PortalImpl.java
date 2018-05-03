@@ -8660,7 +8660,7 @@ public class PortalImpl implements Portal {
 	private String _getPortalURL(
 		String serverName, int serverPort, boolean secure) {
 
-		StringBundler sb = new StringBundler(2);
+		StringBundler sb = new StringBundler(4);
 
 		boolean https = false;
 

@@ -39,6 +39,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseWikiNodeUADExporter extends DynamicQueryUADExporter<WikiNode> {
 	@Override
+	public String getApplicationName() {
+		return WikiUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return wikiNodeLocalService.getActionableDynamicQuery();
 	}

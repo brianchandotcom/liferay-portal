@@ -20,13 +20,11 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.uad.constants.BlogsUADConstants;
 import com.liferay.blogs.uad.test.BlogsEntryUADTestHelper;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
@@ -44,13 +42,13 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase {
+public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase<BlogsEntry> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected BlogsEntry addBaseModel(long userId) throws Exception {
 		BlogsEntry blogsEntry = _blogsEntryUADTestHelper.addBlogsEntry(userId);
 
 		_blogsEntries.add(blogsEntry);
@@ -61,11 +59,6 @@ public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 	@Override
 	protected String getApplicationName() {
 		return BlogsUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
-	protected UADAggregator getUADAggregator() {
-		return _uadAggregator;
 	}
 
 	@Override
@@ -82,9 +75,6 @@ public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
 	@Inject
 	private BlogsEntryUADTestHelper _blogsEntryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
-	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
 	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
 	private UADDisplay _uadDisplay;

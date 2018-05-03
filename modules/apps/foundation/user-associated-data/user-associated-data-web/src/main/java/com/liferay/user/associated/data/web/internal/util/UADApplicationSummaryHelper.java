@@ -309,12 +309,8 @@ public class UADApplicationSummaryHelper {
 	public int getReviewableUADEntitiesCount(
 		Stream<UADDisplay> uadDisplayStream, long userId) {
 
-		return uadDisplayStream.map(
-			uadDisplay -> uadDisplay.getKey()
-		).map(
-			key -> _uadRegistry.getUADAggregator(key)
-		).mapToInt(
-			uadAggregator -> (int)uadAggregator.count(userId)
+		return uadDisplayStream.mapToInt(
+			uadDisplay -> (int)uadDisplay.count(userId)
 		).sum();
 	}
 

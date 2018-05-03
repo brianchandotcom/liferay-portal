@@ -17,7 +17,6 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
@@ -58,25 +57,22 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		String uadRegistryKey = ParamUtil.getString(
 			resourceRequest, "uadRegistryKey");
 
-		UADAggregator uadAggregator = _uadRegistry.getUADAggregator(
-			uadRegistryKey);
+		UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
+
+		resourceRequest.setAttribute(
+			UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 
 		for (String rowId : rowIds) {
-			Object entity = uadAggregator.get(rowId);
+			Object entity = uadDisplay.get(rowId);
 
 			UADEntity uadEntity = new UADEntity(
-				entity, uadAggregator.getPrimaryKey(entity), null);
+				entity, uadDisplay.getPrimaryKey(entity), null);
 
 			uadEntities.add(uadEntity);
 		}
 
 		resourceRequest.setAttribute(
 			UADWebKeys.INFO_PANEL_UAD_ENTITIES, uadEntities);
-
-		UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
-
-		resourceRequest.setAttribute(
-			UADWebKeys.INFO_PANEL_UAD_DISPLAY, uadDisplay);
 
 		include(resourceRequest, resourceResponse, "/info_panel.jsp");
 	}

@@ -20,13 +20,11 @@ import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.contacts.uad.test.EntryUADTestHelper;
 
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
@@ -44,13 +42,13 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class EntryUADDisplayTest extends BaseUADDisplayTestCase {
+public class EntryUADDisplayTest extends BaseUADDisplayTestCase<Entry> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected Entry addBaseModel(long userId) throws Exception {
 		Entry entry = _entryUADTestHelper.addEntry(userId);
 
 		_entries.add(entry);
@@ -61,11 +59,6 @@ public class EntryUADDisplayTest extends BaseUADDisplayTestCase {
 	@Override
 	protected String getApplicationName() {
 		return ContactsUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
-	protected UADAggregator getUADAggregator() {
-		return _uadAggregator;
 	}
 
 	@Override
@@ -82,9 +75,6 @@ public class EntryUADDisplayTest extends BaseUADDisplayTestCase {
 	private final List<Entry> _entries = new ArrayList<Entry>();
 	@Inject
 	private EntryUADTestHelper _entryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	ContactsUADConstants.CLASS_NAME_ENTRY)
-	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
 	ContactsUADConstants.CLASS_NAME_ENTRY)
 	private UADDisplay _uadDisplay;

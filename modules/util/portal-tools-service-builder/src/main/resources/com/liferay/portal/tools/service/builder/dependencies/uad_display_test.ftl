@@ -5,12 +5,10 @@ import ${packagePath}.uad.constants.${portletShortName}UADConstants;
 import ${packagePath}.uad.test.${entity.name}UADTestHelper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
@@ -27,14 +25,14 @@ import org.junit.runner.RunWith;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase {
+public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase<${entity.name}> {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@Override
-	protected BaseModel<?> addBaseModel(long userId) throws Exception {
+	protected ${entity.name} addBaseModel(long userId) throws Exception {
 		${entity.name} ${entity.varName} = _${entity.varName}UADTestHelper.add${entity.name}(userId);
 
 		_${entity.varNames}.add(${entity.varName});
@@ -45,11 +43,6 @@ public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase {
 	@Override
 	protected String getApplicationName() {
 		return ${portletShortName}UADConstants.APPLICATION_NAME;
-	}
-
-	@Override
-	protected UADAggregator getUADAggregator() {
-		return _uadAggregator;
 	}
 
 	@Override
@@ -67,11 +60,6 @@ public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase {
 
 	@Inject
 	private ${entity.name}UADTestHelper _${entity.varName}UADTestHelper;
-
-	@Inject(
-		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}
-	)
-	private UADAggregator _uadAggregator;
 
 	@Inject(
 		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}

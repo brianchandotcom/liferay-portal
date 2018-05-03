@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
+import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 
@@ -55,20 +55,20 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "primaryKeys");
 
 		for (String primaryKey : primaryKeys) {
-			UADAggregator uadAggregator = getUADAggregator(actionRequest);
+			UADDisplay uadDisplay = getUADDisplay(actionRequest);
 
-			entities.add(uadAggregator.get(primaryKey));
+			entities.add(uadDisplay.get(primaryKey));
 		}
 
 		return entities;
 	}
 
 	protected Object getEntity(ActionRequest actionRequest) throws Exception {
-		UADAggregator uadAggregator = getUADAggregator(actionRequest);
+		UADDisplay uadDisplay = getUADDisplay(actionRequest);
 
 		String primaryKey = ParamUtil.getString(actionRequest, "primaryKey");
 
-		return uadAggregator.get(primaryKey);
+		return uadDisplay.get(primaryKey);
 	}
 
 	protected User getSelectedUser(ActionRequest actionRequest)
@@ -83,12 +83,12 @@ public abstract class BaseUADMVCActionCommand extends BaseMVCActionCommand {
 		return selectedUserHelper.getSelectedUserId(actionRequest);
 	}
 
-	protected UADAggregator getUADAggregator(ActionRequest actionRequest) {
-		return uadRegistry.getUADAggregator(getUADRegistryKey(actionRequest));
-	}
-
 	protected UADAnonymizer getUADAnonymizer(ActionRequest actionRequest) {
 		return uadRegistry.getUADAnonymizer(getUADRegistryKey(actionRequest));
+	}
+
+	protected UADDisplay getUADDisplay(ActionRequest actionRequest) {
+		return uadRegistry.getUADDisplay(getUADRegistryKey(actionRequest));
 	}
 
 	protected String getUADRegistryKey(ActionRequest actionRequest) {

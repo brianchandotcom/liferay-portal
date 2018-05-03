@@ -15,10 +15,17 @@
 package com.liferay.announcements.uad.display;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
 
+import java.io.Serializable;
+
+import java.util.List;
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the announcements entry UAD display.
@@ -33,6 +40,12 @@ import java.util.Locale;
  */
 public abstract class BaseAnnouncementsEntryUADDisplay
 	extends BaseModelUADDisplay<AnnouncementsEntry> {
+
+	@Override
+	public AnnouncementsEntry get(Serializable primaryKey) throws Exception {
+		return announcementsEntryLocalService.getAnnouncementsEntry(
+			Long.valueOf(primaryKey.toString()));
+	}
 
 	public String getApplicationName() {
 		return AnnouncementsUADConstants.APPLICATION_NAME;
@@ -49,5 +62,32 @@ public abstract class BaseAnnouncementsEntryUADDisplay
 	public String getTypeName(Locale locale) {
 		return "AnnouncementsEntry";
 	}
+
+	@Override
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return announcementsEntryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	@Override
+	protected DynamicQuery doGetDynamicQuery() {
+		return announcementsEntryLocalService.dynamicQuery();
+	}
+
+	@Override
+	protected List<AnnouncementsEntry> doGetRange(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return announcementsEntryLocalService.dynamicQuery(
+			dynamicQuery, start, end);
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return AnnouncementsUADConstants.
+			USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY;
+	}
+
+	@Reference
+	protected AnnouncementsEntryLocalService announcementsEntryLocalService;
 
 }

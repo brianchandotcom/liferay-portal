@@ -40,6 +40,11 @@ public abstract class DynamicQueryUADAnonymizer<T extends BaseModel>
 	}
 
 	@Override
+	public long count(long userId) throws PortalException {
+		return _getActionableDynamicQuery(userId).performCount();
+	}
+
+	@Override
 	public void deleteAll(long userId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_getActionableDynamicQuery(userId);

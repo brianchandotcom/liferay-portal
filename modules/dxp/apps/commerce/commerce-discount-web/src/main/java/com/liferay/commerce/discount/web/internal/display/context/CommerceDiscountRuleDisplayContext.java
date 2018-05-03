@@ -66,7 +66,7 @@ public class CommerceDiscountRuleDisplayContext
 			commerceDiscountRuleTypeJSPContributorRegistry,
 		CommerceDiscountRuleTypeRegistry commerceDiscountRuleTypeRegistry,
 		CommerceDiscountService commerceDiscountService,
-		CommerceDiscountTargetTypeRegistry commerceDiscountTargetTypeRegistry,
+		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
 		CommerceDiscountUserSegmentRelService
 			commerceDiscountUserSegmentRelService,
 		CommercePriceFormatter commercePriceFormatter,

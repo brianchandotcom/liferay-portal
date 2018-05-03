@@ -60,7 +60,7 @@ public class CommerceDiscountRelDisplayContext
 		CommerceCurrencyService commerceCurrencyService,
 		CommerceDiscountRelService commerceDiscountRelService,
 		CommerceDiscountService commerceDiscountService,
-		CommerceDiscountTargetTypeRegistry commerceDiscountTargetTypeRegistry,
+		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
 		CommerceDiscountUserSegmentRelService
 			commerceDiscountUserSegmentRelService,
 		CommercePriceFormatter commercePriceFormatter,

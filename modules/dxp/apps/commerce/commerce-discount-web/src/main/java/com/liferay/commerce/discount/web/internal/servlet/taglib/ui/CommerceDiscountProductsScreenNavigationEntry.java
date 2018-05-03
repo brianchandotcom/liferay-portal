@@ -112,9 +112,9 @@ public class CommerceDiscountProductsScreenNavigationEntry
 		CommerceDiscountRelDisplayContext commerceDiscountRelDisplayContext =
 			new CommerceDiscountRelDisplayContext(
 				_commerceCurrencyService, _commerceDiscountRelService,
-				_commerceDiscountService, _commerceDiscountTargetTypeRegistry,
-				_commerceDiscountUserSegmentRelService, _cpDefinitionService,
-				httpServletRequest, _itemSelector);
+				_commerceDiscountService, _commerceDiscountTargetRegistry,
+				_commerceDiscountUserSegmentRelService, _commercePriceFormatter,
+				_cpDefinitionService, httpServletRequest, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceDiscountRelDisplayContext);

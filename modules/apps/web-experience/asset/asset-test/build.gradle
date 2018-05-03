@@ -15,7 +15,7 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:bookmarks:bookmarks-api")
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-test-util")
-	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-categories-admin-web")

@@ -1020,6 +1020,14 @@ AUI.add(
 							alert.render('.management-bar-default .container-fluid-1280');
 						}
 
+						var alertBoundingBox = alert.get('boundingBox');
+
+						alertBoundingBox.setStyle('wordWrap', 'break-word');
+
+						var alertParent = alertBoundingBox.get('parentNode');
+
+						alertParent.addClass('alert-notifications alert-notifications-fixed');
+
 						alert.show();
 
 						instance.set('alert', alert);

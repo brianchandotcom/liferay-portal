@@ -66,6 +66,9 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 	public static final String FIELD_DISPLAY_DATE = "displayDate";
 
+	public static final String FIELD_EXTERNAL_REFERENCE_CODE =
+		"externalReferenceCode";
+
 	public static final String FIELD_PURCHASABLE = "purchasable";
 
 	public static final String FIELD_SKU = "sku";
@@ -137,6 +140,8 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+		addSearchTerm(
+			searchQuery, searchContext, FIELD_EXTERNAL_REFERENCE_CODE, false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -186,6 +191,10 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		}
 
 		document.addText(Field.TITLE, cpDefinition.getTitle());
+
+		document.addText(
+			FIELD_EXTERNAL_REFERENCE_CODE,
+			cpInstance.getExternalReferenceCode());
 
 		document.addText(Field.CONTENT, cpInstance.getSku());
 		document.addDateSortable(

@@ -114,13 +114,16 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			return portletURL;
 		}
 
-		if (commerceOrder.isOpen()) {
+		plid = _portal.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_ORDER_CONTENT);
+
+		if (plid > 0) {
 			return _getPortletURL(
-				httpServletRequest, CommercePortletKeys.COMMERCE_CART_CONTENT);
+				httpServletRequest, CommercePortletKeys.COMMERCE_ORDER_CONTENT);
 		}
 
 		return _getPortletURL(
-			httpServletRequest, CommercePortletKeys.COMMERCE_ORDER_CONTENT);
+			httpServletRequest, CommercePortletKeys.COMMERCE_CART_CONTENT);
 	}
 
 	@Override
@@ -193,6 +196,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		if (!themeDisplay.isSignedIn()) {
 			_setGuestCommerceOrder(themeDisplay, commerceOrder);
+
 			return;
 		}
 

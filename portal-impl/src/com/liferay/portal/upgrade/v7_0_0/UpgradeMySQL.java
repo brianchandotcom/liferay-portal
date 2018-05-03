@@ -150,12 +150,13 @@ public class UpgradeMySQL extends UpgradeProcess {
 					continue;
 				}
 
-				String engine = GetterUtil.getString(rs.getString("Engine"));
 				String comment = GetterUtil.getString(rs.getString("Comment"));
 
 				if (StringUtil.equalsIgnoreCase(comment, "VIEW")) {
 					continue;
 				}
+
+				String engine = GetterUtil.getString(rs.getString("Engine"));
 
 				if (StringUtil.equalsIgnoreCase(
 						engine, PropsValues.DATABASE_MYSQL_ENGINE)) {

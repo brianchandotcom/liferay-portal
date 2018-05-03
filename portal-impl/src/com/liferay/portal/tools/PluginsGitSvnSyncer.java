@@ -73,7 +73,6 @@ public class PluginsGitSvnSyncer {
 
 		Process process = runtime.exec(cmd);
 
-		String[] stdout = _getExecOutput(process.getInputStream());
 		String[] stderr = _getExecOutput(process.getErrorStream());
 
 		if (stderr.length > 0) {
@@ -92,7 +91,7 @@ public class PluginsGitSvnSyncer {
 			throw new Exception(sb.toString());
 		}
 
-		return stdout;
+		return _getExecOutput(process.getInputStream());
 	}
 
 	private String[] _getExecOutput(InputStream is) throws IOException {

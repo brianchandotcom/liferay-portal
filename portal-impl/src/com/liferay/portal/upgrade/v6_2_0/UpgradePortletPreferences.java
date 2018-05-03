@@ -54,8 +54,6 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
-					long portletPreferencesId = rs.getLong(
-						"portletPreferencesId");
 					String portletId = GetterUtil.getString(
 						rs.getString("portletId"));
 					String typeSettings = GetterUtil.getString(
@@ -64,6 +62,9 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 					if (typeSettings.contains(portletId)) {
 						continue;
 					}
+
+					long portletPreferencesId = rs.getLong(
+						"portletPreferencesId");
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(

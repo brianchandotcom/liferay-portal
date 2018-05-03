@@ -60,7 +60,6 @@ public class SocialRequestLocalServiceImpl
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		long classNameId = classNameLocalService.getClassNameId(className);
 		User receiverUser = userPersistence.findByPrimaryKey(receiverUserId);
 		long now = System.currentTimeMillis();
 
@@ -70,6 +69,8 @@ public class SocialRequestLocalServiceImpl
 
 			throw new RequestUserIdException();
 		}
+
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		SocialRequest request = socialRequestPersistence.fetchByU_C_C_T_R(
 			userId, classNameId, classPK, type, receiverUserId);

@@ -112,7 +112,6 @@ public class TemplateResourceExternalizationTest {
 
 	@Test
 	public void testDDMTemplateResourceExternalization() throws Exception {
-		String ddmTemplateKey = "testKey";
 		final long templateId = 100;
 
 		Class<?> clazz = getClass();
@@ -136,6 +135,8 @@ public class TemplateResourceExternalizationTest {
 				}
 
 			});
+
+		String ddmTemplateKey = "testKey";
 
 		DDMTemplateResource ddmTemplateResource = new DDMTemplateResource(
 			ddmTemplateKey, ddmTemplate);

@@ -1973,13 +1973,14 @@ public class TableMapperTest {
 			}
 
 			Long leftPrimaryKey = (Long)params[0];
-			Long rightPrimaryKey = (Long)params[1];
 
 			long[] rightPrimaryKeys = _mappingStore.get(leftPrimaryKey);
 
 			if (rightPrimaryKeys == null) {
 				return 0;
 			}
+
+			Long rightPrimaryKey = (Long)params[1];
 
 			if (ArrayUtil.contains(rightPrimaryKeys, rightPrimaryKey)) {
 				rightPrimaryKeys = ArrayUtil.remove(

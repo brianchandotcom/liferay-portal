@@ -74,7 +74,6 @@ public class LinkbackProducerUtil {
 			if (time.before(expiration)) {
 				_pingbackQueue.remove(0);
 
-				String sourceUri = (String)tuple.getObject(1);
 				String targetUri = (String)tuple.getObject(2);
 
 				String serverUri = _discoverPingbackServer(targetUri);
@@ -82,6 +81,8 @@ public class LinkbackProducerUtil {
 				if (Validator.isNull(serverUri)) {
 					continue;
 				}
+
+				String sourceUri = (String)tuple.getObject(1);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(

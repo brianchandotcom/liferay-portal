@@ -67,13 +67,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				long fileEntryId = rs.getLong("fileEntryId");
-				long groupId = rs.getLong("groupId");
-				long folderId = rs.getLong("folderId");
 				String title = rs.getString("title");
 				String extension = GetterUtil.getString(
 					rs.getString("extension"));
-				String version = rs.getString("version");
 
 				String periodAndExtension = StringPool.PERIOD.concat(extension);
 
@@ -86,6 +82,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				String uniqueTitle = title;
 
 				int count = 0;
+
+				long groupId = rs.getLong("groupId");
+				long folderId = rs.getLong("folderId");
 
 				while (hasFileEntry(groupId, folderId, uniqueTitle) ||
 					   ((count != 0) &&
@@ -101,6 +100,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				if (count <= 0) {
 					continue;
 				}
+
+				long fileEntryId = rs.getLong("fileEntryId");
+				String version = rs.getString("version");
 
 				uniqueTitle += periodAndExtension;
 

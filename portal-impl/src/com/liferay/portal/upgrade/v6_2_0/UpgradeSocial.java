@@ -688,7 +688,6 @@ public class UpgradeSocial extends UpgradeProcess {
 			throws SQLException {
 
 			long classNameId = resultSet.getLong("classNameId");
-			long classPK = resultSet.getLong("classPK");
 
 			ExtraDataFactory extraDataFactory = null;
 
@@ -706,6 +705,8 @@ public class UpgradeSocial extends UpgradeProcess {
 			if (extraDataFactory == null) {
 				return null;
 			}
+
+			long classPK = resultSet.getLong("classPK");
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(extraDataFactory.getSQL())) {

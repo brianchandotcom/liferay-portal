@@ -199,7 +199,6 @@ public class CounterFinderImpl
 
 	protected CounterRegister createCounterRegister(String name, long size) {
 		long rangeMin = -1;
-		int rangeSize = getRangeSize(name);
 
 		try (Connection connection = getConnection();
 			PreparedStatement ps1 = connection.prepareStatement(
@@ -229,6 +228,8 @@ public class CounterFinderImpl
 		catch (Exception e) {
 			throw processException(e);
 		}
+
+		int rangeSize = getRangeSize(name);
 
 		CounterHolder counterHolder = _obtainIncrement(name, rangeSize, size);
 

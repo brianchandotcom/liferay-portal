@@ -61,17 +61,18 @@ public class CompanyImpl extends CompanyBaseImpl {
 	@Override
 	public int compareTo(Company company) {
 		String webId1 = getWebId();
-		String webId2 = company.getWebId();
 
 		if (webId1.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 			return -1;
 		}
-		else if (webId2.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+
+		String webId2 = company.getWebId();
+
+		if (webId2.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 			return 1;
 		}
-		else {
-			return webId1.compareTo(webId2);
-		}
+
+		return webId1.compareTo(webId2);
 	}
 
 	@Override

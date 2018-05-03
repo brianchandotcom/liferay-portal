@@ -169,8 +169,6 @@ public class VerifyGroupedModel extends VerifyProcess {
 							con.prepareStatement(sb.toString()))) {
 
 					while (rs.next()) {
-						long primKey = rs.getLong(
-							verifiableGroupedModel.getPrimaryKeyColumnName());
 						long relatedPrimKey = rs.getLong(
 							verifiableGroupedModel.
 								getRelatedPrimaryKeyColumnName());
@@ -186,6 +184,10 @@ public class VerifyGroupedModel extends VerifyProcess {
 						}
 
 						ps2.setLong(1, groupId);
+
+						long primKey = rs.getLong(
+							verifiableGroupedModel.getPrimaryKeyColumnName());
+
 						ps2.setLong(2, primKey);
 
 						ps2.addBatch();

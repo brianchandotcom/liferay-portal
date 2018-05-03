@@ -32,8 +32,6 @@ public class HeadMethodImpl implements Method {
 	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
 		try {
 			WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
-			HttpServletResponse response =
-				webDAVRequest.getHttpServletResponse();
 
 			Resource resource = storage.getResource(webDAVRequest);
 
@@ -42,6 +40,9 @@ public class HeadMethodImpl implements Method {
 			}
 
 			if (!resource.isCollection()) {
+				HttpServletResponse response =
+					webDAVRequest.getHttpServletResponse();
+
 				response.setContentLength((int)resource.getSize());
 			}
 

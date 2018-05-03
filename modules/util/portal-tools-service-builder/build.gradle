@@ -85,7 +85,7 @@ needed by Service Builder to generate model services.
 	}
 
 	into("com/liferay/blogs") {
-		from "../../../modules/apps/collaboration/blogs/blogs-service/service.xml"
+		from "../../../modules/apps/blogs/blogs-service/service.xml"
 	}
 }
 

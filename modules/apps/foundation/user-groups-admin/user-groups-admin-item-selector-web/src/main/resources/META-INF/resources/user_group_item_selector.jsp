@@ -71,7 +71,7 @@ PortletURL portletURL = userGroupItemSelectorViewDisplayContext.getPortletURL();
 			Map<String, Object> data = new HashMap<>();
 
 			data.put("id", userGroup.getUserGroupId());
-			data.put("name", userGroup.getName);
+			data.put("name", userGroup.getName());
 
 			row.setData(data);
 			%>

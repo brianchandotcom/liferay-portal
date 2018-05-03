@@ -3,6 +3,7 @@ targetCompatibility = "1.8"
 
 buildService {
 	apiDir = "../commerce-user-segment-api/src/main/java"
+	testDir = "../commerce-user-segment-test/src/testIntegration/java"
 }
 
 dependencies {

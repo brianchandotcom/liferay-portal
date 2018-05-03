@@ -214,7 +214,6 @@ public class Recurrence implements Serializable {
 			throw new IllegalArgumentException("Current time before DtStart");
 		}
 
-		int minInterval = getMinimumInterval();
 		Calendar candidate = (Calendar)current.clone();
 
 		if (true) {
@@ -237,6 +236,8 @@ public class Recurrence implements Serializable {
 		reduce_constant_length_field(Calendar.SECOND, dtStart, candidate);
 		reduce_constant_length_field(Calendar.MINUTE, dtStart, candidate);
 		reduce_constant_length_field(Calendar.HOUR_OF_DAY, dtStart, candidate);
+
+		int minInterval = getMinimumInterval();
 
 		if (minInterval == WEEKLY) {
 			reduce_constant_length_field(

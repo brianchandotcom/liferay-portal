@@ -513,7 +513,6 @@ public class ExportImportDateUtil {
 		}
 
 		Date startDate = dateRange.getStartDate();
-		Date endDate = dateRange.getEndDate();
 
 		if (originalLastPublishDate != null) {
 			if ((startDate != null) &&
@@ -521,6 +520,8 @@ public class ExportImportDateUtil {
 
 				return false;
 			}
+
+			Date endDate = dateRange.getEndDate();
 
 			if ((endDate != null) && endDate.before(originalLastPublishDate)) {
 				return false;

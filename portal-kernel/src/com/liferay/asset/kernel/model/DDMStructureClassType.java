@@ -96,7 +96,6 @@ public class DDMStructureClassType implements ClassType {
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			String indexType = ddmFormField.getIndexType();
-			String name = ddmFormField.getName();
 
 			String type = ddmFormField.getType();
 
@@ -107,6 +106,7 @@ public class DDMStructureClassType implements ClassType {
 			}
 
 			LocalizedValue label = ddmFormField.getLabel();
+			String name = ddmFormField.getName();
 
 			classTypeFields.add(
 				new ClassTypeField(

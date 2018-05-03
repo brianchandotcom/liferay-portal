@@ -143,13 +143,14 @@ public class SelectorIntraband extends BaseIntraband {
 
 		SelectableChannel readSelectableChannel =
 			(SelectableChannel)scatteringByteChannel;
-		SelectableChannel writeSelectableChannel =
-			(SelectableChannel)gatheringByteChannel;
 
 		if ((readSelectableChannel.validOps() & SelectionKey.OP_READ) == 0) {
 			throw new IllegalArgumentException(
 				"Scattering byte channel is not valid for reading");
 		}
+
+		SelectableChannel writeSelectableChannel =
+			(SelectableChannel)gatheringByteChannel;
 
 		if ((writeSelectableChannel.validOps() & SelectionKey.OP_WRITE) == 0) {
 			throw new IllegalArgumentException(

@@ -145,7 +145,6 @@ public class ModulesStructureTestUtil {
 		while (matcher.find()) {
 			String dependency = matcher.group();
 
-			String configuration = matcher.group(1);
 			String projectPath = matcher.group(2);
 
 			String projectDirName = StringUtil.replace(
@@ -186,6 +185,8 @@ public class ModulesStructureTestUtil {
 				Constants.BUNDLE_SYMBOLICNAME);
 			String moduleVersion = bndProperties.getProperty(
 				Constants.BUNDLE_VERSION);
+
+			String configuration = matcher.group(1);
 
 			GradleDependency gradleDependency = new GradleDependency(
 				dependency, configuration, moduleGroup, moduleName,

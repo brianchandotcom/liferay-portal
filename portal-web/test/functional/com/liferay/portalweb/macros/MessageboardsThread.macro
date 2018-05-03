@@ -1240,7 +1240,7 @@
 	</command>
 
 	<command name="viewNoXSSPG">
-		<var name="key_threadBody" value="" />
+		<var name="key_threadBody" value="${threadBody}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 		<var name="key_userName" value="${userName}" />
 
@@ -1248,7 +1248,7 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#THREAD_USERNAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_SUBJECT" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_BODY" value1="" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_BODY" value1="${threadBody}" />
 	</command>
 
 	<command name="viewPG">

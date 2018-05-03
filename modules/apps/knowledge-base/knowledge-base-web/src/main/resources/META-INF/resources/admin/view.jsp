@@ -95,21 +95,6 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 	includeCheckBox="<%= true %>"
 	searchContainerId="kbObjects"
 >
-	<c:if test="<%= Validator.isNull(keywords) %>">
-
-		<%
-		PortletURL displayStyleURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
-		%>
-
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"descriptive"} %>'
-				portletURL="<%= displayStyleURL %>"
-				selectedDisplayStyle="descriptive"
-			/>
-		</liferay-frontend:management-bar-buttons>
-	</c:if>
-
 	<liferay-frontend:management-bar-filters>
 		<c:if test="<%= Validator.isNull(keywords) %>">
 

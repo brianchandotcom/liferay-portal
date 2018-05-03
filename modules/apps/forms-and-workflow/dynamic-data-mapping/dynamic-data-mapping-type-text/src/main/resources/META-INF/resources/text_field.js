@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-ddm-form-field-text',
 	function(A) {
+		var ENTER_KEY = 13;
+
 		var Renderer = Liferay.DDM.Renderer;
 
 		var Util = Renderer.Util;
@@ -57,7 +59,8 @@ AUI.add(
 						instance._eventHandlers.push(
 							instance.after('optionsChange', instance._afterOptionsChange),
 							instance.after('valueChange', instance._onTextFieldValueChange),
-							instance.bindInputEvent('focus', A.bind('_onTextFieldFocus', instance))
+							instance.bindInputEvent('focus', A.bind('_onTextFieldFocus', instance)),
+							instance.bindInputEvent('keydown', A.bind('_handleEnterKeyDown', instance))
 						);
 
 						instance.evaluate = A.debounce(
@@ -183,13 +186,23 @@ AUI.add(
 						);
 					},
 
+					_handleEnterKeyDown: function(event) {
+						var instance = this;
+
+						var displayStyle = instance.get('displayStyle');
+
+						if ((displayStyle === 'singleline') && (event.keyCode === ENTER_KEY) && (event.which === ENTER_KEY)) {
+							event.preventDefault();
+						}
+					},
+
 					_onTextFieldFocus: function() {
 						var instance = this;
 
-						var input = instance.get('container').one('input');
+						var inputNode = instance.getInputNode();
 
-						if ((input.getData('predefined-value') == input.val()) && (input.getData('interaction'))) {
-							input.setData('interaction', false);
+						if ((inputNode.getData('predefined-value') == inputNode.val()) && (inputNode.getData('interaction'))) {
+							inputNode.setData('interaction', false);
 							instance.set('value', '');
 							instance.setValue('');
 						}

@@ -14,6 +14,7 @@
 
 package com.liferay.site.apio.internal.resource;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -22,7 +23,6 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
@@ -84,17 +84,22 @@ public class WebSiteCollectionResource
 	private PageItems<Group> _getPageItems(
 		Pagination pagination, Company company) {
 
-		List<Group> groups = _groupLocalService.getGroups(
-			company.getCompanyId(), 0, true, pagination.getStartPosition(),
-			pagination.getEndPosition());
-		int count = _groupLocalService.getGroupsCount(
-			company.getCompanyId(), 0, true);
+		return Try.fromFallible(
+			() -> {
+				int count = _groupService.getGroupsCount(
+					company.getCompanyId(), 0, true);
+				List<Group> groups = _groupService.getGroups(
+					company.getCompanyId(), 0, true,
+					pagination.getStartPosition(), pagination.getEndPosition());
 
-		return new PageItems<>(groups, count);
+				return new PageItems<>(groups, count);
+			}
+		).orElse(
+			null
+		);
+
 	}
 
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private GroupService _groupService;

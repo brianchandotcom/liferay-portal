@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH</td>
-	<td>//button[contains(@type,'submit')]/span</td>
+	<td>//button[contains(@type,'submit')]</td>
 	<td></td>
 </tr>
 <tr>

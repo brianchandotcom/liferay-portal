@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.0.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_0_0.xsd"
+>
+	<name>Join Xor</name>
+	<version>1</version>
+	<state>
+		<name>start</name>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>fork</name>
+				<target>fork</target>
+			</transition>
+		</transitions>
+	</state>
+	<fork>
+		<name>fork</name>
+		<transitions>
+			<transition>
+				<name>task1</name>
+				<target>task1</target>
+			</transition>
+			<transition>
+				<name>task2</name>
+				<target>task2</target>
+			</transition>
+		</transitions>
+	</fork>
+	<task>
+		<name>task1</name>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Administrator</name>
+				</role>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Owner</name>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Portal Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Administrator</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Owner</name>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>join-xor</name>
+				<target>join-xor</target>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<name>task2</name>
+		<assignments>
+			<roles>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Administrator</name>
+				</role>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>organization</role-type>
+					<name>Organization Owner</name>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Administrator</name>
+				</role>
+				<role>
+					<role-type>regular</role-type>
+					<name>Portal Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Administrator</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Content Reviewer</name>
+				</role>
+				<role>
+					<role-type>site</role-type>
+					<name>Site Owner</name>
+				</role>
+			</roles>
+		</assignments>
+		<transitions>
+			<transition>
+				<name>join-xor</name>
+				<target>join-xor</target>
+			</transition>
+		</transitions>
+	</task>
+	<join-xor>
+		<name>join-xor</name>
+		<transitions>
+			<transition>
+				<name>end</name>
+				<target>end</target>
+			</transition>
+		</transitions>
+	</join-xor>
+	<state>
+		<name>end</name>
+		<actions>
+			<action>
+				<name>approve</name>
+				<script> <![CDATA[
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+						import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
+					]]> </script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+</workflow-definition>

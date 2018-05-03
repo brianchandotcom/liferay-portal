@@ -241,16 +241,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_VOTE_UP</td>
-	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-up')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DISPLAY_VOTE_DOWN</td>
-	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-down')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

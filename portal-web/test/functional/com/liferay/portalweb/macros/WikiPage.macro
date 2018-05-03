@@ -997,11 +997,11 @@
 	</command>
 
 	<command name="rateCommentAsBad">
-		<execute function="Click" locator1="Comments#THUMBS_DOWN" />
+		<execute function="Click" locator1="Ratings#THUMB_DOWN" />
 	</command>
 
 	<command name="rateCommentAsGood">
-		<execute function="Click" locator1="Comments#THUMBS_UP" />
+		<execute function="Click" locator1="Ratings#THUMB_UP" />
 	</command>
 
 	<command name="removeAttachmentViaPageEdit">
@@ -1322,13 +1322,13 @@
 	</command>
 
 	<command name="viewCommentRatingBad">
-		<execute function="AssertTextEquals" locator1="Comments#THUMBS_UP" value1="0" />
-		<execute function="AssertTextEquals" locator1="Comments#THUMBS_DOWN" value1="1" />
+		<execute function="AssertTextEquals" locator1="Ratings#THUMB_UP" value1="0" />
+		<execute function="AssertTextEquals" locator1="Ratings#THUMB_DOWN" value1="1" />
 	</command>
 
 	<command name="viewCommentRatingGood">
-		<execute function="AssertTextEquals" locator1="Comments#THUMBS_UP" value1="1" />
-		<execute function="AssertTextEquals" locator1="Comments#THUMBS_DOWN" value1="0" />
+		<execute function="AssertTextEquals" locator1="Ratings#THUMB_UP" value1="1" />
+		<execute function="AssertTextEquals" locator1="Ratings#THUMB_DOWN" value1="0" />
 	</command>
 
 	<command name="viewCP">

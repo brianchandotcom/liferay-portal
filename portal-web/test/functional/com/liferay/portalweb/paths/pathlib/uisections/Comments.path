@@ -84,16 +84,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>THUMBS_UP</td>
-	<td>//a[contains(@class,'thumbs-up')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>THUMBS_DOWN</td>
-	<td>//a[contains(@class,'thumbs-down')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUBSCRIBE_TO_COMMENTS_LINK</td>
 	<td>link=Subscribe to Comments</td>
 	<td></td>

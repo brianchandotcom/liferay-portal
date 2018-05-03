@@ -342,8 +342,8 @@
 
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-		<execute function="AssertElementPresent" locator1="Comments#THUMBS_UP" />
-		<execute function="AssertElementPresent" locator1="Comments#THUMBS_DOWN" />
+		<execute function="AssertElementPresent" locator1="Ratings#THUMB_UP" />
+		<execute function="AssertElementPresent" locator1="Ratings#THUMB_DOWN" />
 	</command>
 
 	<command name="viewConfigureScopePG">

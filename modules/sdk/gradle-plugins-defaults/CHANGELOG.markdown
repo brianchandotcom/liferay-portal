@@ -3456,6 +3456,8 @@ classpath.
 ## 5.3.106 - 2018-05-02
 
 ### Changed
+- [LPS-80394]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.29.
 - [LPS-80394]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
 version 2.2.3.
 

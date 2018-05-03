@@ -1404,6 +1404,7 @@ app.server.type=@{app.server.type}]]></echo>
 									>
 										<include name="apps/*" />
 										<include name="private/apps/*" />
+										<exclude name="${build.exclude.dirs}" />
 									</dirset>
 								</path>
 

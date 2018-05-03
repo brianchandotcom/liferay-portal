@@ -4,7 +4,7 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
-	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1.LIFERAY-PATCHED-1"
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.10.200-20150904.172142-1-LIFERAY-CACHED"
 }
 
 jar {
@@ -26,4 +26,16 @@ jarPatched {
 	from {
 		zipTree(configurations.compileOnly.singleFile)
 	}
+}
+
+updateFileVersions {
+	replaceOnlyIf([{
+		String group, String replacement, String content, File contentFile ->
+
+		if (buildFile == contentFile) {
+			return false
+		}
+
+		return true
+	}])
 }

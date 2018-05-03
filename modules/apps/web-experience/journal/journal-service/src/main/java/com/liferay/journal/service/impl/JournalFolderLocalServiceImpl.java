@@ -20,9 +20,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.journal.exception.DuplicateFolderNameException;
-import com.liferay.journal.exception.InvalidDDMStructureException;
 import com.liferay.journal.exception.NoSuchFolderException;
+import com.liferay.journal.internal.validation.JournalFolderModelValidator;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
@@ -49,18 +48,17 @@ import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.tree.TreePathUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.validation.ModelValidator;
+import com.liferay.portal.validation.ModelValidatorRegistryUtil;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.TrashHelper;
@@ -1034,31 +1032,8 @@ public class JournalFolderLocalServiceImpl
 	public void validateFolderDDMStructures(long folderId, long parentFolderId)
 		throws PortalException {
 
-		JournalFolder folder = journalFolderLocalService.fetchFolder(folderId);
-
-		int restrictionType =
-			JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW;
-
-		JournalFolder parentFolder = journalFolderLocalService.fetchFolder(
-			parentFolderId);
-
-		if (parentFolder != null) {
-			restrictionType = parentFolder.getRestrictionType();
-		}
-
-		List<DDMStructure> folderDDMStructures = getDDMStructures(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(folder.getGroupId()),
-			parentFolderId, restrictionType);
-
-		long[] ddmStructureIds = new long[folderDDMStructures.size()];
-
-		for (int i = 0; i < folderDDMStructures.size(); i++) {
-			DDMStructure folderDDMStructure = folderDDMStructures.get(i);
-
-			ddmStructureIds[i] = folderDDMStructure.getStructureId();
-		}
-
-		validateArticleDDMStructures(folderId, ddmStructureIds);
+		_getModelValidator().validateFolderDDMStructures(
+			folderId, parentFolderId);
 	}
 
 	protected JournalFolder doUpdateFolder(
@@ -1468,75 +1443,16 @@ public class JournalFolderLocalServiceImpl
 			long folderId, long[] ddmStructureIds)
 		throws PortalException {
 
-		if (ArrayUtil.isEmpty(ddmStructureIds)) {
-			return;
-		}
-
-		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
-			folderId);
-
-		List<JournalArticle> articles = journalArticleLocalService.getArticles(
-			folder.getGroupId(), folderId);
-
-		if (!articles.isEmpty()) {
-			long classNameId = classNameLocalService.getClassNameId(
-				JournalArticle.class);
-
-			for (JournalArticle article : articles) {
-				DDMStructure ddmStructure =
-					ddmStructureLocalService.fetchStructure(
-						article.getGroupId(), classNameId,
-						article.getDDMStructureKey(), true);
-
-				if (ddmStructure == null) {
-					StringBundler sb = new StringBundler(7);
-
-					sb.append("No DDM structure exists for group ");
-					sb.append(article.getGroupId());
-					sb.append(", class name ");
-					sb.append(classNameId);
-					sb.append(", and structure key ");
-					sb.append(article.getDDMStructureKey());
-					sb.append(" that includes ancestor structures");
-
-					throw new InvalidDDMStructureException(sb.toString());
-				}
-
-				if (!ArrayUtil.contains(
-						ddmStructureIds, ddmStructure.getStructureId())) {
-
-					throw new InvalidDDMStructureException(
-						"Invalid DDM structure " +
-							ddmStructure.getStructureId());
-				}
-			}
-		}
-
-		List<JournalFolder> folders = journalFolderPersistence.findByG_P(
-			folder.getGroupId(), folder.getFolderId());
-
-		if (folders.isEmpty()) {
-			return;
-		}
-
-		for (JournalFolder curFolder : folders) {
-			validateArticleDDMStructures(
-				curFolder.getFolderId(), ddmStructureIds);
-		}
+		_getModelValidator().validateArticleDDMStructures(
+			folderId, ddmStructureIds);
 	}
 
 	protected void validateFolder(
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException {
 
-		journalValidator.validateFolderName(name);
-
-		JournalFolder folder = journalFolderPersistence.fetchByG_P_N(
-			groupId, parentFolderId, name);
-
-		if ((folder != null) && (folder.getFolderId() != folderId)) {
-			throw new DuplicateFolderNameException(name);
-		}
+		_getModelValidator().validateFolder(
+			folderId, groupId, parentFolderId, name);
 	}
 
 	@ServiceReference(type = DDMStructureLinkLocalService.class)
@@ -1557,6 +1473,13 @@ public class JournalFolderLocalServiceImpl
 	)
 	protected com.liferay.portal.kernel.service.SubscriptionLocalService
 		subscriptionLocalService;
+
+	private JournalFolderModelValidator _getModelValidator() {
+		ModelValidator<JournalFolder> modelValidator =
+			ModelValidatorRegistryUtil.getModelValidator(JournalFolder.class);
+
+		return (JournalFolderModelValidator)modelValidator;
+	}
 
 	@ServiceReference(type = SubscriptionLocalService.class)
 	private SubscriptionLocalService _subscriptionLocalService;

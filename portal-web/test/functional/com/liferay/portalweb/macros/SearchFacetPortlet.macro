@@ -1,33 +1,4 @@
 <definition>
-	<command name="assertSingleFacetURL">
-		<var method="StringUtil#lowerCase('${searchPage}')" name="searchPage" />
-
-		<if>
-			<contains string="${searchPage}" substring=" " />
-			<then>
-				<var method="StringUtil#replace('${searchPage}', ' ', '-')" name="searchPage" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${searchAssetType}" arg2="Blogs Entry" />
-			<then>
-				<var name="typeURL" value="com.liferay.blogs.model.BlogsEntry" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${searchAssetType}" arg2="Web Content" />
-			<then>
-				<var name="typeURL" value="com.liferay.journal.model.JournalArticle" />
-			</then>
-		</if>
-
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/${searchPage}?q=${searchTerm}&amp;type=${typeURL}" />
-	</command>
-
 	<command name="checkFacet">
 		<execute function="Check" locator1="Checkbox#ANY_CHECKBOX">
 			<var name="checkboxName" value="${facetValueName}" />

@@ -97,16 +97,6 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 >
 	<liferay-frontend:management-bar-filters>
 		<c:if test="<%= Validator.isNull(keywords) %>">
-
-			<%
-			PortletURL navigationPortletURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
-			%>
-
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= navigationPortletURL %>"
-			/>
-
 			<liferay-frontend:management-bar-sort
 				orderByCol="<%= kbObjectsSearchContainer.getOrderByCol() %>"
 				orderByType="<%= kbObjectsSearchContainer.getOrderByType() %>"

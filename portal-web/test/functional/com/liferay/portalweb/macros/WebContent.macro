@@ -1071,6 +1071,26 @@
 		<execute function="Confirm" value1="Are you sure you want to expire the selected version?" />
 	</command>
 
+	<command name="getAssetId" returns="assetId">
+		<if>
+			<isset var="webContentAsset" />
+			<then>
+				<var method="selenium#getAttribute('//li[contains(@data-title,\'${webContentAsset}\')]//input@value')" name="webContentId" />
+
+				<return name="assetId" value="${webContentId}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="folderAsset" />
+			<then>
+				<var method="selenium#getAttribute('//li[contains(@data-title,\'${folderAsset}\')]@data-folder-id')" name="folderId" />
+
+				<return name="assetId" value="${folderId}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="gotoArticlePermissionsCP">
 		<execute macro="LexiconEntry#gotoHeaderMenuItem">
 			<var name="menuItem" value="Permissions" />

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Workflow API
+Bundle-SymbolicName: com.liferay.portal.workflow.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.workflow.constants,\
+	com.liferay.portal.workflow.portlet.tab
+-dsannotations-options: inherit

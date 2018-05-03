@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Dynamic Data Mapping Form Analytics
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.analytics
+Bundle-Version: 1.0.0
+Web-ContextPath: /dynamic-data-mapping-form-analytics
+-dsannotations-options: inherit

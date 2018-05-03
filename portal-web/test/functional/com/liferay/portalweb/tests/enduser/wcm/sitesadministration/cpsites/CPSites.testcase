@@ -374,7 +374,7 @@
 	</command>
 
 	<command name="AddSiteWithInvalidName" priority="3">
-		<for list="Site Name*,22222" param="siteName">
+		<for list=" ,Site Name*,22222" param="siteName">
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoPortlet">
@@ -388,19 +388,6 @@
 				<var name="siteNameInvalid" value="Invalid" />
 			</execute>
 		</for>
-	</command>
-
-	<command name="AddSiteWithNullName" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#viewCannotAdd">
-			<var name="siteName" value=" " />
-			<var name="siteNameInvalid" value="Null" />
-		</execute>
 	</command>
 
 	<command name="DeleteSite" priority="5">

@@ -1022,9 +1022,9 @@ AUI.add(
 
 						var alertBoundingBox = alert.get('boundingBox');
 
-						var alertParent = alertBoundingBox.get('parentNode');
-
 						alertBoundingBox.setStyle('wordWrap', 'break-word');
+
+						var alertParent = alertBoundingBox.get('parentNode');
 
 						alertParent.addClass('alert-notifications alert-notifications-fixed');
 

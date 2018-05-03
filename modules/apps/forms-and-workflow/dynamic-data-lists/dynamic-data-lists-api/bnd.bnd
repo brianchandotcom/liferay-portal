@@ -11,5 +11,3 @@ Export-Package:\
 	com.liferay.dynamic.data.lists.service.persistence,\
 	com.liferay.dynamic.data.lists.util,\
 	com.liferay.dynamic.data.lists.util.comparator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Dynamic Data Lists

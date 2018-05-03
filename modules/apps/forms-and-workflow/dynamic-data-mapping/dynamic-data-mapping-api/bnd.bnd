@@ -29,5 +29,3 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.util.comparator,\
 	com.liferay.dynamic.data.mapping.validator,\
 	com.liferay.dynamic.data.mapping.webdav
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

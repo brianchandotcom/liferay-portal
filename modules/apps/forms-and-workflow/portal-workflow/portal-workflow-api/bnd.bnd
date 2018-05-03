@@ -4,6 +4,4 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.workflow.constants,\
 	com.liferay.portal.workflow.portlet.tab
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Workflow
 -dsannotations-options: inherit

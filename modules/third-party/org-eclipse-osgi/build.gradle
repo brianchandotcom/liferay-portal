@@ -27,3 +27,15 @@ jarPatched {
 		zipTree(configurations.compileOnly.singleFile)
 	}
 }
+
+updateFileVersions {
+	replaceOnlyIf([{
+		String group, String replacement, String content, File contentFile ->
+
+		if (buildFile == contentFile) {
+			return false
+		}
+
+		return true
+	}])
+}

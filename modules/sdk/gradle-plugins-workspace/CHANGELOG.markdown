@@ -192,7 +192,7 @@ Gradle plugin to the root project if the `target.platform.version` property in
 ## 1.9.2 - 2018-05-02
 
 ### Changed
-- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+- [LPS-80281]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.27.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
@@ -238,4 +238,4 @@ Gradle plugin to the root project if the `target.platform.version` property in
 [LPS-77586]: https://issues.liferay.com/browse/LPS-77586
 [LPS-78149]: https://issues.liferay.com/browse/LPS-78149
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
-[LPS-79679]: https://issues.liferay.com/browse/LPS-79679
+[LPS-80281]: https://issues.liferay.com/browse/LPS-80281

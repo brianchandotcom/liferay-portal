@@ -596,6 +596,20 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="getSiteId" returns="siteId">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="SitesEditSite#SITE_ID" />
+
+		<var method="selenium#getElementValue(SitesEditSite#SITE_ID)" name="siteId" />
+
+		<return name="siteId" value="${siteId}" />
+	</command>
+
 	<command name="gotoSiteViaMySitesPG">
 		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${siteName}">
 			<var name="key_itemName" value="${siteName}" />

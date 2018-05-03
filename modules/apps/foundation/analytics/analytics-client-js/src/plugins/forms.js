@@ -40,7 +40,11 @@ function getFormPayload(form) {
  * @return {boolean} True if the form is trackable.
  */
 function isTrackableForm(form) {
-	return (('analyticsAssetId' in form.dataset) || ('analyticsFormId' in form.dataset)) && !!getFormKey(form);
+	return (
+		('analyticsAssetId' in form.dataset ||
+			'analyticsFormId' in form.dataset) &&
+		!!getFormKey(form)
+	);
 }
 
 /**

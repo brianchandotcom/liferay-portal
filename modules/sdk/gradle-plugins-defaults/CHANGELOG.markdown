@@ -3449,8 +3449,6 @@ classpath.
 
 ## 5.3.105 - 2018-05-02
 
-### Changed
-
 ### Fixed
 - [LPS-65633]: If the module is `private`, search for the public `app.bnd`.
 

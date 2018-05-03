@@ -22,6 +22,9 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommercePriceCalculationLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -72,21 +75,32 @@ public class CommerceCartContentPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
+		try {
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
 
-		CommerceCartContentDisplayContext commerceCartContentDisplayContext =
-			new CommerceCartContentDisplayContext(
-				httpServletRequest, _commerceOrderHttpHelper,
-				_commerceOrderItemService, _commerceOrderValidatorRegistry,
-				_commercePriceCalculationLocalService, _cpDefinitionHelper,
-				_cpInstanceHelper);
+			CommerceCartContentDisplayContext
+				commerceCartContentDisplayContext =
+					new CommerceCartContentDisplayContext(
+						httpServletRequest, _commerceOrderHttpHelper,
+						_commerceOrderItemService,
+						_commerceOrderValidatorRegistry,
+						_commercePriceCalculationLocalService,
+						_cpDefinitionHelper, _cpInstanceHelper);
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCartContentDisplayContext);
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				commerceCartContentDisplayContext);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceCartContentPortlet.class);
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;

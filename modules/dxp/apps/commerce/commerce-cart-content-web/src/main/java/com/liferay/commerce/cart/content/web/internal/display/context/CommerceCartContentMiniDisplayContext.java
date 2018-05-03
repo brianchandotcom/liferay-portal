@@ -22,10 +22,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
 
@@ -46,7 +43,7 @@ public class CommerceCartContentMiniDisplayContext
 				commercePriceCalculationLocalService,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper)
-		throws ConfigurationException {
+		throws PortalException {
 
 		super(
 			httpServletRequest, commerceOrderHttpHelper,
@@ -54,11 +51,8 @@ public class CommerceCartContentMiniDisplayContext
 			commercePriceCalculationLocalService, cpDefinitionHelper,
 			cpInstanceHelper);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay =
+			commerceCartContentRequestHelper.getPortletDisplay();
 
 		_commerceCartContentMiniPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(

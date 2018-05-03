@@ -23,7 +23,6 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -50,7 +49,7 @@ public class CommerceCartContentTotalDisplayContext
 				commercePriceCalculationLocalService,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper, Portal portal)
-		throws ConfigurationException {
+		throws PortalException {
 
 		super(
 			httpServletRequest, commerceOrderHttpHelper,

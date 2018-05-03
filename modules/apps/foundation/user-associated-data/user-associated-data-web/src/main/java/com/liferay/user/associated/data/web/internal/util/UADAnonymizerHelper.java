@@ -111,8 +111,6 @@ public class UADAnonymizerHelper {
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
-		_registerAnonymousUser(companyId, anonymousUser.getUserId());
-
 		return anonymousUser;
 	}
 
@@ -120,36 +118,46 @@ public class UADAnonymizerHelper {
 		Optional<Configuration> configurationOptional =
 			_anonymousUserConfigurationRetriever.getOptional(companyId);
 
-		User anonymousUser = configurationOptional.map(
-			Configuration::getProperties
-		).map(
-			properties -> ConfigurableUtil.createConfigurable(
-				AnonymousUserConfiguration.class, properties)
-		).map(
-			AnonymousUserConfiguration::userId
-		).map(
-			_userLocalService::fetchUser
-		).orElse(
-			_createAnonymousUser(companyId)
-		);
+		if (!configurationOptional.isPresent()) {
+			User anonymousUser = _createAnonymousUser(companyId);
+
+			Configuration configuration =
+				_configurationAdmin.createFactoryConfiguration(
+					AnonymousUserConfiguration.class.getName(),
+					StringPool.QUESTION);
+
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+			properties.put("companyId", companyId);
+			properties.put("userId", anonymousUser.getUserId());
+
+			configuration.update(properties);
+
+			return anonymousUser;
+		}
+
+		Configuration configuration = configurationOptional.get();
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		AnonymousUserConfiguration anonymousUserConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AnonymousUserConfiguration.class, properties);
+
+		User anonymousUser = _userLocalService.fetchUser(
+			anonymousUserConfiguration.userId());
+
+		if (anonymousUser != null) {
+			return anonymousUser;
+		}
+
+		anonymousUser = _createAnonymousUser(companyId);
+
+		properties.put("userId", anonymousUser.getUserId());
+
+		configuration.update(properties);
 
 		return anonymousUser;
-	}
-
-	private void _registerAnonymousUser(long companyId, long userId)
-		throws Exception {
-
-		Configuration anonymousUserConfiguration =
-			_configurationAdmin.createFactoryConfiguration(
-				AnonymousUserConfiguration.class.getName(),
-				StringPool.QUESTION);
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("companyId", companyId);
-		properties.put("userId", userId);
-
-		anonymousUserConfiguration.update(properties);
 	}
 
 	@Reference

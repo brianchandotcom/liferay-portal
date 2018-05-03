@@ -1,11 +1,11 @@
 AUI.add(
 	'liferay-ddm-form-field-text',
 	function(A) {
+		var ENTER_KEY = 13;
+
 		var Renderer = Liferay.DDM.Renderer;
 
 		var Util = Renderer.Util;
-
-		var ENTER_KEY = 13;
 
 		new A.TooltipDelegate(
 			{

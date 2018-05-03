@@ -25,6 +25,10 @@
 }
 
 .liferay-ddm-form-builder-rule-builder-content {
+	span.label.label-secondary {
+		max-width: 200px;
+	}
+
 	.liferay-ddm-form-builder-rule-condition-list, .liferay-ddm-form-builder-rule-action-list {
 		h4 {
 			align-items: center;

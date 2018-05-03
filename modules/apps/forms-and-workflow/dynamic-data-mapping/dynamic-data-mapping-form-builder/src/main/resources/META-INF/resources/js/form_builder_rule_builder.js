@@ -5,7 +5,11 @@ AUI.add(
 
 		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
 
-		var ACTION_LABEL = '<span class="label label-lg label-secondary">{content}</span>';
+		var ACTION_TRUNCATE = '<span class="text-truncate">{content}</span>';
+
+		var ACTION_TRUNCATE_INLINE = '<span class="text-truncate-inline">' + ACTION_TRUNCATE + '</span>';
+
+		var ACTION_LABEL = '<span class="label label-lg label-secondary">' + ACTION_TRUNCATE_INLINE + '</span>';
 
 		var MAP_ACTION_DESCRIPTIONS = {
 			'auto-fill': 'auto-fill',
@@ -73,6 +77,8 @@ AUI.add(
 				prototype: {
 					initializer: function() {
 						var instance = this;
+
+						instance._createBadgeTooltip();
 
 						instance._getUserRoles();
 					},
@@ -144,6 +150,10 @@ AUI.add(
 						var instance = this;
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
+
+						if (instance._tooltip) {
+							instance._tooltip.destroy();
+						}
 					},
 
 					getFields: function() {
@@ -285,6 +295,20 @@ AUI.add(
 						else {
 							instance.syncUI();
 						}
+					},
+
+					_createBadgeTooltip: function() {
+						var instance = this;
+
+						instance._tooltip = new A.TooltipDelegate(
+							{
+								position: 'bottom',
+								trigger: '.label',
+								triggerHideEvent: ['blur', 'mouseleave'],
+								triggerShowEvent: ['focus', 'mouseover'],
+								visible: false
+							}
+						);
 					},
 
 					_fillDataProviders: function() {

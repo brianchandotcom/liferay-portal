@@ -70,6 +70,25 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
+	<command name="getSearchTermURL" returns="searchURL">
+		<if>
+			<contains string="${searchPage}" substring=" " />
+			<then>
+				<var method="StringUtil#replace('${searchPage}', ' ', '-')" name="searchPage" />
+			</then>
+		</if>
+
+		<var method="StringUtil#toLowerCase('${searchPage}')" name="searchPage" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<var name="searchURL" value="${portalURL}/web/guest/${searchPage}?q=" />
+
+		<var name="searchURL" value="${searchURL}${searchTerm}" />
+
+		<return name="searchURL" value="${searchURL}" />
+	</command>
+
 	<command name="searchPG">
 		<execute function="Type" locator1="Search#SEARCH_BAR" value1="${searchTerm}" />
 

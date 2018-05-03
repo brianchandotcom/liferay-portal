@@ -80,7 +80,7 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPDefinition" remote-service="true" trash-enabled="true" uuid="true">
-
+\
 		<!-- PK fields -->
 
 		<column name="CPDefinitionId" primary="true" type="long" />
@@ -115,6 +115,7 @@
 		<column name="telcoOrElectronics" type="boolean" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="published" type="boolean" />
+		<column name="externalReferenceCode" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
@@ -540,6 +541,7 @@
 		<column name="price" type="BigDecimal" />
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="published" type="boolean" />
+		<column name="externalReferenceCode" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />

@@ -1,4 +1,54 @@
 <definition>
+	<command name="viewMultipleSearchResults">
+		<if>
+			<not>
+				<contains string="${resultsList}" substring="/" />
+			</not>
+			<then>
+				<fail message="You must pass in a list with title and type separated by '/'." />
+			</then>
+		</if>
+
+		<for list="${resultsList}" param="titleAndType">
+			<var method="StringUtil#extractFirst('${titleAndType}', '/')" name="searchAssetTitle" />
+			<var method="StringUtil#extractLast('${titleAndType}', '/')" name="searchAssetType" />
+
+			<execute macro="SearchResultPortlet#viewSearchResults">
+				<var name="searchAssetTitle" value="${searchAssetTitle}" />
+				<var name="searchAssetType" value="${searchAssetType}" />
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="viewMultipleSearchResultsNotPresent">
+		<if>
+			<not>
+				<contains string="${noResultsList}" substring="/" />
+			</not>
+			<then>
+				<fail message="You must pass in a list with title and type separated by '/'." />
+			</then>
+		</if>
+
+		<for list="${noResultsList}" param="titleAndType">
+			<var method="StringUtil#extractFirst('${titleAndType}', '/')" name="searchAssetTitle" />
+			<var method="StringUtil#extractLast('${titleAndType}', '/')" name="searchAssetType" />
+
+			<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
+				<var name="searchAssetTitle" value="${searchAssetTitle}" />
+				<var name="searchAssetType" value="${searchAssetType}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="viewSearchResultNotPresent">
+		<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC">
+			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+			<var name="key_searchAssetType" value="${searchAssetType}" />
+		</execute>
+	</command>
+
 	<command name="viewSearchResults">
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 		<var name="key_searchAssetType" value="${searchAssetType}" />

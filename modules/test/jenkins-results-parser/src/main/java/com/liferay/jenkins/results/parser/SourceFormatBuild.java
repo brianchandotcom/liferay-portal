@@ -63,7 +63,7 @@ public class SourceFormatBuild extends TopLevelBuild {
 		String result = getResult();
 		int successCount = 0;
 
-		if ((result != null) && result.equals("SUCCESS")) {
+		if (result.equals("SUCCESS")) {
 			successCount++;
 		}
 
@@ -72,13 +72,13 @@ public class SourceFormatBuild extends TopLevelBuild {
 			String.valueOf(getDownstreamBuildCountByResult(null) + 1),
 			"jobs PASSED");
 
-		if (!result.equals("SUCCESS")) {
-			Dom4JUtil.addToElement(
-				detailsElement, getFailedJobSummaryElement());
-		}
-		else if (result.equals("SUCCESS")) {
+		if (result.equals("SUCCESS")) {
 			Dom4JUtil.addToElement(
 				detailsElement, getSuccessfulJobSummaryElement());
+		}
+		else {
+			Dom4JUtil.addToElement(
+				detailsElement, getFailedJobSummaryElement());
 		}
 
 		Dom4JUtil.addToElement(detailsElement, getMoreDetailsElement());

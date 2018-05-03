@@ -54,15 +54,13 @@ public class SourceFormatBuild extends TopLevelBuild {
 	public Element getTopGitHubMessageElement() {
 		update();
 
+		Element detailsElement = getDetailsElement();
 		Element rootElement = Dom4JUtil.getNewElement(
 			"html", null, getResultElement());
-
-		Element detailsElement = getDetailsElement();
 
 		Dom4JUtil.addToElement(rootElement, detailsElement);
 
 		String result = getResult();
-
 		int successCount = 0;
 
 		if ((result != null) && result.equals("SUCCESS")) {

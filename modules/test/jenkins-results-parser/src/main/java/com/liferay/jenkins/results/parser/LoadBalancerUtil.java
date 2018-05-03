@@ -33,7 +33,62 @@ import java.util.regex.Pattern;
  */
 public class LoadBalancerUtil {
 
+	public static List<JenkinsMaster> getAvailableJenkinsMasters(
+		String masterPrefix, Properties properties) {
+
+		return getAvailableJenkinsMasters(masterPrefix, properties, true);
+	}
+
+	public static List<JenkinsMaster> getAvailableJenkinsMasters(
+		String masterPrefix, Properties properties, boolean verbose) {
+
+		List<JenkinsMaster> allJenkinsMasters = null;
+
+		if (!_jenkinsMasters.containsKey(masterPrefix)) {
+			allJenkinsMasters = JenkinsResultsParserUtil.getJenkinsMasters(
+				properties, masterPrefix);
+
+			_jenkinsMasters.put(masterPrefix, allJenkinsMasters);
+		}
+		else {
+			allJenkinsMasters = _jenkinsMasters.get(masterPrefix);
+		}
+
+		List<String> blacklist = _getBlacklist(properties, verbose);
+
+		if (blacklist.isEmpty()) {
+			return new ArrayList<>(allJenkinsMasters);
+		}
+
+		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
+			allJenkinsMasters.size());
+
+		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
+			if (blacklist.contains(jenkinsMaster.getName())) {
+				continue;
+			}
+
+			availableJenkinsMasters.add(jenkinsMaster);
+		}
+
+		return availableJenkinsMasters;
+	}
+
+	public static String getMostAvailableMasterURL(
+			boolean verbose, String... overridePropertiesArray)
+		throws Exception {
+
+		return getMostAvailableMasterURL(
+			null, overridePropertiesArray, verbose);
+	}
+
 	public static String getMostAvailableMasterURL(Properties properties) {
+		return getMostAvailableMasterURL(properties, true);
+	}
+
+	public static String getMostAvailableMasterURL(
+		Properties properties, boolean verbose) {
+
 		long start = System.currentTimeMillis();
 
 		int retries = 0;
@@ -50,7 +105,7 @@ public class LoadBalancerUtil {
 				}
 
 				List<JenkinsMaster> jenkinsMasters = getAvailableJenkinsMasters(
-					masterPrefix, properties);
+					masterPrefix, properties, verbose);
 
 				long nextUpdateTimestamp = _getNextUpdateTimestamp(
 					masterPrefix);
@@ -68,26 +123,29 @@ public class LoadBalancerUtil {
 				JenkinsMaster mostAvailableJenkinsMaster = jenkinsMasters.get(
 					0);
 
-				StringBuilder sb = new StringBuilder();
+				if (verbose) {
+					StringBuilder sb = new StringBuilder();
 
-				for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
-					sb.append(jenkinsMaster.getName());
-					sb.append(" : ");
-					sb.append(jenkinsMaster.getAvailableSlavesCount());
-					sb.append("\n");
+					for (JenkinsMaster jenkinsMaster : jenkinsMasters) {
+						sb.append(jenkinsMaster.getName());
+						sb.append(" : ");
+						sb.append(jenkinsMaster.getAvailableSlavesCount());
+						sb.append("\n");
+					}
+
+					System.out.println(sb.toString());
+
+					sb = new StringBuilder();
+
+					sb.append("\nMost available master ");
+					sb.append(mostAvailableJenkinsMaster.getName());
+					sb.append(" has ");
+					sb.append(
+						mostAvailableJenkinsMaster.getAvailableSlavesCount());
+					sb.append(" available slaves.");
+
+					System.out.println(sb.toString());
 				}
-
-				System.out.print(sb);
-
-				sb = new StringBuilder();
-
-				sb.append("\nMost available master ");
-				sb.append(mostAvailableJenkinsMaster.getName());
-				sb.append(" has ");
-				sb.append(mostAvailableJenkinsMaster.getAvailableSlavesCount());
-				sb.append(" available slaves.");
-
-				System.out.println(sb);
 
 				int invokedBatchSize = 0;
 
@@ -113,10 +171,12 @@ public class LoadBalancerUtil {
 				throw e;
 			}
 			finally {
-				System.out.println(
-					"Got most available master URL in " +
-						JenkinsResultsParserUtil.toDurationString(
-							System.currentTimeMillis() - start));
+				if (verbose) {
+					System.out.println(
+						"Got most available master URL in " +
+							JenkinsResultsParserUtil.toDurationString(
+								System.currentTimeMillis() - start));
+				}
 			}
 		}
 	}
@@ -125,11 +185,20 @@ public class LoadBalancerUtil {
 			String... overridePropertiesArray)
 		throws Exception {
 
-		return getMostAvailableMasterURL(null, overridePropertiesArray);
+		return getMostAvailableMasterURL(true, overridePropertiesArray);
 	}
 
 	public static String getMostAvailableMasterURL(
 			String propertiesURL, String[] overridePropertiesArray)
+		throws Exception {
+
+		return getMostAvailableMasterURL(
+			propertiesURL, overridePropertiesArray, true);
+	}
+
+	public static String getMostAvailableMasterURL(
+			String propertiesURL, String[] overridePropertiesArray,
+			boolean verbose)
 		throws Exception {
 
 		Properties properties = new Properties();
@@ -162,46 +231,11 @@ public class LoadBalancerUtil {
 			}
 		}
 
-		return getMostAvailableMasterURL(properties);
+		return getMostAvailableMasterURL(properties, verbose);
 	}
 
 	public static void setUpdateInterval(long interval) {
 		_updateInterval = interval;
-	}
-
-	protected static List<JenkinsMaster> getAvailableJenkinsMasters(
-		String masterPrefix, Properties properties) {
-
-		List<JenkinsMaster> allJenkinsMasters = null;
-
-		if (!_jenkinsMasters.containsKey(masterPrefix)) {
-			allJenkinsMasters = JenkinsResultsParserUtil.getJenkinsMasters(
-				properties, masterPrefix);
-
-			_jenkinsMasters.put(masterPrefix, allJenkinsMasters);
-		}
-		else {
-			allJenkinsMasters = _jenkinsMasters.get(masterPrefix);
-		}
-
-		List<String> blacklist = _getBlacklist(properties);
-
-		if (blacklist.isEmpty()) {
-			return new ArrayList<>(allJenkinsMasters);
-		}
-
-		List<JenkinsMaster> availableJenkinsMasters = new ArrayList<>(
-			allJenkinsMasters.size());
-
-		for (JenkinsMaster jenkinsMaster : allJenkinsMasters) {
-			if (blacklist.contains(jenkinsMaster.getName())) {
-				continue;
-			}
-
-			availableJenkinsMasters.add(jenkinsMaster);
-		}
-
-		return availableJenkinsMasters;
 	}
 
 	protected static String getMasterPrefix(String baseInvocationURL) {
@@ -214,11 +248,15 @@ public class LoadBalancerUtil {
 		return matcher.group("masterPrefix");
 	}
 
-	private static List<String> _getBlacklist(Properties properties) {
+	private static List<String> _getBlacklist(
+		Properties properties, boolean verbose) {
+
 		String blacklistString = properties.getProperty(
 			"jenkins.load.balancer.blacklist", "");
 
-		System.out.println("Blacklist: " + blacklistString);
+		if (verbose) {
+			System.out.println("Blacklist: " + blacklistString);
+		}
 
 		if (blacklistString.isEmpty()) {
 			return Collections.emptyList();

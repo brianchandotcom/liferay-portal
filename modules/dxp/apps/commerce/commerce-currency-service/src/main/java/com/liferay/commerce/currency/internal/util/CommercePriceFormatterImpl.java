@@ -14,20 +14,26 @@
 
 package com.liferay.commerce.currency.internal.util;
 
+import com.liferay.commerce.currency.internal.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -35,16 +41,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
  */
-@Component(immediate = true, service = CommercePriceFormatter.class)
+@Component(
+	configurationPid = "com.liferay.commerce.currency.internal.configuration.RoundingTypeConfiguration",
+	immediate = true, service = CommercePriceFormatter.class
+)
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
 	public String format(BigDecimal price) {
-		DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
-		decimalFormat.setMaximumFractionDigits(2);
-		decimalFormat.setMinimumFractionDigits(2);
-		decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
+		DecimalFormat decimalFormat = getDefaultDecimalFormat();
 
 		return decimalFormat.format(price);
 	}
@@ -66,11 +71,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			value = roundingType.round(price);
 		}
 		else {
-			DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
-			decimalFormat.setMaximumFractionDigits(2);
-			decimalFormat.setMinimumFractionDigits(2);
-			decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
+			DecimalFormat decimalFormat = getDefaultDecimalFormat();
 
 			value = decimalFormat.format(price);
 		}
@@ -92,8 +93,36 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		return format(commerceCurrency, price);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_roundingTypeConfiguration = ConfigurableUtil.createConfigurable(
+			RoundingTypeConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_roundingTypeConfiguration = null;
+	}
+
+	protected DecimalFormat getDefaultDecimalFormat() {
+		DecimalFormat decimalFormat = new DecimalFormat(
+			_roundingTypeConfiguration.formatPattern());
+
+		decimalFormat.setMaximumFractionDigits(
+			_roundingTypeConfiguration.maximumFractionDigits());
+		decimalFormat.setMinimumFractionDigits(
+			_roundingTypeConfiguration.minimumFractionDigits());
+		decimalFormat.setRoundingMode(
+			_roundingTypeConfiguration.roundingMode());
+
+		return decimalFormat;
+	}
+
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	private volatile RoundingTypeConfiguration _roundingTypeConfiguration;
 
 	@Reference
 	private RoundingTypeServicesTracker _roundingTypeServicesTracker;

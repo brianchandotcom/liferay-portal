@@ -14,22 +14,28 @@
 
 package com.liferay.commerce.currency.internal.util;
 
+import com.liferay.commerce.currency.internal.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.util.RoundingType;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
 
 import java.util.Locale;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alessio Antonio Rendina
  */
 @Component(
+	configurationPid = "com.liferay.commerce.currency.internal.configuration.RoundingTypeConfiguration",
 	immediate = true,
 	property = {
 		"rounding.type.name=" + DefaultRoundingTypeImpl.NAME,
@@ -53,13 +59,31 @@ public class DefaultRoundingTypeImpl implements RoundingType {
 
 	@Override
 	public String round(BigDecimal value) {
-		DecimalFormat decimalFormat = new DecimalFormat("#.##");
+		DecimalFormat decimalFormat = new DecimalFormat(
+			_roundingTypeConfiguration.formatPattern());
 
-		decimalFormat.setMaximumFractionDigits(2);
-		decimalFormat.setMinimumFractionDigits(2);
-		decimalFormat.setRoundingMode(RoundingMode.HALF_EVEN);
+		decimalFormat.setMaximumFractionDigits(
+			_roundingTypeConfiguration.maximumFractionDigits());
+		decimalFormat.setMinimumFractionDigits(
+			_roundingTypeConfiguration.minimumFractionDigits());
+		decimalFormat.setRoundingMode(
+			_roundingTypeConfiguration.roundingMode());
 
 		return decimalFormat.format(value);
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_roundingTypeConfiguration = ConfigurableUtil.createConfigurable(
+			RoundingTypeConfiguration.class, properties);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_roundingTypeConfiguration = null;
+	}
+
+	private volatile RoundingTypeConfiguration _roundingTypeConfiguration;
 
 }

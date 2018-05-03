@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Notifications Web
+Bundle-SymbolicName: com.liferay.notifications.web
+Bundle-Version: 2.0.0
+Web-ContextPath: /notifications-web

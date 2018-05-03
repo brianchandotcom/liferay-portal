@@ -1,0 +1,8 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	testIntegrationCompile project(":apps:item-selector:item-selector-api")
+	testIntegrationCompile project(":apps:item-selector:item-selector-criteria-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

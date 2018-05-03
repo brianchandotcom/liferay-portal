@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Flags Web
-Bundle-SymbolicName: com.liferay.flags.web
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
-Web-ContextPath: /flags-web

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="PlusStatementCheck" files="modules/apps/wiki/wiki-engine-html/src/test/java/com/liferay/wiki/engine/html/processor/WikiPageRenameHTMLContentProcessorTest\.java" />
+	</checkstyle>
+</suppressions>

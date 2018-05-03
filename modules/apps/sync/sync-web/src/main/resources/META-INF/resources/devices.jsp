@@ -125,25 +125,9 @@ portletURL.setParameter("delta", String.valueOf(delta));
 					property="userName"
 				/>
 
-				<%
-				String location = syncDevice.getHostname();
-
-				IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SyncWebKeys.IP_GEOCODER);
-
-				IPInfo ipInfo = ipGeocoder.getIPInfo(location);
-
-				if (ipInfo != null) {
-					String city = ipInfo.getCity();
-
-					if (city != null) {
-						location = city + " " + location;
-					}
-				}
-				%>
-
 				<liferay-ui:search-container-column-text
 					name="location"
-					value="<%= location %>"
+					value="<%= syncDevice.getHostname() %>"
 				/>
 
 				<liferay-ui:search-container-column-text

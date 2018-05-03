@@ -14,23 +14,14 @@
 
 package com.liferay.sync.web.internal.portlet;
 
-import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sync.service.SyncDeviceLocalService;
-import com.liferay.sync.web.internal.constants.SyncWebKeys;
 import com.liferay.sync.web.internal.upgrade.SyncWebUpgrade;
-
-import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,19 +39,6 @@ public abstract class BaseSyncPortlet extends MVCPortlet {
 		syncDeviceLocalService.deleteSyncDevice(syncDeviceId);
 	}
 
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			renderRequest);
-
-		request.setAttribute(SyncWebKeys.IP_GEOCODER, _ipGeocoder);
-
-		super.render(renderRequest, renderResponse);
-	}
-
 	public void updateDevice(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -70,11 +48,6 @@ public abstract class BaseSyncPortlet extends MVCPortlet {
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		syncDeviceLocalService.updateStatus(syncDeviceId, status);
-	}
-
-	@Reference(unbind = "-")
-	protected void setIPGeocoder(IPGeocoder ipGeocoder) {
-		_ipGeocoder = ipGeocoder;
 	}
 
 	@Reference(unbind = "-")
@@ -95,7 +68,6 @@ public abstract class BaseSyncPortlet extends MVCPortlet {
 
 	protected SyncDeviceLocalService syncDeviceLocalService;
 
-	private IPGeocoder _ipGeocoder;
 	private Portal _portal;
 
 }

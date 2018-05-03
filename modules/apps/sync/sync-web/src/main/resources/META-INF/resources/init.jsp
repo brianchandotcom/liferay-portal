@@ -28,8 +28,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
-page import="com.liferay.ip.geocoder.IPGeocoder" %><%@
-page import="com.liferay.ip.geocoder.IPInfo" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -59,8 +57,7 @@ page import="com.liferay.sync.model.SyncDevice" %><%@
 page import="com.liferay.sync.oauth.helper.SyncOAuthHelperUtil" %><%@
 page import="com.liferay.sync.service.SyncDeviceLocalServiceUtil" %><%@
 page import="com.liferay.sync.service.configuration.SyncServiceConfigurationKeys" %><%@
-page import="com.liferay.sync.web.internal.configuration.SyncServiceConfigurationValues" %><%@
-page import="com.liferay.sync.web.internal.constants.SyncWebKeys" %>
+page import="com.liferay.sync.web.internal.configuration.SyncServiceConfigurationValues" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.LinkedHashMap" %><%@

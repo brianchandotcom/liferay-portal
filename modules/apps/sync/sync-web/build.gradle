@@ -12,7 +12,6 @@ dependencies {
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
-	compileOnly project(":apps:ip-geocoder:ip-geocoder-api")
 	compileOnly project(":apps:sync:sync-api")
 	compileOnly project(":apps:web-experience:application-list:application-list-api")
 	compileOnly project(":core:petra:petra-lang")

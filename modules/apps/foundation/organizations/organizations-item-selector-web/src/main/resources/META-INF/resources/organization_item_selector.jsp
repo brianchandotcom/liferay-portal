@@ -66,6 +66,16 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 			keyProperty="organizationId"
 			modelVar="organization"
 		>
+
+			<%
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("id", organization.getOrganizationId());
+			data.put("name", organization.getName());
+
+			row.setData(data);
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				property="name"
@@ -92,18 +102,29 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 </div>
 
 <aui:script use="liferay-search-container">
-	var organizationSelectorWrapper = A.one('#<portlet:namespace />organizationSelectorWrapper');
-
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />organizations');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-				{
-					data: Liferay.Util.listCheckedExcept(organizationSelectorWrapper, '<portlet:namespace />allRowIds')
+			var allSelectedElements = event.elements.allSelectedElements;
+			var arr = [];
+
+			allSelectedElements.each(
+				function() {
+					var row = this.ancestor('tr');
+
+					var data = row.getDOM().dataset;
+
+					arr.push({id: data.id, name: data.name});
 				}
+			);
+
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
+					{
+						data: arr
+					}
 			);
 		}
 	);

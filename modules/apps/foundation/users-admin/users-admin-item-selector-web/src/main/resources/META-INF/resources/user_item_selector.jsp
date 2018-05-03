@@ -66,10 +66,22 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 			keyProperty="userId"
 			modelVar="user"
 		>
+
+			<%
+			String userFullName = user.getFullName();
+
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("id", user.getUserId());
+			data.put("name", userFullName);
+
+			row.setData(data);
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="name"
-				value="<%= HtmlUtil.escape(user.getFullName()) %>"
+				value="<%= HtmlUtil.escape(userFullName) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -88,17 +100,28 @@ PortletURL portletURL = userItemSelectorViewDisplayContext.getPortletURL();
 </div>
 
 <aui:script use="liferay-search-container">
-	var userSelectorWrapper = A.one('#<portlet:namespace />userSelectorWrapper');
-
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
+			var allSelectedElements = event.elements.allSelectedElements;
+			var arr = [];
+
+			allSelectedElements.each(
+				function() {
+					var row = this.ancestor('tr');
+
+					var data = row.getDOM().dataset;
+
+					arr.push({id: data.id, name: data.name});
+				}
+			);
+
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 				{
-					data: Liferay.Util.listCheckedExcept(userSelectorWrapper, '<portlet:namespace />allRowIds')
+					data: arr
 				}
 			);
 		}

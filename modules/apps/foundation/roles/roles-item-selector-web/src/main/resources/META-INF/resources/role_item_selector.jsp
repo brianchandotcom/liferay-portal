@@ -66,6 +66,16 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 			keyProperty="roleId"
 			modelVar="role"
 		>
+
+			<%
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("id", role.getRoleId());
+			data.put("name", role.getName());
+
+			row.setData(data);
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				property="name"
@@ -85,18 +95,29 @@ PortletURL portletURL = roleItemSelectorViewDisplayContext.getPortletURL();
 	</liferay-ui:search-container>
 </div>
 
-<aui:script use="liferay-search-container">
-	var roleSelectorWrapper = A.one('#<portlet:namespace />roleSelectorWrapper');
-
+<aui:script use="aui-parse-content,liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />roles');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
+			var allSelectedElements = event.elements.allSelectedElements;
+			var arr = [];
+
+			allSelectedElements.each(
+				function() {
+					var row = this.ancestor('tr');
+
+					var data = row.getDOM().dataset;
+
+					arr.push({id: data.id, name: data.name});
+				}
+			);
+
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 				{
-					data: Liferay.Util.listCheckedExcept(roleSelectorWrapper, '<portlet:namespace />allRowIds')
+					data: arr
 				}
 			);
 		}

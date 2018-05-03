@@ -88,7 +88,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		<aui:script>
-			Liferay.Util.focusFormField(document.getElementById('<portlet:namespace />keywords'));
+			Liferay.Util.focusFormField(document.getElementsByName('<portlet:namespace />keywords')[0]);
 		</aui:script>
 	</c:if>
 </nav>

@@ -15,6 +15,7 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceWarehouse;
@@ -55,6 +56,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 	public CommerceShippingFixedOptionRelsDisplayContext(
 		CommerceCountryService commerceCountryService,
 		CommerceCurrencyService commerceCurrencyService,
+		CommercePriceFormatter commercePriceFormatter,
 		CommerceRegionService commerceRegionService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
@@ -65,8 +67,8 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(
-			commerceCurrencyService, commerceShippingMethodService,
-			renderRequest, renderResponse);
+			commerceCurrencyService, commercePriceFormatter,
+			commerceShippingMethodService, renderRequest, renderResponse);
 
 		_commerceCountryService = commerceCountryService;
 		_commerceRegionService = commerceRegionService;

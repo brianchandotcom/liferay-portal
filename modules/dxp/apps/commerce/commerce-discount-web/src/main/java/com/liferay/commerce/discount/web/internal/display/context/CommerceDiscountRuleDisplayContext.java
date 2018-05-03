@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.web.internal.display.context;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContributor;
@@ -65,17 +66,18 @@ public class CommerceDiscountRuleDisplayContext
 			commerceDiscountRuleTypeJSPContributorRegistry,
 		CommerceDiscountRuleTypeRegistry commerceDiscountRuleTypeRegistry,
 		CommerceDiscountService commerceDiscountService,
-		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
+		CommerceDiscountTargetTypeRegistry commerceDiscountTargetTypeRegistry,
 		CommerceDiscountUserSegmentRelService
 			commerceDiscountUserSegmentRelService,
+		CommercePriceFormatter commercePriceFormatter,
 		CPDefinitionService cpDefinitionService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		super(
 			commerceCurrencyService, commerceDiscountService,
 			commerceDiscountTargetRegistry,
-			commerceDiscountUserSegmentRelService, httpServletRequest,
-			itemSelector);
+			commerceDiscountUserSegmentRelService, commercePriceFormatter,
+			httpServletRequest, itemSelector);
 
 		_commerceDiscountRuleService = commerceDiscountRuleService;
 		_commerceDiscountRuleTypeJSPContributorRegistry =

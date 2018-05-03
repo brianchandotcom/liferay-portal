@@ -51,6 +51,8 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -109,6 +111,10 @@ public class CommerceOrderEditDisplayContext {
 				themeDisplay.getTimeZone());
 	}
 
+	public String format(BigDecimal price) {
+		return _commercePriceFormatter.format(price);
+	}
+
 	public int[] getAvailableOrderStatuses() throws PortalException {
 		return _commerceOrderService.getAvailableOrderStatuses(
 			getCommerceOrderId());
@@ -141,6 +147,22 @@ public class CommerceOrderEditDisplayContext {
 		}
 
 		return _commerceOrder.getCommerceOrderId();
+	}
+
+	public CommerceOrderItem getCommerceOrderItem() throws PortalException {
+		if (_commerceOrderItem != null) {
+			return _commerceOrderItem;
+		}
+
+		long commerceOrderItemId = ParamUtil.getLong(
+			_commerceOrderRequestHelper.getRequest(), "commerceOrderItemId");
+
+		if (commerceOrderItemId > 0) {
+			_commerceOrderItem = _commerceOrderItemService.getCommerceOrderItem(
+				commerceOrderItemId);
+		}
+
+		return _commerceOrderItem;
 	}
 
 	public String getCommerceOrderItemPrice(CommerceOrderItem commerceOrderItem)
@@ -275,6 +297,7 @@ public class CommerceOrderEditDisplayContext {
 	private final CommerceCurrency _commerceCurrency;
 	private final CommerceOrder _commerceOrder;
 	private final Format _commerceOrderDateFormatDateTime;
+	private CommerceOrderItem _commerceOrderItem;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;

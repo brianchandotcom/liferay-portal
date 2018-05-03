@@ -76,7 +76,7 @@ if (!usePercentage) {
 
 <div id="<portlet:namespace />maximumDiscountAmountContainer">
 	<div class="<%= itemRetractableCssClass %>">
-		<aui:input name="maximumDiscountAmount" suffix="<%= commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode() %>" type="text" value="<%= (commerceDiscount == null) ? StringPool.BLANK : commerceDiscount.getMaximumDiscountAmount().toPlainString() %>" />
+		<aui:input name="maximumDiscountAmount" suffix="<%= commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode() %>" type="text" value="<%= (commerceDiscount == null) ? commerceDiscountDisplayContext.format(BigDecimal.ZERO) : commerceDiscountDisplayContext.format(commerceDiscount.getMaximumDiscountAmount()) %>" />
 	</div>
 </div>
 
@@ -85,7 +85,7 @@ if (!usePercentage) {
 		<label for="<portlet:namespace />level1" id="<portlet:namespace />level1Label"><%= level1Label %></label>
 
 		<div class="input-group">
-			<aui:input label="" name="level1" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? StringPool.BLANK : commerceDiscount.getLevel1().toPlainString() %>" wrapperCssClass="input-group-append input-group-item" />
+			<aui:input label="" name="level1" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? commerceDiscountDisplayContext.format(BigDecimal.ZERO) : commerceDiscountDisplayContext.format(commerceDiscount.getLevel1()) %>" wrapperCssClass="input-group-append input-group-item" />
 
 			<div class="input-group-item input-group-item-shrink">
 				<aui:button name="level1PlusButton" value="+" />
@@ -101,7 +101,7 @@ if (!usePercentage) {
 		<label for="<portlet:namespace />level2"><liferay-ui:message key="level2" /></label>
 
 		<div class="input-group">
-			<aui:input disabled="<%= level2Disabled %>" label="" name="level2" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? StringPool.BLANK : commerceDiscount.getLevel2().toPlainString() %>" wrapperCssClass="input-group-append input-group-item" />
+			<aui:input disabled="<%= level2Disabled %>" label="" name="level2" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? commerceDiscountDisplayContext.format(BigDecimal.ZERO) : commerceDiscountDisplayContext.format(commerceDiscount.getLevel2()) %>" wrapperCssClass="input-group-append input-group-item" />
 
 			<div class="input-group-item input-group-item-shrink">
 				<aui:button name="level2PlusButton" value="+" />
@@ -114,7 +114,7 @@ if (!usePercentage) {
 	</div>
 
 	<div class="<%= level3CssClass %>">
-		<aui:input disabled="<%= level3Disabled %>" name="level3" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? StringPool.BLANK : commerceDiscount.getLevel3().toPlainString() %>" />
+		<aui:input disabled="<%= level3Disabled %>" name="level3" suffix="<%= levelSuffix %>" type="text" value="<%= (commerceDiscount == null) ? commerceDiscountDisplayContext.format(BigDecimal.ZERO) : commerceDiscountDisplayContext.format(commerceDiscount.getLevel3()) %>" />
 	</div>
 </div>
 

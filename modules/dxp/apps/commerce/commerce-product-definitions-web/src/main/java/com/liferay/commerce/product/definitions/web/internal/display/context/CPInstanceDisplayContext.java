@@ -75,7 +75,7 @@ public class CPInstanceDisplayContext
 
 		setDefaultOrderByCol("sku");
 
-		_commercePriceFormatter = commercePriceFormatter;
+		this.commercePriceFormatter = commercePriceFormatter;
 		_cpDefinitionOptionRelService = cpDefinitionOptionRelService;
 		_cpInstanceService = cpInstanceService;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -84,7 +84,7 @@ public class CPInstanceDisplayContext
 	public String formatPrice(long groupId, BigDecimal price)
 		throws PortalException {
 
-		return _commercePriceFormatter.format(groupId, price);
+		return commercePriceFormatter.format(groupId, price);
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()
@@ -323,7 +323,8 @@ public class CPInstanceDisplayContext
 			true, renderRequest, renderResponse);
 	}
 
-	private final CommercePriceFormatter _commercePriceFormatter;
+	protected final CommercePriceFormatter commercePriceFormatter;
+
 	private final CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 	private CPInstance _cpInstance;
 	private final CPInstanceHelper _cpInstanceHelper;

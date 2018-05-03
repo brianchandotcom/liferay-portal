@@ -16,6 +16,7 @@ package com.liferay.commerce.discount.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountUserSegmentRel;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
@@ -49,6 +50,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,6 +72,7 @@ public class CommerceDiscountDisplayContext {
 		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
 		CommerceDiscountUserSegmentRelService
 			commerceDiscountUserSegmentRelService,
+		CommercePriceFormatter commercePriceFormatter,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		_commerceCurrencyService = commerceCurrencyService;
@@ -76,6 +80,7 @@ public class CommerceDiscountDisplayContext {
 		_commerceDiscountTargetRegistry = commerceDiscountTargetRegistry;
 		_commerceDiscountUserSegmentRelService =
 			commerceDiscountUserSegmentRelService;
+		_commercePriceFormatter = commercePriceFormatter;
 
 		this.itemSelector = itemSelector;
 
@@ -83,6 +88,10 @@ public class CommerceDiscountDisplayContext {
 			httpServletRequest);
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			httpServletRequest);
+	}
+
+	public String format(BigDecimal price) {
+		return _commercePriceFormatter.format(price);
 	}
 
 	public CommerceDiscount getCommerceDiscount() throws PortalException {
@@ -393,6 +402,7 @@ public class CommerceDiscountDisplayContext {
 		_commerceDiscountTargetRegistry;
 	private final CommerceDiscountUserSegmentRelService
 		_commerceDiscountUserSegmentRelService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private String _keywords;
 	private SearchContainer<CommerceDiscount> _searchContainer;
 

@@ -40,11 +40,11 @@ int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus"
 					<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
 					<aui:fieldset disabled="">
-						<aui:input name="subtotal" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getSubtotal().toPlainString() %>" />
+						<aui:input name="subtotal" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrder.getSubtotal()) %>" />
 
-						<aui:input name="shippingPrice" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getShippingPrice().toPlainString() %>" />
+						<aui:input name="shippingPrice" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrder.getShippingPrice()) %>" />
 
-						<aui:input name="total" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getTotal().toPlainString() %>" />
+						<aui:input name="total" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrder.getTotal()) %>" />
 
 						<aui:button-row>
 							<aui:icon cssClass="edit-form-link" image="edit" label="edit-totals" url="javascript:;" />

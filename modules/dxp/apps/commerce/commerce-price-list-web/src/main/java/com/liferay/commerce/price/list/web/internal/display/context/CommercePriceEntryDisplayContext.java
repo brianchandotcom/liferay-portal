@@ -60,10 +60,11 @@ public class CommercePriceEntryDisplayContext
 		CommercePriceFormatter commercePriceFormatter,
 		ItemSelector itemSelector, HttpServletRequest httpServletRequest) {
 
-		super(commercePriceListActionHelper, httpServletRequest);
+		super(
+			commercePriceFormatter, commercePriceListActionHelper,
+			httpServletRequest);
 
 		_commercePriceEntryService = commercePriceEntryService;
-		_commercePriceFormatter = commercePriceFormatter;
 		_itemSelector = itemSelector;
 	}
 
@@ -99,7 +100,7 @@ public class CommercePriceEntryDisplayContext
 		CommercePriceList commercePriceList =
 			commercePriceEntry.getCommercePriceList();
 
-		return _commercePriceFormatter.format(
+		return commercePriceFormatter.format(
 			commercePriceList.getCommerceCurrency(),
 			commercePriceEntry.getPrice());
 	}
@@ -231,7 +232,6 @@ public class CommercePriceEntryDisplayContext
 
 	private CommercePriceEntry _commercePriceEntry;
 	private final CommercePriceEntryService _commercePriceEntryService;
-	private final CommercePriceFormatter _commercePriceFormatter;
 	private final ItemSelector _itemSelector;
 
 }

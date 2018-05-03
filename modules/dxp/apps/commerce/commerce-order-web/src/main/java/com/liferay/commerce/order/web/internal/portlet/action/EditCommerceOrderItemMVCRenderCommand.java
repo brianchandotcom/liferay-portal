@@ -15,14 +15,19 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.exception.NoSuchOrderException;
-import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.order.web.internal.display.context.CommerceOrderEditDisplayContext;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.commerce.service.CommerceOrderNoteService;
+import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommercePaymentMethodService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -49,15 +54,16 @@ public class EditCommerceOrderItemMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			long commerceOrderItemId = ParamUtil.getLong(
-				renderRequest, "commerceOrderItemId");
-
-			CommerceOrderItem commerceOrderItem =
-				_commerceOrderItemService.getCommerceOrderItem(
-					commerceOrderItemId);
+			CommerceOrderEditDisplayContext commerceOrderEditDisplayContext =
+				new CommerceOrderEditDisplayContext(
+					_commerceCurrencyService, _commerceOrderService,
+					_commerceOrderItemService, _commerceOrderNoteService,
+					_commercePaymentMethodService, _commercePriceFormatter,
+					_itemSelector, renderRequest);
 
 			renderRequest.setAttribute(
-				CommerceWebKeys.COMMERCE_ORDER_ITEM, commerceOrderItem);
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				commerceOrderEditDisplayContext);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchOrderException ||
@@ -76,6 +82,24 @@ public class EditCommerceOrderItemMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommerceOrderNoteService _commerceOrderNoteService;
+
+	@Reference
+	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommercePaymentMethodService _commercePaymentMethodService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

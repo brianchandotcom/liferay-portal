@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContributorRegistry;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
@@ -109,8 +110,8 @@ public class CommerceDiscountRulesScreenNavigationEntry
 				_commerceDiscountRuleTypeJSPContributorRegistry,
 				_commerceDiscountRuleTypeRegistry, _commerceDiscountService,
 				_commerceDiscountTargetRegistry,
-				_commerceDiscountUserSegmentRelService, _cpDefinitionService,
-				httpServletRequest, _itemSelector);
+				_commerceDiscountUserSegmentRelService, _commercePriceFormatter,
+				_cpDefinitionService, httpServletRequest, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -143,6 +144,9 @@ public class CommerceDiscountRulesScreenNavigationEntry
 	@Reference
 	private CommerceDiscountUserSegmentRelService
 		_commerceDiscountUserSegmentRelService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

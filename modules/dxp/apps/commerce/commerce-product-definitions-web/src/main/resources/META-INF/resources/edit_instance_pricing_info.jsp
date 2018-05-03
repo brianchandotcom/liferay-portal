@@ -43,11 +43,11 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstancePricingInfo
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getCost().toPlainString() %>" />
+			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.format(cpInstance.getCost()) %>" />
 
-			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getPrice().toPlainString() %>" />
+			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.format(cpInstance.getPrice()) %>" />
 
-			<aui:input name="promoPrice" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getPromoPrice().toPlainString() %>" />
+			<aui:input name="promoPrice" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.format(cpInstance.getPromoPrice()) %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

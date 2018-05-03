@@ -15,6 +15,7 @@
 package com.liferay.commerce.discount.web.internal.portlet.action;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.constants.CommerceDiscountPortletKeys;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeJSPContributorRegistry;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
@@ -66,8 +67,8 @@ public class EditCommerceDiscountRuleMVCRenderCommand
 				_commerceDiscountRuleTypeJSPContributorRegistry,
 				_commerceDiscountRuleTypeRegistry, _commerceDiscountService,
 				_commerceDiscountTargetRegistry,
-				_commerceDiscountUserSegmentRelService, _cpDefinitionService,
-				httpServletRequest, _itemSelector);
+				_commerceDiscountUserSegmentRelService, _commercePriceFormatter,
+				_cpDefinitionService, httpServletRequest, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -98,6 +99,9 @@ public class EditCommerceDiscountRuleMVCRenderCommand
 	@Reference
 	private CommerceDiscountUserSegmentRelService
 		_commerceDiscountUserSegmentRelService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

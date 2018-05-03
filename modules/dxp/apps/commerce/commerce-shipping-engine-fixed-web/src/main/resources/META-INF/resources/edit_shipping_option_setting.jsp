@@ -171,9 +171,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 					</div>
 				</div>
 
-				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO.toPlainString() : commerceShippingFixedOptionRel.getFixedPrice().toPlainString() %>" />
+				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? commerceShippingFixedOptionRelsDisplayContext.format(BigDecimal.ZERO) : commerceShippingFixedOptionRelsDisplayContext.format(commerceShippingFixedOptionRel.getFixedPrice()) %>" />
 
-				<aui:input name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO.toPlainString() : commerceShippingFixedOptionRel.getRateUnitWeightPrice().toPlainString() %>" />
+				<aui:input name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? commerceShippingFixedOptionRelsDisplayContext.format(BigDecimal.ZERO) : commerceShippingFixedOptionRelsDisplayContext.format(commerceShippingFixedOptionRel.getRateUnitWeightPrice()) %>" />
 
 				<aui:input name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
 			</aui:fieldset>

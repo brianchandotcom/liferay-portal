@@ -24,8 +24,6 @@ public class CommerceWebKeys {
 
 	public static final String COMMERCE_ORDER = "COMMERCE_ORDER";
 
-	public static final String COMMERCE_ORDER_ITEM = "COMMERCE_ORDER_ITEM";
-
 	public static final String COMMERCE_SHIPMENT = "COMMERCE_SHIPMENT";
 
 	public static final String COMMERCE_SHIPMENT_ITEM =

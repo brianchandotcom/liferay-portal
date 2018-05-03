@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.admin.ShippingMethodsCommerceAdminModule;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -41,16 +44,22 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 
 	public BaseCommerceShippingFixedOptionDisplayContext(
 		CommerceCurrencyService commerceCurrencyService,
+		CommercePriceFormatter commercePriceFormatter,
 		CommerceShippingMethodService commerceShippingMethodService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		this.commerceCurrencyService = commerceCurrencyService;
+		this.commercePriceFormatter = commercePriceFormatter;
 		this.commerceShippingMethodService = commerceShippingMethodService;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 
 		_defaultOrderByCol = "priority";
 		_defaultOrderByType = "asc";
+	}
+
+	public String format(BigDecimal price) {
+		return commercePriceFormatter.format(price);
 	}
 
 	public String getCommerceCurrencyCode() {
@@ -179,6 +188,7 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 	}
 
 	protected final CommerceCurrencyService commerceCurrencyService;
+	protected final CommercePriceFormatter commercePriceFormatter;
 	protected final CommerceShippingMethodService commerceShippingMethodService;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;

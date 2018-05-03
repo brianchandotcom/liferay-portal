@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -48,6 +50,10 @@ public class CPInstancePricingInfoDisplayContext
 			cpDefinitionOptionRelService, cpInstanceService, cpInstanceHelper);
 
 		_commerceCurrencyService = commerceCurrencyService;
+	}
+
+	public String format(BigDecimal price) {
+		return commercePriceFormatter.format(price);
 	}
 
 	public String getCommerceCurrencyCode() {

@@ -17,17 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommercePriceEntry commercePriceEntry = (CommercePriceEntry)request.getAttribute(CommercePriceListWebKeys.COMMERCE_PRICE_ENTRY);
+CommercePriceEntryDisplayContext commercePriceEntryDisplayContext = (CommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-String currencyCode = StringPool.BLANK;
+CommercePriceEntry commercePriceEntry = commercePriceEntryDisplayContext.getCommercePriceEntry();
+CommercePriceList commercePriceList = commercePriceEntryDisplayContext.getCommercePriceList();
 
-if (commercePriceEntry != null) {
-	CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
+CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
 
-	CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
-
-	currencyCode = commerceCurrency.getCode();
-}
+String currencyCode = commerceCurrency.getCode();
 %>
 
 <liferay-ui:error-marker
@@ -38,6 +35,6 @@ if (commercePriceEntry != null) {
 <aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 
 <aui:fieldset>
-	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntry.getPrice().toPlainString() %>" />
-	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntry.getPromoPrice().toPlainString() %>" />
+	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntryDisplayContext.format(commercePriceEntry.getPrice()) %>" />
+	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntryDisplayContext.format(commercePriceEntry.getPromoPrice()) %>" />
 </aui:fieldset>

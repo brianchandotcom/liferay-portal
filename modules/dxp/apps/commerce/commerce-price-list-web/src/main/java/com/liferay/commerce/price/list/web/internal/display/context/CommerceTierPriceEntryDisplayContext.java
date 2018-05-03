@@ -55,11 +55,12 @@ public class CommerceTierPriceEntryDisplayContext
 		CommerceTierPriceEntryService commerceTierPriceEntryService,
 		HttpServletRequest httpServletRequest) {
 
-		super(commercePriceListActionHelper, httpServletRequest);
+		super(
+			commercePriceFormatter, commercePriceListActionHelper,
+			httpServletRequest);
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		_commercePriceFormatter = commercePriceFormatter;
 		_commerceTierPriceEntryService = commerceTierPriceEntryService;
 	}
 
@@ -117,7 +118,7 @@ public class CommerceTierPriceEntryDisplayContext
 
 		CommercePriceList commercePriceList = getCommercePriceList();
 
-		return _commercePriceFormatter.format(
+		return commercePriceFormatter.format(
 			commercePriceList.getCommerceCurrency(),
 			commerceTierPriceEntry.getPrice());
 	}
@@ -258,7 +259,6 @@ public class CommerceTierPriceEntryDisplayContext
 			getCommerceTierPriceEntryId(), null);
 	}
 
-	private final CommercePriceFormatter _commercePriceFormatter;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
 	private final CommerceTierPriceEntryService _commerceTierPriceEntryService;
 	private final CPRequestHelper _cpRequestHelper;

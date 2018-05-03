@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -67,6 +69,10 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 
 		setDefaultOrderByCol("create-date");
 		setDefaultOrderByType("desc");
+	}
+
+	public String format(BigDecimal price) {
+		return _commercePriceFormatter.format(price);
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() {

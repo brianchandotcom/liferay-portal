@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,6 +72,10 @@ public class CPInstanceCommercePriceEntryDisplayContext
 
 		setDefaultOrderByCol("create-date");
 		setDefaultOrderByType("desc");
+	}
+
+	public String format(BigDecimal price) {
+		return _commercePriceFormatter.format(price);
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() {

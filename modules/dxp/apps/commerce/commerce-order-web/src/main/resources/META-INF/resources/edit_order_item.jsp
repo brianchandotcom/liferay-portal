@@ -17,9 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceOrderItem commerceOrderItem = (CommerceOrderItem)request.getAttribute(CommerceWebKeys.COMMERCE_ORDER_ITEM);
+CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrderEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
+CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerceOrderItem();
 
 CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
@@ -38,7 +39,7 @@ renderResponse.setTitle(commerceOrderItem.getTitle(locale));
 		<aui:input name="quantity" />
 
 		<c:if test="<%= !commerceOrder.isOpen() %>">
-			<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceOrderItem.getPrice().toPlainString() %>" />
+			<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrderItem.getPrice()) %>" />
 		</c:if>
 	</div>
 

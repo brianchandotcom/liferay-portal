@@ -20,28 +20,39 @@ describe('Forms Plugin', () => {
 
 	describe('formViewed event', () => {
 		it('should be fired for every form on the page', () => {
-			const form = document.createElement('form');
-			form.dataset.analyticsAssetId = 'formId';
-			form.dataset.analyticsAssetTitle = 'Form Title';
-			document.body.appendChild(form);
+			const formWithAssetId = document.createElement('form');
+			formWithAssetId.dataset.analyticsAssetId = 'assetId';
+			formWithAssetId.dataset.analyticsAssetTitle = 'Form Title 1';
+			document.body.appendChild(formWithAssetId);
+
+			const formWithFormId = document.createElement('form');
+			formWithFormId.dataset.analyticsFormId = 'formId';
+			formWithFormId.dataset.analyticsAssetTitle = 'Form Title 2';
+			document.body.appendChild(formWithFormId);
 
 			const domContentLoaded = new Event('DOMContentLoaded');
 			document.dispatchEvent(domContentLoaded);
 
 			const events = Analytics.events.filter(
-				({eventId}) => eventId === 'formViewed'
+				({eventId, properties}) => eventId === 'formViewed'
 			);
 
-			expect(events.length).to.be.at.least(1);
+			expect(events.length).to.be.at.least(2);
+
+			events[1].should.deep.include({
+				applicationId: 'forms',
+				eventId: 'formViewed'
+			});
+			expect(events[1].properties.formId).to.equal('formId');
 
 			events[0].should.deep.include({
 				applicationId: 'forms',
-				eventId: 'formViewed',
-				properties: {
-					formId: 'formId',
-					title: 'Form Title'
-				}
+				eventId: 'formViewed'
 			});
+			expect(events[0].properties.formId).to.equal('assetId');
+
+			document.body.removeChild(formWithAssetId);
+			document.body.removeChild(formWithFormId);
 		});
 	});
 

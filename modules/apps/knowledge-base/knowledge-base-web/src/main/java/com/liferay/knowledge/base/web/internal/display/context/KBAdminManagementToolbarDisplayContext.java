@@ -15,6 +15,8 @@
 package com.liferay.knowledge.base.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBTemplate;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -59,6 +62,28 @@ public class KBAdminManagementToolbarDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public List<DropdownItem> getActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							StringBundler.concat(
+								"javascript:",
+								_liferayPortletResponse.getNamespace(),
+								"deleteEntries();"));
+
+						dropdownItem.setIcon("times");
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {

@@ -79,6 +79,7 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 </liferay-portlet:renderURL>
 
 <clay:management-toolbar
+	actionItems="<%= kbAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= String.valueOf(searchURL) %>"
 	creationMenu="<%= kbAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= kbObjects.isEmpty() %>"
@@ -105,14 +106,6 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 			/>
 		</c:if>
 	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
-			icon="times"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

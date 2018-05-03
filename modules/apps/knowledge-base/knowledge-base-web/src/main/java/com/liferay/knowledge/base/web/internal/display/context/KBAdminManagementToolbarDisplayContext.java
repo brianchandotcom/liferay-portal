@@ -314,6 +314,12 @@ public class KBAdminManagementToolbarDisplayContext {
 		return !_searchContainer.hasResults();
 	}
 
+	public boolean isShowInfoButton() {
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		return Validator.isNull(keywords);
+	}
+
 	private SearchContainer _createSearchContainer()
 		throws PortalException, PortletException {
 

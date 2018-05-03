@@ -63,7 +63,7 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 	searchActionURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="kbObjects"
 	selectable="<%= true %>"
-	showInfoButton="<%= Validator.isNull(keywords) %>"
+	showInfoButton="<%= kbAdminManagementToolbarDisplayContext.isShowInfoButton() %>"
 	sortingOrder="<%= kbAdminManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSortingURL()) %>"
 	totalItems="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"

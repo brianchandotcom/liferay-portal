@@ -72,6 +72,21 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
+<liferay-portlet:renderURL varImpl="searchURL">
+	<portlet:param name="mvcPath" value="/admin/search.jsp" />
+</liferay-portlet:renderURL>
+
+<clay:management-toolbar
+	clearResultsURL="<%= String.valueOf(searchURL) %>"
+	disabled="<%= kbObjects.isEmpty() %>"
+	infoPanelId="infoPanelId"
+	searchActionURL="<%= String.valueOf(searchURL) %>"
+	searchContainerId="kbObjects"
+	selectable="<%= true %>"
+	showInfoButton="<%= Validator.isNull(keywords) %>"
+	totalItems="<%= kbObjectsSearchContainer.getTotal() %>"
+/>
+
 <liferay-frontend:management-bar
 	disabled="<%= kbObjects.isEmpty() %>"
 	includeCheckBox="<%= true %>"
@@ -84,11 +99,6 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		%>
 
 		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
-			/>
-
 			<liferay-frontend:management-bar-display-buttons
 				displayViews='<%= new String[] {"descriptive"} %>'
 				portletURL="<%= displayStyleURL %>"
@@ -118,31 +128,9 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
 			/>
 		</c:if>
-
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcPath" value="/admin/search.jsp" />
-			</liferay-portlet:renderURL>
-
-			<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-				<liferay-ui:input-search
-					id="keywords"
-					markupView="lexicon"
-					placeholder='<%= LanguageUtil.get(request, "search") %>'
-				/>
-			</aui:form>
-		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
 		<liferay-frontend:management-bar-button
 			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
 			icon="times"

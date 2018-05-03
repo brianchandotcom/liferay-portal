@@ -87,8 +87,8 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="SearchFacetPortlet#checkFacetOption">
-			<var name="facetOption" value="Blogs Entry" />
+		<execute macro="SearchFacetPortlet#checkFacet">
+			<var name="facetValueName" value="Blogs Entry" />
 		</execute>
 
 		<var method="selenium#getCurrentUrl()" name="searchURL" />

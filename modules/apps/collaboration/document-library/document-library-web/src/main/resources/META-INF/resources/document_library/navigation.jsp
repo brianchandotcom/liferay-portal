@@ -17,13 +17,13 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+DLAdminNavigationDisplayContext dlAdminNavigationDisplayContext = new DLAdminNavigationDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
 
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
 	<clay:navigation-bar
 		inverted="<%= true %>"
-		items="<%= dlAdminDisplayContext.getNavigationItems() %>"
+		items="<%= dlAdminNavigationDisplayContext.getNavigationItems() %>"
 	/>
 </c:if>

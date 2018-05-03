@@ -61,11 +61,6 @@ public class BookmarksEntryUADDisplayTest extends BaseUADDisplayTestCase {
 	}
 
 	@Override
-	protected String getTypeDescription() {
-		return "A link to another page or website";
-	}
-
-	@Override
 	protected UADAggregator getUADAggregator() {
 		return _uadAggregator;
 	}

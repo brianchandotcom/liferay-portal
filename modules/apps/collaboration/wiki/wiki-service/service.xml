@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.wiki">
 	<namespace>Wiki</namespace>
-	<entity local-service="true" name="WikiNode" remote-service="true" trash-enabled="true" uad-type-description="A wiki node" uuid="true">
+	<entity local-service="true" name="WikiNode" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -69,7 +69,7 @@
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="WikiPage" package-path="com.liferay.wiki" />
 	</entity>
-	<entity local-service="true" name="WikiPage" remote-service="true" trash-enabled="true" uad-type-description="A wiki page" uuid="true">
+	<entity local-service="true" name="WikiPage" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 

@@ -73,11 +73,6 @@ public class MBCategoryUADDisplayTest extends BaseUADDisplayTestCase {
 		return _uadDisplay;
 	}
 
-	@Override
-	protected String getTypeDescription() {
-		return "";
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);

@@ -73,11 +73,6 @@ public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase {
 		return _uadDisplay;
 	}
 
-	@Override
-	protected String getTypeDescription() {
-		return "A blog post";
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		_blogsEntryUADTestHelper.cleanUpDependencies(_blogsEntries);

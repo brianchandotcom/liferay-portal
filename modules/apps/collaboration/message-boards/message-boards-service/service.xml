@@ -47,7 +47,7 @@
 		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity human-name="message boards category" local-service="true" name="MBCategory" remote-service="true" trash-enabled="true" uad-entity-type-description="A message board category" uuid="true">
+	<entity human-name="message boards category" local-service="true" name="MBCategory" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -242,7 +242,7 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity human-name="message-boards message" local-service="true" name="MBMessage" remote-service="true" trash-enabled="true" uad-entity-type-description="A message board message" uuid="true">
+	<entity human-name="message-boards message" local-service="true" name="MBMessage" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 

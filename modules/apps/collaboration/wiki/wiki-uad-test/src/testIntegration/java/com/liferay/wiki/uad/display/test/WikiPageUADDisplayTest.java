@@ -73,11 +73,6 @@ public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase {
 		return _uadDisplay;
 	}
 
-	@Override
-	protected String getTypeDescription() {
-		return "A wiki page";
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		_wikiPageUADTestHelper.cleanUpDependencies(_wikiPages);

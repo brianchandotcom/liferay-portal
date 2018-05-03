@@ -73,11 +73,6 @@ public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase {
 		return _uadDisplay;
 	}
 
-	@Override
-	protected String getTypeDescription() {
-		return "A wiki node";
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		_wikiNodeUADTestHelper.cleanUpDependencies(_wikiNodes);

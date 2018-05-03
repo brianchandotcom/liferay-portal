@@ -46,10 +46,6 @@ public abstract class BaseBookmarksEntryUADDisplay
 		return BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY;
 	}
 
-	public String getTypeDescription() {
-		return "A link to another page or website";
-	}
-
 	public String getTypeName(Locale locale) {
 		return "BookmarksEntry";
 	}

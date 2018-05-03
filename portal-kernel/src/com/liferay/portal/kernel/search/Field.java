@@ -87,6 +87,8 @@ public class Field implements Serializable {
 
 	public static final String DESCRIPTION = "description";
 
+	public static final String DISPLAY_DATE = "displayDate";
+
 	public static final String ENTRY_CLASS_NAME = "entryClassName";
 
 	public static final String ENTRY_CLASS_PK = "entryClassPK";

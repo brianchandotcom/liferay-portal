@@ -111,6 +111,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 		document.addText(
 			Field.CONTENT, HtmlUtil.extractText(blogsEntry.getContent()));
 		document.addText(Field.DESCRIPTION, blogsEntry.getDescription());
+		document.addDate(Field.DISPLAY_DATE, blogsEntry.getDisplayDate());
 		document.addDate(Field.MODIFIED_DATE, blogsEntry.getModifiedDate());
 		document.addText(Field.SUBTITLE, blogsEntry.getSubtitle());
 		document.addText(Field.TITLE, blogsEntry.getTitle());

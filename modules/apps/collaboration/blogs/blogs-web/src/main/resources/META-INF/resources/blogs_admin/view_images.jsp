@@ -17,20 +17,6 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-Folder attachmentsFolder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
-
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(BlogsPortletKeys.BLOGS_ADMIN, "images-display-style", "icon");
-}
-else {
-	portalPreferences.setValue(BlogsPortletKeys.BLOGS_ADMIN, "images-display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
-
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
@@ -46,53 +32,41 @@ if (delta > 0) {
 	portletURL.setParameter("delta", String.valueOf(delta));
 }
 
-PortletURL sortURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
 portletURL.setParameter("orderBycol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
 
 request.setAttribute("view_images.jsp-portletURL", portletURL);
 
-PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+SearchContainer blogImagesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found");
 
-if (cur > 0) {
-	displayStyleURL.setParameter("cur", String.valueOf(cur));
-}
+blogImagesSearchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType));
 
-String keywords = ParamUtil.getString(request, "keywords");
+blogImagesSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
+
+BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext(liferayPortletRequest);
+
+blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
+
+BlogImagesManagementToolbarDisplayContext blogImagesManagementToolbarDisplayContext = new BlogImagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
+
+String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionItems="<%= blogImagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	disabled="<%= blogImagesSearchContainer.getTotal() <= 0 %>"
+	filterItems="<%= blogImagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="images"
->
-	<c:if test="<%= Validator.isNull(keywords) %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-				portletURL="<%= displayStyleURL %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"title", "size"} %>'
-				portletURL="<%= sortURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-	</c:if>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteImages();" %>'
-			icon="times"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showCreationMenu="<%= false %>"
+	showInfoButton="<%= false %>"
+	sortingOrder="<%= blogImagesManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(blogImagesManagementToolbarDisplayContext.getSortingURL()) %>"
+	totalItems="<%= blogImagesSearchContainer.getTotal() %>"
+	viewTypes="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <div class="container-fluid-1280 main-content-body">
 	<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
@@ -104,59 +78,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		<liferay-ui:search-container
 			id="images"
-			orderByComparator="<%= DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType) %>"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer='<%= new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-images-were-found") %>'
+			searchContainer="<%= blogImagesSearchContainer %>"
 		>
-
-			<%
-			List<FileEntry> results = null;
-
-			if (Validator.isNull(keywords)) {
-				total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, attachmentsFolder.getFolderId());
-				results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, attachmentsFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
-			else {
-				SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-				searchContext.setEnd(searchContainer.getEnd());
-				searchContext.setFolderIds(new long[] {attachmentsFolder.getFolderId()});
-				searchContext.setStart(searchContainer.getStart());
-
-				Folder folder = DLAppLocalServiceUtil.getFolder(attachmentsFolder.getFolderId());
-
-				Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
-
-				total = hits.getLength();
-
-				Document[] docs = hits.getDocs();
-
-				results = new ArrayList<FileEntry>();
-
-				for (Document doc : docs) {
-					long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-
-					FileEntry fileEntry = null;
-
-					try {
-						fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-
-						results.add(fileEntry);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
-						}
-
-						continue;
-					}
-				}
-			}
-
-			searchContainer.setTotal(total);
-			searchContainer.setResults(results);
-			%>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.repository.model.FileEntry"
 				keyProperty="fileEntryId"
@@ -190,7 +113,3 @@ String keywords = ParamUtil.getString(request, "keywords");
 		}
 	}
 </aui:script>
-
-<%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_blogs_web.blogs_admin.view_images_jsp");
-%>

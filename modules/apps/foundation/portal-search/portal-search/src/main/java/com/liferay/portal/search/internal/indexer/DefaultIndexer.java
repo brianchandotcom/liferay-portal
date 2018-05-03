@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerPermissionPostFilter;
-import com.liferay.portal.search.indexer.IndexerQueryBuilder;
 import com.liferay.portal.search.indexer.IndexerSearcher;
 import com.liferay.portal.search.indexer.IndexerSummaryBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
@@ -57,7 +56,7 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 		IndexerDocumentBuilder indexerDocumentBuilder,
 		IndexerSearcher indexerSearcher, IndexerWriter<T> indexerWriter,
 		IndexerPermissionPostFilter indexerPermissionPostFilter,
-		IndexerQueryBuilder indexerQueryBuilder,
+		IndexerQueryBuilderImpl indexerQueryBuilderImpl,
 		IndexerSummaryBuilder indexerSummaryBuilder,
 		IndexerPostProcessorsHolder indexerPostProcessorsHolder) {
 
@@ -66,7 +65,7 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 		_indexerSearcher = indexerSearcher;
 		_indexerWriter = indexerWriter;
 		_indexerPermissionPostFilter = indexerPermissionPostFilter;
-		_indexerQueryBuilder = indexerQueryBuilder;
+		_indexerQueryBuilderImpl = indexerQueryBuilderImpl;
 		_indexerSummaryBuilder = indexerSummaryBuilder;
 		_indexerPostProcessorsHolder = indexerPostProcessorsHolder;
 	}
@@ -123,7 +122,7 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	public BooleanQuery getFullQuery(SearchContext searchContext)
 		throws SearchException {
 
-		return _indexerQueryBuilder.getQuery(searchContext);
+		return _indexerQueryBuilderImpl.getQuery(searchContext);
 	}
 
 	@Override
@@ -240,6 +239,9 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
+
+		_indexerQueryBuilderImpl.addPreFiltersFromModel(
+			contextBooleanFilter, _modelSearchSettings, searchContext);
 	}
 
 	@Override
@@ -253,6 +255,9 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
 			SearchContext searchContext)
 		throws Exception {
+
+		_indexerQueryBuilderImpl.addSearchTermsFromModel(
+			searchQuery, searchContext);
 	}
 
 	@Override
@@ -337,7 +342,7 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 	private final IndexerDocumentBuilder _indexerDocumentBuilder;
 	private final IndexerPermissionPostFilter _indexerPermissionPostFilter;
 	private final IndexerPostProcessorsHolder _indexerPostProcessorsHolder;
-	private final IndexerQueryBuilder _indexerQueryBuilder;
+	private final IndexerQueryBuilderImpl _indexerQueryBuilderImpl;
 	private final IndexerSearcher _indexerSearcher;
 	private final IndexerSummaryBuilder _indexerSummaryBuilder;
 	private final IndexerWriter<T> _indexerWriter;

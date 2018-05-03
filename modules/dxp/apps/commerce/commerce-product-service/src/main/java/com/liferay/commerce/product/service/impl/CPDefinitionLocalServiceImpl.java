@@ -1437,32 +1437,41 @@ public class CPDefinitionLocalServiceImpl
 			}
 		}
 
-		for (Map.Entry<Locale, String> entry : metaTitleMap.entrySet()) {
-			CPDefinitionMetaTitleException cpDefinitionMetaTitleException =
-				CPDefinitionImpl.validateMetaTitle(entry.getValue());
+		if (metaTitleMap != null) {
+			for (Map.Entry<Locale, String> entry : metaTitleMap.entrySet()) {
+				CPDefinitionMetaTitleException cpDefinitionMetaTitleException =
+					CPDefinitionImpl.validateMetaTitle(entry.getValue());
 
-			if (cpDefinitionMetaTitleException != null) {
-				throw cpDefinitionMetaTitleException;
+				if (cpDefinitionMetaTitleException != null) {
+					throw cpDefinitionMetaTitleException;
+				}
 			}
 		}
 
-		for (Map.Entry<Locale, String> entry : metaKeywordsMap.entrySet()) {
-			CPDefinitionMetaKeywordsException
-				cpDefinitionMetaKeywordsException =
-					CPDefinitionImpl.validateMetaKeyword(entry.getValue());
+		if (metaKeywordsMap != null) {
+			for (Map.Entry<Locale, String> entry : metaKeywordsMap.entrySet()) {
+				CPDefinitionMetaKeywordsException
+					cpDefinitionMetaKeywordsException =
+						CPDefinitionImpl.validateMetaKeyword(entry.getValue());
 
-			if (cpDefinitionMetaKeywordsException != null) {
-				throw cpDefinitionMetaKeywordsException;
+				if (cpDefinitionMetaKeywordsException != null) {
+					throw cpDefinitionMetaKeywordsException;
+				}
 			}
 		}
 
-		for (Map.Entry<Locale, String> entry : metaDescriptionMap.entrySet()) {
-			CPDefinitionMetaDescriptionException
-				cpDefinitionMetaDescriptionException =
-					CPDefinitionImpl.validateMetaDescription(entry.getValue());
+		if (metaDescriptionMap != null) {
+			for (Map.Entry<Locale, String> entry :
+					metaDescriptionMap.entrySet()) {
 
-			if (cpDefinitionMetaDescriptionException != null) {
-				throw cpDefinitionMetaDescriptionException;
+				CPDefinitionMetaDescriptionException
+					cpDefinitionMetaDescriptionException =
+						CPDefinitionImpl.validateMetaDescription(
+							entry.getValue());
+
+				if (cpDefinitionMetaDescriptionException != null) {
+					throw cpDefinitionMetaDescriptionException;
+				}
 			}
 		}
 

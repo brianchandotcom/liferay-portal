@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -97,7 +98,13 @@ public class UADAnonymizerHelper {
 		boolean sendEmail = false;
 		ServiceContext serviceContext = null;
 
-		String screenName = firstName + String.valueOf(companyId);
+		String counterName = "AnonymousUser" + String.valueOf(companyId);
+
+		long uniqueId = _counterLocalService.increment(counterName);
+
+		String screenName = StringBundler.concat(
+			firstName, String.valueOf(companyId), StringPool.UNDERLINE,
+			String.valueOf(uniqueId));
 
 		Company company = _companyLocalService.getCompany(companyId);
 
@@ -169,6 +176,9 @@ public class UADAnonymizerHelper {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

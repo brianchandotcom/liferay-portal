@@ -21,14 +21,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskManagerUtil;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -78,19 +76,14 @@ public class UADApplicationExportHelper {
 		return null;
 	}
 
-	public List<String> getApplicationNames() {
-		Collection<UADAggregator> uadAggregators =
-			_uadRegistry.getUADAggregators();
+	public Stream<String> getApplicationNames() {
+		Stream<UADDisplay> uadDisplayStream =
+			_uadRegistry.getUADDisplayStream();
 
-		Stream<UADAggregator> uadAggregatorStream = uadAggregators.stream();
-
-		return uadAggregatorStream.map(
-			UADAggregator::getApplicationName
+		return uadDisplayStream.map(
+			UADDisplay::getApplicationName
 		).distinct(
-		).sorted(
-		).collect(
-			Collectors.toList()
-		);
+		).sorted();
 	}
 
 	public List<UADExporter> getApplicationUADExporters(
@@ -128,9 +121,7 @@ public class UADApplicationExportHelper {
 	public List<UADApplicationExportDisplay> getUADApplicationExportDisplays(
 		long groupId, long userId) {
 
-		List<String> applicationNames = getApplicationNames();
-
-		Stream<String> applicationNameStream = applicationNames.stream();
+		Stream<String> applicationNameStream = getApplicationNames();
 
 		return applicationNameStream.map(
 			applicationName ->

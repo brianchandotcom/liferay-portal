@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
@@ -92,11 +91,6 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 	}
 
 	@Override
-	protected UADAggregator getUADAggregator() {
-		return _uadAggregator;
-	}
-
-	@Override
 	protected UADAnonymizer getUADAnonymizer() {
 		return _uadAnonymizer;
 	}
@@ -134,9 +128,6 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 	private WikiNodeLocalService _wikiNodeLocalService;
 	@Inject
 	private WikiNodeUADTestHelper _wikiNodeUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE)
-	private UADAggregator _uadAggregator;
 	@Inject(filter = "model.class.name=" +
 	WikiUADConstants.CLASS_NAME_WIKI_NODE)
 	private UADAnonymizer _uadAnonymizer;

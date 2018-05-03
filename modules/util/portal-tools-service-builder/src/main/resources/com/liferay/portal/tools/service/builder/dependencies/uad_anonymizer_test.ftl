@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADAggregator;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
@@ -76,11 +75,6 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<$
 	}
 
 	@Override
-	protected UADAggregator getUADAggregator() {
-		return _uadAggregator;
-	}
-
-	@Override
 	protected UADAnonymizer getUADAnonymizer() {
 		return _uadAnonymizer;
 	}
@@ -136,11 +130,6 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<$
 
 	@Inject
 	private ${entity.name}UADTestHelper _${entity.varName}UADTestHelper;
-
-	@Inject(
-		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}
-	)
-	private UADAggregator _uadAggregator;
 
 	@Inject(
 		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}

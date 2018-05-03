@@ -33,6 +33,8 @@ public interface UADAnonymizer<T> {
 	public void autoAnonymizeAll(long userId, User anonymousUser)
 		throws PortalException;
 
+	public long count(long userId) throws PortalException;
+
 	public void delete(T t) throws PortalException;
 
 	public void deleteAll(long userId) throws PortalException;

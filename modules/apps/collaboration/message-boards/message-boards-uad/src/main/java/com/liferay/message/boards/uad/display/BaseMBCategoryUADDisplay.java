@@ -15,10 +15,19 @@
 package com.liferay.message.boards.uad.display;
 
 import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.uad.constants.MBUADConstants;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
 
+import org.osgi.service.component.annotations.Reference;
+
+import java.io.Serializable;
+
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -34,21 +43,23 @@ import java.util.Locale;
  * @generated
  */
 public abstract class BaseMBCategoryUADDisplay extends BaseModelUADDisplay<MBCategory> {
+	@Override
+	public MBCategory get(Serializable primaryKey) throws PortalException {
+		return mbCategoryLocalService.getMBCategory(Long.valueOf(
+				primaryKey.toString()));
+	}
+
+	@Override
 	public String getApplicationName() {
 		return MBUADConstants.APPLICATION_NAME;
 	}
 
-	/**
-	 * Returns an ordered string array of the fields' names to be displayed.
-	 * Each field name corresponds to a table column based on the order they are
-	 * specified.
-	 *
-	 * @return the array of field names to display
-	 */
+	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "name", "description" };
 	}
 
+	@Override
 	public String getKey() {
 		return MBUADConstants.CLASS_NAME_MB_CATEGORY;
 	}
@@ -57,4 +68,28 @@ public abstract class BaseMBCategoryUADDisplay extends BaseModelUADDisplay<MBCat
 	public String getTypeName(Locale locale) {
 		return "MBCategory";
 	}
+
+	@Override
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return mbCategoryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	@Override
+	protected DynamicQuery doGetDynamicQuery() {
+		return mbCategoryLocalService.dynamicQuery();
+	}
+
+	@Override
+	protected List<MBCategory> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return mbCategoryLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return MBUADConstants.USER_ID_FIELD_NAMES_MB_CATEGORY;
+	}
+
+	@Reference
+	protected MBCategoryLocalService mbCategoryLocalService;
 }

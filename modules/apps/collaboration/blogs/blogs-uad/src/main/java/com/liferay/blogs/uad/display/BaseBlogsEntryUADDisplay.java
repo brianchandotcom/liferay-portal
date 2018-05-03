@@ -15,10 +15,19 @@
 package com.liferay.blogs.uad.display;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.uad.constants.BlogsUADConstants;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
 
+import org.osgi.service.component.annotations.Reference;
+
+import java.io.Serializable;
+
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -34,17 +43,18 @@ import java.util.Locale;
  * @generated
  */
 public abstract class BaseBlogsEntryUADDisplay extends BaseModelUADDisplay<BlogsEntry> {
+	@Override
+	public BlogsEntry get(Serializable primaryKey) throws PortalException {
+		return blogsEntryLocalService.getBlogsEntry(Long.valueOf(
+				primaryKey.toString()));
+	}
+
+	@Override
 	public String getApplicationName() {
 		return BlogsUADConstants.APPLICATION_NAME;
 	}
 
-	/**
-	 * Returns an ordered string array of the fields' names to be displayed.
-	 * Each field name corresponds to a table column based on the order they are
-	 * specified.
-	 *
-	 * @return the array of field names to display
-	 */
+	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] {
 			"title", "subtitle", "urlTitle", "description", "content",
@@ -52,6 +62,7 @@ public abstract class BaseBlogsEntryUADDisplay extends BaseModelUADDisplay<Blogs
 		};
 	}
 
+	@Override
 	public String getKey() {
 		return BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY;
 	}
@@ -60,4 +71,28 @@ public abstract class BaseBlogsEntryUADDisplay extends BaseModelUADDisplay<Blogs
 	public String getTypeName(Locale locale) {
 		return "BlogsEntry";
 	}
+
+	@Override
+	protected long doCount(DynamicQuery dynamicQuery) {
+		return blogsEntryLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	@Override
+	protected DynamicQuery doGetDynamicQuery() {
+		return blogsEntryLocalService.dynamicQuery();
+	}
+
+	@Override
+	protected List<BlogsEntry> doGetRange(DynamicQuery dynamicQuery, int start,
+		int end) {
+		return blogsEntryLocalService.dynamicQuery(dynamicQuery, start, end);
+	}
+
+	@Override
+	protected String[] doGetUserIdFieldNames() {
+		return BlogsUADConstants.USER_ID_FIELD_NAMES_BLOGS_ENTRY;
+	}
+
+	@Reference
+	protected BlogsEntryLocalService blogsEntryLocalService;
 }

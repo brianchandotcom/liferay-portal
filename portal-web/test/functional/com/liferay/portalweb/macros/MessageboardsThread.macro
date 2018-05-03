@@ -335,8 +335,12 @@
 	</command>
 
 	<command name="cancelEdit">
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Edit" />
+		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS">
+			<var name="key_threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
 		</execute>
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubjectEdit}" />
@@ -419,8 +423,12 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-			<var name="menuItem" value="Edit" />
+		<execute function="Click" locator1="MessageBoards#VERTICAL_ELLIPSIS">
+			<var name="key_threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
 		</execute>
 
 		<if>

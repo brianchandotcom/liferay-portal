@@ -47,27 +47,50 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
 	}
 
-	private int _adjustCount(int count, String varName, List<String> parts) {
-		int max = 0;
-		int total = 0;
+	private int _addCountForStatements(
+		int count, String s, String varName, String start,
+		String nextStatementString, int level) {
 
-		for (String part : parts) {
-			if (part.contains(varName + ".append(") &&
-				part.contains("return")) {
-
-				return -1;
-			}
-
-			int i = StringUtil.count(part, varName + ".append(");
-
-			total += i;
-
-			if (i > max) {
-				max = i;
-			}
+		if (count == -1) {
+			return count;
 		}
 
-		return count - (total - max);
+		int x = -1;
+
+		while (true) {
+			x = s.indexOf(start, x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			if (getLevel(s.substring(0, x), "{", "}") != level) {
+				continue;
+			}
+
+			List<String> parts = _getStatementParts(
+				s.substring(x), nextStatementString);
+
+			int maxCount = 0;
+
+			for (String part : parts) {
+				if (part.contains(varName + ".append(") &&
+					part.contains("return")) {
+
+					return -1;
+				}
+
+				int partCount = _getCount(part, varName, 1);
+
+				if (partCount > maxCount) {
+					maxCount = partCount;
+				}
+			}
+
+			count += maxCount;
+		}
+
+		return count;
 	}
 
 	private String _fixInitialCapacity(String content) {
@@ -109,7 +132,7 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			int count = _getCount(s, varName);
+			int count = _getCount(s, varName, 0);
 
 			if (count == -1) {
 				continue;
@@ -130,38 +153,38 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 		return content;
 	}
 
-	private int _getCount(String s, String varName) {
-		int count = StringUtil.count(s, varName + ".append(");
+	private int _getCount(String s, String varName, int level) {
+		int count = 0;
 
 		int x = -1;
 
 		while (true) {
-			int y = s.indexOf("\tif (", x + 1);
-			int z = s.indexOf("\ttry {", x + 1);
+			x = s.indexOf(varName + ".append(", x + 1);
 
-			if ((y != -1) && ((z == -1) || (z > y))) {
-				count = _adjustCount(
-					count, varName, _getIfElseStatementParts(s.substring(y)));
-
-				x = y;
-			}
-			else if (z != -1) {
-				count = _adjustCount(
-					count, varName, _getTryCatchStatementParts(s.substring(z)));
-
-				x = z;
-			}
-			else {
-				return count;
+			if (x == -1) {
+				break;
 			}
 
-			if (count == -1) {
-				return count;
+			if (!ToolsUtil.isInsideQuotes(s, x) &&
+				(getLevel(s.substring(0, x), "{", "}") == level)) {
+
+				count++;
 			}
 		}
+
+		count = _addCountForStatements(
+			count, s, varName, "\tif (", "else ", level);
+		count = _addCountForStatements(
+			count, s, varName, "\ttry {", "catch ", level);
+		count = _addCountForStatements(
+			count, s, varName, " -> {\n", null, level);
+
+		return count;
 	}
 
-	private List<String> _getIfElseStatementParts(String s) {
+	private List<String> _getStatementParts(
+		String s, String nextStatementString) {
+
 		List<String> parts = new ArrayList<>();
 
 		int x = -1;
@@ -187,41 +210,9 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 
 			s = StringUtil.trim(s.substring(x + 1));
 
-			if (!s.startsWith("else ")) {
-				return parts;
-			}
+			if ((nextStatementString == null) ||
+				!s.startsWith(nextStatementString)) {
 
-			x = -1;
-		}
-	}
-
-	private List<String> _getTryCatchStatementParts(String s) {
-		List<String> parts = new ArrayList<>();
-
-		int x = -1;
-
-		while (true) {
-			x = s.indexOf("}", x + 1);
-
-			if (x == -1) {
-				return parts;
-			}
-
-			if (ToolsUtil.isInsideQuotes(s, x)) {
-				continue;
-			}
-
-			String part = s.substring(0, x + 1);
-
-			if (getLevel(part, "{", "}") != 0) {
-				continue;
-			}
-
-			parts.add(part);
-
-			s = StringUtil.trim(s.substring(x + 1));
-
-			if (!s.startsWith("catch ")) {
 				return parts;
 			}
 

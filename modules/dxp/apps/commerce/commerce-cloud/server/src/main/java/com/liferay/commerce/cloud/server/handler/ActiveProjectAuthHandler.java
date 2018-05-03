@@ -16,68 +16,26 @@ package com.liferay.commerce.cloud.server.handler;
 
 import com.liferay.commerce.cloud.server.constants.WebKeys;
 import com.liferay.commerce.cloud.server.model.Project;
-import com.liferay.commerce.cloud.server.service.ProjectService;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 
-import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.serviceproxy.ServiceException;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class ActiveProjectAuthHandler implements Handler<RoutingContext> {
 
-	public ActiveProjectAuthHandler(ProjectService projectService) {
-		_projectService = projectService;
-	}
-
 	@Override
 	public void handle(RoutingContext routingContext) {
-		String projectId = routingContext.pathParam("projectId");
+		Project project = routingContext.get(WebKeys.PROJECT);
 
-		if (projectId == null) {
+		if (project == null) {
 			routingContext.fail(HttpResponseStatus.BAD_REQUEST.code());
 
 			return;
 		}
-
-		_projectService.getProject(
-			projectId,
-			asyncResult -> _handleGetProject(asyncResult, routingContext));
-	}
-
-	private void _handleGetProject(
-		AsyncResult<Project> asyncResult, RoutingContext routingContext) {
-
-		if (asyncResult.failed()) {
-			Throwable t = asyncResult.cause();
-
-			if (t instanceof ServiceException) {
-				ServiceException serviceException = (ServiceException)t;
-
-				int statusCode = serviceException.failureCode();
-
-				if (statusCode == HttpResponseStatus.NOT_FOUND.code()) {
-					statusCode = HttpResponseStatus.UNAUTHORIZED.code();
-				}
-				else {
-					statusCode =
-						HttpResponseStatus.INTERNAL_SERVER_ERROR.code();
-				}
-
-				routingContext.fail(statusCode);
-			}
-			else {
-				routingContext.fail(t);
-			}
-
-			return;
-		}
-
-		Project project = asyncResult.result();
 
 		if (!project.isActive()) {
 			routingContext.fail(HttpResponseStatus.UNAUTHORIZED.code());
@@ -85,11 +43,7 @@ public class ActiveProjectAuthHandler implements Handler<RoutingContext> {
 			return;
 		}
 
-		routingContext.put(WebKeys.PROJECT, project);
-
 		routingContext.next();
 	}
-
-	private final ProjectService _projectService;
 
 }

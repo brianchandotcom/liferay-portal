@@ -19,6 +19,7 @@ import io.vertx.core.json.JsonObject;
 import java.math.BigDecimal;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -27,7 +28,10 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Andrea Di Giorgi
@@ -73,6 +77,14 @@ public class EleflowUtil {
 		return bigDecimal.intValue();
 	}
 
+	public static long getLong(String s) {
+		if ((s == null) || s.isEmpty()) {
+			return 0;
+		}
+
+		return Long.parseLong(s);
+	}
+
 	public static OffsetDateTime getOffsetDateTime(long time) {
 		Instant instant = Instant.ofEpochMilli(time);
 
@@ -86,6 +98,27 @@ public class EleflowUtil {
 
 	public static String getString(BigDecimal bigDecimal) {
 		return bigDecimal.toPlainString();
+	}
+
+	public static long getTime(LocalDate localDate) {
+		return TimeUnit.DAYS.toMillis(localDate.toEpochDay());
+	}
+
+	public static long getTime(String dateString) {
+		LocalDate localDate = LocalDate.parse(
+			dateString, DateTimeFormatter.ISO_LOCAL_DATE);
+
+		return getTime(localDate);
+	}
+
+	public static <T, R> List<R> map(List<T> values, Function<T, R> function) {
+		Stream<T> stream = values.stream();
+
+		return stream.map(
+			function
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public static <D extends Enum<D>, E extends Enum<E>> E toEleflow(

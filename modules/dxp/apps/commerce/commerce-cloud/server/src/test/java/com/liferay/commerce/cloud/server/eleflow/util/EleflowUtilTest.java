@@ -23,6 +23,8 @@ import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Level;
 import com.liferay.commerce.cloud.server.model.ForecastPeriod;
 import com.liferay.commerce.cloud.server.model.ForecastTarget;
 
+import java.time.LocalDate;
+
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -45,6 +47,13 @@ public class EleflowUtilTest {
 	public void testGetDateString() {
 		Assert.assertEquals(
 			"1982-01-08", EleflowUtil.getDateString(379296000000L));
+	}
+
+	@Test
+	public void testGetTime() {
+		Assert.assertEquals(379296000000L, EleflowUtil.getTime("1982-01-08"));
+		Assert.assertEquals(
+			379296000000L, EleflowUtil.getTime(LocalDate.of(1982, 1, 8)));
 	}
 
 	@Test

@@ -15,6 +15,7 @@
 package com.liferay.commerce.cloud.server.eleflow;
 
 import com.liferay.commerce.cloud.server.BaseServiceVerticle;
+import com.liferay.commerce.cloud.server.eleflow.handler.EleflowForecastCallbackHandler;
 import com.liferay.commerce.cloud.server.eleflow.service.impl.EleflowForecastConfigurationServiceImpl;
 import com.liferay.commerce.cloud.server.eleflow.util.EleflowUtil;
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
@@ -65,7 +66,7 @@ public class EleflowForecastConfigurationServiceVerticle
 
 		sb.append("https://");
 		sb.append(CommerceCloudUtil.getHost(configJsonObject));
-		sb.append("/projects/:projectId/forecast/callback");
+		sb.append(EleflowForecastCallbackHandler.PATH);
 
 		return sb.toString();
 	}

@@ -15,12 +15,16 @@
 package com.liferay.commerce.cloud.server;
 
 import com.liferay.commerce.cloud.server.constants.ContentTypes;
+import com.liferay.commerce.cloud.server.eleflow.handler.EleflowForecastCallbackHandler;
 import com.liferay.commerce.cloud.server.handler.ActiveProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.GetForecastConfigurationHandler;
 import com.liferay.commerce.cloud.server.handler.PostForecastOrdersHandler;
+import com.liferay.commerce.cloud.server.handler.ProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.PutForecastConfigurationHandler;
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
+import com.liferay.commerce.cloud.server.service.ForecastProcessorService;
+import com.liferay.commerce.cloud.server.service.ForecastService;
 import com.liferay.commerce.cloud.server.service.ProjectService;
 import com.liferay.commerce.cloud.server.util.CommerceCloudUtil;
 
@@ -62,11 +66,30 @@ public class HttpServerVerticle extends AbstractVerticle {
 		);
 	}
 
+	private void _addRouteEleflowForecastCallback(
+		Router router, ProjectAuthHandler projectAuthHandler,
+		ForecastProcessorService forecastProcessorService,
+		ForecastService forecastService) {
+
+		Route route = router.post(EleflowForecastCallbackHandler.PATH);
+
+		route.handler(BodyHandler.create());
+
+		route.handler(projectAuthHandler);
+
+		route.handler(
+			new EleflowForecastCallbackHandler(
+				forecastProcessorService, forecastService));
+	}
+
 	private void _addRouteGetForecastConfiguration(
-		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
+		Router router, ProjectAuthHandler projectAuthHandler,
+		ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastConfigurationService forecastConfigurationService) {
 
 		Route route = router.get(GetForecastConfigurationHandler.PATH);
+
+		route.handler(projectAuthHandler);
 
 		route.handler(activeProjectAuthHandler);
 
@@ -77,12 +100,15 @@ public class HttpServerVerticle extends AbstractVerticle {
 	}
 
 	private void _addRoutePostOrders(
-		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
+		Router router, ProjectAuthHandler projectAuthHandler,
+		ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastOrderService forecastOrderService) {
 
 		Route route = router.post(PostForecastOrdersHandler.PATH);
 
 		route.handler(BodyHandler.create());
+
+		route.handler(projectAuthHandler);
 
 		route.handler(activeProjectAuthHandler);
 
@@ -92,12 +118,15 @@ public class HttpServerVerticle extends AbstractVerticle {
 	}
 
 	private void _addRoutePutForecastConfiguration(
-		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
+		Router router, ProjectAuthHandler projectAuthHandler,
+		ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastConfigurationService forecastConfigurationService) {
 
 		Route route = router.put(PutForecastConfigurationHandler.PATH);
 
 		route.handler(BodyHandler.create());
+
+		route.handler(projectAuthHandler);
 
 		route.handler(activeProjectAuthHandler);
 
@@ -118,17 +147,30 @@ public class HttpServerVerticle extends AbstractVerticle {
 			ForecastConfigurationService.createProxy(vertx);
 		ForecastOrderService forecastOrderService =
 			ForecastOrderService.createProxy(vertx);
+		ForecastProcessorService forecastProcessorService =
+			ForecastProcessorService.createProxy(vertx);
+		ForecastService forecastService = ForecastService.createProxy(vertx);
 		ProjectService projectService = ProjectService.createProxy(vertx);
 
+		ProjectAuthHandler projectAuthHandler = new ProjectAuthHandler(
+			projectService);
+
+		_addRouteEleflowForecastCallback(
+			router, projectAuthHandler, forecastProcessorService,
+			forecastService);
+
 		ActiveProjectAuthHandler activeProjectAuthHandler =
-			new ActiveProjectAuthHandler(projectService);
+			new ActiveProjectAuthHandler();
 
 		_addRouteGetForecastConfiguration(
-			router, activeProjectAuthHandler, forecastConfigurationService);
+			router, projectAuthHandler, activeProjectAuthHandler,
+			forecastConfigurationService);
 		_addRoutePostOrders(
-			router, activeProjectAuthHandler, forecastOrderService);
+			router, projectAuthHandler, activeProjectAuthHandler,
+			forecastOrderService);
 		_addRoutePutForecastConfiguration(
-			router, activeProjectAuthHandler, forecastConfigurationService);
+			router, projectAuthHandler, activeProjectAuthHandler,
+			forecastConfigurationService);
 
 		httpServer.requestHandler(router::accept);
 

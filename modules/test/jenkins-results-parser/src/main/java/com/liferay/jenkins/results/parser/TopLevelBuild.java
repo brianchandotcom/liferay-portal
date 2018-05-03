@@ -31,7 +31,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -1230,7 +1229,8 @@ public class TopLevelBuild extends BaseBuild {
 
 		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
 
-		if (Objects.equals(ciTestSuite, "default")) {
+		if ((ciTestSuite != null) && !ciTestSuite.isEmpty() &&
+			!ciTestSuite.equals("default")) {
 			testSuiteName = JenkinsResultsParserUtil.combine(
 				testSuiteName, ":", ciTestSuite);
 		}

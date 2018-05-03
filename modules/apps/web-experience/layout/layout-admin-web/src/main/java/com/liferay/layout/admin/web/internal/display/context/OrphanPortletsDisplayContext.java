@@ -139,7 +139,7 @@ public class OrphanPortletsDisplayContext {
 		List<PortletPreferences> portletPreferences =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, getSelPlid());
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
 		for (PortletPreferences portletPreference : portletPreferences) {
 			String portletId = portletPreference.getPortletId();

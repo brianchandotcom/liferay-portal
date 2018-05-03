@@ -104,13 +104,13 @@ public class DLAdminDisplayContext {
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			liferayPortletRequest);
+
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = _themeDisplay.getPermissionChecker();
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			liferayPortletRequest);
 
 		_computeFolder();
 		_computeRootFolder();

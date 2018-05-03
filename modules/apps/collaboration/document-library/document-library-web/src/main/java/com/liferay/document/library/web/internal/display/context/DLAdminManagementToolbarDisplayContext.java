@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -57,7 +56,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,8 +74,6 @@ public class DLAdminManagementToolbarDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
 
-		_currentURLObj = PortletURLUtil.getCurrent(
-			liferayPortletRequest, liferayPortletResponse);
 		_request = liferayPortletRequest.getHttpServletRequest();
 
 		_dlRequestHelper = new DLRequestHelper(_request);
@@ -85,11 +81,11 @@ public class DLAdminManagementToolbarDisplayContext {
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		_dlTrashUtil = (DLTrashUtil)_request.getAttribute(
 			DLWebKeys.DOCUMENT_LIBRARY_TRASH_UTIL);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -247,13 +243,6 @@ public class DLAdminManagementToolbarDisplayContext {
 		return creationMenu;
 	}
 
-	public String[] getDisplayViews() {
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_dlRequestHelper.getDLPortletInstanceSettings();
-
-		return dlPortletInstanceSettings.getDisplayViews();
-	}
-
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -406,15 +395,15 @@ public class DLAdminManagementToolbarDisplayContext {
 
 		return new ViewTypeItemList(displayStyleURL, _getDisplayStyle()) {
 			{
-				if (ArrayUtil.contains(getDisplayViews(), "icon")) {
+				if (ArrayUtil.contains(_getDisplayViews(), "icon")) {
 					addCardViewTypeItem();
 				}
 
-				if (ArrayUtil.contains(getDisplayViews(), "descriptive")) {
+				if (ArrayUtil.contains(_getDisplayViews(), "descriptive")) {
 					addListViewTypeItem();
 				}
 
-				if (ArrayUtil.contains(getDisplayViews(), "list")) {
+				if (ArrayUtil.contains(_getDisplayViews(), "list")) {
 					addTableViewTypeItem();
 				}
 			}
@@ -454,18 +443,15 @@ public class DLAdminManagementToolbarDisplayContext {
 		return false;
 	}
 
-	private PortletURL _clonePortletURL() {
-		try {
-			return PortletURLUtil.clone(
-				_currentURLObj, _liferayPortletResponse);
-		}
-		catch (PortletException pe) {
-			throw new RuntimeException(pe);
-		}
-	}
-
 	private String _getDisplayStyle() {
 		return _dlAdminDisplayContext.getDisplayStyle();
+	}
+
+	private String[] _getDisplayViews() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		return dlPortletInstanceSettings.getDisplayViews();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -480,6 +466,11 @@ public class DLAdminManagementToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
+						dropdownItem.setActive(
+							(navigation.equals("home")) &&
+							(folderId == rootFolderId) &&
+							(fileEntryTypeId == -1));
+
 						PortletURL viewDocumentsHomeURL =
 							_liferayPortletResponse.createRenderURL();
 
@@ -489,15 +480,14 @@ public class DLAdminManagementToolbarDisplayContext {
 							"folderId", String.valueOf(rootFolderId));
 
 						dropdownItem.setHref(viewDocumentsHomeURL);
-						dropdownItem.setActive(
-							(navigation.equals("home")) &&
-							(folderId == rootFolderId) &&
-							(fileEntryTypeId == -1));
+
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "all"));
 					});
 				add(
 					dropdownItem -> {
+						dropdownItem.setActive(navigation.equals("recent"));
+
 						PortletURL viewRecentDocumentsURL =
 							_liferayPortletResponse.createRenderURL();
 
@@ -509,7 +499,7 @@ public class DLAdminManagementToolbarDisplayContext {
 							"folderId", String.valueOf(rootFolderId));
 
 						dropdownItem.setHref(viewRecentDocumentsURL);
-						dropdownItem.setActive(navigation.equals("recent"));
+
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "recent"));
 					});
@@ -517,6 +507,8 @@ public class DLAdminManagementToolbarDisplayContext {
 				if (_themeDisplay.isSignedIn()) {
 					add(
 						dropdownItem -> {
+							dropdownItem.setActive(navigation.equals("mine"));
+
 							PortletURL viewMyDocumentsURL =
 								_liferayPortletResponse.createRenderURL();
 
@@ -529,7 +521,7 @@ public class DLAdminManagementToolbarDisplayContext {
 								"folderId", String.valueOf(rootFolderId));
 
 							dropdownItem.setHref(viewMyDocumentsURL);
-							dropdownItem.setActive(navigation.equals("mine"));
+
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "mine"));
 						});
@@ -539,6 +531,11 @@ public class DLAdminManagementToolbarDisplayContext {
 					SafeConsumer.ignore(
 						dropdownItem -> {
 							dropdownItem.setActive(fileEntryTypeId != -1);
+
+							dropdownItem.setHref(
+								"javascript:" +
+									_liferayPortletResponse.getNamespace() +
+										"openDocumentTypesSelector();");
 
 							String label = LanguageUtil.get(
 								_request, "document-types");
@@ -564,10 +561,6 @@ public class DLAdminManagementToolbarDisplayContext {
 							}
 
 							dropdownItem.setLabel(label);
-							dropdownItem.setHref(
-								"javascript:" +
-									_liferayPortletResponse.getNamespace() +
-										"openDocumentTypesSelector();");
 						}));
 			}
 		};
@@ -641,7 +634,6 @@ public class DLAdminManagementToolbarDisplayContext {
 		return _dlAdminDisplayContext.isSearch();
 	}
 
-	private final PortletURL _currentURLObj;
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;

@@ -99,8 +99,6 @@ public class DBInspector {
 				return false;
 			}
 
-			int expectedColumnDataType = _getColumnDataType(
-				tableClass, columnName);
 			int expectedColumnSize = _getColumnSize(columnType);
 			boolean expectedColumnNullable = _isColumnNullable(columnType);
 
@@ -113,6 +111,9 @@ public class DBInspector {
 
 				return false;
 			}
+
+			int expectedColumnDataType = _getColumnDataType(
+				tableClass, columnName);
 
 			if (actualColumnDataType != expectedColumnDataType) {
 				return false;

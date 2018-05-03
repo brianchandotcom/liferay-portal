@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.display.context.DLAdminDisplayContext;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -46,26 +45,29 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alejandro Tardín
  */
-public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
+public class DLAdminNavigationDisplayContext {
 
-	public DefaultDLAdminDisplayContext(
+	public DLAdminNavigationDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_currentURLObj = currentURLObj;
+
+		_currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+		_request = liferayPortletRequest.getHttpServletRequest();
+
+		_dlRequestHelper = new DLRequestHelper(_request);
+
+		_themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
-	@Override
 	public List<NavigationItem> getNavigationItems() {
 		String mvcRenderCommandName = ParamUtil.getString(
 			_liferayPortletRequest, "mvcRenderCommandName",
 			"/document_library/view");
-
-		DLRequestHelper dlRequestHelper = new DLRequestHelper(
-			_liferayPortletRequest.getHttpServletRequest());
 
 		return new NavigationItemList() {
 			{
@@ -76,7 +78,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 					});
 
 				if (DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
-						dlRequestHelper.getPortletName())) {
+						_dlRequestHelper.getPortletName())) {
 
 					add(
 						navigationItem -> {
@@ -85,7 +87,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 						});
 
 					add(
-						DefaultDLAdminDisplayContext.this
+						DLAdminNavigationDisplayContext.this
 							::_populateMetadataSetsNavigationItem);
 				}
 			}
@@ -108,10 +110,6 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
 	}
 
-	private ThemeDisplay _getThemeDisplay(HttpServletRequest request) {
-		return (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-	}
-
 	private void _populateDocumentLibraryNavigationItem(
 		NavigationItem navigationItem, String mvcRenderCommandName) {
 
@@ -119,7 +117,8 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 			!mvcRenderCommandName.equals(
 				"/document_library/view_file_entry_types"));
 
-		PortletURL viewDocumentLibraryURL = _clonePortletURL();
+		PortletURL viewDocumentLibraryURL =
+			_liferayPortletResponse.createRenderURL();
 
 		viewDocumentLibraryURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view");
@@ -161,10 +160,7 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 		navigationItem.setActive(false);
 
-		ThemeDisplay themeDisplay = _getThemeDisplay(
-			_liferayPortletRequest.getHttpServletRequest());
-
-		Portlet portlet = _getPortlet(themeDisplay);
+		Portlet portlet = _getPortlet(_themeDisplay);
 
 		PortletURL viewMetadataSetsURL = PortletURLFactoryUtil.create(
 			_liferayPortletRequest,
@@ -174,9 +170,9 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 		viewMetadataSetsURL.setParameter("mvcPath", "/view.jsp");
 		viewMetadataSetsURL.setParameter(
-			"backURL", themeDisplay.getURLCurrent());
+			"backURL", _themeDisplay.getURLCurrent());
 		viewMetadataSetsURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
 		viewMetadataSetsURL.setParameter(
 			"refererPortletName", DLPortletKeys.DOCUMENT_LIBRARY);
 		viewMetadataSetsURL.setParameter(
@@ -195,7 +191,10 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 	}
 
 	private final PortletURL _currentURLObj;
+	private final DLRequestHelper _dlRequestHelper;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final HttpServletRequest _request;
+	private final ThemeDisplay _themeDisplay;
 
 }

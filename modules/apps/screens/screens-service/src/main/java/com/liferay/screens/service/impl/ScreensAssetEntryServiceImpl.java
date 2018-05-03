@@ -14,7 +14,9 @@
 
 package com.liferay.screens.service.impl;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.blogs.model.BlogsEntry;
@@ -186,17 +188,27 @@ public class ScreensAssetEntryServiceImpl
 			assetEntryLocalService.getEntry(className, classPK), locale);
 	}
 
-	protected List<AssetEntry> filterAssetEntries(List<AssetEntry> assetEntries)
-		throws PortalException {
+	protected List<AssetEntry> filterAssetEntries(
+		List<AssetEntry> assetEntries) {
 
 		List<AssetEntry> filteredAssetEntries = new ArrayList<>(
 			assetEntries.size());
 
 		for (AssetEntry assetEntry : assetEntries) {
-			if (AssetEntryPermission.contains(
-					getPermissionChecker(), assetEntry, ActionKeys.VIEW)) {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						assetEntry.getClassName());
 
-				filteredAssetEntries.add(assetEntry);
+			try {
+				if (assetRendererFactory.hasPermission(
+						getPermissionChecker(), assetEntry.getClassPK(),
+						ActionKeys.VIEW)) {
+
+					filteredAssetEntries.add(assetEntry);
+				}
+			}
+			catch (Exception e) {
 			}
 		}
 

@@ -188,6 +188,8 @@
 	</command>
 
 	<command name="viewRequest">
+		<var name="key_navLinkOption" value="Requests List" />
+
 		<execute function="Click" locator1="Notifications#REQUESTS_LIST_TAB" />
 
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_TITLE" value1="${requestsTitle}" />

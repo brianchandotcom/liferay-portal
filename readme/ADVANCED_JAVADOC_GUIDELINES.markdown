@@ -674,7 +674,7 @@ need to list the method's parameters.
 When specifying a module that a class/method resides in, be sure to refer to the
 module by its bundle symbolic name found in its `bnd.bnd` file (e.g.,
 `com.liferay.dynamic.data.mapping.api`, which is declared
-[here](https://github.com/liferay/liferay-portal/blob/7.1.0-a1/modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-api/bnd.bnd#L2).
+[here](https://github.com/liferay/liferay-portal/blob/7.1.0-a1/modules/apps/dynamic-data-mapping/dynamic-data-mapping-api/bnd.bnd#L2).
 When referring to non-module areas where code resides, you should specify it in
 the way it is displayed on [docs.liferay.com](https://docs.liferay.com/) (e.g.,
 `portal-kernel`).

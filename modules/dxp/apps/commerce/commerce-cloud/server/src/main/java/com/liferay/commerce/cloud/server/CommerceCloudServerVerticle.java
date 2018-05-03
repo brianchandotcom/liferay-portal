@@ -14,18 +14,15 @@
 
 package com.liferay.commerce.cloud.server;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
 import com.liferay.commerce.cloud.server.service.ForecastProcessorService;
 import com.liferay.commerce.cloud.server.service.ProjectService;
+import com.liferay.commerce.cloud.server.util.JsonUtil;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
-import io.vertx.core.json.Json;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 
@@ -36,6 +33,8 @@ public class CommerceCloudServerVerticle extends AbstractVerticle {
 
 	@Override
 	public void start(Future<Void> startFuture) throws Exception {
+		JsonUtil.init();
+
 		CompositeFuture.all(
 			_deployVerticle(ForecastConfigurationService.ADDRESS),
 			_deployVerticle(ForecastOrderService.ADDRESS),
@@ -68,11 +67,5 @@ public class CommerceCloudServerVerticle extends AbstractVerticle {
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		CommerceCloudServerVerticle.class);
-
-	static {
-		Json.mapper.configure(
-			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		Json.mapper.registerModule(new JavaTimeModule());
-	}
 
 }

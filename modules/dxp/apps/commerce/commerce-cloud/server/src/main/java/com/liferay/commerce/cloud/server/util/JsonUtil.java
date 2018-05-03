@@ -14,6 +14,11 @@
 
 package com.liferay.commerce.cloud.server.util;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
@@ -54,6 +59,16 @@ public class JsonUtil {
 		jsonObject.put(key, value);
 
 		return jsonObject;
+	}
+
+	public static void init() {
+		Json.mapper.configure(
+			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		Json.mapper.configure(
+			SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+		Json.mapper.configure(
+			SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
+		Json.mapper.registerModule(new JavaTimeModule());
 	}
 
 }

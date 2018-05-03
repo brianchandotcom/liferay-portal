@@ -473,6 +473,13 @@ class FragmentsEditor extends Component {
 				this._sidebarTabs = [...this.sidebarTabs];
 			}
 
+			this._translationStatus = this._getTranslationStatus(
+				Object
+					.keys(this.availableLanguages)
+					.filter(languageId => languageId !== '_INJECTED_DATA_'),
+				this._getEditableValues()
+			);
+
 			this._deleteFragmentEntryLink(data.fragmentEntryLinkId);
 		}
 	}

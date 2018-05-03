@@ -199,12 +199,10 @@ AUI.add(
 					_onTextFieldFocus: function() {
 						var instance = this;
 
-						var container = instance.get('container');
+						var inputNode = instance.getInputNode();
 
-						var textField = container.one('input') || container.one('textarea');
-
-						if ((textField.getData('predefined-value') == textField.val()) && (textField.getData('interaction'))) {
-							textField.setData('interaction', false);
+						if ((inputNode.getData('predefined-value') == inputNode.val()) && (inputNode.getData('interaction'))) {
+							inputNode.setData('interaction', false);
 							instance.set('value', '');
 							instance.setValue('');
 						}

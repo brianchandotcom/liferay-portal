@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -104,13 +103,13 @@ public class DLAdminDisplayContext {
 		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
 			_dlRequestHelper);
 
+		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			liferayPortletRequest);
+
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = _themeDisplay.getPermissionChecker();
-
-		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			liferayPortletRequest);
 
 		_computeFolder();
 		_computeRootFolder();
@@ -277,6 +276,14 @@ public class DLAdminDisplayContext {
 				}
 				catch (NoSuchFolderException nsfe) {
 					_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Could not find folder {folderId=",
+								String.valueOf(_folderId), "}"),
+							nsfe);
+					}
 				}
 			}
 		}
@@ -303,8 +310,16 @@ public class DLAdminDisplayContext {
 					_rootFolderName = StringPool.BLANK;
 				}
 			}
-			catch (NoSuchFolderException | PrincipalException e) {
+			catch (NoSuchFolderException nsfe) {
 				_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Could not find folder {folderId=",
+							String.valueOf(_rootFolderId), "}"),
+						nsfe);
+				}
 			}
 			catch (PortalException pe) {
 				throw new SystemException(pe);

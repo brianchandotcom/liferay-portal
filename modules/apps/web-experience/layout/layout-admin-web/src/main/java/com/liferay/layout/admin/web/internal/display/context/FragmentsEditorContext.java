@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -219,18 +218,6 @@ public class FragmentsEditorContext {
 		return actionURL.toString();
 	}
 
-	private long _getGroupId() {
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		long scopeGroupId = scopeGroup.getGroupId();
-
-		if (scopeGroup.isStagingGroup()) {
-			scopeGroupId = scopeGroup.getLiveGroupId();
-		}
-
-		return scopeGroupId;
-	}
-
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -345,7 +332,8 @@ public class FragmentsEditorContext {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(_getGroupId());
+			FragmentCollectionServiceUtil.getFragmentCollections(
+				_themeDisplay.getScopeGroupId());
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =

@@ -34,7 +34,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -285,6 +284,9 @@ public class FragmentDisplayContext {
 			return _fragmentCollectionsSearchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer fragmentCollectionsSearchContainer =
 			new SearchContainer(
 				_renderRequest, _renderResponse.createRenderURL(), null,
@@ -314,26 +316,26 @@ public class FragmentDisplayContext {
 		if (_isSearch()) {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					_getGroupId(), _getKeywords(),
+					themeDisplay.getScopeGroupId(), _getKeywords(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					_getGroupId(), _getKeywords());
+					themeDisplay.getScopeGroupId(), _getKeywords());
 		}
 		else {
 			fragmentCollections =
 				FragmentCollectionServiceUtil.getFragmentCollections(
-					_getGroupId(),
+					themeDisplay.getScopeGroupId(),
 					fragmentCollectionsSearchContainer.getStart(),
 					fragmentCollectionsSearchContainer.getEnd(),
 					orderByComparator);
 
 			fragmentCollectionsCount =
 				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					_getGroupId());
+					themeDisplay.getScopeGroupId());
 		}
 
 		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
@@ -378,6 +380,9 @@ public class FragmentDisplayContext {
 			return _fragmentEntriesSearchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-fragments");
@@ -402,23 +407,24 @@ public class FragmentDisplayContext {
 
 		if (_isSearch()) {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				_getGroupId(), getFragmentCollectionId(), _getKeywords(),
-				fragmentEntriesSearchContainer.getStart(),
+				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					_getGroupId(), getFragmentCollectionId(), _getKeywords());
+					themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
+					_getKeywords());
 		}
 		else {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
-				_getGroupId(), getFragmentCollectionId(),
+				themeDisplay.getScopeGroupId(), getFragmentCollectionId(),
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					_getGroupId(), getFragmentCollectionId());
+					themeDisplay.getScopeGroupId(), getFragmentCollectionId());
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);
@@ -829,21 +835,6 @@ public class FragmentDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	private long _getGroupId() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group scopeGroup = themeDisplay.getScopeGroup();
-
-		long scopeGroupId = scopeGroup.getGroupId();
-
-		if (scopeGroup.isStagingGroup()) {
-			scopeGroupId = scopeGroup.getLiveGroupId();
-		}
-
-		return scopeGroupId;
 	}
 
 	private String _getKeywords() {

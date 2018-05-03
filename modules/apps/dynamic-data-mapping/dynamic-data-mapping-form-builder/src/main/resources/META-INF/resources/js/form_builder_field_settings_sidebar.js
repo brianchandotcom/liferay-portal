@@ -349,6 +349,32 @@ AUI.add(
 						}
 					},
 
+					_isCopySettings: function(settingsFormFieldContext, previousSettingsFormFieldContext) {
+						var fieldName = settingsFormFieldContext.fieldName;
+						var fieldVisibility = settingsFormFieldContext.visible;
+
+						var ignoredFieldNames = ['dataType', 'type', 'validation'];
+
+						var previousFieldName = previousSettingsFormFieldContext.fieldName;
+						var previousFieldVisibility = previousSettingsFormFieldContext.visible;
+
+						if ((fieldName === 'name' && previousFieldName === 'name')) {
+							return true;
+						}
+
+						var ignoreFieldProperty = (ignoredFieldNames.indexOf(fieldName) === -1);
+
+						var sameFieldProperty = (fieldName === previousFieldName);
+
+						var visible = fieldVisibility && previousFieldVisibility;
+
+						if (ignoreFieldProperty && sameFieldProperty && visible) {
+							return true;
+						}
+
+						return false;
+					},
+
 					_isFieldNode: function(node) {
 						var instance = this;
 
@@ -411,21 +437,17 @@ AUI.add(
 
 						var FormBuilderUtil = Liferay.DDM.FormBuilderUtil;
 
-						var ignoredFieldNames = ['dataType', 'type', 'validation'];
-
 						FormBuilderUtil.visitLayout(
 							newSettingsContext.pages,
 							function(settingsFormFieldContext) {
 								var fieldLocalizable = settingsFormFieldContext.localizable;
-								var fieldName = settingsFormFieldContext.fieldName;
 
 								FormBuilderUtil.visitLayout(
 									previousSettingsContext.pages,
 									function(previousSettingsFormFieldContext) {
 										var previousFieldLocalizable = previousSettingsFormFieldContext.localizable;
-										var previousFieldName = previousSettingsFormFieldContext.fieldName;
 
-										if ((ignoredFieldNames.indexOf(fieldName) === -1) && (fieldName === previousFieldName)) {
+										if (instance._isCopySettings(settingsFormFieldContext, previousSettingsFormFieldContext)) {
 											if (fieldLocalizable && previousFieldLocalizable) {
 												settingsFormFieldContext.localizedValue = previousSettingsFormFieldContext.localizedValue;
 											}

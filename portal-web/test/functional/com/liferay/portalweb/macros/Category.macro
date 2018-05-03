@@ -283,6 +283,12 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="getAssetId" returns="assetId">
+		<var method="selenium#getAttribute('//table[contains(@class,\'table-list\')]//tr[contains(.,\'${assetName}\')]/td[1]//input@value')" name="assetId" />
+
+		<return name="assetId" value="${assetId}" />
+	</command>
+
 	<command name="moveViaEditCP">
 		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${vocabularyName}">
 			<var name="key_rowEntry" value="${vocabularyName}" />

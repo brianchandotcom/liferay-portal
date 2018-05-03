@@ -627,20 +627,22 @@
 
 		<property file="${modules.dir}/../build.properties" />
 
-		<pathconvert property="app.bnd.file">
-			<fileset
-				dir="${modules.dir}"
-				includes="apps/${app.name}/app.bnd,private/apps/${app.name}/app.bnd"
-			/>
-		</pathconvert>
-
-		<loadproperties srcFile="${app.bnd.file}">
-			<filterchain>
-				<linecontains>
-					<contains value="Liferay-Releng-App-Title" />
-				</linecontains>
-			</filterchain>
-		</loadproperties>
+		<for list="${modules.dir}/apps/${app.name}/app.bnd,${modules.dir}/private/apps/${app.name}/app.bnd" param="app.bnd.file">
+			<sequential>
+				<if>
+					<available file="${app.bnd.file}" />
+					<then>
+						<loadproperties srcFile="${app.bnd.file}">
+							<filterchain>
+								<linecontains>
+									<contains value="Liferay-Releng-App-Title" />
+								</linecontains>
+							</filterchain>
+						</loadproperties>
+					</then>
+				</if>
+			</sequential>
+		</for>
 
 		<condition property="check.stale.artifacts.skip">
 			<and>

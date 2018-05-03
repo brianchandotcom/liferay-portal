@@ -99,11 +99,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
 			ddmContent, cpDefinition.getWidth(), cpDefinition.getHeight(),
 			cpDefinition.getDepth(), cpDefinition.getWeight(), BigDecimal.ZERO,
-			BigDecimal.ZERO, BigDecimal.ZERO, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			BigDecimal.ZERO, BigDecimal.ZERO, published, StringPool.BLANK,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -113,7 +113,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			String manufacturerPartNumber, boolean purchasable,
 			String ddmContent, double width, double height, double depth,
 			double weight, BigDecimal cost, BigDecimal price,
-			BigDecimal promoPrice, boolean published, int displayDateMonth,
+			BigDecimal promoPrice, boolean published,
+			String externalReferenceCode, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -173,6 +174,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setPrice(price);
 		cpInstance.setPromoPrice(promoPrice);
 		cpInstance.setPublished(published);
+		cpInstance.setExternalReferenceCode(externalReferenceCode);
 		cpInstance.setDisplayDate(displayDate);
 		cpInstance.setExpirationDate(expirationDate);
 
@@ -775,10 +777,11 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
 			ddmContent, width, height, depth, weight, cost, price, promoPrice,
-			published, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			published, StringPool.BLANK, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(

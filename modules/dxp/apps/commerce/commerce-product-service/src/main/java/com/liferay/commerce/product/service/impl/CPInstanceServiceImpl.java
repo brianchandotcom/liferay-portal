@@ -71,7 +71,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			String manufacturerPartNumber, boolean purchasable,
 			String ddmContent, double width, double height, double depth,
 			double weight, BigDecimal cost, BigDecimal price,
-			BigDecimal promoPrice, boolean published, int displayDateMonth,
+			BigDecimal promoPrice, boolean published,
+			String externalReferenceCode, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -86,10 +87,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
 			ddmContent, width, height, depth, weight, cost, price, promoPrice,
-			published, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			published, externalReferenceCode, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override

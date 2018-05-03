@@ -38,6 +38,7 @@ import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -126,7 +127,8 @@ public class CPDefinitionLocalServiceImpl
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, CPInstanceConstants.DEFAULT_SKU, serviceContext);
+			neverExpire, CPInstanceConstants.DEFAULT_SKU, StringPool.BLANK,
+			serviceContext);
 	}
 
 	@Override
@@ -182,7 +184,7 @@ public class CPDefinitionLocalServiceImpl
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, String defaultSku,
-			ServiceContext serviceContext)
+			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -237,6 +239,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
 		cpDefinition.setPublished(published);
+		cpDefinition.setExternalReferenceCode(externalReferenceCode);
 		cpDefinition.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 		cpDefinition.setDisplayDate(displayDate);
 		cpDefinition.setExpirationDate(expirationDate);

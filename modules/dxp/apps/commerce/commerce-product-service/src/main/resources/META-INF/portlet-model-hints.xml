@@ -64,6 +64,7 @@
 		<field name="published" type="boolean">
 			<hint name="default-value">true</hint>
 		</field>
+		<field name="externalReferenceCode" type="String" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
@@ -252,6 +253,7 @@
 		<field name="published" type="boolean">
 			<hint name="default-value">true</hint>
 		</field>
+		<field name="externalReferenceCode" type="String" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />

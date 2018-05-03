@@ -78,10 +78,10 @@ public interface CPInstanceService extends BaseService {
 		String gtin, String manufacturerPartNumber, boolean purchasable,
 		String ddmContent, double width, double height, double depth,
 		double weight, BigDecimal cost, BigDecimal price,
-		BigDecimal promoPrice, boolean published, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		BigDecimal promoPrice, boolean published, String externalReferenceCode,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 

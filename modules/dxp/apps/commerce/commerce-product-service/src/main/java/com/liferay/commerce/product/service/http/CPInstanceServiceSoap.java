@@ -98,21 +98,21 @@ public class CPInstanceServiceSoap {
 		double width, double height, double depth, double weight,
 		java.math.BigDecimal cost, java.math.BigDecimal price,
 		java.math.BigDecimal promoPrice, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		String externalReferenceCode, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.addCPInstance(cpDefinitionId,
 					sku, gtin, manufacturerPartNumber, purchasable, ddmContent,
 					width, height, depth, weight, cost, price, promoPrice,
-					published, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					published, externalReferenceCode, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
 		}

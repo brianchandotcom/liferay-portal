@@ -169,6 +169,8 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setPublished(RandomTestUtil.randomBoolean());
 
+		newCPInstance.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newCPInstance.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCPInstance.setExpirationDate(RandomTestUtil.nextDate());
@@ -232,6 +234,8 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getPromoPrice());
 		Assert.assertEquals(existingCPInstance.isPublished(),
 			newCPInstance.isPublished());
+		Assert.assertEquals(existingCPInstance.getExternalReferenceCode(),
+			newCPInstance.getExternalReferenceCode());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPInstance.getDisplayDate()),
 			Time.getShortTimestamp(newCPInstance.getDisplayDate()));
@@ -387,9 +391,9 @@ public class CPInstancePersistenceTest {
 			"manufacturerPartNumber", true, "purchasable", true, "width", true,
 			"height", true, "depth", true, "weight", true, "cost", true,
 			"price", true, "promoPrice", true, "published", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"externalReferenceCode", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -655,6 +659,8 @@ public class CPInstancePersistenceTest {
 		cpInstance.setPromoPrice(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		cpInstance.setPublished(RandomTestUtil.randomBoolean());
+
+		cpInstance.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		cpInstance.setDisplayDate(RandomTestUtil.nextDate());
 

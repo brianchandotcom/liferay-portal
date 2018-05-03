@@ -429,6 +429,21 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	public void setPublished(boolean published);
 
 	/**
+	 * Returns the external reference code of this cp instance.
+	 *
+	 * @return the external reference code of this cp instance
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this cp instance.
+	 *
+	 * @param externalReferenceCode the external reference code of this cp instance
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the display date of this cp instance.
 	 *
 	 * @return the display date of this cp instance

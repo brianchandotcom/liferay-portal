@@ -58,6 +58,7 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setPrice(model.getPrice());
 		soapModel.setPromoPrice(model.getPromoPrice());
 		soapModel.setPublished(model.isPublished());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -301,6 +302,14 @@ public class CPInstanceSoap implements Serializable {
 		_published = published;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -379,6 +388,7 @@ public class CPInstanceSoap implements Serializable {
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
 	private boolean _published;
+	private String _externalReferenceCode;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;

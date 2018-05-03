@@ -171,6 +171,8 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setPublished(RandomTestUtil.randomBoolean());
 
+		newCPDefinition.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newCPDefinition.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCPDefinition.setExpirationDate(RandomTestUtil.nextDate());
@@ -241,6 +243,8 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getDDMStructureKey());
 		Assert.assertEquals(existingCPDefinition.isPublished(),
 			newCPDefinition.isPublished());
+		Assert.assertEquals(existingCPDefinition.getExternalReferenceCode(),
+			newCPDefinition.getExternalReferenceCode());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getDisplayDate()),
 			Time.getShortTimestamp(newCPDefinition.getDisplayDate()));
@@ -373,10 +377,10 @@ public class CPDefinitionPersistenceTest {
 			"shippingExtraPrice", true, "width", true, "height", true, "depth",
 			true, "weight", true, "CPTaxCategoryId", true, "taxExempt", true,
 			"telcoOrElectronics", true, "DDMStructureKey", true, "published",
-			true, "displayDate", true, "expirationDate", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true, "defaultLanguageId",
-			true);
+			true, "externalReferenceCode", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "defaultLanguageId", true);
 	}
 
 	@Test
@@ -639,6 +643,8 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
 		cpDefinition.setPublished(RandomTestUtil.randomBoolean());
+
+		cpDefinition.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		cpDefinition.setDisplayDate(RandomTestUtil.nextDate());
 

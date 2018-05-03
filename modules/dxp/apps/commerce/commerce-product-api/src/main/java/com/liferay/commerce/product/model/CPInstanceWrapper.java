@@ -83,6 +83,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("price", getPrice());
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("published", isPublished());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -227,6 +228,13 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 
 		if (published != null) {
 			setPublished(published);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -381,6 +389,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public Date getExpirationDate() {
 		return _cpInstance.getExpirationDate();
+	}
+
+	/**
+	* Returns the external reference code of this cp instance.
+	*
+	* @return the external reference code of this cp instance
+	*/
+	@Override
+	public String getExternalReferenceCode() {
+		return _cpInstance.getExternalReferenceCode();
 	}
 
 	/**
@@ -915,6 +933,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		_cpInstance.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Sets the external reference code of this cp instance.
+	*
+	* @param externalReferenceCode the external reference code of this cp instance
+	*/
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_cpInstance.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

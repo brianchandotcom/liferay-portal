@@ -6271,6 +6271,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinitionImpl.setTelcoOrElectronics(cpDefinition.isTelcoOrElectronics());
 		cpDefinitionImpl.setDDMStructureKey(cpDefinition.getDDMStructureKey());
 		cpDefinitionImpl.setPublished(cpDefinition.isPublished());
+		cpDefinitionImpl.setExternalReferenceCode(cpDefinition.getExternalReferenceCode());
 		cpDefinitionImpl.setDisplayDate(cpDefinition.getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(cpDefinition.getExpirationDate());
 		cpDefinitionImpl.setLastPublishDate(cpDefinition.getLastPublishDate());

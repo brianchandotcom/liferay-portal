@@ -128,6 +128,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire, String defaultSku,
+		String externalReferenceCode,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionLocalService.addCPDefinition(titleMap,
@@ -139,7 +140,7 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, defaultSku, serviceContext);
+			neverExpire, defaultSku, externalReferenceCode, serviceContext);
 	}
 
 	@Override

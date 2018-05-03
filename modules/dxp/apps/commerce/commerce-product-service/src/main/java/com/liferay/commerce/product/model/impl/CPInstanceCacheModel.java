@@ -67,7 +67,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -113,6 +113,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sb.append(promoPrice);
 		sb.append(", published=");
 		sb.append(published);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -210,6 +212,13 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		cpInstanceImpl.setPromoPrice(promoPrice);
 		cpInstanceImpl.setPublished(published);
 
+		if (externalReferenceCode == null) {
+			cpInstanceImpl.setExternalReferenceCode("");
+		}
+		else {
+			cpInstanceImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		if (displayDate == Long.MIN_VALUE) {
 			cpInstanceImpl.setDisplayDate(null);
 		}
@@ -289,6 +298,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		promoPrice = (BigDecimal)objectInput.readObject();
 
 		published = objectInput.readBoolean();
+		externalReferenceCode = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -372,6 +382,14 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		objectOutput.writeObject(promoPrice);
 
 		objectOutput.writeBoolean(published);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -412,6 +430,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public BigDecimal price;
 	public BigDecimal promoPrice;
 	public boolean published;
+	public String externalReferenceCode;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

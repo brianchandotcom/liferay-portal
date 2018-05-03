@@ -65,7 +65,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -115,6 +115,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(DDMStructureKey);
 		sb.append(", published=");
 		sb.append(published);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -202,6 +204,13 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		cpDefinitionImpl.setPublished(published);
+
+		if (externalReferenceCode == null) {
+			cpDefinitionImpl.setExternalReferenceCode("");
+		}
+		else {
+			cpDefinitionImpl.setExternalReferenceCode(externalReferenceCode);
+		}
 
 		if (displayDate == Long.MIN_VALUE) {
 			cpDefinitionImpl.setDisplayDate(null);
@@ -297,6 +306,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		DDMStructureKey = objectInput.readUTF();
 
 		published = objectInput.readBoolean();
+		externalReferenceCode = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -378,6 +388,14 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		objectOutput.writeBoolean(published);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -427,6 +445,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public boolean telcoOrElectronics;
 	public String DDMStructureKey;
 	public boolean published;
+	public String externalReferenceCode;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

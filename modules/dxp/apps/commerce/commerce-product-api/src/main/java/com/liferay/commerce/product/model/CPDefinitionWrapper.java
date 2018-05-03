@@ -84,6 +84,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("telcoOrElectronics", isTelcoOrElectronics());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
 		attributes.put("published", isPublished());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -243,6 +244,13 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (published != null) {
 			setPublished(published);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -459,6 +467,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public Date getExpirationDate() {
 		return _cpDefinition.getExpirationDate();
+	}
+
+	/**
+	* Returns the external reference code of this cp definition.
+	*
+	* @return the external reference code of this cp definition
+	*/
+	@Override
+	public String getExternalReferenceCode() {
+		return _cpDefinition.getExternalReferenceCode();
 	}
 
 	/**
@@ -1258,6 +1276,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		_cpDefinition.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Sets the external reference code of this cp definition.
+	*
+	* @param externalReferenceCode the external reference code of this cp definition
+	*/
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_cpDefinition.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

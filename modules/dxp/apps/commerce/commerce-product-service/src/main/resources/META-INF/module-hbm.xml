@@ -74,6 +74,7 @@
 		<property name="telcoOrElectronics" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
@@ -226,6 +227,7 @@
 		<property name="price" type="org.hibernate.type.BigDecimalType" />
 		<property name="promoPrice" type="org.hibernate.type.BigDecimalType" />
 		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />

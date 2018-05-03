@@ -128,8 +128,8 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		String defaultSku, ServiceContext serviceContext)
-		throws PortalException;
+		String defaultSku, String externalReferenceCode,
+		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
 		Map<Locale, String> shortDescriptionMap,

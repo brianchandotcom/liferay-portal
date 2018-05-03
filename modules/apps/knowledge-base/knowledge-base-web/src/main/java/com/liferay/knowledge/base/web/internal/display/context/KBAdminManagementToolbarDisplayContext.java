@@ -47,7 +47,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
@@ -267,17 +270,13 @@ public class KBAdminManagementToolbarDisplayContext {
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
-				String keywords = ParamUtil.getString(_request, "keywords");
-
-				if (Validator.isNull(keywords)) {
-					addGroup(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
-								_getOrderByDropdownItems());
-							dropdownGroupItem.setLabel(
-								LanguageUtil.get(_request, "order-by"));
-						});
-				}
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
 			}
 		};
 	}
@@ -300,10 +299,22 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		return PortletURLUtil.clone(
+		PortletURL sortingURL = PortletURLUtil.clone(
 			PortletURLUtil.getCurrent(
 				_liferayPortletRequest, _liferayPortletResponse),
 			_liferayPortletResponse);
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		String keywords = _getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			sortingURL.setParameter("keywords", keywords);
+		}
+
+		return sortingURL;
 	}
 
 	public int getTotal() {
@@ -315,7 +326,7 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public boolean isShowInfoButton() {
-		String keywords = ParamUtil.getString(_request, "keywords");
+		String keywords = _getKeywords();
 
 		return Validator.isNull(keywords);
 	}
@@ -333,8 +344,6 @@ public class KBAdminManagementToolbarDisplayContext {
 			_request, "parentResourcePrimKey",
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		String keywords = ParamUtil.getString(_request, "keywords");
-
 		_searchContainer = new KBObjectsSearch(
 			_renderRequest,
 			PortletURLUtil.clone(
@@ -347,6 +356,8 @@ public class KBAdminManagementToolbarDisplayContext {
 		if (parentResourceClassNameId == kbFolderClassNameId) {
 			kbFolderView = true;
 		}
+
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			KBArticleSearchDisplay kbArticleSearchDisplay =
@@ -391,6 +402,10 @@ public class KBAdminManagementToolbarDisplayContext {
 		return _searchContainer;
 	}
 
+	private String _getKeywords() {
+		return ParamUtil.getString(_request, "keywords");
+	}
+
 	private String _getOrderByCol() {
 		return _searchContainer.getOrderByCol();
 	}
@@ -398,8 +413,15 @@ public class KBAdminManagementToolbarDisplayContext {
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return new DropdownItemList() {
 			{
+				final Map<String, String> orderColumnsMap = new HashMap<>();
+
+				orderColumnsMap.put("modifiedDate", "modified-date");
+				orderColumnsMap.put("priority", "priority");
+				orderColumnsMap.put("title", "title");
+				orderColumnsMap.put("viewCount", "view-count");
+
 				String[] orderColumns =
-					{"priority", "modified-date", "title", "view-count"};
+					{"priority", "modifiedDate", "title", "viewCount"};
 
 				for (String orderByCol : orderColumns) {
 					add(
@@ -412,7 +434,9 @@ public class KBAdminManagementToolbarDisplayContext {
 									getSortingURL(), "orderByCol", orderByCol);
 
 								dropdownItem.setLabel(
-									LanguageUtil.get(_request, orderByCol));
+									LanguageUtil.get(
+										_request,
+										orderColumnsMap.get(orderByCol)));
 							}));
 				}
 			}

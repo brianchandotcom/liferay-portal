@@ -238,6 +238,8 @@
 	</command>
 
 	<command name="editContentViaCardViewPG">
+		<execute function="MouseOver" locator1="Portlet#PORTLET_CONTENT" />
+
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Edit" />
 		</execute>

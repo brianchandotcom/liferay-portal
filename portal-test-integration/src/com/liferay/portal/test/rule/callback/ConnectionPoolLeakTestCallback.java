@@ -72,8 +72,9 @@ public class ConnectionPoolLeakTestCallback
 		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences =
 			_registry.getServiceReferences(ConnectionPoolMetrics.class, null);
 
-		Assert.assertEquals(
-			"Number of datasources should be 2", 2, serviceReferences.size());
+		Assert.assertTrue(
+			"Number of datasources should be 2 or more",
+			serviceReferences.size() >= 2);
 
 		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
 				serviceReferences) {

@@ -194,9 +194,9 @@ public class ProcessUtil {
 
 					boolean[] markHolder = new boolean[1];
 
-					E stdErr = stdErrReference.get(markHolder);
-
 					if (markHolder[0]) {
+						E stdErr = stdErrReference.get(markHolder);
+
 						defaultNoticeableFuture.set(
 							new ObjectValuePair<>(stdOut, stdErr));
 					}
@@ -225,9 +225,9 @@ public class ProcessUtil {
 
 					boolean[] markHolder = new boolean[1];
 
-					O stdOut = stdOutReference.get(markHolder);
-
 					if (markHolder[0]) {
+						O stdOut = stdOutReference.get(markHolder);
+
 						defaultNoticeableFuture.set(
 							new ObjectValuePair<>(stdOut, stdErr));
 					}

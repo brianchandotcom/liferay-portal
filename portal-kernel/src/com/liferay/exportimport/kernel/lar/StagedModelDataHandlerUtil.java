@@ -50,14 +50,15 @@ public class StagedModelDataHandlerUtil {
 		throws PortalException {
 
 		String className = deletionElement.attributeValue("class-name");
-		String extraData = deletionElement.attributeValue("extra-data");
-		String uuid = deletionElement.attributeValue("uuid");
 
 		StagedModelDataHandler<?> stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				className);
 
 		if (stagedModelDataHandler != null) {
+			String extraData = deletionElement.attributeValue("extra-data");
+			String uuid = deletionElement.attributeValue("uuid");
+
 			stagedModelDataHandler.deleteStagedModel(
 				uuid, portletDataContext.getScopeGroupId(), className,
 				extraData);

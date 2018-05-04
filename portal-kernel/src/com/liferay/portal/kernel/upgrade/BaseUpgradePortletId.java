@@ -475,7 +475,6 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
 				String oldPrimKey = rs.getString("primKey");
 
 				int pos = oldPrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
@@ -499,7 +498,10 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 					ps2.setString(1, newPrimKey);
 
+					long companyId = rs.getLong("companyId");
+
 					ps2.setLong(2, companyId);
+
 					ps2.setString(3, oldPrimKey);
 
 					ps2.addBatch();

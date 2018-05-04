@@ -54,11 +54,10 @@ public class PropertiesUtil {
 		Properties properties = new Properties();
 
 		for (Map.Entry<String, ?> entry : map.entrySet()) {
-			String key = entry.getKey();
 			Object value = entry.getValue();
 
 			if ((value != null) && (value instanceof String)) {
-				properties.setProperty(key, (String)value);
+				properties.setProperty(entry.getKey(), (String)value);
 			}
 		}
 
@@ -259,12 +258,13 @@ public class PropertiesUtil {
 		while (enu.hasMoreElements()) {
 			String key = enu.nextElement();
 
-			String value = properties.getProperty(key);
-
 			String trimmedKey = key.trim();
 
 			if (!key.equals(trimmedKey)) {
 				properties.remove(key);
+
+				String value = properties.getProperty(key);
+
 				properties.setProperty(trimmedKey, value);
 			}
 		}

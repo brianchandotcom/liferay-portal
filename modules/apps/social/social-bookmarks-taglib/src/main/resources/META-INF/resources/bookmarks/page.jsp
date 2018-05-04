@@ -30,11 +30,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("menu") %>'>
 			<clay:dropdown-menu
-				label="<%= LanguageUtil.get(request, "share") %>"
-				icon="share"
-				style="secondary"
-				triggerCssClasses="btn-outline-borderless btn-sm"
-				items="<%=
+				dropdownItems="<%=
 					new JSPDropdownItemList(pageContext) {
 						{
 							for (int i = 0; i < types.length; i++) {
@@ -52,6 +48,10 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 						}
 					}
 				%>"
+				label="<%= LanguageUtil.get(request, "share") %>"
+				icon="share"
+				style="secondary"
+				triggerCssClasses="btn-outline-borderless btn-sm"
 			/>
 		</c:when>
 		<c:otherwise>
@@ -84,10 +84,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			%>
 
 				<clay:dropdown-menu
-					icon="share"
-					style="secondary"
-					triggerCssClasses="btn-outline-borderless btn-sm"
-					items="<%=
+					dropdownItems="<%=
 						new JSPDropdownItemList(pageContext) {
 							{
 								for (int i = maxInlineItems; i < types.length; i++) {
@@ -105,6 +102,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 							}
 						}
 					%>"
+					icon="share"
+					style="secondary"
+					triggerCssClasses="btn-outline-borderless btn-sm"
 				/>
 
 			<%

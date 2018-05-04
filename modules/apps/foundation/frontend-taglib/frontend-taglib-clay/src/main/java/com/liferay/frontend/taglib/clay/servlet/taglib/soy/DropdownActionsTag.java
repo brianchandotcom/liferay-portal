@@ -64,16 +64,16 @@ public class DropdownActionsTag extends BaseClayTag {
 		putValue("caption", caption);
 	}
 
+	public void setDropdownItems(List<DropdownItem> dropdownItems) {
+		putValue("items", dropdownItems);
+	}
+
 	public void setExpanded(Boolean expanded) {
 		putValue("expanded", expanded);
 	}
 
 	public void setHelpText(String helpText) {
 		putValue("helpText", helpText);
-	}
-
-	public void setItems(List<DropdownItem> dropdownItems) {
-		putValue("items", dropdownItems);
 	}
 
 	public void setTriggerCssClasses(String triggerCssClasses) {

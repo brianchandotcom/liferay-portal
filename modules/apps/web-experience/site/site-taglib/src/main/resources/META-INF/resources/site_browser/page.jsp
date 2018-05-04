@@ -17,50 +17,27 @@
 <%@ include file="/site_browser/init.jsp" %>
 
 <%
-String displayStyle = GetterUtil.getString(request.getAttribute("liferay-site:site-browser:displayStyle"));
 String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-site:site-browser:emptyResultsMessage"));
 String eventName = GetterUtil.getString(request.getAttribute("liferay-site:site-browser:eventName"));
 List<Group> groups = (List<Group>)request.getAttribute("liferay-site:site-browser:groups");
 int groupsCount = GetterUtil.getInteger(request.getAttribute("liferay-site:site-browser:groupsCount"));
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-site:site-browser:portletURL");
 long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay-site:site-browser:selectedGroupIds"));
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= portletURL %>"
-			/>
+<clay:management-toolbar
+	filterItems="<%= siteBrowserDisplayContext.getFilterDropdownItems() %>"
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+	sortingOrder="<%= siteBrowserDisplayContext.getOrderByType() %>"
+	sortingURL="<%= siteBrowserDisplayContext.getSortingURL() %>"
+	totalItems="<%= groupsCount %>"
+	viewTypes="<%= siteBrowserDisplayContext.getViewTypeItems() %>"
+/>
 
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"name", "type"} %>'
-				portletURL="<%= portletURL %>"
-			/>
-
-			<li>
-				<liferay-item-selector:search />
-			</li>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list", "descriptive", "icon"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
-
-<aui:form action="<%= portletURL %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
+<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
 	<liferay-ui:search-container
 		emptyResultsMessage="<%= emptyResultsMessage %>"
-		iteratorURL="<%= portletURL %>"
+		iteratorURL="<%= siteBrowserDisplayContext.getPortletURL() %>"
 		total="<%= groupsCount %>"
 	>
 		<liferay-ui:search-container-results
@@ -87,7 +64,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 			%>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
 						icon="sites"
 					/>
@@ -115,7 +92,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
+				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
@@ -154,7 +131,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 						</div>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
+				<c:when test='<%= Objects.equals(siteBrowserDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						name="name"
 						truncate="<%= true %>"
@@ -182,7 +159,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= siteBrowserDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

@@ -14,9 +14,9 @@
 
 package com.liferay.asset.entry.rel.service.impl;
 
-import com.liferay.asset.entry.rel.exception.NoSuchEntryAssetDisplayPageRelException;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetDisplayPageRel;
 import com.liferay.asset.entry.rel.service.base.AssetEntryAssetDisplayPageRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Jürgen Kappler
@@ -46,7 +46,7 @@ public class AssetEntryAssetDisplayPageRelLocalServiceImpl
 	@Override
 	public void deleteAssetEntryAssetDisplayPageRel(
 			long assetEntryId, long assetDisplayPageId)
-		throws NoSuchEntryAssetDisplayPageRelException {
+		throws PortalException {
 
 		assetEntryAssetDisplayPageRelPersistence.removeByA_A(
 			assetEntryId, assetDisplayPageId);

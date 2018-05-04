@@ -73,15 +73,15 @@ public class CommerceOrderItemIndexerTest {
 
 	@Test
 	public void testEmptyQuery() throws Exception {
-		addCommerceOrderItems(1);
-		addCommerceOrderItems(2);
+		_addCommerceOrderItems(1);
+		_addCommerceOrderItems(2);
 
-		CommerceOrderItem[] commerceOrderItems = addCommerceOrderItems(3);
+		CommerceOrderItem[] commerceOrderItems = _addCommerceOrderItems(3);
 
-		assertSearch(StringPool.BLANK, commerceOrderItems);
+		_assertSearch(StringPool.BLANK, commerceOrderItems);
 	}
 
-	protected CommerceOrderItem[] addCommerceOrderItems(int count)
+	private CommerceOrderItem[] _addCommerceOrderItems(int count)
 		throws Exception {
 
 		CommerceOrderItem[] commerceOrderItems = new CommerceOrderItem[count];
@@ -101,40 +101,40 @@ public class CommerceOrderItemIndexerTest {
 		return commerceOrderItems;
 	}
 
-	protected void assertSearch(
+	private void _assertSearch(
 			Hits hits, CommerceOrderItem... expectedCommerceOrderItems)
 		throws Exception {
 
 		List<CommerceOrderItem> actualCommerceOrderItems =
-			getCommerceOrderItems(hits);
+			_getCommerceOrderItems(hits);
 
-		long[] actualCommerceOrderItemIds = getCommerceOrderItemIds(
+		long[] actualCommerceOrderItemIds = _getCommerceOrderItemIds(
 			actualCommerceOrderItems);
 
-		long[] expectedCommerceOrderItemIds = getCommerceOrderItemIds(
+		long[] expectedCommerceOrderItemIds = _getCommerceOrderItemIds(
 			Arrays.asList(expectedCommerceOrderItems));
 
 		Assert.assertArrayEquals(
 			expectedCommerceOrderItemIds, actualCommerceOrderItemIds);
 	}
 
-	protected void assertSearch(
+	private void _assertSearch(
 			String keywords, CommerceOrderItem... expectedCommerceOrderItems)
 		throws Exception {
 
 		CommerceOrderItem commerceOrderItem = expectedCommerceOrderItems[0];
 
-		SearchContext searchContext = getSearchContext(
+		SearchContext searchContext = _getSearchContext(
 			commerceOrderItem.getCommerceOrderId());
 
 		searchContext.setKeywords(keywords);
 
 		Hits hits = _indexer.search(searchContext);
 
-		assertSearch(hits, expectedCommerceOrderItems);
+		_assertSearch(hits, expectedCommerceOrderItems);
 	}
 
-	protected CommerceOrderItem getCommerceOrderItem(Document document)
+	private CommerceOrderItem _getCommerceOrderItem(Document document)
 		throws Exception {
 
 		long commerceOrderItemId = GetterUtil.getLong(
@@ -144,7 +144,7 @@ public class CommerceOrderItemIndexerTest {
 			commerceOrderItemId);
 	}
 
-	protected long[] getCommerceOrderItemIds(
+	private long[] _getCommerceOrderItemIds(
 		List<CommerceOrderItem> commerceOrderItems) {
 
 		long[] commerceOrderItemIds = new long[commerceOrderItems.size()];
@@ -161,7 +161,7 @@ public class CommerceOrderItemIndexerTest {
 		return commerceOrderItemIds;
 	}
 
-	protected List<CommerceOrderItem> getCommerceOrderItems(Hits hits)
+	private List<CommerceOrderItem> _getCommerceOrderItems(Hits hits)
 		throws Exception {
 
 		Document[] documents = hits.getDocs();
@@ -170,13 +170,13 @@ public class CommerceOrderItemIndexerTest {
 			documents.length);
 
 		for (Document document : documents) {
-			commerceOrderItems.add(getCommerceOrderItem(document));
+			commerceOrderItems.add(_getCommerceOrderItem(document));
 		}
 
 		return commerceOrderItems;
 	}
 
-	protected SearchContext getSearchContext(long commerceOrderId) {
+	private SearchContext _getSearchContext(long commerceOrderId) {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttribute(

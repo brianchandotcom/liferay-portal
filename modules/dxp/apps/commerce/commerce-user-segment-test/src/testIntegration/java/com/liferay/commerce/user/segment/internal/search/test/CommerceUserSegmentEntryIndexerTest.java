@@ -83,7 +83,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
 				groupId, RandomTestUtil.randomBoolean());
 
-		Hits hits = _search(commerceUserSegmentEntry.getCompanyId(), groupId);
+		Hits hits = _search();
 
 		Document document = HitsAssert.assertOnlyOne(hits);
 
@@ -117,7 +117,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		_commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(
 			commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
 
-		Hits hits = _search(commerceUserSegmentEntry.getCompanyId(), groupId);
+		Hits hits = _search();
 
 		Assert.assertEquals(hits.toString(), 0, hits.getLength());
 	}
@@ -125,11 +125,11 @@ public class CommerceUserSegmentEntryIndexerTest {
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();
 
-	private Hits _search(long companyId, long groupId) throws SearchException {
+	private Hits _search() throws SearchException {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(companyId);
-		searchContext.setGroupIds(new long[] {groupId});
+		searchContext.setCompanyId(_group.getCompanyId());
+		searchContext.setGroupIds(new long[] {_group.getGroupId()});
 		searchContext.setEntryClassNames(
 			new String[] {CommerceUserSegmentEntry.class.getName()});
 

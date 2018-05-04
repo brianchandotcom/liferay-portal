@@ -94,7 +94,7 @@ public class AssetEntryDisplayPageRelLocalServiceWrapper
 	@Override
 	public void deleteAssetEntryDisplayPageRel(long assetEntryId,
 		long displayPageId)
-		throws com.liferay.asset.entry.rel.exception.NoSuchEntryDisplayPageRelException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_assetEntryDisplayPageRelLocalService.deleteAssetEntryDisplayPageRel(assetEntryId,
 			displayPageId);
 	}

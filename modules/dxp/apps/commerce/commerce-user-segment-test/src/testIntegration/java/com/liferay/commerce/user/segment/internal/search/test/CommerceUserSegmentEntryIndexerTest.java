@@ -92,22 +92,13 @@ public class CommerceUserSegmentEntryIndexerTest {
 		Hits hits = _searchCommerceUserSegmentEntries(
 			commerceUserSegmentEntry.getCompanyId(), groupId);
 
-		int hit = 0;
+		Document document = HitsAssert.assertOnlyOne(hits);
 
-		String name = commerceUserSegmentEntry.getName();
-		long entryId = commerceUserSegmentEntry.getCommerceUserSegmentEntryId();
-
-		for (Document document : hits.getDocs()) {
-			if (entryId == GetterUtil.getLong(
-					document.getField(Field.ENTRY_CLASS_PK).getValue())) {
-
-				if (name.equals(document.getField(Field.NAME).getValue())) {
-					hit++;
-				}
-			}
-		}
-
-		Assert.assertEquals(1, hit);
+		Assert.assertEquals(
+			commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			document.get(Field.ENTRY_CLASS_PK));
+		Assert.assertEquals(
+			commerceUserSegmentEntry.getName(), document.get(Field.NAME));
 	}
 
 	@Test

@@ -428,6 +428,22 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return portalImplDir.getParentFile();
 	}
 
+	protected String getProjectName() {
+		String projectPathPrefix = getProjectPathPrefix();
+
+		if (Validator.isNull(projectPathPrefix)) {
+			return StringPool.BLANK;
+		}
+
+		if (!projectPathPrefix.contains(StringPool.COLON)) {
+			return StringPool.BLANK;
+		}
+
+		int pos = projectPathPrefix.lastIndexOf(StringPool.COLON);
+
+		return projectPathPrefix.substring(pos + 1);
+	}
+
 	protected String getProjectPathPrefix() {
 		return _projectPathPrefix;
 	}

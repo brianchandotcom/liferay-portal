@@ -127,7 +127,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		Assert.assertEquals(hits.toString(), 0, hits.getLength());
 	}
 
-	@Test
+	@Test(expected = CommerceUserSegmentEntrySystemException.class)
 	public void testDeleteSystemCommerceUserSegmentEntry() throws Exception {
 		frutillaRule.scenario(
 			"Delete system user segment entry"
@@ -144,18 +144,9 @@ public class CommerceUserSegmentEntryIndexerTest {
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			_addCommerceUserSegmentEntry(groupId, true);
 
-		boolean check = true;
-
-		try {
-			_commerceUserSegmentEntryLocalService.
-				deleteCommerceUserSegmentEntry(
-					commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
-		}
-		catch (CommerceUserSegmentEntrySystemException cusese) {
-			check = false;
-		}
-
-		Assert.assertEquals(false, check);
+		_commerceUserSegmentEntryLocalService.
+			deleteCommerceUserSegmentEntry(
+				commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
 	}
 
 	@Rule

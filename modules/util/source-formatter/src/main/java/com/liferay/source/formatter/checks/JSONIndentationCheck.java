@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -39,14 +40,8 @@ public class JSONIndentationCheck extends BaseFileCheck {
 
 			String line = null;
 
-			int lineCount = 0;
-
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
-
-				_checkIndentation(line, fileName, expectedTabCount, lineCount);
-
-				sb.append(line);
+				sb.append(_fixIndentation(line, expectedTabCount));
 
 				sb.append("\n");
 
@@ -62,14 +57,16 @@ public class JSONIndentationCheck extends BaseFileCheck {
 			}
 		}
 
-		return content;
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
-	private void _checkIndentation(
-		String line, String fileName, int expectedTabCount, int lineCount) {
-
+	private String _fixIndentation(String line, int expectedTabCount) {
 		if (Validator.isNull(line)) {
-			return;
+			return line;
 		}
 
 		int leadingTabCount = getLeadingTabCount(line);
@@ -79,18 +76,12 @@ public class JSONIndentationCheck extends BaseFileCheck {
 		}
 
 		if (leadingTabCount == expectedTabCount) {
-			return;
+			return line;
 		}
 
-		StringBundler sb = new StringBundler(5);
+		String expectedTab = new String(new char[expectedTabCount]);
 
-		sb.append("Line starts with '");
-		sb.append(leadingTabCount);
-		sb.append("' tabs, but '");
-		sb.append(expectedTabCount);
-		sb.append("' tabs are expected");
-
-		addMessage(fileName, sb.toString(), lineCount);
+		return expectedTab.replace("\0", "\t") + StringUtil.trimLeading(line);
 	}
 
 }

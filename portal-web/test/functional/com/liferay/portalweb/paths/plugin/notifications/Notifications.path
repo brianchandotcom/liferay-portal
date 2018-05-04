@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_DELIVERY_PANEL</td>
-	<td>//div[contains(@class,'panel-title')]/a[contains(.,'${key_contentType}')]</td>
+	<td>//div[contains(@class,'panel-heading')]//a[contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
 <tr>

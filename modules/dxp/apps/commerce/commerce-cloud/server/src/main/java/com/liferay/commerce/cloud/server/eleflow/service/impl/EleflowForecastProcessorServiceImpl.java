@@ -14,8 +14,12 @@
 
 package com.liferay.commerce.cloud.server.eleflow.service.impl;
 
+import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecast;
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowOrder;
+import com.liferay.commerce.cloud.server.eleflow.util.EleflowForecastDecoder;
 import com.liferay.commerce.cloud.server.eleflow.util.EleflowOrderEncoder;
+import com.liferay.commerce.cloud.server.eleflow.util.EleflowUtil;
+import com.liferay.commerce.cloud.server.model.Forecast;
 import com.liferay.commerce.cloud.server.model.ForecastOrder;
 import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
@@ -28,10 +32,12 @@ import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.codec.BodyCodec;
+import io.vertx.ext.web.codec.impl.BodyCodecImpl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,6 +57,26 @@ public class EleflowForecastProcessorServiceImpl
 
 		_forecastOrderService = ForecastOrderService.createProxy(vertx);
 		_projectService = ProjectService.createProxy(vertx);
+	}
+
+	@Override
+	public void getForecasts(
+		Project project, long time,
+		Handler<AsyncResult<List<Forecast>>> handler) {
+
+		HttpRequest<List<Forecast>> httpRequest = webClient.get(
+			path + "/forecast"
+		).as(
+			_forecastsBodyCodec
+		);
+
+		addAuthorization(httpRequest, project);
+
+		httpRequest.setQueryParam("date", EleflowUtil.getDateString(time));
+
+		httpRequest.send(
+			asyncResult -> VertxUtil.handleServiceHttpResponse(
+				asyncResult, handler));
 	}
 
 	@Override
@@ -189,6 +215,17 @@ public class EleflowForecastProcessorServiceImpl
 
 	private static final Function<ForecastOrder, EleflowOrder>
 		_eleflowOrderEncoder = new EleflowOrderEncoder();
+	private static final BodyCodec<List<Forecast>> _forecastsBodyCodec;
+
+	static {
+		Function<Buffer, List<Forecast>> function = BodyCodecImpl.jsonDecoder(
+			EleflowForecast.class
+		).andThen(
+			new EleflowForecastDecoder()
+		);
+
+		_forecastsBodyCodec = BodyCodec.create(function);
+	}
 
 	private final ForecastOrderService _forecastOrderService;
 	private final ProjectService _projectService;

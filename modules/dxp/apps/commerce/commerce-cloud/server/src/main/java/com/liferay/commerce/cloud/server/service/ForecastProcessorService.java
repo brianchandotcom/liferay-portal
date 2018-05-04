@@ -14,12 +14,16 @@
 
 package com.liferay.commerce.cloud.server.service;
 
+import com.liferay.commerce.cloud.server.model.Forecast;
+import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.util.CommerceCloudUtil;
 
 import io.vertx.codegen.annotations.ProxyGen;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -33,6 +37,10 @@ public interface ForecastProcessorService {
 	public static ForecastProcessorService createProxy(Vertx vertx) {
 		return new ForecastProcessorServiceVertxEBProxy(vertx, ADDRESS);
 	}
+
+	public void getForecasts(
+		Project project, long time,
+		Handler<AsyncResult<List<Forecast>>> handler);
 
 	public void processForecastOrders(Handler<AsyncResult<Integer>> handler);
 

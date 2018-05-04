@@ -42,6 +42,12 @@ public class EleflowUtilTest {
 	}
 
 	@Test
+	public void testGetDateString() {
+		Assert.assertEquals(
+			"1982-01-08", EleflowUtil.getDateString(379296000000L));
+	}
+
+	@Test
 	public void testToEleflow() {
 		_testToEleflow(ForecastPeriod.values(), PeriodsEnum::fromValue);
 		_testToEleflow(ForecastTarget.values(), TargetsEnum::fromValue);

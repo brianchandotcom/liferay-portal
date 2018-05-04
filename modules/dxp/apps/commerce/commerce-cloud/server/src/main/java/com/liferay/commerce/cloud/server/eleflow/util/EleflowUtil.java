@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -54,6 +55,13 @@ public class EleflowUtil {
 		}
 
 		return enumSet;
+	}
+
+	public static String getDateString(long time) {
+		LocalDate localDate = LocalDate.ofEpochDay(
+			TimeUnit.MILLISECONDS.toDays(time));
+
+		return localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
 	}
 
 	public static String getHost(JsonObject configJsonObject) {

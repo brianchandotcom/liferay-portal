@@ -31,6 +31,8 @@ import java.util.List;
  */
 public class PostForecastOrdersHandler implements Handler<RoutingContext> {
 
+	public static final String PATH = "/projects/:projectId/forecast/orders/";
+
 	public PostForecastOrdersHandler(
 		ForecastOrderService forecastOrderService) {
 

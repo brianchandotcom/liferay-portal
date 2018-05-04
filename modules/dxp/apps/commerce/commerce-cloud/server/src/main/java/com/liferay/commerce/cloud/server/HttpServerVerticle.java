@@ -66,8 +66,7 @@ public class HttpServerVerticle extends AbstractVerticle {
 		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastConfigurationService forecastConfigurationService) {
 
-		Route route = router.get(
-			"/projects/:projectId/forecast/configuration/");
+		Route route = router.get(GetForecastConfigurationHandler.PATH);
 
 		route.handler(activeProjectAuthHandler);
 
@@ -81,7 +80,7 @@ public class HttpServerVerticle extends AbstractVerticle {
 		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastOrderService forecastOrderService) {
 
-		Route route = router.post("/projects/:projectId/forecast/orders/");
+		Route route = router.post(PostForecastOrdersHandler.PATH);
 
 		route.handler(BodyHandler.create());
 
@@ -96,8 +95,7 @@ public class HttpServerVerticle extends AbstractVerticle {
 		Router router, ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastConfigurationService forecastConfigurationService) {
 
-		Route route = router.put(
-			"/projects/:projectId/forecast/configuration/");
+		Route route = router.put(PutForecastConfigurationHandler.PATH);
 
 		route.handler(BodyHandler.create());
 

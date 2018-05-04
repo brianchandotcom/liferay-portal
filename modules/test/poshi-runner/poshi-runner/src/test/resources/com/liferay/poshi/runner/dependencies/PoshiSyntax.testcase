@@ -250,6 +250,13 @@
 			</then>
 		</while>
 
+		<while max-iterations="16">
+			<condition function="IsElementPresent" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />
+			<then>
+				<execute function="Click" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />
+			</then>
+		</while>
+
 		<execute macro="Smoke#runSmoke" />
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />

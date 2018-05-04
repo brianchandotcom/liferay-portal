@@ -85,7 +85,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
 				<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
 				<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
-				<portlet:param name="portletResource" value="<%= portletDisplay.getPortletName() %>" />
+				<portlet:param name="portletResource" value="<%= layoutsAdminDisplayContext.getPortletResource() %>" />
 				<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 				<portlet:param name="explicitCreation" value="<%= Boolean.TRUE.toString() %>" />

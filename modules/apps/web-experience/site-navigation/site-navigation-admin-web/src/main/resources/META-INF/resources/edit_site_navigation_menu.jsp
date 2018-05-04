@@ -25,49 +25,28 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuName());
 %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="cog"
-			id="showSiteNavigationMenuSettings"
-			label="settings"
-		/>
+<nav class="management-bar management-bar-light navbar navbar-expand-md">
+	<div class="container">
+		<ul class="navbar-nav"></ul>
 
-		<portlet:renderURL var="addSiteNavigationMenuItemRedirectURL">
-			<portlet:param name="mvcPath" value="/add_site_navigation_menu_item_redirect.jsp" />
-			<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-
-			<%
-			for (SiteNavigationMenuItemType siteNavigationMenuItemType : siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemTypes()) {
-				PortletURL addSiteNavigationMenuItemTypeURL = renderResponse.createRenderURL();
-
-				addSiteNavigationMenuItemTypeURL.setParameter("mvcPath", "/add_site_navigation_menu_item.jsp");
-				addSiteNavigationMenuItemTypeURL.setParameter("redirect", addSiteNavigationMenuItemRedirectURL);
-				addSiteNavigationMenuItemTypeURL.setParameter("siteNavigationMenuId", String.valueOf(siteNavigationAdminDisplayContext.getSiteNavigationMenuId()));
-				addSiteNavigationMenuItemTypeURL.setParameter("type", siteNavigationMenuItemType.getType());
-
-				addSiteNavigationMenuItemTypeURL.setWindowState(LiferayWindowState.POP_UP);
-			%>
-
-				<liferay-frontend:add-menu-item
-					cssClass="add-menu-item-link"
-					title="<%= siteNavigationMenuItemType.getLabel(locale) %>"
-					url="<%= addSiteNavigationMenuItemTypeURL.toString() %>"
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<button class="btn btn-unstyled nav-link nav-link-monospaced" id="<portlet:namespace />showSiteNavigationMenuSettings" type="button">
+					<aui:icon cssClass="icon-monospaced" image="cog" markupView="lexicon" />
+				</button>
+			</li>
+			<li class="nav-item">
+				<clay:dropdown-menu
+					buttonStyle="primary"
+					icon="plus"
+					items="<%= siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems() %>"
+					style="primary"
+					triggerCssClasses="nav-btn nav-btn-monospaced"
 				/>
-
-			<%
-			}
-			%>
-
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+			</li>
+		</ul>
+	</div>
+</nav>
 
 <liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
 
@@ -118,7 +97,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	var addMenuItemClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'.add-menu-item-link, .dropdown-item',
+		'.dropdown-item',
 		function(event) {
 			Liferay.Util.openInDialog(
 				event,

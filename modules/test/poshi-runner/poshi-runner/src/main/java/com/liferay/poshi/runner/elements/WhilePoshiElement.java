@@ -52,6 +52,53 @@ public class WhilePoshiElement extends IfPoshiElement {
 		super(_ELEMENT_NAME, readableSyntax);
 	}
 
+	@Override
+	protected String getBlockName() {
+		String parentheticalContent = getParentheticalContent(
+			super.getBlockName());
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getReadableName());
+		sb.append(" (");
+		sb.append(parentheticalContent);
+
+		if (attributeValue("max-iterations") != null) {
+			sb.append(" && (maxIterations = \"");
+			sb.append(attributeValue("max-iterations"));
+			sb.append("\")");
+		}
+
+		sb.append(")");
+
+		return sb.toString();
+	}
+
+	@Override
+	protected String getCondition(String readableSyntax) {
+		String parentheticalContent = getParentheticalContent(readableSyntax);
+
+		if (parentheticalContent.contains("&& (maxIterations = ")) {
+			int index = parentheticalContent.lastIndexOf("&&");
+
+			String maxIterationsAssignment = parentheticalContent.substring(
+				index + 2);
+
+			maxIterationsAssignment = getParentheticalContent(
+				maxIterationsAssignment);
+
+			String maxIterationsValue = getValueFromAssignment(
+				maxIterationsAssignment);
+
+			addAttribute(
+				"max-iterations", getQuotedContent(maxIterationsValue));
+
+			parentheticalContent = parentheticalContent.substring(0, index);
+		}
+
+		return parentheticalContent.trim();
+	}
+
 	private boolean _isElementType(String readableSyntax) {
 		readableSyntax = readableSyntax.trim();
 

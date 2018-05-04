@@ -53,17 +53,6 @@ public class FragmentEntryRenderUtil {
 	}
 
 	public static String renderFragmentEntry(
-		long fragmentEntryId, long fragmentEntryInstanceId) {
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
-
-		return renderFragmentEntry(
-			fragmentEntryId, fragmentEntryInstanceId, fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs());
-	}
-
-	public static String renderFragmentEntry(
 		long fragmentEntryId, long fragmentEntryInstanceId, String css,
 		String html, String js) {
 
@@ -90,29 +79,6 @@ public class FragmentEntryRenderUtil {
 		}
 
 		return sb.toString();
-	}
-
-	public static String renderFragmentEntry(
-		long fragmentEntryId, String css, String html, String js) {
-
-		return renderFragmentEntry(fragmentEntryId, 0, css, html, js);
-	}
-
-	public static String renderFragmentEntryLink(
-			FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
-
-		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
-			getService();
-
-		String html =
-			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink);
-
-		return renderFragmentEntry(
-			fragmentEntryLink.getFragmentEntryId(),
-			fragmentEntryLink.getPosition(), fragmentEntryLink.getCss(), html,
-			fragmentEntryLink.getJs());
 	}
 
 	public static String renderFragmentEntryLink(

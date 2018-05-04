@@ -52,7 +52,7 @@ if (fragmentEntryLink == null) {
 				/>
 			</c:when>
 			<c:otherwise>
-				<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink) %>
+				<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, request, response) %>
 			</c:otherwise>
 		</c:choose>
 	</c:otherwise>

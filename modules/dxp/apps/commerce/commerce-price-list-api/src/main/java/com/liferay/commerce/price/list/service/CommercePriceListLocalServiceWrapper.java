@@ -254,6 +254,14 @@ public class CommercePriceListLocalServiceWrapper
 		return _commercePriceListLocalService.getCommercePriceList(commercePriceListId);
 	}
 
+	@Override
+	public java.util.Optional<com.liferay.commerce.price.list.model.CommercePriceList> getCommercePriceList(
+		long groupId, long[] commerceUserSegmentEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceListLocalService.getCommercePriceList(groupId,
+			commerceUserSegmentEntryIds);
+	}
+
 	/**
 	* Returns the commerce price list matching the UUID and group.
 	*
@@ -376,21 +384,6 @@ public class CommercePriceListLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceListLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.util.Optional<com.liferay.commerce.price.list.model.CommercePriceList> getUserCommercePriceList(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commercePriceListLocalService.getUserCommercePriceList(groupId,
-			userId);
-	}
-
-	@Override
-	public java.util.Optional<com.liferay.commerce.price.list.model.CommercePriceList> getUserCommercePriceList(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commercePriceListLocalService.getUserCommercePriceList(serviceContext);
 	}
 
 	@Override

@@ -242,6 +242,13 @@ public class CommercePriceListLocalServiceUtil {
 		return getService().getCommercePriceList(commercePriceListId);
 	}
 
+	public static java.util.Optional<com.liferay.commerce.price.list.model.CommercePriceList> getCommercePriceList(
+		long groupId, long[] commerceUserSegmentEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommercePriceList(groupId, commerceUserSegmentEntryIds);
+	}
+
 	/**
 	* Returns the commerce price list matching the UUID and group.
 	*
@@ -351,18 +358,6 @@ public class CommercePriceListLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static java.util.Optional<com.liferay.commerce.price.list.model.CommercePriceList> getUserCommercePriceList(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserCommercePriceList(groupId, userId);
-	}
-
-	public static java.util.Optional<com.liferay.commerce.price.list.model.CommercePriceList> getUserCommercePriceList(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserCommercePriceList(serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(

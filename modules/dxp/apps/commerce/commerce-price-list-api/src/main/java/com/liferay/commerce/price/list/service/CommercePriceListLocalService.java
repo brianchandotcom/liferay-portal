@@ -224,6 +224,10 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	public CommercePriceList getCommercePriceList(long commercePriceListId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Optional<CommercePriceList> getCommercePriceList(long groupId,
+		long[] commerceUserSegmentEntryIds) throws PortalException;
+
 	/**
 	* Returns the commerce price list matching the UUID and group.
 	*
@@ -314,14 +318,6 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Optional<CommercePriceList> getUserCommercePriceList(long groupId,
-		long userId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Optional<CommercePriceList> getUserCommercePriceList(
-		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(SearchContext searchContext);

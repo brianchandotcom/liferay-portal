@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -730,6 +731,43 @@ public abstract class CommercePriceListLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the group local service.
+	 *
+	 * @return the group local service
+	 */
+	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
+		return groupLocalService;
+	}
+
+	/**
+	 * Sets the group local service.
+	 *
+	 * @param groupLocalService the group local service
+	 */
+	public void setGroupLocalService(
+		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
+		this.groupLocalService = groupLocalService;
+	}
+
+	/**
+	 * Returns the group persistence.
+	 *
+	 * @return the group persistence
+	 */
+	public GroupPersistence getGroupPersistence() {
+		return groupPersistence;
+	}
+
+	/**
+	 * Sets the group persistence.
+	 *
+	 * @param groupPersistence the group persistence
+	 */
+	public void setGroupPersistence(GroupPersistence groupPersistence) {
+		this.groupPersistence = groupPersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -937,6 +975,10 @@ public abstract class CommercePriceListLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
+	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
+	@ServiceReference(type = GroupPersistence.class)
+	protected GroupPersistence groupPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)

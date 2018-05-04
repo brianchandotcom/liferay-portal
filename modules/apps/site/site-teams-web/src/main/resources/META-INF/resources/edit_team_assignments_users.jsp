@@ -26,11 +26,11 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 />
 
 <clay:management-toolbar
-	actionItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getClearResultsURL() %>"
 	componentId="editTeamAssignemntsUsersWebManagementToolbar"
 	disabled="<%= editSiteTeamAssignmentsUsersDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
@@ -38,8 +38,8 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 	showSearch="<%= editSiteTeamAssignmentsUsersDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= editSiteTeamAssignmentsUsersDisplayContext.getOrderByType() %>"
 	sortingURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getSortingURL() %>"
-	totalItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getTotalItems() %>"
-	viewTypes="<%= editSiteTeamAssignmentsUsersDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= editSiteTeamAssignmentsUsersDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteTeamUsers" var="deleteTeamUsersURL" />

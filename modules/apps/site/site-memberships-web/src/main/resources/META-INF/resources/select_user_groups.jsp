@@ -28,15 +28,15 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 	clearResultsURL="<%= selectUserGroupsDisplayContext.getClearResultsURL() %>"
 	componentId="userGroupsManagementToolbar"
 	disabled="<%= selectUserGroupsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= selectUserGroupsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= selectUserGroupsDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= selectUserGroupsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
 	searchFormName="searchFm"
 	showSearch="<%= selectUserGroupsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectUserGroupsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectUserGroupsDisplayContext.getSortingURL() %>"
-	totalItems="<%= selectUserGroupsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= selectUserGroupsDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= selectUserGroupsDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= selectUserGroupsDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-user-groups" name="fm">

@@ -29,19 +29,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 />
 
 <clay:management-toolbar
-	actionItems="<%= fragmentDisplayContext.getFragmentEntryActionItemsDropdownItems() %>"
+	actionDropdownItems="<%= fragmentDisplayContext.getFragmentEntryActionItemsDropdownItems() %>"
 	clearResultsURL="<%= fragmentDisplayContext.getFragmentEntryClearResultsURL() %>"
 	componentId="fragmentEntriesManagementToolbar"
 	disabled="<%= fragmentDisplayContext.isDisabledFragmentEntriesManagementBar() %>"
-	filterItems="<%= fragmentDisplayContext.getFragmentEntryFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= fragmentDisplayContext.getFragmentEntryFilterItemsDropdownItems() %>"
 	searchActionURL="<%= fragmentDisplayContext.getFragmentEntrySearchActionURL() %>"
 	searchContainerId="fragmentEntries"
 	searchFormName="searchFm"
 	showCreationMenu="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) ? true : false %>"
 	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentDisplayContext.getFragmentEntrySortingURL() %>"
-	totalItems="<%= fragmentDisplayContext.getFragmentEntryTotalItems() %>"
-	viewTypes="<%= fragmentDisplayContext.getFragmentEntryViewTypeItems() %>"
+	itemsTotal="<%= fragmentDisplayContext.getFragmentEntryTotalItems() %>"
+	viewTypeItems="<%= fragmentDisplayContext.getFragmentEntryViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

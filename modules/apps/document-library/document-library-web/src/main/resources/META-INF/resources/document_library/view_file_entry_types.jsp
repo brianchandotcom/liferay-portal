@@ -29,7 +29,7 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 	searchActionURL="<%= dlViewFileEntryTypesDisplayContext.getSearchActionURL() %>"
 	searchFormName="fm"
 	selectable="<%= false %>"
-	totalItems="<%= dlViewFileEntryTypesDisplayContext.getTotalItems() %>"
+	itemsTotal="<%= dlViewFileEntryTypesDisplayContext.getTotalItems() %>"
 />
 
 <div class="container-fluid-1280 main-content-body">

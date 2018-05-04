@@ -27,14 +27,14 @@
 <clay:management-toolbar
 	clearResultsURL="<%= siteMySitesDisplayContext.getClearResultsURL() %>"
 	componentId="siteMySitesWebManagementToolbar"
-	filterItems="<%= siteMySitesDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteMySitesDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= siteMySitesDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= siteMySitesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteMySitesDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteMySitesDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteMySitesDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= siteMySitesDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= siteMySitesDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form action="<%= siteMySitesDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="get" name="fm">

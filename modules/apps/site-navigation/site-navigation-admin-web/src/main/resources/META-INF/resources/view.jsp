@@ -26,18 +26,18 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 />
 
 <clay:management-toolbar
-	actionItems="<%= siteNavigationAdminDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= siteNavigationAdminDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= siteNavigationAdminDisplayContext.getClearResultsURL() %>"
 	componentId="siteNavigationMenuWebManagementToolbar"
 	creationMenu="<%= siteNavigationAdminDisplayContext.isShowAddButton() ? siteNavigationAdminDisplayContext.getCreationMenu() : null %>"
-	filterItems="<%= siteNavigationAdminDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteNavigationAdminDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= siteNavigationAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="siteNavigationMenus"
 	searchFormName="searchFm"
 	sortingOrder="<%= siteNavigationAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteNavigationAdminDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteNavigationAdminDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteNavigationAdminDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= siteNavigationAdminDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= siteNavigationAdminDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="/navigation_menu/delete_site_navigation_menu" var="deleteSitaNavigationMenuURL">

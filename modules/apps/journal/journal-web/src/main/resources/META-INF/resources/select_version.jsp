@@ -61,7 +61,7 @@ List<DropdownItem> dropdownItems = new JSPDropdownItemList(pageContext) {
 
 <clay:management-toolbar
 	componentId="journalSelectVersionsManagementToolbar"
-	filterItems="<%=
+	filterDropdownItems="<%=
 		new JSPDropdownItemList(pageContext) {
 			{
 				addGroup(
@@ -76,7 +76,7 @@ List<DropdownItem> dropdownItems = new JSPDropdownItemList(pageContext) {
 	searchContainerId="articleVersions"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
-	viewTypes="<%=
+	viewTypeItems="<%=
 		new JSPViewTypeItemList(pageContext) {
 			{
 			add(

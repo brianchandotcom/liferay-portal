@@ -27,17 +27,17 @@
 />
 
 <clay:management-toolbar
-	actionItems="<%= layoutsAdminDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= layoutsAdminDisplayContext.getActionDropdownItems() %>"
 	componentId="pagesManagementToolbar"
 	creationMenu="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() ? layoutsAdminDisplayContext.getCreationMenu() : null %>"
-	filterItems="<%= layoutsAdminDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= layoutsAdminDisplayContext.getFilterDropdownItems() %>"
 	searchContainerId="pages"
 	searchFormName="searchFm"
 	showSearch="<%= false %>"
 	sortingOrder="<%= layoutsAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutsAdminDisplayContext.getSortingURL() %>"
-	totalItems="<%= layoutsAdminDisplayContext.getTotalItems() %>"
-	viewTypes="<%= layoutsAdminDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= layoutsAdminDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= layoutsAdminDisplayContext.getViewTypeItems() %>"
 />
 
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">

@@ -31,20 +31,20 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 />
 
 <clay:management-toolbar
-	actionItems="<%= journalFeedsDisplayContext.getActionItemsDropdownItems() %>"
+	actionDropdownItems="<%= journalFeedsDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= journalFeedsDisplayContext.getClearResultsURL() %>"
 	componentId="journalFeedsManagementToolbar"
 	creationMenu="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) ? journalFeedsDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= journalFeedsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= journalFeedsDisplayContext.getFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= journalFeedsDisplayContext.getFilterItemsDropdownItems() %>"
 	searchActionURL="<%= journalFeedsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="feeds"
 	searchFormName="searchFm"
 	showSearch="<%= journalFeedsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= journalFeedsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= journalFeedsDisplayContext.getSortingURL() %>"
-	totalItems="<%= journalFeedsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= journalFeedsDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= journalFeedsDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= journalFeedsDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteFeeds" var="deleteFeedsURL">

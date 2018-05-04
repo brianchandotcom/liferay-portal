@@ -28,11 +28,11 @@ Role role = userGroupsDisplayContext.getRole();
 />
 
 <clay:management-toolbar
-	actionItems="<%= userGroupsDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= userGroupsDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= userGroupsDisplayContext.getClearResultsURL() %>"
 	componentId="userGroupsManagementToolbar"
 	disabled="<%= userGroupsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= userGroupsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= userGroupsDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= userGroupsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
 	searchFormName="searchFm"
@@ -40,8 +40,8 @@ Role role = userGroupsDisplayContext.getRole();
 	showSearch="<%= userGroupsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= userGroupsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= userGroupsDisplayContext.getSortingURL() %>"
-	totalItems="<%= userGroupsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= userGroupsDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= userGroupsDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= userGroupsDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteGroupUserGroups" var="deleteGroupUserGroupsURL">

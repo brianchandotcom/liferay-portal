@@ -26,19 +26,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 />
 
 <clay:management-toolbar
-	actionItems="<%= assetCategoriesDisplayContext.getVocabulariesActionItemsDropdownItems() %>"
+	actionDropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesActionItemsDropdownItems() %>"
 	clearResultsURL="<%= assetCategoriesDisplayContext.getVocabulariesClearResultsURL() %>"
 	componentId="assetVocabulariesManagementToolbar"
 	creationMenu="<%= assetCategoriesDisplayContext.isShowVocabulariesAddButton() ? assetCategoriesDisplayContext.getVocabulariesCreationMenu() : null %>"
 	disabled="<%= assetCategoriesDisplayContext.isDisabledVocabulariesManagementBar() %>"
-	filterItems="<%= assetCategoriesDisplayContext.getVocabulariesFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesFilterItemsDropdownItems() %>"
 	searchActionURL="<%= assetCategoriesDisplayContext.getVocabulariesSearchActionURL() %>"
 	searchContainerId="assetVocabularies"
 	searchFormName="searchFm"
 	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetCategoriesDisplayContext.getVocabulariesSortingURL() %>"
-	totalItems="<%= assetCategoriesDisplayContext.getVocabulariesTotalItems() %>"
-	viewTypes="<%= assetCategoriesDisplayContext.getVocabulariesViewTypeItems() %>"
+	itemsTotal="<%= assetCategoriesDisplayContext.getVocabulariesTotalItems() %>"
+	viewTypeItems="<%= assetCategoriesDisplayContext.getVocabulariesViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">

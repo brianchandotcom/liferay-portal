@@ -28,7 +28,7 @@
 
 		<!-- PK fields -->
 
-		<column name="assetEntryAssetDisplayPageRelId" primary="true" type="long" />
+		<column name="assetEntryAssetDisplayPageId" primary="true" type="long" />
 
 		<!-- Other fields -->
 

@@ -53,7 +53,7 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-list-title"
+				cssClass="important table-cell-expand table-list-title"
 				href="<%= rowURL %>"
 				name="order-date"
 				value="<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDateTime(commerceOrder)) %>"

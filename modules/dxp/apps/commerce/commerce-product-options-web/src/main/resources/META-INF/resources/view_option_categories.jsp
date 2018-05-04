@@ -139,7 +139,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 							%>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
 								name="title"
 								value="<%= HtmlUtil.escape(cpOptionCategory.getTitle(locale)) %>"

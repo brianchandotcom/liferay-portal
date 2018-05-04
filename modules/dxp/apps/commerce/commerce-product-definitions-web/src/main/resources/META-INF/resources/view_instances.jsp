@@ -147,6 +147,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							%>
 
 							<liferay-ui:search-container-column-text
+								cssClass="important"
 								href="<%= rowURL %>"
 								property="sku"
 							/>

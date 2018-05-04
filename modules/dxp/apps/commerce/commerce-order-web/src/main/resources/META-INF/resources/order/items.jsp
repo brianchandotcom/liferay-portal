@@ -99,7 +99,7 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 			%>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="important table-cell-content"
 				href="<%= rowURL %>"
 				property="sku"
 			/>

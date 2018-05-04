@@ -139,7 +139,7 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 							%>
 
 							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
+								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
 								name="title"
 								value="<%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %>"

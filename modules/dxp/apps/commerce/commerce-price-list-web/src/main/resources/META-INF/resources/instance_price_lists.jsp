@@ -122,7 +122,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="important table-cell-content"
 						href="<%= rowURL %>"
 						name="name"
 						value="<%= HtmlUtil.escape(commercePriceList.getName()) %>"

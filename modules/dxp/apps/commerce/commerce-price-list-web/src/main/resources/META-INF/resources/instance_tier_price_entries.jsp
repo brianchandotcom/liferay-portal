@@ -154,7 +154,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="important table-cell-content"
 						href="<%= rowURL %>"
 						name="product-title"
 						value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"

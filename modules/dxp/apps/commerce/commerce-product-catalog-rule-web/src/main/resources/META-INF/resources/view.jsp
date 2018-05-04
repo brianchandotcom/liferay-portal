@@ -99,7 +99,7 @@ SearchContainer<CPRule> cpRuleSearchContainer = cpCatalogRuleDisplayContext.getS
 				</portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
+					cssClass="important table-cell-content"
 					href="<%= rowURL %>"
 					property="name"
 				/>

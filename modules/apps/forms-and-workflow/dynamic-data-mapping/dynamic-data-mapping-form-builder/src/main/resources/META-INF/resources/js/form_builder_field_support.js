@@ -93,6 +93,8 @@ AUI.add(
 								]
 							);
 
+							newFieldName = Lang.String.camelize(newFieldName, ' ');
+
 							newFieldName = newFieldName.replace(/\s/g, '');
 
 							settingsFormFieldContext.value = copy.generateFieldName(newFieldName);

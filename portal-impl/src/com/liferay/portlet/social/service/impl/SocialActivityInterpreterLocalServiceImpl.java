@@ -332,11 +332,11 @@ public class SocialActivityInterpreterLocalServiceImpl
 			SocialActivityInterpreter activityInterpreter = registry.getService(
 				serviceReference);
 
-			String portletId = (String)serviceReference.getProperty(
-				"javax.portlet.name");
-
 			if (!(activityInterpreter instanceof
 					SocialRequestInterpreterImpl)) {
+
+				String portletId = (String)serviceReference.getProperty(
+					"javax.portlet.name");
 
 				activityInterpreter = new SocialActivityInterpreterImpl(
 					portletId, activityInterpreter);

@@ -544,9 +544,10 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		String data, Locale locale, Locale defaultLocale) {
 
 		String languageId = LocaleUtil.toLanguageId(locale);
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		if (Validator.isNotNull(data)) {
+			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
 			data = LocalizationUtil.updateLocalization(
 				getData(), "Data", data, languageId, defaultLanguageId);
 		}

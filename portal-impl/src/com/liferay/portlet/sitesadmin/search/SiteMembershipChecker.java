@@ -67,10 +67,10 @@ public class SiteMembershipChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			if (isChecked(user)) {
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
 				if (SiteMembershipPolicyUtil.isMembershipProtected(
 						permissionChecker, user.getUserId(),
 						_group.getGroupId()) ||

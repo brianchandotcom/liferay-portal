@@ -2004,7 +2004,6 @@ public class DLFileEntryLocalServiceImpl
 			Image largeImage = imageLocalService.getImage(largeImageId);
 
 			byte[] bytes = largeImage.getTextObj();
-			String contentType = largeImage.getType();
 
 			if (bytes != null) {
 				ImageBag imageBag = ImageToolUtil.read(bytes);
@@ -2026,7 +2025,7 @@ public class DLFileEntryLocalServiceImpl
 				imageLocalService.updateImage(
 					smallImageId,
 					ImageToolUtil.getBytes(
-						thumbnailRenderedImage, contentType));
+						thumbnailRenderedImage, largeImage.getType()));
 			}
 		}
 		catch (IOException ioe) {

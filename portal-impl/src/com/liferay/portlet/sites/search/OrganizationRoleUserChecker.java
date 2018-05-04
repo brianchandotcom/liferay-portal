@@ -62,10 +62,10 @@ public class OrganizationRoleUserChecker extends RowChecker {
 		User user = (User)obj;
 
 		try {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			if (isChecked(user)) {
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
 				if (OrganizationMembershipPolicyUtil.isRoleProtected(
 						permissionChecker, user.getUserId(),
 						_organization.getOrganizationId(), _role.getRoleId()) ||

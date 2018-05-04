@@ -26,37 +26,18 @@ String target = ParamUtil.getString(request, "target");
 GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
-			/>
-
-			<c:if test="<%= siteItemSelectorViewDisplayContext.isShowSortFilter() %>">
-				<liferay-frontend:management-bar-sort
-					orderByCol="<%= groupSearch.getOrderByCol() %>"
-					orderByType="<%= groupSearch.getOrderByType() %>"
-					orderColumns='<%= new String[] {"name", "type"} %>'
-					portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
-				/>
-			</c:if>
-
-			<c:if test="<%= siteItemSelectorViewDisplayContext.isShowSearch() %>">
-				<li>
-					<liferay-item-selector:search />
-				</li>
-			</c:if>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list", "descriptive", "icon"} %>'
-			portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= siteItemSelectorViewDisplayContext.getClearResultsURL() %>"
+	filterItems="<%= siteItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= siteItemSelectorViewDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= siteItemSelectorViewDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= siteItemSelectorViewDisplayContext.getOrderByType() %>"
+	sortingURL="<%= siteItemSelectorViewDisplayContext.getSortingURL() %>"
+	totalItems="<%= siteItemSelectorViewDisplayContext.getTotalItems() %>"
+	viewTypes="<%= siteItemSelectorViewDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">
 	<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">

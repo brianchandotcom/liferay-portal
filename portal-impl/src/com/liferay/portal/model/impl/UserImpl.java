@@ -406,11 +406,11 @@ public class UserImpl extends UserBaseImpl {
 			return StringPool.BLANK;
 		}
 
-		String portalURL = themeDisplay.getPortalURL();
-
 		String profileFriendlyURL = getProfileFriendlyURL();
 
 		if (profileFriendlyURL != null) {
+			String portalURL = themeDisplay.getPortalURL();
+
 			return PortalUtil.addPreservedParameters(
 				themeDisplay,
 				portalURL.concat(

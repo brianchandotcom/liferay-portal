@@ -87,9 +87,6 @@ public class UpdateLayoutAction extends JSONAction {
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		String portletId = ParamUtil.getString(request, "p_p_id");
@@ -125,6 +122,9 @@ public class UpdateLayoutAction extends JSONAction {
 			}
 		}
 		else if (cmd.equals("drag")) {
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
 			if (LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.UPDATE)) {
 

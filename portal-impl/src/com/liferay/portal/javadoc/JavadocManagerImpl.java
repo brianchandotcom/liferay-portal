@@ -216,9 +216,9 @@ public class JavadocManagerImpl implements JavadocManager {
 						javadocMethod.getMethod(), javadocMethod);
 				}
 				catch (Exception e) {
-					String methodName = methodElement.elementText("name");
-
 					if (_log.isWarnEnabled()) {
+						String methodName = methodElement.elementText("name");
+
 						_log.warn(
 							StringBundler.concat(
 								"Unable to load method ", methodName,

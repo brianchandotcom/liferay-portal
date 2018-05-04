@@ -340,11 +340,12 @@ public class ServicePreAction extends Action {
 		}
 		else {
 			long groupId = ParamUtil.getLong(request, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
 			long layoutId = ParamUtil.getLong(request, "layoutId");
 
 			if ((groupId > 0) && (layoutId > 0)) {
+				boolean privateLayout = ParamUtil.getBoolean(
+					request, "privateLayout");
+
 				layout = LayoutLocalServiceUtil.getLayout(
 					groupId, privateLayout, layoutId);
 			}
@@ -372,12 +373,12 @@ public class ServicePreAction extends Action {
 			long sourceGroupId = ParamUtil.getLong(request, "p_v_l_s_g_id");
 
 			if ((sourceGroupId > 0) && (sourceGroupId != layout.getGroupId())) {
-				Group sourceGroup = GroupLocalServiceUtil.getGroup(
-					sourceGroupId);
-
 				if (layout.isTypeControlPanel() || layout.isPublicLayout() ||
 					SitesUtil.isUserGroupLayoutSetViewable(
 						permissionChecker, layout.getGroup())) {
+
+					Group sourceGroup = GroupLocalServiceUtil.getGroup(
+						sourceGroupId);
 
 					layout = new VirtualLayout(layout, sourceGroup);
 				}
@@ -503,7 +504,6 @@ public class ServicePreAction extends Action {
 
 		LayoutSet layoutSet = null;
 
-		boolean hasCustomizeLayoutPermission = false;
 		boolean hasUpdateLayoutPermission = false;
 
 		boolean customizedView = SessionParamUtil.getBoolean(
@@ -513,9 +513,10 @@ public class ServicePreAction extends Action {
 			LayoutTypeAccessPolicy layoutTypeAccessPolicy =
 				LayoutTypeAccessPolicyTracker.getLayoutTypeAccessPolicy(layout);
 
-			hasCustomizeLayoutPermission =
+			boolean hasCustomizeLayoutPermission =
 				layoutTypeAccessPolicy.isCustomizeLayoutAllowed(
 					permissionChecker, layout);
+
 			hasUpdateLayoutPermission =
 				layoutTypeAccessPolicy.isUpdateLayoutAllowed(
 					permissionChecker, layout);

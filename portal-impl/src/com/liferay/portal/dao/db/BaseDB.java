@@ -789,11 +789,11 @@ public abstract class BaseDB implements DB {
 
 			String tableNameLowerCase = StringUtil.toLowerCase(tableName);
 
-			boolean unique = index.isUnique();
-
 			validIndexNames.add(indexNameUpperCase);
 
 			if (indexNames.contains(indexNameLowerCase)) {
+				boolean unique = index.isUnique();
+
 				if (unique &&
 					indexesSQLLowerCase.contains(
 						"create unique index " + indexNameLowerCase + " ")) {

@@ -85,10 +85,11 @@ public class LoginAction extends Action {
 
 		String login = ParamUtil.getString(request, "login");
 		String password = request.getParameter("password");
-		boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
-		String authType = ParamUtil.getString(request, "authType");
 
 		if (Validator.isNotNull(login) && Validator.isNotNull(password)) {
+			boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
+			String authType = ParamUtil.getString(request, "authType");
+
 			AuthenticatedSessionManagerUtil.login(
 				request, response, login, password, rememberMe, authType);
 		}

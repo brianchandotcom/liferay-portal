@@ -31,6 +31,10 @@ public class LogMemoryUsageAction extends Action {
 
 	@Override
 	public void run(HttpServletRequest request, HttpServletResponse response) {
+		if (!_log.isDebugEnabled()) {
+			return;
+		}
+
 		Runtime runtime = Runtime.getRuntime();
 
 		NumberFormat nf = NumberFormat.getInstance();
@@ -39,12 +43,10 @@ public class LogMemoryUsageAction extends Action {
 		String totalMemory = nf.format(runtime.totalMemory());
 		String maxMemory = nf.format(runtime.maxMemory());
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Memory Usage:\t", freeMemory, "\t", totalMemory, "\t",
-					maxMemory));
-		}
+		_log.debug(
+			StringBundler.concat(
+				"Memory Usage:\t", freeMemory, "\t", totalMemory, "\t",
+				maxMemory));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

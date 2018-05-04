@@ -54,8 +54,6 @@ public class UpdateLanguageAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		HttpSession session = request.getSession();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -82,6 +80,8 @@ public class UpdateLanguageAction extends Action {
 					contact.getFacebookSn(), contact.getJabberSn(),
 					contact.getSkypeSn(), contact.getTwitterSn());
 			}
+
+			HttpSession session = request.getSession();
 
 			session.setAttribute(Globals.LOCALE_KEY, locale);
 

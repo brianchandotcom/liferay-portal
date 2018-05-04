@@ -963,8 +963,6 @@ public class GroupImpl extends GroupBaseImpl {
 
 		boolean showSite = true;
 
-		Layout defaultLayout = null;
-
 		int siteLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 			this, privateSite);
 
@@ -1015,7 +1013,7 @@ public class GroupImpl extends GroupBaseImpl {
 			}
 		}
 		else {
-			defaultLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+			Layout defaultLayout = LayoutLocalServiceUtil.fetchFirstLayout(
 				getGroupId(), privateSite,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 

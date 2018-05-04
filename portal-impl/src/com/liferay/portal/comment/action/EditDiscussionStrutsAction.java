@@ -84,8 +84,6 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 				ParamUtil.getString(request, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				long commentId = updateComment(namespacedRequest);
-
 				boolean ajax = ParamUtil.getBoolean(request, "ajax", true);
 
 				if (ajax) {
@@ -94,7 +92,10 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+					long commentId = updateComment(namespacedRequest);
+
 					jsonObject.put("commentId", commentId);
+
 					jsonObject.put("randomNamespace", randomNamespace);
 
 					writeJSON(namespacedRequest, response, jsonObject);

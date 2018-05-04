@@ -61,8 +61,6 @@ public class SitemapAction extends Action {
 
 			String layoutUuid = ParamUtil.getString(request, "layoutUuid");
 			long groupId = ParamUtil.getLong(request, "groupId");
-			boolean privateLayout = ParamUtil.getBoolean(
-				request, "privateLayout");
 
 			LayoutSet layoutSet = null;
 
@@ -72,6 +70,9 @@ public class SitemapAction extends Action {
 				if (group.isStagingGroup()) {
 					groupId = group.getLiveGroupId();
 				}
+
+				boolean privateLayout = ParamUtil.getBoolean(
+					request, "privateLayout");
 
 				layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);

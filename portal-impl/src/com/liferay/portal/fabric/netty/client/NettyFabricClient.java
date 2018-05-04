@@ -214,10 +214,10 @@ public class NettyFabricClient implements FabricClient {
 					Throwable cause = t.getCause();
 
 					if (cause instanceof TerminationProcessException) {
-						TerminationProcessException tpe =
-							(TerminationProcessException)cause;
-
 						if (_log.isWarnEnabled()) {
+							TerminationProcessException tpe =
+								(TerminationProcessException)cause;
+
 							_log.warn(
 								StringBundler.concat(
 									"Forcibly terminate fabric worker ",
@@ -298,9 +298,9 @@ public class NettyFabricClient implements FabricClient {
 
 		@Override
 		public void operationComplete(ChannelFuture channelFuture) {
-			Channel channel = channelFuture.channel();
-
 			if (channelFuture.isSuccess()) {
+				Channel channel = channelFuture.channel();
+
 				if (_log.isInfoEnabled()) {
 					_log.info("Connected to " + channel.remoteAddress());
 				}

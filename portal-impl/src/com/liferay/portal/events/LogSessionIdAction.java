@@ -30,9 +30,9 @@ public class LogSessionIdAction extends Action {
 
 	@Override
 	public void run(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-
 		if (_log.isDebugEnabled()) {
+			HttpSession session = request.getSession();
+
 			_log.debug(
 				StringBundler.concat(
 					"Session id ", session.getId(), " is ",

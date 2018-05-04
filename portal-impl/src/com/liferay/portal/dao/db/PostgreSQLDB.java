@@ -161,8 +161,6 @@ public class PostgreSQLDB extends BaseDB {
 			String sqlDir, String databaseName, int population)
 		throws IOException {
 
-		String suffix = getSuffix(population);
-
 		StringBundler sb = new StringBundler(14);
 
 		sb.append("drop database ");
@@ -176,7 +174,7 @@ public class PostgreSQLDB extends BaseDB {
 			sb.append("\\c ");
 			sb.append(databaseName);
 			sb.append(";\n\n");
-			sb.append(getCreateTablesContent(sqlDir, suffix));
+			sb.append(getCreateTablesContent(sqlDir, getSuffix(population)));
 			sb.append("\n\n");
 			sb.append(readFile(sqlDir + "/indexes/indexes-postgresql.sql"));
 			sb.append("\n\n");

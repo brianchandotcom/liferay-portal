@@ -567,11 +567,11 @@ public class JSONWebServiceActionsManagerImpl
 		for (JSONWebServiceActionConfig jsonWebServiceActionConfig :
 				jsonWebServiceActionConfigs) {
 
-			String jsonWebServiceActionConfigMethod =
-				jsonWebServiceActionConfig.getMethod();
-
 			if (PropsValues.JSONWS_WEB_SERVICE_STRICT_HTTP_METHOD &&
 				(method != null)) {
+
+				String jsonWebServiceActionConfigMethod =
+					jsonWebServiceActionConfig.getMethod();
 
 				if ((jsonWebServiceActionConfigMethod != null) &&
 					!jsonWebServiceActionConfigMethod.equals(method)) {

@@ -405,8 +405,6 @@ public class CSSCompressor {
 		int maxIndex = css.length() - 1;
 
 		while (matcher.find()) {
-			int startIndex = matcher.start() + (preservedToken.length() + 1);
-
 			if (matcher.start() < appendIndex) {
 				continue;
 			}
@@ -439,6 +437,9 @@ public class CSSCompressor {
 			sb.append(css.substring(appendIndex, matcher.start()));
 
 			if (foundTerminator) {
+				int startIndex =
+					matcher.start() + (preservedToken.length() + 1);
+
 				String token = css.substring(startIndex, endIndex);
 
 				if (removeWhiteSpace) {

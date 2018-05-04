@@ -96,10 +96,10 @@ public class RequiredPluginsUtil {
 
 				deployed = true;
 
-				String levelRequiredDeploymentWARFileName =
-					levelRequiredDeploymentWARFileNames[j];
-
 				if (_log.isDebugEnabled()) {
+					String levelRequiredDeploymentWARFileName =
+						levelRequiredDeploymentWARFileNames[j];
+
 					_log.debug(
 						"Automatically deploying the required plugin " +
 							levelRequiredDeploymentWARFileName);

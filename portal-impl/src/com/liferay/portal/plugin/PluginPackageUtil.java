@@ -589,8 +589,6 @@ public class PluginPackageUtil {
 	private RemotePluginPackageRepository _loadRepository(String repositoryURL)
 		throws PluginPackageException, PortalException {
 
-		RemotePluginPackageRepository repository = null;
-
 		StringBundler sb = new StringBundler(8);
 
 		if (!repositoryURL.startsWith(Http.HTTP_WITH_SLASH) &&
@@ -657,7 +655,7 @@ public class PluginPackageUtil {
 			}
 
 			if (ArrayUtil.isNotEmpty(bytes)) {
-				repository = _parseRepositoryXml(
+				RemotePluginPackageRepository repository = _parseRepositoryXml(
 					new String(bytes), repositoryURL);
 
 				_repositoryCache.put(repositoryURL, repository);

@@ -508,11 +508,11 @@ public class IntrabandProxyUtil {
 
 		List<MethodNode> templateMethodNodes = templateClassNode.methods;
 
-		MethodNode templateInitMethodNode = ASMUtil.findMethodNode(
-			templateMethodNodes, "<init>", Type.VOID_TYPE, _STRING_TYPE,
-			_REGISTRATION_REFERENCE_TYPE, _EXCEPTION_HANDLER_TYPE);
-
 		if (defaultInitMethodNode != null) {
+			MethodNode templateInitMethodNode = ASMUtil.findMethodNode(
+				templateMethodNodes, "<init>", Type.VOID_TYPE, _STRING_TYPE,
+				_REGISTRATION_REFERENCE_TYPE, _EXCEPTION_HANDLER_TYPE);
+
 			ASMUtil.mergeMethods(
 				templateInitMethodNode, defaultInitMethodNode,
 				templateInitMethodNode);

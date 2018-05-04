@@ -27,16 +27,18 @@ public class HotDeployMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		if (!_log.isDebugEnabled()) {
+			return;
+		}
+
 		String command = message.getString("command");
 		String servletContextName = message.getString("servletContextName");
 
-		if (_log.isDebugEnabled()) {
-			if (command.equals("deploy")) {
-				_log.debug(servletContextName + " was deployed");
-			}
-			else if (command.equals("undeploy")) {
-				_log.debug(servletContextName + " was undeployed");
-			}
+		if (command.equals("deploy")) {
+			_log.debug(servletContextName + " was deployed");
+		}
+		else if (command.equals("undeploy")) {
+			_log.debug(servletContextName + " was undeployed");
 		}
 	}
 

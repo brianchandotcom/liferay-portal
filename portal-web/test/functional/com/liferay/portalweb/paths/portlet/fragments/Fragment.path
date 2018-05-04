@@ -90,6 +90,11 @@
 	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][4]/button</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CONTENT_PAGE_FRAGMENT</td>
+	<td>//div[contains(@id,'fragment') and contains(.,'${key_content}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

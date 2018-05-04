@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_DELIVERY_PANEL</td>
-	<td>//div[contains(@class,'panel-title')]/a[contains(.,'${key_contentType}')]</td>
+	<td>//div[contains(@class,'panel-heading')]//a[contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,7 +174,7 @@
 <!--REQUESTS-->
 <tr>
 	<td>REQUESTS_LIST_TAB</td>
-	<td>//a[contains(@title,'Requests List')]</td>
+	<td>//a[contains(@class,'nav-link') and contains(.,'${key_navLinkOption}')]</td>
 	<td></td>
 </tr>
 </tbody>

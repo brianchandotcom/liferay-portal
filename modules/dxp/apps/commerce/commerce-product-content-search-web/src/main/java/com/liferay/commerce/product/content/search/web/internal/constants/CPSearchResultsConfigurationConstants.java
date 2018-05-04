@@ -19,12 +19,6 @@ package com.liferay.commerce.product.content.search.web.internal.constants;
  */
 public class CPSearchResultsConfigurationConstants {
 
-	public static final String CROSS_SELL_PRODUCTS = "cross-sell-products";
-
-	public static final String RELATED_PRODUCTS = "related-products";
-
 	public static final String SELECT_CATEGORIES = "select-categories";
-
-	public static final String UP_SELL_PRODUCTS = "up-sell-products";
 
 }

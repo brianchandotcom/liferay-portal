@@ -21,15 +21,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskManagerUtil;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -77,11 +76,12 @@ public class UADApplicationExportHelper {
 	}
 
 	public Stream<String> getApplicationNames() {
-		Stream<UADDisplay> uadDisplayStream =
-			_uadRegistry.getUADDisplayStream();
+		Collection<UADExporter> uadExporters = _uadRegistry.getUADExporters();
 
-		return uadDisplayStream.map(
-			UADDisplay::getApplicationName
+		Stream<UADExporter> uadExporterStream = uadExporters.stream();
+
+		return uadExporterStream.map(
+			UADExporter::getApplicationName
 		).distinct(
 		).sorted();
 	}
@@ -89,18 +89,13 @@ public class UADApplicationExportHelper {
 	public List<UADExporter> getApplicationUADExporters(
 		String applicationName) {
 
-		Stream<UADDisplay> uadDisplayStream =
-			_uadRegistry.getUADDisplayStream();
+		Collection<UADExporter> uadExporters = _uadRegistry.getUADExporters();
 
-		return uadDisplayStream.filter(
-			uadDisplay -> applicationName.equals(
-				uadDisplay.getApplicationName())
-		).map(
-			uadDisplay -> uadDisplay.getKey()
-		).map(
-			key -> _uadRegistry.getUADExporter(key)
-		).filter(
-			Objects::nonNull
+		Stream<UADExporter> uadExporterStream = uadExporters.stream();
+
+		return uadExporterStream.filter(
+			uadExporter -> applicationName.equals(
+				uadExporter.getApplicationName())
 		).collect(
 			Collectors.toList()
 		);

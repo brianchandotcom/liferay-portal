@@ -39,6 +39,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseBlogsEntryUADExporter extends DynamicQueryUADExporter<BlogsEntry> {
 	@Override
+	public String getApplicationName() {
+		return BlogsUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return blogsEntryLocalService.getActionableDynamicQuery();
 	}

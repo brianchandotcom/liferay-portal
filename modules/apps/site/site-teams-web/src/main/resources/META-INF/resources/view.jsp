@@ -26,20 +26,20 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 />
 
 <clay:management-toolbar
-	actionItems="<%= siteTeamsDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= siteTeamsDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= siteTeamsDisplayContext.getClearResultsURL() %>"
 	componentId="teamsManagementToolbar"
 	creationMenu="<%= siteTeamsDisplayContext.isShowAddButton() ? siteTeamsDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= siteTeamsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= siteTeamsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteTeamsDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= siteTeamsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="teams"
 	searchFormName="searchFm"
 	showSearch="<%= siteTeamsDisplayContext.isSearchEnabled() %>"
 	sortingOrder="<%= siteTeamsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteTeamsDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteTeamsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteTeamsDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= siteTeamsDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= siteTeamsDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteTeams" var="deleteTeamsURL">

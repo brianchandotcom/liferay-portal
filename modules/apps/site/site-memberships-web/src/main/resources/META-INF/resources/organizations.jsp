@@ -26,11 +26,11 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 />
 
 <clay:management-toolbar
-	actionItems="<%= organizationsDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= organizationsDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= organizationsDisplayContext.getClearResultsURL() %>"
 	componentId="organizationsManagementToolbar"
 	disabled="<%= organizationsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= organizationsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= organizationsDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	searchActionURL="<%= organizationsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="organizations"
@@ -40,8 +40,8 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	showSearch="<%= organizationsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= organizationsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= organizationsDisplayContext.getSortingURL() %>"
-	totalItems="<%= organizationsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= organizationsDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= organizationsDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= organizationsDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

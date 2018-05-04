@@ -28,15 +28,15 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 	clearResultsURL="<%= selectUsersDisplayContext.getClearResultsURL() %>"
 	componentId="selectUsersWebManagementToolbar"
 	disabled="<%= selectUsersDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= selectUsersDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= selectUsersDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= selectUsersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
 	showSearch="<%= selectUsersDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectUsersDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectUsersDisplayContext.getSortingURL() %>"
-	totalItems="<%= selectUsersDisplayContext.getTotalItems() %>"
-	viewTypes="<%= selectUsersDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= selectUsersDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= selectUsersDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-teams-select-users" name="selectUserFm">

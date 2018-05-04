@@ -28,15 +28,15 @@ SiteRolesDisplayContext siteRolesDisplayContext = new SiteRolesDisplayContext(re
 	clearResultsURL="<%= siteRolesDisplayContext.getClearResultsURL() %>"
 	componentId="siteRolesManagementToolbar"
 	disabled="<%= siteRolesDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= siteRolesDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteRolesDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= siteRolesDisplayContext.getSearchActionURL() %>"
 	searchContainerId="siteRoles"
 	searchFormName="searchFm"
 	showSearch="<%= siteRolesDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= siteRolesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteRolesDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteRolesDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteRolesDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= siteRolesDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= siteRolesDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">

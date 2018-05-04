@@ -23,16 +23,16 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	actionItems="<%= kbTemplatesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
 	creationMenu="<%= kbTemplatesManagementToolbarDisplayContext.getCreationMenu() %>"
-	filterItems="<%= kbTemplatesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="kbTemplates"
 	selectable="<%= true %>"
 	sortingOrder="<%= kbTemplatesManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSortingURL()) %>"
-	totalItems="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
+	itemsTotal="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
 />
 
 <div class="container-fluid-1280">

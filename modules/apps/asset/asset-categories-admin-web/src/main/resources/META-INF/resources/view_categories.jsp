@@ -31,20 +31,20 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 />
 
 <clay:management-toolbar
-	actionItems="<%= assetCategoriesDisplayContext.getCategoriesActionItemsDropdownItems() %>"
+	actionDropdownItems="<%= assetCategoriesDisplayContext.getCategoriesActionItemsDropdownItems() %>"
 	clearResultsURL="<%= assetCategoriesDisplayContext.getCategoriesClearResultsURL() %>"
 	componentId="assetCategoriesManagementToolbar"
 	creationMenu="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() ? assetCategoriesDisplayContext.getCategoriesCreationMenu() : null %>"
 	disabled="<%= assetCategoriesDisplayContext.isDisabledCategoriesManagementBar() %>"
-	filterItems="<%= assetCategoriesDisplayContext.getCategoriesFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= assetCategoriesDisplayContext.getCategoriesFilterItemsDropdownItems() %>"
 	searchActionURL="<%= assetCategoriesDisplayContext.getCategoriesSearchActionURL() %>"
 	searchContainerId="assetCategories"
 	searchFormName="searchFm"
 	showSearch="<%= assetCategoriesDisplayContext.isShowCategoriesSearch() %>"
 	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetCategoriesDisplayContext.getCategoriesSortingURL() %>"
-	totalItems="<%= assetCategoriesDisplayContext.getCategoriesTotalItems() %>"
-	viewTypes="<%= assetCategoriesDisplayContext.getCategoriesViewTypeItems() %>"
+	itemsTotal="<%= assetCategoriesDisplayContext.getCategoriesTotalItems() %>"
+	viewTypeItems="<%= assetCategoriesDisplayContext.getCategoriesViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteCategory" var="deleteCategoryURL">

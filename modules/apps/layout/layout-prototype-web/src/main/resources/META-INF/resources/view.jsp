@@ -24,17 +24,17 @@
 />
 
 <clay:management-toolbar
-	actionItems="<%= layoutPrototypeDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= layoutPrototypeDisplayContext.getActionDropdownItems() %>"
 	componentId="layoutPrototypeManagementToolbar"
 	creationMenu="<%= layoutPrototypeDisplayContext.isShowAddButton() ? layoutPrototypeDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= layoutPrototypeDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= layoutPrototypeDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= layoutPrototypeDisplayContext.getFilterDropdownItems() %>"
 	searchContainerId="layoutPrototype"
 	showSearch="<%= false %>"
 	sortingOrder="<%= layoutPrototypeDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutPrototypeDisplayContext.getSortingURL() %>"
-	totalItems="<%= layoutPrototypeDisplayContext.getTotalItems() %>"
-	viewTypes="<%= layoutPrototypeDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= layoutPrototypeDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= layoutPrototypeDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteLayoutPrototypes" var="deleteLayoutPrototypesURL">

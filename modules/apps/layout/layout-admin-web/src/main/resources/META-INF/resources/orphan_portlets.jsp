@@ -35,15 +35,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 />
 
 <clay:management-toolbar
-	actionItems="<%= orphanPortletsDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= orphanPortletsDisplayContext.getActionDropdownItems() %>"
 	componentId="portletsManagementToolbar"
-	filterItems="<%= orphanPortletsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= orphanPortletsDisplayContext.getFilterDropdownItems() %>"
 	searchContainerId="portlets"
 	showSearch="<%= false %>"
 	sortingOrder="<%= orphanPortletsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= orphanPortletsDisplayContext.getSortingURL() %>"
-	totalItems="<%= portlets.size() %>"
-	viewTypes="<%= orphanPortletsDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= portlets.size() %>"
+	viewTypeItems="<%= orphanPortletsDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="container-fluid-1280">

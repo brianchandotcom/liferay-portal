@@ -28,15 +28,15 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 
 <clay:management-toolbar
 	clearResultsURL="<%= siteItemSelectorViewDisplayContext.getClearResultsURL() %>"
-	filterItems="<%= siteItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= siteItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch="<%= siteItemSelectorViewDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= siteItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteItemSelectorViewDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteItemSelectorViewDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteItemSelectorViewDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= siteItemSelectorViewDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= siteItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form action="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">

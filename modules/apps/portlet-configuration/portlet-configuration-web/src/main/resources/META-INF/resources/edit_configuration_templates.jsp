@@ -35,16 +35,16 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 			/>
 
 			<clay:management-toolbar
-				actionItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems() %>"
+				actionDropdownItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems() %>"
 				componentId="archivedSettingsManagementToolbar"
 				disabled="<%= portletConfigurationTemplatesDisplayContext.isDisabledManagementBar() %>"
-				filterItems="<%= portletConfigurationTemplatesDisplayContext.getFilterDropdownItems() %>"
+				filterDropdownItems="<%= portletConfigurationTemplatesDisplayContext.getFilterDropdownItems() %>"
 				searchContainerId="archivedSettings"
 				showSearch="<%= false %>"
 				sortingOrder="<%= portletConfigurationTemplatesDisplayContext.getOrderByType() %>"
 				sortingURL="<%= portletConfigurationTemplatesDisplayContext.getSortingURL() %>"
-				totalItems="<%= portletConfigurationTemplatesDisplayContext.getTotalItems() %>"
-				viewTypes="<%= portletConfigurationTemplatesDisplayContext.getViewTypeItems() %>"
+				itemsTotal="<%= portletConfigurationTemplatesDisplayContext.getTotalItems() %>"
+				viewTypeItems="<%= portletConfigurationTemplatesDisplayContext.getViewTypeItems() %>"
 			/>
 
 			<div class="container-fluid-1280">

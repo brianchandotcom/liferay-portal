@@ -77,7 +77,7 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 	searchActionURL="<%= searchURL %>"
 	selectable="<%= false %>"
 	showCreationMenu="<%= false %>"
-	totalItems="<%= wikiPagesSearchContainer.getTotal() %>"
+	itemsTotal="<%= wikiPagesSearchContainer.getTotal() %>"
 />
 
 <div class="container-fluid-1280 lfr-item-viewer" id="<portlet:namespace />wikiPagesSelectorContainer">

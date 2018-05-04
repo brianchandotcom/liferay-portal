@@ -34,15 +34,15 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 <clay:management-toolbar
 	clearResultsURL="<%= siteBrowserDisplayContext.getClearResultsURL() %>"
 	componentId="siteBrowserWebManagementToolbar"
-	filterItems="<%= siteBrowserDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteBrowserDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= siteBrowserDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch='<%= !Objects.equals(siteBrowserDisplayContext.getType(), "parent-sites") %>'
 	sortingOrder="<%= siteBrowserDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteBrowserDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteBrowserDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteBrowserDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= siteBrowserDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= siteBrowserDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectGroupFm">

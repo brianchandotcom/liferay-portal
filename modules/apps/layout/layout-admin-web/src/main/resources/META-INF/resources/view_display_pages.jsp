@@ -26,11 +26,11 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 />
 
 <clay:management-toolbar
-	actionItems="<%= displayPageDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= displayPageDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= displayPageDisplayContext.getClearResultsURL() %>"
 	componentId="displayPagesManagementToolbar"
 	disabled="<%= displayPageDisplayContext.isDisabledDisplayPagesManagementBar() %>"
-	filterItems="<%= displayPageDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= displayPageDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= displayPageDisplayContext.getSearchActionURL() %>"
 	searchContainerId="displayPages"
 	searchFormName="searchFm"
@@ -38,8 +38,8 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	showSearch="<%= displayPageDisplayContext.isShowDisplayPagesSearch() %>"
 	sortingOrder="<%= displayPageDisplayContext.getOrderByType() %>"
 	sortingURL="<%= displayPageDisplayContext.getSortingURL() %>"
-	totalItems="<%= displayPageDisplayContext.getTotalItems() %>"
-	viewTypes="<%= displayPageDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= displayPageDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= displayPageDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteDisplayPageURL">

@@ -28,19 +28,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 />
 
 <clay:management-toolbar
-	actionItems="<%= fragmentDisplayContext.getFragmentCollectionActionItemsDropdownItems() %>"
+	actionDropdownItems="<%= fragmentDisplayContext.getFragmentCollectionActionItemsDropdownItems() %>"
 	clearResultsURL="<%= fragmentDisplayContext.getFragmentCollectionClearResultsURL() %>"
 	componentId="fragmentCollectionsManagementToolbar"
 	creationMenu="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) ? fragmentDisplayContext.getFragmentCollectionCreationMenu() : null %>"
 	disabled="<%= fragmentDisplayContext.isDisabledFragmentCollectionsManagementBar() %>"
-	filterItems="<%= fragmentDisplayContext.getFragmentCollectionFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= fragmentDisplayContext.getFragmentCollectionFilterItemsDropdownItems() %>"
 	searchActionURL="<%= fragmentDisplayContext.getFragmentCollectionSearchActionURL() %>"
 	searchContainerId="fragmentCollections"
 	searchFormName="searchFm"
 	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentDisplayContext.getFragmentCollectionSortingURL() %>"
-	totalItems="<%= fragmentDisplayContext.getFragmentCollectionTotalItems() %>"
-	viewTypes="<%= fragmentDisplayContext.getFragmentCollectionViewTypeItems() %>"
+	itemsTotal="<%= fragmentDisplayContext.getFragmentCollectionTotalItems() %>"
+	viewTypeItems="<%= fragmentDisplayContext.getFragmentCollectionViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

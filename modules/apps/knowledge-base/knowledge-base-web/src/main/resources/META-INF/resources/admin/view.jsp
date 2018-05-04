@@ -53,11 +53,11 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	actionItems="<%= kbAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	creationMenu="<%= kbAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= kbAdminManagementToolbarDisplayContext.isDisabled() %>"
-	filterItems="<%= kbAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	searchActionURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="kbObjects"
@@ -65,7 +65,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	showInfoButton="<%= kbAdminManagementToolbarDisplayContext.isShowInfoButton() %>"
 	sortingOrder="<%= kbAdminManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSortingURL()) %>"
-	totalItems="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"
+	itemsTotal="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

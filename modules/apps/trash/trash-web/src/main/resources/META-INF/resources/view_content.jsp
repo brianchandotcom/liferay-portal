@@ -56,14 +56,14 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 		<clay:management-toolbar
 			clearResultsURL="<%= trashDisplayContext.getContentClearResultsURL() %>"
 			componentId="trashContentWebManagementToolbar"
-			filterItems="<%= trashDisplayContext.getContentFilterDropdownItems() %>"
+			filterDropdownItems="<%= trashDisplayContext.getContentFilterDropdownItems() %>"
 			infoPanelId="infoPanelId"
 			searchActionURL="<%= trashDisplayContext.getContentSearchActionURL() %>"
 			searchFormName="searchFm"
 			selectable="<%= false %>"
 			showInfoButton="<%= true %>"
-			totalItems="<%= trashHandler.getTrashModelsCount(classPK) %>"
-			viewTypes="<%= trashDisplayContext.getViewTypeItems() %>"
+			itemsTotal="<%= trashHandler.getTrashModelsCount(classPK) %>"
+			viewTypeItems="<%= trashDisplayContext.getViewTypeItems() %>"
 		/>
 
 		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

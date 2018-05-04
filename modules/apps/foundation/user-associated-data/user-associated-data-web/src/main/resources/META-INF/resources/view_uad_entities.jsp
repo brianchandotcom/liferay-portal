@@ -38,14 +38,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 />
 
 <clay:management-toolbar
-	actionItems="<%= viewUADEntitiesDisplay.getActionDropdownItems() %>"
+	actionDropdownItems="<%= viewUADEntitiesDisplay.getActionDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchContainerId="UADEntities"
 	selectable="<%= true %>"
 	showInfoButton="<%= true %>"
 	showSearch="<%= false %>"
-	totalItems="<%= uadEntitySearchContainer.getTotal() %>"
+	itemsTotal="<%= uadEntitySearchContainer.getTotal() %>"
 />
 
 <aui:form method="post" name="viewUADEntitiesFm">

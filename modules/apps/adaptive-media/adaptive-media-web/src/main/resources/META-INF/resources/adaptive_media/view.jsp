@@ -39,12 +39,12 @@ AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMMana
 <clay:management-toolbar
 	creationMenu="<%= amManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= amManagementToolbarDisplayContext.isDisabled() %>"
-	filterItems="<%= amManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= amManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	searchContainerId="imageConfigurationEntries"
 	showSearch="<%= false %>"
-	totalItems="<%= amManagementToolbarDisplayContext.getTotalItems() %>"
-	viewTypes="<%= amManagementToolbarDisplayContext.getViewTypes() %>"
+	itemsTotal="<%= amManagementToolbarDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= amManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <%

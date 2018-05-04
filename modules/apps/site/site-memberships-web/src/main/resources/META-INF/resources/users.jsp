@@ -28,11 +28,11 @@ Role role = usersDisplayContext.getRole();
 />
 
 <clay:management-toolbar
-	actionItems="<%= usersDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= usersDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= usersDisplayContext.getClearResultsURL() %>"
 	componentId="usersManagementToolbar"
 	disabled="<%= usersDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= usersDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= usersDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	searchActionURL="<%= usersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
@@ -42,8 +42,8 @@ Role role = usersDisplayContext.getRole();
 	showSearch="<%= usersDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= usersDisplayContext.getOrderByType() %>"
 	sortingURL="<%= usersDisplayContext.getSortingURL() %>"
-	totalItems="<%= usersDisplayContext.getTotalItems() %>"
-	viewTypes="<%= usersDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= usersDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= usersDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

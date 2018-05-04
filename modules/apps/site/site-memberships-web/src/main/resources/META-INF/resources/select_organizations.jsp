@@ -28,15 +28,15 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 	clearResultsURL="<%= selectOrganizationsDisplayContext.getClearResultsURL() %>"
 	componentId="organizationsManagementToolbar"
 	disabled="<%= selectOrganizationsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= selectOrganizationsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= selectOrganizationsDisplayContext.getFilterDropdownItems() %>"
 	searchActionURL="<%= selectOrganizationsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="organizations"
 	searchFormName="searchFm"
 	showSearch="<%= selectOrganizationsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectOrganizationsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectOrganizationsDisplayContext.getSortingURL() %>"
-	totalItems="<%= selectOrganizationsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= selectOrganizationsDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= selectOrganizationsDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= selectOrganizationsDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

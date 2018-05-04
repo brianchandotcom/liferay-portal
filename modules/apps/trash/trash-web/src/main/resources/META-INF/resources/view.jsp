@@ -32,10 +32,10 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 />
 
 <clay:management-toolbar
-	actionItems="<%= trashDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= trashDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= trashDisplayContext.getClearResultsURL() %>"
 	componentId="trashWebManagementToolbar"
-	filterItems="<%= trashDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= trashDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	searchActionURL="<%= trashDisplayContext.getSearchActionURL() %>"
 	searchContainerId="trash"
@@ -43,8 +43,8 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 	showInfoButton="<%= true %>"
 	sortingOrder="<%= trashDisplayContext.getOrderByType() %>"
 	sortingURL="<%= trashDisplayContext.getSortingURL() %>"
-	totalItems="<%= trashDisplayContext.getTotalItems() %>"
-	viewTypes="<%= trashDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= trashDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= trashDisplayContext.getViewTypeItems() %>"
 />
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />

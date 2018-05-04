@@ -87,7 +87,7 @@ public class WeDeployForecastOrderServiceImpl
 		HttpRequest<List<ForecastOrder>> httpRequest = webClient.get(
 			"/forecast_orders"
 		).as(
-			_bodyCodec
+			_forecastOrdersBodyCodec
 		);
 
 		addAuthorization(httpRequest);
@@ -141,10 +141,11 @@ public class WeDeployForecastOrderServiceImpl
 		return projectId + "-" + orderId;
 	}
 
-	private static final BodyCodec<List<ForecastOrder>> _bodyCodec;
+	private static final BodyCodec<List<ForecastOrder>>
+		_forecastOrdersBodyCodec;
 
 	static {
-		_bodyCodec = BodyCodec.create(
+		_forecastOrdersBodyCodec = BodyCodec.create(
 			BodyCodecImpl.JSON_ARRAY_DECODER.andThen(
 				jsonArray -> JsonUtil.fromJsonArray(
 					jsonArray, ForecastOrder::new)));

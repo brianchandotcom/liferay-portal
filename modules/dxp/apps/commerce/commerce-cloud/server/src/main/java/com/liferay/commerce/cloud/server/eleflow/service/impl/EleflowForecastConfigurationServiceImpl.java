@@ -55,7 +55,7 @@ public class EleflowForecastConfigurationServiceImpl
 		HttpRequest<ForecastConfiguration> httpRequest = webClient.get(
 			path + "/scheduler"
 		).as(
-			_bodyCodec
+			_forecastConfigurationBodyCodec
 		);
 
 		addAuthorization(httpRequest, project);
@@ -91,11 +91,12 @@ public class EleflowForecastConfigurationServiceImpl
 				asyncResult, handler));
 	}
 
-	private static final BodyCodec<ForecastConfiguration> _bodyCodec;
 	private static final
 		BiFunction<ForecastConfiguration, String, EleflowForecastScheduler>
 			_eleflowForecastSchedulerEncoder =
 				new EleflowForecastSchedulerEncoder();
+	private static final BodyCodec<ForecastConfiguration>
+		_forecastConfigurationBodyCodec;
 
 	static {
 		Function<Buffer, ForecastConfiguration> function =
@@ -105,7 +106,7 @@ public class EleflowForecastConfigurationServiceImpl
 				new EleflowForecastSchedulerDecoder()
 			);
 
-		_bodyCodec = BodyCodec.create(function);
+		_forecastConfigurationBodyCodec = BodyCodec.create(function);
 	}
 
 	private final String _callbackURL;

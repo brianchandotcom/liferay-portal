@@ -46,7 +46,7 @@ public class WeDeployProjectServiceImpl
 		HttpRequest<Project> httpRequest = webClient.post(
 			"/projects"
 		).as(
-			_bodyCodec
+			_projectBodyCodec
 		);
 
 		addAuthorization(httpRequest);
@@ -64,7 +64,7 @@ public class WeDeployProjectServiceImpl
 		HttpRequest<Project> httpRequest = webClient.get(
 			"/projects/" + projectId
 		).as(
-			_bodyCodec
+			_projectBodyCodec
 		);
 
 		addAuthorization(httpRequest);
@@ -81,7 +81,7 @@ public class WeDeployProjectServiceImpl
 		HttpRequest<List<Project>> httpRequest = webClient.get(
 			"/projects"
 		).as(
-			_listBodyCodec
+			_projectsBodyCodec
 		);
 
 		addAuthorization(httpRequest);
@@ -97,9 +97,10 @@ public class WeDeployProjectServiceImpl
 				asyncResult, handler));
 	}
 
-	private static final BodyCodec<Project> _bodyCodec = BodyCodec.create(
-		BodyCodecImpl.JSON_OBJECT_DECODER.andThen(Project::new));
-	private static final BodyCodec<List<Project>> _listBodyCodec =
+	private static final BodyCodec<Project> _projectBodyCodec =
+		BodyCodec.create(
+			BodyCodecImpl.JSON_OBJECT_DECODER.andThen(Project::new));
+	private static final BodyCodec<List<Project>> _projectsBodyCodec =
 		BodyCodec.create(
 			BodyCodecImpl.JSON_ARRAY_DECODER.andThen(
 				jsonArray -> JsonUtil.fromJsonArray(jsonArray, Project::new)));

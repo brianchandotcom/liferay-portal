@@ -3464,6 +3464,24 @@ version 2.2.3.
 ### Fixed
 - [LPS-65633]: If the module is `private`, search for the public `app.bnd`.
 
+## 5.3.107 - 2018-05-03
+
+### Changed
+- [LPS-80386]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.30.
+
+## 5.3.108 - 2018-05-03
+
+### Changed
+- [LPS-80466]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.31.
+
+## 5.3.109 - 2018-05-03
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+3.11.32.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3856,7 +3874,9 @@ version 2.2.3.
 [LPS-80125]: https://issues.liferay.com/browse/LPS-80125
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184
 [LPS-80332]: https://issues.liferay.com/browse/LPS-80332
+[LPS-80386]: https://issues.liferay.com/browse/LPS-80386
 [LPS-80394]: https://issues.liferay.com/browse/LPS-80394
+[LPS-80466]: https://issues.liferay.com/browse/LPS-80466
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

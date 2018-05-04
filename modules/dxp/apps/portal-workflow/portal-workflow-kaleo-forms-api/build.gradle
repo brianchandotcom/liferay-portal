@@ -2,7 +2,7 @@ dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compileOnly project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
-	compileOnly project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
+	compileOnly project(":apps:dynamic-data-lists:dynamic-data-lists-api")
+	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 }

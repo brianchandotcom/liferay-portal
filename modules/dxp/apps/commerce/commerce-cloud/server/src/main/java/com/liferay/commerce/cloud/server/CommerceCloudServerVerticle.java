@@ -17,6 +17,7 @@ package com.liferay.commerce.cloud.server;
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
 import com.liferay.commerce.cloud.server.service.ForecastProcessorService;
+import com.liferay.commerce.cloud.server.service.ForecastService;
 import com.liferay.commerce.cloud.server.service.ProjectService;
 import com.liferay.commerce.cloud.server.util.JsonUtil;
 
@@ -39,6 +40,7 @@ public class CommerceCloudServerVerticle extends AbstractVerticle {
 			_deployVerticle(ForecastConfigurationService.ADDRESS),
 			_deployVerticle(ForecastOrderService.ADDRESS),
 			_deployVerticle(ForecastProcessorService.ADDRESS),
+			_deployVerticle(ForecastService.ADDRESS),
 			_deployVerticle(ProjectService.ADDRESS)
 		).compose(
 			__ -> _deployVerticle(

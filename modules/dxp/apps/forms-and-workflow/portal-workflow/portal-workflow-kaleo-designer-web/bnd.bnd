@@ -3,7 +3,5 @@ Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.designer.web
 Bundle-Version: 2.0.0
 Export-Package: com.liferay.portal.workflow.kaleo.designer.web.constants
 Liferay-JS-Config: /META-INF/resources/designer/js/config.js
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Kaleo Designer
 -dsannotations-options: inherit
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

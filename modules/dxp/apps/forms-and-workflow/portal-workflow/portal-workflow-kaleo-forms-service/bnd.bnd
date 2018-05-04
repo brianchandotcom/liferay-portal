@@ -2,8 +2,6 @@ Bundle-Name: Liferay Portal Workflow Kaleo Forms Service
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.forms.service
 Bundle-Version: 2.0.0
 Export-Package: com.liferay.portal.workflow.kaleo.forms.service.permission
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Kaleo Forms
 Liferay-Require-SchemaVersion: 1.1.0
 Liferay-Service: true
 -include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

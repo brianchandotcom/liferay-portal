@@ -1,6 +1,6 @@
 apply plugin: "com.liferay.test.integration"
 
-buildscript{
+buildscript {
 	dependencies {
 		classpath group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 	}

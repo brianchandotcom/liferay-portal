@@ -17,7 +17,12 @@ package com.liferay.gradle.plugins.target.platform;
 import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformIDEExtension;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 
-import io.spring.gradle.dependencymanagement.dsl.DependencyManagementHandler;
+import groovy.lang.Closure;
+import groovy.lang.GroovyObjectSupport;
+
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementConfigurer;
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
+import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -29,6 +34,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -51,8 +57,9 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JavaBasePlugin.class);
 		GradleUtil.applyPlugin(project, TargetPlatformPlugin.class);
 
-		DependencyManagementHandler dependencyManagementHandler =
-			GradleUtil.getExtension(project, DependencyManagementHandler.class);
+		DependencyManagementExtension dependencyManagementExtension =
+			GradleUtil.getExtension(
+				project, DependencyManagementExtension.class);
 
 		TargetPlatformIDEExtension targetPlatformIDEExtension =
 			GradleUtil.addExtension(
@@ -60,7 +67,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 
 		Configuration targetPlatformIDEConfiguration =
 			_addConfigurationTargetPlatformIDE(
-				project, dependencyManagementHandler,
+				project, dependencyManagementExtension,
 				targetPlatformIDEExtension);
 
 		_configureEclipseModel(project, targetPlatformIDEConfiguration);
@@ -68,11 +75,15 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 
 	private Configuration _addConfigurationTargetPlatformIDE(
 		final Project project,
-		final DependencyManagementHandler dependencyManagementHandler,
+		final DependencyManagementExtension dependencyManagementExtension,
 		final TargetPlatformIDEExtension targetPlatformIDEExtension) {
 
-		Configuration configuration = GradleUtil.addConfiguration(
+		final Configuration configuration = GradleUtil.addConfiguration(
 			project, TARGET_PLATFORM_IDE_CONFIGURATION_NAME);
+
+		final Configuration bomConfiguration = GradleUtil.getConfiguration(
+			project,
+			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
 
 		configuration.defaultDependencies(
 			new Action<DependencySet>() {
@@ -80,8 +91,9 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 				@Override
 				public void execute(DependencySet dependencySet) {
 					_addDependenciesTargetPlatformIDE(
-						project, dependencyManagementHandler,
-						targetPlatformIDEExtension);
+						project, dependencyManagementExtension,
+						targetPlatformIDEExtension, configuration,
+						bomConfiguration);
 				}
 
 			});
@@ -96,11 +108,46 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 
 	private void _addDependenciesTargetPlatformIDE(
 		Project project,
-		DependencyManagementHandler dependencyManagementHandler,
-		TargetPlatformIDEExtension targetPlatformIDEExtension) {
+		DependencyManagementExtension dependencyManagementExtension,
+		TargetPlatformIDEExtension targetPlatformIDEExtension,
+		Configuration configuration, final Configuration bomConfiguration) {
+
+		GroovyObjectSupport groovyObjectSupport =
+			(GroovyObjectSupport)dependencyManagementExtension;
+
+		Object[] args = {
+			configuration,
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall() {
+					DependencySet dependencySet =
+						bomConfiguration.getAllDependencies();
+
+					final DependencyManagementConfigurer
+						dependencyManagementConfigurer =
+							(DependencyManagementConfigurer)getDelegate();
+
+					dependencySet.all(
+						new Action<Dependency>() {
+
+							@Override
+							public void execute(Dependency dependency) {
+								_configureDependencyManagementImportsHandler(
+									dependencyManagementConfigurer, dependency);
+							}
+
+						});
+				}
+
+			}
+		};
+
+		groovyObjectSupport.invokeMethod("configurations", args);
 
 		Map<String, String> managedVersions =
-			dependencyManagementHandler.getManagedVersions();
+			dependencyManagementExtension.getManagedVersionsForConfiguration(
+				configuration);
 
 		if (managedVersions.isEmpty()) {
 			return;
@@ -129,6 +176,29 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 				project, TARGET_PLATFORM_IDE_CONFIGURATION_NAME,
 				dependencyNotation);
 		}
+	}
+
+	private void _configureDependencyManagementImportsHandler(
+		DependencyManagementConfigurer dependencyManagementConfigurer,
+		final Dependency dependency) {
+
+		dependencyManagementConfigurer.imports(
+			new Action<ImportsHandler>() {
+
+				@Override
+				public void execute(ImportsHandler importsHandler) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(dependency.getGroup());
+					sb.append(':');
+					sb.append(dependency.getName());
+					sb.append(':');
+					sb.append(dependency.getVersion());
+
+					importsHandler.mavenBom(sb.toString());
+				}
+
+			});
 	}
 
 	private void _configureEclipseModel(

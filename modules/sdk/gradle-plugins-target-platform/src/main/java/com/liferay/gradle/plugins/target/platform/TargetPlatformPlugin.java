@@ -20,11 +20,15 @@ import com.liferay.gradle.plugins.target.platform.internal.util.SkipIfExecutingP
 import com.liferay.gradle.plugins.target.platform.tasks.ResolveTask;
 
 import groovy.lang.Closure;
+import groovy.lang.GroovyObjectSupport;
 
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementConfigurer;
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
 import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -33,6 +37,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
@@ -90,8 +95,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			targetPlatformDistroConfiguration,
 			targetPlatformRequirementsConfiguration);
 
-		_configureDependencyManagement(
-			project, targetPlatformBomsConfiguration);
 		_configureTasksResolve(project, targetPlatformExtension);
 
 		PluginContainer pluginContainer = project.getPlugins();
@@ -107,6 +110,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 						project.getDependencies(),
 						targetPlatformBundlesConfiguration,
 						targetPlatformRequirementsConfiguration);
+					_configureDependencyManagement(
+						project, targetPlatformBomsConfiguration);
 				}
 
 			});
@@ -243,32 +248,63 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	}
 
 	private void _configureDependencyManagement(
-		Project project, Configuration targetPlatformBomsConfiguration) {
+		final Project project,
+		final Configuration targetPlatformBomsConfiguration) {
 
 		final DependencyManagementExtension dependencyManagementExtension =
 			GradleUtil.getExtension(
 				project, DependencyManagementExtension.class);
 
-		DependencySet dependencySet =
-			targetPlatformBomsConfiguration.getAllDependencies();
+		GroovyObjectSupport groovyObjectSupport =
+			(GroovyObjectSupport)dependencyManagementExtension;
 
-		dependencySet.all(
-			new Action<Dependency>() {
+		List<Object> args = new ArrayList<>();
 
-				@Override
-				public void execute(Dependency dependency) {
-					_configureDependencyManagementImportsHandler(
-						dependencyManagementExtension, dependency);
-				}
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
 
-			});
+		for (String configurationName : _CONFIGURATION_NAMES) {
+			Configuration configuration = configurationContainer.findByName(
+				configurationName);
+
+			if (configuration != null) {
+				args.add(configuration);
+			}
+		}
+
+		Closure<Void> closure = new Closure<Void>(project) {
+
+			@SuppressWarnings("unused")
+			public void doCall() {
+				DependencySet dependencySet =
+					targetPlatformBomsConfiguration.getAllDependencies();
+
+				dependencySet.all(
+					new Action<Dependency>() {
+
+						@Override
+						public void execute(final Dependency dependency) {
+							_configureDependencyManagementImportsHandler(
+								(DependencyManagementConfigurer)getDelegate(),
+								dependency);
+						}
+
+					});
+			}
+
+		};
+
+		args.add(closure);
+
+		groovyObjectSupport.invokeMethod(
+			"configurations", args.toArray(new Object[0]));
 	}
 
 	private void _configureDependencyManagementImportsHandler(
-		DependencyManagementExtension dependencyManagementExtension,
+		DependencyManagementConfigurer dependencyManagementConfigurer,
 		final Dependency dependency) {
 
-		dependencyManagementExtension.imports(
+		dependencyManagementConfigurer.imports(
 			new Action<ImportsHandler>() {
 
 				@Override
@@ -377,6 +413,14 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 			});
 	}
+
+	private static final String[] _CONFIGURATION_NAMES = {
+		"compile", "compileClasspath", "compileInclude", "compileOnly",
+		"default", "implementation", "runtime", "runtimeClasspath",
+		"runtimeImplementation", "runtimeOnly", "testCompileClasspath",
+		"testCompileOnly", "testIntegration", "testImplementation",
+		"testRuntime", "testRuntimeClasspath", "testRuntimeOnly"
+	};
 
 	private static final Spec<Task> _skipIfExecutingParentTaskSpec =
 		new SkipIfExecutingParentTaskSpec();

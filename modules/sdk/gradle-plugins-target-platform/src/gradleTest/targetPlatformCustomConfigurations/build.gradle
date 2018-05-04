@@ -1,0 +1,35 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "2.1.25"
+	}
+
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.portal.tools.service.builder"
+apply plugin: "com.liferay.target.platform"
+apply plugin: "java"
+
+task runGradleTest
+
+dependencies {
+	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.208"
+
+	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
+}
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	doLast {
+		assert configurations.serviceBuilder.resolvedConfiguration.resolvedArtifacts.find { it.name.contains("qdox") }.file.name.contains("2.0")
+	}
+}

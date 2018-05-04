@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
-import com.liferay.portal.kernel.servlet.TrackedServletRequest;
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory;
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactoryRegistry;
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIncludeUtil;
@@ -44,10 +43,15 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyContent;
@@ -510,5 +514,36 @@ public class IncludeTag extends AttributesTagSupport {
 	private boolean _strict;
 	private TrackedServletRequest _trackedRequest;
 	private boolean _useCustomPage = true;
+
+	private static class TrackedServletRequest
+		extends HttpServletRequestWrapper {
+
+		public TrackedServletRequest(HttpServletRequest request) {
+			super(request);
+		}
+
+		public Set<String> getSetAttributes() {
+			if (_setAttributes == null) {
+				return Collections.emptySet();
+			}
+			else {
+				return _setAttributes;
+			}
+		}
+
+		@Override
+		public void setAttribute(String name, Object obj) {
+			if (_setAttributes == null) {
+				_setAttributes = new HashSet<>();
+			}
+
+			_setAttributes.add(name);
+
+			super.setAttribute(name, obj);
+		}
+
+		private Set<String> _setAttributes;
+
+	}
 
 }

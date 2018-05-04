@@ -19,10 +19,7 @@ import com.liferay.commerce.cloud.server.eleflow.model.EleflowOrderItems;
 import com.liferay.commerce.cloud.server.model.ForecastOrder;
 import com.liferay.commerce.cloud.server.model.ForecastOrderItem;
 
-import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Andrea Di Giorgi
@@ -39,25 +36,12 @@ public class EleflowOrderEncoder
 			EleflowUtil.getOffsetDateTime(forecastOrder.getCreateTime()));
 		eleflowOrder.setCustomerId(
 			String.valueOf(forecastOrder.getCustomerId()));
-		eleflowOrder.setItems(_encodeEleflowOrderItems(forecastOrder));
+		eleflowOrder.setItems(
+			EleflowUtil.map(
+				forecastOrder.getOrderItems(), _eleflowOrderItemEncoder));
 		eleflowOrder.setOrderId(String.valueOf(forecastOrder.getOrderId()));
 
 		return eleflowOrder;
-	}
-
-	private List<EleflowOrderItems> _encodeEleflowOrderItems(
-		ForecastOrder forecastOrder) {
-
-		List<ForecastOrderItem> forecastOrderItems =
-			forecastOrder.getOrderItems();
-
-		Stream<ForecastOrderItem> stream = forecastOrderItems.stream();
-
-		return stream.map(
-			_eleflowOrderItemEncoder
-		).collect(
-			Collectors.toList()
-		);
 	}
 
 	private static final Function<ForecastOrderItem, EleflowOrderItems>

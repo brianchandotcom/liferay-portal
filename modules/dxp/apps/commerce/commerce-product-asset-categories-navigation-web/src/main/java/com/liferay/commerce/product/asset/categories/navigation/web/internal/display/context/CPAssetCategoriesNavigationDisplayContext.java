@@ -85,9 +85,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return _assetCategories;
 		}
 
-		AssetCategory category =
-			(AssetCategory)_httpServletRequest.getAttribute(
-				WebKeys.ASSET_CATEGORY);
+		AssetCategory category = getParentCategory();
 
 		if (category != null) {
 			_assetCategories = _assetCategoryService.getVocabularyCategories(
@@ -95,6 +93,10 @@ public class CPAssetCategoriesNavigationDisplayContext {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 		else {
+			if (useRootCategory()) {
+				return Collections.emptyList();
+			}
+
 			AssetVocabulary assetVocabulary = getAssetVocabulary();
 
 			if (assetVocabulary == null) {
@@ -247,14 +249,17 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		return url;
 	}
 
+	public String getRootAssetCategoryId() {
+		return _cpAssetCategoriesNavigationPortletInstanceConfiguration.
+			rootAssetCategoryId();
+	}
+
 	public String getVocabularyNavigation(ThemeDisplay themeDisplay)
 		throws Exception {
 
 		long categoryId = 0;
 
-		AssetCategory assetCategory =
-			(AssetCategory)_httpServletRequest.getAttribute(
-				WebKeys.ASSET_CATEGORY);
+		AssetCategory assetCategory = getParentCategory();
 
 		if (assetCategory != null) {
 			categoryId = assetCategory.getCategoryId();
@@ -276,6 +281,16 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		sb.append("</ul></div>");
 
 		return sb.toString();
+	}
+
+	public boolean useCategoryFromRequest() {
+		return _cpAssetCategoriesNavigationPortletInstanceConfiguration.
+			useCategoryFromRequest();
+	}
+
+	public boolean useRootCategory() {
+		return _cpAssetCategoriesNavigationPortletInstanceConfiguration.
+			useRootCategory();
 	}
 
 	protected void buildCategoriesNavigation(
@@ -321,6 +336,26 @@ public class CPAssetCategoriesNavigationDisplayContext {
 
 			sb.append("</li>");
 		}
+	}
+
+	protected AssetCategory getParentCategory() throws PortalException {
+		AssetCategory category = null;
+
+		if (useRootCategory()) {
+			if (useCategoryFromRequest()) {
+				category = (AssetCategory)_httpServletRequest.getAttribute(
+					WebKeys.ASSET_CATEGORY);
+			}
+			else {
+				long categoryId = GetterUtil.getLong(getRootAssetCategoryId());
+
+				if (categoryId > 0) {
+					category = _assetCategoryService.getCategory(categoryId);
+				}
+			}
+		}
+
+		return category;
 	}
 
 	private List<AssetCategory> _assetCategories;

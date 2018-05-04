@@ -353,12 +353,6 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 		PortletContext portletContext =
 			liferayPortletConfig.getPortletContext();
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
 		LiferayPortletRequestDispatcher liferayPortletRequestDispatcher =
 			(LiferayPortletRequestDispatcher)
 				portletContext.getRequestDispatcher(
@@ -369,6 +363,14 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 				_log.error(uri + " is not a valid include");
 			}
 			else {
+				PortletRequest portletRequest =
+					(PortletRequest)request.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST);
+
+				PortletResponse portletResponse =
+					(PortletResponse)request.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 				liferayPortletRequestDispatcher.include(
 					portletRequest, portletResponse, true);
 			}

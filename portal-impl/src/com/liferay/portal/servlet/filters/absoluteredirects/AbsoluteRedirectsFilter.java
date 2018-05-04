@@ -60,9 +60,9 @@ public class AbsoluteRedirectsFilter
 		// Company id needs to always be called here so that it's properly set
 		// in subsequent calls
 
-		long companyId = PortalInstances.getCompanyId(request);
-
 		if (_log.isDebugEnabled()) {
+			long companyId = PortalInstances.getCompanyId(request);
+
 			_log.debug("Company id " + companyId);
 		}
 

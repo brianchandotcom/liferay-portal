@@ -83,8 +83,6 @@ public class InputPermissionsParamsTagUtil {
 			StringBundler sb = new StringBundler();
 
 			for (String action : supportedActions) {
-				boolean groupChecked = groupDefaultActions.contains(action);
-
 				boolean guestChecked = false;
 
 				if (layoutGroup.isControlPanel()) {
@@ -108,6 +106,8 @@ public class InputPermissionsParamsTagUtil {
 				}
 
 				if (group.isOrganization() || group.isRegularSite()) {
+					boolean groupChecked = groupDefaultActions.contains(action);
+
 					if (groupChecked) {
 						sb.append(StringPool.AMPERSAND);
 						sb.append(renderResponse.getNamespace());

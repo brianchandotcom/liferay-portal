@@ -2580,11 +2580,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		String layoutPrototypeUuid = ParamUtil.getString(
 			serviceContext, "layoutPrototypeUuid");
-		boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-			serviceContext, "layoutPrototypeLinkEnabled");
 
 		if (Validator.isNotNull(layoutPrototypeUuid)) {
 			layout.setLayoutPrototypeUuid(layoutPrototypeUuid);
+
+			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
+				serviceContext, "layoutPrototypeLinkEnabled");
+
 			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 		}
 
@@ -3446,14 +3448,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
 		try {
 			WorkflowThreadLocal.setEnabled(false);
 
 			SitesUtil.mergeLayoutPrototypeLayout(group, layout);
 
 			if (Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
+				LayoutSet layoutSet = layout.getLayoutSet();
+
 				SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}

@@ -4953,9 +4953,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
-
 		if (group.isStagingGroup()) {
+			Group parentGroup = groupPersistence.findByPrimaryKey(
+				parentGroupId);
+
 			Group staginGroup = parentGroup.getStagingGroup();
 
 			long stagingGroupId = staginGroup.getGroupId();

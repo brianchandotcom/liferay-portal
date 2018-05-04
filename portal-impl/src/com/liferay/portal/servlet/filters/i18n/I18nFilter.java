@@ -166,11 +166,11 @@ public class I18nFilter extends BasePortalFilter {
 
 		String groupFriendlyURL = StringPool.BLANK;
 
-		int friendlyURLStart = 0;
 		int friendlyURLEnd = 0;
 
 		if (groupFriendlyURLIndex != null) {
-			friendlyURLStart = groupFriendlyURLIndex[0];
+			int friendlyURLStart = groupFriendlyURLIndex[0];
+
 			friendlyURLEnd = groupFriendlyURLIndex[1];
 
 			groupFriendlyURL = requestURI.substring(

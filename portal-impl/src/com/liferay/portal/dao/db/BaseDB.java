@@ -365,6 +365,8 @@ public abstract class BaseDB implements DB {
 			boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
+		template = StringUtil.trim(template);
+
 		if (!template.endsWith(StringPool.SEMICOLON)) {
 			template += StringPool.SEMICOLON;
 		}

@@ -296,10 +296,10 @@ public class SocialRequestInterpreterLocalServiceImpl
 			SocialRequestInterpreter requestInterpreter = registry.getService(
 				serviceReference);
 
-			String portletId = (String)serviceReference.getProperty(
-				"javax.portlet.name");
-
 			if (!(requestInterpreter instanceof SocialRequestInterpreterImpl)) {
+				String portletId = (String)serviceReference.getProperty(
+					"javax.portlet.name");
+
 				requestInterpreter = new SocialRequestInterpreterImpl(
 					portletId, requestInterpreter);
 			}

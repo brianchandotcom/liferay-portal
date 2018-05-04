@@ -134,9 +134,6 @@ public class ActionUtil {
 	}
 
 	public static Group getGroup(HttpServletRequest request) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
 		long groupId = ParamUtil.getLong(request, "groupId");
@@ -147,6 +144,9 @@ public class ActionUtil {
 			group = GroupLocalServiceUtil.getGroup(groupId);
 		}
 		else if (!cmd.equals(Constants.ADD)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			group = themeDisplay.getSiteGroup();
 		}
 

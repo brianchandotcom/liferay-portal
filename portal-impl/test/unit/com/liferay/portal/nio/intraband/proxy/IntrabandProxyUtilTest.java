@@ -1439,8 +1439,6 @@ public class IntrabandProxyUtilTest {
 
 		Class<?> returnClass = method.getReturnType();
 
-		Type returnType = Type.getType(returnClass);
-
 		if (returnClass == void.class) {
 
 			// INVOKESPECIAL stubInternalName _send
@@ -1564,6 +1562,8 @@ public class IntrabandProxyUtilTest {
 				}
 
 				// xRETURN
+
+				Type returnType = Type.getType(returnClass);
 
 				_assertInsnNode(
 					iterator.next(), returnType.getOpcode(Opcodes.IRETURN));

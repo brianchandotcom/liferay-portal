@@ -61,10 +61,10 @@ public class UserGroupRoleRoleChecker extends EmptyOnClickRowChecker {
 		Role role = (Role)obj;
 
 		try {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
 			if (isChecked(role)) {
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
 				if (SiteMembershipPolicyUtil.isRoleProtected(
 						permissionChecker, _user.getUserId(),
 						_group.getGroupId(), role.getRoleId()) ||

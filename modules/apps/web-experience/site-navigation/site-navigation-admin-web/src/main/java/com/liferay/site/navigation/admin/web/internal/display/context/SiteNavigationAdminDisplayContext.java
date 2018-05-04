@@ -28,18 +28,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminWebKeys;
 import com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationPermission;
 import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
@@ -52,7 +46,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -64,18 +57,14 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationAdminDisplayContext {
 
 	public SiteNavigationAdminDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			HttpServletRequest request)
-		throws PortalException {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_request = request;
 
-		_portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletPreferences(
-				request, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN);
 		_siteNavigationMenuItemTypeRegistry =
 			(SiteNavigationMenuItemTypeRegistry)_request.getAttribute(
 				SiteNavigationAdminWebKeys.
@@ -110,40 +99,13 @@ public class SiteNavigationAdminDisplayContext {
 			return _displayStyle;
 		}
 
-		String[] displayViews = getDisplayViews();
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
-
-		_displayStyle = ParamUtil.getString(_request, "displayStyle");
-
-		if (Validator.isNull(_displayStyle)) {
-			_displayStyle = portalPreferences.getValue(
-				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-				"display-style", "list");
-		}
-		else if (ArrayUtil.contains(displayViews, _displayStyle)) {
-			portalPreferences.setValue(
-				SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-				"display-style", _displayStyle);
-		}
-
-		if (!ArrayUtil.contains(displayViews, _displayStyle)) {
-			_displayStyle = displayViews[0];
-		}
+		_displayStyle = ParamUtil.getString(_request, "displayStyle", "list");
 
 		return _displayStyle;
 	}
 
 	public String[] getDisplayViews() {
-		if (_displayViews == null) {
-			_displayViews = StringUtil.split(
-				PrefsParamUtil.getString(
-					_portletPreferences, _request, "displayViews",
-					"list,icon,descriptive"));
-		}
-
-		return _displayViews;
+		return new String[] {"list", "icon", "descriptive"};
 	}
 
 	public String getKeywords() {
@@ -171,45 +133,23 @@ public class SiteNavigationAdminDisplayContext {
 		};
 	}
 
-	public String getOrderByCol() throws Exception {
+	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol");
-
-		if (Validator.isNull(_orderByCol)) {
-			_orderByCol = _portletPreferences.getValue(
-				"order-by-col", "create-date");
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
-
-			if (saveOrderBy) {
-				_portletPreferences.setValue("order-by-col", _orderByCol);
-			}
-		}
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}
 
-	public String getOrderByType() throws Exception {
+	public String getOrderByType() {
 		if (_orderByType != null) {
 			return _orderByType;
 		}
 
-		_orderByType = ParamUtil.getString(_request, "orderByType");
-
-		if (Validator.isNull(_orderByType)) {
-			_orderByType = _portletPreferences.getValue("order-by-type", "asc");
-		}
-		else {
-			boolean saveOrderBy = ParamUtil.getBoolean(_request, "saveOrderBy");
-
-			if (saveOrderBy) {
-				_portletPreferences.setValue("order-by-type", _orderByType);
-			}
-		}
+		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
 	}
@@ -220,7 +160,7 @@ public class SiteNavigationAdminDisplayContext {
 		return orderColumns;
 	}
 
-	public PortletURL getPortletURL() throws Exception {
+	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
 		String displayStyle = ParamUtil.getString(_request, "displayStyle");
@@ -252,7 +192,7 @@ public class SiteNavigationAdminDisplayContext {
 			fetchPrimarySiteNavigationMenu(themeDisplay.getScopeGroupId());
 	}
 
-	public SearchContainer getSearchContainer() throws Exception {
+	public SearchContainer getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -312,7 +252,7 @@ public class SiteNavigationAdminDisplayContext {
 		return _searchContainer;
 	}
 
-	public JSONObject getSelectedItemTypeJSONObject() throws Exception {
+	public JSONObject getSelectedItemTypeJSONObject() {
 		if (Validator.isNotNull(_selectedItemTypeJSONObject)) {
 			return _selectedItemTypeJSONObject;
 		}
@@ -464,13 +404,11 @@ public class SiteNavigationAdminDisplayContext {
 	}
 
 	private String _displayStyle;
-	private String[] _displayViews;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
 	private JSONObject _selectedItemTypeJSONObject;

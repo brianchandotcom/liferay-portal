@@ -111,13 +111,12 @@ public class VerifyGroup extends VerifyProcess {
 				catch (GroupFriendlyURLException gfurle) {
 					if (user != null) {
 						long userId = user.getUserId();
-						String screenName = user.getScreenName();
 
 						if (_log.isWarnEnabled()) {
 							StringBundler sb = new StringBundler(7);
 
 							sb.append("Updating user screen name ");
-							sb.append(screenName);
+							sb.append(user.getScreenName());
 							sb.append(" to ");
 							sb.append(userId);
 							sb.append(" because it is generating an invalid ");

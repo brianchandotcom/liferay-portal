@@ -674,17 +674,15 @@ public class AssetUtil {
 				pos + AssetUtil.CLASSNAME_SEPARATOR.length());
 
 			className = className.substring(0, pos);
+
+			return message;
 		}
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
-		if (pos == -1) {
-			message = assetRendererFactory.getTypeName(locale);
-		}
-
-		return message;
+		return assetRendererFactory.getTypeName(locale);
 	}
 
 	public static String getDefaultAssetPublisherId(Layout layout) {

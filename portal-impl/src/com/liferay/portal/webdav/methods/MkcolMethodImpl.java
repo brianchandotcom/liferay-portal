@@ -36,15 +36,19 @@ public class MkcolMethodImpl implements Method {
 
 	@Override
 	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
-		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
-		HttpServletRequest request = webDAVRequest.getHttpServletRequest();
-		HttpServletResponse response = webDAVRequest.getHttpServletResponse();
 		long groupId = webDAVRequest.getGroupId();
 
 		if (groupId != 0) {
+			WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
+
 			Status status = storage.makeCollection(webDAVRequest);
 
 			if (Validator.isNotNull(status.getObject())) {
+				HttpServletRequest request =
+					webDAVRequest.getHttpServletRequest();
+				HttpServletResponse response =
+					webDAVRequest.getHttpServletResponse();
+
 				response.setHeader(
 					HttpHeaders.LOCATION,
 					StringBundler.concat(

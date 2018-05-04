@@ -81,7 +81,6 @@ public class UpgradeModules extends UpgradeProcess {
 			for (String[] convertedLegacyModule : getConvertedLegacyModules()) {
 				String oldServletContextName = convertedLegacyModule[0];
 				String newServletContextName = convertedLegacyModule[1];
-				String buildNamespace = convertedLegacyModule[2];
 
 				try (PreparedStatement ps = connection.prepareStatement(
 						"select servletContextName, buildNumber from " +
@@ -91,6 +90,8 @@ public class UpgradeModules extends UpgradeProcess {
 
 					try (ResultSet rs = ps.executeQuery()) {
 						if (!rs.next()) {
+							String buildNamespace = convertedLegacyModule[2];
+
 							if (hasServiceComponent(buildNamespace)) {
 								addRelease(newServletContextName);
 							}

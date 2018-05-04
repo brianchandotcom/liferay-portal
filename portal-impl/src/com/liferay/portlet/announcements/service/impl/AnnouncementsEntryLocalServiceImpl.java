@@ -486,7 +486,6 @@ public class AnnouncementsEntryLocalServiceImpl
 		long classPK = entry.getClassPK();
 
 		String toName = PropsValues.ANNOUNCEMENTS_EMAIL_TO_NAME;
-		String toAddress = PropsValues.ANNOUNCEMENTS_EMAIL_TO_ADDRESS;
 
 		long teamId = 0;
 
@@ -553,6 +552,8 @@ public class AnnouncementsEntryLocalServiceImpl
 				user.getFullName());
 		}
 		else {
+			String toAddress = PropsValues.ANNOUNCEMENTS_EMAIL_TO_ADDRESS;
+
 			notifyUsers(entry, teamId, params, toName, toAddress, company);
 		}
 	}

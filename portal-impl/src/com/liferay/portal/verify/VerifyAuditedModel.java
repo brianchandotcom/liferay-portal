@@ -231,16 +231,20 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 			long userId = (Long)auditedModelArray[1];
 			String userName = (String)auditedModelArray[2];
-			Timestamp createDate = (Timestamp)auditedModelArray[3];
-			Timestamp modifiedDate = (Timestamp)auditedModelArray[4];
 
 			ps.setLong(1, companyId);
 			ps.setLong(2, userId);
 			ps.setString(3, userName);
 
 			if (updateDates) {
+				Timestamp createDate = (Timestamp)auditedModelArray[3];
+
 				ps.setTimestamp(4, createDate);
+
+				Timestamp modifiedDate = (Timestamp)auditedModelArray[4];
+
 				ps.setTimestamp(5, modifiedDate);
+
 				ps.setLong(6, primKey);
 			}
 			else {
@@ -294,9 +298,9 @@ public class VerifyAuditedModel extends VerifyProcess {
 
 				while (rs.next()) {
 					long companyId = rs.getLong("companyId");
-					long previousUserId = rs.getLong("userId");
 
 					if (verifiableAuditedModel.getJoinByTableName() != null) {
+						long previousUserId = rs.getLong("userId");
 						long relatedPrimKey = rs.getLong(
 							verifiableAuditedModel.getJoinByTableName());
 

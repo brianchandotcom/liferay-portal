@@ -16,6 +16,7 @@ package com.liferay.asset.entry.rel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.asset.entry.rel.exception.NoSuchEntryDisplayPageRelException;
 import com.liferay.asset.entry.rel.model.AssetEntryDisplayPageRel;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -71,6 +72,9 @@ public interface AssetEntryDisplayPageRelLocalService extends BaseLocalService,
 	public AssetEntryDisplayPageRel addAssetEntryDisplayPageRel(
 		AssetEntryDisplayPageRel assetEntryDisplayPageRel);
 
+	public AssetEntryDisplayPageRel addAssetEntryDisplayPageRel(
+		long assetEntryId, long displayPageId);
+
 	/**
 	* Creates a new asset entry display page rel with the primary key. Does not add the asset entry display page rel to the database.
 	*
@@ -101,6 +105,11 @@ public interface AssetEntryDisplayPageRelLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public AssetEntryDisplayPageRel deleteAssetEntryDisplayPageRel(
 		long assetEntryDisplayPageRelId) throws PortalException;
+
+	public void deleteAssetEntryDisplayPageRel(long assetEntryId,
+		long displayPageId) throws NoSuchEntryDisplayPageRelException;
+
+	public void deleteAssetEntryDisplayPageRelByAssetEntryId(long assetEntryId);
 
 	/**
 	* @throws PortalException
@@ -171,6 +180,10 @@ public interface AssetEntryDisplayPageRelLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetEntryDisplayPageRel fetchAssetEntryDisplayPageRel(
 		long assetEntryDisplayPageRelId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetEntryDisplayPageRel fetchAssetEntryDisplayPageRel(
+		long assetEntryId, long displayPageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

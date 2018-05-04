@@ -54,6 +54,12 @@ public class AssetEntryDisplayPageRelLocalServiceUtil {
 		return getService().addAssetEntryDisplayPageRel(assetEntryDisplayPageRel);
 	}
 
+	public static com.liferay.asset.entry.rel.model.AssetEntryDisplayPageRel addAssetEntryDisplayPageRel(
+		long assetEntryId, long displayPageId) {
+		return getService()
+				   .addAssetEntryDisplayPageRel(assetEntryId, displayPageId);
+	}
+
 	/**
 	* Creates a new asset entry display page rel with the primary key. Does not add the asset entry display page rel to the database.
 	*
@@ -90,6 +96,17 @@ public class AssetEntryDisplayPageRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteAssetEntryDisplayPageRel(assetEntryDisplayPageRelId);
+	}
+
+	public static void deleteAssetEntryDisplayPageRel(long assetEntryId,
+		long displayPageId)
+		throws com.liferay.asset.entry.rel.exception.NoSuchEntryDisplayPageRelException {
+		getService().deleteAssetEntryDisplayPageRel(assetEntryId, displayPageId);
+	}
+
+	public static void deleteAssetEntryDisplayPageRelByAssetEntryId(
+		long assetEntryId) {
+		getService().deleteAssetEntryDisplayPageRelByAssetEntryId(assetEntryId);
 	}
 
 	/**
@@ -183,6 +200,12 @@ public class AssetEntryDisplayPageRelLocalServiceUtil {
 		long assetEntryDisplayPageRelId) {
 		return getService()
 				   .fetchAssetEntryDisplayPageRel(assetEntryDisplayPageRelId);
+	}
+
+	public static com.liferay.asset.entry.rel.model.AssetEntryDisplayPageRel fetchAssetEntryDisplayPageRel(
+		long assetEntryId, long displayPageId) {
+		return getService()
+				   .fetchAssetEntryDisplayPageRel(assetEntryId, displayPageId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

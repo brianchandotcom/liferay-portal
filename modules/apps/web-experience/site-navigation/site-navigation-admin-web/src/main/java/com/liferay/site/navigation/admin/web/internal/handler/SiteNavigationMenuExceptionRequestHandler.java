@@ -49,7 +49,7 @@ public class SiteNavigationMenuExceptionRequestHandler {
 		String errorMessage = "an-unexpected-error-occurred";
 
 		if (pe instanceof SiteNavigationMenuNameException) {
-			errorMessage = "this-field-is-required";
+			errorMessage = "please-enter-a-valid-name";
 		}
 
 		jsonObject.put(

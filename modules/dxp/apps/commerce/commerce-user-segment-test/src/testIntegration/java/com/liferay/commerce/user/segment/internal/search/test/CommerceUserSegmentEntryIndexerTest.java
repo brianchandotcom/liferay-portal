@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -124,22 +124,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		Hits hits = _searchCommerceUserSegmentEntries(
 			commerceUserSegmentEntry.getCompanyId(), groupId);
 
-		int hit = 0;
-
-		String name = commerceUserSegmentEntry.getName();
-		long entryId = commerceUserSegmentEntry.getCommerceUserSegmentEntryId();
-
-		for (Document document : hits.getDocs()) {
-			if (entryId == GetterUtil.getLong(
-					document.getField(Field.ENTRY_CLASS_PK).getValue())) {
-
-				if (name.equals(document.getField(Field.NAME).getValue())) {
-					hit++;
-				}
-			}
-		}
-
-		Assert.assertEquals(0, hit);
+		Assert.assertEquals(hits.toString(), 0, hits.getLength());
 	}
 
 	@Test

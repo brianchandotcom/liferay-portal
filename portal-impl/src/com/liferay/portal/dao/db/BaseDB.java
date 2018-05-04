@@ -365,7 +365,9 @@ public abstract class BaseDB implements DB {
 			boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
-		if (!template.endsWith(StringPool.SEMICOLON)) {
+		template = StringUtil.trim(template);
+
+		if (!StringUtil.endsWith(template, StringPool.SEMICOLON)) {
 			template += StringPool.SEMICOLON;
 		}
 
@@ -397,7 +399,7 @@ public abstract class BaseDB implements DB {
 
 					int end = line.length();
 
-					if (line.endsWith(StringPool.SEMICOLON)) {
+					if (StringUtil.endsWith(line, StringPool.SEMICOLON)) {
 						end -= 1;
 					}
 

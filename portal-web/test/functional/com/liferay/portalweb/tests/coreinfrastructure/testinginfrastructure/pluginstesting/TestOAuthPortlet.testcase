@@ -26,10 +26,20 @@
 			<var name="websiteURL" value="http://www.liferay.com" />
 		</execute>
 
-		<execute macro="TestOAuth#getConsumerKeyAndSecret">
-			<return from="consumerKey" name="consumerKey" />
-			<return from="consumerSecret" name="consumerSecret" />
+		<execute macro="TestOAuth#getApplicationCredentials">
+			<return from="applicationCredentials" name="applicationCredentials" />
 			<var name="applicationName" value="oauth1" />
+		</execute>
+
+		<execute macro="TestOAuth#getConsumerSecret">
+			<return from="consumerSecret" name="consumerSecret" />
+			<var name="applicationCredentials" value="${applicationCredentials}" />
+		</execute>
+
+		<execute macro="TestOAuth#getConsumerKey">
+			<return from="consumerKey" name="consumerKey" />
+			<var name="applicationCredentials" value="${applicationCredentials}" />
+			<var name="consumerSecret" value="${applicationCredentials}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

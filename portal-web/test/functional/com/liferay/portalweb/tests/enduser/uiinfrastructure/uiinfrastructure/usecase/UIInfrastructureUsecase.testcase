@@ -219,8 +219,6 @@
 			<var name="entryTitle" value="Blogs Title" />
 		</execute>
 
-		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
-
 		<execute macro="Button#clickPublish" />
 
 		<execute macro="Alert#viewSuccessMessageText">

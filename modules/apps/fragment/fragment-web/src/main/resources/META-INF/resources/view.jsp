@@ -24,7 +24,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"
+	navigationItems="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"
 />
 
 <clay:management-toolbar

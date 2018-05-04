@@ -28,7 +28,7 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= trashDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= trashDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

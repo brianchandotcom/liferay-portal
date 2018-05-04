@@ -47,7 +47,7 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

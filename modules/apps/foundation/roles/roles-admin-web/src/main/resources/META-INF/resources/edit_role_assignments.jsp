@@ -72,7 +72,7 @@ renderResponse.setTitle(role.getTitle(locale));
 <liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
 
 <clay:navigation-bar
-	items="<%= roleDisplayContext.getRoleAssignmentsNavigationItems(portletURL) %>"
+	navigationItems="<%= roleDisplayContext.getRoleAssignmentsNavigationItems(portletURL) %>"
 />
 
 <liferay-frontend:management-bar

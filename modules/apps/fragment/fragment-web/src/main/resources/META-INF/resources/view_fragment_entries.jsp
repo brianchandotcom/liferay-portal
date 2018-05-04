@@ -25,7 +25,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"
+	navigationItems="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"
 />
 
 <clay:management-toolbar

@@ -50,7 +50,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 	<c:when test="<%= trashHandler.isContainerModel() %>">
 		<clay:navigation-bar
 			inverted="<%= true %>"
-			items="<%= trashDisplayContext.getNavigationItems() %>"
+			navigationItems="<%= trashDisplayContext.getNavigationItems() %>"
 		/>
 
 		<clay:management-toolbar

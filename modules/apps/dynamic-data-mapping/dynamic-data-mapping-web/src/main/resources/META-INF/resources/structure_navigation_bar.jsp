@@ -22,5 +22,5 @@ String scopedLabel = Validator.isNull(scopeTitle) ? ddmDisplay.getTitle(locale) 
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= ddmDisplayContext.getNavigationItem(scopedLabel) %>"
+	navigationItems="<%= ddmDisplayContext.getNavigationItem(scopedLabel) %>"
 />

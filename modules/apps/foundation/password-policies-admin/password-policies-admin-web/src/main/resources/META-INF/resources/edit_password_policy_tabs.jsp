@@ -18,5 +18,5 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= passwordPolicyDisplayContext.getEditPasswordPolicyNavigationItems() %>"
+	navigationItems="<%= passwordPolicyDisplayContext.getEditPasswordPolicyNavigationItems() %>"
 />

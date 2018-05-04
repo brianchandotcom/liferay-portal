@@ -26,7 +26,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
 %>
 
 <clay:navigation-bar
-	items="<%= selectLayoutPageTemplateEntryDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectLayoutPageTemplateEntryDisplayContext.getNavigationItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

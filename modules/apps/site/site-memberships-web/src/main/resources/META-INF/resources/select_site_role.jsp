@@ -21,7 +21,7 @@ SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRole
 %>
 
 <clay:navigation-bar
-	items="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
+	navigationItems="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
 />
 
 <clay:management-toolbar

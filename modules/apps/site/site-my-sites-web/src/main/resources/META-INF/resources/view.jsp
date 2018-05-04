@@ -21,7 +21,7 @@
 <liferay-ui:error key="membershipAlreadyRequested" message="membership-was-already-requested" />
 
 <clay:navigation-bar
-	items="<%= siteMySitesDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= siteMySitesDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

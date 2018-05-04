@@ -32,7 +32,7 @@ public class NavigationBarTag extends BaseClayTag {
 		putValue("inverted", inverted);
 	}
 
-	public void setItems(List<NavigationItem> navigationItems) {
+	public void setNavigationItems(List<NavigationItem> navigationItems) {
 		putValue("items", navigationItems);
 	}
 

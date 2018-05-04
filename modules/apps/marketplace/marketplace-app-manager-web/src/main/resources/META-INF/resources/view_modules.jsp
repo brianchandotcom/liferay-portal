@@ -77,7 +77,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items='<%= appManagerDisplayContext.getNavigationItems(viewURL, "modules") %>'
+	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "modules") %>'
 />
 
 <liferay-frontend:management-bar

@@ -18,7 +18,7 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= assetTagsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= assetTagsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

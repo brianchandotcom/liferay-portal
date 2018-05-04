@@ -24,6 +24,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
 	<clay:navigation-bar
 		inverted="<%= true %>"
-		items="<%= dlAdminNavigationDisplayContext.getNavigationItems() %>"
+		navigationItems="<%= dlAdminNavigationDisplayContext.getNavigationItems() %>"
 	/>
 </c:if>

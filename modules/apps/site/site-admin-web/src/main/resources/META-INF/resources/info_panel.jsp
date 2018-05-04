@@ -65,7 +65,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				</div>
 
 				<clay:navigation-bar
-					items="<%= navigationItems %>"
+					navigationItems="<%= navigationItems %>"
 				/>
 
 				<div class="sidebar-body">
@@ -93,7 +93,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				</div>
 
 				<clay:navigation-bar
-					items="<%= navigationItems %>"
+					navigationItems="<%= navigationItems %>"
 				/>
 
 				<div class="sidebar-body">
@@ -194,7 +194,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 		</div>
 
 		<clay:navigation-bar
-			items="<%= navigationItems %>"
+			navigationItems="<%= navigationItems %>"
 		/>
 
 		<div class="sidebar-body">

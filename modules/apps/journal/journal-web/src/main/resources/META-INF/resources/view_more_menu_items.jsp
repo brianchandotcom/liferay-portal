@@ -39,7 +39,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 </c:if>
 
 <clay:navigation-bar
-	items="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

@@ -22,7 +22,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

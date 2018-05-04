@@ -36,7 +36,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 %>
 
 <clay:navigation-bar
-	items='<%= userDisplayContext.getNavigationItems("user-groups") %>'
+	navigationItems='<%= userDisplayContext.getNavigationItems("user-groups") %>'
 />
 
 <liferay-frontend:management-bar>

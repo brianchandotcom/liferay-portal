@@ -86,7 +86,7 @@ request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 %>
 
 <clay:navigation-bar
-	items='<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				if (role == null) {

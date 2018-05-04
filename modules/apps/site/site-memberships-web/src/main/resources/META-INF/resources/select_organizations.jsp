@@ -21,7 +21,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 %>
 
 <clay:navigation-bar
-	items="<%= selectOrganizationsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectOrganizationsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

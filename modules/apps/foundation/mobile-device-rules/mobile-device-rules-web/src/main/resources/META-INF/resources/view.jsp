@@ -45,7 +45,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

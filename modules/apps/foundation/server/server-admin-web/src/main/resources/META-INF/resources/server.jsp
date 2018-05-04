@@ -28,7 +28,7 @@
 
 		<clay:navigation-bar
 			inverted="<%= true %>"
-			items="<%= serverDisplayContext.getServerNavigationItems() %>"
+			navigationItems="<%= serverDisplayContext.getServerNavigationItems() %>"
 		/>
 
 		<div class="container-fluid-1280">

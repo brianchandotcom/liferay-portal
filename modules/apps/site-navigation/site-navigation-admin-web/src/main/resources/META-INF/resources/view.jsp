@@ -22,7 +22,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteNavigationAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= siteNavigationAdminDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

@@ -39,7 +39,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>'
+	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>'
 />
 
 <liferay-frontend:management-bar

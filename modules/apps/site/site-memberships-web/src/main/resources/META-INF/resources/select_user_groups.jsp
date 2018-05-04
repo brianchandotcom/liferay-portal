@@ -21,7 +21,7 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 %>
 
 <clay:navigation-bar
-	items="<%= selectUserGroupsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectUserGroupsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

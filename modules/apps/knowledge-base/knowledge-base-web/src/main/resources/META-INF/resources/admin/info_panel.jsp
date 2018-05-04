@@ -74,7 +74,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 		%>
 
 		<clay:navigation-bar
-			items="<%= kbAdminNavigationDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= kbAdminNavigationDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">
@@ -205,7 +205,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 		%>
 
 		<clay:navigation-bar
-			items="<%= kbAdminNavigationDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= kbAdminNavigationDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">

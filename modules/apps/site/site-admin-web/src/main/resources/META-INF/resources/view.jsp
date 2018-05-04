@@ -52,7 +52,7 @@ if (group != null) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= siteAdminDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

@@ -18,12 +18,17 @@
 
 <%
 String vocabularyNavigation = cpAssetCategoriesNavigationDisplayContext.getVocabularyNavigation(themeDisplay);
-
 List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.getAssetCategories();
 
 Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("cpAssetCategoriesNavigationDisplayContext", cpAssetCategoriesNavigationDisplayContext);
+
+String vocabularyTitle = StringPool.BLANK;
+
+if (assetVocabulary != null) {
+	vocabularyTitle = assetVocabulary.getTitle(locale);
+}
 %>
 
 <liferay-ddm:template-renderer
@@ -44,23 +49,11 @@ contextObjects.put("cpAssetCategoriesNavigationDisplayContext", cpAssetCategorie
 			extended="<%= true %>"
 			markupView="lexicon"
 			persistState="<%= true %>"
-			title="<%= HtmlUtil.escape(assetVocabulary.getTitle(locale)) %>"
+			title="<%= HtmlUtil.escape(vocabularyTitle) %>"
 		>
 			<%= vocabularyNavigation %>
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
-
-	<%
-	if (assetCategories.isEmpty()) {
-	%>
-
-		<div class="alert alert-info">
-			<liferay-ui:message key="there-are-no-categories" />
-		</div>
-
-	<%
-	}
-	%>
 
 	<aui:script use="aui-tree-view">
 		var treeViews = A.all('#<portlet:namespace />taglibAssetCategoriesNavigationPanel .lfr-asset-category-list-container');

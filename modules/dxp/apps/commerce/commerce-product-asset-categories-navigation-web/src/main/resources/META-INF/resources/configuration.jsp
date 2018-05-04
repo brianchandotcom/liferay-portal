@@ -46,25 +46,114 @@ if (assetVocabulary != null) {
 						/>
 					</div>
 
-					<aui:select label="vocabulary" name="preferences--assetVocabularyId--" showEmptyOption="<%= true %>">
+					<%
+					boolean useRootCategory = cpAssetCategoriesNavigationDisplayContext.useRootCategory();
+					%>
+
+					<aui:input id="preferencesUseRootCategory" label="use-root-category" name="preferences--useRootCategory--" type="toggle-switch" value="<%= useRootCategory %>" />
+
+					<%
+					String assetVocabularyContainerCssClass = StringPool.BLANK;
+					String rootAssetCategoryContainerCssClass = "hide";
+
+					if (useRootCategory) {
+						assetVocabularyContainerCssClass += "hide";
+						rootAssetCategoryContainerCssClass = StringPool.BLANK;
+					}
+					%>
+
+					<div class="<%= assetVocabularyContainerCssClass %>" id="<portlet:namespace />assetVocabularyContainer">
+						<aui:select label="vocabulary" name="preferences--assetVocabularyId--" showEmptyOption="<%= true %>">
+
+							<%
+							for (AssetVocabulary curAssetVocabulary : cpAssetCategoriesNavigationDisplayContext.getAssetVocabularies()) {
+							%>
+
+								<aui:option label="<%= curAssetVocabulary.getTitle(locale) %>" selected="<%= curAssetVocabulary.getVocabularyId() == assetVocabularyId %>" value="<%= curAssetVocabulary.getVocabularyId() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
+
+					<div class="<%= rootAssetCategoryContainerCssClass %>" id="<portlet:namespace />rootAssetCategoryContainer">
 
 						<%
-						for (AssetVocabulary curAssetVocabulary : cpAssetCategoriesNavigationDisplayContext.getAssetVocabularies()) {
+						boolean useCategoryFromRequest = cpAssetCategoriesNavigationDisplayContext.useCategoryFromRequest();
 						%>
 
-							<aui:option label="<%= curAssetVocabulary.getTitle(locale) %>" selected="<%= curAssetVocabulary.getVocabularyId() == assetVocabularyId %>" value="<%= curAssetVocabulary.getVocabularyId() %>" />
+						<aui:input id="preferencesUseCategoryFromRequest" label="use-category-from-request" name="preferences--useCategoryFromRequest--" type="toggle-switch" value="<%= useCategoryFromRequest %>" />
 
 						<%
+						String rootAssetCategoryIdInputContainerCssClass = StringPool.BLANK;
+
+						if (useCategoryFromRequest) {
+							rootAssetCategoryIdInputContainerCssClass += "hide";
 						}
 						%>
 
-					</aui:select>
+						<div class="<%= rootAssetCategoryIdInputContainerCssClass %>" id="<portlet:namespace />rootAssetCategoryIdInputContainer">
+							<aui:input id="preferencesRootAssetCategoryId" name="preferences--rootAssetCategoryId--" type="hidden" />
+
+							<liferay-asset:asset-categories-selector
+								categoryIds="<%= cpAssetCategoriesNavigationDisplayContext.getRootAssetCategoryId() %>"
+								hiddenInput="assetCategoriesSelectorCategoryId"
+								singleSelect="<%= true %>"
+							/>
+						</div>
+					</div>
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button cssClass="btn-lg" name="submitButton" type="submit" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script use="aui-base,event-input">
+	var submitButton = A.one('#<portlet:namespace />submitButton');
+
+	submitButton.on(
+		'click',
+		function() {
+			if (A.one('#<portlet:namespace />preferencesUseRootCategory').attr('checked')) {
+				var preferencesRootAssetCategoryId = A.one('#<portlet:namespace />preferencesRootAssetCategoryId');
+				var assetCategoriesSelectorCategoryId = A.one('#<portlet:namespace />assetCategoriesSelectorCategoryId');
+
+				preferencesRootAssetCategoryId.val(assetCategoriesSelectorCategoryId.val());
+			}
+
+			submitForm(A.one('#<portlet:namespace />fm'));
+		}
+	);
+
+	A.one('#<portlet:namespace />preferencesUseRootCategory').on(
+		'change',
+		function() {
+			if (this.attr('checked')) {
+				A.one('#<portlet:namespace />assetVocabularyContainer').addClass('hide');
+				A.one('#<portlet:namespace />rootAssetCategoryContainer').removeClass('hide');
+			}
+			else {
+				A.one('#<portlet:namespace />rootAssetCategoryContainer').addClass('hide');
+				A.one('#<portlet:namespace />assetVocabularyContainer').removeClass('hide');
+			}
+		}
+	);
+
+	A.one('#<portlet:namespace />preferencesUseCategoryFromRequest').on(
+		'change',
+		function() {
+			if (this.attr('checked')) {
+				A.one('#<portlet:namespace />rootAssetCategoryIdInputContainer').addClass('hide');
+			}
+			else {
+				A.one('#<portlet:namespace />rootAssetCategoryIdInputContainer').removeClass('hide');
+			}
+		}
+	);
+</aui:script>

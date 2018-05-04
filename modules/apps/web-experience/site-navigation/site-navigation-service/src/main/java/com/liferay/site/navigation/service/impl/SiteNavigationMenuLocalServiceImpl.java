@@ -17,6 +17,7 @@ package com.liferay.site.navigation.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -279,6 +280,14 @@ public class SiteNavigationMenuLocalServiceImpl
 	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new SiteNavigationMenuNameException();
+		}
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			SiteNavigationMenu.class.getName(), "name");
+
+		if (name.length() > nameMaxLength) {
+			throw new SiteNavigationMenuNameException(
+				"Maximum length of name exceeded");
 		}
 	}
 

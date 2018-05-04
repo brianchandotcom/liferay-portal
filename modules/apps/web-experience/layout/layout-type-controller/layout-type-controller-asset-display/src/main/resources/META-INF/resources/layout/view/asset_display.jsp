@@ -60,3 +60,5 @@
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<liferay-ui:layout-common />

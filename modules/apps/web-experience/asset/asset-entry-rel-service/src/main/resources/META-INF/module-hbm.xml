@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel" />
+	<import class="com.liferay.asset.entry.rel.model.AssetEntryAssetDisplayPageRel" />
 	<class name="com.liferay.asset.entry.rel.model.impl.AssetEntryAssetCategoryRelImpl" table="AssetEntryAssetCategoryRel">
 		<id name="assetEntryAssetCategoryRelId" type="long">
 			<generator class="assigned" />
@@ -10,5 +11,12 @@
 		<property name="assetEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="assetCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.asset.entry.rel.model.impl.AssetEntryAssetDisplayPageRelImpl" table="AssetEntryAssetDisplayPageRel">
+		<id name="assetEntryAssetDisplayPageId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="assetEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="assetDisplayPageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

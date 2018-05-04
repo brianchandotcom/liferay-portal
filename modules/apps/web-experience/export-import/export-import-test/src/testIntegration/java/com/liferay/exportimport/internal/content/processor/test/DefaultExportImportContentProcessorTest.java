@@ -148,7 +148,10 @@ public class DefaultExportImportContentProcessorTest {
 
 		_externalGroup = GroupTestUtil.addGroup();
 		_liveGroup = GroupTestUtil.addGroup();
-		_stagingGroup = GroupTestUtil.addGroup();
+
+		GroupTestUtil.enableLocalStaging(_liveGroup);
+
+		_stagingGroup = _liveGroup.getStagingGroup();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -413,8 +416,11 @@ public class DefaultExportImportContentProcessorTest {
 		Assert.assertTrue(
 			content,
 			content.contains(
-				"@data_handler_group_friendly_url@@" +
-					_stagingGroup.getFriendlyURL() + "@"));
+				"@data_handler_group_friendly_url@@" + _liveGroup.getUuid() +
+					"@"));
+		Assert.assertFalse(content, content.contains(_stagingGroup.getUuid()));
+		Assert.assertFalse(
+			content, content.contains(_stagingGroup.getFriendlyURL()));
 		Assert.assertTrue(
 			content, content.contains("@data_handler_path_context@/en@"));
 		Assert.assertFalse(
@@ -483,8 +489,11 @@ public class DefaultExportImportContentProcessorTest {
 		Assert.assertTrue(
 			content,
 			content.contains(
-				"@data_handler_group_friendly_url@@" +
-					_stagingGroup.getFriendlyURL() + "@"));
+				"@data_handler_group_friendly_url@@" + _liveGroup.getUuid() +
+					"@"));
+		Assert.assertFalse(content, content.contains(_stagingGroup.getUuid()));
+		Assert.assertFalse(
+			content, content.contains(_stagingGroup.getFriendlyURL()));
 		Assert.assertFalse(content, content.contains("/en/en"));
 
 		setFinalStaticField(
@@ -1215,10 +1224,7 @@ public class DefaultExportImportContentProcessorTest {
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private StagedModel _referrerStagedModel;
-
-	@DeleteAfterTestRun
 	private Group _stagingGroup;
-
 	private Layout _stagingPrivateLayout;
 	private Layout _stagingPublicLayout;
 

@@ -22,6 +22,7 @@ dependencies {
 	compileOnly project(":apps:web-experience:export-import:export-import-api")
 	compileOnly project(":apps:web-experience:layout:layout-api")
 	compileOnly project(":apps:web-experience:site:site-api")
+	compileOnly project(":apps:web-experience:staging:staging-api")
 	compileOnly project(":apps:web-experience:trash:trash-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")

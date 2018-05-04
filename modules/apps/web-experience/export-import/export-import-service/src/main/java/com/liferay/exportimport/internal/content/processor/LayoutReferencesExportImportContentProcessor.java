@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Locale;
 import java.util.Map;
@@ -434,16 +435,18 @@ public class LayoutReferencesExportImportContentProcessor
 						urlSB.append(remoteGroupUuid);
 					}
 				}
-				else if (urlGroup.isStaged()) {
+				else if (_stagingGroupHelper.isStagingGroup(urlGroup)) {
 					Group liveGroup = urlGroup.getLiveGroup();
 
 					urlSB.append(liveGroup.getUuid());
 				}
-				else if (!urlGroup.isControlPanel()) {
-					urlSB.append(urlGroup.getFriendlyURL());
+				else if (urlGroup.isControlPanel() ||
+						 _stagingGroupHelper.isLiveGroup(urlGroup)) {
+
+					urlSB.append(urlGroup.getUuid());
 				}
 				else {
-					urlSB.append(urlGroup.getUuid());
+					urlSB.append(urlGroup.getFriendlyURL());
 				}
 
 				urlSB.append(StringPool.AT);
@@ -981,5 +984,8 @@ public class LayoutReferencesExportImportContentProcessor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

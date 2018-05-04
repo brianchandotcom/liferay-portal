@@ -16,7 +16,6 @@ package com.liferay.asset.entry.rel.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.entry.rel.exception.NoSuchEntryAssetDisplayPageRelException;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetDisplayPageRel;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -107,7 +106,7 @@ public interface AssetEntryAssetDisplayPageRelLocalService
 		long assetEntryAssetDisplayPageId) throws PortalException;
 
 	public void deleteAssetEntryAssetDisplayPageRel(long assetEntryId,
-		long assetDisplayPageId) throws NoSuchEntryAssetDisplayPageRelException;
+		long assetDisplayPageId) throws PortalException;
 
 	public void deleteAssetEntryAssetDisplayPageRelByAssetEntryId(
 		long assetEntryId);

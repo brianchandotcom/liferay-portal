@@ -102,7 +102,7 @@ public class AssetEntryAssetDisplayPageRelLocalServiceUtil {
 
 	public static void deleteAssetEntryAssetDisplayPageRel(long assetEntryId,
 		long assetDisplayPageId)
-		throws com.liferay.asset.entry.rel.exception.NoSuchEntryAssetDisplayPageRelException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteAssetEntryAssetDisplayPageRel(assetEntryId,
 			assetDisplayPageId);

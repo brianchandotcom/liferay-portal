@@ -173,9 +173,7 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 		return _searchContainer.getOrderByCol();
 	}
 
-	private List<DropdownItem> _getOrderByDropdownItems()
-		throws PortletException {
-
+	private List<DropdownItem> _getOrderByDropdownItems() {
 		return new DropdownItemList() {
 			{
 				final Map<String, String> orderColumnsMap = new HashMap<>();

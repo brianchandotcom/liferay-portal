@@ -514,7 +514,7 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>actionItems</name>
+			<name>actionDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -658,7 +658,7 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>actionItems</name>
+			<name>actionDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -814,7 +814,7 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>actionItems</name>
+			<name>actionDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -932,7 +932,7 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-				<attribute>
+		<attribute>
 			<description></description>
 			<name>stickerLabel</name>
 			<required>false</required>
@@ -1708,7 +1708,7 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>actionItems</name>
+			<name>actionDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

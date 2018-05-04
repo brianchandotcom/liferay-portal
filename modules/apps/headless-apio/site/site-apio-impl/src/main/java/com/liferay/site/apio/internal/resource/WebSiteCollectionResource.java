@@ -21,12 +21,18 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,38 +76,84 @@ public class WebSiteCollectionResource
 	public Representor<Group, Long> representor(
 		Representor.Builder<Group, Long> builder) {
 
+		/* TODO -> get url, GroupURLProvider.getGroupURL is not valid because
+		request is not accesible*/
+
 		return builder.types(
 			"WebSite"
 		).identifier(
 			Group::getGroupId
+		).addBidirectionalModel(
+			"interactionService", "webSites", WebSiteIdentifier.class,
+			this::_getParentGroupId
+		).addLinkedModel(
+			"author", PersonIdentifier.class, Group::getCreatorUserId
+		).addLinkedModel(
+			"creator", PersonIdentifier.class, Group::getCreatorUserId
+		).addLocalizedStringByLocale(
+			"active", this::_isActive
 		).addLocalizedStringByLocale(
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(
 			"name", Group::getName
+		).addLocalizedStringByLocale(
+			"numberOfMembers", this::_numberOfMembersMessage
+		).addRelatedCollection(
+			"members", PersonIdentifier.class
+		).addString(
+			"membershipType", Group::getTypeLabel
 		).build();
 	}
 
 	private PageItems<Group> _getPageItems(
-		Pagination pagination, Company company) {
+			Pagination pagination, Company company)
+		throws PortalException {
 
+		int count = _groupService.getGroupsCount(
+			company.getCompanyId(), 0, true);
+		List<Group> groups = _groupService.getGroups(
+			company.getCompanyId(), 0, true, pagination.getStartPosition(),
+			pagination.getEndPosition());
+
+		return new PageItems<>(groups, count);
+	}
+
+	private Long _getParentGroupId(Group group) {
+		if (group.getParentGroupId() != 0L) {
+			return group.getParentGroupId();
+		}
+		else {
+			return null;
+		}
+	}
+
+	private String _isActive(Group group, Locale locale) {
+		return LanguageUtil.get(locale, group.isActive() ? "yes" : "no");
+	}
+
+	private String _numberOfMembersMessage(Group group, Locale locale) {
 		return Try.fromFallible(
-			() -> {
-				int count = _groupService.getGroupsCount(
-					company.getCompanyId(), 0, true);
-				List<Group> groups = _groupService.getGroups(
-					company.getCompanyId(), 0, true,
-					pagination.getStartPosition(), pagination.getEndPosition());
-
-				return new PageItems<>(groups, count);
+			() -> _userLocalService.getGroupUsersCount(
+				group.getGroupId(), WorkflowConstants.STATUS_APPROVED)
+		).map(
+			count -> {
+				if (count == 0) {
+					return String.valueOf(count);
+				}
+				else {
+					return LanguageUtil.format(
+						locale, count > 1 ? "x-users" : "x-user", count);
+				}
 			}
 		).orElse(
 			null
 		);
-
 	}
-
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

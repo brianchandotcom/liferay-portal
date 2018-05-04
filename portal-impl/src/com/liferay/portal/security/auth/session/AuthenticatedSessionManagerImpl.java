@@ -421,8 +421,6 @@ public class AuthenticatedSessionManagerImpl
 			String authType)
 		throws PortalException {
 
-		long userId = GetterUtil.getLong(login);
-
 		Company company = PortalUtil.getCompany(request);
 
 		String requestURI = request.getRequestURI();
@@ -474,6 +472,8 @@ public class AuthenticatedSessionManagerImpl
 					parameterMap, resultsMap);
 			}
 			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+				long userId = GetterUtil.getLong(login);
+
 				authResult = UserLocalServiceUtil.authenticateByUserId(
 					company.getCompanyId(), userId, password, headerMap,
 					parameterMap, resultsMap);

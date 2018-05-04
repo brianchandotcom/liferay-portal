@@ -204,10 +204,6 @@ public class SessionAuthToken implements AuthToken {
 			return true;
 		}
 
-		long plid = layout.getPlid();
-
-		String portletId = portlet.getPortletId();
-
 		String portletToken = ParamUtil.getString(request, "p_p_auth");
 
 		if (Validator.isNull(portletToken)) {
@@ -218,6 +214,9 @@ public class SessionAuthToken implements AuthToken {
 		}
 
 		if (Validator.isNotNull(portletToken)) {
+			long plid = layout.getPlid();
+			String portletId = portlet.getPortletId();
+
 			String key = PortletPermissionUtil.getPrimaryKey(plid, portletId);
 
 			String sessionToken = getSessionAuthenticationToken(

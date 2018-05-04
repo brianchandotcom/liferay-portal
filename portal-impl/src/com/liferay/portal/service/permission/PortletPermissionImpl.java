@@ -682,11 +682,10 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		String portletId = portlet.getPortletId();
 
-		String name = null;
 		String resourcePermissionPrimKey = null;
 
 		if (layout == null) {
-			name = portletId;
+			String name = portletId;
 			resourcePermissionPrimKey = portletId;
 
 			return permissionChecker.hasPermission(

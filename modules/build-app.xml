@@ -630,9 +630,9 @@
 		<for list="${modules.dir}/apps/${app.name}/app.bnd,${modules.dir}/private/apps/${app.name}/app.bnd" param="app.bnd.file">
 			<sequential>
 				<if>
-					<available file="${app.bnd.file}" />
+					<available file="@{app.bnd.file}" />
 					<then>
-						<loadproperties srcFile="${app.bnd.file}">
+						<loadproperties srcFile="@{app.bnd.file}">
 							<filterchain>
 								<linecontains>
 									<contains value="Liferay-Releng-App-Title" />

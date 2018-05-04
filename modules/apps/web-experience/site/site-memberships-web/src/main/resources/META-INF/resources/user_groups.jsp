@@ -69,7 +69,7 @@ userGroupSearch.setResults(userGroups);
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
+	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

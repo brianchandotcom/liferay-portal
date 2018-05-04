@@ -53,7 +53,7 @@ userSearch.setResults(users);
 %>
 
 <clay:navigation-bar
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

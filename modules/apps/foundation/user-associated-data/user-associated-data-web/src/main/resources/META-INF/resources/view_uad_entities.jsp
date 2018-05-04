@@ -34,7 +34,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 %>
 
 <clay:navigation-bar
-	items="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
+	navigationItems="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

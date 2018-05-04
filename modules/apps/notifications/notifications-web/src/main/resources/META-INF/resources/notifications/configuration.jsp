@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

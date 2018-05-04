@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
-	items="<%= assetTagsSelectorDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= assetTagsSelectorDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

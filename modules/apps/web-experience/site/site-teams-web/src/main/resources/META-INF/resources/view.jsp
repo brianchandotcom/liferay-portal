@@ -22,7 +22,7 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteTeamsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= siteTeamsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

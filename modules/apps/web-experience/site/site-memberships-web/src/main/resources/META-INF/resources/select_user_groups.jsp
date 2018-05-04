@@ -46,7 +46,7 @@ userGroupSearch.setResults(userGroups);
 %>
 
 <clay:navigation-bar
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

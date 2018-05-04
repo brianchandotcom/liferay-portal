@@ -29,7 +29,7 @@ portletURL.setParameter("eventName", eventName);
 %>
 
 <clay:navigation-bar
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

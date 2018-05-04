@@ -27,7 +27,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items='<%= journalDisplayContext.getNavigationBarItems("feeds") %>'
+	navigationItems='<%= journalDisplayContext.getNavigationBarItems("feeds") %>'
 />
 
 <clay:management-toolbar

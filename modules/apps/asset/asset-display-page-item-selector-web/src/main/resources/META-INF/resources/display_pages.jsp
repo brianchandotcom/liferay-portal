@@ -23,13 +23,13 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 <clay:management-toolbar
 	clearResultsURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= assetDisplayPagesItemSelectorViewDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchContainerId="displayPages"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= assetDisplayPagesItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= assetDisplayPagesItemSelectorViewDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 

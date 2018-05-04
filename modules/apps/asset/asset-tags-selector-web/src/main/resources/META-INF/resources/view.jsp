@@ -25,13 +25,13 @@
 	componentId="assetTagsSelectorManagementToolbar"
 	disabled="<%= assetTagsSelectorDisplayContext.isDisabledTagsManagementBar() %>"
 	filterDropdownItems="<%= assetTagsSelectorDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= assetTagsSelectorDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= assetTagsSelectorDisplayContext.getSearchActionURL() %>"
 	searchContainerId="tags"
 	searchFormName="searchFm"
 	showSearch="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>"
 	sortingOrder="<%= assetTagsSelectorDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetTagsSelectorDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= assetTagsSelectorDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= assetTagsSelectorDisplayContext.getViewTypeItems() %>"
 />
 

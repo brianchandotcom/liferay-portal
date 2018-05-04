@@ -28,12 +28,12 @@
 	clearResultsURL="<%= siteMySitesDisplayContext.getClearResultsURL() %>"
 	componentId="siteMySitesWebManagementToolbar"
 	filterDropdownItems="<%= siteMySitesDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteMySitesDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteMySitesDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= siteMySitesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteMySitesDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= siteMySitesDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= siteMySitesDisplayContext.getViewTypeItems() %>"
 />
 

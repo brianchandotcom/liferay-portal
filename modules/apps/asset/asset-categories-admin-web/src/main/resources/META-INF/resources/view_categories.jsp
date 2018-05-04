@@ -37,13 +37,13 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	creationMenu="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() ? assetCategoriesDisplayContext.getCategoriesCreationMenu() : null %>"
 	disabled="<%= assetCategoriesDisplayContext.isDisabledCategoriesManagementBar() %>"
 	filterDropdownItems="<%= assetCategoriesDisplayContext.getCategoriesFilterItemsDropdownItems() %>"
+	itemsTotal="<%= assetCategoriesDisplayContext.getCategoriesTotalItems() %>"
 	searchActionURL="<%= assetCategoriesDisplayContext.getCategoriesSearchActionURL() %>"
 	searchContainerId="assetCategories"
 	searchFormName="searchFm"
 	showSearch="<%= assetCategoriesDisplayContext.isShowCategoriesSearch() %>"
 	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetCategoriesDisplayContext.getCategoriesSortingURL() %>"
-	itemsTotal="<%= assetCategoriesDisplayContext.getCategoriesTotalItems() %>"
 	viewTypeItems="<%= assetCategoriesDisplayContext.getCategoriesViewTypeItems() %>"
 />
 

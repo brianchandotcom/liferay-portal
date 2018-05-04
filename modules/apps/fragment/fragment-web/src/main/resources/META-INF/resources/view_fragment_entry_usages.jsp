@@ -116,11 +116,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					componentId="fragmentEntryLinksManagementToolbar"
 					disabled="<%= fragmentEntry.getUsageCount() <= 0 %>"
 					filterDropdownItems="<%= fragmentEntryLinkDisplayContext.getFilterItemsDropdownItems() %>"
+					itemsTotal="<%= fragmentEntry.getUsageCount() %>"
 					searchContainerId="fragmentEntryLinks"
 					showSearch="<%= false %>"
 					sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
 					sortingURL="<%= currentURL %>"
-					itemsTotal="<%= fragmentEntry.getUsageCount() %>"
 					viewTypeItems="<%= fragmentEntryLinkDisplayContext.getViewTypeItems() %>"
 				/>
 

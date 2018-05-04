@@ -35,13 +35,13 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 	clearResultsURL="<%= siteBrowserDisplayContext.getClearResultsURL() %>"
 	componentId="siteBrowserWebManagementToolbar"
 	filterDropdownItems="<%= siteBrowserDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteBrowserDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteBrowserDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch='<%= !Objects.equals(siteBrowserDisplayContext.getType(), "parent-sites") %>'
 	sortingOrder="<%= siteBrowserDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteBrowserDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= siteBrowserDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= siteBrowserDisplayContext.getViewTypeItems() %>"
 />
 

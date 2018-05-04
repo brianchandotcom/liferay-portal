@@ -26,12 +26,12 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 	clearResultsURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getClearResultsURL() %>"
 	componentId="siteNavigationMenuWebManagementToolbar"
 	filterDropdownItems="<%= siteNavigationMenuItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteNavigationMenuItemSelectorViewDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= siteNavigationMenuItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= siteNavigationMenuItemSelectorViewDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= siteNavigationMenuItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 

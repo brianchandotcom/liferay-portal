@@ -32,13 +32,13 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 	creationMenu="<%= siteTeamsDisplayContext.isShowAddButton() ? siteTeamsDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= siteTeamsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= siteTeamsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteTeamsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteTeamsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="teams"
 	searchFormName="searchFm"
 	showSearch="<%= siteTeamsDisplayContext.isSearchEnabled() %>"
 	sortingOrder="<%= siteTeamsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteTeamsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= siteTeamsDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= siteTeamsDisplayContext.getViewTypeItems() %>"
 />
 

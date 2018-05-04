@@ -62,13 +62,13 @@ if (group != null) {
 	creationMenu="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) ? siteAdminDisplayContext.getCreationMenu() : null %>"
 	filterDropdownItems="<%= siteAdminDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= siteAdminDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="sites"
 	searchFormName="searchFm"
 	showInfoButton="<%= true %>"
 	sortingOrder="<%= siteAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteAdminDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= siteAdminDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= siteAdminDisplayContext.getViewTypeItems() %>"
 />
 

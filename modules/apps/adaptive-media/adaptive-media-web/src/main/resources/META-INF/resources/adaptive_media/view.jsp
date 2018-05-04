@@ -41,9 +41,9 @@ AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMMana
 	disabled="<%= amManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= amManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= amManagementToolbarDisplayContext.getTotalItems() %>"
 	searchContainerId="imageConfigurationEntries"
 	showSearch="<%= false %>"
-	itemsTotal="<%= amManagementToolbarDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= amManagementToolbarDisplayContext.getViewTypes() %>"
 />
 

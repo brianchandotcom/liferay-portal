@@ -46,12 +46,12 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	clearResultsURL="<%= journalViewMoreMenuItemsDisplayContext.getClearResultsURL() %>"
 	componentId="journalViewMoreMenuItemsManagementToolbar"
 	filterDropdownItems="<%= journalViewMoreMenuItemsDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= journalViewMoreMenuItemsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= journalViewMoreMenuItemsDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= journalViewMoreMenuItemsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= journalViewMoreMenuItemsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= journalViewMoreMenuItemsDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= journalViewMoreMenuItemsDisplayContext.getViewTypeItems() %>"
 />
 

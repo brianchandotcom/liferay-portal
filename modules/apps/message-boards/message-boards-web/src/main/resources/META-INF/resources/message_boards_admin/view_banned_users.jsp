@@ -35,11 +35,11 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 <clay:management-toolbar
 	actionDropdownItems="<%= mbBannedUsersManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= totalBannedUsers == 0 %>"
+	itemsTotal="<%= totalBannedUsers %>"
 	searchContainerId="mbBanUsers"
 	showCreationMenu="<%= false %>"
 	showInfoButton="<%= false %>"
 	showSearch="<%= false %>"
-	itemsTotal="<%= totalBannedUsers %>"
 	viewTypeItems="<%= mbBannedUsersManagementToolbarDisplayContext.getViewTypes() %>"
 />
 

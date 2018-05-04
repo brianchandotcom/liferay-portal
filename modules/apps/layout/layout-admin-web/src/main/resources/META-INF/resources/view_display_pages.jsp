@@ -31,6 +31,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	componentId="displayPagesManagementToolbar"
 	disabled="<%= displayPageDisplayContext.isDisabledDisplayPagesManagementBar() %>"
 	filterDropdownItems="<%= displayPageDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= displayPageDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= displayPageDisplayContext.getSearchActionURL() %>"
 	searchContainerId="displayPages"
 	searchFormName="searchFm"
@@ -38,7 +39,6 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	showSearch="<%= displayPageDisplayContext.isShowDisplayPagesSearch() %>"
 	sortingOrder="<%= displayPageDisplayContext.getOrderByType() %>"
 	sortingURL="<%= displayPageDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= displayPageDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= displayPageDisplayContext.getViewTypeItems() %>"
 />
 

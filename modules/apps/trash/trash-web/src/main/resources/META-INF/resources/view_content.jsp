@@ -58,11 +58,11 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 			componentId="trashContentWebManagementToolbar"
 			filterDropdownItems="<%= trashDisplayContext.getContentFilterDropdownItems() %>"
 			infoPanelId="infoPanelId"
+			itemsTotal="<%= trashHandler.getTrashModelsCount(classPK) %>"
 			searchActionURL="<%= trashDisplayContext.getContentSearchActionURL() %>"
 			searchFormName="searchFm"
 			selectable="<%= false %>"
 			showInfoButton="<%= true %>"
-			itemsTotal="<%= trashHandler.getTrashModelsCount(classPK) %>"
 			viewTypeItems="<%= trashDisplayContext.getViewTypeItems() %>"
 		/>
 

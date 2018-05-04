@@ -34,13 +34,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 	componentId="fragmentEntriesManagementToolbar"
 	disabled="<%= fragmentDisplayContext.isDisabledFragmentEntriesManagementBar() %>"
 	filterDropdownItems="<%= fragmentDisplayContext.getFragmentEntryFilterItemsDropdownItems() %>"
+	itemsTotal="<%= fragmentDisplayContext.getFragmentEntryTotalItems() %>"
 	searchActionURL="<%= fragmentDisplayContext.getFragmentEntrySearchActionURL() %>"
 	searchContainerId="fragmentEntries"
 	searchFormName="searchFm"
 	showCreationMenu="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) ? true : false %>"
 	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentDisplayContext.getFragmentEntrySortingURL() %>"
-	itemsTotal="<%= fragmentDisplayContext.getFragmentEntryTotalItems() %>"
 	viewTypeItems="<%= fragmentDisplayContext.getFragmentEntryViewTypeItems() %>"
 />
 

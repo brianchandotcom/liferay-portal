@@ -34,12 +34,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 	creationMenu="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) ? fragmentDisplayContext.getFragmentCollectionCreationMenu() : null %>"
 	disabled="<%= fragmentDisplayContext.isDisabledFragmentCollectionsManagementBar() %>"
 	filterDropdownItems="<%= fragmentDisplayContext.getFragmentCollectionFilterItemsDropdownItems() %>"
+	itemsTotal="<%= fragmentDisplayContext.getFragmentCollectionTotalItems() %>"
 	searchActionURL="<%= fragmentDisplayContext.getFragmentCollectionSearchActionURL() %>"
 	searchContainerId="fragmentCollections"
 	searchFormName="searchFm"
 	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentDisplayContext.getFragmentCollectionSortingURL() %>"
-	itemsTotal="<%= fragmentDisplayContext.getFragmentCollectionTotalItems() %>"
 	viewTypeItems="<%= fragmentDisplayContext.getFragmentCollectionViewTypeItems() %>"
 />
 

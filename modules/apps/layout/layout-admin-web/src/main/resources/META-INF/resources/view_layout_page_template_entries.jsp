@@ -34,6 +34,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 	componentId="layoutPageTemplateEntriesManagementToolbar"
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
 	filterDropdownItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
 	searchContainerId="layoutPageTemplateEntries"
 	searchFormName="searchFm"
@@ -41,7 +42,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>"
 	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
 />
 

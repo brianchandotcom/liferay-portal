@@ -31,6 +31,7 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 	disabled="<%= dlAdminManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= dlAdminManagementToolbarDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="entries"
 	selectable="<%= dlAdminManagementToolbarDisplayContext.isSelectable() %>"
@@ -38,7 +39,6 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 	showSearch="<%= dlAdminManagementToolbarDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= dlAdminManagementToolbarDisplayContext.getSortingOrder() %>"
 	sortingURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSortingURL()) %>"
-	itemsTotal="<%= dlAdminManagementToolbarDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= dlAdminManagementToolbarDisplayContext.getViewTypes() %>"
 />
 

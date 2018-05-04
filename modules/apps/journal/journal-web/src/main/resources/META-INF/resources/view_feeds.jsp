@@ -37,13 +37,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	creationMenu="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FEED) ? journalFeedsDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= journalFeedsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= journalFeedsDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= journalFeedsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= journalFeedsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="feeds"
 	searchFormName="searchFm"
 	showSearch="<%= journalFeedsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= journalFeedsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= journalFeedsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= journalFeedsDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= journalFeedsDisplayContext.getViewTypeItems() %>"
 />
 

@@ -29,11 +29,11 @@
 	creationMenu="<%= layoutPrototypeDisplayContext.isShowAddButton() ? layoutPrototypeDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= layoutPrototypeDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= layoutPrototypeDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= layoutPrototypeDisplayContext.getTotalItems() %>"
 	searchContainerId="layoutPrototype"
 	showSearch="<%= false %>"
 	sortingOrder="<%= layoutPrototypeDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutPrototypeDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= layoutPrototypeDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= layoutPrototypeDisplayContext.getViewTypeItems() %>"
 />
 

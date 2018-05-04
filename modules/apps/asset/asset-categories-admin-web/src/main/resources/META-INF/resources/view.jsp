@@ -32,12 +32,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	creationMenu="<%= assetCategoriesDisplayContext.isShowVocabulariesAddButton() ? assetCategoriesDisplayContext.getVocabulariesCreationMenu() : null %>"
 	disabled="<%= assetCategoriesDisplayContext.isDisabledVocabulariesManagementBar() %>"
 	filterDropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesFilterItemsDropdownItems() %>"
+	itemsTotal="<%= assetCategoriesDisplayContext.getVocabulariesTotalItems() %>"
 	searchActionURL="<%= assetCategoriesDisplayContext.getVocabulariesSearchActionURL() %>"
 	searchContainerId="assetVocabularies"
 	searchFormName="searchFm"
 	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetCategoriesDisplayContext.getVocabulariesSortingURL() %>"
-	itemsTotal="<%= assetCategoriesDisplayContext.getVocabulariesTotalItems() %>"
 	viewTypeItems="<%= assetCategoriesDisplayContext.getVocabulariesViewTypeItems() %>"
 />
 

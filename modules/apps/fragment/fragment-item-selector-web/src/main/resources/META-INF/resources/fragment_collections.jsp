@@ -20,12 +20,12 @@
 	clearResultsURL="<%= fragmentItemSelectorViewDisplayContext.getClearResultsURL() %>"
 	componentId="fragmentItemSelectorFragmentCollectionsManagementToolbar"
 	filterDropdownItems="<%= fragmentItemSelectorViewDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= fragmentItemSelectorViewDisplayContext.getFragmentCollectionsTotalItems() %>"
 	searchActionURL="<%= fragmentItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentItemSelectorViewDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= fragmentItemSelectorViewDisplayContext.getFragmentCollectionsTotalItems() %>"
 	viewTypeItems="<%= fragmentItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 

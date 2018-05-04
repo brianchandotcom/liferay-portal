@@ -28,6 +28,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	disabled="<%= journalDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= journalDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= journalDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= journalDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= searchContainerId %>"
 	searchFormName="fm1"
@@ -36,7 +37,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	showSearch="<%= journalDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= journalDisplayContext.getOrderByType() %>"
 	sortingURL="<%= journalDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= journalDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= journalDisplayContext.getViewTypeItems() %>"
 />
 

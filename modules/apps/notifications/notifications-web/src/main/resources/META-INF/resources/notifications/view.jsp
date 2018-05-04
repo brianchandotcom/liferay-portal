@@ -72,13 +72,13 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	actionDropdownItems="<%= notificationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= NotificationsUtil.getAllNotificationsCount(themeDisplay.getUserId(), actionRequired) == 0 %>"
 	filterDropdownItems="<%= notificationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= notificationsSearchContainer.getTotal() %>"
 	searchContainerId="<%= searchContainerId %>"
 	showCreationMenu="<%= false %>"
 	showInfoButton="<%= false %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= notificationsManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(notificationsManagementToolbarDisplayContext.getSortingURL()) %>"
-	itemsTotal="<%= notificationsSearchContainer.getTotal() %>"
 	viewTypeItems="<%= notificationsManagementToolbarDisplayContext.getViewTypes() %>"
 />
 

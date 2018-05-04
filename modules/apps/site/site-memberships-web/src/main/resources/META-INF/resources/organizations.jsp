@@ -32,6 +32,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	disabled="<%= organizationsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= organizationsDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= organizationsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= organizationsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="organizations"
 	searchFormName="searchFm"
@@ -40,7 +41,6 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	showSearch="<%= organizationsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= organizationsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= organizationsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= organizationsDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= organizationsDisplayContext.getViewTypeItems() %>"
 />
 

@@ -34,13 +34,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 	clearResultsURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getClearResultsURL() %>"
 	disabled="<%= ddmFormViewFormInstanceRecordsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getFilterItemsDropdownItemList() %>"
+	itemsTotal="<%= ddmFormViewFormInstanceRecordsDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"
 	sortingOrder="<%= ddmFormViewFormInstanceRecordsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= ddmFormViewFormInstanceRecordsDisplayContext.getTotalItems() %>"
 />
 
 <div class="container-fluid-1280" id="<portlet:namespace />viewEntriesContainer">

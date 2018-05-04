@@ -67,12 +67,12 @@ List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 	actionDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= kbSuggestionListManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
 	searchContainerId="kbComments"
 	selectable="<%= true %>"
 	showSearch="false"
 	sortingOrder="<%= kbSuggestionListManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbSuggestionListManagementToolbarDisplayContext.getSortingURL()) %>"
-	itemsTotal="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
 />
 
 <div class="container-fluid-1280">

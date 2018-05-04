@@ -28,13 +28,13 @@
 	creationMenu="<%= assetTagsDisplayContext.isShowAddButton() ? assetTagsDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= assetTagsDisplayContext.getTotalItems() == 0 %>"
 	filterDropdownItems="<%= assetTagsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= assetTagsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= assetTagsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="assetTags"
 	searchFormName="searchFm"
 	showSearch="<%= assetTagsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= assetTagsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetTagsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= assetTagsDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= assetTagsDisplayContext.getViewTypeItems() %>"
 />
 

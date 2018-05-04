@@ -29,13 +29,13 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 	componentId="selectTeamWebManagementToolbar"
 	disabled="<%= selectTeamDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= selectTeamDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectTeamDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectTeamDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch="<%= selectTeamDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectTeamDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectTeamDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= selectTeamDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= selectTeamDisplayContext.getViewTypeItems() %>"
 />
 

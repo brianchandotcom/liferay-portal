@@ -57,6 +57,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 	clearResultsURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	disabled="<%= blogImagesSearchContainer.getTotal() <= 0 %>"
 	filterDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= blogImagesSearchContainer.getTotal() %>"
 	searchActionURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="images"
 	searchFormName="searchFm"
@@ -64,7 +65,6 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 	showInfoButton="<%= false %>"
 	sortingOrder="<%= blogImagesManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(blogImagesManagementToolbarDisplayContext.getSortingURL()) %>"
-	itemsTotal="<%= blogImagesSearchContainer.getTotal() %>"
 	viewTypeItems="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 

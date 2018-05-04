@@ -78,6 +78,7 @@ import com.liferay.rss.util.RSSUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -374,19 +375,24 @@ public class AssetPublisherDisplayContext {
 
 				JSONArray categoryIdsTitles = JSONFactoryUtil.createJSONArray();
 
-				long[] categoryIds = GetterUtil.getLongValues(
-					queryValues.split(","));
+				List<AssetCategory> categories = _filterAssetCategories(
+					GetterUtil.getLongValues(queryValues.split(",")));
 
-				for (long categoryId : categoryIds) {
-					AssetCategory category =
-						AssetCategoryLocalServiceUtil.fetchAssetCategory(
-							categoryId);
-
+				for (AssetCategory category : categories) {
 					categoryIdsTitles.put(
 						category.getTitle(themeDisplay.getLocale()));
 				}
 
+				List<Long> categoryIds = ListUtil.toList(
+					categories, AssetCategory.CATEGORY_ID_ACCESSOR);
+
+				queryValues = StringUtil.merge(categoryIds, ",");
+
 				ruleJSONObject.put("categoryIdsTitles", categoryIdsTitles);
+			}
+
+			if (Validator.isNull(queryValues)) {
+				continue;
 			}
 
 			ruleJSONObject.put("queryValues", queryValues);
@@ -1525,6 +1531,23 @@ public class AssetPublisherDisplayContext {
 
 			_ddmStructureFieldLabel = classTypeField.getLabel();
 		}
+	}
+
+	private List<AssetCategory> _filterAssetCategories(long[] categoryIds) {
+		List<AssetCategory> filteredCategories = new ArrayList<>();
+
+		for (long categoryId : categoryIds) {
+			AssetCategory category =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(categoryId);
+
+			if (category == null) {
+				continue;
+			}
+
+			filteredCategories.add(category);
+		}
+
+		return filteredCategories;
 	}
 
 	private String _getScopeAssetPortletRedirect(

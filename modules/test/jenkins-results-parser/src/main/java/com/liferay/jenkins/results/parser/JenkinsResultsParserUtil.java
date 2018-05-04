@@ -289,6 +289,25 @@ public class JenkinsResultsParserUtil {
 			try {
 				returnCode = process.exitValue();
 
+				if (returnCode == 0) {
+					String standardOut = readInputStream(
+						process.getInputStream(), true);
+
+					duration = System.currentTimeMillis() - start;
+
+					while (!standardOut.contains(
+								"Finished executing Bash commands.") &&
+						   (duration < timeout)) {
+
+						sleep(10);
+
+						standardOut = readInputStream(
+							process.getInputStream(), true);
+
+						duration = System.currentTimeMillis() - start;
+					}
+				}
+
 				break;
 			}
 			catch (IllegalThreadStateException itse) {

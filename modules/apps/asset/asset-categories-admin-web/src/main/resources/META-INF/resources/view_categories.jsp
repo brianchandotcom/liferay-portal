@@ -27,7 +27,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= assetCategoriesDisplayContext.getAssetCategoriesNavigationItems() %>"
+	navigationItems="<%= assetCategoriesDisplayContext.getAssetCategoriesNavigationItems() %>"
 />
 
 <clay:management-toolbar

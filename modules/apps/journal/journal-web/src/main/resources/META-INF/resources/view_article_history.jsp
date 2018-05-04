@@ -41,7 +41,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 		<clay:navigation-bar
 			inverted="<%= true %>"
-			items="<%= journalHistoryDisplayContext.getNavigationItems() %>"
+			navigationItems="<%= journalHistoryDisplayContext.getNavigationItems() %>"
 		/>
 
 		<clay:management-toolbar

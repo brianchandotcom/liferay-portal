@@ -68,7 +68,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		</div>
 
 		<clay:navigation-bar
-			items="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">
@@ -131,7 +131,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		</div>
 
 		<clay:navigation-bar
-			items="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">
@@ -228,7 +228,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		</div>
 
 		<clay:navigation-bar
-			items="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= journalDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">

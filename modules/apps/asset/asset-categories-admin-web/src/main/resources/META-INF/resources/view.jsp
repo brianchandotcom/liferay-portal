@@ -22,7 +22,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
+	navigationItems="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
 />
 
 <clay:management-toolbar

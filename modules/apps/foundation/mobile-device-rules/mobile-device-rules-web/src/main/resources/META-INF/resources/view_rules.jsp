@@ -76,7 +76,7 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

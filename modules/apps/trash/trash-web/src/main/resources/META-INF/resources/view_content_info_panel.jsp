@@ -36,7 +36,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 	</div>
 
 	<clay:navigation-bar
-		items="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
+		navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
 	/>
 
 	<div class="sidebar-body">

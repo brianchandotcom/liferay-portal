@@ -22,7 +22,7 @@ MDRActionDisplayContext mdrActionDisplayContext = new MDRActionDisplayContext(re
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= mdrActionDisplayContext.getActionNavigationItems() %>"
+	navigationItems="<%= mdrActionDisplayContext.getActionNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

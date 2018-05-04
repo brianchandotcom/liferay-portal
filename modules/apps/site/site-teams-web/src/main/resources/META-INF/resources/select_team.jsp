@@ -21,7 +21,7 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 %>
 
 <clay:navigation-bar
-	items="<%= selectTeamDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectTeamDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

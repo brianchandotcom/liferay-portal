@@ -32,7 +32,7 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 %>
 
 <clay:navigation-bar
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

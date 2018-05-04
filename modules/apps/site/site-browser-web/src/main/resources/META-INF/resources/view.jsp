@@ -28,7 +28,7 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 %>
 
 <clay:navigation-bar
-	items="<%= siteBrowserDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= siteBrowserDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

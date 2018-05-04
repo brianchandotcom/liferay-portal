@@ -21,7 +21,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 %>
 
 <clay:navigation-bar
-	items="<%= selectThemeDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectThemeDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

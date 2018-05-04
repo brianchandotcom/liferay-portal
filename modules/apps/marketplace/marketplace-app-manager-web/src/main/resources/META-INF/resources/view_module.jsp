@@ -95,7 +95,7 @@ else {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= appManagerDisplayContext.getModuleNavigationItems() %>"
+	navigationItems="<%= appManagerDisplayContext.getModuleNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

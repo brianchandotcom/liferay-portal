@@ -18,5 +18,5 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= ddmFormAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= ddmFormAdminDisplayContext.getNavigationItems() %>"
 />

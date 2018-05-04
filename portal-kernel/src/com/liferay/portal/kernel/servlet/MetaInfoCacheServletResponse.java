@@ -204,9 +204,9 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	 */
 	@Deprecated
 	public void finishResponse(boolean reapplyMetaData) throws IOException {
-		HttpServletResponse response = (HttpServletResponse)getResponse();
-
 		if (reapplyMetaData) {
+			HttpServletResponse response = (HttpServletResponse)getResponse();
+
 			finishResponse(_metaData, response);
 		}
 

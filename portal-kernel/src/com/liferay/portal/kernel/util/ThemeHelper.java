@@ -65,14 +65,6 @@ public class ThemeHelper {
 				servletContext.getServletContextName());
 		}
 
-		int start = 0;
-
-		if (path.startsWith(StringPool.SLASH)) {
-			start = 1;
-		}
-
-		int end = path.lastIndexOf(CharPool.PERIOD);
-
 		String extension = theme.getTemplateExtension();
 
 		if (extension.equals(TEMPLATE_EXTENSION_FTL)) {
@@ -87,7 +79,17 @@ public class ThemeHelper {
 			}
 
 			sb.append(StringPool.SLASH);
+
+			int start = 0;
+
+			if (path.startsWith(StringPool.SLASH)) {
+				start = 1;
+			}
+
+			int end = path.lastIndexOf(CharPool.PERIOD);
+
 			sb.append(path.substring(start, end));
+
 			sb.append(StringPool.PERIOD);
 
 			if (Validator.isNotNull(portletId)) {

@@ -75,8 +75,6 @@ public class PortletRatingsDefinitionUtil {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
-
 		RatingsType defaultRatingsType = getDefaultRatingsType(className);
 
 		if (defaultRatingsType != null) {
@@ -88,6 +86,9 @@ public class PortletRatingsDefinitionUtil {
 
 			String value = companyPortletPreferences.getValue(
 				propertyKey, defaultRatingsType.getValue());
+
+			UnicodeProperties groupTypeSettings =
+				group.getTypeSettingsProperties();
 
 			value = groupTypeSettings.getProperty(propertyKey, value);
 

@@ -145,9 +145,10 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
 		for (KeyValuePair xFrameOptionKVP : _xFrameOptionKVPs) {
 			String url = xFrameOptionKVP.getKey();
-			String value = xFrameOptionKVP.getValue();
 
 			if (requestURI.startsWith(url)) {
+				String value = xFrameOptionKVP.getValue();
+
 				if (value != null) {
 					response.setHeader(
 						HttpHeaders.X_FRAME_OPTIONS,

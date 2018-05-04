@@ -22,8 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -252,41 +250,6 @@ public class SiteNavigationAdminDisplayContext {
 		return _searchContainer;
 	}
 
-	public JSONObject getSelectedItemTypeJSONObject() {
-		if (Validator.isNotNull(_selectedItemTypeJSONObject)) {
-			return _selectedItemTypeJSONObject;
-		}
-
-		String selectedItemType = ParamUtil.getString(
-			_request, "selectedItemType", _getFirstSiteNavigationMenuItem());
-
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				selectedItemType);
-
-		if (siteNavigationMenuItemType == null) {
-			return null;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONObject selectedItemTypeJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		selectedItemTypeJSONObject.put(
-			"icon", siteNavigationMenuItemType.getIcon());
-		selectedItemTypeJSONObject.put(
-			"label",
-			siteNavigationMenuItemType.getLabel(themeDisplay.getLocale()));
-		selectedItemTypeJSONObject.put(
-			"type", siteNavigationMenuItemType.getType());
-
-		_selectedItemTypeJSONObject = selectedItemTypeJSONObject;
-
-		return _selectedItemTypeJSONObject;
-	}
-
 	public SiteNavigationMenu getSiteNavigationMenu() throws PortalException {
 		if (getSiteNavigationMenuId() == 0) {
 			return null;
@@ -340,20 +303,6 @@ public class SiteNavigationAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isShowPrimarySiteNavigationMenuMessage() {
-		SiteNavigationMenu primarySiteNavigationMenu =
-			getPrimarySiteNavigationMenu();
-
-		if ((primarySiteNavigationMenu == null) ||
-			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
-				getSiteNavigationMenuId())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private String _getAddURL(
 		SiteNavigationMenuItemType siteNavigationMenuItemType) {
 
@@ -391,18 +340,6 @@ public class SiteNavigationAdminDisplayContext {
 		return addURL.toString();
 	}
 
-	private String _getFirstSiteNavigationMenuItem() {
-		String[] types = _siteNavigationMenuItemTypeRegistry.getTypes();
-
-		String selectedItemType = StringPool.BLANK;
-
-		if (types.length > 0) {
-			return types[0];
-		}
-
-		return selectedItemType;
-	}
-
 	private String _displayStyle;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -411,7 +348,6 @@ public class SiteNavigationAdminDisplayContext {
 	private String _orderByType;
 	private final HttpServletRequest _request;
 	private SearchContainer _searchContainer;
-	private JSONObject _selectedItemTypeJSONObject;
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;

@@ -85,7 +85,14 @@ class EditableTextFragmentProcessor {
 			wrapper,
 			object.mixin(
 				this.fragmentEntryLink.defaultEditorConfiguration.editorConfig,
-				EditableTextFragmentProcessor.EDITOR_CONFIGURATION
+				EditableTextFragmentProcessor.EDITOR_CONFIGURATION,
+				{
+					title: [
+						this.fragmentEntryLink.portletNamespace,
+						'_FragmentEntryLinkEditable_',
+						this.fragmentEntryLink.fragmentEntryLinkId
+					].join('')
+				}
 			)
 		);
 
@@ -101,10 +108,6 @@ class EditableTextFragmentProcessor {
 			'selectionChange',
 			this._handleEditorChange
 		);
-
-		nativeEditor.name = this.fragmentEntryLink.portletNamespace +
-			'_fragmentEntryLink_' +
-			this.fragmentEntryLink.fragmentEntryLinkId;
 
 		return {
 			defaultValue: editableContent,

@@ -223,6 +223,9 @@ definitions:
               type: "string"
             period:
               type: "string"
+              enum:
+              - "monthly"
+              - "weekly"
             timeseries:
               type: "array"
               items:
@@ -238,16 +241,19 @@ definitions:
                 required:
                 - "date"
                 - "value"
-            sku:
+            customerId:
               type: "string"
-            assertiveness:
+            assertivity:
               type: "number"
-            customer:
+            sku:
               type: "string"
             target:
               type: "string"
+              enum:
+              - "revenue"
+              - "quantity"
           required:
-          - "assertiveness"
+          - "assertivity"
           - "period"
           - "target"
   OrderList:

@@ -4,4 +4,3 @@ Bundle-Version: 2.0.0
 Export-Package: com.liferay.portal.workflow.kaleo.forms.service.permission
 Liferay-Require-SchemaVersion: 1.1.0
 Liferay-Service: true
--include: ../../../../../../modules/apps/forms-and-workflow/app.bnd

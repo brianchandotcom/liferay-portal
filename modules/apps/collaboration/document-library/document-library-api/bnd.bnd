@@ -7,5 +7,3 @@ Export-Package:\
 	com.liferay.document.library.display.context,\
 	com.liferay.document.library.exportimport.data.handler,\
 	com.liferay.document.library.portlet.toolbar.contributor
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Document Library

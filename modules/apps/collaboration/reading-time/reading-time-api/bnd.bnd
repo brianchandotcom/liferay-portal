@@ -8,5 +8,3 @@ Export-Package:\
 	com.liferay.reading.time.model,\
 	com.liferay.reading.time.service,\
 	com.liferay.reading.time.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Reading Time

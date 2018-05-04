@@ -6,5 +6,3 @@ Export-Package:\
 	com.liferay.mentions.constants,\
 	com.liferay.mentions.matcher,\
 	com.liferay.mentions.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Mentions

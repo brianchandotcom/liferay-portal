@@ -9,5 +9,3 @@ Export-Package:\
 	com.liferay.item.selector.criteria.upload.criterion,\
 	com.liferay.item.selector.criteria.url.criterion,\
 	com.liferay.item.selector.criteria.video.criterion
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Item Selector

@@ -19,5 +19,3 @@ Export-Package:\
 	com.liferay.wiki.social,\
 	com.liferay.wiki.util.comparator,\
 	com.liferay.wiki.validator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Wiki

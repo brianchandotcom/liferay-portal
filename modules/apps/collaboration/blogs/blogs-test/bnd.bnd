@@ -5,6 +5,4 @@ Import-Package:\
 	!com.dumbster.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Blogs
 -includeresource: test-classes/integration

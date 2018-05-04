@@ -14,25 +14,11 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text>
-	<liferay-ui:user-portrait
-		cssClass="user-icon-lg"
-		userId="<%= cpInstance.getUserId() %>"
-	/>
-</liferay-ui:search-container-column-text>
-
 <liferay-ui:search-container-column-text
 	colspan="<%= 2 %>"
 >
-
-	<%
-	Date createDate = cpInstance.getModifiedDate();
-
-	String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-	%>
-
 	<h6 class="text-default">
-		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(cpInstance.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+		<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
 	</h6>
 
 	<h5>

@@ -14,23 +14,8 @@
  */
 --%>
 
-<liferay-frontend:vertical-card-sticker-bottom>
-	<liferay-ui:user-portrait
-		cssClass="sticker sticker-bottom"
-		imageCssClass="user-icon-lg"
-		userId="<%= cpDefinition.getUserId() %>"
-	/>
-</liferay-frontend:vertical-card-sticker-bottom>
-
 <liferay-frontend:vertical-card-header>
-
-	<%
-	Date createDate = cpDefinition.getModifiedDate();
-
-	String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-	%>
-
-	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(cpDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+	<%= HtmlUtil.escape(cpDefinition.getProductTypeName()) %>
 </liferay-frontend:vertical-card-header>
 
 <liferay-frontend:vertical-card-footer>

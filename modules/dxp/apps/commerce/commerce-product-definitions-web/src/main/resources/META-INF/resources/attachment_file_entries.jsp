@@ -19,6 +19,8 @@
 <%
 CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (CPAttachmentFileEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+CPDefinition cpDefinition = cpAttachmentFileEntriesDisplayContext.getCPDefinition();
+
 long cpDefinitionId = cpAttachmentFileEntriesDisplayContext.getCPDefinitionId();
 
 int type = cpAttachmentFileEntriesDisplayContext.getType();

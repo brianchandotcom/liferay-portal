@@ -32,15 +32,8 @@
 <liferay-ui:search-container-column-text
 	colspan="<%= 2 %>"
 >
-
-	<%
-	Date createDate = cpDefinition.getModifiedDate();
-
-	String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-	%>
-
 	<h6 class="text-default">
-		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(cpDefinition.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+		<%= HtmlUtil.escape(cpDefinition.getProductTypeName()) %>
 	</h6>
 
 	<h5>

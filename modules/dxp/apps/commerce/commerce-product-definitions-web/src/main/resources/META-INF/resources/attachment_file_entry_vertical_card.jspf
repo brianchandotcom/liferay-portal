@@ -23,7 +23,7 @@
 </liferay-frontend:vertical-card-sticker-bottom>
 
 <liferay-frontend:vertical-card-header>
-	<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - cpAttachmentFileEntry.getCreateDate().getTime(), true), HtmlUtil.escape(cpAttachmentFileEntry.getUserName())}, false) %>
+	<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
 </liferay-frontend:vertical-card-header>
 
 <liferay-frontend:vertical-card-footer>

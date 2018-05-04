@@ -2209,6 +2209,52 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the users belonging to a group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  status the workflow status
+	 * @param  start the lower bound of the range of users
+	 * @param  end the upper bound of the range of users (not inclusive)
+	 * @param  obc the comparator to order the users by (optionally
+	 *         <code>null</code>)
+	 * @return the matching users
+	 */
+	@Override
+	public List<User> getGroupUsers(
+			long groupId, int status, int start, int end,
+			OrderByComparator<User> obc)
+		throws PortalException {
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+		params.put("usersGroups", Long.valueOf(groupId));
+
+		return search(
+			group.getCompanyId(), null, status, params, start, end, obc);
+	}
+
+	/**
+	 * Returns the users belonging to a group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  status the workflow status
+	 * @param  obc the comparator to order the users by (optionally
+	 *         <code>null</code>)
+	 * @return the matching users
+	 * @return the users who belong to a group
+	 */
+	@Override
+	public List<User> getGroupUsers(
+			long groupId, int status, OrderByComparator<User> obc)
+		throws PortalException {
+
+		return getGroupUsers(
+			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+	}
+
+	/**
 	 * Returns the number of users with the status belonging to the group.
 	 *
 	 * @param  groupId the primary key of the group

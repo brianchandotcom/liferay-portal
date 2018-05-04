@@ -2897,14 +2897,14 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			<agent-input clean="true" temporary="false">
 				<install modify="false">
 					<offering
-						id="com.ibm.websphere.DEVELOPERSILAN.v85"
-						profile="IBM Websphere 8.5.5.0"
+						id="com.ibm.websphere.BASE.v90"
+						profile="IBM Websphere 9.0.0.0"
 					>
 					</offering>
 				</install>
 
 				<profile
-					id="IBM Websphere 8.5.5.0"
+					id="IBM Websphere 9.0.0.0"
 					installLocation="${app.server.websphere.dir}"
 				>
 				</profile>
@@ -3032,20 +3032,20 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			<agent-input clean="true" temporary="false">
 				<install modify="false">
 					<offering
-						id="com.ibm.websphere.DEVELOPERSILAN.v85"
-						profile="IBM Websphere 8.5.5.0"
+						id="com.ibm.websphere.BASE.v90"
+						profile="IBM Websphere 9.0.0.0"
 					>
 					</offering>
 
 					<offering
-						id="com.ibm.websphere.IBMJAVA.v80"
-						profile="IBM Websphere 8.5.5.0"
+						id="com.ibm.websphere.IBMJAVA.v8"
+						profile="IBM Websphere 9.0.0.0"
 					>
 					</offering>
 				</install>
 
 				<profile
-					id="IBM Websphere 8.5.5.0"
+					id="IBM Websphere 9.0.0.0"
 					installLocation="${app.server.websphere.dir}"
 				>
 				</profile>

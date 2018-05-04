@@ -4,6 +4,9 @@ Bundle-Version: 4.0.1
 Export-Package: com.liferay.project.templates
 Main-Class: com.liferay.project.templates.ProjectTemplates
 Private-Package:\
+	aQute.bnd.version.Version,\
+	aQute.bnd.version.VersionRange,\
+	\
 	org.apache.commons.collections,\
 	org.apache.commons.collections.map,\
 	org.apache.commons.lang,\

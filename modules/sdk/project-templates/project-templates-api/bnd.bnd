@@ -2,6 +2,7 @@ Bundle-Description: Creates a Liferay API module project with an empty public in
 Bundle-Name: Liferay Project Templates API
 Bundle-SymbolicName: com.liferay.project.templates.api
 Bundle-Version: 1.0.9
+Liferay-Versions: [7,8)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

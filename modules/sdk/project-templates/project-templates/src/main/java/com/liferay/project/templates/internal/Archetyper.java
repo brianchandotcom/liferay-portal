@@ -14,6 +14,9 @@
 
 package com.liferay.project.templates.internal;
 
+import aQute.bnd.version.Version;
+import aQute.bnd.version.VersionRange;
+
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -23,6 +26,8 @@ import com.liferay.project.templates.internal.util.ReflectionUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
@@ -31,18 +36,24 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
+import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.ServiceLoader;
+import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
+import java.util.jar.Manifest;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -72,6 +83,48 @@ import org.codehaus.plexus.velocity.VelocityComponent;
  */
 public class Archetyper {
 
+	public static String getManifestProperty(String property, File file)
+		throws IOException {
+
+		try (JarFile jarFile = new JarFile(file)) {
+			Manifest manifest = jarFile.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			return attributes.getValue(property);
+		}
+	}
+
+	public static String getManifestProperty(
+			String property, JarFile jarFile, JarEntry jarEntry)
+		throws IOException {
+
+		try (InputStream inputStream = jarFile.getInputStream(jarEntry);
+			JarInputStream jarInputStream = new JarInputStream(inputStream)) {
+
+			Manifest manifest = jarInputStream.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			return attributes.getValue(property);
+		}
+	}
+
+	public static String getTemplateName(String name) {
+		String projectTemplatesString = "project.templates.";
+
+		int projectTemplatesEndIndex =
+			name.indexOf(projectTemplatesString) +
+				projectTemplatesString.length();
+
+		String templateName = name.substring(
+			projectTemplatesEndIndex, name.lastIndexOf('-'));
+
+		templateName = templateName.replace('.', '-');
+
+		return templateName;
+	}
+
 	public ArchetypeGenerationResult generateProject(
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
 		throws Exception {
@@ -83,6 +136,22 @@ public class Archetyper {
 		String groupId = projectTemplatesArgs.getGroupId();
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
+
+		File templateFile = _getTemplateFile(
+			projectTemplatesArgs.getTemplate());
+
+		String liferayVersionRange = getManifestProperty(
+			"Liferay-Versions", templateFile);
+
+		if (Objects.nonNull(liferayVersionRange) &&
+			Objects.isNull(liferayVersion)) {
+
+			if (!_isVersionValid(liferayVersion, liferayVersionRange)) {
+				throw new Exception(
+					"Specified Liferay Version is invalid. Must be in range " +
+						liferayVersionRange);
+			}
+		}
 
 		if (Objects.isNull(groupId)) {
 			groupId = packageName;
@@ -165,6 +234,51 @@ public class Archetyper {
 		}
 
 		return archetypeGenerationResult;
+	}
+
+	private static File _getTemplateFile(String templateName) throws Exception {
+		Collection<File> templatesFiles = new HashSet<>();
+
+		File projectTemplatesFile = FileUtil.getJarFile(ProjectTemplates.class);
+
+		if (!templatesFiles.contains(projectTemplatesFile)) {
+			templatesFiles.add(projectTemplatesFile);
+		}
+
+		for (File templatesFile : templatesFiles) {
+			if (templatesFile.isDirectory()) {
+				try (DirectoryStream<Path> directoryStream =
+						Files.newDirectoryStream(
+							templatesFile.toPath(), "*.project.templates.*")) {
+
+					Iterator<Path> iterator = directoryStream.iterator();
+
+					while (iterator.hasNext()) {
+						Path path = iterator.next();
+
+						String template = String.valueOf(path.getFileName());
+
+						template = getTemplateName(template);
+
+						if (Objects.equals(template, templateName)) {
+							return path.toFile();
+						}
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private static boolean _isVersionValid(
+		String versionString, String rangeString) {
+
+		Version version = new Version(versionString);
+
+		VersionRange versionRange = new VersionRange(rangeString);
+
+		return versionRange.includes(version);
 	}
 
 	private ArchetypeArtifactManager _createArchetypeArtifactManager(

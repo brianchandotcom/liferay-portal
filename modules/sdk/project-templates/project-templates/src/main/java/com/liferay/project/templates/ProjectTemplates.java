@@ -23,7 +23,6 @@ import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -38,11 +37,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
-import java.util.jar.Manifest;
 
 import org.apache.maven.archetype.ArchetypeGenerationResult;
 
@@ -83,24 +79,14 @@ public class ProjectTemplates {
 
 						String template = String.valueOf(path.getFileName());
 
-						template = template.substring(
-							TEMPLATE_BUNDLE_PREFIX.length(),
-							template.lastIndexOf('-'));
-
-						template = template.replace('.', '-');
+						template = Archetyper.getTemplateName(template);
 
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-							try (JarFile jarFile = new JarFile(path.toFile())) {
-								Manifest manifest = jarFile.getManifest();
+							String bundleDescription =
+								Archetyper.getManifestProperty(
+									"Bundle-Description", path.toFile());
 
-								Attributes attributes =
-									manifest.getMainAttributes();
-
-								String bundleDescription = attributes.getValue(
-									"Bundle-Description");
-
-								templates.put(template, bundleDescription);
-							}
+							templates.put(template, bundleDescription);
 						}
 					}
 				}
@@ -122,30 +108,14 @@ public class ProjectTemplates {
 							continue;
 						}
 
-						template = template.substring(
-							TEMPLATE_BUNDLE_PREFIX.length(),
-							template.indexOf("-"));
-
-						template = template.replace('.', '-');
+						template = Archetyper.getTemplateName(template);
 
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-							try (InputStream inputStream =
-									jarFile.getInputStream(jarEntry);
+							String bundleDescription =
+								Archetyper.getManifestProperty(
+									"Bundle-Description", jarFile, jarEntry);
 
-								JarInputStream jarInputStream =
-									new JarInputStream(inputStream)) {
-
-								Manifest manifest =
-									jarInputStream.getManifest();
-
-								Attributes attributes =
-									manifest.getMainAttributes();
-
-								String bundleDescription = attributes.getValue(
-									"Bundle-Description");
-
-								templates.put(template, bundleDescription);
-							}
+							templates.put(template, bundleDescription);
 						}
 					}
 				}

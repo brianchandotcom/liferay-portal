@@ -2,6 +2,7 @@ Bundle-Description: Creates a Liferay portlet extending the "javax.portlet.Gener
 Bundle-Name: Liferay Project Templates Portlet
 Bundle-SymbolicName: com.liferay.project.templates.portlet
 Bundle-Version: 1.0.8
+Liferay-Versions: [7,8)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

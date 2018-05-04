@@ -118,7 +118,7 @@
 
 		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
 
-		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -170,7 +170,7 @@
 
 		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
 
-		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -203,29 +203,9 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
 		<execute macro="PageTemplate#deactivateAndActivate">
 			<var name="pageTemplateName" value="Page Template Name" />
 			<var name="pageTemplateStatus" value="No" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#viewStatus">
@@ -266,16 +246,6 @@
 		<execute macro="PageTemplate#deactivateAndActivate">
 			<var name="pageTemplateName" value="Page Template Name" />
 			<var name="pageTemplateStatus" value="Yes" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#viewStatus">
@@ -322,28 +292,8 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
 		<execute macro="PageTemplate#deleteCP">
 			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#viewDefaultCP">
@@ -391,29 +341,9 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
 		<execute macro="PageTemplate#editDescription">
 			<var name="pageTemplateDescription" value="This is a page template description" />
 			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Global" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#viewDescription">
@@ -473,7 +403,7 @@
 
 		<execute function="Close#closeWindow" locator1="title=College Landing Page - ${siteName}" />
 
-		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
 
 		<execute macro="Navigator#openURL" />
 

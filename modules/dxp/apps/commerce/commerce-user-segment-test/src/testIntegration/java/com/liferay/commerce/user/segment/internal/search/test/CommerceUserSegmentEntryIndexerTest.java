@@ -89,8 +89,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 			_addCommerceUserSegmentEntry(
 				groupId, RandomTestUtil.randomBoolean());
 
-		Hits hits = _searchCommerceUserSegmentEntries(
-			commerceUserSegmentEntry.getCompanyId(), groupId);
+		Hits hits = _search(commerceUserSegmentEntry.getCompanyId(), groupId);
 
 		Document document = HitsAssert.assertOnlyOne(hits);
 
@@ -123,8 +122,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		_commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(
 			commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
 
-		Hits hits = _searchCommerceUserSegmentEntries(
-			commerceUserSegmentEntry.getCompanyId(), groupId);
+		Hits hits = _search(commerceUserSegmentEntry.getCompanyId(), groupId);
 
 		Assert.assertEquals(hits.toString(), 0, hits.getLength());
 	}
@@ -180,21 +178,13 @@ public class CommerceUserSegmentEntryIndexerTest {
 				nameMap, key, active, system, priority, serviceContext);
 	}
 
-	private SearchContext _getSearchContext(long companyId, long groupId) {
+	private Hits _search(long companyId, long groupId) throws SearchException {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setEntryClassNames(
 			new String[] {CommerceUserSegmentEntry.class.getName()});
-
-		return searchContext;
-	}
-
-	private Hits _searchCommerceUserSegmentEntries(long companyId, long groupId)
-		throws SearchException {
-
-		SearchContext searchContext = _getSearchContext(companyId, groupId);
 
 		return _indexer.search(searchContext);
 	}

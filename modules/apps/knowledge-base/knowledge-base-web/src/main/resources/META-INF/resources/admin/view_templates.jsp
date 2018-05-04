@@ -18,22 +18,9 @@
 
 <%
 KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = new KBTemplatesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, templatePath);
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/admin/view_templates.jsp");
-portletURL.setParameter("orderBycol", orderByCol);
-portletURL.setParameter("orderByType", orderByType);
 %>
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
-
-<%
-String keywords = ParamUtil.getString(request, "keywords");
-%>
 
 <clay:management-toolbar
 	actionItems="<%= kbTemplatesManagementToolbarDisplayContext.getActionDropdownItems() %>"
@@ -47,91 +34,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 	sortingURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSortingURL()) %>"
 	totalItems="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
 />
-
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="kbTemplates"
->
-	<c:if test="<%= Validator.isNull(keywords) %>">
-
-		<%
-		PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-		%>
-
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"descriptive"} %>'
-				portletURL="<%= displayStyleURL %>"
-				selectedDisplayStyle="descriptive"
-			/>
-
-			<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_TEMPLATE) %>">
-				<liferay-portlet:renderURL var="addKBTemplateURL">
-					<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</liferay-portlet:renderURL>
-
-				<liferay-frontend:add-menu
-					inline="<%= true %>"
-				>
-					<liferay-frontend:add-menu-item
-						title='<%= LanguageUtil.get(request, "add-template") %>'
-						url="<%= addKBTemplateURL %>"
-					/>
-				</liferay-frontend:add-menu>
-			</c:if>
-		</liferay-frontend:management-bar-buttons>
-	</c:if>
-
-	<%
-	PortletURL navigationPortletURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-	%>
-
-	<liferay-frontend:management-bar-filters>
-		<c:if test="<%= Validator.isNull(keywords) %>">
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= navigationPortletURL %>"
-			/>
-
-			<%
-			PortletURL sortURL = renderResponse.createRenderURL();
-
-			sortURL.setParameter("mvcPath", "/admin/view_templates.jsp");
-			%>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"title", "user-name", "create-date", "modified-date"} %>'
-				portletURL="<%= sortURL %>"
-			/>
-		</c:if>
-
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
-			</liferay-portlet:renderURL>
-
-			<aui:form action="<%= searchURL %>" method="get" name="fm2">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-					placeholder='<%= LanguageUtil.get(request, "search") %>'
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKBTemplates();" %>'
-			icon="times"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-portlet:renderURL varImpl="searchURL">

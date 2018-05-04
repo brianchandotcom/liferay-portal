@@ -16,8 +16,9 @@ package com.liferay.portal.search.internal.contributor.query;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,12 +34,13 @@ public class LayoutQueryPreFilterContributor
 	public void contribute(
 		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		String layoutUuid = GetterUtil.getString(
+			searchContext.getAttribute(Field.LAYOUT_UUID));
 
-		multiValueFacet.setFieldName(Field.LAYOUT_UUID);
-		multiValueFacet.setStatic(true);
-
-		searchContext.addFacet(multiValueFacet);
+		if (Validator.isNotNull(layoutUuid)) {
+			fullQueryBooleanFilter.addRequiredTerm(
+				Field.LAYOUT_UUID, layoutUuid);
+		}
 	}
 
 }

@@ -21,7 +21,6 @@ import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContri
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.QueryConfigContributor;
-import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.SearchContextContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
@@ -58,10 +57,6 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 			bundleContext, QueryConfigContributor.class,
 			"(indexer.class.name=" + className + ")");
 
-		_queryPreFilterContributors = ServiceTrackerListFactory.open(
-			bundleContext, QueryPreFilterContributor.class,
-			"(indexer.class.name=" + className + ")");
-
 		_searchContextContributors = ServiceTrackerListFactory.open(
 			bundleContext, SearchContextContributor.class,
 			"(indexer.class.name=" + className + ")");
@@ -76,7 +71,6 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 		_modelDocumentContributors.close();
 		_keywordQueryContributors.close();
 		_queryConfigContributors.close();
-		_queryPreFilterContributors.close();
 		_searchContextContributors.close();
 	}
 
@@ -121,11 +115,6 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 	}
 
 	@Override
-	public Iterable<QueryPreFilterContributor> getQueryPreFilterContributors() {
-		return _queryPreFilterContributors;
-	}
-
-	@Override
 	public Iterable<SearchContextContributor> getSearchContextContributors() {
 		return _searchContextContributors;
 	}
@@ -144,9 +133,6 @@ public class ModelSearchConfiguratorImpl<T extends BaseModel<?>>
 	private final ServiceTrackerList
 		<QueryConfigContributor, QueryConfigContributor>
 			_queryConfigContributors;
-	private final ServiceTrackerList
-		<QueryPreFilterContributor, QueryPreFilterContributor>
-			_queryPreFilterContributors;
 	private final ServiceTrackerList
 		<SearchContextContributor, SearchContextContributor>
 			_searchContextContributors;

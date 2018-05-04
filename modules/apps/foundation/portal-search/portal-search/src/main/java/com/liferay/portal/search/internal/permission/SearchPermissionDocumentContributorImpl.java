@@ -67,9 +67,10 @@ public class SearchPermissionDocumentContributorImpl
 			long classNameId = GetterUtil.getLong(
 				document.get(Field.CLASS_NAME_ID));
 
-			className = _portal.getClassName(classNameId);
-
-			classPK = document.get(Field.CLASS_PK);
+			if (classNameId > 0) {
+				className = _portal.getClassName(classNameId);
+				classPK = document.get(Field.CLASS_PK);
+			}
 		}
 
 		addPermissionFields(

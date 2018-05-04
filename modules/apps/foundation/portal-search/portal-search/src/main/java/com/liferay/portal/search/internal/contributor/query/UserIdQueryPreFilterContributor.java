@@ -16,7 +16,6 @@ package com.liferay.portal.search.internal.contributor.query;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
@@ -34,19 +33,12 @@ public class UserIdQueryPreFilterContributor
 	public void contribute(
 		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
-
-		multiValueFacet.setFieldName(Field.USER_ID);
-		multiValueFacet.setStatic(true);
-
 		long userId = GetterUtil.getLong(
 			searchContext.getAttribute(Field.USER_ID));
 
 		if (userId > 0) {
-			multiValueFacet.setValues(new long[] {userId});
+			fullQueryBooleanFilter.addRequiredTerm(Field.USER_ID, userId);
 		}
-
-		searchContext.addFacet(multiValueFacet);
 	}
 
 }

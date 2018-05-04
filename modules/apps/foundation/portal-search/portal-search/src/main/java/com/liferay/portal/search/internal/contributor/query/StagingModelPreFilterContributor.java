@@ -14,41 +14,43 @@
 
 package com.liferay.portal.search.internal.contributor.query;
 
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
+import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = QueryPreFilterContributor.class)
-public class ClassTypeIdsQueryPreFilterContributor
-	implements QueryPreFilterContributor {
+@Component(
+	immediate = true, property = "indexer.class.name=ALL",
+	service = ModelPreFilterContributor.class
+)
+public class StagingModelPreFilterContributor
+	implements ModelPreFilterContributor {
 
 	@Override
 	public void contribute(
-		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
+		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
+		SearchContext searchContext) {
 
-		long[] classTypeIds = searchContext.getClassTypeIds();
-
-		if (ArrayUtil.isEmpty(classTypeIds)) {
+		if (!modelSearchSettings.isStagingAware()) {
 			return;
 		}
 
-		TermsFilter classTypeIdsTermsFilter = new TermsFilter(
-			Field.CLASS_TYPE_ID);
+		if (!searchContext.isIncludeLiveGroups() &&
+			searchContext.isIncludeStagingGroups()) {
 
-		classTypeIdsTermsFilter.addValues(
-			ArrayUtil.toStringArray(classTypeIds));
+			booleanFilter.addRequiredTerm(Field.STAGING_GROUP, true);
+		}
+		else if (searchContext.isIncludeLiveGroups() &&
+				 !searchContext.isIncludeStagingGroups()) {
 
-		fullQueryBooleanFilter.add(
-			classTypeIdsTermsFilter, BooleanClauseOccur.MUST);
+			booleanFilter.addRequiredTerm(Field.STAGING_GROUP, false);
+		}
 	}
 
 }

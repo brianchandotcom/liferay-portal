@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.IndexSearcherHelper;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistry;
@@ -44,6 +45,7 @@ import com.liferay.portal.search.indexer.IndexerQueryBuilder;
 import com.liferay.portal.search.indexer.IndexerSearcher;
 import com.liferay.portal.search.indexer.IndexerSummaryBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
+import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -174,6 +176,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			_bundleContext, KeywordQueryContributor.class,
 			"(!(indexer.class.name=*))");
 
+		_modelPreFilterContributorsHolderImpl =
+			new ModelPreFilterContributorsHolderImpl(_bundleContext);
+
 		_modelResourcePermissionServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ModelResourcePermission.class,
@@ -190,6 +195,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		_searchContextContributors = ServiceTrackerListFactory.open(
 			_bundleContext, SearchContextContributor.class,
 			"(!(indexer.class.name=*))");
+
+		_searchPermissionFilterContributors = ServiceTrackerListFactory.open(
+			_bundleContext, SearchPermissionFilterContributor.class);
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, ModelSearchConfigurator.class, this);
@@ -223,19 +231,21 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		serviceRegistrationHolder.setIndexerDocumentBuilderServiceRegistration(
 			indexerDocumentBuilderServiceRegistration);
 
-		IndexerQueryBuilder indexerQueryBuilder = new IndexerQueryBuilderImpl<>(
-			modelSearchConfigurator.getModelSearchSettings(),
-			modelSearchConfigurator.getKeywordQueryContributors(),
-			modelSearchConfigurator.getQueryPreFilterContributors(),
-			modelSearchConfigurator.getSearchContextContributors(),
-			_keywordQueryContributors, _queryPreFilterContributors,
-			_searchContextContributors, indexerPostProcessorsHolder,
-			relatedEntryIndexerRegistry);
+		IndexerQueryBuilderImpl indexerQueryBuilderImpl =
+			new IndexerQueryBuilderImpl<>(
+				indexerRegistry,
+				modelSearchConfigurator.getModelSearchSettings(),
+				modelSearchConfigurator.getKeywordQueryContributors(),
+				_modelPreFilterContributorsHolderImpl,
+				modelSearchConfigurator.getSearchContextContributors(),
+				_keywordQueryContributors, _queryPreFilterContributors,
+				_searchContextContributors, _searchPermissionFilterContributors,
+				indexerPostProcessorsHolder, relatedEntryIndexerRegistry);
 
 		ServiceRegistration<IndexerQueryBuilder>
 			indexerQueryBuilderServiceRegistration =
 				_bundleContext.registerService(
-					IndexerQueryBuilder.class, indexerQueryBuilder,
+					IndexerQueryBuilder.class, indexerQueryBuilderImpl,
 					serviceProperties);
 
 		serviceRegistrationHolder.setIndexerQueryBuilderServiceRegistration(
@@ -262,7 +272,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		IndexerSearcher indexerSearcher = new IndexerSearcherImpl<>(
 			modelSearchConfigurator.getModelSearchSettings(),
 			modelSearchConfigurator.getQueryConfigContributors(),
-			indexerPermissionPostFilter, indexerQueryBuilder,
+			indexerPermissionPostFilter, indexerQueryBuilderImpl,
 			hitsProcessorRegistry, indexSearcherHelper,
 			_queryConfigContributors, searchResultPermissionFilterFactory);
 
@@ -305,7 +315,7 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		return new DefaultIndexer<>(
 			modelSearchConfigurator.getModelSearchSettings(),
 			indexerDocumentBuilder, indexerSearcher, indexerWriter,
-			indexerPermissionPostFilter, indexerQueryBuilder,
+			indexerPermissionPostFilter, indexerQueryBuilderImpl,
 			indexerSummaryBuilder, indexerPostProcessorsHolder);
 	}
 
@@ -316,9 +326,11 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		_serviceTracker.close();
 		_documentContributors.close();
 		_keywordQueryContributors.close();
+		_modelPreFilterContributorsHolderImpl.close();
 		_queryPreFilterContributors.close();
 		_queryConfigContributors.close();
 		_searchContextContributors.close();
+		_searchPermissionFilterContributors.close();
 
 		_serviceRegistrationHolders.forEach(
 			(key, serviceRegistrationHolder) ->
@@ -333,6 +345,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 
 	@Reference
 	protected HitsProcessorRegistry hitsProcessorRegistry;
+
+	@Reference
+	protected IndexerRegistry indexerRegistry;
 
 	@Reference
 	protected IndexSearcherHelper indexSearcherHelper;
@@ -367,6 +382,8 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		_documentContributors;
 	private ServiceTrackerList<KeywordQueryContributor, KeywordQueryContributor>
 		_keywordQueryContributors;
+	private ModelPreFilterContributorsHolderImpl
+		_modelPreFilterContributorsHolderImpl;
 	private ServiceTrackerMap<String, ModelResourcePermission>
 		_modelResourcePermissionServiceTrackerMap;
 	private ServiceTrackerList<QueryConfigContributor, QueryConfigContributor>
@@ -377,6 +394,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 	private ServiceTrackerList
 		<SearchContextContributor, SearchContextContributor>
 			_searchContextContributors;
+	private ServiceTrackerList
+		<SearchPermissionFilterContributor, SearchPermissionFilterContributor>
+			_searchPermissionFilterContributors;
 	private final Map<String, ServiceRegistrationHolder>
 		_serviceRegistrationHolders = new Hashtable<>();
 	private ServiceTracker

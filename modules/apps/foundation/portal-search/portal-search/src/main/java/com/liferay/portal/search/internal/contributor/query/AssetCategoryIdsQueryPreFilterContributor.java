@@ -14,10 +14,12 @@
 
 package com.liferay.portal.search.internal.contributor.query;
 
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,13 +35,17 @@ public class AssetCategoryIdsQueryPreFilterContributor
 	public void contribute(
 		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		long[] assetCategoryIds = searchContext.getAssetCategoryIds();
 
-		multiValueFacet.setFieldName(Field.ASSET_CATEGORY_IDS);
-		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getAssetCategoryIds());
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return;
+		}
 
-		searchContext.addFacet(multiValueFacet);
+		TermsFilter termsFilter = new TermsFilter(Field.ASSET_CATEGORY_IDS);
+
+		termsFilter.addValues(ArrayUtil.toStringArray(assetCategoryIds));
+
+		fullQueryBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 	}
 
 }

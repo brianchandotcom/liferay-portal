@@ -257,7 +257,9 @@ public abstract class BaseSearchTestCase {
 
 		Hits hits = searchBaseModelsCount(searchContext);
 
-		Assert.assertEquals(hits.toString(), expectedCount, hits.getLength());
+		Assert.assertEquals(
+			searchContext.getAttribute("queryString") + "->" + hits,
+			expectedCount, hits.getLength());
 	}
 
 	protected void assertBaseModelsCount(

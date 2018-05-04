@@ -19,21 +19,34 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.indexer.IndexerQueryBuilder;
+import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
+import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.SearchContextContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 import com.liferay.portal.search.spi.model.query.contributor.helper.SearchContextContributorHelper;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -43,78 +56,102 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	implements IndexerQueryBuilder {
 
 	public IndexerQueryBuilderImpl(
+		IndexerRegistry indexerRegistry,
 		ModelSearchSettings modelSearchSettings,
 		Iterable<KeywordQueryContributor> modelKeywordQueryContributors,
-		Iterable<QueryPreFilterContributor> modelQueryPreFilterContributor,
+		ModelPreFilterContributorsHolder modelPreFilterContributorsHolder,
 		Iterable<SearchContextContributor> modelSearchContextContributor,
 		Iterable<KeywordQueryContributor> keywordQueryContributors,
 		Iterable<QueryPreFilterContributor> queryPreFilterContributors,
 		Iterable<SearchContextContributor> searchContextContributors,
+		Iterable<SearchPermissionFilterContributor>
+			searchPermissionFilterContributors,
 		IndexerPostProcessorsHolder indexerPostProcessorsHolder,
 		RelatedEntryIndexerRegistry relatedEntryIndexerRegistry) {
 
+		_indexerRegistry = indexerRegistry;
 		_modelSearchSettings = modelSearchSettings;
 		_modelKeywordQueryContributors = modelKeywordQueryContributors;
-		_modelQueryPreFilterContributors = modelQueryPreFilterContributor;
+		_modelPreFilterContributorsHolder = modelPreFilterContributorsHolder;
 		_modelSearchContextContributors = modelSearchContextContributor;
 		_keywordQueryContributors = keywordQueryContributors;
 		_queryPreFilterContributors = queryPreFilterContributors;
 		_searchContextContributors = searchContextContributors;
+		_searchPermissionFilterContributors =
+			searchPermissionFilterContributors;
 		_indexerPostProcessorsHolder = indexerPostProcessorsHolder;
 		_relatedEntryIndexerRegistry = relatedEntryIndexerRegistry;
 	}
 
 	@Override
 	public BooleanQuery getQuery(SearchContext searchContext) {
-		try {
-			searchContext.setSearchEngineId(
-				_modelSearchSettings.getSearchEngineId());
+		searchContext.setSearchEngineId(
+			_modelSearchSettings.getSearchEngineId());
 
-			searchContext.clearFullQueryEntryClassNames();
+		_resetFullQuery(searchContext);
 
-			for (RelatedEntryIndexer relatedEntryIndexer :
-					_relatedEntryIndexerRegistry.getRelatedEntryIndexers()) {
+		String[] fullQueryEntryClassNames =
+			searchContext.getFullQueryEntryClassNames();
 
-				relatedEntryIndexer.updateFullQuery(searchContext);
-			}
-
-			contributeSearchContext(searchContext);
-
-			final BooleanFilter fullQueryBooleanFilter = new BooleanFilter();
-
-			contribute(
-				_queryPreFilterContributors, searchContext,
-				fullQueryBooleanFilter);
-
-			contribute(
-				_modelQueryPreFilterContributors, searchContext,
-				fullQueryBooleanFilter);
-
-			BooleanQuery fullQuery = createFullQuery(
-				fullQueryBooleanFilter, searchContext);
-
-			fullQuery.setQueryConfig(searchContext.getQueryConfig());
-
-			return fullQuery;
+		if (ArrayUtil.isNotEmpty(fullQueryEntryClassNames)) {
+			searchContext.setAttribute(
+				"relatedEntryClassNames",
+				_modelSearchSettings.getSearchClassNames());
 		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+
+		String[] entryClassNames = ArrayUtil.append(
+			_modelSearchSettings.getSearchClassNames(),
+			fullQueryEntryClassNames);
+
+		searchContext.setEntryClassNames(entryClassNames);
+
+		contributeSearchContext(searchContext);
+
+		Map<String, Indexer<?>> entryClassNameIndexerMap =
+			_getEntryClassNameIndexerMap(
+				entryClassNames, searchContext.getSearchEngineId());
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		contribute(_queryPreFilterContributors, booleanFilter, searchContext);
+
+		_addPreFilters(booleanFilter, entryClassNameIndexerMap, searchContext);
+
+		BooleanQuery fullQuery = createFullQuery(booleanFilter, searchContext);
+
+		fullQuery.setQueryConfig(searchContext.getQueryConfig());
+
+		return fullQuery;
+	}
+
+	protected void addPreFiltersFromModel(
+		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
+		SearchContext searchContext) {
+
+		Stream<ModelPreFilterContributor> stream =
+			_modelPreFilterContributorsHolder.getByModel(
+				modelSearchSettings.getClassName());
+
+		stream.forEach(
+			modelPreFilterContributor -> modelPreFilterContributor.contribute(
+				booleanFilter, modelSearchSettings, searchContext));
+	}
+
+	protected void addSearchTermsFromModel(
+		BooleanQuery booleanQuery, SearchContext searchContext) {
+
+		contribute(_modelKeywordQueryContributors, searchContext, booleanQuery);
 	}
 
 	protected void contribute(
 		Iterable<KeywordQueryContributor> keywordQueryContributors,
-		SearchContext searchContext, BooleanQuery booleanQuery,
-		String keywords) {
+		SearchContext searchContext, BooleanQuery booleanQuery) {
 
 		for (KeywordQueryContributor keywordQueryContributor :
 				keywordQueryContributors) {
 
 			keywordQueryContributor.contribute(
-				keywords, booleanQuery,
+				searchContext.getKeywords(), booleanQuery,
 				new KeywordQueryContributorHelper() {
 
 					@Override
@@ -139,13 +176,12 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 
 	protected void contribute(
 		Iterable<QueryPreFilterContributor> queryPreFilterContributors,
-		SearchContext searchContext, BooleanFilter fullQueryBooleanFilter) {
+		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		for (QueryPreFilterContributor queryPreFilterContributor :
 				queryPreFilterContributors) {
 
-			queryPreFilterContributor.contribute(
-				fullQueryBooleanFilter, searchContext);
+			queryPreFilterContributor.contribute(booleanFilter, searchContext);
 		}
 	}
 
@@ -173,32 +209,19 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	}
 
 	protected BooleanQuery createFullQuery(
-			BooleanFilter fullQueryBooleanFilter, SearchContext searchContext)
-		throws Exception {
+		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
 
-		final BooleanQuery keywordBooleanQuery = new BooleanQueryImpl();
-
-		final String keywords = searchContext.getKeywords();
-
-		contribute(
-			_keywordQueryContributors, searchContext, keywordBooleanQuery,
-			keywords);
-
-		contribute(
-			_modelKeywordQueryContributors, searchContext, keywordBooleanQuery,
-			keywords);
-
-		postProcessSearchQuery(
-			keywordBooleanQuery, fullQueryBooleanFilter, searchContext);
-
-		BooleanQuery fullBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		if (fullQueryBooleanFilter.hasClauses()) {
-			fullBooleanQuery.setPreBooleanFilter(fullQueryBooleanFilter);
+			booleanQuery.setPreBooleanFilter(fullQueryBooleanFilter);
 		}
 
+		BooleanQuery keywordBooleanQuery = createKeywordQuery(
+			fullQueryBooleanFilter, searchContext);
+
 		if (keywordBooleanQuery.hasClauses()) {
-			fullBooleanQuery.add(keywordBooleanQuery, BooleanClauseOccur.MUST);
+			_add(booleanQuery, keywordBooleanQuery, BooleanClauseOccur.MUST);
 		}
 
 		BooleanClause<Query>[] booleanClauses =
@@ -206,15 +229,30 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 
 		if (booleanClauses != null) {
 			for (BooleanClause<Query> booleanClause : booleanClauses) {
-				fullBooleanQuery.add(
-					booleanClause.getClause(),
+				_add(
+					booleanQuery, booleanClause.getClause(),
 					booleanClause.getBooleanClauseOccur());
 			}
 		}
 
-		postProcessFullQuery(fullBooleanQuery, searchContext);
+		postProcessFullQuery(booleanQuery, searchContext);
 
-		return fullBooleanQuery;
+		return booleanQuery;
+	}
+
+	protected BooleanQuery createKeywordQuery(
+		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		_addSearchKeywords(booleanQuery, searchContext);
+
+		addSearchTermsFromModel(booleanQuery, searchContext);
+
+		_addSearchTermsFromIndexerPostProcessors(
+			booleanQuery, fullQueryBooleanFilter, searchContext);
+
+		return booleanQuery;
 	}
 
 	protected void postProcessFullQuery(
@@ -238,7 +276,88 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			});
 	}
 
-	protected void postProcessSearchQuery(
+	private void _add(
+		BooleanQuery booleanQuery, Query query,
+		BooleanClauseOccur booleanClauseOccur) {
+
+		try {
+			booleanQuery.add(query, booleanClauseOccur);
+		}
+		catch (ParseException pe) {
+			throw new SystemException(pe);
+		}
+	}
+
+	private void _addIndexerProvidedPreFilters(
+			BooleanFilter booleanFilter, Indexer<?> indexer,
+			SearchContext searchContext)
+		throws Exception {
+
+		indexer.postProcessContextBooleanFilter(booleanFilter, searchContext);
+
+		for (IndexerPostProcessor indexerPostProcessor :
+				indexer.getIndexerPostProcessors()) {
+
+			indexerPostProcessor.postProcessContextBooleanFilter(
+				booleanFilter, searchContext);
+		}
+	}
+
+	private void _addPermissionFilter(
+		BooleanFilter booleanFilter, String entryClassName,
+		SearchContext searchContext) {
+
+		if (searchContext.getUserId() == 0) {
+			return;
+		}
+
+		SearchPermissionChecker searchPermissionChecker =
+			SearchEngineHelperUtil.getSearchPermissionChecker();
+
+		Optional<String> permissionedEntryClassNameOptional =
+			_getPermissionedEntryClassName(entryClassName);
+
+		String permissionedEntryClassName =
+			permissionedEntryClassNameOptional.orElse(entryClassName);
+
+		searchPermissionChecker.getPermissionBooleanFilter(
+			searchContext.getCompanyId(), searchContext.getGroupIds(),
+			searchContext.getUserId(), permissionedEntryClassName,
+			booleanFilter, searchContext);
+	}
+
+	private void _addPreFilters(
+		BooleanFilter queryBooleanFilter,
+		Map<String, Indexer<?>> entryClassNameIndexerMap,
+		SearchContext searchContext) {
+
+		BooleanFilter preFilterBooleanFilter = new BooleanFilter();
+
+		for (Entry<String, Indexer<?>> entry :
+				entryClassNameIndexerMap.entrySet()) {
+
+			String entryClassName = entry.getKey();
+			Indexer<?> indexer = entry.getValue();
+
+			preFilterBooleanFilter.add(
+				_createPreFilterForEntryClassName(
+					entryClassName, indexer, searchContext),
+				BooleanClauseOccur.SHOULD);
+		}
+
+		if (preFilterBooleanFilter.hasClauses()) {
+			queryBooleanFilter.add(
+				preFilterBooleanFilter, BooleanClauseOccur.MUST);
+		}
+	}
+
+	private void _addSearchKeywords(
+		BooleanQuery booleanQuery, SearchContext searchContext) {
+
+		contribute(_keywordQueryContributors, searchContext, booleanQuery);
+	}
+
+	private void _addSearchTermsFromIndexerPostProcessors(
 		BooleanQuery booleanQuery, BooleanFilter booleanFilter,
 		SearchContext searchContext) {
 
@@ -260,12 +379,106 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			});
 	}
 
+	private BooleanFilter _createPreFilterForEntryClassName(
+		String entryClassName, Indexer indexer, SearchContext searchContext) {
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		booleanFilter.addTerm(
+			Field.ENTRY_CLASS_NAME, entryClassName, BooleanClauseOccur.MUST);
+
+		_addPermissionFilter(booleanFilter, entryClassName, searchContext);
+
+		try {
+			_addIndexerProvidedPreFilters(
+				booleanFilter, indexer, searchContext);
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+
+		ModelSearchSettings modelSearchSettings = _getModelSearchSettings(
+			indexer);
+
+		addPreFiltersFromModel(
+			booleanFilter, modelSearchSettings, searchContext);
+
+		return booleanFilter;
+	}
+
+	private Map<String, Indexer<?>> _getEntryClassNameIndexerMap(
+		String[] entryClassNames, String searchEngineId) {
+
+		Map<String, Indexer<?>> entryClassNameIndexerMap = new LinkedHashMap<>(
+			entryClassNames.length);
+
+		for (String entryClassName : entryClassNames) {
+			Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
+
+			if (indexer == null) {
+				continue;
+			}
+
+			if (!searchEngineId.equals(indexer.getSearchEngineId())) {
+				continue;
+			}
+
+			entryClassNameIndexerMap.put(entryClassName, indexer);
+		}
+
+		return entryClassNameIndexerMap;
+	}
+
+	private ModelSearchSettings _getModelSearchSettings(Indexer indexer) {
+		ModelSearchSettingsImpl modelSearchSettingsImpl =
+			new ModelSearchSettingsImpl(indexer.getClassName());
+
+		modelSearchSettingsImpl.setStagingAware(indexer.isStagingAware());
+
+		return modelSearchSettingsImpl;
+	}
+
+	private Optional<String> _getPermissionedEntryClassName(
+		String entryClassName) {
+
+		for (SearchPermissionFilterContributor
+				searchPermissionFilterContributor :
+					_searchPermissionFilterContributors) {
+
+			Optional<String> permissionedEntryClassNameOptional =
+				searchPermissionFilterContributor.
+					getParentEntryClassNameOptional(entryClassName);
+
+			if ((permissionedEntryClassNameOptional != null) &&
+				permissionedEntryClassNameOptional.isPresent()) {
+
+				return permissionedEntryClassNameOptional;
+			}
+		}
+
+		return Optional.empty();
+	}
+
+	private void _resetFullQuery(SearchContext searchContext) {
+		searchContext.clearFullQueryEntryClassNames();
+
+		for (RelatedEntryIndexer relatedEntryIndexer :
+				_relatedEntryIndexerRegistry.getRelatedEntryIndexers()) {
+
+			relatedEntryIndexer.updateFullQuery(searchContext);
+		}
+	}
+
 	private final IndexerPostProcessorsHolder _indexerPostProcessorsHolder;
+	private final IndexerRegistry _indexerRegistry;
 	private final Iterable<KeywordQueryContributor> _keywordQueryContributors;
 	private final Iterable<KeywordQueryContributor>
 		_modelKeywordQueryContributors;
-	private final Iterable<QueryPreFilterContributor>
-		_modelQueryPreFilterContributors;
+	private final ModelPreFilterContributorsHolder
+		_modelPreFilterContributorsHolder;
 	private final Iterable<SearchContextContributor>
 		_modelSearchContextContributors;
 	private final ModelSearchSettings _modelSearchSettings;
@@ -273,5 +486,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		_queryPreFilterContributors;
 	private final RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
 	private final Iterable<SearchContextContributor> _searchContextContributors;
+	private final Iterable<SearchPermissionFilterContributor>
+		_searchPermissionFilterContributors;
 
 }

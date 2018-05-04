@@ -14,10 +14,12 @@
 
 package com.liferay.portal.search.internal.contributor.query;
 
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,13 +35,17 @@ public class AssetTagNamesQueryPreFilterContributor
 	public void contribute(
 		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
 
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
+		String[] assetTagNames = searchContext.getAssetTagNames();
 
-		multiValueFacet.setFieldName(Field.ASSET_TAG_NAMES);
-		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getAssetTagNames());
+		if (ArrayUtil.isEmpty(assetTagNames)) {
+			return;
+		}
 
-		searchContext.addFacet(multiValueFacet);
+		TermsFilter termsFilter = new TermsFilter(Field.ASSET_TAG_NAMES);
+
+		termsFilter.addValues(assetTagNames);
+
+		fullQueryBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 	}
 
 }

@@ -26,12 +26,12 @@
 	creationMenu="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) ? assetBrowserDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= assetBrowserDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= assetBrowserDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= assetBrowserDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= assetBrowserDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= assetBrowserDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetBrowserDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= assetBrowserDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= assetBrowserDisplayContext.getViewTypeItems() %>"
 />
 

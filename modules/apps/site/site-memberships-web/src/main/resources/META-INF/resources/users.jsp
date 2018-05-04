@@ -34,6 +34,7 @@ Role role = usersDisplayContext.getRole();
 	disabled="<%= usersDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= usersDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= usersDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= usersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
@@ -42,7 +43,6 @@ Role role = usersDisplayContext.getRole();
 	showSearch="<%= usersDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= usersDisplayContext.getOrderByType() %>"
 	sortingURL="<%= usersDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= usersDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= usersDisplayContext.getViewTypeItems() %>"
 />
 

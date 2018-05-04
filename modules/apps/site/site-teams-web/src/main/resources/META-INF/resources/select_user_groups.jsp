@@ -29,13 +29,13 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 	componentId="selectUserGroupsWebManagementToolbar"
 	disabled="<%= selectUserGroupsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= selectUserGroupsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectUserGroupsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectUserGroupsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
 	searchFormName="searchFm"
 	showSearch="<%= selectUserGroupsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectUserGroupsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectUserGroupsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= selectUserGroupsDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= selectUserGroupsDisplayContext.getViewTypeItems() %>"
 />
 

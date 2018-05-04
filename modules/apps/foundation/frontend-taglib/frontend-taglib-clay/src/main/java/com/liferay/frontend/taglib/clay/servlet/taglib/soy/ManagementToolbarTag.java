@@ -125,6 +125,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("infoPanelId", infoPanelId);
 	}
 
+	public void setItemsTotal(int itemsTotal) {
+		putValue("totalItems", itemsTotal);
+	}
+
 	public void setSearchActionURL(String searchActionURL) {
 		putValue("searchActionURL", searchActionURL);
 	}
@@ -179,10 +183,6 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setSortingURL(String sortingURL) {
 		putValue("sortingURL", sortingURL);
-	}
-
-	public void setItemsTotal(int itemsTotal) {
-		putValue("totalItems", itemsTotal);
 	}
 
 	public void setViewTypeItems(List<ViewTypeItem> viewTypeItems) {

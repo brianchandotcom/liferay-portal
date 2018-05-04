@@ -31,12 +31,12 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 	componentId="siteNavigationMenuWebManagementToolbar"
 	creationMenu="<%= siteNavigationAdminDisplayContext.isShowAddButton() ? siteNavigationAdminDisplayContext.getCreationMenu() : null %>"
 	filterDropdownItems="<%= siteNavigationAdminDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteNavigationAdminDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteNavigationAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="siteNavigationMenus"
 	searchFormName="searchFm"
 	sortingOrder="<%= siteNavigationAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteNavigationAdminDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= siteNavigationAdminDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= siteNavigationAdminDisplayContext.getViewTypeItems() %>"
 />
 

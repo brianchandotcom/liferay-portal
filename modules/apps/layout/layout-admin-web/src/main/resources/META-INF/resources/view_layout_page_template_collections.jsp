@@ -32,13 +32,13 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 	creationMenu="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) ? layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionsCreationMenu() : null %>"
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateCollectionsManagementBar() %>"
 	filterDropdownItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
 	searchContainerId="layoutPageTemplateCollections"
 	searchFormName="searchFm"
 	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>"
 	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
 />
 

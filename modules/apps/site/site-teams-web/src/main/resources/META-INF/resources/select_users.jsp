@@ -29,13 +29,13 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 	componentId="selectUsersWebManagementToolbar"
 	disabled="<%= selectUsersDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= selectUsersDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectUsersDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectUsersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
 	showSearch="<%= selectUsersDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectUsersDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectUsersDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= selectUsersDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= selectUsersDisplayContext.getViewTypeItems() %>"
 />
 

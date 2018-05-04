@@ -29,13 +29,13 @@ SiteRolesDisplayContext siteRolesDisplayContext = new SiteRolesDisplayContext(re
 	componentId="siteRolesManagementToolbar"
 	disabled="<%= siteRolesDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= siteRolesDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteRolesDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteRolesDisplayContext.getSearchActionURL() %>"
 	searchContainerId="siteRoles"
 	searchFormName="searchFm"
 	showSearch="<%= siteRolesDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= siteRolesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteRolesDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= siteRolesDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= siteRolesDisplayContext.getViewTypeItems() %>"
 />
 

@@ -48,11 +48,11 @@ JournalArticle article = journalDisplayContext.getArticle();
 			actionDropdownItems="<%= journalHistoryDisplayContext.getActionItemsDropdownItems() %>"
 			componentId="journalHistoryManagementToolbar"
 			filterDropdownItems="<%= journalHistoryDisplayContext.getFilterItemsDropdownItems() %>"
+			itemsTotal="<%= journalHistoryDisplayContext.getTotalItems() %>"
 			searchContainerId="articleVersions"
 			showSearch="<%= false %>"
 			sortingOrder="<%= journalHistoryDisplayContext.getOrderByType() %>"
 			sortingURL="<%= journalHistoryDisplayContext.getSortingURL() %>"
-			itemsTotal="<%= journalHistoryDisplayContext.getTotalItems() %>"
 			viewTypeItems="<%= journalHistoryDisplayContext.getViewTypeItems() %>"
 		/>
 

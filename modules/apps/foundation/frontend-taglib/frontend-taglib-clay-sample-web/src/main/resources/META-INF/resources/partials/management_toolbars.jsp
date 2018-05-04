@@ -35,7 +35,7 @@
 
 <clay:management-toolbar
 	actionDropdownItems="<%= managementToolbarsDisplayContext.getActionDropdownItems() %>"
+	itemsTotal="<%= 42 %>"
 	selectable="<%= true %>"
 	selectedItems="<%= 14 %>"
-	itemsTotal="<%= 42 %>"
 />

@@ -26,13 +26,13 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 	creationMenu="<%= ddmFormAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= ddmFormAdminDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmFormAdminDisplayContext.getFilterItemsDropdownItemList() %>"
+	itemsTotal="<%= ddmFormAdminDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= ddmFormAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"
 	sortingOrder="<%= ddmFormAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmFormAdminDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= ddmFormAdminDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= ddmFormAdminDisplayContext.getViewTypesItemList() %>"
 />
 

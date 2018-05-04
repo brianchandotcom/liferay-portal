@@ -39,11 +39,11 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 				componentId="archivedSettingsManagementToolbar"
 				disabled="<%= portletConfigurationTemplatesDisplayContext.isDisabledManagementBar() %>"
 				filterDropdownItems="<%= portletConfigurationTemplatesDisplayContext.getFilterDropdownItems() %>"
+				itemsTotal="<%= portletConfigurationTemplatesDisplayContext.getTotalItems() %>"
 				searchContainerId="archivedSettings"
 				showSearch="<%= false %>"
 				sortingOrder="<%= portletConfigurationTemplatesDisplayContext.getOrderByType() %>"
 				sortingURL="<%= portletConfigurationTemplatesDisplayContext.getSortingURL() %>"
-				itemsTotal="<%= portletConfigurationTemplatesDisplayContext.getTotalItems() %>"
 				viewTypeItems="<%= portletConfigurationTemplatesDisplayContext.getViewTypeItems() %>"
 			/>
 

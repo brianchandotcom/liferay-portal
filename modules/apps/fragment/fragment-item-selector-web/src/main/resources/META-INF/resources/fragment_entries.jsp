@@ -25,13 +25,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 	clearResultsURL="<%= fragmentItemSelectorViewDisplayContext.getClearResultsURL() %>"
 	componentId="fragmentItemSelectorFragmentEntriesManagementToolbar"
 	filterDropdownItems="<%= fragmentItemSelectorViewDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= fragmentItemSelectorViewDisplayContext.getFragmentEntriesTotalItems() %>"
 	searchActionURL="<%= fragmentItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchContainerId="fragmentEntries"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentItemSelectorViewDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= fragmentItemSelectorViewDisplayContext.getFragmentEntriesTotalItems() %>"
 	viewTypeItems="<%= fragmentItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 

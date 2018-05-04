@@ -31,6 +31,7 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 	componentId="editTeamAssignemntsUsersWebManagementToolbar"
 	disabled="<%= editSiteTeamAssignmentsUsersDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= editSiteTeamAssignmentsUsersDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
@@ -38,7 +39,6 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 	showSearch="<%= editSiteTeamAssignmentsUsersDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= editSiteTeamAssignmentsUsersDisplayContext.getOrderByType() %>"
 	sortingURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= editSiteTeamAssignmentsUsersDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getViewTypeItems() %>"
 />
 

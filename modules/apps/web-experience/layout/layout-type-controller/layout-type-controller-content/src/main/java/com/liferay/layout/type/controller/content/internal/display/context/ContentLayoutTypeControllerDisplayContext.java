@@ -19,13 +19,6 @@ import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.template.StringTemplateResource;
-import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.template.TemplateManager;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -47,36 +40,6 @@ public class ContentLayoutTypeControllerDisplayContext {
 	}
 
 	public String getRenderedContent() throws PortalException {
-		String templateContent = _getTemplateContent();
-
-		if (Validator.isNull(templateContent)) {
-			return StringPool.BLANK;
-		}
-
-		TemplateResource templateResource = new StringTemplateResource(
-			"template_id", templateContent);
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
-
-		TemplateManager templateManager =
-			TemplateManagerUtil.getTemplateManager(
-				TemplateConstants.LANG_TYPE_FTL);
-
-		templateManager.addTaglibSupport(template, _request, _response);
-		templateManager.addTaglibTheme(
-			template, "taglibLiferay", _request, _response);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.put(TemplateConstants.WRITER, unsyncStringWriter);
-
-		template.processTemplate(unsyncStringWriter);
-
-		return unsyncStringWriter.toString();
-	}
-
-	private String _getTemplateContent() throws PortalException {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			(List<FragmentEntryLink>)_request.getAttribute(
 				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);
@@ -86,10 +49,16 @@ public class ContentLayoutTypeControllerDisplayContext {
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			sb.append(
 				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink));
+					fragmentEntryLink, _request, _response));
 		}
 
-		return sb.toString();
+		String renderedContent = sb.toString();
+
+		if (Validator.isNull(renderedContent)) {
+			return StringPool.BLANK;
+		}
+
+		return renderedContent;
 	}
 
 	private final HttpServletRequest _request;

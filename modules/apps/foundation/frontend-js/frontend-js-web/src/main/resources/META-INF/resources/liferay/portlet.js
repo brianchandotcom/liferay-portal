@@ -570,10 +570,13 @@
 				// Functions to run on portlet load
 
 				if (canEditTitle) {
-					var events = ['focus'];
+
+					// https://github.com/yui/yui3/issues/1808
+
+					var events = 'focus';
 
 					if (!A.UA.touch) {
-						events.push('mousemove');
+						events = ['focus', 'mousemove'];
 					}
 
 					var handle = portlet.on(

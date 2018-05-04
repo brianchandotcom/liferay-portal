@@ -1012,21 +1012,10 @@
 		<if>
 			<equals arg1="${siteNameInvalid}" arg2="Duplicate" />
 			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a unique name." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_MODAL_CONTENT" value1="Please enter a unique name." />
 			</then>
-			<elseif>
-				<equals arg1="${siteNameInvalid}" arg2="Null" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Message#REQUIRED_INFO" value1="This field is required." />
-				</then>
-			</elseif>
 			<else>
-				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The Site Name cannot be blank, numeric or a reserved word such as null." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The Site Name cannot contain the following invalid characters: *." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_MODAL_CONTENT" value1="The Site Name cannot be blank, numeric or a reserved word such as null. The Site Name cannot contain the following invalid characters: *." />
 			</else>
 		</if>
 	</command>

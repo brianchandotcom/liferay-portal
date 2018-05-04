@@ -3285,7 +3285,7 @@
 		</execute>
 
 		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldname" value="Title" />
+			<var name="fieldName" value="Title" />
 			<var name="locale" value="en-US" />
 		</execute>
 

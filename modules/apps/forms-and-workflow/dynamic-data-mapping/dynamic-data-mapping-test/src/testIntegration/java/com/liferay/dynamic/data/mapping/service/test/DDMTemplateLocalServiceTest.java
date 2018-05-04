@@ -539,8 +539,8 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			StringUtil.randomString(), StringUtil.randomString(),
 			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
-			getTestTemplateScript(language),
-			WorkflowConstants.STATUS_APPROVED, true, "foo");
+			getTestTemplateScript(language), WorkflowConstants.STATUS_APPROVED,
+			true, "foo");
 
 		Assert.assertEquals(false, template.getSmallImage());
 	}
@@ -554,8 +554,8 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			StringUtil.randomString(), StringUtil.randomString(),
 			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
 			DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
-			getTestTemplateScript(language),
-			WorkflowConstants.STATUS_APPROVED, true, "http://foo.com/example.png");
+			getTestTemplateScript(language), WorkflowConstants.STATUS_APPROVED,
+			true, "http://foo.com/example.png");
 
 		Assert.assertEquals(true, template.getSmallImage());
 	}

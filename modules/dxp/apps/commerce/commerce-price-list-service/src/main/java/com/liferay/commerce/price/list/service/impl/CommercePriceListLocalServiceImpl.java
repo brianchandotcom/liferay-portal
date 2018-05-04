@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -62,6 +64,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public class CommercePriceListLocalServiceImpl
@@ -238,27 +241,29 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public Optional<CommercePriceList> getUserCommercePriceList(
-			long groupId, long userId)
+	public Optional<CommercePriceList> getCommercePriceList(
+			long groupId, long[] commerceUserSegmentEntryIds)
 		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		String cacheKey = StringUtil.merge(commerceUserSegmentEntryIds);
 
 		PortalCache<String, Serializable> portalCache =
 			MultiVMPoolUtil.getPortalCache("PRICE_LISTS_" + groupId);
 
 		boolean priceListCalculated = GetterUtil.getBoolean(
-			portalCache.get(String.valueOf(userId) + "_calculated"));
+			portalCache.get(cacheKey + "_calculated"));
 
 		CommercePriceList commercePriceList =
-			(CommercePriceList)portalCache.get(String.valueOf(userId));
+			(CommercePriceList)portalCache.get(cacheKey);
 
 		if (priceListCalculated) {
 			return Optional.ofNullable(commercePriceList);
 		}
 
-		User user = userLocalService.getUser(userId);
-
 		SearchContext searchContext = buildSearchContext(
-			user.getCompanyId(), groupId, userId);
+			group.getCompanyId(), groupId, commerceUserSegmentEntryIds);
 
 		Indexer<CommercePriceList> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
@@ -268,7 +273,7 @@ public class CommercePriceListLocalServiceImpl
 		List<Document> documents = hits.toList();
 
 		if (documents.isEmpty()) {
-			portalCache.put(String.valueOf(userId) + "_calculated", true);
+			portalCache.put(cacheKey + "_calculated", true);
 
 			return Optional.empty();
 		}
@@ -280,20 +285,11 @@ public class CommercePriceListLocalServiceImpl
 
 		commercePriceList = fetchCommercePriceList(commercePriceListId);
 
-		portalCache.put(String.valueOf(userId), commercePriceList);
+		portalCache.put(cacheKey, commercePriceList);
 
-		portalCache.put(String.valueOf(userId) + "_calculated", true);
+		portalCache.put(cacheKey + "_calculated", true);
 
 		return Optional.ofNullable(commercePriceList);
-	}
-
-	@Override
-	public Optional<CommercePriceList> getUserCommercePriceList(
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return commercePriceListLocalService.getUserCommercePriceList(
-			serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
 	@Override
@@ -453,14 +449,15 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, long userId) {
+		long companyId, long groupId, long[] commerceUserSegmentEntryIds) {
 
 		SearchContext searchContext = new SearchContext();
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put("qualifitacionTypes", true);
+		attributes.put(
+			"commerceUserSegmentEntryIds", commerceUserSegmentEntryIds);
 
 		searchContext.setAttributes(attributes);
 
@@ -468,7 +465,6 @@ public class CommercePriceListLocalServiceImpl
 		searchContext.setStart(0);
 		searchContext.setEnd(1);
 		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setUserId(userId);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

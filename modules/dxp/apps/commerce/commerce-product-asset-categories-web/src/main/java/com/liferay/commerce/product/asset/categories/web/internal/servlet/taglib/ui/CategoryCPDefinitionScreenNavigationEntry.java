@@ -73,8 +73,8 @@ public class CategoryCPDefinitionScreenNavigationEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, AssetCategory category) {
-		if (category == null) {
+	public boolean isVisible(User user, AssetCategory assetCategory) {
+		if (assetCategory == null) {
 			return false;
 		}
 

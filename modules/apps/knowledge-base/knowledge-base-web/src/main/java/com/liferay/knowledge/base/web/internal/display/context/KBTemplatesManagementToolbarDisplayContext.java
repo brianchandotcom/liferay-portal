@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +59,9 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_templatePath = templatePath;
+
+		_currentURLObj = PortletURLUtil.getCurrent(
+			_liferayPortletRequest, _liferayPortletResponse);
 
 		_request = liferayPortletRequest.getHttpServletRequest();
 
@@ -144,7 +149,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		return searchURL;
 	}
 
-	public PortletURL getSortingURL() {
+	public PortletURL getSortingURL() throws PortletException {
 		PortletURL sortingURL = _getCurrentSortingURL();
 
 		sortingURL.setParameter(
@@ -195,8 +200,9 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		}
 	}
 
-	private PortletURL _getCurrentSortingURL() {
-		PortletURL sortingURL = _liferayPortletResponse.createRenderURL();
+	private PortletURL _getCurrentSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			_currentURLObj, _liferayPortletResponse);
 
 		sortingURL.setParameter("mvcPath", "/admin/view_templates.jsp");
 
@@ -243,6 +249,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 		};
 	}
 
+	private final PortletURL _currentURLObj;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;

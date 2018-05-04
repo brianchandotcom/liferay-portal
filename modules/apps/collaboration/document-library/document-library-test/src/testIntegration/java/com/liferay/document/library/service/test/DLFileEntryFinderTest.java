@@ -1253,35 +1253,6 @@ public class DLFileEntryFinderTest {
 		Assert.assertEquals("FE1.txt-NewRepository", dlFileEntry.getTitle());
 	}
 
-	@Test
-	public void testFindByMisversioned() throws Exception {
-		long oldFileEntryId = _defaultRepositoryDLFileVersion.getFileEntryId();
-
-		try {
-			_defaultRepositoryDLFileVersion.setFileEntryId(
-				RandomTestUtil.randomLong());
-
-			DLFileVersionLocalServiceUtil.updateDLFileVersion(
-				_defaultRepositoryDLFileVersion);
-
-			List<DLFileEntry> dlFileEntries =
-				DLFileEntryLocalServiceUtil.getMisversionedFileEntries();
-
-			Assert.assertEquals(
-				dlFileEntries.toString(), 1, dlFileEntries.size());
-
-			DLFileEntry dlFileEntry = dlFileEntries.get(0);
-
-			Assert.assertEquals("FE1.txt", dlFileEntry.getTitle());
-		}
-		finally {
-			_defaultRepositoryDLFileVersion.setFileEntryId(oldFileEntryId);
-
-			DLFileVersionLocalServiceUtil.updateDLFileVersion(
-				_defaultRepositoryDLFileVersion);
-		}
-	}
-
 	@Ignore
 	@Test
 	public void testFindByNoAssets() throws Exception {

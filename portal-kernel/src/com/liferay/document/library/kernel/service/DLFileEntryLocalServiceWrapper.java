@@ -816,6 +816,10 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		return _dlFileEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getMisversionedFileEntries() {
 		return _dlFileEntryLocalService.getMisversionedFileEntries();
@@ -826,6 +830,10 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		return _dlFileEntryLocalService.getNoAssetFileEntries();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getOrphanedFileEntries() {
 		return _dlFileEntryLocalService.getOrphanedFileEntries();

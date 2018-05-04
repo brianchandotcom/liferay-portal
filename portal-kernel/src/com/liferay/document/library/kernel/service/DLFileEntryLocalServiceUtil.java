@@ -742,6 +742,10 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getMisversionedFileEntries() {
 		return getService().getMisversionedFileEntries();
 	}
@@ -750,6 +754,10 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getNoAssetFileEntries();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> getOrphanedFileEntries() {
 		return getService().getOrphanedFileEntries();
 	}

@@ -31,7 +31,6 @@ import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -304,59 +302,6 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetMisversionedFileEntries() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
-
-		byte[] bytes = RandomTestUtil.randomBytes(
-			TikaSafeRandomizerBumper.INSTANCE);
-
-		InputStream is = new ByteArrayInputStream(bytes);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId());
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
-			dlFolder.getFolderId(), RandomTestUtil.randomString(),
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, is, bytes.length,
-			serviceContext);
-
-		DLFileEntry dlFileEntry = null;
-
-		DLFileVersion dlFileVersion = null;
-
-		try {
-			dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
-				fileEntry.getFileEntryId());
-
-			dlFileVersion = dlFileEntry.getFileVersion();
-
-			dlFileVersion.setFileEntryId(12345L);
-
-			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
-
-			List<DLFileEntry> dlFileEntries =
-				DLFileEntryLocalServiceUtil.getMisversionedFileEntries();
-
-			Assert.assertEquals(
-				dlFileEntries.toString(), 1, dlFileEntries.size());
-			Assert.assertEquals(dlFileEntry, dlFileEntries.get(0));
-		}
-		finally {
-			if (dlFileEntry != null) {
-				DLFileEntryLocalServiceUtil.deleteDLFileEntry(
-					dlFileEntry.getFileEntryId());
-			}
-
-			if (dlFileVersion != null) {
-				DLFileVersionLocalServiceUtil.deleteDLFileVersion(
-					dlFileVersion.getFileVersionId());
-			}
-		}
-	}
-
-	@Test
 	public void testGetNoAssetEntries() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
@@ -400,56 +345,6 @@ public class DLFileEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			fileEntry.getFileEntryId(), dlFileEntry.getFileEntryId());
-	}
-
-	@Test
-	public void testGetOrphanedFileEntries() throws Exception {
-		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
-
-		byte[] bytes = RandomTestUtil.randomBytes(
-			TikaSafeRandomizerBumper.INSTANCE);
-
-		InputStream is = new ByteArrayInputStream(bytes);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId());
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
-			dlFolder.getFolderId(), RandomTestUtil.randomString(),
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, is, bytes.length,
-			serviceContext);
-
-		boolean indexReadOnly = IndexWriterHelperUtil.isIndexReadOnly();
-
-		DLFileEntry dlFileEntry = null;
-
-		try {
-			IndexWriterHelperUtil.setIndexReadOnly(true);
-
-			dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
-				fileEntry.getFileEntryId());
-
-			dlFileEntry.setGroupId(10000L);
-
-			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
-
-			List<DLFileEntry> dlFileEntries =
-				DLFileEntryLocalServiceUtil.getOrphanedFileEntries();
-
-			Assert.assertEquals(
-				dlFileEntries.toString(), 1, dlFileEntries.size());
-			Assert.assertEquals(dlFileEntry, dlFileEntries.get(0));
-		}
-		finally {
-			if (dlFileEntry != null) {
-				DLFileEntryLocalServiceUtil.deleteDLFileEntry(
-					dlFileEntry.getFileEntryId());
-			}
-
-			IndexWriterHelperUtil.setIndexReadOnly(indexReadOnly);
-		}
 	}
 
 	@Test(expected = NoSuchFolderException.class)

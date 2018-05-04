@@ -530,6 +530,36 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(3, count);
 	}
 
+	@Test
+	public void testSmallImageWithInvalidURL() throws Exception {
+		String language = TemplateConstants.LANG_TYPE_VM;
+
+		DDMTemplate template = addTemplate(
+			_classNameId, 0, _resourceClassNameId, StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
+			getTestTemplateScript(language),
+			WorkflowConstants.STATUS_APPROVED, true, "foo");
+
+		Assert.assertEquals(false, template.getSmallImage());
+	}
+
+	@Test
+	public void testSmallImageWithValidURL() throws Exception {
+		String language = TemplateConstants.LANG_TYPE_VM;
+
+		DDMTemplate template = addTemplate(
+			_classNameId, 0, _resourceClassNameId, StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			DDMTemplateConstants.TEMPLATE_TYPE_FORM,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
+			getTestTemplateScript(language),
+			WorkflowConstants.STATUS_APPROVED, true, "http://foo.com/example.png");
+
+		Assert.assertEquals(true, template.getSmallImage());
+	}
+
 	protected DDMTemplate copyTemplate(DDMTemplate template) throws Exception {
 		return DDMTemplateLocalServiceUtil.copyTemplate(
 			template.getUserId(), template.getTemplateId(),

@@ -1085,13 +1085,20 @@ public class JournalArticleStagedModelDataHandler
 		for (JournalArticle curArticle : articles) {
 			boolean update = false;
 
-			if (article.isApproved() && (article.getExpirationDate() != null) &&
+			if ((article.isApproved() || article.isExpired()) &&
+				(article.getExpirationDate() != null) &&
 				expireAllArticleVersions &&
 				!Objects.equals(
 					curArticle.getExpirationDate(),
 					article.getExpirationDate())) {
 
-				curArticle.setExpirationDate(article.getExpirationDate());
+				Date expirationDate = article.getExpirationDate();
+
+				curArticle.setExpirationDate(expirationDate);
+
+				if (expirationDate.before(new Date())) {
+					curArticle.setStatus(WorkflowConstants.STATUS_EXPIRED);
+				}
 
 				update = true;
 			}

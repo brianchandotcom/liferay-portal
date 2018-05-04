@@ -59,8 +59,6 @@ public class PrettyDateFormat extends DateFormat {
 
 		Format dateFormatDate = FastDateFormatFactoryUtil.getDate(
 			_locale, _timeZone);
-		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
-			_locale, _timeZone);
 		Format dateFormatTime = FastDateFormatFactoryUtil.getTime(
 			_locale, _timeZone);
 
@@ -76,6 +74,9 @@ public class PrettyDateFormat extends DateFormat {
 					dateFormatTime.format(date);
 		}
 		else {
+			Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
+				_locale, _timeZone);
+
 			dateString = dateFormatDateTime.format(date);
 		}
 

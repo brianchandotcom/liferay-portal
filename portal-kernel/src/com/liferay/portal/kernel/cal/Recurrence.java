@@ -739,10 +739,12 @@ public class Recurrence implements Serializable {
 			throw new IllegalArgumentException("Not a constant length field");
 		}
 
-		int fieldLength = start.getMaximum(field) - start.getMinimum(field) + 1;
 		int delta = start.get(field) - candidate.get(field);
 
 		if (delta > 0) {
+			int fieldLength =
+				start.getMaximum(field) - start.getMinimum(field) + 1;
+
 			delta -= fieldLength;
 		}
 

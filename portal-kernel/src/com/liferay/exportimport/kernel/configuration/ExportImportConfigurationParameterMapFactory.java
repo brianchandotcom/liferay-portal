@@ -161,13 +161,12 @@ public class ExportImportConfigurationParameterMapFactory {
 
 		// Data strategy
 
-		String dataStrategyParameter =
-			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE;
-
 		if (Validator.isNotNull(dataStrategy)) {
 			parameterMap.put(
 				PortletDataHandlerKeys.DATA_STRATEGY,
-				new String[] {dataStrategyParameter});
+				new String[] {
+					PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE
+				});
 		}
 
 		// Delete missing layouts

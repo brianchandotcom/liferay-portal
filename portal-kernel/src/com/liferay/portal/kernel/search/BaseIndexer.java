@@ -404,9 +404,9 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public boolean isIndexerEnabled() {
-		String className = getClassName();
-
 		if (_indexerEnabled == null) {
+			String className = getClassName();
+
 			String indexerEnabled = PropsUtil.get(
 				PropsKeys.INDEXER_ENABLED,
 				new com.liferay.portal.kernel.configuration.Filter(className));

@@ -41,4 +41,15 @@ public interface CPAssetCategoriesNavigationPortletInstanceConfiguration {
 	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
 	public long displayStyleGroupId();
 
+	@Meta.AD(name = "root-asset-category-id", required = false)
+	public String rootAssetCategoryId();
+
+	@Meta.AD(
+		deflt = "false", name = "use-category-from-request", required = false
+	)
+	public boolean useCategoryFromRequest();
+
+	@Meta.AD(deflt = "false", name = "use-root-category", required = false)
+	public boolean useRootCategory();
+
 }

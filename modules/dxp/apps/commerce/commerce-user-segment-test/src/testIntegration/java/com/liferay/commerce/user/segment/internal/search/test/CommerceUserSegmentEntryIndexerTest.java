@@ -167,7 +167,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 			long groupId, boolean system)
 		throws PortalException {
 
-		Map<Locale, String> name = RandomTestUtil.randomLocaleStringMap();
+		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
 		String key = RandomTestUtil.randomString();
 		boolean active = RandomTestUtil.randomBoolean();
 		double priority = RandomTestUtil.randomDouble();
@@ -176,7 +176,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 
 		return _commerceUserSegmentEntryLocalService.
 			addCommerceUserSegmentEntry(
-				name, key, active, system, priority, serviceContext);
+				nameMap, key, active, system, priority, serviceContext);
 	}
 
 	private SearchContext _getSearchContext(long companyId, long groupId) {

@@ -138,7 +138,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 						<h5>
 							<aui:a href="<%= editSiteNavigationMenuURL %>">
-								<%= siteNavigationMenu.getName() %>
+								<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
 							</aui:a>
 						</h5>
 
@@ -164,7 +164,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 							icon="list"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= siteNavigationMenu.getName() %>"
+							title="<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>"
 							url="<%= editSiteNavigationMenuURL %>"
 						>
 							<liferay-frontend:vertical-card-sticker-bottom>
@@ -189,7 +189,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 						cssClass="table-cell-content"
 						href="<%= editSiteNavigationMenuURL %>"
 						name="title"
-						value="<%= siteNavigationMenu.getName() %>"
+						value="<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

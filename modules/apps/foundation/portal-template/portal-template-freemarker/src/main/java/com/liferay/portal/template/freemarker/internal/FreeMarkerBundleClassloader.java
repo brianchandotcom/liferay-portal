@@ -42,10 +42,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		Collections.addAll(_bundles, bundles);
 	}
 
-	public void addBundle(Bundle bundle) {
-		_bundles.add(bundle);
-	}
-
 	@Override
 	public URL findResource(String name) {
 		for (Bundle bundle : _bundles) {
@@ -76,14 +72,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		return Collections.enumeration(Collections.<URL>emptyList());
 	}
 
-	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public Bundle[] getBundles() {
-		return _bundles.toArray(new Bundle[_bundles.size()]);
-	}
-
 	@Override
 	public URL getResource(String name) {
 		return findResource(name);
@@ -92,10 +80,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	@Override
 	public Enumeration<URL> getResources(String name) {
 		return findResources(name);
-	}
-
-	public void removeBundle(Bundle bundle) {
-		_bundles.remove(bundle);
 	}
 
 	@Override
@@ -125,7 +109,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		return clazz;
 	}
 
-	private final Set<Bundle> _bundles = Collections.newSetFromMap(
-		new ConcurrentHashMap<>());
+	private final Set<Bundle> _bundles = ConcurrentHashMap.newKeySet();
 
 }

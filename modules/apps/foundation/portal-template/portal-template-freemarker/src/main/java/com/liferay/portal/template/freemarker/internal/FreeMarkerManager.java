@@ -332,8 +332,6 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 		_bundle = bundleContext.getBundle();
 
-		_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(_bundle);
-
 		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
 
 		_bundleTracker = new BundleTracker<>(
@@ -368,6 +366,39 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		return template;
 	}
 
+	protected FreeMarkerBundleClassloader getFreeMarkerBundleClassloader() {
+		int currentCount;
+
+		synchronized (_bundleTracker) {
+			if (((currentCount = _bundleTracker.getTrackingCount()) <=
+					_bundleTrackingCount) &&
+				(_freeMarkerBundleClassloader != null)) {
+
+				return _freeMarkerBundleClassloader;
+			}
+
+			_bundleTrackingCount = currentCount;
+
+			Bundle[] bundles = _bundleTracker.getBundles();
+
+			if (bundles == null) {
+				bundles = new Bundle[] {_bundle};
+			}
+			else {
+				Bundle[] temp = new Bundle[bundles.length + 1];
+
+				temp[0] = _bundle;
+
+				System.arraycopy(bundles, 0, temp, 1, bundles.length);
+
+				bundles = temp;
+			}
+
+			return _freeMarkerBundleClassloader =
+				new FreeMarkerBundleClassloader(bundles);
+		}
+	}
+
 	protected ServletContextHashModel getServletContextHashModel(
 		ServletContext servletContext) {
 
@@ -378,11 +409,13 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	}
 
 	protected ServletContext getServletContextWrapper(
-		ServletContext servletContext) {
+		ServletContext servletContext,
+		FreeMarkerBundleClassloader freeMarkerBundleClassloader) {
 
 		return (ServletContext)ProxyUtil.newProxyInstance(
-			_freeMarkerBundleClassloader, _INTERFACES,
-			new ServletContextInvocationHandler(servletContext));
+			freeMarkerBundleClassloader, _INTERFACES,
+			new ServletContextInvocationHandler(
+				servletContext, freeMarkerBundleClassloader));
 	}
 
 	protected boolean isEnableDebuggerService() {
@@ -411,6 +444,10 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 	private Bundle _bundle;
 	private BundleTracker<Set<String>> _bundleTracker;
+
+	// Set initial to -2 because -1 has significance to bundle trackers
+
+	private volatile int _bundleTrackingCount = -2;
 	private Configuration _configuration;
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private volatile FreeMarkerEngineConfiguration
@@ -424,8 +461,12 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 	private class ServletContextInvocationHandler implements InvocationHandler {
 
-		public ServletContextInvocationHandler(ServletContext servletContext) {
+		public ServletContextInvocationHandler(
+			ServletContext servletContext,
+			FreeMarkerBundleClassloader freeMarkerBundleClassloader) {
+
 			_servletContext = servletContext;
+			_freeMarkerBundleClassloader = freeMarkerBundleClassloader;
 		}
 
 		@Override
@@ -537,6 +578,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			return resourcePaths;
 		}
 
+		private final FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 		private final ServletContext _servletContext;
 
 	}
@@ -562,6 +604,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 						Properties properties = PropertiesUtil.load(
 							inputStream, StringPool.UTF8);
 
+						@SuppressWarnings("unchecked")
 						Map<String, String> map = PropertiesUtil.toMap(
 							properties);
 
@@ -589,8 +632,6 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				Object value = attributes.get("osgi.extender");
 
 				if (value.equals("jsp.taglib")) {
-					_freeMarkerBundleClassloader.addBundle(bundle);
-
 					track = true;
 
 					break;
@@ -613,8 +654,6 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, Set<String> trackedKeys) {
 
-			_freeMarkerBundleClassloader.removeBundle(bundle);
-
 			for (String key : trackedKeys) {
 				_taglibMappings.remove(key);
 			}
@@ -627,8 +666,11 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	private class TaglibFactoryWrapper implements TemplateHashModel {
 
 		public TaglibFactoryWrapper(ServletContext servletContext) {
+			_freeMarkerBundleClassloader = getFreeMarkerBundleClassloader();
+
 			_taglibFactory = new TaglibFactory(
-				getServletContextWrapper(servletContext));
+				getServletContextWrapper(
+					servletContext, _freeMarkerBundleClassloader));
 
 			_taglibFactory.setObjectWrapper(getBeansWrapper());
 		}
@@ -664,6 +706,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 			return false;
 		}
 
+		private final FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 		private final TaglibFactory _taglibFactory;
 
 	}

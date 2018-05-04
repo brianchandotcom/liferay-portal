@@ -193,6 +193,18 @@ public abstract class BaseDDMServiceTestCase {
 			String mode, String language, String script, int status)
 		throws Exception {
 
+		return addTemplate(
+			classNameId, classPK, resourceClassNameId, templateKey, name,
+			description, type, mode, language, script, status, false, null);
+	}
+
+	protected DDMTemplate addTemplate(
+			long classNameId, long classPK, long resourceClassNameId,
+			String templateKey, String name, String description, String type,
+			String mode, String language, String script, int status,
+			boolean smallImage, String smallImageURL)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -202,7 +214,8 @@ public abstract class BaseDDMServiceTestCase {
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
 			classPK, resourceClassNameId, templateKey,
 			getDefaultLocaleMap(name), getDefaultLocaleMap(description), type,
-			mode, language, script, false, false, null, null, serviceContext);
+			mode, language, script, false, smallImage, smallImageURL, null,
+			serviceContext);
 	}
 
 	protected DDMTemplate addTemplate(

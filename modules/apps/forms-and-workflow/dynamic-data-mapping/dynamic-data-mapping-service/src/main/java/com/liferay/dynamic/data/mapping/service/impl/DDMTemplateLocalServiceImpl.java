@@ -197,9 +197,12 @@ public class DDMTemplateLocalServiceImpl
 				smallImageBytes = FileUtil.getBytes(smallImageFile);
 			}
 			catch (IOException ioe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioe, ioe);
+				}
 			}
 
-			if ((smallImageBytes == null) || Validator.isUrl(smallImageURL)) {
+			if ((smallImageBytes == null) && !Validator.isUrl(smallImageURL)) {
 				smallImage = false;
 			}
 		}
@@ -1363,10 +1366,19 @@ public class DDMTemplateLocalServiceImpl
 
 		byte[] smallImageBytes = null;
 
-		try {
-			smallImageBytes = FileUtil.getBytes(smallImageFile);
-		}
-		catch (IOException ioe) {
+		if (smallImage) {
+			try {
+				smallImageBytes = FileUtil.getBytes(smallImageFile);
+			}
+			catch (IOException ioe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(ioe, ioe);
+				}
+			}
+
+			if ((smallImageBytes == null) && !Validator.isUrl(smallImageURL)) {
+				smallImage = false;
+			}
 		}
 
 		DDMTemplate template = ddmTemplateLocalService.getDDMTemplate(

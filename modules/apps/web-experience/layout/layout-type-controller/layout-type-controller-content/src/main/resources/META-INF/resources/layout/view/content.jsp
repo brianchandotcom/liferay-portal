@@ -50,3 +50,5 @@ else {
 <%
 }
 %>
+
+<liferay-ui:layout-common />

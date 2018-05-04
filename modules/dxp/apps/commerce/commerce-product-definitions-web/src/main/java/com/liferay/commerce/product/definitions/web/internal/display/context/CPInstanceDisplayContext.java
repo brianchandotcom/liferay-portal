@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -296,6 +297,10 @@ public class CPInstanceDisplayContext
 		return CustomAttributesUtil.hasCustomAttributes(
 			themeDisplay.getCompanyId(), CPInstance.class.getName(),
 			getCPInstanceId(), null);
+	}
+
+	public boolean hasDynamicInclude(String key) {
+		return DynamicIncludeUtil.hasDynamicInclude(key);
 	}
 
 	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>

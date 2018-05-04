@@ -157,9 +157,22 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 
 							<liferay-ui:search-container-column-text
-								title="price"
+								name="price"
 								value="<%= cpInstanceDisplayContext.formatPrice(scopeGroupId, cpInstance.getPrice()) %>"
 							/>
+
+							<c:if test='<%= cpInstanceDisplayContext.hasDynamicInclude("com.liferay.commerce.inventory.web#/inventory_data#") %>'>
+
+								<%
+								request.setAttribute("inventory-cpInstance", cpInstance);
+								%>
+
+								<liferay-ui:search-container-column-text
+									name="available-quantity"
+								>
+									<liferay-util:dynamic-include key="com.liferay.commerce.inventory.web#/inventory_data#" />
+								</liferay-ui:search-container-column-text>
+							</c:if>
 
 							<liferay-ui:search-container-column-text
 								name="options"

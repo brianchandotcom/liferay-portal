@@ -238,6 +238,11 @@ public class CPRuleUserSegmentRelLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
+		long cpRuleId) {
+		return getService().getCPRuleUserSegmentRels(cpRuleId);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
 		long cpRuleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRuleUserSegmentRel> orderByComparator) {
 		return getService()

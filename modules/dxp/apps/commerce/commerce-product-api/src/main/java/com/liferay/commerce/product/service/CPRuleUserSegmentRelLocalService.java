@@ -217,6 +217,9 @@ public interface CPRuleUserSegmentRelLocalService extends BaseLocalService,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(long cpRuleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(long cpRuleId,
 		int start, int end,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator);

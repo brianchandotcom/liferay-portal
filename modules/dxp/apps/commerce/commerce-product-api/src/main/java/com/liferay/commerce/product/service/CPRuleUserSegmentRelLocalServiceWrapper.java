@@ -249,6 +249,12 @@ public class CPRuleUserSegmentRelLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
+		long cpRuleId) {
+		return _cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRels(cpRuleId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
 		long cpRuleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRuleUserSegmentRel> orderByComparator) {
 		return _cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRels(cpRuleId,

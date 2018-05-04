@@ -17,7 +17,6 @@ package com.liferay.fragment.util;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -53,17 +52,6 @@ public class FragmentEntryRenderUtil {
 	}
 
 	public static String renderFragmentEntry(
-		long fragmentEntryId, long fragmentEntryInstanceId) {
-
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
-
-		return renderFragmentEntry(
-			fragmentEntryId, fragmentEntryInstanceId, fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs());
-	}
-
-	public static String renderFragmentEntry(
 		long fragmentEntryId, long fragmentEntryInstanceId, String css,
 		String html, String js) {
 
@@ -90,29 +78,6 @@ public class FragmentEntryRenderUtil {
 		}
 
 		return sb.toString();
-	}
-
-	public static String renderFragmentEntry(
-		long fragmentEntryId, String css, String html, String js) {
-
-		return renderFragmentEntry(fragmentEntryId, 0, css, html, js);
-	}
-
-	public static String renderFragmentEntryLink(
-			FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
-
-		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
-			getService();
-
-		String html =
-			fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink);
-
-		return renderFragmentEntry(
-			fragmentEntryLink.getFragmentEntryId(),
-			fragmentEntryLink.getPosition(), fragmentEntryLink.getCss(), html,
-			fragmentEntryLink.getJs());
 	}
 
 	public static String renderFragmentEntryLink(

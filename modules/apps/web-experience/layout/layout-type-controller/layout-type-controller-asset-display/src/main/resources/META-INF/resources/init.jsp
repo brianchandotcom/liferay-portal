@@ -23,14 +23,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
 page import="com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys" %><%@
-page import="com.liferay.layout.type.controller.asset.display.internal.display.context.AssetDisplayLayoutTypeControllerDisplayContext" %><%@
-page import="com.liferay.portal.kernel.io.unsync.UnsyncStringWriter" %><%@
-page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@
-page import="com.liferay.portal.kernel.template.Template" %><%@
-page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
-page import="com.liferay.portal.kernel.template.TemplateManager" %><%@
-page import="com.liferay.portal.kernel.template.TemplateManagerUtil" %><%@
-page import="com.liferay.portal.kernel.template.TemplateResource" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %>
 
@@ -41,8 +33,6 @@ page import="com.liferay.portal.kernel.util.StringBundler" %>
 <liferay-theme:defineObjects />
 
 <%
-AssetDisplayLayoutTypeControllerDisplayContext assetDisplayLayoutTypeControllerDisplayContext = new AssetDisplayLayoutTypeControllerDisplayContext(request);
-
 AssetEntry assetEntry = (AssetEntry)request.getAttribute(AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY);
 
 List<FragmentEntryLink> fragmentEntryLinks = (List<FragmentEntryLink>)request.getAttribute(AssetDisplayLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);

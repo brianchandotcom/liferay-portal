@@ -1128,16 +1128,7 @@ public class TopLevelBuild extends BaseBuild {
 			sb.append(":x: ");
 		}
 
-		sb.append("ci:test");
-
-		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
-
-		if ((ciTestSuite != null) && !ciTestSuite.isEmpty() &&
-			!ciTestSuite.equals("default")) {
-
-			sb.append(":");
-			sb.append(ciTestSuite);
-		}
+		sb.append(getTestSuiteName());
 
 		sb.append(" - ");
 		sb.append(String.valueOf(successCount));
@@ -1231,6 +1222,20 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return testCount;
+	}
+
+	protected String getTestSuiteName() {
+		String ciTestSuite = getParameterValue("CI_TEST_SUITE");
+		String testSuiteName = "ci:test";
+
+		if ((ciTestSuite != null) && !ciTestSuite.isEmpty() &&
+			!ciTestSuite.equals("default")) {
+
+			testSuiteName = JenkinsResultsParserUtil.combine(
+				testSuiteName, ":", ciTestSuite);
+		}
+
+		return testSuiteName;
 	}
 
 	protected Element getTopGitHubMessageElement() {

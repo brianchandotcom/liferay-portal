@@ -531,9 +531,9 @@ public class GetterUtil {
 			try {
 				ParsePosition parsePosition = new ParsePosition(0);
 
-				if (parsePosition.getIndex() == value.length()) {
-					Number number = numberFormat.parse(value, parsePosition);
+				Number number = numberFormat.parse(value, parsePosition);
 
+				if (parsePosition.getIndex() == value.length()) {
 					return number.doubleValue();
 				}
 			}

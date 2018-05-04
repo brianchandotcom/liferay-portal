@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Frontend JS Web
 Bundle-SymbolicName: com.liferay.frontend.js.web
 Bundle-Version: 2.0.0
+Liferay-Bridge-JS-Submodules: frontend-js-web
 Liferay-Top-Head-Authenticated-JS-Resources:\
 	/aui/async-queue/async-queue.js,\
 	/aui/base-build/base-build.js,\

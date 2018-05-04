@@ -33,17 +33,16 @@
 		<!-- Other fields -->
 
 		<column name="assetEntryId" type="long" />
-		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
+		<column name="displayPageId" type="long" />
 
 		<!-- Finder methods -->
 
 		<finder name="AssetEntry" return-type="Collection">
 			<finder-column name="assetEntryId" />
 		</finder>
-		<finder name="A_C" return-type="AssetEntryDisplayPageRel" unique="true">
+		<finder name="A_D" return-type="AssetEntryDisplayPageRel" unique="true">
 			<finder-column name="assetEntryId" />
-			<finder-column name="classNameId" />
+			<finder-column name="displayPageId" />
 		</finder>
 	</entity>
 </service-builder>

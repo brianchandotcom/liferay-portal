@@ -382,11 +382,23 @@ public class AssetPublisherDisplayContext {
 						AssetCategoryLocalServiceUtil.fetchAssetCategory(
 							categoryId);
 
+					if (category == null) {
+						categoryIds = ArrayUtil.remove(categoryIds, categoryId);
+
+						continue;
+					}
+
 					categoryIdsTitles.put(
 						category.getTitle(themeDisplay.getLocale()));
 				}
 
+				queryValues = StringUtil.merge(categoryIds, ",");
+
 				ruleJSONObject.put("categoryIdsTitles", categoryIdsTitles);
+			}
+
+			if (Validator.isNull(queryValues)) {
+				continue;
 			}
 
 			ruleJSONObject.put("queryValues", queryValues);

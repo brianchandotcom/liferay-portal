@@ -1138,7 +1138,7 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>actionItems</name>
+			<name>actionDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1186,7 +1186,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>filterItems</name>
+			<name>filterDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1199,6 +1199,12 @@
 		<attribute>
 			<description></description>
 			<name>infoPanelId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>itemsTotal</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -1300,13 +1306,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>totalItems</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>viewTypes</name>
+			<name>viewTypeItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

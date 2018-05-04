@@ -24,15 +24,15 @@
 	clearResultsURL="<%= assetTagsSelectorDisplayContext.getClearResultsURL() %>"
 	componentId="assetTagsSelectorManagementToolbar"
 	disabled="<%= assetTagsSelectorDisplayContext.isDisabledTagsManagementBar() %>"
-	filterItems="<%= assetTagsSelectorDisplayContext.getFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= assetTagsSelectorDisplayContext.getFilterItemsDropdownItems() %>"
 	searchActionURL="<%= assetTagsSelectorDisplayContext.getSearchActionURL() %>"
 	searchContainerId="tags"
 	searchFormName="searchFm"
 	showSearch="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>"
 	sortingOrder="<%= assetTagsSelectorDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetTagsSelectorDisplayContext.getSortingURL() %>"
-	totalItems="<%= assetTagsSelectorDisplayContext.getTotalItems() %>"
-	viewTypes="<%= assetTagsSelectorDisplayContext.getViewTypeItems() %>"
+	itemsTotal="<%= assetTagsSelectorDisplayContext.getTotalItems() %>"
+	viewTypeItems="<%= assetTagsSelectorDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="container-fluid-1280">

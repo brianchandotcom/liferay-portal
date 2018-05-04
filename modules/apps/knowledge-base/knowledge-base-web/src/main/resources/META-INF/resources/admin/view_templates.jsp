@@ -17,6 +17,8 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
+KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = new KBTemplatesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, templatePath);
+
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
@@ -32,6 +34,19 @@ portletURL.setParameter("orderByType", orderByType);
 <%
 String keywords = ParamUtil.getString(request, "keywords");
 %>
+
+<clay:management-toolbar
+	actionItems="<%= kbTemplatesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
+	creationMenu="<%= kbTemplatesManagementToolbarDisplayContext.getCreationMenu() %>"
+	filterItems="<%= kbTemplatesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
+	searchContainerId="kbTemplates"
+	selectable="<%= true %>"
+	sortingOrder="<%= kbTemplatesManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSortingURL()) %>"
+	totalItems="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -128,17 +143,11 @@ String keywords = ParamUtil.getString(request, "keywords");
 		<aui:input name="kbTemplateIds" type="hidden" />
 
 		<aui:fieldset>
-			<liferay-portlet:renderURL varImpl="iteratorURL">
-				<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
-			</liferay-portlet:renderURL>
-
 			<liferay-ui:search-container
 				id="kbTemplates"
 				rowChecker="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_TEMPLATES) ? new RowChecker(renderResponse) : null %>"
-				searchContainer="<%= new KBTemplateSearch(renderRequest, iteratorURL) %>"
+				searchContainer="<%= kbTemplatesManagementToolbarDisplayContext.getSearchContainer() %>"
 			>
-				<%@ include file="/admin/template_search_results.jspf" %>
-
 				<liferay-ui:search-container-row
 					className="com.liferay.knowledge.base.model.KBTemplate"
 					keyProperty="kbTemplateId"

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -48,6 +49,8 @@ import java.util.stream.Stream;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import com.liferay.portal.search.filter.FilterBuilders;
+import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -100,6 +103,31 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 			contextBooleanFilter.addTerm(
 				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
 				BooleanClauseOccur.MUST_NOT);
+		}
+
+		long[] commerceUserSegmentEntryIds =  GetterUtil.getLongValues(
+			"commerceUserSegmentEntryIds", null);
+
+		if(commerceUserSegmentEntryIds != null){
+
+			TermsSetFilterBuilder termsSetFilterBuilder =
+				_filterBuilders.termsSetFilterBuilder();
+
+			termsSetFilterBuilder.setFieldName("commerceUserSegmentEntryIds");
+			termsSetFilterBuilder.setMinimumShouldMatchField(
+				"commerceUserSegmentEntryIds_required_matches");
+
+			List<String> values = new ArrayList<>(
+				commerceUserSegmentEntryIds.length);
+
+			for (long commerceUserSegmentEntryId : commerceUserSegmentEntryIds) {
+				values.add(String.valueOf(commerceUserSegmentEntryId));
+			}
+
+			termsSetFilterBuilder.setValues(values);
+
+			contextBooleanFilter.add(
+				termsSetFilterBuilder.build(), BooleanClauseOccur.MUST);
 		}
 	}
 
@@ -266,5 +294,9 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private FilterBuilders _filterBuilders;
+
 
 }

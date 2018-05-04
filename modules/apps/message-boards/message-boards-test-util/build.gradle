@@ -1,7 +1,7 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
-	compileOnly project(":apps:collaboration:message-boards:message-boards-api")
+	compileOnly project(":apps:message-boards:message-boards-api")
 }
 
 liferay {

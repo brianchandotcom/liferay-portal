@@ -235,12 +235,6 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 			orderByComparator);
 	}
 
-	public static java.util.ArrayList<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceUserSegmentEntries(groupId, userId);
-	}
-
 	/**
 	* Returns the number of commerce user segment entries.
 	*
@@ -266,6 +260,14 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCommerceUserSegmentEntry(commerceUserSegmentEntryId);
+	}
+
+	public static long[] getCommerceUserSegmentEntryIds(long groupId,
+		long organizationId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceUserSegmentEntryIds(groupId, organizationId,
+			userId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

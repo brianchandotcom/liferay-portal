@@ -242,14 +242,6 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
-	@Override
-	public java.util.ArrayList<com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntries(groupId,
-			userId);
-	}
-
 	/**
 	* Returns the number of commerce user segment entries.
 	*
@@ -277,6 +269,14 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 		long commerceUserSegmentEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntry(commerceUserSegmentEntryId);
+	}
+
+	@Override
+	public long[] getCommerceUserSegmentEntryIds(long groupId,
+		long organizationId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntryIds(groupId,
+			organizationId, userId);
 	}
 
 	@Override

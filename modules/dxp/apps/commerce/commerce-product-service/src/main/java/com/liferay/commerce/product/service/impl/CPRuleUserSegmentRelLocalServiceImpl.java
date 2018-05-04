@@ -16,6 +16,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.model.CPRuleUserSegmentRel;
 import com.liferay.commerce.product.service.base.CPRuleUserSegmentRelLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -97,6 +98,13 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 		throws PortalException {
 
 		cpRuleUserSegmentRelPersistence.removeByCPRuleId(cpRuleId);
+	}
+
+	@Override
+	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(long cpRuleId) {
+
+		return cpRuleUserSegmentRelPersistence.findByCPRuleId(
+			cpRuleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override

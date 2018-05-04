@@ -53,6 +53,8 @@ kbSuggestionListDisplayContext.populateResultsAndTotal(kbCommentsSearchContainer
 
 kbCommentsSearchContainer.setRowChecker(new KBCommentsChecker(liferayPortletRequest, liferayPortletResponse));
 
+KBSuggestionListManagementToolbarDisplayContext kbSuggestionListManagementToolbarDisplayContext = new KBSuggestionListManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, kbCommentsSearchContainer);
+
 request.setAttribute("view_suggestions.jsp-resultRowSplitter", kbCommentResultRowSplitter);
 request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
 
@@ -60,6 +62,18 @@ List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 %>
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+
+<clay:management-toolbar
+	actionItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	disabled="<%= kbSuggestionListManagementToolbarDisplayContext.isDisabled() %>"
+	filterItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchContainerId="kbComments"
+	selectable="<%= true %>"
+	showSearch="false"
+	sortingOrder="<%= kbSuggestionListManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(kbSuggestionListManagementToolbarDisplayContext.getSortingURL()) %>"
+	totalItems="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= kbComments.isEmpty() %>"

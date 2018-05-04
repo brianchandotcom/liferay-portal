@@ -100,6 +100,7 @@ page import="com.liferay.knowledge.base.web.internal.display.context.KBAdminView
 page import="com.liferay.knowledge.base.web.internal.display.context.KBNavigationDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBSelectParentDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBSuggestionListDisplayContext" %><%@
+page import="com.liferay.knowledge.base.web.internal.display.context.KBSuggestionListManagementToolbarDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.util.KBArticleURLHelper" %><%@
 page import="com.liferay.knowledge.base.web.internal.search.KBCommentsChecker" %><%@
 page import="com.liferay.knowledge.base.web.internal.search.KBObjectsSearch" %><%@

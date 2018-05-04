@@ -53,6 +53,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author Marco Leo
@@ -183,28 +184,29 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public ArrayList<CommerceUserSegmentEntry> getCommerceUserSegmentEntries(
-			long groupId, long userId)
+	public long[] getCommerceUserSegmentEntryIds(
+			long groupId, long organizationId, long userId)
 		throws PortalException {
+
+		String cacheKey = userId + "_" + organizationId;
 
 		PortalCache<String, Serializable> portalCache =
 			MultiVMPoolUtil.getPortalCache("USER_SEGMENTS_" + groupId);
 
 		boolean userSegmentsCalculated = GetterUtil.getBoolean(
-			portalCache.get(String.valueOf(userId) + "_calculated"));
+			portalCache.get( cacheKey + "_calculated"));
 
-		ArrayList<CommerceUserSegmentEntry> commerceUserSegmentEntries =
-			(ArrayList<CommerceUserSegmentEntry>)portalCache.get(
-				String.valueOf(userId));
+		long[] commerceUserSegmentEntryIds =
+			(long[])portalCache.get(cacheKey);
 
 		if (userSegmentsCalculated) {
-			return commerceUserSegmentEntries;
+			return commerceUserSegmentEntryIds;
 		}
 
 		User user = userLocalService.getUser(userId);
 
 		SearchContext searchContext = buildSearchContext(
-			user.getCompanyId(), groupId, userId);
+			user.getCompanyId(), groupId, organizationId, userId);
 
 		Indexer<CommerceUserSegmentEntry> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(
@@ -214,23 +216,16 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 		List<Document> documents = hits.toList();
 
-		commerceUserSegmentEntries = new ArrayList<>();
+		Stream<Document> stream = documents.stream();
 
-		for (Document document : documents) {
-			long commerceUserSegmentEntryId = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
+		commerceUserSegmentEntryIds = stream.mapToLong(
+				field ->  GetterUtil.getLong(field.get(Field.ENTRY_CLASS_PK)))
+			.toArray();
 
-			CommerceUserSegmentEntry commerceUserSegmentEntry =
-				commerceUserSegmentEntryPersistence.fetchByPrimaryKey(
-					commerceUserSegmentEntryId);
+		portalCache.put(cacheKey + "_calculated", true);
+		portalCache.put(cacheKey, commerceUserSegmentEntryIds);
 
-			commerceUserSegmentEntries.add(commerceUserSegmentEntry);
-		}
-
-		portalCache.put(String.valueOf(userId) + "_calculated", true);
-		portalCache.put(String.valueOf(userId), commerceUserSegmentEntries);
-
-		return commerceUserSegmentEntries;
+		return commerceUserSegmentEntryIds;
 	}
 
 	@Override
@@ -335,13 +330,14 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, long userId) {
+		long companyId, long groupId, long organizationId, long userId) {
 
 		SearchContext searchContext = new SearchContext();
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put("criterionType", true);
+		attributes.put("organizationId", organizationId);
 
 		searchContext.setAttributes(attributes);
 

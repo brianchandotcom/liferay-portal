@@ -25,6 +25,16 @@ class MappeableFragmentProcessor {
 	}
 
 	/**
+	 * Finds an associated editor for a given editable id
+	 * @return {null}
+	 * @review
+	 */
+
+	findEditor() {
+		return null;
+	}
+
+	/**
 	 * @inheritDoc
 	 * @review
 	 */

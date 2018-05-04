@@ -307,24 +307,15 @@ public class JenkinsResultsParserUtil {
 		}
 
 		if (debug) {
-			InputStream inputStream = process.getInputStream();
-
-			inputStream.mark(Integer.MAX_VALUE);
-
 			System.out.println(
-				"Output stream: " + readInputStream(inputStream));
-
-			inputStream.reset();
+				"Output stream: " +
+					readInputStream(process.getInputStream(), true));
 		}
 
 		if (debug && (returnCode != 0)) {
-			InputStream inputStream = process.getErrorStream();
-
-			inputStream.mark(Integer.MAX_VALUE);
-
-			System.out.println("Error stream: " + readInputStream(inputStream));
-
-			inputStream.reset();
+			System.out.println(
+				"Error stream: " +
+					readInputStream(process.getErrorStream(), true));
 		}
 
 		return process;
@@ -1088,6 +1079,25 @@ public class JenkinsResultsParserUtil {
 	public static String readInputStream(InputStream inputStream)
 		throws IOException {
 
+		return readInputStream(inputStream, false);
+	}
+
+	public static String readInputStream(
+			InputStream inputStream, boolean resetAfterReading)
+		throws IOException {
+
+		if (resetAfterReading && !inputStream.markSupported()) {
+			Class<?> inputStreamClass = inputStream.getClass();
+
+			System.out.println(
+				"Unable to reset after reading input stream " +
+					inputStreamClass.getName());
+		}
+
+		if (resetAfterReading && inputStream.markSupported()) {
+			inputStream.mark(Integer.MAX_VALUE);
+		}
+
 		StringBuffer sb = new StringBuffer();
 
 		byte[] bytes = new byte[1024];
@@ -1098,6 +1108,10 @@ public class JenkinsResultsParserUtil {
 			sb.append(new String(Arrays.copyOf(bytes, size)));
 
 			size = inputStream.read(bytes);
+		}
+
+		if (resetAfterReading && inputStream.markSupported()) {
+			inputStream.reset();
 		}
 
 		return sb.toString();

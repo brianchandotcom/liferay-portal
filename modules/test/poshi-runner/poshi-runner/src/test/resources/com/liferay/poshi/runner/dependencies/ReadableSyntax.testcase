@@ -193,6 +193,10 @@ definition {
 			Click(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC");
 		}
 
+		while (IsElementPresent(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC") && (maxIterations = "16")) {
+			Click(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC");
+		}
+
 		Smoke.runSmoke();
 
 		AssertElementPresent(locator1 = "Home#PAGE", value1 = "Welcome");

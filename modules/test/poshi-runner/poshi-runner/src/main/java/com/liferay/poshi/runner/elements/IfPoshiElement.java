@@ -50,7 +50,7 @@ public class IfPoshiElement extends PoshiElement {
 			if (readableBlock.startsWith(getName() + " (")) {
 				add(
 					PoshiNodeFactory.newPoshiNode(
-						this, getParentheticalContent(readableBlock)));
+						this, getCondition(readableBlock)));
 
 				continue;
 			}
@@ -123,6 +123,10 @@ public class IfPoshiElement extends PoshiElement {
 		}
 
 		return sb.toString();
+	}
+
+	protected String getCondition(String readableSyntax) {
+		return getParentheticalContent(readableSyntax);
 	}
 
 	protected List<String> getReadableBlocks(String readableSyntax) {

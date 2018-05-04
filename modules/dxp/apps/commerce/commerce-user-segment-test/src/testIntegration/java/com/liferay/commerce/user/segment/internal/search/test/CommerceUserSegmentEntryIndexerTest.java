@@ -78,9 +78,9 @@ public class CommerceUserSegmentEntryIndexerTest {
 		).given(
 			"I add a user segment entry"
 		).when(
-			"the entry is added to the index"
+			"The user segment entry is added to the index"
 		).then(
-			"I will be able to search for it in the index"
+			"I should be able to find the user segment entry in the index"
 		);
 
 		long groupId = _group.getGroupId();
@@ -104,13 +104,15 @@ public class CommerceUserSegmentEntryIndexerTest {
 	@Test
 	public void testDeleteCommerceUserSegmentEntry() throws Exception {
 		frutillaRule.scenario(
-			"Remove a user segment entry"
+			"Delete user segment entry"
 		).given(
-			"I delete a user segment entry"
+			"A user segment entry"
 		).when(
-			"system is set to false"
+			"I delete the user segment entry"
+		).and(
+			"I search the user segment entry in the index"
 		).then(
-			"the user segment entry will be removed"
+			"The user segment entry should not be found"
 		);
 
 		long groupId = _group.getGroupId();
@@ -130,13 +132,13 @@ public class CommerceUserSegmentEntryIndexerTest {
 	@Test
 	public void testDeleteSystemCommerceUserSegmentEntry() throws Exception {
 		frutillaRule.scenario(
-			"Remove a user segment entry"
+			"Delete system user segment entry"
 		).given(
-			"I delete a user segment entry"
+			"A system user segment entry"
 		).when(
-			"system is set to true"
+			"I delete the user segment entry"
 		).then(
-			"a CommerceUserSegmentEntrySystemException is thrown"
+			"A CommerceUserSegmentEntrySystemException should be thrown"
 		);
 
 		long groupId = _group.getGroupId();

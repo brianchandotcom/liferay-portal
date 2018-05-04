@@ -15,10 +15,9 @@
 package com.liferay.commerce.user.segment.internal.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntrySystemException;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentEntryTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -27,18 +26,13 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Locale;
-import java.util.Map;
 
 import org.frutilla.FrutillaRule;
 
@@ -86,7 +80,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			_addCommerceUserSegmentEntry(
+			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
 				groupId, RandomTestUtil.randomBoolean());
 
 		Hits hits = _search(commerceUserSegmentEntry.getCompanyId(), groupId);
@@ -117,7 +111,8 @@ public class CommerceUserSegmentEntryIndexerTest {
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			_addCommerceUserSegmentEntry(groupId, false);
+			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+				groupId, false);
 
 		_commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(
 			commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
@@ -127,47 +122,8 @@ public class CommerceUserSegmentEntryIndexerTest {
 		Assert.assertEquals(hits.toString(), 0, hits.getLength());
 	}
 
-	@Test(expected = CommerceUserSegmentEntrySystemException.class)
-	public void testDeleteSystemCommerceUserSegmentEntry() throws Exception {
-		frutillaRule.scenario(
-			"Delete system user segment entry"
-		).given(
-			"A system user segment entry"
-		).when(
-			"I delete the user segment entry"
-		).then(
-			"A CommerceUserSegmentEntrySystemException should be thrown"
-		);
-
-		long groupId = _group.getGroupId();
-
-		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			_addCommerceUserSegmentEntry(groupId, true);
-
-		_commerceUserSegmentEntryLocalService.
-			deleteCommerceUserSegmentEntry(
-				commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
-	}
-
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();
-
-	private CommerceUserSegmentEntry _addCommerceUserSegmentEntry(
-			long groupId, boolean system)
-		throws PortalException {
-
-		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
-		String key = RandomTestUtil.randomString();
-		boolean active = RandomTestUtil.randomBoolean();
-		double priority = RandomTestUtil.randomDouble();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return _commerceUserSegmentEntryLocalService.
-			addCommerceUserSegmentEntry(
-				nameMap, key, active, system, priority, serviceContext);
-	}
 
 	private Hits _search(long companyId, long groupId) throws SearchException {
 		SearchContext searchContext = new SearchContext();

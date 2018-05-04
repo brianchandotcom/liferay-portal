@@ -425,7 +425,7 @@
 
 	<command name="moveToFolderCP">
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />

@@ -45,7 +45,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 	</set-up>
 
@@ -1790,7 +1790,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -2145,7 +2145,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMFolder#addPG">

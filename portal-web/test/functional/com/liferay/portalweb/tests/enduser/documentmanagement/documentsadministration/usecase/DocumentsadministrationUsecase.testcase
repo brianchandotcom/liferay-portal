@@ -138,7 +138,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentCP">
@@ -417,7 +417,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -662,7 +662,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -682,7 +682,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMDocument#viewDocumentToolbarCmdAsGuestPG">
@@ -699,7 +699,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
@@ -933,7 +933,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1054,7 +1054,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1628,7 +1628,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -1841,7 +1841,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2012,7 +2012,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2262,7 +2262,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -2307,7 +2307,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

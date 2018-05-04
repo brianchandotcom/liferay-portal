@@ -211,7 +211,9 @@ public class ScreensAssetEntryServiceImpl
 				}
 			}
 			catch (Exception e) {
-				_log.debug(e, e);
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
 			}
 		}
 

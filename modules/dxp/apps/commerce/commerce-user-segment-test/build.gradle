@@ -1,4 +1,4 @@
-copyLibs{
+copyLibs {
 	enabled = true
 }
 

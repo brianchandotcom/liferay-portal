@@ -108,15 +108,11 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
+		PortletURL sortingURL = _getCurrentSortingURL();
 
 		sortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		sortingURL.setParameter(
-			"storeOrderByPreference", Boolean.TRUE.toString());
 
 		return sortingURL;
 	}
@@ -127,6 +123,16 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 
 	public boolean isDisabled() {
 		return false;
+	}
+
+	private PortletURL _getCurrentSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			_currentURLObj, _liferayPortletResponse);
+
+		sortingURL.setParameter(
+			"storeOrderByPreference", Boolean.TRUE.toString());
+
+		return sortingURL;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems()
@@ -194,17 +200,9 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 								dropdownItem.setActive(
 									orderByCol.equals(_getOrderByCol()));
 
-								PortletURL sortingURL = PortletURLUtil.clone(
-									_currentURLObj, _liferayPortletResponse);
-
-								sortingURL.setParameter(
-									"storeOrderByPreference",
-									Boolean.TRUE.toString());
-
 								dropdownItem.setHref(
-									sortingURL, "orderByCol",
+									_getCurrentSortingURL(), "orderByCol",
 									orderByColEntry.getValue());
-
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, orderByCol));
 							}));

@@ -295,20 +295,11 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			PortletURLUtil.getCurrent(
-				_liferayPortletRequest, _liferayPortletResponse),
-			_liferayPortletResponse);
+		PortletURL sortingURL = _getCurrentSortingURL();
 
 		sortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		String keywords = _getKeywords();
-
-		if (Validator.isNotNull(keywords)) {
-			sortingURL.setParameter("keywords", keywords);
-		}
 
 		return sortingURL;
 	}
@@ -398,6 +389,21 @@ public class KBAdminManagementToolbarDisplayContext {
 		return _searchContainer;
 	}
 
+	private PortletURL _getCurrentSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse),
+			_liferayPortletResponse);
+
+		String keywords = _getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			sortingURL.setParameter("keywords", keywords);
+		}
+
+		return sortingURL;
+	}
+
 	private String _getKeywords() {
 		return ParamUtil.getString(_request, "keywords");
 	}
@@ -426,7 +432,8 @@ public class KBAdminManagementToolbarDisplayContext {
 								dropdownItem.setActive(
 									orderByCol.equals(_getOrderByCol()));
 								dropdownItem.setHref(
-									getSortingURL(), "orderByCol", orderByCol);
+									_getCurrentSortingURL(), "orderByCol",
+									orderByCol);
 								dropdownItem.setLabel(
 									LanguageUtil.get(
 										_request,

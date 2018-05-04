@@ -194,22 +194,11 @@ public class BlogEntriesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
-
-		sortingURL.setParameter("mvcRenderCommandName", "/blogs/view");
-
-		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+		PortletURL sortingURL = _getCurrentSortingURL();
 
 		sortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		String keywords = ParamUtil.getString(_request, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			sortingURL.setParameter("keywords", keywords);
-		}
 
 		return sortingURL;
 	}
@@ -256,6 +245,23 @@ public class BlogEntriesManagementToolbarDisplayContext {
 			}
 
 		};
+	}
+
+	private PortletURL _getCurrentSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			_currentURLObj, _liferayPortletResponse);
+
+		sortingURL.setParameter("mvcRenderCommandName", "/blogs/view");
+
+		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			sortingURL.setParameter("keywords", keywords);
+		}
+
+		return sortingURL;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -311,7 +317,7 @@ public class BlogEntriesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								"title".equals(getOrderByCol()));
 							dropdownItem.setHref(
-								getSortingURL(), "orderByCol", "title");
+								_getCurrentSortingURL(), "orderByCol", "title");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "title"));
 						}));
@@ -322,7 +328,8 @@ public class BlogEntriesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								"display-date".equals(getOrderByCol()));
 							dropdownItem.setHref(
-								getSortingURL(), "orderByCol", "display-date");
+								_getCurrentSortingURL(), "orderByCol",
+								"display-date");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "display-date"));
 						}));

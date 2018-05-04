@@ -11,6 +11,13 @@
 			"validator": "$auth != null"
 		},
 		"data": true,
+		"path": "/forecasts/*"
+	},
+	{
+		"auth": {
+			"validator": "$auth != null"
+		},
+		"data": true,
 		"path": "/projects/*"
 	}
 ]

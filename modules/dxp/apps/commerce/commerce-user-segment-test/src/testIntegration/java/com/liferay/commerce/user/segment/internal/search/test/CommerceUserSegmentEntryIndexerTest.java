@@ -171,6 +171,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		String key = RandomTestUtil.randomString();
 		boolean active = RandomTestUtil.randomBoolean();
 		double priority = RandomTestUtil.randomDouble();
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 

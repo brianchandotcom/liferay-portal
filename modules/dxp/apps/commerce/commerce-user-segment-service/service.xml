@@ -87,6 +87,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="active" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="Organization" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<exceptions>

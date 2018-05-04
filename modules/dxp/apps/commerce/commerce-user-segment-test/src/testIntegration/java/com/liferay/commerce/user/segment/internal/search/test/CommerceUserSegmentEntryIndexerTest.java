@@ -40,6 +40,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.Locale;
 import java.util.Map;
 
+import org.frutilla.FrutillaRule;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -69,15 +71,18 @@ public class CommerceUserSegmentEntryIndexerTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	/**
-	 * Test add CommerceUserSegmentEntry to index
-	 * Create a CommerceUserSegmentEntry
-	 * and check if it has been added to the index
-	 *
-	 * @throws Exception
-	 */
 	@Test
 	public void testAddCommerceUserSegmentEntry() throws Exception {
+		frutillaRule.scenario(
+			"Add user segment entry to index"
+		).given(
+			"I add a user segment entry"
+		).when(
+			"the entry is added to the index"
+		).then(
+			"I will be able to search for it in the index"
+		);
+
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
@@ -105,14 +110,18 @@ public class CommerceUserSegmentEntryIndexerTest {
 		Assert.assertEquals(1, hit);
 	}
 
-	/**
-	 * test removal process for CommerceUserSegmentEntry with
-	 * system attribute set to false
-	 *
-	 * @throws Exception
-	 */
 	@Test
 	public void testRemoveNoSystemCommerceUserSegmentEntry() throws Exception {
+		frutillaRule.scenario(
+			"Remove a user segment entry"
+		).given(
+			"I delete a user segment entry"
+		).when(
+			"system is set to false"
+		).then(
+			"the user segment entry will be removed"
+		);
+
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
@@ -142,14 +151,18 @@ public class CommerceUserSegmentEntryIndexerTest {
 		Assert.assertEquals(0, hit);
 	}
 
-	/**
-	 * test removal process for CommerceUserSegmentEntry with
-	 * system attribute set to true
-	 *
-	 * @throws Exception
-	 */
 	@Test
 	public void testRemoveSystemCommerceUserSegmentEntry() throws Exception {
+		frutillaRule.scenario(
+			"Remove a user segment entry"
+		).given(
+			"I delete a user segment entry"
+		).when(
+			"system is set to true"
+		).then(
+			"a CommerceUserSegmentEntrySystemException is thrown"
+		);
+
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
@@ -168,6 +181,9 @@ public class CommerceUserSegmentEntryIndexerTest {
 
 		Assert.assertEquals(false, check);
 	}
+
+	@Rule
+	public final FrutillaRule frutillaRule = new FrutillaRule();
 
 	private CommerceUserSegmentEntry _addCommerceUserSegmentEntry(
 			long groupId, boolean system)

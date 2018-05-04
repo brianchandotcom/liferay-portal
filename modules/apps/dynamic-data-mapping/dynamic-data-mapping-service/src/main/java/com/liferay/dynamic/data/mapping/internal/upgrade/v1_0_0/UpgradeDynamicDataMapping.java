@@ -1439,7 +1439,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					sb.toString());
 				PreparedStatement ps2 = connection.prepareStatement(
 					"select companyId, data_ from DDMContent where contentId " +
-						"= ?");
+						"= ? and data_ like '<%'");
 				PreparedStatement ps3 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,

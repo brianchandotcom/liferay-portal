@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.util.JavaConstants;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,20 +31,59 @@ public class RequestDispatcherAttributeNames {
 		return _attributeNames.contains(name);
 	}
 
-	private static final Set<String> _attributeNames = new HashSet<>();
+	private static Set<String> _createConstantSet(
+		int maxSize, String... strings) {
 
-	static {
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_PATH_INFO);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_SERVLET_PATH);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_CONTEXT_PATH);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_PATH_INFO);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_QUERY_STRING);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_SERVLET_PATH);
-		_attributeNames.add(MimeResponse.MARKUP_HEAD_ELEMENT);
+		int size = 16;
+
+		Set<Integer> hashCodes = new HashSet<>();
+		Set<Integer> positions = new HashSet<>();
+
+		for (String s : strings) {
+			hashCodes.add(s.hashCode());
+		}
+
+		iterate:
+		while (size < maxSize) {
+			for (Integer hashCode : hashCodes) {
+				int hash = hashCode;
+
+				int pos = (size - 1) & (hash ^ hash >>> 16);
+
+				if (!positions.add(pos)) {
+					if (size > (maxSize / 2)) {
+						break iterate;
+					}
+
+					size *= 2;
+
+					positions.clear();
+
+					continue iterate;
+				}
+			}
+
+			break;
+		}
+
+		Set<String> set = new HashSet<>(size);
+
+		Collections.addAll(set, strings);
+
+		return set;
 	}
+
+	private static final Set<String> _attributeNames = _createConstantSet(
+		2048, JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH,
+		JavaConstants.JAVAX_SERVLET_FORWARD_PATH_INFO,
+		JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING,
+		JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI,
+		JavaConstants.JAVAX_SERVLET_FORWARD_SERVLET_PATH,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_CONTEXT_PATH,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_PATH_INFO,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_QUERY_STRING,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_SERVLET_PATH,
+		MimeResponse.MARKUP_HEAD_ELEMENT);
 
 }

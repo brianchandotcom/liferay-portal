@@ -15,13 +15,16 @@
 package com.liferay.commerce.product.search;
 
 import com.liferay.commerce.product.model.CPRule;
+import com.liferay.commerce.product.model.CPRuleUserSegmentRel;
 import com.liferay.commerce.product.service.CPRuleLocalService;
+import com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -30,19 +33,28 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.filter.FilterBuilders;
+import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true, service = Indexer.class)
@@ -61,6 +73,39 @@ public class CPRuleIndexer extends BaseIndexer<CPRule> {
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		long[] commerceUserSegmentEntryIds =  GetterUtil.getLongValues(
+			"commerceUserSegmentEntryIds", null);
+
+		if(commerceUserSegmentEntryIds != null){
+
+			TermsSetFilterBuilder termsSetFilterBuilder =
+				_filterBuilders.termsSetFilterBuilder();
+
+			termsSetFilterBuilder.setFieldName("commerceUserSegmentEntryIds");
+			termsSetFilterBuilder.setMinimumShouldMatchField(
+				"commerceUserSegmentEntryIds_required_matches");
+
+			List<String> values = new ArrayList<>(
+				commerceUserSegmentEntryIds.length);
+
+			for (long commerceUserSegmentEntryId :
+				commerceUserSegmentEntryIds) {
+
+				values.add(String.valueOf(commerceUserSegmentEntryId));
+			}
+
+			termsSetFilterBuilder.setValues(values);
+
+			contextBooleanFilter.add(
+				termsSetFilterBuilder.build(), BooleanClauseOccur.MUST);
+		}
 	}
 
 	@Override
@@ -101,6 +146,21 @@ public class CPRuleIndexer extends BaseIndexer<CPRule> {
 		document.addNumber(Field.ENTRY_CLASS_PK, cpRule.getCPRuleId());
 		document.addText(Field.NAME, cpRule.getName());
 		document.addText(Field.USER_NAME, cpRule.getUserName());
+
+		List<CPRuleUserSegmentRel> cpRuleUserSegmentRels =
+			_cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRels(
+				cpRule.getCPRuleId());
+
+		Stream<CPRuleUserSegmentRel> stream = cpRuleUserSegmentRels.stream();
+
+		long[] commerceUserSegmentEntryIds =  stream.mapToLong(
+			CPRuleUserSegmentRel::getCommerceUserSegmentEntryId).toArray();
+
+		document.addNumber(
+			"commerceUserSegmentEntryIds", commerceUserSegmentEntryIds);
+		document.addNumber(
+			"commerceUserSegmentEntryIds_required_matches",
+			commerceUserSegmentEntryIds.length);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpRule + " indexed successfully");
@@ -182,6 +242,12 @@ public class CPRuleIndexer extends BaseIndexer<CPRule> {
 	private CPRuleLocalService _cpRuleLocalService;
 
 	@Reference
+	private CPRuleUserSegmentRelLocalService _cpRuleUserSegmentRelLocalService;
+
+	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private FilterBuilders _filterBuilders;
 
 }

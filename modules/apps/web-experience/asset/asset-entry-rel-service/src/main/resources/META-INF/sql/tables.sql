@@ -4,3 +4,9 @@ create table AssetEntryAssetCategoryRel (
 	assetCategoryId LONG,
 	priority INTEGER
 );
+
+create table AssetEntryAssetDisplayPageRel (
+	assetEntryAssetDisplayPageId LONG not null primary key,
+	assetEntryId LONG,
+	assetDisplayPageId LONG
+);

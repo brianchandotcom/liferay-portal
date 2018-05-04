@@ -37,7 +37,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="AssetEntry" return-type="Collection">
+		<finder name="AssetEntryId" return-type="Collection">
 			<finder-column name="assetEntryId" />
 		</finder>
 		<finder name="A_D" return-type="AssetEntryAssetDisplayPageRel" unique="true">

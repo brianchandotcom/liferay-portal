@@ -102,7 +102,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 	}
 
 	@Test
-	public void testRemoveNoSystemCommerceUserSegmentEntry() throws Exception {
+	public void testDeleteCommerceUserSegmentEntry() throws Exception {
 		frutillaRule.scenario(
 			"Remove a user segment entry"
 		).given(
@@ -128,7 +128,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 	}
 
 	@Test
-	public void testRemoveSystemCommerceUserSegmentEntry() throws Exception {
+	public void testDeleteSystemCommerceUserSegmentEntry() throws Exception {
 		frutillaRule.scenario(
 			"Remove a user segment entry"
 		).given(

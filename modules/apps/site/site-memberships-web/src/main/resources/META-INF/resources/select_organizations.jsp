@@ -29,13 +29,13 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 	componentId="organizationsManagementToolbar"
 	disabled="<%= selectOrganizationsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= selectOrganizationsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectOrganizationsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectOrganizationsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="organizations"
 	searchFormName="searchFm"
 	showSearch="<%= selectOrganizationsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectOrganizationsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectOrganizationsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= selectOrganizationsDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= selectOrganizationsDisplayContext.getViewTypeItems() %>"
 />
 

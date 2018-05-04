@@ -27,11 +27,11 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 <clay:management-toolbar
 	componentId="siteAdminWebManagementToolbar"
 	filterDropdownItems="<%= selectThemeDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectThemeDisplayContext.getTotalItems() %>"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= selectThemeDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectThemeDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= selectThemeDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= selectThemeDisplayContext.getViewTypeItems() %>"
 />
 

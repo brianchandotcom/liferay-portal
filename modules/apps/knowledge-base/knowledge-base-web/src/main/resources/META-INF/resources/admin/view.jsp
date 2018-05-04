@@ -59,13 +59,13 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	disabled="<%= kbAdminManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"
 	searchActionURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="kbObjects"
 	selectable="<%= true %>"
 	showInfoButton="<%= kbAdminManagementToolbarDisplayContext.isShowInfoButton() %>"
 	sortingOrder="<%= kbAdminManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbAdminManagementToolbarDisplayContext.getSortingURL()) %>"
-	itemsTotal="<%= kbAdminManagementToolbarDisplayContext.getTotal() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

@@ -26,13 +26,13 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 	creationMenu="<%= ddmDataProviderDisplayContext.getCreationMenu() %>"
 	disabled="<%= ddmDataProviderDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmDataProviderDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= ddmDataProviderDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= portletURL.toString() %>"
 	searchContainerId="<%= ddmDataProviderDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"
 	sortingOrder="<%= ddmDataProviderDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDataProviderDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= ddmDataProviderDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= ddmDataProviderDisplayContext.getViewTypesItems() %>"
 />
 

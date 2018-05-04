@@ -26,11 +26,11 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 
 <clay:management-toolbar
 	filterDropdownItems="<%= siteBrowserDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= groupsCount %>"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= siteBrowserDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteBrowserDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= groupsCount %>"
 	viewTypeItems="<%= siteBrowserDisplayContext.getViewTypeItems() %>"
 />
 

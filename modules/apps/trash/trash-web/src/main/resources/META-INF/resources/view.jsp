@@ -37,13 +37,13 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 	componentId="trashWebManagementToolbar"
 	filterDropdownItems="<%= trashDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= trashDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= trashDisplayContext.getSearchActionURL() %>"
 	searchContainerId="trash"
 	searchFormName="searchFm"
 	showInfoButton="<%= true %>"
 	sortingOrder="<%= trashDisplayContext.getOrderByType() %>"
 	sortingURL="<%= trashDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= trashDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= trashDisplayContext.getViewTypeItems() %>"
 />
 

@@ -29,6 +29,7 @@ SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRole
 	componentId="siteRolesManagementToolbar"
 	disabled="<%= selectSiteRolesDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= selectSiteRolesDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectSiteRolesDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectSiteRolesDisplayContext.getSearchActionURL() %>"
 	searchContainerId="siteRoles"
 	searchFormName="searchFm"
@@ -36,7 +37,6 @@ SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRole
 	showSearch="<%= selectSiteRolesDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectSiteRolesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectSiteRolesDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= selectSiteRolesDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= selectSiteRolesDisplayContext.getViewTypeItems() %>"
 />
 

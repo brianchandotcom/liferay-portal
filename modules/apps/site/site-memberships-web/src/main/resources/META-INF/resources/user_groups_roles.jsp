@@ -29,13 +29,13 @@ UserGroupRolesDisplayContext userGroupRolesDisplayContext = new UserGroupRolesDi
 	componentId="userGroupGroupRoleRoleManagementToolbar"
 	disabled="<%= userGroupRolesDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= userGroupRolesDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= userGroupRolesDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= userGroupRolesDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroupGroupRoleRole"
 	searchFormName="searchFm"
 	showSearch="<%= userGroupRolesDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= userGroupRolesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= userGroupRolesDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= userGroupRolesDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= userGroupRolesDisplayContext.getViewTypeItems() %>"
 />
 

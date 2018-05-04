@@ -27,12 +27,12 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 	clearResultsURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
 	creationMenu="<%= kbTemplatesManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
 	searchActionURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="kbTemplates"
 	selectable="<%= true %>"
 	sortingOrder="<%= kbTemplatesManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSortingURL()) %>"
-	itemsTotal="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
 />
 
 <div class="container-fluid-1280">

@@ -38,11 +38,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 	actionDropdownItems="<%= orphanPortletsDisplayContext.getActionDropdownItems() %>"
 	componentId="portletsManagementToolbar"
 	filterDropdownItems="<%= orphanPortletsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= portlets.size() %>"
 	searchContainerId="portlets"
 	showSearch="<%= false %>"
 	sortingOrder="<%= orphanPortletsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= orphanPortletsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= portlets.size() %>"
 	viewTypeItems="<%= orphanPortletsDisplayContext.getViewTypeItems() %>"
 />
 

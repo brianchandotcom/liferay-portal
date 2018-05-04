@@ -33,6 +33,7 @@ Role role = userGroupsDisplayContext.getRole();
 	componentId="userGroupsManagementToolbar"
 	disabled="<%= userGroupsDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= userGroupsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= userGroupsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= userGroupsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
 	searchFormName="searchFm"
@@ -40,7 +41,6 @@ Role role = userGroupsDisplayContext.getRole();
 	showSearch="<%= userGroupsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= userGroupsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= userGroupsDisplayContext.getSortingURL() %>"
-	itemsTotal="<%= userGroupsDisplayContext.getTotalItems() %>"
 	viewTypeItems="<%= userGroupsDisplayContext.getViewTypeItems() %>"
 />
 

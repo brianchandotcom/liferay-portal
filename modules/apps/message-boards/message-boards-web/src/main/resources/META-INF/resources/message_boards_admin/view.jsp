@@ -78,13 +78,13 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 	creationMenu="<%= mbEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled='<%= (searchContainer.getTotal() == 0) && (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && entriesNavigation.equals("all") %>'
 	filterDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
 	searchActionURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="mbEntries"
 	searchFormName="searchFm"
 	showInfoButton="<%= false %>"
 	sortingOrder="<%= mbEntriesManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(mbEntriesManagementToolbarDisplayContext.getSortingURL()) %>"
-	itemsTotal="<%= searchContainer.getTotal() %>"
 	viewTypeItems="<%= mbEntriesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 

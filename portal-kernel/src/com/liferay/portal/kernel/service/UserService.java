@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 import java.util.Locale;
@@ -399,6 +400,46 @@ public interface UserService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getGroupUsers(long groupId) throws PortalException;
+
+	/**
+	* Returns the users belonging to a group.
+	*
+	* @param groupId the primary key of the group
+	* @param status the workflow status
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getGroupUsers(long groupId, int status, int start,
+		int end, OrderByComparator<User> obc) throws PortalException;
+
+	/**
+	* Returns the users belonging to a group.
+	*
+	* @param groupId the primary key of the group
+	* @param status the workflow status
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @return the users who belong to a group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getGroupUsers(long groupId, int status,
+		OrderByComparator<User> obc) throws PortalException;
+
+	/**
+	* Returns the number of users with the status belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param status the workflow status
+	* @return the number of users with the status belonging to the group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupUsersCount(long groupId, int status)
+		throws PortalException;
 
 	/**
 	* Returns the primary keys of all the users belonging to the organization.

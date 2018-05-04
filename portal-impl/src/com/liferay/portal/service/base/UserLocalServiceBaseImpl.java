@@ -524,9 +524,11 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public List<User> getGroupUsers(long groupId, int start, int end) {
+	public List<User> getGroupUsers(long groupId, int start, int end)
+		throws PortalException {
 		return groupPersistence.getUsers(groupId, start, end);
 	}
 

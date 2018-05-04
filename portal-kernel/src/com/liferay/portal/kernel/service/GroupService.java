@@ -205,6 +205,48 @@ public interface GroupService extends BaseService {
 		boolean site) throws PortalException;
 
 	/**
+	* Returns all the groups that are direct children of the parent group.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the matching groups, or <code>null</code> if no matches were
+	found
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Group> getGroups(long companyId, long parentGroupId,
+		boolean site, int start, int end) throws PortalException;
+
+	/**
+	* Returns the number of groups that are direct children of the parent
+	* group.
+	*
+	* @param companyId the primary key of the company
+	* @param parentGroupId the primary key of the parent group
+	* @param site whether the group is to be associated with a main site
+	* @return the number of matching groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupsCount(long companyId, long parentGroupId, boolean site)
+		throws PortalException;
+
+	/**
+	* Returns the number of groups that are direct children of the parent group
+	* with the matching className.
+	*
+	* @param companyId the primary key of the company
+	* @param className the class name of the group
+	* @param parentGroupId the primary key of the parent group
+	* @return the number of matching groups
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupsCount(long companyId, String className,
+		long parentGroupId) throws PortalException;
+
+	/**
 	* Returns a range of all the site groups for which the user has control
 	* panel access.
 	*

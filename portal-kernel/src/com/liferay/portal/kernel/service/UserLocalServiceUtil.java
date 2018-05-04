@@ -1135,15 +1135,54 @@ public class UserLocalServiceUtil {
 		return getService().getGroupUsers(groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static java.util.List<com.liferay.portal.kernel.model.User> getGroupUsers(
-		long groupId, int start, int end) {
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getGroupUsers(groupId, start, end);
+	}
+
+	/**
+	* Returns the users belonging to a group.
+	*
+	* @param groupId the primary key of the group
+	* @param status the workflow status
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.User> getGroupUsers(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getGroupUsers(groupId, status, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.User> getGroupUsers(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> orderByComparator) {
 		return getService().getGroupUsers(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the users belonging to a group.
+	*
+	* @param groupId the primary key of the group
+	* @param status the workflow status
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @return the users who belong to a group
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.User> getGroupUsers(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getGroupUsers(groupId, status, obc);
 	}
 
 	public static int getGroupUsersCount(long groupId) {

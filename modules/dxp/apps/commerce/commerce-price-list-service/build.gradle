@@ -12,6 +12,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.search.api", version: "2.0.0-20180327.164433-1"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"

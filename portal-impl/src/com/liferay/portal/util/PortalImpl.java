@@ -694,11 +694,11 @@ public class PortalImpl implements Portal {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
 		if (portletBreadcrumbEntry) {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 			name += StringPool.UNDERLINE + portletDisplay.getId();
 		}
 
@@ -897,10 +897,10 @@ public class PortalImpl implements Portal {
 		while (enu.hasMoreElements()) {
 			String param = enu.nextElement();
 
-			String[] values = actionRequest.getParameterValues(param);
-
 			if (renderParameters.get(actionResponse.getNamespace() + param) ==
 					null) {
+
+				String[] values = actionRequest.getParameterValues(param);
 
 				actionResponse.setRenderParameter(param, values);
 			}
@@ -3622,10 +3622,6 @@ public class PortalImpl implements Portal {
 				requestURI, layoutFriendlyURL, layout.getFriendlyURL(locale));
 		}
 
-		String i18nPath =
-			StringPool.SLASH +
-				getI18nPathLanguageId(locale, LocaleUtil.toLanguageId(locale));
-
 		boolean appendI18nPath = true;
 
 		if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) ||
@@ -3638,6 +3634,11 @@ public class PortalImpl implements Portal {
 		String localizedFriendlyURL = contextPath;
 
 		if (appendI18nPath) {
+			String i18nPath =
+				StringPool.SLASH +
+					getI18nPathLanguageId(
+						locale, LocaleUtil.toLanguageId(locale));
+
 			localizedFriendlyURL += i18nPath;
 		}
 
@@ -3871,10 +3872,8 @@ public class PortalImpl implements Portal {
 		Layout layout = null;
 
 		try {
-			String layoutFriendlyURL = null;
-
 			if (urlParts.length == 4) {
-				layoutFriendlyURL = StringPool.SLASH + urlParts[3];
+				String layoutFriendlyURL = StringPool.SLASH + urlParts[3];
 
 				layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 					group.getGroupId(), privateLayout, layoutFriendlyURL);
@@ -5225,7 +5224,6 @@ public class PortalImpl implements Portal {
 			WebKeys.THEME_DISPLAY);
 
 		Theme theme = themeDisplay.getTheme();
-		ColorScheme colorScheme = themeDisplay.getColorScheme();
 
 		Map<String, String[]> parameterMap = null;
 
@@ -5279,6 +5277,8 @@ public class PortalImpl implements Portal {
 			else {
 				sb.append("&colorSchemeId=");
 			}
+
+			ColorScheme colorScheme = themeDisplay.getColorScheme();
 
 			sb.append(URLCodec.encodeURL(colorScheme.getColorSchemeId()));
 		}
@@ -8029,12 +8029,12 @@ public class PortalImpl implements Portal {
 		long doAsUserId = 0;
 
 		try {
-			Company company = getCompany(request);
-
 			String doAsUserIdString = ParamUtil.getString(
 				request, "doAsUserId");
 
 			if (Validator.isNotNull(doAsUserIdString)) {
+				Company company = getCompany(request);
+
 				doAsUserId = GetterUtil.getLong(
 					Encryptor.decrypt(company.getKeyObj(), doAsUserIdString));
 			}

@@ -191,7 +191,6 @@ public class UpgradeSubscription extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long subscriptionId = rs.getLong("subscriptionId");
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
 
@@ -203,6 +202,9 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 				if (groupId != 0) {
 					ps2.setLong(1, groupId);
+
+					long subscriptionId = rs.getLong("subscriptionId");
+
 					ps2.setLong(2, subscriptionId);
 
 					ps2.addBatch();

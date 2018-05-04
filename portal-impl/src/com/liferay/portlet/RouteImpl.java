@@ -200,7 +200,6 @@ public class RouteImpl implements Route {
 		for (Map.Entry<String, StringParser> entry :
 				generatedParameters.entrySet()) {
 
-			String name = entry.getKey();
 			StringParser stringParser = entry.getValue();
 
 			String value = stringParser.build(parameters);
@@ -210,7 +209,7 @@ public class RouteImpl implements Route {
 			// format in the generated parameter.
 
 			if (value != null) {
-				parameters.put(name, value);
+				parameters.put(entry.getKey(), value);
 			}
 		}
 

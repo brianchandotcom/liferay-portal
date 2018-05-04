@@ -406,9 +406,9 @@ public class PortletContainerImpl implements PortletContainer {
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 
-		String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
-
 		if (_log.isDebugEnabled()) {
+			String contentType = request.getHeader(HttpHeaders.CONTENT_TYPE);
+
 			_log.debug("Content type " + contentType);
 		}
 

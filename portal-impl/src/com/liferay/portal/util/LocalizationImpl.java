@@ -231,9 +231,6 @@ public class LocalizationImpl implements Localization {
 			return value;
 		}
 
-		String systemDefaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
 		String priorityLanguageId = null;
 
 		Locale requestedLocale = LocaleUtil.fromLanguageId(requestedLanguageId);
@@ -242,10 +239,10 @@ public class LocalizationImpl implements Localization {
 			LanguageUtil.isDuplicateLanguageCode(
 				requestedLocale.getLanguage())) {
 
-			Locale priorityLocale = LanguageUtil.getLocale(
-				requestedLocale.getLanguage());
-
 			if (!requestedLanguageId.equals(priorityLanguageId)) {
+				Locale priorityLocale = LanguageUtil.getLocale(
+					requestedLocale.getLanguage());
+
 				priorityLanguageId = LocaleUtil.toLanguageId(priorityLocale);
 			}
 		}
@@ -279,7 +276,8 @@ public class LocalizationImpl implements Localization {
 					null, _DEFAULT_LOCALE);
 
 				if (Validator.isNull(defaultLanguageId)) {
-					defaultLanguageId = systemDefaultLanguageId;
+					defaultLanguageId = LocaleUtil.toLanguageId(
+						LocaleUtil.getSiteDefault());
 				}
 			}
 
@@ -921,9 +919,6 @@ public class LocalizationImpl implements Localization {
 
 		xml = _sanitizeXML(xml);
 
-		String systemDefaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
-
 		XMLStreamReader xmlStreamReader = null;
 		XMLStreamWriter xmlStreamWriter = null;
 
@@ -957,7 +952,8 @@ public class LocalizationImpl implements Localization {
 					null, _DEFAULT_LOCALE);
 
 				if (Validator.isNull(defaultLanguageId)) {
-					defaultLanguageId = systemDefaultLanguageId;
+					defaultLanguageId = LocaleUtil.toLanguageId(
+						LocaleUtil.getSiteDefault());
 				}
 			}
 

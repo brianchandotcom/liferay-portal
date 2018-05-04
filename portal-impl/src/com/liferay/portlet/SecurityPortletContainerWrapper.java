@@ -357,9 +357,9 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			_log.debug(pe);
 		}
 
-		String url = getOriginalURL(request);
-
 		if (_log.isWarnEnabled()) {
+			String url = getOriginalURL(request);
+
 			_log.warn(
 				String.format(
 					"User %s is not allowed to access URL %s and portlet %s",
@@ -405,8 +405,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			_log.debug(pe);
 		}
 
-		String url = getOriginalURL(request);
-
 		response.setHeader(
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
@@ -414,6 +412,8 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
 		if (_log.isWarnEnabled()) {
+			String url = getOriginalURL(request);
+
 			_log.warn(
 				String.format(
 					"User %s is not allowed to serve resource for %s on %s",

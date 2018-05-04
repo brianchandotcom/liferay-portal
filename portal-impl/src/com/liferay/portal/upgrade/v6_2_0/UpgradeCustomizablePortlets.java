@@ -171,8 +171,6 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 						sb.toString())) {
 
 					for (String customPortletId : StringUtil.split(value)) {
-						String newPortletId = null;
-
 						if (!PortletIdCodec.hasInstanceId(customPortletId)) {
 							newPortletIds.add(customPortletId);
 						}
@@ -180,7 +178,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 							String instanceId = PortletIdCodec.decodeInstanceId(
 								customPortletId);
 
-							newPortletId = PortletIdCodec.encode(
+							String newPortletId = PortletIdCodec.encode(
 								PortletIdCodec.decodePortletName(
 									customPortletId),
 								ownerId, instanceId);

@@ -61,12 +61,13 @@ public class WorkflowLinkAdvice {
 			throws Throwable {
 
 			if (_UPDATE_ACTIVE_METHOD.equals(method)) {
-				long companyId = (Long)arguments[0];
-				String name = (String)arguments[2];
-				int version = (Integer)arguments[3];
 				boolean active = (Boolean)arguments[4];
 
 				if (!active) {
+					long companyId = (Long)arguments[0];
+					String name = (String)arguments[2];
+					int version = (Integer)arguments[3];
+
 					List<WorkflowDefinitionLink> workflowDefinitionLinks =
 						WorkflowDefinitionLinkLocalServiceUtil.
 							getWorkflowDefinitionLinks(

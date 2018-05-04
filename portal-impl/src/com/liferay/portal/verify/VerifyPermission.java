@@ -119,9 +119,10 @@ public class VerifyPermission extends VerifyProcess {
 							_organizationToGroupBitwiseValues.entrySet()) {
 
 						long organizationBitwiseValue = entry.getKey();
-						long groupBitwiseValue = entry.getValue();
 
 						if ((oldActionIds & organizationBitwiseValue) != 0) {
+							long groupBitwiseValue = entry.getValue();
+
 							newGroupActionIds |= groupBitwiseValue;
 						}
 					}

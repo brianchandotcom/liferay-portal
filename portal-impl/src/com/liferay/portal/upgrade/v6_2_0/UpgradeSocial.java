@@ -90,7 +90,6 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long activityId = resultSet.getLong("activityId");
 					long classNameId = resultSet.getLong("classNameId");
 					long classPK = resultSet.getLong("classPK");
 					long companyId = resultSet.getLong("companyId");
@@ -104,6 +103,8 @@ public class UpgradeSocial extends UpgradeProcess {
 						classNameId, classPK, type, extraData);
 
 					if (newExtraData != null) {
+						long activityId = resultSet.getLong("activityId");
+
 						extraDataMap.put(activityId, newExtraData);
 					}
 				}

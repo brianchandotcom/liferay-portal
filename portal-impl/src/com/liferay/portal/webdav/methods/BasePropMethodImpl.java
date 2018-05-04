@@ -297,13 +297,13 @@ public abstract class BasePropMethodImpl implements Method {
 		Set<QName> customProps = webDAVProps.getPropsSet();
 
 		for (QName qName : props) {
-			String name = qName.getName();
-			Namespace namespace = qName.getNamespace();
-
-			String prefix = namespace.getPrefix();
-			String uri = namespace.getURI();
-
 			if (customProps.contains(qName)) {
+				Namespace namespace = qName.getNamespace();
+
+				String name = qName.getName();
+				String prefix = namespace.getPrefix();
+				String uri = namespace.getURI();
+
 				String text = webDAVProps.getText(name, prefix, uri);
 
 				DocUtil.add(successPropElement, qName, text);
@@ -362,8 +362,6 @@ public abstract class BasePropMethodImpl implements Method {
 
 		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
 
-		long depth = WebDAVUtil.getDepth(webDAVRequest.getHttpServletRequest());
-
 		Document document = SAXReaderUtil.createDocument();
 
 		Element multistatusElement = SAXReaderUtil.createElement(
@@ -374,6 +372,9 @@ public abstract class BasePropMethodImpl implements Method {
 		Resource resource = storage.getResource(webDAVRequest);
 
 		if (resource != null) {
+			long depth = WebDAVUtil.getDepth(
+				webDAVRequest.getHttpServletRequest());
+
 			addResponse(
 				storage, webDAVRequest, resource, props, multistatusElement,
 				depth);

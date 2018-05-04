@@ -70,10 +70,11 @@ public class UpgradeSQLServer extends UpgradeProcess {
 
 					String columnName = rs.getString("column_name");
 					String dataType = rs.getString("data_type");
-					int length = rs.getInt("length");
 					boolean nullable = rs.getBoolean("is_nullable");
 
 					if (dataType.equals("varchar")) {
+						int length = rs.getInt("length");
+
 						convertVarcharColumn(
 							tableName, columnName, length, nullable);
 					}

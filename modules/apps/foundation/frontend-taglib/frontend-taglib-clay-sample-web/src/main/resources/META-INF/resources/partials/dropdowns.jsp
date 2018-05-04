@@ -23,14 +23,14 @@
 <div class="row">
 	<div class="col-md-2">
 		<clay:dropdown-menu
-			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
+			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			label="Default"
 		/>
 	</div>
 
 	<div class="col-md-2">
 		<clay:dropdown-menu
-			items="<%= dropdownsDisplayContext.getGroupDropdownItems() %>"
+			dropdownItems="<%= dropdownsDisplayContext.getGroupDropdownItems() %>"
 			label="Dividers"
 		/>
 	</div>
@@ -38,7 +38,7 @@
 	<div class="col-md-2">
 		<clay:dropdown-menu
 			buttonLabel="Done"
-			items="<%= dropdownsDisplayContext.getInputDropdownItems() %>"
+			dropdownItems="<%= dropdownsDisplayContext.getInputDropdownItems() %>"
 			label="Inputs"
 			searchable="<%= true %>"
 		/>
@@ -46,15 +46,15 @@
 
 	<div class="col-md-2">
 		<clay:dropdown-menu
+			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			icon="share"
-			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			label="Icon"
 		/>
 	</div>
 
 	<div class="col-md-2">
 		<clay:dropdown-menu
-			items="<%= dropdownsDisplayContext.getIconDropdownItems() %>"
+			dropdownItems="<%= dropdownsDisplayContext.getIconDropdownItems() %>"
 			itemsIconAlignment="left"
 			label="Icons"
 		/>
@@ -64,7 +64,7 @@
 <div class="row">
 	<div class="col-md-4">
 		<clay:dropdown-menu
-			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
+			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			itemsIconAlignment="left"
 			label="Secondary Borderless"
 			style="secondary"
@@ -74,7 +74,7 @@
 
 	<div class="col-md-2">
 		<clay:dropdown-actions
-			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
+			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 		/>
 	</div>
 
@@ -83,8 +83,8 @@
 			buttonLabel="More"
 			buttonStyle="secondary"
 			caption="Showing 4 of 32 Options"
+			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			helpText="You can customize this menu or see all you have by pressing \"more\"."
-			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 		/>
 	</div>
 
@@ -93,8 +93,8 @@
 			buttonLabel="More"
 			buttonStyle="secondary"
 			caption="Showing 4 of 32 Options"
+			dropdownItems="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			helpText="You can customize this menu or see all you have by pressing \"more\"."
-			items="<%= dropdownsDisplayContext.getDefaultDropdownItems() %>"
 			triggerCssClasses="btn-outline-borderless"
 		/>
 	</div>

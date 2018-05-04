@@ -367,7 +367,11 @@ public abstract class BaseDB implements DB {
 
 		template = StringUtil.trim(template);
 
-		if (!StringUtil.endsWith(template, StringPool.SEMICOLON)) {
+		if ((template == null) || template.isEmpty()) {
+			return;
+		}
+
+		if (!template.endsWith(StringPool.SEMICOLON)) {
 			template += StringPool.SEMICOLON;
 		}
 

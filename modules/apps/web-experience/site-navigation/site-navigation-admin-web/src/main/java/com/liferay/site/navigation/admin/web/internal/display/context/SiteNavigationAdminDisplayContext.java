@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -381,7 +380,7 @@ public class SiteNavigationAdminDisplayContext {
 
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
 
-		_siteNavigationMenuName = HtmlUtil.escape(siteNavigationMenu.getName());
+		_siteNavigationMenuName = siteNavigationMenu.getName();
 
 		return _siteNavigationMenuName;
 	}

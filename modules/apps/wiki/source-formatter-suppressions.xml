@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="PlusStatementCheck" files="modules/apps/collaboration/wiki/wiki-engine-html/src/test/java/com/liferay/wiki/engine/html/processor/WikiPageRenameHTMLContentProcessorTest\.java" />
+		<suppress checks="PlusStatementCheck" files="modules/apps/wiki/wiki-engine-html/src/test/java/com/liferay/wiki/engine/html/processor/WikiPageRenameHTMLContentProcessorTest\.java" />
 	</checkstyle>
 </suppressions>

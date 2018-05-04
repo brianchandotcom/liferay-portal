@@ -49,10 +49,10 @@ A module can be built from within liferay-portal without recompiling the whole p
 
 * The platform must be completely compiled once using the method above.  This is due to the fact that the initial build initializes the build environment.
 
-* To build a module located in: **liferay-portal/modules/apps/collaboration/comment/comment-web** run:
+* To build a module located in: **liferay-portal/modules/apps/comment/comment-web** run:
 
       cd liferay-portal/modules
-      ../gradlew :apps:collaboration:comment:comment-web:deploy
+      ../gradlew :apps:comment:comment-web:deploy
 
 * If all goes well the following should appear in the bundle logs:
 

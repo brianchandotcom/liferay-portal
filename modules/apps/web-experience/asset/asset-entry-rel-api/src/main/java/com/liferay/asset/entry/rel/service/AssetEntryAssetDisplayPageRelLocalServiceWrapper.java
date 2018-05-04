@@ -46,6 +46,13 @@ public class AssetEntryAssetDisplayPageRelLocalServiceWrapper
 		return _assetEntryAssetDisplayPageRelLocalService.addAssetEntryAssetDisplayPageRel(assetEntryAssetDisplayPageRel);
 	}
 
+	@Override
+	public com.liferay.asset.entry.rel.model.AssetEntryAssetDisplayPageRel addAssetEntryAssetDisplayPageRel(
+		long assetEntryId, long assetDisplayPageId) {
+		return _assetEntryAssetDisplayPageRelLocalService.addAssetEntryAssetDisplayPageRel(assetEntryId,
+			assetDisplayPageId);
+	}
+
 	/**
 	* Creates a new asset entry asset display page rel with the primary key. Does not add the asset entry asset display page rel to the database.
 	*
@@ -82,6 +89,20 @@ public class AssetEntryAssetDisplayPageRelLocalServiceWrapper
 		long assetEntryAssetDisplayPageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryAssetDisplayPageRelLocalService.deleteAssetEntryAssetDisplayPageRel(assetEntryAssetDisplayPageId);
+	}
+
+	@Override
+	public void deleteAssetEntryAssetDisplayPageRel(long assetEntryId,
+		long assetDisplayPageId)
+		throws com.liferay.asset.entry.rel.exception.NoSuchEntryAssetDisplayPageRelException {
+		_assetEntryAssetDisplayPageRelLocalService.deleteAssetEntryAssetDisplayPageRel(assetEntryId,
+			assetDisplayPageId);
+	}
+
+	@Override
+	public void deleteAssetEntryAssetDisplayPageRelByAssetEntryId(
+		long assetEntryId) {
+		_assetEntryAssetDisplayPageRelLocalService.deleteAssetEntryAssetDisplayPageRelByAssetEntryId(assetEntryId);
 	}
 
 	/**
@@ -184,6 +205,13 @@ public class AssetEntryAssetDisplayPageRelLocalServiceWrapper
 	public com.liferay.asset.entry.rel.model.AssetEntryAssetDisplayPageRel fetchAssetEntryAssetDisplayPageRel(
 		long assetEntryAssetDisplayPageId) {
 		return _assetEntryAssetDisplayPageRelLocalService.fetchAssetEntryAssetDisplayPageRel(assetEntryAssetDisplayPageId);
+	}
+
+	@Override
+	public com.liferay.asset.entry.rel.model.AssetEntryAssetDisplayPageRel fetchAssetEntryAssetDisplayPageRel(
+		long assetEntryId, long assetDisplayPageId) {
+		return _assetEntryAssetDisplayPageRelLocalService.fetchAssetEntryAssetDisplayPageRel(assetEntryId,
+			assetDisplayPageId);
 	}
 
 	@Override

@@ -1,7 +1,145 @@
 if (!CKEDITOR.plugins.get('embedurl')) {
-	var REGEX_HTTP = /^https?/;
+	const REGEX_HTTP = /^https?/;
 
 	CKEDITOR.DEFAULT_LFR_EMBED_WIDGET_TPL = '<div data-embed-url="{url}">{content}<div class="embed-help-message">{helpMessageIcon}<span> {helpMessage}</span></div></div><br>';
+
+	/**
+	 * Enum for supported embed alignments
+	 * @type {Object}
+	 */
+
+	const EMBED_ALIGNMENT = {
+		CENTER: 'center',
+		LEFT: 'left',
+		RIGHT: 'right'
+	};
+
+	/**
+	 * Enum values for supported embed alignments
+	 * @type {Array}
+	 */
+
+	const ALIGN_VALUES = [
+		EMBED_ALIGNMENT.CENTER,
+		EMBED_ALIGNMENT.LEFT,
+		EMBED_ALIGNMENT.RIGHT
+	];
+
+	/**
+	 * Necessary styles for the center alignment
+	 * @type {Array.<Object>}
+	 */
+
+	const CENTERED_EMBED_STYLE = [
+		{
+			name: 'display',
+			value: 'block'
+		},
+		{
+			name: 'margin-left',
+			value: 'auto'
+		},
+		{
+			name: 'margin-right',
+			value: 'auto'
+		}
+	];
+
+	/**
+	 * Retrieves the alignment value of an embed element.
+	 *
+	 * @param {CKEDITOR.dom.element} embed The embed element
+	 * @return {String} The alignment value
+	 */
+
+	const getEmbedAlignment = function(embed) {
+		let embedAlignment = embed.getStyle('float');
+
+		if (!embedAlignment || embedAlignment === 'inherit' || embedAlignment === 'none') {
+			embedAlignment = embed.getAttribute('align');
+		}
+
+		if (!embedAlignment) {
+			const centeredEmbed = CENTERED_EMBED_STYLE.every(
+				style => {
+					let styleCheck = embed.getStyle(style.name) === style.value;
+
+					if (!styleCheck && style.vendorPrefixes) {
+						styleCheck = style.vendorPrefixes.some(
+							vendorPrefix => embed.getStyle(vendorPrefix + style.name) === style.value
+						);
+					}
+
+					return styleCheck;
+				}
+			);
+
+			embedAlignment = centeredEmbed ? EMBED_ALIGNMENT.CENTER : null;
+		}
+
+		return embedAlignment;
+	};
+
+	/**
+	 * Removes the alignment value of an embed
+	 *
+	 * @param {CKEDITOR.dom.element} embed The embed element
+	 * @param {String} embedAlignment The embed alignment value to be removed
+	 */
+
+	const removeEmbedAlignment = function(embed, embedAlignment) {
+		if (embedAlignment === EMBED_ALIGNMENT.LEFT || embedAlignment === EMBED_ALIGNMENT.RIGHT) {
+			embed.removeStyle('float');
+
+			if (embedAlignment === getEmbedAlignment(embed)) {
+				embed.removeAttribute('align');
+			}
+		}
+		else if (embedAlignment === EMBED_ALIGNMENT.CENTER) {
+			CENTERED_EMBED_STYLE.forEach(
+				style => {
+					embed.removeStyle(style.name);
+
+					if (style.vendorPrefixes) {
+						style.vendorPrefixes.forEach(
+							vendorPrefix => embed.removeStyle(vendorPrefix + style.name)
+						);
+					}
+				}
+			);
+		}
+	};
+
+	/**
+	 * Sets the alignment value of an embed
+	 *
+	 * @param {CKEDITOR.dom.element} embed The embed element
+	 * @param {String} embedAlignment The embed alignment value to be set
+	 */
+
+	const setEmbedAlignment = function(embed, embedAlignment) {
+		removeEmbedAlignment(
+			embed,
+			getEmbedAlignment(embed)
+		);
+
+		if (embedAlignment === EMBED_ALIGNMENT.LEFT || embedAlignment === EMBED_ALIGNMENT.RIGHT) {
+			embed.setStyle('float', embedAlignment);
+		}
+		else if (embedAlignment === EMBED_ALIGNMENT.CENTER) {
+			CENTERED_EMBED_STYLE.forEach(
+				style => {
+					embed.setStyle(style.name, style.value);
+
+					if (style.vendorPrefixes) {
+						style.vendorPrefixes.forEach(
+							vendorPrefix => embed.setStyle(vendorPrefix + style.name, style.value)
+						);
+					}
+				}
+			);
+		}
+	};
 
 	/**
 	 * CKEditor plugin which adds the infrastructure to embed urls as media objects
@@ -16,6 +154,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 		'embedurl',
 		{
 			requires: 'widget',
+
 			init: function(editor) {
 				var LFR_EMBED_WIDGET_TPL = new CKEDITOR.template(editor.config.embedWidgetTpl || CKEDITOR.DEFAULT_LFR_EMBED_WIDGET_TPL);
 
@@ -25,7 +164,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 					provider => {
 						return {
 							id: provider.id,
-							tpl: new CKEDITOR.template(`<div class="embed-responsive embed-responsive-16by9" data-embed-id="{embedId}">${provider.tpl}</div>`),
+							tpl: new CKEDITOR.template(`<div data-embed-id="{embedId}">${provider.tpl}</div>`),
 							type: provider.type,
 							urlSchemes: provider.urlSchemes.map(scheme => new RegExp(scheme))
 						};
@@ -61,6 +200,8 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 						var widgetFragment = new CKEDITOR.htmlParser.fragment.fromHtml(embedContent);
 
 						upcastWidget = widgetFragment.children[0];
+
+						upcastWidget.attributes['data-styles'] = JSON.stringify(element.styles);
 
 						element.replaceWith(upcastWidget);
 					}
@@ -141,17 +282,26 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 						requiredContent: 'div[data-embed-url]',
 
 						data: function(event) {
-							var instance = this;
+							const instance = this;
+
+							// Sync dimensions and alignment with editor wrapper
+
+							let styles = JSON.parse(instance.element.getAttribute('data-styles'));
+
+							if (!styles) {
+								const iframe = instance.wrapper.findOne('iframe');
+
+								styles = {
+									height: `${iframe.getAttribute('height')}px`,
+									width: `${iframe.getAttribute('width')}px`
+								};
+							}
+
+							instance.wrapper.setAttribute('style', CKEDITOR.tools.writeCssText(styles));
 
 							if (editor._selectEmbedWidget === event.data.url) {
 								setTimeout(
 									function() {
-										var iframe = instance.wrapper.findOne('iframe');
-
-										if (iframe) {
-											iframe.addClass('embed-responsive-item');
-										}
-
 										editor.getSelection().selectElement(instance.wrapper);
 
 										editor._selectEmbedWidget = null;
@@ -162,7 +312,11 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 						},
 
 						downcast: function(widget) {
-							return widget.children[0];
+							const embedContent = widget.children[0];
+
+							embedContent.attributes.style = CKEDITOR.tools.writeCssText(widget.parent.styles);
+
+							return embedContent;
 						},
 
 						upcast: function(element, data) {
@@ -213,6 +367,70 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 					function(element) {
 						if ('data-embed-url' in element.attributes) {
 							return CKEDITOR.FILTER_SKIP_TREE;
+						}
+					}
+				);
+			},
+
+			afterInit: function(editor) {
+				ALIGN_VALUES.forEach(
+					alignValue => {
+						const command = editor.getCommand('justify' + alignValue);
+
+						if (command) {
+							command.on(
+								'exec',
+								event => {
+									const selectedElement = editor.getSelection().getSelectedElement();
+
+									if (selectedElement && selectedElement.getAttribute('data-cke-widget-wrapper')) {
+										const selectedEmbed = selectedElement.findOne('[data-widget="embedurl"] [data-embed-id]');
+
+										if (selectedEmbed) {
+											const embedAlignment = getEmbedAlignment(selectedElement);
+
+											if (embedAlignment === alignValue) {
+												removeEmbedAlignment(selectedElement, alignValue);
+											}
+											else {
+												setEmbedAlignment(selectedElement, alignValue);
+											}
+
+											event.cancel();
+
+											const elementPath = new CKEDITOR.dom.elementPath(selectedElement);
+
+											ALIGN_VALUES.forEach(
+												alignValue => {
+													const command = editor.getCommand('justify' + alignValue);
+
+													if (command) {
+														command.refresh(editor, elementPath);
+													}
+												}
+											);
+										}
+									}
+								}
+							);
+
+							command.on(
+								'refresh',
+								event => {
+									const lastElement = event.data.path.lastElement;
+
+									if (lastElement &&
+										lastElement.getAttribute('data-cke-widget-wrapper') &&
+										lastElement.findOne('[data-widget] [data-embed-id]')) {
+
+										const embedAlignment = getEmbedAlignment(lastElement);
+
+										event.sender.setState(embedAlignment === alignValue ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF);
+
+										event.cancel();
+									}
+								}
+							);
 						}
 					}
 				);

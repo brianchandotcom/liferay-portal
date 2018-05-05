@@ -15,11 +15,8 @@
 package com.liferay.journal.internal.upgrade.v1_1_2;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -55,13 +52,11 @@ import javax.portlet.PortletPreferences;
 public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	public UpgradeJournalServiceVerify(
-		AssetEntryLocalService assetEntryLocalService,
-		DDMStructureLocalService ddmStructureLocalService, Portal portal,
+		AssetEntryLocalService assetEntryLocalService, Portal portal,
 		ResourceLocalService resourceLocalService,
 		SystemEventLocalService systemEventLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-		_ddmStructureLocalService = ddmStructureLocalService;
 		_portal = portal;
 		_resourceLocalService = resourceLocalService;
 		_systemEventLocalService = systemEventLocalService;
@@ -69,7 +64,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		verifyArticleStructures();
 		verifyContentSearch();
 		verifyFolderAssets();
 		verifyPermissions();
@@ -141,39 +135,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 					}
 				}
 			}
-		}
-	}
-
-	protected void verifyArticleStructures() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement selectPS = connection.prepareStatement(
-				"select id_, groupId, DDMStructureKey from JournalArticle " +
-					"where DDMStructureKey != null and DDMStructureKey != ''");
-			PreparedStatement updatePS =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update JournalArticle set DDMStructureKey = '', " +
-							"DDMTemplateKey = '' where id_ = ?"));
-			ResultSet rs = selectPS.executeQuery()) {
-
-			while (rs.next()) {
-				long groupId = rs.getLong("groupId");
-				String ddmStructureKey = rs.getString("DDMStructureKey");
-
-				DDMStructure ddmStructure =
-					_ddmStructureLocalService.fetchStructure(
-						_portal.getSiteGroupId(groupId),
-						_portal.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE),
-						ddmStructureKey, true);
-
-				if (ddmStructure == null) {
-					updatePS.setLong(1, rs.getLong("id_"));
-
-					updatePS.addBatch();
-				}
-			}
-
-			updatePS.executeBatch();
 		}
 	}
 
@@ -361,7 +322,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		UpgradeJournalServiceVerify.class);
 
 	private final AssetEntryLocalService _assetEntryLocalService;
-	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final Portal _portal;
 	private final ResourceLocalService _resourceLocalService;
 	private final SystemEventLocalService _systemEventLocalService;

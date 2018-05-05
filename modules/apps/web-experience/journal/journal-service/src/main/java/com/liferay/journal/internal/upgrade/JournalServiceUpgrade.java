@@ -129,11 +129,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"0.0.6", "0.0.7", new UpgradeImageTypeContentAttributes());
 
 		registry.register(
-			"0.0.7", "0.0.8",
-			new UpgradeArticleAssets(
-				_assetEntryLocalService, _ddmStructureLocalService, _portal),
-			new UpgradeArticleSystemEvents(_portal, _systemEventLocalService),
-			new UpgradeArticleExpirationDate());
+			"0.0.7", "0.0.8", new UpgradeArticleAssets(_assetEntryLocalService),
+			new UpgradeArticleExpirationDate(),
+			new UpgradeArticleSystemEvents(_portal, _systemEventLocalService));
 
 		registry.register(
 			"0.0.8", "1.0.0", new UpgradeJournalArticleDates(),

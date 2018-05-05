@@ -39,13 +39,13 @@ public class EditSiteTeamAssignmentsDisplayContext {
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		HttpServletRequest request) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
-		_request = request;
+		this.renderRequest = renderRequest;
+		this.renderResponse = renderResponse;
+		this.request = request;
 	}
 
 	public PortletURL getEditTeamAssignmentsURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
 		portletURL.setParameter("tabs1", getTabs1());
@@ -64,7 +64,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 						navigationItem.setHref(
 							getEditTeamAssignmentsURL(), "tabs1", "users");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "users"));
+							LanguageUtil.get(request, "users"));
 					});
 
 				add(
@@ -75,7 +75,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 							getEditTeamAssignmentsURL(), "tabs1",
 							"user-groups");
 						navigationItem.setLabel(
-							LanguageUtil.get(_request, "user-groups"));
+							LanguageUtil.get(request, "user-groups"));
 					});
 			}
 		};
@@ -86,7 +86,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 			return _tabs1;
 		}
 
-		_tabs1 = ParamUtil.getString(_request, "tabs1", "users");
+		_tabs1 = ParamUtil.getString(request, "tabs1", "users");
 
 		return _tabs1;
 	}
@@ -106,7 +106,7 @@ public class EditSiteTeamAssignmentsDisplayContext {
 			return _teamId;
 		}
 
-		_teamId = ParamUtil.getLong(_request, "teamId");
+		_teamId = ParamUtil.getLong(request, "teamId");
 
 		return _teamId;
 	}
@@ -123,9 +123,10 @@ public class EditSiteTeamAssignmentsDisplayContext {
 		return _teamName;
 	}
 
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
-	private final HttpServletRequest _request;
+	protected final RenderRequest renderRequest;
+	protected final RenderResponse renderResponse;
+	protected final HttpServletRequest request;
+
 	private String _tabs1;
 	private Team _team;
 	private Long _teamId;

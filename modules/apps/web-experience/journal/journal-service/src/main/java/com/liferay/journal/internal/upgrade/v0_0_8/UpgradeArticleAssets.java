@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -65,63 +64,6 @@ public class UpgradeArticleAssets extends UpgradeProcess {
 						null, null, indexable, assetEntry.isVisible());
 				}
 			}
-
-			updateResourcePrimKey();
-		}
-	}
-
-	protected void updateResourcePrimKey() throws Exception {
-		try (PreparedStatement selectArticlePS = connection.prepareStatement(
-				"select distinct companyId, groupId, articleId from " +
-					"JournalArticle where resourcePrimKey <= 0");
-			PreparedStatement selectResourcePS = connection.prepareStatement(
-				"select resourcePrimKey from JournalArticleResource where " +
-					"groupId = ? and articleId = ?");
-			PreparedStatement insertResourcePS = connection.prepareStatement(
-				"insert into JournalArticleResource (resourcePrimKey, " +
-					"companyId, groupId, articleId) values (?, ?, ?, ?)");
-			PreparedStatement updateArticlePS =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update JournalArticle set resourcePrimKey = ? where " +
-							"groupId = ? and articleId = ?"));
-			ResultSet articleRS = selectArticlePS.executeQuery()) {
-
-			while (articleRS.next()) {
-				long companyId = articleRS.getLong("companyId");
-				long groupId = articleRS.getLong("groupId");
-				String articleId = articleRS.getString("articleId");
-
-				selectResourcePS.setLong(1, groupId);
-				selectResourcePS.setString(2, articleId);
-
-				try (ResultSet resourceRS = selectResourcePS.executeQuery()) {
-					long resourcePrimKey = 0;
-
-					if (resourceRS.next()) {
-						resourcePrimKey = resourceRS.getLong("resourcePrimKey");
-					}
-					else {
-						resourcePrimKey = increment();
-
-						insertResourcePS.setLong(1, resourcePrimKey);
-
-						insertResourcePS.setLong(2, companyId);
-						insertResourcePS.setLong(3, groupId);
-						insertResourcePS.setString(4, articleId);
-
-						insertResourcePS.executeUpdate();
-					}
-
-					updateArticlePS.setLong(1, resourcePrimKey);
-					updateArticlePS.setLong(2, groupId);
-					updateArticlePS.setString(3, articleId);
-
-					updateArticlePS.addBatch();
-				}
-			}
-
-			updateArticlePS.executeBatch();
 		}
 	}
 

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
@@ -211,6 +212,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		setUpStrutureAttributesMappings();
 
+		updateLinkToLayoutContent();
 		updateStructures();
 		updateTemplates();
 		upgradeURLTitle();
@@ -434,6 +436,21 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 	}
 
+	protected void updateElement(long groupId, Element element) {
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateElement(groupId, dynamicElementElement);
+		}
+
+		String type = element.attributeValue("type");
+
+		if (type.equals("link_to_layout")) {
+			updateLinkToLayoutElements(groupId, element);
+		}
+	}
+
 	protected void updateJournalXSDDynamicElement(
 		Element element, String defaultLanguageId) {
 
@@ -561,6 +578,60 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		for (Element dynamicElementElement : dynamicElementElements) {
 			updateJournalXSDDynamicElement(
 				dynamicElementElement, defaultLanguageId);
+		}
+	}
+
+	protected void updateLinkToLayoutContent() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement selectPS = connection.prepareStatement(
+				"select id_, groupId, content from JournalArticle where " +
+					"(content like '%link_to_layout%') and DDMStructureKey " +
+						"!= ''");
+			PreparedStatement updatePS =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update JournalArticle set content = ? where id_ = ?"));
+			ResultSet rs = selectPS.executeQuery()) {
+
+			while (rs.next()) {
+				long id = rs.getLong("id_");
+				long groupId = rs.getLong("groupId");
+				String content = rs.getString("content");
+
+				try {
+					Document document = SAXReaderUtil.read(content);
+
+					Element rootElement = document.getRootElement();
+
+					for (Element element : rootElement.elements()) {
+						updateElement(groupId, element);
+					}
+
+					updatePS.setString(1, document.asXML());
+					updatePS.setLong(2, id);
+
+					updatePS.addBatch();
+				}
+				catch (Exception e) {
+					_log.error("Unable to update content for article " + id, e);
+				}
+			}
+
+			updatePS.executeBatch();
+		}
+	}
+
+	protected void updateLinkToLayoutElements(long groupId, Element element) {
+		Element dynamicContentElement = element.element("dynamic-content");
+
+		Node node = dynamicContentElement.node(0);
+
+		String text = node.getText();
+
+		if (!text.isEmpty() && !text.endsWith(StringPool.AT + groupId)) {
+			node.setText(
+				dynamicContentElement.getStringValue() + StringPool.AT +
+					groupId);
 		}
 	}
 

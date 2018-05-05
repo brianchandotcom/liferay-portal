@@ -21,7 +21,6 @@ import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -44,10 +43,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,7 +74,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		verifyArticleContents();
 		verifyArticleExpirationDate();
 		verifyArticleStructures();
 		verifyContentSearch();
@@ -156,21 +150,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		}
 	}
 
-	protected void updateElement(long groupId, Element element) {
-		List<Element> dynamicElementElements = element.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			updateElement(groupId, dynamicElementElement);
-		}
-
-		String type = element.attributeValue("type");
-
-		if (type.equals("link_to_layout")) {
-			updateLinkToLayoutElements(groupId, element);
-		}
-	}
-
 	protected void updateExpirationDate(
 			long groupId, String articleId, Timestamp expirationDate,
 			int status)
@@ -186,60 +165,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 			ps.setInt(4, status);
 
 			ps.executeUpdate();
-		}
-	}
-
-	protected void updateLinkToLayoutElements(long groupId, Element element) {
-		Element dynamicContentElement = element.element("dynamic-content");
-
-		Node node = dynamicContentElement.node(0);
-
-		String text = node.getText();
-
-		if (!text.isEmpty() && !text.endsWith(StringPool.AT + groupId)) {
-			node.setText(
-				dynamicContentElement.getStringValue() + StringPool.AT +
-					groupId);
-		}
-	}
-
-	protected void verifyArticleContents() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement selectPS = connection.prepareStatement(
-				"select id_, groupId, content from JournalArticle where " +
-					"(content like '%link_to_layout%') and DDMStructureKey " +
-						"!= ''");
-			PreparedStatement updatePS =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update JournalArticle set content = ? where id_ = ?"));
-			ResultSet rs = selectPS.executeQuery()) {
-
-			while (rs.next()) {
-				long id = rs.getLong("id_");
-				long groupId = rs.getLong("groupId");
-				String content = rs.getString("content");
-
-				try {
-					Document document = SAXReaderUtil.read(content);
-
-					Element rootElement = document.getRootElement();
-
-					for (Element element : rootElement.elements()) {
-						updateElement(groupId, element);
-					}
-
-					updatePS.setString(1, document.asXML());
-					updatePS.setLong(2, id);
-
-					updatePS.addBatch();
-				}
-				catch (Exception e) {
-					_log.error("Unable to update content for article " + id, e);
-				}
-			}
-
-			updatePS.executeBatch();
 		}
 	}
 

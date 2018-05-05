@@ -59,6 +59,7 @@
 
 		<!-- Temporary suppressions for private repos and subrepos -->
 
+		<suppress checks="ReferenceAnnotationCheck" files="modules/private/.*" />
 		<suppress checks="VariableNameCheck" files="modules/private/.*" />
 	</checkstyle>
 	<source-check>

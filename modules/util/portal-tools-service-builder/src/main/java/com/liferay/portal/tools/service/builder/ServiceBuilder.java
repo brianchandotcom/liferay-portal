@@ -698,25 +698,6 @@ public class ServiceBuilder {
 				_uadDirName = _apiDirName.replace("-api/", "-uad/");
 			}
 
-			_uadOutputPath =
-				_uadDirName + "/" + StringUtil.replace(packagePath, '.', '/');
-
-			if (Validator.isNull(_uadTestIntegrationDirName)) {
-				_uadTestIntegrationDirName = StringUtil.replace(
-					_apiDirName, new String[] {"-api/", "/main/"},
-					new String[] {"-uad-test/", "/testIntegration/"});
-			}
-
-			_uadTestIntegrationOutputPath =
-				_uadTestIntegrationDirName + "/" +
-					StringUtil.replace(packagePath, '.', '/');
-
-			String uadTestUnitDirName = _uadDirName.replace("/main/", "/test/");
-
-			_uadTestUnitOutputPath =
-				uadTestUnitDirName + "/" +
-					StringUtil.replace(packagePath, '.', '/');
-
 			_autoImportDefaultReferences = GetterUtil.getBoolean(
 				rootElement.attributeValue("auto-import-default-references"),
 				_autoImportDefaultReferences);
@@ -749,9 +730,6 @@ public class ServiceBuilder {
 				_packagePath += "." + portletPackageName;
 				_serviceOutputPath += "/" + portletPackageName;
 				_testOutputPath += "/" + portletPackageName;
-				_uadOutputPath += "/" + portletPackageName;
-				_uadTestIntegrationOutputPath += "/" + portletPackageName;
-				_uadTestUnitOutputPath += "/" + portletPackageName;
 			}
 			else {
 				_portletShortName = namespaceElement.getText();
@@ -2163,7 +2141,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/anonymizer/Base", entity.getName(),
+				entity.getUADOutputPath(), "/uad/anonymizer/Base", entity.getName(),
 				"UADAnonymizer.java"));
 
 		ToolsUtil.writeFile(
@@ -2183,7 +2161,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/display/Base", entity.getName(),
+				entity.getUADOutputPath(), "/uad/display/Base", entity.getName(),
 				"UADDisplay.java"));
 
 		ToolsUtil.writeFile(
@@ -2203,7 +2181,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/exporter/Base", entity.getName(),
+				entity.getUADOutputPath(), "/uad/exporter/Base", entity.getName(),
 				"UADExporter.java"));
 
 		ToolsUtil.writeFile(
@@ -4031,7 +4009,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/anonymizer/", entity.getName(),
+				entity.getUADOutputPath(), "/uad/anonymizer/", entity.getName(),
 				"UADAnonymizer.java"));
 
 		if (!file.exists()) {
@@ -4053,7 +4031,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/anonymizer/test/",
+				entity.getUADTestIntegrationOutputPath(), "/uad/anonymizer/test/",
 				entity.getName(), "UADAnonymizerTest.java"));
 
 		ToolsUtil.writeFile(
@@ -4090,7 +4068,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/constants/", _portletShortName,
+				entity.getUADOutputPath(), "/uad/constants/", _portletShortName,
 				"UADConstants.java"));
 
 		ToolsUtil.writeFile(
@@ -4110,7 +4088,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/display/", entity.getName(),
+				entity.getUADOutputPath(), "/uad/display/", entity.getName(),
 				"UADDisplay.java"));
 
 		if (!file.exists()) {
@@ -4132,7 +4110,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/display/test/",
+				entity.getUADTestIntegrationOutputPath(), "/uad/display/test/",
 				entity.getName(), "UADDisplayTest.java"));
 
 		ToolsUtil.writeFile(
@@ -4152,7 +4130,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/exporter/", entity.getName(),
+				entity.getUADOutputPath(), "/uad/exporter/", entity.getName(),
 				"UADExporter.java"));
 
 		if (!file.exists()) {
@@ -4174,7 +4152,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/exporter/test/",
+				entity.getUADTestIntegrationOutputPath(), "/uad/exporter/test/",
 				entity.getName(), "UADExporterTest.java"));
 
 		ToolsUtil.writeFile(
@@ -4212,7 +4190,7 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/test/", entity.getName(),
+				entity.getUADTestIntegrationOutputPath(), "/uad/test/", entity.getName(),
 				"UADTestHelper.java"));
 
 		if (!file.exists()) {
@@ -5469,8 +5447,15 @@ public class ServiceBuilder {
 				_packagePath, ".service.persistence.impl.", entityName,
 				"PersistenceImpl"));
 
-		String finderClassName = "";
+		String uadDirPath = GetterUtil.getString(
+			entityElement.attributeValue("uad-dir-path"), _uadDirName);
+		String uadPackagePath = GetterUtil.getString(
+			entityElement.attributeValue("uad-package-path"), _packagePath);
 
+		String uadOutputPath =
+			uadDirPath + "/" + StringUtil.replace(uadPackagePath, '.', '/');
+
+		String finderClassName = "";
 		File originalFinderImplFile = new File(
 			StringBundler.concat(
 				_outputPath, "/service/persistence/", entityName,
@@ -5968,13 +5953,14 @@ public class ServiceBuilder {
 			_apiPackagePath + ".model." + entityName);
 
 		Entity entity = new Entity(
-			_packagePath, _apiPackagePath, _portletShortName, entityName,
-			humanName, tableName, alias, uuid, uuidAccessor, localService,
-			remoteService, persistenceClassName, finderClassName, dataSource,
-			sessionFactory, txManager, cacheEnabled, dynamicUpdateEnabled,
-			jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkEntityColumns,
-			regularEntityColumns, blobEntityColumns, collectionEntityColumns,
-			entityColumns, entityOrder, entityFinders, referenceEntities,
+			_packagePath, _apiPackagePath, uadOutputPath, uadPackagePath,
+			_portletShortName, entityName, humanName, tableName, alias, uuid,
+			uuidAccessor, localService, remoteService, persistenceClassName,
+			finderClassName, dataSource, sessionFactory, txManager,
+			cacheEnabled, dynamicUpdateEnabled, jsonEnabled, mvccEnabled,
+			trashEnabled, deprecated, pkEntityColumns, regularEntityColumns,
+			blobEntityColumns, collectionEntityColumns, entityColumns,
+			entityOrder, entityFinders, referenceEntities,
 			unresolvedReferenceEntityNames, txRequiredMethodNames,
 			resourceActionModel);
 
@@ -6309,21 +6295,21 @@ public class ServiceBuilder {
 	private void _removeBaseUADAnonymizer(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/anonymizer/Base", entity.getName(),
+				entity.getUADOutputPath(), "/uad/anonymizer/Base", entity.getName(),
 				"UADAnonymizer.java"));
 	}
 
 	private void _removeBaseUADDisplay(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/display/Base", entity.getName(),
+				entity.getUADOutputPath(), "/uad/display/Base", entity.getName(),
 				"UADDisplay.java"));
 	}
 
 	private void _removeBaseUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/exporter/Base", entity.getName(),
+				entity.getUADOutputPath(), "/uad/exporter/Base", entity.getName(),
 				"UADExporter.java"));
 	}
 
@@ -6576,49 +6562,49 @@ public class ServiceBuilder {
 	private void _removeUADAnonymizer(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/anonymizer/", entity.getName(),
+				entity.getUADOutputPath(), "/uad/anonymizer/", entity.getName(),
 				"UADAnonymizer.java"));
 	}
 
 	private void _removeUADAnonymizerTest(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/anonymizer/test/",
+				entity.getUADTestIntegrationOutputPath(), "/uad/anonymizer/test/",
 				entity.getName(), "UADAnonymizerTest.java"));
 	}
 
 	private void _removeUADDisplay(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/display/", entity.getName(),
+				entity.getUADOutputPath(), "/uad/display/", entity.getName(),
 				"UADDisplay.java"));
 	}
 
 	private void _removeUADDisplayTest(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/display/test/",
+				entity.getUADTestIntegrationOutputPath(), "/uad/display/test/",
 				entity.getName(), "UADDisplayTest.java"));
 	}
 
 	private void _removeUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadOutputPath, "/uad/exporter/", entity.getName(),
+				entity.getUADOutputPath(), "/uad/exporter/", entity.getName(),
 				"UADExporter.java"));
 	}
 
 	private void _removeUADExporterTest(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/exporter/test/",
+				entity.getUADTestIntegrationOutputPath(), "/uad/exporter/test/",
 				entity.getName(), "UADExporterTest.java"));
 	}
 
 	private void _removeUADTestHelper(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				_uadTestIntegrationOutputPath, "/uad/test/", entity.getName(),
+				entity.getUADTestIntegrationOutputPath(), "/uad/test/", entity.getName(),
 				"UADTestHelper.java"));
 	}
 
@@ -6769,9 +6755,6 @@ public class ServiceBuilder {
 	private String _tplUADTestBnd = _TPL_ROOT + "uad_test_bnd.ftl";
 	private String _tplUADTestHelper = _TPL_ROOT + "uad_test_helper.ftl";
 	private String _uadDirName;
-	private String _uadOutputPath;
 	private String _uadTestIntegrationDirName;
-	private String _uadTestIntegrationOutputPath;
-	private String _uadTestUnitOutputPath;
 
 }

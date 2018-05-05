@@ -93,15 +93,16 @@ public class Entity implements Comparable<Entity> {
 
 	public Entity(String name) {
 		this(
-			null, null, null, name, null, null, null, false, false, false, true,
-			null, null, null, null, null, true, false, false, false, false,
-			false, null, null, null, null, null, null, null, null, null, null,
-			false);
+			null, null, null, null, null, null, name, null, null, null, false,
+			false, false, true, null, null, null, null, null, true, false,
+			false, false, false, false, null, null, null, null, null, null,
+			null, null, null, null, false);
 	}
 
 	public Entity(
-		String packagePath, String apiPackagePath, String portletShortName,
-		String name, String humanName, String table, String alias, boolean uuid,
+		String packagePath, String apiPackagePath, String uadOutputPath,
+		String uadPackagePath, String portletShortName, String name,
+		String humanName, String table, String alias, boolean uuid,
 		boolean uuidAccessor, boolean localService, boolean remoteService,
 		String persistenceClass, String finderClassName, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
@@ -118,6 +119,8 @@ public class Entity implements Comparable<Entity> {
 
 		_packagePath = packagePath;
 		_apiPackagePath = apiPackagePath;
+		_uadOutputPath = uadOutputPath;
+		_uadPackagePath = uadPackagePath;
 		_portletShortName = portletShortName;
 		_name = name;
 		_table = table;
@@ -646,6 +649,20 @@ public class Entity implements Comparable<Entity> {
 		}
 
 		return uadNonanonymizableEntityColumns;
+	}
+
+	public String getUADOutputPath() {
+		return _uadOutputPath;
+	}
+
+	public String getUADPackagePath() {
+		return _uadPackagePath;
+	}
+
+	public String getUADTestIntegrationOutputPath() {
+		return StringUtil.replace(
+			getUADOutputPath(), new String[] {"-uad/", "/main/"},
+			new String[] {"-uad-test/", "/testIntegration/"});
 	}
 
 	public List<String> getUADUserIdColumnNames() {
@@ -1190,6 +1207,8 @@ public class Entity implements Comparable<Entity> {
 	private final boolean _trashEnabled;
 	private final String _txManager;
 	private final List<String> _txRequiredMethodNames;
+	private final String _uadOutputPath;
+	private final String _uadPackagePath;
 	private List<String> _unresolvedReferenceEntityNames;
 	private final boolean _uuid;
 	private final boolean _uuidAccessor;

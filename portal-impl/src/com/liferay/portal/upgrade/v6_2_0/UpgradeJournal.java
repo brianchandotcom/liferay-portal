@@ -212,6 +212,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		setUpStrutureAttributesMappings();
 
+		updateContentSearch();
 		updateLinkToLayoutContent();
 		updateStructures();
 		updateTemplates();
@@ -432,6 +433,90 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				}
 
 				ps2.executeBatch();
+			}
+		}
+	}
+
+	protected void updateContentSearch() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select groupId, portletId from JournalContentSearch group " +
+					"by groupId, portletId having count(groupId) > 1 and " +
+						"count(portletId) > 1");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				String portletId = rs.getString("portletId");
+
+				updateContentSearch(groupId, portletId);
+			}
+		}
+	}
+
+	protected void updateContentSearch(long groupId, String portletId)
+		throws Exception {
+
+		try (PreparedStatement selectPreferencesPS =
+				connection.prepareStatement(
+					"select preferences from PortletPreferences inner join " +
+						"Layout on PortletPreferences.plid = Layout.plid " +
+							"where groupId = ? and portletId = ?");
+			PreparedStatement selectSearchPS = connection.prepareStatement(
+				"select companyId, privateLayout, layoutId, portletId from " +
+					"JournalContentSearch where JournalContentSearch.groupId " +
+						"= ? AND JournalContentSearch.articleId = ?");
+			PreparedStatement deleteSearchPS = connection.prepareStatement(
+				"DELETE FROM JournalContentSearch WHERE" +
+					"JournalContentSearch.groupId = ? AND" +
+						"JournalContentSearch.articleId = ?");
+			PreparedStatement insertSearchPS = connection.prepareStatement(
+				"INSERT INTO JournalContentSearch(contentSearchId, " +
+					"companyId, groupId, privateLayout, layoutId, portletId, " +
+						"articleId) values (?, ?, ?, ?, ?, ?, ?)")) {
+
+			selectPreferencesPS.setLong(1, groupId);
+			selectPreferencesPS.setString(2, portletId);
+
+			try (ResultSet preferencesRS = selectPreferencesPS.executeQuery()) {
+				while (preferencesRS.next()) {
+					String xml = preferencesRS.getString("preferences");
+
+					PortletPreferences portletPreferences =
+						PortletPreferencesFactoryUtil.fromDefaultXML(xml);
+
+					String articleId = portletPreferences.getValue(
+						"articleId", null);
+
+					selectSearchPS.setLong(1, groupId);
+					selectSearchPS.setString(2, articleId);
+
+					try (ResultSet searchRS = selectSearchPS.executeQuery()) {
+						if (searchRS.next()) {
+							long companyId = searchRS.getLong("companyId");
+							boolean privateLayout = searchRS.getBoolean(
+								"privateLayout");
+							long layoutId = searchRS.getLong("layoutId");
+							String journalContentSearchPortletId =
+								searchRS.getString("portletId");
+
+							deleteSearchPS.setLong(1, groupId);
+							deleteSearchPS.setString(2, articleId);
+
+							deleteSearchPS.executeUpdate();
+
+							insertSearchPS.setLong(1, increment());
+							insertSearchPS.setLong(2, companyId);
+							insertSearchPS.setBoolean(3, privateLayout);
+							insertSearchPS.setLong(4, layoutId);
+							insertSearchPS.setString(
+								5, journalContentSearchPortletId);
+							insertSearchPS.setString(6, articleId);
+
+							insertSearchPS.executeUpdate();
+						}
+					}
+				}
 			}
 		}
 	}

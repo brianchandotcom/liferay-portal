@@ -100,9 +100,9 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public Entity(
-		String packagePath, String apiPackagePath, String uadOutputPath,
-		String uadPackagePath, String portletShortName, String name,
-		String humanName, String table, String alias, boolean uuid,
+		String packagePath, String apiPackagePath, String uadApplicationName,
+		String uadOutputPath, String uadPackagePath, String portletShortName,
+		String name, String humanName, String table, String alias, boolean uuid,
 		boolean uuidAccessor, boolean localService, boolean remoteService,
 		String persistenceClass, String finderClassName, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
@@ -119,6 +119,7 @@ public class Entity implements Comparable<Entity> {
 
 		_packagePath = packagePath;
 		_apiPackagePath = apiPackagePath;
+		_uadApplicationName = uadApplicationName;
 		_uadOutputPath = uadOutputPath;
 		_uadPackagePath = uadPackagePath;
 		_portletShortName = portletShortName;
@@ -618,6 +619,10 @@ public class Entity implements Comparable<Entity> {
 		}
 
 		return uadAnonymizableEntityColumnsMap;
+	}
+
+	public String getUADApplicationName() {
+		return _uadApplicationName;
 	}
 
 	public List<EntityColumn> getUADEntityColumns() {
@@ -1207,6 +1212,7 @@ public class Entity implements Comparable<Entity> {
 	private final boolean _trashEnabled;
 	private final String _txManager;
 	private final List<String> _txRequiredMethodNames;
+	private final String _uadApplicationName;
 	private final String _uadOutputPath;
 	private final String _uadPackagePath;
 	private List<String> _unresolvedReferenceEntityNames;

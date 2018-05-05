@@ -939,10 +939,10 @@ public class ServiceBuilder {
 
 				_createProps();
 
-				if (_isUADEnabled(_entities)) {
-					_createUADBnd();
-					_createUADConstants(_entities);
-					_createUADTestBnd();
+				for (String uadApplicationName : _uadApplicationEntities.keySet()) {
+					_createUADBnd(uadApplicationName);
+					_createUADConstants(uadApplicationName);
+					_createUADTestBnd(uadApplicationName);
 				}
 
 				_deleteOrmXml();
@@ -4038,8 +4038,15 @@ public class ServiceBuilder {
 			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createUADBnd() throws Exception {
+	private void _createUADBnd(String uadApplicationName) throws Exception {
 		Map<String, Object> context = _getContext();
+
+		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
+
+		Entity entity = entities.get(0);
+
+		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
+		context.put("uadPackagePath", entity.getUADPackagePath());
 
 		// Content
 
@@ -4047,18 +4054,30 @@ public class ServiceBuilder {
 
 		// Write file
 
-		File file = new File(
-			StringBundler.concat(_uadDirName, "/../../../bnd.bnd"));
+		String uadOutputPath = entity.getUADOutputPath();
+
+		int index = uadOutputPath.indexOf("/src/");
+
+		String uadDirName = uadOutputPath.substring(0, index);
+
+		File file = new File(StringBundler.concat(uadDirName, "/bnd.bnd"));
 
 		if (!file.exists()) {
 			ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
 		}
 	}
 
-	private void _createUADConstants(List<Entity> entities) throws Exception {
+	private void _createUADConstants(String uadApplicationName) throws Exception {
 		Map<String, Object> context = _getContext();
 
+		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
+
 		context.put("entities", entities);
+
+		Entity entity = entities.get(0);
+
+		context.put("uadApplicationName", uadApplicationName);
+		context.put("uadPackagePath", entity.getUADPackagePath());
 
 		// Content
 
@@ -4068,8 +4087,8 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				entity.getUADOutputPath(), "/uad/constants/", _portletShortName,
-				"UADConstants.java"));
+				entity.getUADOutputPath(), "/uad/constants/",
+				uadApplicationName, "UADConstants.java"));
 
 		ToolsUtil.writeFile(
 			file, content, _author, _jalopySettings, _modifiedFileNames);
@@ -4159,8 +4178,15 @@ public class ServiceBuilder {
 			file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createUADTestBnd() throws Exception {
+	private void _createUADTestBnd(String uadApplicationName) throws Exception {
 		Map<String, Object> context = _getContext();
+
+		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
+
+		Entity entity = entities.get(0);
+
+		context.put("uadBundleName", _getUADBundleName(uadApplicationName));
+		context.put("uadPackagePath", entity.getUADPackagePath());
 
 		// Content
 
@@ -4168,9 +4194,16 @@ public class ServiceBuilder {
 
 		// Write file
 
+		String uadTestIntegrationOutputPath =
+			entity.getUADTestIntegrationOutputPath();
+
+		int index = uadTestIntegrationOutputPath.indexOf("/src/");
+
+		String uadTestIntegrationDirName =
+			uadTestIntegrationOutputPath.substring(0, index);
+
 		File file = new File(
-			StringBundler.concat(
-				_uadTestIntegrationDirName, "/../../../bnd.bnd"));
+			StringBundler.concat(uadTestIntegrationDirName, "/bnd.bnd"));
 
 		if (!file.exists()) {
 			ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
@@ -4441,7 +4474,6 @@ public class ServiceBuilder {
 		//context.put("system", staticModels.get("java.lang.System"));
 		context.put(
 			"textFormatter", staticModels.get(TextFormatter.class.getName()));
-		context.put("uadBundleName", _getUADBundleName());
 		context.put("validator", Validator_IW.getInstance());
 
 		return context;
@@ -5175,10 +5207,10 @@ public class ServiceBuilder {
 		return transients;
 	}
 
-	private String _getUADBundleName() {
+	private String _getUADBundleName(String uadApplicationName) {
 		return "Liferay " +
 			TextFormatter.format(
-				TextFormatter.format(_portletShortName, TextFormatter.H),
+				TextFormatter.format(uadApplicationName, TextFormatter.H),
 				TextFormatter.G) + " UAD";
 	}
 
@@ -5447,6 +5479,9 @@ public class ServiceBuilder {
 				_packagePath, ".service.persistence.impl.", entityName,
 				"PersistenceImpl"));
 
+		String uadApplicationName = GetterUtil.getString(
+			entityElement.attributeValue("uad-application-name"),
+			_portletShortName);
 		String uadDirPath = GetterUtil.getString(
 			entityElement.attributeValue("uad-dir-path"), _uadDirName);
 		String uadPackagePath = GetterUtil.getString(
@@ -5953,7 +5988,7 @@ public class ServiceBuilder {
 			_apiPackagePath + ".model." + entityName);
 
 		Entity entity = new Entity(
-			_packagePath, _apiPackagePath, uadOutputPath, uadPackagePath,
+			_packagePath, _apiPackagePath, uadApplicationName, uadOutputPath, uadPackagePath,
 			_portletShortName, entityName, humanName, tableName, alias, uuid,
 			uuidAccessor, localService, remoteService, persistenceClassName,
 			finderClassName, dataSource, sessionFactory, txManager,
@@ -5965,6 +6000,22 @@ public class ServiceBuilder {
 			resourceActionModel);
 
 		_entities.add(entity);
+
+		if (entity.isUADEnabled()) {
+			if (!_uadApplicationEntities.containsKey(uadApplicationName)) {
+				List<Entity> uadApplicationEntityList = new ArrayList<>();
+
+				uadApplicationEntityList.add(entity);
+
+				_uadApplicationEntities.put(uadApplicationName, uadApplicationEntityList);
+			}
+			else {
+				List<Entity> uadApplicationEntityList =
+					_uadApplicationEntities.get(uadApplicationName);
+
+				uadApplicationEntityList.add(entity);
+			}
+		}
 
 		if (localizedEntityElement != null) {
 			_parseLocalizedEntity(entity, localizedEntityElement);
@@ -6754,6 +6805,7 @@ public class ServiceBuilder {
 	private String _tplUADExporterTest = _TPL_ROOT + "uad_exporter_test.ftl";
 	private String _tplUADTestBnd = _TPL_ROOT + "uad_test_bnd.ftl";
 	private String _tplUADTestHelper = _TPL_ROOT + "uad_test_helper.ftl";
+	private Map<String, List<Entity>> _uadApplicationEntities = new HashMap<>();
 	private String _uadDirName;
 	private String _uadTestIntegrationDirName;
 

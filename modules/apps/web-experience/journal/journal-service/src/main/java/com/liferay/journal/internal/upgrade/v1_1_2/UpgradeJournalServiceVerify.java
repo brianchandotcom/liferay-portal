@@ -14,9 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v1_1_2;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolder;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -39,7 +36,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,11 +45,9 @@ import java.util.List;
 public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	public UpgradeJournalServiceVerify(
-		AssetEntryLocalService assetEntryLocalService, Portal portal,
-		ResourceLocalService resourceLocalService,
+		Portal portal, ResourceLocalService resourceLocalService,
 		SystemEventLocalService systemEventLocalService) {
 
-		_assetEntryLocalService = assetEntryLocalService;
 		_portal = portal;
 		_resourceLocalService = resourceLocalService;
 		_systemEventLocalService = systemEventLocalService;
@@ -61,61 +55,9 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		verifyFolderAssets();
 		verifyPermissions();
 
 		verifyJournalArticleDeleteSystemEvents();
-	}
-
-	protected void verifyFolderAssets() throws Exception {
-		long classNameId = _portal.getClassNameId(JournalFolder.class);
-
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				StringBundler.concat(
-					"select JournalFolder.userId, JournalFolder.groupId, ",
-					"JournalFolder.createDate, JournalFolder.modifiedDate, ",
-					"JournalFolder.folderId, JournalFolder.uuid_, ",
-					"JournalFolder.name, JournalFolder.description from ",
-					"JournalFolder left join AssetEntry on ",
-					"(AssetEntry.classNameId = ", String.valueOf(classNameId),
-					") AND (AssetEntry.classPK = JournalFolder.folderId) ",
-					"where AssetEntry.classPK IS NULL"));
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long userId = rs.getLong("userId");
-				long groupId = rs.getLong("groupId");
-				Date createDate = rs.getTimestamp("createDate");
-				Date modifiedDate = rs.getTimestamp("modifiedDate");
-				long folderId = rs.getLong("folderId");
-				String uuid = rs.getString("uuid_");
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-
-				try {
-					_assetEntryLocalService.updateEntry(
-						userId, groupId, createDate, modifiedDate,
-						JournalFolder.class.getName(), folderId, uuid, 0, null,
-						null, true, true, null, null, createDate, null,
-						ContentTypes.TEXT_PLAIN, name, description, null, null,
-						null, 0, 0, null);
-				}
-				catch (Exception e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to update asset for folder ",
-								String.valueOf(folderId), ": ",
-								e.getMessage()));
-					}
-				}
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Assets verified for folders");
-			}
-		}
 	}
 
 	protected void verifyJournalArticleDeleteSystemEvents() throws Exception {
@@ -233,7 +175,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeJournalServiceVerify.class);
 
-	private final AssetEntryLocalService _assetEntryLocalService;
 	private final Portal _portal;
 	private final ResourceLocalService _resourceLocalService;
 	private final SystemEventLocalService _systemEventLocalService;

@@ -27,6 +27,7 @@ import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLoca
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -76,10 +77,16 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContactModelListener.class);
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	private LDAPSettings _ldapSettings;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	private UserExporter _userExporter;
 
 	@Reference

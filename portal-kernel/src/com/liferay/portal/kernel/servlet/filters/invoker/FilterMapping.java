@@ -42,7 +42,7 @@ public class FilterMapping {
 
 		_filterName = filterName;
 		_filter = filter;
-		_urlPatterns = urlPatterns;
+		_urlPatterns = urlPatterns.toArray(new String[urlPatterns.size()]);
 
 		String urlRegexPattern = filterConfig.getInitParameter(
 			"url-regex-pattern");
@@ -189,7 +189,7 @@ public class FilterMapping {
 	}
 
 	private FilterMapping(
-		String filterName, Filter filter, List<String> urlPatterns,
+		String filterName, Filter filter, String[] urlPatterns,
 		Set<Dispatcher> dispatchers, Pattern urlRegexIgnorePattern,
 		Pattern urlRegexPattern) {
 
@@ -210,7 +210,7 @@ public class FilterMapping {
 	private final Set<Dispatcher> _dispatchers;
 	private final Filter _filter;
 	private final String _filterName;
-	private final List<String> _urlPatterns;
+	private final String[] _urlPatterns;
 	private final Pattern _urlRegexIgnorePattern;
 	private final Pattern _urlRegexPattern;
 

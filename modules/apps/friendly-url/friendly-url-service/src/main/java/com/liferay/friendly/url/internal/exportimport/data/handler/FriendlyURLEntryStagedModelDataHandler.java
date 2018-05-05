@@ -109,6 +109,10 @@ public class FriendlyURLEntryStagedModelDataHandler
 		long classPK = MapUtil.getLong(
 			newPrimaryKeysMap, friendlyURLEntry.getClassPK());
 
+		if (classPK == 0) {
+			return;
+		}
+
 		FriendlyURLEntry existingFriendlyURLEntry =
 			fetchStagedModelByUuidAndGroupId(
 				friendlyURLEntry.getUuid(),

@@ -12,10 +12,12 @@ dependencies {
 	compileOnly project(":apps:collaboration:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:collaboration:item-selector:item-selector-taglib")
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":apps:web-experience:site-navigation:site-navigation-api")
 	compileOnly project(":apps:web-experience:site-navigation:site-navigation-item-selector-api")
 	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
 
 	soyCompile project(":apps:foundation:frontend-js:frontend-js-metal-web")
 	soyCompile project(":apps:foundation:frontend-js:frontend-js-web")

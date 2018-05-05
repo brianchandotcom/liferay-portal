@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.upgrade.v1_1_2;
 
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -22,10 +21,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -45,18 +42,14 @@ import java.util.List;
 public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	public UpgradeJournalServiceVerify(
-		Portal portal, ResourceLocalService resourceLocalService,
-		SystemEventLocalService systemEventLocalService) {
+		Portal portal, SystemEventLocalService systemEventLocalService) {
 
 		_portal = portal;
-		_resourceLocalService = resourceLocalService;
 		_systemEventLocalService = systemEventLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		verifyPermissions();
-
 		verifyJournalArticleDeleteSystemEvents();
 	}
 
@@ -142,33 +135,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		}
 	}
 
-	protected void verifyPermissions() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				StringBundler.concat(
-					"select JournalArticle.companyId, ",
-					"JournalArticle.resourcePrimKey from JournalArticle left ",
-					"join ResourcePermission on (ResourcePermission.companyId ",
-					"= JournalArticle.companyId) and (ResourcePermission.name ",
-					"= '", JournalArticle.class.getName(),
-					"') and (ResourcePermission.primKeyId = ",
-					"JournalArticle.resourcePrimKey) and ",
-					"(ResourcePermission.scope = ",
-					String.valueOf(ResourceConstants.SCOPE_INDIVIDUAL),
-					") where ResourcePermission.primKey is null"));
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-				long resourcePrimKey = rs.getLong("resourcePrimKey");
-
-				_resourceLocalService.addResources(
-					companyId, 0, 0, JournalArticle.class.getName(),
-					resourcePrimKey, false, false, false);
-			}
-		}
-	}
-
 	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
 		"com.liferay.journal.model.JournalArticle";
 
@@ -176,7 +142,6 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		UpgradeJournalServiceVerify.class);
 
 	private final Portal _portal;
-	private final ResourceLocalService _resourceLocalService;
 	private final SystemEventLocalService _systemEventLocalService;
 
 }

@@ -156,8 +156,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.1.1", "1.1.2",
 			new UpgradeCheckIntervalConfiguration(_configurationAdmin),
-			new UpgradeJournalServiceVerify(
-				_portal, _resourceLocalService, _systemEventLocalService));
+			new UpgradeJournalServiceVerify(_portal, _systemEventLocalService));
 	}
 
 	protected void deleteTempImages() throws Exception {

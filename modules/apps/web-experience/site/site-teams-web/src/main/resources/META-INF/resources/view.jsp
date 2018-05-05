@@ -25,75 +25,22 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 	items="<%= siteTeamsDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= siteTeamsDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= siteTeamsDisplayContext.getClearResultsURL() %>"
+	componentId="teamsManagementToolbar"
+	creationMenu="<%= siteTeamsDisplayContext.isShowAddButton() ? siteTeamsDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= siteTeamsDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= siteTeamsDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= siteTeamsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="teams"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= siteTeamsDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= siteTeamsDisplayContext.isShowAddButton() %>">
-
-			<%
-			PortletURL addTeamURL = renderResponse.createRenderURL();
-
-			addTeamURL.setParameter("mvcPath", "/edit_team.jsp");
-			%>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-team") %>'
-					url="<%= addTeamURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= siteTeamsDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= siteTeamsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= siteTeamsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= siteTeamsDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= siteTeamsDisplayContext.isSearchEnabled() %>">
-			<li>
-				<aui:form action="<%= siteTeamsDisplayContext.getPortletURL().toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedTeams"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= siteTeamsDisplayContext.isSearchEnabled() %>"
+	sortingOrder="<%= siteTeamsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= siteTeamsDisplayContext.getSortingURL() %>"
+	totalItems="<%= siteTeamsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= siteTeamsDisplayContext.getViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="deleteTeams" var="deleteTeamsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -195,12 +142,9 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedTeams').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+	window.<portlet:namespace />deleteSelectedTeams = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
 		}
-	);
+	}
 </aui:script>

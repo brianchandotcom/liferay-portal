@@ -22,45 +22,18 @@ SiteNavigationMenuItemSelectorViewDisplayContext siteNavigationMenuItemSelectorV
 String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDisplayStyle();
 %>
 
-<liferay-frontend:management-bar
-	searchContainerId="siteNavigationMenus"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews="<%= siteNavigationMenuItemSelectorViewDisplayContext.getDisplayViews() %>"
-			portletURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			label="all"
-		>
-
-			<%
-			PortletURL portletURL = siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL();
-			%>
-
-			<liferay-frontend:management-bar-filter-item
-				active="<%= true %>"
-				label="all"
-				url="<%= portletURL.toString() %>"
-			/>
-		</liferay-frontend:management-bar-navigation>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= siteNavigationMenuItemSelectorViewDisplayContext.getOrderByCol() %>"
-			orderByType="<%= siteNavigationMenuItemSelectorViewDisplayContext.getOrderByType() %>"
-			orderColumns="<%= siteNavigationMenuItemSelectorViewDisplayContext.getOrderColumns() %>"
-			portletURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>"
-		/>
-
-		<li>
-			<liferay-item-selector:search />
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getClearResultsURL() %>"
+	componentId="siteNavigationMenuWebManagementToolbar"
+	filterItems="<%= siteNavigationMenuItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	sortingOrder="<%= siteNavigationMenuItemSelectorViewDisplayContext.getOrderByType() %>"
+	sortingURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSortingURL() %>"
+	totalItems="<%= siteNavigationMenuItemSelectorViewDisplayContext.getTotalItems() %>"
+	viewTypes="<%= siteNavigationMenuItemSelectorViewDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" name="selectSiteNavigationMenuFm">
 	<liferay-ui:search-container

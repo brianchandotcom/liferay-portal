@@ -30,6 +30,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy;
 import com.liferay.journal.model.JournalArticle;
@@ -398,6 +400,8 @@ public class JournalArticleStagedModelDataHandler
 		if (isPreloadedArticle(defaultUserId, article)) {
 			articleElement.addAttribute("preloaded", "true");
 		}
+
+		_exportFriendlyURLEntries(portletDataContext, article);
 
 		portletDataContext.addClassedModel(
 			articleElement, ExportImportPathUtil.getModelPath(article),
@@ -786,10 +790,11 @@ public class JournalArticleStagedModelDataHandler
 						article.getClassNameId(), ddmStructureId, articleId,
 						autoArticleId, article.getVersion(),
 						article.getTitleMap(), article.getDescriptionMap(),
-						article.getContent(), parentDDMStructureKey,
-						parentDDMTemplateKey, article.getLayoutUuid(),
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
+						article.getFriendlyURLMap(), article.getContent(),
+						parentDDMStructureKey, parentDDMTemplateKey,
+						article.getLayoutUuid(), displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -803,10 +808,11 @@ public class JournalArticleStagedModelDataHandler
 						userId, existingArticle.getGroupId(), folderId,
 						existingArticle.getArticleId(), article.getVersion(),
 						article.getTitleMap(), article.getDescriptionMap(),
-						article.getContent(), parentDDMStructureKey,
-						parentDDMTemplateKey, article.getLayoutUuid(),
-						displayDateMonth, displayDateDay, displayDateYear,
-						displayDateHour, displayDateMinute, expirationDateMonth,
+						article.getFriendlyURLMap(), article.getContent(),
+						parentDDMStructureKey, parentDDMTemplateKey,
+						article.getLayoutUuid(), displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
 						expirationDateDay, expirationDateYear,
 						expirationDateHour, expirationDateMinute, neverExpire,
 						reviewDateMonth, reviewDateDay, reviewDateYear,
@@ -831,17 +837,17 @@ public class JournalArticleStagedModelDataHandler
 					userId, portletDataContext.getScopeGroupId(), folderId,
 					article.getClassNameId(), ddmStructureId, articleId,
 					autoArticleId, article.getVersion(), article.getTitleMap(),
-					article.getDescriptionMap(), article.getContent(),
-					parentDDMStructureKey, parentDDMTemplateKey,
-					article.getLayoutUuid(), displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					reviewDateMonth, reviewDateDay, reviewDateYear,
-					reviewDateHour, reviewDateMinute, neverReview,
-					article.isIndexable(), article.isSmallImage(),
-					article.getSmallImageURL(), smallFile, null, articleURL,
-					serviceContext);
+					article.getDescriptionMap(), article.getFriendlyURLMap(),
+					article.getContent(), parentDDMStructureKey,
+					parentDDMTemplateKey, article.getLayoutUuid(),
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, reviewDateMonth,
+					reviewDateDay, reviewDateYear, reviewDateHour,
+					reviewDateMinute, neverReview, article.isIndexable(),
+					article.isSmallImage(), article.getSmallImageURL(),
+					smallFile, null, articleURL, serviceContext);
 			}
 
 			// Clean up initial publication
@@ -875,6 +881,9 @@ public class JournalArticleStagedModelDataHandler
 
 			articlePrimaryKeys.put(
 				article.getPrimaryKey(), importedArticle.getPrimaryKey());
+
+			_importFriendlyURLEntries(
+				portletDataContext, article, importedArticle);
 		}
 		finally {
 			if (smallFile != null) {
@@ -1105,6 +1114,56 @@ public class JournalArticleStagedModelDataHandler
 		}
 	}
 
+	private void _exportFriendlyURLEntries(
+			PortletDataContext portletDataContext, JournalArticle article)
+		throws PortletDataException {
+
+		long classNameId = _portal.getClassNameId(JournalArticle.class);
+
+		List<FriendlyURLEntry> friendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
+				article.getGroupId(), classNameId,
+				article.getResourcePrimKey());
+
+		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, article, friendlyURLEntry,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
+	private void _importFriendlyURLEntries(
+			PortletDataContext portletDataContext, JournalArticle article,
+			JournalArticle importedArticle)
+		throws PortalException {
+
+		List<Element> friendlyURLEntryElements =
+			portletDataContext.getReferenceDataElements(
+				article, FriendlyURLEntry.class);
+
+		for (Element friendlyURLEntryElement : friendlyURLEntryElements) {
+			String path = friendlyURLEntryElement.attributeValue("path");
+
+			FriendlyURLEntry friendlyURLEntry =
+				(FriendlyURLEntry)portletDataContext.getZipEntryAsObject(path);
+
+			friendlyURLEntry.setClassNameId(
+				_portal.getClassNameId(JournalArticle.class));
+			friendlyURLEntry.setClassPK(importedArticle.getResourcePrimKey());
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, friendlyURLEntry);
+		}
+
+		FriendlyURLEntry mainFriendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				JournalArticle.class, importedArticle.getResourcePrimKey());
+
+		importedArticle.setUrlTitle(mainFriendlyURLEntry.getUrlTitle());
+
+		_journalArticleLocalService.updateJournalArticle(importedArticle);
+	}
+
 	/**
 	 * @deprecated As of 4.0.0, only used for backwards compatibility with LARs
 	 *             that use journal schema under 1.1.0
@@ -1133,6 +1192,10 @@ public class JournalArticleStagedModelDataHandler
 	private ConfigurationProvider _configurationProvider;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
 	private ImageLocalService _imageLocalService;
 
 	@Reference(

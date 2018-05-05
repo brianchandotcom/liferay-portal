@@ -84,7 +84,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 		return _keywords;
 	}
 
-	public String getOrderByCol() throws Exception {
+	public String getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
 		}
@@ -94,7 +94,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 		return _orderByCol;
 	}
 
-	public String getOrderByType() throws Exception {
+	public String getOrderByType() {
 		if (_orderByType != null) {
 			return _orderByType;
 		}
@@ -108,7 +108,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 		return new String[] {"create-date", "name"};
 	}
 
-	public PortletURL getPortletURL() throws Exception {
+	public PortletURL getPortletURL() {
 		String displayStyle = ParamUtil.getString(_request, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
@@ -130,7 +130,7 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 		return _portletURL;
 	}
 
-	public SearchContainer getSearchContainer() throws Exception {
+	public SearchContainer getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}

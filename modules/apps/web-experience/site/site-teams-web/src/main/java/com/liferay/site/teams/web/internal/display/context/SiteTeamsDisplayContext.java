@@ -120,7 +120,7 @@ public class SiteTeamsDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer getSearchContainer() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

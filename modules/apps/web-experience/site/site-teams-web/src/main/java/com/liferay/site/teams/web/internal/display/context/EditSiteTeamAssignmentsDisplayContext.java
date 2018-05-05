@@ -36,9 +36,8 @@ import javax.servlet.http.HttpServletRequest;
 public class EditSiteTeamAssignmentsDisplayContext {
 
 	public EditSiteTeamAssignmentsDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			HttpServletRequest request)
-		throws Exception {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HttpServletRequest request) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;

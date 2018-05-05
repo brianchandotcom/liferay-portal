@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.upgrade.v1_1_2;
+package com.liferay.journal.internal.upgrade.v0_0_8;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -32,16 +32,16 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.util.List;
 
 /**
- * @author Alexander Chow
- * @author Shinn Lok
+ * @author Daniel Kocsis
+ * @author Preston Crary
+ * @author Alberto Chaparro
  */
-public class UpgradeJournalServiceVerify extends UpgradeProcess {
+public class UpgradeArticleSystemEvents extends UpgradeProcess {
 
-	public UpgradeJournalServiceVerify(
+	public UpgradeArticleSystemEvents(
 		Portal portal, SystemEventLocalService systemEventLocalService) {
 
 		_portal = portal;
@@ -50,10 +50,10 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		verifyJournalArticleDeleteSystemEvents();
+		deleteJournalArticleSystemEvents();
 	}
 
-	protected void verifyJournalArticleDeleteSystemEvents() throws Exception {
+	protected void deleteJournalArticleSystemEvents() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			DynamicQuery dynamicQuery = _systemEventLocalService.dynamicQuery();
 
@@ -139,9 +139,10 @@ public class UpgradeJournalServiceVerify extends UpgradeProcess {
 		"com.liferay.journal.model.JournalArticle";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeJournalServiceVerify.class);
+		UpgradeArticleSystemEvents.class);
 
 	private final Portal _portal;
 	private final SystemEventLocalService _systemEventLocalService;
 
 }
+

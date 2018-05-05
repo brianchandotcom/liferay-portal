@@ -37,7 +37,6 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 
 <aui:form action="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" name="selectSiteNavigationMenuFm">
 	<liferay-ui:search-container
-		id="siteNavigationMenus"
 		searchContainer="<%= siteNavigationMenuItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -90,7 +89,6 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 						<liferay-frontend:icon-vertical-card
 							icon="list"
 							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
 						>
 							<liferay-frontend:vertical-card-header>
 								<div class="row">

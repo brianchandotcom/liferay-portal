@@ -19,27 +19,6 @@
 <%
 EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayContext = new EditSiteTeamAssignmentsUsersDisplayContext(renderRequest, renderResponse, request);
 
-String displayStyle = portalPreferences.getValue(SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-SearchContainer userSearchContainer = new UserSearch(renderRequest, editSiteTeamAssignmentsUsersDisplayContext.getEditTeamAssignmentsURL());
-
-UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
-LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-userParams.put("inherit", Boolean.TRUE);
-userParams.put("usersTeams", editSiteTeamAssignmentsUsersDisplayContext.getTeamId());
-
-int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
-
-userSearchContainer.setTotal(usersCount);
-
-List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
-
-userSearchContainer.setResults(users);
-
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
@@ -49,7 +28,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 />
 
 <liferay-frontend:management-bar
-	disabled="<%= usersCount <= 0 %>"
+	disabled="<%= editSiteTeamAssignmentsUsersDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="users"
 >
@@ -60,13 +39,13 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= editSiteTeamAssignmentsUsersDisplayContext.getOrderByCol() %>"
+			orderByType="<%= editSiteTeamAssignmentsUsersDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
 			portletURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getEditTeamAssignmentsURL() %>"
 		/>
 
-		<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
+		<c:if test="<%= editSiteTeamAssignmentsUsersDisplayContext.isShowSearch() %>">
 			<li>
 				<aui:form action="<%= editSiteTeamAssignmentsUsersDisplayContext.getEditTeamAssignmentsURL() %>" name="searchFm">
 					<liferay-portlet:renderURLParams varImpl="portletURL" />
@@ -87,7 +66,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle() %>"
 		/>
 
 		<portlet:actionURL name="addTeamUsers" var="addTeamUsersURL" />
@@ -129,7 +108,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<liferay-ui:search-container
 		id="users"
 		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= userSearchContainer %>"
+		searchContainer="<%= editSiteTeamAssignmentsUsersDisplayContext.getUserSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
@@ -148,7 +127,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

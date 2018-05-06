@@ -19,26 +19,6 @@
 <%
 EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroupsDisplayContext = new EditSiteTeamAssignmentsUserGroupsDisplayContext(renderRequest, renderResponse, request);
 
-String displayStyle = portalPreferences.getValue(SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, editSiteTeamAssignmentsUserGroupsDisplayContext.getEditTeamAssignmentsURL());
-
-UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
-
-LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS, Long.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()));
-
-int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-userGroupSearchContainer.setTotal(userGroupsCount);
-
-List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, userGroupSearchContainer.getStart(), userGroupSearchContainer.getEnd(), userGroupSearchContainer.getOrderByComparator());
-
-userGroupSearchContainer.setResults(userGroups);
-
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
@@ -48,7 +28,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 />
 
 <liferay-frontend:management-bar
-	disabled="<%= userGroupsCount <= 0 %>"
+	disabled="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userGroups"
 >
@@ -59,13 +39,13 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"name", "description"} %>'
 			portletURL="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getEditTeamAssignmentsURL() %>"
 		/>
 
-		<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
+		<c:if test="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.isShowSearch() %>">
 			<li>
 				<aui:form action="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getEditTeamAssignmentsURL() %>" name="searchFm">
 					<liferay-portlet:renderURLParams varImpl="portletURL" />
@@ -86,7 +66,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getDisplayStyle() %>"
 		/>
 
 		<portlet:actionURL name="addTeamUserGroups" var="addTeamUserGroupsURL" />
@@ -128,7 +108,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<liferay-ui:search-container
 		id="userGroups"
 		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= userGroupSearchContainer %>"
+		searchContainer="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getUserGroupSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
@@ -146,7 +126,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

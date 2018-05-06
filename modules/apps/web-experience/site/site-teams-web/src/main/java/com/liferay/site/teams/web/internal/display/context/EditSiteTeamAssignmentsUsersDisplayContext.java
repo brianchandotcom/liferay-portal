@@ -14,6 +14,7 @@
 
 package com.liferay.site.teams.web.internal.display.context;
 
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -108,6 +109,9 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 
 		SearchContainer userSearchContainer = new UserSearch(
 			renderRequest, getEditTeamAssignmentsURL());
+
+		userSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(renderResponse));
 
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearchContainer.getSearchTerms();

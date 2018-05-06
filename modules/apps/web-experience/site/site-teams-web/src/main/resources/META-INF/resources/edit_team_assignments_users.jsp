@@ -18,8 +18,6 @@
 
 <%
 EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayContext = new EditSiteTeamAssignmentsUsersDisplayContext(renderRequest, renderResponse, request);
-
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
 <clay:navigation-bar
@@ -107,7 +105,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 	<liferay-ui:search-container
 		id="users"
-		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= editSiteTeamAssignmentsUsersDisplayContext.getUserSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -131,7 +128,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 							actionJspServletContext="<%= application %>"
 							cssClass="entry-display-style"
 							resultRow="<%= row %>"
-							rowChecker="<%= rowChecker %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
 							subtitle="<%= user2.getScreenName() %>"
 							title="<%= user2.getFullName() %>"
 							userId="<%= user2.getUserId() %>"

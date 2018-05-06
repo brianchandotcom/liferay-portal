@@ -18,8 +18,6 @@
 
 <%
 EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroupsDisplayContext = new EditSiteTeamAssignmentsUserGroupsDisplayContext(renderRequest, renderResponse, request);
-
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
 <clay:navigation-bar
@@ -107,7 +105,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 	<liferay-ui:search-container
 		id="userGroups"
-		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getUserGroupSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -140,7 +137,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 							cssClass="entry-display-style"
 							icon="users"
 							resultRow="<%= row %>"
-							rowChecker="<%= rowChecker %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
 							subtitle="<%= userGroup.getDescription() %>"
 							title="<%= userGroup.getName() %>"
 						>

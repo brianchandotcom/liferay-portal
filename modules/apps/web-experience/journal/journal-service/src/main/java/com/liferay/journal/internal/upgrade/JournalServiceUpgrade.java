@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -130,9 +129,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"0.0.7", "0.0.8",
-			new UpgradeArticleAssets(_assetEntryLocalService, _portal),
+			new UpgradeArticleAssets(
+				_assetEntryLocalService, _companyLocalService),
 			new UpgradeArticleExpirationDate(),
-			new UpgradeArticleSystemEvents(_portal, _systemEventLocalService));
+			new UpgradeArticleSystemEvents(_systemEventLocalService));
 
 		registry.register(
 			"0.0.8", "1.0.0", new UpgradeJournalArticleDates(),
@@ -307,10 +307,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private Portal _portal;
-
 	private PrefsProps _prefsProps;
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceActions _resourceActions;

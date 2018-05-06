@@ -18,14 +18,17 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.List;
 
 /**
  * @author Preston Crary
@@ -34,10 +37,11 @@ import java.sql.ResultSet;
 public class UpgradeArticleAssets extends UpgradeProcess {
 
 	public UpgradeArticleAssets(
-		AssetEntryLocalService assetEntryLocalService, Portal portal) {
+		AssetEntryLocalService assetEntryLocalService,
+		CompanyLocalService companyLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-		_portal = portal;
+		_companyLocalService = companyLocalService;
 	}
 
 	@Override
@@ -47,10 +51,10 @@ public class UpgradeArticleAssets extends UpgradeProcess {
 
 	protected void updateDefaultDraftArticleAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long[] companyIds = _portal.getCompanyIds();
+			List<Company> companies = _companyLocalService.getCompanies();
 
-			for (long companyId : companyIds) {
-				updateDefaultDraftArticleAssets(companyId);
+			for (Company company : companies) {
+				updateDefaultDraftArticleAssets(company.getCompanyId());
 			}
 		}
 	}
@@ -83,6 +87,6 @@ public class UpgradeArticleAssets extends UpgradeProcess {
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;
-	private final Portal _portal;
+	private final CompanyLocalService _companyLocalService;
 
 }

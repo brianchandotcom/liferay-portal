@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -43,9 +43,8 @@ import java.util.List;
 public class UpgradeArticleSystemEvents extends UpgradeProcess {
 
 	public UpgradeArticleSystemEvents(
-		Portal portal, SystemEventLocalService systemEventLocalService) {
+		SystemEventLocalService systemEventLocalService) {
 
-		_portal = portal;
 		_systemEventLocalService = systemEventLocalService;
 	}
 
@@ -58,7 +57,7 @@ public class UpgradeArticleSystemEvents extends UpgradeProcess {
 
 			dynamicQuery.add(
 				classNameIdProperty.eq(
-					_portal.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE)));
+					PortalUtil.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE)));
 
 			Property typeProperty = PropertyFactoryUtil.forName("type");
 
@@ -142,7 +141,6 @@ public class UpgradeArticleSystemEvents extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeArticleSystemEvents.class);
 
-	private final Portal _portal;
 	private final SystemEventLocalService _systemEventLocalService;
 
 }

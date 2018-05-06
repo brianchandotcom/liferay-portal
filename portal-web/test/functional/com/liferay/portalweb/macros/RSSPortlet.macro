@@ -157,7 +157,7 @@
 	</command>
 
 	<command name="viewPortletConfigurationInfo">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please configure this portlet and select at least one valid RSS feed." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This application is not visible to users yet. Select at least one valid rss feed to make it visible." />
 	</command>
 
 	<command name="viewUpdateFeedTitle">

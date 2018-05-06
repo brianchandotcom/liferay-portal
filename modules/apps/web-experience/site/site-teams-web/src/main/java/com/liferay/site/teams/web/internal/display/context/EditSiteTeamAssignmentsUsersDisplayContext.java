@@ -14,14 +14,21 @@
 
 package com.liferay.site.teams.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.UserSearch;
@@ -30,7 +37,10 @@ import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -49,6 +59,31 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 		super(renderRequest, renderResponse, request);
 	}
 
+	public List<DropdownItem> getActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + renderResponse.getNamespace() +
+								"deleteUsers();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getEditTeamAssignmentsURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -61,6 +96,28 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 			SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
 
 		return _displayStyle;
+	}
+
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public String getKeywords() {
@@ -93,7 +150,23 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 		return _orderByType;
 	}
 
-	public int getTotal() {
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getEditTeamAssignmentsURL();
+
+		return searchActionURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getEditTeamAssignmentsURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getTotalItems() {
 		SearchContainer userSearchContainer = getUserSearchContainer();
 
 		return userSearchContainer.getTotal();
@@ -140,8 +213,24 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 		return _userSearchContainer;
 	}
 
+	public List<ViewTypeItem> getViewTypeItems() {
+		PortletURL portletURL = renderResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "changeDisplayStyle");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
+
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
+	}
+
 	public boolean isDisabledManagementBar() {
-		if (getTotal() <= 0) {
+		if (getTotalItems() <= 0) {
 			return true;
 		}
 
@@ -149,7 +238,7 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 	}
 
 	public boolean isShowSearch() {
-		if (getTotal() > 0) {
+		if (getTotalItems() > 0) {
 			return true;
 		}
 
@@ -158,6 +247,46 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 		}
 
 		return false;
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(getEditTeamAssignmentsURL());
+						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "first-name"));
+						dropdownItem.setHref(
+							getEditTeamAssignmentsURL(), "orderByCol",
+							"first-name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "first-name"));
+					});
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "screen-name"));
+						dropdownItem.setHref(
+							getEditTeamAssignmentsURL(), "orderByCol",
+							"screen-name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "screen-name"));
+					});
+			}
+		};
 	}
 
 	private String _displayStyle;

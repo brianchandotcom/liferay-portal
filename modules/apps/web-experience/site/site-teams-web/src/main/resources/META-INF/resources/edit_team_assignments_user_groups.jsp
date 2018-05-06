@@ -25,76 +25,22 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 	items="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getClearResultsURL() %>"
+	componentId="editTeamAssignemntsUserGroupsWebManagementToolbar"
 	disabled="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getEditTeamAssignmentsURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "description"} %>'
-			portletURL="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getEditTeamAssignmentsURL() %>"
-		/>
-
-		<c:if test="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getEditTeamAssignmentsURL() %>" name="searchFm">
-					<liferay-portlet:renderURLParams varImpl="portletURL" />
-
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<portlet:actionURL name="addTeamUserGroups" var="addTeamUserGroupsURL" />
-
-		<aui:form action="<%= addTeamUserGroupsURL %>" cssClass="hide" name="addTeamUserGroupsFm">
-			<aui:input name="tabs1" type="hidden" value="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTabs1() %>" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>" />
-		</aui:form>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				id="addUserGroups"
-				title='<%= LanguageUtil.get(request, "add-team-members") %>'
-				url="javascript:;"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteUserGroups"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showCreationMenu="<%= true %>"
+	showSearch="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getSortingURL() %>"
+	totalItems="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="deleteTeamUserGroups" var="deleteTeamUserGroupsURL" />
 
@@ -205,53 +151,55 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 	</liferay-ui:search-container>
 </aui:form>
 
+<portlet:actionURL name="addTeamUserGroups" var="addTeamUserGroupsURL" />
+
+<aui:form action="<%= addTeamUserGroupsURL %>" cssClass="hide" name="addTeamUserGroupsFm">
+	<aui:input name="tabs1" type="hidden" value="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTabs1() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>" />
+</aui:form>
+
 <aui:script use="liferay-item-selector-dialog">
-	var Util = Liferay.Util;
-
-	var form = $(document.<portlet:namespace />fm);
-
 	<portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/select_user_groups.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="teamId" value="<%= String.valueOf(editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamId()) %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />addUserGroups').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	function handleAddClick(event) {
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			{
+				eventName: '<portlet:namespace />selectUserGroup',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItem = event.newVal;
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectUserGroup',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+						if (selectedItem) {
+							var addTeamUserGroupsFm = $(document.<portlet:namespace />addTeamUserGroupsFm);
 
-							if (selectedItem) {
-								var addTeamUserGroupsFm = $(document.<portlet:namespace />addTeamUserGroupsFm);
+							addTeamUserGroupsFm.append(selectedItem);
 
-								addTeamUserGroupsFm.append(selectedItem);
-
-								submitForm(addTeamUserGroupsFm);
-							}
+							submitForm(addTeamUserGroupsFm);
 						}
-					},
-					title: '<liferay-ui:message arguments="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamName() %>" key="add-new-user-group-to-x" />',
-					url: '<%= selectUserGroupURL %>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	);
-
-	$('#<portlet:namespace />deleteUserGroups').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm(form);
+					}
+				},
+				title: '<liferay-ui:message arguments="<%= editSiteTeamAssignmentsUserGroupsDisplayContext.getTeamName() %>" key="add-new-user-group-to-x" />',
+				url: '<%= selectUserGroupURL %>'
 			}
+		);
+
+		itemSelectorDialog.open();
+	}
+
+	Liferay.componentReady('editTeamAssignemntsUserGroupsWebManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddClick);
 		}
 	);
+
+	window.<portlet:namespace />deleteUserGroups = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
+		}
+	}
 </aui:script>

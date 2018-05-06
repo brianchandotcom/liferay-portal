@@ -25,76 +25,22 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 	items="<%= editSiteTeamAssignmentsUsersDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getClearResultsURL() %>"
+	componentId="editTeamAssignemntsUsersWebManagementToolbar"
 	disabled="<%= editSiteTeamAssignmentsUsersDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getEditTeamAssignmentsURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= editSiteTeamAssignmentsUsersDisplayContext.getOrderByCol() %>"
-			orderByType="<%= editSiteTeamAssignmentsUsersDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-			portletURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getEditTeamAssignmentsURL() %>"
-		/>
-
-		<c:if test="<%= editSiteTeamAssignmentsUsersDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= editSiteTeamAssignmentsUsersDisplayContext.getEditTeamAssignmentsURL() %>" name="searchFm">
-					<liferay-portlet:renderURLParams varImpl="portletURL" />
-
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= editSiteTeamAssignmentsUsersDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<portlet:actionURL name="addTeamUsers" var="addTeamUsersURL" />
-
-		<aui:form action="<%= addTeamUsersURL %>" cssClass="hide" name="addTeamUsersFm">
-			<aui:input name="tabs1" type="hidden" value="<%= editSiteTeamAssignmentsUsersDisplayContext.getTabs1() %>" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>" />
-		</aui:form>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				id="addUsers"
-				title='<%= LanguageUtil.get(request, "add-team-members") %>'
-				url="javascript:;"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteUsers"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showCreationMenu="<%= true %>"
+	showSearch="<%= editSiteTeamAssignmentsUsersDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= editSiteTeamAssignmentsUsersDisplayContext.getOrderByType() %>"
+	sortingURL="<%= editSiteTeamAssignmentsUsersDisplayContext.getSortingURL() %>"
+	totalItems="<%= editSiteTeamAssignmentsUsersDisplayContext.getTotalItems() %>"
+	viewTypes="<%= editSiteTeamAssignmentsUsersDisplayContext.getViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="deleteTeamUsers" var="deleteTeamUsersURL" />
 
@@ -183,53 +129,55 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 	</liferay-ui:search-container>
 </aui:form>
 
+<portlet:actionURL name="addTeamUsers" var="addTeamUsersURL" />
+
+<aui:form action="<%= addTeamUsersURL %>" cssClass="hide" name="addTeamUsersFm">
+	<aui:input name="tabs1" type="hidden" value="<%= editSiteTeamAssignmentsUsersDisplayContext.getTabs1() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>" />
+</aui:form>
+
 <aui:script use="liferay-item-selector-dialog">
-	var Util = Liferay.Util;
-
-	var form = $(document.<portlet:namespace />fm);
-
 	<portlet:renderURL var="selectUserURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/select_users.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="teamId" value="<%= String.valueOf(editSiteTeamAssignmentsUsersDisplayContext.getTeamId()) %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />addUsers').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	function handleAddClick(event) {
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			{
+				eventName: '<portlet:namespace />selectUser',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItem = event.newVal;
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectUser',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+						if (selectedItem) {
+							var addTeamUsersFm = $(document.<portlet:namespace />addTeamUsersFm);
 
-							if (selectedItem) {
-								var addTeamUsersFm = $(document.<portlet:namespace />addTeamUsersFm);
+							addTeamUsersFm.append(selectedItem);
 
-								addTeamUsersFm.append(selectedItem);
-
-								submitForm(addTeamUsersFm);
-							}
+							submitForm(addTeamUsersFm);
 						}
-					},
-					title: '<liferay-ui:message arguments="<%= editSiteTeamAssignmentsUsersDisplayContext.getTeamName() %>" key="add-new-user-to-x" />',
-					url: '<%= selectUserURL %>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	);
-
-	$('#<portlet:namespace />deleteUsers').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm(form);
+					}
+				},
+				title: '<liferay-ui:message arguments="<%= editSiteTeamAssignmentsUsersDisplayContext.getTeamName() %>" key="add-new-user-to-x" />',
+				url: '<%= selectUserURL %>'
 			}
+		);
+
+		itemSelectorDialog.open();
+	}
+
+	Liferay.componentReady('editTeamAssignemntsUsersWebManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddClick);
 		}
 	);
+
+	window.<portlet:namespace />deleteUsers = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm(document.<portlet:namespace />fm);
+		}
+	}
 </aui:script>

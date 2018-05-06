@@ -148,7 +148,7 @@ public class OrphanPortletsDisplayContext {
 		}
 
 		_orderByCol = ParamUtil.getString(
-			_liferayPortletRequest, "orderByCol", "modified-date");
+			_liferayPortletRequest, "orderByCol", "name");
 
 		return _orderByCol;
 	}

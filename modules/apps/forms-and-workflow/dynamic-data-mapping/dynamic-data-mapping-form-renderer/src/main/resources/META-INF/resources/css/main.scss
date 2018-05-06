@@ -145,6 +145,10 @@ body .ddm-user-view-content {
 	}
 
 	.has-error {
+		.liferay-ddm-form-field-grid.table-responsive {
+			margin-bottom: 0;
+		}
+
 		select.form-control[multiple] {
 			background-image: none;
 		}

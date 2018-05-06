@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.TeamNameComparator;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.internal.search.TeamDisplayTerms;
 import com.liferay.site.teams.web.internal.search.TeamSearch;
@@ -170,6 +171,24 @@ public class SelectTeamDisplayContext {
 		portletURL.setParameter("mvcPath", "/select_team.jsp");
 		portletURL.setParameter("eventName", getEventName());
 
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
 		return portletURL;
 	}
 
@@ -199,6 +218,18 @@ public class SelectTeamDisplayContext {
 
 		TeamSearch teamSearchContainer = new TeamSearch(
 			_renderRequest, getPortletURL());
+
+		teamSearchContainer.setOrderByCol(getOrderByCol());
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
+
+		teamSearchContainer.setOrderByComparator(
+			new TeamNameComparator(orderByAsc));
+		teamSearchContainer.setOrderByType(getOrderByType());
 
 		TeamDisplayTerms searchTerms =
 			(TeamDisplayTerms)teamSearchContainer.getSearchTerms();

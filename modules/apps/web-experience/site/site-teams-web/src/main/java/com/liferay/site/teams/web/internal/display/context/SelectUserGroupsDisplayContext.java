@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,6 +43,7 @@ import com.liferay.portlet.sitesadmin.search.UserGroupTeamChecker;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms;
 import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -179,6 +181,24 @@ public class SelectUserGroupsDisplayContext {
 		portletURL.setParameter("teamId", String.valueOf(getTeamId()));
 		portletURL.setParameter("eventName", getEventName());
 
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
 		return portletURL;
 	}
 
@@ -245,6 +265,14 @@ public class SelectUserGroupsDisplayContext {
 
 		SearchContainer userGroupSearchContainer = new UserGroupSearch(
 			_renderRequest, getPortletURL());
+
+		OrderByComparator<UserGroup> orderByComparator =
+			UsersAdminUtil.getUserGroupOrderByComparator(
+				getOrderByCol(), getOrderByType());
+
+		userGroupSearchContainer.setOrderByCol(getOrderByCol());
+		userGroupSearchContainer.setOrderByComparator(orderByComparator);
+		userGroupSearchContainer.setOrderByType(getOrderByType());
 
 		Team team = getTeam();
 

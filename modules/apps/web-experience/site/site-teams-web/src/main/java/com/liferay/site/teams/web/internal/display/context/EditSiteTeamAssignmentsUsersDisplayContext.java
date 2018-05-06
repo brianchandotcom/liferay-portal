@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -96,6 +98,31 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 			SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
 
 		return _displayStyle;
+	}
+
+	@Override
+	public PortletURL getEditTeamAssignmentsURL() {
+		PortletURL portletURL = super.getEditTeamAssignmentsURL();
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		return portletURL;
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -182,6 +209,14 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 
 		SearchContainer userSearchContainer = new UserSearch(
 			renderRequest, getEditTeamAssignmentsURL());
+
+		OrderByComparator<User> orderByComparator =
+			UsersAdminUtil.getUserOrderByComparator(
+				getOrderByCol(), getOrderByType());
+
+		userSearchContainer.setOrderByCol(getOrderByCol());
+		userSearchContainer.setOrderByComparator(orderByComparator);
+		userSearchContainer.setOrderByType(getOrderByType());
 
 		userSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(renderResponse));

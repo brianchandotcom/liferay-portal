@@ -34,42 +34,18 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 				items="<%= portletConfigurationTemplatesDisplayContext.getNavigationItems() %>"
 			/>
 
-			<liferay-frontend:management-bar
+			<clay:management-toolbar
+				actionItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems() %>"
+				componentId="archivedSettingsManagementToolbar"
 				disabled="<%= portletConfigurationTemplatesDisplayContext.isDisabledManagementBar() %>"
-				includeCheckBox="<%= true %>"
+				filterItems="<%= portletConfigurationTemplatesDisplayContext.getFilterDropdownItems() %>"
 				searchContainerId="archivedSettings"
-			>
-				<liferay-frontend:management-bar-filters>
-					<liferay-frontend:management-bar-navigation
-						navigationKeys='<%= new String[] {"all"} %>'
-						portletURL="<%= portletConfigurationTemplatesDisplayContext.getPortletURL() %>"
-					/>
-
-					<liferay-frontend:management-bar-sort
-						orderByCol="<%= portletConfigurationTemplatesDisplayContext.getOrderByCol() %>"
-						orderByType="<%= portletConfigurationTemplatesDisplayContext.getOrderByType() %>"
-						orderColumns='<%= new String[] {"name", "modified-date"} %>'
-						portletURL="<%= portletConfigurationTemplatesDisplayContext.getPortletURL() %>"
-					/>
-				</liferay-frontend:management-bar-filters>
-
-				<liferay-frontend:management-bar-buttons>
-					<liferay-frontend:management-bar-display-buttons
-						displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-						portletURL="<%= portletConfigurationTemplatesDisplayContext.getPortletURL() %>"
-						selectedDisplayStyle="<%= portletConfigurationTemplatesDisplayContext.getDisplayStyle() %>"
-					/>
-				</liferay-frontend:management-bar-buttons>
-
-				<liferay-frontend:management-bar-action-buttons>
-					<liferay-frontend:management-bar-button
-						href="javascript:;"
-						icon="trash"
-						id="deleteArchivedSettings"
-						label="delete"
-					/>
-				</liferay-frontend:management-bar-action-buttons>
-			</liferay-frontend:management-bar>
+				showSearch="<%= false %>"
+				sortingOrder="<%= portletConfigurationTemplatesDisplayContext.getOrderByType() %>"
+				sortingURL="<%= portletConfigurationTemplatesDisplayContext.getSortingURL() %>"
+				totalItems="<%= portletConfigurationTemplatesDisplayContext.getTotalItems() %>"
+				viewTypes="<%= portletConfigurationTemplatesDisplayContext.getViewTypeItems() %>"
+			/>
 
 			<div class="container-fluid-1280">
 				<liferay-ui:error exception="<%= NoSuchPortletItemException.class %>" message="the-setup-could-not-be-found" />
@@ -173,12 +149,9 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 </div>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteArchivedSettings').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+	window.<portlet:namespace />deleteArchivedSettings = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
 		}
-	);
+	}
 </aui:script>

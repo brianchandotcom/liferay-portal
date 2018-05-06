@@ -14,8 +14,12 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -39,6 +43,9 @@ import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,11 +55,40 @@ import javax.servlet.http.HttpServletRequest;
 public class OrphanPortletsDisplayContext {
 
 	public OrphanPortletsDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
+		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_request = request;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public List<DropdownItem> getActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" +
+								_liferayPortletResponse.getNamespace() +
+									"deleteOrphanPortlets();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getBackURL() {
+		if (Validator.isNotNull(_backURL)) {
+			return _backURL;
+		}
+
+		_backURL = ParamUtil.getString(_request, "backURL");
+
+		return _backURL;
 	}
 
 	public String getDisplayStyle() {
@@ -64,6 +100,28 @@ public class OrphanPortletsDisplayContext {
 			_liferayPortletRequest, "displayStyle", "list");
 
 		return _displayStyle;
+	}
+
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -170,6 +228,15 @@ public class OrphanPortletsDisplayContext {
 		return orphanPortlets;
 	}
 
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
+		portletURL.setParameter("backURL", getBackURL());
+
+		return portletURL;
+	}
+
 	public Layout getSelLayout() {
 		if (_selLayout != null) {
 			return _selLayout;
@@ -193,6 +260,16 @@ public class OrphanPortletsDisplayContext {
 		return _selPlid;
 	}
 
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
 	public String getStatus(Portlet portlet) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
@@ -210,11 +287,53 @@ public class OrphanPortletsDisplayContext {
 		return LanguageUtil.get(request, "active");
 	}
 
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
+					});
+			}
+		};
+	}
+
+	private String _backURL;
 	private String _displayStyle;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
+	private final HttpServletRequest _request;
 	private Layout _selLayout;
 	private Long _selPlid;
 

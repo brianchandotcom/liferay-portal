@@ -864,7 +864,7 @@ public class LayoutsAdminDisplayContext {
 
 		OrphanPortletsDisplayContext orphanPortletsDisplayContext =
 			new OrphanPortletsDisplayContext(
-				_liferayPortletRequest, _liferayPortletResponse);
+				_request, _liferayPortletRequest, _liferayPortletResponse);
 
 		if (ListUtil.isEmpty(
 				orphanPortletsDisplayContext.getOrphanPortlets(layout))) {

@@ -132,10 +132,76 @@ RowChecker rowChecker = new UserGroupTeamChecker(renderResponse, team);
 		>
 
 			<%
-			boolean showActions = false;
+			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+			userParams.put("usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
+
+			int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY, userParams);
 			%>
 
-			<%@ include file="/user_group_columns.jspf" %>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("entry-card lfr-asset-item selectable");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							cssClass="entry-display-style"
+							icon="users"
+							resultRow="<%= row %>"
+							rowChecker="<%= rowChecker %>"
+							subtitle="<%= userGroup.getDescription() %>"
+							title="<%= userGroup.getName() %>"
+						>
+							<liferay-frontend:vertical-card-footer>
+								<liferay-ui:message arguments="<%= usersCount %>" key="x-users" />
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="users"
+						toggleRowChecker="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5><%= userGroup.getName() %></h5>
+
+						<h6 class="text-default">
+							<span><%= userGroup.getDescription() %></span>
+						</h6>
+
+						<h6 class="text-default">
+							<span><liferay-ui:message arguments="<%= usersCount %>" key="x-users" /></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="name"
+						orderable="<%= true %>"
+						property="name"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="description"
+						orderable="<%= true %>"
+						property="description"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="users"
+						value="<%= String.valueOf(usersCount) %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

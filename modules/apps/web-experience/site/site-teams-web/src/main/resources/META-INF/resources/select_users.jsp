@@ -133,12 +133,55 @@ RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 			modelVar="user2"
 			rowIdProperty="screenName"
 		>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
 
-			<%
-			boolean showActions = false;
-			%>
+					<%
+					row.setCssClass("entry-card lfr-asset-item selectable");
+					%>
 
-			<%@ include file="/user_columns.jspf" %>
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:user-vertical-card
+							cssClass="entry-display-style"
+							resultRow="<%= row %>"
+							rowChecker="<%= rowChecker %>"
+							subtitle="<%= user2.getScreenName() %>"
+							title="<%= user2.getFullName() %>"
+							userId="<%= user2.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<liferay-ui:user-portrait
+							userId="<%= user2.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5><%= user2.getFullName() %></h5>
+
+						<h6 class="text-default">
+							<span><%= user2.getScreenName() %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="name"
+						property="fullName"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="screen-name"
+						property="screenName"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -119,10 +119,86 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 		>
 
 			<%
-			boolean showActions = true;
+			LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
+
+			userParams.put("usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
+
+			int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_ANY, userParams);
 			%>
 
-			<%@ include file="/user_group_columns.jspf" %>
+			<c:choose>
+				<c:when test='<%= Objects.equals(editSiteTeamAssignmentsUserGroupsDisplayContext.getDisplayStyle(), "icon") %>'>
+
+					<%
+					row.setCssClass("entry-card lfr-asset-item selectable");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/edit_team_assignments_user_groups_action.jsp"
+							actionJspServletContext="<%= application %>"
+							cssClass="entry-display-style"
+							icon="users"
+							resultRow="<%= row %>"
+							rowChecker="<%= rowChecker %>"
+							subtitle="<%= userGroup.getDescription() %>"
+							title="<%= userGroup.getName() %>"
+						>
+							<liferay-frontend:vertical-card-footer>
+								<liferay-ui:message arguments="<%= usersCount %>" key="x-users" />
+							</liferay-frontend:vertical-card-footer>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= Objects.equals(editSiteTeamAssignmentsUserGroupsDisplayContext.getDisplayStyle(), "descriptive") %>'>
+					<liferay-ui:search-container-column-icon
+						icon="users"
+						toggleRowChecker="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5><%= userGroup.getName() %></h5>
+
+						<h6 class="text-default">
+							<span><%= userGroup.getDescription() %></span>
+						</h6>
+
+						<h6 class="text-default">
+							<span><liferay-ui:message arguments="<%= usersCount %>" key="x-users" /></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/edit_team_assignments_user_groups_action.jsp"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="name"
+						orderable="<%= true %>"
+						property="name"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="description"
+						orderable="<%= true %>"
+						property="description"
+					/>
+
+					<liferay-ui:search-container-column-text
+						name="users"
+						value="<%= String.valueOf(usersCount) %>"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						path="/edit_team_assignments_user_groups_action.jsp"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -20,6 +20,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -32,41 +33,56 @@ import java.sql.ResultSet;
  */
 public class UpgradeArticleAssets extends UpgradeProcess {
 
-	public UpgradeArticleAssets(AssetEntryLocalService assetEntryLocalService) {
+	public UpgradeArticleAssets(
+		AssetEntryLocalService assetEntryLocalService, Portal portal) {
+
 		_assetEntryLocalService = assetEntryLocalService;
+		_portal = portal;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateArticleAssets();
+		updateDefaultDraftArticleAssets();
 	}
 
-	protected void updateArticleAssets() throws Exception {
+	protected void updateDefaultDraftArticleAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			try (PreparedStatement ps = connection.prepareStatement(
-					StringBundler.concat(
-						"select resourcePrimKey, indexable from ",
-						"JournalArticle where version = ",
-						String.valueOf(JournalArticleConstants.VERSION_DEFAULT),
-						" and status = ",
-						String.valueOf(WorkflowConstants.STATUS_DRAFT)));
-				ResultSet rs = ps.executeQuery()) {
+			long[] companyIds = _portal.getCompanyIds();
 
-				while (rs.next()) {
-					long resourcePrimKey = rs.getLong("resourcePrimKey");
-					boolean indexable = rs.getBoolean("indexable");
+			for (long companyId : companyIds) {
+				updateDefaultDraftArticleAssets(companyId);
+			}
+		}
+	}
 
-					AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-						JournalArticle.class.getName(), resourcePrimKey);
+	protected void updateDefaultDraftArticleAssets(long companyId)
+		throws Exception {
 
-					_assetEntryLocalService.updateEntry(
-						assetEntry.getClassName(), assetEntry.getClassPK(),
-						null, null, indexable, assetEntry.isVisible());
-				}
+		try (PreparedStatement ps = connection.prepareStatement(
+				StringBundler.concat(
+					"select resourcePrimKey, indexable from JournalArticle ",
+					"where companyid = ", String.valueOf(companyId), " and ",
+					"version = ",
+					String.valueOf(JournalArticleConstants.VERSION_DEFAULT),
+					" and status = ",
+					String.valueOf(WorkflowConstants.STATUS_DRAFT)));
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long resourcePrimKey = rs.getLong("resourcePrimKey");
+				boolean indexable = rs.getBoolean("indexable");
+
+				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+					JournalArticle.class.getName(), resourcePrimKey);
+
+				_assetEntryLocalService.updateEntry(
+					assetEntry.getClassName(), assetEntry.getClassPK(), null,
+					null, indexable, assetEntry.isVisible());
 			}
 		}
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;
+	private final Portal _portal;
 
 }

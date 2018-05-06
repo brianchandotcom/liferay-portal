@@ -507,11 +507,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 							insertSearchPS.setLong(1, increment());
 							insertSearchPS.setLong(2, companyId);
-							insertSearchPS.setBoolean(3, privateLayout);
-							insertSearchPS.setLong(4, layoutId);
+							insertSearchPS.setLong(3, groupId);
+							insertSearchPS.setBoolean(4, privateLayout);
+							insertSearchPS.setLong(5, layoutId);
 							insertSearchPS.setString(
-								5, journalContentSearchPortletId);
-							insertSearchPS.setString(6, articleId);
+								6, journalContentSearchPortletId);
+							insertSearchPS.setString(7, articleId);
 
 							insertSearchPS.executeUpdate();
 						}

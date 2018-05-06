@@ -24,29 +24,16 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 	items="<%= selectThemeDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= selectThemeDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= selectThemeDisplayContext.getOrderByCol() %>"
-			orderByType="<%= selectThemeDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= selectThemeDisplayContext.getPortletURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= selectThemeDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= selectThemeDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	componentId="siteAdminWebManagementToolbar"
+	filterItems="<%= selectThemeDisplayContext.getFilterDropdownItems() %>"
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+	sortingOrder="<%= selectThemeDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectThemeDisplayContext.getSortingURL() %>"
+	totalItems="<%= selectThemeDisplayContext.getTotalItems() %>"
+	viewTypes="<%= selectThemeDisplayContext.getViewTypeItems() %>"
+/>
 
 <c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PropsValues.AUTO_DEPLOY_ENABLED %>">
 

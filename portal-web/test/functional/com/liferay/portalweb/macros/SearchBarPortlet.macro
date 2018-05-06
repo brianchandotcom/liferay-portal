@@ -1,4 +1,21 @@
 <definition>
+	<command name="configureDestination">
+		<execute function="Click" locator1="Search#SETUP_DESTINATION" />
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<if>
+			<isset var="destinationPage" />
+			<then>
+				<execute function="Type" locator1="SearchBarConfiguration#DESTINATION_PAGE" value1="${destinationPage}" />
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="configureParameterNamesPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Search Bar" />

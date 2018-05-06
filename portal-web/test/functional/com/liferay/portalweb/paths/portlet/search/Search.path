@@ -55,6 +55,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETUP_DESTINATION</td>
+	<td>//a[.='Set up its destination to make it visible.']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEMPLATE_SEARCH_BAR</td>
 	<td>//input[contains(@id,'templateSearch') and @type='text'] | //input[contains(@data-qa-id,'searchInput')]</td>
 	<td></td>

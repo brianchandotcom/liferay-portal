@@ -24,45 +24,20 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 	items="<%= selectTeamDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= selectTeamDisplayContext.getClearResultsURL() %>"
+	componentId="selectTeamWebManagementToolbar"
 	disabled="<%= selectTeamDisplayContext.isDisabledManagementBar() %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= selectTeamDisplayContext.getPortletURL() %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= selectTeamDisplayContext.getOrderByCol() %>"
-				orderByType="<%= selectTeamDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"name"} %>'
-				portletURL="<%= selectTeamDisplayContext.getPortletURL() %>"
-			/>
-
-			<c:if test="<%= selectTeamDisplayContext.isShowSearch() %>">
-				<li>
-					<aui:form action="<%= selectTeamDisplayContext.getPortletURL() %>" name="searchFm">
-						<liferay-ui:input-search
-							markupView="lexicon"
-						/>
-					</aui:form>
-				</li>
-			</c:if>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= selectTeamDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	filterItems="<%= selectTeamDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= selectTeamDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= selectTeamDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= selectTeamDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectTeamDisplayContext.getSortingURL() %>"
+	totalItems="<%= selectTeamDisplayContext.getTotalItems() %>"
+	viewTypes="<%= selectTeamDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="selectTeamFm">
 	<liferay-ui:search-container

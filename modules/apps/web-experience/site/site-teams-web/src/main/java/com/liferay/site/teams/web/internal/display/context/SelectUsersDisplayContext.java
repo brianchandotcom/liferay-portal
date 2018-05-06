@@ -15,8 +15,13 @@
 package com.liferay.site.teams.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -29,6 +34,7 @@ import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.sitesadmin.search.UserTeamChecker;
@@ -38,7 +44,9 @@ import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -57,6 +65,14 @@ public class SelectUsersDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+	}
+
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	public String getDisplayStyle() {
@@ -83,6 +99,28 @@ public class SelectUsersDisplayContext {
 			_renderResponse.getNamespace() + "selectUser");
 
 		return _eventName;
+	}
+
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public String getKeywords() {
@@ -153,6 +191,22 @@ public class SelectUsersDisplayContext {
 		return _redirect;
 	}
 
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
 	public Team getTeam() {
 		if (_team != null) {
 			return _team;
@@ -173,7 +227,7 @@ public class SelectUsersDisplayContext {
 		return _teamId;
 	}
 
-	public int getTotal() {
+	public int getTotalItems() {
 		SearchContainer userSearchContainer = getUserSearchContainer();
 
 		return userSearchContainer.getTotal();
@@ -229,8 +283,24 @@ public class SelectUsersDisplayContext {
 		return _userSearchContainer;
 	}
 
+	public List<ViewTypeItem> getViewTypeItems() {
+		PortletURL portletURL = _renderResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "changeDisplayStyle");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
+	}
+
 	public boolean isDisabledManagementBar() {
-		if (getTotal() <= 0) {
+		if (getTotalItems() <= 0) {
 			return true;
 		}
 
@@ -238,7 +308,7 @@ public class SelectUsersDisplayContext {
 	}
 
 	public boolean isShowSearch() {
-		if (getTotal() > 0) {
+		if (getTotalItems() > 0) {
 			return true;
 		}
 
@@ -247,6 +317,45 @@ public class SelectUsersDisplayContext {
 		}
 
 		return false;
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "first-name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "first-name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "first-name"));
+					});
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "screen-name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "screen-name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "screen-name"));
+					});
+			}
+		};
 	}
 
 	private String _displayStyle;

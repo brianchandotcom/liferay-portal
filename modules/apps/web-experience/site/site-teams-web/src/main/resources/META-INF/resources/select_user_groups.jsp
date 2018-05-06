@@ -24,47 +24,20 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 	items="<%= selectUserGroupsDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= selectUserGroupsDisplayContext.getClearResultsURL() %>"
+	componentId="selectUserGroupsWebManagementToolbar"
 	disabled="<%= selectUserGroupsDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= selectUserGroupsDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= selectUserGroupsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= selectUserGroupsDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= selectUserGroupsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= selectUserGroupsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "description"} %>'
-			portletURL="<%= selectUserGroupsDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= selectUserGroupsDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= selectUserGroupsDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= selectUserGroupsDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= selectUserGroupsDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= selectUserGroupsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectUserGroupsDisplayContext.getSortingURL() %>"
+	totalItems="<%= selectUserGroupsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= selectUserGroupsDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="selectUserGroupFm">
 	<liferay-ui:search-container

@@ -670,8 +670,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement selectPS = connection.prepareStatement(
 				"select id_, groupId, content from JournalArticle where " +
-					"(content like '%link_to_layout%') and DDMStructureKey " +
-						"!= ''");
+					"(content like '%link_to_layout%') and structureId != ''");
 			PreparedStatement updatePS =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection.prepareStatement(

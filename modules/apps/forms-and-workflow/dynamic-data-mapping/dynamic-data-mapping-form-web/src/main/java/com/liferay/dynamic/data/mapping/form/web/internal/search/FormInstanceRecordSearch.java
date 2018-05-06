@@ -83,6 +83,12 @@ public class FormInstanceRecordSearch
 			EMPTY_RESULTS_MESSAGE);
 
 		try {
+			String keywords = ParamUtil.getString(portletRequest, "keywords");
+
+			if (Validator.isNotNull(keywords)) {
+				setSearch(true);
+			}
+
 			PortalPreferences preferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					portletRequest);

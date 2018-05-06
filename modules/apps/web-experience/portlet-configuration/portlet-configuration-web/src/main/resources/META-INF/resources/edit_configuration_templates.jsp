@@ -17,48 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/edit_configuration_templates.jsp");
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-portletURL.setParameter("portletResource", portletResource);
-
-SearchContainer<ArchivedSettings> archivedSettingsSearch = new SearchContainer<ArchivedSettings>(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-configuration-templates");
-
-List<ArchivedSettings> archivedSettingsList = SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(scopeGroupId, selPortlet.getRootPortletId());
-
-boolean orderByAsc = false;
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator orderByComparator = null;
-
-if (orderByCol.equals("modified-date")) {
-	orderByComparator = new ArchivedSettingsNameComparator(orderByAsc);
-}
-else {
-	orderByComparator = new ArchivedSettingsModifiedDateComparator(orderByAsc);
-}
-
-archivedSettingsList = ListUtil.sort(archivedSettingsList, orderByComparator);
-
-int archivedSettingsCount = archivedSettingsList.size();
-
-archivedSettingsSearch.setTotal(archivedSettingsCount);
-
-archivedSettingsList = ListUtil.subList(archivedSettingsList, archivedSettingsSearch.getStart(), archivedSettingsSearch.getEnd());
-
-archivedSettingsSearch.setResults(archivedSettingsList);
+PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplayContext = new PortletConfigurationTemplatesDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <div class="portlet-configuration-edit-templates">
@@ -72,44 +31,33 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
 		<div class="portlet-configuration-body-content">
 			<clay:navigation-bar
-				items="<%=
-					new JSPNavigationItemList(pageContext) {
-						{
-							add(
-								navigationItem -> {
-									navigationItem.setActive(true);
-									navigationItem.setHref(portletURL);
-									navigationItem.setLabel(LanguageUtil.get(request, "configuration-templates"));
-								});
-						}
-					}
-				%>"
+				items="<%= portletConfigurationTemplatesDisplayContext.getNavigationItems() %>"
 			/>
 
 			<liferay-frontend:management-bar
-				disabled="<%= archivedSettingsCount <= 0 %>"
+				disabled="<%= portletConfigurationTemplatesDisplayContext.isDisabledManagementBar() %>"
 				includeCheckBox="<%= true %>"
 				searchContainerId="archivedSettings"
 			>
 				<liferay-frontend:management-bar-filters>
 					<liferay-frontend:management-bar-navigation
 						navigationKeys='<%= new String[] {"all"} %>'
-						portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+						portletURL="<%= portletConfigurationTemplatesDisplayContext.getPortletURL() %>"
 					/>
 
 					<liferay-frontend:management-bar-sort
-						orderByCol="<%= orderByCol %>"
-						orderByType="<%= orderByType %>"
+						orderByCol="<%= portletConfigurationTemplatesDisplayContext.getOrderByCol() %>"
+						orderByType="<%= portletConfigurationTemplatesDisplayContext.getOrderByType() %>"
 						orderColumns='<%= new String[] {"name", "modified-date"} %>'
-						portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+						portletURL="<%= portletConfigurationTemplatesDisplayContext.getPortletURL() %>"
 					/>
 				</liferay-frontend:management-bar-filters>
 
 				<liferay-frontend:management-bar-buttons>
 					<liferay-frontend:management-bar-display-buttons
 						displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-						portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-						selectedDisplayStyle="<%= displayStyle %>"
+						portletURL="<%= portletConfigurationTemplatesDisplayContext.getPortletURL() %>"
+						selectedDisplayStyle="<%= portletConfigurationTemplatesDisplayContext.getDisplayStyle() %>"
 					/>
 				</liferay-frontend:management-bar-buttons>
 
@@ -138,8 +86,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 
 				<liferay-ui:search-container
 					id="archivedSettings"
-					rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-					searchContainer="<%= archivedSettingsSearch %>"
+					searchContainer="<%= portletConfigurationTemplatesDisplayContext.getArchivedSettingsSearchContainer() %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.portal.kernel.settings.ArchivedSettings"
@@ -147,7 +94,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 						modelVar="archivedSettings"
 					>
 						<c:choose>
-							<c:when test='<%= displayStyle.equals("descriptive") %>'>
+							<c:when test='<%= Objects.equals(portletConfigurationTemplatesDisplayContext.getDisplayStyle(), "descriptive") %>'>
 								<liferay-ui:search-container-column-icon
 									icon="archive"
 								/>
@@ -168,7 +115,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 									path="/configuration_template_action.jsp"
 								/>
 							</c:when>
-							<c:when test='<%= displayStyle.equals("icon") %>'>
+							<c:when test='<%= Objects.equals(portletConfigurationTemplatesDisplayContext.getDisplayStyle(), "icon") %>'>
 
 								<%
 								row.setCssClass("entry-card lfr-asset-item");
@@ -188,7 +135,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 									</liferay-frontend:icon-vertical-card>
 								</liferay-ui:search-container-column-text>
 							</c:when>
-							<c:when test='<%= displayStyle.equals("list") %>'>
+							<c:when test='<%= Objects.equals(portletConfigurationTemplatesDisplayContext.getDisplayStyle(), "list") %>'>
 								<liferay-ui:search-container-column-text
 									name="name"
 									truncate="<%= true %>"
@@ -216,7 +163,7 @@ archivedSettingsSearch.setResults(archivedSettingsList);
 					</liferay-ui:search-container-row>
 
 					<liferay-ui:search-iterator
-						displayStyle="<%= displayStyle %>"
+						displayStyle="<%= portletConfigurationTemplatesDisplayContext.getDisplayStyle() %>"
 						markupView="lexicon"
 					/>
 				</liferay-ui:search-container>

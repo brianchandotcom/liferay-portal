@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import java.util.List;
 
 /**
@@ -46,11 +47,6 @@ public class UpgradeArticleSystemEvents extends UpgradeProcess {
 
 		_portal = portal;
 		_systemEventLocalService = systemEventLocalService;
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		deleteJournalArticleSystemEvents();
 	}
 
 	protected void deleteJournalArticleSystemEvents() throws Exception {
@@ -93,7 +89,7 @@ public class UpgradeArticleSystemEvents extends UpgradeProcess {
 
 				try (PreparedStatement ps = connection.prepareStatement(
 						"select articleId from JournalArticleResource where " +
-							"JournalArticleResource.uuid_ = ? AND " +
+							"JournalArticleResource.uuid_ = ? and " +
 								"JournalArticleResource.groupId = ?")) {
 
 					ps.setString(1, systemEvent.getClassUuid());
@@ -135,6 +131,11 @@ public class UpgradeArticleSystemEvents extends UpgradeProcess {
 		}
 	}
 
+	@Override
+	protected void doUpgrade() throws Exception {
+		deleteJournalArticleSystemEvents();
+	}
+
 	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
 		"com.liferay.journal.model.JournalArticle";
 
@@ -145,4 +146,3 @@ public class UpgradeArticleSystemEvents extends UpgradeProcess {
 	private final SystemEventLocalService _systemEventLocalService;
 
 }
-

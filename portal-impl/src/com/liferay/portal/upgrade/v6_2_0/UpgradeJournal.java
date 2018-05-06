@@ -465,13 +465,13 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			PreparedStatement selectSearchPS = connection.prepareStatement(
 				"select companyId, privateLayout, layoutId, portletId from " +
 					"JournalContentSearch where JournalContentSearch.groupId " +
-						"= ? AND JournalContentSearch.articleId = ?");
+						"= ? and JournalContentSearch.articleId = ?");
 			PreparedStatement deleteSearchPS = connection.prepareStatement(
-				"DELETE FROM JournalContentSearch WHERE" +
-					"JournalContentSearch.groupId = ? AND" +
+				"delete from JournalContentSearch where " +
+					"JournalContentSearch.groupId = ? and " +
 						"JournalContentSearch.articleId = ?");
 			PreparedStatement insertSearchPS = connection.prepareStatement(
-				"INSERT INTO JournalContentSearch(contentSearchId, " +
+				"insert into JournalContentSearch(contentSearchId, " +
 					"companyId, groupId, privateLayout, layoutId, portletId, " +
 						"articleId) values (?, ?, ?, ?, ?, ?, ?)")) {
 

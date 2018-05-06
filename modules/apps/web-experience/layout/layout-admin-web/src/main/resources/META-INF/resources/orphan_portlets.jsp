@@ -17,20 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-
-OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(liferayPortletRequest, liferayPortletResponse);
+OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
 Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
-portletURL.setParameter("backURL", backURL);
+List<Portlet> portlets = orphanPortletsDisplayContext.getOrphanPortlets();
 
 portletDisplay.setDescription(LanguageUtil.get(request, "orphan-portlets-description"));
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
 
 renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 %>
@@ -39,41 +34,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 	items="<%= orphanPortletsDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionItems="<%= orphanPortletsDisplayContext.getActionDropdownItems() %>"
+	componentId="portletsManagementToolbar"
+	filterItems="<%= orphanPortletsDisplayContext.getFilterDropdownItems() %>"
 	searchContainerId="portlets"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orphanPortletsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= orphanPortletsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= orphanPortletsDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteOrphanPortlets"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	showSearch="<%= false %>"
+	sortingOrder="<%= orphanPortletsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= orphanPortletsDisplayContext.getSortingURL() %>"
+	totalItems="<%= portlets.size() %>"
+	viewTypes="<%= orphanPortletsDisplayContext.getViewTypeItems() %>"
+/>
 
 <div class="container-fluid-1280">
 	<div class="text-muted">
@@ -89,7 +60,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 
 	<portlet:actionURL name="/layout/delete_orphan_portlets" var="deleteOrphanPortletsURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="backURL" value="<%= backURL %>" />
+		<portlet:param name="backURL" value="<%= orphanPortletsDisplayContext.getBackURL() %>" />
 		<portlet:param name="selPlid" value="<%= String.valueOf(orphanPortletsDisplayContext.getSelPlid()) %>" />
 	</portlet:actionURL>
 
@@ -97,11 +68,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 		<liferay-ui:search-container
 			deltaConfigurable="<%= false %>"
 			id="portlets"
-			iteratorURL="<%= portletURL %>"
+			iteratorURL="<%= orphanPortletsDisplayContext.getPortletURL() %>"
 			rowChecker="<%= selLayout.isLayoutPrototypeLinkActive() ? null : new EmptyOnClickRowChecker(liferayPortletResponse) %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= orphanPortletsDisplayContext.getOrphanPortlets() %>"
+				results="<%= portlets %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -194,12 +165,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 </div>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteOrphanPortlets').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+	window.<portlet:namespace />deleteOrphanPortlets = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
 		}
-	);
+	}
 </aui:script>

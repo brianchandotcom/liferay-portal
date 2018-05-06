@@ -17,65 +17,23 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String themeId = ParamUtil.getString(request, "themeId");
-
-String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectTheme");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/select_theme.jsp");
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("themeId", themeId);
-portletURL.setParameter("eventName", eventName);
-
-List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
-
-themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")));
+SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
 <clay:navigation-bar
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel(LanguageUtil.get(request, "available-themes"));
-					});
-			}
-		}
-	%>"
+	items="<%= selectThemeDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	componentId="siteAdminWebManagementToolbar"
+	filterItems="<%= selectThemeDisplayContext.getFilterDropdownItems() %>"
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+	sortingOrder="<%= selectThemeDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectThemeDisplayContext.getSortingURL() %>"
+	totalItems="<%= selectThemeDisplayContext.getTotalItems() %>"
+	viewTypes="<%= selectThemeDisplayContext.getViewTypeItems() %>"
+/>
 
 <c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PropsValues.AUTO_DEPLOY_ENABLED %>">
 
@@ -91,13 +49,8 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 <aui:form cssClass="container-fluid-1280" name="selectThemeFm">
 	<liferay-ui:search-container
 		id="themes"
-		iteratorURL="<%= portletURL %>"
-		total="<%= themes.size() %>"
+		searchContainer="<%= selectThemeDisplayContext.getThemesSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(themes, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Theme"
 			escapedModel="<%= true %>"
@@ -114,7 +67,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 			%>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(selectThemeDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-image
 						src='<%= theme.getStaticResourcePath() + theme.getImagesPath() + "/thumbnail.png" %>'
 					/>
@@ -135,7 +88,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 						</c:if>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
+				<c:when test='<%= Objects.equals(selectThemeDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
 					String author = StringPool.NBSP;
@@ -158,7 +111,7 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
+				<c:when test='<%= Objects.equals(selectThemeDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						name="name"
 						truncate="<%= true %>"
@@ -185,12 +138,12 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= selectThemeDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectThemeFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectThemeFm', '<%= HtmlUtil.escapeJS(selectThemeDisplayContext.getEventName()) %>');
 </aui:script>

@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
-import java.util.Locale;
-import java.util.Map;
-
 /**
  * @author Andrea Di Giorgi
  */
@@ -33,17 +30,28 @@ public class CommerceUserSegmentEntryTestUtil {
 			long groupId, boolean system)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
-		String key = RandomTestUtil.randomString();
-		boolean active = RandomTestUtil.randomBoolean();
-		double priority = RandomTestUtil.randomDouble();
+		return addCommerceUserSegmentEntry(
+			groupId, system, RandomTestUtil.randomBoolean(), -1, null);
+	}
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+	public static CommerceUserSegmentEntry addCommerceUserSegmentEntry(
+			long groupId, boolean active, boolean system, long userId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (serviceContext == null) {
+			serviceContext = ServiceContextTestUtil.getServiceContext(groupId);
+		}
+
+		if (userId > 0) {
+			serviceContext.setUserId(userId);
+		}
 
 		return CommerceUserSegmentEntryLocalServiceUtil.
 			addCommerceUserSegmentEntry(
-				nameMap, key, active, system, priority, serviceContext);
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), active, system,
+				RandomTestUtil.randomDouble(), serviceContext);
 	}
 
 }

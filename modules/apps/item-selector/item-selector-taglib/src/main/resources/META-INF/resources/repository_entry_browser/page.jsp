@@ -74,7 +74,7 @@ if (Validator.isNotNull(keywords)) {
 	/>
 </c:if>
 
-<div class="container-fluid-1280 lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
+<div class="container-fluid container-fluid-max-xl lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
 
 	<%
 	long folderId = ParamUtil.getLong(request, "folderId");

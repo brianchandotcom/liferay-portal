@@ -36,14 +36,12 @@ public class DefaultFacetProcessor
 	public void processFacet(
 		SearchRequestBuilder searchRequestBuilder, Facet facet) {
 
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
-
-		String fieldName = facetConfiguration.getFieldName();
-
 		TermsAggregationBuilder termsAggregationBuilder =
-			AggregationBuilders.terms(fieldName);
+			AggregationBuilders.terms(getAggregationName(facet));
 
-		termsAggregationBuilder.field(fieldName);
+		termsAggregationBuilder.field(facet.getFieldName());
+
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
 		JSONObject data = facetConfiguration.getData();
 
@@ -60,6 +58,14 @@ public class DefaultFacetProcessor
 		}
 
 		searchRequestBuilder.addAggregation(termsAggregationBuilder);
+	}
+
+	protected String getAggregationName(Facet facet) {
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+
+		JSONObject data = facetConfiguration.getData();
+
+		return data.getString("aggregationName", facet.getFieldName());
 	}
 
 }

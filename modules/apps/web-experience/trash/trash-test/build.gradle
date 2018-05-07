@@ -1,8 +1,0 @@
-dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile project(":apps:web-experience:trash:trash-api")
-	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
-	testIntegrationCompile project(":core:petra:petra-string")
-	testIntegrationCompile project(":core:registry-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

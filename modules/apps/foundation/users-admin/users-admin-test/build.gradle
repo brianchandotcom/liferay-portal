@@ -3,8 +3,8 @@ targetCompatibility = "1.8"
 
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:foundation:users-admin:users-admin-api")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

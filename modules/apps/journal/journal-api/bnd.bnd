@@ -1,0 +1,23 @@
+Bundle-Name: Liferay Journal API
+Bundle-SymbolicName: com.liferay.journal.api
+Bundle-Version: 3.0.0
+Export-Package:\
+	com.liferay.journal.configuration,\
+	com.liferay.journal.constants,\
+	com.liferay.journal.exception,\
+	com.liferay.journal.model,\
+	com.liferay.journal.service,\
+	com.liferay.journal.service.persistence,\
+	com.liferay.journal.util,\
+	com.liferay.journal.util.comparator
+Import-Package:\
+	com.liferay.portal.kernel.model;version="[1.0,2.1)",\
+	\
+	*
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.journal.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.journal.lang)"

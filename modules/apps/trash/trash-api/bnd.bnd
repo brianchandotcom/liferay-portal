@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Trash API
+Bundle-SymbolicName: com.liferay.trash.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.trash,\
+	com.liferay.trash.exception,\
+	com.liferay.trash.model,\
+	com.liferay.trash.service,\
+	com.liferay.trash.service.persistence,\
+	com.liferay.trash.util,\
+	com.liferay.trash.util.comparator

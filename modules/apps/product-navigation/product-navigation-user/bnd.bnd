@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Product Navigation User
+Bundle-SymbolicName: com.liferay.product.navigation.user
+Bundle-Version: 3.0.0
+Web-ContextPath: /product-navigation-user

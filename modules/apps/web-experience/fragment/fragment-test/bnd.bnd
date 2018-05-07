@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Fragment Test
-Bundle-SymbolicName: com.liferay.fragment.test
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Fragment
--includeresource: test-classes/integration

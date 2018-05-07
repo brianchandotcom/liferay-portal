@@ -14,10 +14,10 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":apps:adaptive-media:adaptive-media-api")
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-api")
+	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
 	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
-	compileOnly project(":apps:web-experience:export-import:export-import-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
 

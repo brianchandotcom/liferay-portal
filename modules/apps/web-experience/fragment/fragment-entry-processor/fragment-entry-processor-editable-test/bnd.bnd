@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Fragment Entry Processor Editable Test
-Bundle-SymbolicName: com.liferay.fragment.entry.processor.editable.test
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Fragment
--includeresource:\
-	test-classes/integration,\
-	@lib/jsoup.jar

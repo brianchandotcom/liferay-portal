@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Product Navigation Taglib
+Bundle-SymbolicName: com.liferay.product.navigation.taglib
+Bundle-Version: 3.0.0
+Export-Package:\
+	com.liferay.product.navigation.taglib.servlet,\
+	com.liferay.product.navigation.taglib.servlet.taglib
+Liferay-JS-Config: /META-INF/resources/config.js
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/product-navigation";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /product-navigation-taglib

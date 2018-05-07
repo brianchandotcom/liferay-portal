@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Layout Set Prototype Web
+Bundle-SymbolicName: com.liferay.layout.set.prototype.web
+Bundle-Version: 2.0.0
+-dsannotations-options: inherit

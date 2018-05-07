@@ -1,0 +1,12 @@
+buildService {
+	apiDir = "../html-preview-api/src/main/java"
+	testDir = "../html-preview-test/src/testIntegration/java"
+}
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
+	compileOnly project(":apps:html-preview:html-preview-api")
+	compileOnly project(":core:petra:petra-string")
+}

@@ -5,8 +5,8 @@ dependencies {
 	testIntegrationCompile project(":apps:blogs:blogs-recent-bloggers-api")
 	testIntegrationCompile project(":apps:blogs:blogs-service")
 	testIntegrationCompile project(":apps:blogs:blogs-test-util")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:export-import:export-import-api")
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

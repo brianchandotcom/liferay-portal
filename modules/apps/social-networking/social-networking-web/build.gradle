@@ -12,10 +12,10 @@ dependencies {
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 	compileOnly project(":apps:ip-geocoder:ip-geocoder-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:rss:rss-api")
+	compileOnly project(":apps:rss:rss-taglib")
 	compileOnly project(":apps:social-networking:social-networking-api")
 	compileOnly project(":apps:social:social-activities-taglib")
-	compileOnly project(":apps:web-experience:rss:rss-api")
-	compileOnly project(":apps:web-experience:rss:rss-taglib")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

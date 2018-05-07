@@ -8,12 +8,12 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-3"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:message-boards:message-boards-test-util")
 	testIntegrationCompile project(":apps:social:social-activity-test-util")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:web-experience:trash:trash-api")
-	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
+	testIntegrationCompile project(":apps:trash:trash-api")
+	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

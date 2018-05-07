@@ -1,0 +1,18 @@
+Bundle-Name: Liferay Site Navigation Admin Web
+Bundle-SymbolicName: com.liferay.site.navigation.admin.web
+Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/js/config.js
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.site.navigation.lang)";\
+		resource.bundle.base.name="content.Language",\
+	soy;\
+		type="site-navigation-admin-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.site.navigation.lang)",\
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+Web-ContextPath: /site-navigation-admin-web
+-dsannotations-options: inherit

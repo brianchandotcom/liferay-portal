@@ -12,14 +12,14 @@ dependencies {
 	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	testCompile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testCompile project(":apps:web-experience:export-import:export-import-api")
-	testCompile project(":apps:web-experience:export-import:export-import-service")
+	testCompile project(":apps:export-import:export-import-api")
+	testCompile project(":apps:export-import:export-import-service")
 	testCompile project(":core:petra:petra-lang")
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

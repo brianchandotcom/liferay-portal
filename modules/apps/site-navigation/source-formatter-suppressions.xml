@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="MemberNameCheck" files="modules/apps/site-navigation/site-navigation-language-web/src/main/java/com/liferay/site/navigation/language/web/internal/upgrade/v1_0_0/UpgradePortletPreferences\.java" />
+	</checkstyle>
+</suppressions>

@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Site Navigation Taglib
+Bundle-SymbolicName: com.liferay.site.navigation.taglib
+Bundle-Version: 3.0.0
+Export-Package: com.liferay.site.navigation.taglib.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/site-navigation";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /site-navigation-taglib

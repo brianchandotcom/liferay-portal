@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Asset Tags Navigation Web
+Bundle-SymbolicName: com.liferay.asset.tags.navigation.web
+Bundle-Version: 4.0.0
+Web-ContextPath: /asset-tags-navigation-web
+-dsannotations-options: inherit

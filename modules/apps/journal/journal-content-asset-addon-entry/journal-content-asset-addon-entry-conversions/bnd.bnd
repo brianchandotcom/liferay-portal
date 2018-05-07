@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Journal Content Asset Addon Entry Conversions
+Bundle-SymbolicName: com.liferay.journal.content.asset.addon.entry.conversions
+Bundle-Version: 3.0.0
+Web-ContextPath: /journal-content-asset-addon-entry-conversions

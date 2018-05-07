@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Asset Publisher API
-Bundle-SymbolicName: com.liferay.asset.publisher.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.asset.publisher.constants,\
-	com.liferay.asset.publisher.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Asset

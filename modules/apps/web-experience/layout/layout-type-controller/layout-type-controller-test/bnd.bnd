@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Layout Type Controller Test
-Bundle-SymbolicName: com.liferay.layout.type.controller.test
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Site Management
--includeresource: test-classes/integration

@@ -1,0 +1,14 @@
+Bundle-Name: Liferay Layout Item Selector Web
+Bundle-SymbolicName: com.liferay.layout.item.selector.web
+Bundle-Version: 2.0.0
+Provide-Capability:\
+	soy;\
+		type="layout-item-selector-web";\
+		version:Version="${Bundle-Version}"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.layout.admin.web)"
+	osgi.extender;\
+		filter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/soy))"
+Web-ContextPath: /layout-item-selector-web
+-dsannotations-options: inherit

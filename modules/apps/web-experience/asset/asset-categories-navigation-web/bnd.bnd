@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Asset Categories Navigation Web
-Bundle-SymbolicName: com.liferay.asset.categories.navigation.web
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Asset
-Web-ContextPath: /asset-categories-navigation-web

@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Product Navigation Product Menu Theme Contributor
-Bundle-SymbolicName: com.liferay.product.navigation.product.menu.theme.contributor
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Product Navigation
-Liferay-Theme-Contributor-Type: product-navigation-product-menu
-Web-ContextPath: /product-navigation-product-menu-theme-contributor

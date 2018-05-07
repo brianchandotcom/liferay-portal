@@ -1,0 +1,16 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+copyLibs {
+	enabled = true
+}
+
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:fragment:fragment-api")
+	testIntegrationCompile project(":apps:fragment:fragment-service")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

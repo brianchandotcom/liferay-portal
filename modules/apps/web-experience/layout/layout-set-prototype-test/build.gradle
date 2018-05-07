@@ -1,6 +1,0 @@
-dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:web-experience:layout:layout-set-prototype-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

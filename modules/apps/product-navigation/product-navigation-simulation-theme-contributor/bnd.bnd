@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Product Navigation Simulation Theme Contributor
+Bundle-SymbolicName: com.liferay.product.navigation.simulation.theme.contributor
+Bundle-Version: 3.0.0
+Liferay-Theme-Contributor-Type: simulation-panel
+Web-ContextPath: /product-navigation-simulation-theme-contributor

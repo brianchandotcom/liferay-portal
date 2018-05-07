@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Layout Type Controller Link To Page
+Bundle-SymbolicName: com.liferay.layout.type.controller.link.to.page
+Bundle-Version: 1.0.0
+Web-ContextPath: /layout-type-controller-link-to-page

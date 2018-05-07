@@ -1,0 +1,4 @@
+Bundle-Name: Liferay XSL Content Web
+Bundle-SymbolicName: com.liferay.xsl.content.web
+Bundle-Version: 3.0.0
+Web-ContextPath: /xsl-content-web

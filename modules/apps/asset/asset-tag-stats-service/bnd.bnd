@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Asset Tag Stats Service
+Bundle-SymbolicName: com.liferay.asset.tag.stats.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

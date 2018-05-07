@@ -9,11 +9,11 @@ dependencies {
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-image-api")
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-test-util")
 	testIntegrationCompile project(":apps:blogs:blogs-api")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":core:petra:petra-concurrent")
 	testIntegrationCompile project(":core:petra:petra-memory")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 
-	testIntegrationRuntime project(":apps:web-experience:asset:asset-test-util")
+	testIntegrationRuntime project(":apps:asset:asset-test-util")
 }

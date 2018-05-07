@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<checkstyle>
-		<suppress checks="StaticVariableNameCheck" files="modules/apps/web-experience/journal/journal-api/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
-	</checkstyle>
-</suppressions>

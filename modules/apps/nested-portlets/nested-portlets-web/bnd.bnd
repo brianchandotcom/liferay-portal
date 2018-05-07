@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Nested Portlets Web
+Bundle-SymbolicName: com.liferay.nested.portlets.web
+Bundle-Version: 3.0.0
+Web-ContextPath: /nested-portlets-web

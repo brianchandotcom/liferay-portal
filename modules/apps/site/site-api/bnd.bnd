@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Site API
+Bundle-SymbolicName: com.liferay.site.api
+Bundle-Version: 3.0.0
+Export-Package:\
+	com.liferay.site.constants,\
+	com.liferay.site.exception,\
+	com.liferay.site.initializer,\
+	com.liferay.site.model,\
+	com.liferay.site.model.adapter,\
+	com.liferay.site.service,\
+	com.liferay.site.service.persistence,\
+	com.liferay.site.util

@@ -1,0 +1,7 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:portlet-display-template:portlet-display-template-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

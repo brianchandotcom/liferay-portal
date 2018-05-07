@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Staging Bar Web
-Bundle-SymbolicName: com.liferay.staging.bar.web
-Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Data Management
-Web-ContextPath: /staging-bar-web

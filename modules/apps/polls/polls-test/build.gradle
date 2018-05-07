@@ -1,8 +1,8 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:export-import:export-import-api")
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:polls:polls-api")
 	testIntegrationCompile project(":apps:polls:polls-service")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

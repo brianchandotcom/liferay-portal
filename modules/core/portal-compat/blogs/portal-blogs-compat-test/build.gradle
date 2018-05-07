@@ -6,7 +6,7 @@ dependencies {
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:subscription:subscription-api")
-	testIntegrationCompile project(":apps:web-experience:trash:trash-api")
-	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
+	testIntegrationCompile project(":apps:trash:trash-api")
+	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -1,8 +1,0 @@
-copyLibs {
-	enabled = true
-}
-
-dependencies {
-	testIntegrationCompile project (":apps:web-experience:html-preview:html-preview-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

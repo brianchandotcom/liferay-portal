@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Asset Test Utilities
-Bundle-SymbolicName: com.liferay.asset.test.util
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.asset.test.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Asset

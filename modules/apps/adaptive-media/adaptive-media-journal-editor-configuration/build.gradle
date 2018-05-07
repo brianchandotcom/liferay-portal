@@ -5,8 +5,8 @@ dependencies {
 	compileOnly project(":apps:adaptive-media:adaptive-media-image-item-selector-api");
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
-	compileOnly project(":apps:web-experience:journal:journal-api")
-	compileOnly project(":apps:web-experience:journal:journal-item-selector-api")
+	compileOnly project(":apps:journal:journal-api")
+	compileOnly project(":apps:journal:journal-item-selector-api")
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

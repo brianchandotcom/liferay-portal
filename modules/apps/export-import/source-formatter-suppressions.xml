@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="StaticVariableNameCheck" files="modules/apps/export-import/export-import-web/src/main/java/com/liferay/exportimport/web/internal/configuration/ExportImportWebConfigurationValues\.java" />
+	</checkstyle>
+</suppressions>

@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Asset Display Implementation
-Bundle-SymbolicName: com.liferay.asset.display.impl
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Asset

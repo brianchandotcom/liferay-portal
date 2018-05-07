@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Asset Display Page API
+Bundle-SymbolicName: com.liferay.asset.display.page.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.asset.display.page.exception,\
+	com.liferay.asset.display.page.model,\
+	com.liferay.asset.display.page.service,\
+	com.liferay.asset.display.page.service.persistence

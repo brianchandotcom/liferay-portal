@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Site Navigation Language API
+Bundle-SymbolicName: com.liferay.site.navigation.language.api
+Bundle-Version: 2.0.0
+Export-Package: com.liferay.site.navigation.language.constants

@@ -1,0 +1,327 @@
+{namespace com.liferay.layout.admin.web.FragmentsEditor}
+
+/**
+ * FragmentsEditor
+ */
+{template .render}
+	{@param availableLanguages: ?}
+	{@param defaultEditorConfiguration: ?}
+	{@param defaultLanguageId: string}
+	{@param classPK: ?}
+	{@param fragmentCollections: list<[
+		fragmentEntries: list<[
+			fragmentEntryId: string,
+			imagePreviewURL: string,
+			name: string
+		]>,
+		fragmentCollectionId: string,
+		name: string
+	]>}
+	{@param mappingFieldsURL: string}
+	{@param imageSelectorURL: string}
+	{@param languageId: string}
+	{@param portletNamespace: string}
+	{@param spritemap: string}
+	{@param? _contextualSidebarVisible: bool}
+	{@param? _dirty: bool}
+	{@param? _handleEditableChanged: any}
+	{@param? _handleFragmentCollectionEntryClick: any}
+	{@param? _handleFragmentMove: any}
+	{@param? _handleFragmentRemove: any}
+	{@param? _handleHideContextualSidebar: any}
+	{@param? _handleMappeableFieldClicked: any}
+	{@param? _handleMappeableFieldSelected: any}
+	{@param? _handleMappingTypeSelected: any}
+	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? _handleSelectAssetTypeButtonClick: any}
+	{@param? _handleSelectMappingDialogVisibleChanged: any}
+	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
+	{@param? _handleSidebarTabClick: any}
+	{@param? _handleTranslationLanguageChange: any}
+	{@param? _lastSaveDate: string}
+	{@param? _selectMappingDialogEditableId: string}
+	{@param? _selectMappingDialogFragmentEntryLinkId: string}
+	{@param? _selectMappingDialogVisible: bool}
+	{@param? _selectMappingTypeDialogVisible: bool}
+	{@param? _sidebarSelectedTab: string}
+	{@param? _sidebarTabs: list<[id:string, label:string]>}
+	{@param? _translationStatus: [
+		languageValues: list<[languageId: string, values: list<string>]>,
+		translationKeys: list<string>
+	]}
+	{@param? fragmentEntryLinks: list<[
+		content: html|null,
+		editableValues: ?,
+		fragmentEntryLinkId: number,
+		name: string
+	]>}
+	{@param? getAssetClassTypesURL: any}
+	{@param? getAssetDisplayContributorsURL: any}
+	{@param? id: string}
+	{@param? selectedMappingTypes: [
+		subtype: [
+			id: string,
+			label: string
+		],
+		type: [
+			id: string,
+			label: string
+		]
+	]}
+	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
+
+	<div id="{$id}">
+		{call .managementBar}
+			{param availableLanguages: $availableLanguages /}
+			{param defaultLanguageId: $defaultLanguageId /}
+			{param languageId: $languageId /}
+			{param spritemap: $spritemap /}
+			{param dirty: $_dirty /}
+			{param handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
+			{param handleTranslationLanguageChange: $_handleTranslationLanguageChange /}
+			{param lastSaveDate: $_lastSaveDate /}
+			{param translationStatus: $_translationStatus /}
+		{/call}
+
+		<div class="container-fluid-1280 contextual-sidebar-content">
+			{let $entryLinksClasses kind="text"}
+				fragments-editor__fragment-entry-links
+
+				{if $languageId != $defaultLanguageId}
+					{sp}translating
+				{/if}
+			{/let}
+
+			<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
+				{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
+					{foreach $fragmentEntryLink in $fragmentEntryLinks}
+						<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
+							{call com.liferay.layout.admin.web.FragmentEntryLink.render}
+								{param content: $fragmentEntryLink.content /}
+								{param defaultEditorConfiguration: $defaultEditorConfiguration /}
+								{param editableValues: $fragmentEntryLink.editableValues /}
+								{param events: [
+									'editableChanged': $_handleEditableChanged,
+									'mappeableFieldClicked': $_handleMappeableFieldClicked,
+									'move': $_handleFragmentMove,
+									'remove': $_handleFragmentRemove
+								] /}
+								{param defaultLanguageId: $defaultLanguageId /}
+								{param languageId: $languageId /}
+								{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
+								{param imageSelectorURL: $imageSelectorURL /}
+								{param selectedMappingTypes: $selectedMappingTypes /}
+								{param showMapping: $selectedMappingTypes and $selectedMappingTypes.type and $_sidebarSelectedTab == 'mapping' /}
+								{param name: $fragmentEntryLink.name /}
+								{param portletNamespace: $portletNamespace /}
+								{param ref: 'fragmentEntryLink_' + $fragmentEntryLink.fragmentEntryLinkId /}
+								{param spritemap: $spritemap /}
+							{/call}
+						</div>
+					{/foreach}
+				{else}
+					{call .noFragmentsMessage /}
+				{/if}
+			</div>
+
+			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
+				{param editableId: $_selectMappingDialogEditableId /}
+				{param events: [
+					'mappeableFieldSelected': $_handleMappeableFieldSelected,
+					'visibleChanged': $_handleSelectMappingDialogVisibleChanged
+				] /}
+				{param fragmentEntryLinkId: $_selectMappingDialogFragmentEntryLinkId /}
+				{param mappingFieldsURL: $mappingFieldsURL /}
+				{param namespace: $portletNamespace /}
+				{param selectedMappingTypes: $selectedMappingTypes /}
+				{param spritemap: $spritemap /}
+				{param visible: $_selectMappingDialogVisible ?: false /}
+			{/call}
+
+			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
+				{param classPK: $classPK /}
+				{param events: [
+					'mappingTypeSelected': $_handleMappingTypeSelected,
+					'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
+				] /}
+				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
+				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
+				{param portletNamespace: $portletNamespace /}
+				{param spritemap: $spritemap /}
+				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
+				{param visible: $_selectMappingTypeDialogVisible ?: false /}
+			{/call}
+
+			{call liferay.frontend.ContextualSidebar.render}
+				{param body kind="html"}
+					<div class="sidebar-section">
+						<nav class="navbar navbar-expand-md navbar-underline">
+							<ul class="navbar-nav">
+								{if $_sidebarTabs}
+									{foreach $sidebarTab in $_sidebarTabs}
+										{call .sidebarTab}
+											{param active: $sidebarTab.id == $_sidebarSelectedTab /}
+											{param id: $sidebarTab.id /}
+											{param key: $sidebarTab.id /}
+											{param handleTabClick: $_handleSidebarTabClick /}
+											{param label: $sidebarTab.label /}
+										{/call}
+									{/foreach}
+								{/if}
+							</ul>
+						</nav>
+					</div>
+
+					{if $_sidebarSelectedTab == 'available'}
+						{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
+							{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
+							{param fragmentCollections: $fragmentCollections /}
+							{param spritemap: $spritemap /}
+						{/call}
+					{elseif $_sidebarSelectedTab == 'added'}
+						{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
+							{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
+							{param fragmentEntryLinks: $fragmentEntryLinks /}
+							{param spritemap: $spritemap /}
+						{/call}
+					{elseif $_sidebarSelectedTab == 'mapping'}
+						{call com.liferay.layout.admin.web.SidebarMapping.render}
+							{param events: ['selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick] /}
+							{param selectedMappingTypes: $selectedMappingTypes /}
+							{param spritemap: $spritemap /}
+						{/call}
+					{/if}
+				{/param}
+
+				{param elementClasses: 'fragments-editor-sidebar' /}
+
+				{param events: [
+					'hide': $_handleHideContextualSidebar
+				]/}
+
+				{param header kind="html"}
+					<div class="autofit-row sidebar-section">
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="component-title">
+								<span class="text-truncate-inline">
+									Fragments
+								</span>
+							</h4>
+						</div>
+
+						<div class="autofit-col">
+							<button
+								class="component-action"
+								data-onclick="{$_handleToggleContextualSidebarButtonClick}"
+								type="button"
+							>
+								<svg class="icon-monospaced lexicon-icon">
+									<use xlink:href="{$spritemap}#times"></use>
+								</svg>
+							</button>
+						</div>
+					</div>
+				{/param}
+
+				{param visible: $_contextualSidebarVisible ?: true /}
+			{/call}
+		</div>
+	</div>
+{/template}
+
+/**
+ * No fragments message
+ */
+{template .noFragmentsMessage}
+	<div class="taglib-empty-result-message">
+		<div class="taglib-empty-result-message-header"></div>
+
+		<div class="text-center text-muted">
+			{msg desc=""}the-fragment-editor-is-empty{/msg}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Management bar
+ */
+{template .managementBar}
+	{@param availableLanguages: ?}
+	{@param defaultLanguageId: string}
+	{@param languageId: string}
+	{@param spritemap: string}
+	{@param? dirty: bool}
+	{@param? handleToggleContextualSidebarButtonClick: any}
+	{@param? handleTranslationLanguageChange: any}
+	{@param? lastSaveDate: string}
+	{@param? translationStatus: [
+		languageValues: list<[languageId: string, values: list<string>]>,
+		translationKeys: list<string>
+	]}
+
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<div class="container">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					{call com.liferay.layout.admin.web.TranslationStatus.render}
+						{param availableLanguages: $availableLanguages /}
+						{param defaultLanguageId: $defaultLanguageId /}
+						{param events: ['languageChange': $handleTranslationLanguageChange] /}
+						{param languageId: $languageId /}
+						{param spritemap: $spritemap /}
+						{param translationStatus: $translationStatus /}
+					{/call}
+				</li>
+				<li class="nav-item">
+					<span class="navbar-text">
+						{if $dirty}
+							{msg desc=""}saving-changes{/msg}
+						{elseif $lastSaveDate}
+							{msg desc=""}changes-saved-at-{$lastSaveDate}{/msg}
+						{/if}
+					</span>
+				</li>
+			</ul>
+
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<button class="btn btn-secondary nav-btn" data-onclick="{$handleToggleContextualSidebarButtonClick}">
+						<svg class="icon-monospaced lexicon-icon">
+							<use xlink:href="{$spritemap}#cards"></use>
+						</svg>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+{/template}
+
+/**
+ * Sidebar tab
+ */
+{template .sidebarTab}
+	{@param id: string}
+	{@param handleTabClick: any}
+	{@param active: bool}
+	{@param label: string}
+
+	<li class="nav-item">
+		{let $navLinkClasses kind="text"}
+			nav-link
+			{if $active}
+				{sp}active
+			{/if}
+		{/let}
+
+		<a
+			class="{$navLinkClasses}"
+			data-onclick="{$handleTabClick}"
+			data-tab-name="{$id}"
+			href="javascript:;"
+		>
+			<span class="text-truncate">
+				{$label}
+			</span>
+		</a>
+	</li>
+{/template}

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Asset Tags API
+Bundle-SymbolicName: com.liferay.asset.tags.api
+Bundle-Version: 2.0.0
+Export-Package: com.liferay.asset.tags.constants

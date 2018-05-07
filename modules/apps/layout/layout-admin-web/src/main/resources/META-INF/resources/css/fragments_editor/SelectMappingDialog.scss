@@ -1,0 +1,19 @@
+.select-mapping-dialog {
+	.modal-header {
+		border-color: transparent;
+	}
+
+	.modal-body {
+		outline: none;
+		padding: 0;
+	}
+
+	.modal-footer {
+		border-color: transparent;
+	}
+
+	.list-group-item {
+		border-radius: 0;
+		cursor: pointer;
+	}
+}

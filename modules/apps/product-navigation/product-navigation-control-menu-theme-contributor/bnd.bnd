@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Product Navigation Control Menu Theme Contributor
+Bundle-SymbolicName: com.liferay.product.navigation.control.menu.theme.contributor
+Bundle-Version: 3.0.0
+Liferay-Theme-Contributor-Type: product-navigation-control-menu
+Web-ContextPath: /product-navigation-control-menu-theme-contributor

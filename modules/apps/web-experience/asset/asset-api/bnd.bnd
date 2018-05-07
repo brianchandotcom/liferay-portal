@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Asset API
-Bundle-SymbolicName: com.liferay.asset.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.asset.constants,\
-	com.liferay.asset.util,\
-	com.liferay.asset.util.comparator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Asset

@@ -9,16 +9,16 @@ dependencies {
 
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:asset:asset-api")
+	testIntegrationCompile project(":apps:asset:asset-test-util")
+	testIntegrationCompile project(":apps:export-import:export-import-api")
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:message-boards:message-boards-api")
 	testIntegrationCompile project(":apps:social:social-activity-test-util")
 	testIntegrationCompile project(":apps:subscription:subscription-api")
-	testIntegrationCompile project(":apps:web-experience:asset:asset-api")
-	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-api")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:web-experience:trash:trash-api")
-	testIntegrationCompile project(":apps:web-experience:trash:trash-test-util")
+	testIntegrationCompile project(":apps:trash:trash-api")
+	testIntegrationCompile project(":apps:trash:trash-test-util")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

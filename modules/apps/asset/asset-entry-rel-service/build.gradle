@@ -1,0 +1,15 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+buildService {
+	apiDir = "../asset-entry-rel-api/src/main/java"
+	testDir = "../asset-entry-rel-test/src/testIntegration/java"
+}
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:asset:asset-entry-rel-api")
+	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
+	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
+}

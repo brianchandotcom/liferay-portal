@@ -1,7 +1,7 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:foundation:mobile-device-rules:mobile-device-rules-api")
 	testIntegrationCompile project(":apps:foundation:mobile-device-rules:mobile-device-rules-service")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

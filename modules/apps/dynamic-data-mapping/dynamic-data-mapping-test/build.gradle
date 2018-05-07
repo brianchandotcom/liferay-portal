@@ -51,8 +51,8 @@ dependencies {
 	testCompile project(":core:petra:petra-string")
 
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
+	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
-	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

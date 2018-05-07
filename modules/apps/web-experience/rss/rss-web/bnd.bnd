@@ -1,7 +1,0 @@
-Bundle-Name: Liferay RSS Web
-Bundle-SymbolicName: com.liferay.rss.web
-Bundle-Version: 4.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Publication Tools
-Web-ContextPath: /rss-web
--dsannotations-options: inherit

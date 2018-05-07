@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Site Navigation Breadcrumb Web
+Bundle-SymbolicName: com.liferay.site.navigation.breadcrumb.web
+Bundle-Version: 4.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.site.navigation.lang)";\
+		resource.bundle.base.name="content.Language"
+Require-Capability:\
+	liferay.resource.bundle;\
+		filter:="(bundle.symbolic.name=com.liferay.site.navigation.lang)"
+Web-ContextPath: /site-navigation-breadcrumb-web
+-dsannotations-options: inherit

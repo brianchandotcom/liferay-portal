@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Product Navigation Site Administration
-Bundle-SymbolicName: com.liferay.product.navigation.site.administration
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Title: Product Navigation
-Web-ContextPath: /product-navigation-site-administration

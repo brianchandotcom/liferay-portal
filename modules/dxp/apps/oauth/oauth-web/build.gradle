@@ -7,11 +7,11 @@ dependencies {
 	compileOnly group: "net.oauth.core", name: "oauth", version: "20100527"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly project(":apps:application-list:application-list-api")
 	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:foundation:portal-security:portal-security-service-access-policy-api")
 	compileOnly project(":apps:foundation:portal:portal-instance-lifecycle-api")
 	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
-	compileOnly project(":apps:web-experience:application-list:application-list-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":private:apps:oauth:oauth-api")
 	compileOnly project(":private:apps:oauth:oauth-service")

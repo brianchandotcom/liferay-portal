@@ -22,12 +22,16 @@ runGradleTest {
 
 		assert expectedException.message == "Configuration with name 'targetPlatform' not found."
 
-		assert dependencyManagement.managedVersions.size() == 898
+		Configuration configuration = configurations.compile
+
+		Map<String, String> managedVersionsForConfiguration = dependencyManagement.getManagedVersionsForConfiguration(configuration)
+
+		assert managedVersionsForConfiguration.size() == 898
 
 		expectedException = null
 
 		try {
-			configurations.compile.resolvedConfiguration.resolvedArtifacts
+			configuration.resolvedConfiguration.resolvedArtifacts
 		}
 		catch (ResolveException re) {
 			re.printStackTrace()

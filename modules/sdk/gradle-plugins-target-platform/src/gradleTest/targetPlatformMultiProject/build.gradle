@@ -10,17 +10,18 @@ dependencies {
 
 runGradleTest {
 	doLast {
-		assert configurations.targetPlatformBoms.size() == 1
-		assert configurations.targetPlatformBoms[0].name == "com.liferay.ce.portal.bom-7.0.4.pom"
-
 		Project subproject = project.childProjects["subproject"]
 
-		assert subproject.dependencyManagement.managedVersions.size() == 898
+		Configuration configuration = subproject.configurations.compile
+
+		Map<String, String> managedVersionsForConfiguration = subproject.dependencyManagement.getManagedVersionsForConfiguration(configuration)
+
+		assert managedVersionsForConfiguration.size() == 898
 
 		Exception expectedException = null
 
 		try {
-			subproject.configurations.compile.resolvedConfiguration.resolvedArtifacts
+			configuration.resolvedConfiguration.resolvedArtifacts
 		}
 		catch (ResolveException re) {
 			expectedException = re.cause

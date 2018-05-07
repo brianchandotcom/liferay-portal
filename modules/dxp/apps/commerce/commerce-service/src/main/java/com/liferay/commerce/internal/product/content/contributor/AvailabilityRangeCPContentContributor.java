@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.util;
+package com.liferay.commerce.internal.product.content.contributor;
 
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
@@ -26,14 +26,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
@@ -50,8 +55,13 @@ public class AvailabilityRangeCPContentContributor
 	}
 
 	@Override
-	public JSONObject getValue(CPInstance cpInstance, Locale locale)
+	public JSONObject getValue(
+			CPInstance cpInstance, HttpServletRequest httpServletRequest)
 		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -82,9 +92,9 @@ public class AvailabilityRangeCPContentContributor
 			jsonObject.put(
 				CPContentContributorConstants.AVAILABILITY_RANGE_NAME,
 				getAvailabilityRangeLabel(
-					locale,
+					themeDisplay.getLocale(),
 					cpDefinitionInventoryEngine.getAvailabilityRange(
-						cpInstance, locale)));
+						cpInstance, themeDisplay.getLocale())));
 		}
 
 		return jsonObject;

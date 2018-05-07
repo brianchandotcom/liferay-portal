@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.util;
+package com.liferay.commerce.internal.product.content.contributor;
 
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
@@ -25,30 +25,38 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
-	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.AVAILABILITY_NAME,
+	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.STOCK_QUANTITY_NAME,
 	service = CPContentContributor.class
 )
-public class AvailabilityCPContentContributor implements CPContentContributor {
+public class StockQuantityCPContentContributor implements CPContentContributor {
 
 	@Override
 	public String getName() {
-		return CPContentContributorConstants.AVAILABILITY_NAME;
+		return CPContentContributorConstants.STOCK_QUANTITY_NAME;
 	}
 
 	@Override
-	public JSONObject getValue(CPInstance cpInstance, Locale locale)
+	public JSONObject getValue(
+			CPInstance cpInstance, HttpServletRequest httpServletRequest)
 		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -65,29 +73,15 @@ public class AvailabilityCPContentContributor implements CPContentContributor {
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		boolean displayAvailability =
-			cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance);
+		boolean displayStockQuantity =
+			cpDefinitionInventoryEngine.isDisplayStockQuantity(cpInstance);
 
-		boolean available = false;
-
-		if (cpDefinitionInventoryEngine.getStockQuantity(cpInstance) >
-				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance)) {
-
-			available = true;
-		}
-
-		if (displayAvailability && available) {
+		if (displayStockQuantity) {
 			jsonObject.put(
-				CPContentContributorConstants.AVAILABILITY_NAME,
-				LanguageUtil.get(
-					locale, CPContentContributorConstants.AVAILABLE));
-		}
-
-		if (displayAvailability && !available) {
-			jsonObject.put(
-				CPContentContributorConstants.AVAILABILITY_NAME,
-				LanguageUtil.get(
-					locale, CPContentContributorConstants.UNAVAILABLE));
+				CPContentContributorConstants.STOCK_QUANTITY_NAME,
+				LanguageUtil.format(
+					themeDisplay.getLocale(), "stock-quantity-x",
+					cpDefinitionInventoryEngine.getStockQuantity(cpInstance)));
 		}
 
 		return jsonObject;

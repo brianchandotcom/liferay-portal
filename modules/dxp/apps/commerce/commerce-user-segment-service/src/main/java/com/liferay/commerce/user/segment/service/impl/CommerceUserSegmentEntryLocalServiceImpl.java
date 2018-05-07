@@ -207,6 +207,23 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			return commerceUserSegmentEntryIds;
 		}
 
+		if (userId == 0) {
+			CommerceUserSegmentEntry commerceUserSegmentEntry =
+				commerceUserSegmentEntryPersistence.fetchByG_K(
+					groupId, CommerceUserSegmentEntryConstants.KEY_GUEST);
+
+			if (commerceUserSegmentEntry == null) {
+				return commerceUserSegmentEntryIds;
+			}
+
+			commerceUserSegmentEntryIds = new long[] {
+				commerceUserSegmentEntry.getCommerceUserSegmentEntryId()
+			};
+
+			portalCache.put(cacheKey + "_calculated", true);
+			portalCache.put(cacheKey, commerceUserSegmentEntryIds);
+		}
+
 		User user = userLocalService.getUser(userId);
 
 		SearchContext searchContext = buildSearchContext(

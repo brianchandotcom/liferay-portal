@@ -25,6 +25,8 @@ public class CPContentContributorConstants {
 
 	public static final String AVAILABLE = "available";
 
+	public static final String PRICE = "price";
+
 	public static final String STOCK_QUANTITY_NAME = "stockQuantity";
 
 	public static final String UNAVAILABLE = "unavailable";

@@ -40,14 +40,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.AVAILABILITY_NAME,
+	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.PRICE,
 	service = CPContentContributor.class
 )
 public class PriceCPContentContributor implements CPContentContributor {
 
 	@Override
 	public String getName() {
-		return CPContentContributorConstants.AVAILABILITY_NAME;
+		return CPContentContributorConstants.PRICE;
 	}
 
 	@Override

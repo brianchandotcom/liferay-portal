@@ -82,7 +82,7 @@ request.setAttribute("cpInstance", cpInstance);
 						<c:when test="<%= cpInstance != null %>">
 							<h4 class="sku"><%= cpInstance.getSku() %></h4>
 
-							<div class="price"><%= cpInstance.getPrice() %></div>
+							<div class="price"><%= cpTypeDisplayContext.getPrice() %></div>
 
 							<div class="availability"><%= cpTypeDisplayContext.getAvailabilityLabel() %></div>
 

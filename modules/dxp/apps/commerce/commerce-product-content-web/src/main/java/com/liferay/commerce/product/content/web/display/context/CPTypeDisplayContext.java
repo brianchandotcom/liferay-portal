@@ -280,6 +280,17 @@ public class CPTypeDisplayContext {
 		return LanguageUtil.get(locale, key);
 	}
 
+	public String getPrice() throws Exception {
+		JSONObject price = (JSONObject)getCPContentContributorValue(
+			CPContentContributorConstants.PRICE);
+
+		if (price == null) {
+			return StringPool.BLANK;
+		}
+
+		return price.getString(CPContentContributorConstants.PRICE);
+	}
+
 	public String getStockQuantityLabel() throws Exception {
 		JSONObject stockQuantity = (JSONObject)getCPContentContributorValue(
 			CPContentContributorConstants.STOCK_QUANTITY_NAME);

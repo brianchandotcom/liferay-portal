@@ -16,6 +16,7 @@ package com.liferay.commerce.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 
 import java.util.List;
@@ -30,7 +31,8 @@ public interface CommerceShippingEngine {
 	public String getCommerceShippingOptionLabel(String name, Locale locale);
 
 	public List<CommerceShippingOption> getCommerceShippingOptions(
-			CommerceOrder commerceOrder, Locale locale)
+			CommerceContext commerceContext, CommerceOrder commerceOrder,
+			Locale locale)
 		throws CommerceShippingEngineException;
 
 	public String getDescription(Locale locale);

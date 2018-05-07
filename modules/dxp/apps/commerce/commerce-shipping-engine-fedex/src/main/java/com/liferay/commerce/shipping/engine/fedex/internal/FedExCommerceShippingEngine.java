@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.engine.fedex.internal;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
@@ -21,9 +22,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fedex.internal.util.FedExCommerceShippingOptionHelper;
 import com.liferay.commerce.util.CommerceShippingHelper;
@@ -60,7 +61,8 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public List<CommerceShippingOption> getCommerceShippingOptions(
-			CommerceOrder commerceOrder, Locale locale)
+			CommerceContext commerceContext, CommerceOrder commerceOrder,
+			Locale locale)
 		throws CommerceShippingEngineException {
 
 		try {
@@ -80,9 +82,9 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 			FedExCommerceShippingOptionHelper
 				fedExCommerceShippingOptionHelper =
 					new FedExCommerceShippingOptionHelper(
-						commerceOrder, _commerceCurrencyLocalService,
-						_commercePriceCalculationLocalService,
-						_commerceShippingHelper,
+						commerceContext, commerceOrder,
+						_commerceCurrencyLocalService,
+						_commercePriceCalculation, _commerceShippingHelper,
 						_commerceShippingOriginLocatorRegistry,
 						_cpMeasurementUnitLocalService, _configurationProvider,
 						_getResourceBundle(locale));
@@ -137,8 +139,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
-	private CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
+	private CommercePriceCalculation _commercePriceCalculation;
 
 	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;

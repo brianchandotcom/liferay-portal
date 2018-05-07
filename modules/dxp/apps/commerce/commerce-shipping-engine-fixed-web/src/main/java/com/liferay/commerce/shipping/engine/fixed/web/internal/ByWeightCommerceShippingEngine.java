@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal;
 
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -21,8 +23,8 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
@@ -68,7 +70,8 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public List<CommerceShippingOption> getCommerceShippingOptions(
-			CommerceOrder commerceOrder, Locale locale)
+			CommerceContext commerceContext, CommerceOrder commerceOrder,
+			Locale locale)
 		throws CommerceShippingEngineException {
 
 		List<CommerceShippingOption> commerceShippingOptions =
@@ -76,7 +79,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 
 		try {
 			commerceShippingOptions = _getCommerceShippingOptions(
-				commerceOrder, locale);
+				commerceContext, commerceOrder, locale);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -119,17 +122,20 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	private CommerceShippingOption _getCommerceShippingOption(
-			CommerceOrder commerceOrder, Locale locale,
-			CommerceAddress commerceAddress,
+			CommerceContext commerceContext, CommerceOrder commerceOrder,
+			Locale locale, CommerceAddress commerceAddress,
 			CommerceShippingFixedOption commerceShippingFixedOption)
 		throws PortalException {
 
 		List<CommerceOrderItem> commerceOrderItems =
 			commerceOrder.getCommerceOrderItems();
 
-		BigDecimal orderPrice =
-			_commercePriceCalculationLocalService.getOrderSubtotal(
-				commerceOrder);
+		CommerceMoney commerceMoney =
+			_commercePriceCalculation.getOrderSubtotal(
+				commerceOrder, commerceContext);
+
+		BigDecimal orderPrice = commerceMoney.getPrice();
+
 		double orderWeight = _commerceShippingHelper.getWeight(
 			commerceOrderItems);
 
@@ -168,7 +174,8 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	private List<CommerceShippingOption> _getCommerceShippingOptions(
-			CommerceOrder commerceOrder, Locale locale)
+			CommerceContext commerceContext, CommerceOrder commerceOrder,
+			Locale locale)
 		throws PortalException {
 
 		List<CommerceShippingOption> commerceShippingOptions =
@@ -195,7 +202,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 
 			CommerceShippingOption commerceShippingOption =
 				_getCommerceShippingOption(
-					commerceOrder, locale, commerceAddress,
+					commerceContext, commerceOrder, locale, commerceAddress,
 					commerceShippingFixedOption);
 
 			if (commerceShippingOption != null) {
@@ -219,8 +226,7 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		_commerceAddressRestrictionService;
 
 	@Reference
-	private CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
+	private CommercePriceCalculation _commercePriceCalculation;
 
 	@Reference
 	private CommerceShippingFixedOptionRelService

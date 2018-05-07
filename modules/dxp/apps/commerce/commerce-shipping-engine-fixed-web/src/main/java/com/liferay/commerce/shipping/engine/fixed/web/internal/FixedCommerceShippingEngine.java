@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
@@ -63,7 +64,8 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public List<CommerceShippingOption> getCommerceShippingOptions(
-			CommerceOrder commerceOrder, Locale locale)
+			CommerceContext commerceContext, CommerceOrder commerceOrder,
+			Locale locale)
 		throws CommerceShippingEngineException {
 
 		List<CommerceShippingOption> commerceShippingOptions =

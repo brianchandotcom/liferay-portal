@@ -17,26 +17,8 @@ package com.liferay.asset.display.page.service.impl;
 import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryLocalServiceBaseImpl;
 
 /**
- * The implementation of the asset display page entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see AssetDisplayPageEntryLocalServiceBaseImpl
- * @see com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil
+ * @author Eudaldo Alonso
  */
 public class AssetDisplayPageEntryLocalServiceImpl
 	extends AssetDisplayPageEntryLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil} to access the asset display page entry local service.
-	 */
-
 }

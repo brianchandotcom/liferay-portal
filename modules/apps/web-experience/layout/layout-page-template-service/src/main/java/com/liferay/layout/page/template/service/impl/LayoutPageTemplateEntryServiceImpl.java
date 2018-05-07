@@ -75,8 +75,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
-			long[] layoutPageTemplateEntryIds)
-		throws PortalException {
+		long[] layoutPageTemplateEntryIds) {
 
 		List<LayoutPageTemplateEntry> undeletableLayoutPageTemplateEntries =
 			new ArrayList<>();
@@ -164,9 +163,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-			long groupId, int type, int start, int end,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws PortalException {
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_T(
 			groupId, type, start, end, orderByComparator);
@@ -174,9 +172,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-			long groupId, long layoutPageTemplateCollectionId, int start,
-			int end)
-		throws PortalException {
+		long groupId, long layoutPageTemplateCollectionId, int start, int end) {
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_L(
 			groupId, layoutPageTemplateCollectionId, start, end);
@@ -184,10 +180,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-			long groupId, long layoutPageTemplateCollectionId, int start,
-			int end,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws PortalException {
+		long groupId, long layoutPageTemplateCollectionId, int start,
+		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_L(
 			groupId, layoutPageTemplateCollectionId, start, end,
@@ -196,8 +190,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-			long groupId, long classNameId, long classTypeId, int type)
-		throws PortalException {
+		long groupId, long classNameId, long classTypeId, int type) {
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_T(
 			groupId, classNameId, classTypeId, type);
@@ -241,8 +234,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public int getLayoutPageTemplateEntriesCount(
-			long groupId, long classNameId, long classTypeId, int type)
-		throws PortalException {
+		long groupId, long classNameId, long classTypeId, int type) {
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_C_C_T(
 			groupId, classNameId, classTypeId, type);

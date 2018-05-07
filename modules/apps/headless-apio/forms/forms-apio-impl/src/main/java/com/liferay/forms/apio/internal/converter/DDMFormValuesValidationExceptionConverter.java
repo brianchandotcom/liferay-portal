@@ -16,7 +16,7 @@ package com.liferay.forms.apio.internal.converter;
 
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true)
 public class DDMFormValuesValidationExceptionConverter
-	implements ExceptionConverter<DDMFormValuesValidationException> {
+	implements ExceptionMapper<DDMFormValuesValidationException> {
 
 	@Override
-	public APIError convert(DDMFormValuesValidationException ddmfvve) {
+	public APIError map(DDMFormValuesValidationException ddmfvve) {
 		return new APIError(
 			ddmfvve, "Wrong values", ddmfvve.getMessage(), "bad-request",
 			BAD_REQUEST.getStatusCode());

@@ -28,6 +28,7 @@ import com.liferay.blog.apio.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.internal.form.BlogPostingForm;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.media.object.apio.identifier.FileEntryIdentifier;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -106,8 +107,6 @@ public class BlogPostingNestedCollectionResource
 			"modifiedDate", BlogsEntry::getModifiedDate
 		).addDate(
 			"publishedDate", BlogsEntry::getLastPublishDate
-		).addLink(
-			"license", "https://creativecommons.org/licenses/by/4.0"
 		).addLinkedModel(
 			"aggregateRating", AggregateRatingIdentifier.class,
 			ClassNameClassPK::create
@@ -125,6 +124,9 @@ public class BlogPostingNestedCollectionResource
 			"fileFormat", blogsEntry -> "text/html"
 		).addString(
 			"headline", BlogsEntry::getTitle
+		).addLinkedModel(
+			"image", FileEntryIdentifier.class,
+			BlogsEntry::getCoverImageFileEntryId
 		).build();
 	}
 

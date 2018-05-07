@@ -40,7 +40,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= HtmlUtil.Unescape(attachmentsFileEntry.getTitle()) %>" />
+					<portlet:param name="fileName" value="<%= HtmlUtil.unescape(attachmentsFileEntry.getTitle()) %>" />
 				</portlet:actionURL>
 
 				<liferay-ui:icon
@@ -55,7 +55,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= HtmlUtil.Unescape(attachmentsFileEntry.getTitle()) %>" />
+					<portlet:param name="fileName" value="<%= HtmlUtil.unescape(attachmentsFileEntry.getTitle()) %>" />
 				</portlet:actionURL>
 
 				<liferay-ui:icon-delete
@@ -70,7 +70,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="fileName" value="<%= HtmlUtil.Unescape(attachmentsFileEntry.getTitle()) %>" />
+					<portlet:param name="fileName" value="<%= HtmlUtil.unescape(attachmentsFileEntry.getTitle()) %>" />
 				</portlet:actionURL>
 
 				<liferay-ui:icon-delete

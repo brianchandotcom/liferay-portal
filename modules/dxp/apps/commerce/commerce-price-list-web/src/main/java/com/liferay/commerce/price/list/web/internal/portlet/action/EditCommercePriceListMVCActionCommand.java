@@ -15,6 +15,7 @@
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
+import com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel;
@@ -111,6 +112,14 @@ public class EditCommercePriceListMVCActionCommand
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else if (e instanceof CommercePriceListCurrencyException) {
+				SessionErrors.add(actionRequest, e.getClass());
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw e;

@@ -29,6 +29,8 @@ List<CommercePriceListUserSegmentEntryRel> commercePriceListUserSegmentEntryRels
 	value="details"
 />
 
+<liferay-ui:error exception="<%= CommercePriceListCurrencyException.class %>" message="please-select-a-valid-store-currency" />
+
 <aui:model-context bean="<%= commercePriceList %>" model="<%= CommercePriceList.class %>" />
 
 <liferay-util:buffer

@@ -656,6 +656,60 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a radio button designed specifically for Staging screens.</description>
+		<name>radio</name>
+		<tag-class>com.liferay.staging.taglib.servlet.taglib.RadioTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>Whether the radio is checked. The default is unchecked.</description>
+			<name>checked</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether the radio button is disabled. The default is enabled.</description>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The HTML input's ID. It is added to the portlet ID when creating the DOM ID.</description>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether the radio button is displayed inline. The default is false.</description>
+			<name>inline</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key of the radio button's label.</description>
+			<name>label</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The HTML input's name.</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The language key for the optional popover's text.</description>
+			<name>popover</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The value of the radio button.</description>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Renders the remote site options.</description>
 		<name>remote-options</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.RemoteOptionsTag</tag-class>

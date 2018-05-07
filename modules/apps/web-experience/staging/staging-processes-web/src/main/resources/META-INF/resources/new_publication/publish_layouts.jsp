@@ -67,8 +67,11 @@
 					</c:choose>
 				</aui:fieldset>
 
-				<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="date">
-					<%@ include file="/new_publication/publish_layouts_scheduler.jspf" %>
+				<aui:fieldset cssClass="options-group">
+					<div class="sheet-section">
+						<h3 class="sheet-subtitle"><liferay-ui:message key="date" /></h3>
+						<%@ include file="/new_publication/publish_layouts_scheduler.jspf" %>
+					</div>
 				</aui:fieldset>
 
 				<c:if test="<%= !group.isCompany() %>">

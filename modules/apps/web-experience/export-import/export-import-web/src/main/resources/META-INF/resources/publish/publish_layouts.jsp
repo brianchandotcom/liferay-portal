@@ -236,8 +236,11 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 							</c:choose>
 						</aui:fieldset>
 
-						<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="date">
-							<%@ include file="/publish/publish_layouts_scheduler.jspf" %>
+						<aui:fieldset cssClass="options-group">
+							<div class="sheet-section">
+								<h3 class="sheet-subtitle"><liferay-ui:message key="date" /></h3>
+								<%@ include file="/publish/publish_layouts_scheduler.jspf" %>
+							</div>
 						</aui:fieldset>
 
 						<c:if test="<%= !group.isCompany() %>">

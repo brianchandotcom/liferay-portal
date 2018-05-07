@@ -296,9 +296,7 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="PageTemplate#viewDefaultCP">
-			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
-		</execute>
+		<execute macro="PageTemplate#viewDefaultCP" />
 	</command>
 
 	<command name="EditPageTemplate" priority="5">
@@ -453,9 +451,7 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="PageTemplate#viewDefaultCP">
-			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
-		</execute>
+		<execute macro="PageTemplate#viewDefaultCP" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="My Account" />
@@ -508,9 +504,7 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="PageTemplate#viewDefaultCP">
-			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
-		</execute>
+		<execute macro="PageTemplate#viewDefaultCP" />
 	</command>
 
 	<command name="ViewEditedPageTemplatePageName" priority="4">

@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -888,14 +887,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "changeLog");
 		boolean majorVersion = ParamUtil.getBoolean(
 			uploadPortletRequest, "majorVersion");
-
-		if (folderId > 0) {
-			Folder folder = _dlAppService.getFolder(folderId);
-
-			if (folder.getGroupId() != themeDisplay.getScopeGroupId()) {
-				throw new NoSuchFolderException("{folderId=" + folderId + "}");
-			}
-		}
 
 		if (cmd.equals(Constants.ADD_DYNAMIC)) {
 			title = uploadPortletRequest.getFileName("file");

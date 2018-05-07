@@ -16,13 +16,24 @@ package com.liferay.commerce.currency.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
+
+import java.math.BigDecimal;
+
 /**
+ * @author Marco Leo
  * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CommerceCurrencyImpl extends CommerceCurrencyBaseImpl {
 
 	public CommerceCurrencyImpl() {
+	}
+
+	@Override
+	public CommerceMoney getZero() {
+		return CommerceMoneyFactoryUtil.create(this, BigDecimal.ZERO);
 	}
 
 }

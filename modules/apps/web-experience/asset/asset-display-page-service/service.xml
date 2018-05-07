@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.asset.display.page">
+	<namespace>Asset</namespace>
+	<entity local-service="true" name="AssetDisplayPageEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="assetDisplayPageEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="assetEntryId" type="long" />
+		<column name="layoutId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="AssetEntryId" return-type="Collection">
+			<finder-column name="assetEntryId" />
+		</finder>
+		<finder name="A_L" return-type="AssetDisplayPageEntry" unique="true">
+			<finder-column name="assetEntryId" />
+			<finder-column name="layoutId" />
+		</finder>
+	</entity>
+</service-builder>

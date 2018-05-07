@@ -222,6 +222,8 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 			portalCache.put(cacheKey + "_calculated", true);
 			portalCache.put(cacheKey, commerceUserSegmentEntryIds);
+
+			return commerceUserSegmentEntryIds;
 		}
 
 		User user = userLocalService.getUser(userId);

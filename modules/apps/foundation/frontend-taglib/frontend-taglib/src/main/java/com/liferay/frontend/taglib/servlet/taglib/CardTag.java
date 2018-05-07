@@ -128,8 +128,8 @@ public class CardTag extends IncludeTag {
 		_checkboxValue = null;
 		_cssClass = null;
 		_data = null;
-		_imageUrl = null;
 		_imageCSSClass = null;
+		_imageUrl = null;
 		_resultRow = null;
 		_rowChecker = null;
 		_showCheckbox = false;

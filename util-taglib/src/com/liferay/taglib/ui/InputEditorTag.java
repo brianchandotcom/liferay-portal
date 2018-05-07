@@ -222,13 +222,13 @@ public class InputEditorTag extends BaseValidatorTagSupport {
 		_inlineEdit = false;
 		_inlineEditSaveURL = null;
 		_name = "editor";
-		_onChangeMethod = null;
 		_onBlurMethod = null;
+		_onChangeMethod = null;
 		_onFocusMethod = null;
 		_onInitMethod = null;
 		_placeholder = null;
-		_resizable = true;
 		_required = false;
+		_resizable = true;
 		_showSource = true;
 		_skipEditorLoading = false;
 		_toolbarSet = _TOOLBAR_SET_DEFAULT;

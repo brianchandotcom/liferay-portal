@@ -82,8 +82,8 @@ public class ManagementBarNavigationTag extends IncludeTag implements BodyTag {
 		super.cleanUp();
 
 		_disabled = null;
-		_managementBarFilterItems = new ArrayList<>();
 		_label = null;
+		_managementBarFilterItems = new ArrayList<>();
 		_navigationKeys = new LinkedHashMap<>();
 		_navigationParam = "navigation";
 		_portletURL = null;

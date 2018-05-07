@@ -93,11 +93,11 @@ public class PublishEntityMenuItemTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_changesetUuid = StringPool.BLANK;
 		_className = StringPool.BLANK;
 		_classNameId = 0;
 		_groupId = 0;
 		_uuid = StringPool.BLANK;
-		_changesetUuid = StringPool.BLANK;
 	}
 
 	@Override

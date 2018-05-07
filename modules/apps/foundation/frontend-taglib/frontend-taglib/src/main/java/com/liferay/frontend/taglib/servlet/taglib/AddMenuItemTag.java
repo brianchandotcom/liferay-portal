@@ -60,11 +60,11 @@ public class AddMenuItemTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
 		_anchorData = null;
 		_cssClass = null;
 		_id = null;
 		_title = null;
-		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
 		_url = null;
 	}
 

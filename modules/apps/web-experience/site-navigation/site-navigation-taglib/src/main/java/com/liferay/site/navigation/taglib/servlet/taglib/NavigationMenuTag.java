@@ -166,9 +166,9 @@ public class NavigationMenuTag extends IncludeTag {
 		_displayDepth = 0;
 		_expandedLevels = "auto";
 		_preview = false;
+		_rootItemId = null;
 		_rootItemLevel = 1;
 		_rootItemType = "absolute";
-		_rootItemId = null;
 		_siteNavigationMenuId = 0;
 	}
 

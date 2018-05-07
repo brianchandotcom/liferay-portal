@@ -60,8 +60,8 @@ public class EmptyResultMessageTag extends IncludeTag {
 
 		_actionDropdownItems = null;
 		_animationType = EmptyResultMessageKeys.AnimationType.EMPTY;
-		_elementType = "element";
 		_description = null;
+		_elementType = "element";
 	}
 
 	@Override

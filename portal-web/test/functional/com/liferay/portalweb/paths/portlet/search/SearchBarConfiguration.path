@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>DESTINATION_PAGE</td>
+	<td>//input[contains(@name,'destination')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEYWORDS_PARAMETER_NAME</td>
 	<td>//input[contains(@name,'keywordsParameterName')]</td>
 	<td></td>

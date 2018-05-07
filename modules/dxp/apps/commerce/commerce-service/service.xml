@@ -483,8 +483,6 @@
 
 		<reference entity="Image" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="CommercePriceCalculation" remote-service="false">
-	</entity>
 	<entity local-service="true" name="CommerceRegion" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -664,8 +662,6 @@
 		<!-- References -->
 
 		<reference entity="Image" package-path="com.liferay.portal" />
-	</entity>
-	<entity local-service="true" name="CommerceTaxCalculation" remote-service="false">
 	</entity>
 	<entity local-service="true" name="CommerceTaxMethod" remote-service="true">
 

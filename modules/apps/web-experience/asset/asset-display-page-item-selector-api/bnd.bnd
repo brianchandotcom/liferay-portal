@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Asset Display Page Item Selector API
+Bundle-SymbolicName: com.liferay.asset.display.page.item.selector.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.asset.display.page.item.selector.criterion
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management

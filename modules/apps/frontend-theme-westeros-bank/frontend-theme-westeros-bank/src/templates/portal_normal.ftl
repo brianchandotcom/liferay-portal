@@ -20,8 +20,7 @@
 		<div id="wrapper">
 			<div class="navbar-recursive">
 				<nav class="navbar navbar-inverse">
-					<div class="navbar-wrapper">
-						<div class="container-fluid-1280" id="headerTopBar">
+					<div class="container-fluid container-fluid-max-xl" id="headerTopBar">
 							<#if !stringUtil.equals(main_recursive_menu_class, "no-screen")>
 								<div class="${main_recursive_menu_class} nav navbar-nav">
 									<#assign preferencesMap = {"displayDepth": "1", "portletSetupPortletDecoratorId": "barebone"} />
@@ -45,12 +44,11 @@
 									</ul>
 								</div>
 							</div>
-						</div>
 					</div>
 				</nav>
 			</div>
 
-			<header class="container-fluid-1280" id="banner" role="banner">
+			<header class="container-fluid container-fluid-max-xl" id="banner" role="banner">
 				<div class="navbar-header" id="heading">
 					<#if has_navigation>
 						<button aria-controls="navigation" aria-expanded="false" class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
@@ -71,8 +69,6 @@
 			</header>
 
 			<main id="content" role="main">
-				<h1 class="hide-accessible">${the_title}</h1>
-
 				<#if selectable>
 					<@liferay_util["include"] page=content_include />
 				<#else>

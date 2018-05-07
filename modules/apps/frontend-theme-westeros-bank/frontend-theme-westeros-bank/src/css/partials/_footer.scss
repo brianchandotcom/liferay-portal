@@ -1,9 +1,9 @@
 #footer {
-	background-color: $brand-bg-color-1;
+	background-color: $brand-bg-footer-color;
 	color: $brand-color-3;
 	padding-bottom: 0;
 
-	a {
+	.nav-item > a {
 		color: $brand-color-3;
 
 		&:hover, &:focus {
@@ -13,6 +13,6 @@
 }
 
 #footer-recursive {
-	background-color: #318AB7;
+	background-color: $brand-bg-footer-color;
 	font-family: 'open_sanssemibold';
 }

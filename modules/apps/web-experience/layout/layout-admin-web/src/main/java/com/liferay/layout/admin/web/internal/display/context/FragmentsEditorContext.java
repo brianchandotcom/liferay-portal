@@ -164,15 +164,19 @@ public class FragmentsEditorContext {
 		soyContext.put("imageSelectorURL", itemSelectorURL.toString());
 
 		soyContext.put("languageId", _themeDisplay.getLanguageId());
+
+		if (_showMapping) {
+			soyContext.put(
+				"mappingFieldsURL",
+				_getFragmentEntryActionURL("/layout/get_mapping_fields"));
+		}
+
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"renderFragmentEntryURL",
 			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
 
 		if (_showMapping) {
-			soyContext.put(
-				"mappingFieldsURL",
-				_getFragmentEntryActionURL("/layout/get_mapping_fields"));
 			soyContext.put("selectedMappingTypes", _getSelectedMappingTypes());
 		}
 
@@ -297,25 +301,27 @@ public class FragmentsEditorContext {
 			return SoyContextFactoryUtil.createSoyContext();
 		}
 
-		SoyContext soyContexts = SoyContextFactoryUtil.createSoyContext();
-
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
-		soyContext.put("id", layoutPageTemplateEntry.getClassNameId());
-		soyContext.put("label", _getMappingTypeLabel());
+		SoyContext typeSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-		soyContexts.put("type", soyContext);
+		typeSoyContext.put("id", layoutPageTemplateEntry.getClassNameId());
+		typeSoyContext.put("label", _getMappingTypeLabel());
+
+		soyContext.put("type", typeSoyContext);
 
 		if (layoutPageTemplateEntry.getClassTypeId() > 0) {
-			soyContext = SoyContextFactoryUtil.createSoyContext();
+			SoyContext subtypeSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
 
-			soyContext.put("id", layoutPageTemplateEntry.getClassTypeId());
-			soyContext.put("label", _getMappingSubtypeLabel());
+			subtypeSoyContext.put(
+				"id", layoutPageTemplateEntry.getClassTypeId());
+			subtypeSoyContext.put("label", _getMappingSubtypeLabel());
 
-			soyContexts.put("subtype", soyContext);
+			soyContext.put("subtype", subtypeSoyContext);
 		}
 
-		return soyContexts;
+		return soyContext;
 	}
 
 	private SoyContext _getSidebarTab(String label) {

@@ -31,6 +31,11 @@ public abstract class Base${entity.name}UADExporter extends DynamicQueryUADExpor
 	}
 
 	@Override
+	public Class<${entity.name}> getTypeClass() {
+		return ${entity.name}.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return ${entity.varName}LocalService.getActionableDynamicQuery();
 	}

@@ -24,42 +24,21 @@ SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRole
 	items="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= selectSiteRolesDisplayContext.getClearResultsURL() %>"
+	componentId="siteRolesManagementToolbar"
 	disabled="<%= selectSiteRolesDisplayContext.isDisabledManagementBar() %>"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= selectSiteRolesDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= selectSiteRolesDisplayContext.getOrderByCol() %>"
-			orderByType="<%= selectSiteRolesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= selectSiteRolesDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= selectSiteRolesDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= selectSiteRolesDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= selectSiteRolesDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= selectSiteRolesDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	filterItems="<%= selectSiteRolesDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= selectSiteRolesDisplayContext.getSearchActionURL() %>"
+	searchContainerId="siteRoles"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= selectSiteRolesDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= selectSiteRolesDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectSiteRolesDisplayContext.getSortingURL() %>"
+	totalItems="<%= selectSiteRolesDisplayContext.getTotalItems() %>"
+	viewTypes="<%= selectSiteRolesDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">
 	<liferay-ui:search-container

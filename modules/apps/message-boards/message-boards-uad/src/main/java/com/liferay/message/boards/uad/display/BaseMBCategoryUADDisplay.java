@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Provides the base implementation for the MBCategory UAD display.
@@ -60,13 +59,8 @@ public abstract class BaseMBCategoryUADDisplay extends BaseModelUADDisplay<MBCat
 	}
 
 	@Override
-	public String getKey() {
-		return MBUADConstants.CLASS_NAME_MB_CATEGORY;
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "MBCategory";
+	public Class<MBCategory> getTypeClass() {
+		return MBCategory.class;
 	}
 
 	@Override

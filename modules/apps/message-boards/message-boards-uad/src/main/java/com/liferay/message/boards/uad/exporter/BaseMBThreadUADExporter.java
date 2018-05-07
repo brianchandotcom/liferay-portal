@@ -44,6 +44,11 @@ public abstract class BaseMBThreadUADExporter extends DynamicQueryUADExporter<MB
 	}
 
 	@Override
+	public Class<MBThread> getTypeClass() {
+		return MBThread.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return mbThreadLocalService.getActionableDynamicQuery();
 	}

@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Provides the base implementation for the MBMessage UAD display.
@@ -60,13 +59,8 @@ public abstract class BaseMBMessageUADDisplay extends BaseModelUADDisplay<MBMess
 	}
 
 	@Override
-	public String getKey() {
-		return MBUADConstants.CLASS_NAME_MB_MESSAGE;
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "MBMessage";
+	public Class<MBMessage> getTypeClass() {
+		return MBMessage.class;
 	}
 
 	@Override

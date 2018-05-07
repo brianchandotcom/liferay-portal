@@ -65,8 +65,18 @@ public abstract class BaseMBMessageUADAnonymizer
 	}
 
 	@Override
+	public String getApplicationName() {
+		return MBUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList("subject", "body");
+	}
+
+	@Override
+	public Class<MBMessage> getTypeClass() {
+		return MBMessage.class;
 	}
 
 	@Override

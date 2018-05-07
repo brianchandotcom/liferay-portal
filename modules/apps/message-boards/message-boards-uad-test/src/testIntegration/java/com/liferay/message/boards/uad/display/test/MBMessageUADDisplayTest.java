@@ -75,7 +75,6 @@ public class MBMessageUADDisplayTest extends BaseUADDisplayTestCase<MBMessage> {
 	private final List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	@Inject
 	private MBMessageUADTestHelper _mbMessageUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_MESSAGE)
+	@Inject(filter = "component.name=*.MBMessageUADDisplay")
 	private UADDisplay _uadDisplay;
 }

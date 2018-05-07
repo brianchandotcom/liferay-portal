@@ -44,6 +44,11 @@ public abstract class BaseMBMessageUADExporter extends DynamicQueryUADExporter<M
 	}
 
 	@Override
+	public Class<MBMessage> getTypeClass() {
+		return MBMessage.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return mbMessageLocalService.getActionableDynamicQuery();
 	}

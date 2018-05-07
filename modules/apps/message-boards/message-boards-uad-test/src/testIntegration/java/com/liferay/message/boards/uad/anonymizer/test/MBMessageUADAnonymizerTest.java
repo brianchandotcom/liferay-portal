@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBMessageUADTestHelper;
 
 import com.liferay.portal.kernel.model.User;
@@ -128,7 +127,6 @@ public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMess
 	private MBMessageLocalService _mbMessageLocalService;
 	@Inject
 	private MBMessageUADTestHelper _mbMessageUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_MESSAGE)
+	@Inject(filter = "component.name=*.MBMessageUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
 }

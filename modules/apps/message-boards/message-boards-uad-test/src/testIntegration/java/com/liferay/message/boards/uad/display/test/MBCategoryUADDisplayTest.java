@@ -75,7 +75,6 @@ public class MBCategoryUADDisplayTest extends BaseUADDisplayTestCase<MBCategory>
 	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
 	@Inject
 	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_CATEGORY)
+	@Inject(filter = "component.name=*.MBCategoryUADDisplay")
 	private UADDisplay _uadDisplay;
 }

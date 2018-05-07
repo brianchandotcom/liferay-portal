@@ -225,6 +225,29 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
 
+	protected static class BatchTestClass extends TestClass {
+
+		protected static BatchTestClass getInstance(
+			PortalGitWorkingDirectory portalGitWorkingDirectory,
+			String batchName) {
+
+			File file = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(),
+				"build-test-batch.xml");
+
+			BatchTestClass batchTestClass = new BatchTestClass(file, batchName);
+
+			return batchTestClass;
+		}
+
+		protected BatchTestClass(File file, String batchName) {
+			super(file);
+
+			addTestMethod(batchName);
+		}
+
+	}
+
 	private String _getAxisMaxSizePropertyValue() {
 		return getFirstPropertyValue("test.batch.axis.max.size");
 	}

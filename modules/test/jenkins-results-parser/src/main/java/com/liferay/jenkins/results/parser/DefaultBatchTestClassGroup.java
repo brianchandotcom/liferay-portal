@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-
 /**
  * @author Yi-Chen Tsai
  */
@@ -29,15 +27,8 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 
 		AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(this, 0);
 
-		File file = new File(
-			portalGitWorkingDirectory.getWorkingDirectory(),
-			"build-test-batch.xml");
-
-		TestClass testClass = new TestClass(file);
-
-		testClass.addTestMethod(batchName);
-
-		axisTestClassGroup.addTestClass(testClass);
+		axisTestClassGroup.addTestClass(
+			BatchTestClass.getInstance(portalGitWorkingDirectory, batchName));
 
 		axisTestClassGroups.put(0, axisTestClassGroup);
 	}

@@ -17,39 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = portalPreferences.getValue(SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style", "icon");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL viewOrganizationsURL = renderResponse.createRenderURL();
-
-viewOrganizationsURL.setParameter("mvcPath", "/view.jsp");
-viewOrganizationsURL.setParameter("tabs1", "organizations");
-viewOrganizationsURL.setParameter("redirect", currentURL);
-viewOrganizationsURL.setParameter("groupId", String.valueOf(siteMembershipsDisplayContext.getGroupId()));
-
-OrganizationSearch organizationSearch = new OrganizationSearch(renderRequest, PortletURLUtil.clone(viewOrganizationsURL, renderResponse));
-
-organizationSearch.setEmptyResultsMessage("no-organization-was-found-that-is-a-member-of-this-site");
-
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearch.getSearchTerms();
-
-long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
-LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-organizationParams.put("groupOrganization", Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
-organizationParams.put("organizationsGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
-
-int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams);
-
-organizationSearch.setTotal(organizationsCount);
-
-List<Organization> organizations = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, organizationSearch.getStart(), organizationSearch.getEnd(), organizationSearch.getOrderByComparator());
-
-organizationSearch.setResults(organizations);
+OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar
@@ -58,7 +26,7 @@ organizationSearch.setResults(organizations);
 />
 
 <liferay-frontend:management-bar
-	disabled="<%= organizationsCount <= 0 %>"
+	disabled="<%= organizationsDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="organizations"
 >
@@ -75,7 +43,7 @@ organizationSearch.setResults(organizations);
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= organizationsDisplayContext.getDisplayStyle() %>"
 		/>
 
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
@@ -94,17 +62,17 @@ organizationSearch.setResults(organizations);
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(viewOrganizationsURL, renderResponse) %>"
+			portletURL="<%= organizationsDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= organizationsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= organizationsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"name", "type"} %>'
-			portletURL="<%= PortletURLUtil.clone(viewOrganizationsURL, renderResponse) %>"
+			portletURL="<%= organizationsDisplayContext.getPortletURL() %>"
 		/>
 
-		<c:if test="<%= (organizationsCount > 0) || searchTerms.isSearch() %>">
+		<c:if test="<%= organizationsDisplayContext.isShowSearch() %>">
 			<li>
 				<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
 					<liferay-ui:input-search
@@ -154,8 +122,7 @@ organizationSearch.setResults(organizations);
 
 			<liferay-ui:search-container
 				id="organizations"
-				rowChecker="<%= rowChecker %>"
-				searchContainer="<%= organizationSearch %>"
+				searchContainer="<%= organizationsDisplayContext.getOrganizationSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Organization"
@@ -165,6 +132,8 @@ organizationSearch.setResults(organizations);
 				>
 
 					<%
+					String displayStyle = organizationsDisplayContext.getDisplayStyle();
+
 					boolean selectOrganizations = false;
 					%>
 
@@ -172,7 +141,7 @@ organizationSearch.setResults(organizations);
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator
-					displayStyle="<%= displayStyle %>"
+					displayStyle="<%= organizationsDisplayContext.getDisplayStyle() %>"
 					markupView="lexicon"
 				/>
 			</liferay-ui:search-container>

@@ -99,12 +99,9 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 							File file = filePath.toFile();
 
-							TestClass testClass = new TestClass(
-								file.getParentFile());
-
-							testClass.addTestMethod(batchName);
-
-							testClasses.add(testClass);
+							testClasses.add(
+								PluginsBatchTestClass.getInstance(
+									file.getParentFile(), batchName));
 						}
 
 						return FileVisitResult.CONTINUE;
@@ -142,6 +139,25 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		Collections.sort(testClasses);
+	}
+
+	protected static class PluginsBatchTestClass extends TestClass {
+
+		protected static TestClass getInstance(
+			File pluginDir, String batchName) {
+
+			TestClass testClass = new PluginsBatchTestClass(
+				pluginDir, batchName);
+
+			return testClass;
+		}
+
+		protected PluginsBatchTestClass(File file, String batchName) {
+			super(file);
+
+			addTestMethod(batchName);
+		}
+
 	}
 
 	private List<PathMatcher> _getPluginNamesPathMatchers(String propertyName) {

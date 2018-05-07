@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Commerce Price Impl
-Bundle-SymbolicName: com.liferay.commerce.price.impl
-Bundle-Version: 1.0.0
-Import-Package:\
-	com.liferay.portal.kernel.model;version="[1.0.0,1.2.0)",\
-	\
-	*

@@ -19,15 +19,17 @@ import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCh
 import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -107,9 +109,8 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		OrderSummaryCheckoutStepDisplayContext
 			orderSummaryCheckoutStepDisplayContext =
 				new OrderSummaryCheckoutStepDisplayContext(
-					_commerceOrderValidatorRegistry,
-					_commercePriceCalculationLocalService, _cpInstanceHelper,
-					httpServletRequest);
+					_commerceOrderValidatorRegistry, _commercePriceCalculation,
+					_cpInstanceHelper, httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
@@ -149,9 +150,13 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrder.class.getName(), actionRequest);
 
+		CommerceContext commerceContext =
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
 		CommerceOrder commerceOrder =
 			_commerceOrderService.checkoutCommerceOrder(
-				commerceOrderId, serviceContext);
+				commerceOrderId, commerceContext, serviceContext);
 
 		_actionHelper.startPayment(
 			commerceOrder.getCommerceOrderId(), actionRequest, actionResponse,
@@ -171,8 +176,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
-	private CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
+	private CommercePriceCalculation _commercePriceCalculation;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

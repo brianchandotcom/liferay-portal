@@ -16,6 +16,8 @@ package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.util.ShippingMethodCommerceCheckoutStep;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceOrder;
@@ -108,13 +110,17 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		CommerceContext commerceContext =
+			(CommerceContext)_httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
 		CommerceShippingEngine commerceShippingEngine =
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				commerceShippingMethod.getEngineKey());
 
 		List<CommerceShippingOption> commerceShippingOptions =
 			commerceShippingEngine.getCommerceShippingOptions(
-				_commerceOrder, themeDisplay.getLocale());
+				commerceContext, _commerceOrder, themeDisplay.getLocale());
 
 		return ListUtil.sort(
 			commerceShippingOptions,

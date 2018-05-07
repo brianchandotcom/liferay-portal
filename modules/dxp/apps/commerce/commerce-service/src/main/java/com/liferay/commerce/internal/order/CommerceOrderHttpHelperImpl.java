@@ -16,6 +16,8 @@ package com.liferay.commerce.internal.order;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
@@ -271,13 +273,21 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		_commerceOrderService.mergeGuestCommerceOrder(
 			cookieCommerceOrder.getCommerceOrderId(),
-			commerceOrder.getCommerceOrderId(), serviceContext);
+			commerceOrder.getCommerceOrderId(),
+			_getCommerceContext(themeDisplay.getRequest()), serviceContext);
 
 		CookieKeys.deleteCookies(
 			themeDisplay.getRequest(), themeDisplay.getResponse(), domain,
 			commerceOrderUuidWebKey);
 
 		return commerceOrder;
+	}
+
+	private CommerceContext _getCommerceContext(
+		HttpServletRequest httpServletRequest) {
+
+		return (CommerceContext)httpServletRequest.getAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT);
 	}
 
 	private String _getCookieName(long groupId) {

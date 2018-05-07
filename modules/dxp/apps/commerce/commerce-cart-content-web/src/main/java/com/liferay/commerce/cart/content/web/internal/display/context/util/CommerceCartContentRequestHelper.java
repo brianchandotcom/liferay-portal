@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context.util;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,16 @@ public class CommerceCartContentRequestHelper extends BaseRequestHelper {
 		HttpServletRequest httpServletRequest) {
 
 		super(httpServletRequest);
+	}
+
+	public CommerceContext getCommerceContext() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		return commerceContext;
 	}
 
 }

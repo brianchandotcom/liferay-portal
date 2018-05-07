@@ -17,10 +17,10 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentMiniPortletInstanceConfiguration;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 
@@ -39,17 +39,15 @@ public class CommerceCartContentMiniDisplayContext
 			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-			CommercePriceCalculationLocalService
-				commercePriceCalculationLocalService,
+			CommercePriceCalculation commercePriceCalculation,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper)
 		throws PortalException {
 
 		super(
-			httpServletRequest, commerceOrderHttpHelper,
-			commerceOrderItemService, commerceOrderValidatorRegistry,
-			commercePriceCalculationLocalService, cpDefinitionHelper,
-			cpInstanceHelper);
+			httpServletRequest, commerceOrderItemService,
+			commerceOrderValidatorRegistry, commercePriceCalculation,
+			cpDefinitionHelper, cpInstanceHelper);
 
 		PortletDisplay portletDisplay =
 			commerceCartContentRequestHelper.getPortletDisplay();
@@ -57,11 +55,13 @@ public class CommerceCartContentMiniDisplayContext
 		_commerceCartContentMiniPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CommerceCartContentMiniPortletInstanceConfiguration.class);
+
+		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 	}
 
 	public String getCommerceCartPortletURL() throws PortalException {
 		PortletURL portletURL =
-			commerceOrderHttpHelper.getCommerceCartPortletURL(
+			_commerceOrderHttpHelper.getCommerceCartPortletURL(
 				commerceCartContentRequestHelper.getRequest());
 
 		return portletURL.toString();
@@ -91,6 +91,7 @@ public class CommerceCartContentMiniDisplayContext
 
 	private final CommerceCartContentMiniPortletInstanceConfiguration
 		_commerceCartContentMiniPortletInstanceConfiguration;
+	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private long _displayStyleGroupId;
 
 }

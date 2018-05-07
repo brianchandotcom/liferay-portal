@@ -15,6 +15,8 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
@@ -55,6 +57,10 @@ public class EditCommerceOrderItemMVCActionCommand
 	protected void addCommerceOrderItems(ActionRequest actionRequest)
 		throws Exception {
 
+		CommerceContext commerceContext =
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
 
@@ -70,7 +76,7 @@ public class EditCommerceOrderItemMVCActionCommand
 
 			_commerceOrderItemService.addCommerceOrderItem(
 				commerceOrderId, cpInstanceId, 1, 0, cpInstance.getDDMContent(),
-				cpInstance.getPrice(), serviceContext);
+				cpInstance.getPrice(), commerceContext, serviceContext);
 		}
 	}
 

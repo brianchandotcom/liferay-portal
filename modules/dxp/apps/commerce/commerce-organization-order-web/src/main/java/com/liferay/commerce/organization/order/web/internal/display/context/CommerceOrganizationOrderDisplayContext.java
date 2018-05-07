@@ -17,7 +17,8 @@ package com.liferay.commerce.organization.order.web.internal.display.context;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -26,12 +27,11 @@ import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.order.CommerceOrderHelper;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.order.web.internal.configuration.CommerceOrganizationOpenOrderPortletInstanceConfiguration;
 import com.liferay.commerce.organization.order.web.internal.display.context.util.CommerceOrganizationOrderRequestHelper;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderSearch;
-import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.search.facet.NegatableSimpleFacet;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -39,7 +39,6 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -85,8 +84,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
-import java.math.BigDecimal;
-
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -112,15 +109,11 @@ public class CommerceOrganizationOrderDisplayContext {
 	public CommerceOrganizationOrderDisplayContext(
 			CommerceAddressService commerceAddressService,
 			CommerceOrderHelper commerceOrderHelper,
-			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderLocalService commerceOrderLocalService,
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommerceOrderService commerceOrderService,
-			CommerceOrganizationHelper commerceOrganizationHelper,
-			CommercePriceCalculationLocalService
-				commercePriceCalculationLocalService,
-			CommercePriceFormatter commercePriceFormatter,
+			CommercePriceCalculation commercePriceCalculation,
 			CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 			CPInstanceHelper cpInstanceHelper, JSONFactory jsonFactory,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
@@ -129,14 +122,11 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		_commerceAddressService = commerceAddressService;
 		_commerceOrderHelper = commerceOrderHelper;
-		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderService = commerceOrderService;
-		_commercePriceCalculationLocalService =
-			commercePriceCalculationLocalService;
-		_commercePriceFormatter = commercePriceFormatter;
+		_commercePriceCalculation = commercePriceCalculation;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_cpInstanceHelper = cpInstanceHelper;
 		_jsonFactory = jsonFactory;
@@ -147,6 +137,9 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		ThemeDisplay themeDisplay =
 			_commerceOrganizationOrderRequestHelper.getThemeDisplay();
+
+		CommerceContext commerceContext =
+			_commerceOrganizationOrderRequestHelper.getCommerceContext();
 
 		_commerceOrderDateFormatDate = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
@@ -159,10 +152,9 @@ public class CommerceOrganizationOrderDisplayContext {
 				DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
 
-		_currentCommerceOrder = commerceOrderHttpHelper.getCurrentCommerceOrder(
-			_commerceOrganizationOrderRequestHelper.getRequest());
-		_organization = commerceOrganizationHelper.getCurrentOrganization(
-			_commerceOrganizationOrderRequestHelper.getRequest());
+		_currentCommerceOrder = commerceContext.getCommerceOrder();
+
+		_organization = commerceContext.getOrganization();
 
 		_commerceOrderId = ParamUtil.getLong(renderRequest, "commerceOrderId");
 		_commerceOrderNoteId = ParamUtil.getLong(
@@ -229,9 +221,9 @@ public class CommerceOrganizationOrderDisplayContext {
 	public String getCommerceOrderItemPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		return _commercePriceFormatter.format(
-			_commerceOrganizationOrderRequestHelper.getSiteGroupId(),
-			commerceOrderItem.getPrice());
+		CommerceMoney commerceMoney = commerceOrderItem.getPriceMoney();
+
+		return commerceMoney.toString();
 	}
 
 	public SearchContainer<CommerceOrderItem>
@@ -455,15 +447,15 @@ public class CommerceOrganizationOrderDisplayContext {
 	public String getCommerceOrderValue(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		BigDecimal value = commerceOrder.getTotal();
+		CommerceMoney commerceMoney = commerceOrder.getTotalMoney();
 
 		if (commerceOrder.isOpen()) {
-			value = _commercePriceCalculationLocalService.getOrderSubtotal(
-				commerceOrder);
+			commerceMoney = _commercePriceCalculation.getOrderSubtotal(
+				commerceOrder,
+				_commerceOrganizationOrderRequestHelper.getCommerceContext());
 		}
 
-		return _commercePriceFormatter.format(
-			commerceOrder.getSiteGroupId(), value);
+		return commerceMoney.toString();
 	}
 
 	public String getDisplayStyle() {
@@ -912,7 +904,6 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final Format _commerceOrderDateFormatDateTime;
 	private final Format _commerceOrderDateFormatTime;
 	private final CommerceOrderHelper _commerceOrderHelper;
-	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private final long _commerceOrderId;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private SearchContainer<CommerceOrderItem>
@@ -926,9 +917,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		_commerceOrganizationOpenOrderPortletInstanceConfiguration;
 	private final CommerceOrganizationOrderRequestHelper
 		_commerceOrganizationOrderRequestHelper;
-	private final CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
-	private final CommercePriceFormatter _commercePriceFormatter;
+	private final CommercePriceCalculation _commercePriceCalculation;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;
 	private final CPInstanceHelper _cpInstanceHelper;

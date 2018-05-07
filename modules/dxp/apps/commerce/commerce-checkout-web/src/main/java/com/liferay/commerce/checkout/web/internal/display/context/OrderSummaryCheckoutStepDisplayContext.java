@@ -15,15 +15,18 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -43,17 +46,17 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-			CommercePriceCalculationLocalService
-				commercePriceCalculationLocalService,
+			CommercePriceCalculation commercePriceCalculation,
 			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
-		_commercePriceCalculationLocalService =
-			commercePriceCalculationLocalService;
+		_commercePriceCalculation = commercePriceCalculation;
 		_cpInstanceHelper = cpInstanceHelper;
 
+		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT);
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 	}
@@ -91,14 +94,16 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	}
 
 	public String getCommerceOrderShippingPrice() throws PortalException {
-		return _commercePriceCalculationLocalService.formatPriceWithCurrency(
-			_commerceOrder.getCommerceCurrencyId(),
-			_commerceOrder.getShippingPrice());
+		CommerceMoney commerceMoney = _commerceOrder.getShippingMoney();
+
+		return commerceMoney.toString();
 	}
 
 	public String getCommerceOrderSubtotal() throws PortalException {
-		return _commercePriceCalculationLocalService.getFormattedOrderSubtotal(
-			getCommerceOrder());
+		CommerceMoney subtotal = _commercePriceCalculation.getOrderSubtotal(
+			getCommerceOrder(), _commerceContext);
+
+		return subtotal.toString();
 	}
 
 	public Map<Long, List<CommerceOrderValidatorResult>>
@@ -112,10 +117,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	public String getFormattedPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		return _commercePriceCalculationLocalService.getFormattedFinalPrice(
-			_commerceOrder.getSiteGroupId(), _commerceOrder.getOrderUserId(),
+		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			commerceOrderItem.getCPInstanceId(),
-			commerceOrderItem.getQuantity());
+			commerceOrderItem.getQuantity(), true, true, _commerceContext);
+
+		return commerceMoney.toString();
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
@@ -124,11 +130,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return _cpInstanceHelper.getKeyValuePairs(json, locale);
 	}
 
+	private final CommerceContext _commerceContext;
 	private final CommerceOrder _commerceOrder;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
-	private final CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
+	private final CommercePriceCalculation _commercePriceCalculation;
 	private final CPInstanceHelper _cpInstanceHelper;
 
 }

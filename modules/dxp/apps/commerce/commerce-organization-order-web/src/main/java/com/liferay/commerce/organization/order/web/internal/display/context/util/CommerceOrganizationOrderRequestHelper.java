@@ -14,11 +14,14 @@
 
 package com.liferay.commerce.organization.order.web.internal.display.context.util;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -31,6 +34,16 @@ public class CommerceOrganizationOrderRequestHelper extends BaseRequestHelper {
 
 		_httpServletResponse = PortalUtil.getHttpServletResponse(
 			getLiferayPortletResponse());
+	}
+
+	public CommerceContext getCommerceContext() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		return commerceContext;
 	}
 
 	public HttpServletResponse getResponse() {

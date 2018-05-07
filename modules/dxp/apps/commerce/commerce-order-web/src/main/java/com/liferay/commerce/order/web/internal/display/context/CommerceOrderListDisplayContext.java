@@ -16,7 +16,7 @@ package com.liferay.commerce.order.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
@@ -25,10 +25,10 @@ import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.order.web.internal.search.facet.NegatableMultiValueFacet;
 import com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.search.facet.NegatableSimpleFacet;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.petra.function.UnsafeFunction;
@@ -72,8 +72,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
-import java.math.BigDecimal;
-
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -98,9 +96,7 @@ public class CommerceOrderListDisplayContext {
 		CommerceOrderLocalService commerceOrderLocalService,
 		CommerceOrderNoteService commerceOrderNoteService,
 		CommerceOrganizationService commerceOrganizationService,
-		CommercePriceCalculationLocalService
-			commercePriceCalculationLocalService,
-		CommercePriceFormatter commercePriceFormatter,
+		CommercePriceCalculation commercePriceCalculation,
 		GroupLocalService groupLocalService, JSONFactory jsonFactory,
 		RenderRequest renderRequest) {
 
@@ -108,9 +104,7 @@ public class CommerceOrderListDisplayContext {
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrganizationService = commerceOrganizationService;
-		_commercePriceCalculationLocalService =
-			commercePriceCalculationLocalService;
-		_commercePriceFormatter = commercePriceFormatter;
+		_commercePriceCalculation = commercePriceCalculation;
 		_groupLocalService = groupLocalService;
 		_jsonFactory = jsonFactory;
 
@@ -251,15 +245,15 @@ public class CommerceOrderListDisplayContext {
 	public String getCommerceOrderValue(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		BigDecimal value = commerceOrder.getTotal();
+		CommerceMoney commerceMoney = commerceOrder.getTotalMoney();
 
 		if (commerceOrder.isOpen()) {
-			value = _commercePriceCalculationLocalService.getOrderSubtotal(
-				commerceOrder);
+			commerceMoney = _commercePriceCalculation.getOrderSubtotal(
+				commerceOrder,
+				_commerceOrderRequestHelper.getCommerceContext());
 		}
 
-		return _commercePriceFormatter.format(
-			commerceOrder.getSiteGroupId(), value);
+		return commerceMoney.toString();
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
@@ -754,9 +748,7 @@ public class CommerceOrderListDisplayContext {
 	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommerceOrganizationService _commerceOrganizationService;
-	private final CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
-	private final CommercePriceFormatter _commercePriceFormatter;
+	private final CommercePriceCalculation _commercePriceCalculation;
 	private final GroupLocalService _groupLocalService;
 	private final JSONFactory _jsonFactory;
 	private final String _keywords;

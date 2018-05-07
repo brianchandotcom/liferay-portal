@@ -16,12 +16,11 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentTotalPortletInstanceConfiguration;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -42,20 +41,17 @@ public class CommerceCartContentTotalDisplayContext
 
 	public CommerceCartContentTotalDisplayContext(
 			HttpServletRequest httpServletRequest,
-			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-			CommercePriceCalculationLocalService
-				commercePriceCalculationLocalService,
+			CommercePriceCalculation commercePriceCalculation,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper, Portal portal)
 		throws PortalException {
 
 		super(
-			httpServletRequest, commerceOrderHttpHelper,
-			commerceOrderItemService, commerceOrderValidatorRegistry,
-			commercePriceCalculationLocalService, cpDefinitionHelper,
-			cpInstanceHelper);
+			httpServletRequest, commerceOrderItemService,
+			commerceOrderValidatorRegistry, commercePriceCalculation,
+			cpDefinitionHelper, cpInstanceHelper);
 
 		_portal = portal;
 

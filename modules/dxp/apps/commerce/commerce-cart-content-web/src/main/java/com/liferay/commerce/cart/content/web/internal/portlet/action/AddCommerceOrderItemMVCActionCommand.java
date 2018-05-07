@@ -15,6 +15,8 @@
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -92,13 +94,17 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 					httpServletRequest);
 			}
 
+			CommerceContext commerceContext =
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceOrderItem.class.getName(), httpServletRequest);
 
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId, quantity,
-					0, ddmFormValues, null, serviceContext);
+					0, ddmFormValues, null, commerceContext, serviceContext);
 
 			int commerceOrderItemsQuantity =
 				_commerceOrderItemService.getCommerceOrderItemsQuantity(

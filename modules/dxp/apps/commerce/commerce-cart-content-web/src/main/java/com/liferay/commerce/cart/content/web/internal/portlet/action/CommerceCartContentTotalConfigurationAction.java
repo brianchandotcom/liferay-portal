@@ -16,12 +16,11 @@ package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentTotalDisplayContext;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -64,11 +63,10 @@ public class CommerceCartContentTotalConfigurationAction
 			CommerceCartContentTotalDisplayContext
 				commerceCartContentTotalDisplayContext =
 					new CommerceCartContentTotalDisplayContext(
-						httpServletRequest, _commerceOrderHttpHelper,
-						_commerceOrderItemService,
+						httpServletRequest, _commerceOrderItemService,
 						_commerceOrderValidatorRegistry,
-						_commercePriceCalculationLocalService,
-						_cpDefinitionHelper, _cpInstanceHelper, _portal);
+						_commercePriceCalculation, _cpDefinitionHelper,
+						_cpInstanceHelper, _portal);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -94,17 +92,13 @@ public class CommerceCartContentTotalConfigurationAction
 		CommerceCartContentTotalConfigurationAction.class);
 
 	@Reference
-	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
-
-	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
 
 	@Reference
-	private CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
+	private CommercePriceCalculation _commercePriceCalculation;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

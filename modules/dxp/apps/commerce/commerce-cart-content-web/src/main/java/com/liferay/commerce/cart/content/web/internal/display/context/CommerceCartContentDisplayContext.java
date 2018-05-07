@@ -16,18 +16,20 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.content.web.internal.display.context.util.CommerceCartContentRequestHelper;
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentPortletInstanceConfiguration;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,8 +41,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Locale;
@@ -59,27 +59,24 @@ public class CommerceCartContentDisplayContext {
 
 	public CommerceCartContentDisplayContext(
 			HttpServletRequest httpServletRequest,
-			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-			CommercePriceCalculationLocalService
-				commercePriceCalculationLocalService,
+			CommercePriceCalculation commercePriceCalculation,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper)
 		throws PortalException {
 
-		this.commerceOrderHttpHelper = commerceOrderHttpHelper;
-
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
-		_commercePriceCalculationLocalService =
-			commercePriceCalculationLocalService;
+		_commercePriceCalculation = commercePriceCalculation;
 
 		this.cpDefinitionHelper = cpDefinitionHelper;
 		this.cpInstanceHelper = cpInstanceHelper;
 
 		commerceCartContentRequestHelper = new CommerceCartContentRequestHelper(
 			httpServletRequest);
+
+		commerceContext = commerceCartContentRequestHelper.getCommerceContext();
 
 		PortletDisplay portletDisplay =
 			commerceCartContentRequestHelper.getPortletDisplay();
@@ -94,10 +91,7 @@ public class CommerceCartContentDisplayContext {
 			return _commerceOrder;
 		}
 
-		_commerceOrder = commerceOrderHttpHelper.getCurrentCommerceOrder(
-			commerceCartContentRequestHelper.getRequest());
-
-		return _commerceOrder;
+		return commerceContext.getCommerceOrder();
 	}
 
 	public long getCommerceOrderId() throws PortalException {
@@ -141,14 +135,16 @@ public class CommerceCartContentDisplayContext {
 	public String getCommerceOrderSubtotal() throws PortalException {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
-		if (commerceOrder == null) {
-			return _commercePriceCalculationLocalService.formatPrice(
-				commerceCartContentRequestHelper.getScopeGroupId(),
-				BigDecimal.ZERO);
+		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
+
+		CommerceMoney commerceMoney = commerceCurrency.getZero();
+
+		if (commerceOrder != null) {
+			commerceMoney = _commercePriceCalculation.getOrderSubtotal(
+				getCommerceOrder(), commerceContext);
 		}
 
-		return _commercePriceCalculationLocalService.getFormattedOrderSubtotal(
-			getCommerceOrder());
+		return commerceMoney.toString();
 	}
 
 	public Map<Long, List<CommerceOrderValidatorResult>>
@@ -208,11 +204,11 @@ public class CommerceCartContentDisplayContext {
 	public String getFormattedPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
-		return _commercePriceCalculationLocalService.getFormattedFinalPrice(
-			commerceCartContentRequestHelper.getScopeGroupId(),
-			commerceCartContentRequestHelper.getUserId(),
+		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			commerceOrderItem.getCPInstanceId(),
-			commerceOrderItem.getQuantity());
+			commerceOrderItem.getQuantity(), true, true, commerceContext);
+
+		return commerceMoney.toString();
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
@@ -306,7 +302,7 @@ public class CommerceCartContentDisplayContext {
 
 	protected final CommerceCartContentRequestHelper
 		commerceCartContentRequestHelper;
-	protected final CommerceOrderHttpHelper commerceOrderHttpHelper;
+	protected final CommerceContext commerceContext;
 	protected final CPDefinitionHelper cpDefinitionHelper;
 	protected final CPInstanceHelper cpInstanceHelper;
 
@@ -316,8 +312,7 @@ public class CommerceCartContentDisplayContext {
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
-	private final CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
+	private final CommercePriceCalculation _commercePriceCalculation;
 	private long _displayStyleGroupId;
 	private SearchContainer<CommerceOrderItem> _searchContainer;
 

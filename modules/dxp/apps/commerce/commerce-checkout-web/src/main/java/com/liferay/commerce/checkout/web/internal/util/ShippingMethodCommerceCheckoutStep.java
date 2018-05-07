@@ -19,6 +19,8 @@ import com.liferay.commerce.checkout.web.internal.display.context.ShippingMethod
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.exception.CommerceOrderShippingMethodException;
 import com.liferay.commerce.model.CommerceOrder;
@@ -146,8 +148,9 @@ public class ShippingMethodCommerceCheckoutStep
 	}
 
 	protected BigDecimal getShippingPrice(
-			CommerceOrder commerceOrder, long commerceShippingMethodId,
-			String shippingOptionName, Locale locale)
+			CommerceContext commerceContext, CommerceOrder commerceOrder,
+			long commerceShippingMethodId, String shippingOptionName,
+			Locale locale)
 		throws PortalException {
 
 		CommerceShippingMethod commerceShippingMethod =
@@ -167,7 +170,7 @@ public class ShippingMethodCommerceCheckoutStep
 
 		List<CommerceShippingOption> commerceShippingOptions =
 			commerceShippingEngine.getCommerceShippingOptions(
-				commerceOrder, locale);
+				commerceContext, commerceOrder, locale);
 
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingOptions) {
@@ -196,6 +199,10 @@ public class ShippingMethodCommerceCheckoutStep
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		CommerceContext commerceContext =
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
 
@@ -221,8 +228,8 @@ public class ShippingMethodCommerceCheckoutStep
 			pos + 1);
 
 		BigDecimal shippingPrice = getShippingPrice(
-			commerceOrder, commerceShippingMethodId, shippingOptionName,
-			themeDisplay.getLocale());
+			commerceContext, commerceOrder, commerceShippingMethodId,
+			shippingOptionName, themeDisplay.getLocale());
 
 		_commerceOrderLocalService.updateCommerceOrder(
 			commerceOrder.getCommerceOrderId(),

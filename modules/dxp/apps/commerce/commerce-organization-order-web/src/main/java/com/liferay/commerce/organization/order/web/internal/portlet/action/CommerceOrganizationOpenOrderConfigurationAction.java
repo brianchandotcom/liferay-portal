@@ -15,19 +15,16 @@
 package com.liferay.commerce.organization.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.order.web.internal.display.context.CommerceOrganizationOrderDisplayContext;
-import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -68,11 +65,9 @@ public class CommerceOrganizationOpenOrderConfigurationAction
 				commerceOrganizationOrderDisplayContext =
 					new CommerceOrganizationOrderDisplayContext(
 						_commerceAddressService, _commerceOrderHelper,
-						_commerceOrderHttpHelper, _commerceOrderItemService,
-						_commerceOrderLocalService, _commerceOrderNoteService,
-						_commerceOrderService, _commerceOrganizationHelper,
-						_commercePriceCalculationLocalService,
-						_commercePriceFormatter,
+						_commerceOrderItemService, _commerceOrderLocalService,
+						_commerceOrderNoteService, _commerceOrderService,
+						_commercePriceCalculation,
 						_commerceShippingEngineRegistry, _cpInstanceHelper,
 						_jsonFactory, _modelResourcePermission, renderRequest);
 
@@ -106,9 +101,6 @@ public class CommerceOrganizationOpenOrderConfigurationAction
 	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference
-	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
-
-	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
@@ -121,14 +113,7 @@ public class CommerceOrganizationOpenOrderConfigurationAction
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommerceOrganizationHelper _commerceOrganizationHelper;
-
-	@Reference
-	private CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
+	private CommercePriceCalculation _commercePriceCalculation;
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;

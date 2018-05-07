@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.wish.list.web.internal.display.context.util;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -29,6 +31,16 @@ public class CommerceWishListRequestHelper extends BaseRequestHelper {
 		HttpServletRequest httpServletRequest) {
 
 		super(httpServletRequest);
+	}
+
+	public CommerceContext getCommerceContext() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		return commerceContext;
 	}
 
 	public HttpServletResponse getResponse() {

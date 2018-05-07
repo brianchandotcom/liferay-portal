@@ -15,6 +15,8 @@
 package com.liferay.commerce.organization.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
@@ -258,8 +260,13 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, long commerceOrderId)
 		throws Exception {
 
+		CommerceContext commerceContext =
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
 		CommerceOrder commerceOrder =
-			_commerceOrderService.reorderCommerceOrder(commerceOrderId);
+			_commerceOrderService.reorderCommerceOrder(
+				commerceOrderId, commerceContext);
 
 		checkoutOrSubmitCommerceOrder(actionRequest, commerceOrder);
 	}

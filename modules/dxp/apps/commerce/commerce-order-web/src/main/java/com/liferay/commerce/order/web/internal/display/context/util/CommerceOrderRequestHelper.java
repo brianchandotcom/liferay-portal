@@ -14,10 +14,14 @@
 
 package com.liferay.commerce.order.web.internal.display.context.util;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.portlet.RenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
@@ -26,6 +30,16 @@ public class CommerceOrderRequestHelper extends BaseRequestHelper {
 
 	public CommerceOrderRequestHelper(RenderRequest renderRequest) {
 		super(PortalUtil.getHttpServletRequest(renderRequest));
+	}
+
+	public CommerceContext getCommerceContext() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		return commerceContext;
 	}
 
 }

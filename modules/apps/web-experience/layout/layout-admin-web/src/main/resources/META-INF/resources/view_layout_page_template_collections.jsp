@@ -25,74 +25,22 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateCollectionsActionDropdownItems() %>"
+	clearResultsURL="<%= layoutPageTemplateDisplayContext.getClearResultsURL() %>"
+	componentId="layoutPageTemplateCollectionsManagementToolbar"
+	creationMenu="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) ? layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionsCreationMenu() : null %>"
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateCollectionsManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
 	searchContainerId="layoutPageTemplateCollections"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon"} %>'
-			portletURL="<%= currentURLObj %>"
-			selectedDisplayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
-			<portlet:renderURL var="addLayoutPageTemplateCollectionURL">
-				<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-collection") %>'
-					url="<%= addLayoutPageTemplateCollectionURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= currentURLObj %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= layoutPageTemplateDisplayContext.getOrderByCol() %>"
-			orderByType="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
-			orderColumns="<%= layoutPageTemplateDisplayContext.getOrderColumns() %>"
-			portletURL="<%= currentURLObj %>"
-		/>
-
-		<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>">
-			<portlet:renderURL var="portletURL">
-				<portlet:param name="mvcPath" value="/view_layout_page_template_collections.jsp" />
-				<portlet:param name="tabs1" value="page-templates" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="displayStyle" value="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" />
-			</portlet:renderURL>
-
-			<li>
-				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedLayoutPageTemplateCollections"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>"
+	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
+	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
+	totalItems="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
+	viewTypes="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -148,12 +96,9 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedLayoutPageTemplateCollections').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+	window.deleteLayoutPageTemplateCollections = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
 		}
-	);
+	}
 </aui:script>

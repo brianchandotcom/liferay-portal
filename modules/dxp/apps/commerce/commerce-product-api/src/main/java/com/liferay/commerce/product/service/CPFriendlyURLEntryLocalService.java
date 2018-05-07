@@ -189,6 +189,10 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long groupId,
 		long classNameId, long classPK, String languageId, boolean main);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(long groupId,
+		long classNameId, String languageId, String urlTitle);
+
 	/**
 	* Returns the cp friendly url entry matching the UUID and group.
 	*
@@ -264,11 +268,6 @@ public interface CPFriendlyURLEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPFriendlyURLEntry getCPFriendlyURLEntry(long CPFriendlyURLEntryId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPFriendlyURLEntry getCPFriendlyURLEntry(long groupId,
-		long classNameId, String languageId, String urlTitle)
 		throws PortalException;
 
 	/**

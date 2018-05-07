@@ -1227,12 +1227,12 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		cpDefinitionLocalizationImpl.setCompanyId(cpDefinitionLocalization.getCompanyId());
 		cpDefinitionLocalizationImpl.setCPDefinitionId(cpDefinitionLocalization.getCPDefinitionId());
 		cpDefinitionLocalizationImpl.setLanguageId(cpDefinitionLocalization.getLanguageId());
-		cpDefinitionLocalizationImpl.setTitle(cpDefinitionLocalization.getTitle());
+		cpDefinitionLocalizationImpl.setName(cpDefinitionLocalization.getName());
 		cpDefinitionLocalizationImpl.setShortDescription(cpDefinitionLocalization.getShortDescription());
 		cpDefinitionLocalizationImpl.setDescription(cpDefinitionLocalization.getDescription());
 		cpDefinitionLocalizationImpl.setMetaTitle(cpDefinitionLocalization.getMetaTitle());
-		cpDefinitionLocalizationImpl.setMetaKeywords(cpDefinitionLocalization.getMetaKeywords());
 		cpDefinitionLocalizationImpl.setMetaDescription(cpDefinitionLocalization.getMetaDescription());
+		cpDefinitionLocalizationImpl.setMetaKeywords(cpDefinitionLocalization.getMetaKeywords());
 
 		return cpDefinitionLocalizationImpl;
 	}

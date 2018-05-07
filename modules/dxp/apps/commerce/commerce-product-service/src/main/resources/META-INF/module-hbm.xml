@@ -108,12 +108,12 @@
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="shortDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="metaTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="metaKeywords" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="metaDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="metaKeywords" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.commerce.product.model.impl.CPDefinitionOptionRelImpl" table="CPDefinitionOptionRel">
 		<id name="CPDefinitionOptionRelId" type="long">

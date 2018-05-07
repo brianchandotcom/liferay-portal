@@ -93,8 +93,8 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		sb.append(shippedQuantity);
 		sb.append(", json=");
 		sb.append(json);
-		sb.append(", title=");
-		sb.append(title);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", sku=");
 		sb.append(sku);
 		sb.append(", price=");
@@ -146,11 +146,11 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 			commerceOrderItemImpl.setJson(json);
 		}
 
-		if (title == null) {
-			commerceOrderItemImpl.setTitle("");
+		if (name == null) {
+			commerceOrderItemImpl.setName("");
 		}
 		else {
-			commerceOrderItemImpl.setTitle(title);
+			commerceOrderItemImpl.setName(name);
 		}
 
 		if (sku == null) {
@@ -189,7 +189,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 
 		shippedQuantity = objectInput.readInt();
 		json = objectInput.readUTF();
-		title = objectInput.readUTF();
+		name = objectInput.readUTF();
 		sku = objectInput.readUTF();
 		price = (BigDecimal)objectInput.readObject();
 	}
@@ -230,11 +230,11 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 			objectOutput.writeUTF(json);
 		}
 
-		if (title == null) {
+		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(title);
+			objectOutput.writeUTF(name);
 		}
 
 		if (sku == null) {
@@ -259,7 +259,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 	public int quantity;
 	public int shippedQuantity;
 	public String json;
-	public String title;
+	public String name;
 	public String sku;
 	public BigDecimal price;
 }

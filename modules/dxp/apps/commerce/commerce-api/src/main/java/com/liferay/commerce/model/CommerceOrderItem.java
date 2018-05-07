@@ -55,9 +55,6 @@ public interface CommerceOrderItem extends CommerceOrderItemModel, PersistedMode
 			}
 		};
 
-	public com.liferay.commerce.currency.model.CommerceMoney getPriceMoney()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public CommerceOrder getCommerceOrder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -68,5 +65,8 @@ public interface CommerceOrderItem extends CommerceOrderItemModel, PersistedMode
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.commerce.product.model.CPInstance getCPInstance()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.commerce.currency.model.CommerceMoney getPriceMoney()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

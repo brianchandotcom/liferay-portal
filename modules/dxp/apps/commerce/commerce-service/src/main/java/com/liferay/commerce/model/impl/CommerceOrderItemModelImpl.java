@@ -91,7 +91,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			{ "quantity", Types.INTEGER },
 			{ "shippedQuantity", Types.INTEGER },
 			{ "json", Types.CLOB },
-			{ "title", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
 			{ "sku", Types.VARCHAR },
 			{ "price", Types.DECIMAL }
 		};
@@ -110,12 +110,12 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("shippedQuantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPInstanceId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,title STRING null,sku VARCHAR(75) null,price DECIMAL(30, 16) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPInstanceId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,name STRING null,sku VARCHAR(75) null,price DECIMAL(30, 16) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrderItem.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrderItem.createDate ASC";
@@ -160,7 +160,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		model.setQuantity(soapModel.getQuantity());
 		model.setShippedQuantity(soapModel.getShippedQuantity());
 		model.setJson(soapModel.getJson());
-		model.setTitle(soapModel.getTitle());
+		model.setName(soapModel.getName());
 		model.setSku(soapModel.getSku());
 		model.setPrice(soapModel.getPrice());
 
@@ -240,7 +240,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		attributes.put("quantity", getQuantity());
 		attributes.put("shippedQuantity", getShippedQuantity());
 		attributes.put("json", getJson());
-		attributes.put("title", getTitle());
+		attributes.put("name", getName());
 		attributes.put("sku", getSku());
 		attributes.put("price", getPrice());
 
@@ -324,10 +324,10 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			setJson(json);
 		}
 
-		String title = (String)attributes.get("title");
+		String name = (String)attributes.get("name");
 
-		if (title != null) {
-			setTitle(title);
+		if (name != null) {
+			setName(name);
 		}
 
 		String sku = (String)attributes.get("sku");
@@ -535,101 +535,101 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	@JSON
 	@Override
-	public String getTitle() {
-		if (_title == null) {
+	public String getName() {
+		if (_name == null) {
 			return "";
 		}
 		else {
-			return _title;
+			return _name;
 		}
 	}
 
 	@Override
-	public String getTitle(Locale locale) {
+	public String getName(Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		return getTitle(languageId);
+		return getName(languageId);
 	}
 
 	@Override
-	public String getTitle(Locale locale, boolean useDefault) {
+	public String getName(Locale locale, boolean useDefault) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		return getTitle(languageId, useDefault);
+		return getName(languageId, useDefault);
 	}
 
 	@Override
-	public String getTitle(String languageId) {
-		return LocalizationUtil.getLocalization(getTitle(), languageId);
+	public String getName(String languageId) {
+		return LocalizationUtil.getLocalization(getName(), languageId);
 	}
 
 	@Override
-	public String getTitle(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getTitle(), languageId,
+	public String getName(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getName(), languageId,
 			useDefault);
 	}
 
 	@Override
-	public String getTitleCurrentLanguageId() {
-		return _titleCurrentLanguageId;
+	public String getNameCurrentLanguageId() {
+		return _nameCurrentLanguageId;
 	}
 
 	@JSON
 	@Override
-	public String getTitleCurrentValue() {
-		Locale locale = getLocale(_titleCurrentLanguageId);
+	public String getNameCurrentValue() {
+		Locale locale = getLocale(_nameCurrentLanguageId);
 
-		return getTitle(locale);
+		return getName(locale);
 	}
 
 	@Override
-	public Map<Locale, String> getTitleMap() {
-		return LocalizationUtil.getLocalizationMap(getTitle());
+	public Map<Locale, String> getNameMap() {
+		return LocalizationUtil.getLocalizationMap(getName());
 	}
 
 	@Override
-	public void setTitle(String title) {
-		_title = title;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	@Override
-	public void setTitle(String title, Locale locale) {
-		setTitle(title, locale, LocaleUtil.getSiteDefault());
+	public void setName(String name, Locale locale) {
+		setName(name, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
-	public void setTitle(String title, Locale locale, Locale defaultLocale) {
+	public void setName(String name, Locale locale, Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-		if (Validator.isNotNull(title)) {
-			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
-					title, languageId, defaultLanguageId));
+		if (Validator.isNotNull(name)) {
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
 		}
 		else {
-			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
 					languageId));
 		}
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(String languageId) {
-		_titleCurrentLanguageId = languageId;
+	public void setNameCurrentLanguageId(String languageId) {
+		_nameCurrentLanguageId = languageId;
 	}
 
 	@Override
-	public void setTitleMap(Map<Locale, String> titleMap) {
-		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
+	public void setNameMap(Map<Locale, String> nameMap) {
+		setNameMap(nameMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
-	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
-		if (titleMap == null) {
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale) {
+		if (nameMap == null) {
 			return;
 		}
 
-		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
-				"Title", LocaleUtil.toLanguageId(defaultLocale)));
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -680,9 +680,9 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<String>();
 
-		Map<Locale, String> titleMap = getTitleMap();
+		Map<Locale, String> nameMap = getNameMap();
 
-		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
 			Locale locale = entry.getKey();
 			String value = entry.getValue();
 
@@ -696,7 +696,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	@Override
 	public String getDefaultLanguageId() {
-		String xml = getTitle();
+		String xml = getName();
 
 		if (xml == null) {
 			return "";
@@ -727,13 +727,13 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
 
-		String title = getTitle(defaultLocale);
+		String name = getName(defaultLocale);
 
-		if (Validator.isNull(title)) {
-			setTitle(getTitle(modelDefaultLanguageId), defaultLocale);
+		if (Validator.isNull(name)) {
+			setName(getName(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
+			setName(getName(defaultLocale), defaultLocale, defaultLocale);
 		}
 	}
 
@@ -763,7 +763,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		commerceOrderItemImpl.setQuantity(getQuantity());
 		commerceOrderItemImpl.setShippedQuantity(getShippedQuantity());
 		commerceOrderItemImpl.setJson(getJson());
-		commerceOrderItemImpl.setTitle(getTitle());
+		commerceOrderItemImpl.setName(getName());
 		commerceOrderItemImpl.setSku(getSku());
 		commerceOrderItemImpl.setPrice(getPrice());
 
@@ -894,12 +894,12 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			commerceOrderItemCacheModel.json = null;
 		}
 
-		commerceOrderItemCacheModel.title = getTitle();
+		commerceOrderItemCacheModel.name = getName();
 
-		String title = commerceOrderItemCacheModel.title;
+		String name = commerceOrderItemCacheModel.name;
 
-		if ((title != null) && (title.length() == 0)) {
-			commerceOrderItemCacheModel.title = null;
+		if ((name != null) && (name.length() == 0)) {
+			commerceOrderItemCacheModel.name = null;
 		}
 
 		commerceOrderItemCacheModel.sku = getSku();
@@ -943,8 +943,8 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		sb.append(getShippedQuantity());
 		sb.append(", json=");
 		sb.append(getJson());
-		sb.append(", title=");
-		sb.append(getTitle());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", sku=");
 		sb.append(getSku());
 		sb.append(", price=");
@@ -1011,8 +1011,8 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		sb.append(getJson());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>sku</column-name><column-value><![CDATA[");
@@ -1049,8 +1049,8 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 	private int _quantity;
 	private int _shippedQuantity;
 	private String _json;
-	private String _title;
-	private String _titleCurrentLanguageId;
+	private String _name;
+	private String _nameCurrentLanguageId;
 	private String _sku;
 	private BigDecimal _price;
 	private long _columnBitmask;

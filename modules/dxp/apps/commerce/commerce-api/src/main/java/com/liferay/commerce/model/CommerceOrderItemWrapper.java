@@ -72,7 +72,7 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 		attributes.put("quantity", getQuantity());
 		attributes.put("shippedQuantity", getShippedQuantity());
 		attributes.put("json", getJson());
-		attributes.put("title", getTitle());
+		attributes.put("name", getName());
 		attributes.put("sku", getSku());
 		attributes.put("price", getPrice());
 
@@ -153,10 +153,10 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 			setJson(json);
 		}
 
-		String title = (String)attributes.get("title");
+		String name = (String)attributes.get("name");
 
-		if (title != null) {
-			setTitle(title);
+		if (name != null) {
+			setName(name);
 		}
 
 		String sku = (String)attributes.get("sku");
@@ -302,6 +302,82 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	}
 
 	/**
+	* Returns the name of this commerce order item.
+	*
+	* @return the name of this commerce order item
+	*/
+	@Override
+	public String getName() {
+		return _commerceOrderItem.getName();
+	}
+
+	/**
+	* Returns the localized name of this commerce order item in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this commerce order item
+	*/
+	@Override
+	public String getName(java.util.Locale locale) {
+		return _commerceOrderItem.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this commerce order item in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this commerce order item. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public String getName(java.util.Locale locale, boolean useDefault) {
+		return _commerceOrderItem.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this commerce order item in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this commerce order item
+	*/
+	@Override
+	public String getName(String languageId) {
+		return _commerceOrderItem.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this commerce order item in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this commerce order item
+	*/
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return _commerceOrderItem.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return _commerceOrderItem.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return _commerceOrderItem.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this commerce order item.
+	*
+	* @return the locales and localized names of this commerce order item
+	*/
+	@Override
+	public Map<java.util.Locale, String> getNameMap() {
+		return _commerceOrderItem.getNameMap();
+	}
+
+	/**
 	* Returns the price of this commerce order item.
 	*
 	* @return the price of this commerce order item
@@ -360,82 +436,6 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	@Override
 	public String getSku() {
 		return _commerceOrderItem.getSku();
-	}
-
-	/**
-	* Returns the title of this commerce order item.
-	*
-	* @return the title of this commerce order item
-	*/
-	@Override
-	public String getTitle() {
-		return _commerceOrderItem.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this commerce order item in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this commerce order item
-	*/
-	@Override
-	public String getTitle(java.util.Locale locale) {
-		return _commerceOrderItem.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this commerce order item in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this commerce order item. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _commerceOrderItem.getTitle(locale, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this commerce order item in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this commerce order item
-	*/
-	@Override
-	public String getTitle(String languageId) {
-		return _commerceOrderItem.getTitle(languageId);
-	}
-
-	/**
-	* Returns the localized title of this commerce order item in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this commerce order item
-	*/
-	@Override
-	public String getTitle(String languageId, boolean useDefault) {
-		return _commerceOrderItem.getTitle(languageId, useDefault);
-	}
-
-	@Override
-	public String getTitleCurrentLanguageId() {
-		return _commerceOrderItem.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public String getTitleCurrentValue() {
-		return _commerceOrderItem.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this commerce order item.
-	*
-	* @return the locales and localized titles of this commerce order item
-	*/
-	@Override
-	public Map<java.util.Locale, String> getTitleMap() {
-		return _commerceOrderItem.getTitleMap();
 	}
 
 	/**
@@ -607,6 +607,67 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 		_commerceOrderItem.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this commerce order item.
+	*
+	* @param name the name of this commerce order item
+	*/
+	@Override
+	public void setName(String name) {
+		_commerceOrderItem.setName(name);
+	}
+
+	/**
+	* Sets the localized name of this commerce order item in the language.
+	*
+	* @param name the localized name of this commerce order item
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setName(String name, java.util.Locale locale) {
+		_commerceOrderItem.setName(name, locale);
+	}
+
+	/**
+	* Sets the localized name of this commerce order item in the language, and sets the default locale.
+	*
+	* @param name the localized name of this commerce order item
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setName(String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_commerceOrderItem.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		_commerceOrderItem.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized names of this commerce order item from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this commerce order item
+	*/
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
+		_commerceOrderItem.setNameMap(nameMap);
+	}
+
+	/**
+	* Sets the localized names of this commerce order item from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this commerce order item
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
+		java.util.Locale defaultLocale) {
+		_commerceOrderItem.setNameMap(nameMap, defaultLocale);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_commerceOrderItem.setNew(n);
@@ -665,67 +726,6 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	@Override
 	public void setSku(String sku) {
 		_commerceOrderItem.setSku(sku);
-	}
-
-	/**
-	* Sets the title of this commerce order item.
-	*
-	* @param title the title of this commerce order item
-	*/
-	@Override
-	public void setTitle(String title) {
-		_commerceOrderItem.setTitle(title);
-	}
-
-	/**
-	* Sets the localized title of this commerce order item in the language.
-	*
-	* @param title the localized title of this commerce order item
-	* @param locale the locale of the language
-	*/
-	@Override
-	public void setTitle(String title, java.util.Locale locale) {
-		_commerceOrderItem.setTitle(title, locale);
-	}
-
-	/**
-	* Sets the localized title of this commerce order item in the language, and sets the default locale.
-	*
-	* @param title the localized title of this commerce order item
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitle(String title, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
-		_commerceOrderItem.setTitle(title, locale, defaultLocale);
-	}
-
-	@Override
-	public void setTitleCurrentLanguageId(String languageId) {
-		_commerceOrderItem.setTitleCurrentLanguageId(languageId);
-	}
-
-	/**
-	* Sets the localized titles of this commerce order item from the map of locales and localized titles.
-	*
-	* @param titleMap the locales and localized titles of this commerce order item
-	*/
-	@Override
-	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_commerceOrderItem.setTitleMap(titleMap);
-	}
-
-	/**
-	* Sets the localized titles of this commerce order item from the map of locales and localized titles, and sets the default locale.
-	*
-	* @param titleMap the locales and localized titles of this commerce order item
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitleMap(Map<java.util.Locale, String> titleMap,
-		java.util.Locale defaultLocale) {
-		_commerceOrderItem.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**

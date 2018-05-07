@@ -540,13 +540,13 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public Map<String, String> getLanguageIdToShortDescriptionMap() {
-		return _cpDefinition.getLanguageIdToShortDescriptionMap();
+	public Map<String, String> getLanguageIdToNameMap() {
+		return _cpDefinition.getLanguageIdToNameMap();
 	}
 
 	@Override
-	public Map<String, String> getLanguageIdToTitleMap() {
-		return _cpDefinition.getLanguageIdToTitleMap();
+	public Map<String, String> getLanguageIdToShortDescriptionMap() {
+		return _cpDefinition.getLanguageIdToShortDescriptionMap();
 	}
 
 	/**
@@ -647,6 +647,36 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public Date getModifiedDate() {
 		return _cpDefinition.getModifiedDate();
+	}
+
+	@Override
+	public String getName() {
+		return _cpDefinition.getName();
+	}
+
+	@Override
+	public String getName(String languageId) {
+		return _cpDefinition.getName(languageId);
+	}
+
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return _cpDefinition.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return _cpDefinition.getNameCurrentValue();
+	}
+
+	@Override
+	public Map<java.util.Locale, String> getNameMap() {
+		return _cpDefinition.getNameMap();
+	}
+
+	@Override
+	public String getNameMapAsXML() {
+		return _cpDefinition.getNameMapAsXML();
 	}
 
 	/**
@@ -807,36 +837,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public boolean getTelcoOrElectronics() {
 		return _cpDefinition.getTelcoOrElectronics();
-	}
-
-	@Override
-	public String getTitle() {
-		return _cpDefinition.getTitle();
-	}
-
-	@Override
-	public String getTitle(String languageId) {
-		return _cpDefinition.getTitle(languageId);
-	}
-
-	@Override
-	public String getTitle(String languageId, boolean useDefault) {
-		return _cpDefinition.getTitle(languageId, useDefault);
-	}
-
-	@Override
-	public String getTitleCurrentValue() {
-		return _cpDefinition.getTitleCurrentValue();
-	}
-
-	@Override
-	public Map<java.util.Locale, String> getTitleMap() {
-		return _cpDefinition.getTitleMap();
-	}
-
-	@Override
-	public String getTitleMapAsXML() {
-		return _cpDefinition.getTitleMapAsXML();
 	}
 
 	/**
@@ -1354,6 +1354,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
+	public void setNameMap(Map<java.util.Locale, String> titleMap) {
+		_cpDefinition.setNameMap(titleMap);
+	}
+
+	@Override
 	public void setNew(boolean n) {
 		_cpDefinition.setNew(n);
 	}
@@ -1497,11 +1502,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setTelcoOrElectronics(boolean telcoOrElectronics) {
 		_cpDefinition.setTelcoOrElectronics(telcoOrElectronics);
-	}
-
-	@Override
-	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_cpDefinition.setTitleMap(titleMap);
 	}
 
 	@Override

@@ -43,13 +43,13 @@ public class CPDefinitionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.util.Map<java.util.Locale, String> urlTitleMap,
 		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		String productTypeName, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
@@ -62,26 +62,26 @@ public class CPDefinitionServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPDefinition(titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, productTypeName, ignoreSKUCombinations,
-			shippable, freeShipping, shipSeparately, shippingExtraPrice, width,
-			height, depth, weight, cpTaxCategoryId, taxExempt,
-			telcoOrElectronics, ddmStructureKey, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+				   .addCPDefinition(nameMap, shortDescriptionMap,
+			descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap,
+			metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable,
+			freeShipping, shipSeparately, shippingExtraPrice, width, height,
+			depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics,
+			ddmStructureKey, published, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.util.Map<java.util.Locale, String> urlTitleMap,
 		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		String productTypeName, boolean ignoreSKUCombinations,
 		String ddmStructureKey, boolean published, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -91,9 +91,9 @@ public class CPDefinitionServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPDefinition(titleMap, shortDescriptionMap,
-			descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-			metaDescriptionMap, productTypeName, ignoreSKUCombinations,
+				   .addCPDefinition(nameMap, shortDescriptionMap,
+			descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap,
+			metaKeywordsMap, productTypeName, ignoreSKUCombinations,
 			ddmStructureKey, published, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -197,13 +197,13 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
-		long cpDefinitionId, java.util.Map<java.util.Locale, String> titleMap,
+		long cpDefinitionId, java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.util.Map<java.util.Locale, String> urlTitleMap,
 		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
 		double height, double depth, double weight, long cpTaxCategoryId,
@@ -215,9 +215,9 @@ public class CPDefinitionServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPDefinition(cpDefinitionId, titleMap,
+				   .updateCPDefinition(cpDefinitionId, nameMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, ignoreSKUCombinations,
+			metaDescriptionMap, metaKeywordsMap, ignoreSKUCombinations,
 			shippable, freeShipping, shipSeparately, shippingExtraPrice, width,
 			height, depth, weight, cpTaxCategoryId, taxExempt,
 			telcoOrElectronics, ddmStructureKey, published, displayDateMonth,
@@ -228,13 +228,13 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
-		long cpDefinitionId, java.util.Map<java.util.Locale, String> titleMap,
+		long cpDefinitionId, java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.util.Map<java.util.Locale, String> urlTitleMap,
 		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		boolean ignoreSKUCombinations, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -243,9 +243,9 @@ public class CPDefinitionServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPDefinition(cpDefinitionId, titleMap,
+				   .updateCPDefinition(cpDefinitionId, nameMap,
 			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, ignoreSKUCombinations,
+			metaDescriptionMap, metaKeywordsMap, ignoreSKUCombinations,
 			ddmStructureKey, published, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,

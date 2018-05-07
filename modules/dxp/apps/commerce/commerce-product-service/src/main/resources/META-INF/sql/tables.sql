@@ -97,12 +97,12 @@ create table CPDefinitionLocalization (
 	companyId LONG,
 	CPDefinitionId LONG,
 	languageId VARCHAR(75) null,
-	title STRING null,
+	name STRING null,
 	shortDescription STRING null,
 	description TEXT null,
 	metaTitle VARCHAR(255) null,
-	metaKeywords VARCHAR(255) null,
-	metaDescription VARCHAR(255) null
+	metaDescription VARCHAR(255) null,
+	metaKeywords VARCHAR(255) null
 );
 
 create table CPDefinitionOptionRel (

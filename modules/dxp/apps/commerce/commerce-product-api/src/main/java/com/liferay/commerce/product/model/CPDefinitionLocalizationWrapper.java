@@ -64,12 +64,12 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 		attributes.put("companyId", getCompanyId());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("languageId", getLanguageId());
-		attributes.put("title", getTitle());
+		attributes.put("name", getName());
 		attributes.put("shortDescription", getShortDescription());
 		attributes.put("description", getDescription());
 		attributes.put("metaTitle", getMetaTitle());
-		attributes.put("metaKeywords", getMetaKeywords());
 		attributes.put("metaDescription", getMetaDescription());
+		attributes.put("metaKeywords", getMetaKeywords());
 
 		return attributes;
 	}
@@ -107,10 +107,10 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 			setLanguageId(languageId);
 		}
 
-		String title = (String)attributes.get("title");
+		String name = (String)attributes.get("name");
 
-		if (title != null) {
-			setTitle(title);
+		if (name != null) {
+			setName(name);
 		}
 
 		String shortDescription = (String)attributes.get("shortDescription");
@@ -131,16 +131,16 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 			setMetaTitle(metaTitle);
 		}
 
-		String metaKeywords = (String)attributes.get("metaKeywords");
-
-		if (metaKeywords != null) {
-			setMetaKeywords(metaKeywords);
-		}
-
 		String metaDescription = (String)attributes.get("metaDescription");
 
 		if (metaDescription != null) {
 			setMetaDescription(metaDescription);
+		}
+
+		String metaKeywords = (String)attributes.get("metaKeywords");
+
+		if (metaKeywords != null) {
+			setMetaKeywords(metaKeywords);
 		}
 	}
 
@@ -250,6 +250,16 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	}
 
 	/**
+	* Returns the name of this cp definition localization.
+	*
+	* @return the name of this cp definition localization
+	*/
+	@Override
+	public String getName() {
+		return _cpDefinitionLocalization.getName();
+	}
+
+	/**
 	* Returns the primary key of this cp definition localization.
 	*
 	* @return the primary key of this cp definition localization
@@ -272,16 +282,6 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public String getShortDescription() {
 		return _cpDefinitionLocalization.getShortDescription();
-	}
-
-	/**
-	* Returns the title of this cp definition localization.
-	*
-	* @return the title of this cp definition localization
-	*/
-	@Override
-	public String getTitle() {
-		return _cpDefinitionLocalization.getTitle();
 	}
 
 	@Override
@@ -415,6 +415,16 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 		_cpDefinitionLocalization.setMvccVersion(mvccVersion);
 	}
 
+	/**
+	* Sets the name of this cp definition localization.
+	*
+	* @param name the name of this cp definition localization
+	*/
+	@Override
+	public void setName(String name) {
+		_cpDefinitionLocalization.setName(name);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_cpDefinitionLocalization.setNew(n);
@@ -443,16 +453,6 @@ public class CPDefinitionLocalizationWrapper implements CPDefinitionLocalization
 	@Override
 	public void setShortDescription(String shortDescription) {
 		_cpDefinitionLocalization.setShortDescription(shortDescription);
-	}
-
-	/**
-	* Sets the title of this cp definition localization.
-	*
-	* @param title the title of this cp definition localization
-	*/
-	@Override
-	public void setTitle(String title) {
-		_cpDefinitionLocalization.setTitle(title);
 	}
 
 	@Override

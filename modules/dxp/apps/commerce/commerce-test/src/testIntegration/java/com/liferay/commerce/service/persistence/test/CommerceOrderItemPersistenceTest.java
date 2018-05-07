@@ -146,7 +146,7 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setJson(RandomTestUtil.randomString());
 
-		newCommerceOrderItem.setTitle(RandomTestUtil.randomString());
+		newCommerceOrderItem.setName(RandomTestUtil.randomString());
 
 		newCommerceOrderItem.setSku(RandomTestUtil.randomString());
 
@@ -183,8 +183,8 @@ public class CommerceOrderItemPersistenceTest {
 			newCommerceOrderItem.getShippedQuantity());
 		Assert.assertEquals(existingCommerceOrderItem.getJson(),
 			newCommerceOrderItem.getJson());
-		Assert.assertEquals(existingCommerceOrderItem.getTitle(),
-			newCommerceOrderItem.getTitle());
+		Assert.assertEquals(existingCommerceOrderItem.getName(),
+			newCommerceOrderItem.getName());
 		Assert.assertEquals(existingCommerceOrderItem.getSku(),
 			newCommerceOrderItem.getSku());
 		Assert.assertEquals(existingCommerceOrderItem.getPrice(),
@@ -240,7 +240,7 @@ public class CommerceOrderItemPersistenceTest {
 			"commerceOrderItemId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceOrderId", true, "CPInstanceId",
-			true, "quantity", true, "shippedQuantity", true, "title", true,
+			true, "quantity", true, "shippedQuantity", true, "name", true,
 			"sku", true, "price", true);
 	}
 
@@ -466,7 +466,7 @@ public class CommerceOrderItemPersistenceTest {
 
 		commerceOrderItem.setJson(RandomTestUtil.randomString());
 
-		commerceOrderItem.setTitle(RandomTestUtil.randomString());
+		commerceOrderItem.setName(RandomTestUtil.randomString());
 
 		commerceOrderItem.setSku(RandomTestUtil.randomString());
 

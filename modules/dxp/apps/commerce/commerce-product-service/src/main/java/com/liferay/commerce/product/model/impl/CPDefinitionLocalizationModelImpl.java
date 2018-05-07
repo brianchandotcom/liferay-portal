@@ -65,12 +65,12 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			{ "companyId", Types.BIGINT },
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "languageId", Types.VARCHAR },
-			{ "title", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
 			{ "shortDescription", Types.VARCHAR },
 			{ "description", Types.CLOB },
 			{ "metaTitle", Types.VARCHAR },
-			{ "metaKeywords", Types.VARCHAR },
-			{ "metaDescription", Types.VARCHAR }
+			{ "metaDescription", Types.VARCHAR },
+			{ "metaKeywords", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -80,15 +80,15 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("shortDescription", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("metaTitle", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("metaKeywords", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("metaDescription", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("metaKeywords", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLocalization (mvccVersion LONG default 0 not null,cpDefinitionLocalizationId LONG not null primary key,companyId LONG,CPDefinitionId LONG,languageId VARCHAR(75) null,title STRING null,shortDescription STRING null,description TEXT null,metaTitle VARCHAR(255) null,metaKeywords VARCHAR(255) null,metaDescription VARCHAR(255) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionLocalization (mvccVersion LONG default 0 not null,cpDefinitionLocalizationId LONG not null primary key,companyId LONG,CPDefinitionId LONG,languageId VARCHAR(75) null,name VARCHAR(75) null,shortDescription STRING null,description TEXT null,metaTitle VARCHAR(255) null,metaDescription VARCHAR(255) null,metaKeywords VARCHAR(255) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLocalization";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionLocalization.cpDefinitionLocalizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionLocalization.cpDefinitionLocalizationId ASC";
@@ -153,12 +153,12 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		attributes.put("companyId", getCompanyId());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("languageId", getLanguageId());
-		attributes.put("title", getTitle());
+		attributes.put("name", getName());
 		attributes.put("shortDescription", getShortDescription());
 		attributes.put("description", getDescription());
 		attributes.put("metaTitle", getMetaTitle());
-		attributes.put("metaKeywords", getMetaKeywords());
 		attributes.put("metaDescription", getMetaDescription());
+		attributes.put("metaKeywords", getMetaKeywords());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -199,10 +199,10 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			setLanguageId(languageId);
 		}
 
-		String title = (String)attributes.get("title");
+		String name = (String)attributes.get("name");
 
-		if (title != null) {
-			setTitle(title);
+		if (name != null) {
+			setName(name);
 		}
 
 		String shortDescription = (String)attributes.get("shortDescription");
@@ -223,16 +223,16 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			setMetaTitle(metaTitle);
 		}
 
-		String metaKeywords = (String)attributes.get("metaKeywords");
-
-		if (metaKeywords != null) {
-			setMetaKeywords(metaKeywords);
-		}
-
 		String metaDescription = (String)attributes.get("metaDescription");
 
 		if (metaDescription != null) {
 			setMetaDescription(metaDescription);
+		}
+
+		String metaKeywords = (String)attributes.get("metaKeywords");
+
+		if (metaKeywords != null) {
+			setMetaKeywords(metaKeywords);
 		}
 	}
 
@@ -314,18 +314,18 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	}
 
 	@Override
-	public String getTitle() {
-		if (_title == null) {
+	public String getName() {
+		if (_name == null) {
 			return "";
 		}
 		else {
-			return _title;
+			return _name;
 		}
 	}
 
 	@Override
-	public void setTitle(String title) {
-		_title = title;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	@Override
@@ -374,21 +374,6 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	}
 
 	@Override
-	public String getMetaKeywords() {
-		if (_metaKeywords == null) {
-			return "";
-		}
-		else {
-			return _metaKeywords;
-		}
-	}
-
-	@Override
-	public void setMetaKeywords(String metaKeywords) {
-		_metaKeywords = metaKeywords;
-	}
-
-	@Override
 	public String getMetaDescription() {
 		if (_metaDescription == null) {
 			return "";
@@ -401,6 +386,21 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	@Override
 	public void setMetaDescription(String metaDescription) {
 		_metaDescription = metaDescription;
+	}
+
+	@Override
+	public String getMetaKeywords() {
+		if (_metaKeywords == null) {
+			return "";
+		}
+		else {
+			return _metaKeywords;
+		}
+	}
+
+	@Override
+	public void setMetaKeywords(String metaKeywords) {
+		_metaKeywords = metaKeywords;
 	}
 
 	public long getColumnBitmask() {
@@ -439,12 +439,12 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		cpDefinitionLocalizationImpl.setCompanyId(getCompanyId());
 		cpDefinitionLocalizationImpl.setCPDefinitionId(getCPDefinitionId());
 		cpDefinitionLocalizationImpl.setLanguageId(getLanguageId());
-		cpDefinitionLocalizationImpl.setTitle(getTitle());
+		cpDefinitionLocalizationImpl.setName(getName());
 		cpDefinitionLocalizationImpl.setShortDescription(getShortDescription());
 		cpDefinitionLocalizationImpl.setDescription(getDescription());
 		cpDefinitionLocalizationImpl.setMetaTitle(getMetaTitle());
-		cpDefinitionLocalizationImpl.setMetaKeywords(getMetaKeywords());
 		cpDefinitionLocalizationImpl.setMetaDescription(getMetaDescription());
+		cpDefinitionLocalizationImpl.setMetaKeywords(getMetaKeywords());
 
 		cpDefinitionLocalizationImpl.resetOriginalValues();
 
@@ -536,12 +536,12 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			cpDefinitionLocalizationCacheModel.languageId = null;
 		}
 
-		cpDefinitionLocalizationCacheModel.title = getTitle();
+		cpDefinitionLocalizationCacheModel.name = getName();
 
-		String title = cpDefinitionLocalizationCacheModel.title;
+		String name = cpDefinitionLocalizationCacheModel.name;
 
-		if ((title != null) && (title.length() == 0)) {
-			cpDefinitionLocalizationCacheModel.title = null;
+		if ((name != null) && (name.length() == 0)) {
+			cpDefinitionLocalizationCacheModel.name = null;
 		}
 
 		cpDefinitionLocalizationCacheModel.shortDescription = getShortDescription();
@@ -568,20 +568,20 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 			cpDefinitionLocalizationCacheModel.metaTitle = null;
 		}
 
-		cpDefinitionLocalizationCacheModel.metaKeywords = getMetaKeywords();
-
-		String metaKeywords = cpDefinitionLocalizationCacheModel.metaKeywords;
-
-		if ((metaKeywords != null) && (metaKeywords.length() == 0)) {
-			cpDefinitionLocalizationCacheModel.metaKeywords = null;
-		}
-
 		cpDefinitionLocalizationCacheModel.metaDescription = getMetaDescription();
 
 		String metaDescription = cpDefinitionLocalizationCacheModel.metaDescription;
 
 		if ((metaDescription != null) && (metaDescription.length() == 0)) {
 			cpDefinitionLocalizationCacheModel.metaDescription = null;
+		}
+
+		cpDefinitionLocalizationCacheModel.metaKeywords = getMetaKeywords();
+
+		String metaKeywords = cpDefinitionLocalizationCacheModel.metaKeywords;
+
+		if ((metaKeywords != null) && (metaKeywords.length() == 0)) {
+			cpDefinitionLocalizationCacheModel.metaKeywords = null;
 		}
 
 		return cpDefinitionLocalizationCacheModel;
@@ -601,18 +601,18 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getCPDefinitionId());
 		sb.append(", languageId=");
 		sb.append(getLanguageId());
-		sb.append(", title=");
-		sb.append(getTitle());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", shortDescription=");
 		sb.append(getShortDescription());
 		sb.append(", description=");
 		sb.append(getDescription());
 		sb.append(", metaTitle=");
 		sb.append(getMetaTitle());
-		sb.append(", metaKeywords=");
-		sb.append(getMetaKeywords());
 		sb.append(", metaDescription=");
 		sb.append(getMetaDescription());
+		sb.append(", metaKeywords=");
+		sb.append(getMetaKeywords());
 		sb.append("}");
 
 		return sb.toString();
@@ -647,8 +647,8 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getLanguageId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>shortDescription</column-name><column-value><![CDATA[");
@@ -663,12 +663,12 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 		sb.append(getMetaTitle());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>metaKeywords</column-name><column-value><![CDATA[");
-		sb.append(getMetaKeywords());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>metaDescription</column-name><column-value><![CDATA[");
 		sb.append(getMetaDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>metaKeywords</column-name><column-value><![CDATA[");
+		sb.append(getMetaKeywords());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -688,12 +688,12 @@ public class CPDefinitionLocalizationModelImpl extends BaseModelImpl<CPDefinitio
 	private boolean _setOriginalCPDefinitionId;
 	private String _languageId;
 	private String _originalLanguageId;
-	private String _title;
+	private String _name;
 	private String _shortDescription;
 	private String _description;
 	private String _metaTitle;
-	private String _metaKeywords;
 	private String _metaDescription;
+	private String _metaKeywords;
 	private long _columnBitmask;
 	private CPDefinitionLocalization _escapedModel;
 }

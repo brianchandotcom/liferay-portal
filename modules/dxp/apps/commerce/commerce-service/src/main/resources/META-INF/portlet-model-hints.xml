@@ -135,7 +135,7 @@
 		<field name="json" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field localized="true" name="title" type="String" />
+		<field localized="true" name="name" type="String" />
 		<field name="sku" type="String" />
 		<field name="price" type="BigDecimal">
 			<validator name="number" />

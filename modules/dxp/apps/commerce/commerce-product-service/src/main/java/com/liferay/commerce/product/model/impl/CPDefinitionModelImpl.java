@@ -549,50 +549,50 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	}
 
 	@Override
-	public String getTitle() {
-		return getTitle(getDefaultLanguageId(), false);
+	public String getName() {
+		return getName(getDefaultLanguageId(), false);
 	}
 
 	@Override
-	public String getTitle(String languageId) {
-		return getTitle(languageId, true);
+	public String getName(String languageId) {
+		return getName(languageId, true);
 	}
 
 	@Override
-	public String getTitle(String languageId, boolean useDefault) {
+	public String getName(String languageId, boolean useDefault) {
 		if (useDefault) {
 			return LocalizationUtil.getLocalization(new Function<String, String>() {
 					@Override
 					public String apply(String languageId) {
-						return _getTitle(languageId);
+						return _getName(languageId);
 					}
 				}, languageId, getDefaultLanguageId());
 		}
 
-		return _getTitle(languageId);
+		return _getName(languageId);
 	}
 
 	@Override
-	public String getTitleMapAsXML() {
-		return LocalizationUtil.getXml(getLanguageIdToTitleMap(),
-			getDefaultLanguageId(), "Title");
+	public String getNameMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToNameMap(),
+			getDefaultLanguageId(), "Name");
 	}
 
 	@Override
-	public Map<String, String> getLanguageIdToTitleMap() {
-		Map<String, String> languageIdToTitleMap = new HashMap<String, String>();
+	public Map<String, String> getLanguageIdToNameMap() {
+		Map<String, String> languageIdToNameMap = new HashMap<String, String>();
 
 		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
 
 		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizations) {
-			languageIdToTitleMap.put(cpDefinitionLocalization.getLanguageId(),
-				cpDefinitionLocalization.getTitle());
+			languageIdToNameMap.put(cpDefinitionLocalization.getLanguageId(),
+				cpDefinitionLocalization.getName());
 		}
 
-		return languageIdToTitleMap;
+		return languageIdToNameMap;
 	}
 
-	private String _getTitle(String languageId) {
+	private String _getName(String languageId) {
 		CPDefinitionLocalization cpDefinitionLocalization = CPDefinitionLocalServiceUtil.fetchCPDefinitionLocalization(getPrimaryKey(),
 				languageId);
 
@@ -600,7 +600,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			return "";
 		}
 
-		return cpDefinitionLocalization.getTitle();
+		return cpDefinitionLocalization.getName();
 	}
 
 	@Override
@@ -769,61 +769,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	}
 
 	@Override
-	public String getMetaKeywords() {
-		return getMetaKeywords(getDefaultLanguageId(), false);
-	}
-
-	@Override
-	public String getMetaKeywords(String languageId) {
-		return getMetaKeywords(languageId, true);
-	}
-
-	@Override
-	public String getMetaKeywords(String languageId, boolean useDefault) {
-		if (useDefault) {
-			return LocalizationUtil.getLocalization(new Function<String, String>() {
-					@Override
-					public String apply(String languageId) {
-						return _getMetaKeywords(languageId);
-					}
-				}, languageId, getDefaultLanguageId());
-		}
-
-		return _getMetaKeywords(languageId);
-	}
-
-	@Override
-	public String getMetaKeywordsMapAsXML() {
-		return LocalizationUtil.getXml(getLanguageIdToMetaKeywordsMap(),
-			getDefaultLanguageId(), "MetaKeywords");
-	}
-
-	@Override
-	public Map<String, String> getLanguageIdToMetaKeywordsMap() {
-		Map<String, String> languageIdToMetaKeywordsMap = new HashMap<String, String>();
-
-		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
-
-		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizations) {
-			languageIdToMetaKeywordsMap.put(cpDefinitionLocalization.getLanguageId(),
-				cpDefinitionLocalization.getMetaKeywords());
-		}
-
-		return languageIdToMetaKeywordsMap;
-	}
-
-	private String _getMetaKeywords(String languageId) {
-		CPDefinitionLocalization cpDefinitionLocalization = CPDefinitionLocalServiceUtil.fetchCPDefinitionLocalization(getPrimaryKey(),
-				languageId);
-
-		if (cpDefinitionLocalization == null) {
-			return "";
-		}
-
-		return cpDefinitionLocalization.getMetaKeywords();
-	}
-
-	@Override
 	public String getMetaDescription() {
 		return getMetaDescription(getDefaultLanguageId(), false);
 	}
@@ -876,6 +821,61 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		}
 
 		return cpDefinitionLocalization.getMetaDescription();
+	}
+
+	@Override
+	public String getMetaKeywords() {
+		return getMetaKeywords(getDefaultLanguageId(), false);
+	}
+
+	@Override
+	public String getMetaKeywords(String languageId) {
+		return getMetaKeywords(languageId, true);
+	}
+
+	@Override
+	public String getMetaKeywords(String languageId, boolean useDefault) {
+		if (useDefault) {
+			return LocalizationUtil.getLocalization(new Function<String, String>() {
+					@Override
+					public String apply(String languageId) {
+						return _getMetaKeywords(languageId);
+					}
+				}, languageId, getDefaultLanguageId());
+		}
+
+		return _getMetaKeywords(languageId);
+	}
+
+	@Override
+	public String getMetaKeywordsMapAsXML() {
+		return LocalizationUtil.getXml(getLanguageIdToMetaKeywordsMap(),
+			getDefaultLanguageId(), "MetaKeywords");
+	}
+
+	@Override
+	public Map<String, String> getLanguageIdToMetaKeywordsMap() {
+		Map<String, String> languageIdToMetaKeywordsMap = new HashMap<String, String>();
+
+		List<CPDefinitionLocalization> cpDefinitionLocalizations = CPDefinitionLocalServiceUtil.getCPDefinitionLocalizations(getPrimaryKey());
+
+		for (CPDefinitionLocalization cpDefinitionLocalization : cpDefinitionLocalizations) {
+			languageIdToMetaKeywordsMap.put(cpDefinitionLocalization.getLanguageId(),
+				cpDefinitionLocalization.getMetaKeywords());
+		}
+
+		return languageIdToMetaKeywordsMap;
+	}
+
+	private String _getMetaKeywords(String languageId) {
+		CPDefinitionLocalization cpDefinitionLocalization = CPDefinitionLocalServiceUtil.fetchCPDefinitionLocalization(getPrimaryKey(),
+				languageId);
+
+		if (cpDefinitionLocalization == null) {
+			return "";
+		}
+
+		return cpDefinitionLocalization.getMetaKeywords();
 	}
 
 	@JSON

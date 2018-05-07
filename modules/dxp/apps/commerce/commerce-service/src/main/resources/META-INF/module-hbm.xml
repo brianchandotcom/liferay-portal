@@ -146,7 +146,7 @@
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="shippedQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="json" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="price" type="org.hibernate.type.BigDecimalType" />
 	</class>

@@ -89,18 +89,18 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 		sb.append(CPDefinitionId);
 		sb.append(", languageId=");
 		sb.append(languageId);
-		sb.append(", title=");
-		sb.append(title);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", shortDescription=");
 		sb.append(shortDescription);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", metaTitle=");
 		sb.append(metaTitle);
-		sb.append(", metaKeywords=");
-		sb.append(metaKeywords);
 		sb.append(", metaDescription=");
 		sb.append(metaDescription);
+		sb.append(", metaKeywords=");
+		sb.append(metaKeywords);
 		sb.append("}");
 
 		return sb.toString();
@@ -122,11 +122,11 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 			cpDefinitionLocalizationImpl.setLanguageId(languageId);
 		}
 
-		if (title == null) {
-			cpDefinitionLocalizationImpl.setTitle("");
+		if (name == null) {
+			cpDefinitionLocalizationImpl.setName("");
 		}
 		else {
-			cpDefinitionLocalizationImpl.setTitle(title);
+			cpDefinitionLocalizationImpl.setName(name);
 		}
 
 		if (shortDescription == null) {
@@ -150,18 +150,18 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 			cpDefinitionLocalizationImpl.setMetaTitle(metaTitle);
 		}
 
-		if (metaKeywords == null) {
-			cpDefinitionLocalizationImpl.setMetaKeywords("");
-		}
-		else {
-			cpDefinitionLocalizationImpl.setMetaKeywords(metaKeywords);
-		}
-
 		if (metaDescription == null) {
 			cpDefinitionLocalizationImpl.setMetaDescription("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setMetaDescription(metaDescription);
+		}
+
+		if (metaKeywords == null) {
+			cpDefinitionLocalizationImpl.setMetaKeywords("");
+		}
+		else {
+			cpDefinitionLocalizationImpl.setMetaKeywords(metaKeywords);
 		}
 
 		cpDefinitionLocalizationImpl.resetOriginalValues();
@@ -179,12 +179,12 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 
 		CPDefinitionId = objectInput.readLong();
 		languageId = objectInput.readUTF();
-		title = objectInput.readUTF();
+		name = objectInput.readUTF();
 		shortDescription = objectInput.readUTF();
 		description = objectInput.readUTF();
 		metaTitle = objectInput.readUTF();
-		metaKeywords = objectInput.readUTF();
 		metaDescription = objectInput.readUTF();
+		metaKeywords = objectInput.readUTF();
 	}
 
 	@Override
@@ -205,11 +205,11 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 			objectOutput.writeUTF(languageId);
 		}
 
-		if (title == null) {
+		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(title);
+			objectOutput.writeUTF(name);
 		}
 
 		if (shortDescription == null) {
@@ -233,18 +233,18 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 			objectOutput.writeUTF(metaTitle);
 		}
 
-		if (metaKeywords == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(metaKeywords);
-		}
-
 		if (metaDescription == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(metaDescription);
+		}
+
+		if (metaKeywords == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(metaKeywords);
 		}
 	}
 
@@ -253,10 +253,10 @@ public class CPDefinitionLocalizationCacheModel implements CacheModel<CPDefiniti
 	public long companyId;
 	public long CPDefinitionId;
 	public String languageId;
-	public String title;
+	public String name;
 	public String shortDescription;
 	public String description;
 	public String metaTitle;
-	public String metaKeywords;
 	public String metaDescription;
+	public String metaKeywords;
 }

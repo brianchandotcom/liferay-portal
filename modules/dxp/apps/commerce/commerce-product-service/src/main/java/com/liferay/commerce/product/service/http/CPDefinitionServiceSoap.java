@@ -70,14 +70,14 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionSoap addCPDefinition(
-		String[] titleMapLanguageIds, String[] titleMapValues,
+		String[] nameMapLanguageIds, String[] nameMapValues,
 		String[] shortDescriptionMapLanguageIds,
 		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
 		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
 		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
-		String[] metaTitleMapValues, String[] metaKeywordsMapLanguageIds,
-		String[] metaKeywordsMapValues, String[] metaDescriptionMapLanguageIds,
-		String[] metaDescriptionMapValues, String productTypeName,
+		String[] metaTitleMapValues, String[] metaDescriptionMapLanguageIds,
+		String[] metaDescriptionMapValues, String[] metaKeywordsMapLanguageIds,
+		String[] metaKeywordsMapValues, String productTypeName,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
 		double height, double depth, double weight, long cpTaxCategoryId,
@@ -89,8 +89,8 @@ public class CPDefinitionServiceSoap {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
 					shortDescriptionMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
@@ -99,14 +99,14 @@ public class CPDefinitionServiceSoap {
 					urlTitleMapValues);
 			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
 					metaTitleMapValues);
-			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
-					metaKeywordsMapValues);
 			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
 					metaDescriptionMapValues);
+			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
+					metaKeywordsMapValues);
 
-			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(titleMap,
+			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(nameMap,
 					shortDescriptionMap, descriptionMap, urlTitleMap,
-					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+					metaTitleMap, metaDescriptionMap, metaKeywordsMap,
 					productTypeName, ignoreSKUCombinations, shippable,
 					freeShipping, shipSeparately, shippingExtraPrice, width,
 					height, depth, weight, cpTaxCategoryId, taxExempt,
@@ -126,14 +126,14 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap addCPDefinition(
-		String[] titleMapLanguageIds, String[] titleMapValues,
+		String[] nameMapLanguageIds, String[] nameMapValues,
 		String[] shortDescriptionMapLanguageIds,
 		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
 		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
 		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
-		String[] metaTitleMapValues, String[] metaKeywordsMapLanguageIds,
-		String[] metaKeywordsMapValues, String[] metaDescriptionMapLanguageIds,
-		String[] metaDescriptionMapValues, String productTypeName,
+		String[] metaTitleMapValues, String[] metaDescriptionMapLanguageIds,
+		String[] metaDescriptionMapValues, String[] metaKeywordsMapLanguageIds,
+		String[] metaKeywordsMapValues, String productTypeName,
 		boolean ignoreSKUCombinations, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -142,8 +142,8 @@ public class CPDefinitionServiceSoap {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
 					shortDescriptionMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
@@ -152,14 +152,14 @@ public class CPDefinitionServiceSoap {
 					urlTitleMapValues);
 			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
 					metaTitleMapValues);
-			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
-					metaKeywordsMapValues);
 			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
 					metaDescriptionMapValues);
+			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
+					metaKeywordsMapValues);
 
-			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(titleMap,
+			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.addCPDefinition(nameMap,
 					shortDescriptionMap, descriptionMap, urlTitleMap,
-					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+					metaTitleMap, metaDescriptionMap, metaKeywordsMap,
 					productTypeName, ignoreSKUCombinations, ddmStructureKey,
 					published, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
@@ -367,14 +367,14 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinition(
-		long cpDefinitionId, String[] titleMapLanguageIds,
-		String[] titleMapValues, String[] shortDescriptionMapLanguageIds,
+		long cpDefinitionId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] shortDescriptionMapLanguageIds,
 		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
 		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
 		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
-		String[] metaTitleMapValues, String[] metaKeywordsMapLanguageIds,
-		String[] metaKeywordsMapValues, String[] metaDescriptionMapLanguageIds,
-		String[] metaDescriptionMapValues, boolean ignoreSKUCombinations,
+		String[] metaTitleMapValues, String[] metaDescriptionMapLanguageIds,
+		String[] metaDescriptionMapValues, String[] metaKeywordsMapLanguageIds,
+		String[] metaKeywordsMapValues, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
 		double weight, long cpTaxCategoryId, boolean taxExempt,
@@ -386,8 +386,8 @@ public class CPDefinitionServiceSoap {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
 					shortDescriptionMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
@@ -396,14 +396,14 @@ public class CPDefinitionServiceSoap {
 					urlTitleMapValues);
 			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
 					metaTitleMapValues);
-			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
-					metaKeywordsMapValues);
 			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
 					metaDescriptionMapValues);
+			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
+					metaKeywordsMapValues);
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
-					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+					nameMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+					metaTitleMap, metaDescriptionMap, metaKeywordsMap,
 					ignoreSKUCombinations, shippable, freeShipping,
 					shipSeparately, shippingExtraPrice, width, height, depth,
 					weight, cpTaxCategoryId, taxExempt, telcoOrElectronics,
@@ -423,14 +423,14 @@ public class CPDefinitionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinition(
-		long cpDefinitionId, String[] titleMapLanguageIds,
-		String[] titleMapValues, String[] shortDescriptionMapLanguageIds,
+		long cpDefinitionId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] shortDescriptionMapLanguageIds,
 		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
 		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
 		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
-		String[] metaTitleMapValues, String[] metaKeywordsMapLanguageIds,
-		String[] metaKeywordsMapValues, String[] metaDescriptionMapLanguageIds,
-		String[] metaDescriptionMapValues, boolean ignoreSKUCombinations,
+		String[] metaTitleMapValues, String[] metaDescriptionMapLanguageIds,
+		String[] metaDescriptionMapValues, String[] metaKeywordsMapLanguageIds,
+		String[] metaKeywordsMapValues, boolean ignoreSKUCombinations,
 		String ddmStructureKey, boolean published, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -439,8 +439,8 @@ public class CPDefinitionServiceSoap {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
 					shortDescriptionMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
@@ -449,14 +449,14 @@ public class CPDefinitionServiceSoap {
 					urlTitleMapValues);
 			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
 					metaTitleMapValues);
-			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
-					metaKeywordsMapValues);
 			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
 					metaDescriptionMapValues);
+			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
+					metaKeywordsMapValues);
 
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
-					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+					nameMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+					metaTitleMap, metaDescriptionMap, metaKeywordsMap,
 					ignoreSKUCombinations, ddmStructureKey, published,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,

@@ -139,19 +139,19 @@ public interface CPDefinitionLocalizationModel extends BaseModel<CPDefinitionLoc
 	public void setLanguageId(String languageId);
 
 	/**
-	 * Returns the title of this cp definition localization.
+	 * Returns the name of this cp definition localization.
 	 *
-	 * @return the title of this cp definition localization
+	 * @return the name of this cp definition localization
 	 */
 	@AutoEscape
-	public String getTitle();
+	public String getName();
 
 	/**
-	 * Sets the title of this cp definition localization.
+	 * Sets the name of this cp definition localization.
 	 *
-	 * @param title the title of this cp definition localization
+	 * @param name the name of this cp definition localization
 	 */
-	public void setTitle(String title);
+	public void setName(String name);
 
 	/**
 	 * Returns the short description of this cp definition localization.
@@ -199,21 +199,6 @@ public interface CPDefinitionLocalizationModel extends BaseModel<CPDefinitionLoc
 	public void setMetaTitle(String metaTitle);
 
 	/**
-	 * Returns the meta keywords of this cp definition localization.
-	 *
-	 * @return the meta keywords of this cp definition localization
-	 */
-	@AutoEscape
-	public String getMetaKeywords();
-
-	/**
-	 * Sets the meta keywords of this cp definition localization.
-	 *
-	 * @param metaKeywords the meta keywords of this cp definition localization
-	 */
-	public void setMetaKeywords(String metaKeywords);
-
-	/**
 	 * Returns the meta description of this cp definition localization.
 	 *
 	 * @return the meta description of this cp definition localization
@@ -227,6 +212,21 @@ public interface CPDefinitionLocalizationModel extends BaseModel<CPDefinitionLoc
 	 * @param metaDescription the meta description of this cp definition localization
 	 */
 	public void setMetaDescription(String metaDescription);
+
+	/**
+	 * Returns the meta keywords of this cp definition localization.
+	 *
+	 * @return the meta keywords of this cp definition localization
+	 */
+	@AutoEscape
+	public String getMetaKeywords();
+
+	/**
+	 * Sets the meta keywords of this cp definition localization.
+	 *
+	 * @param metaKeywords the meta keywords of this cp definition localization
+	 */
+	public void setMetaKeywords(String metaKeywords);
 
 	@Override
 	public boolean isNew();

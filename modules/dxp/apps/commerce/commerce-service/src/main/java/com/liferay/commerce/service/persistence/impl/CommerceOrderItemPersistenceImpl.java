@@ -2043,7 +2043,7 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		commerceOrderItemImpl.setQuantity(commerceOrderItem.getQuantity());
 		commerceOrderItemImpl.setShippedQuantity(commerceOrderItem.getShippedQuantity());
 		commerceOrderItemImpl.setJson(commerceOrderItem.getJson());
-		commerceOrderItemImpl.setTitle(commerceOrderItem.getTitle());
+		commerceOrderItemImpl.setName(commerceOrderItem.getName());
 		commerceOrderItemImpl.setSku(commerceOrderItem.getSku());
 		commerceOrderItemImpl.setPrice(commerceOrderItem.getPrice());
 

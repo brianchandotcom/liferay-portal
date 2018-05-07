@@ -153,7 +153,7 @@ create table CommerceOrderItem (
 	quantity INTEGER,
 	shippedQuantity INTEGER,
 	json TEXT null,
-	title STRING null,
+	name STRING null,
 	sku VARCHAR(75) null,
 	price DECIMAL(30, 16) null
 );

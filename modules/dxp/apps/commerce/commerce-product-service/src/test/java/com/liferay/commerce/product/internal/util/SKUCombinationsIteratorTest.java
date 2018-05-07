@@ -122,7 +122,7 @@ public class SKUCombinationsIteratorTest {
 		cpDefinition.setCompanyId(RandomTestUtil.randomLong());
 		cpDefinition.setUserId(RandomTestUtil.randomLong());
 		cpDefinition.setUserName(RandomTestUtil.randomString());
-		cpDefinition.setTitleMap(map);
+		cpDefinition.setNameMap(map);
 		cpDefinition.setDescriptionMap(map);
 
 		return cpDefinition;

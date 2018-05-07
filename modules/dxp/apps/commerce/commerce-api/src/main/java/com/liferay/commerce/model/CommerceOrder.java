@@ -55,15 +55,6 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 			}
 		};
 
-	public com.liferay.commerce.currency.model.CommerceMoney getTotalMoney()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.commerce.currency.model.CommerceMoney getSubTotalMoney()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public com.liferay.commerce.currency.model.CommerceMoney getShippingMoney()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public CommerceAddress getBillingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -96,6 +87,15 @@ public interface CommerceOrder extends CommerceOrderModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public CommerceAddress getShippingAddress()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.commerce.currency.model.CommerceMoney getShippingMoney()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.commerce.currency.model.CommerceMoney getSubTotalMoney()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.commerce.currency.model.CommerceMoney getTotalMoney()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isB2B()

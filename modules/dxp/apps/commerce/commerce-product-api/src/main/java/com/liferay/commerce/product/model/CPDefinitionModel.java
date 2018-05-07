@@ -652,15 +652,15 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 
 	public String[] getAvailableLanguageIds();
 
-	public String getTitle();
+	public String getName();
 
-	public String getTitle(String languageId);
+	public String getName(String languageId);
 
-	public String getTitle(String languageId, boolean useDefault);
+	public String getName(String languageId, boolean useDefault);
 
-	public String getTitleMapAsXML();
+	public String getNameMapAsXML();
 
-	public Map<String, String> getLanguageIdToTitleMap();
+	public Map<String, String> getLanguageIdToNameMap();
 
 	public String getShortDescription();
 
@@ -692,16 +692,6 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 
 	public Map<String, String> getLanguageIdToMetaTitleMap();
 
-	public String getMetaKeywords();
-
-	public String getMetaKeywords(String languageId);
-
-	public String getMetaKeywords(String languageId, boolean useDefault);
-
-	public String getMetaKeywordsMapAsXML();
-
-	public Map<String, String> getLanguageIdToMetaKeywordsMap();
-
 	public String getMetaDescription();
 
 	public String getMetaDescription(String languageId);
@@ -711,6 +701,16 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public String getMetaDescriptionMapAsXML();
 
 	public Map<String, String> getLanguageIdToMetaDescriptionMap();
+
+	public String getMetaKeywords();
+
+	public String getMetaKeywords(String languageId);
+
+	public String getMetaKeywords(String languageId, boolean useDefault);
+
+	public String getMetaKeywordsMapAsXML();
+
+	public Map<String, String> getLanguageIdToMetaKeywordsMap();
 
 	/**
 	 * Returns the trash entry created when this cp definition was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this cp definition.

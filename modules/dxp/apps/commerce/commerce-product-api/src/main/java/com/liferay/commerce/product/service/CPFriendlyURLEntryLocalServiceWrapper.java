@@ -217,6 +217,13 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 			classNameId, classPK, languageId, main);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
+		long groupId, long classNameId, String languageId, String urlTitle) {
+		return _cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(groupId,
+			classNameId, languageId, urlTitle);
+	}
+
 	/**
 	* Returns the cp friendly url entry matching the UUID and group.
 	*
@@ -315,14 +322,6 @@ public class CPFriendlyURLEntryLocalServiceWrapper
 		long CPFriendlyURLEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(CPFriendlyURLEntryId);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
-		long groupId, long classNameId, String languageId, String urlTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(groupId,
-			classNameId, languageId, urlTitle);
 	}
 
 	/**

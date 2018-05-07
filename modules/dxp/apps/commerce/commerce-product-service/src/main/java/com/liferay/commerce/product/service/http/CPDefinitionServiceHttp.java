@@ -57,13 +57,13 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPDefinitionServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.util.Map<java.util.Locale, String> urlTitleMap,
 		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		String productTypeName, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
@@ -79,9 +79,9 @@ public class CPDefinitionServiceHttp {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
 					"addCPDefinition", _addCPDefinitionParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
+					shortDescriptionMap, descriptionMap, urlTitleMap,
+					metaTitleMap, metaDescriptionMap, metaKeywordsMap,
 					productTypeName, ignoreSKUCombinations, shippable,
 					freeShipping, shipSeparately, shippingExtraPrice, width,
 					height, depth, weight, cpTaxCategoryId, taxExempt,
@@ -115,13 +115,13 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition addCPDefinition(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.util.Map<java.util.Locale, String> urlTitleMap,
 		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		String productTypeName, boolean ignoreSKUCombinations,
 		String ddmStructureKey, boolean published, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -134,9 +134,9 @@ public class CPDefinitionServiceHttp {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
 					"addCPDefinition", _addCPDefinitionParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
+					shortDescriptionMap, descriptionMap, urlTitleMap,
+					metaTitleMap, metaDescriptionMap, metaKeywordsMap,
 					productTypeName, ignoreSKUCombinations, ddmStructureKey,
 					published, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
@@ -604,13 +604,13 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
 		HttpPrincipal httpPrincipal, long cpDefinitionId,
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.util.Map<java.util.Locale, String> urlTitleMap,
 		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
 		double height, double depth, double weight, long cpTaxCategoryId,
@@ -626,15 +626,16 @@ public class CPDefinitionServiceHttp {
 					"updateCPDefinition", _updateCPDefinitionParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, titleMap, shortDescriptionMap,
-					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-					metaDescriptionMap, ignoreSKUCombinations, shippable,
-					freeShipping, shipSeparately, shippingExtraPrice, width,
-					height, depth, weight, cpTaxCategoryId, taxExempt,
-					telcoOrElectronics, ddmStructureKey, published,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
+					cpDefinitionId, nameMap, shortDescriptionMap,
+					descriptionMap, urlTitleMap, metaTitleMap,
+					metaDescriptionMap, metaKeywordsMap, ignoreSKUCombinations,
+					shippable, freeShipping, shipSeparately,
+					shippingExtraPrice, width, height, depth, weight,
+					cpTaxCategoryId, taxExempt, telcoOrElectronics,
+					ddmStructureKey, published, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
@@ -661,13 +662,13 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
 		HttpPrincipal httpPrincipal, long cpDefinitionId,
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> shortDescriptionMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		java.util.Map<java.util.Locale, String> urlTitleMap,
 		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		boolean ignoreSKUCombinations, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -680,14 +681,14 @@ public class CPDefinitionServiceHttp {
 					"updateCPDefinition", _updateCPDefinitionParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, titleMap, shortDescriptionMap,
-					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-					metaDescriptionMap, ignoreSKUCombinations, ddmStructureKey,
-					published, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					cpDefinitionId, nameMap, shortDescriptionMap,
+					descriptionMap, urlTitleMap, metaTitleMap,
+					metaDescriptionMap, metaKeywordsMap, ignoreSKUCombinations,
+					ddmStructureKey, published, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
 

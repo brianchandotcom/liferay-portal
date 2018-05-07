@@ -77,11 +77,11 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.Map<java.util.Locale, String> getMetaTitleMap();
 
+	public String getNameCurrentValue();
+
+	public java.util.Map<java.util.Locale, String> getNameMap();
+
 	public java.util.Map<java.util.Locale, String> getShortDescriptionMap();
-
-	public String getTitleCurrentValue();
-
-	public java.util.Map<java.util.Locale, String> getTitleMap();
 
 	public java.util.Map<java.util.Locale, String> getUrlTitleMap();
 
@@ -90,10 +90,10 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public void setLayoutUuid(String layoutUuid);
 
+	public void setNameMap(java.util.Map<java.util.Locale, String> titleMap);
+
 	public void setShortDescriptionMap(
 		java.util.Map<java.util.Locale, String> shortDescriptionMap);
-
-	public void setTitleMap(java.util.Map<java.util.Locale, String> titleMap);
 
 	public void setUrlTitleMap(
 		java.util.Map<java.util.Locale, String> urlTitleMap);

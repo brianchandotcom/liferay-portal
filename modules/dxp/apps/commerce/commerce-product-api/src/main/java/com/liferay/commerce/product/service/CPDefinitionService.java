@@ -63,11 +63,12 @@ public interface CPDefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionServiceUtil} to access the cp definition remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+	public CPDefinition addCPDefinition(Map<Locale, String> nameMap,
 		Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, String productTypeName,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
 		double height, double depth, double weight, long cpTaxCategoryId,
@@ -78,11 +79,12 @@ public interface CPDefinitionService extends BaseService {
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+	public CPDefinition addCPDefinition(Map<Locale, String> nameMap,
 		Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, String productTypeName,
 		boolean ignoreSKUCombinations, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -151,10 +153,11 @@ public interface CPDefinitionService extends BaseService {
 		int end, Sort sort) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, String> titleMap, Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, boolean ignoreSKUCombinations,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
 		double weight, long cpTaxCategoryId, boolean taxExempt,
@@ -166,10 +169,11 @@ public interface CPDefinitionService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, String> titleMap, Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, boolean ignoreSKUCombinations,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, boolean ignoreSKUCombinations,
 		String ddmStructureKey, boolean published, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,

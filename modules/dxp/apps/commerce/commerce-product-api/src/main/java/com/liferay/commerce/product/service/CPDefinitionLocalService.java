@@ -83,11 +83,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public CPDefinition addCPDefinition(CPDefinition cpDefinition);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+	public CPDefinition addCPDefinition(Map<Locale, String> nameMap,
 		Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, String productTypeName,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
 		double height, double depth, double weight, long cpTaxCategoryId,
@@ -99,11 +100,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		boolean hasDefaultInstance, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+	public CPDefinition addCPDefinition(Map<Locale, String> nameMap,
 		Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, String productTypeName,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
 		double height, double depth, double weight, long cpTaxCategoryId,
@@ -115,11 +117,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+	public CPDefinition addCPDefinition(Map<Locale, String> nameMap,
 		Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, String productTypeName,
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
 		double height, double depth, double weight, long cpTaxCategoryId,
@@ -131,11 +134,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		String defaultSku, String externalReferenceCode,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPDefinition addCPDefinition(Map<Locale, String> titleMap,
+	public CPDefinition addCPDefinition(Map<Locale, String> nameMap,
 		Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, String productTypeName,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, String productTypeName,
 		boolean ignoreSKUCombinations, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -319,6 +323,9 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, String> getCPDefinitionMetaTitleMap(long cpDefinitionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, String> getCPDefinitionNameMap(long cpDefinitionId);
+
 	/**
 	* Returns a range of all the cp definitions.
 	*
@@ -377,9 +384,6 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, String> getCPDefinitionShortDescriptionMap(
 		long cpDefinitionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, String> getCPDefinitionTitleMap(long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
@@ -475,10 +479,11 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, String> titleMap, Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, boolean ignoreSKUCombinations,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
 		double weight, long cpTaxCategoryId, boolean taxExempt,
@@ -490,10 +495,11 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, String> titleMap, Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> shortDescriptionMap,
 		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap, Map<Locale, String> metaKeywordsMap,
-		Map<Locale, String> metaDescriptionMap, boolean ignoreSKUCombinations,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, boolean ignoreSKUCombinations,
 		String ddmStructureKey, boolean published, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,

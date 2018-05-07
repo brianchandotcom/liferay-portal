@@ -38,12 +38,12 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setLanguageId(model.getLanguageId());
-		soapModel.setTitle(model.getTitle());
+		soapModel.setName(model.getName());
 		soapModel.setShortDescription(model.getShortDescription());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setMetaTitle(model.getMetaTitle());
-		soapModel.setMetaKeywords(model.getMetaKeywords());
 		soapModel.setMetaDescription(model.getMetaDescription());
+		soapModel.setMetaKeywords(model.getMetaKeywords());
 
 		return soapModel;
 	}
@@ -139,12 +139,12 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		_languageId = languageId;
 	}
 
-	public String getTitle() {
-		return _title;
+	public String getName() {
+		return _name;
 	}
 
-	public void setTitle(String title) {
-		_title = title;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public String getShortDescription() {
@@ -171,14 +171,6 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		_metaTitle = metaTitle;
 	}
 
-	public String getMetaKeywords() {
-		return _metaKeywords;
-	}
-
-	public void setMetaKeywords(String metaKeywords) {
-		_metaKeywords = metaKeywords;
-	}
-
 	public String getMetaDescription() {
 		return _metaDescription;
 	}
@@ -187,15 +179,23 @@ public class CPDefinitionLocalizationSoap implements Serializable {
 		_metaDescription = metaDescription;
 	}
 
+	public String getMetaKeywords() {
+		return _metaKeywords;
+	}
+
+	public void setMetaKeywords(String metaKeywords) {
+		_metaKeywords = metaKeywords;
+	}
+
 	private long _mvccVersion;
 	private long _cpDefinitionLocalizationId;
 	private long _companyId;
 	private long _CPDefinitionId;
 	private String _languageId;
-	private String _title;
+	private String _name;
 	private String _shortDescription;
 	private String _description;
 	private String _metaTitle;
-	private String _metaKeywords;
 	private String _metaDescription;
+	private String _metaKeywords;
 }

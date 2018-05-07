@@ -15,7 +15,6 @@
 package com.liferay.blogs.uad.display;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.uad.constants.BlogsUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -32,11 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY,
-	service = UADDisplay.class
-)
+@Component(immediate = true, service = UADDisplay.class)
 public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 
 	@Override

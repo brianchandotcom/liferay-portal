@@ -14,14 +14,17 @@
 
 package com.liferay.portal.search.web.internal.search.request;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -50,7 +53,9 @@ public class SearchSettingsImpl implements SearchSettings {
 
 	@Override
 	public void addFacet(Facet facet) {
-		_searchContext.addFacet(facet);
+		Map<String, Facet> facets = _searchContext.getFacets();
+
+		facets.put(getAggregationName(facet), facet);
 	}
 
 	@Override
@@ -120,6 +125,14 @@ public class SearchSettingsImpl implements SearchSettings {
 		String paginationStartParameterName) {
 
 		_paginationStartParameterName = paginationStartParameterName;
+	}
+
+	protected String getAggregationName(Facet facet) {
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+
+		JSONObject data = facetConfiguration.getData();
+
+		return data.getString("aggregationName", facet.getFieldName());
 	}
 
 	private String _keywordsParameterName;

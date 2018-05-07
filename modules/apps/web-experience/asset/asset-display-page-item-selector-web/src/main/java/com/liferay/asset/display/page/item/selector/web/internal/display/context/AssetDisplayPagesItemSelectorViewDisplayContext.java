@@ -101,32 +101,65 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 
 		assetDisplayPageSearchContainer.setOrderByType(getOrderByType());
 
-		int layoutPageTemplateEntriesCount =
-			LayoutPageTemplateEntryServiceUtil.
-				getLayoutPageTemplateEntriesCount(
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries = null;
+		int layoutPageTemplateEntriesCount = 0;
+
+		if (Validator.isNotNull(_getKeywords())) {
+			layoutPageTemplateEntriesCount =
+				LayoutPageTemplateEntryServiceUtil.
+					getLayoutPageTemplateEntriesCount(
+						_themeDisplay.getScopeGroupId(),
+						_assetDisplayPageSelectorCriterion.getClassNameId(),
+						_assetDisplayPageSelectorCriterion.getClassTypeId(),
+						_getKeywords(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+			layoutPageTemplateEntries =
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 					_themeDisplay.getScopeGroupId(),
 					_assetDisplayPageSelectorCriterion.getClassNameId(),
 					_assetDisplayPageSelectorCriterion.getClassTypeId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+					_getKeywords(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+					assetDisplayPageSearchContainer.getStart(),
+					assetDisplayPageSearchContainer.getEnd(),
+					assetDisplayPageSearchContainer.getOrderByComparator());
+		}
+		else {
+			layoutPageTemplateEntriesCount =
+				LayoutPageTemplateEntryServiceUtil.
+					getLayoutPageTemplateEntriesCount(
+						_themeDisplay.getScopeGroupId(),
+						_assetDisplayPageSelectorCriterion.getClassNameId(),
+						_assetDisplayPageSelectorCriterion.getClassTypeId(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+			layoutPageTemplateEntries =
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
+					_themeDisplay.getScopeGroupId(),
+					_assetDisplayPageSelectorCriterion.getClassNameId(),
+					_assetDisplayPageSelectorCriterion.getClassTypeId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+					assetDisplayPageSearchContainer.getStart(),
+					assetDisplayPageSearchContainer.getEnd(),
+					assetDisplayPageSearchContainer.getOrderByComparator());
+		}
 
 		assetDisplayPageSearchContainer.setTotal(
 			layoutPageTemplateEntriesCount);
-
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-				_themeDisplay.getScopeGroupId(),
-				_assetDisplayPageSelectorCriterion.getClassNameId(),
-				_assetDisplayPageSelectorCriterion.getClassTypeId(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-				assetDisplayPageSearchContainer.getStart(),
-				assetDisplayPageSearchContainer.getEnd(),
-				assetDisplayPageSearchContainer.getOrderByComparator());
-
 		assetDisplayPageSearchContainer.setResults(layoutPageTemplateEntries);
 
 		_assetDisplayPageSearchContainer = assetDisplayPageSearchContainer;
 
 		return _assetDisplayPageSearchContainer;
+	}
+
+	public String getClearResultsURL() throws PortletException {
+		PortletURL clearResultsURL = _getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	public String getDisplayStyle() {
@@ -174,6 +207,12 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	public String getSearchActionURL() throws PortletException {
+		PortletURL searchActionURL = _getPortletURL();
+
+		return searchActionURL.toString();
 	}
 
 	public String getSortingURL() throws PortletException {
@@ -252,6 +291,16 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 						}));
 			}
 		};
+	}
+
+	private String _getKeywords() {
+		if (Validator.isNotNull(_keywords)) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
 	}
 
 	private OrderByComparator<LayoutPageTemplateEntry>
@@ -336,6 +385,7 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		_assetDisplayPageSelectorCriterion;
 	private String _displayStyle;
 	private final String _itemSelectedEventName;
+	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletRequest _portletRequest;

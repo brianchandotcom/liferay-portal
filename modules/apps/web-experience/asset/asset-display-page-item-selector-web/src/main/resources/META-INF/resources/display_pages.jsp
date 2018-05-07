@@ -22,6 +22,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 
 <clay:management-toolbar
 	filterItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchContainerId="displayPages"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"

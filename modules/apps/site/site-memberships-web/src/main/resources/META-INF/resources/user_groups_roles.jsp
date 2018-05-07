@@ -24,48 +24,20 @@ UserGroupRolesDisplayContext userGroupRolesDisplayContext = new UserGroupRolesDi
 	items="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= userGroupRolesDisplayContext.getClearResultsURL() %>"
+	componentId="userGroupGroupRoleRoleManagementToolbar"
 	disabled="<%= userGroupRolesDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= userGroupRolesDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= userGroupRolesDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroupGroupRoleRole"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= userGroupRolesDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= userGroupRolesDisplayContext.getOrderByCol() %>"
-			orderByType="<%= userGroupRolesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= userGroupRolesDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= userGroupRolesDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= userGroupRolesDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= userGroupRolesDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= userGroupRolesDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= userGroupRolesDisplayContext.getOrderByType() %>"
+	sortingURL="<%= userGroupRolesDisplayContext.getSortingURL() %>"
+	totalItems="<%= userGroupRolesDisplayContext.getTotalItems() %>"
+	viewTypes="<%= userGroupRolesDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">
 	<liferay-ui:search-container

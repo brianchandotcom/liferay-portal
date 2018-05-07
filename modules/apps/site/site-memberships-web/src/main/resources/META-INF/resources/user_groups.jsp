@@ -17,54 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "all");
+UserGroupsDisplayContext userGroupsDisplayContext = new UserGroupsDisplayContext(request, renderRequest, renderResponse);
 
-long roleId = ParamUtil.getLong(request, "roleId");
-
-Role role = null;
-
-if (roleId > 0) {
-	role = RoleLocalServiceUtil.fetchRole(roleId);
-}
-
-String displayStyle = portalPreferences.getValue(SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style", "icon");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL viewUserGroupsURL = renderResponse.createRenderURL();
-
-viewUserGroupsURL.setParameter("mvcPath", "/view.jsp");
-viewUserGroupsURL.setParameter("tabs1", "user-groups");
-viewUserGroupsURL.setParameter("redirect", currentURL);
-viewUserGroupsURL.setParameter("groupId", String.valueOf(siteMembershipsDisplayContext.getGroupId()));
-
-if (role != null) {
-	viewUserGroupsURL.setParameter("roleId", String.valueOf(roleId));
-}
-
-UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, PortletURLUtil.clone(viewUserGroupsURL, renderResponse));
-
-userGroupSearch.setEmptyResultsMessage("no-user-group-was-found-that-is-a-member-of-this-site");
-
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
-
-LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
-
-if (role != null) {
-	userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUP_GROUP_ROLE, new Long[] {Long.valueOf(roleId), Long.valueOf(siteMembershipsDisplayContext.getGroupId())});
-}
-
-int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-userGroupSearch.setTotal(userGroupsCount);
-
-List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
-
-userGroupSearch.setResults(userGroups);
+Role role = userGroupsDisplayContext.getRole();
 %>
 
 <clay:navigation-bar
@@ -73,7 +28,7 @@ userGroupSearch.setResults(userGroups);
 />
 
 <liferay-frontend:management-bar
-	disabled='<%= (userGroupsCount <= 0) && Objects.equals(navigation, "all") %>'
+	disabled="<%= userGroupsDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userGroups"
 >
@@ -85,7 +40,7 @@ userGroupSearch.setResults(userGroups);
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= userGroupsDisplayContext.getDisplayStyle() %>"
 		/>
 
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
@@ -106,7 +61,7 @@ userGroupSearch.setResults(userGroups);
 		<%
 		String label = null;
 
-		if (Objects.equals(navigation, "roles") && (role != null)) {
+		if (Objects.equals(userGroupsDisplayContext.getNavigation(), "roles") && (role != null)) {
 			label = LanguageUtil.get(request, "roles") + StringPool.COLON + StringPool.SPACE + HtmlUtil.escape(role.getTitle(themeDisplay.getLocale()));
 		}
 		%>
@@ -116,20 +71,20 @@ userGroupSearch.setResults(userGroups);
 		>
 
 			<%
-			PortletURL viewAllURL = PortletURLUtil.clone(viewUserGroupsURL, renderResponse);
+			PortletURL viewAllURL = userGroupsDisplayContext.getPortletURL();
 
 			viewAllURL.setParameter("navigation", "all");
 			viewAllURL.setParameter("roleId", "0");
 			%>
 
 			<liferay-frontend:management-bar-filter-item
-				active='<%= Objects.equals(navigation, "all") %>'
+				active='<%= Objects.equals(userGroupsDisplayContext.getNavigation(), "all") %>'
 				label="all"
 				url="<%= viewAllURL.toString() %>"
 			/>
 
 			<liferay-frontend:management-bar-filter-item
-				active='<%= Objects.equals(navigation, "roles") %>'
+				active='<%= Objects.equals(userGroupsDisplayContext.getNavigation(), "roles") %>'
 				id="roles"
 				label="roles"
 				url="javascript:;"
@@ -137,13 +92,13 @@ userGroupSearch.setResults(userGroups);
 		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= userGroupsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= userGroupsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"name", "description"} %>'
-			portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+			portletURL="<%= userGroupsDisplayContext.getPortletURL() %>"
 		/>
 
-		<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
+		<c:if test="<%= userGroupsDisplayContext.isShowSearch() %>">
 			<li>
 				<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
 					<liferay-ui:input-search
@@ -194,13 +149,12 @@ userGroupSearch.setResults(userGroups);
 
 <aui:form action="<%= deleteGroupUserGroupsURL %>" cssClass="container-fluid-1280 portlet-site-memberships-user-groups" name="fm">
 	<aui:input name="tabs1" type="hidden" value="user-groups" />
-	<aui:input name="navigation" type="hidden" value="<%= navigation %>" />
-	<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
+	<aui:input name="navigation" type="hidden" value="<%= userGroupsDisplayContext.getNavigation() %>" />
+	<aui:input name="roleId" type="hidden" value="<%= (role != null) ? role.getRoleId() : 0 %>" />
 
 	<liferay-ui:search-container
 		id="userGroups"
-		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= userGroupSearch %>"
+		searchContainer="<%= userGroupsDisplayContext.getUserGroupSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
@@ -210,6 +164,8 @@ userGroupSearch.setResults(userGroups);
 		>
 
 			<%
+			String displayStyle = userGroupsDisplayContext.getDisplayStyle();
+
 			boolean selectUserGroup = false;
 			%>
 
@@ -217,7 +173,7 @@ userGroupSearch.setResults(userGroups);
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= userGroupsDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

@@ -135,6 +135,40 @@ public class CallFunctionTest {
 		Assert.assertNull(ddmFormFieldEvaluationResult.getValue());
 	}
 
+	@Test
+	public void testSetDDMFormFieldOptionsRepeatableFields() {
+		Map<String, List<DDMFormFieldEvaluationResult>>
+			ddmFormFieldEvaluationResults = new HashMap<>();
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult1 =
+			new DDMFormFieldEvaluationResult("field0", "1");
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult2 =
+			new DDMFormFieldEvaluationResult("field0", "2");
+
+		ddmFormFieldEvaluationResults.put(
+			"field0",
+			Arrays.asList(
+				ddmFormFieldEvaluationResult1, ddmFormFieldEvaluationResult2));
+
+		CallFunction callFunction = new CallFunction(
+			null, ddmFormFieldEvaluationResults, null, _jsonFactory);
+
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
+		keyValuePairs.add(new KeyValuePair("key_1", "value_1"));
+		keyValuePairs.add(new KeyValuePair("key_2", "value_2"));
+
+		callFunction.setDDMFormFieldOptions("field0", keyValuePairs);
+
+		Assert.assertEquals(
+			keyValuePairs,
+			ddmFormFieldEvaluationResult1.getProperty("options"));
+		Assert.assertEquals(
+			keyValuePairs,
+			ddmFormFieldEvaluationResult2.getProperty("options"));
+	}
+
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

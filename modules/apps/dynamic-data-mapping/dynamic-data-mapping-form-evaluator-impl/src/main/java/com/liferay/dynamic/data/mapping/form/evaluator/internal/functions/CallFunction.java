@@ -175,15 +175,24 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 	protected DDMFormFieldEvaluationResult getDDMFormFieldEvaluationResult(
 		String ddmFormFieldName) {
 
-		if (!_ddmFormFieldEvaluationResults.containsKey(ddmFormFieldName)) {
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResultList =
+			getDDMFormFieldEvaluationResultList(ddmFormFieldName);
+
+		if (ddmFormFieldEvaluationResultList.isEmpty()) {
 			return null;
 		}
 
-		List<DDMFormFieldEvaluationResult>
-			ddmFormFieldInstancesEvaluationResults =
-				_ddmFormFieldEvaluationResults.get(ddmFormFieldName);
+		return ddmFormFieldEvaluationResultList.get(0);
+	}
 
-		return ddmFormFieldInstancesEvaluationResults.get(0);
+	protected List<DDMFormFieldEvaluationResult>
+		getDDMFormFieldEvaluationResultList(String ddmFormFieldName) {
+
+		if (!_ddmFormFieldEvaluationResults.containsKey(ddmFormFieldName)) {
+			return Collections.emptyList();
+		}
+
+		return _ddmFormFieldEvaluationResults.get(ddmFormFieldName);
 	}
 
 	protected String getDDMFormFieldValue(String ddmFormFieldName) {
@@ -216,10 +225,8 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 	}
 
 	protected void setDDMFormFieldOptions(
-		String ddmFormFieldName, List<KeyValuePair> options) {
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			getDDMFormFieldEvaluationResult(ddmFormFieldName);
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
+		List<KeyValuePair> options) {
 
 		if (ddmFormFieldEvaluationResult == null) {
 			return;
@@ -235,6 +242,19 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 			valueJSONArray.put(keyValuePair.getValue());
 
 			ddmFormFieldEvaluationResult.setValue(valueJSONArray);
+		}
+	}
+
+	protected void setDDMFormFieldOptions(
+		String ddmFormFieldName, List<KeyValuePair> options) {
+
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResultList =
+			getDDMFormFieldEvaluationResultList(ddmFormFieldName);
+
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResultList) {
+
+			setDDMFormFieldOptions(ddmFormFieldEvaluationResult, options);
 		}
 	}
 

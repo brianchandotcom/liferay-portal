@@ -214,103 +214,103 @@ public interface CPOptionModel extends BaseModel<CPOption>, LocalizedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the title of this cp option.
+	 * Returns the name of this cp option.
 	 *
-	 * @return the title of this cp option
+	 * @return the name of this cp option
 	 */
-	public String getTitle();
+	public String getName();
 
 	/**
-	 * Returns the localized title of this cp option in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this cp option in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized title of this cp option
+	 * @return the localized name of this cp option
 	 */
 	@AutoEscape
-	public String getTitle(Locale locale);
+	public String getName(Locale locale);
 
 	/**
-	 * Returns the localized title of this cp option in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this cp option in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this cp option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized name of this cp option. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@AutoEscape
-	public String getTitle(Locale locale, boolean useDefault);
+	public String getName(Locale locale, boolean useDefault);
 
 	/**
-	 * Returns the localized title of this cp option in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this cp option in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized title of this cp option
+	 * @return the localized name of this cp option
 	 */
 	@AutoEscape
-	public String getTitle(String languageId);
+	public String getName(String languageId);
 
 	/**
-	 * Returns the localized title of this cp option in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this cp option in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this cp option
+	 * @return the localized name of this cp option
 	 */
 	@AutoEscape
-	public String getTitle(String languageId, boolean useDefault);
+	public String getName(String languageId, boolean useDefault);
 
 	@AutoEscape
-	public String getTitleCurrentLanguageId();
+	public String getNameCurrentLanguageId();
 
 	@AutoEscape
-	public String getTitleCurrentValue();
+	public String getNameCurrentValue();
 
 	/**
-	 * Returns a map of the locales and localized titles of this cp option.
+	 * Returns a map of the locales and localized names of this cp option.
 	 *
-	 * @return the locales and localized titles of this cp option
+	 * @return the locales and localized names of this cp option
 	 */
-	public Map<Locale, String> getTitleMap();
+	public Map<Locale, String> getNameMap();
 
 	/**
-	 * Sets the title of this cp option.
+	 * Sets the name of this cp option.
 	 *
-	 * @param title the title of this cp option
+	 * @param name the name of this cp option
 	 */
-	public void setTitle(String title);
+	public void setName(String name);
 
 	/**
-	 * Sets the localized title of this cp option in the language.
+	 * Sets the localized name of this cp option in the language.
 	 *
-	 * @param title the localized title of this cp option
+	 * @param name the localized name of this cp option
 	 * @param locale the locale of the language
 	 */
-	public void setTitle(String title, Locale locale);
+	public void setName(String name, Locale locale);
 
 	/**
-	 * Sets the localized title of this cp option in the language, and sets the default locale.
+	 * Sets the localized name of this cp option in the language, and sets the default locale.
 	 *
-	 * @param title the localized title of this cp option
+	 * @param name the localized name of this cp option
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
-	public void setTitle(String title, Locale locale, Locale defaultLocale);
+	public void setName(String name, Locale locale, Locale defaultLocale);
 
-	public void setTitleCurrentLanguageId(String languageId);
+	public void setNameCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets the localized titles of this cp option from the map of locales and localized titles.
+	 * Sets the localized names of this cp option from the map of locales and localized names.
 	 *
-	 * @param titleMap the locales and localized titles of this cp option
+	 * @param nameMap the locales and localized names of this cp option
 	 */
-	public void setTitleMap(Map<Locale, String> titleMap);
+	public void setNameMap(Map<Locale, String> nameMap);
 
 	/**
-	 * Sets the localized titles of this cp option from the map of locales and localized titles, and sets the default locale.
+	 * Sets the localized names of this cp option from the map of locales and localized names, and sets the default locale.
 	 *
-	 * @param titleMap the locales and localized titles of this cp option
+	 * @param nameMap the locales and localized names of this cp option
 	 * @param defaultLocale the default locale
 	 */
-	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
 	 * Returns the description of this cp option.

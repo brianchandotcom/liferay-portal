@@ -143,7 +143,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		newCPDefinitionOptionRel.setCPOptionId(RandomTestUtil.nextLong());
 
-		newCPDefinitionOptionRel.setTitle(RandomTestUtil.randomString());
+		newCPDefinitionOptionRel.setName(RandomTestUtil.randomString());
 
 		newCPDefinitionOptionRel.setDescription(RandomTestUtil.randomString());
 
@@ -184,8 +184,8 @@ public class CPDefinitionOptionRelPersistenceTest {
 			newCPDefinitionOptionRel.getCPDefinitionId());
 		Assert.assertEquals(existingCPDefinitionOptionRel.getCPOptionId(),
 			newCPDefinitionOptionRel.getCPOptionId());
-		Assert.assertEquals(existingCPDefinitionOptionRel.getTitle(),
-			newCPDefinitionOptionRel.getTitle());
+		Assert.assertEquals(existingCPDefinitionOptionRel.getName(),
+			newCPDefinitionOptionRel.getName());
 		Assert.assertEquals(existingCPDefinitionOptionRel.getDescription(),
 			newCPDefinitionOptionRel.getDescription());
 		Assert.assertEquals(existingCPDefinitionOptionRel.getDDMFormFieldTypeName(),
@@ -284,7 +284,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 			"uuid", true, "CPDefinitionOptionRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "CPDefinitionId", true, "CPOptionId",
-			true, "title", true, "description", true, "DDMFormFieldTypeName",
+			true, "name", true, "description", true, "DDMFormFieldTypeName",
 			true, "priority", true, "facetable", true, "required", true,
 			"skuContributor", true);
 	}
@@ -531,7 +531,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		cpDefinitionOptionRel.setCPOptionId(RandomTestUtil.nextLong());
 
-		cpDefinitionOptionRel.setTitle(RandomTestUtil.randomString());
+		cpDefinitionOptionRel.setName(RandomTestUtil.randomString());
 
 		cpDefinitionOptionRel.setDescription(RandomTestUtil.randomString());
 

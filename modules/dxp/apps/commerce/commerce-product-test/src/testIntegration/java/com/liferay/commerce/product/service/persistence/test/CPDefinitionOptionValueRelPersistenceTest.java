@@ -141,7 +141,7 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		newCPDefinitionOptionValueRel.setCPDefinitionOptionRelId(RandomTestUtil.nextLong());
 
-		newCPDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
+		newCPDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		newCPDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
 
@@ -174,8 +174,8 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 				newCPDefinitionOptionValueRel.getModifiedDate()));
 		Assert.assertEquals(existingCPDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
 			newCPDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-		Assert.assertEquals(existingCPDefinitionOptionValueRel.getTitle(),
-			newCPDefinitionOptionValueRel.getTitle());
+		Assert.assertEquals(existingCPDefinitionOptionValueRel.getName(),
+			newCPDefinitionOptionValueRel.getName());
 		AssertUtils.assertEquals(existingCPDefinitionOptionValueRel.getPriority(),
 			newCPDefinitionOptionValueRel.getPriority());
 		Assert.assertEquals(existingCPDefinitionOptionValueRel.getKey(),
@@ -276,7 +276,7 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			"uuid", true, "CPDefinitionOptionValueRelId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true,
-			"CPDefinitionOptionRelId", true, "title", true, "priority", true,
+			"CPDefinitionOptionRelId", true, "name", true, "priority", true,
 			"key", true);
 	}
 
@@ -541,7 +541,7 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(RandomTestUtil.nextLong());
 
-		cpDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
+		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 
 		cpDefinitionOptionValueRel.setPriority(RandomTestUtil.nextDouble());
 

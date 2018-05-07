@@ -128,7 +128,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="CPOptionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="DDMFormFieldTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
@@ -148,7 +148,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPDefinitionOptionRelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
@@ -266,7 +266,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="DDMFormFieldTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="facetable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
@@ -304,7 +304,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPOptionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />

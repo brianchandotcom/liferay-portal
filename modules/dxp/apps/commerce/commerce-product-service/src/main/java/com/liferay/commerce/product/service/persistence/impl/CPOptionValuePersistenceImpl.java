@@ -109,7 +109,7 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 			"findByUuid", new String[] { String.class.getName() },
 			CPOptionValueModelImpl.UUID_COLUMN_BITMASK |
 			CPOptionValueModelImpl.PRIORITY_COLUMN_BITMASK |
-			CPOptionValueModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionValueModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -912,7 +912,7 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 			CPOptionValueModelImpl.UUID_COLUMN_BITMASK |
 			CPOptionValueModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPOptionValueModelImpl.PRIORITY_COLUMN_BITMASK |
-			CPOptionValueModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionValueModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1500,7 +1500,7 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 			"findByGroupId", new String[] { Long.class.getName() },
 			CPOptionValueModelImpl.GROUPID_COLUMN_BITMASK |
 			CPOptionValueModelImpl.PRIORITY_COLUMN_BITMASK |
-			CPOptionValueModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionValueModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -2007,7 +2007,7 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 			"findByCompanyId", new String[] { Long.class.getName() },
 			CPOptionValueModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPOptionValueModelImpl.PRIORITY_COLUMN_BITMASK |
-			CPOptionValueModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionValueModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
@@ -2516,7 +2516,7 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 			"findByCPOptionId", new String[] { Long.class.getName() },
 			CPOptionValueModelImpl.CPOPTIONID_COLUMN_BITMASK |
 			CPOptionValueModelImpl.PRIORITY_COLUMN_BITMASK |
-			CPOptionValueModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionValueModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_CPOPTIONID = new FinderPath(CPOptionValueModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPOptionId",
@@ -3773,7 +3773,7 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 		cpOptionValueImpl.setCreateDate(cpOptionValue.getCreateDate());
 		cpOptionValueImpl.setModifiedDate(cpOptionValue.getModifiedDate());
 		cpOptionValueImpl.setCPOptionId(cpOptionValue.getCPOptionId());
-		cpOptionValueImpl.setTitle(cpOptionValue.getTitle());
+		cpOptionValueImpl.setName(cpOptionValue.getName());
 		cpOptionValueImpl.setPriority(cpOptionValue.getPriority());
 		cpOptionValueImpl.setKey(cpOptionValue.getKey());
 		cpOptionValueImpl.setLastPublishDate(cpOptionValue.getLastPublishDate());

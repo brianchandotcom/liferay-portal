@@ -116,7 +116,7 @@ create table CPDefinitionOptionRel (
 	modifiedDate DATE null,
 	CPDefinitionId LONG,
 	CPOptionId LONG,
-	title STRING null,
+	name STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
 	priority DOUBLE,
@@ -135,7 +135,7 @@ create table CPDefinitionOptionValueRel (
 	createDate DATE null,
 	modifiedDate DATE null,
 	CPDefinitionOptionRelId LONG,
-	title STRING null,
+	name STRING null,
 	priority DOUBLE,
 	key_ VARCHAR(75) null
 );
@@ -230,7 +230,7 @@ create table CPOption (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	title STRING null,
+	name STRING null,
 	description STRING null,
 	DDMFormFieldTypeName VARCHAR(75) null,
 	facetable BOOLEAN,
@@ -266,7 +266,7 @@ create table CPOptionValue (
 	createDate DATE null,
 	modifiedDate DATE null,
 	CPOptionId LONG,
-	title STRING null,
+	name STRING null,
 	priority DOUBLE,
 	key_ VARCHAR(75) null,
 	lastPublishDate DATE null

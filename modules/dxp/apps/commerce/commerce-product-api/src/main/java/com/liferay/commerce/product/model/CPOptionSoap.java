@@ -42,7 +42,7 @@ public class CPOptionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setTitle(model.getTitle());
+		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDDMFormFieldTypeName(model.getDDMFormFieldTypeName());
 		soapModel.setFacetable(model.isFacetable());
@@ -166,12 +166,12 @@ public class CPOptionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getTitle() {
-		return _title;
+	public String getName() {
+		return _name;
 	}
 
-	public void setTitle(String title) {
-		_title = title;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public String getDescription() {
@@ -250,7 +250,7 @@ public class CPOptionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _title;
+	private String _name;
 	private String _description;
 	private String _DDMFormFieldTypeName;
 	private boolean _facetable;

@@ -86,8 +86,8 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		sb.append(modifiedDate);
 		sb.append(", CPDefinitionOptionRelId=");
 		sb.append(CPDefinitionOptionRelId);
-		sb.append(", title=");
-		sb.append(title);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", key=");
@@ -137,11 +137,11 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 
 		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(CPDefinitionOptionRelId);
 
-		if (title == null) {
-			cpDefinitionOptionValueRelImpl.setTitle("");
+		if (name == null) {
+			cpDefinitionOptionValueRelImpl.setName("");
 		}
 		else {
-			cpDefinitionOptionValueRelImpl.setTitle(title);
+			cpDefinitionOptionValueRelImpl.setName(name);
 		}
 
 		cpDefinitionOptionValueRelImpl.setPriority(priority);
@@ -174,7 +174,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 		modifiedDate = objectInput.readLong();
 
 		CPDefinitionOptionRelId = objectInput.readLong();
-		title = objectInput.readUTF();
+		name = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
 		key = objectInput.readUTF();
@@ -210,11 +210,11 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 
 		objectOutput.writeLong(CPDefinitionOptionRelId);
 
-		if (title == null) {
+		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(title);
+			objectOutput.writeUTF(name);
 		}
 
 		objectOutput.writeDouble(priority);
@@ -236,7 +236,7 @@ public class CPDefinitionOptionValueRelCacheModel implements CacheModel<CPDefini
 	public long createDate;
 	public long modifiedDate;
 	public long CPDefinitionOptionRelId;
-	public String title;
+	public String name;
 	public double priority;
 	public String key;
 }

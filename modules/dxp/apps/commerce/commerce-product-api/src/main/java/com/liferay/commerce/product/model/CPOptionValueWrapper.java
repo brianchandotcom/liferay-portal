@@ -69,7 +69,7 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPOptionId", getCPOptionId());
-		attributes.put("title", getTitle());
+		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -133,10 +133,10 @@ public class CPOptionValueWrapper implements CPOptionValue,
 			setCPOptionId(CPOptionId);
 		}
 
-		String title = (String)attributes.get("title");
+		String name = (String)attributes.get("name");
 
-		if (title != null) {
-			setTitle(title);
+		if (name != null) {
+			setName(name);
 		}
 
 		Double priority = (Double)attributes.get("priority");
@@ -270,6 +270,82 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	}
 
 	/**
+	* Returns the name of this cp option value.
+	*
+	* @return the name of this cp option value
+	*/
+	@Override
+	public String getName() {
+		return _cpOptionValue.getName();
+	}
+
+	/**
+	* Returns the localized name of this cp option value in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this cp option value
+	*/
+	@Override
+	public String getName(java.util.Locale locale) {
+		return _cpOptionValue.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this cp option value in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this cp option value. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public String getName(java.util.Locale locale, boolean useDefault) {
+		return _cpOptionValue.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this cp option value in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this cp option value
+	*/
+	@Override
+	public String getName(String languageId) {
+		return _cpOptionValue.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this cp option value in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this cp option value
+	*/
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return _cpOptionValue.getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return _cpOptionValue.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public String getNameCurrentValue() {
+		return _cpOptionValue.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this cp option value.
+	*
+	* @return the locales and localized names of this cp option value
+	*/
+	@Override
+	public Map<java.util.Locale, String> getNameMap() {
+		return _cpOptionValue.getNameMap();
+	}
+
+	/**
 	* Returns the primary key of this cp option value.
 	*
 	* @return the primary key of this cp option value
@@ -292,82 +368,6 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public double getPriority() {
 		return _cpOptionValue.getPriority();
-	}
-
-	/**
-	* Returns the title of this cp option value.
-	*
-	* @return the title of this cp option value
-	*/
-	@Override
-	public String getTitle() {
-		return _cpOptionValue.getTitle();
-	}
-
-	/**
-	* Returns the localized title of this cp option value in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param locale the locale of the language
-	* @return the localized title of this cp option value
-	*/
-	@Override
-	public String getTitle(java.util.Locale locale) {
-		return _cpOptionValue.getTitle(locale);
-	}
-
-	/**
-	* Returns the localized title of this cp option value in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param locale the local of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp option value. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
-	*/
-	@Override
-	public String getTitle(java.util.Locale locale, boolean useDefault) {
-		return _cpOptionValue.getTitle(locale, useDefault);
-	}
-
-	/**
-	* Returns the localized title of this cp option value in the language. Uses the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @return the localized title of this cp option value
-	*/
-	@Override
-	public String getTitle(String languageId) {
-		return _cpOptionValue.getTitle(languageId);
-	}
-
-	/**
-	* Returns the localized title of this cp option value in the language, optionally using the default language if no localization exists for the requested language.
-	*
-	* @param languageId the ID of the language
-	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized title of this cp option value
-	*/
-	@Override
-	public String getTitle(String languageId, boolean useDefault) {
-		return _cpOptionValue.getTitle(languageId, useDefault);
-	}
-
-	@Override
-	public String getTitleCurrentLanguageId() {
-		return _cpOptionValue.getTitleCurrentLanguageId();
-	}
-
-	@Override
-	public String getTitleCurrentValue() {
-		return _cpOptionValue.getTitleCurrentValue();
-	}
-
-	/**
-	* Returns a map of the locales and localized titles of this cp option value.
-	*
-	* @return the locales and localized titles of this cp option value
-	*/
-	@Override
-	public Map<java.util.Locale, String> getTitleMap() {
-		return _cpOptionValue.getTitleMap();
 	}
 
 	/**
@@ -549,6 +549,67 @@ public class CPOptionValueWrapper implements CPOptionValue,
 		_cpOptionValue.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this cp option value.
+	*
+	* @param name the name of this cp option value
+	*/
+	@Override
+	public void setName(String name) {
+		_cpOptionValue.setName(name);
+	}
+
+	/**
+	* Sets the localized name of this cp option value in the language.
+	*
+	* @param name the localized name of this cp option value
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setName(String name, java.util.Locale locale) {
+		_cpOptionValue.setName(name, locale);
+	}
+
+	/**
+	* Sets the localized name of this cp option value in the language, and sets the default locale.
+	*
+	* @param name the localized name of this cp option value
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setName(String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_cpOptionValue.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		_cpOptionValue.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized names of this cp option value from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this cp option value
+	*/
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
+		_cpOptionValue.setNameMap(nameMap);
+	}
+
+	/**
+	* Sets the localized names of this cp option value from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this cp option value
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setNameMap(Map<java.util.Locale, String> nameMap,
+		java.util.Locale defaultLocale) {
+		_cpOptionValue.setNameMap(nameMap, defaultLocale);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_cpOptionValue.setNew(n);
@@ -577,67 +638,6 @@ public class CPOptionValueWrapper implements CPOptionValue,
 	@Override
 	public void setPriority(double priority) {
 		_cpOptionValue.setPriority(priority);
-	}
-
-	/**
-	* Sets the title of this cp option value.
-	*
-	* @param title the title of this cp option value
-	*/
-	@Override
-	public void setTitle(String title) {
-		_cpOptionValue.setTitle(title);
-	}
-
-	/**
-	* Sets the localized title of this cp option value in the language.
-	*
-	* @param title the localized title of this cp option value
-	* @param locale the locale of the language
-	*/
-	@Override
-	public void setTitle(String title, java.util.Locale locale) {
-		_cpOptionValue.setTitle(title, locale);
-	}
-
-	/**
-	* Sets the localized title of this cp option value in the language, and sets the default locale.
-	*
-	* @param title the localized title of this cp option value
-	* @param locale the locale of the language
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitle(String title, java.util.Locale locale,
-		java.util.Locale defaultLocale) {
-		_cpOptionValue.setTitle(title, locale, defaultLocale);
-	}
-
-	@Override
-	public void setTitleCurrentLanguageId(String languageId) {
-		_cpOptionValue.setTitleCurrentLanguageId(languageId);
-	}
-
-	/**
-	* Sets the localized titles of this cp option value from the map of locales and localized titles.
-	*
-	* @param titleMap the locales and localized titles of this cp option value
-	*/
-	@Override
-	public void setTitleMap(Map<java.util.Locale, String> titleMap) {
-		_cpOptionValue.setTitleMap(titleMap);
-	}
-
-	/**
-	* Sets the localized titles of this cp option value from the map of locales and localized titles, and sets the default locale.
-	*
-	* @param titleMap the locales and localized titles of this cp option value
-	* @param defaultLocale the default locale
-	*/
-	@Override
-	public void setTitleMap(Map<java.util.Locale, String> titleMap,
-		java.util.Locale defaultLocale) {
-		_cpOptionValue.setTitleMap(titleMap, defaultLocale);
 	}
 
 	/**

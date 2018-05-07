@@ -107,7 +107,7 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
 			CPOptionModelImpl.UUID_COLUMN_BITMASK |
-			CPOptionModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CPOptionModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -906,7 +906,7 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 			new String[] { String.class.getName(), Long.class.getName() },
 			CPOptionModelImpl.UUID_COLUMN_BITMASK |
 			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPOptionModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CPOptionModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1491,7 +1491,7 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
 			CPOptionModelImpl.GROUPID_COLUMN_BITMASK |
-			CPOptionModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CPOptionModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -3038,7 +3038,7 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 		cpOptionImpl.setUserName(cpOption.getUserName());
 		cpOptionImpl.setCreateDate(cpOption.getCreateDate());
 		cpOptionImpl.setModifiedDate(cpOption.getModifiedDate());
-		cpOptionImpl.setTitle(cpOption.getTitle());
+		cpOptionImpl.setName(cpOption.getName());
 		cpOptionImpl.setDescription(cpOption.getDescription());
 		cpOptionImpl.setDDMFormFieldTypeName(cpOption.getDDMFormFieldTypeName());
 		cpOptionImpl.setFacetable(cpOption.isFacetable());

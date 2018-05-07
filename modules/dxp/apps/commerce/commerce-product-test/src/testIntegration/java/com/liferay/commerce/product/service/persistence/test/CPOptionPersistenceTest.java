@@ -138,7 +138,7 @@ public class CPOptionPersistenceTest {
 
 		newCPOption.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCPOption.setTitle(RandomTestUtil.randomString());
+		newCPOption.setName(RandomTestUtil.randomString());
 
 		newCPOption.setDescription(RandomTestUtil.randomString());
 
@@ -175,7 +175,7 @@ public class CPOptionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPOption.getModifiedDate()),
 			Time.getShortTimestamp(newCPOption.getModifiedDate()));
-		Assert.assertEquals(existingCPOption.getTitle(), newCPOption.getTitle());
+		Assert.assertEquals(existingCPOption.getName(), newCPOption.getName());
 		Assert.assertEquals(existingCPOption.getDescription(),
 			newCPOption.getDescription());
 		Assert.assertEquals(existingCPOption.getDDMFormFieldTypeName(),
@@ -267,7 +267,7 @@ public class CPOptionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CPOption", "uuid", true,
 			"CPOptionId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"title", true, "description", true, "DDMFormFieldTypeName", true,
+			"name", true, "description", true, "DDMFormFieldTypeName", true,
 			"facetable", true, "required", true, "skuContributor", true, "key",
 			true, "lastPublishDate", true);
 	}
@@ -506,7 +506,7 @@ public class CPOptionPersistenceTest {
 
 		cpOption.setModifiedDate(RandomTestUtil.nextDate());
 
-		cpOption.setTitle(RandomTestUtil.randomString());
+		cpOption.setName(RandomTestUtil.randomString());
 
 		cpOption.setDescription(RandomTestUtil.randomString());
 

@@ -88,7 +88,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "CPOptionId", Types.BIGINT },
-			{ "title", Types.VARCHAR },
+			{ "name", Types.VARCHAR },
 			{ "priority", Types.DOUBLE },
 			{ "key_", Types.VARCHAR },
 			{ "lastPublishDate", Types.TIMESTAMP }
@@ -105,16 +105,16 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("CPOptionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPOptionValue (uuid_ VARCHAR(75) null,CPOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,title STRING null,priority DOUBLE,key_ VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPOptionValue (uuid_ VARCHAR(75) null,CPOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPOptionValue";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionValue.priority ASC, cpOptionValue.title ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPOptionValue.priority ASC, CPOptionValue.title ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionValue.priority ASC, cpOptionValue.name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPOptionValue.priority ASC, CPOptionValue.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -133,7 +133,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	public static final long KEY_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long PRIORITY_COLUMN_BITMASK = 32L;
-	public static final long TITLE_COLUMN_BITMASK = 64L;
+	public static final long NAME_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -157,7 +157,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCPOptionId(soapModel.getCPOptionId());
-		model.setTitle(soapModel.getTitle());
+		model.setName(soapModel.getName());
 		model.setPriority(soapModel.getPriority());
 		model.setKey(soapModel.getKey());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -234,7 +234,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CPOptionId", getCPOptionId());
-		attributes.put("title", getTitle());
+		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
 		attributes.put("key", getKey());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -301,10 +301,10 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 			setCPOptionId(CPOptionId);
 		}
 
-		String title = (String)attributes.get("title");
+		String name = (String)attributes.get("name");
 
-		if (title != null) {
-			setTitle(title);
+		if (name != null) {
+			setName(name);
 		}
 
 		Double priority = (Double)attributes.get("priority");
@@ -503,103 +503,103 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 	@JSON
 	@Override
-	public String getTitle() {
-		if (_title == null) {
+	public String getName() {
+		if (_name == null) {
 			return "";
 		}
 		else {
-			return _title;
+			return _name;
 		}
 	}
 
 	@Override
-	public String getTitle(Locale locale) {
+	public String getName(Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		return getTitle(languageId);
+		return getName(languageId);
 	}
 
 	@Override
-	public String getTitle(Locale locale, boolean useDefault) {
+	public String getName(Locale locale, boolean useDefault) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		return getTitle(languageId, useDefault);
+		return getName(languageId, useDefault);
 	}
 
 	@Override
-	public String getTitle(String languageId) {
-		return LocalizationUtil.getLocalization(getTitle(), languageId);
+	public String getName(String languageId) {
+		return LocalizationUtil.getLocalization(getName(), languageId);
 	}
 
 	@Override
-	public String getTitle(String languageId, boolean useDefault) {
-		return LocalizationUtil.getLocalization(getTitle(), languageId,
+	public String getName(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getName(), languageId,
 			useDefault);
 	}
 
 	@Override
-	public String getTitleCurrentLanguageId() {
-		return _titleCurrentLanguageId;
+	public String getNameCurrentLanguageId() {
+		return _nameCurrentLanguageId;
 	}
 
 	@JSON
 	@Override
-	public String getTitleCurrentValue() {
-		Locale locale = getLocale(_titleCurrentLanguageId);
+	public String getNameCurrentValue() {
+		Locale locale = getLocale(_nameCurrentLanguageId);
 
-		return getTitle(locale);
+		return getName(locale);
 	}
 
 	@Override
-	public Map<Locale, String> getTitleMap() {
-		return LocalizationUtil.getLocalizationMap(getTitle());
+	public Map<Locale, String> getNameMap() {
+		return LocalizationUtil.getLocalizationMap(getName());
 	}
 
 	@Override
-	public void setTitle(String title) {
+	public void setName(String name) {
 		_columnBitmask = -1L;
 
-		_title = title;
+		_name = name;
 	}
 
 	@Override
-	public void setTitle(String title, Locale locale) {
-		setTitle(title, locale, LocaleUtil.getSiteDefault());
+	public void setName(String name, Locale locale) {
+		setName(name, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
-	public void setTitle(String title, Locale locale, Locale defaultLocale) {
+	public void setName(String name, Locale locale, Locale defaultLocale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-		if (Validator.isNotNull(title)) {
-			setTitle(LocalizationUtil.updateLocalization(getTitle(), "Title",
-					title, languageId, defaultLanguageId));
+		if (Validator.isNotNull(name)) {
+			setName(LocalizationUtil.updateLocalization(getName(), "Name",
+					name, languageId, defaultLanguageId));
 		}
 		else {
-			setTitle(LocalizationUtil.removeLocalization(getTitle(), "Title",
+			setName(LocalizationUtil.removeLocalization(getName(), "Name",
 					languageId));
 		}
 	}
 
 	@Override
-	public void setTitleCurrentLanguageId(String languageId) {
-		_titleCurrentLanguageId = languageId;
+	public void setNameCurrentLanguageId(String languageId) {
+		_nameCurrentLanguageId = languageId;
 	}
 
 	@Override
-	public void setTitleMap(Map<Locale, String> titleMap) {
-		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
+	public void setNameMap(Map<Locale, String> nameMap) {
+		setNameMap(nameMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
-	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale) {
-		if (titleMap == null) {
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale) {
+		if (nameMap == null) {
 			return;
 		}
 
-		setTitle(LocalizationUtil.updateLocalization(titleMap, getTitle(),
-				"Title", LocaleUtil.toLanguageId(defaultLocale)));
+		setName(LocalizationUtil.updateLocalization(nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -679,9 +679,9 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<String>();
 
-		Map<Locale, String> titleMap = getTitleMap();
+		Map<Locale, String> nameMap = getNameMap();
 
-		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
 			Locale locale = entry.getKey();
 			String value = entry.getValue();
 
@@ -695,7 +695,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 	@Override
 	public String getDefaultLanguageId() {
-		String xml = getTitle();
+		String xml = getName();
 
 		if (xml == null) {
 			return "";
@@ -726,13 +726,13 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
 
-		String title = getTitle(defaultLocale);
+		String name = getName(defaultLocale);
 
-		if (Validator.isNull(title)) {
-			setTitle(getTitle(modelDefaultLanguageId), defaultLocale);
+		if (Validator.isNull(name)) {
+			setName(getName(modelDefaultLanguageId), defaultLocale);
 		}
 		else {
-			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
+			setName(getName(defaultLocale), defaultLocale, defaultLocale);
 		}
 	}
 
@@ -759,7 +759,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		cpOptionValueImpl.setCreateDate(getCreateDate());
 		cpOptionValueImpl.setModifiedDate(getModifiedDate());
 		cpOptionValueImpl.setCPOptionId(getCPOptionId());
-		cpOptionValueImpl.setTitle(getTitle());
+		cpOptionValueImpl.setName(getName());
 		cpOptionValueImpl.setPriority(getPriority());
 		cpOptionValueImpl.setKey(getKey());
 		cpOptionValueImpl.setLastPublishDate(getLastPublishDate());
@@ -787,7 +787,7 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 			return value;
 		}
 
-		value = getTitle().compareTo(cpOptionValue.getTitle());
+		value = getName().compareTo(cpOptionValue.getName());
 
 		if (value != 0) {
 			return value;
@@ -906,12 +906,12 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 
 		cpOptionValueCacheModel.CPOptionId = getCPOptionId();
 
-		cpOptionValueCacheModel.title = getTitle();
+		cpOptionValueCacheModel.name = getName();
 
-		String title = cpOptionValueCacheModel.title;
+		String name = cpOptionValueCacheModel.name;
 
-		if ((title != null) && (title.length() == 0)) {
-			cpOptionValueCacheModel.title = null;
+		if ((name != null) && (name.length() == 0)) {
+			cpOptionValueCacheModel.name = null;
 		}
 
 		cpOptionValueCacheModel.priority = getPriority();
@@ -958,8 +958,8 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		sb.append(getModifiedDate());
 		sb.append(", CPOptionId=");
 		sb.append(getCPOptionId());
-		sb.append(", title=");
-		sb.append(getTitle());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", key=");
@@ -1016,8 +1016,8 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 		sb.append(getCPOptionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>title</column-name><column-value><![CDATA[");
-		sb.append(getTitle());
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
@@ -1058,8 +1058,8 @@ public class CPOptionValueModelImpl extends BaseModelImpl<CPOptionValue>
 	private long _CPOptionId;
 	private long _originalCPOptionId;
 	private boolean _setOriginalCPOptionId;
-	private String _title;
-	private String _titleCurrentLanguageId;
+	private String _name;
+	private String _nameCurrentLanguageId;
 	private double _priority;
 	private String _key;
 	private String _originalKey;

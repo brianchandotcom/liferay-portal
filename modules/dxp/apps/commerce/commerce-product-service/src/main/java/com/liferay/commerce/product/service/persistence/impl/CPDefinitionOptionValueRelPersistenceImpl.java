@@ -4456,7 +4456,7 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		cpDefinitionOptionValueRelImpl.setCreateDate(cpDefinitionOptionValueRel.getCreateDate());
 		cpDefinitionOptionValueRelImpl.setModifiedDate(cpDefinitionOptionValueRel.getModifiedDate());
 		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionRelId(cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-		cpDefinitionOptionValueRelImpl.setTitle(cpDefinitionOptionValueRel.getTitle());
+		cpDefinitionOptionValueRelImpl.setName(cpDefinitionOptionValueRel.getName());
 		cpDefinitionOptionValueRelImpl.setPriority(cpDefinitionOptionValueRel.getPriority());
 		cpDefinitionOptionValueRelImpl.setKey(cpDefinitionOptionValueRel.getKey());
 

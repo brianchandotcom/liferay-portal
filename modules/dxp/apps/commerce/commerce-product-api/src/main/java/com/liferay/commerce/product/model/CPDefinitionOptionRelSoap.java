@@ -45,7 +45,7 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setCPOptionId(model.getCPOptionId());
-		soapModel.setTitle(model.getTitle());
+		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDDMFormFieldTypeName(model.getDDMFormFieldTypeName());
 		soapModel.setPriority(model.getPriority());
@@ -187,12 +187,12 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 		_CPOptionId = CPOptionId;
 	}
 
-	public String getTitle() {
-		return _title;
+	public String getName() {
+		return _name;
 	}
 
-	public void setTitle(String title) {
-		_title = title;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public String getDescription() {
@@ -265,7 +265,7 @@ public class CPDefinitionOptionRelSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _CPDefinitionId;
 	private long _CPOptionId;
-	private String _title;
+	private String _name;
 	private String _description;
 	private String _DDMFormFieldTypeName;
 	private double _priority;

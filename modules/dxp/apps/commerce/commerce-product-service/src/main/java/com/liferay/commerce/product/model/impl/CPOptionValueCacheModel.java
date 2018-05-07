@@ -85,8 +85,8 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		sb.append(modifiedDate);
 		sb.append(", CPOptionId=");
 		sb.append(CPOptionId);
-		sb.append(", title=");
-		sb.append(title);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", key=");
@@ -137,11 +137,11 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 
 		cpOptionValueImpl.setCPOptionId(CPOptionId);
 
-		if (title == null) {
-			cpOptionValueImpl.setTitle("");
+		if (name == null) {
+			cpOptionValueImpl.setName("");
 		}
 		else {
-			cpOptionValueImpl.setTitle(title);
+			cpOptionValueImpl.setName(name);
 		}
 
 		cpOptionValueImpl.setPriority(priority);
@@ -181,7 +181,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 		modifiedDate = objectInput.readLong();
 
 		CPOptionId = objectInput.readLong();
-		title = objectInput.readUTF();
+		name = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
 		key = objectInput.readUTF();
@@ -218,11 +218,11 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 
 		objectOutput.writeLong(CPOptionId);
 
-		if (title == null) {
+		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(title);
+			objectOutput.writeUTF(name);
 		}
 
 		objectOutput.writeDouble(priority);
@@ -246,7 +246,7 @@ public class CPOptionValueCacheModel implements CacheModel<CPOptionValue>,
 	public long createDate;
 	public long modifiedDate;
 	public long CPOptionId;
-	public String title;
+	public String name;
 	public double priority;
 	public String key;
 	public long lastPublishDate;

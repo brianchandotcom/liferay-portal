@@ -82,8 +82,8 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", title=");
-		sb.append(title);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", DDMFormFieldTypeName=");
@@ -140,11 +140,11 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 			cpOptionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (title == null) {
-			cpOptionImpl.setTitle("");
+		if (name == null) {
+			cpOptionImpl.setName("");
 		}
 		else {
-			cpOptionImpl.setTitle(title);
+			cpOptionImpl.setName(name);
 		}
 
 		if (description == null) {
@@ -198,7 +198,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		title = objectInput.readUTF();
+		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
 
@@ -239,11 +239,11 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (title == null) {
+		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(title);
+			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
@@ -284,7 +284,7 @@ public class CPOptionCacheModel implements CacheModel<CPOption>, Externalizable 
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String title;
+	public String name;
 	public String description;
 	public String DDMFormFieldTypeName;
 	public boolean facetable;

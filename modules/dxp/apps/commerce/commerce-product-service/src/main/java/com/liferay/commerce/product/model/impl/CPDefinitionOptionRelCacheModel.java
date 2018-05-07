@@ -87,8 +87,8 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		sb.append(CPDefinitionId);
 		sb.append(", CPOptionId=");
 		sb.append(CPOptionId);
-		sb.append(", title=");
-		sb.append(title);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", DDMFormFieldTypeName=");
@@ -146,11 +146,11 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		cpDefinitionOptionRelImpl.setCPDefinitionId(CPDefinitionId);
 		cpDefinitionOptionRelImpl.setCPOptionId(CPOptionId);
 
-		if (title == null) {
-			cpDefinitionOptionRelImpl.setTitle("");
+		if (name == null) {
+			cpDefinitionOptionRelImpl.setName("");
 		}
 		else {
-			cpDefinitionOptionRelImpl.setTitle(title);
+			cpDefinitionOptionRelImpl.setName(name);
 		}
 
 		if (description == null) {
@@ -195,7 +195,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 		CPDefinitionId = objectInput.readLong();
 
 		CPOptionId = objectInput.readLong();
-		title = objectInput.readUTF();
+		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		DDMFormFieldTypeName = objectInput.readUTF();
 
@@ -240,11 +240,11 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 
 		objectOutput.writeLong(CPOptionId);
 
-		if (title == null) {
+		if (name == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(title);
+			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
@@ -280,7 +280,7 @@ public class CPDefinitionOptionRelCacheModel implements CacheModel<CPDefinitionO
 	public long modifiedDate;
 	public long CPDefinitionId;
 	public long CPOptionId;
-	public String title;
+	public String name;
 	public String description;
 	public String DDMFormFieldTypeName;
 	public double priority;

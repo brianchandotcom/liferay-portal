@@ -6,9 +6,15 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? _handleSelectAssetTypeButtonClick: any}
-	{@param? selectedMappingTypeLabel: [
-		type: string,
-		subtype: string
+	{@param? selectedMappingTypes: [
+		subtype: [
+			id: string,
+			label: string
+		],
+		type: [
+			id: string,
+			label: string
+		]
 	]}
 
 	<div class="sidebar-mapping">
@@ -18,17 +24,17 @@
 
 		<div class="panel panel-secondary">
 			<div class="panel-body">
-				{if $selectedMappingTypeLabel and $selectedMappingTypeLabel.type}
-					{$selectedMappingTypeLabel.type}
+				{if $selectedMappingTypes and $selectedMappingTypes.type}
+					{$selectedMappingTypes.type.label}
 
-					{if $selectedMappingTypeLabel.subtype}
+					{if $selectedMappingTypes.subtype}
 						<span class="inline-item inline-item-after inline-item-before">
 							<svg class="lexicon-icon">
 								<use xlink:href="{$spritemap}#angle-right"></use>
 							</svg>
 						</span>
 
-						{$selectedMappingTypeLabel.subtype}
+						{$selectedMappingTypes.subtype.label}
 					{/if}
 				{else}
 					{msg desc=""}no-asset-type-selected{/msg}
@@ -36,7 +42,7 @@
 			</div>
 		</div>
 
-		{if not $selectedMappingTypeLabel or not $selectedMappingTypeLabel.type}
+		{if not $selectedMappingTypes or not $selectedMappingTypes.type}
 			<button
 				class="btn btn-secondary"
 				data-onclick="{$_handleSelectAssetTypeButtonClick}"

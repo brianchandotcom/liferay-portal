@@ -55,7 +55,10 @@ class EditableTextFragmentProcessor {
 
 	process() {
 		this._destroyEditors();
-		this._createEditors();
+
+		if (!this.fragmentEntryLink.showMapping) {
+			this._createEditors();
+		}
 	}
 
 	/**
@@ -82,7 +85,14 @@ class EditableTextFragmentProcessor {
 			wrapper,
 			object.mixin(
 				this.fragmentEntryLink.defaultEditorConfiguration.editorConfig,
-				EditableTextFragmentProcessor.EDITOR_CONFIGURATION
+				EditableTextFragmentProcessor.EDITOR_CONFIGURATION,
+				{
+					title: [
+						this.fragmentEntryLink.portletNamespace,
+						'_FragmentEntryLinkEditable_',
+						this.fragmentEntryLink.fragmentEntryLinkId
+					].join('')
+				}
 			)
 		);
 

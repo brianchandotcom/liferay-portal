@@ -129,8 +129,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
 		cpDefinitionImpl.setDescriptionMap(getDescriptionMap());
 		cpDefinitionImpl.setLayoutUuid(getLayoutUuid());
+		cpDefinitionImpl.setNameMap(getNameMap());
 		cpDefinitionImpl.setShortDescriptionMap(getShortDescriptionMap());
-		cpDefinitionImpl.setTitleMap(getTitleMap());
 		cpDefinitionImpl.setUrlTitleMap(getUrlTitleMap());
 
 		return cpDefinitionImpl;
@@ -258,6 +258,25 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public String getNameCurrentValue() {
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		return getName(LocaleUtil.toLanguageId(locale), true);
+	}
+
+	@Override
+	public Map<Locale, String> getNameMap() {
+		if (_titleMap != null) {
+			return _titleMap;
+		}
+
+		_titleMap = CPDefinitionLocalServiceUtil.getCPDefinitionNameMap(
+			getCPDefinitionId());
+
+		return _titleMap;
+	}
+
+	@Override
 	public Map<Locale, String> getShortDescriptionMap() {
 		if (_shortDescriptionMap != null) {
 			return _shortDescriptionMap;
@@ -268,25 +287,6 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 				getCPDefinitionId());
 
 		return _shortDescriptionMap;
-	}
-
-	@Override
-	public String getTitleCurrentValue() {
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-		return getTitle(LocaleUtil.toLanguageId(locale), true);
-	}
-
-	@Override
-	public Map<Locale, String> getTitleMap() {
-		if (_titleMap != null) {
-			return _titleMap;
-		}
-
-		_titleMap = CPDefinitionLocalServiceUtil.getCPDefinitionTitleMap(
-			getCPDefinitionId());
-
-		return _titleMap;
 	}
 
 	@Override
@@ -317,15 +317,15 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public void setNameMap(Map<Locale, String> titleMap) {
+		_titleMap = titleMap;
+	}
+
+	@Override
 	public void setShortDescriptionMap(
 		Map<Locale, String> shortDescriptionMap) {
 
 		_shortDescriptionMap = shortDescriptionMap;
-	}
-
-	@Override
-	public void setTitleMap(Map<Locale, String> titleMap) {
-		_titleMap = titleMap;
 	}
 
 	@Override

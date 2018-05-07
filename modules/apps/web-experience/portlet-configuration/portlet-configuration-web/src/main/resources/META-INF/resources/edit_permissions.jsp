@@ -33,17 +33,12 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 			items="<%= portletConfigurationPermissionsDisplayContext.getNavigationItems() %>"
 		/>
 
-		<liferay-frontend:management-bar>
-			<liferay-frontend:management-bar-filters>
-				<li>
-					<aui:form action="<%= portletConfigurationPermissionsDisplayContext.getIteratorURL() %>" name="searchFm">
-						<liferay-ui:input-search
-							markupView="lexicon"
-						/>
-					</aui:form>
-				</li>
-			</liferay-frontend:management-bar-filters>
-		</liferay-frontend:management-bar>
+		<clay:management-toolbar
+			clearResultsURL="<%= portletConfigurationPermissionsDisplayContext.getClearResultsURL() %>"
+			searchActionURL="<%= portletConfigurationPermissionsDisplayContext.getSearchActionURL() %>"
+			searchFormName="searchFm"
+			selectable="<%= false %>"
+		/>
 
 		<aui:form action="<%= portletConfigurationPermissionsDisplayContext.getUpdateRolePermissionsURL() %>" cssClass="container-fluid-1280" method="post" name="fm">
 			<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />

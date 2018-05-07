@@ -25,79 +25,24 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= organizationsDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= organizationsDisplayContext.getClearResultsURL() %>"
+	componentId="organizationsManagementToolbar"
 	disabled="<%= organizationsDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= organizationsDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	searchActionURL="<%= organizationsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="organizations"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= organizationsDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					id="selectOrganizations"
-					title='<%= LanguageUtil.get(request, "assign-organizations") %>'
-					url="javascript:;"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= organizationsDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= organizationsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= organizationsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "type"} %>'
-			portletURL="<%= organizationsDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= organizationsDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedOrganizations"
-			label="remove-membership"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showCreationMenu="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= organizationsDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= organizationsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= organizationsDisplayContext.getSortingURL() %>"
+	totalItems="<%= organizationsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= organizationsDisplayContext.getViewTypeItems() %>"
+/>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/organization/info_panel" var="sidebarPanelURL">
@@ -156,47 +101,43 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var Util = Liferay.Util;
-
-	var form = $(document.<portlet:namespace />fm);
-
-	$('#<portlet:namespace />deleteSelectedOrganizations').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm(form);
-			}
+	window.<portlet:namespace />deleteSelectedOrganizations = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm(document.<portlet:namespace />fm);
 		}
-	);
+	}
 
-	$('#<portlet:namespace />selectOrganizations').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	function handleAddClick(event) {
+		event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectOrganizations',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			{
+				eventName: '<portlet:namespace />selectOrganizations',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItem = event.newVal;
 
-							if (selectedItem) {
-								var addGroupOrganizationsFm = $(document.<portlet:namespace />addGroupOrganizationsFm);
+						if (selectedItem) {
+							var addGroupOrganizationsFm = $(document.<portlet:namespace />addGroupOrganizationsFm);
 
-								addGroupOrganizationsFm.append(selectedItem);
+							addGroupOrganizationsFm.append(selectedItem);
 
-								submitForm(addGroupOrganizationsFm);
-							}
+							submitForm(addGroupOrganizationsFm);
 						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="assign-organizations-to-this-site" />',
-					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organizations.jsp" /></portlet:renderURL>'
-				}
-			);
+					}
+				},
+				'strings.add': '<liferay-ui:message key="done" />',
+				title: '<liferay-ui:message key="assign-organizations-to-this-site" />',
+				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organizations.jsp" /></portlet:renderURL>'
+			}
+		);
 
-			itemSelectorDialog.open();
+		itemSelectorDialog.open();
+	}
+
+	Liferay.componentReady('organizationsManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddClick);
 		}
 	);
 </aui:script>

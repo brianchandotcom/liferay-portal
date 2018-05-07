@@ -51,27 +51,28 @@ if (Validator.isNotNull(keywords)) {
 	<link href="<%= ServletContextUtil.getContextPath() + "/repository_entry_browser/css/main.css" %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<c:if test="<%= !showSearchInfo %>">
+<%
+ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse);
+%>
 
-	<%
-	ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse);
-	%>
+<clay:management-toolbar
+	clearResultsURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
+	disabled="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.isDisabled() %>"
+	filterItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
+	searchFormMethod="POST"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showInfoButton="<%= false %>"
+	showSearch="<%= showSearch %>"
+	sortingOrder="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getOrderByType() %>"
+	sortingURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSortingURL()) %>"
+	totalItems="<%= repositoryEntriesCount %>"
+	viewTypes="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
-	<clay:management-toolbar
-		clearResultsURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
-		disabled="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.isDisabled() %>"
-		filterItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-		searchActionURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
-		searchFormMethod="POST"
-		searchFormName="searchFm"
-		selectable="<%= false %>"
-		showInfoButton="<%= false %>"
-		showSearch="<%= showSearch %>"
-		sortingOrder="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getOrderByType() %>"
-		sortingURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSortingURL()) %>"
-		totalItems="<%= repositoryEntriesCount %>"
-		viewTypes="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getViewTypes() %>"
-	/>
+<c:if test="<%= showSearchInfo %>">
+	<liferay-util:include page="/repository_entry_browser/search_info.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <div class="container-fluid container-fluid-max-xl lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
@@ -89,79 +90,6 @@ if (Validator.isNotNull(keywords)) {
 			showLayout="<%= false %>"
 			showParentGroups="<%= false %>"
 		/>
-
-	<%
-	}
-	else if (showSearchInfo) {
-	%>
-
-		<div class="search-info">
-			<span class="keywords">
-
-				<%
-				Folder folder = null;
-				boolean searchEverywhere = true;
-
-				String searchInfoMessage = StringPool.BLANK;
-				boolean showRerunSearchButton = true;
-
-				if (!showBreadcrumb) {
-					searchInfoMessage = LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(tabName)}, false);
-
-					showRerunSearchButton = false;
-				}
-				else {
-					long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
-
-					if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-						searchEverywhere = false;
-
-						folder = DLAppServiceUtil.getFolder(folderId);
-					}
-					else {
-						folderId = searchFolderId;
-					}
-
-					if ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (searchFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-						showRerunSearchButton = false;
-					}
-
-					searchInfoMessage = !searchEverywhere ? LanguageUtil.format(request, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(request, "searched-for-x-everywhere", HtmlUtil.escape(keywords), false);
-				}
-				%>
-
-				<%= searchInfoMessage %>
-			</span>
-
-			<c:if test="<%= showRerunSearchButton %>">
-				<span class="change-search-folder">
-
-					<%
-					PortletURL searchURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-					searchURL.setParameter("folderId", !searchEverywhere ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId));
-					searchURL.setParameter("searchFolderId", String.valueOf(folderId));
-					searchURL.setParameter("keywords", keywords);
-					%>
-
-					<aui:button href="<%= searchURL.toString() %>" value='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
-				</span>
-			</c:if>
-
-			<%
-			PortletURL closeSearchURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-			closeSearchURL.setParameter("folderId", String.valueOf(folderId));
-			%>
-
-			<liferay-ui:icon
-				cssClass="close-search"
-				iconCssClass="icon-remove"
-				id="closeSearch"
-				message="remove"
-				url="<%= closeSearchURL.toString() %>"
-			/>
-		</div>
 
 	<%
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.util;
 
+import com.liferay.fragment.constants.FragmentEntryLinkMode;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -28,8 +29,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-
-import javax.portlet.PortletMode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -86,7 +85,7 @@ public class FragmentEntryRenderUtil {
 		throws PortalException {
 
 		return renderFragmentEntryLink(
-			fragmentEntryLink, PortletMode.EDIT.toString(), request, response);
+			fragmentEntryLink, FragmentEntryLinkMode.EDIT, request, response);
 	}
 
 	public static String renderFragmentEntryLink(

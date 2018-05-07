@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.processor;
 
+import com.liferay.fragment.constants.FragmentEntryLinkMode;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -25,8 +26,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Collections;
-
-import javax.portlet.PortletMode;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -68,7 +67,7 @@ public class FragmentEntryProcessorRegistryImpl
 		throws PortalException {
 
 		return processFragmentEntryLinkHTML(
-			fragmentEntryLink, PortletMode.EDIT.toString());
+			fragmentEntryLink, FragmentEntryLinkMode.EDIT);
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.portlet;
 
+import com.liferay.fragment.constants.FragmentEntryLinkMode;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
@@ -48,7 +49,6 @@ import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplica
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 
@@ -142,7 +142,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					fragmentEntryLink.getGroupId(), portletName,
 					ActionKeys.CONFIGURATION) &&
 				layout.isTypeControlPanel() &&
-				Objects.equals(mode, PortletMode.EDIT.toString())) {
+				Objects.equals(mode, FragmentEntryLinkMode.EDIT)) {
 
 				portletElement.appendChild(
 					_getPortletTopperElement(portletName, instanceId));

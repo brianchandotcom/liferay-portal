@@ -14,11 +14,10 @@
 
 package com.liferay.fragment.processor;
 
+import com.liferay.fragment.constants.FragmentEntryLinkMode;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-
-import javax.portlet.PortletMode;
 
 /**
  * @author Pavel Savinov
@@ -34,7 +33,7 @@ public interface FragmentEntryProcessor {
 		throws PortalException {
 
 		return processFragmentEntryLinkHTML(
-			fragmentEntryLink, html, PortletMode.EDIT.toString());
+			fragmentEntryLink, html, FragmentEntryLinkMode.EDIT);
 	}
 
 	public String processFragmentEntryLinkHTML(

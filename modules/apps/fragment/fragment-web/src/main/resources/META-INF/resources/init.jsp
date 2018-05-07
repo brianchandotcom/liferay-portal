@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
+page import="com.liferay.fragment.constants.FragmentEntryLinkMode" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentEntryKeyException" %><%@
@@ -71,8 +72,7 @@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
-<%@ page import="javax.portlet.PortletMode" %><%@
-page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

@@ -67,7 +67,7 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 		throws PortalException;
 
 	public List<LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
-		long[] layoutPageTemplateEntryIds) throws PortalException;
+		long[] layoutPageTemplateEntryIds);
 
 	public LayoutPageTemplateEntry deleteLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId) throws PortalException;
@@ -91,24 +91,31 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws PortalException;
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateCollectionId, int start, int end)
-		throws PortalException;
+		long groupId, long layoutPageTemplateCollectionId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
-		throws PortalException;
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long classNameId, long classTypeId, int type)
-		throws PortalException;
+		long groupId, long classNameId, long classTypeId, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long classNameId, long classTypeId, int type, int start,
+		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long classNameId, long classTypeId, String name,
+		int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
@@ -130,7 +137,11 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutPageTemplateEntriesCount(long groupId,
-		long classNameId, long classTypeId, int type) throws PortalException;
+		long classNameId, long classTypeId, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutPageTemplateEntriesCount(long groupId,
+		long classNameId, long classTypeId, String name, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutPageTemplateEntriesCount(long groupId,

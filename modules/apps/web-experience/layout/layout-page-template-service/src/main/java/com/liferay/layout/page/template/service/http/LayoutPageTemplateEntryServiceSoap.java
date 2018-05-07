@@ -270,6 +270,46 @@ public class LayoutPageTemplateEntryServiceSoap {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
+		long groupId, long classNameId, long classTypeId, int type, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> returnValue =
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(groupId,
+					classNameId, classTypeId, type, start, end,
+					orderByComparator);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
+		long groupId, long classNameId, long classTypeId, String name,
+		int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> returnValue =
+				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(groupId,
+					classNameId, classTypeId, name, type, start, end,
+					orderByComparator);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator)
@@ -342,6 +382,22 @@ public class LayoutPageTemplateEntryServiceSoap {
 		try {
 			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
 					classNameId, classTypeId, type);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getLayoutPageTemplateEntriesCount(long groupId,
+		long classNameId, long classTypeId, String name, int type)
+		throws RemoteException {
+		try {
+			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
+					classNameId, classTypeId, name, type);
 
 			return returnValue;
 		}

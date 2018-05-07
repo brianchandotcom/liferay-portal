@@ -17,10 +17,26 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommercePriceEntryDisplayContext commercePriceEntryDisplayContext = (CommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommercePriceEntry commercePriceEntry = null;
+String price = StringPool.BLANK;
+String promoPrice = StringPool.BLANK;
 
-CommercePriceEntry commercePriceEntry = commercePriceEntryDisplayContext.getCommercePriceEntry();
-CommercePriceList commercePriceList = commercePriceEntryDisplayContext.getCommercePriceList();
+if (portletName.equals(CommercePriceListPortletKeys.COMMERCE_PRICE_LIST)) {
+	CommercePriceEntryDisplayContext commercePriceEntryDisplayContext = (CommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+	commercePriceEntry = commercePriceEntryDisplayContext.getCommercePriceEntry();
+	price = commercePriceEntryDisplayContext.format(commercePriceEntry.getPrice());
+	promoPrice = commercePriceEntryDisplayContext.format(commercePriceEntry.getPrice());
+}
+else {
+	CPInstanceCommercePriceEntryDisplayContext cpInstanceCommercePriceEntryDisplayContext = (CPInstanceCommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+	commercePriceEntry = cpInstanceCommercePriceEntryDisplayContext.getCommercePriceEntry();
+	price = cpInstanceCommercePriceEntryDisplayContext.format(commercePriceEntry.getPrice());
+	promoPrice = cpInstanceCommercePriceEntryDisplayContext.format(commercePriceEntry.getPrice());
+}
+
+CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 
 CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
 
@@ -35,6 +51,7 @@ String currencyCode = commerceCurrency.getCode();
 <aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 
 <aui:fieldset>
-	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntryDisplayContext.format(commercePriceEntry.getPrice()) %>" />
-	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntryDisplayContext.format(commercePriceEntry.getPromoPrice()) %>" />
+	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= price %>" />
+
+	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= promoPrice %>" />
 </aui:fieldset>

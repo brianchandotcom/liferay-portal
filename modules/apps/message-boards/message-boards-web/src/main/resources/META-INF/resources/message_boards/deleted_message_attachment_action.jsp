@@ -35,7 +35,7 @@ MBMessage message = MBMessageLocalServiceUtil.getFileEntryMessage(fileEntry.getF
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-			<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
+			<portlet:param name="fileName" value="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon
@@ -47,7 +47,7 @@ MBMessage message = MBMessageLocalServiceUtil.getFileEntryMessage(fileEntry.getF
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-			<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
+			<portlet:param name="fileName" value="<%= HtmlUtil.unescape(fileEntry.getTitle()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

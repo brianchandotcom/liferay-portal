@@ -46,6 +46,13 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 		return _assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(assetDisplayPageEntry);
 	}
 
+	@Override
+	public com.liferay.asset.display.page.model.AssetDisplayPageEntry addAssetDisplayPageEntry(
+		long assetEntryId, long layoutId) {
+		return _assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(assetEntryId,
+			layoutId);
+	}
+
 	/**
 	* Creates a new asset display page entry with the primary key. Does not add the asset display page entry to the database.
 	*
@@ -82,6 +89,18 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 		long assetDisplayPageEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(assetDisplayPageEntryId);
+	}
+
+	@Override
+	public void deleteAssetDisplayPageEntry(long assetEntryId, long layoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(assetEntryId,
+			layoutId);
+	}
+
+	@Override
+	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId) {
+		_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntryByAssetEntryId(assetEntryId);
 	}
 
 	/**
@@ -184,6 +203,13 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 	public com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchAssetDisplayPageEntry(
 		long assetDisplayPageEntryId) {
 		return _assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(assetDisplayPageEntryId);
+	}
+
+	@Override
+	public com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchAssetDisplayPageEntry(
+		long assetEntryId, long layoutId) {
+		return _assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(assetEntryId,
+			layoutId);
 	}
 
 	@Override

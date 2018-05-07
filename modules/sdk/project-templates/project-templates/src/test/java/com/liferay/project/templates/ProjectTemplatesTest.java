@@ -2801,20 +2801,15 @@ public class ProjectTemplatesTest {
 			for (String line : lines) {
 				FileTestUtil.write(bufferedWriter, line);
 
-				if (line.contains(classPath)) {
-					String newClassPath =
-						"classpath group: \"com.liferay\", name: \"com." +
-							"liferay.gradle.plugins.defaults\", version: " +
-								"\"latest.release\"";
+				int lastLine = lines.lastIndexOf(lines);
 
-					FileTestUtil.write(bufferedWriter, newClassPath);
-				}
-
-				if (line.contains(applyPlugin)) {
-					String newApplyPlugin =
-						"apply plugin: \"com.liferay.defaults.plugin\"";
-
-					FileTestUtil.write(bufferedWriter, newApplyPlugin);
+				if (lastLine == lines.size()) {
+					FileTestUtil.write(
+						bufferedWriter,
+						"import com.liferay.gradle.plugins.node.tasks." +
+							"ExecuteNpmTask",
+						"tasks.withType(ExecuteNpmTask.class) {",
+						"registry = '" + _NODEJS_NPM_CI_REGISTRY + "'}");
 				}
 			}
 		}

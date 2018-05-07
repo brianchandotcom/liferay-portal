@@ -876,8 +876,11 @@
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#selectScopeInputPG">
 			<var name="searchScope" value="This Site" />
+		</execute>
+
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -892,8 +895,13 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<!-- LPS-80521 -->
+
+		<!-- <execute macro="SearchBarPortlet#selectScopeInputPG">
 			<var name="searchScope" value="All Sites" />
+		</execute>
+
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -907,7 +915,7 @@
 			<var name="searchAssetTitle" value="userfn2 userln2" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
-		</execute>
+		</execute> -->
 	</command>
 
 	<command name="SearchTwiceScopeThisSite" priority="5">

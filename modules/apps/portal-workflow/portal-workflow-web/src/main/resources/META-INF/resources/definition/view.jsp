@@ -17,10 +17,6 @@
 <%@ include file="/definition/init.jsp" %>
 
 <%
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
-int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
-
-String navigation = ParamUtil.getString(request, "navigation", "definitions");
 String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
 
 int displayedStatus = WorkflowDefinitionConstants.STATUS_ALL;
@@ -32,30 +28,9 @@ else if (StringUtil.equals(definitionsNavigation, "not-published")) {
 	displayedStatus = WorkflowDefinitionConstants.STATUS_NOT_PUBLISHED;
 }
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL navigationPortletURL = renderResponse.createRenderURL();
-
-navigationPortletURL.setParameter("mvcPath", "/view.jsp");
-navigationPortletURL.setParameter("tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION);
-
-if (delta > 0) {
-	navigationPortletURL.setParameter("delta", String.valueOf(delta));
-}
-
-navigationPortletURL.setParameter("orderByCol", orderByCol);
-navigationPortletURL.setParameter("orderByType", orderByType);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("definitionsNavigation", definitionsNavigation);
-
-PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-if (cur > 0) {
-	displayStyleURL.setParameter("cur", String.valueOf(cur));
-}
 
 WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch(renderRequest, portletURL);
 %>
@@ -75,8 +50,11 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 
 <clay:management-toolbar
 	creationMenu="<%= workflowDefinitionDisplayContext.getCreationMenu(pageContext) %>"
+	filterItems="<%= workflowDefinitionDisplayContext.getFilterOptions(request) %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	selectable="<%= false %>"
+	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
+	sortingURL="<%= workflowDefinitionDisplayContext.getSortingURL(request) %>"
 />
 
 <div class="container-fluid-1280 workflow-definition-container">

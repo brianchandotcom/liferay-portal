@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPCreationMenu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -51,7 +53,9 @@ import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionTi
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -148,6 +152,67 @@ public class WorkflowDefinitionDisplayContext {
 
 		return LocalizationUtil.updateLocalization(
 			title, "title", newTitle, defaultLanguageId);
+	}
+
+	public DropdownItemList getFilterOptions(HttpServletRequest request) {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getFilterNavigationDropdownItem(
+											"all",
+											_getCurrentNavigation(request),
+											"all"));
+
+									add(
+										_getFilterNavigationDropdownItem(
+											"published",
+											_getCurrentNavigation(request),
+											"published"));
+
+									add(
+										_getFilterNavigationDropdownItem(
+											"not-published",
+											_getCurrentNavigation(request),
+											"not-published"));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(
+								_workflowDefinitionRequestHelper.getRequest(),
+								"filter"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getOrderByDropdownItem(
+											"last-modified",
+											_getCurrentOrder(request),
+											request));
+
+									add(
+										_getOrderByDropdownItem(
+											"title", _getCurrentOrder(request),
+											request));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(
+								_workflowDefinitionRequestHelper.getRequest(),
+								"order-by"));
+					});
+			}
+		};
 	}
 
 	public Object[] getMessageArguments(
@@ -254,6 +319,30 @@ public class WorkflowDefinitionDisplayContext {
 		}
 
 		return workflowDefinitions;
+	}
+
+	public String getSortingURL(HttpServletRequest request)
+		throws PortletException {
+
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+		LiferayPortletResponse response =
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = response.createRenderURL();
+
+		portletURL.setParameter(
+			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
+
+		String definitionsNavigation = ParamUtil.getString(
+			request, "definitionsNavigation");
+
+		if (Validator.isNotNull(definitionsNavigation)) {
+			portletURL.setParameter(
+				"definitionsNavigation", definitionsNavigation);
+		}
+
+		return portletURL.toString();
 	}
 
 	public String getTitle(WorkflowDefinition workflowDefinition) {
@@ -409,6 +498,74 @@ public class WorkflowDefinitionDisplayContext {
 			getWorkflowDefitionOrderByComparator(
 				orderByCol, orderByType,
 				_workflowDefinitionRequestHelper.getLocale());
+	}
+
+	private String _getCurrentNavigation(HttpServletRequest request) {
+		return ParamUtil.getString(request, "definitionsNavigation", "all");
+	}
+
+	private String _getCurrentOrder(HttpServletRequest request) {
+		return ParamUtil.getString(request, "orderByCol", "title");
+	}
+
+	private Consumer<DropdownItem> _getFilterNavigationDropdownItem(
+		String navigation, String currentNavigation,
+		String definitionsNavigation) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(
+				Objects.equals(currentNavigation, navigation));
+
+			dropdownItem.setHref(
+				_getPortletURL(null), "definitionsNavigation",
+				definitionsNavigation, "mvcPath", "/view.jsp", "tab",
+				WorkflowWebKeys.WORKFLOW_TAB_DEFINITION);
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_workflowDefinitionRequestHelper.getRequest(), navigation));
+
+		};
+	}
+
+	private Consumer<DropdownItem> _getOrderByDropdownItem(
+		String orderByCol, String currentOrder, HttpServletRequest request) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(Objects.equals(currentOrder, orderByCol));
+
+			dropdownItem.setHref(
+				_getPortletURL(request), "orderByCol", orderByCol);
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_workflowDefinitionRequestHelper.getRequest(), orderByCol));
+		};
+	}
+
+	private PortletURL _getPortletURL(HttpServletRequest request) {
+		LiferayPortletResponse liferayPortletResponse =
+			_workflowDefinitionRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		if (Validator.isNull(request)) {
+			return portletURL;
+		}
+
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+		portletURL.setParameter("orderByType", orderByType);
+
+		String definitionsNavigation = ParamUtil.getString(
+			request, "definitionsNavigation");
+
+		if (Validator.isNotNull(definitionsNavigation)) {
+			portletURL.setParameter(
+				"definitionsNavigation", definitionsNavigation);
+		}
+
+		return portletURL;
 	}
 
 	private static final String _HTML =

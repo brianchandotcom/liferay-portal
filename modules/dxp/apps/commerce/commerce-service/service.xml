@@ -328,7 +328,7 @@
 		<column name="quantity" type="int" />
 		<column name="shippedQuantity" type="int" />
 		<column name="json" type="String" />
-		<column localized="true" name="title" type="String" />
+		<column localized="true" name="name" type="String" />
 		<column name="sku" type="String" />
 		<column name="price" type="BigDecimal" />
 

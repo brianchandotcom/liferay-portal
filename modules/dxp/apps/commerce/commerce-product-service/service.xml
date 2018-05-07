@@ -127,12 +127,12 @@
 		<!-- Localized entity -->
 
 		<localized-entity>
-			<localized-column name="title" />
+			<localized-column name="name" />
 			<localized-column name="shortDescription" />
 			<localized-column name="description" />
 			<localized-column name="metaTitle" />
-			<localized-column name="metaKeywords" />
 			<localized-column name="metaDescription" />
+			<localized-column name="metaKeywords" />
 		</localized-entity>
 
 		<!-- Order -->

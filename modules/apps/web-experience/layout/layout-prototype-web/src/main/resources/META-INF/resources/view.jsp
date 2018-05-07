@@ -20,7 +20,7 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= layoutPrototypeDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= layoutPrototypeDisplayContext.getNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

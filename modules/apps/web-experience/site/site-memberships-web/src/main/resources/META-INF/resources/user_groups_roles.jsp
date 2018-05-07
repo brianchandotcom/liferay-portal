@@ -43,7 +43,7 @@ roleSearch.setResults(roles);
 %>
 
 <clay:navigation-bar
-	items="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
+	navigationItems="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

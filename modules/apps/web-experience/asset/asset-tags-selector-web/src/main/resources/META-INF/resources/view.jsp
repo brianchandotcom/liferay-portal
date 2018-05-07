@@ -17,22 +17,22 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
-	items="<%= assetTagsSelectorDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= assetTagsSelectorDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= assetTagsSelectorDisplayContext.getClearResultsURL() %>"
 	componentId="assetTagsSelectorManagementToolbar"
 	disabled="<%= assetTagsSelectorDisplayContext.isDisabledTagsManagementBar() %>"
-	filterItems="<%= assetTagsSelectorDisplayContext.getFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= assetTagsSelectorDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= assetTagsSelectorDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= assetTagsSelectorDisplayContext.getSearchActionURL() %>"
 	searchContainerId="tags"
 	searchFormName="searchFm"
 	showSearch="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>"
 	sortingOrder="<%= assetTagsSelectorDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetTagsSelectorDisplayContext.getSortingURL() %>"
-	totalItems="<%= assetTagsSelectorDisplayContext.getTotalItems() %>"
-	viewTypes="<%= assetTagsSelectorDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= assetTagsSelectorDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="container-fluid-1280">

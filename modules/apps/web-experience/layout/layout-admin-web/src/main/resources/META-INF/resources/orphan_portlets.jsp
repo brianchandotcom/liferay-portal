@@ -31,7 +31,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 %>
 
 <clay:navigation-bar
-	items="<%= orphanPortletsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= orphanPortletsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

@@ -69,7 +69,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				</div>
 
 				<clay:navigation-bar
-					items="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
+					navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
 				/>
 
 				<div class="sidebar-body">
@@ -92,7 +92,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				</div>
 
 				<clay:navigation-bar
-					items="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
+					navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
 				/>
 
 				<div class="sidebar-body">
@@ -111,7 +111,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 		</div>
 
 		<clay:navigation-bar
-			items="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">

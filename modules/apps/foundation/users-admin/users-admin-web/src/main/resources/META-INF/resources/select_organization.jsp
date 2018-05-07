@@ -42,7 +42,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
 
 <clay:navigation-bar
-	items='<%= userDisplayContext.getNavigationItems("organizations") %>'
+	navigationItems='<%= userDisplayContext.getNavigationItems("organizations") %>'
 />
 
 <liferay-frontend:management-bar>

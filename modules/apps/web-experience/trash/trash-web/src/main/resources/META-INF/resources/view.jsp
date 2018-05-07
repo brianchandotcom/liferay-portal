@@ -28,23 +28,23 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= trashDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= trashDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= trashDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= trashDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= trashDisplayContext.getClearResultsURL() %>"
 	componentId="trashWebManagementToolbar"
-	filterItems="<%= trashDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= trashDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= trashDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= trashDisplayContext.getSearchActionURL() %>"
 	searchContainerId="trash"
 	searchFormName="searchFm"
 	showInfoButton="<%= true %>"
 	sortingOrder="<%= trashDisplayContext.getOrderByType() %>"
 	sortingURL="<%= trashDisplayContext.getSortingURL() %>"
-	totalItems="<%= trashDisplayContext.getTotalItems() %>"
-	viewTypes="<%= trashDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= trashDisplayContext.getViewTypeItems() %>"
 />
 
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />

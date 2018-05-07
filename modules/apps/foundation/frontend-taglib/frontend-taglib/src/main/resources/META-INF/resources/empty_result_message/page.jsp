@@ -35,7 +35,7 @@
 				<c:choose>
 					<c:when test="<%= actionDropdownItems.size() > 1 %>">
 						<clay:dropdown-menu
-							items="<%= actionDropdownItems %>"
+							dropdownItems="<%= actionDropdownItems %>"
 							itemsIconAlignment="left"
 							label='<%= LanguageUtil.get(request, "new") %>'
 							style="secondary"

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
-	items="<%= assetBrowserDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= assetBrowserDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
@@ -25,14 +25,14 @@
 	componentId="assetBrowserManagementToolbar"
 	creationMenu="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) ? assetBrowserDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= assetBrowserDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= assetBrowserDisplayContext.getFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= assetBrowserDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= assetBrowserDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= assetBrowserDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= assetBrowserDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetBrowserDisplayContext.getSortingURL() %>"
-	totalItems="<%= assetBrowserDisplayContext.getTotalItems() %>"
-	viewTypes="<%= assetBrowserDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= assetBrowserDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="selectAssetFm">

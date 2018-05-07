@@ -23,7 +23,7 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">

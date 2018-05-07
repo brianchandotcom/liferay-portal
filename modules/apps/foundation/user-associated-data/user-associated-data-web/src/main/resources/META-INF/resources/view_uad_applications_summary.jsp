@@ -61,7 +61,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
 			<clay:management-toolbar
-				filterItems="<%= viewUADApplicationsSummaryDisplay.getManagementBarFilterItems() %>"
+				filterDropdownItems="<%= viewUADApplicationsSummaryDisplay.getManagementBarFilterItems() %>"
 				namespace="<%= renderResponse.getNamespace() %>"
 				searchContainerId="uadApplicationSummaryDisplays"
 				selectable="<%= false %>"

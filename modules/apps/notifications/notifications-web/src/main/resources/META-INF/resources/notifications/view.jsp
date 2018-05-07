@@ -46,7 +46,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(
@@ -69,17 +69,17 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 />
 
 <clay:management-toolbar
-	actionItems="<%= notificationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= notificationsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= NotificationsUtil.getAllNotificationsCount(themeDisplay.getUserId(), actionRequired) == 0 %>"
-	filterItems="<%= notificationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= notificationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= notificationsSearchContainer.getTotal() %>"
 	searchContainerId="<%= searchContainerId %>"
 	showCreationMenu="<%= false %>"
 	showInfoButton="<%= false %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= notificationsManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(notificationsManagementToolbarDisplayContext.getSortingURL()) %>"
-	totalItems="<%= notificationsSearchContainer.getTotal() %>"
-	viewTypes="<%= notificationsManagementToolbarDisplayContext.getViewTypes() %>"
+	viewTypeItems="<%= notificationsManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <div class="container-fluid-1280 main-content-body">

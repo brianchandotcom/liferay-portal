@@ -74,7 +74,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		return cpDefinitionOptionValueRelLocalService.
 			addCPDefinitionOptionValueRel(
-				cpDefinitionOptionRelId, cpOptionValue.getTitleMap(),
+				cpDefinitionOptionRelId, cpOptionValue.getNameMap(),
 				cpOptionValue.getPriority(), cpOptionValue.getKey(),
 				serviceContext);
 	}
@@ -82,7 +82,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-			long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
+			long cpDefinitionOptionRelId, Map<Locale, String> nameMap,
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -108,7 +108,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setUserName(user.getFullName());
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
 			cpDefinitionOptionRelId);
-		cpDefinitionOptionValueRel.setTitleMap(titleMap);
+		cpDefinitionOptionValueRel.setNameMap(nameMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
@@ -305,7 +305,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-			long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
+			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -321,7 +321,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(), key);
 
-		cpDefinitionOptionValueRel.setTitleMap(titleMap);
+		cpDefinitionOptionValueRel.setNameMap(nameMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
@@ -350,7 +350,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.TITLE, keywords);
+		attributes.put(Field.NAME, keywords);
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put(_FIELD_KEY, keywords);
 		attributes.put("CPDefinitionOptionRelId", cpDefinitionOptionRelId);

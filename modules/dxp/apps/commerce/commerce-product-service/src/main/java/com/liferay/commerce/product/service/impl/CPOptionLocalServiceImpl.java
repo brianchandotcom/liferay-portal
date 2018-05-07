@@ -59,7 +59,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOption addCPOption(
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, boolean facetable, boolean required,
 			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException {
@@ -82,7 +82,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		cpOption.setCompanyId(user.getCompanyId());
 		cpOption.setUserId(user.getUserId());
 		cpOption.setUserName(user.getFullName());
-		cpOption.setTitleMap(titleMap);
+		cpOption.setNameMap(nameMap);
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOption.setFacetable(facetable);
@@ -243,7 +243,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOption updateCPOption(
-			long cpOptionId, Map<Locale, String> titleMap,
+			long cpOptionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 			boolean facetable, boolean required, boolean skuContributor,
 			String key, ServiceContext serviceContext)
@@ -255,7 +255,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		validate(cpOption.getCPOptionId(), cpOption.getGroupId(), key);
 
-		cpOption.setTitleMap(titleMap);
+		cpOption.setNameMap(nameMap);
 		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpOption.setFacetable(facetable);
@@ -282,7 +282,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.TITLE, keywords);
+		attributes.put(Field.NAME, keywords);
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put(CPOptionIndexer.FIELD_KEY, keywords);

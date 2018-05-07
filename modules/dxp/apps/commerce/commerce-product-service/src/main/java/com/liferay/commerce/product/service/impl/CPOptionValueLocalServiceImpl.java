@@ -60,7 +60,7 @@ public class CPOptionValueLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOptionValue addCPOptionValue(
-			long cpOptionId, Map<Locale, String> titleMap, double priority,
+			long cpOptionId, Map<Locale, String> nameMap, double priority,
 			String key, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -84,7 +84,7 @@ public class CPOptionValueLocalServiceImpl
 		cpOptionValue.setUserId(user.getUserId());
 		cpOptionValue.setUserName(user.getFullName());
 		cpOptionValue.setCPOptionId(cpOptionId);
-		cpOptionValue.setTitleMap(titleMap);
+		cpOptionValue.setNameMap(nameMap);
 		cpOptionValue.setPriority(priority);
 		cpOptionValue.setKey(key);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
@@ -186,7 +186,7 @@ public class CPOptionValueLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPOptionValue updateCPOptionValue(
-			long cpOptionValueId, Map<Locale, String> titleMap, double priority,
+			long cpOptionValueId, Map<Locale, String> nameMap, double priority,
 			String key, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -201,7 +201,7 @@ public class CPOptionValueLocalServiceImpl
 			cpOptionValue.getCPOptionValueId(), cpOptionValue.getCPOptionId(),
 			key);
 
-		cpOptionValue.setTitleMap(titleMap);
+		cpOptionValue.setNameMap(nameMap);
 		cpOptionValue.setPriority(priority);
 		cpOptionValue.setKey(key);
 		cpOptionValue.setExpandoBridgeAttributes(serviceContext);
@@ -226,7 +226,7 @@ public class CPOptionValueLocalServiceImpl
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.TITLE, keywords);
+		attributes.put(Field.NAME, keywords);
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put(_FIELD_KEY, keywords);
 		attributes.put("CPOptionId", cpOptionId);

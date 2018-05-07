@@ -71,7 +71,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-			cpDefinitionId, cpOptionId, cpOption.getTitleMap(),
+			cpDefinitionId, cpOptionId, cpOption.getNameMap(),
 			cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(), 0,
 			cpOption.getFacetable(), cpOption.isRequired(),
 			cpOption.getSkuContributor(), importOptionValue, serviceContext);
@@ -80,7 +80,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
-			long cpDefinitionId, long cpOptionId, Map<Locale, String> titleMap,
+			long cpDefinitionId, long cpOptionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 			double priority, boolean facetable, boolean required,
 			boolean skuContributor, boolean importOptionValue,
@@ -104,7 +104,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setUserName(user.getFullName());
 		cpDefinitionOptionRel.setCPDefinitionId(cpDefinitionId);
 		cpDefinitionOptionRel.setCPOptionId(cpOptionId);
-		cpDefinitionOptionRel.setTitleMap(titleMap);
+		cpDefinitionOptionRel.setNameMap(nameMap);
 		cpDefinitionOptionRel.setDescriptionMap(descriptionMap);
 		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpDefinitionOptionRel.setPriority(priority);
@@ -282,7 +282,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	@Override
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, double priority, boolean facetable,
 			boolean required, boolean skuContributor,
 			ServiceContext serviceContext)
@@ -293,7 +293,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId);
 
 		cpDefinitionOptionRel.setCPOptionId(cpOptionId);
-		cpDefinitionOptionRel.setTitleMap(titleMap);
+		cpDefinitionOptionRel.setNameMap(nameMap);
 		cpDefinitionOptionRel.setDescriptionMap(descriptionMap);
 		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
 		cpDefinitionOptionRel.setPriority(priority);
@@ -330,7 +330,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.TITLE, keywords);
+		attributes.put(Field.NAME, keywords);
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put("CPDefinitionId", cpDefinitionId);
 		attributes.put("params", params);

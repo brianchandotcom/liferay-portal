@@ -259,7 +259,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 				skuSB.append(
 					StringUtil.toUpperCase(
-						cpDefinitionOptionValueRel.getTitle(
+						cpDefinitionOptionValueRel.getName(
 							serviceContext.getLanguageId())));
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

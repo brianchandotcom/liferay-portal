@@ -51,7 +51,7 @@ public class CPDefinitionOptionRelServiceImpl
 
 	@Override
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(
-			long cpDefinitionId, long cpOptionId, Map<Locale, String> titleMap,
+			long cpDefinitionId, long cpOptionId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 			double priority, boolean facetable, boolean required,
 			boolean skuContributor, boolean importOptionValue,
@@ -62,7 +62,7 @@ public class CPDefinitionOptionRelServiceImpl
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-			cpDefinitionId, cpOptionId, titleMap, descriptionMap,
+			cpDefinitionId, cpOptionId, nameMap, descriptionMap,
 			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
 			importOptionValue, serviceContext);
 	}
@@ -211,7 +211,7 @@ public class CPDefinitionOptionRelServiceImpl
 	@Override
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String ddmFormFieldTypeName, double priority, boolean facetable,
 			boolean required, boolean skuContributor,
 			ServiceContext serviceContext)
@@ -221,7 +221,7 @@ public class CPDefinitionOptionRelServiceImpl
 			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
-			cpDefinitionOptionRelId, cpOptionId, titleMap, descriptionMap,
+			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
 			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
 			serviceContext);
 	}

@@ -49,8 +49,8 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long siteNavigationMenuId = ParamUtil.getLong(
-			actionRequest, "siteNavigationMenuId");
+		long siteNavigationMenuItemId = ParamUtil.getLong(
+			actionRequest, "siteNavigationMenuItemId");
 
 		UnicodeProperties typeSettingsProperties =
 			PropertiesParamUtil.getProperties(
@@ -60,7 +60,7 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 			actionRequest);
 
 		_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
-			siteNavigationMenuId, typeSettingsProperties.toString(),
+			siteNavigationMenuItemId, typeSettingsProperties.toString(),
 			serviceContext);
 	}
 

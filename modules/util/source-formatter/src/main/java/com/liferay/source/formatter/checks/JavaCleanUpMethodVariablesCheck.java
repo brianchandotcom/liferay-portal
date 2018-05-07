@@ -51,7 +51,14 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		String cleanUpMethodContent = _getCleanUpMethodContent(javaClass);
 
 		if (cleanUpMethodContent != null) {
-			_checkVariables(fileName, cleanUpMethodContent, javaClass);
+			String newCleanUpMethodContent = _formatVariables(
+				fileName, cleanUpMethodContent, javaClass);
+
+			if (!cleanUpMethodContent.equals(newCleanUpMethodContent)) {
+				return StringUtil.replace(
+					javaTerm.getContent(), cleanUpMethodContent,
+					newCleanUpMethodContent);
+			}
 		}
 
 		return javaTerm.getContent();
@@ -85,8 +92,10 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		}
 	}
 
-	private void _checkVariables(
+	private String _formatVariables(
 		String fileName, String cleanUpMethodContent, JavaClass javaClass) {
+
+		int previousPos = -1;
 
 		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
 			if (!javaTerm.isJavaVariable()) {
@@ -101,11 +110,19 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 
 			String variableName = javaTerm.getName();
 
-			if (!cleanUpMethodContent.contains(variableName + " =")) {
+			int pos = cleanUpMethodContent.indexOf(variableName + " =");
+
+			if (pos == -1) {
 				_checkMissingVariable(fileName, variableName, javaClass);
 
 				continue;
 			}
+
+			if (previousPos > pos) {
+				return _sortVariables(cleanUpMethodContent, previousPos, pos);
+			}
+
+			previousPos = pos;
 
 			Pattern pattern = Pattern.compile(
 				"\t(private|protected|public)\\s+" +
@@ -175,6 +192,8 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 					"cleanup.markdown");
 			}
 		}
+
+		return cleanUpMethodContent;
 	}
 
 	private String _getCleanUpMethodContent(JavaClass javaClass) {
@@ -199,6 +218,34 @@ public class JavaCleanUpMethodVariablesCheck extends BaseJavaTermCheck {
 		}
 
 		return "null";
+	}
+
+	private String _sortVariables(
+		String cleanUpMethodContent, int previousPos, int pos) {
+
+		int semiColonPos = cleanUpMethodContent.indexOf(";\n", pos);
+
+		if ((semiColonPos == -1) || (semiColonPos > previousPos)) {
+			return cleanUpMethodContent;
+		}
+
+		int previousSemiColonPos = cleanUpMethodContent.indexOf(
+			";\n", previousPos);
+
+		if (previousSemiColonPos == -1) {
+			return cleanUpMethodContent;
+		}
+
+		String previousVariableSetter = cleanUpMethodContent.substring(
+			previousPos, previousSemiColonPos + 1);
+		String variableSetter = cleanUpMethodContent.substring(
+			pos, semiColonPos + 1);
+
+		String newCleanUpMethodContent = StringUtil.replaceFirst(
+			cleanUpMethodContent, variableSetter, previousVariableSetter);
+
+		return StringUtil.replaceLast(
+			newCleanUpMethodContent, previousVariableSetter, variableSetter);
 	}
 
 	private static final Map<String, String> _defaultPrimitiveValues =

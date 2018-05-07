@@ -1146,6 +1146,36 @@ a[type="button"] {
 	z-index: $zindex-fixed;
 }
 
+// Multi Step Nav
+
+.commerce-multi-step-nav {
+	margin-bottom: 3rem;
+	margin-top: 2rem;
+	padding-left: 4rem;
+	padding-right: 4rem;
+
+	.multi-step-indicator-label {
+		font-size: 1rem;
+		max-width: 200px;
+	}
+
+	&.multi-step-nav-collapse-sm {
+		@include media-breakpoint-down(sm) {
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		&.multi-step-indicator-label-top .multi-step-indicator-label {
+			margin-top: -1rem;
+
+			@include media-breakpoint-up(md) {
+				bottom: 3.25rem;
+				margin-top: 0;
+			}
+		}
+	}
+}
+
 // Checkout
 
 .commerce-payment-types, .commerce-shipping-types {

@@ -50,6 +50,8 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -1673,11 +1675,13 @@ public class DDMStructureLocalServiceImpl
 			ddmForm.getDDMFormFieldsMap(true);
 
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
-			long ddmDataProviderInstanceId = GetterUtil.getLong(
+			long[] ddmDataProviderInstanceIds = getDDMDataProviderInstanceIds(
 				ddmFormField.getProperty("ddmDataProviderInstanceId"));
 
-			if (ddmDataProviderInstanceId > 0) {
-				dataProviderInstanceIds.add(ddmDataProviderInstanceId);
+			for (long ddmDataProviderInstanceId : ddmDataProviderInstanceIds) {
+				if (ddmDataProviderInstanceId > 0) {
+					dataProviderInstanceIds.add(ddmDataProviderInstanceId);
+				}
 			}
 		}
 
@@ -1721,6 +1725,31 @@ public class DDMStructureLocalServiceImpl
 		}
 
 		return dataProviderInstanceIds;
+	}
+
+	protected long[] getDDMDataProviderInstanceIds(
+		Object ddmDataProviderInstanceId) {
+
+		if (ddmDataProviderInstanceId instanceof JSONArray) {
+			JSONArray jsonArray = (JSONArray)ddmDataProviderInstanceId;
+
+			long[] ddmDataProviderInstanceIds = new long[jsonArray.length()];
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				ddmDataProviderInstanceIds[i] = jsonArray.getLong(i);
+			}
+
+			return ddmDataProviderInstanceIds;
+		}
+
+		long ddmDataProviderInstanceIdLong = GetterUtil.getLong(
+			ddmDataProviderInstanceId);
+
+		if (ddmDataProviderInstanceIdLong > 0) {
+			return new long[] {ddmDataProviderInstanceIdLong};
+		}
+
+		return GetterUtil.DEFAULT_LONG_VALUES;
 	}
 
 	protected Set<String> getDDMFormFieldsNames(DDMForm ddmForm) {
@@ -2013,6 +2042,9 @@ public class DDMStructureLocalServiceImpl
 
 	@ServiceReference(type = DDMXML.class)
 	protected DDMXML ddmXML;
+
+	@ServiceReference(type = JSONFactory.class)
+	protected JSONFactory jsonFactory;
 
 	private final Pattern _callFunctionPattern = Pattern.compile(
 		"call\\(\\s*\'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +

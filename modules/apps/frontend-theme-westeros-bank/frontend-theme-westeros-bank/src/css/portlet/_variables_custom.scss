@@ -1,8 +1,8 @@
-$portlet-topper-bg: map-get($theme-colors, secondary);
-$portlet-topper-border: $portlet-topper-bg;
-$portlet-topper-color: #FFF;
-$portlet-topper-link-color: #FFF;
-$portlet-topper-link-hover-color: $portlet-topper-link-color;
+$portlet-topper-bg: #F1F5FF;
+$portlet-topper-border: #D7E5FF;
+$portlet-topper-color: map-get($theme-colors, primary);
+$portlet-topper-link-color: map-get($theme-colors, primary);
+$portlet-topper-link-hover-color: map-get($theme-colors, primary);
 
-$portlet-content-border-radius: 0 0 2px 2px;
+$portlet-content-border-radius: 0 0 8px 8px;
 $portlet-topper-border-radius: 4px 4px 0 0;

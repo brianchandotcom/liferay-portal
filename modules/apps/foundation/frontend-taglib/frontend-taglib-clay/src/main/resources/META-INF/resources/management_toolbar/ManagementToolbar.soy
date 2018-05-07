@@ -1,0 +1,117 @@
+{namespace com.liferay.frontend.taglib.clay.ManagementToolbar}
+
+/**
+ *
+*/
+{template .render}
+	{@param spritemap: string}
+	{@param? _handleSelectPageCheckboxChanged: any}
+	{@param? _handleDeselectAllClicked: any}
+	{@param? _handleSelectAllClicked: any}
+	{@param? actionItems: list<[
+		disabled: bool,
+		href: string,
+		icon: string,
+		label: string,
+		quickAction: bool,
+		separator: bool,
+		type: string
+	]>}
+	{@param? clearResultsURL: string}
+	{@param? contentRenderer: string}
+	{@param? creationMenu: [
+		caption: string,
+		helpText: string,
+		maxPrimaryItems: int,
+		maxSecondaryItems: int,
+		maxTotalItems: int,
+		primaryItems: list<[
+			disabled: bool,
+			href: string,
+			icon: string,
+			label: string,
+			separator: bool
+		]>,
+		secondaryItems: list<[
+			disabled: bool,
+			href: string,
+			icon: string,
+			items: list<[
+				disabled: bool,
+				href: string,
+				icon: string,
+				label: string,
+				separator: bool
+			]>,
+			label: string,
+			separator: bool
+		]>,
+		viewMoreURL: string
+	]}
+	{@param? disabled: bool}
+	{@param? elementClasses: string}
+	{@param? filterItems: list<[
+		checked: bool,
+		disabled: bool,
+		inputName: string,
+		inputValue: string,
+		label: string,
+		separator: bool,
+		type: string
+	]>}
+	{@param? id: string}
+	{@param? searchActionURL: string}
+	{@param? searchFormName: string}
+	{@param? searchInputName: string}
+	{@param? searchValue: string}
+	{@param? selectable: bool}
+	{@param? selectedItems: number}
+	{@param? showAdvancedSearch: bool}
+	{@param? showCreationMenu: bool}
+	{@param? showFiltersDoneButton: bool}
+	{@param? showInfoButton: bool}
+	{@param? showSearch: bool}
+	{@param? sortingOrder: string}
+	{@param? sortingURL: string}
+	{@param? totalItems: number}
+	{@param? viewTypes: list<[
+		active: bool,
+		disabled: bool,
+		href: string,
+		icon: string,
+		label: string
+	]>}
+
+	{call ClayManagementToolbar.render}
+		{param actionItems: $actionItems /}
+		{param clearResultsURL: $clearResultsURL /}
+		{param contentRenderer: $contentRenderer /}
+		{param creationMenu: $creationMenu /}
+		{param disabled: $disabled /}
+		{param elementClasses: $elementClasses /}
+		{param events: [
+			'deselectAllClicked': $_handleDeselectAllClicked,
+			'selectPageCheckboxChanged': $_handleSelectPageCheckboxChanged,
+			'selectAllClicked': $_handleSelectAllClicked
+		 ] /}
+		{param filterItems: $filterItems /}
+		{param id: $id /}
+		{param ref: 'managementToolbar' /}
+		{param searchActionURL: $searchActionURL /}
+		{param searchFormName: $searchFormName /}
+		{param searchInputName: $searchInputName /}
+		{param searchValue: $searchValue /}
+		{param selectable: $selectable /}
+		{param selectedItems: $selectedItems /}
+		{param showAdvancedSearch: $showAdvancedSearch /}
+		{param showCreationMenu: $showCreationMenu /}
+		{param showFiltersDoneButton: $showFiltersDoneButton /}
+		{param showInfoButton: $showInfoButton /}
+		{param showSearch: $showSearch /}
+		{param sortingOrder: $sortingOrder /}
+		{param sortingURL: $sortingURL /}
+		{param spritemap: $spritemap /}
+		{param totalItems: $totalItems /}
+		{param viewTypes: $viewTypes /}
+	{/call}
+{/template}

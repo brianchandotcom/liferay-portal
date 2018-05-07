@@ -43,6 +43,11 @@ public abstract class BaseBookmarksEntryUADExporter
 	}
 
 	@Override
+	public Class<BookmarksEntry> getTypeClass() {
+		return BookmarksEntry.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return bookmarksEntryLocalService.getActionableDynamicQuery();
 	}

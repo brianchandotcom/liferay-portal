@@ -16,7 +16,6 @@ package com.liferay.announcements.uad.anonymizer.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
-import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.AnnouncementsEntryUADTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
@@ -110,9 +109,7 @@ public class AnnouncementsEntryUADAnonymizerTest
 	@Inject
 	private AnnouncementsEntryUADTestHelper _announcementsEntryUADTestHelper;
 
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
-	)
+	@Inject(filter = "component.name=*.AnnouncementsEntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
 
 }

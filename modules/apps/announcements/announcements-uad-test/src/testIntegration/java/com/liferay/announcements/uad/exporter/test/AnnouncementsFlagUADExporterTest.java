@@ -15,7 +15,6 @@
 package com.liferay.announcements.uad.exporter.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
-import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.AnnouncementsFlagUADTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -71,9 +70,7 @@ public class AnnouncementsFlagUADExporterTest
 	@Inject
 	private AnnouncementsFlagUADTestHelper _announcementsFlagUADTestHelper;
 
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
-	)
+	@Inject(filter = "component.name=*.AnnouncementsFlagUADExporter")
 	private UADExporter _uadExporter;
 
 }

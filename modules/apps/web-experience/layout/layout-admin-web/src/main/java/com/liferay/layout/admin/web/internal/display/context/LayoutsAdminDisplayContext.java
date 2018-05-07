@@ -15,8 +15,14 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.constants.LayoutAdminDisplayStyleKeys;
@@ -97,6 +103,24 @@ public class LayoutsAdminDisplayContext {
 
 		_liferayPortletRequest.setAttribute(
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
+	}
+
+	public List<DropdownItem> getActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" +
+								_liferayPortletResponse.getNamespace() +
+									"deleteSelectedPages();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
 	}
 
 	public String getAutoSiteNavigationMenuNames() {
@@ -191,6 +215,21 @@ public class LayoutsAdminDisplayContext {
 		return copyLayoutURL.toString();
 	}
 
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								getSelectLayoutPageTemplateEntryURL());
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "add-page"));
+						}));
+			}
+		};
+	}
+
 	public String getDeleteLayoutURL(Layout layout) {
 		PortletURL deleteLayoutURL = _liferayPortletResponse.createActionURL();
 
@@ -216,6 +255,28 @@ public class LayoutsAdminDisplayContext {
 			LayoutAdminPortletKeys.GROUP_PAGES, "display-style", "list");
 
 		return _displayStyle;
+	}
+
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public long getFirstLayoutPageTemplateCollectionId()
@@ -402,20 +463,6 @@ public class LayoutsAdminDisplayContext {
 		};
 	}
 
-	public String[] getNavigationKeys() {
-		if (_navigationKeys != null) {
-			return _navigationKeys;
-		}
-
-		_navigationKeys = new String[] {"public-pages", "private-pages"};
-
-		if (!isShowPublicPages()) {
-			_navigationKeys = new String[] {"private-pages"};
-		}
-
-		return _navigationKeys;
-	}
-
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -436,10 +483,6 @@ public class LayoutsAdminDisplayContext {
 			_liferayPortletRequest, "orderByType", "asc");
 
 		return _orderByType;
-	}
-
-	public String[] getOrderColumns() {
-		return new String[] {"create-date"};
 	}
 
 	public String getOrphanPortletsURL(Layout layout) {
@@ -665,6 +708,16 @@ public class LayoutsAdminDisplayContext {
 		return _selPlid;
 	}
 
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
 	public Group getStagingGroup() {
 		return _groupDisplayContextHelper.getStagingGroup();
 	}
@@ -681,6 +734,12 @@ public class LayoutsAdminDisplayContext {
 		_tabs1 = ParamUtil.getString(_liferayPortletRequest, "tabs1", "pages");
 
 		return _tabs1;
+	}
+
+	public int getTotalItems() throws Exception {
+		SearchContainer layoutsSearchContainer = getLayoutsSearchContainer();
+
+		return layoutsSearchContainer.getTotal();
 	}
 
 	public String getViewLayoutURL(Layout layout) throws PortalException {
@@ -702,6 +761,14 @@ public class LayoutsAdminDisplayContext {
 		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
 
 		return editLayoutURL.toString();
+	}
+
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
+			{
+				addTableViewTypeItem();
+			}
+		};
 	}
 
 	public boolean isMillerColumnsEnabled() {
@@ -944,6 +1011,28 @@ public class LayoutsAdminDisplayContext {
 		return breadcrumbEntryJSONObject;
 	}
 
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(isPublicPages());
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "public-pages"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(isPrivatePages());
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "private-pages"));
+					});
+			}
+		};
+	}
+
 	private JSONArray _getLayoutColumnsJSONArray() throws Exception {
 		JSONArray layoutColumnsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -1031,6 +1120,22 @@ public class LayoutsAdminDisplayContext {
 		return orderByComparator;
 	}
 
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "create-date"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "create-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "create-date"));
+					});
+			}
+		};
+	}
+
 	private boolean _isActive(long plid) throws PortalException {
 		if (plid == getSelPlid()) {
 			return true;
@@ -1060,7 +1165,6 @@ public class LayoutsAdminDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _millerColumnsEnabled;
 	private String _navigation;
-	private String[] _navigationKeys;
 	private String _orderByCol;
 	private String _orderByType;
 	private Long _parentLayoutId;

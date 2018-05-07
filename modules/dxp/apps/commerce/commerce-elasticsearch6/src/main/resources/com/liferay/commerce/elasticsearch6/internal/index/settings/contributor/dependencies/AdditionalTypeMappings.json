@@ -27,6 +27,10 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"commerceUserSegmentEntryIds_required_matches": {
+			"store": true,
+			"type": "integer"
+		},
 		"optionsNames": {
 			"store": true,
 			"type": "keyword"

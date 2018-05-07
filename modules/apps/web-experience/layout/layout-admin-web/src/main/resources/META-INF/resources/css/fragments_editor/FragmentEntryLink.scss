@@ -76,6 +76,12 @@ $wrapperBorderColor: #FF8F39;
 		}
 	}
 
+	.fragment-entry-link-content {
+		overflow: hidden;
+		position: relative;
+		z-index: -1;
+	}
+
 	lfr-editable {
 		box-shadow: 0 0 0 1px transparent;
 		cursor: pointer;

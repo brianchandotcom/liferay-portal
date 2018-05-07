@@ -69,7 +69,6 @@
 			</header>
 
 			<main id="content" role="main">
-
 				<#if selectable>
 					<@liferay_util["include"] page=content_include />
 				<#else>

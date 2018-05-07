@@ -72,45 +72,6 @@ if (Validator.isNotNull(keywords)) {
 		totalItems="<%= repositoryEntriesCount %>"
 		viewTypes="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getViewTypes() %>"
 	/>
-
-	<liferay-frontend:management-bar>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews="<%= RepositoryEntryBrowserTag.DISPLAY_STYLES %>"
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-filters>
-
-			<%
-			PortletURL sortURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-			String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-			String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-			Map<String, String> orderColumns = new HashMap<String, String>();
-
-			orderColumns.put("modifiedDate", "modified-date");
-			orderColumns.put("size", "size");
-			orderColumns.put("title", "title");
-			%>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns="<%= orderColumns %>"
-				portletURL="<%= sortURL %>"
-			/>
-
-			<c:if test="<%= showSearch %>">
-				<li>
-					<liferay-item-selector:search />
-				</li>
-			</c:if>
-		</liferay-frontend:management-bar-filters>
-	</liferay-frontend:management-bar>
 </c:if>
 
 <div class="container-fluid-1280 lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">

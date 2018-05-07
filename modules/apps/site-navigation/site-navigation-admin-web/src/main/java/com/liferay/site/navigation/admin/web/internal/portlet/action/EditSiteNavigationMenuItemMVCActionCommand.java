@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import javax.portlet.ActionRequest;
@@ -59,9 +61,16 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
-			siteNavigationMenuItemId, typeSettingsProperties.toString(),
-			serviceContext);
+		try {
+			_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
+				siteNavigationMenuItemId, typeSettingsProperties.toString(),
+				serviceContext);
+		}
+		catch (SiteNavigationMenuItemNameException snmine) {
+			SessionErrors.add(actionRequest, snmine.getClass(), snmine);
+
+			sendRedirect(actionRequest, actionResponse);
+		}
 	}
 
 	@Reference

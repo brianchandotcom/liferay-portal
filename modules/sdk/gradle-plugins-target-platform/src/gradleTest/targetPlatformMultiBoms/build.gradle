@@ -12,7 +12,7 @@ dependencies {
 
 runGradleTest {
 	doLast {
-		Map managedVersionsForConfiguration = dependencyManagement.getManagedVersionsForConfiguration(configurations.compile)
+		Map<String, String> managedVersionsForConfiguration = dependencyManagement.getManagedVersionsForConfiguration(configurations.compile)
 
 		assert managedVersionsForConfiguration.size() == 899
 	}

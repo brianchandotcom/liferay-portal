@@ -420,7 +420,7 @@ public class FragmentEntryLocalServiceImpl
 	private String _parseHTMLContent(String html)
 		throws FragmentEntryContentException {
 
-		Document document = Jsoup.parse(html);
+		Document document = Jsoup.parseBodyFragment(html);
 
 		Document.OutputSettings outputSettings = new Document.OutputSettings();
 

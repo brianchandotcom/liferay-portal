@@ -220,8 +220,9 @@ public class SelectSiteRolesDisplayContext {
 
 		roleSearch.setTotal(rolesCount);
 
-		roleSearch.setResults(ListUtil.subList(
-			roles, roleSearch.getStart(), roleSearch.getEnd()));
+		roleSearch.setResults(
+			ListUtil.subList(
+				roles, roleSearch.getStart(), roleSearch.getEnd()));
 
 		_roleSearch = roleSearch;
 

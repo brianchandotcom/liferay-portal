@@ -12,6 +12,7 @@ dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.0.0-20180316.222213-1"
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.data.provider", version: "2.1.0-20170601.152559-12"
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0-20180109.010916-4"
 	compileOnly group: "com.liferay", name: "com.liferay.journal.api", version: "3.0.0-20170601.182427-18"
 	compileOnly group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "3.0.0-20180316.221954-1"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"

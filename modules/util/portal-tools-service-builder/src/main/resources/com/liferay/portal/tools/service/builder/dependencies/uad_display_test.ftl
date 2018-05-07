@@ -61,9 +61,7 @@ public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase<${entit
 	@Inject
 	private ${entity.name}UADTestHelper _${entity.varName}UADTestHelper;
 
-	@Inject(
-		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}
-	)
+	@Inject(filter = "component.name=*.${entity.name}UADDisplay")
 	private UADDisplay _uadDisplay;
 
 }

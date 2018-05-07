@@ -2,7 +2,6 @@ package ${packagePath}.uad.anonymizer.test;
 
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.${entity.name}LocalService;
-import ${packagePath}.uad.constants.${portletShortName}UADConstants;
 import ${packagePath}.uad.test.${entity.name}UADTestHelper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -131,9 +130,7 @@ public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<$
 	@Inject
 	private ${entity.name}UADTestHelper _${entity.varName}UADTestHelper;
 
-	@Inject(
-		filter = "model.class.name=" + ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName}
-	)
+	@Inject(filter = "component.name=*.${entity.name}UADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
 
 }

@@ -26,7 +26,7 @@
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
-				rowChecker="<%= roleSearch.getRowChecker() %>"
+				rowChecker="<%= searchContainer.getRowChecker() %>"
 				subtitle="<%= LanguageUtil.get(request, role.getTypeLabel()) %>"
 				title="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 			/>

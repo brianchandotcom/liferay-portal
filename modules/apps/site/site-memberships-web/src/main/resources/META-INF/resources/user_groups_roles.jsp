@@ -17,29 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = portalPreferences.getValue(SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style", "icon");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroupsRoles");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/user_groups_roles.jsp");
-portletURL.setParameter("userGroupId", String.valueOf(siteMembershipsDisplayContext.getUserGroupId()));
-
-RoleSearch roleSearch = new RoleSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
-
-RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearch.getSearchTerms();
-
-List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
-
-roles = UsersAdminUtil.filterGroupRoles(permissionChecker, siteMembershipsDisplayContext.getGroupId(), roles);
-
-int rolesCount = roles.size();
-
-roleSearch.setTotal(rolesCount);
-
-roles = ListUtil.subList(roles, roleSearch.getStart(), roleSearch.getEnd());
-
-roleSearch.setResults(roles);
+UserGroupRolesDisplayContext userGroupRolesDisplayContext = new UserGroupRolesDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar
@@ -47,26 +25,26 @@ roleSearch.setResults(roles);
 />
 
 <liferay-frontend:management-bar
-	disabled="<%= (rolesCount <= 0) && !searchTerms.isSearch() %>"
+	disabled="<%= userGroupRolesDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userGroupGroupRoleRole"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= userGroupRolesDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= roleSearch.getOrderByCol() %>"
-			orderByType="<%= roleSearch.getOrderByType() %>"
+			orderByCol="<%= userGroupRolesDisplayContext.getOrderByCol() %>"
+			orderByType="<%= userGroupRolesDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= userGroupRolesDisplayContext.getPortletURL() %>"
 		/>
 
-		<c:if test="<%= (rolesCount > 0) || searchTerms.isSearch() %>">
+		<c:if test="<%= userGroupRolesDisplayContext.isShowSearch() %>">
 			<li>
-				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<aui:form action="<%= userGroupRolesDisplayContext.getPortletURL() %>" name="searchFm">
 					<liferay-ui:input-search
 						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 						markupView="lexicon"
@@ -84,7 +62,7 @@ roleSearch.setResults(roles);
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= userGroupRolesDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
@@ -92,19 +70,23 @@ roleSearch.setResults(roles);
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">
 	<liferay-ui:search-container
 		id="userGroupGroupRoleRole"
-		rowChecker="<%= new UserGroupGroupRoleRoleChecker(renderResponse, siteMembershipsDisplayContext.getUserGroup(), siteMembershipsDisplayContext.getGroup()) %>"
-		searchContainer="<%= roleSearch %>"
+		searchContainer="<%= userGroupRolesDisplayContext.getRoleSearchSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
 			keyProperty="roleId"
 			modelVar="role"
 		>
+
+			<%
+			String displayStyle = userGroupRolesDisplayContext.getDisplayStyle();
+			%>
+
 			<%@ include file="/role_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= userGroupRolesDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
@@ -117,7 +99,7 @@ roleSearch.setResults(roles);
 		'rowToggled',
 		function(event) {
 			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(eventName) %>',
+				'<%= HtmlUtil.escapeJS(userGroupRolesDisplayContext.getEventName()) %>',
 				{
 					data: event.elements.allSelectedElements.getDOMNodes()
 				}

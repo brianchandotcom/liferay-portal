@@ -40,7 +40,7 @@ String userGroupGroupRolesString = ListUtil.toString(userGroupGroupRoles, UsersA
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
-				rowChecker="<%= rowChecker %>"
+				rowChecker="<%= searchContainer.getRowChecker() %>"
 				subtitle="<%= userGroup.getDescription() %>"
 				title="<%= userGroup.getName() %>"
 			>

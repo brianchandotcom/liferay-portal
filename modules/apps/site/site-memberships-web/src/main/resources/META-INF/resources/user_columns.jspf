@@ -43,7 +43,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
 				resultRow="<%= row %>"
-				rowChecker="<%= rowChecker %>"
+				rowChecker="<%= searchContainer.getRowChecker() %>"
 				subtitle="<%= user2.getScreenName() %>"
 				title="<%= user2.getFullName() %>"
 				userId="<%= user2.getUserId() %>"

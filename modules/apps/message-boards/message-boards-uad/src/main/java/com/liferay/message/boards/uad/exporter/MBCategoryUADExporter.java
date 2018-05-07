@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.uad.exporter;
 
-import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,10 +21,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_CATEGORY,
-	service = UADExporter.class
-)
+@Component(immediate = true, service = UADExporter.class)
 public class MBCategoryUADExporter extends BaseMBCategoryUADExporter {
 }

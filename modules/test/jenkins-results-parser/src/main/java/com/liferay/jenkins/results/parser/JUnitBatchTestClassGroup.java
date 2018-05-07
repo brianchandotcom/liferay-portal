@@ -151,12 +151,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 							packagePath = packagePath.replace(
 								".java", ".class");
 
-							return JunitTestClass.getInstance(
+							return JunitBatchTestClass.getInstance(
 								portalGitWorkingDirectory,
 								new File(packagePath), path.toFile());
 						}
 
-						return JunitTestClass.getInstance(
+						return JunitBatchTestClass.getInstance(
 							portalGitWorkingDirectory,
 							new File(filePath.replace(".java", ".class")),
 							path.toFile());
@@ -201,16 +201,16 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
 
-	protected static class JunitTestClass extends TestClass {
+	protected static class JunitBatchTestClass extends TestClass {
 
-		protected static JunitTestClass getInstance(
+		protected static JunitBatchTestClass getInstance(
 			GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
 
 			if (_junitTestClasses.containsKey(file)) {
 				return _junitTestClasses.get(file);
 			}
 
-			JunitTestClass junitTestClass = new JunitTestClass(
+			JunitBatchTestClass junitTestClass = new JunitBatchTestClass(
 				gitWorkingDirectory, file, srcFile);
 
 			_junitTestClasses.put(file, junitTestClass);
@@ -218,7 +218,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return junitTestClass;
 		}
 
-		protected static JunitTestClass getInstance(
+		protected static JunitBatchTestClass getInstance(
 			GitWorkingDirectory gitWorkingDirectory, String fullClassName) {
 
 			String filePath = fullClassName.substring(
@@ -262,7 +262,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return getInstance(gitWorkingDirectory, file, matchingSrcFile);
 		}
 
-		protected JunitTestClass(
+		protected JunitBatchTestClass(
 			GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
 
 			super(file);
@@ -406,17 +406,17 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return;
 			}
 
-			JunitTestClass parentJunitTestClass = getInstance(
+			JunitBatchTestClass parentJunitBatchTestClass = getInstance(
 				_gitWorkingDirectory, parentFullClassName);
 
 			for (TestMethod testMethod :
-					parentJunitTestClass.getTestMethods()) {
+					parentJunitBatchTestClass.getTestMethods()) {
 
 				addTestMethod(testMethod);
 			}
 		}
 
-		private static final Map<File, JunitTestClass> _junitTestClasses =
+		private static final Map<File, JunitBatchTestClass> _junitTestClasses =
 			new HashMap<>();
 		private static Pattern _methodHeaderPattern = Pattern.compile(
 			JenkinsResultsParserUtil.combine(

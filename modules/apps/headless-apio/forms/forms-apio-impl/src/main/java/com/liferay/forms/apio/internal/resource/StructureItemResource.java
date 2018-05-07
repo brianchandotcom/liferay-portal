@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
-import com.liferay.forms.apio.architect.identifier.StructureVersionIdentifier;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 
 import org.osgi.service.component.annotations.Component;
@@ -72,8 +71,15 @@ public class StructureItemResource
 		).addLinkedModel(
 			"structure", StructureIdentifier.class,
 			DDMStructure::getParentStructureId
-		).addLinkedModel(
-			"version", StructureVersionIdentifier.class, this::_getVersionId
+		).addNested(
+			"version", this::_getVersion,
+			nestedBuilder -> nestedBuilder.nestedTypes(
+				"StructureVersion"
+			).addLinkedModel(
+				"author", PersonIdentifier.class, DDMStructureVersion::getUserId
+			).addString(
+				"name", DDMStructureVersion::getVersion
+			).build()
 		).addLocalizedStringByLocale(
 			"description", DDMStructure::getDescription
 		).addLocalizedStringByLocale(
@@ -89,11 +95,9 @@ public class StructureItemResource
 		).build();
 	}
 
-	private Long _getVersionId(DDMStructure ddmStructure) {
+	private DDMStructureVersion _getVersion(DDMStructure ddmStructure) {
 		return Try.fromFallible(
 			ddmStructure::getStructureVersion
-		).map(
-			DDMStructureVersion::getStructureVersionId
 		).orElse(
 			null
 		);

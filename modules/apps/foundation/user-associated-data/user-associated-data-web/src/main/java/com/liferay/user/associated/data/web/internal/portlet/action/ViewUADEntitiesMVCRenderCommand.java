@@ -135,7 +135,10 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		Map<String, Object> columnFieldValues = uadDisplay.getFieldValues(
 			entity, uadDisplay.getColumnFieldNames());
 
-		columnFieldValues.forEach(uadEntity::addColumnEntry);
+		for (String columnFieldName : uadDisplay.getColumnFieldNames()) {
+			uadEntity.addColumnEntry(
+				columnFieldName, columnFieldValues.get(columnFieldName));
+		}
 
 		return uadEntity;
 	}

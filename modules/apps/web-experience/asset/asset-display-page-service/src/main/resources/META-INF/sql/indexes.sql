@@ -1,0 +1,1 @@
+create unique index IX_63CAE531 on AssetDisplayPage (assetEntryId, layoutId);

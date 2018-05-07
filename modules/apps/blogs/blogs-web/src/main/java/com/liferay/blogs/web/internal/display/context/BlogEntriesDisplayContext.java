@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -127,6 +128,7 @@ public class BlogEntriesDisplayContext {
 			SearchContext searchContext = SearchContextFactory.getInstance(
 				_request);
 
+			searchContext.setAttribute(Field.STATUS, _getStatus());
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setKeywords(keywords);
 			searchContext.setStart(searchContainer.getStart());
@@ -198,10 +200,34 @@ public class BlogEntriesDisplayContext {
 		searchContainer.setResults(entriesResults);
 	}
 
+	private int _getStatus() {
+		if (_status != null) {
+			return _status;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (permissionChecker.isContentReviewer(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
+
+			_status = WorkflowConstants.STATUS_ANY;
+		}
+		else {
+			_status = WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return _status;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogEntriesDisplayContext.class);
 
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final HttpServletRequest _request;
+	private Integer _status;
 
 }

@@ -14,11 +14,51 @@
 
 package com.liferay.asset.display.page.service.impl;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Eudaldo Alonso
  */
 public class AssetDisplayPageEntryLocalServiceImpl
 	extends AssetDisplayPageEntryLocalServiceBaseImpl {
+
+	@Override
+	public AssetDisplayPageEntry addAssetDisplayPageEntry(
+		long assetEntryId, long layoutId) {
+
+		long assetDisplayPageEntryId = counterLocalService.increment();
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			assetDisplayPageEntryPersistence.create(assetDisplayPageEntryId);
+
+		assetDisplayPageEntry.setAssetEntryId(assetEntryId);
+		assetDisplayPageEntry.setLayoutId(layoutId);
+
+		assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
+
+		return assetDisplayPageEntry;
+	}
+
+	@Override
+	public void deleteAssetDisplayPageEntry(long assetEntryId, long layoutId)
+		throws PortalException {
+
+		assetDisplayPageEntryPersistence.removeByA_L(assetEntryId, layoutId);
+	}
+
+	@Override
+	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId) {
+		assetDisplayPageEntryPersistence.removeByAssetEntryId(assetEntryId);
+	}
+
+	@Override
+	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(
+		long assetEntryId, long layoutId) {
+
+		return assetDisplayPageEntryPersistence.fetchByA_L(
+			assetEntryId, layoutId);
+	}
+
 }

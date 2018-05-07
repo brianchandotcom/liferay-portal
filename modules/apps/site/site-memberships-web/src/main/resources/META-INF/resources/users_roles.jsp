@@ -24,48 +24,20 @@ UserRolesDisplayContext userRolesDisplayContext = new UserRolesDisplayContext(re
 	items="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= userRolesDisplayContext.getClearResultsURL() %>"
+	componentId="userGroupRoleRoleManagementToolbar"
 	disabled="<%= userRolesDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= userRolesDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= userRolesDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroupRoleRole"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= userRolesDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= userRolesDisplayContext.getOrderByCol() %>"
-			orderByType="<%= userRolesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= userRolesDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= userRolesDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= userRolesDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= userRolesDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= userRolesDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= userRolesDisplayContext.getOrderByType() %>"
+	sortingURL="<%= userRolesDisplayContext.getSortingURL() %>"
+	totalItems="<%= userRolesDisplayContext.getTotalItems() %>"
+	viewTypes="<%= userRolesDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">
 	<liferay-ui:membership-policy-error />

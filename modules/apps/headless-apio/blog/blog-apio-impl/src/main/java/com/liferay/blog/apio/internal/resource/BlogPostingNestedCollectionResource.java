@@ -15,9 +15,9 @@
 package com.liferay.blog.apio.internal.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
+import static com.liferay.portal.kernel.workflow.WorkflowConstants.STATUS_APPROVED;
 
 import com.liferay.aggregate.rating.apio.identifier.AggregateRatingIdentifier;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -114,6 +114,9 @@ public class BlogPostingNestedCollectionResource
 			"author", PersonIdentifier.class, BlogsEntry::getUserId
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, BlogsEntry::getUserId
+		).addLinkedModel(
+			"image", FileEntryIdentifier.class,
+			BlogsEntry::getCoverImageFileEntryId
 		).addString(
 			"alternativeHeadline", BlogsEntry::getSubtitle
 		).addString(
@@ -124,14 +127,12 @@ public class BlogPostingNestedCollectionResource
 			"fileFormat", blogsEntry -> "text/html"
 		).addString(
 			"headline", BlogsEntry::getTitle
-		).addLinkedModel(
-			"image", FileEntryIdentifier.class,
-			BlogsEntry::getCoverImageFileEntryId
 		).build();
 	}
 
 	private BlogsEntry _addBlogsEntry(
-		Long groupId, BlogPostingForm blogPostingForm) {
+			Long groupId, BlogPostingForm blogPostingForm)
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -139,28 +140,26 @@ public class BlogPostingNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
-		return Try.fromFallible(
-			() -> _blogsService.addEntry(
-				blogPostingForm.getHeadline(),
-				blogPostingForm.getAlternativeHeadline(),
-				blogPostingForm.getDescription(),
-				blogPostingForm.getArticleBody(),
-				blogPostingForm.getDisplayDateMonth(),
-				blogPostingForm.getDisplayDateDay(),
-				blogPostingForm.getDisplayDateYear(),
-				blogPostingForm.getDisplayDateHour(),
-				blogPostingForm.getDisplayDateMinute(), false, false, null,
-				null, null, null, serviceContext)
-		).getUnchecked();
+		return _blogsService.addEntry(
+			blogPostingForm.getHeadline(),
+			blogPostingForm.getAlternativeHeadline(),
+			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
+			blogPostingForm.getDisplayDateMonth(),
+			blogPostingForm.getDisplayDateDay(),
+			blogPostingForm.getDisplayDateYear(),
+			blogPostingForm.getDisplayDateHour(),
+			blogPostingForm.getDisplayDateMinute(), false, false, null, null,
+			null, null, serviceContext);
 	}
 
 	private PageItems<BlogsEntry> _getPageItems(
 		Pagination pagination, Long groupId) {
 
 		List<BlogsEntry> blogsEntries = _blogsService.getGroupEntries(
-			groupId, 0, pagination.getStartPosition(),
+			groupId, STATUS_APPROVED, pagination.getStartPosition(),
 			pagination.getEndPosition());
-		int count = _blogsService.getGroupEntriesCount(groupId, 0);
+		int count = _blogsService.getGroupEntriesCount(
+			groupId, STATUS_APPROVED);
 
 		return new PageItems<>(blogsEntries, count);
 	}

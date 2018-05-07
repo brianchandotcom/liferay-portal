@@ -329,7 +329,7 @@ public class MBCategoryServiceHttp {
 
 	public static java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		HttpPrincipal httpPrincipal, long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBCategoryServiceUtil.class,

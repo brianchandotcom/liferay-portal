@@ -98,7 +98,7 @@ public interface MBCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId, long parentCategoryId,
-		QueryDefinition<?> queryDefinition) throws PortalException;
+		QueryDefinition<MBCategory> queryDefinition) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBCategory> getCategories(long groupId,

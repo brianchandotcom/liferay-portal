@@ -14,29 +14,28 @@
 
 package com.liferay.message.boards.util.comparator;
 
-import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Date;
 
 /**
- * @author David Zhang
+ * @author Sergio González
  */
-public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
+public class CategoryModifiedDateComparator<T> extends OrderByComparator<T> {
 
-	public static final String ORDER_BY_ASC = "priority DESC, modifiedDate ASC";
+	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC =
-		"priority DESC, modifiedDate DESC";
+	public static final String ORDER_BY_DESC = "modifiedDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"priority", "modifiedDate"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public ThreadModifiedDateComparator() {
+	public CategoryModifiedDateComparator() {
 		this(false);
 	}
 
-	public ThreadModifiedDateComparator(boolean ascending) {
+	public CategoryModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -76,10 +75,10 @@ public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
 	}
 
 	protected Date getModifiedDate(Object obj) {
-		if (obj instanceof MBThread) {
-			MBThread mbThread = (MBThread)obj;
+		if (obj instanceof MBCategory) {
+			MBCategory mbCategory = (MBCategory)obj;
 
-			return mbThread.getModifiedDate();
+			return mbCategory.getModifiedDate();
 		}
 
 		return null;

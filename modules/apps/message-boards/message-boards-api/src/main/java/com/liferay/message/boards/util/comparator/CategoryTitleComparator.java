@@ -23,16 +23,11 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class CategoryTitleComparator<T> extends OrderByComparator<T> {
 
-	public static final String ORDER_BY_ASC =
-		"modelCategory ASC, priority DESC, name ASC, modifiedDate DESC, " +
-			"modelId ASC";
+	public static final String ORDER_BY_ASC = "name ASC, modifiedDate DESC";
 
-	public static final String ORDER_BY_DESC =
-		"modelCategory ASC, priority DESC, name DESC, modifiedDate DESC, " +
-			"modelId ASC";
+	public static final String ORDER_BY_DESC = "name DESC, modifiedDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS =
-		{"modelCategory", "priority", "name", "modifiedDate", "modelId"};
+	public static final String[] ORDER_BY_FIELDS = {"name", "modifiedDate"};
 
 	public CategoryTitleComparator() {
 		this(false);

@@ -110,7 +110,7 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	@Override
 	public java.util.List<com.liferay.message.boards.model.MBCategory> getCategories(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryService.getCategories(groupId, parentCategoryId,
 			queryDefinition);

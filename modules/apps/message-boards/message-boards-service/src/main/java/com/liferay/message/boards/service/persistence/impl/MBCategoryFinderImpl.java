@@ -129,7 +129,7 @@ public class MBCategoryFinderImpl
 	@Override
 	public List<MBCategory> filterFindC_ByG_P(
 		long groupId, long parentCategoryId,
-		QueryDefinition<?> queryDefinition) {
+		QueryDefinition<MBCategory> queryDefinition) {
 
 		return doFindC_ByG_P(groupId, parentCategoryId, queryDefinition, true);
 	}
@@ -153,7 +153,7 @@ public class MBCategoryFinderImpl
 	@Override
 	public List<MBCategory> findC_ByG_P(
 		long groupId, long parentCategoryId,
-		QueryDefinition<?> queryDefinition) {
+		QueryDefinition<MBCategory> queryDefinition) {
 
 		return doFindC_ByG_P(groupId, parentCategoryId, queryDefinition, false);
 	}
@@ -421,14 +421,15 @@ public class MBCategoryFinderImpl
 	}
 
 	protected List<MBCategory> doFindC_ByG_P(
-		long groupId, long parentCategoryId, QueryDefinition<?> queryDefinition,
-		boolean inlineSQLHelper) {
+		long groupId, long parentCategoryId,
+		QueryDefinition<MBCategory> queryDefinition, boolean inlineSQLHelper) {
 
 		if (!inlineSQLHelper || !InlineSQLHelperUtil.isEnabled(groupId)) {
 			if (queryDefinition.isExcludeStatus()) {
 				return MBCategoryUtil.findByG_P_NotS(
 					groupId, parentCategoryId, queryDefinition.getStatus(),
-					queryDefinition.getStart(), queryDefinition.getEnd());
+					queryDefinition.getStart(), queryDefinition.getEnd(),
+					queryDefinition.getOrderByComparator());
 			}
 			else {
 				if (queryDefinition.getStatus() !=
@@ -436,12 +437,14 @@ public class MBCategoryFinderImpl
 
 					return MBCategoryUtil.findByG_P_S(
 						groupId, parentCategoryId, queryDefinition.getStatus(),
-						queryDefinition.getStart(), queryDefinition.getEnd());
+						queryDefinition.getStart(), queryDefinition.getEnd(),
+						queryDefinition.getOrderByComparator());
 				}
 				else {
 					return MBCategoryUtil.findByG_P(
 						groupId, parentCategoryId, queryDefinition.getStart(),
-						queryDefinition.getEnd());
+						queryDefinition.getEnd(),
+						queryDefinition.getOrderByComparator());
 				}
 			}
 		}
@@ -458,6 +461,9 @@ public class MBCategoryFinderImpl
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBCategory.class.getName(), "MBCategory.categoryId",
 				groupId);
+
+			sql = _customSQL.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

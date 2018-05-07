@@ -16,19 +16,24 @@ package com.liferay.message.boards.web.internal.display.context;
 
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.display.context.MBAdminListDisplayContext;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.service.MBThreadServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -40,6 +45,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -131,6 +137,30 @@ public class DefaultMBAdminListDisplayContext
 
 			searchContext.setKeywords(keywords);
 
+			String orderByCol = searchContainer.getOrderByCol();
+			String orderByType = searchContainer.getOrderByType();
+
+			Sort sort = null;
+
+			boolean orderByAsc = true;
+
+			if (Objects.equals(orderByType, "asc")) {
+				orderByAsc = false;
+			}
+
+			if (Objects.equals(orderByCol, "modified-date")) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			}
+			else if (Objects.equals(orderByCol, "title")) {
+				String sortFieldName = Field.getSortableFieldName(
+					"localized_title_".concat(themeDisplay.getLanguageId()));
+
+				sort = new Sort(sortFieldName, Sort.STRING_TYPE, orderByAsc);
+			}
+
+			searchContext.setSorts(sort);
+
 			searchContext.setStart(searchContainer.getStart());
 
 			Hits hits = indexer.search(searchContext);
@@ -142,31 +172,92 @@ public class DefaultMBAdminListDisplayContext
 			searchContainer.setTotal(hits.getLength());
 		}
 		else {
-			int status = WorkflowConstants.STATUS_APPROVED;
+			String entriesNavigation = ParamUtil.getString(
+				_request, "entriesNavigation", "all");
 
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
+			if ("all".equals(entriesNavigation)) {
+				int status = WorkflowConstants.STATUS_APPROVED;
 
-			if (permissionChecker.isContentReviewer(
-					themeDisplay.getCompanyId(),
-					themeDisplay.getScopeGroupId())) {
+				PermissionChecker permissionChecker =
+					themeDisplay.getPermissionChecker();
 
-				status = WorkflowConstants.STATUS_ANY;
+				if (permissionChecker.isContentReviewer(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId())) {
+
+					status = WorkflowConstants.STATUS_ANY;
+				}
+
+				QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+					status, themeDisplay.getUserId(), true,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator());
+
+				searchContainer.setTotal(
+					MBCategoryServiceUtil.getCategoriesAndThreadsCount(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setResults(
+					MBCategoryServiceUtil.getCategoriesAndThreads(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
 			}
+			else if ("threads".equals(entriesNavigation)) {
+				int status = WorkflowConstants.STATUS_APPROVED;
 
-			QueryDefinition<?> queryDefinition = new QueryDefinition<>(
-				status, themeDisplay.getUserId(), true,
-				searchContainer.getStart(), searchContainer.getEnd(),
-				searchContainer.getOrderByComparator());
+				PermissionChecker permissionChecker =
+					themeDisplay.getPermissionChecker();
 
-			searchContainer.setTotal(
-				MBCategoryServiceUtil.getCategoriesAndThreadsCount(
-					themeDisplay.getScopeGroupId(), _categoryId,
-					queryDefinition));
-			searchContainer.setResults(
-				MBCategoryServiceUtil.getCategoriesAndThreads(
-					themeDisplay.getScopeGroupId(), _categoryId,
-					queryDefinition));
+				if (permissionChecker.isContentReviewer(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId())) {
+
+					status = WorkflowConstants.STATUS_ANY;
+				}
+
+				QueryDefinition<MBThread> queryDefinition =
+					new QueryDefinition<>(
+						status, themeDisplay.getUserId(), true,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator());
+
+				searchContainer.setTotal(
+					MBThreadServiceUtil.getThreadsCount(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setResults(
+					MBThreadServiceUtil.getThreads(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+			}
+			else if ("categories".equals(entriesNavigation)) {
+				int status = WorkflowConstants.STATUS_APPROVED;
+
+				PermissionChecker permissionChecker =
+					themeDisplay.getPermissionChecker();
+
+				if (permissionChecker.isContentReviewer(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId())) {
+
+					status = WorkflowConstants.STATUS_ANY;
+				}
+
+				QueryDefinition<MBCategory> queryDefinition =
+					new QueryDefinition<>(
+						status, themeDisplay.getUserId(), true,
+						searchContainer.getStart(), searchContainer.getEnd(),
+						searchContainer.getOrderByComparator());
+
+				searchContainer.setTotal(
+					MBCategoryServiceUtil.getCategoriesCount(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+				searchContainer.setResults(
+					MBCategoryServiceUtil.getCategories(
+						themeDisplay.getScopeGroupId(), _categoryId,
+						queryDefinition));
+			}
 		}
 	}
 

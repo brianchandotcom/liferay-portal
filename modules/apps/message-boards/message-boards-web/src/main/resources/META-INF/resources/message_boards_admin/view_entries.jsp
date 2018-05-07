@@ -22,14 +22,6 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
 
 SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("view.jsp-entriesSearchContainer");
-
-long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
-
-if (groupThreadsUserId > 0) {
-	portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
-}
 %>
 
 <div class="container-fluid-1280 view-entries-container">
@@ -77,7 +69,7 @@ if (groupThreadsUserId > 0) {
 		showParentGroups="<%= false %>"
 	/>
 
-	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
+	<aui:form method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 
 		<liferay-ui:search-container

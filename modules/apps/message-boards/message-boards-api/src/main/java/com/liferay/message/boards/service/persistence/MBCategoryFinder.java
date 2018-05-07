@@ -44,7 +44,7 @@ public interface MBCategoryFinder {
 
 	public java.util.List<com.liferay.message.boards.model.MBCategory> filterFindC_ByG_P(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition);
 
 	public java.util.List<com.liferay.message.boards.model.MBCategory> filterFindC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
@@ -56,7 +56,7 @@ public interface MBCategoryFinder {
 
 	public java.util.List<com.liferay.message.boards.model.MBCategory> findC_ByG_P(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition);
 
 	public java.util.List<com.liferay.message.boards.model.MBCategory> findC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,

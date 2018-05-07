@@ -408,7 +408,7 @@ public class MBCategoryServiceTest {
 		MBCategoryLocalServiceUtil.moveCategoryToTrash(
 			TestPropsValues.getUserId(), category1.getCategoryId());
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
+		QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);
 
 		List<MBCategory> categories = MBCategoryServiceUtil.getCategories(
@@ -439,7 +439,7 @@ public class MBCategoryServiceTest {
 		MBCategoryLocalServiceUtil.moveCategoryToTrash(
 			TestPropsValues.getUserId(), category1.getCategoryId());
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
+		QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_APPROVED);
 
 		List<MBCategory> categories = MBCategoryServiceUtil.getCategories(
@@ -470,7 +470,7 @@ public class MBCategoryServiceTest {
 		MBCategoryLocalServiceUtil.moveCategoryToTrash(
 			TestPropsValues.getUserId(), category1.getCategoryId());
 
-		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
+		QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_IN_TRASH);
 
 		List<MBCategory> categories = MBCategoryServiceUtil.getCategories(
@@ -504,7 +504,7 @@ public class MBCategoryServiceTest {
 		try (ContextUserReplace contextUserReplace =
 				new ContextUserReplace(user, permissionChecker)) {
 
-			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
+			QueryDefinition<MBCategory> queryDefinition = new QueryDefinition<>(
 				WorkflowConstants.STATUS_ANY);
 
 			List<MBCategory> categories = MBCategoryServiceUtil.getCategories(

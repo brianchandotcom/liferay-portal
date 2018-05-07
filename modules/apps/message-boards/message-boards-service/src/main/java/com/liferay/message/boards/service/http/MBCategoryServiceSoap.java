@@ -220,7 +220,7 @@ public class MBCategoryServiceSoap {
 
 	public static com.liferay.message.boards.model.MBCategorySoap[] getCategories(
 		long groupId, long parentCategoryId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition)
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.model.MBCategory> queryDefinition)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.message.boards.model.MBCategory> returnValue =

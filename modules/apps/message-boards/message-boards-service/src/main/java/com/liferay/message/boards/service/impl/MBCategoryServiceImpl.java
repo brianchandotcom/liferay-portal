@@ -149,7 +149,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 	@Override
 	public List<MBCategory> getCategories(
 			long groupId, long parentCategoryId,
-			QueryDefinition<?> queryDefinition)
+			QueryDefinition<MBCategory> queryDefinition)
 		throws PortalException {
 
 		if (queryDefinition.isIncludeOwner() &&

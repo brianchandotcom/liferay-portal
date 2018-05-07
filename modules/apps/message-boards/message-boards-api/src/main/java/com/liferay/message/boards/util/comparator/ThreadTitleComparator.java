@@ -15,37 +15,37 @@
 package com.liferay.message.boards.util.comparator;
 
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.Date;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author David Zhang
+ * @author Sergio González
  */
-public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
+public class ThreadTitleComparator<T> extends OrderByComparator<T> {
 
-	public static final String ORDER_BY_ASC = "priority DESC, modifiedDate ASC";
+	public static final String ORDER_BY_ASC =
+		"priority DESC, title ASC, modifiedDate DESC";
 
 	public static final String ORDER_BY_DESC =
-		"priority DESC, modifiedDate DESC";
+		"priority DESC, title DESC, modifiedDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"priority", "modifiedDate"};
+	public static final String[] ORDER_BY_FIELDS =
+		{"priority", "title", "modifiedDate"};
 
-	public ThreadModifiedDateComparator() {
+	public ThreadTitleComparator() {
 		this(false);
 	}
 
-	public ThreadModifiedDateComparator(boolean ascending) {
+	public ThreadTitleComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(T t1, T t2) {
-		Date modifiedDate1 = getModifiedDate(t1);
-		Date modifiedDate2 = getModifiedDate(t2);
+		String name1 = StringUtil.toLowerCase(getThreadTitle(t1));
+		String name2 = StringUtil.toLowerCase(getThreadTitle(t2));
 
-		int value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;
@@ -75,11 +75,11 @@ public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
 		return _ascending;
 	}
 
-	protected Date getModifiedDate(Object obj) {
+	protected String getThreadTitle(Object obj) {
 		if (obj instanceof MBThread) {
 			MBThread mbThread = (MBThread)obj;
 
-			return mbThread.getModifiedDate();
+			return mbThread.getTitle();
 		}
 
 		return null;

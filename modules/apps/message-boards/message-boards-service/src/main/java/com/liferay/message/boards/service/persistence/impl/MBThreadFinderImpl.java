@@ -1030,7 +1030,8 @@ public class MBThreadFinderImpl
 			if (queryDefinition.isExcludeStatus()) {
 				return MBThreadUtil.findByG_C_NotS(
 					groupId, categoryId, queryDefinition.getStatus(),
-					queryDefinition.getStart(), queryDefinition.getEnd());
+					queryDefinition.getStart(), queryDefinition.getEnd(),
+					queryDefinition.getOrderByComparator());
 			}
 			else {
 				if (queryDefinition.getStatus() !=
@@ -1038,12 +1039,14 @@ public class MBThreadFinderImpl
 
 					return MBThreadUtil.findByG_C_S(
 						groupId, categoryId, queryDefinition.getStatus(),
-						queryDefinition.getStart(), queryDefinition.getEnd());
+						queryDefinition.getStart(), queryDefinition.getEnd(),
+						queryDefinition.getOrderByComparator());
 				}
 				else {
 					return MBThreadUtil.findByG_C(
 						groupId, categoryId, queryDefinition.getStart(),
-						queryDefinition.getEnd());
+						queryDefinition.getEnd(),
+						queryDefinition.getOrderByComparator());
 				}
 			}
 		}
@@ -1060,6 +1063,9 @@ public class MBThreadFinderImpl
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
 				groupId);
+
+			sql = _customSQL.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

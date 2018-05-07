@@ -27,48 +27,23 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_use
 </liferay-util:include>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS, "banned-users-display-style", "descriptive");
-}
-else {
-	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS, "banned-users-display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
-
 int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
+
+MBBannedUsersManagementToolbarDisplayContext mbBannedUsersManagementToolbarDisplayContext = new MBBannedUsersManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
+String displayStyle = mbBannedUsersManagementToolbarDisplayContext.getDisplayStyle();
 %>
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= mbBannedUsersManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= totalBannedUsers == 0 %>"
-	includeCheckBox="<%= true %>"
 	searchContainerId="mbBanUsers"
->
-
-	<%
-	PortletURL displayStyleURL = renderResponse.createRenderURL();
-
-	displayStyleURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned_users");
-	%>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= displayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "unbanUser();" %>'
-			icon="unlock"
-			label="unban-user"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	showCreationMenu="<%= false %>"
+	showInfoButton="<%= false %>"
+	showSearch="<%= false %>"
+	totalItems="<%= totalBannedUsers %>"
+	viewTypes="<%= mbBannedUsersManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">

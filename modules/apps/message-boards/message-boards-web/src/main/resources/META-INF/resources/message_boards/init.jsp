@@ -96,12 +96,12 @@ page import="com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil" %>
 page import="com.liferay.message.boards.service.MBThreadLocalServiceUtil" %><%@
 page import="com.liferay.message.boards.service.MBThreadServiceUtil" %><%@
 page import="com.liferay.message.boards.settings.MBGroupServiceSettings" %><%@
-page import="com.liferay.message.boards.util.comparator.MBObjectsModifiedDateComparator" %><%@
-page import="com.liferay.message.boards.util.comparator.MBObjectsTitleComparator" %><%@
 page import="com.liferay.message.boards.util.comparator.ThreadModifiedDateComparator" %><%@
 page import="com.liferay.message.boards.web.internal.dao.search.MBResultRowSplitter" %><%@
 page import="com.liferay.message.boards.web.internal.display.MBCategoryDisplay" %><%@
+page import="com.liferay.message.boards.web.internal.display.context.MBBannedUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.MBDisplayContextProvider" %><%@
+page import="com.liferay.message.boards.web.internal.display.context.MBEntriesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.message.boards.web.internal.display.context.util.MBRequestHelper" %><%@
 page import="com.liferay.message.boards.web.internal.search.EntriesChecker" %><%@
 page import="com.liferay.message.boards.web.internal.security.permission.MBCategoryPermission" %><%@
@@ -134,8 +134,6 @@ page import="com.liferay.portal.kernel.model.TicketConstants" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
@@ -230,8 +228,6 @@ String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
 MBWebComponentProvider mbWebComponentProvider = MBWebComponentProvider.getMBWebComponentProvider();
 
 MBDisplayContextProvider mbDisplayContextProvider = mbWebComponentProvider.getMBDisplayContextProvider();
-
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>EXPIRE</td>
-	<td>//*[*[name()='svg'][contains(@class,'icon-time')]]</td>
+	<td>//a[*[name()='svg'][contains(@class,'icon-time')]]</td>
 	<td></td>
 </tr>
 <tr>

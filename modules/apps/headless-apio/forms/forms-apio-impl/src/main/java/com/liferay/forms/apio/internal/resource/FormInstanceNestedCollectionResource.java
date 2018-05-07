@@ -113,9 +113,10 @@ public class FormInstanceNestedCollectionResource
 		).addNested(
 			"version", this::_getVersion,
 			nestedBuilder -> nestedBuilder.nestedTypes(
-			"FormInstanceVersion"
+				"FormInstanceVersion"
 			).addLinkedModel(
-				"author", PersonIdentifier.class, DDMFormInstanceVersion::getUserId
+				"author", PersonIdentifier.class,
+				DDMFormInstanceVersion::getUserId
 			).addString(
 				"name", DDMFormInstanceVersion::getVersion
 			).build()

@@ -62,7 +62,9 @@ public class FormInstanceRecordResourceHelper {
 			LocalizedValue localizedValue = new LocalizedValue();
 
 			localizedValue.addString(locale, formFieldValue.value);
+
 			ddmFormFieldValue.setValue(localizedValue);
+
 			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}
 

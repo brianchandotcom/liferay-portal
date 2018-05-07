@@ -202,6 +202,12 @@ AUI.add(
 						return '[name="' + qualifiedName + '"]';
 					},
 
+					getPredefinedValue: function() {
+						var instance = this;
+
+						return instance.get('predefinedValue');
+					},
+
 					getQualifiedName: function() {
 						var instance = this;
 

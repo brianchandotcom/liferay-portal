@@ -2783,6 +2783,43 @@ public class ProjectTemplatesTest {
 		Assert.assertFalse(message.toString(), realChange);
 	}
 
+	private static void _writeNPMBuildFile(File projectDir) throws IOException {
+		String classPath = "com.liferay.gradle.plugins";
+		String applyPlugin = "com.liferay.plugin";
+
+		File buildFile = _testContains(
+			projectDir, "build.gradle", classPath, applyPlugin);
+
+		Path buildFilePath = buildFile.toPath();
+
+		List<String> lines = Files.readAllLines(
+			buildFilePath, StandardCharsets.UTF_8);
+
+		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
+				buildFilePath, StandardCharsets.UTF_8)) {
+
+			for (String line : lines) {
+				FileTestUtil.write(bufferedWriter, line);
+
+				if (line.contains(classPath)) {
+					String newClassPath =
+						"classpath group: \"com.liferay\", name: \"com." +
+							"liferay.gradle.plugins.defaults\", version: " +
+								"\"latest.release\"";
+
+					FileTestUtil.write(bufferedWriter, newClassPath);
+				}
+
+				if (line.contains(applyPlugin)) {
+					String newApplyPlugin =
+						"apply plugin: \"com.liferay.defaults.plugin\"";
+
+					FileTestUtil.write(bufferedWriter, newApplyPlugin);
+				}
+			}
+		}
+	}
+
 	private static void _writeServiceClass(File projectDir) throws IOException {
 		String importLine =
 			"import com.liferay.portal.kernel.events.LifecycleAction;";
@@ -2898,6 +2935,8 @@ public class ProjectTemplatesTest {
 		_testNotContains(
 			gradleProjectDir, ".npmbundlerrc",
 			"target/classes/META-INF/resources");
+
+		_writeNPMBuildFile(gradleProjectDir);
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			template, name, "com.test", "-DclassName=" + className,

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Message Boards Parser BBCode
+Bundle-SymbolicName: com.liferay.message.boards.parser.bbcode
+Bundle-Version: 3.0.0

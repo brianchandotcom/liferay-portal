@@ -16,9 +16,20 @@
 
 <ul class="lfr-tree list-unstyled">
 	<li class="tree-item">
-		<aui:input checked="<%= true %>" id="publishingEventNow" label="now" name="schedule" type="radio" value="<%= false %>" />
+		<liferay-staging:radio
+			checked="<%= true %>"
+			id="publishingEventNow"
+			label="now"
+			name="schedule"
+			value="false"
+		/>
 
-		<aui:input id="publishingEventSchedule" label="schedule" name="schedule" type="radio" value="<%= true %>" />
+		<liferay-staging:radio
+			id="publishingEventSchedule"
+			label="schedule"
+			name="schedule"
+			value="true"
+		/>
 
 		<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectSchedule">
 			<li>

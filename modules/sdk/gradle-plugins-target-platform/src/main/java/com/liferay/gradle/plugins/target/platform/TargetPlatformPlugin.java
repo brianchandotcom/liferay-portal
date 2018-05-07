@@ -415,11 +415,13 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 	}
 
 	private static final String[] _CONFIGURATION_NAMES = {
-		"compile", "compileClasspath", "compileInclude", "compileOnly",
-		"default", "implementation", "runtime", "runtimeClasspath",
-		"runtimeImplementation", "runtimeOnly", "testCompileClasspath",
-		"testCompileOnly", "testIntegration", "testImplementation",
-		"testRuntime", "testRuntimeClasspath", "testRuntimeOnly"
+		JavaPlugin.COMPILE_CONFIGURATION_NAME, "compileClasspath",
+		"compileInclude", "compileOnly", Dependency.DEFAULT_CONFIGURATION,
+		"implementation", JavaPlugin.RUNTIME_CONFIGURATION_NAME,
+		"runtimeClasspath", "runtimeImplementation", "runtimeOnly",
+		"testCompileClasspath", "testCompileOnly", "testIntegration",
+		"testImplementation", JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME,
+		"testRuntimeClasspath", "testRuntimeOnly"
 	};
 
 	private static final Spec<Task> _skipIfExecutingParentTaskSpec =

@@ -255,7 +255,7 @@
 
 		<column name="CPDefinitionId" type="long" />
 		<column name="CPOptionId" type="long" />
-		<column localized="true" name="title" type="String" />
+		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
 		<column name="priority" type="double" />
@@ -310,7 +310,7 @@
 		<!-- Other fields -->
 
 		<column name="CPDefinitionOptionRelId" type="long" />
-		<column localized="true" name="title" type="String" />
+		<column localized="true" name="name" type="String" />
 		<column name="priority" type="double" />
 		<column name="key" type="String" />
 
@@ -679,7 +679,7 @@
 
 		<!-- Other fields -->
 
-		<column localized="true" name="title" type="String" />
+		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
 		<column name="facetable" type="boolean" />
@@ -691,7 +691,7 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="title" />
+			<order-column name="name" />
 		</order>
 
 		<!-- Finder methods -->
@@ -774,7 +774,7 @@
 		<!-- Other fields -->
 
 		<column name="CPOptionId" type="long" />
-		<column localized="true" name="title" type="String" />
+		<column localized="true" name="name" type="String" />
 		<column name="priority" type="double" />
 		<column name="key" type="String" />
 		<column name="lastPublishDate" type="Date" />
@@ -783,7 +783,7 @@
 
 		<order by="asc">
 			<order-column name="priority" />
-			<order-column name="title" />
+			<order-column name="name" />
 		</order>
 
 		<!-- Finder methods -->

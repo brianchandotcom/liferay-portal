@@ -79,7 +79,9 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 						}
 
 						if (_pathIncluded(filePath)) {
-							testClasses.add(new TestClass(filePath.toFile()));
+							testClasses.add(
+								TCKBatchTestClass.getInstance(
+									filePath.toFile(), batchName));
 						}
 
 						return FileVisitResult.CONTINUE;
@@ -117,6 +119,22 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		Collections.sort(testClasses);
+	}
+
+	protected static class TCKBatchTestClass extends TestClass {
+
+		protected static TestClass getInstance(File warFile, String batchName) {
+			TestClass testClass = new TCKBatchTestClass(warFile, batchName);
+
+			return testClass;
+		}
+
+		protected TCKBatchTestClass(File file, String batchName) {
+			super(file);
+
+			addTestMethod(batchName);
+		}
+
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(

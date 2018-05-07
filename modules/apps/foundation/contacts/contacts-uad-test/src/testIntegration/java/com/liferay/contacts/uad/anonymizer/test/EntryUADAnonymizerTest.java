@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalService;
-import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.contacts.uad.test.EntryUADTestHelper;
 
 import com.liferay.portal.kernel.model.User;
@@ -112,7 +111,6 @@ public class EntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<Entry> {
 	private EntryLocalService _entryLocalService;
 	@Inject
 	private EntryUADTestHelper _entryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	ContactsUADConstants.CLASS_NAME_ENTRY)
+	@Inject(filter = "component.name=*.EntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
 }

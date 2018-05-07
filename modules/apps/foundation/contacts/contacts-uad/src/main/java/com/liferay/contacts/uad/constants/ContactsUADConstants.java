@@ -20,6 +20,5 @@ package com.liferay.contacts.uad.constants;
  */
 public class ContactsUADConstants {
 	public static final String APPLICATION_NAME = "Contacts";
-	public static final String CLASS_NAME_ENTRY = "com.liferay.contacts.model.Entry";
 	public static final String[] USER_ID_FIELD_NAMES_ENTRY = { "userId" };
 }

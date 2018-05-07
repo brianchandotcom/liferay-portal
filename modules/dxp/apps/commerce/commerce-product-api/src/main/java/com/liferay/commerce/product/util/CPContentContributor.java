@@ -18,16 +18,18 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 
-import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
 public interface CPContentContributor {
 
 	public String getName();
 
-	public JSONObject getValue(CPInstance cpInstance, Locale locale)
+	public JSONObject getValue(
+			CPInstance cpInstance, HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 }

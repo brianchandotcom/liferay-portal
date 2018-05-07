@@ -120,7 +120,8 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 						cpContentContributors) {
 
 					JSONObject valueJSONObject = cpContentContributor.getValue(
-						cpInstance, themeDisplay.getLocale());
+						cpInstance,
+						_portal.getHttpServletRequest(actionRequest));
 
 					Iterator<String> iterator = valueJSONObject.keys();
 

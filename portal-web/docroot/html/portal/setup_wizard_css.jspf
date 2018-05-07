@@ -20,6 +20,10 @@
 	min-width: 0;
 }
 
+p.powered-by {
+	padding: 1em;
+}
+
 #banner {
 	min-height: 100px;
 }

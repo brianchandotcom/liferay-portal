@@ -1,4 +1,4 @@
-package ${packagePath}.uad.test;
+package ${entity.UADPackagePath}.uad.test;
 
 import ${apiPackagePath}.model.${entity.name};
 

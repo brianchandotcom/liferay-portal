@@ -1,12 +1,12 @@
-package ${packagePath}.uad.constants;
+package ${uadPackagePath}.uad.constants;
 
 /**
  * @author ${author}
  * @generated
  */
-public class ${portletShortName}UADConstants {
+public class ${uadApplicationName}UADConstants {
 
-	public static final String APPLICATION_NAME = "${portletShortName}";
+	public static final String APPLICATION_NAME = "${uadApplicationName}";
 
 	<#list entities as entity>
 		<#if entity.isUADEnabled()>

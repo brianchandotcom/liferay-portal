@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import javax.portlet.ActionRequest;
@@ -66,9 +68,17 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-			themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0, type,
-			typeSettingsProperties.toString(), serviceContext);
+		try {
+			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+				themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0, type,
+				typeSettingsProperties.toString(), serviceContext);
+		}
+		catch (SiteNavigationMenuItemNameException snmine) {
+			SessionErrors.add(actionRequest, snmine.getClass(), snmine);
+
+			actionResponse.setRenderParameter(
+				"mvcPath", "/add_site_navigation_menu_item.jsp");
+		}
 	}
 
 	@Reference

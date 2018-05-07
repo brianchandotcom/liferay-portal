@@ -133,6 +133,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("searchContainerId", searchContainerId);
 	}
 
+	public void setSearchFormMethod(String searchFormMethod) {
+		putValue("searchFormMethod", searchFormMethod);
+	}
+
 	public void setSearchFormName(String searchFormName) {
 		putValue("searchFormName", searchFormName);
 	}

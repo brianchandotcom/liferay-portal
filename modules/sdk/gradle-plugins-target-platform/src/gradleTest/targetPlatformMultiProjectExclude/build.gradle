@@ -27,7 +27,9 @@ runGradleTest {
 
 		Configuration configuration = subproject2.configurations.compile
 
-		assert subproject2.dependencyManagement.getManagedVersionsForConfiguration(configuration).size() == 898
+		Map<String, String> managedVersionsForConfiguration = subproject2.dependencyManagement.getManagedVersionsForConfiguration(configuration)
+
+		assert managedVersionsForConfiguration.size() == 898
 
 		expectedException = null
 

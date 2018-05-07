@@ -100,20 +100,19 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public CPFriendlyURLEntry fetchCPFriendlyURLEntry(
+		long groupId, long classNameId, String languageId, String urlTitle) {
+
+		return cpFriendlyURLEntryPersistence.fetchByG_C_L_U(
+			groupId, classNameId, languageId, urlTitle);
+	}
+
+	@Override
 	public List<CPFriendlyURLEntry> getCPFriendlyURLEntries(
 		long groupId, long classNameId, long classPK) {
 
 		return cpFriendlyURLEntryPersistence.findByG_C_C(
 			groupId, classNameId, classPK);
-	}
-
-	@Override
-	public CPFriendlyURLEntry getCPFriendlyURLEntry(
-			long groupId, long classNameId, String languageId, String urlTitle)
-		throws PortalException {
-
-		return cpFriendlyURLEntryPersistence.findByG_C_L_U(
-			groupId, classNameId, languageId, urlTitle);
 	}
 
 	@Override

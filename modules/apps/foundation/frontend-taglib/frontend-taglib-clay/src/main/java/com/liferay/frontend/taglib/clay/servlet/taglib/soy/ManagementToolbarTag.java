@@ -50,6 +50,11 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setSearchInputName(searchInputName);
 		}
 
+		String searchFormMethod = GetterUtil.getString(
+			context.get("searchFormMethod"), "POST");
+
+		setSearchFormMethod(searchFormMethod);
+
 		String searchValue = (String)context.get("searchValue");
 
 		if (Validator.isNull(searchValue) &&

@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,6 +56,11 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 	@Override
 	public List<T> getRange(long userId, int start, int end) {
 		return doGetRange(_getDynamicQuery(userId), start, end);
+	}
+
+	@Override
+	public String getTypeName(Locale locale) {
+		return getTypeClass().getSimpleName();
 	}
 
 	protected abstract long doCount(DynamicQuery dynamicQuery);

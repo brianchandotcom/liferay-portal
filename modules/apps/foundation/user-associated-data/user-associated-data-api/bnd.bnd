@@ -4,6 +4,7 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.user.associated.data.aggregator,\
 	com.liferay.user.associated.data.anonymizer,\
+	com.liferay.user.associated.data.component,\
 	com.liferay.user.associated.data.constants,\
 	com.liferay.user.associated.data.display,\
 	com.liferay.user.associated.data.exception,\

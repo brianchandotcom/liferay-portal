@@ -208,6 +208,18 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long classNameId, long classTypeId, String name, int type,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_LikeN_T(
+			groupId, classNameId, classTypeId,
+			_customSQL.keywords(name, WildcardMode.SURROUND)[0], type, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
@@ -248,6 +260,16 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_C_C_T(
 			groupId, classNameId, classTypeId, type);
+	}
+
+	@Override
+	public int getLayoutPageTemplateEntriesCount(
+		long groupId, long classNameId, long classTypeId, String name,
+		int type) {
+
+		return layoutPageTemplateEntryPersistence.filterCountByG_C_C_LikeN_T(
+			groupId, classNameId, classTypeId,
+			_customSQL.keywords(name, WildcardMode.SURROUND)[0], type);
 	}
 
 	@Override

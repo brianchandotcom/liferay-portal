@@ -29,7 +29,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -149,12 +151,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 							packagePath = packagePath.replace(
 								".java", ".class");
 
-							return TestClassFactory.newJunitTestClass(
+							return JunitTestClass.getInstance(
 								portalGitWorkingDirectory,
 								new File(packagePath), path.toFile());
 						}
 
-						return TestClassFactory.newJunitTestClass(
+						return JunitTestClass.getInstance(
 							portalGitWorkingDirectory,
 							new File(filePath.replace(".java", ".class")),
 							path.toFile());
@@ -198,6 +200,238 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		new ArrayList<>();
 	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
 		new ArrayList<>();
+
+	protected static class JunitTestClass extends TestClass {
+
+		protected static JunitTestClass getInstance(
+			GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
+
+			if (_junitTestClasses.containsKey(file)) {
+				return _junitTestClasses.get(file);
+			}
+
+			JunitTestClass junitTestClass = new JunitTestClass(
+				gitWorkingDirectory, file, srcFile);
+
+			_junitTestClasses.put(file, junitTestClass);
+
+			return junitTestClass;
+		}
+
+		protected static JunitTestClass getInstance(
+			GitWorkingDirectory gitWorkingDirectory, String fullClassName) {
+
+			String filePath = fullClassName.substring(
+				0, fullClassName.lastIndexOf("."));
+
+			filePath = filePath.replace(".", "/");
+
+			String simpleClassName = fullClassName.substring(
+				fullClassName.lastIndexOf(".") + 1);
+
+			File file = new File(filePath, simpleClassName + ".class");
+
+			if (_junitTestClasses.containsKey(file)) {
+				return _junitTestClasses.get(file);
+			}
+
+			String srcFileName = simpleClassName + ".java";
+
+			List<File> srcFiles = JenkinsResultsParserUtil.findFiles(
+				gitWorkingDirectory.getWorkingDirectory(), srcFileName);
+
+			File matchingSrcFile = null;
+
+			for (File srcFile : srcFiles) {
+				String srcFilePath = srcFile.toString();
+
+				if (srcFilePath.contains(filePath)) {
+					matchingSrcFile = srcFile;
+
+					break;
+				}
+			}
+
+			if (matchingSrcFile == null) {
+				throw new RuntimeException("No matching files found.");
+			}
+
+			if (srcFiles.size() > 1) {
+			}
+
+			return getInstance(gitWorkingDirectory, file, matchingSrcFile);
+		}
+
+		protected JunitTestClass(
+			GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
+
+			super(file);
+
+			String srcFileName = srcFile.getName();
+
+			if (!srcFileName.endsWith(".java")) {
+				throw new RuntimeException("Invalid Junit Test Class");
+			}
+
+			_gitWorkingDirectory = gitWorkingDirectory;
+			_srcFile = srcFile;
+
+			try {
+				_srcFileContent = JenkinsResultsParserUtil.read(_srcFile);
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+
+			_className = _getClassName();
+			_packageName = _getPackageName();
+
+			try {
+				_initTestMethods();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+
+		private String _getClassName() {
+			String srcFileName = _srcFile.getName();
+
+			return srcFileName.substring(0, srcFileName.lastIndexOf("."));
+		}
+
+		private String _getPackageName() {
+			Matcher packageNameMatcher = _packageNamePattern.matcher(
+				_srcFileContent);
+
+			if (!packageNameMatcher.find()) {
+				throw new RuntimeException("No package found in " + _srcFile);
+			}
+
+			return packageNameMatcher.group("packageName");
+		}
+
+		private String _getParentClassName() {
+			Pattern classHeaderPattern = Pattern.compile(
+				JenkinsResultsParserUtil.combine(
+					"public\\s+(abstract\\s+)?class\\s+", _className,
+					"(\\<[^\\<]+\\>)?(?<classHeaderEntities>[^\\{]+)\\{"));
+
+			Matcher classHeaderMatcher = classHeaderPattern.matcher(
+				_srcFileContent);
+
+			if (!classHeaderMatcher.find()) {
+				throw new RuntimeException(
+					"No class header found in " + _srcFile);
+			}
+
+			String classHeaderEntities = classHeaderMatcher.group(
+				"classHeaderEntities");
+
+			Pattern parentClassPattern = Pattern.compile(
+				JenkinsResultsParserUtil.combine(
+					"extends\\s+(?<parentClassName>[^\\s\\<]+)"));
+
+			Matcher parentClassMatcher = parentClassPattern.matcher(
+				classHeaderEntities);
+
+			if (parentClassMatcher.find()) {
+				return parentClassMatcher.group("parentClassName");
+			}
+
+			return null;
+		}
+
+		private String _getParentFullClassName() {
+			String parentClassName = _getParentClassName();
+
+			if (parentClassName == null) {
+				return null;
+			}
+
+			if (parentClassName.contains(".") &&
+				parentClassName.matches("[a-z].*")) {
+
+				return parentClassName;
+			}
+
+			String parentPackageName = _getParentPackageName(parentClassName);
+
+			if (parentPackageName == null) {
+				return null;
+			}
+
+			return parentPackageName + "." + parentClassName;
+		}
+
+		private String _getParentPackageName(String parentClassName) {
+			Pattern parentImportClassPattern = Pattern.compile(
+				JenkinsResultsParserUtil.combine(
+					"import\\s+(?<parentPackageName>[^;]+)\\.", parentClassName,
+					";"));
+
+			Matcher parentImportClassMatcher = parentImportClassPattern.matcher(
+				_srcFileContent);
+
+			if (parentImportClassMatcher.find()) {
+				String parentPackageName = parentImportClassMatcher.group(
+					"parentPackageName");
+
+				if (!parentPackageName.startsWith("com.liferay")) {
+					return null;
+				}
+
+				return parentPackageName;
+			}
+
+			return _packageName;
+		}
+
+		private void _initTestMethods() throws IOException {
+			Matcher methodHeaderMatcher = _methodHeaderPattern.matcher(
+				_srcFileContent);
+
+			while (methodHeaderMatcher.find()) {
+				String annotations = methodHeaderMatcher.group("annotations");
+				String methodName = methodHeaderMatcher.group("methodName");
+
+				if (annotations.contains("@Test")) {
+					addTestMethod(methodName);
+				}
+			}
+
+			String parentFullClassName = _getParentFullClassName();
+
+			if (parentFullClassName == null) {
+				return;
+			}
+
+			JunitTestClass parentJunitTestClass = getInstance(
+				_gitWorkingDirectory, parentFullClassName);
+
+			for (TestMethod testMethod :
+					parentJunitTestClass.getTestMethods()) {
+
+				addTestMethod(testMethod);
+			}
+		}
+
+		private static final Map<File, JunitTestClass> _junitTestClasses =
+			new HashMap<>();
+		private static Pattern _methodHeaderPattern = Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"\\t(?<annotations>(@[\\s\\S]+?))public\\s+void\\s+",
+				"(?<methodName>[^\\(\\s]+)"));
+		private static Pattern _packageNamePattern = Pattern.compile(
+			"package (?<packageName>[^;]+);");
+
+		private final String _className;
+		private final GitWorkingDirectory _gitWorkingDirectory;
+		private final String _packageName;
+		private final File _srcFile;
+		private final String _srcFileContent;
+
+	}
 
 	private String _getTestClassNamesExcludesPropertyValue() {
 		String propertyValue = getFirstPropertyValue(

@@ -134,7 +134,9 @@ public class UADApplicationExportController {
 			applicationName);
 
 		return uadDisplayStream.map(
-			UADDisplay::getKey
+			UADDisplay::getTypeClass
+		).map(
+			Class::getName
 		).collect(
 			Collectors.toList()
 		);

@@ -25,6 +25,8 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 	searchContainerId="displayPages"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
+	sortingOrder="<%= assetDisplayPagesItemSelectorViewDisplayContext.getOrderByType() %>"
+	sortingURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSortingURL() %>"
 	totalItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getTotalItems() %>"
 	viewTypes="<%= assetDisplayPagesItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />

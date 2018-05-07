@@ -17,55 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "all");
+UsersDisplayContext usersDisplayContext = new UsersDisplayContext(request, renderRequest, renderResponse);
 
-long roleId = ParamUtil.getLong(request, "roleId");
-
-Role role = null;
-
-if (roleId > 0) {
-	role = RoleLocalServiceUtil.fetchRole(roleId);
-}
-
-String displayStyle = portalPreferences.getValue(SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style", "icon");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "first-name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL viewUsersURL = renderResponse.createRenderURL();
-
-viewUsersURL.setParameter("mvcPath", "/view.jsp");
-viewUsersURL.setParameter("tabs1", "users");
-viewUsersURL.setParameter("redirect", currentURL);
-viewUsersURL.setParameter("groupId", String.valueOf(siteMembershipsDisplayContext.getGroupId()));
-
-if (role != null) {
-	viewUsersURL.setParameter("roleId", String.valueOf(roleId));
-}
-
-UserSearch userSearch = new UserSearch(renderRequest, PortletURLUtil.clone(viewUsersURL, renderResponse));
-
-userSearch.setEmptyResultsMessage("no-user-was-found-that-is-a-direct-member-of-this-site");
-
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-UserSearchTerms searchTerms = (UserSearchTerms)userSearch.getSearchTerms();
-
-LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-userParams.put("inherit", Boolean.TRUE);
-userParams.put("usersGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
-
-if (role != null) {
-	userParams.put("userGroupRole", new Long[] {Long.valueOf(siteMembershipsDisplayContext.getGroupId()), Long.valueOf(roleId)});
-}
-
-int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams);
-
-userSearch.setTotal(usersCount);
-
-List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator());
-
-userSearch.setResults(users);
+Role role = usersDisplayContext.getRole();
 %>
 
 <clay:navigation-bar
@@ -74,7 +28,7 @@ userSearch.setResults(users);
 />
 
 <liferay-frontend:management-bar
-	disabled='<%= (usersCount <= 0) && Objects.equals(navigation, "all") %>'
+	disabled="<%= usersDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="users"
 >
@@ -91,7 +45,7 @@ userSearch.setResults(users);
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= usersDisplayContext.getDisplayStyle() %>"
 		/>
 
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
@@ -112,7 +66,7 @@ userSearch.setResults(users);
 		<%
 		String label = null;
 
-		if (Objects.equals(navigation, "roles") && (role != null)) {
+		if (Objects.equals(usersDisplayContext.getNavigation(), "roles") && (role != null)) {
 			label = LanguageUtil.get(request, "roles") + StringPool.COLON + StringPool.SPACE + HtmlUtil.escape(role.getTitle(themeDisplay.getLocale()));
 		}
 		%>
@@ -122,20 +76,20 @@ userSearch.setResults(users);
 		>
 
 			<%
-			PortletURL viewAllURL = PortletURLUtil.clone(viewUsersURL, renderResponse);
+			PortletURL viewAllURL = usersDisplayContext.getPortletURL();
 
 			viewAllURL.setParameter("navigation", "all");
 			viewAllURL.setParameter("roleId", "0");
 			%>
 
 			<liferay-frontend:management-bar-filter-item
-				active='<%= Objects.equals(navigation, "all") %>'
+				active='<%= Objects.equals(usersDisplayContext.getNavigation(), "all") %>'
 				label="all"
 				url="<%= viewAllURL.toString() %>"
 			/>
 
 			<liferay-frontend:management-bar-filter-item
-				active='<%= Objects.equals(navigation, "roles") %>'
+				active='<%= Objects.equals(usersDisplayContext.getNavigation(), "roles") %>'
 				id="roles"
 				label="roles"
 				url="javascript:;"
@@ -143,13 +97,13 @@ userSearch.setResults(users);
 		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= usersDisplayContext.getOrderByCol() %>"
+			orderByType="<%= usersDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-			portletURL="<%= PortletURLUtil.clone(viewUsersURL, renderResponse) %>"
+			portletURL="<%= usersDisplayContext.getPortletURL() %>"
 		/>
 
-		<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
+		<c:if test="<%= usersDisplayContext.isShowSearch() %>">
 			<li>
 				<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
 					<liferay-ui:input-search
@@ -218,16 +172,15 @@ userSearch.setResults(users);
 
 		<aui:form action="<%= deleteGroupUsersURL %>" cssClass="portlet-site-memberships-users" method="post" name="fm">
 			<aui:input name="tabs1" type="hidden" value="users" />
-			<aui:input name="navigation" type="hidden" value="<%= navigation %>" />
+			<aui:input name="navigation" type="hidden" value="<%= usersDisplayContext.getNavigation() %>" />
 			<aui:input name="addUserIds" type="hidden" />
-			<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
+			<aui:input name="roleId" type="hidden" value="<%= (role != null) ? role.getRoleId() : 0 %>" />
 
 			<liferay-ui:membership-policy-error />
 
 			<liferay-ui:search-container
 				id="users"
-				rowChecker="<%= rowChecker %>"
-				searchContainer="<%= userSearch %>"
+				searchContainer="<%= usersDisplayContext.getUserSearchContainer() %>"
 			>
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.User"
@@ -238,6 +191,8 @@ userSearch.setResults(users);
 				>
 
 					<%
+					String displayStyle = usersDisplayContext.getDisplayStyle();
+
 					boolean selectUsers = false;
 					%>
 
@@ -245,7 +200,7 @@ userSearch.setResults(users);
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator
-					displayStyle="<%= displayStyle %>"
+					displayStyle="<%= usersDisplayContext.getDisplayStyle() %>"
 					markupView="lexicon"
 				/>
 			</liferay-ui:search-container>

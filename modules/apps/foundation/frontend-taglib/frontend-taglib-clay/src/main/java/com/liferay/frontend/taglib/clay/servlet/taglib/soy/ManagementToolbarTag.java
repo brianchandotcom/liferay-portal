@@ -82,6 +82,11 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		setShowInfoButton(showInfoButton);
 
+		String searchFormMethod = GetterUtil.getString(
+			context.get("searchFormMethod"), "POST");
+
+		setSearchFormMethod(searchFormMethod);
+
 		return super.doStartTag();
 	}
 

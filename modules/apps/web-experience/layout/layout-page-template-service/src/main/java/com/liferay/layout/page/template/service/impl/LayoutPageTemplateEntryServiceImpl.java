@@ -180,8 +180,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-		long groupId, long layoutPageTemplateCollectionId, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		long groupId, long layoutPageTemplateCollectionId, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_L(
 			groupId, layoutPageTemplateCollectionId, start, end,
@@ -194,6 +194,16 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_T(
 			groupId, classNameId, classTypeId, type);
+	}
+
+	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
+		long groupId, long classNameId, long classTypeId, int type, int start,
+		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_T(
+			groupId, classNameId, classTypeId, type, start, end,
+			orderByComparator);
 	}
 
 	@Override

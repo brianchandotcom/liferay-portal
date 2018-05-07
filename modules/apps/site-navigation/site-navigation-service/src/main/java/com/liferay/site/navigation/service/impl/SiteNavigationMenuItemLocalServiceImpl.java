@@ -18,9 +18,13 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
+import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuItemLocalServiceBaseImpl;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderComparator;
 
 import java.util.Date;
@@ -38,6 +42,14 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			long parentSiteNavigationMenuItemId, String type, int order,
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				type);
+
+		if (siteNavigationMenuItemType == null) {
+			throw new InvalidSiteNavigationMenuItemTypeException(type);
+		}
 
 		User user = userLocalService.getUser(userId);
 
@@ -224,6 +236,15 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				siteNavigationMenuItemId);
 
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
+
+		if (siteNavigationMenuItemType == null) {
+			throw new InvalidSiteNavigationMenuItemTypeException(
+				siteNavigationMenuItem.getType());
+		}
+
 		siteNavigationMenuItem.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenuItem.setUserId(userId);
@@ -255,5 +276,9 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 		}
 	}
+
+	@ServiceReference(type = SiteNavigationMenuItemTypeRegistry.class)
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

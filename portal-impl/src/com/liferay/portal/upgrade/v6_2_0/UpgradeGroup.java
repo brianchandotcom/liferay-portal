@@ -14,10 +14,13 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.upgrade.v6_2_0.util.GroupTable;
+
+import java.sql.PreparedStatement;
 
 /**
  * @author Hugo Huijser
@@ -30,18 +33,31 @@ public class UpgradeGroup extends UpgradeProcess {
 			GroupTable.class, new AlterColumnType("typeSettings", "TEXT null"),
 			new AlterColumnType("friendlyURL", "VARCHAR(255) null"));
 
-		upgradeGroup();
+		upgradeFriendlyURL();
+		upgradeSite();
 	}
 
-	protected void upgradeGroup() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long classNameId = PortalUtil.getClassNameId(
-				"com.liferay.portal.model.Company");
+	protected void upgradeFriendlyURL() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"update Group_ set friendlyURL= ? where classNameId = ?")) {
 
-			runSQL(
-				"update Group_ set site = TRUE where classNameId = " +
-					classNameId);
+			ps.setString(1, GroupConstants.GLOBAL_FRIENDLY_URL);
+			ps.setLong(2, _COMPANY_CLASS_NAME_ID);
+
+			ps.execute();
 		}
 	}
+
+	protected void upgradeSite() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL(
+				"update Group_ set site = TRUE where classNameId = " +
+					_COMPANY_CLASS_NAME_ID);
+		}
+	}
+
+	private static final Long _COMPANY_CLASS_NAME_ID =
+		PortalUtil.getClassNameId("com.liferay.portal.model.Company");
 
 }

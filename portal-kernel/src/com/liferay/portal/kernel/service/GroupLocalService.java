@@ -785,7 +785,9 @@ public interface GroupLocalService extends BaseLocalService,
 	*
 	* @return the non-system groups having <code>null</code> or empty friendly
 	URLs
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getNullFriendlyURLGroups();
 

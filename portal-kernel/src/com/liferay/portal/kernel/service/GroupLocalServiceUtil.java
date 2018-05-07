@@ -988,7 +988,9 @@ public class GroupLocalServiceUtil {
 	*
 	* @return the non-system groups having <code>null</code> or empty friendly
 	URLs
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.Group> getNullFriendlyURLGroups() {
 		return getService().getNullFriendlyURLGroups();
 	}

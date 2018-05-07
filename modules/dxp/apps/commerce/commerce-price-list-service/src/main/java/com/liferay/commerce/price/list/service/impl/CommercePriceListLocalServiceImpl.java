@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.price.list.service.impl;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException;
 import com.liferay.commerce.price.list.exception.CommercePriceListDisplayDateException;
 import com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -52,6 +55,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -85,6 +89,8 @@ public class CommercePriceListLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(commerceCurrencyId);
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -334,6 +340,8 @@ public class CommercePriceListLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		CommercePriceList commercePriceList =
 			commercePriceListPersistence.findByPrimaryKey(commercePriceListId);
+
+		validate(commerceCurrencyId);
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -660,10 +668,23 @@ public class CommercePriceListLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
+	protected void validate(long commerceCurrencyId) throws PortalException {
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.fetchCommerceCurrency(
+				commerceCurrencyId);
+
+		if (commerceCurrency == null) {
+			throw new CommercePriceListCurrencyException();
+		}
+	}
+
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePriceListLocalServiceImpl.class);
+
+	@ServiceReference(type = CommerceCurrencyLocalService.class)
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 }

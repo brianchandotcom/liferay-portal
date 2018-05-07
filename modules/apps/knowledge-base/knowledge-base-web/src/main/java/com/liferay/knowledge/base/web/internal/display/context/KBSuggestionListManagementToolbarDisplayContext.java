@@ -122,6 +122,10 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	public boolean isDisabled() {
+		if (_getNavigation().equals("all") && !_searchContainer.hasResults()) {
+			return true;
+		}
+
 		return false;
 	}
 

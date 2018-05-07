@@ -144,6 +144,14 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletPreferences);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"An error occured when updating portlet preferences " +
+						"during export for " +
+							portletDataContext.getPortletId(),
+					e);
+			}
+
 			return portletPreferences;
 		}
 	}
@@ -163,6 +171,14 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletDataContext, portletPreferences);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"An error occured when updating portlet preferences " +
+						"during import for " +
+							portletDataContext.getPortletId(),
+					e);
+			}
+
 			return portletPreferences;
 		}
 	}

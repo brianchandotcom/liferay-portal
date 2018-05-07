@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Asset Display Page Item Selector Web
+Bundle-SymbolicName: com.liferay.asset.display.page.item.selector.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management
+Web-ContextPath: /asset-display-page-item-selector-web
+-dsannotations-options: inherit

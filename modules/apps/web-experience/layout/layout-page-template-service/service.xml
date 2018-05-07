@@ -125,6 +125,13 @@
 			<finder-column name="classTypeId" />
 			<finder-column name="defaultTemplate" />
 		</finder>
+		<finder name="G_C_C_LikeN_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classTypeId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+			<finder-column name="type" />
+		</finder>
 
 		<!-- References -->
 

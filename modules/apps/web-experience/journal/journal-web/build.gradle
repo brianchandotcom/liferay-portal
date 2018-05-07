@@ -27,6 +27,7 @@ dependencies {
 	compileOnly project(":apps:upload:upload-api")
 	compileOnly project(":apps:web-experience:application-list:application-list-api")
 	compileOnly project(":apps:web-experience:asset:asset-display-api")
+	compileOnly project(":apps:web-experience:asset:asset-display-page-item-selector-api")
 	compileOnly project(":apps:web-experience:asset:asset-taglib")
 	compileOnly project(":apps:web-experience:export-import:export-import-changeset-api")
 	compileOnly project(":apps:web-experience:export-import:export-import-changeset-taglib")

@@ -258,6 +258,17 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_C_LikeN_T() throws Exception {
+		_persistence.countByG_C_C_LikeN_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_LikeN_T(0L, 0L, 0L, "null", 0);
+
+		_persistence.countByG_C_C_LikeN_T(0L, 0L, 0L, (String)null, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LayoutPageTemplateEntry newLayoutPageTemplateEntry = addLayoutPageTemplateEntry();
 

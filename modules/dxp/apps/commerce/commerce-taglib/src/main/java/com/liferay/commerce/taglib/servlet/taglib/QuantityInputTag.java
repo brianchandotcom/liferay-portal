@@ -107,10 +107,10 @@ public class QuantityInputTag extends IncludeTag {
 		_allowedOrderQuantity = null;
 		_cpDefinition = null;
 		_cpDefinitionId = 0;
-		_name = null;
 		_maxOrderQuantity = 0;
 		_minOrderQuantity = 0;
 		_multipleOrderQuantity = 0;
+		_name = null;
 		_useSelect = true;
 		_value = 0;
 	}

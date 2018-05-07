@@ -118,8 +118,8 @@ public class TierPriceTag extends IncludeTag {
 		super.cleanUp();
 
 		_commerceCurrencyId = 0;
-		_cpInstanceId = 0;
 		_commerceTierPriceEntries = null;
+		_cpInstanceId = 0;
 		_taglibQuantityInputId = null;
 	}
 

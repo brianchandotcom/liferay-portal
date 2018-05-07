@@ -75,10 +75,10 @@ public class CompareProductTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_checked = false;
 		_cpDefinition = null;
 		_cpDefinitionId = 0;
 		_cpDefinitionIds = null;
-		_checked = false;
 	}
 
 	@Override

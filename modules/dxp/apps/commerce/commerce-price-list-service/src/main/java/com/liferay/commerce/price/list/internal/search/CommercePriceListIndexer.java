@@ -106,7 +106,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		}
 
 		long[] commerceUserSegmentEntryIds = GetterUtil.getLongValues(
-			"commerceUserSegmentEntryIds", null);
+			searchContext.getAttribute("commerceUserSegmentEntryIds"), null);
 
 		if (commerceUserSegmentEntryIds != null) {
 			TermsSetFilterBuilder termsSetFilterBuilder =
@@ -194,7 +194,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		).toArray();
 
 		document.addNumber(
-			"commerceUserSegmentEntryIds", commercePriceList.getPriority());
+			"commerceUserSegmentEntryIds", commerceUserSegmentEntryIds);
 		document.addNumber(
 			"commerceUserSegmentEntryIds_required_matches",
 			commerceUserSegmentEntryIds.length);

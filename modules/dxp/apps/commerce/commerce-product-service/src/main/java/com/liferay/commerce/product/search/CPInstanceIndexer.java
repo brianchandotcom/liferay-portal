@@ -175,10 +175,10 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 				cpInstance.getCPDefinitionId());
 
 		String cpDefinitionDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(cpDefinition.getTitle());
+			LocalizationUtil.getDefaultLanguageId(cpDefinition.getName());
 
 		for (String languageId : languageIds) {
-			String title = cpDefinition.getTitle(languageId);
+			String title = cpDefinition.getName(languageId);
 
 			if (languageId.equals(cpDefinitionDefaultLanguageId)) {
 				document.addText(Field.TITLE, title);
@@ -186,11 +186,11 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
 				title);
 		}
 
-		document.addText(Field.TITLE, cpDefinition.getTitle());
+		document.addText(Field.NAME, cpDefinition.getName());
 
 		document.addText(
 			FIELD_EXTERNAL_REFERENCE_CODE,

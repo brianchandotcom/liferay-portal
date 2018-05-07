@@ -99,8 +99,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public CPDefinitionIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.TITLE, Field.UID);
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
+			Field.SCOPE_GROUP_ID, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -152,8 +152,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, FIELD_SKUS, false);
 		addSearchTerm(
 			searchQuery, searchContext, FIELD_EXTERNAL_REFERENCE_CODE, false);
@@ -188,7 +188,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		Document document = getBaseModelDocument(CLASS_NAME, cpDefinition);
 
 		String cpDefinitionDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(cpDefinition.getTitle());
+			LocalizationUtil.getDefaultLanguageId(cpDefinition.getName());
 
 		List<String> languageIds =
 			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
@@ -204,19 +204,19 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		for (String languageId : languageIds) {
 			String description = cpDefinition.getDescription(languageId);
-			String title = cpDefinition.getTitle(languageId);
+			String name = cpDefinition.getName(languageId);
 			String urlTitle = languageIdToUrlTitleMap.get(languageId);
 
 			if (languageId.equals(cpDefinitionDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
-				document.addText(Field.TITLE, title);
+				document.addText(Field.NAME, name);
 				document.addText(Field.URL, urlTitle);
 				document.addText("defaultLanguageId", languageId);
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
-				title);
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				name);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
@@ -228,7 +228,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addText(Field.CONTENT, description);
 		}
 
-		document.addText(Field.TITLE, cpDefinition.getTitle());
+		document.addText(Field.NAME, cpDefinition.getName());
 
 		List<String> optionNames = new ArrayList<>();
 		List<Long> optionIds = new ArrayList<>();
@@ -397,7 +397,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
+			document, Field.NAME, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 

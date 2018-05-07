@@ -73,8 +73,23 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
-			_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(
+			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
 				groupId, classNameId, languageId, urlTitle);
+
+		if (cpFriendlyURLEntry == null) {
+			Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
+
+			String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+				siteDefaultLocale);
+
+			cpFriendlyURLEntry =
+				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
+					groupId, classNameId, siteDefaultLanguageId, urlTitle);
+		}
+
+		if (cpFriendlyURLEntry == null) {
+			return null;
+		}
 
 		if (!cpFriendlyURLEntry.isMain()) {
 			cpFriendlyURLEntry =
@@ -155,13 +170,28 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
-			_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(
+			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
 				groupId, classNameId, languageId, urlTitle);
+
+		if (cpFriendlyURLEntry == null) {
+			Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
+
+			String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+				siteDefaultLocale);
+
+			cpFriendlyURLEntry =
+				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
+					groupId, classNameId, siteDefaultLanguageId, urlTitle);
+		}
+
+		if (cpFriendlyURLEntry == null) {
+			return null;
+		}
 
 		if (!cpFriendlyURLEntry.isMain()) {
 			cpFriendlyURLEntry =
 				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					groupId, classNameId, cpFriendlyURLEntry.getPrimaryKey(),
+					groupId, classNameId, cpFriendlyURLEntry.getClassPK(),
 					languageId, true);
 		}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.site.teams.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -22,26 +21,21 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.TeamServiceUtil;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.TeamNameComparator;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
+import com.liferay.site.teams.web.internal.search.TeamDisplayTerms;
 import com.liferay.site.teams.web.internal.search.TeamSearch;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,35 +51,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SiteTeamsDisplayContext {
+public class SelectTeamDisplayContext {
 
-	public SiteTeamsDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			HttpServletRequest request)
-		throws Exception {
+	public SelectTeamDisplayContext(
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		HttpServletRequest request) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
-
-		addBreadcrumbEntries();
-	}
-
-	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedTeams();");
-						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
 	}
 
 	public String getClearResultsURL() {
@@ -94,21 +68,6 @@ public class SiteTeamsDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
-	}
-
-	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_team.jsp");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add-team"));
-					});
-			}
-		};
 	}
 
 	public String getDisplayStyle() {
@@ -123,6 +82,18 @@ public class SiteTeamsDisplayContext {
 			SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
 
 		return _displayStyle;
+	}
+
+	public String getEventName() {
+		if (_eventName != null) {
+			return _eventName;
+		}
+
+		_eventName = ParamUtil.getString(
+			_request, "eventName",
+			_renderResponse.getNamespace() + "selectTeam");
+
+		return _eventName;
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -147,13 +118,26 @@ public class SiteTeamsDisplayContext {
 		};
 	}
 
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
+	}
+
 	public List<NavigationItem> getNavigationItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setHref(getPortletURL());
+						navigationItem.setHref(themeDisplay.getURLCurrent());
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "teams"));
 					});
@@ -184,7 +168,26 @@ public class SiteTeamsDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("displayStyle", getDisplayStyle());
+		portletURL.setParameter("mvcPath", "/select_team.jsp");
+		portletURL.setParameter("eventName", getEventName());
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
 
 		return portletURL;
 	}
@@ -193,35 +196,6 @@ public class SiteTeamsDisplayContext {
 		PortletURL searchActionURL = getPortletURL();
 
 		return searchActionURL.toString();
-	}
-
-	public SearchContainer getSearchContainer() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SearchContainer searchContainer = new TeamSearch(
-			_renderRequest, getPortletURL());
-
-		searchContainer.setEmptyResultsMessage("there-are-no-site-teams");
-
-		if (Validator.isNotNull(getKeywords())) {
-			searchContainer.setSearch(true);
-		}
-
-		searchContainer.setId("teams");
-		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
-		searchContainer.setTotal(getTotalItems());
-
-		List results = TeamServiceUtil.search(
-			themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
-			new LinkedHashMap<String, Object>(), searchContainer.getStart(),
-			searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-		searchContainer.setResults(results);
-
-		return searchContainer;
 	}
 
 	public String getSortingURL() {
@@ -234,13 +208,55 @@ public class SiteTeamsDisplayContext {
 		return sortingURL.toString();
 	}
 
-	public int getTotalItems() {
+	public SearchContainer getTeamSearchContainer() {
+		if (_teamSearchContainer != null) {
+			return _teamSearchContainer;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return TeamServiceUtil.searchCount(
-			themeDisplay.getScopeGroupId(), getKeywords(), getKeywords(),
-			new LinkedHashMap<String, Object>());
+		TeamSearch teamSearchContainer = new TeamSearch(
+			_renderRequest, getPortletURL());
+
+		teamSearchContainer.setOrderByCol(getOrderByCol());
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
+
+		teamSearchContainer.setOrderByComparator(
+			new TeamNameComparator(orderByAsc));
+		teamSearchContainer.setOrderByType(getOrderByType());
+
+		TeamDisplayTerms searchTerms =
+			(TeamDisplayTerms)teamSearchContainer.getSearchTerms();
+
+		int teamsCount = TeamLocalServiceUtil.searchCount(
+			themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
+			searchTerms.getDescription(), new LinkedHashMap<>());
+
+		teamSearchContainer.setTotal(teamsCount);
+
+		List<Team> teams = TeamLocalServiceUtil.search(
+			themeDisplay.getScopeGroupId(), searchTerms.getKeywords(),
+			searchTerms.getDescription(), new LinkedHashMap<>(),
+			teamSearchContainer.getStart(), teamSearchContainer.getEnd(),
+			teamSearchContainer.getOrderByComparator());
+
+		teamSearchContainer.setResults(teams);
+
+		_teamSearchContainer = teamSearchContainer;
+
+		return _teamSearchContainer;
+	}
+
+	public int getTotalItems() {
+		SearchContainer userSearchContainer = getTeamSearchContainer();
+
+		return userSearchContainer.getTotal();
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
@@ -259,43 +275,15 @@ public class SiteTeamsDisplayContext {
 		};
 	}
 
-	public boolean isDescriptiveView() {
-		if (Objects.equals(getDisplayStyle(), "descriptive")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isDisabledManagementBar() {
-		if (getTotalItems() > 0) {
-			return false;
-		}
-
-		if (Validator.isNotNull(getKeywords())) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean isIconView() {
-		if (Objects.equals(getDisplayStyle(), "icon")) {
+		if (getTotalItems() <= 0) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public boolean isListView() {
-		if (Objects.equals(getDisplayStyle(), "list")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isSearchEnabled() {
+	public boolean isShowSearch() {
 		if (getTotalItems() > 0) {
 			return true;
 		}
@@ -305,55 +293,6 @@ public class SiteTeamsDisplayContext {
 		}
 
 		return false;
-	}
-
-	public boolean isShowAddButton() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup(), ActionKeys.MANAGE_TEAMS)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected void addBreadcrumbEntries() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
-
-		if (group.isOrganization()) {
-			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(
-					group.getOrganizationId());
-
-			UsersAdminUtil.addPortletBreadcrumbEntries(
-				organization, _request, _renderResponse);
-		}
-		else {
-			PortalUtil.addPortletBreadcrumbEntry(
-				_request, group.getDescriptiveName(themeDisplay.getLocale()),
-				null);
-		}
-
-		PortalUtil.addPortletBreadcrumbEntry(
-			_request, LanguageUtil.get(_request, "manage-teams"),
-			themeDisplay.getURLCurrent());
-	}
-
-	protected String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		_keywords = ParamUtil.getString(_request, "keywords");
-
-		return _keywords;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -387,11 +326,13 @@ public class SiteTeamsDisplayContext {
 	}
 
 	private String _displayStyle;
+	private String _eventName;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private SearchContainer _teamSearchContainer;
 
 }

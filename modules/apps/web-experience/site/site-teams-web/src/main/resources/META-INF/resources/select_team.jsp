@@ -17,88 +17,32 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = portalPreferences.getValue(SiteTeamsPortletKeys.SITE_TEAMS, "display-style", "icon");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectTeam");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/select_team.jsp");
-portletURL.setParameter("eventName", eventName);
-
-TeamSearch teamSearch = new TeamSearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse));
-
-TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearch.getSearchTerms();
-
-portletURL.setParameter(teamSearch.getCurParam(), String.valueOf(teamSearch.getCur()));
-
-int teamsCount = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getKeywords(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
-
-teamSearch.setTotal(teamsCount);
+SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext(renderRequest, renderResponse, request);
 %>
 
 <clay:navigation-bar
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(currentURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "teams"));
-					});
-			}
-		}
-	%>"
+	items="<%= selectTeamDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
-	disabled="<%= (teamsCount <= 0) && !searchTerms.isSearch() %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= teamSearch.getOrderByCol() %>"
-				orderByType="<%= teamSearch.getOrderByType() %>"
-				orderColumns='<%= new String[] {"name"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<c:if test="<%= (teamsCount > 0) || searchTerms.isSearch() %>">
-				<li>
-					<aui:form action="<%= portletURL %>" name="searchFm">
-						<liferay-ui:input-search
-							markupView="lexicon"
-						/>
-					</aui:form>
-				</li>
-			</c:if>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= selectTeamDisplayContext.getClearResultsURL() %>"
+	componentId="selectTeamWebManagementToolbar"
+	disabled="<%= selectTeamDisplayContext.isDisabledManagementBar() %>"
+	filterItems="<%= selectTeamDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= selectTeamDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= selectTeamDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= selectTeamDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectTeamDisplayContext.getSortingURL() %>"
+	totalItems="<%= selectTeamDisplayContext.getTotalItems() %>"
+	viewTypes="<%= selectTeamDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="selectTeamFm">
 	<liferay-ui:search-container
-		searchContainer="<%= teamSearch %>"
+		searchContainer="<%= selectTeamDisplayContext.getTeamSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results
-			results="<%= TeamLocalServiceUtil.search(scopeGroupId, searchTerms.getKeywords(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.TeamModel"
 			keyProperty="teamId"
@@ -123,7 +67,7 @@ teamSearch.setTotal(teamsCount);
 			%>
 
 			<c:choose>
-				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<c:when test='<%= Objects.equals(selectTeamDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
 						icon="users"
 						toggleRowChecker="<%= true %>"
@@ -150,7 +94,7 @@ teamSearch.setTotal(teamsCount);
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("icon") %>'>
+				<c:when test='<%= Objects.equals(selectTeamDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item");
@@ -167,7 +111,7 @@ teamSearch.setTotal(teamsCount);
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= displayStyle.equals("list") %>'>
+				<c:when test='<%= Objects.equals(selectTeamDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
 						name="name"
@@ -194,12 +138,12 @@ teamSearch.setTotal(teamsCount);
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= selectTeamDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
 </aui:form>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectTeamFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectTeamFm', '<%= HtmlUtil.escapeJS(selectTeamDisplayContext.getEventName()) %>');
 </aui:script>

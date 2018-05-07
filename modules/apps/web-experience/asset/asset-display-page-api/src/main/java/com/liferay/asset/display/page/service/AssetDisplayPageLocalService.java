@@ -71,6 +71,8 @@ public interface AssetDisplayPageLocalService extends BaseLocalService,
 	public AssetDisplayPage addAssetDisplayPage(
 		AssetDisplayPage assetDisplayPage);
 
+	public AssetDisplayPage addAssetDisplayPage(long assetEntryId, long layoutId);
+
 	/**
 	* Creates a new asset display page with the primary key. Does not add the asset display page to the database.
 	*
@@ -100,6 +102,11 @@ public interface AssetDisplayPageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public AssetDisplayPage deleteAssetDisplayPage(long assetDisplayPageId)
 		throws PortalException;
+
+	public void deleteAssetDisplayPage(long assetEntryId, long layoutId)
+		throws PortalException;
+
+	public void deleteAssetDisplayPageByAssetEntryId(long assetEntryId);
 
 	/**
 	* @throws PortalException
@@ -169,6 +176,10 @@ public interface AssetDisplayPageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetDisplayPage fetchAssetDisplayPage(long assetDisplayPageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetDisplayPage fetchAssetDisplayPage(long assetEntryId,
+		long layoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

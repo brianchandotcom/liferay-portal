@@ -54,6 +54,11 @@ public class AssetDisplayPageLocalServiceUtil {
 		return getService().addAssetDisplayPage(assetDisplayPage);
 	}
 
+	public static com.liferay.asset.display.page.model.AssetDisplayPage addAssetDisplayPage(
+		long assetEntryId, long layoutId) {
+		return getService().addAssetDisplayPage(assetEntryId, layoutId);
+	}
+
 	/**
 	* Creates a new asset display page with the primary key. Does not add the asset display page to the database.
 	*
@@ -87,6 +92,15 @@ public class AssetDisplayPageLocalServiceUtil {
 		long assetDisplayPageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteAssetDisplayPage(assetDisplayPageId);
+	}
+
+	public static void deleteAssetDisplayPage(long assetEntryId, long layoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAssetDisplayPage(assetEntryId, layoutId);
+	}
+
+	public static void deleteAssetDisplayPageByAssetEntryId(long assetEntryId) {
+		getService().deleteAssetDisplayPageByAssetEntryId(assetEntryId);
 	}
 
 	/**
@@ -179,6 +193,11 @@ public class AssetDisplayPageLocalServiceUtil {
 	public static com.liferay.asset.display.page.model.AssetDisplayPage fetchAssetDisplayPage(
 		long assetDisplayPageId) {
 		return getService().fetchAssetDisplayPage(assetDisplayPageId);
+	}
+
+	public static com.liferay.asset.display.page.model.AssetDisplayPage fetchAssetDisplayPage(
+		long assetEntryId, long layoutId) {
+		return getService().fetchAssetDisplayPage(assetEntryId, layoutId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

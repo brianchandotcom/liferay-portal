@@ -70,9 +70,7 @@ public class BookmarksEntryUADDisplayTest
 	@Inject
 	private BookmarksEntryUADTestHelper _bookmarksEntryUADTestHelper;
 
-	@Inject(
-		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
-	)
+	@Inject(filter = "component.name=*.BookmarksEntryUADDisplay")
 	private UADDisplay _uadDisplay;
 
 }

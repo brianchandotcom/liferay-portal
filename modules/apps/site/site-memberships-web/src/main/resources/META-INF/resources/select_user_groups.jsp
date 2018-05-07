@@ -17,51 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = portalPreferences.getValue(SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style", "icon");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroups");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL viewUserGroupsURL = renderResponse.createRenderURL();
-
-viewUserGroupsURL.setParameter("mvcPath", "/select_user_groups.jsp");
-viewUserGroupsURL.setParameter("groupId", String.valueOf(siteMembershipsDisplayContext.getGroupId()));
-viewUserGroupsURL.setParameter("eventName", eventName);
-
-UserGroupSiteMembershipChecker rowChecker = new UserGroupSiteMembershipChecker(renderResponse, siteMembershipsDisplayContext.getGroup());
-
-UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, PortletURLUtil.clone(viewUserGroupsURL, renderResponse));
-
-UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearch.getSearchTerms();
-
-LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-userGroupSearch.setTotal(userGroupsCount);
-
-List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
-
-userGroupSearch.setResults(userGroups);
+SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGroupsDisplayContext(request, renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(currentURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
-					});
-			}
-		}
-	%>"
+	items="<%= selectUserGroupsDisplayContext.getNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar
-	disabled="<%= userGroupsCount <= 0 %>"
+	disabled="<%= selectUserGroupsDisplayContext.isDisabledManagementBar() %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="userGroups"
 >
@@ -74,26 +38,26 @@ userGroupSearch.setResults(userGroups);
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= selectUserGroupsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+			portletURL="<%= selectUserGroupsDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= selectUserGroupsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= selectUserGroupsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"name", "description"} %>'
-			portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
+			portletURL="<%= selectUserGroupsDisplayContext.getPortletURL() %>"
 		/>
 
-		<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
+		<c:if test="<%= selectUserGroupsDisplayContext.isShowSearch() %>">
 			<li>
-				<aui:form action="<%= viewUserGroupsURL.toString() %>" name="searchFm">
+				<aui:form action="<%= selectUserGroupsDisplayContext.getPortletURL() %>" name="searchFm">
 					<liferay-ui:input-search
 						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 						markupView="lexicon"
@@ -107,8 +71,7 @@ userGroupSearch.setResults(userGroups);
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-user-groups" name="fm">
 	<liferay-ui:search-container
 		id="userGroups"
-		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= userGroupSearch %>"
+		searchContainer="<%= selectUserGroupsDisplayContext.getUserGroupSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
@@ -118,6 +81,8 @@ userGroupSearch.setResults(userGroups);
 		>
 
 			<%
+			String displayStyle = selectUserGroupsDisplayContext.getDisplayStyle();
+
 			boolean selectUserGroup = true;
 			%>
 
@@ -125,7 +90,7 @@ userGroupSearch.setResults(userGroups);
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= selectUserGroupsDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
@@ -138,7 +103,7 @@ userGroupSearch.setResults(userGroups);
 		'rowToggled',
 		function(event) {
 			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(eventName) %>',
+				'<%= HtmlUtil.escapeJS(selectUserGroupsDisplayContext.getEventName()) %>',
 				{
 					data: event.elements.allSelectedElements.getDOMNodes()
 				}

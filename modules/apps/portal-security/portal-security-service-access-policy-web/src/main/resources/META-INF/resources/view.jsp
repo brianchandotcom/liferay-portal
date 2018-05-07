@@ -19,8 +19,6 @@
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-
 boolean orderByAsc = false;
 
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
@@ -34,6 +32,12 @@ OrderByComparator<SAPEntry> orderByComparator = new SAPEntryNameComparator(order
 int sapEntriesCount = SAPEntryServiceUtil.getCompanySAPEntriesCount(company.getCompanyId());
 
 PortletURL portletURL = renderResponse.createRenderURL();
+
+PortletURL sortingURL = renderResponse.createRenderURL();
+
+sortingURL.setParameter("displayStyle", displayStyle);
+
+sortingURL.setParameter("orderByType", orderByAsc ? "desc" : "asc");
 %>
 
 <aui:nav-bar markupView="lexicon">
@@ -42,53 +46,27 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</aui:nav>
 </aui:nav-bar>
 
-<c:if test="<%= sapEntriesCount > 0 %>">
-	<liferay-frontend:management-bar>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"list"} %>'
-				portletURL="<%= renderResponse.createRenderURL() %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-
-			<c:if test="<%= SAPPermission.contains(permissionChecker, SAPActionKeys.ACTION_ADD_SAP_ENTRY) %>">
-				<portlet:renderURL var="addSAPEntryURL">
-					<portlet:param name="mvcPath" value="/edit_entry.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-				</portlet:renderURL>
-
-				<liferay-frontend:add-menu
-					inline="<%= true %>"
-				>
-					<liferay-frontend:add-menu-item
-						title='<%= LanguageUtil.get(request, "add") %>'
-						url="<%= addSAPEntryURL %>"
-					/>
-				</liferay-frontend:add-menu>
-			</c:if>
-		</liferay-frontend:management-bar-buttons>
-
-		<%
-		PortletURL iteratorURL = renderResponse.createRenderURL();
-
-		iteratorURL.setParameter("displayStyle", displayStyle);
-		%>
-
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= renderResponse.createRenderURL() %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= orderByCol %>"
-				orderByType="<%= orderByType %>"
-				orderColumns='<%= new String[] {"name"} %>'
-				portletURL="<%= iteratorURL %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-	</liferay-frontend:management-bar>
-</c:if>
+<clay:management-toolbar
+	creationMenu="<%=
+		new JSPCreationMenu(pageContext) {
+			{
+					addPrimaryDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setHref(renderResponse.createRenderURL(),
+							"mvcPath", "/edit_entry.jsp", "redirect",
+							PortalUtil.getCurrentURL(request));
+						}
+					);
+			}
+		}
+	%>"
+	disabled="<%= sapEntriesCount == 0 %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+	sortingOrder="<%= orderByType %>"
+	sortingURL="<%= sortingURL.toString() %>"
+/>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

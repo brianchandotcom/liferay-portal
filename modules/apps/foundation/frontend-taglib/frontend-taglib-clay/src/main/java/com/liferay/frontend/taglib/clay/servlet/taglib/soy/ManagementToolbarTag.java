@@ -35,9 +35,7 @@ import java.util.Map;
 public class ManagementToolbarTag extends BaseClayTag {
 
 	public ManagementToolbarTag() {
-		this(
-			"management-toolbar",
-			_TEMPLATE_NAMESPACE, true);
+		this("management-toolbar", _TEMPLATE_NAMESPACE, true);
 	}
 
 	public ManagementToolbarTag(

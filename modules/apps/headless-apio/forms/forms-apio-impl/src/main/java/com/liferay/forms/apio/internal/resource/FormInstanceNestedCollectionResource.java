@@ -31,7 +31,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
-import com.liferay.forms.apio.architect.identifier.FormInstanceVersionIdentifier;
 import com.liferay.forms.apio.architect.identifier.StructureIdentifier;
 import com.liferay.forms.apio.internal.form.FormContextForm;
 import com.liferay.forms.apio.internal.helper.FormInstanceRecordResourceHelper;
@@ -111,8 +110,15 @@ public class FormInstanceNestedCollectionResource
 		).addLinkedModel(
 			"structure", StructureIdentifier.class,
 			DDMFormInstance::getStructureId
-		).addLinkedModel(
-			"version", FormInstanceVersionIdentifier.class, this::_getVersionId
+		).addNested(
+			"version", this::_getVersion,
+			nestedBuilder -> nestedBuilder.nestedTypes(
+			"FormInstanceVersion"
+			).addLinkedModel(
+				"author", PersonIdentifier.class, DDMFormInstanceVersion::getUserId
+			).addString(
+				"name", DDMFormInstanceVersion::getVersion
+			).build()
 		).addLocalizedStringByLocale(
 			"description", DDMFormInstance::getDescription
 		).addLocalizedStringByLocale(
@@ -174,13 +180,13 @@ public class FormInstanceNestedCollectionResource
 		return new PageItems<>(ddmFormInstances, count);
 	}
 
-	private Long _getVersionId(DDMFormInstance ddmFormInstance) {
+	private DDMFormInstanceVersion _getVersion(
+		DDMFormInstance ddmFormInstance) {
+
 		return Try.fromFallible(
 			ddmFormInstance::getVersion
 		).map(
 			ddmFormInstance::getFormInstanceVersion
-		).map(
-			DDMFormInstanceVersion::getFormInstanceVersionId
 		).orElse(
 			null
 		);

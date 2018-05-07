@@ -25,13 +25,15 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionModel;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
-import com.liferay.forms.apio.architect.identifier.FormInstanceRecordVersionIdentifier;
 import com.liferay.forms.apio.internal.FormInstanceRecordServiceContext;
 import com.liferay.forms.apio.internal.form.FormInstanceRecordForm;
 import com.liferay.forms.apio.internal.helper.FormInstanceRecordResourceHelper;
@@ -108,11 +110,18 @@ public class FormInstanceRecordNestedCollectionResource
 			"datePublished", DDMFormInstanceRecord::getLastPublishDate
 		).addLinkedModel(
 			"author", PersonIdentifier.class, DDMFormInstanceRecord::getUserId
-		).addLinkedModel(
-			"version", FormInstanceRecordVersionIdentifier.class,
-			this::_getVersionId
 		).addLocalizedStringByLocale(
 			"fieldValues", FormInstanceRecordResourceHelper::getFieldValuesJSON
+		).addNested(
+			"version", this::_getVersion,
+			nestedBuilder -> nestedBuilder.nestedTypes(
+				"FormInstanceRecordVersion"
+			).addLinkedModel(
+				"author", PersonIdentifier.class,
+				DDMFormInstanceRecordVersion::getUserId
+			).addString(
+				"name", DDMFormInstanceRecordVersionModel::getVersion
+			).build()
 		).build();
 	}
 
@@ -160,13 +169,13 @@ public class FormInstanceRecordNestedCollectionResource
 		return new PageItems<>(ddmFormInstances, count);
 	}
 
-	private Long _getVersionId(DDMFormInstanceRecord ddmFormInstanceRecord) {
+	private DDMFormInstanceRecordVersion _getVersion(
+		DDMFormInstanceRecord ddmFormInstanceRecord) {
+
 		return Try.fromFallible(
 			ddmFormInstanceRecord::getVersion
 		).map(
 			ddmFormInstanceRecord::getFormInstanceRecordVersion
-		).map(
-			DDMFormInstanceRecordVersion::getFormInstanceRecordVersionId
 		).orElse(
 			null
 		);

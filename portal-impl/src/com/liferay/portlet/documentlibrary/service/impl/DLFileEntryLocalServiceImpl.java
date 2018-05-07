@@ -553,6 +553,9 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
 
+			Serializable validateDDMFormValues = serviceContext.getAttribute(
+				"validateDDMFormValues");
+
 			serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
 
 			if (fileEntryTypeId == oldDLFileVersion.getFileEntryTypeId()) {
@@ -562,7 +565,8 @@ public class DLFileEntryLocalServiceImpl
 					serviceContext);
 			}
 
-			serviceContext.setAttribute("validateDDMFormValues", Boolean.TRUE);
+			serviceContext.setAttribute(
+				"validateDDMFormValues", validateDDMFormValues);
 		}
 
 		return dlFileEntry;

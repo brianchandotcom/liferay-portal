@@ -28,7 +28,10 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
@@ -167,6 +170,57 @@ public class FileEntryStagedModelDataHandlerTest
 			fileEntry.getUuid(), liveGroup.getGroupId());
 
 		Assert.assertEquals("pdf", importedFileEntry.getExtension());
+	}
+
+	@Test
+	public void testExportImportRequiredFieldInDocumentType() throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			liveGroup.getGroupId(), DLFileEntryMetadata.class.getName());
+
+		DLFileEntryType dlFileEntryType = addDLFileEntryType(
+			liveGroup.getGroupId(), ddmStructure.getStructureId());
+
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		try {
+			String fileName = "PDF_Test.pdf";
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId());
+
+			serviceContext.setAttribute(
+				"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
+
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), liveGroup.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+				ContentTypes.APPLICATION_PDF,
+				FileUtil.getBytes(getClass(), "dependencies/" + fileName),
+				serviceContext);
+
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+			ddmFormFields.forEach(
+				ddmFormField -> ddmFormField.setRequired(true));
+
+			DDMStructureLocalServiceUtil.updateStructure(
+				ddmStructure.getUserId(), ddmStructure.getStructureId(),
+				ddmForm, ddmStructure.getDDMFormLayout(), serviceContext);
+
+			exportImportStagedModelFromLiveToStaging(fileEntry);
+
+			FileEntry stagingGroupFileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), stagingGroup.getGroupId());
+
+			exportImportStagedModel(stagingGroupFileEntry);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
 	}
 
 	@Test

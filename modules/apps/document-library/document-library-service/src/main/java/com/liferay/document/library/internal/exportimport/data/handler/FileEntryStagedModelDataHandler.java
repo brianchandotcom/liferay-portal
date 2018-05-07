@@ -80,6 +80,7 @@ import com.liferay.trash.TrashHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -386,6 +387,11 @@ public class FileEntryStagedModelDataHandler
 			"fileVersionUuid");
 		String version = fileEntryElement.attributeValue("version");
 
+		Serializable validateDDMFormValues = serviceContext.getAttribute(
+			"validateDDMFormValues");
+
+		serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
+
 		InputStream is = null;
 
 		try {
@@ -633,6 +639,9 @@ public class FileEntryStagedModelDataHandler
 				fileEntry.getFileEntryId(), importedFileEntry.getFileEntryId());
 		}
 		finally {
+			serviceContext.setAttribute(
+				"validateDDMFormValues", validateDDMFormValues);
+
 			try {
 				if (is != null) {
 					is.close();

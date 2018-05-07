@@ -12,12 +12,8 @@
  * details.
  */
 
-package com.liferay.journal.internal.verify;
+package com.liferay.journal.internal.upgrade.v0_0_8;
 
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleResource;
-import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -28,69 +24,31 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.List;
 
 /**
  * @author Daniel Kocsis
+ * @author Preston Crary
+ * @author Alberto Chaparro
  */
-public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
+public class UpgradeArticleSystemEvents extends UpgradeProcess {
 
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
-	public JournalServiceSystemEventVerifyProcess() {
-		_journalArticleLocalService = null;
-		_journalArticleResourceLocalService = null;
-		_systemEventLocalService = null;
-	}
-
-	public JournalServiceSystemEventVerifyProcess(
-		JournalArticleLocalService journalArticleLocalService,
-		JournalArticleResourceLocalService journalArticleResourceLocalService,
+	public UpgradeArticleSystemEvents(
 		SystemEventLocalService systemEventLocalService) {
 
-		_journalArticleLocalService = journalArticleLocalService;
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
 		_systemEventLocalService = systemEventLocalService;
 	}
 
-	@Override
-	protected void doVerify() throws Exception {
-		verifyJournalArticleDeleteSystemEvents();
-	}
-
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-	}
-
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
-	protected void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-	}
-
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
-	protected void setSystemEventLocalService(
-		SystemEventLocalService systemEventLocalService) {
-	}
-
-	protected void verifyJournalArticleDeleteSystemEvents() throws Exception {
+	protected void deleteJournalArticleSystemEvents() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			DynamicQuery dynamicQuery = _systemEventLocalService.dynamicQuery();
 
@@ -99,7 +57,7 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 
 			dynamicQuery.add(
 				classNameIdProperty.eq(
-					PortalUtil.getClassNameId(JournalArticle.class)));
+					PortalUtil.getClassNameId(_CLASS_NAME_JOURNAL_ARTICLE)));
 
 			Property typeProperty = PropertyFactoryUtil.forName("type");
 
@@ -126,27 +84,43 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 					continue;
 				}
 
-				JournalArticleResource journalArticleResource =
-					_journalArticleResourceLocalService.
-						fetchJournalArticleResourceByUuidAndGroupId(
-							systemEvent.getClassUuid(),
-							systemEvent.getGroupId());
+				String articleId = null;
 
-				if (journalArticleResource == null) {
+				try (PreparedStatement ps = connection.prepareStatement(
+						"select articleId from JournalArticleResource where " +
+							"JournalArticleResource.uuid_ = ? and " +
+								"JournalArticleResource.groupId = ?")) {
+
+					ps.setString(1, systemEvent.getClassUuid());
+					ps.setLong(2, systemEvent.getGroupId());
+
+					try (ResultSet rs = ps.executeQuery()) {
+						if (rs.next()) {
+							articleId = rs.getString(1);
+						}
+					}
+				}
+
+				if (articleId == null) {
 					continue;
 				}
 
-				JournalArticle journalArticle =
-					_journalArticleLocalService.fetchArticle(
-						systemEvent.getGroupId(),
-						journalArticleResource.getArticleId(),
-						extraDataJSONObject.getDouble("version"));
+				try (PreparedStatement ps = connection.prepareStatement(
+						"select 1 from JournalArticle where groupId = ? and " +
+							"articleId = ? and version = ? and status = ?")) {
 
-				if ((journalArticle == null) || journalArticle.isInTrash()) {
-					continue;
+					ps.setLong(1, systemEvent.getGroupId());
+					ps.setString(2, articleId);
+					ps.setDouble(3, extraDataJSONObject.getDouble("version"));
+					ps.setInt(4, WorkflowConstants.STATUS_IN_TRASH);
+
+					try (ResultSet rs = ps.executeQuery()) {
+						if (rs.next()) {
+							_systemEventLocalService.deleteSystemEvent(
+								systemEvent);
+						}
+					}
 				}
-
-				_systemEventLocalService.deleteSystemEvent(systemEvent);
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -156,12 +130,17 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalServiceSystemEventVerifyProcess.class);
+	@Override
+	protected void doUpgrade() throws Exception {
+		deleteJournalArticleSystemEvents();
+	}
 
-	private final JournalArticleLocalService _journalArticleLocalService;
-	private final JournalArticleResourceLocalService
-		_journalArticleResourceLocalService;
+	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
+		"com.liferay.journal.model.JournalArticle";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeArticleSystemEvents.class);
+
 	private final SystemEventLocalService _systemEventLocalService;
 
 }

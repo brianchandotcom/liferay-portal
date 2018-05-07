@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
@@ -211,6 +212,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		setUpStrutureAttributesMappings();
 
+		updateContentSearch();
+		updateLinkToLayoutContent();
 		updateStructures();
 		updateTemplates();
 		upgradeURLTitle();
@@ -434,6 +437,106 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 	}
 
+	protected void updateContentSearch() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select groupId, portletId from JournalContentSearch group " +
+					"by groupId, portletId having count(groupId) > 1 and " +
+						"count(portletId) > 1");
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				String portletId = rs.getString("portletId");
+
+				updateContentSearch(groupId, portletId);
+			}
+		}
+	}
+
+	protected void updateContentSearch(long groupId, String portletId)
+		throws Exception {
+
+		try (PreparedStatement selectPreferencesPS =
+				connection.prepareStatement(
+					"select preferences from PortletPreferences inner join " +
+						"Layout on PortletPreferences.plid = Layout.plid " +
+							"where groupId = ? and portletId = ?");
+			PreparedStatement selectSearchPS = connection.prepareStatement(
+				"select companyId, privateLayout, layoutId, portletId from " +
+					"JournalContentSearch where JournalContentSearch.groupId " +
+						"= ? and JournalContentSearch.articleId = ?");
+			PreparedStatement deleteSearchPS = connection.prepareStatement(
+				"delete from JournalContentSearch where " +
+					"JournalContentSearch.groupId = ? and " +
+						"JournalContentSearch.articleId = ?");
+			PreparedStatement insertSearchPS = connection.prepareStatement(
+				"insert into JournalContentSearch(contentSearchId, " +
+					"companyId, groupId, privateLayout, layoutId, portletId, " +
+						"articleId) values (?, ?, ?, ?, ?, ?, ?)")) {
+
+			selectPreferencesPS.setLong(1, groupId);
+			selectPreferencesPS.setString(2, portletId);
+
+			try (ResultSet preferencesRS = selectPreferencesPS.executeQuery()) {
+				while (preferencesRS.next()) {
+					String xml = preferencesRS.getString("preferences");
+
+					PortletPreferences portletPreferences =
+						PortletPreferencesFactoryUtil.fromDefaultXML(xml);
+
+					String articleId = portletPreferences.getValue(
+						"articleId", null);
+
+					selectSearchPS.setLong(1, groupId);
+					selectSearchPS.setString(2, articleId);
+
+					try (ResultSet searchRS = selectSearchPS.executeQuery()) {
+						if (searchRS.next()) {
+							long companyId = searchRS.getLong("companyId");
+							boolean privateLayout = searchRS.getBoolean(
+								"privateLayout");
+							long layoutId = searchRS.getLong("layoutId");
+							String journalContentSearchPortletId =
+								searchRS.getString("portletId");
+
+							deleteSearchPS.setLong(1, groupId);
+							deleteSearchPS.setString(2, articleId);
+
+							deleteSearchPS.executeUpdate();
+
+							insertSearchPS.setLong(1, increment());
+							insertSearchPS.setLong(2, companyId);
+							insertSearchPS.setLong(3, groupId);
+							insertSearchPS.setBoolean(4, privateLayout);
+							insertSearchPS.setLong(5, layoutId);
+							insertSearchPS.setString(
+								6, journalContentSearchPortletId);
+							insertSearchPS.setString(7, articleId);
+
+							insertSearchPS.executeUpdate();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	protected void updateElement(long groupId, Element element) {
+		List<Element> dynamicElementElements = element.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			updateElement(groupId, dynamicElementElement);
+		}
+
+		String type = element.attributeValue("type");
+
+		if (type.equals("link_to_layout")) {
+			updateLinkToLayoutElements(groupId, element);
+		}
+	}
+
 	protected void updateJournalXSDDynamicElement(
 		Element element, String defaultLanguageId) {
 
@@ -561,6 +664,59 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		for (Element dynamicElementElement : dynamicElementElements) {
 			updateJournalXSDDynamicElement(
 				dynamicElementElement, defaultLanguageId);
+		}
+	}
+
+	protected void updateLinkToLayoutContent() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement selectPS = connection.prepareStatement(
+				"select id_, groupId, content from JournalArticle where " +
+					"structureId != '' and content like '%link_to_layout%'");
+			PreparedStatement updatePS =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update JournalArticle set content = ? where id_ = ?"));
+			ResultSet rs = selectPS.executeQuery()) {
+
+			while (rs.next()) {
+				long id = rs.getLong("id_");
+				long groupId = rs.getLong("groupId");
+				String content = rs.getString("content");
+
+				try {
+					Document document = SAXReaderUtil.read(content);
+
+					Element rootElement = document.getRootElement();
+
+					for (Element element : rootElement.elements()) {
+						updateElement(groupId, element);
+					}
+
+					updatePS.setString(1, document.asXML());
+					updatePS.setLong(2, id);
+
+					updatePS.addBatch();
+				}
+				catch (Exception e) {
+					_log.error("Unable to update content for article " + id, e);
+				}
+			}
+
+			updatePS.executeBatch();
+		}
+	}
+
+	protected void updateLinkToLayoutElements(long groupId, Element element) {
+		Element dynamicContentElement = element.element("dynamic-content");
+
+		Node node = dynamicContentElement.node(0);
+
+		String text = node.getText();
+
+		if (!text.isEmpty() && !text.endsWith(StringPool.AT + groupId)) {
+			node.setText(
+				dynamicContentElement.getStringValue() + StringPool.AT +
+					groupId);
 		}
 	}
 

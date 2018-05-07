@@ -34,6 +34,9 @@ import com.liferay.journal.internal.upgrade.v0_0_5.UpgradePortletSettings;
 import com.liferay.journal.internal.upgrade.v0_0_6.UpgradeImageTypeContentAttributes;
 import com.liferay.journal.internal.upgrade.v0_0_7.UpgradeJournalArticleDates;
 import com.liferay.journal.internal.upgrade.v0_0_7.UpgradeJournalArticleTreePath;
+import com.liferay.journal.internal.upgrade.v0_0_8.UpgradeArticleAssets;
+import com.liferay.journal.internal.upgrade.v0_0_8.UpgradeArticleExpirationDate;
+import com.liferay.journal.internal.upgrade.v0_0_8.UpgradeArticleSystemEvents;
 import com.liferay.journal.internal.upgrade.v1_0_0.UpgradeJournalArticleImage;
 import com.liferay.journal.internal.upgrade.v1_0_1.UpgradeJournalContentSearch;
 import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeDocumentLibraryTypeContent;
@@ -53,6 +56,7 @@ import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -124,7 +128,14 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"0.0.6", "0.0.7", new UpgradeImageTypeContentAttributes());
 
 		registry.register(
-			"0.0.7", "1.0.0", new UpgradeJournalArticleDates(),
+			"0.0.7", "0.0.8",
+			new UpgradeArticleAssets(
+				_assetEntryLocalService, _companyLocalService),
+			new UpgradeArticleExpirationDate(),
+			new UpgradeArticleSystemEvents(_systemEventLocalService));
+
+		registry.register(
+			"0.0.8", "1.0.0", new UpgradeJournalArticleDates(),
 			new UpgradeJournalArticleTreePath());
 
 		registry.register("1.0.0", "1.0.1", new UpgradeJournalContentSearch());
@@ -301,6 +312,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private ResourceActions _resourceActions;
 	private ResourceLocalService _resourceLocalService;
 	private SettingsFactory _settingsFactory;
+
+	@Reference
+	private SystemEventLocalService _systemEventLocalService;
+
 	private UserLocalService _userLocalService;
 
 }

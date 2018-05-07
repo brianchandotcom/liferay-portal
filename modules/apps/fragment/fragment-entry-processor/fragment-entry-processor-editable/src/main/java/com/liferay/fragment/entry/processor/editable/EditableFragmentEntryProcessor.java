@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
+import com.liferay.fragment.constants.FragmentEntryLinkMode;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -31,6 +32,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -118,11 +120,16 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			JSONObject editableValueJSONObject =
 				editableValuesJSONObject.getJSONObject(id);
 
-			String value = editableValueJSONObject.getString(
-				LanguageUtil.getLanguageId(locale));
+			String value = StringPool.BLANK;
+
+			if (Objects.equals(
+					mode, FragmentEntryLinkMode.ASSET_DISPLAY_PAGE)) {
+
+				value = _getMappedValue(editableValueJSONObject);
+			}
 
 			if (Validator.isNull(value)) {
-				value = editableValueJSONObject.getString("defaultValue");
+				value = _getEditableValue(editableValueJSONObject, locale);
 			}
 
 			editableElementParser.replace(element, value);
@@ -173,6 +180,26 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		document.outputSettings(outputSettings);
 
 		return document;
+	}
+
+	private String _getEditableValue(JSONObject jsonObject, Locale locale) {
+		String value = jsonObject.getString(LanguageUtil.getLanguageId(locale));
+
+		if (Validator.isNull(value)) {
+			value = jsonObject.getString("defaultValue");
+		}
+
+		return value;
+	}
+
+	private String _getMappedValue(JSONObject jsonObject) {
+		String value = jsonObject.getString("mappedField");
+
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		return "${" + value + "}";
 	}
 
 	private void _validateAttribute(Element element, String attribute)

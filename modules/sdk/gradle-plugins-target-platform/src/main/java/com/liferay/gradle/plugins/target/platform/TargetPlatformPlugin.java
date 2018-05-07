@@ -258,7 +258,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		GroovyObjectSupport groovyObjectSupport =
 			(GroovyObjectSupport)dependencyManagementExtension;
 
-		List<Object> args = new ArrayList<>();
+		List<Object> args = new ArrayList<>(_CONFIGURATION_NAMES.length + 1);
 
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();

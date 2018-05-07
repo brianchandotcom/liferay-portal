@@ -27,131 +27,24 @@ Role role = usersDisplayContext.getRole();
 	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= usersDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= usersDisplayContext.getClearResultsURL() %>"
+	componentId="usersManagementToolbar"
 	disabled="<%= usersDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= usersDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	searchActionURL="<%= usersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= usersDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					id="selectUsers"
-					title='<%= LanguageUtil.get(request, "assign-users") %>'
-					url="javascript:;"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-
-		<%
-		String label = null;
-
-		if (Objects.equals(usersDisplayContext.getNavigation(), "roles") && (role != null)) {
-			label = LanguageUtil.get(request, "roles") + StringPool.COLON + StringPool.SPACE + HtmlUtil.escape(role.getTitle(themeDisplay.getLocale()));
-		}
-		%>
-
-		<liferay-frontend:management-bar-navigation
-			label="<%= label %>"
-		>
-
-			<%
-			PortletURL viewAllURL = usersDisplayContext.getPortletURL();
-
-			viewAllURL.setParameter("navigation", "all");
-			viewAllURL.setParameter("roleId", "0");
-			%>
-
-			<liferay-frontend:management-bar-filter-item
-				active='<%= Objects.equals(usersDisplayContext.getNavigation(), "all") %>'
-				label="all"
-				url="<%= viewAllURL.toString() %>"
-			/>
-
-			<liferay-frontend:management-bar-filter-item
-				active='<%= Objects.equals(usersDisplayContext.getNavigation(), "roles") %>'
-				id="roles"
-				label="roles"
-				url="javascript:;"
-			/>
-		</liferay-frontend:management-bar-navigation>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= usersDisplayContext.getOrderByCol() %>"
-			orderByType="<%= usersDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-			portletURL="<%= usersDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= usersDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ASSIGN_USER_ROLES) %>">
-			<liferay-frontend:management-bar-button
-				href="javascript:;"
-				icon="add-role"
-				id="selectSiteRole"
-				label="assign-site-roles"
-			/>
-
-			<c:if test="<%= role != null %>">
-
-				<%
-				String label = LanguageUtil.format(request, "remove-site-role-x", role.getTitle(themeDisplay.getLocale()), false);
-				%>
-
-				<liferay-frontend:management-bar-button
-					href="javascript:;"
-					icon="remove-role"
-					id="removeUserSiteRole"
-					label="<%= label %>"
-				/>
-			</c:if>
-		</c:if>
-
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedUsers"
-			label="remove-membership"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showCreationMenu="<%= GroupPermissionUtil.contains(permissionChecker, siteMembershipsDisplayContext.getGroupId(), ActionKeys.ASSIGN_MEMBERS) %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= usersDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= usersDisplayContext.getOrderByType() %>"
+	sortingURL="<%= usersDisplayContext.getSortingURL() %>"
+	totalItems="<%= usersDisplayContext.getTotalItems() %>"
+	viewTypes="<%= usersDisplayContext.getViewTypeItems() %>"
+/>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/user/info_panel" var="sidebarPanelURL">
@@ -224,25 +117,19 @@ Role role = usersDisplayContext.getRole();
 <aui:script use="liferay-item-selector-dialog">
 	var form = $(document.<portlet:namespace />fm);
 
-	$('#<portlet:namespace />deleteSelectedUsers').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm(form);
-			}
+	window.<portlet:namespace />deleteSelectedUsers = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm(form);
 		}
-	);
+	}
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ASSIGN_USER_ROLES) %>">
 		<c:if test="<%= role != null %>">
-			$('#<portlet:namespace />removeUserSiteRole').on(
-				'click',
-				function() {
-					if (confirm('<liferay-ui:message arguments="<%= role.getTitle(themeDisplay.getLocale()) %>" key="are-you-sure-you-want-to-remove-x-role-to-selected-users" translateArguments="<%= false %>" />')) {
-						submitForm(form, '<portlet:actionURL name="removeUserSiteRole" />');
-					}
+			window.<portlet:namespace />removeUserSiteRole = function() {
+				if (confirm('<liferay-ui:message arguments="<%= role.getTitle(themeDisplay.getLocale()) %>" key="are-you-sure-you-want-to-remove-x-role-to-selected-users" translateArguments="<%= false %>" />')) {
+					submitForm(form, '<portlet:actionURL name="removeUserSiteRole" />');
 				}
-			);
+			}
 		</c:if>
 
 		<portlet:renderURL var="selectSiteRoleURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -250,62 +137,62 @@ Role role = usersDisplayContext.getRole();
 			<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 		</portlet:renderURL>
 
-		$('#<portlet:namespace />selectSiteRole').on(
-			'click',
-			function() {
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: '<portlet:namespace />selectSiteRole',
-						on: {
-							selectedItemChange: function(event) {
-								var selectedItem = event.newVal;
-
-								if (selectedItem) {
-									form.append(selectedItem);
-
-									submitForm(form, '<portlet:actionURL name="editUsersSiteRoles" />');
-								}
-							}
-						},
-						'strings.add': '<liferay-ui:message key="done" />',
-						title: '<liferay-ui:message key="assign-site-roles" />',
-						url: '<%= selectSiteRoleURL %>'
-					}
-				);
-
-				itemSelectorDialog.open();
-			}
-		);
-	</c:if>
-
-	$('#<portlet:namespace />selectUsers').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
+		window.<portlet:namespace />selectSiteRole = function() {
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					eventName: '<portlet:namespace />selectUsers',
+					eventName: '<portlet:namespace />selectSiteRole',
 					on: {
 						selectedItemChange: function(event) {
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
-								var addGroupUsersFm = $(document.<portlet:namespace />addGroupUsersFm);
+								form.append(selectedItem);
 
-								addGroupUsersFm.append(selectedItem);
-
-								submitForm(addGroupUsersFm);
+								submitForm(form, '<portlet:actionURL name="editUsersSiteRoles" />');
 							}
 						}
 					},
 					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="assign-users-to-this-site" />',
-					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_users.jsp" /></portlet:renderURL>'
+					title: '<liferay-ui:message key="assign-site-roles" />',
+					url: '<%= selectSiteRoleURL %>'
 				}
 			);
 
 			itemSelectorDialog.open();
+		}
+	</c:if>
+
+	function handleAddClick(event) {
+		event.preventDefault();
+
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			{
+				eventName: '<portlet:namespace />selectUsers',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItem = event.newVal;
+
+						if (selectedItem) {
+							var addGroupUsersFm = $(document.<portlet:namespace />addGroupUsersFm);
+
+							addGroupUsersFm.append(selectedItem);
+
+							submitForm(addGroupUsersFm);
+						}
+					}
+				},
+				'strings.add': '<liferay-ui:message key="done" />',
+				title: '<liferay-ui:message key="assign-users-to-this-site" />',
+				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_users.jsp" /></portlet:renderURL>'
+			}
+		);
+
+		itemSelectorDialog.open();
+	}
+
+	Liferay.componentReady('usersManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddClick);
 		}
 	);
 
@@ -317,30 +204,25 @@ Role role = usersDisplayContext.getRole();
 		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />roles').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true
-					},
-					eventName: '<portlet:namespace />selectSiteRole',
-					title: '<liferay-ui:message key="select-site-role" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_site_role.jsp" /><portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" /></portlet:renderURL>'
+	window.<portlet:namespace />selectRoles = function() {
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true
 				},
-				function(event) {
-					var uri = '<%= viewRoleURL %>';
+				eventName: '<portlet:namespace />selectSiteRole',
+				title: '<liferay-ui:message key="select-site-role" />',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_site_role.jsp" /><portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" /></portlet:renderURL>'
+			},
+			function(event) {
+				var uri = '<%= viewRoleURL %>';
 
-					uri = Liferay.Util.addParams('<portlet:namespace />roleId=' + event.id, uri);
+				uri = Liferay.Util.addParams('<portlet:namespace />roleId=' + event.id, uri);
 
-					location.href = uri;
-				}
-			);
-		}
-	);
+				location.href = uri;
+			}
+		);
+	}
 </aui:script>

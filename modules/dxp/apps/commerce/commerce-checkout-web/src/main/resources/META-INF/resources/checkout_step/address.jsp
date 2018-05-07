@@ -37,7 +37,7 @@ long commerceRegionId = BeanParamUtil.getLong(defaultCommerceAddress, request, "
 %>
 
 <div class="form-group-autofit">
-	<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="form-group-item">
+	<aui:select label="<%= selectLabel %>" name="commerceAddress" onChange='<%= renderResponse.getNamespace() + "selectAddress();" %>' wrapperCssClass="commerce-form-group-item-row form-group-item">
 		<aui:option label="add-new-address" value="0" />
 
 		<%
@@ -80,7 +80,7 @@ long commerceRegionId = BeanParamUtil.getLong(defaultCommerceAddress, request, "
 	</div>
 
 	<div class="add-street-link form-group-autofit">
-		<aui:a cssClass="form-group-item" disabled="<%= (commerceAddressId > 0) %>" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
+		<aui:a disabled="<%= (commerceAddressId > 0) %>" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
 	</div>
 
 	<div class="add-street-fields form-group-autofit hide">

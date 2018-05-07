@@ -24,49 +24,20 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 	items="<%= selectUsersDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= selectUsersDisplayContext.getClearResultsURL() %>"
+	componentId="usersManagementToolbar"
 	disabled="<%= selectUsersDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= selectUsersDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= selectUsersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="mvcPath" value="/select_users.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= selectUsersDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= selectUsersDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= selectUsersDisplayContext.getOrderByCol() %>"
-			orderByType="<%= selectUsersDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-			portletURL="<%= selectUsersDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= selectUsersDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= selectUsersDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= selectUsersDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= selectUsersDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectUsersDisplayContext.getSortingURL() %>"
+	totalItems="<%= selectUsersDisplayContext.getTotalItems() %>"
+	viewTypes="<%= selectUsersDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-select-users" name="fm">
 	<liferay-ui:membership-policy-error />

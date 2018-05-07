@@ -24,8 +24,9 @@ AUI.add(
 						value: {
 							basic: Liferay.Language.get('field-types-basic-elements'),
 							customized: Liferay.Language.get('field-types-customized-elements'),
-							element_set: Liferay.Language.get('element-sets'),
-							elements: Liferay.Language.get('elements')
+							elements: Liferay.Language.get('elements'),
+							elementSets: Liferay.Language.get('element-sets'),
+							emptyElementSetListMessage: Liferay.Language.get('there-are-no-element-sets-yet')
 						}
 					}
 				},
@@ -50,7 +51,7 @@ AUI.add(
 						if (Liferay.Browser.isMobile()) {
 							instance._eventHandlers.push(
 								boundingBox.delegate('click', instance._afterFieldSetItemClick.bind(instance), '.lfr-ddm-form-builder-field-set-item'),
-									boundingBox.delegate('click', instance._afterFieldTypeItemClick.bind(instance), '.lfr-ddm-form-builder-field-type-item')
+								boundingBox.delegate('click', instance._afterFieldTypeItemClick.bind(instance), '.lfr-ddm-form-builder-field-type-item')
 							);
 						}
 

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -181,6 +182,15 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
 				themeDisplay.getScopeGroupId(), classNameId, cpDefinitionId,
 				themeDisplay.getLanguageId(), true);
+
+		if (cpFriendlyURLEntry == null) {
+			cpFriendlyURLEntry =
+				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
+					themeDisplay.getScopeGroupId(), classNameId, cpDefinitionId,
+					LocaleUtil.toLanguageId(
+						themeDisplay.getSiteDefaultLocale()),
+					true);
+		}
 
 		if (cpFriendlyURLEntry == null) {
 			if (_log.isInfoEnabled()) {

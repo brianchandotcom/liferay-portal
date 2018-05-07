@@ -42,7 +42,7 @@ if (cpDefinitions == null) {
 
 					<div class="<%= carouselItemCssClass %>">
 						<div class="sidebar-header">
-							<h1><%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %></h1>
+							<h1><%= HtmlUtil.escape(cpDefinition.getName(languageId)) %></h1>
 
 							<div class="lfr-asset-categories sidebar-block">
 								<liferay-asset:asset-categories-summary

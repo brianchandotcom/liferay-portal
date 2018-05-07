@@ -138,6 +138,16 @@ public class CPSearchResultsDisplayContext {
 		return _displayStyleGroupId;
 	}
 
+	public String getName(Document document) {
+		String name = document.get(_locale, Field.NAME);
+
+		if (Validator.isNull(name)) {
+			name = document.get(Field.NAME);
+		}
+
+		return name;
+	}
+
 	public String getProductDefaultImage(
 			Document document, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -193,16 +203,6 @@ public class CPSearchResultsDisplayContext {
 
 	public String[] getSkus(Document document) throws Exception {
 		return document.getValues(CPDefinitionIndexer.FIELD_SKUS);
-	}
-
-	public String getTitle(Document document) {
-		String title = document.get(_locale, Field.TITLE);
-
-		if (Validator.isNull(title)) {
-			title = document.get(Field.TITLE);
-		}
-
-		return title;
 	}
 
 	public boolean isIgnoreSkuCombinations(Document document) {

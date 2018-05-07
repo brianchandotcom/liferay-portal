@@ -23,11 +23,11 @@ CPPreviewContentDisplayContext cpPreviewContentDisplayContext = (CPPreviewConten
 
 CPDefinition cpDefinition = cpPreviewContentDisplayContext.getCPDefinition();
 
-String cpDefinitionTitle = StringPool.BLANK;
+String cpDefinitionName = StringPool.BLANK;
 String defaultImageThumbnailSrc = StringPool.BLANK;
 
 if (cpDefinition != null) {
-	cpDefinitionTitle = cpDefinition.getTitle(languageId);
+	cpDefinitionName = cpDefinition.getName(languageId);
 	defaultImageThumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 }
 
@@ -42,7 +42,7 @@ PortletURL portletURL = cpPreviewContentDisplayContext.getPortletURL();
 	<div class="product-preview-header">
 		<img class="d-inline" src="<%= defaultImageThumbnailSrc %>" />
 
-		<h2 class="d-inline"><%= HtmlUtil.escape(cpDefinitionTitle) %></h2>
+		<h2 class="d-inline"><%= HtmlUtil.escape(cpDefinitionName) %></h2>
 	</div>
 
 	<div id="<portlet:namespace />productInstancesContainer">

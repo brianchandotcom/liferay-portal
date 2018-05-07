@@ -33,7 +33,7 @@
 	colspan="<%= 2 %>"
 >
 	<h6 class="text-default">
-		<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+		<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
 	</h6>
 
 	<h5>

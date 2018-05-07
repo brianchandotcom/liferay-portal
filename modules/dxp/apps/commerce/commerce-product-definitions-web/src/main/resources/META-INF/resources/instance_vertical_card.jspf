@@ -15,7 +15,7 @@
 --%>
 
 <liferay-frontend:vertical-card-header>
-	<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+	<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
 </liferay-frontend:vertical-card-header>
 
 <liferay-frontend:vertical-card-footer>

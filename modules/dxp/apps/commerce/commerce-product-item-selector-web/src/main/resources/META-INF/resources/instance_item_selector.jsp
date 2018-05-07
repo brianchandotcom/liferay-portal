@@ -84,7 +84,7 @@ PortletURL portletURL = cpInstanceItemSelectorViewDisplayContext.getPortletURL()
 				name="title"
 			>
 				<div class="commerce-product-definition-title" data-id="<%= cpDefinition.getCPDefinitionId() %>">
-					<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
+					<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 

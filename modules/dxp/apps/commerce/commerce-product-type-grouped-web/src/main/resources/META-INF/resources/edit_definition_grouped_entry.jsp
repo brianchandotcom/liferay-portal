@@ -33,7 +33,7 @@ groupedProductsURL.setParameter("screenNavigationCategoryKey", cpDefinitionGroup
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(groupedProductsURL.toString());
 
-renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()) + " - " + entryCPDefinition.getTitle(themeDisplay.getLanguageId()));
+renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()) + " - " + entryCPDefinition.getName(themeDisplay.getLanguageId()));
 %>
 
 <portlet:actionURL name="editCPDefinitionGroupedEntry" var="editCPDefinitionGroupedEntryActionURL">

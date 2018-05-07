@@ -147,8 +147,8 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 							<liferay-ui:search-container-column-text
 								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
-								name="title"
-								value="<%= HtmlUtil.escape(cpDefinition2.getTitle(languageId)) %>"
+								name="name"
+								value="<%= HtmlUtil.escape(cpDefinition2.getName(languageId)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
@@ -224,7 +224,7 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= cpDefinition.getTitle(languageId) %>" key="add-new-product-to-x" />',
+					title: '<liferay-ui:message arguments="<%= cpDefinition.getName(languageId) %>" key="add-new-product-to-x" />',
 					url: '<%= cpDefinitionLinkDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

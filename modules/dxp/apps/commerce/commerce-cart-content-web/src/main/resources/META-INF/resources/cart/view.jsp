@@ -107,7 +107,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 						name="description"
 					>
 						<a href="<%= commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
-							<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+							<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
 						</a>
 
 						<h6 class="text-default">

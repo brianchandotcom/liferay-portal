@@ -91,7 +91,7 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 
 								<div class="autofit-col autofit-col-expand">
 									<a class="compare-link" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
-										<%= cpDefinition.getTitle(languageId) %>
+										<%= cpDefinition.getName(languageId) %>
 									</a>
 								</div>
 						</li>

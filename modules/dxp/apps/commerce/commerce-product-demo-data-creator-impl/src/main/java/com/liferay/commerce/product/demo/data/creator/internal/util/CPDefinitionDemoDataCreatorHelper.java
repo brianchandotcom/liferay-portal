@@ -64,7 +64,7 @@ public class CPDefinitionDemoDataCreatorHelper
 		for (int i = 0; i < catalogJSONArray.length(); i++) {
 			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
 
-			String title = productJSONObject.getString("title");
+			String name = productJSONObject.getString("name");
 			String description = productJSONObject.getString("description");
 			String productTypeName = productJSONObject.getString(
 				"productTypeName");
@@ -81,7 +81,7 @@ public class CPDefinitionDemoDataCreatorHelper
 			// Commerce product definition
 
 			CPDefinition cpDefinition = createCPDefinition(
-				userId, groupId, title, description, productTypeName,
+				userId, groupId, name, description, productTypeName,
 				assetCategoryIds);
 
 			// Commerce product definition inventory
@@ -161,8 +161,8 @@ public class CPDefinitionDemoDataCreatorHelper
 		createCPDefinitionLinks(catalogJSONArray, serviceContext);
 	}
 
-	public CPDefinition getCPDefinitionByTitle(String title) {
-		return _cpDefinitions.get(title);
+	public CPDefinition getCPDefinitionByName(String name) {
+		return _cpDefinitions.get(name);
 	}
 
 	public void init() {
@@ -175,11 +175,11 @@ public class CPDefinitionDemoDataCreatorHelper
 	}
 
 	protected CPDefinition createCPDefinition(
-			long userId, long groupId, String title, String description,
+			long userId, long groupId, String name, String description,
 			String productTypeName, long[] assetCategoryIds)
 		throws PortalException {
 
-		CPDefinition cpDefinition = getCPDefinitionByTitle(title);
+		CPDefinition cpDefinition = getCPDefinitionByName(name);
 
 		if (cpDefinition != null) {
 			return cpDefinition;
@@ -221,13 +221,12 @@ public class CPDefinitionDemoDataCreatorHelper
 			expirationDateHour += 12;
 		}
 
-		Map<Locale, String> titleMap = Collections.singletonMap(
-			Locale.US, title);
+		Map<Locale, String> nameMap = Collections.singletonMap(Locale.US, name);
 		Map<Locale, String> descriptionMap = Collections.singletonMap(
 			Locale.US, description);
 
 		cpDefinition = _cpDefinitionLocalService.addCPDefinition(
-			titleMap, null, descriptionMap, titleMap, null, null, null,
+			nameMap, null, descriptionMap, nameMap, null, null, null,
 			productTypeName, false, true, false, false, 0, 10, 10, 10, 10, 0,
 			false, false, null, true, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
@@ -235,7 +234,7 @@ public class CPDefinitionDemoDataCreatorHelper
 			expirationDateHour, expirationDateMinute, true, false,
 			serviceContext);
 
-		_cpDefinitions.put(title, cpDefinition);
+		_cpDefinitions.put(name, cpDefinition);
 
 		return cpDefinition;
 	}
@@ -247,9 +246,9 @@ public class CPDefinitionDemoDataCreatorHelper
 		for (int i = 0; i < catalogJSONArray.length(); i++) {
 			JSONObject productJSONObject = catalogJSONArray.getJSONObject(i);
 
-			String title = productJSONObject.getString("title");
+			String name = productJSONObject.getString("name");
 
-			CPDefinition cpDefinition = getCPDefinitionByTitle(title);
+			CPDefinition cpDefinition = getCPDefinitionByName(name);
 
 			JSONArray cpDefinitionLinksJSONArray =
 				productJSONObject.getJSONArray("relatedProducts");
@@ -261,7 +260,7 @@ public class CPDefinitionDemoDataCreatorHelper
 			List<Long> cpDefinitionIdsList = new ArrayList<>();
 
 			for (int j = 0; j < cpDefinitionLinksJSONArray.length(); j++) {
-				CPDefinition cpDefinitionEntry = getCPDefinitionByTitle(
+				CPDefinition cpDefinitionEntry = getCPDefinitionByName(
 					cpDefinitionLinksJSONArray.getString(j));
 
 				cpDefinitionIdsList.add(cpDefinitionEntry.getCPDefinitionId());

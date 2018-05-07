@@ -16,7 +16,7 @@
 
 				productURL = commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay)
 
-				title = cpDefinition.getTitle(locale)
+				name = cpDefinition.getName(themeDisplay.getLanguageId())
 
 				price = commerceCartContentMiniDisplayContext.getFormattedPrice(curCommerceOrderItem)
 			/>
@@ -28,7 +28,7 @@
 
 				<div class="row">
 					<a href="${productURL}">
-						<strong>${title}</strong>
+						<strong>${name}</strong>
 					</a>
 				</div>
 

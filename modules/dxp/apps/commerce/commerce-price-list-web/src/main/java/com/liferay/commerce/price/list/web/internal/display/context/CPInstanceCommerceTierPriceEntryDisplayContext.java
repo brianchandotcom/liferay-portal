@@ -146,7 +146,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 
 				if (cpDefinition != null) {
 					sb.append(
-						cpDefinition.getTitle(themeDisplay.getLanguageId()));
+						cpDefinition.getName(themeDisplay.getLanguageId()));
 					sb.append(" - ");
 					sb.append(cpInstance.getSku());
 

@@ -38,7 +38,7 @@
 <div class="product-detail" id="<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent">
 	<div class="product-detail-header">
 		<div class="commerce-brand-name">Brand Name</div>
-		<h2 class="commerce-title">${cpDefinition.getTitle()}</h2>
+		<h2 class="commerce-title">${cpDefinition.getName()}</h2>
 
 		<div class="autofit-float autofit-row product-detail-secondary-info">
 			<div class="autofit-col">

@@ -150,8 +150,8 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 							<liferay-ui:search-container-column-text
 								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
-								name="product-title"
-								value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+								name="product-name"
+								value="<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

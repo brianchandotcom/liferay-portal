@@ -8,7 +8,7 @@
 
 				friendlyURL = cpSearchResultsDisplayContext.getProductFriendlyURL(curDocument)
 
-				title = cpSearchResultsDisplayContext.getTitle(curDocument)
+				name = cpSearchResultsDisplayContext.getName(curDocument)
 			/>
 
 			<div class="col-md-4">
@@ -18,7 +18,7 @@
 
 				<div>
 					<a href="${friendlyURL}">
-						<strong>${title}</strong>
+						<strong>${name}</strong>
 					</a>
 				</div>
 			</div>

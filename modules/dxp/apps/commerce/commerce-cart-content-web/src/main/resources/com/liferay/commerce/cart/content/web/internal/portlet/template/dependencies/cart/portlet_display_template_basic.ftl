@@ -17,7 +17,7 @@
 
 				productURL = commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay)
 
-				title = cpDefinition.getTitle(locale)
+				name = cpDefinition.getName(themeDisplay.getLanguageId())
 
 				price = commerceCartContentDisplayContext.getFormattedPrice(curCommerceOrderItem)
 
@@ -32,7 +32,7 @@
 					</td>
 					<td>
 						<a href="${productURL}">
-							<strong>${title}</strong>
+							<strong>${name}</strong>
 						</a>
 					</td>
 					<td>${price}</td>

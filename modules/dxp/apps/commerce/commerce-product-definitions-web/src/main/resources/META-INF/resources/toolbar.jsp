@@ -71,7 +71,7 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpDefinitionsDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpDefinitionsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"modified-date", "display-date", "title"} %>'
+			orderColumns='<%= new String[] {"modified-date", "display-date", "name"} %>'
 			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
 		/>
 

@@ -28,7 +28,7 @@ PortletURL portletURL = cpDefinitionsDisplayContext.getEditProductDefinitionURL(
 String title = LanguageUtil.get(request, "add-product");
 
 if (cpDefinition != null) {
-	title = cpDefinition.getTitle(languageId);
+	title = cpDefinition.getName(languageId);
 }
 
 Map<String, Object> data = new HashMap<>();

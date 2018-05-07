@@ -112,7 +112,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 													icon="documents-and-media"
 													resultRow="<%= row %>"
 													rowChecker="<%= cpDefinitionsDisplayContext.getRowChecker() %>"
-													title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+													title="<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>"
 													url="<%= rowURL.toString() %>"
 												>
 													<%@ include file="/definition_vertical_card.jspf" %>
@@ -126,7 +126,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 													imageUrl="<%= thumbnailSrc %>"
 													resultRow="<%= row %>"
 													rowChecker="<%= cpDefinitionsDisplayContext.getRowChecker() %>"
-													title="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+													title="<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>"
 													url="<%= rowURL.toString() %>"
 												>
 													<%@ include file="/definition_vertical_card.jspf" %>

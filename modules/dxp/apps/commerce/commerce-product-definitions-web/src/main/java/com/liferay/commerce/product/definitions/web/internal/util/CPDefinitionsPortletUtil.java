@@ -30,13 +30,13 @@ import com.liferay.commerce.product.util.comparator.CPAttachmentFileEntryPriorit
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionLinkPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionNameComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionSpecificationOptionValuePriorityComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
@@ -250,8 +250,8 @@ public class CPDefinitionsPortletUtil {
 			orderByComparator = new CPDefinitionModifiedDateComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("title")) {
-			orderByComparator = new CPDefinitionTitleComparator(orderByAsc);
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new CPDefinitionNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;

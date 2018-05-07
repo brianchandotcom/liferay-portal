@@ -81,8 +81,8 @@ cpDefinitionSearchContainer.setResults(cpDefinitions);
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
-					name="title"
-					value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+					name="name"
+					value="<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

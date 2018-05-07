@@ -42,7 +42,7 @@ if (cpDefinitionGroupedEntries == null) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(entryCPDefinition.getTitle(themeDisplay.getLanguageId())) %></h4>
+			<h4><%= HtmlUtil.escape(entryCPDefinition.getName(themeDisplay.getLanguageId())) %></h4>
 		</div>
 
 		<div class="sidebar-body">

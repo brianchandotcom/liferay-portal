@@ -215,7 +215,7 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= cpDefinition.getTitle(languageId) %>" key="add-new-specification-to-x" />',
+					title: '<liferay-ui:message arguments="<%= cpDefinition.getName(languageId) %>" key="add-new-specification-to-x" />',
 					url: '<%= cpDefinitionSpecificationOptionValueDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

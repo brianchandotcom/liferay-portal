@@ -38,7 +38,7 @@ PortletURL priceEntriesURL = renderResponse.createRenderURL();
 priceEntriesURL.setParameter("mvcRenderCommandName", "viewCommercePriceEntries");
 priceEntriesURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
 
-String title = cpDefinition.getTitle(languageId);
+String title = cpDefinition.getName(languageId);
 
 Map<String, Object> data = new HashMap<>();
 
@@ -178,8 +178,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 							<liferay-ui:search-container-column-text
 								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
-								name="product-title"
-								value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+								name="product-name"
+								value="<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

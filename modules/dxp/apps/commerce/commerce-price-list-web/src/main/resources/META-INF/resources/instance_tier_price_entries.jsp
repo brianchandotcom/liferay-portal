@@ -52,7 +52,7 @@ Map<String, Object> data = new HashMap<>();
 data.put("direction-right", StringPool.TRUE);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
-PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpInstanceCommerceTierPriceEntryDisplayContext.getEditProductDefinitionURL()), data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getName(languageId), String.valueOf(cpInstanceCommerceTierPriceEntryDisplayContext.getEditProductDefinitionURL()), data);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPDefinitionScreenNavigationConstants.CATEGORY_KEY_SKUS), productSkusURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, cpInstance.getSku(), instancePriceListsURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
@@ -156,8 +156,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					<liferay-ui:search-container-column-text
 						cssClass="important table-cell-content"
 						href="<%= rowURL %>"
-						name="product-title"
-						value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
+						name="product-name"
+						value="<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

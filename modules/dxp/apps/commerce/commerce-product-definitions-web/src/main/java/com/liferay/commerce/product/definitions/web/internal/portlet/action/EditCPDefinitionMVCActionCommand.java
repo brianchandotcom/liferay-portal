@@ -291,8 +291,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "titleMapAsXML");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "nameMapAsXML");
 		Map<Locale, String> shortDescriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "shortDescriptionMapAsXML");
@@ -305,12 +305,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "urlTitleMapAsXML");
 		Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "metaTitleMapAsXML");
-		Map<Locale, String> metaKeywordsMap =
-			LocalizationUtil.getLocalizationMap(
-				actionRequest, "metaKeywordsMapAsXML");
 		Map<Locale, String> metaDescriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "metaDescriptionMapAsXML");
+		Map<Locale, String> metaKeywordsMap =
+			LocalizationUtil.getLocalizationMap(
+				actionRequest, "metaKeywordsMapAsXML");
 		boolean published = ParamUtil.getBoolean(actionRequest, "published");
 
 		int displayDateMonth = ParamUtil.getInteger(
@@ -360,8 +360,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce product definition
 
 			cpDefinition = _cpDefinitionService.addCPDefinition(
-				titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-				metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+				nameMap, shortDescriptionMap, descriptionMap, urlTitleMap,
+				metaTitleMap, metaDescriptionMap, metaKeywordsMap,
 				productTypeName, true, null, published, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
@@ -384,8 +384,8 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			serviceContext.setAssetTagNames(getAssetTagNames(oldCPDefinition));
 
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
-				cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
-				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
+				cpDefinitionId, nameMap, shortDescriptionMap, descriptionMap,
+				urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap,
 				oldCPDefinition.isIgnoreSKUCombinations(), null, published,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,

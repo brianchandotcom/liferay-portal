@@ -89,7 +89,7 @@ PortletURL portletURL = commerceWishListDisplayContext.getPortletURL();
 				name="description"
 			>
 				<a href="<%= commerceWishListDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
-					<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
+					<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>
 				</a>
 
 				<h6 class="text-default">

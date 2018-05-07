@@ -60,7 +60,7 @@ List<Document> results = searchContainer.getResults();
 						<div class="card-row card-row-padded card-row-valign-top">
 							<div class="card-col-content">
 								<a class="truncate-text" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
-									<%= cpSearchResultsDisplayContext.getTitle(document) %>
+									<%= cpSearchResultsDisplayContext.getName(document) %>
 								</a>
 							</div>
 						</div>

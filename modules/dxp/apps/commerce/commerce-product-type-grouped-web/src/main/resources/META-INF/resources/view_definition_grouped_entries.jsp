@@ -27,7 +27,7 @@ PortletURL portletURL = cpDefinitionGroupedEntriesDisplayContext.getPortletURL()
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
-renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()));
+renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 %>
 
 <liferay-ui:error exception="<%= NoSuchCPDefinitionException.class %>" message="please-select-a-valid-product" />
@@ -147,8 +147,8 @@ renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()));
 							<liferay-ui:search-container-column-text
 								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
-								name="title"
-								value="<%= HtmlUtil.escape(entryCPDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+								name="name"
+								value="<%= HtmlUtil.escape(entryCPDefinition.getName(themeDisplay.getLanguageId())) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
@@ -223,7 +223,7 @@ renderResponse.setTitle(cpDefinition.getTitle(themeDisplay.getLanguageId()));
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= cpDefinition.getTitle(themeDisplay.getLanguageId()) %>" key="add-new-grouped-entry-to-x" />',
+					title: '<liferay-ui:message arguments="<%= cpDefinition.getName(themeDisplay.getLanguageId()) %>" key="add-new-grouped-entry-to-x" />',
 					url: '<%= cpDefinitionGroupedEntriesDisplayContext.getItemSelectorUrl() %>'
 				}
 			);

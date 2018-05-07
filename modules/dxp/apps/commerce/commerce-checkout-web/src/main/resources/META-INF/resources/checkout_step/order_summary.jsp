@@ -90,7 +90,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 								<div class="list-group-text">Brand</div>
 
 								<div class="list-group-title">
-									<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
+									<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>
 								</div>
 
 								<%

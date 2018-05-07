@@ -28,7 +28,7 @@ long cpDefinitionId = cpDefinitionVirtualSettingDisplayContext.getCPDefinitionId
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(catalogURL);
 
-renderResponse.setTitle(cpDefinition.getTitle(languageId));
+renderResponse.setTitle(cpDefinition.getName(languageId));
 %>
 
 <portlet:actionURL name="editProductDefinitionVirtualSetting" var="editProductDefinitionVirtualSettingActionURL" />

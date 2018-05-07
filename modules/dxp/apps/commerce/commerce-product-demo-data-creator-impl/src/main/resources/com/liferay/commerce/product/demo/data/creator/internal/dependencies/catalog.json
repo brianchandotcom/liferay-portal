@@ -13,6 +13,7 @@
 			"puzzle_bag_pink.jpg",
 			"puzzle_bag_gold.jpg"
 		],
+		"name": "Puzzle Small Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -102,8 +103,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Puzzle Small Bag"
+		]
 	},
 	{
 		"baseSKU": "HMMKBG",
@@ -120,6 +120,7 @@
 			"hammock_red.jpg",
 			"hammock_blue.jpg"
 		],
+		"name": "Hammock Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -214,8 +215,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Hammock Bag"
+		]
 	},
 	{
 		"baseSKU": "ELEMNB",
@@ -234,6 +234,7 @@
 			"elephant_mini_red.jpg",
 			"elephant_mini_blue.jpg"
 		],
+		"name": "Elephant Mini Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -330,8 +331,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Elephant Mini Bag"
+		]
 	},
 	{
 		"baseSKU": "FRTHBG",
@@ -349,6 +349,7 @@
 			"fortune_hobo_red.jpg",
 			"fortune_hobo_indigo.jpg"
 		],
+		"name": "Fortune Hobo Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -440,8 +441,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Fortune Hobo Bag"
+		]
 	},
 	{
 		"baseSKU": "PZLBG",
@@ -461,6 +461,7 @@
 			"puzzle_blue.jpg",
 			"puzzle_fuchsia.jpg"
 		],
+		"name": "Puzzle Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -570,8 +571,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Puzzle Bag"
+		]
 	},
 	{
 		"baseSKU": "AMZBG",
@@ -588,6 +588,7 @@
 			"amazona_mink.jpg",
 			"amazona_marine.jpg"
 		],
+		"name": "Amazona Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -690,8 +691,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Amazona Bag"
+		]
 	},
 	{
 		"baseSKU": "MDTPCH",
@@ -707,6 +707,7 @@
 			"medium_pouch_tan.jpg",
 			"medium_pouch_blue.jpg"
 		],
+		"name": "Medium T Pouch",
 		"optionCategories": [
 			{
 				"description": "",
@@ -788,8 +789,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Medium T Pouch"
+		]
 	},
 	{
 		"baseSKU": "AVNBG",
@@ -807,6 +807,7 @@
 			"avenue_stone.jpg",
 			"avenue_fuchsia.jpg"
 		],
+		"name": "Avenue Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -898,8 +899,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Avenue Bag"
+		]
 	},
 	{
 		"baseSKU": "FMKTBG",
@@ -916,6 +916,7 @@
 			"flamenco_marine.jpg",
 			"flamenco_pink.jpg"
 		],
+		"name": "Flamenco Knot Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1010,8 +1011,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Flamenco Knot Bag"
+		]
 	},
 	{
 		"baseSKU": "TPCH",
@@ -1030,6 +1030,7 @@
 			"pouch_blue.jpg",
 			"pouch_fuchsia.jpg"
 		],
+		"name": "T Pouch",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1126,8 +1127,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "T Pouch"
+		]
 	},
 	{
 		"baseSKU": "HMKSMB",
@@ -1147,6 +1147,7 @@
 			"hammock_small_orange.jpg",
 			"hammock_small_blue.jpg"
 		],
+		"name": "Hammock Small Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1256,8 +1257,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Hammock Small Bag"
+		]
 	},
 	{
 		"baseSKU": "JYCSMB",
@@ -1273,6 +1273,7 @@
 			"joyce_small_blue.jpg",
 			"joyce_small_orange.jpg"
 		],
+		"name": "Joyce Small Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1354,8 +1355,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Joyce Small Bag"
+		]
 	},
 	{
 		"baseSKU": "BCLNBG",
@@ -1374,6 +1374,7 @@
 			"barcelona_pink.jpg",
 			"barcelona_mink.jpg"
 		],
+		"name": "Barcelona Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1478,8 +1479,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Barcelona Bag"
+		]
 	},
 	{
 		"baseSKU": "GYBKPK",
@@ -1496,6 +1496,7 @@
 			"goya_tan.jpg",
 			"goya_indigo.jpg"
 		],
+		"name": "Goya Backpack",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1598,8 +1599,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Goya Backpack"
+		]
 	},
 	{
 		"baseSKU": "TMNBG",
@@ -1616,6 +1616,7 @@
 			"mini_red.jpg",
 			"mini_green.jpg"
 		],
+		"name": "T Mini Bag",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1710,8 +1711,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "T Mini Bag"
+		]
 	},
 	{
 		"baseSKU": "ADBSKB",
@@ -1725,6 +1725,7 @@
 		"images": [
 			"asym_skirt_black.jpg"
 		],
+		"name": "Asym Draped Button Skirt Black",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1816,8 +1817,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Asym Draped Button Skirt Black"
+		]
 	},
 	{
 		"baseSKU": "ASPSOM",
@@ -1831,6 +1831,7 @@
 		"images": [
 			"anagram_silk_pleated_skirt_orange_multicolour.jpg"
 		],
+		"name": "Anagram Silk Pleated Skirt Orange/Multicolour",
 		"optionCategories": [
 			{
 				"description": "",
@@ -1927,8 +1928,7 @@
 				"title": "Made in",
 				"value": "France"
 			}
-		],
-		"title": "Anagram Silk Pleated Skirt Orange/Multicolour"
+		]
 	},
 	{
 		"baseSKU": "KSSPBW",
@@ -1942,6 +1942,7 @@
 		"images": [
 			"knit_skirt_stripes_blue_white.jpg"
 		],
+		"name": "Knit Skirt Stripes Blue/White",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2028,8 +2029,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Knit Skirt Stripes Blue/White"
+		]
 	},
 	{
 		"baseSKU": "LSDDRS",
@@ -2044,6 +2044,7 @@
 			"long_sleeve_draped_dress_light_blue.jpg",
 			"long_sleeve_draped_dress_black.jpg"
 		],
+		"name": "Long Sleeve Draped Dress",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2147,8 +2148,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Long Sleeve Draped Dress"
+		]
 	},
 	{
 		"baseSKU": "SHDBBW",
@@ -2162,6 +2162,7 @@
 		"images": [
 			"shirtdress_baby_blue_white.jpg"
 		],
+		"name": "Shirtdress Baby Blue/White",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2247,8 +2248,7 @@
 				"title": "Made in",
 				"value": "France"
 			}
-		],
-		"title": "Shirtdress Baby Blue/White"
+		]
 	},
 	{
 		"baseSKU": "FMJNSB",
@@ -2262,6 +2262,7 @@
 		"images": [
 			"fisherman_jeans_blue.jpg"
 		],
+		"name": "Fisherman Jeans Blue",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2352,8 +2353,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Fisherman Jeans Blue"
+		]
 	},
 	{
 		"baseSKU": "FMSWSI",
@@ -2367,6 +2367,7 @@
 		"images": [
 			"fisherman_stonewashed_indigo.jpg"
 		],
+		"name": "Fisherman Stonewashed Indigo",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2462,8 +2463,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Fisherman Stonewashed Indigo"
+		]
 	},
 	{
 		"baseSKU": "TSLPPW",
@@ -2477,6 +2477,7 @@
 		"images": [
 			"tshirt_lollipops_white.jpg"
 		],
+		"name": "T-Shirt Lollipops White",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2564,8 +2565,7 @@
 				"title": "Made in",
 				"value": "Portugal"
 			}
-		],
-		"title": "T-Shirt Lollipops White"
+		]
 	},
 	{
 		"baseSKU": "TSFOYW",
@@ -2579,6 +2579,7 @@
 		"images": [
 			"tshirt_fire_of_youth_white.jpg"
 		],
+		"name": "T-Shirt Fire Of Youth White",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2666,8 +2667,7 @@
 				"title": "Made in",
 				"value": "Portugal"
 			}
-		],
-		"title": "T-Shirt Fire Of Youth White"
+		]
 	},
 	{
 		"baseSKU": "TSLDWB",
@@ -2681,6 +2681,7 @@
 		"images": [
 			"tshirt_loewe_dog_washed_black.jpg"
 		],
+		"name": "T-Shirt Loewe Dog Washed Black",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2769,8 +2770,7 @@
 				"title": "Made in",
 				"value": "Portugal"
 			}
-		],
-		"title": "T-Shirt Loewe Dog Washed Black"
+		]
 	},
 	{
 		"baseSKU": "TSLTPBR",
@@ -2784,6 +2784,7 @@
 		"images": [
 			"tshirt_loewe_tartan_patch_black_red.jpg"
 		],
+		"name": "T-Shirt Loewe Tartan Patch Black/Red",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2871,8 +2872,7 @@
 				"title": "Made in",
 				"value": "Portugal"
 			}
-		],
-		"title": "T-Shirt Loewe Tartan Patch Black/Red"
+		]
 	},
 	{
 		"baseSKU": "TSFOYP",
@@ -2887,6 +2887,7 @@
 			"tshirt_fire_of_youth_poster_white.jpg",
 			"tshirt_fire_of_youth_poster_black.jpg"
 		],
+		"name": "T-Shirt Fire Of Youth Poster",
 		"optionCategories": [
 			{
 				"description": "",
@@ -2987,8 +2988,7 @@
 				"title": "Made in",
 				"value": "Portugal"
 			}
-		],
-		"title": "T-Shirt Fire Of Youth Poster"
+		]
 	},
 	{
 		"baseSKU": "AMSRTW",
@@ -3002,6 +3002,7 @@
 		"images": [
 			"asymetric_shirt_white.jpg"
 		],
+		"name": "Asymetric Shirt White",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3098,8 +3099,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Asymetric Shirt White"
+		]
 	},
 	{
 		"baseSKU": "ASASMC",
@@ -3113,6 +3113,7 @@
 		"images": [
 			"anagram_silk_asym_shirt_multicolour.jpg"
 		],
+		"name": "Anagram Silk Asym Shirt Multicolour",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3209,8 +3210,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Anagram Silk Asym Shirt Multicolour"
+		]
 	},
 	{
 		"baseSKU": "ASCBBBW",
@@ -3224,6 +3224,7 @@
 		"images": [
 			"asymetric_shirt_contrast_bib_baby_blue_white.jpg"
 		],
+		"name": "Asymetric Shirt Contrast Bib Baby Blue/White",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3320,8 +3321,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Asymetric Shirt Contrast Bib Baby Blue/White"
+		]
 	},
 	{
 		"baseSKU": "LDCGPT",
@@ -3335,6 +3335,7 @@
 		"images": [
 			"loewe_detail_cardigan_petroleum.jpg"
 		],
+		"name": "Loewe Detail Cardigan Petroleum",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3416,8 +3417,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Loewe Detail Cardigan Petroleum"
+		]
 	},
 	{
 		"baseSKU": "AGSCGB",
@@ -3431,6 +3431,7 @@
 		"images": [
 			"anagram_silk_cardigan_blue.jpg"
 		],
+		"name": "Anagram Silk Cardigan Blue",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3517,8 +3518,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Anagram Silk Cardigan Blue"
+		]
 	},
 	{
 		"baseSKU": "CGLPBM",
@@ -3532,6 +3532,7 @@
 		"images": [
 			"cardigan_lollipops_black_multicolor.jpg"
 		],
+		"name": "Cardigan Lollipops Black/Multicolor",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3618,8 +3619,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Cardigan Lollipops Black/Multicolor"
+		]
 	},
 	{
 		"baseSKU": "DBLFCT",
@@ -3634,6 +3634,7 @@
 			"double_face_coat_camel.jpg",
 			"double_face_coat_grey.jpg"
 		],
+		"name": "Double Face Coat",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3741,8 +3742,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Double Face Coat"
+		]
 	},
 	{
 		"baseSKU": "SJKTB",
@@ -3756,6 +3756,7 @@
 		"images": [
 			"satin_jacket_black.jpg"
 		],
+		"name": "Satin Jacket Black",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3852,8 +3853,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Satin Jacket Black"
+		]
 	},
 	{
 		"baseSKU": "OSTCTB",
@@ -3867,6 +3867,7 @@
 		"images": [
 			"oversize_trenchcoat_blue.jpg"
 		],
+		"name": "Oversize Trenchcoat Blue",
 		"optionCategories": [
 			{
 				"description": "",
@@ -3943,8 +3944,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Oversize Trenchcoat Blue"
+		]
 	},
 	{
 		"baseSKU": "CTTRSB",
@@ -3958,6 +3958,7 @@
 		"images": [
 			"culotte_trousers_black.jpg"
 		],
+		"name": "Culotte Trousers Black",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4054,8 +4055,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Culotte Trousers Black"
+		]
 	},
 	{
 		"baseSKU": "CGTRSB",
@@ -4069,6 +4069,7 @@
 		"images": [
 			"cargo_trousers_black.jpg"
 		],
+		"name": "Cargo Trousers Black",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4160,8 +4161,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Cargo Trousers Black"
+		]
 	},
 	{
 		"baseSKU": "LGNBLK",
@@ -4175,6 +4175,7 @@
 		"images": [
 			"leggings_black.jpg"
 		],
+		"name": "Leggings Black",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4266,8 +4267,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Leggings Black"
+		]
 	},
 	{
 		"baseSKU": "ESPNPP",
@@ -4284,6 +4284,7 @@
 			"espadrille_nappa_orange.jpg",
 			"espadrille_nappa_pink.jpg"
 		],
+		"name": "Espadrille Nappa",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4403,8 +4404,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Espadrille Nappa"
+		]
 	},
 	{
 		"baseSKU": "ZPBSQB",
@@ -4418,6 +4418,7 @@
 		"images": [
 			"zip_boot_square_black.jpg"
 		],
+		"name": "Zip Boot Square Black",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4514,8 +4515,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Zip Boot Square Black"
+		]
 	},
 	{
 		"baseSKU": "ASKRSBS",
@@ -4529,6 +4529,7 @@
 		"images": [
 			"anklestrap_knot_rhinestones_black_silver.jpg"
 		],
+		"name": "Anklestrap Knot Rhinestones Black/Silver",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4625,8 +4626,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Anklestrap Knot Rhinestones Black/Silver"
+		]
 	},
 	{
 		"baseSKU": "SMLZWT",
@@ -4643,6 +4643,7 @@
 			"small_zip_wallet_orange.jpg",
 			"small_zip_wallet_blue.jpg"
 		],
+		"name": "Small Zip Wallet",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4716,8 +4717,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Small Zip Wallet"
+		]
 	},
 	{
 		"baseSKU": "CNTLWT",
@@ -4734,6 +4734,7 @@
 			"continental_wallet_red.jpg",
 			"continental_wallet_blue.jpg"
 		],
+		"name": "Continental Wallet",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4823,8 +4824,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Continental Wallet"
+		]
 	},
 	{
 		"baseSKU": "ZARNWT",
@@ -4840,6 +4840,7 @@
 			"zip_around_wallet_black.jpg",
 			"zip_around_wallet_orange.jpg"
 		],
+		"name": "Zip Around Wallet",
 		"optionCategories": [
 			{
 				"description": "",
@@ -4924,8 +4925,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Zip Around Wallet"
+		]
 	},
 	{
 		"baseSKU": "LPPERS",
@@ -4940,6 +4940,7 @@
 			"lollipop_earrings_blue.jpg",
 			"lollipop_earrings_red.jpg"
 		],
+		"name": "Lollipop Earrings",
 		"optionCategories": [
 			{
 				"description": "",
@@ -5011,8 +5012,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Lollipop Earrings"
+		]
 	},
 	{
 		"baseSKU": "WRBRCT",
@@ -5026,6 +5026,7 @@
 		"images": [
 			"wire_bracelet_gold_palladium.jpg"
 		],
+		"name": "Wire Bracelet",
 		"optionCategories": [
 			{
 				"description": "",
@@ -5084,8 +5085,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "Wire Bracelet"
+		]
 	},
 	{
 		"baseSKU": "LCHNNL",
@@ -5100,6 +5100,7 @@
 			"l_chain_necklace_gold.jpg",
 			"l_chain_necklace_palladium.jpg"
 		],
+		"name": "L Chain Necklace",
 		"optionCategories": [
 			{
 				"description": "",
@@ -5163,8 +5164,7 @@
 				"title": "Made in",
 				"value": "Spain"
 			}
-		],
-		"title": "L Chain Necklace"
+		]
 	},
 	{
 		"baseSKU": "ALNSGL",
@@ -5178,6 +5178,7 @@
 		"images": [
 			"alejandra_sunglasses_gold.jpg"
 		],
+		"name": "Alejandra Sunglasses",
 		"optionCategories": [
 			{
 				"description": "",
@@ -5236,8 +5237,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Alejandra Sunglasses"
+		]
 	},
 	{
 		"baseSKU": "VDRSGL",
@@ -5251,6 +5251,7 @@
 		"images": [
 			"vedra_sunglasses_black.jpg"
 		],
+		"name": "Vedra Sunglasses",
 		"optionCategories": [
 			{
 				"description": "",
@@ -5309,8 +5310,7 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Vedra Sunglasses"
+		]
 	},
 	{
 		"baseSKU": "FLPSGL",
@@ -5327,6 +5327,7 @@
 			"filipa_sunglasses_blue.jpg",
 			"filipa_sunglasses_pearl.jpg"
 		],
+		"name": "Filipa Sunglasses",
 		"optionCategories": [
 			{
 				"description": "",
@@ -5408,7 +5409,6 @@
 				"title": "Made in",
 				"value": "Italy"
 			}
-		],
-		"title": "Filipa Sunglasses"
+		]
 	}
 ]

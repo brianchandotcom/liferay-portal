@@ -84,7 +84,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 						<div class="list-group-title">
 							<a href="<%= commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay) %>">
-								<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+								<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
 							</a>
 						</div>
 

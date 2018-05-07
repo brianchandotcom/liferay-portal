@@ -71,7 +71,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 				</liferay-frontend:info-bar>
 			</c:if>
 
-			<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text">
+			<aui:input autoFocus="<%= true %>" label="name" localized="<%= true %>" name="nameMapAsXML" type="text">
 				<aui:validator name="required" />
 			</aui:input>
 
@@ -85,7 +85,9 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 			}
 			%>
 
-			<aui:field-wrapper label="full-description">
+			<aui:field-wrapper>
+				<label class="control-label" for="<portlet:namespace />descriptionMapAsXML"><liferay-ui:message key="full-description" /></label>
+
 				<div class="entry-content form-group">
 					<liferay-ui:input-localized
 						editorName="alloyeditor"
@@ -117,9 +119,9 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 			<aui:input label="meta-title" localized="<%= true %>" name="metaTitleMapAsXML" type="text" />
 
-			<aui:input label="meta-keywords" localized="<%= true %>" name="metaKeywordsMapAsXML" type="textarea" />
-
 			<aui:input label="meta-description" localized="<%= true %>" name="metaDescriptionMapAsXML" type="textarea" />
+
+			<aui:input label="meta-keywords" localized="<%= true %>" name="metaKeywordsMapAsXML" type="textarea" />
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="schedule">
@@ -202,19 +204,19 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 	<aui:script sandbox="<%= true %>" use="aui-base">
 		var form = $(document.<portlet:namespace />fm);
 
-		var titleInput = form.fm('titleMapAsXML');
+		var nameInput = form.fm('nameMapAsXML');
 		var urlInput = form.fm('urlTitleMapAsXML');
 		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
 
-		var onTitleInput = _.debounce(
+		var onNameInput = _.debounce(
 			function(event) {
-				urlInput.val(titleInput.val());
+				urlInput.val(nameInput.val());
 
-				urlTitleInputLocalized.updateInputLanguage(titleInput.val());
+				urlTitleInputLocalized.updateInputLanguage(nameInput.val());
 			},
 			200
 		);
 
-		titleInput.on('input', onTitleInput);
+		nameInput.on('input', onNameInput);
 	</aui:script>
 </c:if>

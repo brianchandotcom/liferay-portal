@@ -77,7 +77,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 									<div class="card-subtitle">Brand</div>
 									<div class="card-title">
 										<a href="<%= HtmlUtil.escape(cpCompareContentDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
-											<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+											<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
 										</a>
 									</div>
 								</div>

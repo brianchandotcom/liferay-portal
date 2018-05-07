@@ -12,7 +12,7 @@
 
 				friendlyURL = cpSearchResultsDisplayContext.getProductFriendlyURL(curDocument)
 
-				title = cpSearchResultsDisplayContext.getTitle(curDocument)
+				name = cpSearchResultsDisplayContext.getName(curDocument)
 
 				cpInstanceId = 0
 
@@ -49,7 +49,7 @@
 						<div class="autofit-row product-description">
 							<div class="autofit-col autofit-col-expand">
 								<div class="card-title">
-									<a href="${friendlyURL}">${title}</a>
+									<a href="${friendlyURL}">${name}</a>
 								</div>
 							</div>
 

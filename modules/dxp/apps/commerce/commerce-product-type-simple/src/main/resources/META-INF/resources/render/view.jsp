@@ -76,7 +76,7 @@ request.setAttribute("cpInstance", cpInstance);
 				</div>
 
 				<div class="col-lg-6 col-md-5">
-					<h1><%= cpDefinition.getTitle(languageId) %></h1>
+					<h1><%= cpDefinition.getName(languageId) %></h1>
 
 					<c:choose>
 						<c:when test="<%= cpInstance != null %>">

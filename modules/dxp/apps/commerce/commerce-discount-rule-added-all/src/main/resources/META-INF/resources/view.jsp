@@ -51,7 +51,7 @@ List<CPDefinition> cpDefinitions = addedAllCommerceDiscountRuleDisplayContext.ge
 	>
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
-			value="<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+			value="<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>"
 		/>
 
 		<liferay-ui:search-container-column-text>
@@ -112,7 +112,7 @@ List<CPDefinition> cpDefinitions = addedAllCommerceDiscountRuleDisplayContext.ge
 
 		var rowColumns = [];
 
-		rowColumns.push(item.title);
+		rowColumns.push(item.name);
 		rowColumns.push('<a class="float-right modify-link" data-rowId="' + item.cpDefinitionId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommerceDiscountRuleCPDefinitionIcon) %></a>');
 
 		A.Array.removeItem(<portlet:namespace />deleteCommerceDiscountRuleCPDefinitionIds, item.cpDefinitionId);

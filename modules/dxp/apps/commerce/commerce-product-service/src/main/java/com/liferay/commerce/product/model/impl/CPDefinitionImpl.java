@@ -266,14 +266,14 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 
 	@Override
 	public Map<Locale, String> getNameMap() {
-		if (_titleMap != null) {
-			return _titleMap;
+		if (_nameMap != null) {
+			return _nameMap;
 		}
 
-		_titleMap = CPDefinitionLocalServiceUtil.getCPDefinitionNameMap(
+		_nameMap = CPDefinitionLocalServiceUtil.getCPDefinitionNameMap(
 			getCPDefinitionId());
 
-		return _titleMap;
+		return _nameMap;
 	}
 
 	@Override
@@ -317,8 +317,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
-	public void setNameMap(Map<Locale, String> titleMap) {
-		_titleMap = titleMap;
+	public void setNameMap(Map<Locale, String> nameMap) {
+		_nameMap = nameMap;
 	}
 
 	@Override
@@ -338,8 +338,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	private Map<Locale, String> _metaDescriptionMap;
 	private Map<Locale, String> _metaKeywordsMap;
 	private Map<Locale, String> _metaTitleMap;
+	private Map<Locale, String> _nameMap;
 	private Map<Locale, String> _shortDescriptionMap;
-	private Map<Locale, String> _titleMap;
 	private Map<Locale, String> _urlTitleMap;
 
 }

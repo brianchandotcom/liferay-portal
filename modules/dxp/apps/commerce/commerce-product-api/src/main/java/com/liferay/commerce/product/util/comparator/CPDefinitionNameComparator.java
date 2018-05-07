@@ -21,31 +21,31 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionTitleComparator
+public class CPDefinitionNameComparator
 	extends OrderByComparator<CPDefinition> {
 
 	public static final String ORDER_BY_ASC =
-		"CPDefinitionLocalization.title ASC";
+		"CPDefinitionLocalization.name ASC";
 
 	public static final String ORDER_BY_DESC =
-		"CPDefinitionLocalization.title DESC";
+		"CPDefinitionLocalization.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"title"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CPDefinitionTitleComparator() {
+	public CPDefinitionNameComparator() {
 		this(false);
 	}
 
-	public CPDefinitionTitleComparator(boolean ascending) {
+	public CPDefinitionNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(CPDefinition cpDefinition1, CPDefinition cpDefinition2) {
-		String title1 = StringUtil.toLowerCase(cpDefinition1.getTitle());
-		String title2 = StringUtil.toLowerCase(cpDefinition2.getTitle());
+		String name1 = StringUtil.toLowerCase(cpDefinition1.getName());
+		String name2 = StringUtil.toLowerCase(cpDefinition2.getName());
 
-		int value = title1.compareTo(title2);
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

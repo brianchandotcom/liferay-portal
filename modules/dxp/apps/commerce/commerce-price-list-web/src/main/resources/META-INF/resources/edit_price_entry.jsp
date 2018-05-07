@@ -43,7 +43,7 @@ PortletURL editPriceListURL = renderResponse.createRenderURL();
 editPriceListURL.setParameter("mvcRenderCommandName", "editCommercePriceList");
 editPriceListURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
 
-String title = cpDefinition.getTitle(languageId);
+String title = cpDefinition.getName(languageId);
 
 Map<String, Object> data = new HashMap<>();
 

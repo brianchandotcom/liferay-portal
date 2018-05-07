@@ -79,7 +79,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 			Map<String, Object> data = new HashMap<>();
 
 			data.put("cp-definition-id", cpDefinition.getCPDefinitionId());
-			data.put("title", cpDefinition.getTitle(themeDisplay.getLanguageId()));
+			data.put("name", cpDefinition.getName(themeDisplay.getLanguageId()));
 
 			row.setData(data);
 
@@ -105,10 +105,10 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="title"
+				name="name"
 			>
 				<div class="commerce-product-definition-title" data-id="<%= cpDefinition.getCPDefinitionId() %>">
-					<%= HtmlUtil.escape(cpDefinition.getTitle(themeDisplay.getLanguageId())) %>
+					<%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %>
 				</div>
 			</liferay-ui:search-container-column-text>
 
@@ -167,7 +167,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 
 					var data = row.getDOM().dataset;
 
-					arr.push({cpDefinitionId : data.cpDefinitionId, title : data.title});
+					arr.push({cpDefinitionId : data.cpDefinitionId, name : data.name});
 				}
 			);
 

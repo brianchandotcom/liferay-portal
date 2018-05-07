@@ -46,7 +46,7 @@ if (commerceTierPriceEntries == null) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinition.getName(languageId)) %></h4>
 		</div>
 
 		<div class="sidebar-body">
@@ -56,10 +56,10 @@ if (commerceTierPriceEntries == null) {
 				<%= HtmlUtil.escape(String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId())) %>
 			</p>
 
-			<h5><liferay-ui:message key="title" /></h5>
+			<h5><liferay-ui:message key="name" /></h5>
 
 			<p>
-				<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>
+				<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
 			</p>
 
 			<h5><liferay-ui:message key="sku" /></h5>

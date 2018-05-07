@@ -21,7 +21,7 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.util.comparator.CPDefinitionDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionNameComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
@@ -54,7 +54,7 @@ public class CPItemSelectorViewUtil {
 		OrderByComparator<CPDefinition> orderByComparator = null;
 
 		if (orderByCol.equals("title")) {
-			orderByComparator = new CPDefinitionTitleComparator(orderByAsc);
+			orderByComparator = new CPDefinitionNameComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new CPDefinitionModifiedDateComparator(

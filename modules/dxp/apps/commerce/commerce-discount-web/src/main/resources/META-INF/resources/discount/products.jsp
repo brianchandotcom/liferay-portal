@@ -100,7 +100,7 @@ SearchContainer<CommerceDiscountRel> cpDefinitionCommerceDiscountRelSearchContai
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="name"
-					value="<%= HtmlUtil.escape((cpDefinition == null) ? StringPool.BLANK : cpDefinition.getTitle(themeDisplay.getLanguageId())) %>"
+					value="<%= HtmlUtil.escape((cpDefinition == null) ? StringPool.BLANK : cpDefinition.getName(themeDisplay.getLanguageId())) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

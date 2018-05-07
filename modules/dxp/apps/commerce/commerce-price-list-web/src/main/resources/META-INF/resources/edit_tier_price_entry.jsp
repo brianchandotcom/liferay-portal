@@ -62,7 +62,7 @@ data.put("direction-right", StringPool.TRUE);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "price-lists"), priceListsURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, commercePriceList.getName(), editPriceListURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), editPriceEntryURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getName(languageId), editPriceEntryURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "tier-price-entries"), tierPriceEntriesURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 

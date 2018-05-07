@@ -12,7 +12,7 @@
 
 			friendlyURL = cpSearchResultsDisplayContext.getProductFriendlyURL(curDocument)
 
-			title = cpSearchResultsDisplayContext.getTitle(curDocument)
+			name = cpSearchResultsDisplayContext.getName(curDocument)
 
 			cpInstanceId = 0
 
@@ -53,7 +53,7 @@
 						</div>
 
 						<div class="card-title">
-							<a href="${friendlyURL}">${title}</a>
+							<a href="${friendlyURL}">${name}</a>
 						</div>
 
 						<p class="card-subtitle product-sku">

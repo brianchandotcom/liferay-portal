@@ -74,7 +74,9 @@ else {
 		%>
 
 		<div>
-			<liferay-util:include page="/display/full_content.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/display/full_content.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="languageId" value="<%= LanguageUtil.getLanguageId(request) %>" />
+			</liferay-util:include>
 		</div>
 
 		<liferay-util:include page="/asset_html_metadata.jsp" servletContext="<%= application %>" />

@@ -887,6 +887,7 @@
 		<exception>CommerceOrderBillingAddress</exception>
 		<exception>CommerceOrderNoteContent</exception>
 		<exception>CommerceOrderPaymentMethod</exception>
+		<exception>CommerceOrderPrice</exception>
 		<exception>CommerceOrderPurchaseOrderNumber</exception>
 		<exception>CommerceOrderShippingAddress</exception>
 		<exception>CommerceOrderShippingMethod</exception>

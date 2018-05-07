@@ -26,7 +26,6 @@ import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
 import com.liferay.wiki.uad.test.WikiPageUADTestHelper;
 
 import org.junit.After;
@@ -88,7 +87,6 @@ public class WikiPageUADExporterTest extends BaseUADExporterTestCase<WikiPage>
 	private final List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	@Inject
 	private WikiPageUADTestHelper _wikiPageUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
+	@Inject(filter = "component.name=*.WikiPageUADExporter")
 	private UADExporter _uadExporter;
 }

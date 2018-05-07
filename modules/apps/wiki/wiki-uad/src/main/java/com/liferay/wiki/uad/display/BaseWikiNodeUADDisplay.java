@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Provides the base implementation for the WikiNode UAD display.
@@ -60,13 +59,8 @@ public abstract class BaseWikiNodeUADDisplay extends BaseModelUADDisplay<WikiNod
 	}
 
 	@Override
-	public String getKey() {
-		return WikiUADConstants.CLASS_NAME_WIKI_NODE;
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "WikiNode";
+	public Class<WikiNode> getTypeClass() {
+		return WikiNode.class;
 	}
 
 	@Override

@@ -65,8 +65,18 @@ public abstract class BaseWikiPageUADAnonymizer
 	}
 
 	@Override
+	public String getApplicationName() {
+		return WikiUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList("title", "content", "summary");
+	}
+
+	@Override
+	public Class<WikiPage> getTypeClass() {
+		return WikiPage.class;
 	}
 
 	@Override

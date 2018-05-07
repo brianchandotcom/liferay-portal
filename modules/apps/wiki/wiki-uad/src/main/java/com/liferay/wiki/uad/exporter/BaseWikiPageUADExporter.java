@@ -44,6 +44,11 @@ public abstract class BaseWikiPageUADExporter extends DynamicQueryUADExporter<Wi
 	}
 
 	@Override
+	public Class<WikiPage> getTypeClass() {
+		return WikiPage.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return wikiPageLocalService.getActionableDynamicQuery();
 	}

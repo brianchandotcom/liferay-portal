@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.exception.ContentException;
 import com.liferay.dynamic.data.mapping.exception.ContentNameException;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.service.base.DDMContentLocalServiceBaseImpl;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -105,7 +107,23 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(name, data);
+		try {
+			validate(name, data);
+		}
+		catch (ContentNameException cne) {
+			throw new ContentNameException(
+				StringBundler.concat(
+					cne.getMessage(), " for contentId ",
+					String.valueOf(contentId), StringPool.PERIOD),
+				cne.getCause());
+		}
+		catch (ContentException ce) {
+			throw new ContentException(
+				StringBundler.concat(
+					ce.getMessage(), " with contentId ",
+					String.valueOf(contentId), StringPool.PERIOD),
+				ce.getCause());
+		}
 
 		DDMContent content = ddmContentPersistence.findByPrimaryKey(contentId);
 
@@ -120,11 +138,12 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 
 	protected void validate(String name, String data) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new ContentNameException("Name is null");
+			throw new ContentNameException("DDMContent name is null");
 		}
 
 		if (Validator.isNull(data)) {
-			throw new ContentException("Data is null");
+			throw new ContentException(
+				"DDMContent data is null for content " + name);
 		}
 	}
 

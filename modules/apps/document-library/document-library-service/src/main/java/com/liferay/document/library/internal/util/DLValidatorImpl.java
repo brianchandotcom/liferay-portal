@@ -122,7 +122,8 @@ public final class DLValidatorImpl implements DLValidator {
 		throws FolderNameException {
 
 		if (!isValidName(directoryName)) {
-			throw new FolderNameException(directoryName);
+			throw new FolderNameException(
+				"Invalid folder name " + directoryName);
 		}
 	}
 
@@ -145,14 +146,15 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		if (!validFileExtension) {
-			throw new FileExtensionException(fileName);
+			throw new FileExtensionException(
+				"Invalid file extension for " + fileName);
 		}
 	}
 
 	@Override
 	public void validateFileName(String fileName) throws FileNameException {
 		if (!isValidName(fileName)) {
-			throw new FileNameException(fileName);
+			throw new FileNameException("Invalid file name " + fileName);
 		}
 
 		if (!DLWebDAVUtil.isRepresentableTitle(fileName)) {
@@ -166,7 +168,7 @@ public final class DLValidatorImpl implements DLValidator {
 		throws FileSizeException {
 
 		if (bytes == null) {
-			throw new FileSizeException(fileName);
+			throw new FileSizeException("File size is zero for " + fileName);
 		}
 
 		validateFileSize(fileName, bytes.length);
@@ -177,7 +179,7 @@ public final class DLValidatorImpl implements DLValidator {
 		throws FileSizeException {
 
 		if (file == null) {
-			throw new FileSizeException(fileName);
+			throw new FileSizeException("File is null for " + fileName);
 		}
 
 		validateFileSize(fileName, file.length());
@@ -189,7 +191,8 @@ public final class DLValidatorImpl implements DLValidator {
 
 		try {
 			if (is == null) {
-				throw new FileSizeException(fileName);
+				throw new FileSizeException(
+					"Input stream is null for " + fileName);
 			}
 
 			validateFileSize(fileName, is.available());
@@ -225,7 +228,10 @@ public final class DLValidatorImpl implements DLValidator {
 			PropsValues.DL_FILE_EXTENSIONS_STRICT_CHECK &&
 			!fileExtension.equals(sourceFileExtension)) {
 
-			throw new SourceFileNameException(sourceFileExtension);
+			throw new SourceFileNameException(
+				StringBundler.concat(
+					"File extension ", sourceFileExtension,
+					" is invalid for file name ", sourceFileName));
 		}
 	}
 

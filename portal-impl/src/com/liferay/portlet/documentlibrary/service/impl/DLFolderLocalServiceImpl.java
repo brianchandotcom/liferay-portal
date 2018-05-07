@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -1415,14 +1416,16 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			groupId, parentFolderId, name);
 
 		if (dlFileEntry != null) {
-			throw new DuplicateFileEntryException(name);
+			throw new DuplicateFileEntryException(
+				"A file entry already exists with title " + name);
 		}
 
 		DLFolder dlFolder = dlFolderPersistence.fetchByG_P_N(
 			groupId, parentFolderId, name);
 
 		if ((dlFolder != null) && (dlFolder.getFolderId() != folderId)) {
-			throw new DuplicateFolderNameException(name);
+			throw new DuplicateFolderNameException(
+				"A folder already exists with name " + name);
 		}
 	}
 
@@ -1439,7 +1442,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (folderName.contains(StringPool.SLASH)) {
-			throw new FolderNameException(folderName);
+			throw new FolderNameException(
+				StringBundler.concat(
+					"Folder name ", folderName,
+					" is invalid because it contains a ", StringPool.SLASH));
 		}
 	}
 

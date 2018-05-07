@@ -16,7 +16,6 @@ package com.liferay.contacts.uad.display;
 
 import com.liferay.contacts.constants.ContactsPortletKeys;
 import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
@@ -31,11 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY,
-	service = UADDisplay.class
-)
+@Component(immediate = true, service = UADDisplay.class)
 public class EntryUADDisplay extends BaseEntryUADDisplay {
 
 	@Override

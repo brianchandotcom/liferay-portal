@@ -14,7 +14,6 @@
 
 package com.liferay.contacts.uad.exporter;
 
-import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,10 +21,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY,
-	service = UADExporter.class
-)
+@Component(immediate = true, service = UADExporter.class)
 public class EntryUADExporter extends BaseEntryUADExporter {
 }

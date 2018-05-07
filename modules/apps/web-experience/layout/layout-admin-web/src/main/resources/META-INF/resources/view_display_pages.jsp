@@ -25,76 +25,22 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= displayPageDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= displayPageDisplayContext.getClearResultsURL() %>"
+	componentId="displayPagesManagementToolbar"
 	disabled="<%= displayPageDisplayContext.isDisabledDisplayPagesManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= displayPageDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= displayPageDisplayContext.getSearchActionURL() %>"
 	searchContainerId="displayPages"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon"} %>'
-			portletURL="<%= currentURLObj %>"
-			selectedDisplayStyle="<%= displayPageDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= displayPageDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY) %>">
-			<portlet:renderURL var="addDisplayPageURL">
-				<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
-				<portlet:param name="type" value="<%= String.valueOf(LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					id="addDisplayPageMenuItem"
-					title='<%= LanguageUtil.get(request, "add-display-page") %>'
-					url="<%= addDisplayPageURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= currentURLObj %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= displayPageDisplayContext.getOrderByCol() %>"
-			orderByType="<%= displayPageDisplayContext.getOrderByType() %>"
-			orderColumns="<%= displayPageDisplayContext.getOrderColumns() %>"
-			portletURL="<%= currentURLObj %>"
-		/>
-
-		<c:if test="<%= displayPageDisplayContext.isShowDisplayPagesSearch() %>">
-			<portlet:renderURL var="portletURL">
-				<portlet:param name="mvcPath" value="/view_display_pages.jsp" />
-				<portlet:param name="tabs1" value="display-pages" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="displayStyle" value="<%= displayPageDisplayContext.getDisplayStyle() %>" />
-			</portlet:renderURL>
-
-			<li>
-				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedDisplayPages"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showCreationMenu="<%= displayPageDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY) %>"
+	showSearch="<%= displayPageDisplayContext.isShowDisplayPagesSearch() %>"
+	sortingOrder="<%= displayPageDisplayContext.getOrderByType() %>"
+	sortingURL="<%= displayPageDisplayContext.getSortingURL() %>"
+	totalItems="<%= displayPageDisplayContext.getTotalItems() %>"
+	viewTypes="<%= displayPageDisplayContext.getViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteDisplayPageURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -308,23 +254,19 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 		}
 	);
 
-	var deleteSelectedDisplayPagesClickHandler = dom.on(
-		'#<portlet:namespace />deleteSelectedDisplayPages',
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+	window.<portlet:namespace />deleteSelectedDisplayPages = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
+		}
+	}
+
+	Liferay.componentReady('displayPagesManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddDisplayPageMenuItemClick);
 		}
 	);
 
-	var addDisplayPageMenuItem = document.getElementById('<portlet:namespace />addDisplayPageMenuItem');
-
-	addDisplayPageMenuItem.addEventListener('click', handleAddDisplayPageMenuItemClick);
-
 	function handleDestroyPortlet() {
-		addDisplayPageMenuItem.removeEventListener('click', handleAddDisplayPageMenuItemClick);
-		deleteSelectedDisplayPagesClickHandler.removeListener();
 		updateDisplayPageMenuItemClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

@@ -24,49 +24,20 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 	items="<%= selectOrganizationsDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= selectOrganizationsDisplayContext.getClearResultsURL() %>"
+	componentId="organizationsManagementToolbar"
 	disabled="<%= selectOrganizationsDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= selectOrganizationsDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= selectOrganizationsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="organizations"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="mvcPath" value="/select_organizations.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= selectOrganizationsDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= selectOrganizationsDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= selectOrganizationsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= selectOrganizationsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "type"} %>'
-			portletURL="<%= selectOrganizationsDisplayContext.getPortletURL() %>"
-		/>
-
-		<c:if test="<%= selectOrganizationsDisplayContext.isShowSearch() %>">
-			<li>
-				<aui:form action="<%= selectOrganizationsDisplayContext.getPortletURL() %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showSearch="<%= selectOrganizationsDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= selectOrganizationsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= selectOrganizationsDisplayContext.getSortingURL() %>"
+	totalItems="<%= selectOrganizationsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= selectOrganizationsDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container

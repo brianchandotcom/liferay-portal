@@ -71,7 +71,7 @@ public class DLRequestHelper extends BaseRequestHelper {
 	}
 
 	public DLPortletInstanceSettings getDLPortletInstanceSettings() {
-		if (_dlGroupServiceSettings != null) {
+		if (_dlPortletInstanceSettings != null) {
 			return _dlPortletInstanceSettings;
 		}
 

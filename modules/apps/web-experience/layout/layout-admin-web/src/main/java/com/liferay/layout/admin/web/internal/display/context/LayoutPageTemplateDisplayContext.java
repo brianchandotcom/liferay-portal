@@ -14,6 +14,11 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
@@ -22,6 +27,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,6 +64,50 @@ public class LayoutPageTemplateDisplayContext {
 		_request = request;
 	}
 
+	public List<DropdownItem>
+		geLayoutPageTemplateCollectionsActionDropdownItems() {
+
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteLayoutPageTemplateCollections();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public List<DropdownItem> geLayoutPageTemplateEntriesActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteLayoutPageTemplateEntries();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -70,6 +120,28 @@ public class LayoutPageTemplateDisplayContext {
 			LayoutAdminPortletKeys.GROUP_PAGES, "display-style", "icon");
 
 		return _displayStyle;
+	}
+
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public String getKeywords() {
@@ -122,6 +194,21 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return redirect;
+	}
+
+	public CreationMenu getLayoutPageTemplateCollectionsCreationMenu() {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/edit_layout_page_template_collection.jsp");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add-collection"));
+					});
+			}
+		};
 	}
 
 	public SearchContainer getLayoutPageTemplateCollectionsSearchContainer()
@@ -356,8 +443,89 @@ public class LayoutPageTemplateDisplayContext {
 		return _orderByType;
 	}
 
-	public String[] getOrderColumns() {
-		return new String[] {"create-date", "name"};
+	public PortletURL getPortletURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		long layoutPageTemplateCollectionId =
+			getLayoutPageTemplateCollectionId();
+
+		if (layoutPageTemplateCollectionId <= 0) {
+			portletURL.setParameter(
+				"mvcPath", "/view_layout_page_template_collections.jsp");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcPath", "/view_layout_page_template_entries.jsp");
+		}
+
+		portletURL.setParameter("tabs1", "page-templates");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		if (layoutPageTemplateCollectionId > 0) {
+			portletURL.setParameter(
+				"layoutPageTemplateCollectionId",
+				String.valueOf(layoutPageTemplateCollectionId));
+		}
+
+		String displayStyle = getDisplayStyle();
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		return portletURL;
+	}
+
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getTotalItems() throws Exception {
+		SearchContainer layoutPageTemplateCollectionsSearchContainer =
+			getLayoutPageTemplateCollectionsSearchContainer();
+
+		return layoutPageTemplateCollectionsSearchContainer.getTotal();
+	}
+
+	public List<ViewTypeItem> getViewTypeItems() {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+			}
+		};
 	}
 
 	public boolean isDisabledLayoutPageTemplateCollectionsManagementBar()
@@ -446,6 +614,46 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return false;
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "create-date"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "create-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "create-date"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "name"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "name");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "name"));
+					});
+			}
+		};
 	}
 
 	private boolean _hasLayoutPageTemplateCollectionsResults()

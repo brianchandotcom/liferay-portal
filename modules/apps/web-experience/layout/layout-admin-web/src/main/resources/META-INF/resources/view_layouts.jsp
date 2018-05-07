@@ -26,6 +26,20 @@
 	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
+<clay:management-toolbar
+	actionItems="<%= layoutsAdminDisplayContext.getActionDropdownItems() %>"
+	componentId="pagesManagementToolbar"
+	creationMenu="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() ? layoutsAdminDisplayContext.getCreationMenu() : null %>"
+	filterItems="<%= layoutsAdminDisplayContext.getFilterDropdownItems() %>"
+	searchContainerId="pages"
+	searchFormName="searchFm"
+	showSearch="<%= false %>"
+	sortingOrder="<%= layoutsAdminDisplayContext.getOrderByType() %>"
+	sortingURL="<%= layoutsAdminDisplayContext.getSortingURL() %>"
+	totalItems="<%= layoutsAdminDisplayContext.getTotalItems() %>"
+	viewTypes="<%= layoutsAdminDisplayContext.getViewTypeItems() %>"
+/>
+
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">
 
 	<%
@@ -36,54 +50,6 @@
 		<liferay-ui:message arguments='<%= "layout.types." + lte.getLayoutType() %>' key="the-first-page-cannot-be-of-type-x" />
 	</c:if>
 </liferay-ui:error>
-
-<liferay-frontend:management-bar
-	disabled="<%= false %>"
-	includeCheckBox="<%= true %>"
-	searchContainerId="pages"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= layoutsAdminDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= layoutsAdminDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() %>">
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-page") %>'
-					url="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys="<%= layoutsAdminDisplayContext.getNavigationKeys() %>"
-			portletURL="<%= layoutsAdminDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= layoutsAdminDisplayContext.getOrderByCol() %>"
-			orderByType="<%= layoutsAdminDisplayContext.getOrderByType() %>"
-			orderColumns="<%= layoutsAdminDisplayContext.getOrderColumns() %>"
-			portletURL="<%= layoutsAdminDisplayContext.getPortletURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedPages"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
 
 <portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -153,12 +119,9 @@
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedPages').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+	window.<portlet:namespace />deleteSelectedPages = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
 		}
-	);
+	}
 </aui:script>

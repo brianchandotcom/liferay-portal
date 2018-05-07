@@ -28,77 +28,22 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateEntriesActionDropdownItems() %>"
+	clearResultsURL="<%= layoutPageTemplateDisplayContext.getClearResultsURL() %>"
+	componentId="layoutPageTemplateEntriesManagementToolbar"
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
 	searchContainerId="layoutPageTemplateEntries"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon"} %>'
-			portletURL="<%= currentURLObj %>"
-			selectedDisplayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY) %>">
-			<portlet:renderURL var="addLayoutPageTemplateEntryURL">
-				<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
-				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					id="addLayoutPageTemplateEntryMenuItem"
-					title='<%= LanguageUtil.get(request, "add-page-template") %>'
-					url="<%= addLayoutPageTemplateEntryURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= currentURLObj %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= layoutPageTemplateDisplayContext.getOrderByCol() %>"
-			orderByType="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
-			orderColumns="<%= layoutPageTemplateDisplayContext.getOrderColumns() %>"
-			portletURL="<%= currentURLObj %>"
-		/>
-
-		<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>">
-			<portlet:renderURL var="portletURL">
-				<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
-				<portlet:param name="tabs1" value="page-templates" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
-				<portlet:param name="displayStyle" value="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" />
-			</portlet:renderURL>
-
-			<li>
-				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedLayoutPageTemplateEntries"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	showCreationMenu="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY) %>"
+	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>"
+	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
+	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
+	totalItems="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
+	viewTypes="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteLayoutPageTemplateEntryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -223,23 +168,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 		}
 	);
 
-	var deleteSelectedLayoutPageTemplateEntriesClickHandler = dom.on(
-		'#<portlet:namespace />deleteSelectedLayoutPageTemplateEntries',
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+	window.<portlet:namespace />deleteLayoutPageTemplateEntries = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
+		}
+	}
+
+	Liferay.componentReady('layoutPageTemplateEntriesManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddLayoutPageTemplateEntryMenuItemClick);
 		}
 	);
 
-	var addLayoutPageTemplateEntryMenuItem = document.getElementById('<portlet:namespace />addLayoutPageTemplateEntryMenuItem');
-
-	addLayoutPageTemplateEntryMenuItem.addEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
-
 	function handleDestroyPortlet() {
-		addLayoutPageTemplateEntryMenuItem.removeEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
-		deleteSelectedLayoutPageTemplateEntriesClickHandler.removeListener();
 		updateLayoutPageTemplateEntryMenuItemClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

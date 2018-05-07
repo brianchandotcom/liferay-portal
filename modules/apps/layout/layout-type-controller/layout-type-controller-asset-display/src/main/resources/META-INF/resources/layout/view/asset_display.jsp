@@ -20,10 +20,12 @@
 	<c:when test="<%= ListUtil.isNotEmpty(fragmentEntryLinks) %>">
 
 		<%
+		Map<String, Object> fieldValues = assetDisplayLayoutTypeControllerDisplayContext.getAssetDisplayFieldsValues();
+
 		StringBundler sb = new StringBundler(fragmentEntryLinks.size());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, request, response));
+			sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkMode.ASSET_DISPLAY_PAGE, fieldValues, request, response));
 		}
 		%>
 

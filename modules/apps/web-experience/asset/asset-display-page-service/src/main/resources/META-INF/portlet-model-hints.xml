@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.asset.display.page.model.AssetDisplayPageEntry">
+		<field name="assetDisplayPageEntryId" type="long" />
+		<field name="assetEntryId" type="long" />
+		<field name="layoutId" type="long" />
+	</model>
+</model-hints>

@@ -19,7 +19,9 @@ import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderPaymentMethodException;
@@ -38,6 +40,7 @@ import com.liferay.commerce.model.CommercePaymentEngineResult;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
@@ -227,7 +230,8 @@ public class CommerceOrderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder checkoutCommerceOrder(
-			long commerceOrderId, ServiceContext serviceContext)
+			long commerceOrderId, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order
@@ -240,9 +244,12 @@ public class CommerceOrderLocalServiceImpl
 
 		serviceContext.setScopeGroupId(commerceOrder.getGroupId());
 
-		BigDecimal subtotal =
-			commercePriceCalculationLocalService.getOrderSubtotal(
-				commerceOrder);
+		CommerceMoney subtotalCommerceMoney =
+			_commercePriceCalculation.getOrderSubtotal(
+				commerceOrder, commerceContext);
+
+		BigDecimal subtotal = subtotalCommerceMoney.getPrice();
+
 		BigDecimal shippingPrice = commerceOrder.getShippingPrice();
 
 		BigDecimal total = subtotal.add(shippingPrice);
@@ -487,7 +494,7 @@ public class CommerceOrderLocalServiceImpl
 	@Override
 	public void mergeGuestCommerceOrder(
 			long guestCommerceOrderId, long userCommerceOrderId,
-			ServiceContext serviceContext)
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		List<CommerceOrderItem> guestCommerceOrderItems =
@@ -528,14 +535,16 @@ public class CommerceOrderLocalServiceImpl
 				guestCommerceOrderItem.getQuantity(),
 				guestCommerceOrderItem.getShippedQuantity(),
 				guestCommerceOrderItem.getJson(),
-				guestCommerceOrderItem.getPrice(), serviceContext);
+				guestCommerceOrderItem.getPrice(), commerceContext,
+				serviceContext);
 		}
 
 		commerceOrderLocalService.deleteCommerceOrder(guestCommerceOrderId);
 	}
 
 	@Override
-	public CommerceOrder reorderCommerceOrder(long userId, long commerceOrderId)
+	public CommerceOrder reorderCommerceOrder(
+			long userId, long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException {
 
 		// Commerce order
@@ -590,7 +599,7 @@ public class CommerceOrderLocalServiceImpl
 				newCommerceOrder.getCommerceOrderId(),
 				commerceOrderItem.getCPInstanceId(),
 				commerceOrderItem.getQuantity(), 0, commerceOrderItem.getJson(),
-				commerceOrderItem.getPrice(), serviceContext);
+				commerceOrderItem.getPrice(), commerceContext, serviceContext);
 		}
 
 		return newCommerceOrder;
@@ -1298,6 +1307,9 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = CommercePaymentEngineRegistry.class)
 	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
+
+	@ServiceReference(type = CommercePriceCalculation.class)
+	private CommercePriceCalculation _commercePriceCalculation;
 
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;

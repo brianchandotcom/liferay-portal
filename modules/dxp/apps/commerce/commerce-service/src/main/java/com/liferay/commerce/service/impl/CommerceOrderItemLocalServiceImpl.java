@@ -15,6 +15,9 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.exception.CommerceOrderPriceException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.GuestCartItemMaxAllowedException;
 import com.liferay.commerce.exception.NoSuchOrderException;
@@ -24,6 +27,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -68,7 +72,7 @@ public class CommerceOrderItemLocalServiceImpl
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, int quantity,
 			int shippedQuantity, String json, BigDecimal price,
-			ServiceContext serviceContext)
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
@@ -85,13 +89,15 @@ public class CommerceOrderItemLocalServiceImpl
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpInstance.getCPDefinitionId());
 
-		validate(commerceOrder, cpDefinition, cpInstance, quantity);
-
 		if (price == null) {
-			price = commercePriceCalculationLocalService.getFinalPrice(
-				commerceOrder.getSiteGroupId(), commerceOrder.getOrderUserId(),
-				cpInstanceId, quantity);
+			CommerceMoney commerceMoney =
+				_commercePriceCalculation.getFinalPrice(
+					cpInstanceId, quantity, true, true, commerceContext);
+
+			price = commerceMoney.getPrice();
 		}
+
+		validate(commerceOrder, cpDefinition, cpInstance, quantity, price);
 
 		long commerceOrderItemId = counterLocalService.increment();
 
@@ -315,7 +321,7 @@ public class CommerceOrderItemLocalServiceImpl
 		validate(
 			commerceOrderItem.getCommerceOrder(),
 			commerceOrderItem.getCPDefinition(),
-			commerceOrderItem.getCPInstance(), newQuantity);
+			commerceOrderItem.getCPInstance(), newQuantity, price);
 
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setJson(json);
@@ -413,7 +419,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 	protected void validate(
 			CommerceOrder commerceOrder, CPDefinition cpDefinition,
-			CPInstance cpInstance, int quantity)
+			CPInstance cpInstance, int quantity, BigDecimal price)
 		throws PortalException {
 
 		validateCommerceOrder(commerceOrder);
@@ -436,6 +442,10 @@ public class CommerceOrderItemLocalServiceImpl
 				"CPInstance " + cpInstance.getCPInstanceId() +
 					" belongs to a different CPDefinition than " +
 						cpDefinition.getCPDefinitionId());
+		}
+
+		if (price == null) {
+			throw new CommerceOrderPriceException();
 		}
 
 		List<CommerceOrderValidatorResult> commerceCartValidatorResults =
@@ -463,6 +473,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@ServiceReference(type = CommerceOrderValidatorRegistry.class)
 	private CommerceOrderValidatorRegistry _commerceOrderValidatorRegistry;
+
+	@ServiceReference(type = CommercePriceCalculation.class)
+	private CommercePriceCalculation _commercePriceCalculation;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

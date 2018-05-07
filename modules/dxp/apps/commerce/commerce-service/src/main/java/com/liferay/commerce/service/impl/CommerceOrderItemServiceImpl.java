@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.base.CommerceOrderItemServiceBaseImpl;
@@ -39,7 +40,7 @@ public class CommerceOrderItemServiceImpl
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, int quantity,
 			int shippedQuantity, String json, BigDecimal price,
-			ServiceContext serviceContext)
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -47,7 +48,7 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, quantity, shippedQuantity, json,
-			price, serviceContext);
+			price, commerceContext, serviceContext);
 	}
 
 	@Override

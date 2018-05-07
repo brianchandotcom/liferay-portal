@@ -15,6 +15,7 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.internal.security.permission.CommerceOrderWorkflowPermissionChecker;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceOrderServiceBaseImpl;
@@ -95,7 +96,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
 	public CommerceOrder checkoutCommerceOrder(
-			long commerceOrderId, ServiceContext serviceContext)
+			long commerceOrderId, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -103,7 +105,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER);
 
 		return commerceOrderLocalService.checkoutCommerceOrder(
-			commerceOrderId, serviceContext);
+			commerceOrderId, commerceContext, serviceContext);
 	}
 
 	@Override
@@ -280,7 +282,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	@Override
 	public void mergeGuestCommerceOrder(
 			long guestCommerceOrderId, long userCommerceOrderId,
-			ServiceContext serviceContext)
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
@@ -289,18 +291,20 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			getPermissionChecker(), userCommerceOrderId, ActionKeys.UPDATE);
 
 		commerceOrderLocalService.mergeGuestCommerceOrder(
-			guestCommerceOrderId, userCommerceOrderId, serviceContext);
+			guestCommerceOrderId, userCommerceOrderId, commerceContext,
+			serviceContext);
 	}
 
 	@Override
-	public CommerceOrder reorderCommerceOrder(long commerceOrderId)
+	public CommerceOrder reorderCommerceOrder(
+			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException {
 
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(), commerceOrderId, ActionKeys.VIEW);
 
 		return commerceOrderLocalService.reorderCommerceOrder(
-			getUserId(), commerceOrderId);
+			getUserId(), commerceOrderId, commerceContext);
 	}
 
 	@Override

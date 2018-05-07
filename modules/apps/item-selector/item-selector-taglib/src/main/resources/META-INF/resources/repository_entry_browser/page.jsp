@@ -52,6 +52,27 @@ if (Validator.isNotNull(keywords)) {
 </liferay-util:html-top>
 
 <c:if test="<%= !showSearchInfo %>">
+
+	<%
+	ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse);
+	%>
+
+	<clay:management-toolbar
+		clearResultsURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
+		disabled="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.isDisabled() %>"
+		filterItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+		searchActionURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
+		searchFormMethod="POST"
+		searchFormName="searchFm"
+		selectable="<%= false %>"
+		showInfoButton="<%= false %>"
+		showSearch="<%= showSearch %>"
+		sortingOrder="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getOrderByType() %>"
+		sortingURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSortingURL()) %>"
+		totalItems="<%= repositoryEntriesCount %>"
+		viewTypes="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getViewTypes() %>"
+	/>
+
 	<liferay-frontend:management-bar>
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons

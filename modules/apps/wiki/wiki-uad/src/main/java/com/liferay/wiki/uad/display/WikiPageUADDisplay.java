@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -31,11 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_PAGE,
-	service = UADDisplay.class
-)
+@Component(immediate = true, service = UADDisplay.class)
 public class WikiPageUADDisplay extends BaseWikiPageUADDisplay {
 
 	@Override

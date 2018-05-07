@@ -65,7 +65,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{siteNavigationMenuItemId=");
 		sb.append(siteNavigationMenuItemId);
@@ -85,6 +85,8 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		sb.append(siteNavigationMenuId);
 		sb.append(", parentSiteNavigationMenuItemId=");
 		sb.append(parentSiteNavigationMenuItemId);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", typeSettings=");
@@ -129,6 +131,13 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		siteNavigationMenuItemImpl.setSiteNavigationMenuId(siteNavigationMenuId);
 		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
 
+		if (name == null) {
+			siteNavigationMenuItemImpl.setName("");
+		}
+		else {
+			siteNavigationMenuItemImpl.setName(name);
+		}
+
 		if (type == null) {
 			siteNavigationMenuItemImpl.setType("");
 		}
@@ -166,6 +175,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		siteNavigationMenuId = objectInput.readLong();
 
 		parentSiteNavigationMenuItemId = objectInput.readLong();
+		name = objectInput.readUTF();
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
 
@@ -197,6 +207,13 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 		objectOutput.writeLong(parentSiteNavigationMenuItemId);
 
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		if (type == null) {
 			objectOutput.writeUTF("");
 		}
@@ -223,6 +240,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 	public long modifiedDate;
 	public long siteNavigationMenuId;
 	public long parentSiteNavigationMenuItemId;
+	public String name;
 	public String type;
 	public String typeSettings;
 	public int order;

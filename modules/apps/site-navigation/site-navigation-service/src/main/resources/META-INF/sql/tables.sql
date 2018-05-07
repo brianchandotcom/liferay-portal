@@ -21,6 +21,7 @@ create table SiteNavigationMenuItem (
 	modifiedDate DATE null,
 	siteNavigationMenuId LONG,
 	parentSiteNavigationMenuItemId LONG,
+	name VARCHAR(255) null,
 	type_ VARCHAR(75) null,
 	typeSettings TEXT null,
 	order_ INTEGER

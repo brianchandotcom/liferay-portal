@@ -125,7 +125,7 @@ public class DLAdminManagementToolbarDisplayContext {
 										Constants.CHECKIN, "'}); void(0);"));
 								dropdownItem.setIcon("unlock");
 								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "unlock"));
+									LanguageUtil.get(_request, "checkin"));
 								dropdownItem.setQuickAction(true);
 							}));
 
@@ -140,7 +140,8 @@ public class DLAdminManagementToolbarDisplayContext {
 										Constants.CHECKOUT, "'}); void(0);"));
 								dropdownItem.setIcon("lock");
 								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "lock"));
+									LanguageUtil.get(
+										_request, "checkout[document]"));
 								dropdownItem.setQuickAction(true);
 							}));
 

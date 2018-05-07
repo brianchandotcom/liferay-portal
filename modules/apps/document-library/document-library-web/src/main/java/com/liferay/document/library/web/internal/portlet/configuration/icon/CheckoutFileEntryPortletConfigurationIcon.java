@@ -51,7 +51,7 @@ public class CheckoutFileEntryPortletConfigurationIcon
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "checkout");
+			getResourceBundle(getLocale(portletRequest)), "checkout[document]");
 	}
 
 	@Override

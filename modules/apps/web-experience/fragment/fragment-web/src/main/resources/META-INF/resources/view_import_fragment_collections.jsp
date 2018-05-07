@@ -81,6 +81,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 			%>
 
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
+			deleteFile: '<portlet:actionURL name="/fragment/import_fragment_collections"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /></portlet:actionURL>',
 			fallback: '#<portlet:namespace />fallback',
 			fileDescription: '<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
 			maxFileSize: '<%= UploadServletRequestConfigurationHelperUtil.getMaxSize() %> B',

@@ -126,7 +126,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="CPOptionId" type="long" />
-		<field localized="true" name="title" type="String">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String" />
@@ -150,7 +150,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionOptionRelId" type="long" />
-		<field localized="true" name="title" type="String">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
 		<field name="priority" type="double">
@@ -294,7 +294,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field localized="true" name="title" type="String">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String">
@@ -342,7 +342,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPOptionId" type="long" />
-		<field localized="true" name="title" type="String">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
 		<field name="priority" type="double">

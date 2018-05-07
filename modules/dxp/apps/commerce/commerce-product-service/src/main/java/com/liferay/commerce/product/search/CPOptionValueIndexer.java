@@ -55,8 +55,8 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 	public CPOptionValueIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.TITLE, Field.UID, FIELD_CP_OPTION_ID, FIELD_KEY);
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
+			Field.SCOPE_GROUP_ID, Field.UID, FIELD_CP_OPTION_ID, FIELD_KEY);
 	}
 
 	@Override
@@ -95,25 +95,25 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 		Document document = getBaseModelDocument(CLASS_NAME, cpOptionValue);
 
 		String cpOptionValueDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(cpOptionValue.getTitle());
+			LocalizationUtil.getDefaultLanguageId(cpOptionValue.getName());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			cpOptionValue.getTitle());
+			cpOptionValue.getName());
 
 		for (String languageId : languageIds) {
-			String title = cpOptionValue.getTitle(languageId);
+			String name = cpOptionValue.getName(languageId);
 
 			if (languageId.equals(cpOptionValueDefaultLanguageId)) {
-				document.addText(Field.TITLE, title);
+				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
-				title);
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				name);
 			document.addNumber(Field.PRIORITY, cpOptionValue.getPriority());
 			document.addText(FIELD_KEY, cpOptionValue.getKey());
-			document.addText(Field.CONTENT, title);
+			document.addText(Field.CONTENT, name);
 			document.addNumber(
 				FIELD_CP_OPTION_ID, cpOptionValue.getCPOptionId());
 		}
@@ -131,7 +131,7 @@ public class CPOptionValueIndexer extends BaseIndexer<CPOptionValue> {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
+			document, Field.NAME, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 

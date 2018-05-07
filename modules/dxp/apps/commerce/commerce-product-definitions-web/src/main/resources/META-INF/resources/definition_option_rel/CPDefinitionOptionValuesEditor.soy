@@ -19,8 +19,8 @@
 	{@param? _handleOptionValueDelated: any }
 	{@param? _handleOptionValueSaved: any }
 	{@param? _handleOptionValueSelected: any }
-	{@param? _handleTitleChange: any }
-	{@param? _newCPDefinitionOptionValueRelTitle: string}
+	{@param? _handleNameChange: any }
+	{@param? _newCPDefinitionOptionValueRelName: string}
 
 	<div id="{$id}">
 		{let $classes kind="text"}
@@ -56,7 +56,7 @@
 										<div class="form-container">
 											{call CPDefinitionOptionValueList.render}
 												{param currentCPDefinitionOptionValueRelId: $_currentCPDefinitionOptionValueRelId /}
-												{param newCPDefinitionOptionValueRelTitle: $_newCPDefinitionOptionValueRelTitle /}
+												{param newCPDefinitionOptionValueRelName: $_newCPDefinitionOptionValueRelName /}
 												{param cpDefinitionOptionValueRels: $_cpDefinitionOptionValueRels /}
 												{param pathThemeImages: $pathThemeImages /}
 												{param events: ['addOptionValue': $_handleAddOptionValue , 'optionValueSelected': $_handleOptionValueSelected] /}
@@ -77,7 +77,7 @@
 													{param namespace: $namespace /}
 													{param cpDefinitionOptionValueRelURL: $cpDefinitionOptionValueRelURL /}
 													{param pathThemeImages: $pathThemeImages /}
-													{param events: ['cancel': $_handleCancelEditing , 'optionValueDelated': $_handleOptionValueDelated , 'optionValueSaved': $_handleOptionValueSaved , 'titleChange': $_handleTitleChange] /}
+													{param events: ['cancel': $_handleCancelEditing , 'optionValueDelated': $_handleOptionValueDelated , 'optionValueSaved': $_handleOptionValueSaved , 'nameChange': $_handleNameChange] /}
 												{/call}
 											{/if}
 										</div>

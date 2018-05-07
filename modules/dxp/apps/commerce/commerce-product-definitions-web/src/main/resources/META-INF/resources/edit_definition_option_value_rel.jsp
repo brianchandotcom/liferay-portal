@@ -40,7 +40,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 		<liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="please-enter-a-unique-key" />
 
 		<aui:fieldset>
-			<aui:input id="optionValueTitle" name="title" />
+			<aui:input id="optionValueName" name="name" />
 
 			<aui:input name="priority" />
 
@@ -61,16 +61,16 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				var form = $(document.<portlet:namespace />cpDefinitionOptionValueRelfm);
 
 				var keyInput = form.fm('key');
-				var titleInput = form.fm('title');
+				var nameInput = form.fm('name');
 
-				var onTitleInput = _.debounce(
+				var onNameInput = _.debounce(
 					function(event) {
-						keyInput.val(titleInput.val());
+						keyInput.val(nameInput.val());
 					},
 					200
 				);
 
-				titleInput.on('input', onTitleInput);
+				nameInput.on('input', onNameInput);
 			</aui:script>
 		</c:if>
 	</div>

@@ -39,12 +39,12 @@
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-			stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+			stringJoiner.add(cpDefinitionOptionValueRel.getName(languageId));
 		}
 	%>
 
 		<h6 class="text-default">
-			<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
+			<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getName(languageId)) %></strong>
 
 			<%= HtmlUtil.escape(stringJoiner.toString()) %>
 		</h6>

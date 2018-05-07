@@ -55,7 +55,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String title = jsonObject.getString("title");
+			String name = jsonObject.getString("name");
 			String description = jsonObject.getString("description");
 			String ddmFormFieldTypeName = jsonObject.getString(
 				"ddmFormFieldTypeName");
@@ -64,8 +64,8 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 			boolean required = jsonObject.getBoolean("required");
 			boolean skuContributor = jsonObject.getBoolean("skuContributor");
 
-			Map<Locale, String> titleMap = Collections.singletonMap(
-				locale, title);
+			Map<Locale, String> nameMap = Collections.singletonMap(
+				locale, name);
 			Map<Locale, String> descriptionMap = Collections.singletonMap(
 				locale, description);
 
@@ -76,7 +76,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				_cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
-					cpDefinitionId, cpOptionId, titleMap, descriptionMap,
+					cpDefinitionId, cpOptionId, nameMap, descriptionMap,
 					ddmFormFieldTypeName, priority, facetable, required,
 					skuContributor, false, serviceContext);
 
@@ -149,7 +149,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 			return cpOption;
 		}
 
-		String title = jsonObject.getString("title");
+		String name = jsonObject.getString("name");
 		String description = jsonObject.getString("description");
 		String ddmFormFieldTypeName = jsonObject.getString(
 			"ddmFormFieldTypeName");
@@ -157,14 +157,14 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 		boolean required = jsonObject.getBoolean("required");
 		boolean skuContributor = jsonObject.getBoolean("skuContributor");
 
-		Map<Locale, String> titleMap = Collections.singletonMap(locale, title);
+		Map<Locale, String> nameMap = Collections.singletonMap(locale, name);
 		Map<Locale, String> descriptionMap = Collections.singletonMap(
 			locale, description);
 
 		ServiceContext serviceContext = getServiceContext(userId, groupId);
 
 		cpOption = _cpOptionLocalService.addCPOption(
-			titleMap, descriptionMap, ddmFormFieldTypeName, facetable, required,
+			nameMap, descriptionMap, ddmFormFieldTypeName, facetable, required,
 			skuContributor, key, serviceContext);
 
 		_cpOptions.put(key, cpOption);

@@ -193,7 +193,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 					themeDisplay.getScopeGroupId(), optionKey);
 
 				if (cpOption != null) {
-					label = cpOption.getTitle(themeDisplay.getLocale());
+					label = cpOption.getName(themeDisplay.getLocale());
 				}
 			}
 			else if (Validator.isNotNull(currentOptionKey)) {
@@ -207,7 +207,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 					CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
 						cpDefinitionOptionValueRels.get(0);
 
-					label = cpDefinitionOptionValueRel.getTitle(
+					label = cpDefinitionOptionValueRel.getName(
 						themeDisplay.getLocale());
 				}
 			}

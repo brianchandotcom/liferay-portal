@@ -78,10 +78,10 @@ public class CPDefinitionOptionValueRelsMVCResourceCommand
 				"cpDefinitionOptionValueRelId",
 				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
 			jsonObject.put(
-				"priority", cpDefinitionOptionValueRel.getPriority());
+				"name",
+				cpDefinitionOptionValueRel.getName(themeDisplay.getLocale()));
 			jsonObject.put(
-				"title",
-				cpDefinitionOptionValueRel.getTitle(themeDisplay.getLocale()));
+				"priority", cpDefinitionOptionValueRel.getPriority());
 
 			jsonArray.put(jsonObject);
 		}

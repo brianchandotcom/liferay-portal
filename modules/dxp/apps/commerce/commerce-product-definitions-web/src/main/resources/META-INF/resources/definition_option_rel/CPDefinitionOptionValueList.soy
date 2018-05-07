@@ -9,7 +9,7 @@
 	{@param? id: string}
 	{@param? cpDefinitionOptionValueRels: ?}
 	{@param? pathThemeImages: string}
-	{@param? newCPDefinitionOptionValueRelTitle: string}
+	{@param? newCPDefinitionOptionValueRelName: string}
 	{@param? _handleAddOptionValueClick: any}
 	{@param? _handleSelectCPDefinitionOptionValueRelClick: any}
 
@@ -29,7 +29,7 @@
 			<thead>
 				<tr>
 					<th class="table-cell-content">
-						<span class="text-truncate" title="Description">{msg desc=""}title{/msg}</span>
+						<span class="text-truncate" title="Description">{msg desc=""}name{/msg}</span>
 					</th>
 					<th>
 						<span class="text-truncate" title="Priority">{msg desc=""}priority{/msg}</span>
@@ -41,7 +41,7 @@
 				{if $currentCPDefinitionOptionValueRelId == '0'}
 					{call .cpDefinitionOptionValueRelRow}
 						{param id: '0' /}
-						{param title: $newCPDefinitionOptionValueRelTitle /}
+						{param name: $newCPDefinitionOptionValueRelName /}
 						{param selected: true /}
 						{param priority: 0 /}
 						{param _handleSelectCPDefinitionOptionValueRelClick: $_handleSelectCPDefinitionOptionValueRelClick /}
@@ -52,7 +52,7 @@
 					{foreach $cpDefinitionValueRel in $cpDefinitionOptionValueRels}
 						{call .cpDefinitionOptionValueRelRow}
 							{param id: $cpDefinitionValueRel.cpDefinitionOptionValueRelId /}
-							{param title: $cpDefinitionValueRel.title /}
+							{param name: $cpDefinitionValueRel.name /}
 							{param selected: $cpDefinitionValueRel.cpDefinitionOptionValueRelId == $currentCPDefinitionOptionValueRelId /}
 							{param priority: $cpDefinitionValueRel.priority /}
 							{param _handleSelectCPDefinitionOptionValueRelClick: $_handleSelectCPDefinitionOptionValueRelClick /}
@@ -70,7 +70,7 @@
  */
 {template .cpDefinitionOptionValueRelRow}
 	{@param id: string}
-	{@param title: null|string }
+	{@param name: null|string }
 	{@param? selected: bool}
 	{@param? priority: number}
 	{@param? _handleSelectCPDefinitionOptionValueRelClick: any}
@@ -84,12 +84,12 @@
 	<tr class="{$classes}" data-id="{$id}" onclick="{$_handleSelectCPDefinitionOptionValueRelClick}">
 		<td class="table-cell-content">
 			{if $id != 0}
-				{$title}
+				{$name}
 			{else}
-				{if $title == ''}
+				{if $name == ''}
 					[{msg desc=""}new-option-value{/msg}]
 				{else}
-					{$title}
+					{$name}
 				{/if}
 			{/if}
 		</td>

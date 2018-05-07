@@ -7,7 +7,7 @@
 {template .render}
 	{@param? currentCPOptionId: string}
 	{@param? id: string}
-	{@param? newOptionTitle: string}
+	{@param? newOptionName: string}
 	{@param? options: ?}
 	{@param? pathThemeImages: string}
 	{@param? _handleAddOptionClick: any}
@@ -33,7 +33,7 @@
 						<span class="text-truncate" title="Id">{msg desc=""}Id{/msg}</span>
 					</th>
 					<th class="table-cell-content">
-						<span class="text-truncate" title="Description">{msg desc=""}Title{/msg}</span>
+						<span class="text-truncate" title="Description">{msg desc=""}Name{/msg}</span>
 					</th>
 					<th></th>
 				</tr>
@@ -43,7 +43,7 @@
 				{if $currentCPOptionId == '0'}
 					{call .optionRow}
 						{param id: '0' /}
-						{param title: $newOptionTitle /}
+						{param name: $newOptionName /}
 						{param selected: true /}
 						{param showButton: false /}
 					{/call}
@@ -53,7 +53,7 @@
 					{foreach $option in $options}
 						{call .optionRow}
 							{param id: $option.cpOptionId /}
-							{param title: $option.title /}
+							{param name: $option.name /}
 							{param selected: $option.cpOptionId == $currentCPOptionId /}
 							{param showButton: $option.hasValues /}
 							{param _handleSelectOptionClick: $_handleSelectOptionClick /}
@@ -72,7 +72,7 @@
  */
 {template .optionRow}
 	{@param id: string}
-	{@param title: null|string }
+	{@param name: null|string }
 	{@param? selected: bool}
 	{@param? showButton: bool}
 	{@param? _handleSelectOptionClick: any}
@@ -92,12 +92,12 @@
 		</td>
 		<td class="table-cell-content">
 			{if $id != 0}
-				{$title}
+				{$name}
 			{else}
-				{if $title == ''}
+				{if $name == ''}
 					[{msg desc=""}new-option-template{/msg}]
 				{else}
-					{$title}
+					{$name}
 				{/if}
 			{/if}
 		</td>

@@ -123,8 +123,8 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			long cpOptionId, ActionRequest actionRequest)
 		throws Exception {
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String ddmFormFieldTypeName = ParamUtil.getString(
@@ -145,7 +145,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			// Add commerce product option
 
 			cpOption = _cpOptionService.addCPOption(
-				titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
+				nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
 				required, skuContributor, key, serviceContext);
 		}
 		else {
@@ -153,7 +153,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			// Update commerce product option
 
 			cpOption = _cpOptionService.updateCPOption(
-				cpOptionId, titleMap, descriptionMap, ddmFormFieldTypeName,
+				cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
 				facetable, required, skuContributor, key, serviceContext);
 		}
 

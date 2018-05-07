@@ -58,14 +58,14 @@ public class CPDefinitionOptionRelIndexer
 
 	public static final String FIELD_CP_DEFINITION_ID = "CPDefinitionId";
 
-	public static final String FIELD_DEFINITION_OPTION_VALUE_REL_TITLE =
-		"definitionOptionValueRelTitle";
+	public static final String FIELD_DEFINITION_OPTION_VALUE_REL_NAME =
+		"definitionOptionValueRelName";
 
 	public CPDefinitionOptionRelIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.TITLE, Field.UID);
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
+			Field.SCOPE_GROUP_ID, Field.UID);
 	}
 
 	@Override
@@ -96,15 +96,15 @@ public class CPDefinitionOptionRelIndexer
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchTerm(
-			searchQuery, searchContext, FIELD_DEFINITION_OPTION_VALUE_REL_TITLE,
+			searchQuery, searchContext, FIELD_DEFINITION_OPTION_VALUE_REL_NAME,
 			false);
 		addSearchLocalizedTerm(
-			searchQuery, searchContext, FIELD_DEFINITION_OPTION_VALUE_REL_TITLE,
+			searchQuery, searchContext, FIELD_DEFINITION_OPTION_VALUE_REL_NAME,
 			false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -146,47 +146,47 @@ public class CPDefinitionOptionRelIndexer
 
 		String cpDefinitionOptionRelDefaultLanguageId =
 			LocalizationUtil.getDefaultLanguageId(
-				cpDefinitionOptionRel.getTitle());
+				cpDefinitionOptionRel.getName());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			cpDefinitionOptionRel.getTitle());
+			cpDefinitionOptionRel.getName());
 
 		for (String languageId : languageIds) {
 			String description = cpDefinitionOptionRel.getDescription(
 				languageId);
-			String title = cpDefinitionOptionRel.getTitle(languageId);
-			List<String> cpDefinitionOptionValueRelTitlesList =
+			String name = cpDefinitionOptionRel.getName(languageId);
+			List<String> cpDefinitionOptionValueRelNamesList =
 				new ArrayList<>();
 
 			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 					cpDefinitionOptionValueRels) {
 
-				cpDefinitionOptionValueRelTitlesList.add(
-					cpDefinitionOptionValueRel.getTitle(languageId));
+				cpDefinitionOptionValueRelNamesList.add(
+					cpDefinitionOptionValueRel.getName(languageId));
 			}
 
-			String[] cpDefinitionOptionValueRelTitles =
-				cpDefinitionOptionValueRelTitlesList.toArray(
-					new String[cpDefinitionOptionValueRelTitlesList.size()]);
+			String[] cpDefinitionOptionValueRelNames =
+				cpDefinitionOptionValueRelNamesList.toArray(
+					new String[cpDefinitionOptionValueRelNamesList.size()]);
 
 			if (languageId.equals(cpDefinitionOptionRelDefaultLanguageId)) {
 				document.addText(
-					FIELD_DEFINITION_OPTION_VALUE_REL_TITLE,
-					cpDefinitionOptionValueRelTitles);
+					FIELD_DEFINITION_OPTION_VALUE_REL_NAME,
+					cpDefinitionOptionValueRelNames);
 				document.addText(Field.DESCRIPTION, description);
-				document.addText(Field.TITLE, title);
+				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
-				title);
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				name);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				description);
 
-			document.addText(Field.CONTENT, title);
+			document.addText(Field.CONTENT, name);
 
 			document.addKeyword(
 				FIELD_CP_DEFINITION_ID,
@@ -194,8 +194,8 @@ public class CPDefinitionOptionRelIndexer
 
 			document.addText(
 				LocalizationUtil.getLocalizedName(
-					FIELD_DEFINITION_OPTION_VALUE_REL_TITLE, languageId),
-				cpDefinitionOptionValueRelTitles);
+					FIELD_DEFINITION_OPTION_VALUE_REL_NAME, languageId),
+				cpDefinitionOptionValueRelNames);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -212,7 +212,7 @@ public class CPDefinitionOptionRelIndexer
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
+			document, Field.NAME, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 

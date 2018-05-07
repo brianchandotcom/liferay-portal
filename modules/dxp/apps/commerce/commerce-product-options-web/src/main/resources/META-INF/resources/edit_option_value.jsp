@@ -58,7 +58,7 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 		<liferay-ui:error exception="<%= CPOptionValueKeyException.class %>" message="please-enter-a-unique-key" />
 
 		<aui:fieldset>
-			<aui:input id="optionValueTitle" name="title" wrapperCssClass="commerce-product-option-value-title" />
+			<aui:input id="optionValueName" name="name" wrapperCssClass="commerce-product-option-value-title" />
 
 			<aui:input name="priority" />
 
@@ -81,16 +81,16 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 				var form = $(document.<portlet:namespace />optionValueFm);
 
 				var keyInput = form.fm('key');
-				var titleInput = form.fm('optionValueTitle');
+				var nameInput = form.fm('optionValueName');
 
-				var onTitleInput = _.debounce(
+				var onNameInput = _.debounce(
 					function(event) {
-						keyInput.val(titleInput.val());
+						keyInput.val(nameInput.val());
 					},
 					200
 				);
 
-				titleInput.on('input', onTitleInput);
+				nameInput.on('input', onNameInput);
 			</aui:script>
 		</c:if>
 	</div>

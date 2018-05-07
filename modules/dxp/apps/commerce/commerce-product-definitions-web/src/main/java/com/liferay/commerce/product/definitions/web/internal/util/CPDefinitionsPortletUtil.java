@@ -32,10 +32,10 @@ import com.liferay.commerce.product.util.comparator.CPDefinitionLinkPriorityComp
 import com.liferay.commerce.product.util.comparator.CPDefinitionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionNameComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelCreateDateComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelNameComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelPriorityComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionRelTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelNameComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelPriorityComparator;
-import com.liferay.commerce.product.util.comparator.CPDefinitionOptionValueRelTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPDefinitionSpecificationOptionValuePriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
@@ -148,8 +148,8 @@ public class CPDefinitionsPortletUtil {
 			orderByComparator = new CPDefinitionOptionRelPriorityComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("title")) {
-			orderByComparator = new CPDefinitionOptionRelTitleComparator(
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new CPDefinitionOptionRelNameComparator(
 				orderByAsc);
 		}
 
@@ -171,9 +171,9 @@ public class CPDefinitionsPortletUtil {
 			sort = SortFactoryUtil.create(
 				Field.CREATE_DATE + "_sortable", reverse);
 		}
-		else if (orderByCol.equals("title")) {
+		else if (orderByCol.equals("name")) {
 			sort = SortFactoryUtil.create(
-				Field.TYPE, Sort.STRING_TYPE, reverse);
+				Field.NAME, Sort.STRING_TYPE, reverse);
 		}
 		else if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
@@ -199,8 +199,8 @@ public class CPDefinitionsPortletUtil {
 			orderByComparator =
 				new CPDefinitionOptionValueRelPriorityComparator(orderByAsc);
 		}
-		else if (orderByCol.equals("title")) {
-			orderByComparator = new CPDefinitionOptionValueRelTitleComparator(
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new CPDefinitionOptionValueRelNameComparator(
 				orderByAsc);
 		}
 
@@ -222,9 +222,9 @@ public class CPDefinitionsPortletUtil {
 			sort = SortFactoryUtil.create(
 				Field.PRIORITY, Sort.INT_TYPE, reverse);
 		}
-		else if (orderByCol.equals("title")) {
+		else if (orderByCol.equals("name")) {
 			sort = SortFactoryUtil.create(
-				Field.TITLE, Sort.STRING_TYPE, reverse);
+				Field.NAME, Sort.STRING_TYPE, reverse);
 		}
 
 		return sort;

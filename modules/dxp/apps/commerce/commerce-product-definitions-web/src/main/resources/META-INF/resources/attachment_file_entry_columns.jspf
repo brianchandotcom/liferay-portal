@@ -51,7 +51,7 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 %>
 
 	<liferay-ui:search-container-column-text
-		name="<%= cpDefinitionOptionRel.getTitle(languageId) %>"
+		name="<%= cpDefinitionOptionRel.getName(languageId) %>"
 	>
 
 		<%
@@ -61,7 +61,7 @@ for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
 			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
 			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-				stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+				stringJoiner.add(cpDefinitionOptionValueRel.getName(languageId));
 			}
 		}
 		%>

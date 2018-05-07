@@ -157,8 +157,8 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		throws Exception {
 
 		long cpOptionId = ParamUtil.getLong(actionRequest, "cpOptionId");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String ddmFormFieldTypeName = ParamUtil.getString(
@@ -174,7 +174,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			_cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
-				cpDefinitionOptionRelId, cpOptionId, titleMap, descriptionMap,
+				cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
 				ddmFormFieldTypeName, priority, facetable, required,
 				skuContributor, serviceContext);
 

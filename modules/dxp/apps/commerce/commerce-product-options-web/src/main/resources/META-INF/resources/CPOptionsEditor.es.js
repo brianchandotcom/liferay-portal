@@ -21,7 +21,7 @@ class CPOptionsEditor extends Component {
 	}
 
 	_handleAddOption() {
-		this._newOptionTitle = '';
+		this._newOptionName = '';
 		this._currentOption = '0';
 	}
 
@@ -44,7 +44,7 @@ class CPOptionsEditor extends Component {
 					}
 				}
 				else if ((this._options && this._options.length == 0)) {
-					this._newOptionTitle = '';
+					this._newOptionName = '';
 					this._currentOption = '0';
 				}
 			}
@@ -73,12 +73,12 @@ class CPOptionsEditor extends Component {
 		this.loadOptions();
 	}
 
-	_handleTitleChange(newTitle) {
+	_handleNameChange(newName) {
 		if (this._currentOption == '0') {
-			this._newOptionTitle = newTitle;
+			this._newOptionName = newName;
 		}
 		else {
-			this._newOptionTitle = '';
+			this._newOptionName = '';
 		}
 	}
 
@@ -106,7 +106,7 @@ CPOptionsEditor.STATE = {
 	optionValuesURL: Config.string().required(),
 	optionValueURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
-	_newOptionTitle: Config.string().value(''),
+	_newOptionName: Config.string().value(''),
 	_options: Config.array().value([])
 };
 

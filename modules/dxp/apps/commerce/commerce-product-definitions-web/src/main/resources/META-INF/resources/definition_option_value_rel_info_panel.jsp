@@ -40,7 +40,7 @@ if (cpDefinitionOptionValueRels == null) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(cpDefinitionOptionValueRel.getTitle(languageId)) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinitionOptionValueRel.getName(languageId)) %></h4>
 		</div>
 
 		<div class="sidebar-body">

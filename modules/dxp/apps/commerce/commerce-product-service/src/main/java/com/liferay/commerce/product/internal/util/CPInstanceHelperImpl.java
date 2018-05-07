@@ -435,7 +435,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 							cpDefinitionOptionValueRelId);
 
 				if (cpDefinitionOptionValueRel != null) {
-					value = cpDefinitionOptionValueRel.getTitle(locale);
+					value = cpDefinitionOptionValueRel.getName(locale);
 				}
 				else {
 					value = valueJSONArray.getString(j);
@@ -443,7 +443,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 				KeyValuePair keyValuePair = new KeyValuePair();
 
-				keyValuePair.setKey(cpDefinitionOptionRel.getTitle(locale));
+				keyValuePair.setKey(cpDefinitionOptionRel.getName(locale));
 				keyValuePair.setValue(value);
 
 				values.add(keyValuePair);
@@ -668,7 +668,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 					ddmFormFieldOptions.addOptionLabel(
 						optionLabel, locale,
-						cpDefinitionOptionValueRel.getTitle(locale));
+						cpDefinitionOptionValueRel.getName(locale));
 				}
 
 				ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
@@ -677,7 +677,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			LocalizedValue localizedValue = new LocalizedValue(locale);
 
 			localizedValue.addString(
-				locale, cpDefinitionOptionRel.getTitle(locale));
+				locale, cpDefinitionOptionRel.getName(locale));
 
 			ddmFormField.setLabel(localizedValue);
 

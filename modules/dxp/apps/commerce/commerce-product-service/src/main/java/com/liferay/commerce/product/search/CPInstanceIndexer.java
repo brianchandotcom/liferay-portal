@@ -231,7 +231,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 					LocalizationUtil.getLocalizedName(
 						"ATTRIBUTE_" + cpOption.getKey() + "_TITLE",
 						languageId),
-					cpDefinitionOptionValueRel.getTitle(languageId));
+					cpDefinitionOptionValueRel.getName(languageId));
 
 				document.addText(
 					LocalizationUtil.getLocalizedName(
@@ -239,7 +239,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 							cpDefinitionOptionRel.getCPDefinitionOptionRelId() +
 								"_TITLE",
 						languageId),
-					cpDefinitionOptionValueRel.getTitle(languageId));
+					cpDefinitionOptionValueRel.getName(languageId));
 			}
 
 			document.addNumber(

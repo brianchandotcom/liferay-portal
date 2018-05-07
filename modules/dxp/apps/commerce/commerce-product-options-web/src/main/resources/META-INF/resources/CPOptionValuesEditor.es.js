@@ -23,13 +23,13 @@ class CPOptionValuesEditor extends Component {
 	}
 
 	_handleAddOptionValue() {
-		this._newOptionValueTitle = '';
+		this._newOptionValueName = '';
 		this._currentOptionValue = '0';
 	}
 
 	loadOptionValues() {
 		if (this.cpOptionId === undefined || this.cpOptionId == '0') {
-			this._newOptionValueTitle = '';
+			this._newOptionValueName = '';
 			this._currentOptionValue = '0';
 
 			return;
@@ -57,7 +57,7 @@ class CPOptionValuesEditor extends Component {
 					}
 				}
 				else if ((this._optionValues && this._optionValues.length == 0)) {
-					this._newOptionValueTitle = '';
+					this._newOptionValueName = '';
 					this._currentOptionValue = '0';
 				}
 			}
@@ -90,12 +90,12 @@ class CPOptionValuesEditor extends Component {
 		this.loadOptionValues();
 	}
 
-	_handleTitleChange(newTitle) {
+	_handleNameChange(newName) {
 		if (this._currentOptionValue == '0') {
-			this._newOptionValueTitle = newTitle;
+			this._newOptionValueName = newName;
 		}
 		else {
-			this._newOptionValueTitle = '';
+			this._newOptionValueName = '';
 		}
 	}
 }
@@ -113,7 +113,7 @@ CPOptionValuesEditor.STATE = {
 	optionValueURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
-	_newOptionValueTitle: Config.string().value(''),
+    _newOptionValueName: Config.string().value(''),
 	_optionValues: Config.array().value([])
 };
 

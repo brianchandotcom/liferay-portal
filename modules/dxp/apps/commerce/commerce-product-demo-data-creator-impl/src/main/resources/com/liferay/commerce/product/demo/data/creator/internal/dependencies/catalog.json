@@ -27,25 +27,25 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Blue",
-						"priority": 1,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 1
 					},
 					{
 						"key": "Pink",
-						"priority": 2,
-						"title": "Pink"
+						"name": "Pink",
+						"priority": 2
 					},
 					{
 						"key": "Gold",
-						"priority": 3,
-						"title": "Gold"
+						"name": "Gold",
+						"priority": 3
 					}
 				]
 			}
@@ -134,30 +134,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Tan",
-						"priority": 1,
-						"title": "Tan"
+						"name": "Tan",
+						"priority": 1
 					},
 					{
 						"key": "Black",
-						"priority": 2,
-						"title": "Black"
+						"name": "Black",
+						"priority": 2
 					},
 					{
 						"key": "Red",
-						"priority": 3,
-						"title": "Red"
+						"name": "Red",
+						"priority": 3
 					},
 					{
 						"key": "Blue",
-						"priority": 4,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 4
 					}
 				]
 			}
@@ -248,20 +248,20 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Yellow",
-						"priority": 2,
-						"title": "Yellow"
+						"name": "Yellow",
+						"priority": 2
 					},
 					{
 						"key": "Orange",
@@ -270,18 +270,18 @@
 					},
 					{
 						"key": "Pink",
-						"priority": 4,
-						"title": "Pink"
+						"name": "Pink",
+						"priority": 4
 					},
 					{
 						"key": "Red",
-						"priority": 5,
-						"title": "Red"
+						"name": "Red",
+						"priority": 5
 					},
 					{
 						"key": "Blue",
-						"priority": 6,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 6
 					}
 				]
 			}
@@ -363,35 +363,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Yellow",
-						"priority": 2,
-						"title": "Yellow"
+						"name": "Yellow",
+						"priority": 2
 					},
 					{
 						"key": "Tan",
-						"priority": 3,
-						"title": "Tan"
+						"name": "Tan",
+						"priority": 3
 					},
 					{
 						"key": "Red",
-						"priority": 4,
-						"title": "Red"
+						"name": "Red",
+						"priority": 4
 					},
 					{
 						"key": "Indigo",
-						"priority": 5,
-						"title": "Indigo"
+						"name": "Indigo",
+						"priority": 5
 					}
 				]
 			}
@@ -475,45 +475,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Yellow",
-						"priority": 2,
-						"title": "Yellow"
+						"name": "Yellow",
+						"priority": 2
 					},
 					{
 						"key": "Tan",
-						"priority": 3,
-						"title": "Tan"
+						"name": "Tan",
+						"priority": 3
 					},
 					{
 						"key": "Red",
-						"priority": 4,
-						"title": "Red"
+						"name": "Red",
+						"priority": 4
 					},
 					{
 						"key": "Stone",
-						"priority": 5,
-						"title": "Stone"
+						"name": "Stone",
+						"priority": 5
 					},
 					{
 						"key": "Blue",
-						"priority": 6,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 6
 					},
 					{
 						"key": "Fuchsia",
-						"priority": 7,
-						"title": "Fuchsia"
+						"name": "Fuchsia",
+						"priority": 7
 					}
 				]
 			}
@@ -602,30 +602,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Tan",
-						"priority": 2,
-						"title": "Tan"
+						"name": "Tan",
+						"priority": 2
 					},
 					{
 						"key": "Mink",
-						"priority": 3,
-						"title": "Mink"
+						"name": "Mink",
+						"priority": 3
 					},
 					{
 						"key": "Marine",
-						"priority": 4,
-						"title": "Marine"
+						"name": "Marine",
+						"priority": 4
 					}
 				]
 			}
@@ -721,25 +721,25 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Tan",
-						"priority": 2,
-						"title": "Tan"
+						"name": "Tan",
+						"priority": 2
 					},
 					{
 						"key": "Blue",
-						"priority": 3,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 3
 					}
 				]
 			}
@@ -821,35 +821,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Yellow",
-						"priority": 2,
-						"title": "Yellow"
+						"name": "Yellow",
+						"priority": 2
 					},
 					{
 						"key": "Red",
-						"priority": 3,
-						"title": "Red"
+						"name": "Red",
+						"priority": 3
 					},
 					{
 						"key": "Stone",
-						"priority": 4,
-						"title": "Stone"
+						"name": "Stone",
+						"priority": 4
 					},
 					{
 						"key": "Fuchsia",
-						"priority": 5,
-						"title": "Fuchsia"
+						"name": "Fuchsia",
+						"priority": 5
 					}
 				]
 			}
@@ -930,30 +930,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Tan",
-						"priority": 2,
-						"title": "Tan"
+						"name": "Tan",
+						"priority": 2
 					},
 					{
 						"key": "Marine",
-						"priority": 3,
-						"title": "Marine"
+						"name": "Marine",
+						"priority": 3
 					},
 					{
 						"key": "Pink",
-						"priority": 4,
-						"title": "Pink"
+						"name": "Pink",
+						"priority": 4
 					}
 				]
 			}
@@ -1044,40 +1044,40 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Yellow",
-						"priority": 2,
-						"title": "Yellow"
+						"name": "Yellow",
+						"priority": 2
 					},
 					{
 						"key": "Red",
-						"priority": 3,
-						"title": "Red"
+						"name": "Red",
+						"priority": 3
 					},
 					{
 						"key": "Orange",
-						"priority": 4,
-						"title": "Orange"
+						"name": "Orange",
+						"priority": 4
 					},
 					{
 						"key": "Blue",
-						"priority": 5,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 5
 					},
 					{
 						"key": "Fuchsia",
-						"priority": 6,
-						"title": "Fuchsia"
+						"name": "Fuchsia",
+						"priority": 6
 					}
 				]
 			}
@@ -1161,45 +1161,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Yellow",
-						"priority": 2,
-						"title": "Yellow"
+						"name": "Yellow",
+						"priority": 2
 					},
 					{
 						"key": "Red",
-						"priority": 3,
-						"title": "Red"
+						"name": "Red",
+						"priority": 3
 					},
 					{
 						"key": "Aqua",
-						"priority": 4,
-						"title": "Aqua"
+						"name": "Aqua",
+						"priority": 4
 					},
 					{
 						"key": "Tan",
-						"priority": 5,
-						"title": "Tan"
+						"name": "Tan",
+						"priority": 5
 					},
 					{
 						"key": "Orange",
-						"priority": 6,
-						"title": "Orange"
+						"name": "Orange",
+						"priority": 6
 					},
 					{
 						"key": "Blue",
-						"priority": 7,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 7
 					}
 				]
 			}
@@ -1287,25 +1287,25 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Blue",
-						"priority": 2,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 2
 					},
 					{
 						"key": "Orange",
-						"priority": 3,
-						"title": "Orange"
+						"name": "Orange",
+						"priority": 3
 					}
 				]
 			}
@@ -1388,40 +1388,40 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Yellow",
-						"priority": 2,
-						"title": "Yellow"
+						"name": "Yellow",
+						"priority": 2
 					},
 					{
 						"key": "Red",
-						"priority": 3,
-						"title": "Red"
+						"name": "Red",
+						"priority": 3
 					},
 					{
 						"key": "Orange",
-						"priority": 4,
-						"title": "Orange"
+						"name": "Orange",
+						"priority": 4
 					},
 					{
 						"key": "Pink",
-						"priority": 5,
-						"title": "Pink"
+						"name": "Pink",
+						"priority": 5
 					},
 					{
 						"key": "Mink",
-						"priority": 6,
-						"title": "Mink"
+						"name": "Mink",
+						"priority": 6
 					}
 				]
 			}
@@ -1510,30 +1510,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Red",
-						"priority": 2,
-						"title": "Red"
+						"name": "Red",
+						"priority": 2
 					},
 					{
 						"key": "Tan",
-						"priority": 3,
-						"title": "Tan"
+						"name": "Tan",
+						"priority": 3
 					},
 					{
 						"key": "Indigo",
-						"priority": 4,
-						"title": "Indigo"
+						"name": "Indigo",
+						"priority": 4
 					}
 				]
 			}
@@ -1630,30 +1630,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Yellow",
-						"priority": 2,
-						"title": "Yellow"
+						"name": "Yellow",
+						"priority": 2
 					},
 					{
 						"key": "Red",
-						"priority": 3,
-						"title": "Red"
+						"name": "Red",
+						"priority": 3
 					},
 					{
 						"key": "Green",
-						"priority": 4,
-						"title": "Green"
+						"name": "Green",
+						"priority": 4
 					}
 				]
 			}
@@ -1739,40 +1739,40 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					}
 				]
 			}
@@ -1845,45 +1845,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					},
 					{
 						"key": "44",
-						"priority": 7,
-						"title": "44"
+						"name": "44",
+						"priority": 7
 					}
 				]
 			}
@@ -1956,35 +1956,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XXS",
-						"priority": 1,
-						"title": "XXS"
+						"name": "XXS",
+						"priority": 1
 					},
 					{
 						"key": "XS",
-						"priority": 2,
-						"title": "XS"
+						"name": "XS",
+						"priority": 2
 					},
 					{
 						"key": "S",
-						"priority": 3,
-						"title": "S"
+						"name": "S",
+						"priority": 3
 					},
 					{
 						"key": "M",
-						"priority": 4,
-						"title": "M"
+						"name": "M",
+						"priority": 4
 					},
 					{
 						"key": "L",
-						"priority": 5,
-						"title": "L"
+						"name": "L",
+						"priority": 5
 					}
 				]
 			}
@@ -2058,20 +2058,20 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Light Blue",
-						"priority": 1,
-						"title": "Light Blue"
+						"name": "Light Blue",
+						"priority": 1
 					},
 					{
 						"key": "Black",
-						"priority": 2,
-						"title": "Black"
+						"name": "Black",
+						"priority": 2
 					}
 				]
 			},
@@ -2079,40 +2079,40 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 2,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					}
 				]
 			}
@@ -2176,35 +2176,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					}
 				]
 			}
@@ -2276,40 +2276,40 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					}
 				]
 			}
@@ -2381,45 +2381,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					},
 					{
 						"key": "44",
-						"priority": 7,
-						"title": "44"
+						"name": "44",
+						"priority": 7
 					}
 				]
 			}
@@ -2491,35 +2491,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XXS",
-						"priority": 1,
-						"title": "XXS"
+						"name": "XXS",
+						"priority": 1
 					},
 					{
 						"key": "XS",
-						"priority": 2,
-						"title": "XS"
+						"name": "XS",
+						"priority": 2
 					},
 					{
 						"key": "S",
-						"priority": 3,
-						"title": "S"
+						"name": "S",
+						"priority": 3
 					},
 					{
 						"key": "M",
-						"priority": 4,
-						"title": "M"
+						"name": "M",
+						"priority": 4
 					},
 					{
 						"key": "L",
-						"priority": 5,
-						"title": "L"
+						"name": "L",
+						"priority": 5
 					}
 				]
 			}
@@ -2593,35 +2593,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XS",
-						"priority": 1,
-						"title": "XS"
+						"name": "XS",
+						"priority": 1
 					},
 					{
 						"key": "S",
-						"priority": 2,
-						"title": "S"
+						"name": "S",
+						"priority": 2
 					},
 					{
 						"key": "M",
-						"priority": 3,
-						"title": "M"
+						"name": "M",
+						"priority": 3
 					},
 					{
 						"key": "L",
-						"priority": 4,
-						"title": "L"
+						"name": "L",
+						"priority": 4
 					},
 					{
 						"key": "XL",
-						"priority": 5,
-						"title": "XL"
+						"name": "XL",
+						"priority": 5
 					}
 				]
 			}
@@ -2695,35 +2695,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XS",
-						"priority": 1,
-						"title": "XS"
+						"name": "XS",
+						"priority": 1
 					},
 					{
 						"key": "S",
-						"priority": 2,
-						"title": "S"
+						"name": "S",
+						"priority": 2
 					},
 					{
 						"key": "M",
-						"priority": 3,
-						"title": "M"
+						"name": "M",
+						"priority": 3
 					},
 					{
 						"key": "L",
-						"priority": 4,
-						"title": "L"
+						"name": "L",
+						"priority": 4
 					},
 					{
 						"key": "XL",
-						"priority": 5,
-						"title": "XL"
+						"name": "XL",
+						"priority": 5
 					}
 				]
 			}
@@ -2798,35 +2798,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XS",
-						"priority": 1,
-						"title": "XS"
+						"name": "XS",
+						"priority": 1
 					},
 					{
 						"key": "S",
-						"priority": 2,
-						"title": "S"
+						"name": "S",
+						"priority": 2
 					},
 					{
 						"key": "M",
-						"priority": 3,
-						"title": "M"
+						"name": "M",
+						"priority": 3
 					},
 					{
 						"key": "L",
-						"priority": 4,
-						"title": "L"
+						"name": "L",
+						"priority": 4
 					},
 					{
 						"key": "XL",
-						"priority": 5,
-						"title": "XL"
+						"name": "XL",
+						"priority": 5
 					}
 				]
 			}
@@ -2901,20 +2901,20 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "White",
-						"priority": 1,
-						"title": "White"
+						"name": "White",
+						"priority": 1
 					},
 					{
 						"key": "Black",
-						"priority": 2,
-						"title": "Black"
+						"name": "Black",
+						"priority": 2
 					}
 				]
 			},
@@ -2922,35 +2922,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 2,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XS",
-						"priority": 1,
-						"title": "XS"
+						"name": "XS",
+						"priority": 1
 					},
 					{
 						"key": "S",
-						"priority": 2,
-						"title": "S"
+						"name": "S",
+						"priority": 2
 					},
 					{
 						"key": "M",
-						"priority": 3,
-						"title": "M"
+						"name": "M",
+						"priority": 3
 					},
 					{
 						"key": "L",
-						"priority": 4,
-						"title": "L"
+						"name": "L",
+						"priority": 4
 					},
 					{
 						"key": "XL",
-						"priority": 5,
-						"title": "XL"
+						"name": "XL",
+						"priority": 5
 					}
 				]
 			}
@@ -3016,45 +3016,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					},
 					{
 						"key": "44",
-						"priority": 7,
-						"title": "44"
+						"name": "44",
+						"priority": 7
 					}
 				]
 			}
@@ -3127,45 +3127,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					},
 					{
 						"key": "44",
-						"priority": 7,
-						"title": "44"
+						"name": "44",
+						"priority": 7
 					}
 				]
 			}
@@ -3238,45 +3238,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					},
 					{
 						"key": "44",
-						"priority": 7,
-						"title": "44"
+						"name": "44",
+						"priority": 7
 					}
 				]
 			}
@@ -3349,30 +3349,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XS",
-						"priority": 1,
-						"title": "XS"
+						"name": "XS",
+						"priority": 1
 					},
 					{
 						"key": "S",
-						"priority": 2,
-						"title": "S"
+						"name": "S",
+						"priority": 2
 					},
 					{
 						"key": "M",
-						"priority": 3,
-						"title": "M"
+						"name": "M",
+						"priority": 3
 					},
 					{
 						"key": "L",
-						"priority": 4,
-						"title": "L"
+						"name": "L",
+						"priority": 4
 					}
 				]
 			}
@@ -3445,35 +3445,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XXS",
-						"priority": 1,
-						"title": "XXS"
+						"name": "XXS",
+						"priority": 1
 					},
 					{
 						"key": "XS",
-						"priority": 2,
-						"title": "XS"
+						"name": "XS",
+						"priority": 2
 					},
 					{
 						"key": "S",
-						"priority": 3,
-						"title": "S"
+						"name": "S",
+						"priority": 3
 					},
 					{
 						"key": "M",
-						"priority": 4,
-						"title": "M"
+						"name": "M",
+						"priority": 4
 					},
 					{
 						"key": "L",
-						"priority": 5,
-						"title": "L"
+						"name": "L",
+						"priority": 5
 					}
 				]
 			}
@@ -3546,35 +3546,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XXS",
-						"priority": 1,
-						"title": "XXS"
+						"name": "XXS",
+						"priority": 1
 					},
 					{
 						"key": "XS",
-						"priority": 2,
-						"title": "XS"
+						"name": "XS",
+						"priority": 2
 					},
 					{
 						"key": "S",
-						"priority": 3,
-						"title": "S"
+						"name": "S",
+						"priority": 3
 					},
 					{
 						"key": "M",
-						"priority": 4,
-						"title": "M"
+						"name": "M",
+						"priority": 4
 					},
 					{
 						"key": "L",
-						"priority": 5,
-						"title": "L"
+						"name": "L",
+						"priority": 5
 					}
 				]
 			}
@@ -3648,20 +3648,20 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Camel",
-						"priority": 1,
-						"title": "Camel"
+						"name": "Camel",
+						"priority": 1
 					},
 					{
 						"key": "Grey",
-						"priority": 2,
-						"title": "Grey"
+						"name": "Grey",
+						"priority": 2
 					}
 				]
 			},
@@ -3669,35 +3669,35 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 2,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XXS",
-						"priority": 1,
-						"title": "XXS"
+						"name": "XXS",
+						"priority": 1
 					},
 					{
 						"key": "XS",
-						"priority": 2,
-						"title": "XS"
+						"name": "XS",
+						"priority": 2
 					},
 					{
 						"key": "S",
-						"priority": 3,
-						"title": "S"
+						"name": "S",
+						"priority": 3
 					},
 					{
 						"key": "M",
-						"priority": 4,
-						"title": "M"
+						"name": "M",
+						"priority": 4
 					},
 					{
 						"key": "L",
-						"priority": 5,
-						"title": "L"
+						"name": "L",
+						"priority": 5
 					}
 				]
 			}
@@ -3770,45 +3770,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					},
 					{
 						"key": "44",
-						"priority": 7,
-						"title": "44"
+						"name": "44",
+						"priority": 7
 					}
 				]
 			}
@@ -3881,25 +3881,25 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "XS",
-						"priority": 1,
-						"title": "XS"
+						"name": "XS",
+						"priority": 1
 					},
 					{
 						"key": "S",
-						"priority": 2,
-						"title": "S"
+						"name": "S",
+						"priority": 2
 					},
 					{
 						"key": "M",
-						"priority": 3,
-						"title": "M"
+						"name": "M",
+						"priority": 3
 					}
 				]
 			}
@@ -3972,45 +3972,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					},
 					{
 						"key": "44",
-						"priority": 7,
-						"title": "44"
+						"name": "44",
+						"priority": 7
 					}
 				]
 			}
@@ -4083,40 +4083,40 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					}
 				]
 			}
@@ -4189,40 +4189,40 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "32",
-						"priority": 1,
-						"title": "32"
+						"name": "32",
+						"priority": 1
 					},
 					{
 						"key": "34",
-						"priority": 2,
-						"title": "34"
+						"name": "34",
+						"priority": 2
 					},
 					{
 						"key": "36",
-						"priority": 3,
-						"title": "36"
+						"name": "36",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "40",
-						"priority": 5,
-						"title": "40"
+						"name": "40",
+						"priority": 5
 					},
 					{
 						"key": "42",
-						"priority": 6,
-						"title": "42"
+						"name": "42",
+						"priority": 6
 					}
 				]
 			}
@@ -4298,30 +4298,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Green",
-						"priority": 2,
-						"title": "Green"
+						"name": "Green",
+						"priority": 2
 					},
 					{
 						"key": "Orange",
-						"priority": 3,
-						"title": "Orange"
+						"name": "Orange",
+						"priority": 3
 					},
 					{
 						"key": "Pink",
-						"priority": 4,
-						"title": "Pink"
+						"name": "Pink",
+						"priority": 4
 					}
 				]
 			},
@@ -4329,45 +4329,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 2,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "35",
-						"priority": 1,
-						"title": "35"
+						"name": "35",
+						"priority": 1
 					},
 					{
 						"key": "36",
-						"priority": 2,
-						"title": "36"
+						"name": "36",
+						"priority": 2
 					},
 					{
 						"key": "37",
-						"priority": 3,
-						"title": "37"
+						"name": "37",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "39",
-						"priority": 5,
-						"title": "39"
+						"name": "39",
+						"priority": 5
 					},
 					{
 						"key": "40",
-						"priority": 6,
-						"title": "40"
+						"name": "40",
+						"priority": 6
 					},
 					{
 						"key": "41",
-						"priority": 7,
-						"title": "41"
+						"name": "41",
+						"priority": 7
 					}
 				]
 			}
@@ -4432,45 +4432,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "35",
-						"priority": 1,
-						"title": "35"
+						"name": "35",
+						"priority": 1
 					},
 					{
 						"key": "36",
-						"priority": 2,
-						"title": "36"
+						"name": "36",
+						"priority": 2
 					},
 					{
 						"key": "37",
-						"priority": 3,
-						"title": "37"
+						"name": "37",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "39",
-						"priority": 5,
-						"title": "39"
+						"name": "39",
+						"priority": 5
 					},
 					{
 						"key": "40",
-						"priority": 6,
-						"title": "40"
+						"name": "40",
+						"priority": 6
 					},
 					{
 						"key": "41",
-						"priority": 7,
-						"title": "41"
+						"name": "41",
+						"priority": 7
 					}
 				]
 			}
@@ -4543,45 +4543,45 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Size",
+				"name": "Size",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Size",
 				"values": [
 					{
 						"key": "35",
-						"priority": 1,
-						"title": "35"
+						"name": "35",
+						"priority": 1
 					},
 					{
 						"key": "36",
-						"priority": 2,
-						"title": "36"
+						"name": "36",
+						"priority": 2
 					},
 					{
 						"key": "37",
-						"priority": 3,
-						"title": "37"
+						"name": "37",
+						"priority": 3
 					},
 					{
 						"key": "38",
-						"priority": 4,
-						"title": "38"
+						"name": "38",
+						"priority": 4
 					},
 					{
 						"key": "39",
-						"priority": 5,
-						"title": "39"
+						"name": "39",
+						"priority": 5
 					},
 					{
 						"key": "40",
-						"priority": 6,
-						"title": "40"
+						"name": "40",
+						"priority": 6
 					},
 					{
 						"key": "41",
-						"priority": 7,
-						"title": "41"
+						"name": "41",
+						"priority": 7
 					}
 				]
 			}
@@ -4657,30 +4657,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Sand",
-						"priority": 2,
-						"title": "Sand"
+						"name": "Sand",
+						"priority": 2
 					},
 					{
 						"key": "Orange",
-						"priority": 3,
-						"title": "Orange"
+						"name": "Orange",
+						"priority": 3
 					},
 					{
 						"key": "Blue",
-						"priority": 4,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 4
 					}
 				]
 			}
@@ -4748,30 +4748,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Pink",
-						"priority": 1,
-						"title": "Pink"
+						"name": "Pink",
+						"priority": 1
 					},
 					{
 						"key": "Black",
-						"priority": 2,
-						"title": "Black"
+						"name": "Black",
+						"priority": 2
 					},
 					{
 						"key": "Red",
-						"priority": 3,
-						"title": "Red"
+						"name": "Red",
+						"priority": 3
 					},
 					{
 						"key": "Blue",
-						"priority": 4,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 4
 					}
 				]
 			}
@@ -4854,25 +4854,25 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Blue",
-						"priority": 1,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 1
 					},
 					{
 						"key": "Black",
-						"priority": 2,
-						"title": "Black"
+						"name": "Black",
+						"priority": 2
 					},
 					{
 						"key": "Orange",
-						"priority": 3,
-						"title": "Orange"
+						"name": "Orange",
+						"priority": 3
 					}
 				]
 			}
@@ -4954,20 +4954,20 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Blue",
-						"priority": 1,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 1
 					},
 					{
 						"key": "Red",
-						"priority": 2,
-						"title": "Red"
+						"name": "Red",
+						"priority": 2
 					}
 				]
 			}
@@ -5040,15 +5040,15 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Gold-Palladium",
-						"priority": 1,
-						"title": "Gold-Palladium"
+						"name": "Gold-Palladium",
+						"priority": 1
 					}
 				]
 			}
@@ -5114,20 +5114,20 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Gold",
-						"priority": 1,
-						"title": "Gold"
+						"name": "Gold",
+						"priority": 1
 					},
 					{
 						"key": "Palladium",
-						"priority": 2,
-						"title": "Palladium"
+						"name": "Palladium",
+						"priority": 2
 					}
 				]
 			}
@@ -5192,15 +5192,15 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Gold",
-						"priority": 1,
-						"title": "Gold"
+						"name": "Gold",
+						"priority": 1
 					}
 				]
 			}
@@ -5265,15 +5265,15 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					}
 				]
 			}
@@ -5341,30 +5341,30 @@
 				"ddmFormFieldTypeName": "select",
 				"facetable": true,
 				"key": "Color",
+				"name": "Color",
 				"priority": 1,
 				"required": true,
 				"skuContributor": true,
-				"title": "Color",
 				"values": [
 					{
 						"key": "Black",
-						"priority": 1,
-						"title": "Black"
+						"name": "Black",
+						"priority": 1
 					},
 					{
 						"key": "Havana",
-						"priority": 2,
-						"title": "Havana"
+						"name": "Havana",
+						"priority": 2
 					},
 					{
 						"key": "Blue",
-						"priority": 3,
-						"title": "Blue"
+						"name": "Blue",
+						"priority": 3
 					},
 					{
 						"key": "Pearl",
-						"priority": 4,
-						"title": "Pearl"
+						"name": "Pearl",
+						"priority": 4
 					}
 				]
 			}

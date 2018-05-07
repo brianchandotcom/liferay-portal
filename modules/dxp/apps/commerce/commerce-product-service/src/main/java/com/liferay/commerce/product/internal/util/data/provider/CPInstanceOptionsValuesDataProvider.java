@@ -157,7 +157,7 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 
 					data.add(
 						new KeyValuePair(
-							key, cpDefinitionOptionValueRel.getTitle(locale)));
+							key, cpDefinitionOptionValueRel.getName(locale)));
 				}
 
 				ddmDataProviderResponseOutputs.add(

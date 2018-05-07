@@ -67,18 +67,18 @@ public class CPOptionFacetsDisplayContext {
 		return cpOption.getKey();
 	}
 
-	public String getCPOptionTitle(long groupId, String fieldName)
+	public String getCPOptionName(long groupId, String fieldName)
 		throws PortalException {
 
 		CPOption cpOption = getCPOption(groupId, fieldName);
 
-		String title = StringPool.BLANK;
+		String name = StringPool.BLANK;
 
 		if (cpOption != null) {
-			title = cpOption.getTitle(_locale);
+			name = cpOption.getName(_locale);
 		}
 
-		return title;
+		return name;
 	}
 
 	public List<Facet> getFacets() {

@@ -141,8 +141,8 @@ productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOpt
 							<liferay-ui:search-container-column-text
 								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
-								name="title"
-								value="<%= HtmlUtil.escape(cpDefinitionOptionValueRel.getTitle(languageId)) %>"
+								name="name"
+								value="<%= HtmlUtil.escape(cpDefinitionOptionValueRel.getName(languageId)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

@@ -19,9 +19,10 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionValueNameComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValuePriorityComparator;
-import com.liferay.commerce.product.util.comparator.CPOptionValueTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionTitleComparator;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -72,8 +73,8 @@ public class CPOptionsPortletUtil {
 		if (orderByCol.equals("priority")) {
 			orderByComparator = new CPOptionValuePriorityComparator(orderByAsc);
 		}
-		else if (orderByCol.equals("title")) {
-			orderByComparator = new CPOptionValueTitleComparator(orderByAsc);
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new CPOptionValueNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;
@@ -90,8 +91,9 @@ public class CPOptionsPortletUtil {
 
 		Sort sort = null;
 
-		if (Objects.equals(orderByCol, "title")) {
-			sort = SortFactoryUtil.create("title", Sort.STRING_TYPE, reverse);
+		if (Objects.equals(orderByCol, "name")) {
+			sort = SortFactoryUtil.create(
+				Field.NAME, Sort.STRING_TYPE, reverse);
 		}
 		else if (Objects.equals(orderByCol, "priority")) {
 			sort = SortFactoryUtil.create("priority", Sort.INT_TYPE, reverse);

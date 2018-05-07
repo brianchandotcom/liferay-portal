@@ -14,41 +14,38 @@
 
 package com.liferay.commerce.product.util.comparator;
 
-import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
-public class CPDefinitionOptionValueRelTitleComparator
-	extends OrderByComparator<CPDefinitionOptionValueRel> {
+public class CPOptionValueNameComparator
+	extends OrderByComparator<CPOptionValue> {
 
-	public static final String ORDER_BY_ASC = "title ASC";
+	public static final String ORDER_BY_ASC = "CPOptionValue.name ASC";
 
-	public static final String ORDER_BY_DESC = "title DESC";
+	public static final String ORDER_BY_DESC = "CPOptionValue.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"title"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public CPDefinitionOptionValueRelTitleComparator() {
+	public CPOptionValueNameComparator() {
 		this(false);
 	}
 
-	public CPDefinitionOptionValueRelTitleComparator(boolean ascending) {
+	public CPOptionValueNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel1,
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel2) {
+		CPOptionValue cpOptionValue1, CPOptionValue cpOptionValue2) {
 
-		String title1 = StringUtil.toLowerCase(
-			cpDefinitionOptionValueRel1.getTitle());
-		String title2 = StringUtil.toLowerCase(
-			cpDefinitionOptionValueRel1.getTitle());
+		String name1 = StringUtil.toLowerCase(cpOptionValue1.getName());
+		String name2 = StringUtil.toLowerCase(cpOptionValue2.getName());
 
-		int value = title1.compareTo(title2);
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

@@ -45,15 +45,15 @@ class CPDefinitionOptionValueDetail extends Component {
 
 				globalEval.runScriptsInElement(optionValueDetail);
 
-				var title = optionValueDetail.querySelector('#' + instance.namespace + 'optionValueTitle');
+				var name = optionValueDetail.querySelector('#' + instance.namespace + 'optionValueName');
 
-				if (title) {
-					title.addEventListener(
+				if (name) {
+                    name.addEventListener(
 						'keyup',
 						(event) => {
 							var target = event.target;
 
-							instance.emit('titleChange', target.value);
+							instance.emit('nameChange', target.value);
 						}
 					);
 				}

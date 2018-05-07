@@ -19,8 +19,8 @@
 	{@param? _handleoptionDeleted: any }
 	{@param? _handleOptionSaved: any }
 	{@param? _handleOptionSelected: any }
-	{@param? _handleTitleChange: any }
-	{@param? _newOptionTitle: string}
+	{@param? _handleNameChange: any }
+	{@param? _newOptionName: string}
 	{@param? _options: ?}
 	{@param? _showValues: bool}
 
@@ -32,7 +32,7 @@
 						<div class="form-container">
 							{call CPOptionList.render}
 								{param currentCPOptionId: $_currentOption /}
-								{param newOptionTitle: $_newOptionTitle /}
+								{param newOptionName: $_newOptionName /}
 								{param options: $_options /}
 								{param pathThemeImages: $pathThemeImages /}
 								{param events: ['addOption': $_handleAddOption , 'editValues' : $_handleEditValues , 'optionSelected': $_handleOptionSelected] /}
@@ -52,7 +52,7 @@
 									{param namespace: $namespace /}
 									{param optionURL: $optionURL /}
 									{param pathThemeImages: $pathThemeImages /}
-									{param events: ['cancel': $_handleCancelEditing , 'optionDeleted': $_handleoptionDeleted , 'optionSaved': $_handleOptionSaved , 'titleChange': $_handleTitleChange ] /}
+									{param events: ['cancel': $_handleCancelEditing , 'optionDeleted': $_handleoptionDeleted , 'optionSaved': $_handleOptionSaved , 'nameChange': $_handleNameChange ] /}
 								{/call}
 							{/if}
 						</div>

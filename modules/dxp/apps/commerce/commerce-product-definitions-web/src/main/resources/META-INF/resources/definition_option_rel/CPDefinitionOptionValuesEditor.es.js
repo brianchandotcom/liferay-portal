@@ -23,13 +23,13 @@ class CPDefinitionOptionValuesEditor extends Component {
 	}
 
 	_handleAddOptionValue() {
-		this._newCPDefinitionOptionValueRelTitle = '';
+		this._newCPDefinitionOptionValueRelName = '';
 		this._currentCPDefinitionOptionValueRelId = '0';
 	}
 
 	loadOptionValues() {
 		if (this.cpDefinitionOptionRelId === undefined || this.cpDefinitionOptionRelId == '0') {
-			this._newCPDefinitionOptionValueRelTitle = '';
+			this._newCPDefinitionOptionValueRelName = '';
 			this._currentCPDefinitionOptionValueRelId = '0';
 
 			return;
@@ -57,7 +57,7 @@ class CPDefinitionOptionValuesEditor extends Component {
 					}
 				}
 				else if ((this._cpDefinitionOptionValueRels && this._cpDefinitionOptionValueRels.length == 0)) {
-					this._newCPDefinitionOptionValueRelTitle = '';
+					this._newCPDefinitionOptionValueRelName = '';
 					this._currentCPDefinitionOptionValueRelId = '0';
 				}
 			}
@@ -90,12 +90,12 @@ class CPDefinitionOptionValuesEditor extends Component {
 		this.loadOptionValues();
 	}
 
-	_handleTitleChange(newTitle) {
+	_handleNameChange(newName) {
 		if (this._currentCPDefinitionOptionValueRelId == '0') {
-			this._newCPDefinitionOptionValueRelTitle = newTitle;
+			this._newCPDefinitionOptionValueRelName = newName;
 		}
 		else {
-			this._newCPDefinitionOptionValueRelTitle = '';
+			this._newCPDefinitionOptionValueRelName = '';
 		}
 	}
 }
@@ -114,7 +114,7 @@ CPDefinitionOptionValuesEditor.STATE = {
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
 	_cpDefinitionOptionValueRels: Config.array().value([]),
-	_newCPDefinitionOptionValueRelTitle: Config.string().value('')
+    _newCPDefinitionOptionValueRelName: Config.string().value('')
 };
 
 // Register component

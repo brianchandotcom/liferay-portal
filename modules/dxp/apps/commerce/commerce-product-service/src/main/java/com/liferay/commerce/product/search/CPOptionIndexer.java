@@ -56,13 +56,13 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 	public static final String FIELD_KEY = "key";
 
-	public static final String FIELD_OPTION_VALUE_TITLE = "optionValueTitle";
+	public static final String FIELD_OPTION_VALUE_NAME = "optionValueName";
 
 	public CPOptionIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.TITLE, Field.UID, FIELD_KEY);
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
+			Field.SCOPE_GROUP_ID, Field.UID, FIELD_KEY);
 		setFilterSearch(true);
 		setPermissionAware(true);
 	}
@@ -83,11 +83,11 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, FIELD_KEY, false);
 		addSearchTerm(
-			searchQuery, searchContext, FIELD_OPTION_VALUE_TITLE, false);
+			searchQuery, searchContext, FIELD_OPTION_VALUE_NAME, false);
 		addSearchLocalizedTerm(
-			searchQuery, searchContext, FIELD_OPTION_VALUE_TITLE, false);
-		addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+			searchQuery, searchContext, FIELD_OPTION_VALUE_NAME, false);
+		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -118,45 +118,45 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		List<CPOptionValue> cpOptionValues = cpOption.getCPOptionValues();
 
 		String cpOptionDefaultLanguageId =
-			LocalizationUtil.getDefaultLanguageId(cpOption.getTitle());
+			LocalizationUtil.getDefaultLanguageId(cpOption.getName());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			cpOption.getTitle());
+			cpOption.getName());
 
 		for (String languageId : languageIds) {
 			String description = cpOption.getDescription(languageId);
-			String title = cpOption.getTitle(languageId);
-			List<String> cpOptionValueTitlesList = new ArrayList<>();
+			String name = cpOption.getName(languageId);
+			List<String> cpOptionValueNamesList = new ArrayList<>();
 
 			for (CPOptionValue cpOptionValue : cpOptionValues) {
-				cpOptionValueTitlesList.add(cpOptionValue.getTitle(languageId));
+				cpOptionValueNamesList.add(cpOptionValue.getName(languageId));
 			}
 
-			String[] cpOptionValueTitles = cpOptionValueTitlesList.toArray(
-				new String[cpOptionValueTitlesList.size()]);
+			String[] cpOptionValueNames = cpOptionValueNamesList.toArray(
+				new String[cpOptionValueNamesList.size()]);
 
 			if (languageId.equals(cpOptionDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
-				document.addText(FIELD_OPTION_VALUE_TITLE, cpOptionValueTitles);
-				document.addText(Field.TITLE, title);
+				document.addText(FIELD_OPTION_VALUE_NAME, cpOptionValueNames);
+				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
-				title);
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				name);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				description);
 
 			document.addText(FIELD_KEY, cpOption.getKey());
-			document.addText(Field.CONTENT, title);
+			document.addText(Field.CONTENT, name);
 
 			document.addText(
 				LocalizationUtil.getLocalizedName(
-					FIELD_OPTION_VALUE_TITLE, languageId),
-				cpOptionValueTitles);
+					FIELD_OPTION_VALUE_NAME, languageId),
+				cpOptionValueNames);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -172,7 +172,7 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
+			document, Field.NAME, Field.DESCRIPTION);
 
 		summary.setMaxContentLength(200);
 

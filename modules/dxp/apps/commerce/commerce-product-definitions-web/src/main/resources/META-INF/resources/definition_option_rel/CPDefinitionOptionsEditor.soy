@@ -20,7 +20,7 @@
 	{@param? _handleoptionDeleted: any }
 	{@param? _handleOptionSaved: any }
 	{@param? _handleOptionSelected: any }
-	{@param? _handleTitleChange: any }
+	{@param? _handleNameChange: any }
 	{@param? _showValues: bool}
 
 	<div id="{$id}" class="commerce-product-option-editor">
@@ -50,7 +50,7 @@
 									{param namespace: $namespace /}
 									{param optionURL: $optionURL /}
 									{param pathThemeImages: $pathThemeImages /}
-									{param events: ['cancel': $_handleCancelEditing , 'optionDeleted': $_handleoptionDeleted , 'optionSaved': $_handleOptionSaved , 'titleChange': $_handleTitleChange ] /}
+									{param events: ['cancel': $_handleCancelEditing , 'optionDeleted': $_handleoptionDeleted , 'optionSaved': $_handleOptionSaved , 'nameChange': $_handleNameChange ] /}
 								{/call}
 							{else}
 								<div class="alert alert-info" role="alert">

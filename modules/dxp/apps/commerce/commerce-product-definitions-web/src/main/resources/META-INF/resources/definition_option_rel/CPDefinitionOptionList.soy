@@ -29,7 +29,7 @@
 			<thead>
 				<tr>
 					<th>
-						<span class="text-truncate" title="Description">{msg desc=""}title{/msg}</span>
+						<span class="text-truncate" title="Description">{msg desc=""}name{/msg}</span>
 					</th>
 					<th>
 						<span class="text-truncate" title="Priority">{msg desc=""}priority{/msg}</span>
@@ -43,7 +43,7 @@
 					{foreach $cpDefinitionOption in $cpDefinitionOptions}
 						{call .cpDefinitionOptionRow}
 							{param id: $cpDefinitionOption.cpDefinitionOptionRelId /}
-							{param title: $cpDefinitionOption.title /}
+							{param name: $cpDefinitionOption.name /}
 							{param selected: $cpDefinitionOption.cpDefinitionOptionRelId == $currentCPDefinitionOptionId /}
 							{param showButton: $cpDefinitionOption.hasValues /}
 							{param priority: $cpDefinitionOption.priority /}
@@ -63,7 +63,7 @@
  */
 {template .cpDefinitionOptionRow}
 	{@param id: string}
-	{@param title: null|string }
+	{@param name: null|string }
 	{@param? selected: bool}
 	{@param? showButton: bool}
 	{@param? priority: number}
@@ -78,7 +78,7 @@
 
 	<tr class="{$classes}" data-id="{$id}" onclick="{$_handleSelectOptionClick}">
 		<td class="table-cell-content">
-			{$title}
+			{$name}
 		</td>
 		<td>
 			{$priority}

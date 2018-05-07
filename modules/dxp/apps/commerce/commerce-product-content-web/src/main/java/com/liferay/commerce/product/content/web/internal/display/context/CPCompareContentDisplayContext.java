@@ -106,14 +106,14 @@ public class CPCompareContentDisplayContext {
 		return cpSpecificationOptions;
 	}
 
-	public Set<String> getCPDefinitionOptionRelTitles(
+	public Set<String> getCPDefinitionOptionRelNames(
 		List<CPDefinition> cpDefinitions) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Set<String> cpDefinitionOptionRelTitles = new HashSet<>();
+		Set<String> cpDefinitionOptionRelNames = new HashSet<>();
 
 		for (CPDefinition cpDefinition : cpDefinitions) {
 			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
@@ -122,19 +122,18 @@ public class CPCompareContentDisplayContext {
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {
 
-				String cpDefinitionOptionRelTitle =
-					cpDefinitionOptionRel.getTitle(
-						themeDisplay.getLanguageId());
+				String cpDefinitionOptionRelName =
+					cpDefinitionOptionRel.getName(themeDisplay.getLanguageId());
 
-				cpDefinitionOptionRelTitles.add(cpDefinitionOptionRelTitle);
+				cpDefinitionOptionRelNames.add(cpDefinitionOptionRelName);
 			}
 		}
 
-		return cpDefinitionOptionRelTitles;
+		return cpDefinitionOptionRelNames;
 	}
 
 	public String getCPDefinitionOptionValueRels(
-		CPDefinition cpDefinition, String cpDefinitionOptionRelTitle) {
+		CPDefinition cpDefinition, String cpDefinitionOptionRelName) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -145,8 +144,8 @@ public class CPCompareContentDisplayContext {
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinition.getCPDefinitionOptionRels()) {
 
-			if (cpDefinitionOptionRelTitle.equals(
-					cpDefinitionOptionRel.getTitle(languageId))) {
+			if (cpDefinitionOptionRelName.equals(
+					cpDefinitionOptionRel.getName(languageId))) {
 
 				return StringUtil.merge(
 					getCPDefinitionOptionValueRels(
@@ -313,7 +312,7 @@ public class CPCompareContentDisplayContext {
 				cpDefinitionOptionValueRels) {
 
 			cpDefinitionOptionValueRelValues.add(
-				cpDefinitionOptionValueRel.getTitle(languageId));
+				cpDefinitionOptionValueRel.getName(languageId));
 		}
 
 		return cpDefinitionOptionValueRelValues;

@@ -45,7 +45,7 @@ List<Facet> facets = cpOptionFacetsDisplayContext.getFacets();
 				cssClass="search-facet"
 				markupView="lexicon"
 				persistState="<%= true %>"
-				title="<%= cpOptionFacetsDisplayContext.getCPOptionTitle(scopeGroupId, facet.getFieldName()) %>"
+				title="<%= cpOptionFacetsDisplayContext.getCPOptionName(scopeGroupId, facet.getFieldName()) %>"
 			>
 				<aui:form method="post" name='<%= "assetEntriesFacetForm_" + facet.getFieldName() %>'>
 					<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= cpOptionFacetsDisplayContext.getCPOptionKey(scopeGroupId, facet.getFieldName()) %>" />

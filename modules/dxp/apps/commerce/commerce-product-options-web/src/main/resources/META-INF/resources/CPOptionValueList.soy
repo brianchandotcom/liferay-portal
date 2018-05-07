@@ -9,7 +9,7 @@
 	{@param? id: string}
 	{@param? optionValues: ?}
 	{@param? pathThemeImages: string}
-	{@param? newOptionValueTitle: string}
+	{@param? newOptionValueName: string}
 	{@param? _handleAddOptionValueClick: any}
 	{@param? _handleSelectOptionValueClick: any}
 
@@ -32,7 +32,7 @@
 						<span class="text-truncate" title="Id">{msg desc=""}id{/msg}</span>
 					</th>
 					<th class="table-cell-content">
-						<span class="text-truncate" title="Description">{msg desc=""}title{/msg}</span>
+						<span class="text-truncate" title="Description">{msg desc=""}name{/msg}</span>
 					</th>
 					<th>
 						<span class="text-truncate" title="Priority">{msg desc=""}priority{/msg}</span>
@@ -57,10 +57,10 @@
 				<tr data-id="0" {$attributes}>
 					<td></td>
 					<td class="table-cell-content">
-						{if $newOptionValueTitle == ''}
+						{if $newOptionValueName == ''}
 							[{msg desc=""}new-option-value{/msg}]
 						{else}
-							{$newOptionValueTitle}
+							{$newOptionValueName}
 						{/if}
 					</td>
 					<td></td>
@@ -79,7 +79,7 @@
 								{$optionValue.cpOptionValueId}
 							</td>
 							<td class="table-cell-content">
-								{$optionValue.title}
+								{$optionValue.name}
 							</td>
 							<td>
 								{$optionValue.priority}

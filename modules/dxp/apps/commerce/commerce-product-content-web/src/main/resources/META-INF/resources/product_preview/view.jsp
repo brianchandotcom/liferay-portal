@@ -81,7 +81,7 @@ PortletURL portletURL = cpPreviewContentDisplayContext.getPortletURL();
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-content"
-							name="<%= cpDefinitionOptionRel.getTitle(languageId) %>"
+							name="<%= cpDefinitionOptionRel.getName(languageId) %>"
 						>
 
 							<%
@@ -91,7 +91,7 @@ PortletURL portletURL = cpPreviewContentDisplayContext.getPortletURL();
 								List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
 
 								for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-									stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+									stringJoiner.add(cpDefinitionOptionValueRel.getName(languageId));
 								}
 							}
 							%>

@@ -26,7 +26,7 @@ Map<String, Object> contextObjects = new HashMap<>();
 contextObjects.put("cpCompareContentDisplayContext", cpCompareContentDisplayContext);
 
 List<CPDefinition> cpDefinitions = cpCompareContentDisplayContext.getCPDefinitions();
-Set<String> cpDefinitionOptionRelTitles = cpCompareContentDisplayContext.getCPDefinitionOptionRelTitles(cpDefinitions);
+Set<String> cpDefinitionOptionRelTitles = cpCompareContentDisplayContext.getCPDefinitionOptionRelNames(cpDefinitions);
 Set<CPSpecificationOption> cpSpecificationOptions = cpCompareContentDisplayContext.getCPSpecificationOptions(cpDefinitions);
 Set<CPSpecificationOption> categorizedCPSpecificationOptions = cpCompareContentDisplayContext.getCategorizedCPSpecificationOptions(cpDefinitions);
 List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCPOptionCategories();

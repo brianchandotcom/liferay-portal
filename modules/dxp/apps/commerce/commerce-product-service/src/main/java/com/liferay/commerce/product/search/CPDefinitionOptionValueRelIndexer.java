@@ -61,8 +61,8 @@ public class CPDefinitionOptionValueRelIndexer
 	public CPDefinitionOptionValueRelIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-			Field.GROUP_ID, Field.MODIFIED_DATE, Field.SCOPE_GROUP_ID,
-			Field.TITLE, Field.UID, FIELD_KEY);
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
+			Field.SCOPE_GROUP_ID, Field.UID, FIELD_KEY);
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class CPDefinitionOptionValueRelIndexer
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, FIELD_KEY, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 
 		LinkedHashMap<String, Object> params =
@@ -132,27 +132,27 @@ public class CPDefinitionOptionValueRelIndexer
 
 		String cpDefinitionOptionValueRelDefaultLanguageId =
 			LocalizationUtil.getDefaultLanguageId(
-				cpDefinitionOptionValueRel.getTitle());
+				cpDefinitionOptionValueRel.getName());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			cpDefinitionOptionValueRel.getTitle());
+			cpDefinitionOptionValueRel.getName());
 
 		for (String languageId : languageIds) {
-			String title = cpDefinitionOptionValueRel.getTitle(languageId);
+			String name = cpDefinitionOptionValueRel.getName(languageId);
 
 			if (languageId.equals(
 					cpDefinitionOptionValueRelDefaultLanguageId)) {
 
-				document.addText(Field.TITLE, title);
+				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);
 			}
 
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.TITLE, languageId),
-				title);
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				name);
 
 			document.addText(FIELD_KEY, cpDefinitionOptionValueRel.getKey());
-			document.addText(Field.CONTENT, title);
+			document.addText(Field.CONTENT, name);
 		}
 
 		document.addNumber(
@@ -175,7 +175,7 @@ public class CPDefinitionOptionValueRelIndexer
 		Document document, Locale locale, String snippet,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		Summary summary = createSummary(document, Field.TITLE, FIELD_KEY);
+		Summary summary = createSummary(document, Field.NAME, FIELD_KEY);
 
 		summary.setMaxContentLength(200);
 

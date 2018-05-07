@@ -48,19 +48,19 @@ public class CPDefinitionOptionValueRelDemoDataCreatorHelper
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String title = jsonObject.getString("title");
+			String name = jsonObject.getString("name");
 			int priority = jsonObject.getInt("priority");
 			String key = jsonObject.getString("key");
 
-			Map<Locale, String> titleMap = Collections.singletonMap(
-				locale, title);
+			Map<Locale, String> nameMap = Collections.singletonMap(
+				locale, name);
 
 			ServiceContext serviceContext = getServiceContext(userId, groupId);
 
 			_cpDefinitionOptionValueRelLocalService.
 				addCPDefinitionOptionValueRel(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-					titleMap, priority, key, serviceContext);
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(), nameMap,
+					priority, key, serviceContext);
 		}
 
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =

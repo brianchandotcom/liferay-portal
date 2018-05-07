@@ -84,11 +84,11 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 							%>
 
 								<h6 class="text-default">
-									<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getTitle(languageId)) %></strong>
+									<strong><%= HtmlUtil.escape(cpDefinitionOptionRel.getName(languageId)) %></strong>
 
 									<%
 									for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel : cpDefinitionOptionValueRels) {
-										stringJoiner.add(cpDefinitionOptionValueRel.getTitle(languageId));
+										stringJoiner.add(cpDefinitionOptionValueRel.getName(languageId));
 									}
 									%>
 

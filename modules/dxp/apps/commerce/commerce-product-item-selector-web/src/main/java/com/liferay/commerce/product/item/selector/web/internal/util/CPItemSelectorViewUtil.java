@@ -26,7 +26,7 @@ import com.liferay.commerce.product.util.comparator.CPInstanceCreateDateComparat
 import com.liferay.commerce.product.util.comparator.CPInstanceDisplayDateComparator;
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionModifiedDateComparator;
-import com.liferay.commerce.product.util.comparator.CPOptionTitleComparator;
+import com.liferay.commerce.product.util.comparator.CPOptionNameComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionTitleComparator;
 import com.liferay.portal.kernel.search.Field;
@@ -85,9 +85,9 @@ public class CPItemSelectorViewUtil {
 		else if (orderByCol.equals("modified-date")) {
 			sort = SortFactoryUtil.create(Field.MODIFIED_DATE, orderByAsc);
 		}
-		else if (orderByCol.equals("title")) {
+		else if (orderByCol.equals("name")) {
 			sort = SortFactoryUtil.create(
-				Field.TITLE, Sort.STRING_TYPE, orderByAsc);
+				Field.NAME, Sort.STRING_TYPE, orderByAsc);
 		}
 
 		return sort;
@@ -157,8 +157,8 @@ public class CPItemSelectorViewUtil {
 			orderByComparator = new CPOptionModifiedDateComparator(orderByAsc);
 		}
 
-		if (orderByCol.equals("title")) {
-			orderByComparator = new CPOptionTitleComparator(orderByAsc);
+		if (orderByCol.equals("name")) {
+			orderByComparator = new CPOptionNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;
@@ -177,9 +177,9 @@ public class CPItemSelectorViewUtil {
 			sort = SortFactoryUtil.create(
 				Field.MODIFIED_DATE + "_sortable", reverse);
 		}
-		else if (Objects.equals(orderByCol, "title")) {
+		else if (Objects.equals(orderByCol, "name")) {
 			sort = SortFactoryUtil.create(
-				Field.TITLE, Sort.STRING_TYPE, reverse);
+				Field.NAME, Sort.STRING_TYPE, reverse);
 		}
 
 		return sort;

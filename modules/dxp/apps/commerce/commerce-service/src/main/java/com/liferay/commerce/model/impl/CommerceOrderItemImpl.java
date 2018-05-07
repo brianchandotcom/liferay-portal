@@ -16,6 +16,8 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -24,6 +26,7 @@ import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
  */
@@ -56,6 +59,14 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 	@Override
 	public CPInstance getCPInstance() throws PortalException {
 		return CPInstanceLocalServiceUtil.getCPInstance(getCPInstanceId());
+	}
+
+	@Override
+	public CommerceMoney getPriceMoney() throws PortalException {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		return CommerceMoneyFactoryUtil.create(
+			commerceOrder.getCommerceCurrencyId(), getPrice());
 	}
 
 }

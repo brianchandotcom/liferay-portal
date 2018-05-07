@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import java.util.List;
 
 /**
+ * @author Marco Leo
  * @author Alessio Antonio Rendina
  * @author Andrea Di Giorgi
  */
@@ -187,6 +190,24 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public CommerceMoney getShippingMoney() throws PortalException {
+		return CommerceMoneyFactoryUtil.create(
+			getCommerceCurrencyId(), getShippingPrice());
+	}
+
+	@Override
+	public CommerceMoney getSubTotalMoney() throws PortalException {
+		return CommerceMoneyFactoryUtil.create(
+			getCommerceCurrencyId(), getSubtotal());
+	}
+
+	@Override
+	public CommerceMoney getTotalMoney() throws PortalException {
+		return CommerceMoneyFactoryUtil.create(
+			getCommerceCurrencyId(), getTotal());
 	}
 
 	@Override

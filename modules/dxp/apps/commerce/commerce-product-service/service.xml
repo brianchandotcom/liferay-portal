@@ -80,7 +80,7 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CPDefinition" remote-service="true" trash-enabled="true" uuid="true">
-\
+
 		<!-- PK fields -->
 
 		<column name="CPDefinitionId" primary="true" type="long" />
@@ -604,7 +604,6 @@
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity local-service="true" name="CPMeasurementUnit" remote-service="true" uuid="true">
 

@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -119,6 +120,14 @@ public class BlogsEntryStagedModelDataHandler
 	@Override
 	public String getDisplayName(BlogsEntry entry) {
 		return entry.getTitle();
+	}
+
+	@Override
+	public int[] getExportableStatuses() {
+		return new int[] {
+			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_SCHEDULED
+		};
 	}
 
 	@Override

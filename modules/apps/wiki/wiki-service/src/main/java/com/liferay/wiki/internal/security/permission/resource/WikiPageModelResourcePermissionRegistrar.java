@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 import com.liferay.portal.util.PropsValues;
@@ -79,7 +80,7 @@ public class WikiPageModelResourcePermissionRegistrar {
 					consumer.accept(
 						new WorkflowedModelPermissionLogic<>(
 							_workflowPermission, modelResourcePermission,
-							WikiPage::getResourcePrimKey));
+							_groupLocalService, WikiPage::getResourcePrimKey));
 					consumer.accept(
 						(permissionChecker, name, page, actionId) -> {
 
@@ -104,6 +105,9 @@ public class WikiPageModelResourcePermissionRegistrar {
 	public void deactivate() {
 		_serviceRegistration.unregister();
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(resource.name=" + WikiConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

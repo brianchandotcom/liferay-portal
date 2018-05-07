@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 import com.liferay.portal.util.PropsValues;
@@ -94,7 +95,7 @@ public class MBMessagePermissionRegistrar {
 					consumer.accept(
 						new WorkflowedModelPermissionLogic<>(
 							_workflowPermission, modelResourcePermission,
-							MBMessage::getMessageId));
+							_groupLocalService, MBMessage::getMessageId));
 
 					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 						consumer.accept(
@@ -131,6 +132,9 @@ public class MBMessagePermissionRegistrar {
 			return _mbCategoryLocalService.getCategory(categoryId);
 		};
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private MBBanLocalService _mbBanLocalService;

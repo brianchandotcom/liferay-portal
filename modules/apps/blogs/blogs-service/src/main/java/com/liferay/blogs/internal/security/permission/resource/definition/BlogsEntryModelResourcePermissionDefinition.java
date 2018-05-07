@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.definition.ModelResourcePermissionDefinition;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
 import java.util.function.Consumer;
@@ -73,11 +74,14 @@ public class BlogsEntryModelResourcePermissionDefinition
 		modelResourcePermissionLogicConsumer.accept(
 			new WorkflowedModelPermissionLogic<>(
 				_workflowPermission, modelResourcePermission,
-				BlogsEntry::getEntryId));
+				_groupLocalService, BlogsEntry::getEntryId));
 	}
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

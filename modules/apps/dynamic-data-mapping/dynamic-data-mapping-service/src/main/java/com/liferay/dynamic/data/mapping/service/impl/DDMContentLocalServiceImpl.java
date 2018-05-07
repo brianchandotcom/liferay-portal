@@ -112,17 +112,12 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		}
 		catch (ContentNameException cne) {
 			throw new ContentNameException(
-				StringBundler.concat(
-					cne.getMessage(), " for contentId ",
-					String.valueOf(contentId), StringPool.PERIOD),
-				cne.getCause());
+				"Invalid empty name for content id " +
+					contentId, cne.getCause());
 		}
 		catch (ContentException ce) {
 			throw new ContentException(
-				StringBundler.concat(
-					ce.getMessage(), " with contentId ",
-					String.valueOf(contentId), StringPool.PERIOD),
-				ce.getCause());
+				"Invalid empty data for DDM Content " + name, ce.getCause());
 		}
 
 		DDMContent content = ddmContentPersistence.findByPrimaryKey(contentId);

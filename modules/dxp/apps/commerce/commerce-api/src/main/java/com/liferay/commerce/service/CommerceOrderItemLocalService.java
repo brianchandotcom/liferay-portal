@@ -16,6 +16,7 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrderItem;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -79,8 +80,8 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
 		long cpInstanceId, int quantity, int shippedQuantity, String json,
-		BigDecimal price, ServiceContext serviceContext)
-		throws PortalException;
+		BigDecimal price, CommerceContext commerceContext,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce order item with the primary key. Does not add the commerce order item to the database.

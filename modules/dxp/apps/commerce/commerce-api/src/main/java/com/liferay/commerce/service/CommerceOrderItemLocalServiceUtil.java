@@ -57,11 +57,13 @@ public class CommerceOrderItemLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
 		long commerceOrderId, long cpInstanceId, int quantity,
 		int shippedQuantity, String json, java.math.BigDecimal price,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceOrderItem(commerceOrderId, cpInstanceId,
-			quantity, shippedQuantity, json, price, serviceContext);
+			quantity, shippedQuantity, json, price, commerceContext,
+			serviceContext);
 	}
 
 	/**

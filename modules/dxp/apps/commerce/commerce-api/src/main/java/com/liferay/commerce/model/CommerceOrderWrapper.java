@@ -545,6 +545,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.getShippingAddressId();
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceMoney getShippingMoney()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getShippingMoney();
+	}
+
 	/**
 	* Returns the shipping option name of this commerce order.
 	*
@@ -645,6 +651,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.getSubtotal();
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceMoney getSubTotalMoney()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getSubTotalMoney();
+	}
+
 	/**
 	* Returns the total of this commerce order.
 	*
@@ -653,6 +665,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public BigDecimal getTotal() {
 		return _commerceOrder.getTotal();
+	}
+
+	@Override
+	public com.liferay.commerce.currency.model.CommerceMoney getTotalMoney()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getTotalMoney();
 	}
 
 	/**

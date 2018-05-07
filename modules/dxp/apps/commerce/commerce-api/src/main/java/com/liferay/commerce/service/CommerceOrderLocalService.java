@@ -16,6 +16,7 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -102,7 +103,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder checkoutCommerceOrder(long commerceOrderId,
-		ServiceContext serviceContext) throws PortalException;
+		CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CommerceOrder completeCommerceOrderPayment(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
@@ -344,10 +346,11 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
-		long userCommerceOrderId, ServiceContext serviceContext)
-		throws PortalException;
+		long userCommerceOrderId, CommerceContext commerceContext,
+		ServiceContext serviceContext) throws PortalException;
 
-	public CommerceOrder reorderCommerceOrder(long userId, long commerceOrderId)
+	public CommerceOrder reorderCommerceOrder(long userId,
+		long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)

@@ -35,7 +35,6 @@
 	<bean class="com.liferay.commerce.service.impl.CommercePaymentMethodLocalServiceImpl" id="com.liferay.commerce.service.CommercePaymentMethodLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommercePaymentMethodServiceImpl" id="com.liferay.commerce.service.CommercePaymentMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommercePaymentMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommercePriceCalculationLocalServiceImpl" id="com.liferay.commerce.service.CommercePriceCalculationLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceRegionLocalServiceImpl" id="com.liferay.commerce.service.CommerceRegionLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceRegionServiceImpl" id="com.liferay.commerce.service.CommerceRegionService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceRegionPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceRegionPersistence" parent="basePersistence" />
@@ -48,7 +47,6 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodLocalServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShippingMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.impl.CommerceTaxCalculationLocalServiceImpl" id="com.liferay.commerce.service.CommerceTaxCalculationLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceTaxMethodLocalServiceImpl" id="com.liferay.commerce.service.CommerceTaxMethodLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceTaxMethodServiceImpl" id="com.liferay.commerce.service.CommerceTaxMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceTaxMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceTaxMethodPersistence" parent="basePersistence" />

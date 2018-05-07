@@ -16,6 +16,7 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,7 +76,8 @@ public interface CommerceOrderService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceOrder checkoutCommerceOrder(long commerceOrderId,
-		ServiceContext serviceContext) throws PortalException;
+		CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CommerceOrder completeCommerceOrderPayment(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
@@ -129,11 +131,11 @@ public interface CommerceOrderService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
-		long userCommerceOrderId, ServiceContext serviceContext)
-		throws PortalException;
+		long userCommerceOrderId, CommerceContext commerceContext,
+		ServiceContext serviceContext) throws PortalException;
 
-	public CommerceOrder reorderCommerceOrder(long commerceOrderId)
-		throws PortalException;
+	public CommerceOrder reorderCommerceOrder(long commerceOrderId,
+		CommerceContext commerceContext) throws PortalException;
 
 	public String startCommerceOrderPayment(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;

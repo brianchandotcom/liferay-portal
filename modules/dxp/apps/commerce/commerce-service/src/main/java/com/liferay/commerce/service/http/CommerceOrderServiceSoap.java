@@ -145,11 +145,12 @@ public class CommerceOrderServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceOrderSoap checkoutCommerceOrder(
 		long commerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.checkoutCommerceOrder(commerceOrderId,
-					serviceContext);
+					commerceContext, serviceContext);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
 		}
@@ -327,11 +328,12 @@ public class CommerceOrderServiceSoap {
 
 	public static void mergeGuestCommerceOrder(long guestCommerceOrderId,
 		long userCommerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			CommerceOrderServiceUtil.mergeGuestCommerceOrder(guestCommerceOrderId,
-				userCommerceOrderId, serviceContext);
+				userCommerceOrderId, commerceContext, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -341,9 +343,12 @@ public class CommerceOrderServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderSoap reorderCommerceOrder(
-		long commerceOrderId) throws RemoteException {
+		long commerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext)
+		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.reorderCommerceOrder(commerceOrderId);
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.reorderCommerceOrder(commerceOrderId,
+					commerceContext);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
 		}

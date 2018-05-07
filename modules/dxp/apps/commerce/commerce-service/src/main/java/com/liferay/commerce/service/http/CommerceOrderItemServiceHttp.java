@@ -59,6 +59,7 @@ public class CommerceOrderItemServiceHttp {
 		HttpPrincipal httpPrincipal, long commerceOrderId, long cpInstanceId,
 		int quantity, int shippedQuantity, String json,
 		java.math.BigDecimal price,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -67,7 +68,7 @@ public class CommerceOrderItemServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId, cpInstanceId, quantity, shippedQuantity,
-					json, price, serviceContext);
+					json, price, commerceContext, serviceContext);
 
 			Object returnObj = null;
 
@@ -422,6 +423,7 @@ public class CommerceOrderItemServiceHttp {
 	private static final Class<?>[] _addCommerceOrderItemParameterTypes0 = new Class[] {
 			long.class, long.class, int.class, int.class, String.class,
 			java.math.BigDecimal.class,
+			com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceOrderItemParameterTypes1 = new Class[] {

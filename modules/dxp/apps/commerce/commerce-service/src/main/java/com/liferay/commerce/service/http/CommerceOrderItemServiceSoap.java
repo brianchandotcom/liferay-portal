@@ -68,12 +68,13 @@ public class CommerceOrderItemServiceSoap {
 	public static com.liferay.commerce.model.CommerceOrderItemSoap addCommerceOrderItem(
 		long commerceOrderId, long cpInstanceId, int quantity,
 		int shippedQuantity, String json, java.math.BigDecimal price,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrderItem returnValue = CommerceOrderItemServiceUtil.addCommerceOrderItem(commerceOrderId,
 					cpInstanceId, quantity, shippedQuantity, json, price,
-					serviceContext);
+					commerceContext, serviceContext);
 
 			return com.liferay.commerce.model.CommerceOrderItemSoap.toSoapModel(returnValue);
 		}

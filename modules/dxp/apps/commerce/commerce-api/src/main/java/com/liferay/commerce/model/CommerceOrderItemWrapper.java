@@ -311,6 +311,12 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 		return _commerceOrderItem.getPrice();
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceMoney getPriceMoney()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderItem.getPriceMoney();
+	}
+
 	/**
 	* Returns the primary key of this commerce order item.
 	*

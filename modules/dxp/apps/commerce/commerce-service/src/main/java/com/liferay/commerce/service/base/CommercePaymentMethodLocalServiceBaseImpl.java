@@ -728,25 +728,6 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce price calculation local service.
-	 *
-	 * @return the commerce price calculation local service
-	 */
-	public com.liferay.commerce.service.CommercePriceCalculationLocalService getCommercePriceCalculationLocalService() {
-		return commercePriceCalculationLocalService;
-	}
-
-	/**
-	 * Sets the commerce price calculation local service.
-	 *
-	 * @param commercePriceCalculationLocalService the commerce price calculation local service
-	 */
-	public void setCommercePriceCalculationLocalService(
-		com.liferay.commerce.service.CommercePriceCalculationLocalService commercePriceCalculationLocalService) {
-		this.commercePriceCalculationLocalService = commercePriceCalculationLocalService;
-	}
-
-	/**
 	 * Returns the commerce region local service.
 	 *
 	 * @return the commerce region local service
@@ -896,25 +877,6 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	public void setCommerceShippingMethodPersistence(
 		CommerceShippingMethodPersistence commerceShippingMethodPersistence) {
 		this.commerceShippingMethodPersistence = commerceShippingMethodPersistence;
-	}
-
-	/**
-	 * Returns the commerce tax calculation local service.
-	 *
-	 * @return the commerce tax calculation local service
-	 */
-	public com.liferay.commerce.service.CommerceTaxCalculationLocalService getCommerceTaxCalculationLocalService() {
-		return commerceTaxCalculationLocalService;
-	}
-
-	/**
-	 * Sets the commerce tax calculation local service.
-	 *
-	 * @param commerceTaxCalculationLocalService the commerce tax calculation local service
-	 */
-	public void setCommerceTaxCalculationLocalService(
-		com.liferay.commerce.service.CommerceTaxCalculationLocalService commerceTaxCalculationLocalService) {
-		this.commerceTaxCalculationLocalService = commerceTaxCalculationLocalService;
 	}
 
 	/**
@@ -1387,8 +1349,6 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected CommercePaymentMethodLocalService commercePaymentMethodLocalService;
 	@BeanReference(type = CommercePaymentMethodPersistence.class)
 	protected CommercePaymentMethodPersistence commercePaymentMethodPersistence;
-	@BeanReference(type = com.liferay.commerce.service.CommercePriceCalculationLocalService.class)
-	protected com.liferay.commerce.service.CommercePriceCalculationLocalService commercePriceCalculationLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceRegionLocalService.class)
 	protected com.liferay.commerce.service.CommerceRegionLocalService commerceRegionLocalService;
 	@BeanReference(type = CommerceRegionPersistence.class)
@@ -1405,8 +1365,6 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
 	@BeanReference(type = CommerceShippingMethodPersistence.class)
 	protected CommerceShippingMethodPersistence commerceShippingMethodPersistence;
-	@BeanReference(type = com.liferay.commerce.service.CommerceTaxCalculationLocalService.class)
-	protected com.liferay.commerce.service.CommerceTaxCalculationLocalService commerceTaxCalculationLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceTaxMethodLocalService.class)
 	protected com.liferay.commerce.service.CommerceTaxMethodLocalService commerceTaxMethodLocalService;
 	@BeanReference(type = CommerceTaxMethodPersistence.class)

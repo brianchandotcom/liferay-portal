@@ -79,10 +79,12 @@ public class CommerceOrderServiceUtil {
 
 	public static com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
 		long commerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .checkoutCommerceOrder(commerceOrderId, serviceContext);
+				   .checkoutCommerceOrder(commerceOrderId, commerceContext,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder completeCommerceOrderPayment(
@@ -167,17 +169,20 @@ public class CommerceOrderServiceUtil {
 
 	public static void mergeGuestCommerceOrder(long guestCommerceOrderId,
 		long userCommerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.mergeGuestCommerceOrder(guestCommerceOrderId, userCommerceOrderId,
-			serviceContext);
+			commerceContext, serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder reorderCommerceOrder(
-		long commerceOrderId)
+		long commerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().reorderCommerceOrder(commerceOrderId);
+		return getService()
+				   .reorderCommerceOrder(commerceOrderId, commerceContext);
 	}
 
 	public static String startCommerceOrderPayment(long commerceOrderId,

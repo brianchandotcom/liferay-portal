@@ -222,6 +222,7 @@ public class CommerceOrderServiceHttp {
 
 	public static com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
 		HttpPrincipal httpPrincipal, long commerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -230,7 +231,7 @@ public class CommerceOrderServiceHttp {
 					_checkoutCommerceOrderParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceOrderId, serviceContext);
+					commerceOrderId, commerceContext, serviceContext);
 
 			Object returnObj = null;
 
@@ -613,6 +614,7 @@ public class CommerceOrderServiceHttp {
 
 	public static void mergeGuestCommerceOrder(HttpPrincipal httpPrincipal,
 		long guestCommerceOrderId, long userCommerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -621,7 +623,8 @@ public class CommerceOrderServiceHttp {
 					_mergeGuestCommerceOrderParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					guestCommerceOrderId, userCommerceOrderId, serviceContext);
+					guestCommerceOrderId, userCommerceOrderId, commerceContext,
+					serviceContext);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -642,7 +645,8 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder reorderCommerceOrder(
-		HttpPrincipal httpPrincipal, long commerceOrderId)
+		HttpPrincipal httpPrincipal, long commerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -650,7 +654,7 @@ public class CommerceOrderServiceHttp {
 					_reorderCommerceOrderParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceOrderId);
+					commerceOrderId, commerceContext);
 
 			Object returnObj = null;
 
@@ -1005,7 +1009,8 @@ public class CommerceOrderServiceHttp {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _checkoutCommerceOrderParameterTypes5 = new Class[] {
-			long.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, com.liferay.commerce.context.CommerceContext.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _completeCommerceOrderPaymentParameterTypes6 =
 		new Class[] {
@@ -1043,10 +1048,11 @@ public class CommerceOrderServiceHttp {
 		};
 	private static final Class<?>[] _mergeGuestCommerceOrderParameterTypes17 = new Class[] {
 			long.class, long.class,
+			com.liferay.commerce.context.CommerceContext.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _reorderCommerceOrderParameterTypes18 = new Class[] {
-			long.class
+			long.class, com.liferay.commerce.context.CommerceContext.class
 		};
 	private static final Class<?>[] _startCommerceOrderPaymentParameterTypes19 = new Class[] {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class

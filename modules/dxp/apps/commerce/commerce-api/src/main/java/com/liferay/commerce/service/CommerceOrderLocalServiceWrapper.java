@@ -91,10 +91,11 @@ public class CommerceOrderLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceOrder checkoutCommerceOrder(
 		long commerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.checkoutCommerceOrder(commerceOrderId,
-			serviceContext);
+			commerceContext, serviceContext);
 	}
 
 	@Override
@@ -446,18 +447,20 @@ public class CommerceOrderLocalServiceWrapper
 	@Override
 	public void mergeGuestCommerceOrder(long guestCommerceOrderId,
 		long userCommerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceOrderLocalService.mergeGuestCommerceOrder(guestCommerceOrderId,
-			userCommerceOrderId, serviceContext);
+			userCommerceOrderId, commerceContext, serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder reorderCommerceOrder(
-		long userId, long commerceOrderId)
+		long userId, long commerceOrderId,
+		com.liferay.commerce.context.CommerceContext commerceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.reorderCommerceOrder(userId,
-			commerceOrderId);
+			commerceOrderId, commerceContext);
 	}
 
 	@Override

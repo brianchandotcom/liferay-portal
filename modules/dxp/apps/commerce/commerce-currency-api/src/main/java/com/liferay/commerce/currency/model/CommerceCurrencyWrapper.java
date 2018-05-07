@@ -458,6 +458,11 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	@Override
+	public CommerceMoney getZero() {
+		return _commerceCurrency.getZero();
+	}
+
+	@Override
 	public int hashCode() {
 		return _commerceCurrency.hashCode();
 	}

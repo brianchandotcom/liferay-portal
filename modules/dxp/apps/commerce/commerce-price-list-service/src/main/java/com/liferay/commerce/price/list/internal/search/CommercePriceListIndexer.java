@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.filter.FilterBuilders;
+import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -49,8 +51,6 @@ import java.util.stream.Stream;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.portal.search.filter.FilterBuilders;
-import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -105,11 +105,10 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 				BooleanClauseOccur.MUST_NOT);
 		}
 
-		long[] commerceUserSegmentEntryIds =  GetterUtil.getLongValues(
+		long[] commerceUserSegmentEntryIds = GetterUtil.getLongValues(
 			"commerceUserSegmentEntryIds", null);
 
-		if(commerceUserSegmentEntryIds != null){
-
+		if (commerceUserSegmentEntryIds != null) {
 			TermsSetFilterBuilder termsSetFilterBuilder =
 				_filterBuilders.termsSetFilterBuilder();
 
@@ -120,7 +119,9 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 			List<String> values = new ArrayList<>(
 				commerceUserSegmentEntryIds.length);
 
-			for (long commerceUserSegmentEntryId : commerceUserSegmentEntryIds) {
+			for (long commerceUserSegmentEntryId :
+					commerceUserSegmentEntryIds) {
+
 				values.add(String.valueOf(commerceUserSegmentEntryId));
 			}
 
@@ -293,10 +294,9 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		_commercePriceListUserSegmentEntryRelLocalService;
 
 	@Reference
-	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference
 	private FilterBuilders _filterBuilders;
 
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
 
 }

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,21 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+package com.liferay.commerce.model;
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+import com.liferay.commerce.currency.model.CommerceCurrency;
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+import java.math.BigDecimal;
 
-<%@ page import="com.liferay.commerce.currency.model.CommerceMoney" %><%@
-page import="com.liferay.commerce.price.list.model.CommerceTierPriceEntry" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %>
+/**
+ * @author Marco Leo
+ */
+public interface CommerceOrderPrice {
 
-<%@ page import="java.util.List" %>
+	public CommerceCurrency getCommerceCurrency();
 
-<liferay-theme:defineObjects />
+	public BigDecimal getDiscountAmount();
 
-<portlet:defineObjects />
+	public BigDecimal getShippingAmount();
+
+	public BigDecimal getSubtotal();
+
+	public BigDecimal getTaxAmount();
+
+	public BigDecimal getTotal();
+
+}

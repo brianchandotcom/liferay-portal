@@ -209,38 +209,6 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
-	public List<CommercePriceList> getCommercePriceLists(
-		long groupId, int start, int end) {
-
-		return commercePriceListPersistence.findByGroupId(groupId, start, end);
-	}
-
-	@Override
-	public List<CommercePriceList> getCommercePriceLists(
-		long groupId, int status, int start, int end,
-		OrderByComparator<CommercePriceList> orderByComparator) {
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return commercePriceListPersistence.findByG_NotS(
-				groupId, WorkflowConstants.STATUS_IN_TRASH, start, end,
-				orderByComparator);
-		}
-
-		return commercePriceListPersistence.findByG_S(
-			groupId, status, start, end, orderByComparator);
-	}
-
-	@Override
-	public int getCommercePriceListsCount(long groupId, int status) {
-		if (status == WorkflowConstants.STATUS_ANY) {
-			commercePriceListPersistence.countByG_NotS(
-				groupId, WorkflowConstants.STATUS_IN_TRASH);
-		}
-
-		return commercePriceListPersistence.countByG_S(groupId, status);
-	}
-
-	@Override
 	public Optional<CommercePriceList> getCommercePriceList(
 			long groupId, long[] commerceUserSegmentEntryIds)
 		throws PortalException {
@@ -290,6 +258,38 @@ public class CommercePriceListLocalServiceImpl
 		portalCache.put(cacheKey + "_calculated", true);
 
 		return Optional.ofNullable(commercePriceList);
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceLists(
+		long groupId, int start, int end) {
+
+		return commercePriceListPersistence.findByGroupId(groupId, start, end);
+	}
+
+	@Override
+	public List<CommercePriceList> getCommercePriceLists(
+		long groupId, int status, int start, int end,
+		OrderByComparator<CommercePriceList> orderByComparator) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return commercePriceListPersistence.findByG_NotS(
+				groupId, WorkflowConstants.STATUS_IN_TRASH, start, end,
+				orderByComparator);
+		}
+
+		return commercePriceListPersistence.findByG_S(
+			groupId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommercePriceListsCount(long groupId, int status) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			commercePriceListPersistence.countByG_NotS(
+				groupId, WorkflowConstants.STATUS_IN_TRASH);
+		}
+
+		return commercePriceListPersistence.countByG_S(groupId, status);
 	}
 
 	@Override

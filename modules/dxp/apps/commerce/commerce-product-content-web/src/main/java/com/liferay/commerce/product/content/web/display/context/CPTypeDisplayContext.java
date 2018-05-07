@@ -161,10 +161,6 @@ public class CPTypeDisplayContext {
 	public Object getCPContentContributorValue(String contributorKey)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		CPContentContributor cpContentContributor =
 			cpContentContributorRegistry.getCPContentContributor(
 				contributorKey);
@@ -174,7 +170,7 @@ public class CPTypeDisplayContext {
 		}
 
 		return cpContentContributor.getValue(
-			getDefaultCPInstance(), themeDisplay.getLocale());
+			getDefaultCPInstance(), httpServletRequest);
 	}
 
 	public CPDefinition getCPDefinition() {

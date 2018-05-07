@@ -15,13 +15,16 @@
 package com.liferay.commerce.taglib.servlet.taglib;
 
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.model.CPDefinitionInventory;
+import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceServiceUtil;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
-import com.liferay.commerce.service.CommercePriceCalculationLocalServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -40,6 +43,9 @@ public class PriceTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		CommerceContext commerceContext = (CommerceContext)request.getAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT);
+
 		try {
 			if (_quantity == 0) {
 				CPInstance cpInstance = CPInstanceServiceUtil.getCPInstance(
@@ -70,10 +76,11 @@ public class PriceTag extends IncludeTag {
 				_commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
 			}
 
-			_formattedPrice =
-				CommercePriceCalculationLocalServiceUtil.getFormattedFinalPrice(
-					groupId, _commerceCurrencyId, PortalUtil.getUserId(request),
-					_cpInstanceId, _quantity);
+			CommerceMoney commerceMoney =
+				commercePriceCalculation.getFinalPrice(
+					_cpInstanceId, _quantity, true, true, commerceContext);
+
+			_formattedPrice = commerceMoney.toString();
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -97,6 +104,9 @@ public class PriceTag extends IncludeTag {
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
+
+		commercePriceCalculation =
+			ServletContextUtil.getCommercePriceCalculation();
 
 		servletContext = ServletContextUtil.getServletContext();
 	}
@@ -129,6 +139,8 @@ public class PriceTag extends IncludeTag {
 			"liferay-commerce:price:formattedPrice", _formattedPrice);
 		request.setAttribute("liferay-commerce:price:quantity", _quantity);
 	}
+
+	protected CommercePriceCalculation commercePriceCalculation;
 
 	private static final String _PAGE = "/price/page.jsp";
 

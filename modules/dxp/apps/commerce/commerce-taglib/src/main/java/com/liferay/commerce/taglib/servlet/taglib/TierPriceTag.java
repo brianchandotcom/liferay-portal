@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.taglib.servlet.taglib;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
-import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServiceUtil;
 import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -46,12 +45,12 @@ public class TierPriceTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			long groupId = PortalUtil.getScopeGroupId(request);
-			long userId = PortalUtil.getUserId(request);
+			CommerceContext commerceContext =
+				(CommerceContext)request.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			Optional<CommercePriceList> commercePriceListOptional =
-				CommercePriceListLocalServiceUtil.getUserCommercePriceList(
-					groupId, userId);
+				commerceContext.getCommercePriceList();
 
 			if (commercePriceListOptional.isPresent()) {
 				CommercePriceList commercePriceList =
@@ -77,8 +76,7 @@ public class TierPriceTag extends IncludeTag {
 
 			if (_commerceCurrencyId == 0) {
 				CommerceCurrency commerceCurrency =
-					CommerceCurrencyLocalServiceUtil.
-						fetchPrimaryCommerceCurrency(groupId);
+					commerceContext.getCommerceCurrency();
 
 				_commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
 			}

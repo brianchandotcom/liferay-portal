@@ -14,16 +14,11 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
-import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
-import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
-import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.service.CommercePriceCalculationLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -31,11 +26,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -69,9 +62,6 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		long cpDefinitionId = ParamUtil.getLong(
@@ -92,26 +82,6 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					cpInstance.getManufacturerPartNumber());
 
 				jsonObject.put("sku", cpInstance.getSku());
-
-				CPDefinitionInventory cpDefinitionInventory =
-					_cpDefinitionInventoryLocalService.
-						fetchCPDefinitionInventoryByCPDefinitionId(
-							cpDefinitionId);
-
-				CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
-					_cpDefinitionInventoryEngineRegistry.
-						getCPDefinitionInventoryEngine(cpDefinitionInventory);
-
-				String formattedPrice =
-					_commercePriceCalculationLocalService.
-						getFormattedFinalPrice(
-							themeDisplay.getScopeGroupId(),
-							themeDisplay.getUserId(),
-							cpInstance.getCPInstanceId(),
-							cpDefinitionInventoryEngine.getMinOrderQuantity(
-								cpInstance));
-
-				jsonObject.put("price", formattedPrice);
 
 				List<CPContentContributor> cpContentContributors =
 					_cpContentContributorRegistry.getCPContentContributors();
@@ -168,19 +138,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		CheckCPInstanceMVCActionCommand.class);
 
 	@Reference
-	private CommercePriceCalculationLocalService
-		_commercePriceCalculationLocalService;
-
-	@Reference
 	private CPContentContributorRegistry _cpContentContributorRegistry;
-
-	@Reference
-	private CPDefinitionInventoryEngineRegistry
-		_cpDefinitionInventoryEngineRegistry;
-
-	@Reference
-	private CPDefinitionInventoryLocalService
-		_cpDefinitionInventoryLocalService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

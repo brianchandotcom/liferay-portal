@@ -102,7 +102,6 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 
 	@Override
 	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(long cpRuleId) {
-
 		return cpRuleUserSegmentRelPersistence.findByCPRuleId(
 			cpRuleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}

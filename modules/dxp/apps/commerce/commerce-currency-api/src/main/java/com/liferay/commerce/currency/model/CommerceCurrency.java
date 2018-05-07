@@ -54,4 +54,6 @@ public interface CommerceCurrency extends CommerceCurrencyModel, PersistedModel 
 				return CommerceCurrency.class;
 			}
 		};
+
+	public CommerceMoney getZero();
 }

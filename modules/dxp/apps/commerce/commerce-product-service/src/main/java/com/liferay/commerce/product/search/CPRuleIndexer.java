@@ -33,10 +33,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.filter.FilterBuilders;
+import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -47,9 +47,6 @@ import java.util.stream.Stream;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.filter.FilterBuilders;
-import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -80,11 +77,10 @@ public class CPRuleIndexer extends BaseIndexer<CPRule> {
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		long[] commerceUserSegmentEntryIds =  GetterUtil.getLongValues(
+		long[] commerceUserSegmentEntryIds = GetterUtil.getLongValues(
 			"commerceUserSegmentEntryIds", null);
 
-		if(commerceUserSegmentEntryIds != null){
-
+		if (commerceUserSegmentEntryIds != null) {
 			TermsSetFilterBuilder termsSetFilterBuilder =
 				_filterBuilders.termsSetFilterBuilder();
 
@@ -96,7 +92,7 @@ public class CPRuleIndexer extends BaseIndexer<CPRule> {
 				commerceUserSegmentEntryIds.length);
 
 			for (long commerceUserSegmentEntryId :
-				commerceUserSegmentEntryIds) {
+					commerceUserSegmentEntryIds) {
 
 				values.add(String.valueOf(commerceUserSegmentEntryId));
 			}
@@ -153,7 +149,7 @@ public class CPRuleIndexer extends BaseIndexer<CPRule> {
 
 		Stream<CPRuleUserSegmentRel> stream = cpRuleUserSegmentRels.stream();
 
-		long[] commerceUserSegmentEntryIds =  stream.mapToLong(
+		long[] commerceUserSegmentEntryIds = stream.mapToLong(
 			CPRuleUserSegmentRel::getCommerceUserSegmentEntryId).toArray();
 
 		document.addNumber(
@@ -245,9 +241,9 @@ public class CPRuleIndexer extends BaseIndexer<CPRule> {
 	private CPRuleUserSegmentRelLocalService _cpRuleUserSegmentRelLocalService;
 
 	@Reference
-	private IndexWriterHelper _indexWriterHelper;
+	private FilterBuilders _filterBuilders;
 
 	@Reference
-	private FilterBuilders _filterBuilders;
+	private IndexWriterHelper _indexWriterHelper;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.taglib.servlet.taglib.internal.servlet;
 
+import com.liferay.commerce.price.CommercePriceCalculation;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
@@ -26,6 +28,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class ServletContextUtil {
+
+	public static final CommercePriceCalculation getCommercePriceCalculation() {
+		return _instance._getCommercePriceCalculation();
+	}
 
 	public static final ServletContext getServletContext() {
 		return _instance._getServletContext();
@@ -41,6 +47,13 @@ public class ServletContextUtil {
 		_instance = null;
 	}
 
+	@Reference(unbind = "-")
+	protected void setCommercePriceCalculation(
+		CommercePriceCalculation commercePriceCalculation) {
+
+		_commercePriceCalculation = commercePriceCalculation;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.taglib)",
 		unbind = "-"
@@ -49,12 +62,17 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
+	private CommercePriceCalculation _getCommercePriceCalculation() {
+		return _commercePriceCalculation;
+	}
+
 	private ServletContext _getServletContext() {
 		return _servletContext;
 	}
 
 	private static ServletContextUtil _instance;
 
+	private CommercePriceCalculation _commercePriceCalculation;
 	private ServletContext _servletContext;
 
 }

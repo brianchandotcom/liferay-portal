@@ -184,6 +184,11 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getCommerceUserSegmentEntriesCount(long groupId) {
+		return commerceUserSegmentEntryPersistence.countByGroupId(groupId);
+	}
+
+	@Override
 	public long[] getCommerceUserSegmentEntryIds(
 			long groupId, long organizationId, long userId)
 		throws PortalException {
@@ -194,10 +199,9 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			MultiVMPoolUtil.getPortalCache("USER_SEGMENTS_" + groupId);
 
 		boolean userSegmentsCalculated = GetterUtil.getBoolean(
-			portalCache.get( cacheKey + "_calculated"));
+			portalCache.get(cacheKey + "_calculated"));
 
-		long[] commerceUserSegmentEntryIds =
-			(long[])portalCache.get(cacheKey);
+		long[] commerceUserSegmentEntryIds = (long[])portalCache.get(cacheKey);
 
 		if (userSegmentsCalculated) {
 			return commerceUserSegmentEntryIds;
@@ -219,18 +223,13 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		Stream<Document> stream = documents.stream();
 
 		commerceUserSegmentEntryIds = stream.mapToLong(
-				field ->  GetterUtil.getLong(field.get(Field.ENTRY_CLASS_PK)))
-			.toArray();
+			field -> GetterUtil.getLong(field.get(Field.ENTRY_CLASS_PK))).
+				toArray();
 
 		portalCache.put(cacheKey + "_calculated", true);
 		portalCache.put(cacheKey, commerceUserSegmentEntryIds);
 
 		return commerceUserSegmentEntryIds;
-	}
-
-	@Override
-	public int getCommerceUserSegmentEntriesCount(long groupId) {
-		return commerceUserSegmentEntryPersistence.countByGroupId(groupId);
 	}
 
 	@Override

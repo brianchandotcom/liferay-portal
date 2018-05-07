@@ -65,7 +65,7 @@ public class CommerceTestUtil {
 		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
 			commerceOrderId, cpInstanceId, RandomTestUtil.randomInt(),
 			RandomTestUtil.randomInt(), null,
-			new BigDecimal(RandomTestUtil.nextDouble()), serviceContext);
+			new BigDecimal(RandomTestUtil.nextDouble()), null, serviceContext);
 	}
 
 	public static CommerceWarehouse addCommerceWarehouse(

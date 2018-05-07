@@ -33,7 +33,6 @@ import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -126,7 +125,8 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			Field.CREATE_DATE, fileEntry.getCreateDate(), map);
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, fileEntry.getModifiedDate(), map);
-		indexedFieldsFixture.populateDate(Field.PUBLISH_DATE, new Date(0), map);
+		indexedFieldsFixture.populateDate(
+			Field.PUBLISH_DATE, fileEntry.getCreateDate(), map);
 
 		indexedFieldsFixture.populateExpirationDateWithForever(map);
 	}

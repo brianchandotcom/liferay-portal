@@ -115,6 +115,21 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			new LiferayIntegrationTestRule();
 
 		@Test
+		public void assetEntryShouldHavePublishDate() throws Exception {
+			String fileName = RandomTestUtil.randomString();
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName);
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
+			Assert.assertEquals(
+				assetEntry.getCreateDate(), assetEntry.getPublishDate());
+		}
+
+		@Test
 		public void assetTagsShouldBeOrdered() throws Exception {
 			String fileName = RandomTestUtil.randomString();
 

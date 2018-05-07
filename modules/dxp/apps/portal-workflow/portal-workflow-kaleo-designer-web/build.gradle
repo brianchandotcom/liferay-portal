@@ -21,9 +21,9 @@ dependencies {
 
 mergeLang {
 	sourceDirs = [
-		"../../../../../apps/dynamic-data-lists/dynamic-data-lists-web/src/main/resources/content",
-		"../../../../../apps/dynamic-data-mapping/dynamic-data-mapping-form-web/src/main/resources/content",
-		"../../../../../apps/portal-workflow/portal-workflow-lang/src/main/resources/content",
+		"../../../../apps/dynamic-data-lists/dynamic-data-lists-web/src/main/resources/content",
+		"../../../../apps/dynamic-data-mapping/dynamic-data-mapping-form-web/src/main/resources/content",
+		"../../../../apps/portal-workflow/portal-workflow-lang/src/main/resources/content",
 		"src/main/resources/content"
 	]
 }

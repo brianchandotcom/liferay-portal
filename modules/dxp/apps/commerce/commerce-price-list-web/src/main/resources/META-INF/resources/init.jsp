@@ -51,6 +51,7 @@ page import="com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDe
 page import="com.liferay.commerce.product.exception.NoSuchCPInstanceException" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
+page import="com.liferay.commerce.product.util.CPNavigationItemRegistryUtil" %><%@
 page import="com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

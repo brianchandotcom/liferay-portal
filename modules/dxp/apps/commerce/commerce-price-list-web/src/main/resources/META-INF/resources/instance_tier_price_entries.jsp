@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
-
 CPInstanceCommerceTierPriceEntryDisplayContext cpInstanceCommerceTierPriceEntryDisplayContext = (CPInstanceCommerceTierPriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpInstanceCommerceTierPriceEntryDisplayContext.getCPDefinition();
@@ -60,10 +58,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, cpInstance.getSku(), instancePrice
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
-<%@ include file="/navbar.jspf" %>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+/>
 
 <%@ include file="/breadcrumb.jspf" %>
-
 <%@ include file="/instance_price_entry_navbar.jspf" %>
 
 <liferay-frontend:management-bar

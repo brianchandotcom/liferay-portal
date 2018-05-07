@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-specification-options");
-
 CPSpecificationOption cpSpecificationOption = (CPSpecificationOption)request.getAttribute(CPWebKeys.CP_SPECIFICATION_OPTION);
 
 long cpSpecificationOptionId = BeanParamUtil.getLong(cpSpecificationOption, request, "CPSpecificationOptionId");
@@ -39,7 +37,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
-<%@ include file="/navbar.jspf" %>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+/>
+
+<%@ include file="/navbar_specifications.jspf" %>
 <%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editProductSpecificationOption" var="editProductSpecificationOptionActionURL" />

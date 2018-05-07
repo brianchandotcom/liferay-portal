@@ -27,10 +27,6 @@ SearchContainer<CPDefinitionOptionValueRel> cpDefinitionOptionValueRelSearchCont
 
 PortletURL portletURL = cpDefinitionOptionValueRelDisplayContext.getPortletURL();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-commerce-product-definition-option-value-rels");
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-
 request.setAttribute("view.jsp-portletURL", portletURL);
 
 PortletURL productOptionRelsURL = renderResponse.createRenderURL();

@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-option-categories");
-
 CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWebKeys.CP_OPTION_CATEGORY);
 
 long cpOptionCategoryId = BeanParamUtil.getLong(cpOptionCategory, request, "CPOptionCategoryId");
@@ -39,7 +37,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
-<%@ include file="/navbar.jspf" %>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+/>
+
+<%@ include file="/navbar_specifications.jspf" %>
 <%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editProductOptionCategory" var="editProductOptionCategoryActionURL" />

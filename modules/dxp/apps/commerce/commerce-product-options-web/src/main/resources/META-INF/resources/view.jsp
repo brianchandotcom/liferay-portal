@@ -17,12 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-options");
-
 renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
-<%@ include file="/navbar.jspf" %>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+/>
 
 <div class="container-fluid-1280" id="<portlet:namespace />CPOptionsEditor">
 

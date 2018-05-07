@@ -19,8 +19,6 @@
 <%
 String catalogNavigationItem = ParamUtil.getString(request, "catalogNavigationItem", "view-all-product-definitions");
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
-
 CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer productDefinitionSearchContainer = cpDefinitionsDisplayContext.getSearchContainer();
@@ -29,13 +27,15 @@ String displayStyle = cpDefinitionsDisplayContext.getDisplayStyle();
 
 PortletURL portletURL = cpDefinitionsDisplayContext.getPortletURL();
 
-portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "cpDefinitions");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<%@ include file="/navbar.jspf" %>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+/>
 
 <%@ include file="/navbar_definitions.jspf" %>
 

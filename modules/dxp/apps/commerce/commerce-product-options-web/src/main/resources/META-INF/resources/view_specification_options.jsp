@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-specification-options");
-
 CPSpecificationOptionDisplayContext cpSpecificationOptionDisplayContext = (CPSpecificationOptionDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer<CPSpecificationOption> cpSpecificationOptionSearchContainer = cpSpecificationOptionDisplayContext.getSearchContainer();
@@ -27,7 +25,6 @@ String displayStyle = cpSpecificationOptionDisplayContext.getDisplayStyle();
 
 PortletURL portletURL = cpSpecificationOptionDisplayContext.getPortletURL();
 
-portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "cpSpecificationOptions");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
@@ -35,7 +32,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
-<%@ include file="/navbar.jspf" %>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+/>
+
+<%@ include file="/navbar_specifications.jspf" %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

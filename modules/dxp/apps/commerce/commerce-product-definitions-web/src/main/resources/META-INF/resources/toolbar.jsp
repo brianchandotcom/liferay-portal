@@ -53,7 +53,6 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 					<portlet:param name="mvcRenderCommandName" value="editProductDefinition" />
 					<portlet:param name="backURL" value="<%= PortalUtil.getCurrentCompleteURL(request) %>" />
 					<portlet:param name="productTypeName" value="<%= curCPType.getName() %>" />
-					<portlet:param name="toolbarItem" value="view-product-definition-details" />
 				</liferay-portlet:renderURL>
 
 				<liferay-frontend:add-menu-item

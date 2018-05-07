@@ -39,4 +39,4 @@ Liferay-Releng-Module-Group-Title: Remote Service Engines
 	javax.wsdl.*;version="1.2",\
 	\
 	org.apache.cxf.*;version="3.1.9",\
-	org.apache.ws.commons.schema.*;version="2.1.0"
+	org.apache.ws.commons.schema.*;version="2.2.1"

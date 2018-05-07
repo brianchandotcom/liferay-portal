@@ -429,19 +429,15 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected String getProjectName() {
-		String projectPathPrefix = getProjectPathPrefix();
+		if (Validator.isNull(_projectPathPrefix) ||
+			!_projectPathPrefix.contains(StringPool.COLON)) {
 
-		if (Validator.isNull(projectPathPrefix)) {
 			return StringPool.BLANK;
 		}
 
-		if (!projectPathPrefix.contains(StringPool.COLON)) {
-			return StringPool.BLANK;
-		}
+		int pos = _projectPathPrefix.lastIndexOf(StringPool.COLON);
 
-		int pos = projectPathPrefix.lastIndexOf(StringPool.COLON);
-
-		return projectPathPrefix.substring(pos + 1);
+		return _projectPathPrefix.substring(pos + 1);
 	}
 
 	protected String getProjectPathPrefix() {

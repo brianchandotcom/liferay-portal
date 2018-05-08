@@ -43,8 +43,12 @@ public abstract class BaseAssetDisplayContributor<T>
 			AssetEntry assetEntry, Locale locale)
 		throws PortalException {
 
+		// Default fields for asset entry
+
 		Map<String, Object> parameterMap = _getDefaultParameterMap(
 			assetEntry, locale);
+
+		// Fields for the specific asset type
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
@@ -54,13 +58,24 @@ public abstract class BaseAssetDisplayContributor<T>
 		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
 			assetEntry.getClassPK());
 
-		for (String assetEntryModelField : getAssetEntryModelFields()) {
-			parameterMap.put(
-				assetEntryModelField,
-				getFieldValue(
-					assetRenderer.getAssetObject(), assetEntryModelField,
-					locale));
+		String[] assetEntryModelFields = getAssetEntryModelFields();
+
+		if (assetEntryModelFields != null) {
+			for (String assetEntryModelField : assetEntryModelFields) {
+				parameterMap.put(
+					assetEntryModelField,
+					getFieldValue(
+						assetRenderer.getAssetObject(), assetEntryModelField,
+						locale));
+			}
 		}
+
+		// Fields for the class type
+
+		Map<String, Object> classTypeValues = getClassTypeValues(
+			assetRenderer.getAssetObject(), locale);
+
+		parameterMap.putAll(classTypeValues);
 
 		return parameterMap;
 	}

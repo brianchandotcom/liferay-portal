@@ -48,12 +48,14 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 									</div>
 
 									<div class="autofit-col autofit-col-end">
-										<liferay-ui:icon
-											icon="plus"
-											iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
-											markupView="lexicon"
-											url="<%= editFragmentCollectionURL %>"
-										/>
+										<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
+											<liferay-ui:icon
+												icon="plus"
+												iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+												markupView="lexicon"
+												url="<%= editFragmentCollectionURL %>"
+											/>
+										</c:if>
 									</div>
 								</div>
 
@@ -95,7 +97,9 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 									<liferay-ui:message key="collections-are-needed-to-create-fragments" />
 								</p>
 
-								<aui:a cssClass="btn btn-primary" href="<%= editFragmentCollectionURL %>" label="add-collection" />
+								<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
+									<aui:a cssClass="btn btn-primary" href="<%= editFragmentCollectionURL %>" label="add-collection" />
+								</c:if>
 							</c:otherwise>
 						</c:choose>
 					</li>

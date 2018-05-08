@@ -17,10 +17,13 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.annotation.Annotation;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -66,10 +69,80 @@ public class ServiceBeanAopCacheManager {
 		_annotations.put(methodInvocation.getMethod(), annotations);
 	}
 
+	public ServiceBeanAopCacheManager(MethodInterceptor methodInterceptor) {
+		ArrayList<MethodInterceptor> classLevelMethodInterceptors =
+			new ArrayList<>();
+		ArrayList<MethodInterceptor> fullMethodInterceptors = new ArrayList<>();
+
+		while (true) {
+			if (!(methodInterceptor instanceof ChainableMethodAdvice)) {
+				classLevelMethodInterceptors.add(methodInterceptor);
+				fullMethodInterceptors.add(methodInterceptor);
+
+				break;
+			}
+
+			ChainableMethodAdvice chainableMethodAdvice =
+				(ChainableMethodAdvice)methodInterceptor;
+
+			chainableMethodAdvice.setServiceBeanAopCacheManager(this);
+
+			if (methodInterceptor instanceof AnnotationChainableMethodAdvice) {
+				AnnotationChainableMethodAdvice<?>
+					annotationChainableMethodAdvice =
+						(AnnotationChainableMethodAdvice<?>)methodInterceptor;
+
+				Class<? extends Annotation> annotationClass =
+					annotationChainableMethodAdvice.getAnnotationClass();
+
+				Target target = annotationClass.getAnnotation(Target.class);
+
+				if (target == null) {
+					classLevelMethodInterceptors.add(methodInterceptor);
+				}
+				else {
+					for (ElementType elementType : target.value()) {
+						if (elementType == ElementType.TYPE) {
+							classLevelMethodInterceptors.add(methodInterceptor);
+
+							break;
+						}
+					}
+				}
+			}
+			else {
+				classLevelMethodInterceptors.add(methodInterceptor);
+			}
+
+			fullMethodInterceptors.add(methodInterceptor);
+
+			methodInterceptor = chainableMethodAdvice.nextMethodInterceptor;
+		}
+
+		classLevelMethodInterceptors.trimToSize();
+
+		_classLevelMethodInterceptors = classLevelMethodInterceptors;
+		_fullMethodInterceptors = fullMethodInterceptors;
+	}
+
 	public MethodInterceptorsBag getMethodInterceptorsBag(
 		MethodInvocation methodInvocation) {
 
-		return _methodInterceptorBags.get(methodInvocation.getMethod());
+		MethodInterceptorsBag methodInterceptorsBag =
+			_methodInterceptorBags.get(methodInvocation.getMethod());
+
+		if (methodInterceptorsBag == null) {
+			List<MethodInterceptor> methodInterceptors = new ArrayList<>(
+				_fullMethodInterceptors);
+
+			methodInterceptorsBag = new MethodInterceptorsBag(
+				_classLevelMethodInterceptors, methodInterceptors);
+
+			_methodInterceptorBags.put(
+				methodInvocation.getMethod(), methodInterceptorsBag);
+		}
+
+		return methodInterceptorsBag;
 	}
 
 	public Map
@@ -167,6 +240,8 @@ public class ServiceBeanAopCacheManager {
 	private final
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			_annotationChainableMethodAdvices = new HashMap<>();
+	private final List<MethodInterceptor> _classLevelMethodInterceptors;
+	private final List<MethodInterceptor> _fullMethodInterceptors;
 	private final Map<Method, MethodInterceptorsBag> _methodInterceptorBags =
 		new ConcurrentHashMap<>();
 

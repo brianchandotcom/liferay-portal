@@ -18,16 +18,8 @@ import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.aopalliance.intercept.MethodInterceptor;
 
 /**
  * @author Shuyang Zhou
@@ -52,65 +44,10 @@ public class ServiceBeanAopProxy
 	}
 
 	public ServiceBeanAopProxy(
-		AdvisedSupport advisedSupport, MethodInterceptor methodInterceptor,
+		AdvisedSupport advisedSupport,
 		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
 
 		_advisedSupport = advisedSupport;
-
-		ArrayList<MethodInterceptor> classLevelMethodInterceptors =
-			new ArrayList<>();
-		ArrayList<MethodInterceptor> fullMethodInterceptors = new ArrayList<>();
-
-		while (true) {
-			if (!(methodInterceptor instanceof ChainableMethodAdvice)) {
-				classLevelMethodInterceptors.add(methodInterceptor);
-				fullMethodInterceptors.add(methodInterceptor);
-
-				break;
-			}
-
-			ChainableMethodAdvice chainableMethodAdvice =
-				(ChainableMethodAdvice)methodInterceptor;
-
-			chainableMethodAdvice.setServiceBeanAopCacheManager(
-				serviceBeanAopCacheManager);
-
-			if (methodInterceptor instanceof AnnotationChainableMethodAdvice) {
-				AnnotationChainableMethodAdvice<?>
-					annotationChainableMethodAdvice =
-						(AnnotationChainableMethodAdvice<?>)methodInterceptor;
-
-				Class<? extends Annotation> annotationClass =
-					annotationChainableMethodAdvice.getAnnotationClass();
-
-				Target target = annotationClass.getAnnotation(Target.class);
-
-				if (target == null) {
-					classLevelMethodInterceptors.add(methodInterceptor);
-				}
-				else {
-					for (ElementType elementType : target.value()) {
-						if (elementType == ElementType.TYPE) {
-							classLevelMethodInterceptors.add(methodInterceptor);
-
-							break;
-						}
-					}
-				}
-			}
-			else {
-				classLevelMethodInterceptors.add(methodInterceptor);
-			}
-
-			fullMethodInterceptors.add(methodInterceptor);
-
-			methodInterceptor = chainableMethodAdvice.nextMethodInterceptor;
-		}
-
-		classLevelMethodInterceptors.trimToSize();
-
-		_classLevelMethodInterceptors = classLevelMethodInterceptors;
-		_fullMethodInterceptors = fullMethodInterceptors;
 
 		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
 	}
@@ -157,24 +94,11 @@ public class ServiceBeanAopProxy
 			_serviceBeanAopCacheManager.getMethodInterceptorsBag(
 				serviceBeanMethodInvocation);
 
-		if (methodInterceptorsBag == null) {
-			List<MethodInterceptor> methodInterceptors = new ArrayList<>(
-				_fullMethodInterceptors);
-
-			methodInterceptorsBag = new MethodInterceptorsBag(
-				_classLevelMethodInterceptors, methodInterceptors);
-
-			_serviceBeanAopCacheManager.putMethodInterceptorsBag(
-				serviceBeanMethodInvocation, methodInterceptorsBag);
-		}
-
 		serviceBeanMethodInvocation.setMethodInterceptors(
 			methodInterceptorsBag.getMergedMethodInterceptors());
 	}
 
 	private final AdvisedSupport _advisedSupport;
-	private final List<MethodInterceptor> _classLevelMethodInterceptors;
-	private final List<MethodInterceptor> _fullMethodInterceptors;
 	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 }

@@ -32,14 +32,7 @@ import org.springframework.beans.factory.ListableBeanFactory;
  */
 public class AopProxyFactoryImpl implements AopProxyFactory, BeanFactoryAware {
 
-	public AopProxyFactoryImpl() {
-		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager();
-	}
-
 	public void afterPropertiesSet() {
-		ServiceBeanAopCacheManagerUtil.registerServiceBeanAopCacheManager(
-			_serviceBeanAopCacheManager);
-
 		ListableBeanFactory listableBeanFactory =
 			(ListableBeanFactory)_beanFactory;
 
@@ -52,6 +45,12 @@ public class AopProxyFactoryImpl implements AopProxyFactory, BeanFactoryAware {
 
 			chainableMethodAdviceInjector.inject();
 		}
+
+		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager(
+			_methodInterceptor);
+
+		ServiceBeanAopCacheManagerUtil.registerServiceBeanAopCacheManager(
+			_serviceBeanAopCacheManager);
 	}
 
 	public void destroy() {
@@ -62,7 +61,7 @@ public class AopProxyFactoryImpl implements AopProxyFactory, BeanFactoryAware {
 	@Override
 	public AopProxy getAopProxy(AdvisedSupport advisedSupport) {
 		return new ServiceBeanAopProxy(
-			advisedSupport, _methodInterceptor, _serviceBeanAopCacheManager);
+			advisedSupport, _serviceBeanAopCacheManager);
 	}
 
 	@Override
@@ -76,6 +75,6 @@ public class AopProxyFactoryImpl implements AopProxyFactory, BeanFactoryAware {
 
 	private BeanFactory _beanFactory;
 	private MethodInterceptor _methodInterceptor;
-	private final ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
+	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 }

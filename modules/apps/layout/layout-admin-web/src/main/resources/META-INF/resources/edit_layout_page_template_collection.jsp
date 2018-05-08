@@ -19,7 +19,7 @@
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-String redirect = layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionRedirect();
+String redirect = layoutPageTemplateDisplayContext.getRedirect();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

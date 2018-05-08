@@ -1,21 +1,28 @@
-import {ClayManagementToolbar} from 'clay-management-toolbar';
+import {
+	actionItemsValidator,
+	creationMenuItemsValidator,
+	filterItemsValidator
+} from 'clay-management-toolbar';
 import {Config} from 'metal-state';
-import {EventHandler} from 'metal-events';
+import ClayComponent from 'clay-component';
+import Soy from 'metal-soy';
+
+import templates from './ManagementToolbar.soy';
 
 /**
  * Metal ManagementToolbar component.
  * @review
  */
 
-class ManagementToolbar extends ClayManagementToolbar {
+class ManagementToolbar extends ClayComponent {
 
 	/**
 	 * @inheritDoc
 	 * @review
 	 */
 
-	attached() {
-		super.attached();
+	attached(...args) {
+		super.attached(...args);
 
 		Liferay.componentReady(this.searchContainerId).then(
 			searchContainer => {
@@ -28,7 +35,7 @@ class ManagementToolbar extends ClayManagementToolbar {
 		);
 
 		if (this.infoPanelId) {
-			let sidenavToggle = $(this.refs.infoButton);
+			let sidenavToggle = AUI.$(this.refs.managementToolbar.refs.infoButton);
 
 			if (!sidenavToggle.sideNavigation('instance')) {
 				sidenavToggle.sideNavigation(
@@ -49,8 +56,8 @@ class ManagementToolbar extends ClayManagementToolbar {
 	 * @review
 	 */
 
-	disposed() {
-		super.disposed();
+	disposed(...args) {
+		super.disposed(...args);
 
 		if (this._eventHandler) {
 			this._eventHandler.forEach(
@@ -62,39 +69,12 @@ class ManagementToolbar extends ClayManagementToolbar {
 	}
 
 	/**
-	 * @inheritDoc
-	 * @review
-	 */
-
-	_handleDeselectAllClicked(event) {
-		super._handleDeselectAllClicked(event);
-
-		if (this._searchContainer) {
-			this._searchContainer.select.toggleAllRows(false);
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-
-	_handleSelectAllClicked(event) {
-		super._handleSelectAllClicked(event);
-
-		if (this._searchContainer) {
-			this._searchContainer.select.toggleAllRows(true);
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 * @review
+	 * Toggles all searchContainer rows
+	 * @param {!Event} event
+	 * @private
 	 */
 
 	_handleSelectPageCheckboxChanged(event) {
-		super._handleSelectPageCheckboxChanged(event);
-
 		if (this._searchContainer) {
 			let checkboxStatus = event.target.checked;
 
@@ -104,6 +84,30 @@ class ManagementToolbar extends ClayManagementToolbar {
 			else {
 				this._searchContainer.select.toggleAllRows(false);
 			}
+		}
+	}
+
+	/**
+	 * Deselects all searchContainer rows
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleDeselectAllClicked() {
+		if (this._searchContainer) {
+			this._searchContainer.select.toggleAllRows(false);
+		}
+	}
+
+	/**
+	 * Selects all searchContainer rows
+	 * @param {!Event} event
+	 * @private
+	 */
+
+	_handleSelectAllClicked(event) {
+		if (this._searchContainer) {
+			this._searchContainer.select.toggleAllRows(true);
 		}
 	}
 
@@ -120,6 +124,7 @@ class ManagementToolbar extends ClayManagementToolbar {
 
 		this.selectedItems = elements.allSelectedElements.filter(':enabled').size();
 	}
+
 }
 
 /**
@@ -129,6 +134,100 @@ class ManagementToolbar extends ClayManagementToolbar {
  */
 
 ManagementToolbar.STATE = {
+
+	/**
+	 * List of items to display in the actions menu on active state.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(array|undefined)}
+	 */
+
+	actionItems: actionItemsValidator,
+
+	/**
+	 * Url for clear results link.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	clearResultsURL: Config.string(),
+
+	/**
+	 * Name of the content renderer to use template variants.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	contentRenderer: Config.string(),
+
+	/**
+	 * Configuration of the creation menu.
+	 * Set `true` to render a plain button that will emit an event onclick.
+	 * Set `string` to use it as link href to render a link styled button.
+	 * Set `object` to render a dropdown menu with items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(object|string|bool|undefined)}
+	 */
+
+	creationMenu: Config.shapeOf(
+		{
+			caption: Config.string(),
+			helpText: Config.string(),
+			maxPrimaryItems: Config.number(),
+			maxSecondaryItems: Config.number(),
+			maxTotalItems: Config.number(),
+			primaryItems: creationMenuItemsValidator,
+			secondaryItems: creationMenuItemsValidator,
+			viewMoreURL: Config.string()
+		}
+	),
+
+	/**
+	 * Flag to indicate if the managment toolbar is disabled or not.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?bool}
+	 */
+
+	disabled: Config.bool().value(false),
+
+	/**
+	 * CSS classes to be applied to the element.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	elementClasses: Config.string(),
+
+	/**
+	 * List of filter menu items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(array|undefined)}
+	 */
+
+	filterItems: filterItemsValidator,
+
+	/**
+	 * Id to be applied to the element.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	id: Config.string(),
 
 	/**
 	 * Id to get the infoPanel node.
@@ -142,6 +241,16 @@ ManagementToolbar.STATE = {
 	infoPanelId: Config.string(),
 
 	/**
+	 * URL of the search form action
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	searchActionURL: Config.string(),
+
+	/**
 	 * Id to get a instance of the searchContainer.
 	 * @default undefined
 	 * @instance
@@ -150,8 +259,173 @@ ManagementToolbar.STATE = {
 	 * @type {?string|undefined}
 	 */
 
-	searchContainerId: Config.string()
+	searchContainerId: Config.string(),
+
+	/**
+	 * Name of the search form.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	searchFormName: Config.string(),
+
+	/**
+	 * Name of the search input.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	searchInputName: Config.string(),
+
+	/**
+	 * Value of the search input.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	searchValue: Config.string(),
+
+	/**
+	 * Flag to indicate if the managment toolbar will control the selection of
+	 * elements.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(bool|undefined)}
+	 */
+
+	selectable: Config.bool().value(false),
+
+	/**
+	 * Number of selected items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(number|undefined)}
+	 */
+
+	selectedItems: Config.number(),
+
+	/**
+	 * Flag to indicate if advanced search should be shown or not.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?bool}
+	 */
+
+	showAdvancedSearch: Config.bool().value(false),
+
+	/**
+	 * Flag to indicate if creation menu button should be shown or not.
+	 * @default true
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?bool}
+	 */
+
+	showCreationMenu: Config.bool().value(true),
+
+	/**
+	 * Flag to indicate if the `Done` button in filter dropdown should be shown or
+	 * not.
+	 * @default true
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?bool}
+	 */
+
+	showFiltersDoneButton: Config.bool().value(true),
+
+	/**
+	 * Flag to indicate if the Info button should be shown or not.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?bool}
+	 */
+
+	showInfoButton: Config.bool().value(false),
+
+	/**
+	 * Flag to indicate if search should be shown or not.
+	 * @default true
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?bool}
+	 */
+
+	showSearch: Config.bool().value(true),
+
+	/**
+	 * Sorting url.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	sortingURL: Config.string(),
+
+	/**
+	 * Sorting order.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	sortingOrder: Config.oneOf(['asc', 'desc']),
+
+	/**
+	 * The path to the SVG spritemap file containing the icons.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+
+	spritemap: Config.string().required(),
+
+	/**
+	 * Total number of items. If totalItems is 0 most of the elements in the bar
+	 * will appear disabled.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(number|undefined)}
+	 */
+
+	totalItems: Config.number(),
+
+	/**
+	 * List of view items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(array|undefined)}
+	 */
+
+	viewTypes: Config.arrayOf(
+		Config.shapeOf(
+			{
+				active: Config.bool().value(false),
+				disabled: Config.bool().value(false),
+				href: Config.string(),
+				icon: Config.string().required(),
+				label: Config.string().required()
+			}
+		)
+	)
 };
+
+Soy.register(ManagementToolbar, templates);
 
 export {ManagementToolbar};
 export default ManagementToolbar;

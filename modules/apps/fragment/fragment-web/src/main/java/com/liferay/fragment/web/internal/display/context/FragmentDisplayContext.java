@@ -147,16 +147,6 @@ public class FragmentDisplayContext {
 		return _fragmentCollectionId;
 	}
 
-	public String getFragmentCollectionTitle() {
-		FragmentCollection fragmentCollection = getFragmentCollection();
-
-		if (fragmentCollection == null) {
-			return LanguageUtil.get(_request, "add-collection");
-		}
-
-		return fragmentCollection.getName();
-	}
-
 	public SearchContainer getFragmentEntriesSearchContainer() {
 		if (_fragmentEntriesSearchContainer != null) {
 			return _fragmentEntriesSearchContainer;

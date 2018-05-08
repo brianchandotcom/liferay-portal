@@ -41,6 +41,7 @@ page import="com.liferay.fragment.exception.RequiredFragmentEntryException" %><%
 page import="com.liferay.fragment.model.FragmentCollection" %><%@
 page import="com.liferay.fragment.model.FragmentEntry" %><%@
 page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
+page import="com.liferay.fragment.service.FragmentCollectionLocalServiceUtil" %><%@
 page import="com.liferay.fragment.service.FragmentCollectionServiceUtil" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLocalServiceUtil" %><%@

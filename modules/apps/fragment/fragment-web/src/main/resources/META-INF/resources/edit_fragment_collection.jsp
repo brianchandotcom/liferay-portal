@@ -17,12 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = fragmentDisplayContext.getRedirect();
+String redirect = ParamUtil.getString(request, "redirect");
+
+long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
+
+FragmentCollection fragmentCollection = FragmentCollectionLocalServiceUtil.fetchFragmentCollection(fragmentCollectionId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
+renderResponse.setTitle((fragmentCollection != null) ? fragmentCollection.getName() : LanguageUtil.get(request, "add-collection"));
 %>
 
 <portlet:actionURL name="/fragment/edit_fragment_collection" var="editFragmentCollectionURL">
@@ -34,13 +38,13 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 	name="fm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentDisplayContext.getFragmentCollectionId() %>" />
+	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentCollectionId %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateFragmentCollectionException.class %>" message="please-enter-a-unique-name" />
 		<liferay-ui:error exception="<%= FragmentCollectionNameException.class %>" message="please-enter-a-valid-name" />
 
-		<aui:model-context bean="<%= fragmentDisplayContext.getFragmentCollection() %>" model="<%= FragmentCollection.class %>" />
+		<aui:model-context bean="<%= fragmentCollection %>" model="<%= FragmentCollection.class %>" />
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>

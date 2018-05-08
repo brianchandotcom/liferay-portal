@@ -40,11 +40,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_AND_ORDER</td>
-	<td>//button[contains(@class,'nav-link') and contains(.,'Filter and Order')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FILTER_STATUS</td>
 	<td>//*[@data-qa-id='filterstatus']</td>
 	<td></td>
@@ -52,16 +47,6 @@
 <tr>
 	<td>FILTER_ORDER</td>
 	<td>//*[@data-qa-id='filterorder-by']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_VALUES</td>
-	<td>//*[@data-qa-id='filterValues']/li[contains(.,'${key_filterValue}')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FILTER_ORDER_VALUES</td>
-	<td>//a[contains(@class,'dropdown-item') and contains(.,'${key_filterValue}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -73,10 +73,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							size = 12,
 							value = {
 								"predefinedValue", "placeholder",
-								"visibilityExpression", "validation",
-								"fieldNamespace", "indexType", "localizable",
-								"readOnly", "dataType", "type", "name",
-								"showLabel", "repeatable", "autocomplete",
+								"visibilityExpression", "fieldNamespace",
+								"indexType", "localizable", "readOnly",
+								"dataType", "type", "name", "showLabel",
+								"repeatable", "validation", "autocomplete",
 								"dataSourceType", "ddmDataProviderInstanceId",
 								"ddmDataProviderInstanceOutput", "options",
 								"tooltip"

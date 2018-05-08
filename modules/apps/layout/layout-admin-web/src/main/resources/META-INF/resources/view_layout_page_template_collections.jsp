@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(themeDisplay.getScopeGroupId());
+
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 %>
 
@@ -25,80 +27,42 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar
-	actionDropdownItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateCollectionsActionDropdownItems() %>"
-	clearResultsURL="<%= layoutPageTemplateDisplayContext.getClearResultsURL() %>"
-	componentId="layoutPageTemplateCollectionsManagementToolbar"
-	creationMenu="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) ? layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionsCreationMenu() : null %>"
-	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateCollectionsManagementBar() %>"
-	filterDropdownItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
-	searchContainerId="layoutPageTemplateCollections"
-	searchFormName="searchFm"
-	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>"
-	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
-	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
-/>
+<div class="container-fluid container-fluid-max-xl container-view">
+	<div class="row">
+		<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
+			<ul class="nav nav-nested">
+				<li class="nav-item">
+					<strong class="text-uppercase">
+						<liferay-ui:message key="collections" />
+					</strong>
 
-<portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
+					<ul class="nav nav-stacked">
 
-<aui:form action="<%= deleteLayoutPageTemplateCollectionURL %>" cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		id="layoutPageTemplateCollections"
-		searchContainer="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionsSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.layout.page.template.model.LayoutPageTemplateCollection"
-			keyProperty="layoutPageTemplateCollectionId"
-			modelVar="layoutPageTemplateCollection"
-		>
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
-				<portlet:param name="tabs1" value="page-templates" />
-				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
-			</portlet:renderURL>
+						<%
+						for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
+						%>
 
-			<%
-			row.setCssClass("entry-card lfr-asset-folder");
-			%>
+							<li class="nav-item">
 
-			<liferay-ui:search-container-column-text>
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
-					<liferay-frontend:horizontal-card
-						actionJsp="/layout_page_template_collection_action.jsp"
-						actionJspServletContext="<%= application %>"
-						resultRow="<%= row %>"
-						rowChecker="<%= searchContainer.getRowChecker() %>"
-						text="<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>"
-						url="<%= rowURL.toString() %>"
-					>
-						<liferay-frontend:horizontal-card-col>
-							<liferay-frontend:horizontal-card-icon
-								icon="folder"
-							/>
-						</liferay-frontend:horizontal-card-col>
-					</liferay-frontend:horizontal-card>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+								<%
+								PortletURL layoutPageTemplateCollectionURL = renderResponse.createRenderURL();
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</aui:form>
+								layoutPageTemplateCollectionURL.setParameter("layoutPageTemplateCollectionId", String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()));
+								layoutPageTemplateCollectionURL.setParameter("tabs1", "page-templates");
+								%>
 
-<aui:script sandbox="<%= true %>">
-	window.deleteLayoutPageTemplateCollections = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
-		}
-	}
-</aui:script>
+								<a class="nav-link truncate-text <%= (layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() == layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= layoutPageTemplateCollectionURL.toString() %>">
+									<%= layoutPageTemplateCollection.getName() %>
+								</a>
+							</li>
+
+						<%
+						}
+						%>
+
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>

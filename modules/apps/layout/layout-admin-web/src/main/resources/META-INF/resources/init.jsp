@@ -50,6 +50,7 @@ page import="com.liferay.layout.page.template.exception.DuplicateLayoutPageTempl
 page import="com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
+page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

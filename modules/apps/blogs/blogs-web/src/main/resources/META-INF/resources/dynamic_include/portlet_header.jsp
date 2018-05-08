@@ -90,7 +90,7 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 				buttonStyle="primary"
 				elementClasses="btn-sm"
 				href="<%= editEntryURL %>"
-				label='<%= LanguageUtil.get(request, "new-blog-entry") %>'
+				label='<%= LanguageUtil.get(request, "new-entry") %>'
 			/>
 		</div>
 	</c:if>

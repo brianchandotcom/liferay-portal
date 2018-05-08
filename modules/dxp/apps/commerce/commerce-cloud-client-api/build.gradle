@@ -5,4 +5,5 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180326.173807-1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":private:apps:commerce:commerce-api")
+	compileOnly project(":private:apps:commerce:commerce-forecast-api")
 }

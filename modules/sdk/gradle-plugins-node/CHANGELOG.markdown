@@ -235,6 +235,11 @@ the `node_modules` directory's digest.
 - [LPS-78741]: Fix the `npmPackageLock` task execution when the `npmInstall`
 task's `useNpmCI` property is set to `true`.
 
+## 4.3.4 - 2018-05-07
+
+### Added
+- [LPS-75530]: Define task inputs and outputs for `NpmInstallTask`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -256,6 +261,7 @@ task's `useNpmCI` property is set to `true`.
 [LPS-74904]: https://issues.liferay.com/browse/LPS-74904
 [LPS-74933]: https://issues.liferay.com/browse/LPS-74933
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
+[LPS-75530]: https://issues.liferay.com/browse/LPS-75530
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
 [LPS-77996]: https://issues.liferay.com/browse/LPS-77996
 [LPS-78741]: https://issues.liferay.com/browse/LPS-78741

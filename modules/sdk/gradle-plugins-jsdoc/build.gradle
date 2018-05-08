@@ -9,7 +9,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "4.3.3"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "4.3.4"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 }

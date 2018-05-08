@@ -44,6 +44,9 @@ import org.gradle.api.Task;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
 
 /**
  * @author Andrea Di Giorgi
@@ -107,22 +110,28 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return GradleUtil.toFile(getProject(), _nodeModulesDigestFile);
 	}
 
+	@OutputDirectory
 	public File getNodeModulesDir() {
 		Project project = getProject();
 
 		return project.file("node_modules");
 	}
 
+	@InputFile
 	public File getPackageJsonFile() {
 		Project project = getProject();
 
 		return project.file("package.json");
 	}
 
+	@InputFile
+	@Optional
 	public File getPackageLockJsonFile() {
 		return _getExistentFile("package-lock.json");
 	}
 
+	@InputFile
+	@Optional
 	public File getShrinkwrapJsonFile() {
 		return _getExistentFile("npm-shrinkwrap.json");
 	}

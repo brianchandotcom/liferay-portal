@@ -13,6 +13,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
-	compileOnly project(":apps:foundation:portal-remote:portal-remote-cxf-jaxrs-common")
+	compileOnly project(":apps:portal-remote:portal-remote-cxf-jaxrs-common")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 }

@@ -7,12 +7,12 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
-	compileOnly project(":apps:foundation:portal:portal-instance-lifecycle-api")
-	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
 	compileOnly project(":apps:portal-rules-engine:portal-rules-engine-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-runtime-api")
+	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:push-notifications:push-notifications-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-string")

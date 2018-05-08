@@ -29,13 +29,13 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-orm", version: "4.1.9.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-tx", version: "4.1.9.RELEASE"
-	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:osgi-felix-util")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
 
-	springExtenderApi project(":apps:foundation:portal:portal-spring-extender-api")
+	springExtenderApi project(":apps:portal:portal-spring-extender-api")
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"

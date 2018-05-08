@@ -43,15 +43,15 @@ dependencies {
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	parentThemes group: "com.liferay.plugins", name: "classic-theme", version: "1.0.2"
-	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-styled")
-	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-unstyled")
+	parentThemes project(":apps:frontend-theme:frontend-theme-styled")
+	parentThemes project(":apps:frontend-theme:frontend-theme-unstyled")
 
 	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 	testCompile project(":test:maven-executor")
 
-	testThemes project(":apps:foundation:frontend-theme:frontend-theme-admin")
-	testThemes project(":apps:foundation:frontend-theme:frontend-theme-classic")
+	testThemes project(":apps:frontend-theme:frontend-theme-admin")
+	testThemes project(":apps:frontend-theme:frontend-theme-classic")
 }
 
 formatSource {

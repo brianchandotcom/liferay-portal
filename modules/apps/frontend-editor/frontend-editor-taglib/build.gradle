@@ -6,7 +6,7 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compileOnly project(":apps:foundation:frontend-editor:frontend-editor-api")
+	compileOnly project(":apps:frontend-editor:frontend-editor-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")

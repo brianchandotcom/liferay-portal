@@ -5,14 +5,14 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-	compileOnly project(":apps:foundation:frontend-image-editor:frontend-image-editor-api")
-	compileOnly project(":apps:foundation:portal-portlet-bridge:portal-portlet-bridge-soy-api")
+	compileOnly project(":apps:frontend-image-editor:frontend-image-editor-api")
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
+	compileOnly project(":apps:portal-portlet-bridge:portal-portlet-bridge-soy-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
 
-	soyCompile project(":apps:foundation:frontend-js:frontend-js-web")
+	soyCompile project(":apps:frontend-js:frontend-js-web")
 }

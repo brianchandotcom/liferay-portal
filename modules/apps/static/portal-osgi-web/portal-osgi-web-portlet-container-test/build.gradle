@@ -8,7 +8,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-taglib")
-	compileOnly project(":apps:foundation:petra:petra-encryptor")
+	compileOnly project(":apps:petra:petra-encryptor")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 

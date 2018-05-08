@@ -91,11 +91,11 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
-	compileOnly project(":apps:foundation:petra:petra-content")
-	compileOnly project(":apps:foundation:petra:petra-encryptor")
-	compileOnly project(":apps:foundation:petra:petra-log4j")
-	compileOnly project(":apps:foundation:petra:petra-mail")
-	compileOnly project(":apps:foundation:petra:petra-xml")
+	compileOnly project(":apps:petra:petra-content")
+	compileOnly project(":apps:petra:petra-encryptor")
+	compileOnly project(":apps:petra:petra-log4j")
+	compileOnly project(":apps:petra:petra-mail")
+	compileOnly project(":apps:petra:petra-xml")
 	compileOnly project(":core:jaxws-osgi-bridge")
 	compileOnly project(":core:osgi-felix-util")
 	compileOnly project(":core:osgi-service-tracker-collections")

@@ -42,14 +42,14 @@ dependencies {
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
-	compileOnly project(":apps:foundation:frontend-editor:frontend-editor-api")
-	compileOnly project(":apps:foundation:frontend-editor:frontend-editor-taglib")
-	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
-	compileOnly project(":apps:foundation:petra:petra-encryptor")
+	compileOnly project(":apps:frontend-editor:frontend-editor-api")
+	compileOnly project(":apps:frontend-editor:frontend-editor-taglib")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:layout:layout-item-selector-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:petra:petra-encryptor")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")

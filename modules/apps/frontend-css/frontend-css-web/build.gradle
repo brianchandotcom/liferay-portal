@@ -1,7 +1,7 @@
 task buildAlloyTheme(type: Copy)
 
 buildAlloyTheme {
-	dependsOn ":apps:foundation:frontend-js:frontend-js-aui-web:buildAlloyUI"
+	dependsOn ":apps:frontend-js:frontend-js-aui-web:buildAlloyUI"
 
 	ext {
 		autoClean = false

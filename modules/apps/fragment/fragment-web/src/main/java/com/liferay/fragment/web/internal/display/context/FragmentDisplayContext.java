@@ -18,12 +18,10 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
-import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -148,80 +146,6 @@ public class FragmentDisplayContext {
 		return _fragmentCollection;
 	}
 
-	public List<DropdownItem> getFragmentCollectionActionItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"exportSelectedFragmentCollections();");
-						dropdownItem.setIcon("import-export");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "export"));
-						dropdownItem.setQuickAction(true);
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedFragmentCollections();");
-						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
-			}
-		};
-	}
-
-	public String getFragmentCollectionClearResultsURL() {
-		PortletURL clearResultsURL = _getFragmentCollectionPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
-	public CreationMenu getFragmentCollectionCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName",
-							"/fragment/edit_fragment_collection");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add-collection"));
-					});
-			}
-		};
-	}
-
-	public List<DropdownItem> getFragmentCollectionFilterItemsDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFragmentCollectionFilterNavigationDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "filter-by-navigation"));
-					});
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getFragmentCollectionOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
-	}
-
 	public long getFragmentCollectionId() {
 		if (Validator.isNotNull(_fragmentCollectionId)) {
 			return _fragmentCollectionId;
@@ -248,103 +172,12 @@ public class FragmentDisplayContext {
 		};
 	}
 
-	public String getFragmentCollectionSearchActionURL() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL searchActionURL = _renderResponse.createRenderURL();
-
-		searchActionURL.setParameter("mvcRenderCommandName", "/fragment/view");
-		searchActionURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		searchActionURL.setParameter("displayStyle", getDisplayStyle());
-
-		return searchActionURL.toString();
-	}
-
-	public String getFragmentCollectionSortingURL() {
-		PortletURL sortingURL = _getFragmentCollectionPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
 	public String getFragmentCollectionsRedirect() {
 		PortletURL backURL = _renderResponse.createRenderURL();
 
 		backURL.setParameter("mvcRenderCommandName", "/fragment/view");
 
 		return backURL.toString();
-	}
-
-	public SearchContainer getFragmentCollectionsSearchContainer() {
-		if (_fragmentCollectionsSearchContainer != null) {
-			return _fragmentCollectionsSearchContainer;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SearchContainer fragmentCollectionsSearchContainer =
-			new SearchContainer(
-				_renderRequest, _renderResponse.createRenderURL(), null,
-				"there-are-no-collections");
-
-		if (_isSearch()) {
-			fragmentCollectionsSearchContainer.setSearch(true);
-		}
-
-		fragmentCollectionsSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
-		OrderByComparator<FragmentCollection> orderByComparator =
-			FragmentPortletUtil.getFragmentCollectionOrderByComparator(
-				_getOrderByCol(), getOrderByType());
-
-		fragmentCollectionsSearchContainer.setOrderByCol(_getOrderByCol());
-		fragmentCollectionsSearchContainer.setOrderByComparator(
-			orderByComparator);
-		fragmentCollectionsSearchContainer.setOrderByType(getOrderByType());
-		fragmentCollectionsSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
-
-		List<FragmentCollection> fragmentCollections = null;
-		int fragmentCollectionsCount = 0;
-
-		if (_isSearch()) {
-			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(), _getKeywords(),
-					fragmentCollectionsSearchContainer.getStart(),
-					fragmentCollectionsSearchContainer.getEnd(),
-					orderByComparator);
-
-			fragmentCollectionsCount =
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), _getKeywords());
-		}
-		else {
-			fragmentCollections =
-				FragmentCollectionServiceUtil.getFragmentCollections(
-					themeDisplay.getScopeGroupId(),
-					fragmentCollectionsSearchContainer.getStart(),
-					fragmentCollectionsSearchContainer.getEnd(),
-					orderByComparator);
-
-			fragmentCollectionsCount =
-				FragmentCollectionServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId());
-		}
-
-		fragmentCollectionsSearchContainer.setTotal(fragmentCollectionsCount);
-		fragmentCollectionsSearchContainer.setResults(fragmentCollections);
-
-		_fragmentCollectionsSearchContainer =
-			fragmentCollectionsSearchContainer;
-
-		return _fragmentCollectionsSearchContainer;
 	}
 
 	public String getFragmentCollectionTitle() {
@@ -355,24 +188,6 @@ public class FragmentDisplayContext {
 		}
 
 		return fragmentCollection.getName();
-	}
-
-	public int getFragmentCollectionTotalItems() {
-		SearchContainer fragmentCollectionsSearchContainer =
-			getFragmentCollectionsSearchContainer();
-
-		return fragmentCollectionsSearchContainer.getTotal();
-	}
-
-	public List<ViewTypeItem> getFragmentCollectionViewTypeItems() {
-		return new ViewTypeItemList(
-			_getFragmentCollectionPortletURL(), getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-			}
-
-		};
 	}
 
 	public SearchContainer getFragmentEntriesSearchContainer() {
@@ -643,18 +458,6 @@ public class FragmentDisplayContext {
 		return themeDisplay.getPlid();
 	}
 
-	public boolean isDisabledFragmentCollectionsManagementBar() {
-		if (_hasFragmentCollectionsResults()) {
-			return false;
-		}
-
-		if (_isSearch()) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isDisabledFragmentEntriesManagementBar() {
 		if (_hasFragmentEntriesResults()) {
 			return false;
@@ -679,83 +482,6 @@ public class FragmentDisplayContext {
 		}
 
 		return false;
-	}
-
-	private List<DropdownItem>
-		_getFragmentCollectionFilterNavigationDropdownItems() {
-
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(true);
-						dropdownItem.setHref(
-							_getFragmentCollectionPortletURL());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
-			}
-		};
-	}
-
-	private List<DropdownItem> _getFragmentCollectionOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "name"));
-						dropdownItem.setHref(
-							_getFragmentCollectionPortletURL(), "orderByCol",
-							"name");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "name"));
-					});
-
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(_getOrderByCol(), "create-date"));
-						dropdownItem.setHref(
-							_getFragmentCollectionPortletURL(), "orderByCol",
-							"create-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "create-date"));
-					});
-			}
-		};
-	}
-
-	private PortletURL _getFragmentCollectionPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
-
-		String displayStyle = getDisplayStyle();
-
-		if (Validator.isNotNull(displayStyle)) {
-			portletURL.setParameter("displayStyle", displayStyle);
-		}
-
-		String keywords = _getKeywords();
-
-		if (Validator.isNotNull(keywords)) {
-			portletURL.setParameter("keywords", keywords);
-		}
-
-		String orderByCol = _getOrderByCol();
-
-		if (Validator.isNotNull(orderByCol)) {
-			portletURL.setParameter("orderByCol", orderByCol);
-		}
-
-		String orderByType = getOrderByType();
-
-		if (Validator.isNotNull(orderByType)) {
-			portletURL.setParameter("orderByType", orderByType);
-		}
-
-		return portletURL;
 	}
 
 	private List<DropdownItem>
@@ -858,17 +584,6 @@ public class FragmentDisplayContext {
 		return _orderByCol;
 	}
 
-	private boolean _hasFragmentCollectionsResults() {
-		SearchContainer searchContainer =
-			getFragmentCollectionsSearchContainer();
-
-		if (searchContainer.getTotal() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _hasFragmentEntriesResults() {
 		SearchContainer searchContainer = getFragmentEntriesSearchContainer();
 
@@ -891,7 +606,6 @@ public class FragmentDisplayContext {
 	private String _displayStyle;
 	private FragmentCollection _fragmentCollection;
 	private Long _fragmentCollectionId;
-	private SearchContainer _fragmentCollectionsSearchContainer;
 	private SearchContainer _fragmentEntriesSearchContainer;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;

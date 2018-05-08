@@ -104,12 +104,22 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 		if (unbindName == null) {
 			if (!_containsMethod(classDefAST, defaultUnbindMethodName)) {
-				if (policyName.endsWith(_POLICY_STATIC)) {
+				if (policyName.endsWith(_POLICY_DYNAMIC)) {
+					log(
+						annotationAST.getLineNo(),
+						_MSG_DYNAMIC_POLICY_MISSING_UNBIND);
+				}
+				else {
 					log(
 						annotationAST.getLineNo(),
 						_MSG_STATIC_POLICY_MISSING_UNBIND, _NO_UNBIND);
 				}
 			}
+		}
+		else if (unbindName.equals(_NO_UNBIND) &&
+				 policyName.endsWith(_POLICY_DYNAMIC)) {
+
+			log(annotationAST.getLineNo(), _MSG_DYNAMIC_POLICY_MISSING_UNBIND);
 		}
 	}
 
@@ -227,6 +237,9 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		return sb.toString();
 	}
 
+	private static final String _MSG_DYNAMIC_POLICY_MISSING_UNBIND =
+		"missing.unbind.dynamic.policy";
+
 	private static final String _MSG_INCORRECT_GREEDY_POLICY_OPTION =
 		"greedy.policy.option.incorrect";
 
@@ -236,6 +249,8 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	private static final String _MSG_VOLATILE_MISSING = "missing.volatile";
 
 	private static final String _NO_UNBIND = "\"-\"";
+
+	private static final String _POLICY_DYNAMIC = "DYNAMIC";
 
 	private static final String _POLICY_OPTION_GREEDY = "GREEDY";
 

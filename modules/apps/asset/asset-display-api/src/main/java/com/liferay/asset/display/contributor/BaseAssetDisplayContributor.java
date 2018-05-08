@@ -119,6 +119,9 @@ public abstract class BaseAssetDisplayContributor<T>
 
 	protected abstract String[] getAssetEntryModelFields();
 
+	protected abstract Map<String, Object> getClassTypeValues(
+		T assetEntryObject, Locale locale);
+
 	protected abstract Object getFieldValue(
 		T assetEntryObject, String field, Locale locale);
 

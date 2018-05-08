@@ -30,7 +30,7 @@ renderResponse.setTitle((layoutPageTemplateCollection != null) ? layoutPageTempl
 %>
 
 <portlet:actionURL name="/layout/edit_layout_page_template_collection" var="editLayoutPageTemplateCollectionURL">
-	<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_collection" />
 	<portlet:param name="tabs1" value="page-templates" />
 </portlet:actionURL>
 

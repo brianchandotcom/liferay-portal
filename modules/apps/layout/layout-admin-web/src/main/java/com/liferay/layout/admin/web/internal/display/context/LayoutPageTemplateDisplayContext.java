@@ -323,8 +323,7 @@ public class LayoutPageTemplateDisplayContext {
 
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"mvcPath", "/view_layout_page_template_collections.jsp");
+		portletURL.setParameter("mvcRenderCommandName", "/layout/view");
 		portletURL.setParameter("tabs1", "page-templates");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 

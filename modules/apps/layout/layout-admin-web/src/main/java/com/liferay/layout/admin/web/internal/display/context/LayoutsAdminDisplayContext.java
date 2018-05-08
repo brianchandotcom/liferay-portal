@@ -554,7 +554,7 @@ public class LayoutsAdminDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("mvcRenderCommandName", "/layout/view");
 		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter("navigation", getNavigation());
 		portletURL.setParameter("orderByCol", getOrderByCol());
@@ -577,7 +577,7 @@ public class LayoutsAdminDisplayContext {
 	public PortletURL getRedirectURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("mvcRenderCommandName", "/layout/view");
 		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter("groupId", String.valueOf(getSelGroupId()));
 

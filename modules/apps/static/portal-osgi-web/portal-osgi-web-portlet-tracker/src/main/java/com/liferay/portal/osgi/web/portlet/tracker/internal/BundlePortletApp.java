@@ -109,7 +109,7 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public String getDefaultNamespace() {
-		if (Validator.isNull(_defaultNamespace)) {
+		if (_defaultNamespace == null) {
 			return _portletApp.getDefaultNamespace();
 		}
 
@@ -211,7 +211,12 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public void setDefaultNamespace(String defaultNamespace) {
-		_defaultNamespace = defaultNamespace;
+		if (Validator.isNull(defaultNamespace)) {
+			_defaultNamespace = null;
+		}
+		else {
+			_defaultNamespace = defaultNamespace;
+		}
 	}
 
 	@Override

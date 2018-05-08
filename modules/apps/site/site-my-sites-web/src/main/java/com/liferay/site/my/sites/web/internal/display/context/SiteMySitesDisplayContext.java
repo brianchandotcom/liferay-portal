@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -177,7 +178,7 @@ public class SiteMySitesDisplayContext {
 			themeDisplay.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
 			groupIds);
 
-		return groupUsersCounts.get(groupId);
+		return GetterUtil.getInteger(groupUsersCounts.get(groupId));
 	}
 
 	public List<NavigationItem> getNavigationItems() {

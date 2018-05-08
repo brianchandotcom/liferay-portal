@@ -488,6 +488,32 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateLiferayVersionInvalid62() throws Exception {
+		_buildTemplateWithGradle(
+			"mvc-portlet", "test", "--liferayVersion", "6.2");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateLiferayVersionInvalid70test()
+		throws Exception {
+
+		_buildTemplateWithGradle(
+			"mvc-portlet", "test", "--liferayVersion", "7.0test");
+	}
+
+	@Test
+	public void testBuildTemplateLiferayVersionValid70() throws Exception {
+		_buildTemplateWithGradle(
+			"mvc-portlet", "test", "--liferayVersion", "7.0");
+	}
+
+	@Test
+	public void testBuildTemplateLiferayVersionValid712() throws Exception {
+		_buildTemplateWithGradle(
+			"mvc-portlet", "test", "--liferayVersion", "7.1.2");
+	}
+
 	@Test
 	public void testBuildTemplateMVCPortlet() throws Exception {
 		_testBuildTemplatePortlet(

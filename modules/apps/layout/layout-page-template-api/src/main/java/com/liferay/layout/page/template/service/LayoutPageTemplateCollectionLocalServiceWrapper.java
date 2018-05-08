@@ -241,8 +241,7 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, int start, int end) {
 		return _layoutPageTemplateCollectionLocalService.getLayoutPageTemplateCollections(groupId,
 			start, end);
 	}
@@ -250,8 +249,7 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator) {
 		return _layoutPageTemplateCollectionLocalService.getLayoutPageTemplateCollections(groupId,
 			start, end, orderByComparator);
 	}

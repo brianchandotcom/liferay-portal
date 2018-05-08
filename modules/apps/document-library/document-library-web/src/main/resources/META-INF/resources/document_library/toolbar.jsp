@@ -25,12 +25,13 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 %>
 
 <clay:management-toolbar
-	actionItems="<%= dlAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= dlAdminManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= dlAdminManagementToolbarDisplayContext.isDisabled() %>"
-	filterItems="<%= dlAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= dlAdminManagementToolbarDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSearchURL()) %>"
 	searchContainerId="entries"
 	selectable="<%= dlAdminManagementToolbarDisplayContext.isSelectable() %>"
@@ -38,8 +39,7 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 	showSearch="<%= dlAdminManagementToolbarDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= dlAdminManagementToolbarDisplayContext.getSortingOrder() %>"
 	sortingURL="<%= String.valueOf(dlAdminManagementToolbarDisplayContext.getSortingURL()) %>"
-	totalItems="<%= dlAdminManagementToolbarDisplayContext.getTotalItems() %>"
-	viewTypes="<%= dlAdminManagementToolbarDisplayContext.getViewTypes() %>"
+	viewTypeItems="<%= dlAdminManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <c:if test="<%= dlAdminManagementToolbarDisplayContext.isShowSearchInfo() %>">

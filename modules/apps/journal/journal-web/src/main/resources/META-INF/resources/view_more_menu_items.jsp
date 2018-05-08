@@ -39,20 +39,20 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 </c:if>
 
 <clay:navigation-bar
-	items="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= journalViewMoreMenuItemsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= journalViewMoreMenuItemsDisplayContext.getClearResultsURL() %>"
 	componentId="journalViewMoreMenuItemsManagementToolbar"
-	filterItems="<%= journalViewMoreMenuItemsDisplayContext.getFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= journalViewMoreMenuItemsDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= journalViewMoreMenuItemsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= journalViewMoreMenuItemsDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= journalViewMoreMenuItemsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= journalViewMoreMenuItemsDisplayContext.getSortingURL() %>"
-	totalItems="<%= journalViewMoreMenuItemsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= journalViewMoreMenuItemsDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= journalViewMoreMenuItemsDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="addMenuItemFm">

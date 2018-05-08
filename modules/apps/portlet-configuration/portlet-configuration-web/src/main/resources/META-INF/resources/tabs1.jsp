@@ -28,7 +28,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), 
 %>
 
 <clay:navigation-bar
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				if (selPortlet.getConfigurationActionInstance() != null) {

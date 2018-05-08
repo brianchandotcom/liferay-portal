@@ -59,7 +59,7 @@ if (step == 1) {
 %>
 
 <clay:navigation-bar
-	items='<%= roleDisplayContext.getSelectRoleNavigationItems("organization-roles") %>'
+	navigationItems='<%= roleDisplayContext.getSelectRoleNavigationItems("organization-roles") %>'
 />
 
 <liferay-frontend:management-bar>

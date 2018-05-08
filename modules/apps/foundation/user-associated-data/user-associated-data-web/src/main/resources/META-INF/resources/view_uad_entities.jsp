@@ -34,18 +34,18 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 %>
 
 <clay:navigation-bar
-	items="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
+	navigationItems="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= viewUADEntitiesDisplay.getActionDropdownItems() %>"
+	actionDropdownItems="<%= viewUADEntitiesDisplay.getActionDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= uadEntitySearchContainer.getTotal() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchContainerId="UADEntities"
 	selectable="<%= true %>"
 	showInfoButton="<%= true %>"
 	showSearch="<%= false %>"
-	totalItems="<%= uadEntitySearchContainer.getTotal() %>"
 />
 
 <aui:form method="post" name="viewUADEntitiesFm">

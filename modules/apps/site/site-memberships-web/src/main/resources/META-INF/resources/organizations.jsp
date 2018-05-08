@@ -22,16 +22,17 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
+	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= organizationsDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= organizationsDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= organizationsDisplayContext.getClearResultsURL() %>"
 	componentId="organizationsManagementToolbar"
 	disabled="<%= organizationsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= organizationsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= organizationsDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= organizationsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= organizationsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="organizations"
 	searchFormName="searchFm"
@@ -40,8 +41,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	showSearch="<%= organizationsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= organizationsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= organizationsDisplayContext.getSortingURL() %>"
-	totalItems="<%= organizationsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= organizationsDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= organizationsDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

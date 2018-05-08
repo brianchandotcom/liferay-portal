@@ -21,22 +21,22 @@ UserRolesDisplayContext userRolesDisplayContext = new UserRolesDisplayContext(re
 %>
 
 <clay:navigation-bar
-	items="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
+	navigationItems="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= userRolesDisplayContext.getClearResultsURL() %>"
 	componentId="userGroupRoleRoleManagementToolbar"
 	disabled="<%= userRolesDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= userRolesDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= userRolesDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= userRolesDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= userRolesDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroupRoleRole"
 	searchFormName="searchFm"
 	showSearch="<%= userRolesDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= userRolesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= userRolesDisplayContext.getSortingURL() %>"
-	totalItems="<%= userRolesDisplayContext.getTotalItems() %>"
-	viewTypes="<%= userRolesDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= userRolesDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">

@@ -24,16 +24,17 @@ Role role = usersDisplayContext.getRole();
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
+	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= usersDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= usersDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= usersDisplayContext.getClearResultsURL() %>"
 	componentId="usersManagementToolbar"
 	disabled="<%= usersDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= usersDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= usersDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= usersDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= usersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
@@ -42,8 +43,7 @@ Role role = usersDisplayContext.getRole();
 	showSearch="<%= usersDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= usersDisplayContext.getOrderByType() %>"
 	sortingURL="<%= usersDisplayContext.getSortingURL() %>"
-	totalItems="<%= usersDisplayContext.getTotalItems() %>"
-	viewTypes="<%= usersDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= usersDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

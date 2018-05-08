@@ -53,10 +53,11 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 %>
 
 <clay:management-toolbar
-	actionItems="<%= blogImagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	disabled="<%= blogImagesSearchContainer.getTotal() <= 0 %>"
-	filterItems="<%= blogImagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= blogImagesSearchContainer.getTotal() %>"
 	searchActionURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="images"
 	searchFormName="searchFm"
@@ -64,8 +65,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 	showInfoButton="<%= false %>"
 	sortingOrder="<%= blogImagesManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(blogImagesManagementToolbarDisplayContext.getSortingURL()) %>"
-	totalItems="<%= blogImagesSearchContainer.getTotal() %>"
-	viewTypes="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
+	viewTypeItems="<%= blogImagesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <div class="container-fluid-1280 main-content-body">

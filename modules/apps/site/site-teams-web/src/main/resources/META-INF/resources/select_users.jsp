@@ -21,22 +21,22 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 %>
 
 <clay:navigation-bar
-	items="<%= selectUsersDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectUsersDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= selectUsersDisplayContext.getClearResultsURL() %>"
 	componentId="selectUsersWebManagementToolbar"
 	disabled="<%= selectUsersDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= selectUsersDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= selectUsersDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectUsersDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectUsersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
 	showSearch="<%= selectUsersDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectUsersDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectUsersDisplayContext.getSortingURL() %>"
-	totalItems="<%= selectUsersDisplayContext.getTotalItems() %>"
-	viewTypes="<%= selectUsersDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= selectUsersDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-teams-select-users" name="selectUserFm">

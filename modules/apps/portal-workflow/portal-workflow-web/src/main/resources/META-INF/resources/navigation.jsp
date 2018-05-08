@@ -23,5 +23,5 @@ WorkflowNavigationDisplayContext workflowNavigationDisplayContext =
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= workflowNavigationDisplayContext.getNavigationItems(selectedWorkflowPortletTab, workflowPortletTabs) %>"
+	navigationItems="<%= workflowNavigationDisplayContext.getNavigationItems(selectedWorkflowPortletTab, workflowPortletTabs) %>"
 />

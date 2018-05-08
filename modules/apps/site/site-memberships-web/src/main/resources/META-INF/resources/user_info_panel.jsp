@@ -52,7 +52,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		</div>
 
 		<clay:navigation-bar
-			items="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">
@@ -87,7 +87,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		</div>
 
 		<clay:navigation-bar
-			items="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">
@@ -152,7 +152,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		</div>
 
 		<clay:navigation-bar
-			items="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">

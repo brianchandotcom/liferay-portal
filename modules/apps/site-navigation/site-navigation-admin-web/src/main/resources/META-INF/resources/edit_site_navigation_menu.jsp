@@ -38,8 +38,8 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			<li class="nav-item">
 				<clay:dropdown-menu
 					buttonStyle="primary"
+					dropdownItems="<%= siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems() %>"
 					icon="plus"
-					items="<%= siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems() %>"
 					style="primary"
 					triggerCssClasses="nav-btn nav-btn-monospaced"
 				/>

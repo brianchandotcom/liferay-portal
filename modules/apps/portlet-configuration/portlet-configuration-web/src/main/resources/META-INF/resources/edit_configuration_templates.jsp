@@ -31,20 +31,20 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
 		<div class="portlet-configuration-body-content">
 			<clay:navigation-bar
-				items="<%= portletConfigurationTemplatesDisplayContext.getNavigationItems() %>"
+				navigationItems="<%= portletConfigurationTemplatesDisplayContext.getNavigationItems() %>"
 			/>
 
 			<clay:management-toolbar
-				actionItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems() %>"
+				actionDropdownItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems() %>"
 				componentId="archivedSettingsManagementToolbar"
 				disabled="<%= portletConfigurationTemplatesDisplayContext.isDisabledManagementBar() %>"
-				filterItems="<%= portletConfigurationTemplatesDisplayContext.getFilterDropdownItems() %>"
+				filterDropdownItems="<%= portletConfigurationTemplatesDisplayContext.getFilterDropdownItems() %>"
+				itemsTotal="<%= portletConfigurationTemplatesDisplayContext.getTotalItems() %>"
 				searchContainerId="archivedSettings"
 				showSearch="<%= false %>"
 				sortingOrder="<%= portletConfigurationTemplatesDisplayContext.getOrderByType() %>"
 				sortingURL="<%= portletConfigurationTemplatesDisplayContext.getSortingURL() %>"
-				totalItems="<%= portletConfigurationTemplatesDisplayContext.getTotalItems() %>"
-				viewTypes="<%= portletConfigurationTemplatesDisplayContext.getViewTypeItems() %>"
+				viewTypeItems="<%= portletConfigurationTemplatesDisplayContext.getViewTypeItems() %>"
 			/>
 
 			<div class="container-fluid-1280">

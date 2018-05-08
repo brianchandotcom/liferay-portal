@@ -44,9 +44,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose
- * {@link CommercePriceList} resources
- * through a web API.
+ * Provides the information necessary to expose {@link CommercePriceList}
+ * resources through a web API.
  *
  * @author Zoltán Takács
  */

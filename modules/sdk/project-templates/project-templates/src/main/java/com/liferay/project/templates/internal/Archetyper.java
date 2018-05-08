@@ -40,9 +40,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import java.util.Collection;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -120,17 +118,15 @@ public class Archetyper {
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
 
-		File templateFile = _getTemplateFile(
-			projectTemplatesArgs.getTemplate());
+		File templateFile = _getTemplateFile(projectTemplatesArgs);
 
 		String liferayVersions = getManifestProperty(
 			templateFile, "Liferay-Versions");
 
 		if (Objects.nonNull(liferayVersions) &&
-			Objects.isNull(liferayVersion) &&
 			!_isSupported(liferayVersion, liferayVersions)) {
 
-			throw new Exception(
+			throw new IllegalArgumentException(
 				"Specified Liferay Version is invalid. Must be in range " +
 					liferayVersions);
 		}
@@ -218,20 +214,54 @@ public class Archetyper {
 		return archetypeGenerationResult;
 	}
 
-	private static File _getTemplateFile(String templateName) throws Exception {
-		Collection<File> templatesFiles = new HashSet<>();
+	private static File _getArchetypeFile(String artifactId, File file)
+		throws IOException {
 
-		File projectTemplatesFile = FileUtil.getJarFile(ProjectTemplates.class);
+		try (JarFile jarFile = new JarFile(file)) {
+			Enumeration<JarEntry> enumeration = jarFile.entries();
 
-		if (!templatesFiles.contains(projectTemplatesFile)) {
-			templatesFiles.add(projectTemplatesFile);
+			while (enumeration.hasMoreElements()) {
+				JarEntry jarEntry = enumeration.nextElement();
+
+				if (jarEntry.isDirectory()) {
+					continue;
+				}
+
+				String name = jarEntry.getName();
+
+				if (!name.startsWith(artifactId + "-")) {
+					continue;
+				}
+
+				Path archetypePath = Files.createTempFile(
+					"temp-archetype", null);
+
+				Files.copy(
+					jarFile.getInputStream(jarEntry), archetypePath,
+					StandardCopyOption.REPLACE_EXISTING);
+
+				File archetypeFile = archetypePath.toFile();
+
+				archetypeFile.deleteOnExit();
+
+				return archetypeFile;
+			}
 		}
 
-		for (File templatesFile : templatesFiles) {
-			if (templatesFile.isDirectory()) {
+		return null;
+	}
+
+	private static File _getTemplateFile(
+			ProjectTemplatesArgs projectTemplatesArgs)
+		throws Exception {
+
+		String template = projectTemplatesArgs.getTemplate();
+
+		for (File archetypesDir : projectTemplatesArgs.getArchetypesDirs()) {
+			if (archetypesDir.isDirectory()) {
 				try (DirectoryStream<Path> directoryStream =
 						Files.newDirectoryStream(
-							templatesFile.toPath(), "*.project.templates.*")) {
+							archetypesDir.toPath(), "*.project.templates.*")) {
 
 					Iterator<Path> iterator = directoryStream.iterator();
 
@@ -240,7 +270,7 @@ public class Archetyper {
 
 						String fileName = String.valueOf(path.getFileName());
 
-						String template = getTemplateName(fileName);
+						String templateName = getTemplateName(fileName);
 
 						if (Objects.equals(template, templateName)) {
 							return path.toFile();
@@ -250,7 +280,13 @@ public class Archetyper {
 			}
 		}
 
-		return null;
+		File archetypesFile = FileUtil.getJarFile(ProjectTemplates.class);
+
+		String artifactId =
+			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
+				template.replace('-', '.');
+
+		return _getArchetypeFile(artifactId, archetypesFile);
 	}
 
 	private static boolean _isSupported(String versionString, String range) {
@@ -445,37 +481,11 @@ public class Archetyper {
 						}
 					}
 					else {
-						try (JarFile jarFile = new JarFile(archetypesFile)) {
-							Enumeration<JarEntry> enumeration =
-								jarFile.entries();
+						archetypeFile = _getArchetypeFile(
+							artifactId, archetypesFile);
 
-							while (enumeration.hasMoreElements()) {
-								JarEntry jarEntry = enumeration.nextElement();
-
-								if (jarEntry.isDirectory()) {
-									continue;
-								}
-
-								String name = jarEntry.getName();
-
-								if (!name.startsWith(artifactId + "-")) {
-									continue;
-								}
-
-								Path archetypePath = Files.createTempFile(
-									"temp-archetype", null);
-
-								Files.copy(
-									jarFile.getInputStream(jarEntry),
-									archetypePath,
-									StandardCopyOption.REPLACE_EXISTING);
-
-								archetypeFile = archetypePath.toFile();
-
-								archetypeFile.deleteOnExit();
-
-								break;
-							}
+						if (archetypeFile != null) {
+							break;
 						}
 					}
 				}

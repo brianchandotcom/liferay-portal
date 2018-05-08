@@ -530,15 +530,13 @@
 		</execute>
 	</command>
 
-	<command name="tearDownCP" summary="Delete all pages except the Welcome Page">
+	<command name="tearDownCP" summary="Delete all pages except the Welcome and Search Page">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -548,12 +546,12 @@
 
 		<while>
 			<condition function="IsElementPresent" locator1="SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS">
-				<var name="key_index" value="2" />
+				<var name="key_index" value="3" />
 			</condition>
 
 			<then>
 				<execute function="Click#waitForMenuToggleJSClick" locator1="SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS">
-					<var name="key_index" value="2" />
+					<var name="key_index" value="3" />
 				</execute>
 
 				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
@@ -565,7 +563,7 @@
 		</while>
 
 		<execute function="AssertElementNotPresent" locator1="SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS">
-			<var name="key_index" value="2" />
+			<var name="key_index" value="3" />
 		</execute>
 	</command>
 

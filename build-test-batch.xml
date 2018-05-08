@@ -3761,7 +3761,7 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<gradle-execute dir="${project.dir}/modules/apps/foundation/petra" task="deploy">
+				<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
 					<arg value="-Dportal.build=true" />
 				</gradle-execute>
 

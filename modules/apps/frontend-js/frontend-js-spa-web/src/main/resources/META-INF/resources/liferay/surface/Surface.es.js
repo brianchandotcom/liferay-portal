@@ -7,7 +7,7 @@ import Surface from 'senna/src/surface/Surface';
 /**
  * LiferaySurface
  *
- * Inherits from Senna's Surface and calls {@link https://github.com/liferay/liferay-portal/blob/7.1.x/modules/apps/foundation/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/dom_task_runner.js|Liferay.DOMTaskRunner}
+ * Inherits from Senna's Surface and calls {@link https://github.com/liferay/liferay-portal/blob/7.1.x/modules/apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/dom_task_runner.js|Liferay.DOMTaskRunner}
  * when content is added to a Surface
  */
 

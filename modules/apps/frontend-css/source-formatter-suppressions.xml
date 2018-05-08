@@ -2,6 +2,6 @@
 
 <suppressions>
 	<checkstyle>
-		<suppress checks="ConcatCheck" files="modules/apps/foundation/frontend-css/frontend-css-rtl-converter/src/test/java/com/liferay/frontend/css/rtl/converter/CSSRTLConverterTest\.java" />
+		<suppress checks="ConcatCheck" files="modules/apps/frontend-css/frontend-css-rtl-converter/src/test/java/com/liferay/frontend/css/rtl/converter/CSSRTLConverterTest\.java" />
 	</checkstyle>
 </suppressions>

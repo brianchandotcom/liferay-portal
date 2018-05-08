@@ -2054,7 +2054,7 @@ tell application "Safari" to quit
 								<arg value="-Dportal.build=true" />
 							</gradle-execute>
 
-							<gradle-execute dir="${project.dir}/modules/apps/foundation/petra" task="deploy">
+							<gradle-execute dir="${project.dir}/modules/apps/petra" task="deploy">
 								<arg value="-Dportal.build=true" />
 							</gradle-execute>
 						</then>

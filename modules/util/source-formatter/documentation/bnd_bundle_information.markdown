@@ -34,7 +34,7 @@ have the `Web-ContextPath` header. The header should match the `name` in the
 
 ### Example
 
-`\apps\foundation\frontend-js\frontend-js-web\bnd.bnd` contains the following
+`\apps\frontend-js\frontend-js-web\bnd.bnd` contains the following
 `Web-ContextPath`:
 
     Web-ContextPath: /frontend-js-web

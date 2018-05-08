@@ -66,7 +66,7 @@ class LiferayApp extends App {
 	/**
 	 * Returns the cache expiration time configuration. This value comes from
 	 * System Settings. The configuration is set upon App initialization 
-	 * @See {@link https://github.com/liferay/liferay-portal/blob/7.1.x/modules/apps/foundation/frontend-js/frontend-js-spa-web/src/main/resources/META-INF/resources/init.tmpl|init.tmpl}
+	 * @See {@link https://github.com/liferay/liferay-portal/blob/7.1.x/modules/apps/frontend-js/frontend-js-spa-web/src/main/resources/META-INF/resources/init.tmpl|init.tmpl}
 	 * @return {!Number} The `cacheExpirationTime` value
 	 */
 

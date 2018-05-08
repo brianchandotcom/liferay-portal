@@ -17,17 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-LayoutPageTemplateCollection layoutPageTemplateCollection = (LayoutPageTemplateCollection)row.getObject();
+LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDisplayContext.getLayoutPageTemplateCollection();
 %>
 
 <liferay-ui:icon-menu
-	direction="left-side"
+	direction="down"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
+	triggerCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
 >
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editLayoutPageTemplateCollectionURL">

@@ -111,9 +111,15 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 
 			<c:if test="<%= layoutPageTemplateCollection != null %>">
 				<div class="sheet">
-					<h3>
-						<%= layoutPageTemplateCollection.getName() %>
-					</h3>
+					<div class="align-items-center autofit-row h3">
+						<div class="autofit-col">
+							<%= layoutPageTemplateCollection.getName() %>
+						</div>
+
+						<div class="autofit-col autofit-col-end inline-item-after">
+							<liferay-util:include page="/layout_page_template_collection_action.jsp" servletContext="<%= application %>" />
+						</div>
+					</div>
 
 					<liferay-util:include page="/view_layout_page_template_entries.jsp" servletContext="<%= application %>" />
 				</div>

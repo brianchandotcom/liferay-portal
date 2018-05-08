@@ -48,12 +48,14 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 									</div>
 
 									<div class="autofit-col autofit-col-end">
-										<liferay-ui:icon
-											icon="plus"
-											iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
-											markupView="lexicon"
-											url="<%= editLayoutPageTemplateCollectionURL %>"
-										/>
+										<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
+											<liferay-ui:icon
+												icon="plus"
+												iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+												markupView="lexicon"
+												url="<%= editLayoutPageTemplateCollectionURL %>"
+											/>
+										</c:if>
 									</div>
 								</div>
 
@@ -96,7 +98,9 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 									<liferay-ui:message key="collections-are-needed-to-create-page-templates" />
 								</p>
 
-								<aui:a cssClass="btn btn-primary" href="<%= editLayoutPageTemplateCollectionURL %>" label="add-collection" />
+								<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
+									<aui:a cssClass="btn btn-primary" href="<%= editLayoutPageTemplateCollectionURL %>" label="add-collection" />
+								</c:if>
 							</c:otherwise>
 						</c:choose>
 					</li>

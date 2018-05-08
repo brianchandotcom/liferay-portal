@@ -103,7 +103,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 </aui:form>
 
 <portlet:actionURL name="/layout/add_layout_page_template_entry" var="addLayoutPageTemplateEntryURL">
-	<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
 </portlet:actionURL>

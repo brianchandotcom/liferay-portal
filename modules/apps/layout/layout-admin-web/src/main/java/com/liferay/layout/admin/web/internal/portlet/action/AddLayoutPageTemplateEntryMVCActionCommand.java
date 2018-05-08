@@ -104,7 +104,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcPath", "/edit_layout_page_template_entry.jsp");
+			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

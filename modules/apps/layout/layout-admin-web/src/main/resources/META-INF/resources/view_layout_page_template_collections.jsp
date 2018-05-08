@@ -34,7 +34,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 				<ul class="nav nav-nested">
 					<li class="nav-item">
 						<portlet:renderURL var="editLayoutPageTemplateCollectionURL">
-							<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+							<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_collection" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:renderURL>
 

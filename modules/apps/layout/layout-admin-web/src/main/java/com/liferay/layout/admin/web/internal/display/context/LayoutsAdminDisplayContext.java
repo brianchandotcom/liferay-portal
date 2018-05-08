@@ -752,10 +752,6 @@ public class LayoutsAdminDisplayContext {
 		editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
 		editLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		editLayoutURL.setParameter("portletResource", portletDisplay.getId());
-
 		editLayoutURL.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()));
 		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));

@@ -16,11 +16,13 @@ package com.liferay.commerce.product.internal.catalog.rule;
 
 import com.liferay.commerce.product.catalog.rule.CPRuleType;
 import com.liferay.commerce.product.constants.CPRuleConstants;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Locale;
 
@@ -51,6 +53,14 @@ public class AssetCategoryCPRuleTypeImpl implements CPRuleType {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "categories");
+	}
+
+	public boolean isSatisfied(
+			CPDefinition cpDefinition, CPRuleType cpRuleType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return false;
 	}
 
 	@Override

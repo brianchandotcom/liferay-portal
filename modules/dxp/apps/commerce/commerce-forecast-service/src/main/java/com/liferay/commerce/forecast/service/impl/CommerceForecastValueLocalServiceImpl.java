@@ -14,11 +14,56 @@
 
 package com.liferay.commerce.forecast.service.impl;
 
+import com.liferay.commerce.forecast.model.CommerceForecastValue;
 import com.liferay.commerce.forecast.service.base.CommerceForecastValueLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+
+import java.math.BigDecimal;
+
+import java.util.Date;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class CommerceForecastValueLocalServiceImpl
 	extends CommerceForecastValueLocalServiceBaseImpl {
+
+	@Override
+	public CommerceForecastValue addCommerceForecastValue(
+			long userId, long commerceForecastEntryId, Date date,
+			BigDecimal value)
+		throws PortalException {
+
+		CommerceForecastValue commerceForecastValue =
+			commerceForecastValuePersistence.fetchByC_D(
+				commerceForecastEntryId, date);
+
+		if (commerceForecastValue == null) {
+			User user = userLocalService.getUser(userId);
+
+			long commerceForecastValueId = counterLocalService.increment();
+
+			commerceForecastValue = commerceForecastValuePersistence.create(
+				commerceForecastValueId);
+
+			commerceForecastValue.setCompanyId(user.getCompanyId());
+			commerceForecastValue.setUserId(user.getUserId());
+			commerceForecastValue.setUserName(user.getFullName());
+			commerceForecastValue.setCommerceForecastEntryId(
+				commerceForecastEntryId);
+			commerceForecastValue.setDate(date);
+		}
+
+		commerceForecastValue.setValue(value);
+
+		return commerceForecastValuePersistence.update(commerceForecastValue);
+	}
+
+	@Override
+	public void deleteCommerceForecastValues(long commerceForecastEntryId) {
+		commerceForecastValuePersistence.removeByCommerceForecastEntryId(
+			commerceForecastEntryId);
+	}
+
 }

@@ -354,7 +354,7 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 			groupId, userId, displayDate);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setBlogsStatsUserLocalService(
 		com.liferay.blogs.service.BlogsStatsUserLocalService
 			blogsStatsUserLocalService) {

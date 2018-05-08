@@ -73,8 +73,7 @@ public class ScriptingExecutorExtender {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeScriptingExecutor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addScriptingExecutor(ScriptingExecutor scriptingExecutor) {
 		_scriptingLanguages.add(scriptingExecutor.getLanguage());

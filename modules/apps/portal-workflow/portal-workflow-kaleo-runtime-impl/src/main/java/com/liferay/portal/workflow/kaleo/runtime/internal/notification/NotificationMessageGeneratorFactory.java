@@ -56,8 +56,7 @@ public class NotificationMessageGeneratorFactory {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(template.language=*)",
-		unbind = "removeNotificationMessageGenerator"
+		target = "(template.language=*)"
 	)
 	protected void addNotificationMessageGenerator(
 		NotificationMessageGenerator notificationMessageGenerator,

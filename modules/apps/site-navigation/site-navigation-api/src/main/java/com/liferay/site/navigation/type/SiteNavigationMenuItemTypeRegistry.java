@@ -57,8 +57,7 @@ public class SiteNavigationMenuItemTypeRegistry {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		unbind = "unregisterSiteNavigationMenuItemType"
+		policy = ReferencePolicy.DYNAMIC
 	)
 	public void registerSiteNavigationMenuItemType(
 		SiteNavigationMenuItemType siteNavigationMenuItemType) {

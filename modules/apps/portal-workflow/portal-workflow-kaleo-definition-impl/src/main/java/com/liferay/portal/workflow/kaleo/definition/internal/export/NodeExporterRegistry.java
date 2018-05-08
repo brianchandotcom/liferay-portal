@@ -39,8 +39,7 @@ public class NodeExporterRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeNodeExporter"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addNodeExporter(
 		NodeExporter nodeExporter, Map<String, Object> properties) {

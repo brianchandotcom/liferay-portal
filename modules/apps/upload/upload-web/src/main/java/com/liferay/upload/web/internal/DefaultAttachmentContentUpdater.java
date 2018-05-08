@@ -63,8 +63,7 @@ public class DefaultAttachmentContentUpdater
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeAttachmentElementHandler"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addAttachmentElementHandler(
 		AttachmentElementHandler attachmentElementHandler) {

@@ -193,7 +193,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "unbindBundleProcessor"
+		policy = ReferencePolicy.DYNAMIC
 	)
 	protected synchronized void bindBundleProcessor(
 		JSBundleProcessor jsBundleProcessor) {

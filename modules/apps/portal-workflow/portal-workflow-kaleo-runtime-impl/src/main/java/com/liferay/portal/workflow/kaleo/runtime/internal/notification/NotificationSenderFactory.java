@@ -53,7 +53,7 @@ public class NotificationSenderFactory {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(notification.type=*)", unbind = "removeNotificationSender"
+		target = "(notification.type=*)"
 	)
 	protected void addNotificationSender(
 		NotificationSender notificationSender, Map<String, Object> properties) {

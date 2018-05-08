@@ -48,8 +48,7 @@ public class AssetDisplayContributorTrackerImpl
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		unbind = "unsetAssetDisplayContributor"
+		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void setAssetDisplayContributor(
 		AssetDisplayContributor assetDisplayContributor) {

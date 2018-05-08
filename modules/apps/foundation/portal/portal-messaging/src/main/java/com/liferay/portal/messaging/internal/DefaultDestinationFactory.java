@@ -79,8 +79,7 @@ public class DefaultDestinationFactory implements DestinationFactory {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeDestinationPrototype"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDestinationPrototype(
 		DestinationPrototype destinationPrototype,

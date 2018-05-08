@@ -61,4 +61,12 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			assetEntryId, layoutId);
 	}
 
+	@Override
+	public AssetDisplayPageEntry fetchFirstAssetDisplayPageEntry(
+		long assetEntryId) {
+
+		return assetDisplayPageEntryPersistence.fetchByAssetEntryId_First(
+			assetEntryId, null);
+	}
+
 }

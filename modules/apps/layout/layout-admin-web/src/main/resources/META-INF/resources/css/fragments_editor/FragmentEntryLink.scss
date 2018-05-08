@@ -82,6 +82,10 @@ $wrapperBorderColor: #FF8F39;
 		z-index: -1;
 	}
 
+	&:hover > .fragment-entry-link-content {
+		z-index: auto;
+	}
+
 	lfr-editable {
 		box-shadow: 0 0 0 1px transparent;
 		cursor: pointer;

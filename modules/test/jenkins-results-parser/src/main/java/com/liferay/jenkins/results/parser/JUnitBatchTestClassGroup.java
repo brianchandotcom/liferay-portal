@@ -280,6 +280,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		super(batchName, portalGitWorkingDirectory, testSuiteName);
 
+		_setAutoBalanceTestFiles();
+
 		_setTestClassNamesExcludesRelativeGlobs();
 		_setTestClassNamesIncludesRelativeGlobs();
 
@@ -344,7 +346,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		int testClassCount = testClasses.size();
 
 		if (testClassCount == 0) {
-			if (includeAutoBalanceTests && !autoBalanceTestFiles.isEmpty()) {
+			if (_includeAutoBalanceTests && !_autoBalanceTestFiles.isEmpty()) {
 				int id = 0;
 
 				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
@@ -352,7 +354,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 				axisTestClassGroups.put(id, axisTestClassGroup);
 
-				for (File autoBalanceTestFile : autoBalanceTestFiles) {
+				for (File autoBalanceTestFile : _autoBalanceTestFiles) {
 					String filePath = autoBalanceTestFile.toString();
 
 					filePath = filePath.replace(".java", ".class");
@@ -387,8 +389,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 
-			if (includeAutoBalanceTests) {
-				for (File autoBalanceTestFile : autoBalanceTestFiles) {
+			if (_includeAutoBalanceTests) {
+				for (File autoBalanceTestFile : _autoBalanceTestFiles) {
 					String filePath = autoBalanceTestFile.toString();
 
 					filePath = filePath.replace(".java", ".class");
@@ -545,9 +547,23 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		return pathMatchers;
 	}
 
+	private void _setAutoBalanceTestFiles() {
+		String propertyName = "test.class.names.auto.balance";
+
+		String autoBalanceTestNames = getFirstPropertyValue(propertyName);
+
+		if ((autoBalanceTestNames != null) &&
+			!autoBalanceTestNames.equals("")) {
+
+			for (String autoBalanceTestName : autoBalanceTestNames.split(",")) {
+				_autoBalanceTestFiles.add(new File(autoBalanceTestName));
+			}
+		}
+	}
+
 	private void _setIncludeAutoBalanceTests() {
 		if (!testClasses.isEmpty()) {
-			includeAutoBalanceTests = true;
+			_includeAutoBalanceTests = true;
 
 			return;
 		}
@@ -556,12 +572,12 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			portalGitWorkingDirectory.getModifiedFilesList(".java");
 
 		if (!modifiedJavaFilesList.isEmpty()) {
-			includeAutoBalanceTests = true;
+			_includeAutoBalanceTests = true;
 
 			return;
 		}
 
-		includeAutoBalanceTests = _DEFAULT_INCLUDE_AUTO_BALANCE_TESTS;
+		_includeAutoBalanceTests = _DEFAULT_INCLUDE_AUTO_BALANCE_TESTS;
 	}
 
 	private void _setTestClassNamesExcludesRelativeGlobs() {
@@ -614,6 +630,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	private static final boolean _DEFAULT_INCLUDE_AUTO_BALANCE_TESTS = false;
 
+	private final List<File> _autoBalanceTestFiles = new ArrayList<>();
+	private boolean _includeAutoBalanceTests;
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");
 

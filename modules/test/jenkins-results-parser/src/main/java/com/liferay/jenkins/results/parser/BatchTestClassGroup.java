@@ -86,7 +86,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				this.portalGitWorkingDirectory.getWorkingDirectory(),
 				"test.properties"));
 
-		_setAutoBalanceTestFiles();
 		_setTestRelevantChanges();
 	}
 
@@ -188,20 +187,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		int testClassCount = testClasses.size();
 
 		if (testClassCount == 0) {
-			if (includeAutoBalanceTests && !autoBalanceTestFiles.isEmpty()) {
-				int id = 0;
-
-				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-					this, id);
-
-				axisTestClassGroups.put(id, axisTestClassGroup);
-
-				for (File autoBalanceTestFile : autoBalanceTestFiles) {
-					axisTestClassGroup.addTestClass(
-						new TestClass(autoBalanceTestFile));
-				}
-			}
-
 			return;
 		}
 
@@ -225,22 +210,13 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 
-			if (includeAutoBalanceTests) {
-				for (File autoBalanceTestFile : autoBalanceTestFiles) {
-					axisTestClassGroup.addTestClass(
-						new TestClass(autoBalanceTestFile));
-				}
-			}
-
 			id++;
 		}
 	}
 
-	protected List<File> autoBalanceTestFiles = new ArrayList<>();
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;
-	protected boolean includeAutoBalanceTests;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;
@@ -248,20 +224,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	private String _getAxisMaxSizePropertyValue() {
 		return getFirstPropertyValue("test.batch.axis.max.size");
-	}
-
-	private void _setAutoBalanceTestFiles() {
-		String propertyName = "test.class.names.auto.balance";
-
-		String autoBalanceTestNames = getFirstPropertyValue(propertyName);
-
-		if ((autoBalanceTestNames != null) &&
-			!autoBalanceTestNames.equals("")) {
-
-			for (String autoBalanceTestName : autoBalanceTestNames.split(",")) {
-				autoBalanceTestFiles.add(new File(autoBalanceTestName));
-			}
-		}
 	}
 
 	private void _setTestRelevantChanges() {

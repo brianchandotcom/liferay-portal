@@ -35,7 +35,7 @@ boolean signedIn = themeDisplay.isSignedIn();
 					navigationItem -> {
 						navigationItem.setActive(mvcRenderCommandName.equals("/message_boards/edit_category") || mvcRenderCommandName.equals("/message_boards/edit_message") || mvcRenderCommandName.equals("/message_boards/view") || mvcRenderCommandName.equals("/message_boards/view_category") || mvcRenderCommandName.equals("/message_boards/view_message"));
 						navigationItem.setHref(messageBoardsHomeURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "home"));
+						navigationItem.setLabel(LanguageUtil.get(request, "categories"));
 					});
 
 				PortletURL viewRecentPostsURL = renderResponse.createRenderURL();

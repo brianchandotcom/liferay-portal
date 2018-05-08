@@ -16,12 +16,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="AssetEntryId" return-type="Collection">
+		<finder name="AssetEntryId" return-type="AssetDisplayPageEntry" unique="true">
 			<finder-column name="assetEntryId" />
-		</finder>
-		<finder name="A_L" return-type="AssetDisplayPageEntry" unique="true">
-			<finder-column name="assetEntryId" />
-			<finder-column name="layoutId" />
 		</finder>
 	</entity>
 </service-builder>

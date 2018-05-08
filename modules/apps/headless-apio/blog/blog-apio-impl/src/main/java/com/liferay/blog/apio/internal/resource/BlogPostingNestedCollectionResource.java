@@ -15,7 +15,7 @@
 package com.liferay.blog.apio.internal.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
-import static com.liferay.portal.kernel.workflow.WorkflowConstants;
+import static com.liferay.portal.kernel.workflow.WorkflowConstants.STATUS_APPROVED;
 
 import com.liferay.aggregate.rating.apio.identifier.AggregateRatingIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -157,10 +157,10 @@ public class BlogPostingNestedCollectionResource
 		Pagination pagination, Long groupId) {
 
 		List<BlogsEntry> blogsEntries = _blogsService.getGroupEntries(
-			groupId, WorkflowConstants.STATUS_APPROVED,
-			pagination.getStartPosition(), pagination.getEndPosition());
+			groupId, STATUS_APPROVED, pagination.getStartPosition(),
+			pagination.getEndPosition());
 		int count = _blogsService.getGroupEntriesCount(
-			groupId, WorkflowConstants.STATUS_APPROVED);
+			groupId, STATUS_APPROVED);
 
 		return new PageItems<>(blogsEntries, count);
 	}

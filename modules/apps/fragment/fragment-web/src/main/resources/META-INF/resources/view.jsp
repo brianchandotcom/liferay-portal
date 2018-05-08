@@ -29,76 +29,95 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 
 <div class="container-fluid container-fluid-max-xl container-view">
 	<div class="row">
-		<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-			<ul class="nav nav-nested">
-				<li class="nav-item">
-					<portlet:renderURL var="editFragmentCollectionURL">
-						<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
-					</portlet:renderURL>
+		<div class="col-lg-3">
+			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
+				<ul class="nav nav-nested">
+					<li class="nav-item">
+						<portlet:renderURL var="editFragmentCollectionURL">
+							<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
+						</portlet:renderURL>
 
-					<c:choose>
-						<c:when test="<%= ListUtil.isNotEmpty(fragmentCollections) %>">
-							<div class="align-items-center autofit-row">
-								<div class="autofit-col autofit-col-expand">
-									<strong class="text-uppercase">
-										<liferay-ui:message key="collections" />
-									</strong>
+						<c:choose>
+							<c:when test="<%= ListUtil.isNotEmpty(fragmentCollections) %>">
+								<div class="align-items-center autofit-row">
+									<div class="autofit-col autofit-col-expand">
+										<strong class="text-uppercase">
+											<liferay-ui:message key="collections" />
+										</strong>
+									</div>
+
+									<div class="autofit-col autofit-col-end">
+										<liferay-ui:icon
+											icon="plus"
+											iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+											markupView="lexicon"
+											url="<%= editFragmentCollectionURL %>"
+										/>
+									</div>
 								</div>
 
-								<div class="autofit-col autofit-col-end">
-									<liferay-ui:icon
-										icon="plus"
-										iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
-										markupView="lexicon"
-										url="<%= editFragmentCollectionURL %>"
-									/>
-								</div>
-							</div>
+								<ul class="nav nav-stacked">
 
-							<ul class="nav nav-stacked">
+									<%
+									for (FragmentCollection fragmentCollection : fragmentCollections) {
+									%>
 
-								<%
-								for (FragmentCollection fragmentCollection : fragmentCollections) {
-								%>
+										<li class="nav-item">
 
-									<li class="nav-item">
+											<%
+											PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
 
-										<%
-										PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
+											fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
+											%>
 
-										fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
-										%>
+											<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+												<%= fragmentCollection.getName() %>
+											</a>
+										</li>
 
-										<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-											<%= fragmentCollection.getName() %>
-										</a>
-									</li>
+									<%
+									}
+									%>
 
-								<%
-								}
-								%>
+								</ul>
+							</c:when>
+							<c:otherwise>
+								<p class="text-uppercase">
+									<strong><liferay-ui:message key="collections" /></strong>
+								</p>
 
-							</ul>
-						</c:when>
-						<c:otherwise>
-							<p class="text-uppercase">
-								<strong><liferay-ui:message key="collections" /></strong>
-							</p>
+								<h2 class="text-center">
+									<liferay-ui:message key="no-collections-yet" />
+								</h2>
 
-							<h2 class="text-center">
-								<liferay-ui:message key="no-collections-yet" />
-							</h2>
+								<p class="text-center">
+									<liferay-ui:message key="collections-are-needed-to-create-fragments" />
+								</p>
 
-							<p class="text-center">
-								<liferay-ui:message key="collections-are-needed-to-create-fragments" />
-							</p>
+								<aui:a cssClass="btn btn-primary" href="<%= editFragmentCollectionURL %>" label="add-collection" />
+							</c:otherwise>
+						</c:choose>
+					</li>
+				</ul>
+			</nav>
+		</div>
 
-							<aui:a cssClass="btn btn-primary" href="<%= editFragmentCollectionURL %>" label="add-collection" />
-						</c:otherwise>
-					</c:choose>
-				</li>
-			</ul>
-		</nav>
+		<div class="col-lg-9">
+
+			<%
+			FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollection();
+			%>
+
+			<c:if test="<%= fragmentCollection != null %>">
+				<div class="sheet">
+					<h3>
+						<%= fragmentCollection.getName() %>
+					</h3>
+
+					<liferay-util:include page="/view_fragment_entries.jsp" servletContext="<%= application %>" />
+				</div>
+			</c:if>
+		</div>
 	</div>
 </div>
 

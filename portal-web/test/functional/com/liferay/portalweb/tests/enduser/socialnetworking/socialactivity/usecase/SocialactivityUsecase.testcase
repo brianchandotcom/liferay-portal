@@ -355,7 +355,7 @@
 
 		<execute macro="Page#gotoSALocalizedCP">
 			<var name="adminLocalized" value="システム管理" />
-			<var name="portletCategoryName" value="編集" />
+			<var name="portletCategoryName" value="設定" />
 			<var name="portletName" value="ソーシャルアクティビティ" />
 		</execute>
 

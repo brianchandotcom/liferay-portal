@@ -102,6 +102,9 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		resourceLocalService.addModelResources(
 			commerceUserSegmentEntry, serviceContext);
 
+		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
+			commerceUserSegmentEntry.getGroupId());
+
 		return commerceUserSegmentEntry;
 	}
 
@@ -123,6 +126,8 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(
 				commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
 		}
+
+		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(groupId);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -155,6 +160,11 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(
 			commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
+
+		//Cache
+
+		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
+			commerceUserSegmentEntry.getGroupId());
 
 		return commerceUserSegmentEntry;
 	}
@@ -347,6 +357,9 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 		commerceUserSegmentEntry.setPriority(priority);
 		commerceUserSegmentEntry.setExpandoBridgeAttributes(serviceContext);
+
+		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
+			commerceUserSegmentEntry.getGroupId());
 
 		return commerceUserSegmentEntryPersistence.update(
 			commerceUserSegmentEntry);

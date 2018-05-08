@@ -67,6 +67,9 @@ public class CommerceUserSegmentCriterionLocalServiceImpl
 		commerceUserSegmentCriterionPersistence.update(
 			commerceUserSegmentCriterion);
 
+		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
+			serviceContext.getScopeGroupId());
+
 		return commerceUserSegmentCriterion;
 	}
 
@@ -94,6 +97,11 @@ public class CommerceUserSegmentCriterionLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(
 			commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId());
+
+		// Cache
+
+		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
+			commerceUserSegmentCriterion.getGroupId());
 
 		return commerceUserSegmentCriterion;
 	}
@@ -148,6 +156,9 @@ public class CommerceUserSegmentCriterionLocalServiceImpl
 
 		commerceUserSegmentCriterionPersistence.update(
 			commerceUserSegmentCriterion);
+
+		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
+			commerceUserSegmentCriterion.getGroupId());
 
 		return commerceUserSegmentCriterion;
 	}

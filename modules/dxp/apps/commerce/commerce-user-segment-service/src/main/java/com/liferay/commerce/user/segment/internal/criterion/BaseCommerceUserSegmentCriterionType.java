@@ -62,7 +62,7 @@ public abstract class BaseCommerceUserSegmentCriterionType
 
 		document.addKeyword(getIndexerFieldName(), classPKs);
 		document.addKeyword(
-			getIndexerFieldName() + "required_matches", classPKs.length);
+			getIndexerFieldName() + "_required_matches", classPKs.length);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public abstract class BaseCommerceUserSegmentCriterionType
 
 		termsSetFilterBuilder.setFieldName(getIndexerFieldName());
 		termsSetFilterBuilder.setMinimumShouldMatchField(
-			getIndexerFieldName() + "required_matches");
+			getIndexerFieldName() + "_required_matches");
 
 		List<String> values = new ArrayList<>(classPKs.length);
 

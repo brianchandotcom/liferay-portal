@@ -23,61 +23,19 @@
 	items="<%= layoutPrototypeDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	actionItems="<%= layoutPrototypeDisplayContext.getActionDropdownItems() %>"
+	componentId="layoutPrototypeManagementToolbar"
+	creationMenu="<%= layoutPrototypeDisplayContext.isShowAddButton() ? layoutPrototypeDisplayContext.getCreationMenu() : null %>"
 	disabled="<%= layoutPrototypeDisplayContext.isDisabledManagementBar() %>"
-	includeCheckBox="<%= true %>"
+	filterItems="<%= layoutPrototypeDisplayContext.getFilterDropdownItems() %>"
 	searchContainerId="layoutPrototype"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
-			portletURL="<%= layoutPrototypeDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= layoutPrototypeDisplayContext.getOrderByCol() %>"
-			orderByType="<%= layoutPrototypeDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date"} %>'
-			portletURL="<%= layoutPrototypeDisplayContext.getPortletURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= layoutPrototypeDisplayContext.getDisplayStyle() %>"
-		/>
-
-		<c:if test="<%= layoutPrototypeDisplayContext.isShowAddButton() %>">
-			<portlet:renderURL var="addLayoutPrototypeURL">
-				<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add") %>'
-					url="<%= addLayoutPrototypeURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteSelectedLayoutPrototypes"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	showSearch="<%= false %>"
+	sortingOrder="<%= layoutPrototypeDisplayContext.getOrderByType() %>"
+	sortingURL="<%= layoutPrototypeDisplayContext.getSortingURL() %>"
+	totalItems="<%= layoutPrototypeDisplayContext.getTotalItems() %>"
+	viewTypes="<%= layoutPrototypeDisplayContext.getViewTypeItems() %>"
+/>
 
 <portlet:actionURL name="deleteLayoutPrototypes" var="deleteLayoutPrototypesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -232,12 +190,9 @@
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteSelectedLayoutPrototypes').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				submitForm($(document.<portlet:namespace />fm));
-			}
+	window.<portlet:namespace />deleteSelectedLayoutPrototypes = function() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			submitForm($(document.<portlet:namespace />fm));
 		}
-	);
+	}
 </aui:script>

@@ -32,35 +32,58 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 		<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 			<ul class="nav nav-nested">
 				<li class="nav-item">
-					<strong class="text-uppercase">
-						<liferay-ui:message key="collections" />
-					</strong>
+					<c:choose>
+						<c:when test="<%= ListUtil.isNotEmpty(layoutPageTemplateCollections) %>">
+							<strong class="text-uppercase">
+								<liferay-ui:message key="collections" />
+							</strong>
 
-					<ul class="nav nav-stacked">
-
-						<%
-						for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
-						%>
-
-							<li class="nav-item">
+							<ul class="nav nav-stacked">
 
 								<%
-								PortletURL layoutPageTemplateCollectionURL = renderResponse.createRenderURL();
-
-								layoutPageTemplateCollectionURL.setParameter("layoutPageTemplateCollectionId", String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()));
-								layoutPageTemplateCollectionURL.setParameter("tabs1", "page-templates");
+								for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
 								%>
 
-								<a class="nav-link truncate-text <%= (layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() == layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= layoutPageTemplateCollectionURL.toString() %>">
-									<%= layoutPageTemplateCollection.getName() %>
-								</a>
-							</li>
+									<li class="nav-item">
 
-						<%
-						}
-						%>
+										<%
+										PortletURL layoutPageTemplateCollectionURL = renderResponse.createRenderURL();
 
-					</ul>
+										layoutPageTemplateCollectionURL.setParameter("layoutPageTemplateCollectionId", String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()));
+										layoutPageTemplateCollectionURL.setParameter("tabs1", "page-templates");
+										%>
+
+										<a class="nav-link truncate-text <%= (layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() == layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= layoutPageTemplateCollectionURL.toString() %>">
+											<%= layoutPageTemplateCollection.getName() %>
+										</a>
+									</li>
+
+								<%
+								}
+								%>
+
+							</ul>
+						</c:when>
+						<c:otherwise>
+							<p class="text-uppercase">
+								<strong><liferay-ui:message key="collections" /></strong>
+							</p>
+
+							<h2 class="text-center">
+								<liferay-ui:message key="no-collections-yet" />
+							</h2>
+
+							<p class="text-center">
+								<liferay-ui:message key="collections-are-needed-to-create-page-templates" />
+							</p>
+
+							<portlet:renderURL var="editLayoutPageTemplateCollectionURL">
+								<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+							</portlet:renderURL>
+
+							<aui:a cssClass="btn btn-primary" href="<%= editLayoutPageTemplateCollectionURL %>" label="add-collection" />
+						</c:otherwise>
+					</c:choose>
 				</li>
 			</ul>
 		</nav>

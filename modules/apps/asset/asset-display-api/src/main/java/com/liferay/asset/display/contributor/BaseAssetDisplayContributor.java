@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -39,7 +38,7 @@ public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 
 	@Override
-	public Set<AssetDisplayField> getAssetEntryFields(
+	public Set<AssetDisplayField> getAssetDisplayFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
@@ -61,39 +60,37 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		String[] assetEntryModelFields = getAssetEntryModelFields();
 
-		for (String assetEntryModelField : assetEntryModelFields) {
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					assetEntryModelField,
-					LanguageUtil.get(resourceBundle, assetEntryModelField)));
+		if (assetEntryModelFields != null) {
+			for (String assetEntryModelField : assetEntryModelFields) {
+				assetDisplayFields.add(
+					new AssetDisplayField(
+						assetEntryModelField,
+						LanguageUtil.get(
+							resourceBundle, assetEntryModelField)));
+			}
 		}
 
 		// Fields for the class type
 
-		List<ClassTypeField> classTypeFields = getClassTypeFields(
+		List<AssetDisplayField> classTypeFields = getClassTypeFields(
 			classTypeId, locale);
 
-		for (ClassTypeField classTypeField : classTypeFields) {
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					classTypeField.getName(), classTypeField.getLabel()));
-		}
+		assetDisplayFields.addAll(classTypeFields);
 
 		return assetDisplayFields;
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return ResourceActionsUtil.getModelResource(locale, getClassName());
-	}
-
-	@Override
-	public Map<String, Object> getParameterMap(
+	public Map<String, Object> getAssetDisplayFieldsValues(
 			AssetEntry assetEntry, Locale locale)
 		throws PortalException {
 
+		// Default fields for asset entry
+
 		Map<String, Object> parameterMap = _getDefaultParameterMap(
 			assetEntry, locale);
+
+		// Fields for the specific asset type
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
@@ -103,18 +100,37 @@ public abstract class BaseAssetDisplayContributor<T>
 		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
 			assetEntry.getClassPK());
 
-		for (String assetEntryModelField : getAssetEntryModelFields()) {
-			parameterMap.put(
-				assetEntryModelField,
-				getFieldValue(
-					assetRenderer.getAssetObject(), assetEntryModelField,
-					locale));
+		String[] assetEntryModelFields = getAssetEntryModelFields();
+
+		if (assetEntryModelFields != null) {
+			for (String assetEntryModelField : assetEntryModelFields) {
+				parameterMap.put(
+					assetEntryModelField,
+					getFieldValue(
+						assetRenderer.getAssetObject(), assetEntryModelField,
+						locale));
+			}
 		}
+
+		// Fields for the class type
+
+		Map<String, Object> classTypeValues = getClassTypeValues(
+			assetRenderer.getAssetObject(), locale);
+
+		parameterMap.putAll(classTypeValues);
 
 		return parameterMap;
 	}
 
+	@Override
+	public String getLabel(Locale locale) {
+		return ResourceActionsUtil.getModelResource(locale, getClassName());
+	}
+
 	protected abstract String[] getAssetEntryModelFields();
+
+	protected abstract Map<String, Object> getClassTypeValues(
+		T assetEntryObject, Locale locale);
 
 	protected abstract Object getFieldValue(
 		T assetEntryObject, String field, Locale locale);

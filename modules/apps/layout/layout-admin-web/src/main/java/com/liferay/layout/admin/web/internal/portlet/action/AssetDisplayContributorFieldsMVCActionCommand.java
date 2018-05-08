@@ -74,7 +74,7 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
 
 		for (AssetDisplayField assetDisplayField :
-				assetDisplayContributor.getAssetEntryFields(
+				assetDisplayContributor.getAssetDisplayFields(
 					classTypeId, themeDisplay.getLocale())) {
 
 			jsonArray.put(assetDisplayField.toJSONObject());

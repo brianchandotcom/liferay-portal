@@ -115,6 +115,8 @@ public class PersonCollectionResource
 		).addString(
 			"alternateName", User::getScreenName
 		).addString(
+			"dashboardURL", UserWrapper::getDashboardURL
+		).addString(
 			"email", User::getEmailAddress
 		).addString(
 			"familyName", User::getLastName
@@ -128,6 +130,8 @@ public class PersonCollectionResource
 			"jobTitle", User::getJobTitle
 		).addString(
 			"name", User::getFullName
+		).addString(
+			"profileURL", UserWrapper::getProfileURL
 		).build();
 	}
 

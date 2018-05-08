@@ -352,10 +352,11 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 					String message = _message;
 
-					ResourceBundle resourceBundle =
-						TagResourceBundleUtil.getResourceBundle(pageContext);
-
 					if (_localizeMessage) {
+						ResourceBundle resourceBundle =
+							TagResourceBundleUtil.getResourceBundle(
+								pageContext);
+
 						message = LanguageUtil.get(resourceBundle, _message);
 					}
 
@@ -479,10 +480,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 		String message = _message;
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
 		if (_localizeMessage) {
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			message = LanguageUtil.get(resourceBundle, _message);
 		}
 

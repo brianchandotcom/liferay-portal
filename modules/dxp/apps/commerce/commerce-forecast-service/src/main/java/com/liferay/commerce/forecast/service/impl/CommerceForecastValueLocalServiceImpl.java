@@ -17,24 +17,8 @@ package com.liferay.commerce.forecast.service.impl;
 import com.liferay.commerce.forecast.service.base.CommerceForecastValueLocalServiceBaseImpl;
 
 /**
- * The implementation of the commerce forecast value local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.forecast.service.CommerceForecastValueLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Andrea Di Giorgi
- * @see CommerceForecastValueLocalServiceBaseImpl
- * @see com.liferay.commerce.forecast.service.CommerceForecastValueLocalServiceUtil
  */
 public class CommerceForecastValueLocalServiceImpl
 	extends CommerceForecastValueLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.forecast.service.CommerceForecastValueLocalServiceUtil} to access the commerce forecast value local service.
-	 */
 }

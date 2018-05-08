@@ -17,21 +17,12 @@ package com.liferay.commerce.forecast.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the CommerceForecastValue service. Represents a row in the &quot;CommerceForecastValue&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.forecast.model.CommerceForecastValue} interface.
- * </p>
- *
  * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CommerceForecastValueImpl extends CommerceForecastValueBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce forecast value model instance should use the {@link com.liferay.commerce.forecast.model.CommerceForecastValue} interface instead.
-	 */
+
 	public CommerceForecastValueImpl() {
 	}
+
 }

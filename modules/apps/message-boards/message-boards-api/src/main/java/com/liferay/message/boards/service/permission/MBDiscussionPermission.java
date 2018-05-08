@@ -96,14 +96,6 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			return true;
 		}
 
-		if ((mbDiscussion.getUserId() > 0) &&
-			permissionChecker.hasOwnerPermission(
-				companyId, className, classPK, mbDiscussion.getUserId(),
-				actionId)) {
-
-			return true;
-		}
-
 		Boolean hasPermission =
 			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
 				permissionChecker, groupId, className, classPK, actionId);

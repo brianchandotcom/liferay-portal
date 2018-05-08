@@ -15,18 +15,16 @@
 package com.liferay.portal.apio.internal.uri.mapper;
 
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.uri.mapper.PathIdentifierMapper;
-import com.liferay.apio.architect.wiring.osgi.manager.representable.IdentifierClassManager;
-import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,37 +51,46 @@ public class ClassNameClassPKIdentifierMapper
 
 		if (components.length != 2) {
 			throw new BadRequestException(
-				id + " should be a string with the form \"name:classPK\"");
+				id + " should be a string with the form " +
+					"\"classNameId:classPK\"");
 		}
 
-		Optional<Class<Identifier>> optional =
-			_modelClassManager.getIdentifierClassOptional(components[0]);
+		Long classNameId = _getAsLong(components[0]);
+		Long classPK = _getAsLong(components[1]);
 
-		Class<Identifier> modelClass = optional.orElseThrow(
-			() -> new NotFoundException(
-				"No resource found for path " + components[0]));
-
-		Long classPK = Try.fromFallible(
-			() -> GetterUtil.getLong(components[1])
+		String className = Optional.ofNullable(
+			_classNameLocalService.fetchByClassNameId(classNameId)
+		).map(
+			ClassName::getClassName
 		).orElseThrow(
 			() -> new BadRequestException(
-				"Unable to convert " + id + " to a long class PK")
+				"Unable to convert " + classNameId + " to a className")
 		);
 
-		return ClassNameClassPK.create(modelClass.getName(), classPK);
+		return ClassNameClassPK.create(className, classPK);
 	}
 
 	@Override
 	public Path map(String name, ClassNameClassPK classNameClassPK) {
-		String id = name + ":" + classNameClassPK.getClassPK();
+		String className = classNameClassPK.getClassName();
+
+		long classNameId = _classNameLocalService.getClassNameId(className);
+
+		String id = classNameId + ":" + classNameClassPK.getClassPK();
 
 		return new Path(name, id);
 	}
 
-	@Reference
-	private IdentifierClassManager _modelClassManager;
+	private Long _getAsLong(String string) {
+		return Try.fromFallible(
+			() -> GetterUtil.getLong(string)
+		).orElseThrow(
+			() -> new BadRequestException(
+				"Unable to convert " + string + " to long")
+		);
+	}
 
 	@Reference
-	private NameManager _nameManager;
+	private ClassNameLocalService _classNameLocalService;
 
 }

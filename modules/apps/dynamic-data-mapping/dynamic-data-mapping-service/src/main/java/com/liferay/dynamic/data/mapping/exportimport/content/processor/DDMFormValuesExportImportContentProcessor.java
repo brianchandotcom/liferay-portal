@@ -367,6 +367,10 @@ public class DDMFormValuesExportImportContentProcessor
 			for (Locale locale : value.getAvailableLocales()) {
 				String valueString = value.getString(locale);
 
+				if (Validator.isNull(valueString)) {
+					return;
+				}
+
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
 

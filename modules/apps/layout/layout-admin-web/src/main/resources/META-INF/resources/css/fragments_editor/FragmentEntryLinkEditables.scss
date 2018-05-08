@@ -1,0 +1,58 @@
+$gridSize: 8px;
+$translatedColor: #3DC513;
+$untranslatedColor: #A7A9BC;
+
+.fragments-editor__fragment-entry-links {
+	lfr-editable {
+		box-shadow: 0 0 0 1px transparent;
+		cursor: pointer;
+		display: block;
+		position: relative;
+		transition: box-shadow ease 0.2s;
+
+		&:hover {
+			box-shadow: 0 0 0 1px #80ACFF;
+		}
+
+		&:focus,
+		&:focus-within {
+			background-color: fade_out(#80ACFF, 0.9);
+			box-shadow: 0 0 0 1px #0B5FFF;
+		}
+
+		& > div[data-lfr-editable-id] {
+			display: inline;
+			outline: none;
+		}
+	}
+
+	&.translating {
+		.translated,
+		.untranslated {
+			background-size: $gridSize $gridSize;
+		}
+
+		.translated,
+		.translated[type="image"]:after {
+			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($translatedColor, 0.75) 50%, transparent calc(50% + 1px), transparent 100%);
+			box-shadow: 0 0 0 1px fade_out($translatedColor, 0.4);
+		}
+
+		.untranslated,
+		.untranslated[type="image"]:after {
+			background-color: fade_out($untranslatedColor, 0.9);
+			box-shadow: 0 0 0 1px fade_out($untranslatedColor, 0.4);
+		}
+
+		.translated[type="image"]:after,
+		.untranslated[type="image"]:after {
+			background-size: $gridSize $gridSize;
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
+}

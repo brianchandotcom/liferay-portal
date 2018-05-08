@@ -34,6 +34,19 @@ import org.osgi.service.component.annotations.Reference;
 public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 
 	@Override
+	public String[] getColumnFieldNames() {
+		return new String[] {"subject", "body"};
+	}
+
+	@Override
+	public String[] getDisplayFieldNames() {
+		return new String[] {
+			"subject", "body", "messageId", "userId", "userName",
+			"statusByUserId", "statusByUserName"
+		};
+	}
+
+	@Override
 	public String getEditURL(
 			MBMessage mbMessage, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

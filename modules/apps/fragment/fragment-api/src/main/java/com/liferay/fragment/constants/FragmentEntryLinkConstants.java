@@ -17,7 +17,7 @@ package com.liferay.fragment.constants;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentEntryLinkMode {
+public class FragmentEntryLinkConstants {
 
 	public static final String ASSET_DISPLAY_PAGE = "ASSET_DISPLAY_PAGE";
 

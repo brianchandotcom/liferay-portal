@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
-page import="com.liferay.fragment.constants.FragmentEntryLinkMode" %><%@
+page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
 page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
 page import="com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys" %><%@

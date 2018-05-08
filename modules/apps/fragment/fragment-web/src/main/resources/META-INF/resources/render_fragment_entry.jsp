@@ -35,7 +35,7 @@ fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 try {
 %>
 
-	<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkMode.VIEW, request, response) %>
+	<%= FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.VIEW, request, response) %>
 
 <%
 }

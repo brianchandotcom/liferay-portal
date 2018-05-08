@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.fragment.constants.FragmentEntryLinkMode;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -123,7 +123,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			String value = StringPool.BLANK;
 
 			if (Objects.equals(
-					mode, FragmentEntryLinkMode.ASSET_DISPLAY_PAGE)) {
+					mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE)) {
 
 				value = _getMappedValue(editableValueJSONObject);
 			}

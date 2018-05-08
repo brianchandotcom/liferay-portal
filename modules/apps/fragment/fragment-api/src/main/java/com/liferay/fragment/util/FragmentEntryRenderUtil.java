@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.util;
 
-import com.liferay.fragment.constants.FragmentEntryLinkMode;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -89,7 +89,8 @@ public class FragmentEntryRenderUtil {
 		throws PortalException {
 
 		return renderFragmentEntryLink(
-			fragmentEntryLink, FragmentEntryLinkMode.EDIT, request, response);
+			fragmentEntryLink, FragmentEntryLinkConstants.EDIT, request,
+			response);
 	}
 
 	public static String renderFragmentEntryLink(

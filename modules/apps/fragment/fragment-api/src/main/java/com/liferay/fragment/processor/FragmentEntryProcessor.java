@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.processor;
 
-import com.liferay.fragment.constants.FragmentEntryLinkMode;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,7 +33,7 @@ public interface FragmentEntryProcessor {
 		throws PortalException {
 
 		return processFragmentEntryLinkHTML(
-			fragmentEntryLink, html, FragmentEntryLinkMode.EDIT);
+			fragmentEntryLink, html, FragmentEntryLinkConstants.EDIT);
 	}
 
 	public String processFragmentEntryLinkHTML(

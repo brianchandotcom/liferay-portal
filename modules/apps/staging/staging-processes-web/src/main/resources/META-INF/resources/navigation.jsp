@@ -35,13 +35,11 @@ else {
 }
 
 String searchContainerId = "publishLayoutProcesses";
-
-PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= stagingProcessesWebDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= stagingProcessesWebDisplayContext.getNavigationItems() %>"
 />
 
 <c:choose>

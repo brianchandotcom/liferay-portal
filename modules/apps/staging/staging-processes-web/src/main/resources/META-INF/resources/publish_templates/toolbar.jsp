@@ -32,7 +32,9 @@ String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName")
 				<liferay-portlet:renderURLParams varImpl="searchURL" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-				<liferay-ui:input-search markupView="lexicon" />
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
 			</aui:form>
 		</li>
 	</liferay-frontend:management-bar-filters>
@@ -46,7 +48,9 @@ String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName")
 			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu inline="<%= true %>">
+		<liferay-frontend:add-menu
+			inline="<%= true %>"
+		>
 			<liferay-frontend:add-menu-item
 				title='<%= LanguageUtil.get(request, "new") %>'
 				url="<%= addPublishConfigurationURL %>"

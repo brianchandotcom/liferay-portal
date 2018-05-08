@@ -14,16 +14,15 @@
 
 package com.liferay.staging.processes.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
-import javax.portlet.PortletURL;
+import java.util.List;
+
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author Péter Alius

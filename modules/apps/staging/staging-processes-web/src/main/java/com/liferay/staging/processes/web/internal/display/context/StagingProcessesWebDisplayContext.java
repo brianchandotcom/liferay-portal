@@ -19,10 +19,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.util.List;
+
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author Péter Alius
@@ -45,6 +46,7 @@ public class StagingProcessesWebDisplayContext {
 							_request, "tabs1", "processes");
 
 						navigationItem.setActive(activeTab.equals("processes"));
+
 						navigationItem.setHref(
 							_renderResponse.createRenderURL(), "tabs1",
 							"processes");
@@ -58,6 +60,7 @@ public class StagingProcessesWebDisplayContext {
 							_request, "tabs1", "processes");
 
 						navigationItem.setActive(activeTab.equals("scheduled"));
+
 						navigationItem.setHref(
 							_renderResponse.createRenderURL(), "tabs1",
 							"scheduled");

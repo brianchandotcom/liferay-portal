@@ -64,7 +64,7 @@ public class TestAuthenticator implements Authenticator {
 		return Authenticator.SUCCESS;
 	}
 
-	@Reference(target = "(test=AtomicState)")
+	@Reference(target = "(test=AtomicState)", unbind = "-")
 	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
 		_atomicBoolean = atomicBoolean;
 	}

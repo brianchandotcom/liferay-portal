@@ -57,6 +57,7 @@ import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -391,11 +392,20 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	public void setPortalToLDAPConverter(
 		PortalToLDAPConverter portalToLDAPConverter) {
 
 		_portalToLDAPConverter = portalToLDAPConverter;
+	}
+
+	public void unsetPortalToLDAPConverter(
+		PortalToLDAPConverter portalToLDAPConverter) {
+
+		_portalToLDAPConverter = null;
 	}
 
 	protected Binding addGroup(
@@ -459,7 +469,10 @@ public class LDAPUserExporterImpl implements UserExporter {
 		_ldapSettings = ldapSettings;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void setPortalLDAP(PortalLDAP portalLDAP) {
 		_portalLDAP = portalLDAP;
 	}
@@ -474,6 +487,10 @@ public class LDAPUserExporterImpl implements UserExporter {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	protected void unsetPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

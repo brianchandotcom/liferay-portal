@@ -112,7 +112,7 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "removeBundleWebResources"
+		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void addBundleWebResources(
 		ServiceReference<BundleWebResources>

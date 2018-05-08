@@ -100,7 +100,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "unregister"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	public void register(Indexer<?> indexer) {
 		Class<?> clazz = indexer.getClass();
@@ -159,7 +159,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(indexer.class.name=*)", unbind = "removeIndexerPostProcessor"
+		target = "(indexer.class.name=*)"
 	)
 	protected void addIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor,

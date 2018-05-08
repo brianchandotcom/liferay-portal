@@ -80,8 +80,7 @@ public class DDMFormValuesJSONSerializerImpl
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeDDMFormFieldValueJSONSerializer"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDDMFormFieldValueJSONSerializer(
 		DDMFormFieldValueJSONSerializer ddmFormFieldValueJSONSerializer,

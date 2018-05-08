@@ -109,8 +109,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeTemplateHandler"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void addTemplateHandler(
 		TemplateHandler templateHandler) {

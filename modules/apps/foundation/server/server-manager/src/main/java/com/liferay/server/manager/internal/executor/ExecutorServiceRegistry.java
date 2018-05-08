@@ -45,8 +45,7 @@ public class ExecutorServiceRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterExecutor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void registerExecutor(
 		Executor executor, Map<String, Object> properties) {

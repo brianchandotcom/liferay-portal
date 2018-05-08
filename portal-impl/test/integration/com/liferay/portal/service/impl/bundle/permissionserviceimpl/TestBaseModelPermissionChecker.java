@@ -43,7 +43,7 @@ public class TestBaseModelPermissionChecker
 		_atomicBoolean.set(Boolean.TRUE);
 	}
 
-	@Reference(target = "(test=AtomicState)")
+	@Reference(target = "(test=AtomicState)", unbind = "-")
 	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
 		_atomicBoolean = atomicBoolean;
 	}

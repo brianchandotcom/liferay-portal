@@ -66,6 +66,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -506,9 +507,9 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)"
 	)
 	protected void setExportImportContentProcessor(
 		ExportImportContentProcessor<String> exportImportContentProcessor) {
@@ -526,6 +527,12 @@ public class BlogsEntryStagedModelDataHandler
 	@Reference(unbind = "-")
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
+	}
+
+	protected void unsetExportImportContentProcessor(
+		ExportImportContentProcessor<String> exportImportContentProcessor) {
+
+		_exportImportContentProcessor = null;
 	}
 
 	private void _exportFriendlyURLEntries(

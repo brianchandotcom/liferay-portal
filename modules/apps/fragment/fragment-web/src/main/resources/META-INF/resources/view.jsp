@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
+List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.getFragmentCollections(themeDisplay.getScopeGroupId());
 %>
 
 <liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-collection-cannot-be-deleted-because-it-contains-a-fragment-required-by-one-or-more-templates" />
@@ -27,77 +27,46 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 	navigationItems="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"
 />
 
-<clay:management-toolbar
-	actionDropdownItems="<%= fragmentDisplayContext.getFragmentCollectionActionItemsDropdownItems() %>"
-	clearResultsURL="<%= fragmentDisplayContext.getFragmentCollectionClearResultsURL() %>"
-	componentId="fragmentCollectionsManagementToolbar"
-	creationMenu="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) ? fragmentDisplayContext.getFragmentCollectionCreationMenu() : null %>"
-	disabled="<%= fragmentDisplayContext.isDisabledFragmentCollectionsManagementBar() %>"
-	filterDropdownItems="<%= fragmentDisplayContext.getFragmentCollectionFilterItemsDropdownItems() %>"
-	itemsTotal="<%= fragmentDisplayContext.getFragmentCollectionTotalItems() %>"
-	searchActionURL="<%= fragmentDisplayContext.getFragmentCollectionSearchActionURL() %>"
-	searchContainerId="fragmentCollections"
-	searchFormName="searchFm"
-	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
-	sortingURL="<%= fragmentDisplayContext.getFragmentCollectionSortingURL() %>"
-	viewTypeItems="<%= fragmentDisplayContext.getFragmentCollectionViewTypeItems() %>"
-/>
+<div class="container-fluid container-fluid-max-xl container-view">
+	<div class="row">
+		<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
+			<ul class="nav nav-nested">
+				<li class="nav-item">
+					<strong class="text-uppercase">
+						<liferay-ui:message key="collections" />
+					</strong>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		id="fragmentCollections"
-		searchContainer="<%= fragmentDisplayContext.getFragmentCollectionsSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.fragment.model.FragmentCollection"
-			keyProperty="fragmentCollectionId"
-			modelVar="fragmentCollection"
-		>
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_entries" />
-				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
-			</portlet:renderURL>
+					<ul class="nav nav-stacked">
 
-			<%
-			row.setCssClass("entry-card lfr-asset-folder");
-			%>
+						<%
+						for (FragmentCollection fragmentCollection : fragmentCollections) {
+						%>
 
-			<liferay-ui:search-container-column-text>
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
-					<liferay-frontend:horizontal-card
-						actionJsp="/fragment_collection_action.jsp"
-						actionJspServletContext="<%= application %>"
-						resultRow="<%= row %>"
-						rowChecker="<%= searchContainer.getRowChecker() %>"
-						text="<%= HtmlUtil.escape(fragmentCollection.getName()) %>"
-						url="<%= rowURL.toString() %>"
-					>
-						<liferay-frontend:horizontal-card-col>
-							<liferay-frontend:horizontal-card-icon
-								icon="documents-and-media"
-							/>
-						</liferay-frontend:horizontal-card-col>
-					</liferay-frontend:horizontal-card>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+							<li class="nav-item">
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</aui:form>
+								<%
+								PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
+
+								fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
+								%>
+
+								<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+									<%= fragmentCollection.getName() %>
+								</a>
+							</li>
+
+						<%
+						}
+						%>
+
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
 
 <aui:script>
-	window.<portlet:namespace />deleteSelectedFragmentCollections = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:actionURL name="/fragment/delete_fragment_collection"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-		}
-	}
-
 	window.<portlet:namespace />exportSelectedFragmentCollections = function() {
 		submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_collections" />');
 	}

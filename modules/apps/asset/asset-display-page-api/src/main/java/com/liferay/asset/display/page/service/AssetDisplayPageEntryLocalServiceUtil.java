@@ -94,14 +94,9 @@ public class AssetDisplayPageEntryLocalServiceUtil {
 		return getService().deleteAssetDisplayPageEntry(assetDisplayPageEntryId);
 	}
 
-	public static void deleteAssetDisplayPageEntry(long assetEntryId,
-		long layoutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAssetDisplayPageEntry(assetEntryId, layoutId);
-	}
-
 	public static void deleteAssetDisplayPageEntryByAssetEntryId(
-		long assetEntryId) {
+		long assetEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteAssetDisplayPageEntryByAssetEntryId(assetEntryId);
 	}
 
@@ -197,14 +192,10 @@ public class AssetDisplayPageEntryLocalServiceUtil {
 		return getService().fetchAssetDisplayPageEntry(assetDisplayPageEntryId);
 	}
 
-	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchAssetDisplayPageEntry(
-		long assetEntryId, long layoutId) {
-		return getService().fetchAssetDisplayPageEntry(assetEntryId, layoutId);
-	}
-
-	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchFirstAssetDisplayPageEntry(
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchAssetDisplayPageEntryByAssetEntryId(
 		long assetEntryId) {
-		return getService().fetchFirstAssetDisplayPageEntry(assetEntryId);
+		return getService()
+				   .fetchAssetDisplayPageEntryByAssetEntryId(assetEntryId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

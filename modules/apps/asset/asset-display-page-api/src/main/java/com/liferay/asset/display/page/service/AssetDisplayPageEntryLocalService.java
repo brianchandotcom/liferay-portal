@@ -105,10 +105,8 @@ public interface AssetDisplayPageEntryLocalService extends BaseLocalService,
 	public AssetDisplayPageEntry deleteAssetDisplayPageEntry(
 		long assetDisplayPageEntryId) throws PortalException;
 
-	public void deleteAssetDisplayPageEntry(long assetEntryId, long layoutId)
+	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId)
 		throws PortalException;
-
-	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId);
 
 	/**
 	* @throws PortalException
@@ -181,11 +179,7 @@ public interface AssetDisplayPageEntryLocalService extends BaseLocalService,
 		long assetDisplayPageEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(long assetEntryId,
-		long layoutId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetDisplayPageEntry fetchFirstAssetDisplayPageEntry(
+	public AssetDisplayPageEntry fetchAssetDisplayPageEntryByAssetEntryId(
 		long assetEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -89,8 +89,7 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 				"value.object.column.bitmask.enabled.com.liferay.asset.display.page.model.AssetDisplayPageEntry"),
 			true);
 	public static final long ASSETENTRYID_COLUMN_BITMASK = 1L;
-	public static final long LAYOUTID_COLUMN_BITMASK = 2L;
-	public static final long ASSETDISPLAYPAGEENTRYID_COLUMN_BITMASK = 4L;
+	public static final long ASSETDISPLAYPAGEENTRYID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.asset.display.page.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.asset.display.page.model.AssetDisplayPageEntry"));
 
@@ -202,19 +201,7 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 	@Override
 	public void setLayoutId(long layoutId) {
-		_columnBitmask |= LAYOUTID_COLUMN_BITMASK;
-
-		if (!_setOriginalLayoutId) {
-			_setOriginalLayoutId = true;
-
-			_originalLayoutId = _layoutId;
-		}
-
 		_layoutId = layoutId;
-	}
-
-	public long getOriginalLayoutId() {
-		return _originalLayoutId;
 	}
 
 	public long getColumnBitmask() {
@@ -317,10 +304,6 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 		assetDisplayPageEntryModelImpl._setOriginalAssetEntryId = false;
 
-		assetDisplayPageEntryModelImpl._originalLayoutId = assetDisplayPageEntryModelImpl._layoutId;
-
-		assetDisplayPageEntryModelImpl._setOriginalLayoutId = false;
-
 		assetDisplayPageEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -387,8 +370,6 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 	private long _originalAssetEntryId;
 	private boolean _setOriginalAssetEntryId;
 	private long _layoutId;
-	private long _originalLayoutId;
-	private boolean _setOriginalLayoutId;
 	private long _columnBitmask;
 	private AssetDisplayPageEntry _escapedModel;
 }

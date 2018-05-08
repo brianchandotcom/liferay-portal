@@ -92,14 +92,8 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteAssetDisplayPageEntry(long assetEntryId, long layoutId)
+	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(assetEntryId,
-			layoutId);
-	}
-
-	@Override
-	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId) {
 		_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntryByAssetEntryId(assetEntryId);
 	}
 
@@ -206,16 +200,9 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchAssetDisplayPageEntry(
-		long assetEntryId, long layoutId) {
-		return _assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(assetEntryId,
-			layoutId);
-	}
-
-	@Override
-	public com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchFirstAssetDisplayPageEntry(
+	public com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchAssetDisplayPageEntryByAssetEntryId(
 		long assetEntryId) {
-		return _assetDisplayPageEntryLocalService.fetchFirstAssetDisplayPageEntry(assetEntryId);
+		return _assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntryByAssetEntryId(assetEntryId);
 	}
 
 	@Override

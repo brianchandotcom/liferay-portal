@@ -147,14 +147,6 @@ public class AssetDisplayPageEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByA_L() throws Exception {
-		_persistence.countByA_L(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
-
-		_persistence.countByA_L(0L, 0L);
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetDisplayPageEntry newAssetDisplayPageEntry = addAssetDisplayPageEntry();
 
@@ -397,10 +389,6 @@ public class AssetDisplayPageEntryPersistenceTest {
 				existingAssetDisplayPageEntry.getAssetEntryId()),
 			ReflectionTestUtil.<Long>invoke(existingAssetDisplayPageEntry,
 				"getOriginalAssetEntryId", new Class<?>[0]));
-		Assert.assertEquals(Long.valueOf(
-				existingAssetDisplayPageEntry.getLayoutId()),
-			ReflectionTestUtil.<Long>invoke(existingAssetDisplayPageEntry,
-				"getOriginalLayoutId", new Class<?>[0]));
 	}
 
 	protected AssetDisplayPageEntry addAssetDisplayPageEntry()

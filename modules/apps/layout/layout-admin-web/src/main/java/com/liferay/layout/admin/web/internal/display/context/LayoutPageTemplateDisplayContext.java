@@ -24,6 +24,7 @@ import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -154,8 +156,28 @@ public class LayoutPageTemplateDisplayContext {
 			return _layoutPageTemplateCollectionId;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long defaultLayoutPageTemplateCollectionId = 0;
+
+		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
+			LayoutPageTemplateCollectionLocalServiceUtil.
+				getLayoutPageTemplateCollections(
+					themeDisplay.getScopeGroupId(), 0, 1);
+
+		if (ListUtil.isNotEmpty(layoutPageTemplateCollections)) {
+			LayoutPageTemplateCollection layoutPageTemplateCollection =
+				layoutPageTemplateCollections.get(0);
+
+			defaultLayoutPageTemplateCollectionId =
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId();
+		}
+
 		_layoutPageTemplateCollectionId = ParamUtil.getLong(
-			_request, "layoutPageTemplateCollectionId");
+			_request, "layoutPageTemplateCollectionId",
+			defaultLayoutPageTemplateCollectionId);
 
 		return _layoutPageTemplateCollectionId;
 	}

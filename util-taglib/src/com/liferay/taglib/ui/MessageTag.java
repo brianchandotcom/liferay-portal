@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.DirectTag;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
-import java.util.ResourceBundle;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -54,35 +52,41 @@ public class MessageTag extends TagSupport implements DirectTag {
 				request.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
 		}
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
 		if (arguments == null) {
 			if (!localizeKey) {
 				value = key;
 			}
 			else if (escape) {
-				value = HtmlUtil.escape(LanguageUtil.get(resourceBundle, key));
+				value = HtmlUtil.escape(
+					LanguageUtil.get(
+						TagResourceBundleUtil.getResourceBundle(pageContext),
+						key));
 			}
 			else if (escapeAttribute) {
 				value = HtmlUtil.escapeAttribute(
-					LanguageUtil.get(resourceBundle, key));
+					LanguageUtil.get(
+						TagResourceBundleUtil.getResourceBundle(pageContext),
+						key));
 			}
 			else if (unicode) {
-				value = UnicodeLanguageUtil.get(resourceBundle, key);
+				value = UnicodeLanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext), key);
 			}
 			else {
-				value = LanguageUtil.get(resourceBundle, key);
+				value = LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext), key);
 			}
 		}
 		else {
 			if (unicode) {
 				value = UnicodeLanguageUtil.format(
-					resourceBundle, key, arguments, translateArguments);
+					TagResourceBundleUtil.getResourceBundle(pageContext), key,
+					arguments, translateArguments);
 			}
 			else {
 				value = LanguageUtil.format(
-					resourceBundle, key, arguments, translateArguments);
+					TagResourceBundleUtil.getResourceBundle(pageContext), key,
+					arguments, translateArguments);
 			}
 		}
 

@@ -14,8 +14,13 @@
 
 package com.liferay.layout.prototype.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.layout.prototype.constants.LayoutPrototypePortletKeys;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -29,6 +34,7 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.LayoutPrototypeCreateDateComparator;
@@ -36,6 +42,7 @@ import com.liferay.portal.kernel.util.comparator.LayoutPrototypeCreateDateCompar
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -56,6 +63,23 @@ public class LayoutPrototypeDisplayContext {
 		_request = request;
 	}
 
+	public List<DropdownItem> getActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteSelectedLayoutPrototypes();");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+		};
+	}
+
 	public Boolean getActive() {
 		String navigation = getNavigation();
 
@@ -71,6 +95,21 @@ public class LayoutPrototypeDisplayContext {
 		return active;
 	}
 
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/edit_layout_prototype.jsp");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add"));
+					});
+			}
+		};
+	}
+
 	public String getDisplayStyle() {
 		if (Validator.isNotNull(_displayStyle)) {
 			return _displayStyle;
@@ -84,6 +123,28 @@ public class LayoutPrototypeDisplayContext {
 			"list");
 
 		return _displayStyle;
+	}
+
+	public List<DropdownItem> getFilterDropdownItems() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							_getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(_request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -124,6 +185,24 @@ public class LayoutPrototypeDisplayContext {
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
+		String navigation = getNavigation();
+
+		if (Validator.isNotNull(navigation)) {
+			portletURL.setParameter("navigation", navigation);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
 		return portletURL;
 	}
 
@@ -162,6 +241,38 @@ public class LayoutPrototypeDisplayContext {
 		searchContainer.setResults(results);
 
 		return searchContainer;
+	}
+
+	public String getSortingURL() {
+		PortletURL sortingURL = getPortletURL();
+
+		sortingURL.setParameter(
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getTotalItems() {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
+	}
+
+	public List<ViewTypeItem> getViewTypeItems() {
+		PortletURL portletURL = _renderResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "changeDisplayStyle");
+		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
+
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
+			{
+				addCardViewTypeItem();
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
 	}
 
 	public boolean isDescriptiveView() {
@@ -219,7 +330,7 @@ public class LayoutPrototypeDisplayContext {
 			return _navigation;
 		}
 
-		_navigation = ParamUtil.getString(_request, "navigation");
+		_navigation = ParamUtil.getString(_request, "navigation", "all");
 
 		return _navigation;
 	}
@@ -230,6 +341,58 @@ public class LayoutPrototypeDisplayContext {
 
 		return LayoutPrototypeLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), getActive());
+	}
+
+	private List<DropdownItem> _getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getNavigation(), "all"));
+						dropdownItem.setHref(
+							getPortletURL(), "navigation", "all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "all"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getNavigation(), "active"));
+						dropdownItem.setHref(
+							getPortletURL(), "navigation", "active");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "active"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getNavigation(), "inactive"));
+						dropdownItem.setHref(
+							getPortletURL(), "navigation", "inactive");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "inactive"));
+					});
+			}
+		};
+	}
+
+	private List<DropdownItem> _getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(
+							Objects.equals(getOrderByCol(), "create-date"));
+						dropdownItem.setHref(
+							getPortletURL(), "orderByCol", "create-date");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "create-date"));
+					});
+			}
+		};
 	}
 
 	private String _displayStyle;

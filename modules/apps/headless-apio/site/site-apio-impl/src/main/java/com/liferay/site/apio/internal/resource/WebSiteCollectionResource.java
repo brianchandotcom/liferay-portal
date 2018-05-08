@@ -76,9 +76,6 @@ public class WebSiteCollectionResource
 	public Representor<Group, Long> representor(
 		Representor.Builder<Group, Long> builder) {
 
-		/* TODO -> get url, GroupURLProvider.getGroupURL is not valid because
-		request is not accesible*/
-
 		return builder.types(
 			"WebSite"
 		).identifier(
@@ -86,12 +83,12 @@ public class WebSiteCollectionResource
 		).addBidirectionalModel(
 			"interactionService", "webSites", WebSiteIdentifier.class,
 			this::_getParentGroupId
+		).addBoolean(
+			"active", Group::isActive
 		).addLinkedModel(
 			"author", PersonIdentifier.class, Group::getCreatorUserId
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, Group::getCreatorUserId
-		).addLocalizedStringByLocale(
-			"active", this::_isActive
 		).addLocalizedStringByLocale(
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(
@@ -125,10 +122,6 @@ public class WebSiteCollectionResource
 		else {
 			return null;
 		}
-	}
-
-	private String _isActive(Group group, Locale locale) {
-		return LanguageUtil.get(locale, group.isActive() ? "yes" : "no");
 	}
 
 	private String _numberOfMembersMessage(Group group, Locale locale) {

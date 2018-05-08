@@ -135,14 +135,23 @@ public class CommerceCartContentDisplayContext {
 	public String getCommerceOrderSubtotal() throws PortalException {
 		CommerceOrder commerceOrder = getCommerceOrder();
 
+		if (commerceOrder == null) {
+			CommerceContext commerceContext =
+				commerceCartContentRequestHelper.getCommerceContext();
+
+			CommerceCurrency commerceCurrency =
+				commerceContext.getCommerceCurrency();
+
+			CommerceMoney commerceMoney = commerceCurrency.getZero();
+
+			return commerceMoney.toString();
+		}
+
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		CommerceMoney commerceMoney = commerceCurrency.getZero();
-
-		if (commerceOrder != null) {
-			commerceMoney = _commercePriceCalculation.getOrderSubtotal(
+		CommerceMoney commerceMoney =
+			_commercePriceCalculation.getOrderSubtotal(
 				getCommerceOrder(), commerceContext);
-		}
 
 		return commerceMoney.toString();
 	}

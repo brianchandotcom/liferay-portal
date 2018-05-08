@@ -16,8 +16,8 @@
 	</command>
 
 	<command name="selectSite">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute macro="SiteSelector#_searchSite">
@@ -32,8 +32,8 @@
 	</command>
 
 	<command name="viewSite">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute macro="SiteSelector#_searchSite">

@@ -42,31 +42,18 @@ public class AssetDisplayPageEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteAssetDisplayPageEntry(long assetEntryId, long layoutId)
+	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId)
 		throws PortalException {
 
-		assetDisplayPageEntryPersistence.removeByA_L(assetEntryId, layoutId);
-	}
-
-	@Override
-	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId) {
 		assetDisplayPageEntryPersistence.removeByAssetEntryId(assetEntryId);
 	}
 
 	@Override
-	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(
-		long assetEntryId, long layoutId) {
-
-		return assetDisplayPageEntryPersistence.fetchByA_L(
-			assetEntryId, layoutId);
-	}
-
-	@Override
-	public AssetDisplayPageEntry fetchFirstAssetDisplayPageEntry(
+	public AssetDisplayPageEntry fetchAssetDisplayPageEntryByAssetEntryId(
 		long assetEntryId) {
 
-		return assetDisplayPageEntryPersistence.fetchByAssetEntryId_First(
-			assetEntryId, null);
+		return assetDisplayPageEntryPersistence.fetchByAssetEntryId(
+			assetEntryId);
 	}
 
 }

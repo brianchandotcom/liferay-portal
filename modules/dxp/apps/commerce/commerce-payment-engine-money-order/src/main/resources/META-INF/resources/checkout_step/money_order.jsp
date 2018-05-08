@@ -20,4 +20,6 @@
 MoneyOrderCheckoutStepDisplayContext moneyOrderCheckoutStepDisplayContext = (MoneyOrderCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 %>
 
-<%= moneyOrderCheckoutStepDisplayContext.getMessage() %>
+<c:if test="<%= Validator.isNotNull(moneyOrderCheckoutStepDisplayContext.getMessage()) %>">
+	<%= moneyOrderCheckoutStepDisplayContext.getMessage() %>
+</c:if>

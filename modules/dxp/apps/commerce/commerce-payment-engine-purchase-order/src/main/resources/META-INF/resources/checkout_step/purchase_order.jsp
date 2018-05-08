@@ -24,8 +24,10 @@ CommerceOrder commerceOrder = purchaseOrderCheckoutStepDisplayContext.getCommerc
 
 <liferay-ui:error exception="<%= CommerceOrderPurchaseOrderNumberException.class %>" message="please-enter-a-valid-number" />
 
-<%= purchaseOrderCheckoutStepDisplayContext.getMessage() %>
+<c:if test="<%= Validator.isNotNull(purchaseOrderCheckoutStepDisplayContext.getMessage()) %>">
+	<%= purchaseOrderCheckoutStepDisplayContext.getMessage() %>
+</c:if>
 
 <aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
-<aui:input name="purchaseOrderNumber" required="<%= true %>" />
+<aui:input name="purchaseOrderNumber" placeholder="purchase-order-number" required="<%= true %>" />

@@ -69,7 +69,7 @@ public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 
 		if (assetDisplayContributor != null) {
 			Set<AssetDisplayField> assetEntryFields =
-				assetDisplayContributor.getAssetEntryFields(
+				assetDisplayContributor.getAssetDisplayFields(
 					classTypeId, themeDisplay.getLocale());
 
 			for (AssetDisplayField assetEntryField : assetEntryFields) {

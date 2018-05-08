@@ -38,49 +38,7 @@ public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 
 	@Override
-	public Map<String, Object> getAssetDisplayFieldsValues(
-			AssetEntry assetEntry, Locale locale)
-		throws PortalException {
-
-		// Default fields for asset entry
-
-		Map<String, Object> parameterMap = _getDefaultParameterMap(
-			assetEntry, locale);
-
-		// Fields for the specific asset type
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					assetEntry.getClassNameId());
-
-		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
-			assetEntry.getClassPK());
-
-		String[] assetEntryModelFields = getAssetEntryModelFields();
-
-		if (assetEntryModelFields != null) {
-			for (String assetEntryModelField : assetEntryModelFields) {
-				parameterMap.put(
-					assetEntryModelField,
-					getFieldValue(
-						assetRenderer.getAssetObject(), assetEntryModelField,
-						locale));
-			}
-		}
-
-		// Fields for the class type
-
-		Map<String, Object> classTypeValues = getClassTypeValues(
-			assetRenderer.getAssetObject(), locale);
-
-		parameterMap.putAll(classTypeValues);
-
-		return parameterMap;
-	}
-
-	@Override
-	public Set<AssetDisplayField> getAssetEntryFields(
+	public Set<AssetDisplayField> getAssetDisplayFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
@@ -120,6 +78,48 @@ public abstract class BaseAssetDisplayContributor<T>
 		assetDisplayFields.addAll(classTypeFields);
 
 		return assetDisplayFields;
+	}
+
+	@Override
+	public Map<String, Object> getAssetDisplayFieldsValues(
+			AssetEntry assetEntry, Locale locale)
+		throws PortalException {
+
+		// Default fields for asset entry
+
+		Map<String, Object> parameterMap = _getDefaultParameterMap(
+			assetEntry, locale);
+
+		// Fields for the specific asset type
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					assetEntry.getClassNameId());
+
+		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		String[] assetEntryModelFields = getAssetEntryModelFields();
+
+		if (assetEntryModelFields != null) {
+			for (String assetEntryModelField : assetEntryModelFields) {
+				parameterMap.put(
+					assetEntryModelField,
+					getFieldValue(
+						assetRenderer.getAssetObject(), assetEntryModelField,
+						locale));
+			}
+		}
+
+		// Fields for the class type
+
+		Map<String, Object> classTypeValues = getClassTypeValues(
+			assetRenderer.getAssetObject(), locale);
+
+		parameterMap.putAll(classTypeValues);
+
+		return parameterMap;
 	}
 
 	@Override

@@ -35,12 +35,12 @@ import java.util.Set;
  */
 public interface AssetDisplayContributor {
 
-	public Map<String, Object> getAssetDisplayFieldsValues(
-			AssetEntry assetEntry, Locale locale)
+	public Set<AssetDisplayField> getAssetDisplayFields(
+			long classTypeId, Locale locale)
 		throws PortalException;
 
-	public Set<AssetDisplayField> getAssetEntryFields(
-			long classTypeId, Locale locale)
+	public Map<String, Object> getAssetDisplayFieldsValues(
+			AssetEntry assetEntry, Locale locale)
 		throws PortalException;
 
 	public String getClassName();

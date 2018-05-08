@@ -20,5 +20,3 @@ Import-Package:\
 	!org.zeroturnaround.javarebel,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Template Engines

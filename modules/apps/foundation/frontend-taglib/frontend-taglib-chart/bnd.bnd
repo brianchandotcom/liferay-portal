@@ -20,8 +20,6 @@ Export-Package:\
 	com.liferay.frontend.taglib.chart.model.point.step,\
 	com.liferay.frontend.taglib.chart.servlet.taglib.soy,\
 	com.liferay.frontend.taglib.chart.servlet.taglib.soy.base
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

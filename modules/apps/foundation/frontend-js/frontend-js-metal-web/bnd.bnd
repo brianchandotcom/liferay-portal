@@ -5,8 +5,6 @@ Liferay-Export-JS-Submodules:\
 	html2incdom,\
 	incremental-dom*,\
 	metal*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 Provide-Capability:\
 	soy;\
 		type="metal";\

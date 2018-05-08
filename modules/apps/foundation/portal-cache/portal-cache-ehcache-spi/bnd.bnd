@@ -5,6 +5,4 @@ DynamicImport-Package: *
 Export-Package:\
 	com.liferay.portal.cache.ehcache.spi,\
 	com.liferay.portal.cache.ehcache.spi.event
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Cache Engines
 -dsannotations-options: inherit

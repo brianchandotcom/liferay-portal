@@ -5,5 +5,3 @@ Export-Package:\
 	com.liferay.portal.security.service.access.quota.configuration,\
 	com.liferay.portal.security.service.access.quota.metric,\
 	com.liferay.portal.security.service.access.quota.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

@@ -6,6 +6,4 @@ Import-Package:\
 	\
 	*
 Liferay-JS-Config: /META-INF/resources/js/config.js
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /portal-search-web

@@ -31,6 +31,4 @@ Import-Package:\
 	!org.springframework.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Remote Service Engines
 Liferay-Require-SchemaVersion: 1.0.0

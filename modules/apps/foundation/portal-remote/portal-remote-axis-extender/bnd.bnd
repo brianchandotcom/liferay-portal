@@ -22,8 +22,6 @@ Import-Package:\
 	!sun.awt.image.codec,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Remote Service Engines
 -exportcontents: org.apache.axis.*;version="1.4"
 -fixupmessages: "Version for package org.apache.axis...";is:=ignore
 -includeresource: @com.liferay.util.java-[0-9]*.jar!/com/liferay/util/axis/*.class

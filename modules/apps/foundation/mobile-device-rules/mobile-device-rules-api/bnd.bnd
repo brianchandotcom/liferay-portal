@@ -10,5 +10,3 @@ Export-Package:\
 	com.liferay.mobile.device.rules.service,\
 	com.liferay.mobile.device.rules.service.persistence,\
 	com.liferay.mobile.device.rules.util.comparator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

@@ -4,5 +4,3 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.security.sso.facebook.connect.configuration,\
 	com.liferay.portal.security.sso.facebook.connect.constants
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Security Frameworks

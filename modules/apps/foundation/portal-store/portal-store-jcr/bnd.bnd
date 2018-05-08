@@ -9,5 +9,3 @@ Import-Package:\
 	!org.apache.tika.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Data Stores

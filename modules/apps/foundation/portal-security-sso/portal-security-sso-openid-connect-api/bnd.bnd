@@ -21,8 +21,6 @@ Import-Package:\
 	!sun.security.util.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Security Frameworks
 -exportcontents:\
 	com.nimbusds.jose.util,\
 	com.nimbusds.jwt,\

@@ -14,5 +14,3 @@ Import-Package:\
 	!org.xml.sax,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Frontend Infrastructure

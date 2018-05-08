@@ -7,8 +7,6 @@ Export-Package:\
 	com.liferay.frontend.taglib.servlet.taglib.soy,\
 	com.liferay.frontend.taglib.servlet.taglib.util
 Liferay-JS-Config: /META-INF/resources/config.js
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

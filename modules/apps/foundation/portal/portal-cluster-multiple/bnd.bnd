@@ -33,5 +33,3 @@ Import-Package:\
 	org.postgresql;resolution:=optional,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Clustering

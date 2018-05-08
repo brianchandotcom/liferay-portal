@@ -12,5 +12,3 @@ Import-Package:\
 	!org.fusesource.jansi.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Scripting Engines

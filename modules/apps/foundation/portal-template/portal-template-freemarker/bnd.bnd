@@ -46,6 +46,4 @@ Import-Package:\
 	org.apache.taglibs.standard.tlv;version='[1.2.3,2.0)',\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Template Engines
 -includeresource: @javax.servlet.jsp.jstl-[0-9]*.jar!/META-INF/*.tld

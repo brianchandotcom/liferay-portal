@@ -45,8 +45,6 @@ Import-Package:\
 	!sun.misc,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Cache Engines
 -includeresource:\
 	@ehcache-[0-9]*.jar!/META-INF/*,\
 	@ehcache-[0-9]*.jar!/com/*,\

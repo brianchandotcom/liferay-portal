@@ -5,5 +5,3 @@ Export-Package:\
 	com.liferay.portal.security.sso.google,\
 	com.liferay.portal.security.sso.google.configuration,\
 	com.liferay.portal.security.sso.google.constants
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

@@ -5,5 +5,3 @@ Export-Package:\
 	com.liferay.portal.security.sso.openid,\
 	com.liferay.portal.security.sso.openid.configuration,\
 	com.liferay.portal.security.sso.openid.constants
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Security Frameworks

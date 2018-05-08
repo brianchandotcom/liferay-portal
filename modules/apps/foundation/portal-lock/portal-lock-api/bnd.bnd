@@ -6,5 +6,3 @@ Export-Package:\
 	com.liferay.portal.lock.model,\
 	com.liferay.portal.lock.service,\
 	com.liferay.portal.lock.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

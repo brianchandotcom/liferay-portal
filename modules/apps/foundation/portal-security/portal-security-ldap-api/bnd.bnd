@@ -11,5 +11,3 @@ Export-Package:\
 	com.liferay.portal.security.ldap.exportimport.configuration,\
 	com.liferay.portal.security.ldap.util,\
 	com.liferay.portal.security.ldap.validator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: LDAP

@@ -2,8 +2,6 @@ Bundle-Name: Liferay Frontend Editor AlloyEditor Web
 Bundle-SymbolicName: com.liferay.frontend.editor.alloyeditor.web
 Bundle-Version: 2.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Rich Text Editors
 Provide-Capability:\
 	alloyeditor.link.browse;\
 		alloyeditor.link.browse:String="default",\

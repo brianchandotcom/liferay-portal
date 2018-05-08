@@ -9,5 +9,3 @@ Import-Package:\
 	!org.apache.http.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

@@ -30,8 +30,6 @@ Import-Package:\
 	!org.springframework.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Remote Service Engines
 Provide-Capability:\
 	osgi.contract;\
 		osgi.contract=JavaJAXRS;\

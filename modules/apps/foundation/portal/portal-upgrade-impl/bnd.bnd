@@ -5,5 +5,3 @@ Import-Package:\
 	org.apache.felix.service.command;resolution:=optional,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Upgrade and Verify

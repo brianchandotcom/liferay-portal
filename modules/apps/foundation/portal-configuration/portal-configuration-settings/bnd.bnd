@@ -5,5 +5,3 @@ Import-Package:\
 	com.liferay.portal.kernel.settings;version="[1.2.0,2)",\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Configuration Framework

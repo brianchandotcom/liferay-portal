@@ -23,7 +23,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 %>
 
 <clay:navigation-bar
-	items="<%=
+	navigationItems="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

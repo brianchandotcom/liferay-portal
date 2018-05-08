@@ -26,10 +26,10 @@ DLViewFileEntryTypesDisplayContext dlViewFileEntryTypesDisplayContext = new DLVi
 	clearResultsURL="<%= dlViewFileEntryTypesDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= dlViewFileEntryTypesDisplayContext.getCreationMenu() %>"
 	disabled="<%= dlViewFileEntryTypesDisplayContext.getTotalItems() == 0 %>"
+	itemsTotal="<%= dlViewFileEntryTypesDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= dlViewFileEntryTypesDisplayContext.getSearchActionURL() %>"
 	searchFormName="fm"
 	selectable="<%= false %>"
-	totalItems="<%= dlViewFileEntryTypesDisplayContext.getTotalItems() %>"
 />
 
 <div class="container-fluid-1280 main-content-body">

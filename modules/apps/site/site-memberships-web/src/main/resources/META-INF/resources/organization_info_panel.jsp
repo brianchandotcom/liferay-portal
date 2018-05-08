@@ -27,7 +27,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 		</div>
 
 		<clay:navigation-bar
-			items="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">
@@ -78,7 +78,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 		</div>
 
 		<clay:navigation-bar
-			items="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">
@@ -131,7 +131,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 		</div>
 
 		<clay:navigation-bar
-			items="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
+			navigationItems="<%= siteMembershipsDisplayContext.getInfoPanelNavigationItems() %>"
 		/>
 
 		<div class="sidebar-body">

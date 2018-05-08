@@ -21,13 +21,14 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 %>
 
 <clay:management-toolbar
-	actionItems="<%= journalDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= journalDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= journalDisplayContext.getClearResultsURL() %>"
 	componentId="journalWebManagementToolbar"
 	creationMenu="<%= journalDisplayContext.getCreationMenu() %>"
 	disabled="<%= journalDisplayContext.isDisabled() %>"
-	filterItems="<%= journalDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= journalDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= journalDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= journalDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= searchContainerId %>"
 	searchFormName="fm1"
@@ -36,8 +37,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	showSearch="<%= journalDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= journalDisplayContext.getOrderByType() %>"
 	sortingURL="<%= journalDisplayContext.getSortingURL() %>"
-	totalItems="<%= journalDisplayContext.getTotalItems() %>"
-	viewTypes="<%= journalDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= journalDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:script>

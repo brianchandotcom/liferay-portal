@@ -47,7 +47,7 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 <liferay-ui:membership-policy-error />
 
 <clay:navigation-bar
-	items='<%= userDisplayContext.getNavigationItems("users") %>'
+	navigationItems='<%= userDisplayContext.getNavigationItems("users") %>'
 />
 
 <liferay-frontend:management-bar

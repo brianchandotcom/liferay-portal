@@ -65,7 +65,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 %>
 
 <clay:navigation-bar
-	items="<%= roleDisplayContext.getSelectAssigneesNavigationItems(portletURL) %>"
+	navigationItems="<%= roleDisplayContext.getSelectAssigneesNavigationItems(portletURL) %>"
 />
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">

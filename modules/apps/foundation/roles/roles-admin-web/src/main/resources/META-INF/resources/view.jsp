@@ -53,7 +53,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= roleDisplayContext.getViewRoleNavigationItems(portletURL) %>"
+	navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(portletURL) %>"
 />
 
 <liferay-frontend:management-bar

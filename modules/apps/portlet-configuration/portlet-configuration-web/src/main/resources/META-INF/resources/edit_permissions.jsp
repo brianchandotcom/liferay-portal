@@ -30,7 +30,7 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 <div class="edit-permissions portlet-configuration-edit-permissions">
 	<div class="portlet-configuration-body-content">
 		<clay:navigation-bar
-			items="<%= portletConfigurationPermissionsDisplayContext.getNavigationItems() %>"
+			navigationItems="<%= portletConfigurationPermissionsDisplayContext.getNavigationItems() %>"
 		/>
 
 		<clay:management-toolbar

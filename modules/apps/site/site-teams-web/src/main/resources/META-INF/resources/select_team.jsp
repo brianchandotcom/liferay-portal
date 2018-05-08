@@ -21,22 +21,22 @@ SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext
 %>
 
 <clay:navigation-bar
-	items="<%= selectTeamDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectTeamDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= selectTeamDisplayContext.getClearResultsURL() %>"
 	componentId="selectTeamWebManagementToolbar"
 	disabled="<%= selectTeamDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= selectTeamDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= selectTeamDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectTeamDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectTeamDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	showSearch="<%= selectTeamDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectTeamDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectTeamDisplayContext.getSortingURL() %>"
-	totalItems="<%= selectTeamDisplayContext.getTotalItems() %>"
-	viewTypes="<%= selectTeamDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= selectTeamDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="selectTeamFm">

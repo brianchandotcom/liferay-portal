@@ -22,22 +22,22 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteNavigationAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= siteNavigationAdminDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= siteNavigationAdminDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= siteNavigationAdminDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= siteNavigationAdminDisplayContext.getClearResultsURL() %>"
 	componentId="siteNavigationMenuWebManagementToolbar"
 	creationMenu="<%= siteNavigationAdminDisplayContext.isShowAddButton() ? siteNavigationAdminDisplayContext.getCreationMenu() : null %>"
-	filterItems="<%= siteNavigationAdminDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteNavigationAdminDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteNavigationAdminDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteNavigationAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="siteNavigationMenus"
 	searchFormName="searchFm"
 	sortingOrder="<%= siteNavigationAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteNavigationAdminDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteNavigationAdminDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteNavigationAdminDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= siteNavigationAdminDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="/navigation_menu/delete_site_navigation_menu" var="deleteSitaNavigationMenuURL">

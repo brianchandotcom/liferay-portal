@@ -21,15 +21,15 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 %>
 
 <clay:management-toolbar
-	filterItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= assetDisplayPagesItemSelectorViewDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchContainerId="displayPages"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= assetDisplayPagesItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSortingURL() %>"
-	totalItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getTotalItems() %>"
-	viewTypes="<%= assetDisplayPagesItemSelectorViewDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

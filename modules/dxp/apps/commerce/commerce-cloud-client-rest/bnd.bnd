@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Cloud Client REST
+Bundle-SymbolicName: com.liferay.commerce.cloud.client.rest
+Bundle-Version: 1.0.0
+Liferay-Configuration-Path: /configuration

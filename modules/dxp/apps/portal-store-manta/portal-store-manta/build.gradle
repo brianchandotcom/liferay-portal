@@ -21,7 +21,7 @@ dependencies {
 
 mergeLang {
 	sourceDirs = [
-		"../../../../apps/foundation/portal-store/portal-store-s3/src/main/resources/content",
+		"../../../../apps/portal-store/portal-store-s3/src/main/resources/content",
 		"src/main/resources/content"
 	]
 }

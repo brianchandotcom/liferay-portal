@@ -15,7 +15,7 @@ dependencies {
 
 mergeLang {
 	sourceDirs = [
-		"../../../../../apps/foundation/monitoring/monitoring-web/src/main/resources/content",
+		"../../../../apps/monitoring/monitoring-web/src/main/resources/content",
 		"src/main/resources/content"
 	]
 }

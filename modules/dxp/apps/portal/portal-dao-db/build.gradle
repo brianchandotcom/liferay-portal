@@ -1,5 +1,5 @@
-File portalImplClassesDir = file("../../../../../../portal-impl/classes")
-File portalKernelClassesDir = file("../../../../../../portal-kernel/classes")
+File portalImplClassesDir = file("../../../../../portal-impl/classes")
+File portalKernelClassesDir = file("../../../../../portal-kernel/classes")
 
 if (portalImplClassesDir.exists() && portalKernelClassesDir.exists()) {
 	dependencies {

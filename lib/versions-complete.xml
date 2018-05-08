@@ -3939,64 +3939,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.wsrp.api.jar!oasis.names.tc.wsrp.jar</file-name>
-				<version>1.0.1</version>
-				<project-name>oasis.names.tc.wsrp</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.wsrp.service.jar!bcprov-jdk16.jar</file-name>
-				<version>1.46</version>
-				<project-name>Bouncy Castle Provider</project-name>
-				<project-url>http://www.bouncycastle.org/java.html</project-url>
-				<licenses>
-					<license>
-						<license-name>Bouncy Castle Licence</license-name>
-						<license-url>http://www.bouncycastle.org/licence.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.wsrp.service.jar!oasis.names.tc.wsrp.jar</file-name>
-				<version>1.0.1</version>
-				<project-name>oasis.names.tc.wsrp</project-name>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.wsrp.service.jar!opensaml.jar</file-name>
-				<version>1.1</version>
-				<project-name>OpenSAML-J</project-name>
-				<project-url>https://opensaml.org/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache 2</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.wsrp.service.jar!wss4j.jar</file-name>
-				<version>1.5.12</version>
-				<project-name>WSS4J</project-name>
-				<project-url>http://ws.apache.org/wss4j/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/activation.jar</file-name>
 				<version>1.1</version>
 				<project-name>JavaBeans Activation Framework</project-name>

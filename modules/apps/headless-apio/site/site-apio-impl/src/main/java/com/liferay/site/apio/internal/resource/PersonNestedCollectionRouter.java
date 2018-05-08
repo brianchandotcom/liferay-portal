@@ -23,7 +23,6 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
@@ -61,9 +60,6 @@ public class PersonNestedCollectionRouter implements
 
 		return new PageItems<>(users, userCount);
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private UserService _userService;

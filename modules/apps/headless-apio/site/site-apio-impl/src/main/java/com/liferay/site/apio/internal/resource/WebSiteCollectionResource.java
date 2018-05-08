@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
@@ -119,8 +118,5 @@ public class WebSiteCollectionResource
 
 	@Reference
 	private GroupService _groupService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

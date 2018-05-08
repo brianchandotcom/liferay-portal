@@ -649,6 +649,82 @@ public class UserServiceSoap {
 	}
 
 	/**
+	* Returns the users belonging to a group.
+	*
+	* @param groupId the primary key of the group
+	* @param status the workflow status
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	*/
+	public static com.liferay.portal.kernel.model.UserSoap[] getGroupUsers(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.User> returnValue = UserServiceUtil.getGroupUsers(groupId,
+					status, start, end, obc);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the users belonging to a group.
+	*
+	* @param groupId the primary key of the group
+	* @param status the workflow status
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @return the users who belong to a group
+	*/
+	public static com.liferay.portal.kernel.model.UserSoap[] getGroupUsers(
+		long groupId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.User> returnValue = UserServiceUtil.getGroupUsers(groupId,
+					status, obc);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the number of users with the status belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @param status the workflow status
+	* @return the number of users with the status belonging to the group
+	*/
+	public static int getGroupUsersCount(long groupId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = UserServiceUtil.getGroupUsersCount(groupId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*
 	* @param organizationId the primary key of the organization

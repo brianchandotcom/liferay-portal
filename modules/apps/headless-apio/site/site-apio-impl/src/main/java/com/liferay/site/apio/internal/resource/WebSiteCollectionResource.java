@@ -20,9 +20,10 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
@@ -74,27 +75,46 @@ public class WebSiteCollectionResource
 			"WebSite"
 		).identifier(
 			Group::getGroupId
+		).addBidirectionalModel(
+			"interactionService", "webSites", WebSiteIdentifier.class,
+			this::_getParentGroupId
+		).addBoolean(
+			"active", Group::isActive
+		).addLinkedModel(
+			"author", PersonIdentifier.class, Group::getCreatorUserId
+		).addLinkedModel(
+			"creator", PersonIdentifier.class, Group::getCreatorUserId
 		).addLocalizedStringByLocale(
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(
 			"name", Group::getName
+		).addRelatedCollection(
+			"members", PersonIdentifier.class
+		).addString(
+			"membershipType", Group::getTypeLabel
 		).build();
 	}
 
 	private PageItems<Group> _getPageItems(
-		Pagination pagination, Company company) {
+			Pagination pagination, Company company)
+		throws PortalException {
 
-		List<Group> groups = _groupLocalService.getGroups(
+		int count = _groupService.getGroupsCount(
+			company.getCompanyId(), 0, true);
+		List<Group> groups = _groupService.getGroups(
 			company.getCompanyId(), 0, true, pagination.getStartPosition(),
 			pagination.getEndPosition());
-		int count = _groupLocalService.getGroupsCount(
-			company.getCompanyId(), 0, true);
 
 		return new PageItems<>(groups, count);
 	}
 
-	@Reference
-	private GroupLocalService _groupLocalService;
+	private Long _getParentGroupId(Group group) {
+		if (group.getParentGroupId() != 0L) {
+			return group.getParentGroupId();
+		}
+
+		return null;
+	}
 
 	@Reference
 	private GroupService _groupService;

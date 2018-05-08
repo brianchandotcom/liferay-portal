@@ -16,7 +16,6 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
@@ -99,28 +98,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 			_checkUtilUsage(
 				fileName, content, serviceReferenceUtilClassName,
 				moduleSuperClassContent);
-		}
-
-		Matcher matcher = _referenceMethodPattern.matcher(content);
-
-		while (matcher.find()) {
-			String methodName = matcher.group(4);
-
-			if (!methodName.startsWith("set")) {
-				continue;
-			}
-
-			String annotationParameters = matcher.group(1);
-			String methodContent = matcher.group();
-
-			content = _formatMissingUnbindAnnotation(
-				content, methodName, methodContent, annotationParameters);
-
-			String methodBody = matcher.group(6);
-			String typeName = matcher.group(5);
-
-			content = _formatVolatileReferenceVariable(
-				content, methodBody, typeName);
 		}
 
 		return content;
@@ -296,82 +273,6 @@ public class JavaOSGiReferenceCheck extends BaseFileCheck {
 						bndSettings.getFileName(),
 					"osgi_components_inheritance.markdown");
 			}
-		}
-
-		return content;
-	}
-
-	private String _formatMissingUnbindAnnotation(
-		String content, String methodName, String methodContent,
-		String annotationParameters) {
-
-		if (annotationParameters.contains("unbind =") ||
-			content.contains("un" + methodName + "(")) {
-
-			return content;
-		}
-
-		if (Validator.isNull(annotationParameters)) {
-			String newMethodContent = StringUtil.replaceFirst(
-				methodContent, "@Reference", "@Reference(unbind = \"-\")");
-
-			return StringUtil.replace(content, methodContent, newMethodContent);
-		}
-
-		if (!annotationParameters.contains(StringPool.NEW_LINE)) {
-			String newAnnotationParameters = StringUtil.replaceLast(
-				annotationParameters, CharPool.CLOSE_PARENTHESIS,
-				", unbind = \"-\")");
-
-			String newMethodContent = StringUtil.replaceFirst(
-				methodContent, annotationParameters, newAnnotationParameters);
-
-			return StringUtil.replace(content, methodContent, newMethodContent);
-		}
-
-		if (!annotationParameters.contains("\n\n")) {
-			String newAnnotationParameters = StringUtil.replaceLast(
-				annotationParameters, "\n", ",\n\t\tunbind = \"-\"\n");
-
-			String newMethodContent = StringUtil.replaceFirst(
-				methodContent, annotationParameters, newAnnotationParameters);
-
-			return StringUtil.replace(content, methodContent, newMethodContent);
-		}
-
-		return content;
-	}
-
-	private String _formatVolatileReferenceVariable(
-		String content, String methodBody, String typeName) {
-
-		Matcher matcher = _referenceMethodContentPattern.matcher(methodBody);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String variableName = matcher.group(1);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("private volatile ");
-		sb.append(typeName);
-		sb.append("\\s+");
-		sb.append(variableName);
-		sb.append(StringPool.SEMICOLON);
-
-		Pattern privateVarPattern = Pattern.compile(sb.toString());
-
-		matcher = privateVarPattern.matcher(content);
-
-		if (matcher.find()) {
-			String match = matcher.group();
-
-			String replacement = StringUtil.replace(
-				match, "private volatile ", "private ");
-
-			return StringUtil.replace(content, match, replacement);
 		}
 
 		return content;

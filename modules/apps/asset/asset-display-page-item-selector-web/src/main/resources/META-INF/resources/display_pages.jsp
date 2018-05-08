@@ -51,7 +51,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 
 			data.put("id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 			data.put("name", layoutPageTemplateEntry.getName());
-			data.put("type", "display-page");
+			data.put("type", "asset-display-page");
 			%>
 
 			<liferay-ui:search-container-column-text>

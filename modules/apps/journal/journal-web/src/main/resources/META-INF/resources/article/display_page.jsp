@@ -65,6 +65,8 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
 
+		<aui:input id="assetDisplayPageId" ignoreRequestValue="<%= true %>" name="assetDisplayPageId" type="hidden" value="" />
+
 		<p class="text-muted">
 			<liferay-ui:message key="default-display-page-help" />
 		</p>
@@ -146,6 +148,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		%>
 
 		<aui:script use="liferay-item-selector-dialog">
+			var assetDisplayPageIdInput = $('#<portlet:namespace />assetDisplayPageIdInput');
 			var displayPageItemContainer = $('#<portlet:namespace />displayPageItemContainer');
 			var displayPageItemRemove = $('#<portlet:namespace />displayPageItemRemove');
 			var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
@@ -161,8 +164,17 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 								selectedItemChange: function(event) {
 									var selectedItem = event.newVal;
 
+									assetDisplayPageIdInput.val('');
+
+									pagesContainerInput.val('');
+
 									if (selectedItem) {
-										pagesContainerInput.val(selectedItem.id);
+										if (selectedItem.type === "asset-display-page") {
+											assetDisplayPageIdInput.val(selectedItem.id);
+										}
+										else {
+											pagesContainerInput.val(selectedItem.id);
+										}
 
 										displayPageNameInput.html(selectedItem.name);
 

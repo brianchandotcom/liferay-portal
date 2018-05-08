@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -734,13 +735,15 @@ public class JournalPortlet extends MVCPortlet {
 
 		String ddmTemplateKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmTemplateKey");
+		long assetDisplayPageId = ParamUtil.getLong(
+			uploadPortletRequest, "assetDisplayPageId");
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
 
 		Layout targetLayout = _journalHelper.getArticleLayout(
 			layoutUuid, groupId);
 
-		if (targetLayout == null) {
+		if ((targetLayout == null) || (assetDisplayPageId != 0)) {
 			layoutUuid = null;
 		}
 
@@ -907,6 +910,10 @@ public class JournalPortlet extends MVCPortlet {
 					actionRequest, portletResource, article.getArticleId());
 			}
 		}
+
+		// Asset Display Page
+
+		_updateAssetDisplayPage(article, assetDisplayPageId);
 
 		sendEditArticleRedirect(
 			actionRequest, actionResponse, article, oldUrlTitle);
@@ -1453,7 +1460,26 @@ public class JournalPortlet extends MVCPortlet {
 			portletResource, articleId, true);
 	}
 
+	private void _updateAssetDisplayPage(
+		JournalArticle article, long assetDisplayPageId) {
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		_assetDisplayPageEntryLocalService.
+			deleteAssetDisplayPageEntryByAssetEntryId(assetEntry.getEntryId());
+
+		if (assetDisplayPageId > 0) {
+			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+				assetEntry.getEntryId(), assetDisplayPageId);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

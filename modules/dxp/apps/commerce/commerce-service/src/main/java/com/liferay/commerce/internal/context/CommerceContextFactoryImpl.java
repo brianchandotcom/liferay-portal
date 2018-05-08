@@ -20,6 +20,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.product.service.CPRuleLocalService;
 import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -40,7 +41,7 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 			httpServletRequest, _commerceCurrencyService,
 			_commerceOrderHttpHelper, _commerceOrganizationHelper,
 			_commercePriceListLocalService, _commerceUserSegmentHelper,
-			_portal);
+			_cpRuleLocalService, _portal);
 	}
 
 	@Reference
@@ -57,6 +58,9 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 
 	@Reference
 	private CommerceUserSegmentHelper _commerceUserSegmentHelper;
+
+	@Reference
+	private CPRuleLocalService _cpRuleLocalService;
 
 	@Reference
 	private Portal _portal;

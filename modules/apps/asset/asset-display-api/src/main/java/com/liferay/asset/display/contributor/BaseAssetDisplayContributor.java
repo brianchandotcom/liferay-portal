@@ -88,11 +88,14 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		String[] assetEntryModelFields = getAssetEntryModelFields();
 
-		for (String assetEntryModelField : assetEntryModelFields) {
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					assetEntryModelField,
-					LanguageUtil.get(resourceBundle, assetEntryModelField)));
+		if (assetEntryModelFields != null) {
+			for (String assetEntryModelField : assetEntryModelFields) {
+				assetDisplayFields.add(
+					new AssetDisplayField(
+						assetEntryModelField,
+						LanguageUtil.get(
+							resourceBundle, assetEntryModelField)));
+			}
 		}
 
 		// Fields for the class type

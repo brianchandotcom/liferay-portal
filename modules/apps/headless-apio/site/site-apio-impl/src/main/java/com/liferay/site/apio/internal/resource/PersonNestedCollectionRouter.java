@@ -14,17 +14,18 @@
 
 package com.liferay.site.apio.internal.resource;
 
-import com.liferay.apio.architect.functional.Try;
+import static com.liferay.portal.kernel.workflow.WorkflowConstants.STATUS_APPROVED;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
@@ -48,22 +49,17 @@ public class PersonNestedCollectionRouter implements
 		).build();
 	}
 
-	private PageItems<User> _getPageItems(Pagination pagination, Long groupId) {
-		return Try.fromFallible(
-			() -> {
-				List<User> users = _userService.getGroupUsers(
-					groupId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					new UserLastNameComparator(true));
+	private PageItems<User> _getPageItems(Pagination pagination, Long groupId)
+		throws PortalException {
 
-				int userCount = _userService.getGroupUsersCount(
-					groupId, WorkflowConstants.STATUS_APPROVED);
+		List<User> users = _userService.getGroupUsers(
+			groupId, STATUS_APPROVED, pagination.getStartPosition(),
+			pagination.getEndPosition(), new UserLastNameComparator(true));
 
-				return new PageItems<>(users, userCount);
-			}
-		).orElse(
-			null
-		);
+		int userCount = _userService.getGroupUsersCount(
+			groupId, STATUS_APPROVED);
+
+		return new PageItems<>(users, userCount);
 	}
 
 	@Reference

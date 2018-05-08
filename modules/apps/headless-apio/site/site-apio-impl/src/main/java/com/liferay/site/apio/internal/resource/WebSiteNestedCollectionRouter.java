@@ -14,11 +14,11 @@
 
 package com.liferay.site.apio.internal.resource;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
@@ -46,22 +46,17 @@ public class WebSiteNestedCollectionRouter implements
 	}
 
 	private PageItems<Group> _getPageItems(
-		Pagination pagination, Long parentGroupId, Company company) {
+			Pagination pagination, Long parentGroupId, Company company)
+		throws PortalException {
 
-		return Try.fromFallible(
-			() -> {
-				List<Group> groups = _groupService.getGroups(
-					company.getCompanyId(), parentGroupId, true,
-					pagination.getStartPosition(), pagination.getEndPosition());
+		List<Group> groups = _groupService.getGroups(
+			company.getCompanyId(), parentGroupId, true,
+			pagination.getStartPosition(), pagination.getEndPosition());
 
-				int groupsCount = _groupService.getGroupsCount(
-					company.getCompanyId(), parentGroupId, true);
+		int count = _groupService.getGroupsCount(
+			company.getCompanyId(), parentGroupId, true);
 
-				return new PageItems<>(groups, groupsCount);
-			}
-		).orElse(
-			null
-		);
+		return new PageItems<>(groups, count);
 	}
 
 	@Reference

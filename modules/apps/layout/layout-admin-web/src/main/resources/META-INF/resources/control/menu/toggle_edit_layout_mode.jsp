@@ -14,15 +14,31 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
+<%
+String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
+
+String redirect = HttpUtil.setParameter(themeDisplay.getURLCurrent(), "p_l_mode", Objects.equals(mode, Constants.EDIT) ? Constants.VIEW : Constants.EDIT);
+%>
+
 <label class="align-text-top toggle-switch">
-	<input class="toggle-switch-check" type="checkbox" />
+	<input <%= Objects.equals(mode, Constants.EDIT) ? "checked=\"checked\"" : StringPool.BLANK %> class="toggle-switch-check" id="<portlet:namespace />mode" type="checkbox" />
 
 	<span aria-hidden="true" class="toggle-switch-bar">
 		<span class="toggle-switch-handle" data-label-off="" data-label-on="">
@@ -39,3 +55,17 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 		</span>
 	</span>
 </label>
+
+<aui:script>
+	$('#<portlet:namespace />mode').on(
+		'change',
+		function(event) {
+			if (Liferay.SPA) {
+				Liferay.SPA.app.navigate('<%= redirect %>');
+			}
+			else {
+				location.href='<%= redirect %>'
+			}
+		}
+	);
+</aui:script>

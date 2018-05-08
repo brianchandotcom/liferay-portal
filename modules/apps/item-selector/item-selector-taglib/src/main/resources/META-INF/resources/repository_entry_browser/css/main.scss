@@ -1,18 +1,17 @@
 .lfr-item-viewer {
 	.search-info {
-		padding: 10px;
-		padding-right: 50px;
-		position: relative;
+		background: none;
+		font-size: 0.875rem;
+		margin-top: 20px;
 
-		.keywords {
-			float: none;
+		a:first-child {
+			margin-left: 16px;
+			margin-right: 8px;
 		}
 
-		.close-search {
-			margin-top: -8px;
-			position: absolute;
-			right: 15px;
-			top: 50%;
+		a.active {
+			cursor: default;
+			pointer-events: none;
 		}
 	}
 

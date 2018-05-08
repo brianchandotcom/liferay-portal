@@ -16,8 +16,11 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
+
 <%@ page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@
 page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
+page import="com.liferay.item.selector.taglib.internal.display.context.ItemSelectorRepositoryEntryManagementToolbarDisplayContext" %><%@
 page import="com.liferay.portal.kernel.model.Image" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@

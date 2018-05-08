@@ -71,11 +71,10 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 	viewTypes="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<c:if test="<%= showSearchInfo %>">
-	<liferay-util:include page="/repository_entry_browser/search_info.jsp" servletContext="<%= application %>" />
-</c:if>
-
 <div class="container-fluid container-fluid-max-xl lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
+	<c:if test="<%= showSearchInfo %>">
+		<liferay-util:include page="/repository_entry_browser/search_info.jsp" servletContext="<%= application %>" />
+	</c:if>
 
 	<%
 	long folderId = ParamUtil.getLong(request, "folderId");

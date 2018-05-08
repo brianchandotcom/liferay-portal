@@ -16,76 +16,67 @@
 
 <%@ include file="/repository_entry_browser/init.jsp" %>
 
-<nav class="subnav-tbar subnav-tbar-primary tbar">
-	<div class="container-fluid container-fluid-max-xl">
-		<ul class="tbar-nav">
-			<li class="tbar-item">
-				<div class="tbar-section">
-					<span class="text-truncate-inline">
-						<span class="text-truncate">
+<div class="search-info">
 
-							<%
-							long folderId = ParamUtil.getLong(request, "folderId");
-							String keywords = ParamUtil.getString(request, "keywords");
-							String tabName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:tabName"));
+	<%
+	long folderId = ParamUtil.getLong(request, "folderId");
+	String keywords = ParamUtil.getString(request, "keywords");
 
-							Folder folder = null;
-							boolean searchEverywhere = true;
+	boolean searchEverywhere = true;
 
-							String searchInfoMessage = StringPool.BLANK;
-							boolean showRerunSearchButton = true;
+	long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
 
-							boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showBreadcrumb"));
+	boolean showRerunSearchButton = true;
 
-							if (!showBreadcrumb) {
-								searchInfoMessage = LanguageUtil.format(resourceBundle, "searched-in-x", new Object[] {HtmlUtil.escape(tabName)}, false);
+	if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		searchEverywhere = false;
+	}
+	else {
+		folderId = searchFolderId;
+	}
 
-								showRerunSearchButton = false;
-							}
-							else {
-								long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
+	if ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (searchFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+		showRerunSearchButton = false;
+	}
+	%>
 
-								if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-									searchEverywhere = false;
+	<c:if test="<%= showRerunSearchButton %>">
 
-									folder = DLAppServiceUtil.getFolder(folderId);
-								}
-								else {
-									folderId = searchFolderId;
-								}
+		<%
+		PortletURL portletURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:portletURL");
 
-								if ((folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (searchFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-									showRerunSearchButton = false;
-								}
+		PortletURL searchEverywhereURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-								searchInfoMessage = !searchEverywhere ? LanguageUtil.format(resourceBundle, "searched-in-x", new Object[] {HtmlUtil.escape(folder.getName())}, false) : LanguageUtil.format(resourceBundle, "searched-everywhere", false);
-							}
-							%>
+		searchEverywhereURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+		searchEverywhereURL.setParameter("searchFolderId", String.valueOf(folderId));
+		searchEverywhereURL.setParameter("keywords", keywords);
 
-							<%= searchInfoMessage %>
-						</span>
-					</span>
-				</div>
-			</li>
+		PortletURL searchFolderURL = PortletURLUtil.clone(searchEverywhereURL, liferayPortletResponse);
 
-			<c:if test="<%= showRerunSearchButton %>">
-				<li class="tbar-item">
+		searchFolderURL.setParameter("folderId", String.valueOf(folderId));
+		%>
 
-					<%
-					PortletURL portletURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:portletURL");
+		<liferay-util:whitespace-remover>
+			<liferay-ui:message key="search" />
 
-					PortletURL searchURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+			<clay:link
+				buttonStyle="secondary"
+				elementClasses='<%= "btn-sm" + (searchEverywhere ? " active" : "") %>'
+				href="<%= searchEverywhereURL.toString() %>"
+				label='<%= LanguageUtil.get(resourceBundle, "everywhere") %>'
+			/>
 
-					searchURL.setParameter("folderId", !searchEverywhere ? String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId));
-					searchURL.setParameter("searchFolderId", String.valueOf(folderId));
-					searchURL.setParameter("keywords", keywords);
-					%>
+			<%
+			Folder folder = DLAppServiceUtil.getFolder(folderId);
+			%>
 
-					<a class="component-link tbar-link" href="<%= searchURL.toString() %>">
-						<liferay-ui:message key='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
-					</a>
-				</li>
-			</c:if>
-		</ul>
-	</div>
-</nav>
+			<clay:link
+				buttonStyle="secondary"
+				elementClasses='<%= "btn-sm" + (!searchEverywhere ? " active" : "") %>'
+				href="<%= searchFolderURL.toString() %>"
+				icon="folder"
+				label="<%= folder.getName() %>"
+			/>
+		</liferay-util:whitespace-remover>
+	</c:if>
+</div>

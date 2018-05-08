@@ -5127,10 +5127,11 @@ go]]></replacevalue>
 
 										<for param="module.dir.path">
 											<path>
-												<dirset
-													dir="@{app.dir}"
-												>
-													<include name="*" />
+												<dirset dir="@{app.dir}" >
+													<include name="**" />
+													<present targetdir="@{app.dir}">
+														<mapper from="*" to="*/bnd.bnd" type="glob" />
+													</present>
 												</dirset>
 											</path>
 											<sequential>

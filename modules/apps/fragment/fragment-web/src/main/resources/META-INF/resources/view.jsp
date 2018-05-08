@@ -32,11 +32,28 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 		<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 			<ul class="nav nav-nested">
 				<li class="nav-item">
+					<portlet:renderURL var="editFragmentCollectionURL">
+						<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
+					</portlet:renderURL>
+
 					<c:choose>
 						<c:when test="<%= ListUtil.isNotEmpty(fragmentCollections) %>">
-							<strong class="text-uppercase">
-								<liferay-ui:message key="collections" />
-							</strong>
+							<div class="align-items-center autofit-row">
+								<div class="autofit-col autofit-col-expand">
+									<strong class="text-uppercase">
+										<liferay-ui:message key="collections" />
+									</strong>
+								</div>
+
+								<div class="autofit-col autofit-col-end">
+									<liferay-ui:icon
+										icon="plus"
+										iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+										markupView="lexicon"
+										url="<%= editFragmentCollectionURL %>"
+									/>
+								</div>
+							</div>
 
 							<ul class="nav nav-stacked">
 
@@ -75,10 +92,6 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 							<p class="text-center">
 								<liferay-ui:message key="collections-are-needed-to-create-fragments" />
 							</p>
-
-							<portlet:renderURL var="editFragmentCollectionURL">
-								<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
-							</portlet:renderURL>
 
 							<aui:a cssClass="btn btn-primary" href="<%= editFragmentCollectionURL %>" label="add-collection" />
 						</c:otherwise>

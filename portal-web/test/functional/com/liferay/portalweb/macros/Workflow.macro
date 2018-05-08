@@ -4,9 +4,9 @@
 
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
-		<var name="key_filterValue" value="Pending" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Pending" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Pending">
+			<var name="key_menuItem" value="Pending" />
+		</execute>
 	</command>
 
 	<command name="_openPreview">
@@ -354,9 +354,9 @@
 
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
-		<var name="key_filterValue" value="Completed" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Completed">
+			<var name="key_menuItem" value="Completed" />
+		</execute>
 	</command>
 
 	<command name="gotoCompletedTaskAssignedToMePreview">

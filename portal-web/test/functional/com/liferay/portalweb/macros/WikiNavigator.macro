@@ -1,4 +1,4 @@
-<definition>
+	<definition>
 	<command name="gotoAddPageViaPG">
 		<execute macro="Portlet#clickPortletPlusIconPG">
 			<var name="portletName" value="Wiki" />
@@ -12,9 +12,9 @@
 	<command name="gotoAllPagesCP">
 		<execute function="Click" locator1="Dropdown#FILTER" />
 
-		<var name="key_filterValue" value="All Pages" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="All Pages" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="All Pages">
+			<var name="key_menuItem" value="All Pages" />
+		</execute>
 	</command>
 
 	<command name="gotoAllPagesPG">
@@ -67,14 +67,14 @@
 		<if>
 			<equals arg1="${isOrphanPage}" arg2="true" />
 			<then>
-				<var name="key_filterValue" value="Orphan Pages" />
-
-				<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Orphan Pages" />
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Orphan Pages">
+					<var name="key_menuItem" value="Orphan Pages" />
+				</execute>
 			</then>
 			<else>
-				<var name="key_filterValue" value="All Pages" />
-
-				<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="All Pages" />
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="All Pages">
+					<var name="key_menuItem" value="All Pages" />
+				</execute>
 			</else>
 		</if>
 
@@ -162,9 +162,9 @@
 
 		<execute function="AssertClick" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
 
-		<var name="key_filterValue" value="All Pages" />
-
-		<execute function="AssertElementPresent" locator1="Dropdown#FILTER_VALUES" />
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="All Pages">
+			<var name="key_menuItem" value="All Pages" />
+		</execute>
 	</command>
 
 	<command name="gotoOrphanPagesPG">

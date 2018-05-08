@@ -735,15 +735,15 @@ public class JournalPortlet extends MVCPortlet {
 
 		String ddmTemplateKey = ParamUtil.getString(
 			uploadPortletRequest, "ddmTemplateKey");
-		long displayPageId = ParamUtil.getLong(
-			uploadPortletRequest, "displayPageId");
+		long assetDisplayPageId = ParamUtil.getLong(
+			uploadPortletRequest, "assetDisplayPageId");
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
 
 		Layout targetLayout = _journalHelper.getArticleLayout(
 			layoutUuid, groupId);
 
-		if ((targetLayout == null) || (displayPageId != 0)) {
+		if ((targetLayout == null) || (assetDisplayPageId != 0)) {
 			layoutUuid = null;
 		}
 
@@ -911,9 +911,9 @@ public class JournalPortlet extends MVCPortlet {
 			}
 		}
 
-		// Display Page
+		// Asset Display Page
 
-		_updateAssetDisplayPage(article, displayPageId);
+		_updateAssetDisplayPage(article, assetDisplayPageId);
 
 		sendEditArticleRedirect(
 			actionRequest, actionResponse, article, oldUrlTitle);
@@ -1461,7 +1461,7 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private void _updateAssetDisplayPage(
-		JournalArticle article, long displayPageId) {
+		JournalArticle article, long assetDisplayPageId) {
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
@@ -1469,9 +1469,9 @@ public class JournalPortlet extends MVCPortlet {
 		_assetDisplayPageEntryLocalService.
 			deleteAssetDisplayPageEntryByAssetEntryId(assetEntry.getEntryId());
 
-		if (displayPageId > 0) {
+		if (assetDisplayPageId > 0) {
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				assetEntry.getEntryId(), displayPageId);
+				assetEntry.getEntryId(), assetDisplayPageId);
 		}
 	}
 

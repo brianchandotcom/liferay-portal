@@ -180,7 +180,7 @@ public class PortletImpl extends PortletBaseImpl {
 		boolean showPortletInactive, boolean actionURLRedirect,
 		boolean restoreCurrentView, boolean maximizeEdit, boolean maximizeHelp,
 		boolean popUpPrint, boolean layoutCacheable, boolean instanceable,
-		boolean remoteable, boolean scopeable, boolean singlePageApplication,
+		boolean scopeable, boolean singlePageApplication,
 		String userPrincipalStrategy, boolean privateRequestAttributes,
 		boolean privateSessionAttributes, Set<String> autopropagatedParameters,
 		boolean requiresNamespacedParameters, int actionTimeout,
@@ -265,7 +265,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_popUpPrint = popUpPrint;
 		_layoutCacheable = layoutCacheable;
 		_instanceable = instanceable;
-		_remoteable = remoteable;
 		_scopeable = scopeable;
 		_singlePageApplication = singlePageApplication;
 		_userPrincipalStrategy = userPrincipalStrategy;
@@ -300,102 +299,6 @@ public class PortletImpl extends PortletBaseImpl {
 		_portletInfo = portletInfo;
 		_portletFilters = portletFilters;
 		_portletApp = portletApp;
-	}
-
-	/**
-	 * Constructs a portlet with the specified parameters.
-	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public PortletImpl(
-		String portletId, Portlet rootPortlet, PluginPackage pluginPackage,
-		PluginSetting pluginSetting, long companyId, String icon,
-		String virtualPath, String strutsPath, String parentStrutsPath,
-		String portletName, String displayName, String portletClass,
-		String configurationActionClass, List<String> indexerClasses,
-		String openSearchClass, List<SchedulerEntry> schedulerEntries,
-		String portletURLClass, String friendlyURLMapperClass,
-		String friendlyURLMapping, String friendlyURLRoutes,
-		String urlEncoderClass, String portletDataHandlerClass,
-		List<String> stagedModelDataHandlerClasses, String templateHandlerClass,
-		String portletLayoutListenerClass, String pollerProcessorClass,
-		String popMessageListenerClass,
-		List<String> socialActivityInterpreterClasses,
-		String socialRequestInterpreterClass,
-		String userNotificationDefinitions,
-		List<String> userNotificationHandlerClasses, String webDAVStorageToken,
-		String webDAVStorageClass, String xmlRpcMethodClass,
-		String controlPanelEntryCategory, double controlPanelEntryWeight,
-		String controlPanelClass, List<String> assetRendererFactoryClasses,
-		List<String> atomCollectionAdapterClasses,
-		List<String> customAttributesDisplayClasses,
-		String permissionPropagatorClass, List<String> trashHandlerClasses,
-		List<String> workflowHandlerClasses, String defaultPreferences,
-		String preferencesValidator, boolean preferencesCompanyWide,
-		boolean preferencesUniquePerLayout, boolean preferencesOwnedByGroup,
-		boolean useDefaultTemplate, boolean showPortletAccessDenied,
-		boolean showPortletInactive, boolean actionURLRedirect,
-		boolean restoreCurrentView, boolean maximizeEdit, boolean maximizeHelp,
-		boolean popUpPrint, boolean layoutCacheable, boolean instanceable,
-		boolean remoteable, boolean scopeable, boolean singlePageApplication,
-		String userPrincipalStrategy, boolean privateRequestAttributes,
-		boolean privateSessionAttributes, Set<String> autopropagatedParameters,
-		boolean requiresNamespacedParameters, int actionTimeout,
-		int renderTimeout, int renderWeight, boolean ajaxable,
-		List<String> headerPortalCss, List<String> headerPortletCss,
-		List<String> headerPortalJavaScript,
-		List<String> headerPortletJavaScript, List<String> footerPortalCss,
-		List<String> footerPortletCss, List<String> footerPortalJavaScript,
-		List<String> footerPortletJavaScript, String cssClassWrapper,
-		String facebookIntegration, boolean addDefaultResource, String roles,
-		Set<String> unlinkedRoles, Map<String, String> roleMappers,
-		boolean system, boolean active, boolean include,
-		Map<String, String> initParams, Integer expCache,
-		Map<String, Set<String>> portletModes,
-		Map<String, Set<String>> windowStates, Set<String> supportedLocales,
-		String resourceBundle, PortletInfo portletInfo,
-		Map<String, PortletFilter> portletFilters, Set<QName> processingEvents,
-		Set<QName> publishingEvents,
-		Set<PublicRenderParameter> publicRenderParameters,
-		PortletApp portletApp) {
-
-		this(
-			portletId, rootPortlet, pluginPackage, pluginSetting, companyId,
-			icon, virtualPath, strutsPath, parentStrutsPath, portletName,
-			displayName, portletClass, configurationActionClass, indexerClasses,
-			openSearchClass, schedulerEntries, portletURLClass,
-			friendlyURLMapperClass, friendlyURLMapping, friendlyURLRoutes,
-			urlEncoderClass, portletDataHandlerClass,
-			stagedModelDataHandlerClasses, templateHandlerClass,
-			portletLayoutListenerClass, pollerProcessorClass,
-			popMessageListenerClass, socialActivityInterpreterClasses,
-			socialRequestInterpreterClass, userNotificationDefinitions,
-			userNotificationHandlerClasses, webDAVStorageToken,
-			webDAVStorageClass, xmlRpcMethodClass, controlPanelEntryCategory,
-			controlPanelEntryWeight, controlPanelClass,
-			assetRendererFactoryClasses, atomCollectionAdapterClasses,
-			customAttributesDisplayClasses, permissionPropagatorClass,
-			trashHandlerClasses, workflowHandlerClasses, defaultPreferences,
-			preferencesValidator, preferencesCompanyWide,
-			preferencesUniquePerLayout, preferencesOwnedByGroup,
-			useDefaultTemplate, showPortletAccessDenied, showPortletInactive,
-			actionURLRedirect, restoreCurrentView, maximizeEdit, maximizeHelp,
-			popUpPrint, layoutCacheable, instanceable, remoteable, scopeable,
-			singlePageApplication, userPrincipalStrategy,
-			privateRequestAttributes, privateSessionAttributes,
-			autopropagatedParameters, requiresNamespacedParameters,
-			actionTimeout, renderTimeout, renderWeight, ajaxable,
-			headerPortalCss, headerPortletCss, headerPortalJavaScript,
-			headerPortletJavaScript, footerPortalCss, footerPortletCss,
-			footerPortalJavaScript, footerPortletJavaScript, cssClassWrapper,
-			addDefaultResource, roles, unlinkedRoles, roleMappers, system,
-			active, include, initParams, expCache, portletModes, windowStates,
-			supportedLocales, resourceBundle, portletInfo, portletFilters,
-			processingEvents, publishingEvents, publicRenderParameters,
-			portletApp);
-
-		_facebookIntegration = facebookIntegration;
 	}
 
 	/**
@@ -497,12 +400,12 @@ public class PortletImpl extends PortletBaseImpl {
 			isShowPortletAccessDenied(), isShowPortletInactive(),
 			isActionURLRedirect(), isRestoreCurrentView(), isMaximizeEdit(),
 			isMaximizeHelp(), isPopUpPrint(), isLayoutCacheable(),
-			isInstanceable(), isRemoteable(), isScopeable(),
-			isSinglePageApplication(), getUserPrincipalStrategy(),
-			isPrivateRequestAttributes(), isPrivateSessionAttributes(),
-			getAutopropagatedParameters(), isRequiresNamespacedParameters(),
-			getActionTimeout(), getRenderTimeout(), getRenderWeight(),
-			isAjaxable(), getHeaderPortalCss(), getHeaderPortletCss(),
+			isInstanceable(), isScopeable(), isSinglePageApplication(),
+			getUserPrincipalStrategy(), isPrivateRequestAttributes(),
+			isPrivateSessionAttributes(), getAutopropagatedParameters(),
+			isRequiresNamespacedParameters(), getActionTimeout(),
+			getRenderTimeout(), getRenderWeight(), isAjaxable(),
+			getHeaderPortalCss(), getHeaderPortletCss(),
 			getHeaderPortalJavaScript(), getHeaderPortletJavaScript(),
 			getFooterPortalCss(), getFooterPortletCss(),
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
@@ -1671,16 +1574,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the portlet supports remoting.
-	 *
-	 * @return <code>true</code> if the portlet supports remoting
-	 */
-	@Override
-	public boolean getRemoteable() {
-		return _remoteable;
-	}
-
-	/**
 	 * Returns the render timeout of the portlet.
 	 *
 	 * @return the render timeout of the portlet
@@ -2702,16 +2595,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the portlet supports remoting.
-	 *
-	 * @return <code>true</code> if the portlet supports remoting
-	 */
-	@Override
-	public boolean isRemoteable() {
-		return _remoteable;
-	}
-
-	/**
 	 * Returns <code>true</code> if the portlet will only process namespaced
 	 * parameters.
 	 *
@@ -3694,17 +3577,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Set to <code>true</code> if the portlet supports remoting
-	 *
-	 * @param remoteable boolean value for whether or not the the portlet
-	 *        supports remoting
-	 */
-	@Override
-	public void setRemoteable(boolean remoteable) {
-		_remoteable = remoteable;
-	}
-
-	/**
 	 * Sets the render timeout of the portlet.
 	 *
 	 * @param renderTimeout the render timeout of the portlet
@@ -4517,11 +4389,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The publishing events of the portlet.
 	 */
 	private final Set<QName> _publishingEvents = new HashSet<>();
-
-	/**
-	 * <code>True</code> if the portlet supports remoting.
-	 */
-	private boolean _remoteable;
 
 	/**
 	 * The render timeout of the portlet.

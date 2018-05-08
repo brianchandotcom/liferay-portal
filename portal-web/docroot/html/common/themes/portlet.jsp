@@ -56,16 +56,9 @@ if (Validator.isNull(portletDisplay.getDescription())) {
 }
 
 Group group = layout.getGroup();
-
-boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request), "wsrp");
 %>
 
 <c:choose>
-	<c:when test="<%= wsrp %>">
-		<liferay-wsrp-portlet>
-			<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
-		</liferay-wsrp-portlet>
-	</c:when>
 	<c:when test="<%= themeDisplay.isStateExclusive() %>">
 		<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
 	</c:when>

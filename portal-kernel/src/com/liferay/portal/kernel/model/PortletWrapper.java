@@ -1189,16 +1189,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Returns <code>true</code> if the portlet supports remoting.
-	*
-	* @return <code>true</code> if the portlet supports remoting
-	*/
-	@Override
-	public boolean getRemoteable() {
-		return _portlet.getRemoteable();
-	}
-
-	/**
 	* Returns the render timeout of the portlet.
 	*
 	* @return the render timeout of the portlet
@@ -2052,16 +2042,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public boolean isReady() {
 		return _portlet.isReady();
-	}
-
-	/**
-	* Returns <code>true</code> if the portlet supports remoting.
-	*
-	* @return <code>true</code> if the portlet supports remoting
-	*/
-	@Override
-	public boolean isRemoteable() {
-		return _portlet.isRemoteable();
 	}
 
 	/**
@@ -3035,17 +3015,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setReady(boolean ready) {
 		_portlet.setReady(ready);
-	}
-
-	/**
-	* Set to <code>true</code> if the portlet supports remoting
-	*
-	* @param remoteable boolean value for whether or not the the portlet
-	supports remoting
-	*/
-	@Override
-	public void setRemoteable(boolean remoteable) {
-		_portlet.setRemoteable(remoteable);
 	}
 
 	/**

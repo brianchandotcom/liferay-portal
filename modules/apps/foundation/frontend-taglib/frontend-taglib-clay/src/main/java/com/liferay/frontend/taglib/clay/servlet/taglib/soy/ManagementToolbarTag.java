@@ -35,7 +35,15 @@ import java.util.Map;
 public class ManagementToolbarTag extends BaseClayTag {
 
 	public ManagementToolbarTag() {
-		super("management-toolbar", "ClayManagementToolbar", true);
+		this(
+			"management-toolbar",
+			"com.liferay.frontend.taglib.clay.ManagementToolbar", true);
+	}
+
+	public ManagementToolbarTag(
+		String moduleBaseName, String componentBaseName, boolean hydrate) {
+
+		super(moduleBaseName, componentBaseName, hydrate);
 	}
 
 	@Override

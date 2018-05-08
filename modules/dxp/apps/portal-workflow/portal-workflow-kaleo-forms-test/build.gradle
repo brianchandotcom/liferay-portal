@@ -3,7 +3,7 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
-	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
+	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":private:apps:portal-workflow:portal-workflow-kaleo-forms-api")
 	testIntegrationCompile project(":private:apps:portal-workflow:portal-workflow-kaleo-forms-service")

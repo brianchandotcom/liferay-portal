@@ -16,12 +16,12 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
-	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
-	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
-	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
-	compileOnly project(":apps:foundation:xstream:xstream-configurator-api")
 	compileOnly project(":apps:portal-reports-engine:portal-reports-engine-api")
+	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:registry-api")
 	compileOnly project(":private:apps:portal-reports-engine:portal-reports-engine-console-api")
 }

@@ -12,9 +12,9 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
-	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
-	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
+	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:registry-api")
 	compileOnly project(":private:apps:portal-workflow:portal-workflow-kaleo-forms-api")

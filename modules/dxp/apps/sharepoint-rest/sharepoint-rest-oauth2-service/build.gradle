@@ -6,6 +6,6 @@ buildService {
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":private:apps:sharepoint-rest:sharepoint-rest-oauth2-api")
 }

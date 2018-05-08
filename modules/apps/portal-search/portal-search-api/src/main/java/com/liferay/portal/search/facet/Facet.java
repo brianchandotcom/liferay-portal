@@ -21,4 +21,6 @@ public interface Facet extends com.liferay.portal.kernel.search.facet.Facet {
 
 	public void select(String... selections);
 
+	public void setAggregationName(String aggregationName);
+
 }

@@ -38,12 +38,13 @@ public class PortletSharedSearchSettingsImpl
 	implements PortletSharedSearchSettings {
 
 	public PortletSharedSearchSettingsImpl(
-		SearchSettings searchSettings,
+		SearchSettings searchSettings, String portletId,
 		Optional<PortletPreferences> portletPreferencesOptional,
 		PortletSharedRequestHelper portletSharedRequestHelper,
 		RenderRequest renderRequest) {
 
 		_searchSettings = searchSettings;
+		_portletId = portletId;
 		_portletPreferencesOptional = portletPreferencesOptional;
 		_portletSharedRequestHelper = portletSharedRequestHelper;
 		_renderRequest = renderRequest;
@@ -93,6 +94,11 @@ public class PortletSharedSearchSettingsImpl
 	public Optional<String[]> getParameterValues(String name) {
 		return _portletSharedRequestHelper.getParameterValues(
 			name, _renderRequest);
+	}
+
+	@Override
+	public String getPortletId() {
+		return _portletId;
 	}
 
 	@Override
@@ -156,6 +162,7 @@ public class PortletSharedSearchSettingsImpl
 			paginationStartParameterName);
 	}
 
+	private final String _portletId;
 	private final Optional<PortletPreferences> _portletPreferencesOptional;
 	private final PortletSharedRequestHelper _portletSharedRequestHelper;
 	private final RenderRequest _renderRequest;

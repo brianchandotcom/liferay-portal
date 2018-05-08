@@ -44,6 +44,7 @@ import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.display.context.util.WorkflowDefinitionRequestHelper;
+import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionSearch;
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionSearchTerms;
 import com.liferay.portal.workflow.web.internal.util.WorkflowDefinitionPortletUtil;
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionActivePredicateFilter;
@@ -90,6 +91,14 @@ public class WorkflowDefinitionDisplayContext {
 		}
 
 		return LanguageUtil.get(request, "no");
+	}
+
+	public String getClearResultsURL(HttpServletRequest request) {
+		PortletURL clearResultsURL = _getPortletURL(request);
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	public Date getCreatedDate(WorkflowDefinition workflowDefinition)
@@ -284,9 +293,16 @@ public class WorkflowDefinitionDisplayContext {
 		return HtmlUtil.escape(workflowDefinition.getName());
 	}
 
-	public List<WorkflowDefinition> getSearchContainerResults(
-			SearchContainer<WorkflowDefinition> searchContainer, int status)
+	public SearchContainer<WorkflowDefinition> getSearch(
+			HttpServletRequest request, RenderRequest renderRequest, int status)
 		throws PortalException {
+
+		WorkflowDefinitionSearch workflowDefinitionSearch =
+			new WorkflowDefinitionSearch(
+				renderRequest, _getPortletURL(request));
+
+		workflowDefinitionSearch.setEmptyResultsMessage(
+			"no-workflow-definitions-are-defined");
 
 		List<WorkflowDefinition> workflowDefinitions =
 			WorkflowDefinitionManagerUtil.getLatestWorkflowDefinitions(
@@ -295,7 +311,7 @@ public class WorkflowDefinitionDisplayContext {
 				getWorkflowDefinitionOrderByComparator());
 
 		WorkflowDefinitionSearchTerms searchTerms =
-			(WorkflowDefinitionSearchTerms)searchContainer.getSearchTerms();
+			new WorkflowDefinitionSearchTerms(renderRequest);
 
 		if (searchTerms.isAdvancedSearch()) {
 			workflowDefinitions = filter(
@@ -308,17 +324,36 @@ public class WorkflowDefinitionDisplayContext {
 				searchTerms.getKeywords(), status, false);
 		}
 
-		searchContainer.setTotal(workflowDefinitions.size());
+		workflowDefinitionSearch.setTotal(workflowDefinitions.size());
 
 		if (workflowDefinitions.size() >
-				(searchContainer.getEnd() - searchContainer.getStart())) {
+				(workflowDefinitionSearch.
+					getEnd() - workflowDefinitionSearch.getStart())) {
 
 			workflowDefinitions = ListUtil.subList(
-				workflowDefinitions, searchContainer.getStart(),
-				searchContainer.getEnd());
+				workflowDefinitions, workflowDefinitionSearch.getStart(),
+				workflowDefinitionSearch.getEnd());
 		}
 
-		return workflowDefinitions;
+		workflowDefinitionSearch.setTotal(workflowDefinitions.size());
+
+		workflowDefinitionSearch.setResults(workflowDefinitions);
+
+		return workflowDefinitionSearch;
+	}
+
+	public String getSearchURL(HttpServletRequest request) {
+		PortletURL portletURL = _getPortletURL(null);
+
+		ThemeDisplay themeDisplay =
+			_workflowDefinitionRequestHelper.getThemeDisplay();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+		portletURL.setParameter("tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION);
+
+		return portletURL.toString();
 	}
 
 	public String getSortingURL(HttpServletRequest request)
@@ -351,6 +386,16 @@ public class WorkflowDefinitionDisplayContext {
 
 		return HtmlUtil.escape(
 			workflowDefinition.getTitle(themeDisplay.getLanguageId()));
+	}
+
+	public int getTotalItems(
+			HttpServletRequest request, RenderRequest renderRequest, int status)
+		throws PortalException {
+
+		SearchContainer<?> searchContainer = getSearch(
+			request, renderRequest, status);
+
+		return searchContainer.getTotal();
 	}
 
 	public String getUserName(WorkflowDefinition workflowDefinition) {
@@ -405,6 +450,16 @@ public class WorkflowDefinitionDisplayContext {
 		Collections.reverse(workFlowDefinitions);
 
 		return workFlowDefinitions;
+	}
+
+	public boolean isDisabledManagementBar(
+			HttpServletRequest request, RenderRequest renderRequest, int status)
+		throws PortalException {
+
+		SearchContainer searchContainer = getSearch(
+			request, renderRequest, status);
+
+		return !searchContainer.hasResults();
 	}
 
 	protected PredicateFilter<WorkflowDefinition> createPredicateFilter(

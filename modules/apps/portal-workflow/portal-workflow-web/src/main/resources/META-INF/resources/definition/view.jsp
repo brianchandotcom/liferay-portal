@@ -49,28 +49,31 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 </liferay-ui:error>
 
 <clay:management-toolbar
+	clearResultsURL="<%= workflowDefinitionDisplayContext.getClearResultsURL(request) %>"
 	creationMenu="<%= workflowDefinitionDisplayContext.getCreationMenu(pageContext) %>"
-	filterItems="<%= workflowDefinitionDisplayContext.getFilterOptions(request) %>"
+	disabled="<%= workflowDefinitionDisplayContext.isDisabledManagementBar(request, renderRequest, displayedStatus) %>"
+	filterDropdownItems="<%= workflowDefinitionDisplayContext.getFilterOptions(request) %>"
+	itemsTotal="<%= workflowDefinitionDisplayContext.getTotalItems(request, renderRequest, displayedStatus) %>"
 	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= workflowDefinitionDisplayContext.getSearchURL(request) %>"
+	searchContainerId="workflowDefinitions"
+	searchFormName="fm1"
 	selectable="<%= false %>"
 	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
 	sortingURL="<%= workflowDefinitionDisplayContext.getSortingURL(request) %>"
+	totalItems="<%= workflowDefinitionDisplayContext.getTotalItems(request, renderRequest, displayedStatus) %>"
 />
 
 <div class="container-fluid-1280 workflow-definition-container">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-workflow-definitions-are-defined"
 		id="workflowDefinitions"
-		searchContainer="<%= workflowDefinitionSearch %>"
+		searchContainer="<%= workflowDefinitionDisplayContext.getSearch(request, renderRequest, displayedStatus) %>"
 	>
 
 		<%
 		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 		%>
-
-		<liferay-ui:search-container-results
-			results="<%= workflowDefinitionDisplayContext.getSearchContainerResults(searchContainer, displayedStatus) %>"
-		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.workflow.WorkflowDefinition"

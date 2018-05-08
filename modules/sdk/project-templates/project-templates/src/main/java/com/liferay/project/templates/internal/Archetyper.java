@@ -27,7 +27,6 @@ import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
@@ -52,7 +51,6 @@ import java.util.ServiceLoader;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
@@ -88,21 +86,6 @@ public class Archetyper {
 
 		try (JarFile jarFile = new JarFile(file)) {
 			Manifest manifest = jarFile.getManifest();
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			return attributes.getValue(property);
-		}
-	}
-
-	public static String getManifestProperty(
-			String property, JarFile jarFile, JarEntry jarEntry)
-		throws IOException {
-
-		try (InputStream inputStream = jarFile.getInputStream(jarEntry);
-			JarInputStream jarInputStream = new JarInputStream(inputStream)) {
-
-			Manifest manifest = jarInputStream.getManifest();
 
 			Attributes attributes = manifest.getMainAttributes();
 

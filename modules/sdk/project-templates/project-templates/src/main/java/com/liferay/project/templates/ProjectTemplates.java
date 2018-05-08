@@ -23,6 +23,7 @@ import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -37,8 +38,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
+import java.util.jar.Manifest;
 
 import org.apache.maven.archetype.ArchetypeGenerationResult;
 
@@ -111,11 +115,22 @@ public class ProjectTemplates {
 						template = Archetyper.getTemplateName(template);
 
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-							String bundleDescription =
-								Archetyper.getManifestProperty(
-									"Bundle-Description", jarFile, jarEntry);
+							try (InputStream inputStream =
+									jarFile.getInputStream(jarEntry);
+								JarInputStream jarInputStream =
+									new JarInputStream(inputStream)) {
 
-							templates.put(template, bundleDescription);
+								Manifest manifest =
+									jarInputStream.getManifest();
+
+								Attributes attributes =
+									manifest.getMainAttributes();
+
+								String bundleDescription = attributes.getValue(
+									"Bundle-Description");
+
+								templates.put(template, bundleDescription);
+							}
 						}
 					}
 				}

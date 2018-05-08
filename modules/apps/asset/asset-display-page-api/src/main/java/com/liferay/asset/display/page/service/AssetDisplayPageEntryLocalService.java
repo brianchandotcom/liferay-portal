@@ -185,6 +185,10 @@ public interface AssetDisplayPageEntryLocalService extends BaseLocalService,
 		long layoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetDisplayPageEntry fetchFirstAssetDisplayPageEntry(
+		long assetEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

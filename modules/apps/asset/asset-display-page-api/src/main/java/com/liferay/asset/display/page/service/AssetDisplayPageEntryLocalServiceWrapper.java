@@ -213,6 +213,12 @@ public class AssetDisplayPageEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchFirstAssetDisplayPageEntry(
+		long assetEntryId) {
+		return _assetDisplayPageEntryLocalService.fetchFirstAssetDisplayPageEntry(assetEntryId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _assetDisplayPageEntryLocalService.getActionableDynamicQuery();
 	}

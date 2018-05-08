@@ -202,6 +202,11 @@ public class AssetDisplayPageEntryLocalServiceUtil {
 		return getService().fetchAssetDisplayPageEntry(assetEntryId, layoutId);
 	}
 
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry fetchFirstAssetDisplayPageEntry(
+		long assetEntryId) {
+		return getService().fetchFirstAssetDisplayPageEntry(assetEntryId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

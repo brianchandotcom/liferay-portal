@@ -934,14 +934,14 @@ FragmentsEditor.STATE = {
 
 	/**
 	 * URL for getting the list of mapping fields
-	 * @default undefined
+	 * @default null
 	 * @instance
 	 * @memberOf FragmentsEditor
 	 * @review
-	 * @type {!string}
+	 * @type {string}
 	 */
 
-	mappingFieldsURL: Config.string().required(),
+	mappingFieldsURL: Config.string().value(null),
 
 	/**
 	 * Currently selected language id.

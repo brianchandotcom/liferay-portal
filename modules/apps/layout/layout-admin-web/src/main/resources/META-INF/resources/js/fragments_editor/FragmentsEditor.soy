@@ -17,7 +17,6 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
-	{@param mappingFieldsURL: string}
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
@@ -58,6 +57,7 @@
 	{@param? getAssetClassTypesURL: any}
 	{@param? getAssetDisplayContributorsURL: any}
 	{@param? id: string}
+	{@param? mappingFieldsURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -124,19 +124,21 @@
 				{/if}
 			</div>
 
-			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
-				{param editableId: $_selectMappingDialogEditableId /}
-				{param events: [
-					'mappeableFieldSelected': $_handleMappeableFieldSelected,
-					'visibleChanged': $_handleSelectMappingDialogVisibleChanged
-				] /}
-				{param fragmentEntryLinkId: $_selectMappingDialogFragmentEntryLinkId /}
-				{param mappingFieldsURL: $mappingFieldsURL /}
-				{param namespace: $portletNamespace /}
-				{param selectedMappingTypes: $selectedMappingTypes /}
-				{param spritemap: $spritemap /}
-				{param visible: $_selectMappingDialogVisible ?: false /}
-			{/call}
+			{if $mappingFieldsURL}
+				{call com.liferay.layout.admin.web.SelectMappingDialog.render}
+					{param editableId: $_selectMappingDialogEditableId /}
+					{param events: [
+						'mappeableFieldSelected': $_handleMappeableFieldSelected,
+						'visibleChanged': $_handleSelectMappingDialogVisibleChanged
+					] /}
+					{param fragmentEntryLinkId: $_selectMappingDialogFragmentEntryLinkId /}
+					{param mappingFieldsURL: $mappingFieldsURL /}
+					{param namespace: $portletNamespace /}
+					{param selectedMappingTypes: $selectedMappingTypes /}
+					{param spritemap: $spritemap /}
+					{param visible: $_selectMappingDialogVisible ?: false /}
+				{/call}
+			{/if}
 
 			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
 				{param classPK: $classPK /}

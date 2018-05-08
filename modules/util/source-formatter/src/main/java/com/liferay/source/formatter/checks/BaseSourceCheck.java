@@ -428,6 +428,26 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return portalImplDir.getParentFile();
 	}
 
+	protected String getProjectName() {
+		if (_projectName != null) {
+			return _projectName;
+		}
+
+		if (Validator.isNull(_projectPathPrefix) ||
+			!_projectPathPrefix.contains(StringPool.COLON)) {
+
+			_projectName = StringPool.BLANK;
+
+			return _projectName;
+		}
+
+		int pos = _projectPathPrefix.lastIndexOf(StringPool.COLON);
+
+		_projectName = _projectPathPrefix.substring(pos + 1);
+
+		return _projectName;
+	}
+
 	protected String getProjectPathPrefix() {
 		return _projectPathPrefix;
 	}
@@ -638,6 +658,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
 	private boolean _portalSource;
+	private String _projectName;
 	private String _projectPathPrefix;
 	private Map<String, Properties> _propertiesMap;
 	private SourceFormatterExcludes _sourceFormatterExcludes;

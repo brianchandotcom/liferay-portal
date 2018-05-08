@@ -418,6 +418,20 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 		moduleLangDirNames.add(moduleLangDirName);
 
+		String projectName = getProjectName();
+
+		if (Validator.isNotNull(projectName)) {
+			String projectLangDirName = StringBundler.concat(
+				moduleLocation.substring(0, x + 1), projectName,
+				"-lang/src/main/resources/content");
+
+			File projectLangDir = new File(projectLangDirName);
+
+			if (projectLangDir.exists()) {
+				moduleLangDirNames.add(projectLangDirName);
+			}
+		}
+
 		return moduleLangDirNames;
 	}
 

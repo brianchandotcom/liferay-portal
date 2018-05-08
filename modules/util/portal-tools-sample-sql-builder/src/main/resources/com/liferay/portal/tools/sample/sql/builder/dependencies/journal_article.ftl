@@ -10,6 +10,10 @@
 
 ${dataFactory.toInsertSQL(ddmTemplateModel)}
 
+<#assign ddmTemplateVersionModel = dataFactory.defaultJournalDDMTemplateVersionModel />
+
+${dataFactory.toInsertSQL(ddmTemplateVersionModel)}
+
 <#assign
 	journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)
 

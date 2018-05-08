@@ -142,6 +142,7 @@ Liferay-Top-Head-JS-Resources:\
 	/liferay/dom_task_runner.js,\
 	/liferay/events.js,\
 	/liferay/language.js,\
+	/liferay/lazy_load.js,\
 	/liferay/liferay.js,\
 	/liferay/util.js,\
 	\

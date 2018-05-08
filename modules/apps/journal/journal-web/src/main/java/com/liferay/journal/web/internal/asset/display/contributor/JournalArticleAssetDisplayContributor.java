@@ -55,7 +55,7 @@ public class JournalArticleAssetDisplayContributor
 
 	@Override
 	protected String[] getAssetEntryModelFields() {
-		return new String[] {"content"};
+		return null;
 	}
 
 	@Override
@@ -104,14 +104,6 @@ public class JournalArticleAssetDisplayContributor
 	@Override
 	protected Object getFieldValue(
 		JournalArticle article, String field, Locale locale) {
-
-		String languageId = LanguageUtil.getLanguageId(locale);
-
-		if (Objects.equals(field, "content")) {
-			return _journalContent.getContent(
-				article.getGroupId(), article.getArticleId(), Constants.VIEW,
-				languageId);
-		}
 
 		return StringPool.BLANK;
 	}

@@ -27,8 +27,12 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -93,6 +97,17 @@ public class FragmentEntryRenderUtil {
 			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException {
 
+		return renderFragmentEntryLink(
+			fragmentEntryLink, mode, new HashMap<String, Object>(), request,
+			response);
+	}
+
+	public static String renderFragmentEntryLink(
+			FragmentEntryLink fragmentEntryLink, String mode,
+			Map<String, Object> parameterMap, HttpServletRequest request,
+			HttpServletResponse response)
+		throws PortalException {
+
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
 			getService();
 
@@ -101,7 +116,7 @@ public class FragmentEntryRenderUtil {
 				fragmentEntryLink, mode);
 
 		if (Validator.isNotNull(html)) {
-			html = _processTemplate(html, request, response);
+			html = _processTemplate(html, parameterMap, request, response);
 		}
 
 		return renderFragmentEntry(
@@ -111,8 +126,8 @@ public class FragmentEntryRenderUtil {
 	}
 
 	private static String _processTemplate(
-			String html, HttpServletRequest request,
-			HttpServletResponse response)
+			String html, Map<String, Object> parameterMap,
+			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException {
 
 		TemplateResource templateResource = new StringTemplateResource(
@@ -132,6 +147,10 @@ public class FragmentEntryRenderUtil {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		template.put(TemplateConstants.WRITER, unsyncStringWriter);
+
+		if (MapUtil.isNotEmpty(parameterMap)) {
+			template.putAll(parameterMap);
+		}
 
 		template.prepare(request);
 

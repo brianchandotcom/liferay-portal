@@ -17,15 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalArticle article = journalDisplayContext.getArticle();
+EditArticleDisplayPageDisplayContext editArticleDisplayPageDisplayContext = new EditArticleDisplayPageDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+
+JournalArticle article = editArticleDisplayPageDisplayContext.getArticle();
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-long classNameId = ParamUtil.getLong(request, "classNameId");
-
-boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
 %>
 
 <c:choose>
@@ -35,35 +33,12 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		</p>
 	</c:when>
 	<c:otherwise>
-
-		<%
-		String layoutUuid = BeanParamUtil.getString(article, request, "layoutUuid");
-
-		if (changeStructure && (article != null)) {
-			layoutUuid = article.getLayoutUuid();
-		}
-
-		String layoutBreadcrumb = StringPool.BLANK;
-
-		if (Validator.isNotNull(layoutUuid)) {
-			Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), false);
-
-			if (selLayout == null) {
-				selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), true);
-			}
-
-			if (selLayout != null) {
-				layoutBreadcrumb = journalDisplayContext.getLayoutBreadcrumb(selLayout);
-			}
-		}
-		%>
-
 		<liferay-ui:error-marker
 			key="<%= WebKeys.ERROR_SECTION %>"
 			value="display-page"
 		/>
 
-		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
+		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= editArticleDisplayPageDisplayContext.getLayoutUuid() %>" />
 
 		<aui:input id="assetDisplayPageId" ignoreRequestValue="<%= true %>" name="assetDisplayPageId" type="hidden" value="" />
 
@@ -72,16 +47,16 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		</p>
 
 		<p class="text-default">
-			<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
+			<span class="<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
 				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
 			</span>
 			<span id="<portlet:namespace />displayPageNameInput">
 				<c:choose>
-					<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
+					<c:when test="<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) %>">
 						<span class="text-muted"><liferay-ui:message key="none" /></span>
 					</c:when>
 					<c:otherwise>
-						<%= layoutBreadcrumb %>
+						<%= editArticleDisplayPageDisplayContext.getDisplayPageName() %>
 					</c:otherwise>
 				</c:choose>
 			</span>
@@ -89,63 +64,20 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		<aui:button name="chooseDisplayPage" value="choose" />
 
-		<c:if test="<%= (article != null) && Validator.isNotNull(layoutUuid) %>">
+		<c:if test="<%= editArticleDisplayPageDisplayContext.isURLViewInContext() %>">
 
 			<%
-			Layout defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, false);
+			Layout defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(editArticleDisplayPageDisplayContext.getLayoutUuid(), themeDisplay.getScopeGroupId(), false);
 
 			if (defaultDisplayLayout == null) {
-				defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, scopeGroupId, true);
+				defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(editArticleDisplayPageDisplayContext.getLayoutUuid(), themeDisplay.getScopeGroupId(), true);
 			}
-
-			AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
-
-			AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
-
-			String urlViewInContext = assetRenderer.getURLViewInContext(liferayPortletRequest, liferayPortletResponse, currentURL);
 			%>
 
-			<c:if test="<%= !article.isNew() && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) && Validator.isNotNull(urlViewInContext) %>">
-				<aui:a href="<%= urlViewInContext %>" target="blank">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(defaultDisplayLayout.getName(locale)) %>" key="view-content-in-x" translateArguments="<%= false %>" />
-				</aui:a>
-			</c:if>
+			<aui:a href="<%= editArticleDisplayPageDisplayContext.getURLViewInContext() %>" target="blank">
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(defaultDisplayLayout.getName(locale)) %>" key="view-content-in-x" translateArguments="<%= false %>" />
+			</aui:a>
 		</c:if>
-
-		<%
-		String eventName = liferayPortletResponse.getNamespace() + "selectDisplayPage";
-
-		ItemSelector itemSelector = (ItemSelector)request.getAttribute(JournalWebKeys.ITEM_SELECTOR);
-
-		DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
-
-		long displayPageClassNameId = PortalUtil.getClassNameId(JournalArticle.class.getName());
-
-		AssetDisplayPageSelectorCriterion assetDisplayPageSelectorCriterion = new AssetDisplayPageSelectorCriterion();
-
-		assetDisplayPageSelectorCriterion.setClassNameId(displayPageClassNameId);
-		assetDisplayPageSelectorCriterion.setClassTypeId(ddmStructure.getStructureId());
-
-		List<ItemSelectorReturnType> desiredAssetDisplayPageItemSelectorReturnTypes = new ArrayList<ItemSelectorReturnType>();
-
-		desiredAssetDisplayPageItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
-
-		assetDisplayPageSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredAssetDisplayPageItemSelectorReturnTypes);
-
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion();
-
-		layoutItemSelectorCriterion.setCheckDisplayPage(true);
-
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new ArrayList<ItemSelectorReturnType>();
-
-		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
-
-		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
-
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, assetDisplayPageSelectorCriterion, layoutItemSelectorCriterion);
-
-		itemSelectorURL.setParameter("layoutUuid", layoutUuid);
-		%>
 
 		<aui:script use="liferay-item-selector-dialog">
 			var assetDisplayPageIdInput = $('#<portlet:namespace />assetDisplayPageIdInput');
@@ -159,7 +91,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 				function(event) {
 					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 						{
-							eventName: '<%= eventName %>',
+							eventName: '<%= liferayPortletResponse.getNamespace() + "selectDisplayPage" %>',
 							on: {
 								selectedItemChange: function(event) {
 									var selectedItem = event.newVal;
@@ -184,7 +116,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 							},
 							'strings.add': '<liferay-ui:message key="done" />',
 							title: '<liferay-ui:message key="select-page" />',
-							url: '<%= itemSelectorURL.toString() %>'
+							url: '<%= editArticleDisplayPageDisplayContext.getDisplayPageItemSelectorURL() %>'
 						}
 					);
 

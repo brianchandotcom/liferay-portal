@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -44,7 +45,7 @@ public interface AssetDisplayContributor {
 
 	public String getClassName();
 
-	public default List<ClassTypeField> getClassTypeFields(
+	public default List<AssetDisplayField> getClassTypeFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
 
@@ -65,7 +66,15 @@ public interface AssetDisplayContributor {
 			return Collections.emptyList();
 		}
 
-		return classType.getClassTypeFields();
+		List<AssetDisplayField> classTypeFields = new ArrayList<>();
+
+		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
+			classTypeFields.add(
+				new AssetDisplayField(
+					classTypeField.getName(), classTypeField.getLabel()));
+		}
+
+		return classTypeFields;
 	}
 
 	public default List<ClassType> getClassTypes(long groupId, Locale locale)

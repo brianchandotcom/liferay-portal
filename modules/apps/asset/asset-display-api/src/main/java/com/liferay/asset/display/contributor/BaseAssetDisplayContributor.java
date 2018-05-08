@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -115,14 +114,10 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		// Fields for the class type
 
-		List<ClassTypeField> classTypeFields = getClassTypeFields(
+		List<AssetDisplayField> classTypeFields = getClassTypeFields(
 			classTypeId, locale);
 
-		for (ClassTypeField classTypeField : classTypeFields) {
-			assetDisplayFields.add(
-				new AssetDisplayField(
-					classTypeField.getName(), classTypeField.getLabel()));
-		}
+		assetDisplayFields.addAll(classTypeFields);
 
 		return assetDisplayFields;
 	}

@@ -28,7 +28,7 @@
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
-				rowChecker="<%= rowChecker %>"
+				rowChecker="<%= searchContainer.getRowChecker() %>"
 				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
 				title="<%= organization.getName() %>"
 			/>

@@ -54,6 +54,15 @@ public class CommerceForecastEntryLocalServiceUtil {
 		return getService().addCommerceForecastEntry(commerceForecastEntry);
 	}
 
+	public static com.liferay.commerce.forecast.model.CommerceForecastEntry addCommerceForecastEntry(
+		long userId, java.util.Date date, int period, int target,
+		long customerId, String sku, java.math.BigDecimal assertivity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceForecastEntry(userId, date, period, target,
+			customerId, sku, assertivity);
+	}
+
 	/**
 	* Creates a new commerce forecast entry with the primary key. Does not add the commerce forecast entry to the database.
 	*
@@ -63,6 +72,10 @@ public class CommerceForecastEntryLocalServiceUtil {
 	public static com.liferay.commerce.forecast.model.CommerceForecastEntry createCommerceForecastEntry(
 		long commerceForecastEntryId) {
 		return getService().createCommerceForecastEntry(commerceForecastEntryId);
+	}
+
+	public static void deleteCommerceForecastEntries(long companyId) {
+		getService().deleteCommerceForecastEntries(companyId);
 	}
 
 	/**

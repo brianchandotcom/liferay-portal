@@ -46,6 +46,15 @@ public class CommerceForecastEntryLocalServiceWrapper
 		return _commerceForecastEntryLocalService.addCommerceForecastEntry(commerceForecastEntry);
 	}
 
+	@Override
+	public com.liferay.commerce.forecast.model.CommerceForecastEntry addCommerceForecastEntry(
+		long userId, java.util.Date date, int period, int target,
+		long customerId, String sku, java.math.BigDecimal assertivity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceForecastEntryLocalService.addCommerceForecastEntry(userId,
+			date, period, target, customerId, sku, assertivity);
+	}
+
 	/**
 	* Creates a new commerce forecast entry with the primary key. Does not add the commerce forecast entry to the database.
 	*
@@ -56,6 +65,11 @@ public class CommerceForecastEntryLocalServiceWrapper
 	public com.liferay.commerce.forecast.model.CommerceForecastEntry createCommerceForecastEntry(
 		long commerceForecastEntryId) {
 		return _commerceForecastEntryLocalService.createCommerceForecastEntry(commerceForecastEntryId);
+	}
+
+	@Override
+	public void deleteCommerceForecastEntries(long companyId) {
+		_commerceForecastEntryLocalService.deleteCommerceForecastEntries(companyId);
 	}
 
 	/**

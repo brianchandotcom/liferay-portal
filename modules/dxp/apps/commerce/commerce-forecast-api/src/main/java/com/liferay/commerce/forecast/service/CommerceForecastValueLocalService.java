@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,6 +74,10 @@ public interface CommerceForecastValueLocalService extends BaseLocalService,
 	public CommerceForecastValue addCommerceForecastValue(
 		CommerceForecastValue commerceForecastValue);
 
+	public CommerceForecastValue addCommerceForecastValue(long userId,
+		long commerceForecastEntryId, Date date, BigDecimal value)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce forecast value with the primary key. Does not add the commerce forecast value to the database.
 	*
@@ -101,6 +108,8 @@ public interface CommerceForecastValueLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceForecastValue deleteCommerceForecastValue(
 		long commerceForecastValueId) throws PortalException;
+
+	public void deleteCommerceForecastValues(long commerceForecastEntryId);
 
 	/**
 	* @throws PortalException

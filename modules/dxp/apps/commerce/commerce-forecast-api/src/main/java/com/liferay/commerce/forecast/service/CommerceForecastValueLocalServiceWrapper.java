@@ -46,6 +46,15 @@ public class CommerceForecastValueLocalServiceWrapper
 		return _commerceForecastValueLocalService.addCommerceForecastValue(commerceForecastValue);
 	}
 
+	@Override
+	public com.liferay.commerce.forecast.model.CommerceForecastValue addCommerceForecastValue(
+		long userId, long commerceForecastEntryId, java.util.Date date,
+		java.math.BigDecimal value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceForecastValueLocalService.addCommerceForecastValue(userId,
+			commerceForecastEntryId, date, value);
+	}
+
 	/**
 	* Creates a new commerce forecast value with the primary key. Does not add the commerce forecast value to the database.
 	*
@@ -82,6 +91,11 @@ public class CommerceForecastValueLocalServiceWrapper
 		long commerceForecastValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceForecastValueLocalService.deleteCommerceForecastValue(commerceForecastValueId);
+	}
+
+	@Override
+	public void deleteCommerceForecastValues(long commerceForecastEntryId) {
+		_commerceForecastValueLocalService.deleteCommerceForecastValues(commerceForecastEntryId);
 	}
 
 	/**

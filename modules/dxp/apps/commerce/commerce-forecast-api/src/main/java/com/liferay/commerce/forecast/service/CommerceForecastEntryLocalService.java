@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,6 +74,10 @@ public interface CommerceForecastEntryLocalService extends BaseLocalService,
 	public CommerceForecastEntry addCommerceForecastEntry(
 		CommerceForecastEntry commerceForecastEntry);
 
+	public CommerceForecastEntry addCommerceForecastEntry(long userId,
+		Date date, int period, int target, long customerId, String sku,
+		BigDecimal assertivity) throws PortalException;
+
 	/**
 	* Creates a new commerce forecast entry with the primary key. Does not add the commerce forecast entry to the database.
 	*
@@ -80,6 +87,8 @@ public interface CommerceForecastEntryLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public CommerceForecastEntry createCommerceForecastEntry(
 		long commerceForecastEntryId);
+
+	public void deleteCommerceForecastEntries(long companyId);
 
 	/**
 	* Deletes the commerce forecast entry from the database. Also notifies the appropriate model listeners.

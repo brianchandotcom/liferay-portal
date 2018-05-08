@@ -47,7 +47,7 @@ public class BlogPostingForm {
 		).constructor(
 			BlogPostingForm::new
 		).addRequiredDate(
-			"displayDate", BlogPostingForm::_setDisplayDate
+			"dateDisplayed", BlogPostingForm::_setDisplayDate
 		).addRequiredString(
 			"alternativeHeadline", BlogPostingForm::_setAlternativeHeadline
 		).addRequiredString(

@@ -98,15 +98,16 @@ public class BlogPostingNestedCollectionResource
 		).identifier(
 			BlogsEntry::getEntryId
 		).addBidirectionalModel(
-			"webSite", "blogs", WebSiteIdentifier.class, BlogsEntry::getGroupId
+			"interactionService", "blogPosts", WebSiteIdentifier.class,
+			BlogsEntry::getGroupId
 		).addDate(
-			"createDate", BlogsEntry::getCreateDate
+			"dateCreated", BlogsEntry::getCreateDate
 		).addDate(
-			"displayDate", BlogsEntry::getDisplayDate
+			"dateDisplayed", BlogsEntry::getDisplayDate
 		).addDate(
-			"modifiedDate", BlogsEntry::getModifiedDate
+			"dateModified", BlogsEntry::getModifiedDate
 		).addDate(
-			"publishedDate", BlogsEntry::getLastPublishDate
+			"datePublished", BlogsEntry::getLastPublishDate
 		).addLinkedModel(
 			"aggregateRating", AggregateRatingIdentifier.class,
 			ClassNameClassPK::create

@@ -24,7 +24,6 @@ import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -156,15 +155,10 @@ public class LayoutPageTemplateDisplayContext {
 			return _layoutPageTemplateCollectionId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long defaultLayoutPageTemplateCollectionId = 0;
 
 		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-			LayoutPageTemplateCollectionLocalServiceUtil.
-				getLayoutPageTemplateCollections(
-					themeDisplay.getScopeGroupId(), 0, 1);
+			getLayoutPageTemplateCollections();
 
 		if (ListUtil.isNotEmpty(layoutPageTemplateCollections)) {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -180,6 +174,24 @@ public class LayoutPageTemplateDisplayContext {
 			defaultLayoutPageTemplateCollectionId);
 
 		return _layoutPageTemplateCollectionId;
+	}
+
+	public List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections() {
+
+		if (_layoutPageTemplateCollections != null) {
+			return _layoutPageTemplateCollections;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_layoutPageTemplateCollections =
+			LayoutPageTemplateCollectionServiceUtil.
+				getLayoutPageTemplateCollections(
+					themeDisplay.getScopeGroupId());
+
+		return _layoutPageTemplateCollections;
 	}
 
 	public SearchContainer getLayoutPageTemplateEntriesSearchContainer() {
@@ -505,6 +517,7 @@ public class LayoutPageTemplateDisplayContext {
 	private String _keywords;
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private Long _layoutPageTemplateCollectionId;
+	private List<LayoutPageTemplateCollection> _layoutPageTemplateCollections;
 	private SearchContainer _layoutPageTemplateEntriesSearchContainer;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private Long _layoutPageTemplateEntryId;

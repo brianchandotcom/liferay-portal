@@ -17,17 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-FragmentCollection fragmentCollection = (FragmentCollection)row.getObject();
+FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollection();
 %>
 
 <liferay-ui:icon-menu
-	direction="left-side"
+	direction="down"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
+	triggerCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
 >
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFragmentCollectionURL">

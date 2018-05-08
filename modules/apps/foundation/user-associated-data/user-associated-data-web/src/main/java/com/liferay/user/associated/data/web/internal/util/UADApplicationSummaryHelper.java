@@ -155,7 +155,9 @@ public class UADApplicationSummaryHelper {
 			applicationName);
 
 		return uadDisplayStream.map(
-			UADDisplay::getKey
+			UADDisplay::getTypeClass
+		).map(
+			Class::getName
 		).map(
 			key -> _uadRegistry.getUADAnonymizer(key)
 		).collect(
@@ -218,7 +220,9 @@ public class UADApplicationSummaryHelper {
 			applicationName);
 
 		return uadDisplayStream.map(
-			UADDisplay::getKey
+			UADDisplay::getTypeClass
+		).map(
+			Class::getName
 		).findFirst(
 		).get();
 	}

@@ -75,7 +75,6 @@ public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase<BlogsEntry>
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
 	@Inject
 	private BlogsEntryUADTestHelper _blogsEntryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
+	@Inject(filter = "component.name=*.BlogsEntryUADDisplay")
 	private UADDisplay _uadDisplay;
 }

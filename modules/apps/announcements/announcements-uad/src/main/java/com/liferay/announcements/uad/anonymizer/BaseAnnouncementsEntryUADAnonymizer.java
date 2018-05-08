@@ -66,6 +66,11 @@ public abstract class BaseAnnouncementsEntryUADAnonymizer
 	}
 
 	@Override
+	public Class<AnnouncementsEntry> getTypeClass() {
+		return AnnouncementsEntry.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return announcementsEntryLocalService.getActionableDynamicQuery();
 	}

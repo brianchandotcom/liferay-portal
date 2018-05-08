@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.user.associated.data.component.UADComponent;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
  * @author William Newbury
  */
 @ProviderType
-public interface UADAnonymizer<T> {
+public interface UADAnonymizer<T> extends UADComponent<T> {
 
 	public void autoAnonymize(T t, long userId, User anonymousUser)
 		throws PortalException;

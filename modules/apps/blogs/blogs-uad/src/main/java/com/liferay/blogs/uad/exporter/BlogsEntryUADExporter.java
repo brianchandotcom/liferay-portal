@@ -14,7 +14,6 @@
 
 package com.liferay.blogs.uad.exporter;
 
-import com.liferay.blogs.uad.constants.BlogsUADConstants;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,10 +21,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY,
-	service = UADExporter.class
-)
+@Component(immediate = true, service = UADExporter.class)
 public class BlogsEntryUADExporter extends BaseBlogsEntryUADExporter {
 }

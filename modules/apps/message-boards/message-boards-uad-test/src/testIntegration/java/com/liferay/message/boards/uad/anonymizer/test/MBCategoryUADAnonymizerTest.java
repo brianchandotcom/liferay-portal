@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
 
 import com.liferay.portal.kernel.model.User;
@@ -128,7 +127,6 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	private MBCategoryLocalService _mbCategoryLocalService;
 	@Inject
 	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_CATEGORY)
+	@Inject(filter = "component.name=*.MBCategoryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
 }

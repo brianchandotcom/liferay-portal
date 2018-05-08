@@ -17,7 +17,6 @@ package com.liferay.bookmarks.uad.anonymizer.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
-import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.test.BookmarksEntryUADTestHelper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -128,9 +127,7 @@ public class BookmarksEntryUADAnonymizerTest
 	@Inject
 	private BookmarksEntryUADTestHelper _bookmarksEntryUADTestHelper;
 
-	@Inject(
-		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
-	)
+	@Inject(filter = "component.name=*.BookmarksEntryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
 
 }

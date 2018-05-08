@@ -20,9 +20,6 @@ package com.liferay.message.boards.uad.constants;
  */
 public class MBUADConstants {
 	public static final String APPLICATION_NAME = "MB";
-	public static final String CLASS_NAME_MB_CATEGORY = "com.liferay.message.boards.model.MBCategory";
-	public static final String CLASS_NAME_MB_MESSAGE = "com.liferay.message.boards.model.MBMessage";
-	public static final String CLASS_NAME_MB_THREAD = "com.liferay.message.boards.model.MBThread";
 	public static final String[] USER_ID_FIELD_NAMES_MB_CATEGORY = {
 			"userId", "statusByUserId"
 		};

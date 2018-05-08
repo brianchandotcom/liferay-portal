@@ -45,13 +45,8 @@ public abstract class Base${entity.name}UADDisplay extends BaseModelUADDisplay<$
 	}
 
 	@Override
-	public String getKey() {
-		return ${portletShortName}UADConstants.CLASS_NAME_${entity.constantName};
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "${entity.name}";
+	public Class<${entity.name}> getTypeClass() {
+		return ${entity.name}.class;
 	}
 
 	@Override

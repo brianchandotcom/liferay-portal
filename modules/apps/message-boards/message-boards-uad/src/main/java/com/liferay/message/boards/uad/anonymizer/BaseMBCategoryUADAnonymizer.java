@@ -65,8 +65,18 @@ public abstract class BaseMBCategoryUADAnonymizer
 	}
 
 	@Override
+	public String getApplicationName() {
+		return MBUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList("name", "description");
+	}
+
+	@Override
+	public Class<MBCategory> getTypeClass() {
+		return MBCategory.class;
 	}
 
 	@Override

@@ -28,7 +28,6 @@ import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
 import com.liferay.wiki.uad.test.WikiNodeUADTestHelper;
 
 import org.junit.After;
@@ -128,7 +127,6 @@ public class WikiNodeUADAnonymizerTest extends BaseUADAnonymizerTestCase<WikiNod
 	private WikiNodeLocalService _wikiNodeLocalService;
 	@Inject
 	private WikiNodeUADTestHelper _wikiNodeUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE)
+	@Inject(filter = "component.name=*.WikiNodeUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
 }

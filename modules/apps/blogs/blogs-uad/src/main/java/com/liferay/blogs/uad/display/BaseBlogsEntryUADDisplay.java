@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Provides the base implementation for the BlogsEntry UAD display.
@@ -63,13 +62,8 @@ public abstract class BaseBlogsEntryUADDisplay extends BaseModelUADDisplay<Blogs
 	}
 
 	@Override
-	public String getKey() {
-		return BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY;
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "BlogsEntry";
+	public Class<BlogsEntry> getTypeClass() {
+		return BlogsEntry.class;
 	}
 
 	@Override

@@ -15,17 +15,12 @@
 package com.liferay.wiki.uad.exporter;
 
 import com.liferay.user.associated.data.exporter.UADExporter;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE,
-	service = UADExporter.class
-)
+@Component(immediate = true, service = UADExporter.class)
 public class WikiNodeUADExporter extends BaseWikiNodeUADExporter {
 }

@@ -49,8 +49,18 @@ public abstract class Base${entity.name}UADAnonymizer extends DynamicQueryUADAno
 	}
 
 	@Override
+	public String getApplicationName() {
+		return ${portletShortName}UADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList(<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>"${uadNonanonymizableEntityColumn.name}"<#sep>, </#sep></#list>);
+	}
+
+	@Override
+	public Class<${entity.name}> getTypeClass() {
+		return ${entity.name}.class;
 	}
 
 	@Override

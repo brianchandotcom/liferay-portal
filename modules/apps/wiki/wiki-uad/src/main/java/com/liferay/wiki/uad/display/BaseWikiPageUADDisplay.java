@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Provides the base implementation for the WikiPage UAD display.
@@ -60,13 +59,8 @@ public abstract class BaseWikiPageUADDisplay extends BaseModelUADDisplay<WikiPag
 	}
 
 	@Override
-	public String getKey() {
-		return WikiUADConstants.CLASS_NAME_WIKI_PAGE;
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "WikiPage";
+	public Class<WikiPage> getTypeClass() {
+		return WikiPage.class;
 	}
 
 	@Override

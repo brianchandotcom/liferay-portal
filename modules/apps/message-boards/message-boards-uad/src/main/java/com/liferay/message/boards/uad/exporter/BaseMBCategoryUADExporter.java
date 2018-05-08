@@ -44,6 +44,11 @@ public abstract class BaseMBCategoryUADExporter extends DynamicQueryUADExporter<
 	}
 
 	@Override
+	public Class<MBCategory> getTypeClass() {
+		return MBCategory.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return mbCategoryLocalService.getActionableDynamicQuery();
 	}

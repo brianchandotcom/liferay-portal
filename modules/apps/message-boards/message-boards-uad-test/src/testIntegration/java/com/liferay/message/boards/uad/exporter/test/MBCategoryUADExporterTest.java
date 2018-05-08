@@ -17,7 +17,6 @@ package com.liferay.message.boards.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -88,7 +87,6 @@ public class MBCategoryUADExporterTest extends BaseUADExporterTestCase<MBCategor
 	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
 	@Inject
 	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	MBUADConstants.CLASS_NAME_MB_CATEGORY)
+	@Inject(filter = "component.name=*.MBCategoryUADExporter")
 	private UADExporter _uadExporter;
 }

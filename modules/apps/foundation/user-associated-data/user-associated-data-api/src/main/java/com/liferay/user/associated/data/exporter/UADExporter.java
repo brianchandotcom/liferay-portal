@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.exporter;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.user.associated.data.component.UADComponent;
 
 import java.io.File;
 
@@ -24,16 +25,12 @@ import java.io.File;
  * @author William Newbury
  */
 @ProviderType
-public interface UADExporter<T> {
+public interface UADExporter<T> extends UADComponent<T> {
 
 	public long count(long userId) throws PortalException;
 
 	public byte[] export(T t) throws PortalException;
 
 	public File exportAll(long userId) throws PortalException;
-
-	public default String getApplicationName() {
-		return "other";
-	}
 
 }

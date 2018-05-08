@@ -14,7 +14,6 @@
 
 package com.liferay.contacts.uad.anonymizer;
 
-import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,10 +21,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + ContactsUADConstants.CLASS_NAME_ENTRY,
-	service = UADAnonymizer.class
-)
+@Component(immediate = true, service = UADAnonymizer.class)
 public class EntryUADAnonymizer extends BaseEntryUADAnonymizer {
 }

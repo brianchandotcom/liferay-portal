@@ -73,8 +73,18 @@ public abstract class BaseMBThreadUADAnonymizer
 	}
 
 	@Override
+	public String getApplicationName() {
+		return MBUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList();
+	}
+
+	@Override
+	public Class<MBThread> getTypeClass() {
+		return MBThread.class;
 	}
 
 	@Override

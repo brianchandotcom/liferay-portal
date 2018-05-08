@@ -16,6 +16,7 @@ package com.liferay.user.associated.data.display;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.user.associated.data.component.UADComponent;
 
 import java.io.Serializable;
 
@@ -26,13 +27,11 @@ import java.util.Map;
 /**
  * @author William Newbury
  */
-public interface UADDisplay<T> {
+public interface UADDisplay<T> extends UADComponent<T> {
 
 	public long count(long userId);
 
 	public T get(Serializable primaryKey) throws Exception;
-
-	public String getApplicationName();
 
 	public default String[] getColumnFieldNames() {
 		return getDisplayFieldNames();
@@ -49,8 +48,6 @@ public interface UADDisplay<T> {
 	}
 
 	public Map<String, Object> getFieldValues(T t, String[] fieldNames);
-
-	public String getKey();
 
 	public Serializable getPrimaryKey(T t);
 

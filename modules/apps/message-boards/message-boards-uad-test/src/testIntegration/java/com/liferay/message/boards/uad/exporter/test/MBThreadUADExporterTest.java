@@ -17,7 +17,6 @@ package com.liferay.message.boards.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBThreadUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -88,6 +87,6 @@ public class MBThreadUADExporterTest extends BaseUADExporterTestCase<MBThread>
 	private final List<MBThread> _mbThreads = new ArrayList<MBThread>();
 	@Inject
 	private MBThreadUADTestHelper _mbThreadUADTestHelper;
-	@Inject(filter = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD)
+	@Inject(filter = "component.name=*.MBThreadUADExporter")
 	private UADExporter _uadExporter;
 }

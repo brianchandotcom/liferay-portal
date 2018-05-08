@@ -190,10 +190,13 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			navigationItemList.add(
 				navigationItem -> {
+					Class<?> uadClass = uadDisplay.getTypeClass();
+
 					navigationItem.setActive(
-						uadRegistryKey.equals(uadDisplay.getKey()));
+						uadRegistryKey.equals(uadClass.getName()));
 					navigationItem.setHref(
-						tabPortletURL, "uadRegistryKey", uadDisplay.getKey());
+						tabPortletURL, "uadRegistryKey", uadClass.getName());
+
 					navigationItem.setLabel(uadDisplay.getTypeName(locale));
 				});
 		}

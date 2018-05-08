@@ -65,8 +65,18 @@ public abstract class BaseWikiNodeUADAnonymizer
 	}
 
 	@Override
+	public String getApplicationName() {
+		return WikiUADConstants.APPLICATION_NAME;
+	}
+
+	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList("name", "description");
+	}
+
+	@Override
+	public Class<WikiNode> getTypeClass() {
+		return WikiNode.class;
 	}
 
 	@Override

@@ -64,6 +64,11 @@ public abstract class BaseAnnouncementsFlagUADAnonymizer
 	}
 
 	@Override
+	public Class<AnnouncementsFlag> getTypeClass() {
+		return AnnouncementsFlag.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return announcementsFlagLocalService.getActionableDynamicQuery();
 	}

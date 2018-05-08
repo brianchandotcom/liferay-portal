@@ -14,7 +14,6 @@
 
 package com.liferay.announcements.uad.exporter;
 
-import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,11 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Noah Sherrill
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG,
-	service = UADExporter.class
-)
+@Component(immediate = true, service = UADExporter.class)
 public class AnnouncementsFlagUADExporter
 	extends BaseAnnouncementsFlagUADExporter {
 }

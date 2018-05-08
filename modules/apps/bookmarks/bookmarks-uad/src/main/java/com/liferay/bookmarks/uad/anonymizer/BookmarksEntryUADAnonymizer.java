@@ -14,7 +14,6 @@
 
 package com.liferay.bookmarks.uad.anonymizer;
 
-import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,11 +21,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Noah Sherrill
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
-	service = UADAnonymizer.class
-)
+@Component(immediate = true, service = UADAnonymizer.class)
 public class BookmarksEntryUADAnonymizer
 	extends BaseBookmarksEntryUADAnonymizer {
 }

@@ -75,7 +75,6 @@ public class EntryUADDisplayTest extends BaseUADDisplayTestCase<Entry> {
 	private final List<Entry> _entries = new ArrayList<Entry>();
 	@Inject
 	private EntryUADTestHelper _entryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	ContactsUADConstants.CLASS_NAME_ENTRY)
+	@Inject(filter = "component.name=*.EntryUADDisplay")
 	private UADDisplay _uadDisplay;
 }

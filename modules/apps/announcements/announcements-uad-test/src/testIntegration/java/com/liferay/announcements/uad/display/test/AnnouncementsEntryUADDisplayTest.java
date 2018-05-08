@@ -71,9 +71,7 @@ public class AnnouncementsEntryUADDisplayTest
 	@Inject
 	private AnnouncementsEntryUADTestHelper _announcementsEntryUADTestHelper;
 
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY
-	)
+	@Inject(filter = "component.name=*.AnnouncementsEntryUADDisplay")
 	private UADDisplay<AnnouncementsEntry> _uadDisplay;
 
 }

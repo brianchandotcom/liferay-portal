@@ -15,17 +15,12 @@
 package com.liferay.wiki.uad.anonymizer;
 
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + WikiUADConstants.CLASS_NAME_WIKI_NODE,
-	service = UADAnonymizer.class
-)
+@Component(immediate = true, service = UADAnonymizer.class)
 public class WikiNodeUADAnonymizer extends BaseWikiNodeUADAnonymizer {
 }

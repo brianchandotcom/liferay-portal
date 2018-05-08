@@ -14,7 +14,6 @@
 
 package com.liferay.message.boards.uad.anonymizer;
 
-import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,10 +21,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + MBUADConstants.CLASS_NAME_MB_THREAD,
-	service = UADAnonymizer.class
-)
+@Component(immediate = true, service = UADAnonymizer.class)
 public class MBThreadUADAnonymizer extends BaseMBThreadUADAnonymizer {
 }

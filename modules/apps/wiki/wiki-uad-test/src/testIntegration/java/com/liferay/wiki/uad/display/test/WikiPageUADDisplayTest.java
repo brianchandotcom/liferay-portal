@@ -75,7 +75,6 @@ public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase<WikiPage> {
 	private final List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
 	@Inject
 	private WikiPageUADTestHelper _wikiPageUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_PAGE)
+	@Inject(filter = "component.name=*.WikiPageUADDisplay")
 	private UADDisplay _uadDisplay;
 }

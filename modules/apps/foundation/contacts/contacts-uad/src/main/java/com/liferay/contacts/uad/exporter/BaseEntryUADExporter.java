@@ -44,6 +44,11 @@ public abstract class BaseEntryUADExporter extends DynamicQueryUADExporter<Entry
 	}
 
 	@Override
+	public Class<Entry> getTypeClass() {
+		return Entry.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
 		return entryLocalService.getActionableDynamicQuery();
 	}

@@ -28,7 +28,6 @@ import org.osgi.service.component.annotations.Reference;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Provides the base implementation for the Entry UAD display.
@@ -59,13 +58,8 @@ public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
 	}
 
 	@Override
-	public String getKey() {
-		return ContactsUADConstants.CLASS_NAME_ENTRY;
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "Entry";
+	public Class<Entry> getTypeClass() {
+		return Entry.class;
 	}
 
 	@Override

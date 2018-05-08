@@ -15,7 +15,6 @@
 package com.liferay.announcements.uad.display;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -32,11 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Noah Sherrill
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY,
-	service = UADDisplay.class
-)
+@Component(immediate = true, service = UADDisplay.class)
 public class AnnouncementsEntryUADDisplay
 	extends BaseAnnouncementsEntryUADDisplay {
 

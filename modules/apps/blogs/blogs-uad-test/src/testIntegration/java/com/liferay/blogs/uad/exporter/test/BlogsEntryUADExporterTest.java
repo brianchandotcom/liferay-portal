@@ -17,7 +17,6 @@ package com.liferay.blogs.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.uad.constants.BlogsUADConstants;
 import com.liferay.blogs.uad.test.BlogsEntryUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -88,7 +87,6 @@ public class BlogsEntryUADExporterTest extends BaseUADExporterTestCase<BlogsEntr
 	private final List<BlogsEntry> _blogsEntries = new ArrayList<BlogsEntry>();
 	@Inject
 	private BlogsEntryUADTestHelper _blogsEntryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	BlogsUADConstants.CLASS_NAME_BLOGS_ENTRY)
+	@Inject(filter = "component.name=*.BlogsEntryUADExporter")
 	private UADExporter _uadExporter;
 }

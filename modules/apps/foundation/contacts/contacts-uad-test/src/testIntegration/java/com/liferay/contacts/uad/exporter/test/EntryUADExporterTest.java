@@ -17,7 +17,6 @@ package com.liferay.contacts.uad.exporter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.contacts.uad.test.EntryUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -75,7 +74,6 @@ public class EntryUADExporterTest extends BaseUADExporterTestCase<Entry> {
 	private final List<Entry> _entries = new ArrayList<Entry>();
 	@Inject
 	private EntryUADTestHelper _entryUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	ContactsUADConstants.CLASS_NAME_ENTRY)
+	@Inject(filter = "component.name=*.EntryUADExporter")
 	private UADExporter _uadExporter;
 }

@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.bookmarks.uad.exporter;
-
-import com.liferay.user.associated.data.exporter.UADExporter;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.user.associated.data.component;
 
 /**
- * @author Noah Sherrill
+ * @author Drew Brokke
  */
-@Component(immediate = true, service = UADExporter.class)
-public class BookmarksEntryUADExporter extends BaseBookmarksEntryUADExporter {
+public interface UADComponent<T> {
+
+	public default String getApplicationName() {
+		return "other";
+	}
+
+	public Class<T> getTypeClass();
+
 }

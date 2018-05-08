@@ -75,7 +75,6 @@ public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase<WikiNode> {
 	private final List<WikiNode> _wikiNodes = new ArrayList<WikiNode>();
 	@Inject
 	private WikiNodeUADTestHelper _wikiNodeUADTestHelper;
-	@Inject(filter = "model.class.name=" +
-	WikiUADConstants.CLASS_NAME_WIKI_NODE)
+	@Inject(filter = "component.name=*.WikiNodeUADDisplay")
 	private UADDisplay _uadDisplay;
 }

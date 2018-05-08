@@ -160,22 +160,6 @@ public class LayoutPageTemplateDisplayContext {
 		return _layoutPageTemplateCollectionId;
 	}
 
-	public String getLayoutPageTemplateCollectionRedirect() {
-		String redirect = ParamUtil.getString(_request, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			PortletURL backURL = _renderResponse.createRenderURL();
-
-			backURL.setParameter(
-				"mvcPath", "/view_layout_page_template_collections.jsp");
-			backURL.setParameter("tabs1", "page-templates");
-
-			redirect = backURL.toString();
-		}
-
-		return redirect;
-	}
-
 	public String getLayoutPageTemplateCollectionTitle()
 		throws PortalException {
 
@@ -330,20 +314,13 @@ public class LayoutPageTemplateDisplayContext {
 
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		long layoutPageTemplateCollectionId =
-			getLayoutPageTemplateCollectionId();
-
-		if (layoutPageTemplateCollectionId <= 0) {
-			portletURL.setParameter(
-				"mvcPath", "/view_layout_page_template_collections.jsp");
-		}
-		else {
-			portletURL.setParameter(
-				"mvcPath", "/view_layout_page_template_entries.jsp");
-		}
-
+		portletURL.setParameter(
+			"mvcPath", "/view_layout_page_template_collections.jsp");
 		portletURL.setParameter("tabs1", "page-templates");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		long layoutPageTemplateCollectionId =
+			getLayoutPageTemplateCollectionId();
 
 		if (layoutPageTemplateCollectionId > 0) {
 			portletURL.setParameter(
@@ -376,6 +353,31 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public String getRedirect() {
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			PortletURL backURL = _renderResponse.createRenderURL();
+
+			backURL.setParameter(
+				"mvcPath", "/view_layout_page_template_collections.jsp");
+			backURL.setParameter("tabs1", "page-templates");
+
+			long layoutPageTemplateCollectionId =
+				getLayoutPageTemplateCollectionId();
+
+			if (getLayoutPageTemplateCollectionId() > 0) {
+				backURL.setParameter(
+					"layoutPageTemplateCollectionId",
+					String.valueOf(layoutPageTemplateCollectionId));
+			}
+
+			redirect = backURL.toString();
+		}
+
+		return redirect;
 	}
 
 	public String getSearchActionURL() {

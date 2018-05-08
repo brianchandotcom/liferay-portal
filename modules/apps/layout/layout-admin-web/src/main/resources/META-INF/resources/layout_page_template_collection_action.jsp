@@ -33,6 +33,7 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDi
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editLayoutPageTemplateCollectionURL">
 			<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="tabs1" value="page-templates" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
 		</portlet:renderURL>
@@ -61,8 +62,13 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDi
 	</c:if>
 
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.DELETE) %>">
+		<portlet:renderURL var="redirectURL">
+			<portlet:param name="mvcPath" value="/view_layout_page_template_collections.jsp" />
+			<portlet:param name="tabs1" value="page-templates" />
+		</portlet:renderURL>
+
 		<portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
 		</portlet:actionURL>
 

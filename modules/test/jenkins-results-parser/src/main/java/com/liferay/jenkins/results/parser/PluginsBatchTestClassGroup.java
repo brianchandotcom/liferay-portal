@@ -36,6 +36,25 @@ import java.util.Properties;
  */
 public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
+	public static class PluginsBatchTestClass extends TestClass {
+
+		protected static TestClass getInstance(
+			File pluginDir, String batchName) {
+
+			TestClass testClass = new PluginsBatchTestClass(
+				pluginDir, batchName);
+
+			return testClass;
+		}
+
+		protected PluginsBatchTestClass(File file, String batchName) {
+			super(file);
+
+			addTestMethod(batchName);
+		}
+
+	}
+
 	protected PluginsBatchTestClassGroup(
 		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
@@ -139,25 +158,6 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		Collections.sort(testClasses);
-	}
-
-	protected static class PluginsBatchTestClass extends TestClass {
-
-		protected static TestClass getInstance(
-			File pluginDir, String batchName) {
-
-			TestClass testClass = new PluginsBatchTestClass(
-				pluginDir, batchName);
-
-			return testClass;
-		}
-
-		protected PluginsBatchTestClass(File file, String batchName) {
-			super(file);
-
-			addTestMethod(batchName);
-		}
-
 	}
 
 	private List<PathMatcher> _getPluginNamesPathMatchers(String propertyName) {

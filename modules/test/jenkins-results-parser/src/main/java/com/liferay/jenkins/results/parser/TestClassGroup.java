@@ -28,7 +28,7 @@ public abstract class TestClassGroup {
 
 	public abstract List<File> getTestClassFiles();
 
-	protected static class TestClass implements Comparable<TestClass> {
+	public static class TestClass implements Comparable<TestClass> {
 
 		@Override
 		public int compareTo(TestClass testClass) {
@@ -64,7 +64,7 @@ public abstract class TestClassGroup {
 
 	}
 
-	protected static class TestMethod {
+	public static class TestMethod {
 
 		protected TestMethod(String name, TestClass testClass) {
 			_name = name;

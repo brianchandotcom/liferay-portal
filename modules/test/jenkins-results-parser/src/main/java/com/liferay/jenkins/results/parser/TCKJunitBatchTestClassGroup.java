@@ -35,6 +35,22 @@ import java.util.List;
  */
 public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
+	public static class TCKBatchTestClass extends TestClass {
+
+		protected static TestClass getInstance(File warFile, String batchName) {
+			TestClass testClass = new TCKBatchTestClass(warFile, batchName);
+
+			return testClass;
+		}
+
+		protected TCKBatchTestClass(File file, String batchName) {
+			super(file);
+
+			addTestMethod(batchName);
+		}
+
+	}
+
 	protected TCKJunitBatchTestClassGroup(
 		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
@@ -119,22 +135,6 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		Collections.sort(testClasses);
-	}
-
-	protected static class TCKBatchTestClass extends TestClass {
-
-		protected static TestClass getInstance(File warFile, String batchName) {
-			TestClass testClass = new TCKBatchTestClass(warFile, batchName);
-
-			return testClass;
-		}
-
-		protected TCKBatchTestClass(File file, String batchName) {
-			super(file);
-
-			addTestMethod(batchName);
-		}
-
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(

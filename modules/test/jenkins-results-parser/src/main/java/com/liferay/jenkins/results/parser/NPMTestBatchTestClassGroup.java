@@ -39,6 +39,25 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		return new AxisTestClassGroup(this, axisId);
 	}
 
+	public static class NPMTestBatchTestClass extends TestClass {
+
+		protected static NPMTestBatchTestClass getInstance(
+			File moduleDir, String batchName) {
+
+			NPMTestBatchTestClass npmTestBatchTestClass =
+				new NPMTestBatchTestClass(moduleDir, batchName);
+
+			return npmTestBatchTestClass;
+		}
+
+		protected NPMTestBatchTestClass(File file, String batchName) {
+			super(file);
+
+			addTestMethod(batchName);
+		}
+
+	}
+
 	protected NPMTestBatchTestClassGroup(
 		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
@@ -78,25 +97,6 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		axisTestClassGroups.put(0, axisTestClassGroup);
-	}
-
-	protected static class NPMTestBatchTestClass extends TestClass {
-
-		protected static NPMTestBatchTestClass getInstance(
-			File moduleDir, String batchName) {
-
-			NPMTestBatchTestClass npmTestBatchTestClass =
-				new NPMTestBatchTestClass(moduleDir, batchName);
-
-			return npmTestBatchTestClass;
-		}
-
-		protected NPMTestBatchTestClass(File file, String batchName) {
-			super(file);
-
-			addTestMethod(batchName);
-		}
-
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.google.common.collect.Lists;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -40,168 +42,7 @@ import java.util.regex.Pattern;
  */
 public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
-	protected JUnitBatchTestClassGroup(
-		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String testSuiteName) {
-
-		super(batchName, portalGitWorkingDirectory, testSuiteName);
-
-		_setTestClassNamesExcludesRelativeGlobs();
-		_setTestClassNamesIncludesRelativeGlobs();
-
-		setTestClasses();
-
-		_setIncludeAutoBalanceTests();
-
-		setAxisTestClassGroups();
-	}
-
-	protected List<String> getRelevantTestClassNamesRelativeGlobs(
-		List<String> testClassNamesRelativeGlobs) {
-
-		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
-
-		List<File> moduleDirsList = null;
-
-		try {
-			moduleDirsList = portalGitWorkingDirectory.getModuleDirsList();
-		}
-		catch (IOException ioe) {
-			File workingDirectory =
-				portalGitWorkingDirectory.getWorkingDirectory();
-
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get module directories in ",
-					workingDirectory.getPath()),
-				ioe);
-		}
-
-		List<File> modifiedFilesList =
-			portalGitWorkingDirectory.getModifiedFilesList();
-
-		for (File modifiedFile : modifiedFilesList) {
-			boolean foundModuleFile = false;
-
-			for (File moduleDir : moduleDirsList) {
-				if (JenkinsResultsParserUtil.isFileInDirectory(
-						moduleDir, modifiedFile)) {
-
-					foundModuleFile = true;
-
-					break;
-				}
-			}
-
-			if (foundModuleFile) {
-				continue;
-			}
-
-			relevantTestClassNameRelativeGlobs.addAll(
-				testClassNamesRelativeGlobs);
-
-			return relevantTestClassNameRelativeGlobs;
-		}
-
-		return relevantTestClassNameRelativeGlobs;
-	}
-
-	protected void setTestClasses() {
-		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
-
-		try {
-			Files.walkFileTree(
-				workingDirectory.toPath(),
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult preVisitDirectory(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (_pathExcluded(filePath)) {
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath, BasicFileAttributes attrs)
-						throws IOException {
-
-						if (_pathIncluded(filePath) &&
-							!_pathExcluded(filePath)) {
-
-							testClasses.add(_getPackagePathClassFile(filePath));
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					private TestClass _getPackagePathClassFile(Path path) {
-						String filePath = path.toString();
-
-						Matcher matcher = _packagePathPattern.matcher(filePath);
-
-						if (matcher.find()) {
-							String packagePath = matcher.group("packagePath");
-
-							packagePath = packagePath.replace(
-								".java", ".class");
-
-							return JunitBatchTestClass.getInstance(
-								portalGitWorkingDirectory,
-								new File(packagePath), path.toFile());
-						}
-
-						return JunitBatchTestClass.getInstance(
-							portalGitWorkingDirectory,
-							new File(filePath.replace(".java", ".class")),
-							path.toFile());
-					}
-
-					private boolean _pathExcluded(Path path) {
-						return _pathMatches(
-							path, testClassNamesExcludesPathMatchers);
-					}
-
-					private boolean _pathIncluded(Path path) {
-						return _pathMatches(
-							path, testClassNamesIncludesPathMatchers);
-					}
-
-					private boolean _pathMatches(
-						Path path, List<PathMatcher> pathMatchers) {
-
-						for (PathMatcher pathMatcher : pathMatchers) {
-							if (pathMatcher.matches(path)) {
-								return true;
-							}
-						}
-
-						return false;
-					}
-
-				});
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to search for test file names in " +
-					workingDirectory.getPath(),
-				ioe);
-		}
-
-		Collections.sort(testClasses);
-	}
-
-	protected final List<PathMatcher> testClassNamesExcludesPathMatchers =
-		new ArrayList<>();
-	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
-		new ArrayList<>();
-
-	protected static class JunitBatchTestClass extends TestClass {
+	public static class JunitBatchTestClass extends TestClass {
 
 		protected static JunitBatchTestClass getInstance(
 			GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
@@ -432,6 +273,231 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		private final String _srcFileContent;
 
 	}
+
+	protected JUnitBatchTestClassGroup(
+		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String testSuiteName) {
+
+		super(batchName, portalGitWorkingDirectory, testSuiteName);
+
+		_setTestClassNamesExcludesRelativeGlobs();
+		_setTestClassNamesIncludesRelativeGlobs();
+
+		setTestClasses();
+
+		_setIncludeAutoBalanceTests();
+
+		setAxisTestClassGroups();
+	}
+
+	protected List<String> getRelevantTestClassNamesRelativeGlobs(
+		List<String> testClassNamesRelativeGlobs) {
+
+		List<String> relevantTestClassNameRelativeGlobs = new ArrayList<>();
+
+		List<File> moduleDirsList = null;
+
+		try {
+			moduleDirsList = portalGitWorkingDirectory.getModuleDirsList();
+		}
+		catch (IOException ioe) {
+			File workingDirectory =
+				portalGitWorkingDirectory.getWorkingDirectory();
+
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get module directories in ",
+					workingDirectory.getPath()),
+				ioe);
+		}
+
+		List<File> modifiedFilesList =
+			portalGitWorkingDirectory.getModifiedFilesList();
+
+		for (File modifiedFile : modifiedFilesList) {
+			boolean foundModuleFile = false;
+
+			for (File moduleDir : moduleDirsList) {
+				if (JenkinsResultsParserUtil.isFileInDirectory(
+						moduleDir, modifiedFile)) {
+
+					foundModuleFile = true;
+
+					break;
+				}
+			}
+
+			if (foundModuleFile) {
+				continue;
+			}
+
+			relevantTestClassNameRelativeGlobs.addAll(
+				testClassNamesRelativeGlobs);
+
+			return relevantTestClassNameRelativeGlobs;
+		}
+
+		return relevantTestClassNameRelativeGlobs;
+	}
+
+	protected void setAxisTestClassGroups() {
+		int testClassCount = testClasses.size();
+
+		if (testClassCount == 0) {
+			if (includeAutoBalanceTests && !autoBalanceTestFiles.isEmpty()) {
+				int id = 0;
+
+				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
+					this, id);
+
+				axisTestClassGroups.put(id, axisTestClassGroup);
+
+				for (File autoBalanceTestFile : autoBalanceTestFiles) {
+					String filePath = autoBalanceTestFile.toString();
+
+					filePath = filePath.replace(".java", ".class");
+
+					axisTestClassGroup.addTestClass(
+						JunitBatchTestClass.getInstance(
+							portalGitWorkingDirectory, new File(filePath),
+							autoBalanceTestFile));
+				}
+			}
+
+			return;
+		}
+
+		int axisMaxSize = getAxisMaxSize();
+
+		int axisCount = (int)Math.ceil((double)testClassCount / axisMaxSize);
+
+		int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
+
+		int id = 0;
+
+		for (List<TestClass> axisTestClasses :
+				Lists.partition(testClasses, axisSize)) {
+
+			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
+				this, id);
+
+			axisTestClassGroups.put(id, axisTestClassGroup);
+
+			for (TestClass axisTestClass : axisTestClasses) {
+				axisTestClassGroup.addTestClass(axisTestClass);
+			}
+
+			if (includeAutoBalanceTests) {
+				for (File autoBalanceTestFile : autoBalanceTestFiles) {
+					String filePath = autoBalanceTestFile.toString();
+
+					filePath = filePath.replace(".java", ".class");
+
+					axisTestClassGroup.addTestClass(
+						JunitBatchTestClass.getInstance(
+							portalGitWorkingDirectory, new File(filePath),
+							autoBalanceTestFile));
+				}
+			}
+
+			id++;
+		}
+	}
+
+	protected void setTestClasses() {
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
+
+		try {
+			Files.walkFileTree(
+				workingDirectory.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult preVisitDirectory(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
+
+						if (_pathExcluded(filePath)) {
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath, BasicFileAttributes attrs)
+						throws IOException {
+
+						if (_pathIncluded(filePath) &&
+							!_pathExcluded(filePath)) {
+
+							testClasses.add(_getPackagePathClassFile(filePath));
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					private TestClass _getPackagePathClassFile(Path path) {
+						String filePath = path.toString();
+
+						Matcher matcher = _packagePathPattern.matcher(filePath);
+
+						if (matcher.find()) {
+							String packagePath = matcher.group("packagePath");
+
+							packagePath = packagePath.replace(
+								".java", ".class");
+
+							return JunitBatchTestClass.getInstance(
+								portalGitWorkingDirectory,
+								new File(packagePath), path.toFile());
+						}
+
+						return JunitBatchTestClass.getInstance(
+							portalGitWorkingDirectory,
+							new File(filePath.replace(".java", ".class")),
+							path.toFile());
+					}
+
+					private boolean _pathExcluded(Path path) {
+						return _pathMatches(
+							path, testClassNamesExcludesPathMatchers);
+					}
+
+					private boolean _pathIncluded(Path path) {
+						return _pathMatches(
+							path, testClassNamesIncludesPathMatchers);
+					}
+
+					private boolean _pathMatches(
+						Path path, List<PathMatcher> pathMatchers) {
+
+						for (PathMatcher pathMatcher : pathMatchers) {
+							if (pathMatcher.matches(path)) {
+								return true;
+							}
+						}
+
+						return false;
+					}
+
+				});
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to search for test file names in " +
+					workingDirectory.getPath(),
+				ioe);
+		}
+
+		Collections.sort(testClasses);
+	}
+
+	protected final List<PathMatcher> testClassNamesExcludesPathMatchers =
+		new ArrayList<>();
+	protected final List<PathMatcher> testClassNamesIncludesPathMatchers =
+		new ArrayList<>();
 
 	private String _getTestClassNamesExcludesPropertyValue() {
 		String propertyValue = getFirstPropertyValue(

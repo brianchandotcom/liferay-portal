@@ -720,10 +720,6 @@ public class StagedLayoutSetStagedModelDataHandler
 		UnicodeProperties importedSettingsProperties =
 			importedLayoutSet.getSettingsProperties();
 
-		boolean showSearchHeader = GetterUtil.getBoolean(
-			importedSettingsProperties.getProperty(
-				"lfr-theme:regular:show-header-search"));
-
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
@@ -731,9 +727,16 @@ public class StagedLayoutSetStagedModelDataHandler
 			Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
 
 		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
-			settingsProperties.setProperty(
-				"lfr-theme:regular:show-header-search",
-				String.valueOf(showSearchHeader));
+			boolean showSearchHeader = GetterUtil.getBoolean(
+				importedSettingsProperties.getProperty(
+					"lfr-theme:regular:show-header-search"),
+				true);
+
+			if (!showSearchHeader) {
+				settingsProperties.setProperty(
+					"lfr-theme:regular:show-header-search",
+					String.valueOf(showSearchHeader));
+			}
 
 			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}

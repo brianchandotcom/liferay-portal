@@ -31,37 +31,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 	items="<%= viewMembershipRequestsDisplayContext.getNavigationItems() %>"
 />
 
-<liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
-
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	componentId="siteAdminWebManagementToolbar"
 	disabled="<%= viewMembershipRequestsDisplayContext.isDisabledManagementBar() %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:actionURL>
+	filterItems="<%= viewMembershipRequestsDisplayContext.getFilterDropdownItems() %>"
+	searchContainerId="sites"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+	sortingOrder="<%= viewMembershipRequestsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= viewMembershipRequestsDisplayContext.getSortingURL() %>"
+	totalItems="<%= viewMembershipRequestsDisplayContext.getTotalItems() %>"
+	viewTypes="<%= viewMembershipRequestsDisplayContext.getViewTypeItems() %>"
+/>
 
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= viewMembershipRequestsDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= viewMembershipRequestsDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= viewMembershipRequestsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= viewMembershipRequestsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"date"} %>'
-			portletURL="<%= viewMembershipRequestsDisplayContext.getPortletURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

@@ -435,10 +435,9 @@ public class FragmentEntryLinkLocalServiceUtil {
 			fragmentEntryIds, editableValues, serviceContext);
 	}
 
-	public static com.liferay.fragment.model.FragmentEntryLink updateLatestChanges(
-		long fragmentEntryLinkId)
+	public static void updateLatestChanges(long fragmentEntryLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateLatestChanges(fragmentEntryLinkId);
+		getService().updateLatestChanges(fragmentEntryLinkId);
 	}
 
 	public static FragmentEntryLinkLocalService getService() {

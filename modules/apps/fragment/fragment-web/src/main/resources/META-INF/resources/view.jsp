@@ -24,7 +24,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"
+	navigationItems="<%= fragmentDisplayContext.getNavigationItems() %>"
 />
 
 <div class="container-fluid container-fluid-max-xl container-view">

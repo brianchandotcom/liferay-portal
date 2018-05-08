@@ -157,21 +157,6 @@ public class FragmentDisplayContext {
 		return _fragmentCollectionId;
 	}
 
-	public List<NavigationItem> getFragmentCollectionNavigationItems() {
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(
-							_renderResponse.createRenderURL());
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "collections"));
-					});
-			}
-		};
-	}
-
 	public String getFragmentCollectionsRedirect() {
 		PortletURL backURL = _renderResponse.createRenderURL();
 
@@ -423,6 +408,21 @@ public class FragmentDisplayContext {
 		}
 
 		return _jsContent;
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(
+							_renderResponse.createRenderURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "fragments"));
+					});
+			}
+		};
 	}
 
 	public String getOrderByType() {

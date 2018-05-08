@@ -29,41 +29,49 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.ANNOTATION};
+		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST identAST = detailAST.findFirstToken(TokenTypes.IDENT);
+		List<DetailAST> annotationASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.ANNOTATION);
 
-		if (identAST == null) {
-			return;
+		for (DetailAST annotationAST : annotationASTList) {
+			DetailAST identAST = annotationAST.findFirstToken(TokenTypes.IDENT);
+
+			if (identAST == null) {
+				continue;
+			}
+
+			String name = identAST.getText();
+
+			if (!name.equals("Reference")) {
+				continue;
+			}
+
+			String policyName = _getAnnotationMemberValue(
+				annotationAST, "policy", _POLICY_STATIC);
+
+			_checkGreedyOption(annotationAST, policyName);
 		}
+	}
 
-		String name = identAST.getText();
-
-		if (!name.equals("Reference")) {
-			return;
-		}
+	private void _checkGreedyOption(
+		DetailAST annotationAST, String policyName) {
 
 		String policyOptionName = _getAnnotationMemberValue(
-			detailAST, "policyOption");
+			annotationAST, "policyOption", _POLICY_OPTION_RELUCTANT);
 
-		if ((policyOptionName == null) ||
-			!policyOptionName.endsWith("GREEDY")) {
+		if (policyOptionName.endsWith(_POLICY_OPTION_GREEDY) &&
+			policyName.endsWith(_POLICY_STATIC)) {
 
-			return;
-		}
-
-		String policyName = _getAnnotationMemberValue(detailAST, "policy");
-
-		if ((policyName == null) || !policyName.endsWith("DYNAMIC")) {
-			log(detailAST.getLineNo(), _MSG_INCORRECT_GREEDY_POLICY_OPTION);
+			log(annotationAST.getLineNo(), _MSG_INCORRECT_GREEDY_POLICY_OPTION);
 		}
 	}
 
 	private String _getAnnotationMemberValue(
-		DetailAST anontationAST, String name) {
+		DetailAST anontationAST, String name, String defaultValue) {
 
 		List<DetailAST> annotationMemberValuePairASTList =
 			DetailASTUtil.getAllChildTokens(
@@ -94,10 +102,16 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 			return expressionIdent.getText();
 		}
 
-		return null;
+		return defaultValue;
 	}
 
 	private static final String _MSG_INCORRECT_GREEDY_POLICY_OPTION =
 		"greedy.policy.option.incorrect";
+
+	private static final String _POLICY_OPTION_GREEDY = "GREEDY";
+
+	private static final String _POLICY_OPTION_RELUCTANT = "RELUCTANT";
+
+	private static final String _POLICY_STATIC = "STATIC";
 
 }

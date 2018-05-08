@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -222,14 +223,19 @@ public class ServicePreAction extends Action {
 		int companyLogoHeight = 0;
 		int companyLogoWidth = 0;
 
-		if (companyLogoId > 0) {
-			Image companyLogoImage = ImageLocalServiceUtil.getCompanyLogo(
-				companyLogoId);
+		Image companyLogoImage = null;
 
-			if (companyLogoImage != null) {
-				companyLogoHeight = companyLogoImage.getHeight();
-				companyLogoWidth = companyLogoImage.getWidth();
-			}
+		if (companyLogoId > 0) {
+			companyLogoImage = ImageLocalServiceUtil.getCompanyLogo(
+				companyLogoId);
+		}
+		else {
+			companyLogoImage = ImageToolUtil.getDefaultCompanyLogo();
+		}
+
+		if (companyLogoImage != null) {
+			companyLogoHeight = companyLogoImage.getHeight();
+			companyLogoWidth = companyLogoImage.getWidth();
 		}
 
 		String realCompanyLogo = companyLogo;

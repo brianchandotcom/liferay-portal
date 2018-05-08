@@ -2294,8 +2294,12 @@
 			<var name="portlet" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DDLTemplate#viewDefaultNoTemplatesCP">
+		<execute macro="DDLNavigator#gotoManageTemplates">
 			<var name="ddlDataDefinitionName" value="Data Definition Copy" />
+		</execute>
+
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no results." />
 		</execute>
 	</command>
 

@@ -26,21 +26,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= ddmFormViewFormInstanceRecordsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getActionItemsDropdownItemList() %>"
+	actionDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getActionItemsDropdownItemList() %>"
 	clearResultsURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getClearResultsURL() %>"
 	disabled="<%= ddmFormViewFormInstanceRecordsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getFilterItemsDropdownItemList() %>"
+	filterDropdownItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getFilterItemsDropdownItemList() %>"
+	itemsTotal="<%= ddmFormViewFormInstanceRecordsDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"
 	sortingOrder="<%= ddmFormViewFormInstanceRecordsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSortingURL() %>"
-	totalItems="<%= ddmFormViewFormInstanceRecordsDisplayContext.getTotalItems() %>"
 />
 
 <div class="container-fluid-1280" id="<portlet:namespace />viewEntriesContainer">

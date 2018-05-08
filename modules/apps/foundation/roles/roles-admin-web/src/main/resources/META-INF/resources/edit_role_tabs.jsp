@@ -18,5 +18,5 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= roleDisplayContext.getEditRoleNavigationItems() %>"
+	navigationItems="<%= roleDisplayContext.getEditRoleNavigationItems() %>"
 />

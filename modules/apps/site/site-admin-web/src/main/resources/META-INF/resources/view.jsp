@@ -52,24 +52,24 @@ if (group != null) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= siteAdminDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= siteAdminDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= siteAdminDisplayContext.getClearResultsURL() %>"
 	componentId="siteAdminWebManagementToolbar"
 	creationMenu="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) ? siteAdminDisplayContext.getCreationMenu() : null %>"
-	filterItems="<%= siteAdminDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteAdminDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
+	itemsTotal="<%= siteAdminDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="sites"
 	searchFormName="searchFm"
 	showInfoButton="<%= true %>"
 	sortingOrder="<%= siteAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteAdminDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteAdminDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteAdminDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= siteAdminDisplayContext.getViewTypeItems() %>"
 />
 
 <div id="<portlet:namespace />sitesContainer">

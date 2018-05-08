@@ -64,7 +64,7 @@ navigationItems.add(entriesNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	navigationItems="<%= navigationItems %>"
 />
 
 <liferay-frontend:management-bar

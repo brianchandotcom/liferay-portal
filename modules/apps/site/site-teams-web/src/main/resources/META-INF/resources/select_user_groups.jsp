@@ -21,22 +21,22 @@ SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGr
 %>
 
 <clay:navigation-bar
-	items="<%= selectUserGroupsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectUserGroupsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= selectUserGroupsDisplayContext.getClearResultsURL() %>"
 	componentId="selectUserGroupsWebManagementToolbar"
 	disabled="<%= selectUserGroupsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= selectUserGroupsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= selectUserGroupsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectUserGroupsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectUserGroupsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
 	searchFormName="searchFm"
 	showSearch="<%= selectUserGroupsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectUserGroupsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectUserGroupsDisplayContext.getSortingURL() %>"
-	totalItems="<%= selectUserGroupsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= selectUserGroupsDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= selectUserGroupsDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="selectUserGroupFm">

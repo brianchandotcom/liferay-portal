@@ -18,5 +18,5 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= ddlDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= ddlDisplayContext.getNavigationItems() %>"
 />

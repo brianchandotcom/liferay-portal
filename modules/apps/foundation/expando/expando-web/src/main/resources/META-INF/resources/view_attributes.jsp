@@ -43,7 +43,7 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items='<%= expandoDisplayContext.getNavigationItems("fields") %>'
+	navigationItems='<%= expandoDisplayContext.getNavigationItems("fields") %>'
 />
 
 <liferay-frontend:management-bar

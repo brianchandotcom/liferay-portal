@@ -24,15 +24,16 @@ Role role = userGroupsDisplayContext.getRole();
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
+	navigationItems="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= userGroupsDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= userGroupsDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= userGroupsDisplayContext.getClearResultsURL() %>"
 	componentId="userGroupsManagementToolbar"
 	disabled="<%= userGroupsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= userGroupsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= userGroupsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= userGroupsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= userGroupsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
 	searchFormName="searchFm"
@@ -40,8 +41,7 @@ Role role = userGroupsDisplayContext.getRole();
 	showSearch="<%= userGroupsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= userGroupsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= userGroupsDisplayContext.getSortingURL() %>"
-	totalItems="<%= userGroupsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= userGroupsDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= userGroupsDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteGroupUserGroups" var="deleteGroupUserGroupsURL">

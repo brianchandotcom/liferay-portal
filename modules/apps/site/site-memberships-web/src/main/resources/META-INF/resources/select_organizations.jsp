@@ -21,22 +21,22 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new Select
 %>
 
 <clay:navigation-bar
-	items="<%= selectOrganizationsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectOrganizationsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= selectOrganizationsDisplayContext.getClearResultsURL() %>"
 	componentId="organizationsManagementToolbar"
 	disabled="<%= selectOrganizationsDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= selectOrganizationsDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= selectOrganizationsDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectOrganizationsDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= selectOrganizationsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="organizations"
 	searchFormName="searchFm"
 	showSearch="<%= selectOrganizationsDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= selectOrganizationsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectOrganizationsDisplayContext.getSortingURL() %>"
-	totalItems="<%= selectOrganizationsDisplayContext.getTotalItems() %>"
-	viewTypes="<%= selectOrganizationsDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= selectOrganizationsDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

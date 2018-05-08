@@ -22,24 +22,24 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateCollectionsActionDropdownItems() %>"
+	actionDropdownItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateCollectionsActionDropdownItems() %>"
 	clearResultsURL="<%= layoutPageTemplateDisplayContext.getClearResultsURL() %>"
 	componentId="layoutPageTemplateCollectionsManagementToolbar"
 	creationMenu="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) ? layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionsCreationMenu() : null %>"
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateCollectionsManagementBar() %>"
-	filterItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
 	searchContainerId="layoutPageTemplateCollections"
 	searchFormName="searchFm"
 	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>"
 	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
-	totalItems="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
-	viewTypes="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">

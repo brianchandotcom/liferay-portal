@@ -97,7 +97,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 			"frontend-taglib-clay/management_toolbar/ManagementToolbar.es");
 	}
 
-	public void setActionItems(List<DropdownItem> actionDropdownItems) {
+	public void setActionDropdownItems(List<DropdownItem> actionDropdownItems) {
 		putValue("actionItems", actionDropdownItems);
 	}
 
@@ -117,12 +117,16 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("disabled", disabled);
 	}
 
-	public void setFilterItems(List<DropdownItem> filterDropdownItems) {
+	public void setFilterDropdownItems(List<DropdownItem> filterDropdownItems) {
 		putValue("filterItems", filterDropdownItems);
 	}
 
 	public void setInfoPanelId(String infoPanelId) {
 		putValue("infoPanelId", infoPanelId);
+	}
+
+	public void setItemsTotal(int itemsTotal) {
+		putValue("totalItems", itemsTotal);
 	}
 
 	public void setSearchActionURL(String searchActionURL) {
@@ -181,11 +185,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("sortingURL", sortingURL);
 	}
 
-	public void setTotalItems(int totalItems) {
-		putValue("totalItems", totalItems);
-	}
-
-	public void setViewTypes(List<ViewTypeItem> viewTypeItems) {
+	public void setViewTypeItems(List<ViewTypeItem> viewTypeItems) {
 		putValue("viewTypes", viewTypeItems);
 	}
 

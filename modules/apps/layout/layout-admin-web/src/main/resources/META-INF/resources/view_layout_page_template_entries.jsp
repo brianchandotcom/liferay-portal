@@ -25,15 +25,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateEntriesActionDropdownItems() %>"
+	actionDropdownItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateEntriesActionDropdownItems() %>"
 	clearResultsURL="<%= layoutPageTemplateDisplayContext.getClearResultsURL() %>"
 	componentId="layoutPageTemplateEntriesManagementToolbar"
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
-	filterItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
 	searchContainerId="layoutPageTemplateEntries"
 	searchFormName="searchFm"
@@ -41,8 +42,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, layoutPageTemplateDisplayContext.g
 	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>"
 	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
-	totalItems="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
-	viewTypes="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteLayoutPageTemplateEntryURL">

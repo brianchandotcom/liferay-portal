@@ -40,7 +40,7 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 	<c:otherwise>
 		<clay:navigation-bar
 			inverted="<%= false %>"
-			items="<%= navigationItems %>"
+			navigationItems="<%= navigationItems %>"
 		/>
 
 		<%

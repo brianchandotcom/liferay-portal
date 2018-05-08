@@ -22,23 +22,23 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
+	navigationItems="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
 />
 
 <clay:management-toolbar
-	actionItems="<%= assetCategoriesDisplayContext.getVocabulariesActionItemsDropdownItems() %>"
+	actionDropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesActionItemsDropdownItems() %>"
 	clearResultsURL="<%= assetCategoriesDisplayContext.getVocabulariesClearResultsURL() %>"
 	componentId="assetVocabulariesManagementToolbar"
 	creationMenu="<%= assetCategoriesDisplayContext.isShowVocabulariesAddButton() ? assetCategoriesDisplayContext.getVocabulariesCreationMenu() : null %>"
 	disabled="<%= assetCategoriesDisplayContext.isDisabledVocabulariesManagementBar() %>"
-	filterItems="<%= assetCategoriesDisplayContext.getVocabulariesFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesFilterItemsDropdownItems() %>"
+	itemsTotal="<%= assetCategoriesDisplayContext.getVocabulariesTotalItems() %>"
 	searchActionURL="<%= assetCategoriesDisplayContext.getVocabulariesSearchActionURL() %>"
 	searchContainerId="assetVocabularies"
 	searchFormName="searchFm"
 	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetCategoriesDisplayContext.getVocabulariesSortingURL() %>"
-	totalItems="<%= assetCategoriesDisplayContext.getVocabulariesTotalItems() %>"
-	viewTypes="<%= assetCategoriesDisplayContext.getVocabulariesViewTypeItems() %>"
+	viewTypeItems="<%= assetCategoriesDisplayContext.getVocabulariesViewTypeItems() %>"
 />
 
 <portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">

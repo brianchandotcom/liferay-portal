@@ -34,7 +34,7 @@ portletURL.setParameter("eventName", eventName);
 %>
 
 <clay:navigation-bar
-	items='<%= roleDisplayContext.getSelectRoleNavigationItems("regular-roles") %>'
+	navigationItems='<%= roleDisplayContext.getSelectRoleNavigationItems("regular-roles") %>'
 />
 
 <liferay-frontend:management-bar>

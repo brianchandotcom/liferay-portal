@@ -28,7 +28,7 @@ portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items='<%=
+	navigationItems='<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				add(

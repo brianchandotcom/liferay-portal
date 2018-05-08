@@ -57,7 +57,7 @@ portletURL.setParameter("step", String.valueOf(step));
 %>
 
 <clay:navigation-bar
-	items='<%= roleDisplayContext.getSelectRoleNavigationItems("site-roles") %>'
+	navigationItems='<%= roleDisplayContext.getSelectRoleNavigationItems("site-roles") %>'
 />
 
 <liferay-frontend:management-bar>

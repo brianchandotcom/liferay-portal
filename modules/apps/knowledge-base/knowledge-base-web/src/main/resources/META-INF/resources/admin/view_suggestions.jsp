@@ -64,15 +64,15 @@ List<KBComment> kbComments = kbCommentsSearchContainer.getResults();
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar
-	actionItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= kbSuggestionListManagementToolbarDisplayContext.isDisabled() %>"
-	filterItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
 	searchContainerId="kbComments"
 	selectable="<%= true %>"
 	showSearch="false"
 	sortingOrder="<%= kbSuggestionListManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbSuggestionListManagementToolbarDisplayContext.getSortingURL()) %>"
-	totalItems="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
 />
 
 <div class="container-fluid-1280">

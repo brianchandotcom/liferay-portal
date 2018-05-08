@@ -28,7 +28,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 %>
 
 <clay:navigation-bar
-	items="<%= viewMembershipRequestsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= viewMembershipRequestsDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

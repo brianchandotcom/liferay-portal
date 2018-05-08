@@ -70,7 +70,7 @@ navigationItems.add(entriesNavigationItem);
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= navigationItems %>"
+	navigationItems="<%= navigationItems %>"
 />
 
 <liferay-frontend:management-bar

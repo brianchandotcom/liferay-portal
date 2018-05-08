@@ -73,19 +73,19 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 %>
 
 <clay:management-toolbar
-	actionItems="<%= mbEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	actionDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	creationMenu="<%= mbEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled='<%= (searchContainer.getTotal() == 0) && (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && entriesNavigation.equals("all") %>'
-	filterItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
 	searchActionURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="mbEntries"
 	searchFormName="searchFm"
 	showInfoButton="<%= false %>"
 	sortingOrder="<%= mbEntriesManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(mbEntriesManagementToolbarDisplayContext.getSortingURL()) %>"
-	totalItems="<%= searchContainer.getTotal() %>"
-	viewTypes="<%= mbEntriesManagementToolbarDisplayContext.getViewTypes() %>"
+	viewTypeItems="<%= mbEntriesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <%

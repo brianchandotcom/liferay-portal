@@ -50,7 +50,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= passwordPolicyDisplayContext.getViewPasswordPoliciesNavigationItems() %>"
+	navigationItems="<%= passwordPolicyDisplayContext.getViewPasswordPoliciesNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

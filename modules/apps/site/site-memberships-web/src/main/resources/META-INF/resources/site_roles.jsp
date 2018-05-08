@@ -21,22 +21,22 @@ SiteRolesDisplayContext siteRolesDisplayContext = new SiteRolesDisplayContext(re
 %>
 
 <clay:navigation-bar
-	items="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
+	navigationItems="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= siteRolesDisplayContext.getClearResultsURL() %>"
 	componentId="siteRolesManagementToolbar"
 	disabled="<%= siteRolesDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= siteRolesDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteRolesDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteRolesDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteRolesDisplayContext.getSearchActionURL() %>"
 	searchContainerId="siteRoles"
 	searchFormName="searchFm"
 	showSearch="<%= siteRolesDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= siteRolesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteRolesDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteRolesDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteRolesDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= siteRolesDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280 portlet-site-memberships-assign-site-roles" name="fm">

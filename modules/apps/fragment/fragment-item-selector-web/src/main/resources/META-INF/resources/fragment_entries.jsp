@@ -24,15 +24,15 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentItemSelectorViewDisplayCon
 <clay:management-toolbar
 	clearResultsURL="<%= fragmentItemSelectorViewDisplayContext.getClearResultsURL() %>"
 	componentId="fragmentItemSelectorFragmentEntriesManagementToolbar"
-	filterItems="<%= fragmentItemSelectorViewDisplayContext.getFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= fragmentItemSelectorViewDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= fragmentItemSelectorViewDisplayContext.getFragmentEntriesTotalItems() %>"
 	searchActionURL="<%= fragmentItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchContainerId="fragmentEntries"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentItemSelectorViewDisplayContext.getSortingURL() %>"
-	totalItems="<%= fragmentItemSelectorViewDisplayContext.getFragmentEntriesTotalItems() %>"
-	viewTypes="<%= fragmentItemSelectorViewDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= fragmentItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

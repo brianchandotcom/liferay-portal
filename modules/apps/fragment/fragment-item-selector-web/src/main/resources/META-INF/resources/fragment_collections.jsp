@@ -19,14 +19,14 @@
 <clay:management-toolbar
 	clearResultsURL="<%= fragmentItemSelectorViewDisplayContext.getClearResultsURL() %>"
 	componentId="fragmentItemSelectorFragmentCollectionsManagementToolbar"
-	filterItems="<%= fragmentItemSelectorViewDisplayContext.getFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= fragmentItemSelectorViewDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= fragmentItemSelectorViewDisplayContext.getFragmentCollectionsTotalItems() %>"
 	searchActionURL="<%= fragmentItemSelectorViewDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentItemSelectorViewDisplayContext.getSortingURL() %>"
-	totalItems="<%= fragmentItemSelectorViewDisplayContext.getFragmentCollectionsTotalItems() %>"
-	viewTypes="<%= fragmentItemSelectorViewDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= fragmentItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

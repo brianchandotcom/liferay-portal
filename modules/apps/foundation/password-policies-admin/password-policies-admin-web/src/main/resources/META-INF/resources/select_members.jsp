@@ -63,7 +63,7 @@ if (tabs2.equals("organizations")) {
 %>
 
 <clay:navigation-bar
-	items="<%= passwordPolicyDisplayContext.getSelectMembersNavigationItems() %>"
+	navigationItems="<%= passwordPolicyDisplayContext.getSelectMembersNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

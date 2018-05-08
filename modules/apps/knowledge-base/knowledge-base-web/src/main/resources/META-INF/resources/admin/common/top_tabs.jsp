@@ -22,5 +22,5 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= kbAdminNavigationDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= kbAdminNavigationDisplayContext.getNavigationItems() %>"
 />

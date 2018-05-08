@@ -66,7 +66,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</div>
 
 		<clay:navigation-bar
-			items="<%=
+			navigationItems="<%=
 				new JSPNavigationItemList(pageContext) {
 					{
 						add(
@@ -134,7 +134,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</div>
 
 		<clay:navigation-bar
-			items="<%=
+			navigationItems="<%=
 				new JSPNavigationItemList(pageContext) {
 					{
 						add(
@@ -231,7 +231,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</div>
 
 		<clay:navigation-bar
-			items="<%=
+			navigationItems="<%=
 				new JSPNavigationItemList(pageContext) {
 					{
 						add(

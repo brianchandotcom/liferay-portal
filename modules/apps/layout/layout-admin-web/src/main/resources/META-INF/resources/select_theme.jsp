@@ -21,18 +21,18 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 %>
 
 <clay:navigation-bar
-	items="<%= selectThemeDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= selectThemeDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	componentId="siteAdminWebManagementToolbar"
-	filterItems="<%= selectThemeDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= selectThemeDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= selectThemeDisplayContext.getTotalItems() %>"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= selectThemeDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectThemeDisplayContext.getSortingURL() %>"
-	totalItems="<%= selectThemeDisplayContext.getTotalItems() %>"
-	viewTypes="<%= selectThemeDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= selectThemeDisplayContext.getViewTypeItems() %>"
 />
 
 <c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PropsValues.AUTO_DEPLOY_ENABLED %>">

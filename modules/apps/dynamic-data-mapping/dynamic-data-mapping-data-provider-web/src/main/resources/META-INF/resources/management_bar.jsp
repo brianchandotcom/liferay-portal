@@ -21,19 +21,19 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 %>
 
 <clay:management-toolbar
-	actionItems="<%= ddmDataProviderDisplayContext.getActionItemsDropdownItems() %>"
+	actionDropdownItems="<%= ddmDataProviderDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddmDataProviderDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= ddmDataProviderDisplayContext.getCreationMenu() %>"
 	disabled="<%= ddmDataProviderDisplayContext.isDisabledManagementBar() %>"
-	filterItems="<%= ddmDataProviderDisplayContext.getFilterItemsDropdownItems() %>"
+	filterDropdownItems="<%= ddmDataProviderDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= ddmDataProviderDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= portletURL.toString() %>"
 	searchContainerId="<%= ddmDataProviderDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"
 	sortingOrder="<%= ddmDataProviderDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDataProviderDisplayContext.getSortingURL() %>"
-	totalItems="<%= ddmDataProviderDisplayContext.getTotalItems() %>"
-	viewTypes="<%= ddmDataProviderDisplayContext.getViewTypesItems() %>"
+	viewTypeItems="<%= ddmDataProviderDisplayContext.getViewTypesItems() %>"
 />
 
 <aui:script>

@@ -81,7 +81,7 @@ searchContainer.setResults(results);
 
 <c:if test="<%= notPublishedEntriesCount > 0 %>">
 	<clay:navigation-bar
-		items='<%=
+		navigationItems='<%=
 			new JSPNavigationItemList(pageContext) {
 				{
 					add(

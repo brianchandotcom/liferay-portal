@@ -18,13 +18,13 @@
 	<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 		<clay:navigation-bar
 			inverted="<%= true %>"
-			items='<%= userDisplayContext.getNavigationItems("users-and-suborganizations") %>'
+			navigationItems='<%= userDisplayContext.getNavigationItems("users-and-suborganizations") %>'
 		/>
 	</c:when>
 	<c:otherwise>
 		<clay:navigation-bar
 			inverted="<%= true %>"
-			items="<%= userDisplayContext.getViewNavigationItems(portletName) %>"
+			navigationItems="<%= userDisplayContext.getViewNavigationItems(portletName) %>"
 		/>
 	</c:otherwise>
 </c:choose>

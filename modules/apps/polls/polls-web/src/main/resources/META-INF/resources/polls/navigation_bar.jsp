@@ -18,5 +18,5 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= pollsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= pollsDisplayContext.getNavigationItems() %>"
 />

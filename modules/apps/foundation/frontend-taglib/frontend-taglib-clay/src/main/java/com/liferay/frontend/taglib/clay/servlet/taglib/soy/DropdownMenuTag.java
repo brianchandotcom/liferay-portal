@@ -60,16 +60,16 @@ public class DropdownMenuTag extends BaseClayTag {
 		putValue("buttonType", buttonType);
 	}
 
+	public void setDropdownItems(List<DropdownItem> dropdownItems) {
+		putValue("items", dropdownItems);
+	}
+
 	public void setExpanded(Boolean expanded) {
 		putValue("expanded", expanded);
 	}
 
 	public void setIcon(String icon) {
 		putValue("icon", icon);
-	}
-
-	public void setItems(List<DropdownItem> dropdownItems) {
-		putValue("items", dropdownItems);
 	}
 
 	public void setItemsIconAlignment(String itemsIconAlignment) {

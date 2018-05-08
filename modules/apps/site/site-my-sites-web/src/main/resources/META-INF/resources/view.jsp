@@ -21,20 +21,20 @@
 <liferay-ui:error key="membershipAlreadyRequested" message="membership-was-already-requested" />
 
 <clay:navigation-bar
-	items="<%= siteMySitesDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= siteMySitesDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar
 	clearResultsURL="<%= siteMySitesDisplayContext.getClearResultsURL() %>"
 	componentId="siteMySitesWebManagementToolbar"
-	filterItems="<%= siteMySitesDisplayContext.getFilterDropdownItems() %>"
+	filterDropdownItems="<%= siteMySitesDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= siteMySitesDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteMySitesDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
 	sortingOrder="<%= siteMySitesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteMySitesDisplayContext.getSortingURL() %>"
-	totalItems="<%= siteMySitesDisplayContext.getTotalItems() %>"
-	viewTypes="<%= siteMySitesDisplayContext.getViewTypeItems() %>"
+	viewTypeItems="<%= siteMySitesDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form action="<%= siteMySitesDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="get" name="fm">

@@ -14,6 +14,10 @@
 
 package com.liferay.journal.web.asset;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
@@ -387,6 +391,21 @@ public class JournalArticleAssetRenderer
 				groupFriendlyURL.concat(
 					JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
 						_article.getUrlTitle()));
+		}
+
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(), getClassPK());
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			AssetDisplayPageEntryLocalServiceUtil.
+				fetchAssetDisplayPageEntryByAssetEntryId(
+					assetEntry.getEntryId());
+
+		if (assetDisplayPageEntry != null) {
+			return
+				themeDisplay.getPortalURL() + "/a/" + assetEntry.getEntryId();
 		}
 
 		String hitLayoutURL = getHitLayoutURL(

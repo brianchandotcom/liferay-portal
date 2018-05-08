@@ -309,7 +309,7 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 			item.setCurrency(
 				StringUtil.toUpperCase(commerceCurrency.getCode()));
 			item.setDescription(cpDefinition.getShortDescription(languageId));
-			item.setName(commerceOrderItem.getTitle(languageId));
+			item.setName(commerceOrderItem.getName(languageId));
 			item.setPrice(String.valueOf(commerceOrderItem.getPrice()));
 			item.setQuantity(String.valueOf(commerceOrderItem.getQuantity()));
 			item.setSku(commerceOrderItem.getSku());

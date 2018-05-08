@@ -137,7 +137,9 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
 		addSearchTerm(
@@ -178,16 +180,16 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			LocalizationUtil.getDefaultLanguageId(cpDefinition.getName());
 
 		for (String languageId : languageIds) {
-			String title = cpDefinition.getName(languageId);
+			String name = cpDefinition.getName(languageId);
 
 			if (languageId.equals(cpDefinitionDefaultLanguageId)) {
-				document.addText(Field.TITLE, title);
+				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);
 			}
 
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
-				title);
+				name);
 		}
 
 		document.addText(Field.NAME, cpDefinition.getName());

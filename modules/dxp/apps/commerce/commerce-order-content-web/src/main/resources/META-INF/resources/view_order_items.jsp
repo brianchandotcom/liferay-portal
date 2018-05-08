@@ -73,7 +73,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					cssClass="table-cell-content"
 					href="<%= cpDefinitionURL %>"
 					name="description"
-					value="<%= HtmlUtil.escape(commerceOrderItem.getTitle(languageId)) %>"
+					value="<%= HtmlUtil.escape(commerceOrderItem.getName(languageId)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

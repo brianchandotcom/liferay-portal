@@ -332,7 +332,7 @@ public class WorldpayCommercePaymentEngine implements CommercePaymentEngine {
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 
-			sb.append(commerceOrderItem.getTitle(languageId));
+			sb.append(commerceOrderItem.getName(languageId));
 		}
 
 		return sb.toString();

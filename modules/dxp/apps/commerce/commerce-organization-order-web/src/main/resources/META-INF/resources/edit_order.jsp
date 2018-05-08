@@ -240,8 +240,8 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 		/>
 
 		<liferay-ui:search-container-column-text
-			name="title"
-			value="<%= HtmlUtil.escape(commerceOrderItem.getTitle(locale)) %>"
+			name="name"
+			value="<%= HtmlUtil.escape(commerceOrderItem.getName(locale)) %>"
 		/>
 
 		<%

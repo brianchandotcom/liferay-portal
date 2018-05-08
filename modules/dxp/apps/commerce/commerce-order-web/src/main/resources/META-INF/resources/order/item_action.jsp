@@ -40,7 +40,7 @@ CommerceOrderItem commerceOrderItem = (CommerceOrderItem)row.getObject();
 
 	data.put("destroyOnHide", true);
 	data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editOrderItemDialog");
-	data.put("title", HtmlUtil.escape(commerceOrderItem.getTitle(locale)));
+	data.put("title", HtmlUtil.escape(commerceOrderItem.getName(locale)));
 	%>
 
 	<liferay-ui:icon

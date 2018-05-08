@@ -24,7 +24,7 @@ CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerc
 
 CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-renderResponse.setTitle(commerceOrderItem.getTitle(locale));
+renderResponse.setTitle(commerceOrderItem.getName(locale));
 %>
 
 <portlet:actionURL name="editCommerceOrderItem" var="editCommerceOrderItemActionURL" />

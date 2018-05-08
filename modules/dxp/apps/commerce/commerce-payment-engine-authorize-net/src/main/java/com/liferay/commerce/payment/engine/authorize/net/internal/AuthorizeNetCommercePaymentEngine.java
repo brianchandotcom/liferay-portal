@@ -389,7 +389,7 @@ public class AuthorizeNetCommercePaymentEngine
 			lineItem.setDescription(
 				cpDefinition.getShortDescription(languageId));
 			lineItem.setItemId(commerceOrderItem.getSku());
-			lineItem.setName(commerceOrderItem.getTitle(languageId));
+			lineItem.setName(commerceOrderItem.getName(languageId));
 			lineItem.setQuantity(
 				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
 

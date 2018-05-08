@@ -404,7 +404,7 @@ syncGitRepoReleases {
 }
 
 tagAppReleases {
-	description = "Gathers the Git IDs from all app changelog files and tags them as 'marketplace-appName-appVersion'."
+	description = "Gathers the Git IDs from all app change logs and tags them as 'marketplace-[app name]-[app version]'."
 
 	doLast {
 		FileTree appChangelogFileTree = fileTree(dir: projectDir, includes: [".releng/apps/**/app.changelog"])

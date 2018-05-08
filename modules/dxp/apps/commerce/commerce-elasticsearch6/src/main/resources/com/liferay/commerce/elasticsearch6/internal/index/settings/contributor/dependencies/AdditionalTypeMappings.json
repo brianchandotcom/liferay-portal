@@ -20,6 +20,17 @@
 				"match_mapping_type": "string"
 			}
 
+		},
+		{
+			"template_terms_set_required_matches": {
+				"mapping": {
+					"store": true,
+					"type": "integer"
+				},
+				"match": "*_required_matches",
+				"match_mapping_type": "string"
+			}
+
 		}
 	],
 	"properties": {
@@ -27,7 +38,19 @@
 			"store": true,
 			"type": "keyword"
 		},
-		"commerceUserSegmentEntryIds_required_matches": {
+		"criterionType_organization_required_matches": {
+			"store": true,
+			"type": "integer"
+		},
+		"criterionType_role_required_matches": {
+			"store": true,
+			"type": "integer"
+		},
+		"criterionType_user_group_required_matches": {
+			"store": true,
+			"type": "integer"
+		},
+		"criterionType_user_required_matches": {
 			"store": true,
 			"type": "integer"
 		},

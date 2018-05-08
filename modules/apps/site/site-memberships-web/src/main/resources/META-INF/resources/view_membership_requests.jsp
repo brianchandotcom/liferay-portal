@@ -17,55 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "pending");
-
-int statusId = -1;
-
-if (tabs1.equals("approved")) {
-	statusId = MembershipRequestConstants.STATUS_APPROVED;
-}
-else if (tabs1.equals("denied")) {
-	statusId = MembershipRequestConstants.STATUS_DENIED;
-}
-else {
-	statusId = MembershipRequestConstants.STATUS_PENDING;
-}
-
-String displayStyle = portalPreferences.getValue(SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "display-style", "icon");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("groupId", String.valueOf(scopeGroupId));
-
-SearchContainer siteMembershipSearch = new SearchContainer(renderRequest, portletURL, null, "no-requests-were-found");
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "date");
-
-siteMembershipSearch.setOrderByCol(orderByCol);
-
-boolean orderByAsc = false;
-
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-if (orderByType.equals("asc")) {
-	orderByAsc = true;
-}
-
-OrderByComparator<MembershipRequest> orderByComparator = new MembershipRequestCreateDateComparator(orderByAsc);
-
-siteMembershipSearch.setOrderByComparator(orderByComparator);
-
-siteMembershipSearch.setOrderByType(orderByType);
-
-int membershipRequestCount = MembershipRequestLocalServiceUtil.searchCount(scopeGroupId, statusId);
-
-siteMembershipSearch.setTotal(membershipRequestCount);
-
-List results = MembershipRequestLocalServiceUtil.search(scopeGroupId, statusId, siteMembershipSearch.getStart(), siteMembershipSearch.getEnd(), siteMembershipSearch.getOrderByComparator());
-
-siteMembershipSearch.setResults(results);
+ViewMembershipRequestsDisplayContext viewMembershipRequestsDisplayContext = new ViewMembershipRequestsDisplayContext(request, renderRequest, renderResponse);
 
 PortletURL backURL = renderResponse.createRenderURL();
 
@@ -76,38 +28,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 %>
 
 <clay:navigation-bar
-	items="<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(tabs1.equals("pending"));
-						navigationItem.setHref(portletURL, "tabs1", "pending");
-						navigationItem.setLabel(LanguageUtil.get(request, "pending"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(tabs1.equals("approved"));
-						navigationItem.setHref(portletURL, "tabs1", "approved");
-						navigationItem.setLabel(LanguageUtil.get(request, "approved"));
-					});
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(tabs1.equals("denied"));
-						navigationItem.setHref(portletURL, "tabs1", "denied");
-						navigationItem.setLabel(LanguageUtil.get(request, "denied"));
-					});
-			}
-		}
-	%>"
+	items="<%= viewMembershipRequestsDisplayContext.getNavigationItems() %>"
 />
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
 
 <liferay-frontend:management-bar
-	disabled="<%= membershipRequestCount <= 0 %>"
+	disabled="<%= viewMembershipRequestsDisplayContext.isDisabledManagementBar() %>"
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
@@ -117,35 +44,40 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= changeDisplayStyleURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
+			selectedDisplayStyle="<%= viewMembershipRequestsDisplayContext.getDisplayStyle() %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= viewMembershipRequestsDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
+			orderByCol="<%= viewMembershipRequestsDisplayContext.getOrderByCol() %>"
+			orderByType="<%= viewMembershipRequestsDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"date"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+			portletURL="<%= viewMembershipRequestsDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		searchContainer="<%= siteMembershipSearch %>"
+		searchContainer="<%= viewMembershipRequestsDisplayContext.getSiteMembershipSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.MembershipRequest"
 			modelVar="membershipRequest"
 		>
+
+			<%
+			String displayStyle = viewMembershipRequestsDisplayContext.getDisplayStyle();
+			%>
+
 			<c:choose>
-				<c:when test='<%= tabs1.equals("pending") %>'>
+				<c:when test='<%= Objects.equals(viewMembershipRequestsDisplayContext.getTabs1(), "pending") %>'>
 					<%@ include file="/view_membership_requests_pending_columns.jspf" %>
 				</c:when>
 				<c:otherwise>
@@ -155,7 +87,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayStyle %>"
+			displayStyle="<%= viewMembershipRequestsDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

@@ -116,6 +116,9 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 				}
 			}
 		}
+		else if (unbindName.equals("\"" + defaultUnbindMethodName + "\"")) {
+			log(annotationAST.getLineNo(), _MSG_REDUNDANT_DEFAULT_UNBIND);
+		}
 		else if (unbindName.equals(_NO_UNBIND) &&
 				 policyName.endsWith(_POLICY_DYNAMIC)) {
 
@@ -242,6 +245,9 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 	private static final String _MSG_INCORRECT_GREEDY_POLICY_OPTION =
 		"greedy.policy.option.incorrect";
+
+	private static final String _MSG_REDUNDANT_DEFAULT_UNBIND =
+		"default.unbind.redundant";
 
 	private static final String _MSG_STATIC_POLICY_MISSING_UNBIND =
 		"missing.unbind.static.policy";

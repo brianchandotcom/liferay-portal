@@ -3,7 +3,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import org.gradle.execution.ProjectConfigurer
 
-task cleanProjectTemplateTests(type: Delete)
+task cleanProjectTemplatesTests(type: Delete)
 task uploadProjectTemplateArchives
 task writeProjectTemplateVersions
 
@@ -28,7 +28,7 @@ bundle {
 	includeTransitiveDependencies = true
 }
 
-cleanProjectTemplateTests {
+cleanProjectTemplatesTests {
 	delete fileTree(dir: processTestResources.destinationDir, include: "*.jar")
 }
 
@@ -121,7 +121,7 @@ processResources {
 }
 
 processTestResources {
-	dependsOn cleanProjectTemplateTests
+	dependsOn cleanProjectTemplatesTests
 	from configurations.projectTemplatesTests
 }
 

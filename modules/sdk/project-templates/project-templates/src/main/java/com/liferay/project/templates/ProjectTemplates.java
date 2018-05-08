@@ -77,9 +77,9 @@ public class ProjectTemplates {
 					while (iterator.hasNext()) {
 						Path path = iterator.next();
 
-						String template = String.valueOf(path.getFileName());
+						String fileName = String.valueOf(path.getFileName());
 
-						template = Archetyper.getTemplateName(template);
+						String template = Archetyper.getTemplateName(fileName);
 
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
 							String bundleDescription =

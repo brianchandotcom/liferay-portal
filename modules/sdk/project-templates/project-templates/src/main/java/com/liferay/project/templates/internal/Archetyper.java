@@ -256,9 +256,9 @@ public class Archetyper {
 					while (iterator.hasNext()) {
 						Path path = iterator.next();
 
-						String template = String.valueOf(path.getFileName());
+						String fileName = String.valueOf(path.getFileName());
 
-						template = getTemplateName(template);
+						String template = getTemplateName(fileName);
 
 						if (Objects.equals(template, templateName)) {
 							return path.toFile();

@@ -1,0 +1,19 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":apps:calendar:calendar-api")
+	testCompile project(":apps:calendar:calendar-service")
+	testCompile project(":apps:portal-search:portal-search-test-util")
+	testCompile project(":core:petra:petra-lang")
+
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:journal:journal-api")
+	testIntegrationCompile project(":apps:message-boards:message-boards-api")
+	testIntegrationCompile project(":apps:portal-search:portal-search-api")
+	testIntegrationCompile project(":apps:static:osgi:osgi-util")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

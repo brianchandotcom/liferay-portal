@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Scripting Executor
+Bundle-SymbolicName: com.liferay.portal.scripting.executor
+Bundle-Version: 4.0.0
+Liferay-Modules-Compat-Adapters: com.liferay.portal.scripting.executor.provider.ScriptBundleProvider:com.liferay.portal.scripting.ScriptBundleProvider

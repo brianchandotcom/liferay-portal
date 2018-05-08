@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Contacts Service
-Bundle-SymbolicName: com.liferay.contacts.service
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
-Liferay-Require-SchemaVersion: 2.0.2
-Liferay-Service: true

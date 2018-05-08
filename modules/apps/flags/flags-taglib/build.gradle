@@ -7,9 +7,9 @@ dependencies {
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:flags:flags-api")
-	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib-soy")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 
-	soyCompile project(":apps:foundation:frontend-js:frontend-js-web")
+	soyCompile project(":apps:frontend-js:frontend-js-web")
 }

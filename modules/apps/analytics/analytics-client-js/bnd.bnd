@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Analytics Client JS
+Bundle-SymbolicName: com.liferay.analytics.client.js
+Bundle-Version: 1.0.0
+Web-ContextPath: /analytics-client-js

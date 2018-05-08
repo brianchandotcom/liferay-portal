@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Login Authentication OpenID Web
-Bundle-SymbolicName: com.liferay.login.authentication.openid.web
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Login
-Web-ContextPath: /login-authentication-openid-web

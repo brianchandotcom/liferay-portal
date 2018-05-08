@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Configuration Test Utilities
-Bundle-SymbolicName: com.liferay.portal.configuration.test.util
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.portal.configuration.test.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Configuration Framework

@@ -1,0 +1,15 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+buildService {
+	apiDir = "../changeset-api/src/main/java"
+	testDir = "../changeset-test/src/testIntegration/java"
+}
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":apps:changeset:changeset-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":core:petra:petra-string")
+}

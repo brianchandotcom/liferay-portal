@@ -1,0 +1,11 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.8"
+	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
+	testIntegrationCompile project(":apps:static:osgi:osgi-util")
+	testIntegrationCompile project(":core:petra:petra-function")
+	testIntegrationCompile project(":core:petra:petra-string")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="XMLServiceEntityNameCheck" files="modules/apps/foundation/portal-background-task/portal-background-task-service/service\.xml" />
-	</source-check>
-</suppressions>

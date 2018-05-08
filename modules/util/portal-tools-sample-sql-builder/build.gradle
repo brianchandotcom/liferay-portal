@@ -20,8 +20,8 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
-	compile project(":apps:foundation:friendly-url:friendly-url-api")
-	compile project(":apps:foundation:friendly-url:friendly-url-service")
+	compile project(":apps:friendly-url:friendly-url-api")
+	compile project(":apps:friendly-url:friendly-url-service")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:journal:journal-service")
 	compile project(":apps:message-boards:message-boards-api")
@@ -51,7 +51,7 @@ dependencies {
 	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
 	testCompile group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
-	testCompile project(":apps:foundation:petra:petra-log4j")
+	testCompile project(":apps:petra:petra-log4j")
 	testCompile project(":core:osgi-service-tracker-collections")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")

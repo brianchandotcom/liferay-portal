@@ -43,8 +43,8 @@ dependencies {
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-radio")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-select")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-type-text")
-	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
-	testCompile project(":apps:foundation:portal-template:portal-template-soy-api")
+	testCompile project(":apps:portal-search:portal-search-test-util")
+	testCompile project(":apps:portal-template:portal-template-soy-api")
 	testCompile project(":core:petra:petra-concurrent")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":core:petra:petra-memory")
@@ -52,7 +52,7 @@ dependencies {
 
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:foundation:portal:portal-upgrade-api")
+	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:registry-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

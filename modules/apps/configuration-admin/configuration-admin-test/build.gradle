@@ -1,0 +1,14 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+copyLibs {
+	enabled = true
+}
+
+dependencies {
+	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:configuration-admin:configuration-admin-web")
+
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

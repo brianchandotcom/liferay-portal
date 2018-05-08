@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Portal Store JCR
+Bundle-SymbolicName: com.liferay.portal.store.jcr
+Bundle-Version: 3.0.0
+Import-Package:\
+	!org.apache.commons.dbcp,\
+	!org.apache.jackrabbit.test,\
+	!org.apache.lucene.*,\
+	!org.apache.pdfbox.*,\
+	!org.apache.tika.*,\
+	\
+	*

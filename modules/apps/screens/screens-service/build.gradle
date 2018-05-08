@@ -16,9 +16,9 @@ dependencies {
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
-	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
 	compileOnly project(":apps:journal:journal-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:screens:screens-api")
 	compileOnly project(":core:petra:petra-string")
 }

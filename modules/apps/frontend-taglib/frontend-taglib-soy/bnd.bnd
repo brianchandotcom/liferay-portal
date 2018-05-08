@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Frontend Taglib Soy
+Bundle-SymbolicName: com.liferay.frontend.taglib.soy
+Bundle-Version: 2.0.0
+Export-Package: com.liferay.frontend.taglib.soy.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/soy";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /frontend-taglib-soy

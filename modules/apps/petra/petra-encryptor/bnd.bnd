@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Petra Encryptor
+Bundle-SymbolicName: com.liferay.petra.encryptor
+Bundle-Version: 2.0.0
+Export-Package: com.liferay.petra.encryptor
+Import-Package:\
+	com.ibm.crypto.provider;resolution:=optional,\
+	\
+	*

@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Portal Security Service Access Policy Service
-Bundle-SymbolicName: com.liferay.portal.security.service.access.policy.service
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
-Liferay-Require-SchemaVersion: 2.0.13
-Liferay-Service: true

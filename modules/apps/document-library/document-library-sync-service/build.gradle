@@ -11,7 +11,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:document-library:document-library-sync-api")
-	compileOnly project(":apps:foundation:petra:petra-model-adapter")
-	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
-	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
+	compileOnly project(":apps:petra:petra-model-adapter")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 }

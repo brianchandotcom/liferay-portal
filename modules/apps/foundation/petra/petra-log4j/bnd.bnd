@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Petra Log4j
-Bundle-SymbolicName: com.liferay.petra.log4j
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.petra.log4j
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

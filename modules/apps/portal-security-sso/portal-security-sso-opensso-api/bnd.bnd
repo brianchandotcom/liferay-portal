@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Security SSO OpenSSO API
+Bundle-SymbolicName: com.liferay.portal.security.sso.opensso.api
+Bundle-Version: 2.0.0
+Export-Package:\
+	com.liferay.portal.security.sso.opensso.configuration,\
+	com.liferay.portal.security.sso.opensso.constants

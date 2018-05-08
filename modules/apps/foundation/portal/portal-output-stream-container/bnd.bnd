@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Portal Output Stream Container
-Bundle-SymbolicName: com.liferay.portal.output.stream.container
-Bundle-Version: 4.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Runtime

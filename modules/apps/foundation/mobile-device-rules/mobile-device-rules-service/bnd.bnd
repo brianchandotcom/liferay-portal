@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Mobile Device Rules Service
-Bundle-SymbolicName: com.liferay.mobile.device.rules.service
-Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Mobile Device Rules
-Liferay-Require-SchemaVersion: 1.0.1
-Liferay-Service: true

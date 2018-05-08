@@ -6,10 +6,10 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:comment:comment-api")
 	compileOnly project(":apps:export-import:export-import-api")
-	compileOnly project(":apps:foundation:portal-search:portal-search")
-	compileOnly project(":apps:foundation:xstream:xstream-configurator-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:message-boards:message-boards-service")
+	compileOnly project(":apps:portal-search:portal-search")
+	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:petra:petra-string")
 
 	testCompile project(":core:petra:petra-lang")

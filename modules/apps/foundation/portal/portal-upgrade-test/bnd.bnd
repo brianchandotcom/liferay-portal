@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Upgrade Test
-Bundle-SymbolicName: com.liferay.portal.upgrade.test
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Upgrade and Verify
--includeresource: test-classes/integration

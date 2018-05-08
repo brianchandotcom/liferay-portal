@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Security SSO Google API
+Bundle-SymbolicName: com.liferay.portal.security.sso.google.api
+Bundle-Version: 2.0.0
+Export-Package:\
+	com.liferay.portal.security.sso.google,\
+	com.liferay.portal.security.sso.google.configuration,\
+	com.liferay.portal.security.sso.google.constants

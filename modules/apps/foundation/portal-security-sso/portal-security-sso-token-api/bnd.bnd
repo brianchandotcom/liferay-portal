@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Portal Security SSO Token API
-Bundle-SymbolicName: com.liferay.portal.security.sso.token.api
-Bundle-Version: 2.0.0
-Export-Package:\
-	com.liferay.portal.security.sso.token.events,\
-	com.liferay.portal.security.sso.token.security.auth
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Security Frameworks

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Output Stream Container API
+Bundle-SymbolicName: com.liferay.portal.output.stream.container.api
+Bundle-Version: 2.0.0
+Export-Package: com.liferay.portal.output.stream.container

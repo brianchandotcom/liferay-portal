@@ -8,8 +8,8 @@ dependencies {
 	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly project(":apps:comment:comment-taglib")
-	compileOnly project(":apps:foundation:frontend-taglib:frontend-taglib")
-	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

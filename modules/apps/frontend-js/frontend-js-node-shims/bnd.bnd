@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend JS Node Shims
+Bundle-SymbolicName: com.liferay.frontend.js.node.shims
+Bundle-Version: 2.0.0
+Web-ContextPath: /frontend-js-node-shims

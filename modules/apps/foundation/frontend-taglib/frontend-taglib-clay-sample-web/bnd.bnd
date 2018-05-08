@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Frontend Taglib Clay Sample Web
-Bundle-SymbolicName: com.liferay.frontend.taglib.clay.sample.web
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.frontend.taglib.clay.sample.web.constants
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Samples

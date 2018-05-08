@@ -1,0 +1,9 @@
+dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":apps:contacts:contacts-api")
+	testIntegrationCompile project(":apps:contacts:contacts-uad")
+	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-api")
+	testIntegrationCompile project(":apps:user-associated-data:user-associated-data-test-util")
+	testIntegrationCompile project(":core:petra:petra-string")
+}

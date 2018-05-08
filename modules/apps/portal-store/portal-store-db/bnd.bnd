@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Store DB
+Bundle-SymbolicName: com.liferay.portal.store.db
+Bundle-Version: 3.0.0

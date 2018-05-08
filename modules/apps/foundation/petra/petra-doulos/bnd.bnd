@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Petra Doulos
-Bundle-SymbolicName: com.liferay.petra.doulos
-Bundle-Version: 4.0.0
-Export-Package:\
-	com.liferay.petra.doulos.processor,\
-	com.liferay.petra.doulos.servlet
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

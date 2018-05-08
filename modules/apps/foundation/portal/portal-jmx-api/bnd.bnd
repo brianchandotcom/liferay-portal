@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal JMX API
-Bundle-SymbolicName: com.liferay.portal.jmx.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.portal.jmx
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Monitoring and Management

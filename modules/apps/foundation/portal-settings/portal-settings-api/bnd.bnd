@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Portal Settings API
-Bundle-SymbolicName: com.liferay.portal.settings.api
-Bundle-Version: 3.0.0
-Export-Package:\
-	com.liferay.portal.settings.constants,\
-	com.liferay.portal.settings.portlet.action
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

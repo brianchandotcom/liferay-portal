@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Frontend JS Bundle Config Extender
-Bundle-SymbolicName: com.liferay.frontend.js.bundle.config.extender
-Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Frontend Infrastructure

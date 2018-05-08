@@ -1,0 +1,87 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+String elasticsearchVersion = "2.4.0"
+
+configurations {
+	elasticsearchPlugins {
+		transitive = false
+	}
+}
+
+dependencies {
+	compileInclude group: "com.carrotsearch", name: "hppc", version: "0.7.1"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.8.1"
+	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-cbor", version: "2.8.1"
+	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.8.1"
+	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.8.1"
+	compileInclude group: "com.google.guava", name: "guava", version: "18.0"
+	compileInclude group: "com.liferay", name: "org.elasticsearch", version: "${elasticsearchVersion}.LIFERAY-PATCHED-1"
+	compileInclude group: "com.ning", name: "compress-lzf", version: "1.0.2"
+	compileInclude group: "com.spatial4j", name: "spatial4j", version: "0.5"
+	compileInclude group: "com.tdunning", name: "t-digest", version: "3.0"
+	compileInclude group: "com.twitter", name: "jsr166e", version: "1.1.0"
+	compileInclude group: "com.vividsolutions", name: "jts", version: "1.13"
+	compileInclude group: "commons-cli", name: "commons-cli", version: "1.3.1"
+	compileInclude group: "commons-io", name: "commons-io", version: "2.4"
+	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
+	compileInclude group: "io.netty", name: "netty", version: "3.10.6.Final"
+	compileInclude group: "joda-time", name: "joda-time", version: "2.9.4"
+	compileInclude group: "org.antlr", name: "antlr-runtime", version: "3.5"
+	compileInclude group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-core", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-grouping", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-highlighter", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-join", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-memory", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-misc", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-queries", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-queryparser", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-sandbox", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-spatial", version: "5.5.2"
+	compileInclude group: "org.apache.lucene", name: "lucene-suggest", version: "5.5.2"
+	compileInclude group: "org.joda", name: "joda-convert", version: "1.2"
+	compileInclude group: "org.noggit", name: "noggit", version: "0.6"
+	compileInclude group: "org.ow2.asm", name: "asm-debug-all", version: "5.0.4"
+	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.15"
+
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "commons-cli", name: "commons-cli", version: "1.3.1"
+	compileOnly group: "org.hdrhistogram", name: "HdrHistogram", version: "2.1.8"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly project(":apps:portal-search:portal-search-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":core:petra:petra-string")
+
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-icu", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-kuromoji", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-smartcn", version: elasticsearchVersion
+	elasticsearchPlugins ext: "zip", group: "org.elasticsearch.plugin", name: "analysis-stempel", version: elasticsearchVersion
+
+	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
+	testCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	testCompile group: "log4j", name: "log4j", version: "1.2.17"
+	testCompile group: "net.java.dev.jna", name: "jna", version: "4.1.0"
+	testCompile group: "org.apache.tika", name: "tika-core", version: "1.14"
+	testCompile group: "org.jabsorb", name: "jabsorb", version: "1.3.1"
+	testCompile group: "org.jodd", name: "jodd-bean", version: "3.6.4"
+	testCompile group: "org.jodd", name: "jodd-json", version: "3.6.4"
+	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.22"
+	testCompile project(":apps:portal-search:portal-search")
+	testCompile project(":apps:portal-search:portal-search-test-util")
+	testCompile project(":core:petra:petra-concurrent")
+	testCompile project(":core:petra:petra-lang")
+	testCompile project(":core:petra:petra-memory")
+	testCompile project(":core:petra:petra-reflect")
+}
+
+processResources {
+	into("plugins") {
+		from configurations.elasticsearchPlugins
+	}
+}

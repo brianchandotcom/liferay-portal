@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Contacts Service
+Bundle-SymbolicName: com.liferay.contacts.service
+Bundle-Version: 3.0.0
+Liferay-Require-SchemaVersion: 2.0.2
+Liferay-Service: true

@@ -21,11 +21,11 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":apps:document-library:document-library-sync-api")
-	compileOnly project(":apps:foundation:petra:petra-io-delta")
-	compileOnly project(":apps:foundation:portal:portal-dao-orm-custom-sql-api")
-	compileOnly project(":apps:foundation:portal:portal-instance-lifecycle-api")
-	compileOnly project(":apps:foundation:portal:portal-spring-extender-api")
-	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
+	compileOnly project(":apps:petra:petra-io-delta")
+	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")
+	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
+	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:sync:sync-api")
 	compileOnly project(":core:osgi-service-tracker-collections")

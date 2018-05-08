@@ -1,0 +1,74 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+configurations {
+	tinyMCE
+}
+
+task buildTinyMCE(type: Copy)
+
+String tinyMCEVersion = "4.3.12"
+
+File editorDestinationDir = file("tmp/META-INF/resources")
+File editorSrcDir = file("src/main/resources/META-INF/resources")
+File thirdPartyDir = file("third-party")
+
+buildTinyMCE {
+	File tinyMCEDestinationDir = new File(editorDestinationDir, "tiny_mce")
+	File tinyMCEZipFile = new File(thirdPartyDir, "tinymce_${tinyMCEVersion}.zip")
+
+	doFirst {
+		delete tinyMCEDestinationDir
+	}
+
+	duplicatesStrategy = "exclude"
+
+	from new File(editorSrcDir, "_diffs")
+
+	from  {
+		zipTree(configurations.tinyMCE.singleFile)
+	} {
+		eachFile new StripPathSegmentsAction(5)
+
+		exclude "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/media/moxieplayer.swf"
+		exclude "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/tinymce.jquery.min.js"
+
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/*.min.js"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/license.txt"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/**/*.css"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/**/*.gif"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/plugins/**/*.min.js"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/skins/"
+		include "META-INF/resources/webjars/tinymce/${tinyMCEVersion}/themes/**/*.min.js"
+	}
+
+	includeEmptyDirs = false
+	into tinyMCEDestinationDir
+}
+
+classes {
+	dependsOn buildTinyMCE
+}
+
+clean {
+	delete "tmp"
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
+	compileOnly group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly project(":apps:frontend-editor:frontend-editor-api")
+	compileOnly project(":apps:frontend-editor:frontend-editor-taglib")
+	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:item-selector:item-selector-api")
+	compileOnly project(":apps:item-selector:item-selector-criteria-api")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
+
+	tinyMCE group: "org.webjars.bower", name: "tinymce", transitive: false, version: tinyMCEVersion
+}

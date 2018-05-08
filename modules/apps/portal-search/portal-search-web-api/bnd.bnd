@@ -1,0 +1,17 @@
+Bundle-Name: Liferay Portal Search Web API
+Bundle-SymbolicName: com.liferay.portal.search.web.api
+Bundle-Version: 2.0.0
+Export-Package:\
+	com.liferay.portal.search.web.constants,\
+	com.liferay.portal.search.web.facet,\
+	com.liferay.portal.search.web.facet.util,\
+	com.liferay.portal.search.web.facet.util.comparator,\
+	com.liferay.portal.search.web.layout.prototype,\
+	com.liferay.portal.search.web.portlet.shared.search,\
+	com.liferay.portal.search.web.portlet.shared.task,\
+	com.liferay.portal.search.web.search.request,\
+	com.liferay.portal.search.web.search.result
+Import-Package:\
+	!com.liferay.util.xml,\
+	\
+	*

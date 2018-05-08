@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Remote JSON Web Service Extender
+Bundle-SymbolicName: com.liferay.portal.remote.json.web.service.extender
+Bundle-Version: 3.0.0

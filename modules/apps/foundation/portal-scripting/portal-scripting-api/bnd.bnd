@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Scripting API
-Bundle-SymbolicName: com.liferay.portal.scripting.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.portal.scripting
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Scripting Engines

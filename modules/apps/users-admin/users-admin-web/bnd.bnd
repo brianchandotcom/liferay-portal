@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Users Admin Web
+Bundle-SymbolicName: com.liferay.users.admin.web
+Bundle-Version: 3.0.0
+Import-Package:\
+	javax.net.ssl,\
+	\
+	*
+Web-ContextPath: /users-admin-web
+-dsannotations-options: inherit

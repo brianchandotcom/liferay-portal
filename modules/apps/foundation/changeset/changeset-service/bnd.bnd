@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Changeset Service
-Bundle-SymbolicName: com.liferay.changeset.service
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Data Management
-Liferay-Require-SchemaVersion: 1.0.0
-Liferay-Service: true

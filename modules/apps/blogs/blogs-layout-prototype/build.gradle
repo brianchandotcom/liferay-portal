@@ -7,7 +7,7 @@ dependencies {
 	compileOnly project(":apps:asset:asset-tags-navigation-api")
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:blogs:blogs-recent-bloggers-api")
-	compileOnly project(":apps:foundation:portal:portal-instance-lifecycle-api")
-	compileOnly project(":apps:foundation:portal:portal-upgrade-api")
+	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-string")
 }

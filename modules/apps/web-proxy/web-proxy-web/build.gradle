@@ -1,0 +1,20 @@
+dependencies {
+	compileInclude group: "com.liferay", name: "org.portletbridge.core", version: "1.1.2"
+	compileInclude group: "com.liferay", name: "org.portletbridge.portlet", version: "1.1.2"
+	compileInclude group: "concurrent", name: "concurrent", version: "1.3.4"
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
+	compileOnly group: "javax.portlet", name: "portlet-api", version: "2.0"
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compileOnly group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
+	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-string")
+}

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Search
+Bundle-SymbolicName: com.liferay.portal.search
+Bundle-Version: 5.0.0
+Import-Package:\
+	com.liferay.portal.kernel.search;version="[7.1.0,8)",\
+	\
+	*
+-dsannotations-options: inherit

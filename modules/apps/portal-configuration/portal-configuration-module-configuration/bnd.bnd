@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Configuration Module Configuration
+Bundle-SymbolicName: com.liferay.portal.configuration.module.configuration
+Bundle-Version: 3.0.0

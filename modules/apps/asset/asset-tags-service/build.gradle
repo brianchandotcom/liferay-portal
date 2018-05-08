@@ -7,5 +7,5 @@ dependencies {
 	compileOnly project(":apps:asset:asset-tag-stats-api")
 	compileOnly project(":apps:asset:asset-tags-api")
 	compileOnly project(":apps:export-import:export-import-api")
-	compileOnly project(":apps:foundation:xstream:xstream-configurator-api")
+	compileOnly project(":apps:xstream:xstream-configurator-api")
 }

@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Background Task Service
+Bundle-SymbolicName: com.liferay.portal.background.task.service
+Bundle-Version: 4.0.0
+Import-Package:\
+	com.liferay.portal.kernel.backgroundtask.display;version="[1.0.0,2)",\
+	\
+	*
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

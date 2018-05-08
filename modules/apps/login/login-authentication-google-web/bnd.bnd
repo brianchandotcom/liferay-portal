@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Login Authentication Google Web
+Bundle-SymbolicName: com.liferay.login.authentication.google.web
+Bundle-Version: 3.0.0
+Web-ContextPath: /login-authentication-google-web

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="AppendCheck" files="modules/apps/portal-language/portal-language-servlet-filter/src/main/java/com/liferay/portal/language/servlet/filter/internal/LanguageFilterTracker\.java" />
+	</checkstyle>
+</suppressions>

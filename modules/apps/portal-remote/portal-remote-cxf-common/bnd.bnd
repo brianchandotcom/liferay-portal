@@ -1,0 +1,40 @@
+Bundle-Name: Liferay Portal Remote CXF Common
+Bundle-SymbolicName: com.liferay.portal.remote.cxf.common
+Bundle-Version: 4.0.0
+Import-Package:\
+	!com.sun.*,\
+	\
+	!javax.annotation.*;resolution:=optional,\
+	\
+	!javax.validation.*,\
+	\
+	!net.sf.cglib.proxy.*,\
+	\
+	!org.apache.abdera.*,\
+	!org.apache.aries.*,\
+	!org.apache.cxf.aegis.*,\
+	!org.apache.cxf.ws.policy.*,\
+	!org.apache.neethi.*,\
+	!org.apache.velocity.*,\
+	!org.apache.xml.resolver.*,\
+	!org.apache.xmlbeans.*,\
+	\
+	!org.junit.*,\
+	\
+	!org.jvnet.fastinfoset.*,\
+	!org.jvnet.staxex.*,\
+	\
+	!org.osgi.service.blueprint.*,\
+	\
+	!org.relaxng.datatype.*,\
+	\
+	!org.slf4j.spi.*,\
+	\
+	!org.springframework.*,\
+	\
+	*
+-exportcontents:\
+	javax.wsdl.*;version="1.2",\
+	\
+	org.apache.cxf.*;version="3.1.9",\
+	org.apache.ws.commons.schema.*;version="2.2.1"

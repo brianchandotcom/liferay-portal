@@ -18,9 +18,9 @@
 		<build-theme
 			diffsDir="diffs"
 			outputDir="../tmp"
-			parentDir="../../../apps/foundation/frontend-theme/frontend-theme-styled/classes/META-INF/resources/_styled"
+			parentDir="../../../apps/frontend-theme/frontend-theme-styled/classes/META-INF/resources/_styled"
 			parentName="_styled"
-			unstyledDir="../../../apps/foundation/frontend-theme/frontend-theme-unstyled/classes/META-INF/resources/_unstyled"
+			unstyledDir="../../../apps/frontend-theme/frontend-theme-unstyled/classes/META-INF/resources/_unstyled"
 		/>
 	</target>
 </project>

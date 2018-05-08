@@ -1,0 +1,4 @@
+Bundle-Activator: com.liferay.portal.relationship.internal.activator.RelationshipImplBundleActivator
+Bundle-Name: Liferay Portal Relationship Implementation
+Bundle-SymbolicName: com.liferay.portal.relationship.impl
+Bundle-Version: 1.0.0

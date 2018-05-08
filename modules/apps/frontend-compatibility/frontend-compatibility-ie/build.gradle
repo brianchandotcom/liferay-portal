@@ -1,0 +1,51 @@
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+configurations {
+	fetch
+	objectAssign
+}
+
+task buildFetch(type: Copy)
+task buildObjectAssign(type: Copy)
+
+buildFetch {
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.fetch.singleFile)
+	}
+
+	include "META-INF/resources/webjars/whatwg-fetch/2.0.4/fetch.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+}
+
+buildObjectAssign {
+	eachFile new StripPathSegmentsAction(6)
+
+	from {
+		zipTree(configurations.objectAssign.singleFile)
+	}
+
+	include "META-INF/resources/webjars/es6-object-assign/1.1.0/dist/object-assign-auto.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+}
+
+classes {
+	dependsOn buildFetch
+	dependsOn buildObjectAssign
+}
+
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")
+
+	fetch group: "org.webjars.npm", name: "whatwg-fetch", transitive: false, version: "2.0.4"
+
+	objectAssign group: "org.webjars.npm", name: "es6-object-assign", transitive: false, version: "1.1.0"
+}

@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Instances API
-Bundle-SymbolicName: com.liferay.portal.instances.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.portal.instances.service
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Scheduler
+Bundle-SymbolicName: com.liferay.portal.scheduler
+Bundle-Version: 5.0.0

@@ -1,6 +1,0 @@
-Bundle-Name: Liferay License Manager Web
-Bundle-SymbolicName: com.liferay.license.manager.web
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
-Liferay-Require-SchemaVersion: 1.0.1

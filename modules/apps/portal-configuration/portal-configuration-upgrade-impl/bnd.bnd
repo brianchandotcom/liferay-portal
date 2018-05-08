@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Configuration Upgrade Implementation
+Bundle-SymbolicName: com.liferay.portal.configuration.upgrade.impl
+Bundle-Version: 1.0.0

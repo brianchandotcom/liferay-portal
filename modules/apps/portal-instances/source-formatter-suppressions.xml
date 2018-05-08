@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="XMLServiceEntityNameCheck" files="modules/apps/portal-instances/portal-instances-service/service\.xml" />
+	</source-check>
+</suppressions>

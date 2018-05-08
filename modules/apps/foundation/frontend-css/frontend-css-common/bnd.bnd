@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Frontend CSS Common
-Bundle-SymbolicName: com.liferay.frontend.css.common
-Bundle-Version: 3.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Frontend Infrastructure
--donotcopy: (\.npmignore|npm-debug\.log|package\.json)
--includeresource: META-INF/resources=tmp/META-INF/resources

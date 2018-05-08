@@ -1,0 +1,4 @@
+Bundle-Activator: com.liferay.portal.remote.rest.extender.internal.activator.CXFJaxRsBundleActivator
+Bundle-Name: Liferay Portal Remote REST Extender
+Bundle-SymbolicName: com.liferay.portal.remote.rest.extender
+Bundle-Version: 3.0.0

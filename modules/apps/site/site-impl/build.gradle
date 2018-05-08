@@ -7,6 +7,6 @@ dependencies {
 	compileOnly project (":apps:layout:layout-api")
 	compileOnly project (":apps:site:site-api")
 	compileOnly project(":apps:application-list:application-list-api")
-	compileOnly project(":apps:foundation:xstream:xstream-configurator-api")
+	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:petra:petra-string")
 }

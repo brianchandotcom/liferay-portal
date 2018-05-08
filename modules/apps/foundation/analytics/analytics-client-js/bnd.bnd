@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Analytics Client JS
-Bundle-SymbolicName: com.liferay.analytics.client.js
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Analytics
-Web-ContextPath: /analytics-client-js

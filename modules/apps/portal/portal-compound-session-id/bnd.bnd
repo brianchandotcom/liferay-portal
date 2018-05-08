@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Compound Session ID
+Bundle-SymbolicName: com.liferay.portal.compound.session.id
+Bundle-Version: 3.0.0

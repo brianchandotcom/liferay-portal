@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Relationship API
-Bundle-SymbolicName: com.liferay.portal.relationship.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.relationship
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Portal Relationship

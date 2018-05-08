@@ -4,6 +4,6 @@ dependencies {
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:blogs:blogs-demo-data-creator-api")
 	compileOnly project(":apps:comment:comment-demo-data-creator-api")
-	compileOnly project(":apps:foundation:portal:portal-instance-lifecycle-api")
-	compileOnly project(":apps:foundation:users-admin:users-admin-demo-data-creator-api")
+	compileOnly project(":apps:portal:portal-instance-lifecycle-api")
+	compileOnly project(":apps:users-admin:users-admin-demo-data-creator-api")
 }

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal Cache Ehcache Multiple
+Bundle-SymbolicName: com.liferay.portal.cache.ehcache.multiple
+Bundle-Version: 2.0.0

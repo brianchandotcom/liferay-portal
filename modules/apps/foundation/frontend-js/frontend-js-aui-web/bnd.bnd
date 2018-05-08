@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Frontend JS AUI Web
-Bundle-SymbolicName: com.liferay.frontend.js.aui.web
-Bundle-Version: 2.0.0
-Fragment-Host: com.liferay.frontend.js.web
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Frontend Infrastructure
--donotcopy: (\.touch|.*_diffs.*)
--includeresource: META-INF/resources=tmp/META-INF/resources

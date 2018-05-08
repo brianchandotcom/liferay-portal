@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Background Task API
+Bundle-SymbolicName: com.liferay.portal.background.task.api
+Bundle-Version: 3.0.0
+Export-Package:\
+	com.liferay.portal.background.task.constants,\
+	com.liferay.portal.background.task.exception,\
+	com.liferay.portal.background.task.model,\
+	com.liferay.portal.background.task.service,\
+	com.liferay.portal.background.task.service.persistence

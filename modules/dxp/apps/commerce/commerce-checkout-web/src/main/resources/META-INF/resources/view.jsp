@@ -32,7 +32,8 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 				</div>
 			</c:when>
 			<c:otherwise>
-				<ul class="commerce-multi-step-nav multi-step-nav multi-step-nav-collapse-sm multi-step-indicator-label-top">
+				<ul class="commerce-multi-step-nav multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
+
 					<%
 					boolean complete = true;
 					int step = 1;
@@ -59,19 +60,23 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 							cssClass += " complete";
 						}
 					%>
+
 						<li class="<%= cssClass %>">
 							<div class="multi-step-divider"></div>
 							<div class="multi-step-indicator">
 								<div class="multi-step-indicator-label">
 									<liferay-ui:message key="<%= commerceCheckoutStep.getLabel(locale) %>" />
 								</div>
+
 								<span class="multi-step-icon" data-multi-step-icon="<%= step %>"></span>
 							</div>
 						</li>
+
 					<%
 						step++;
 					}
 					%>
+
 				</ul>
 
 				<portlet:actionURL name="saveStep" var="saveStepURL" />

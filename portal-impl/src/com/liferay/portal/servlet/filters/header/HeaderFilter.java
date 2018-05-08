@@ -17,7 +17,6 @@ package com.liferay.portal.servlet.filters.header;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -47,7 +46,7 @@ import javax.servlet.http.HttpSession;
 public class HeaderFilter extends BasePortalFilter {
 
 	protected long getLastModified(HttpServletRequest request) {
-		String value = HttpUtil.getParameter(request.getQueryString(), "t");
+		String value = request.getParameter("t");
 
 		if (Validator.isNull(value)) {
 			return -1;

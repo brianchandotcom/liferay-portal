@@ -20,6 +20,7 @@ import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionLocalService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
+import com.liferay.commerce.user.segment.util.comparator.CommerceUserSegmentCriterionPriorityComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -187,7 +188,9 @@ public class CommerceUserSegmentEntryIndexer
 					getCommerceUserSegmentCriteria(
 						commerceUserSegmentEntry.
 							getCommerceUserSegmentEntryId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						new CommerceUserSegmentCriterionPriorityComparator(
+							true));
 
 			for (CommerceUserSegmentCriterion commerceUserSegmentCriterion :
 					commerceUserSegmentCriteria) {

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -124,8 +125,24 @@ public class FragmentDisplayContext {
 			return _fragmentCollectionId;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long defaultFragmentCollectionId = 0;
+
+		List<FragmentCollection> fragmentCollections =
+			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+				themeDisplay.getScopeGroupId(), 0, 1);
+
+		if (ListUtil.isNotEmpty(fragmentCollections)) {
+			FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+			defaultFragmentCollectionId =
+				fragmentCollection.getFragmentCollectionId();
+		}
+
 		_fragmentCollectionId = ParamUtil.getLong(
-			_request, "fragmentCollectionId");
+			_request, "fragmentCollectionId", defaultFragmentCollectionId);
 
 		return _fragmentCollectionId;
 	}

@@ -29,9 +29,12 @@ import com.liferay.person.apio.internal.form.PersonUpdaterForm;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -98,6 +102,10 @@ public class PersonCollectionResource
 			User::getUserId
 		).addDate(
 			"birthDate", PersonCollectionResource::_getBirthday
+		).addLocalizedStringByLocale(
+			"honorificPrefix", this::_getPrefix
+		).addLocalizedStringByLocale(
+			"honorificSuffix", this::_getSuffix
 		).addString(
 			"additionalName", User::getMiddleName
 		).addString(
@@ -165,6 +173,38 @@ public class PersonCollectionResource
 		return new PageItems<>(users, count);
 	}
 
+	private String _getPrefix(User user, Locale locale) {
+		return Try.fromFallible(
+			() -> {
+				Contact contact = user.getContact();
+
+				long prefixId = contact.getPrefixId();
+
+				return _listTypeLocalService.getListType(prefixId);
+			}
+		).map(
+			listType -> LanguageUtil.get(locale, listType.getName())
+		).orElse(
+			null
+		);
+	}
+
+	private String _getSuffix(User user, Locale locale) {
+		return Try.fromFallible(
+			() -> {
+				Contact contact = user.getContact();
+
+				long suffixId = contact.getSuffixId();
+
+				return _listTypeLocalService.getListType(suffixId);
+			}
+		).map(
+			listType -> LanguageUtil.get(locale, listType.getName())
+		).orElse(
+			null
+		);
+	}
+
 	private User _updateUser(Long userId, PersonUpdaterForm personUpdaterForm)
 		throws PortalException {
 
@@ -182,6 +222,9 @@ public class PersonCollectionResource
 
 	@Reference
 	private HasPermission _hasPermission;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

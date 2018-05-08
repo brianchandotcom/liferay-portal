@@ -14,7 +14,10 @@
 
 package com.liferay.commerce.taglib.servlet.taglib.internal.servlet;
 
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.price.CommercePriceCalculation;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import javax.servlet.ServletContext;
 
@@ -28,6 +31,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class ServletContextUtil {
+
+	public static final CommerceOrderHelper getCommerceOrderHelper() {
+		return _instance._getCommerceOrderHelper();
+	}
+
+	public static final ModelResourcePermission<CommerceOrder>
+		getCommerceOrderModelResourcePermission() {
+
+		return _instance._getCommerceOrderModelResourcePermission();
+	}
 
 	public static final CommercePriceCalculation getCommercePriceCalculation() {
 		return _instance._getCommercePriceCalculation();
@@ -48,6 +61,25 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCommerceOrderHelper(
+		CommerceOrderHelper commerceOrderHelper) {
+
+		_commerceOrderHelper = commerceOrderHelper;
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)",
+		unbind = "-"
+	)
+	protected void setCommerceOrderModelResourcePermission(
+		ModelResourcePermission<CommerceOrder>
+			commerceOrderModelResourcePermission) {
+
+		_commerceOrderModelResourcePermission =
+			commerceOrderModelResourcePermission;
+	}
+
+	@Reference(unbind = "-")
 	protected void setCommercePriceCalculation(
 		CommercePriceCalculation commercePriceCalculation) {
 
@@ -62,6 +94,16 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
+	private CommerceOrderHelper _getCommerceOrderHelper() {
+		return _commerceOrderHelper;
+	}
+
+	private ModelResourcePermission<CommerceOrder>
+		_getCommerceOrderModelResourcePermission() {
+
+		return _commerceOrderModelResourcePermission;
+	}
+
 	private CommercePriceCalculation _getCommercePriceCalculation() {
 		return _commercePriceCalculation;
 	}
@@ -72,6 +114,9 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _instance;
 
+	private CommerceOrderHelper _commerceOrderHelper;
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
 	private CommercePriceCalculation _commercePriceCalculation;
 	private ServletContext _servletContext;
 

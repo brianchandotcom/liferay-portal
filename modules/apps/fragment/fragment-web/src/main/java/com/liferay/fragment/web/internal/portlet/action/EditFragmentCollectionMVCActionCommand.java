@@ -15,15 +15,19 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionService;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +57,8 @@ public class EditFragmentCollectionMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
+		FragmentCollection fragmentCollection = null;
+
 		if (fragmentCollectionId <= 0) {
 
 			// Add fragment collection
@@ -60,20 +66,45 @@ public class EditFragmentCollectionMVCActionCommand
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			_fragmentCollectionService.addFragmentCollection(
-				serviceContext.getScopeGroupId(), name, description,
-				serviceContext);
+			fragmentCollection =
+				_fragmentCollectionService.addFragmentCollection(
+					serviceContext.getScopeGroupId(), name, description,
+					serviceContext);
 		}
 		else {
 
 			// Update fragment collection
 
-			_fragmentCollectionService.updateFragmentCollection(
-				fragmentCollectionId, name, description);
+			fragmentCollection =
+				_fragmentCollectionService.updateFragmentCollection(
+					fragmentCollectionId, name, description);
 		}
+
+		String redirect = getRedirectURL(actionResponse, fragmentCollection);
+
+		sendRedirect(actionRequest, actionResponse, redirect);
+	}
+
+	protected String getRedirectURL(
+		ActionResponse actionResponse, FragmentCollection fragmentCollection) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(actionResponse);
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
+		portletURL.setParameter(
+			"fragmentCollectionId",
+			String.valueOf(fragmentCollection.getFragmentCollectionId()));
+
+		return portletURL.toString();
 	}
 
 	@Reference
 	private FragmentCollectionService _fragmentCollectionService;
+
+	@Reference
+	private Portal _portal;
 
 }

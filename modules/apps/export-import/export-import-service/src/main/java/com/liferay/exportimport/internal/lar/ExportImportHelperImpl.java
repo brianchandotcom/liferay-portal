@@ -455,17 +455,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
 			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 
-			Layout layout = new LayoutImpl();
-
-			if (plid == 0) {
-				layout.setPlid(LayoutConstants.DEFAULT_PLID);
-				layout.setLayoutId(LayoutConstants.DEFAULT_PLID);
-				layout.setParentLayoutId(
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
-			else {
-				layout = _layoutLocalService.getLayout(plid);
-			}
+			Layout layout = getLayoutOrCreateDummyRootLayout(plid);
 
 			if (!layouts.contains(layout)) {
 				layouts.add(layout);
@@ -516,6 +506,24 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		throws PortalException {
 
 		return getLayoutIds(getLayoutIdMap(portletRequest), targetGroupId);
+	}
+
+	@Override
+	public Layout getLayoutOrCreateDummyRootLayout(long plid)
+		throws PortalException {
+
+		Layout layout = new LayoutImpl();
+
+		if (plid == 0) {
+			layout.setPlid(LayoutConstants.DEFAULT_PLID);
+			layout.setLayoutId(LayoutConstants.DEFAULT_PLID);
+			layout.setParentLayoutId(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		}
+		else {
+			layout = _layoutLocalService.getLayout(plid);
+		}
+
+		return layout;
 	}
 
 	@Override

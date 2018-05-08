@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -199,10 +200,16 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
 				boolean includeChildren = entry.getValue();
 
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+				Layout layout =
+					ExportImportHelperUtil.getLayoutOrCreateDummyRootLayout(
+						plid);
 
 				if (!layouts.contains(layout)) {
 					layouts.add(layout);
+				}
+
+				if (layout.getPlid() == LayoutConstants.DEFAULT_PLID) {
+					continue;
 				}
 
 				List<Layout> parentLayouts = getMissingRemoteParentLayouts(

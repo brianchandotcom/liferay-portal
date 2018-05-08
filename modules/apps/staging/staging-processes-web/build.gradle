@@ -1,6 +1,7 @@
 apply plugin: "com.liferay.lang.merger"
 
 dependencies {
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"

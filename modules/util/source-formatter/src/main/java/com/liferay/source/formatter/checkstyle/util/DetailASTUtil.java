@@ -148,6 +148,22 @@ public class DetailASTUtil {
 		return parameterNames;
 	}
 
+	public static DetailAST getParentWithTokenType(
+		DetailAST detailAST, int... tokenTypes) {
+
+		DetailAST parentAST = detailAST.getParent();
+
+		while (parentAST != null) {
+			if (ArrayUtil.contains(tokenTypes, parentAST.getType())) {
+				return parentAST;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+
+		return null;
+	}
+
 	public static String getSignature(DetailAST detailAST) {
 		if ((detailAST.getType() != TokenTypes.CTOR_DEF) &&
 			(detailAST.getType() != TokenTypes.METHOD_DEF)) {
@@ -384,14 +400,10 @@ public class DetailASTUtil {
 	public static boolean hasParentWithTokenType(
 		DetailAST detailAST, int... tokenTypes) {
 
-		DetailAST parentAST = detailAST.getParent();
+		DetailAST parentAST = getParentWithTokenType(detailAST, tokenTypes);
 
-		while (parentAST != null) {
-			if (ArrayUtil.contains(tokenTypes, parentAST.getType())) {
-				return true;
-			}
-
-			parentAST = parentAST.getParent();
+		if (parentAST != null) {
+			return true;
 		}
 
 		return false;

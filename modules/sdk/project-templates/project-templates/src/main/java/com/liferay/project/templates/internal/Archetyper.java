@@ -123,17 +123,15 @@ public class Archetyper {
 		File templateFile = _getTemplateFile(
 			projectTemplatesArgs.getTemplate());
 
-		String liferayVersionRange = getManifestProperty(
+		String liferayVersions = getManifestProperty(
 			templateFile, "Liferay-Versions");
 
-		if (Objects.nonNull(liferayVersionRange) &&
-			Objects.isNull(liferayVersion)) {
-
-			if (!_isVersionValid(liferayVersion, liferayVersionRange)) {
-				throw new Exception(
-					"Specified Liferay Version is invalid. Must be in range " +
-						liferayVersionRange);
-			}
+		if (Objects.nonNull(liferayVersions) &&
+				Objects.isNull(liferayVersion) &&
+					(!_isSupported(liferayVersion, liferayVersions))) {
+			throw new Exception(
+				"Specified Liferay Version is invalid. Must be in range " +
+					liferayVersions);
 		}
 
 		if (Objects.isNull(groupId)) {
@@ -254,12 +252,10 @@ public class Archetyper {
 		return null;
 	}
 
-	private static boolean _isVersionValid(
-		String versionString, String rangeString) {
-
+	private static boolean _isSupported(String versionString, String range) {
 		Version version = new Version(versionString);
 
-		VersionRange versionRange = new VersionRange(rangeString);
+		VersionRange versionRange = new VersionRange(range);
 
 		return versionRange.includes(version);
 	}

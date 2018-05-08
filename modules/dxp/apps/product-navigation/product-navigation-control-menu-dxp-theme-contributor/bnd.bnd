@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Product Navigation Control Menu DXP Theme Contributor
-Bundle-SymbolicName: com.liferay.product.navigation.control.menu.dxp.theme.contributor
-Bundle-Version: 2.0.0
-Liferay-Theme-Contributor-Type: product-navigation-control-menu
-Liferay-Theme-Contributor-Weight: 500
-Web-ContextPath: /product-navigation-control-menu-dxp-theme-contributor

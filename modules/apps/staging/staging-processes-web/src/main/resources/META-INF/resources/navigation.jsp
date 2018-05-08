@@ -39,22 +39,10 @@ String searchContainerId = "publishLayoutProcesses";
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		portletURL.setParameter("tabs1", "processes");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="processes" selected='<%= tabs1.equals("processes") %>' />
-
-		<%
-		portletURL.setParameter("tabs1", "scheduled");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="scheduled" selected='<%= tabs1.equals("scheduled") %>' />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= stagingProcessesWebDisplayContext.getNavigationItems() %>"
+/>
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("processes") %>'>

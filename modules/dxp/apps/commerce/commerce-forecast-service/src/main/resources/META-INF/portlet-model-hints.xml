@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.forecast.model.CommerceForecastEntry">
+		<field name="commerceForecastEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="date" type="Date" />
+		<field name="period" type="int" />
+		<field name="target" type="int" />
+		<field name="customerId" type="long" />
+		<field name="sku" type="String" />
+		<field name="assertivity" type="BigDecimal" />
+	</model>
+	<model name="com.liferay.commerce.forecast.model.CommerceForecastValue">
+		<field name="commerceForecastValueId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceForecastEntryId" type="long" />
+		<field name="date" type="Date" />
+		<field name="value" type="BigDecimal" />
+	</model>
+</model-hints>

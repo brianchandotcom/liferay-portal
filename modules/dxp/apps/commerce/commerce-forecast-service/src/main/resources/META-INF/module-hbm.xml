@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.commerce.forecast.model.CommerceForecastEntry" />
+	<import class="com.liferay.commerce.forecast.model.CommerceForecastValue" />
+	<class name="com.liferay.commerce.forecast.model.impl.CommerceForecastEntryImpl" table="CommerceForecastEntry">
+		<id name="commerceForecastEntryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property column="date_" name="date" type="org.hibernate.type.TimestampType" />
+		<property name="period" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="target" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="customerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="assertivity" type="org.hibernate.type.BigDecimalType" />
+	</class>
+	<class name="com.liferay.commerce.forecast.model.impl.CommerceForecastValueImpl" table="CommerceForecastValue">
+		<id name="commerceForecastValueId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceForecastEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property column="date_" name="date" type="org.hibernate.type.TimestampType" />
+		<property name="value" type="org.hibernate.type.BigDecimalType" />
+	</class>
+</hibernate-mapping>

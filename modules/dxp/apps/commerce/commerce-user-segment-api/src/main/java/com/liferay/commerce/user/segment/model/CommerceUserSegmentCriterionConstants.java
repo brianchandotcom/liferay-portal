@@ -25,6 +25,6 @@ public class CommerceUserSegmentCriterionConstants {
 
 	public static final String TYPE_USER = "user";
 
-	public static final String TYPE_USER_GROUP = "user-group";
+	public static final String TYPE_USER_GROUP = "user_group";
 
 }

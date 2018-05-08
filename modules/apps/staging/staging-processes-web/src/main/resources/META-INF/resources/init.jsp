@@ -64,6 +64,7 @@ page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %>
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebDisplayContext" %><%@
+page import="com.liferay.staging.processes.web.internal.display.context.PublishTemplatesDisplayContext" %><%@
 page import="com.liferay.portal.kernel.scheduler.StorageType" %><%@
 page import="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthException" %><%@
@@ -125,6 +126,8 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
 int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
+
+PublishTemplatesDisplayContext publishTemplatesDisplayContext = new PublishTemplatesDisplayContext(renderResponse, request);
 
 StagingProcessesWebDisplayContext stagingProcessesWebDisplayContext = new StagingProcessesWebDisplayContext(renderResponse, request);
 %>

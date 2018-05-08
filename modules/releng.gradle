@@ -48,6 +48,7 @@ apply plugin: "org.ajoberstar.grgit"
 task cherryPickArtifacts
 task lockDependencyVersion
 task prepareMajorIncrement
+task tagAppReleases
 task syncGitRepoReleases
 
 cherryPickArtifacts {
@@ -339,6 +340,80 @@ prepareMajorIncrement {
 
 		dirNames.each {
 			incrementMajorVersionClosure new File(portalRootDir, it)
+		}
+	}
+}
+
+tagAppReleases {
+	description = "Gathers the Git IDs from all app changelog files and tags them as 'marketplace-appName-appVersion'."
+
+	doLast {
+		FileTree appChangelogFileTree = fileTree(dir: projectDir, includes: [".releng/apps/**/app.changelog"])
+
+		appChangelogFileTree.each {
+			appChangelog ->
+
+			String appName = appChangelog.getParentFile().getName()
+
+			String appChangelogTextFiltered = appChangelog.filterLine {
+				it =~ /app\.git\.id/
+			}
+
+			List appGitIDLines = appChangelogTextFiltered.readLines()
+
+			for (appGitIDLine in appGitIDLines) {
+				String appGitID = appGitIDLine.replaceFirst(/app\.git\.id-.+=/, "")
+
+				String appVersion = appGitIDLine.replaceFirst(/app\.git\.id-(.+)=.+/, /$1/)
+
+				String appGitTagName = "marketplace-" + appName + "-" + appVersion
+
+				String gitRevListCmd = "git rev-list -1 " + appGitTagName
+
+				Process process = gitRevListCmd.execute()
+
+				String appGitIDUpstream = process.text.trim()
+
+				int appGitIDLineDuplicates = (appGitIDLines =~ /app\.git\.id-/ + appVersion + "=").count
+
+				String readability = "########################################"
+
+				if (appGitIDLineDuplicates > 1) {
+					println readability
+					println "Warning: " + appGitIDLineDuplicates + " duplicate changelog entries found for " + appName + " version " + appVersion
+					println "Changelog file: " + appChangelog.toString()
+					println "Please delete all but the correct entry and run this script again."
+
+					break
+				}
+				else if (!(appGitIDUpstream =~ /[\da-f]{40}/)) {
+					println readability
+					println appGitTagName + " does not point to a valid Git ID."
+					println "Tagging " + appGitTagName + " at " + appGitID
+
+					grgit.tag.add {
+						pointsTo = appGitID
+						name = appGitTagName
+					}
+				}
+				else if (appGitID != appGitIDUpstream) {
+					println readability
+					println appGitTagName + " has a different upstream Git ID from what is in app.changelog."
+					println "Changelog ID: " + appGitID
+					println "Upstream ID:  " + appGitIDUpstream
+					println "Deleting " + appGitTagName + " at " + appGitIDUpstream
+					println "Tagging " + appGitTagName + " at " + appGitID
+
+					grgit.tag.remove {
+						names = [appGitTagName]
+					}
+
+					grgit.tag.add {
+						pointsTo = appGitID
+						name = appGitTagName
+					}
+				}
+			}
 		}
 	}
 }

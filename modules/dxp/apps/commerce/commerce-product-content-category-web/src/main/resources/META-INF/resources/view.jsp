@@ -39,20 +39,20 @@ contextObjects.put("cpCategoryContentDisplayContext", cpCategoryContentDisplayCo
 >
 	<c:if test="<%= assetCategory != null %>">
 		<div class="category-detail">
-			<div class="category-image">
-
-				<%
-				String imgURL = cpCategoryContentDisplayContext.getDefaultImageSrc(themeDisplay);
-				%>
+			<%
+			String imgURL = cpCategoryContentDisplayContext.getDefaultImageSrc(themeDisplay);
+			%>
 
 			<c:if test="<%= Validator.isNotNull(imgURL) %>">
-				<img class="img-responsive" src="<%= imgURL %>" />
+				<div class="category-image">
+					<img class="img-fluid" src="<%= imgURL %>" />
+				</div>
 			</c:if>
-		</div>
 
-		<div class="container-fluid">
-			<h1><%= assetCategory.getTitle(languageId) %></h1>
-			<p><%= assetCategory.getDescription(languageId) %></p>
+			<div class="container-fluid">
+				<h1 class="category-title"><%= assetCategory.getTitle(languageId) %></h1>
+				<p class="category-description"><%= assetCategory.getDescription(languageId) %></p>
+			</div>
 		</div>
 	</c:if>
 </liferay-ddm:template-renderer>

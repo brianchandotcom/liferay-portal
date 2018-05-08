@@ -77,7 +77,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, FIELD_SKU, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, true);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class CommerceOrderItemIndexer extends BaseIndexer<CommerceOrderItem> {
 		Document document = getBaseModelDocument(CLASS_NAME, commerceOrderItem);
 
 		document.addLocalizedKeyword(
-			Field.TITLE, commerceOrderItem.getTitleMap());
+			Field.NAME, commerceOrderItem.getNameMap());
 		document.addKeyword(FIELD_SKU, commerceOrderItem.getSku());
 		document.addNumber(
 			FIELD_COMMERCE_ORDER_ID, commerceOrderItem.getCommerceOrderId());

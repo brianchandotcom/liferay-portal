@@ -273,6 +273,10 @@ public class PortletTracker
 			BundlePortletApp bundlePortletApp = createBundlePortletApp(
 				bundle, bundleClassLoader, serviceRegistrations);
 
+			bundlePortletApp.setDefaultNamespace(
+				(String)serviceReference.getProperty(
+					"javax.portlet.default-namespace"));
+
 			String jxPortletVersion = (String)serviceReference.getProperty(
 				"javax.portlet.version");
 

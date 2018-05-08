@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.SpriteImage;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 
@@ -108,7 +109,11 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public String getDefaultNamespace() {
-		return _portletApp.getDefaultNamespace();
+		if (_defaultNamespace == null) {
+			return _portletApp.getDefaultNamespace();
+		}
+
+		return _defaultNamespace;
 	}
 
 	@Override
@@ -206,7 +211,12 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public void setDefaultNamespace(String defaultNamespace) {
-		_portletApp.setDefaultNamespace(defaultNamespace);
+		if (Validator.isNull(defaultNamespace)) {
+			_defaultNamespace = null;
+		}
+		else {
+			_defaultNamespace = defaultNamespace;
+		}
 	}
 
 	@Override
@@ -232,6 +242,7 @@ public class BundlePortletApp implements PortletApp {
 		_portletApp.setWARFile(warFile);
 	}
 
+	private String _defaultNamespace;
 	private final BundlePluginPackage _pluginPackage;
 	private final Portlet _portalPortletModel;
 	private final PortletApp _portletApp;

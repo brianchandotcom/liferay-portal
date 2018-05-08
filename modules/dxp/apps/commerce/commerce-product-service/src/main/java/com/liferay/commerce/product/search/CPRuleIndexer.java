@@ -78,7 +78,7 @@ public class CPRuleIndexer extends BaseIndexer<CPRule> {
 		throws Exception {
 
 		long[] commerceUserSegmentEntryIds = GetterUtil.getLongValues(
-			"commerceUserSegmentEntryIds", null);
+			searchContext.getAttribute("commerceUserSegmentEntryIds"), null);
 
 		if (commerceUserSegmentEntryIds != null) {
 			TermsSetFilterBuilder termsSetFilterBuilder =

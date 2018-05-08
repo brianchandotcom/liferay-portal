@@ -110,24 +110,21 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			String srcFileName = srcFile.getName();
 
-			if (!srcFileName.endsWith(".java")) {
-				throw new RuntimeException("Invalid Junit Test Class");
-			}
-
 			_gitWorkingDirectory = gitWorkingDirectory;
 			_srcFile = srcFile;
-
-			try {
-				_srcFileContent = JenkinsResultsParserUtil.read(_srcFile);
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(ioe);
-			}
 
 			_className = _getClassName();
 			_packageName = _getPackageName();
 
+			if (!srcFileName.endsWith(".java")) {
+				_srcFileContent = "";
+
+				return;
+			}
+
 			try {
+				_srcFileContent = JenkinsResultsParserUtil.read(_srcFile);
+
 				_initTestMethods();
 			}
 			catch (IOException ioe) {
@@ -142,14 +139,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		private String _getPackageName() {
-			Matcher packageNameMatcher = _packageNamePattern.matcher(
-				_srcFileContent);
+			String srcFilePath = _srcFile.toString();
 
-			if (!packageNameMatcher.find()) {
-				throw new RuntimeException("No package found in " + _srcFile);
-			}
+			int x = srcFilePath.indexOf("/com/");
+			int y = srcFilePath.lastIndexOf("/");
 
-			return packageNameMatcher.group("packageName");
+			srcFilePath = srcFilePath.substring(x + 1, y);
+
+			return srcFilePath.replaceAll("/", ".");
 		}
 
 		private String _getParentClassName() {

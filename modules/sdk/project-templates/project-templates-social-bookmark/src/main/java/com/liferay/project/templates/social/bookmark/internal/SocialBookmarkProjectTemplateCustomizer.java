@@ -45,8 +45,10 @@ public class SocialBookmarkProjectTemplateCustomizer
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		properties.put(
-			"socialBookmarkType", projectTemplatesArgs.getClassName());
+		if (!properties.containsKey("socialBookmarkType")) {
+			properties.put(
+				"socialBookmarkType", projectTemplatesArgs.getClassName());
+		}
 	}
 
 }

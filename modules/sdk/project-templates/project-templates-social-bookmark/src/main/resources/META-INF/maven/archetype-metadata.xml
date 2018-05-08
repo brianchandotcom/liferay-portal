@@ -34,8 +34,5 @@
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
 		</requiredProperty>
-		<requiredProperty key="socialBookmarkType">
-			<defaultValue>example</defaultValue>
-		</requiredProperty>
 	</requiredProperties>
 </archetype-descriptor>

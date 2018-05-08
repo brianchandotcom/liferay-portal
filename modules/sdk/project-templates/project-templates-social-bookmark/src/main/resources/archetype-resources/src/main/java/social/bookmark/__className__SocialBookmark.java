@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"social.bookmarks.type=${socialBookmarkType}"
+		"social.bookmarks.type=${className.toLowerCase()}"
 	}
 )
 public class ${className}SocialBookmark implements SocialBookmark {
@@ -34,7 +34,7 @@ public class ${className}SocialBookmark implements SocialBookmark {
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "${socialBookmarkType}");
+		return LanguageUtil.get(resourceBundle, "${className.toLowerCase()}");
 	}
 
 	@Override
@@ -55,12 +55,12 @@ public class ${className}SocialBookmark implements SocialBookmark {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=${package}.social.bookmark.${socialBookmarkType})"
+		target = "(bundle.symbolic.name=${package})"
 	)
 	private ResourceBundleLoader _resourceBundleLoader;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=${package}.social.bookmark.${socialBookmarkType})"
+		target = "(osgi.web.symbolicname=${package})"
 	)
 	private ServletContext _servletContext;
 

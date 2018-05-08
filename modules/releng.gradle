@@ -410,65 +410,64 @@ tagAppReleases {
 		FileTree appChangelogFileTree = fileTree(dir: projectDir, includes: [".releng/apps/**/app.changelog"])
 
 		appChangelogFileTree.each {
-			appChangelog ->
+			appChangelogFile ->
 
-			String appName = appChangelog.getParentFile().getName()
+			String appName = appChangelogFile.parentFile.name
 
-			String appChangelogTextFiltered = appChangelog.filterLine {
+			String appChangelogTextFiltered = appChangelogFile.filterLine {
 				it =~ /app\.git\.id/
 			}
 
-			List appGitIDLines = appChangelogTextFiltered.readLines()
+			List<String> appGitIdLines = appChangelogTextFiltered.readLines()
 
-			for (appGitIDLine in appGitIDLines) {
-				String appGitID = appGitIDLine.replaceFirst(/app\.git\.id-.+=/, "")
+			for (String appGitIdLine in appGitIdLines) {
+				String appGitId = appGitIdLine.replaceFirst(/app\.git\.id-.+=/, "")
+				String appVersion = appGitIdLine.replaceFirst(/app\.git\.id-(.+)=.+/, /$1/)
 
-				String appVersion = appGitIDLine.replaceFirst(/app\.git\.id-(.+)=.+/, /$1/)
+				String appGitTagName = "marketplace-${appName}-${appVersion}"
 
-				String appGitTagName = "marketplace-" + appName + "-" + appVersion
-
-				String gitRevListCmd = "git rev-list -1 " + appGitTagName
+				String gitRevListCmd = "git rev-list -1 ${appGitTagName}"
 
 				Process process = gitRevListCmd.execute()
 
-				String appGitIDUpstream = process.text.trim()
+				String appGitIdUpstream = process.text.trim()
 
-				int appGitIDLineDuplicates = (appGitIDLines =~ /app\.git\.id-/ + appVersion + "=").count
+				int appGitIdLineDuplicates = (appGitIdLines =~ /app\.git\.id-/ + appVersion + "=").count
 
-				String readability = "########################################"
+				String separatorString = "########################################"
 
-				if (appGitIDLineDuplicates > 1) {
-					println readability
-					println "Warning: " + appGitIDLineDuplicates + " duplicate changelog entries found for " + appName + " version " + appVersion
-					println "Changelog file: " + appChangelog.toString()
+				if (appGitIdLineDuplicates > 1) {
+					println separatorString
+					println "Warning: ${appGitIdLineDuplicates} duplicate changelog entries found for ${appName} version ${appVersion}"
+					println "Changelog file: " + appChangelogFile.toString()
 					println "Please delete all but the correct entry and run this script again."
 
 					break
 				}
-				else if (!(appGitIDUpstream =~ /[\da-f]{40}/)) {
-					println readability
-					println appGitTagName + " does not point to a valid Git ID."
-					println "Tagging " + appGitTagName + " at " + appGitID
+				else if (!(appGitIdUpstream =~ /[\da-f]{40}/)) {
+					println separatorString
+					println "${appGitTagName} does not point to a valid Git ID."
+					println "Tagging ${appGitTagName} at ${appGitId}"
 
 					grgit.tag.add {
-						pointsTo = appGitID
+						pointsTo = appGitId
 						name = appGitTagName
 					}
 				}
-				else if (appGitID != appGitIDUpstream) {
-					println readability
-					println appGitTagName + " has a different upstream Git ID from what is in app.changelog."
-					println "Changelog ID: " + appGitID
-					println "Upstream ID:  " + appGitIDUpstream
-					println "Deleting " + appGitTagName + " at " + appGitIDUpstream
-					println "Tagging " + appGitTagName + " at " + appGitID
+				else if (appGitId != appGitIdUpstream) {
+					println separatorString
+					println "${appGitTagName} has a different upstream Git ID from what is in app.changelog."
+					println "Changelog Id: ${appGitId}"
+					println "Upstream Id:  ${appGitIdUpstream}"
+					println "Deleting ${appGitTagName} at ${appGitIdUpstream}"
+					println "Tagging ${appGitTagName} at ${appGitId}"
 
 					grgit.tag.remove {
 						names = [appGitTagName]
 					}
 
 					grgit.tag.add {
-						pointsTo = appGitID
+						pointsTo = appGitId
 						name = appGitTagName
 					}
 				}

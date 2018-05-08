@@ -57,43 +57,13 @@ if (liveGroup == null) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcRenderCommandName" value="viewExportConfigurations" />
-			</liferay-portlet:renderURL>
-
-			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<portlet:renderURL var="addExportConfigurationURL">
-			<portlet:param name="mvcRenderCommandName" value="editExportConfiguration" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "new") %>'
-				url="<%= addExportConfigurationURL %>"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	creationMenu="<%= exportTemplatesToolbarDisplayContext.getCreationMenu() %>"
+	searchActionURL="<%= exportTemplatesToolbarDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	showCreationMenu="<%= true %>"
+	showSearch="<%= true %>"
+/>
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= portletURL %>">

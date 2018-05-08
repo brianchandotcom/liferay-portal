@@ -42,7 +42,7 @@ bannedUsersURL.setParameter("mvcRenderCommandName", "/message_boards/view_banned
 					navigationItem -> {
 						navigationItem.setActive(navItemSelected.equals("threads"));
 						navigationItem.setHref(messageBoardsHomeURL);
-						navigationItem.setLabel(LanguageUtil.get(request, "threads"));
+						navigationItem.setLabel(LanguageUtil.get(request, "content"));
 					});
 
 				add(

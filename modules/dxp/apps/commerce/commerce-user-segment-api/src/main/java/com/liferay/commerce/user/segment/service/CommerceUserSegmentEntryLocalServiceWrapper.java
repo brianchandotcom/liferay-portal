@@ -56,6 +56,11 @@ public class CommerceUserSegmentEntryLocalServiceWrapper
 			key, active, system, priority, serviceContext);
 	}
 
+	@Override
+	public void cleanUserSegmentsChache(long groupId) {
+		_commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(groupId);
+	}
+
 	/**
 	* Creates a new commerce user segment entry with the primary key. Does not add the commerce user segment entry to the database.
 	*

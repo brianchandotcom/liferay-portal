@@ -1,0 +1,109 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Eleflow Predictive Commerce Admin"
+host: "ytop6ls10k.execute-api.us-west-2.amazonaws.com"
+basePath: "/Prod"
+schemes:
+- "https"
+paths:
+  /usagePlan:
+    get:
+      produces:
+      - "application/json"
+      parameters:
+      - name: "clientId"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/UsagePlan"
+      security:
+      - api_key: []
+      x-amazon-apigateway-request-validator: "basic"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-GetUsagePlanFunction-Y8ZIRRK8QS11/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+    post:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "UsagePlan"
+        required: true
+        schema:
+          $ref: "#/definitions/UsagePlan"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ApiKey"
+      x-amazon-apigateway-request-validator: "basic"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-PostUsagePlanFunction-2ZHM6MVPQVXE/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+    delete:
+      parameters:
+      - name: "clientId"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+      x-amazon-apigateway-request-validator: "basic"
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-DeleteUsagePlanFunction-1D73TQLIN0IV9/invocations"
+        responses:
+          default:
+            statusCode: "200"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+        type: "aws_proxy"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "x-api-key"
+    in: "header"
+definitions:
+  ApiKey:
+    type: "string"
+  UsagePlan:
+    type: "object"
+    required:
+    - "clientId"
+    - "plan"
+    properties:
+      clientId:
+        type: "string"
+        description: "Unique identifier of the client."
+      plan:
+        type: "string"
+        description: "The client's usage plan choice ."
+        enum:
+        - "basic"
+        - "advanced"
+        default: "advanced"
+x-amazon-apigateway-request-validators:
+  basic:
+    validateRequestParameters: true
+    validateRequestBody: true

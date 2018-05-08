@@ -64,16 +64,16 @@
 		<execute macro="Upgrade#approveWorkflow" />
 	</command>
 
-	<command ignore="true" name="ViewWorkflowArchive70106" priority="5">
+	<command name="ViewWorkflowArchive70106" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
-		<property name="portal.version" value="7.2.10.6" />
+		<property name="portal.version" value="7.0.10.6" />
 
 		<execute macro="Upgrade#approveWorkflow" />
 
 		<execute macro="Upgrade#publishWorkflowDefinition" />
 	</command>
 
-	<command ignore="true" name="ViewWorkflowArchive704" priority="5">
+	<command name="ViewWorkflowArchive704" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="7.0.4" />
 

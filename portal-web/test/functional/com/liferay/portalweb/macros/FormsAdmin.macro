@@ -204,7 +204,7 @@
 	</command>
 
 	<command name="viewNoFormEntries">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no entries." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 	</command>
 
 	<command name="viewNoForms">

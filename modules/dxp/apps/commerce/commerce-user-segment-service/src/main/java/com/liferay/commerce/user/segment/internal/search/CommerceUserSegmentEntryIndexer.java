@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -35,7 +36,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
@@ -152,13 +155,32 @@ public class CommerceUserSegmentEntryIndexer
 		document.addNumber(
 			Field.ENTRY_CLASS_PK,
 			commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
-		document.addText(Field.NAME, commerceUserSegmentEntry.getName());
 		document.addText(
 			Field.USER_NAME, commerceUserSegmentEntry.getUserName());
 		document.addNumberSortable(
 			Field.PRIORITY, commerceUserSegmentEntry.getPriority());
 
 		document.addKeyword("active", commerceUserSegmentEntry.isActive());
+
+		String commerceUserSegmentEntryLanguageId =
+			LocalizationUtil.getDefaultLanguageId(
+				commerceUserSegmentEntry.getName());
+
+		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
+			commerceUserSegmentEntry.getName());
+
+		for (String languageId : languageIds) {
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				commerceUserSegmentEntry.getName(languageId));
+
+			if (languageId.equals(commerceUserSegmentEntryLanguageId)) {
+				document.addText(
+					Field.NAME, commerceUserSegmentEntry.getName(languageId));
+				document.addText("defaultLanguageId", languageId);
+			}
+		}
+
 		try {
 			List<CommerceUserSegmentCriterion> commerceUserSegmentCriteria =
 				_commerceUserSegmentCriterionLocalService.

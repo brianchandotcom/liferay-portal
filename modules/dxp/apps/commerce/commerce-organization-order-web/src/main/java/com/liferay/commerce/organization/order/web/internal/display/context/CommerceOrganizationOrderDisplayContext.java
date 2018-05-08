@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -77,7 +76,6 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -369,79 +367,6 @@ public class CommerceOrganizationOrderDisplayContext {
 	public String getCommerceOrderTime(CommerceOrder commerceOrder) {
 		return _commerceOrderDateFormatTime.format(
 			commerceOrder.getCreateDate());
-	}
-
-	public String getCommerceOrderTransitionMessage(String transitionName) {
-		if (Validator.isNull(transitionName)) {
-			transitionName = "proceed";
-		}
-
-		return LanguageUtil.get(
-			_commerceOrganizationOrderRequestHelper.getRequest(),
-			transitionName);
-	}
-
-	public List<ObjectValuePair<Long, String>> getCommerceOrderTransitionOVPs(
-			CommerceOrder commerceOrder)
-		throws PortalException {
-
-		List<ObjectValuePair<Long, String>> transitionOVPs = new ArrayList<>();
-
-		if (!commerceOrder.isOpen()) {
-			transitionOVPs.add(
-				new ObjectValuePair<Long, String>(0L, "reorder"));
-		}
-
-		ObjectValuePair<Long, String> approveOVP = null;
-
-		if (commerceOrder.isOpen() && commerceOrder.isPending() &&
-			hasPermission(
-				commerceOrder,
-				CommerceOrderActionKeys.APPROVE_COMMERCE_ORDER)) {
-
-			approveOVP = new ObjectValuePair<>(0L, "approve");
-
-			transitionOVPs.add(approveOVP);
-		}
-
-		if (commerceOrder.isOpen() && commerceOrder.isApproved() &&
-			hasPermission(
-				commerceOrder,
-				CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER)) {
-
-			transitionOVPs.add(new ObjectValuePair<>(0L, "checkout"));
-		}
-
-		if (commerceOrder.isOpen() && commerceOrder.isDraft() &&
-			!commerceOrder.isEmpty() &&
-			hasPermission(commerceOrder, ActionKeys.UPDATE)) {
-
-			transitionOVPs.add(new ObjectValuePair<>(0L, "submit"));
-		}
-
-		int start = transitionOVPs.size();
-
-		transitionOVPs.addAll(
-			_commerceOrderHelper.getWorkflowTransitions(
-				_commerceOrganizationOrderRequestHelper.getUserId(),
-				commerceOrder));
-
-		if (approveOVP != null) {
-			for (int i = start; i < transitionOVPs.size(); i++) {
-				ObjectValuePair<Long, String> objectValuePair =
-					transitionOVPs.get(i);
-
-				String value = objectValuePair.getValue();
-
-				if (value.equals(approveOVP.getValue())) {
-					approveOVP.setValue("force-" + value);
-
-					break;
-				}
-			}
-		}
-
-		return transitionOVPs;
 	}
 
 	public String getCommerceOrderValue(CommerceOrder commerceOrder)

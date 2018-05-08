@@ -73,12 +73,10 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 
 		<c:if test="<%= commerceOrder.isOpen() %>">
 			<div class="autofit-col">
-
-				<%
-				request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
-				%>
-
-				<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />
+				<liferay-commerce:order-transitions
+					commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>"
+					cssClass="btn btn-secondary btn-sm"
+				/>
 			</div>
 
 			<c:if test="<%= commerceOrganizationOrderDisplayContext.hasPermission(commerceOrder, ActionKeys.UPDATE) %>">
@@ -152,6 +150,12 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 				<c:if test="<%= Validator.isNotNull(paymentMethodName) %>">
 					<div class="order-details-subtitle payment-method-name">
 						<%= HtmlUtil.escape(paymentMethodName) %>
+					</div>
+				</c:if>
+
+				<c:if test="<%= Validator.isNotNull(commerceOrder.getPurchaseOrderNumber()) %>">
+					<div class="order-details-subtitle purchase-order-number">
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceOrder.getPurchaseOrderNumber()) %>" key="purchase-order-number-x" translateArguments="<%= false %>" />
 					</div>
 				</c:if>
 			</div>

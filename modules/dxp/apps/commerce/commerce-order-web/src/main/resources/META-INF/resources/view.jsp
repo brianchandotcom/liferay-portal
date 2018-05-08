@@ -102,10 +102,14 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 				path="/order_notes.jsp"
 			/>
 
-			<liferay-ui:search-container-column-jsp
+			<liferay-ui:search-container-column-text
 				cssClass="transition-column"
-				path="/order_transition.jsp"
-			/>
+			>
+				<liferay-commerce:order-transitions
+					commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>"
+					cssClass="btn btn-secondary btn-sm"
+				/>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
 				align="center"

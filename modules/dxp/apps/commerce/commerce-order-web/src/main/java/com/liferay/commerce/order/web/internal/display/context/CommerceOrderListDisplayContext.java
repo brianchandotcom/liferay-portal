@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.order.web.internal.display.context;
 
-import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
@@ -56,7 +55,6 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -65,7 +63,6 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -186,60 +183,6 @@ public class CommerceOrderListDisplayContext {
 			_commerceOrderRequestHelper.getRequest(),
 			CommerceOrderConstants.getOrderStatusLabel(
 				commerceOrder.getOrderStatus()));
-	}
-
-	public String getCommerceOrderTransitionMessage(String transitionName) {
-		if (Validator.isNull(transitionName)) {
-			transitionName = "proceed";
-		}
-
-		return LanguageUtil.get(
-			_commerceOrderRequestHelper.getRequest(), transitionName);
-	}
-
-	public List<ObjectValuePair<Long, String>> getCommerceOrderTransitionOVPs(
-			CommerceOrder commerceOrder)
-		throws PortalException {
-
-		List<ObjectValuePair<Long, String>> transitionOVPs = new ArrayList<>();
-
-		PermissionChecker permissionChecker =
-			_commerceOrderRequestHelper.getPermissionChecker();
-
-		ObjectValuePair<Long, String> approveOVP = null;
-
-		if (commerceOrder.isOpen() && commerceOrder.isPending() &&
-			CommerceOrderPermission.contains(
-				permissionChecker, commerceOrder,
-				CommerceOrderActionKeys.APPROVE_COMMERCE_ORDER)) {
-
-			approveOVP = new ObjectValuePair<>(0L, "approve");
-
-			transitionOVPs.add(approveOVP);
-		}
-
-		int start = transitionOVPs.size();
-
-		transitionOVPs.addAll(
-			_commerceOrderHelper.getWorkflowTransitions(
-				_commerceOrderRequestHelper.getUserId(), commerceOrder));
-
-		if (approveOVP != null) {
-			for (int i = start; i < transitionOVPs.size(); i++) {
-				ObjectValuePair<Long, String> objectValuePair =
-					transitionOVPs.get(i);
-
-				String value = objectValuePair.getValue();
-
-				if (value.equals(approveOVP.getValue())) {
-					approveOVP.setValue("force-" + value);
-
-					break;
-				}
-			}
-		}
-
-		return transitionOVPs;
 	}
 
 	public String getCommerceOrderValue(CommerceOrder commerceOrder)

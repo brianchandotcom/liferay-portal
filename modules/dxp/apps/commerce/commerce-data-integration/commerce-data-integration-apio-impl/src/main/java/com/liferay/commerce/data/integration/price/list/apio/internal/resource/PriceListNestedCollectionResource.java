@@ -23,11 +23,15 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.data.integration.price.list.apio.identifier.PriceListIdentifier;
+import com.liferay.commerce.data.integration.price.list.apio.internal.form.PriceListCreatorForm;
+import com.liferay.commerce.data.integration.price.list.apio.internal.util.PriceListHelper;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -61,6 +65,9 @@ public class PriceListNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getPageItems
+		).addCreator(
+			this::_addCommercePriceList, (credentials, s) -> true,
+			PriceListCreatorForm::buildForm
 		).build();
 	}
 
@@ -101,6 +108,25 @@ public class PriceListNestedCollectionResource
 		).addString(
 			"name", CommercePriceList::getName
 		).build();
+	}
+
+	private CommercePriceList _addCommercePriceList(
+			Long groupId, PriceListCreatorForm priceListCreatorForm)
+		throws PortalException {
+
+		try {
+			return _priceListHelper.addCommercePriceList(
+				groupId, priceListCreatorForm.getCurrency(),
+				priceListCreatorForm.getName(),
+				priceListCreatorForm.getPriority(),
+				priceListCreatorForm.isNeverExpire());
+		}
+		catch (NoSuchCurrencyException nsce) {
+			throw new NotFoundException(nsce.getLocalizedMessage());
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
 	}
 
 	private CommercePriceList _getCPDefinition(Long commercePriceListId) {
@@ -159,5 +185,8 @@ public class PriceListNestedCollectionResource
 
 	@Reference
 	private HasPermission _hasPermission;
+
+	@Reference
+	private PriceListHelper _priceListHelper;
 
 }

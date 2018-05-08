@@ -14,7 +14,6 @@
 
 package com.liferay.site.apio.internal.resource;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -23,16 +22,13 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -93,8 +89,6 @@ public class WebSiteCollectionResource
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(
 			"name", Group::getName
-		).addLocalizedStringByLocale(
-			"numberOfMembers", this::_numberOfMembersMessage
 		).addRelatedCollection(
 			"members", PersonIdentifier.class
 		).addString(
@@ -119,28 +113,8 @@ public class WebSiteCollectionResource
 		if (group.getParentGroupId() != 0L) {
 			return group.getParentGroupId();
 		}
-		else {
-			return null;
-		}
-	}
 
-	private String _numberOfMembersMessage(Group group, Locale locale) {
-		return Try.fromFallible(
-			() -> _userLocalService.getGroupUsersCount(
-				group.getGroupId(), WorkflowConstants.STATUS_APPROVED)
-		).map(
-			count -> {
-				if (count == 0) {
-					return String.valueOf(count);
-				}
-				else {
-					return LanguageUtil.format(
-						locale, count > 1 ? "x-users" : "x-user", count);
-				}
-			}
-		).orElse(
-			null
-		);
+		return null;
 	}
 
 	@Reference

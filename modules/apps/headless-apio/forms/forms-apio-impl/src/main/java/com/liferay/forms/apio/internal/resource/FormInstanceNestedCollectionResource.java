@@ -130,7 +130,7 @@ public class FormInstanceNestedCollectionResource
 	}
 
 	private DDMFormInstance _evaluateContext(
-			Long formInstanceId, FormContextForm formContextForm,
+			Long ddmFormInstanceId, FormContextForm formContextForm,
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
@@ -139,13 +139,13 @@ public class FormInstanceNestedCollectionResource
 
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
 
-		DDMFormInstance formInstance = _ddmFormInstanceService.getFormInstance(
-			formInstanceId);
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceService.getFormInstance(ddmFormInstanceId);
 
-		DDMStructure structure = formInstance.getStructure();
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
-		DDMForm ddmForm = structure.getDDMForm();
-		DDMFormLayout ddmFormLayout = structure.getDDMFormLayout();
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
 
 		DDMFormValues ddmFormValues =
 			FormInstanceRecordResourceHelper.getDDMFormValues(
@@ -164,7 +164,7 @@ public class FormInstanceNestedCollectionResource
 
 		System.out.println(json);
 
-		return formInstance;
+		return ddmFormInstance;
 	}
 
 	private PageItems<DDMFormInstance> _getPageItems(

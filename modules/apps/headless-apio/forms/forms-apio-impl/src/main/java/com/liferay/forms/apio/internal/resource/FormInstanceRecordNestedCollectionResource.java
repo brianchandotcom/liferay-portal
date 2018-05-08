@@ -124,13 +124,13 @@ public class FormInstanceRecordNestedCollectionResource
 	}
 
 	private DDMFormInstanceRecord _addFormInstanceRecord(
-			Long formInstanceId, FormInstanceRecordForm formInstanceRecordForm,
-			Language language,
+			Long ddmFormInstanceId,
+			FormInstanceRecordForm formInstanceRecordForm, Language language,
 			FormInstanceRecordServiceContext formInstanceRecordServiceContext)
 		throws PortalException {
 
 		DDMFormInstance ddmFormInstance =
-			_ddmFormInstanceService.getFormInstance(formInstanceId);
+			_ddmFormInstanceService.getFormInstance(ddmFormInstanceId);
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 

@@ -48,7 +48,8 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 			portal.getControlPanelPlid(liferayPortletRequest),
 			MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_message");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/message_boards/edit_message");
 		portletURL.setParameter(
 			"redirect", portal.getCurrentURL(liferayPortletRequest));
 		portletURL.setParameter(

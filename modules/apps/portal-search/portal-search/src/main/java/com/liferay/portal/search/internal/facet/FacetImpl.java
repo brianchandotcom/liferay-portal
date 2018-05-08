@@ -14,10 +14,12 @@
 
 package com.liferay.portal.search.internal.facet;
 
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.BaseFacet;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
@@ -38,6 +40,15 @@ public class FacetImpl extends BaseFacet implements Facet {
 	@Override
 	public void select(String... selections) {
 		_selections = selections;
+	}
+
+	@Override
+	public void setAggregationName(String aggregationName) {
+		FacetConfiguration facetConfiguration = getFacetConfiguration();
+
+		JSONObject data = facetConfiguration.getData();
+
+		data.put("aggregationName", aggregationName);
 	}
 
 	@Override

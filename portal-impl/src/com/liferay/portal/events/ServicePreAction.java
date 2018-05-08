@@ -203,22 +203,20 @@ public class ServicePreAction extends Action {
 
 		// Company logo
 
-		String companyLogoIdToken = WebServerServletTokenUtil.getToken(company.getLogoId());
-
-		long companyLogoId = Long.parseLong(companyLogoIdToken);
-
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(imagePath);
 		sb.append("/company_logo?img_id=");
 		sb.append(company.getLogoId());
 		sb.append("&t=");
-		sb.append(companyLogoIdToken);
+		sb.append(WebServerServletTokenUtil.getToken(company.getLogoId()));
 
 		String companyLogo = sb.toString();
 
 		int companyLogoHeight = 0;
 		int companyLogoWidth = 0;
+
+		long companyLogoId = company.getLogoId();
 
 		if (companyLogoId > 0) {
 			Image companyLogoImage = ImageLocalServiceUtil.getCompanyLogo(

@@ -105,8 +105,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-			long groupId)
-		throws PortalException {
+		long groupId) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
 			groupId);
@@ -114,8 +113,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-			long groupId, int start, int end)
-		throws PortalException {
+		long groupId, int start, int end) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
 			groupId, start, end);
@@ -123,9 +121,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-			long groupId, int start, int end,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws PortalException {
+		long groupId, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
@@ -133,9 +130,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-			long groupId, String name, int start, int end,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws PortalException {
+		long groupId, String name, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByG_LikeN(
 			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0], start,

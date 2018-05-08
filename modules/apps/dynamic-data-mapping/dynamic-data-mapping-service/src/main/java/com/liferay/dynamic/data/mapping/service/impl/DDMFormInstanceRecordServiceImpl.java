@@ -54,16 +54,11 @@ public class DDMFormInstanceRecordServiceImpl
 	public void deleteFormInstanceRecord(long ddmFormInstanceRecordId)
 		throws PortalException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord =
-			ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				ddmFormInstanceRecordId);
-
-		_ddmFormInstanceModelResourcePermission.check(
-			getPermissionChecker(), ddmFormInstanceRecord.getFormInstance(),
-			ActionKeys.DELETE);
+		_ddmFormInstanceRecordModelResourcePermission.check(
+			getPermissionChecker(), ddmFormInstanceRecordId, ActionKeys.DELETE);
 
 		ddmFormInstanceRecordLocalService.deleteFormInstanceRecord(
-			ddmFormInstanceRecord);
+			ddmFormInstanceRecordId);
 	}
 
 	@Override
@@ -71,15 +66,11 @@ public class DDMFormInstanceRecordServiceImpl
 			long ddmFormInstanceRecordId)
 		throws PortalException {
 
-		DDMFormInstanceRecord ddmFormInstanceRecord =
-			ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				ddmFormInstanceRecordId);
+		_ddmFormInstanceRecordModelResourcePermission.check(
+			getPermissionChecker(), ddmFormInstanceRecordId, ActionKeys.VIEW);
 
-		_ddmFormInstanceModelResourcePermission.check(
-			getPermissionChecker(), ddmFormInstanceRecord.getFormInstance(),
-			ActionKeys.VIEW);
-
-		return ddmFormInstanceRecord;
+		return ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+			ddmFormInstanceRecordId);
 	}
 
 	@Override
@@ -128,9 +119,8 @@ public class DDMFormInstanceRecordServiceImpl
 			ddmFormInstanceRecordLocalService.getFormInstanceRecord(
 				ddmFormInstanceRecordId);
 
-		_ddmFormInstanceModelResourcePermission.check(
-			getPermissionChecker(), ddmFormInstanceRecord.getFormInstance(),
-			ActionKeys.UPDATE);
+		_ddmFormInstanceRecordModelResourcePermission.check(
+			getPermissionChecker(), ddmFormInstanceRecord, ActionKeys.UPDATE);
 
 		ddmFormInstanceRecordLocalService.revertFormInstanceRecord(
 			getGuestOrUserId(), ddmFormInstanceRecordId, version,
@@ -147,9 +137,8 @@ public class DDMFormInstanceRecordServiceImpl
 			ddmFormInstanceRecordLocalService.getFormInstanceRecord(
 				ddmFormInstanceRecordId);
 
-		_ddmFormInstanceModelResourcePermission.check(
-			getPermissionChecker(), ddmFormInstanceRecord.getFormInstance(),
-			ActionKeys.UPDATE);
+		_ddmFormInstanceRecordModelResourcePermission.check(
+			getPermissionChecker(), ddmFormInstanceRecord, ActionKeys.UPDATE);
 
 		return ddmFormInstanceRecordLocalService.updateFormInstanceRecord(
 			getUserId(), ddmFormInstanceRecordId, majorVersion, ddmFormValues,
@@ -162,5 +151,11 @@ public class DDMFormInstanceRecordServiceImpl
 				DDMFormInstanceRecordServiceImpl.class,
 				"_ddmFormInstanceModelResourcePermission",
 				DDMFormInstance.class);
+	private static volatile ModelResourcePermission<DDMFormInstanceRecord>
+		_ddmFormInstanceRecordModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDMFormInstanceRecordServiceImpl.class,
+				"_ddmFormInstanceRecordModelResourcePermission",
+				DDMFormInstanceRecord.class);
 
 }

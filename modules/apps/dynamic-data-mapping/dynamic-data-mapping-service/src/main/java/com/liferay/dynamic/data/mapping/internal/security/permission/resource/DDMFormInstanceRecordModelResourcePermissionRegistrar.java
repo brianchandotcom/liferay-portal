@@ -20,12 +20,14 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Dictionary;
 
@@ -58,6 +60,8 @@ public class DDMFormInstanceRecordModelResourcePermissionRegistrar {
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> {
 					consumer.accept(
+						new DDMFormInstanceRecordAutosavedPermissionLogic());
+					consumer.accept(
 						new DDMFormInstanceRecordInheritancePermissionLogic());
 				}),
 			properties);
@@ -85,6 +89,32 @@ public class DDMFormInstanceRecordModelResourcePermissionRegistrar {
 
 	@Reference
 	private StagingPermission _stagingPermission;
+
+	private class DDMFormInstanceRecordAutosavedPermissionLogic
+		implements ModelResourcePermissionLogic<DDMFormInstanceRecord> {
+
+		@Override
+		public Boolean contains(
+				PermissionChecker permissionChecker, String name,
+				DDMFormInstanceRecord formInstanceRecord, String actionId)
+			throws PortalException {
+
+			if (!actionId.equals(ActionKeys.UPDATE)) {
+				return null;
+			}
+
+			if ((formInstanceRecord.getStatus() ==
+					WorkflowConstants.STATUS_DRAFT) &&
+				(formInstanceRecord.getUserId() ==
+					permissionChecker.getUserId())) {
+
+				return true;
+			}
+
+			return null;
+		}
+
+	}
 
 	private class DDMFormInstanceRecordInheritancePermissionLogic
 		implements ModelResourcePermissionLogic<DDMFormInstanceRecord> {

@@ -34,6 +34,10 @@ import java.util.Set;
  */
 public interface AssetDisplayContributor {
 
+	public Map<String, Object> getAssetDisplayFieldsValues(
+			AssetEntry assetEntry, Locale locale)
+		throws PortalException;
+
 	public Set<AssetDisplayField> getAssetEntryFields(
 			long classTypeId, Locale locale)
 		throws PortalException;
@@ -83,9 +87,5 @@ public interface AssetDisplayContributor {
 	}
 
 	public String getLabel(Locale locale);
-
-	public Map<String, Object> getParameterMap(
-			AssetEntry assetEntry, Locale locale)
-		throws PortalException;
 
 }

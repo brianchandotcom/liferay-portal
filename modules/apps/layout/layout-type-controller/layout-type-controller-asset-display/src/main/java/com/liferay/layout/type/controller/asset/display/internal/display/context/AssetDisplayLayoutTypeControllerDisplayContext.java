@@ -36,7 +36,9 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		_request = request;
 	}
 
-	public Map<String, Object> getParameterMap() throws PortalException {
+	public Map<String, Object> getAssetDisplayFieldsValues()
+		throws PortalException {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -48,7 +50,7 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 		AssetEntry assetEntry = (AssetEntry)_request.getAttribute(
 			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY);
 
-		return assetDisplayContributor.getParameterMap(
+		return assetDisplayContributor.getAssetDisplayFieldsValues(
 			assetEntry, themeDisplay.getLocale());
 	}
 

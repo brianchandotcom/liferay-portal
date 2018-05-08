@@ -39,6 +39,33 @@ public abstract class BaseAssetDisplayContributor<T>
 	implements AssetDisplayContributor {
 
 	@Override
+	public Map<String, Object> getAssetDisplayFieldsValues(
+			AssetEntry assetEntry, Locale locale)
+		throws PortalException {
+
+		Map<String, Object> parameterMap = _getDefaultParameterMap(
+			assetEntry, locale);
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					assetEntry.getClassNameId());
+
+		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
+			assetEntry.getClassPK());
+
+		for (String assetEntryModelField : getAssetEntryModelFields()) {
+			parameterMap.put(
+				assetEntryModelField,
+				getFieldValue(
+					assetRenderer.getAssetObject(), assetEntryModelField,
+					locale));
+		}
+
+		return parameterMap;
+	}
+
+	@Override
 	public Set<AssetDisplayField> getAssetEntryFields(
 			long classTypeId, Locale locale)
 		throws PortalException {
@@ -85,33 +112,6 @@ public abstract class BaseAssetDisplayContributor<T>
 	@Override
 	public String getLabel(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
-	}
-
-	@Override
-	public Map<String, Object> getParameterMap(
-			AssetEntry assetEntry, Locale locale)
-		throws PortalException {
-
-		Map<String, Object> parameterMap = _getDefaultParameterMap(
-			assetEntry, locale);
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					assetEntry.getClassNameId());
-
-		AssetRenderer<T> assetRenderer = assetRendererFactory.getAssetRenderer(
-			assetEntry.getClassPK());
-
-		for (String assetEntryModelField : getAssetEntryModelFields()) {
-			parameterMap.put(
-				assetEntryModelField,
-				getFieldValue(
-					assetRenderer.getAssetObject(), assetEntryModelField,
-					locale));
-		}
-
-		return parameterMap;
 	}
 
 	protected abstract String[] getAssetEntryModelFields();

@@ -156,7 +156,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		long groupId, long fragmentEntryId, int start, int end,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		return fragmentEntryLinkPersistence.findByG_F(
+		return fragmentEntryLinkFinder.findByG_F(
 			groupId, fragmentEntryId, start, end, orderByComparator);
 	}
 
@@ -184,22 +184,21 @@ public class FragmentEntryLinkLocalServiceImpl
 		long groupId, long fragmentEntryId, long classNameId, int start,
 		int end, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		return fragmentEntryLinkPersistence.findByG_F_C(
+		return fragmentEntryLinkFinder.findByG_F_C(
 			groupId, fragmentEntryId, classNameId, start, end,
 			orderByComparator);
 	}
 
 	@Override
 	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId) {
-		return fragmentEntryLinkPersistence.countByG_F(
-			groupId, fragmentEntryId);
+		return fragmentEntryLinkFinder.countByG_F(groupId, fragmentEntryId);
 	}
 
 	@Override
 	public int getFragmentEntryLinksCount(
 		long groupId, long fragmentEntryId, long classNameId) {
 
-		return fragmentEntryLinkPersistence.countByG_F_C(
+		return fragmentEntryLinkFinder.countByG_F_C(
 			groupId, fragmentEntryId, classNameId);
 	}
 
@@ -305,24 +304,30 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public FragmentEntryLink updateLatestChanges(long fragmentEntryLinkId)
+	public void updateLatestChanges(long fragmentEntryLinkId)
 		throws PortalException {
 
-		FragmentEntryLink fragmentEntryLink =
+		FragmentEntryLink oldFragmentEntryLink =
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			fragmentEntryLink.getFragmentEntryId());
+			oldFragmentEntryLink.getFragmentEntryId());
 
-		fragmentEntryLink.setCss(fragmentEntry.getCss());
-		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-		fragmentEntryLink.setJs(fragmentEntry.getJs());
+		List<FragmentEntryLink> fragmentEntryLinks =
+			fragmentEntryLinkPersistence.findByG_C_C(
+				oldFragmentEntryLink.getGroupId(),
+				oldFragmentEntryLink.getClassNameId(),
+				oldFragmentEntryLink.getClassPK());
 
-		fragmentEntryLink.setLastPropagationDate(new Date());
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLink.setCss(fragmentEntry.getCss());
+			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+			fragmentEntryLink.setJs(fragmentEntry.getJs());
 
-		fragmentEntryLinkPersistence.update(fragmentEntryLink);
+			fragmentEntryLink.setLastPropagationDate(new Date());
 
-		return fragmentEntryLink;
+			fragmentEntryLinkPersistence.update(fragmentEntryLink);
+		}
 	}
 
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)

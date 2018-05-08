@@ -1,15 +1,21 @@
 .sheet > .panel-group .sheet-footer {
-margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .sheet-footer {
-display: inline-flex;
+	display: inline-flex;
 
-.btn {
-	margin-right: $btn-group-item-margin-right;
+	.btn {
+		margin-right: $btn-group-item-margin-right;
 
-	&:last-child {
-	 margin-right: 0;
+		&:last-child {
+			margin-right: 0;
+		}
 	}
 }
+
+@include sm {
+	.sheet .display-style-icon .lfr-asset-item {
+		width: 25%;
+	}
 }

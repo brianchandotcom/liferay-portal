@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Commerce Forecast Service
+Bundle-SymbolicName: com.liferay.commerce.forecast.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

@@ -1,0 +1,11 @@
+buildService {
+	apiDir = "../commerce-forecast-api/src/main/java"
+	testDir = "../commerce-forecast-test/src/testIntegration/java"
+}
+
+dependencies {
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.59.0-20180105.041445-1"
+	compileOnly project(":private:apps:commerce:commerce-forecast-api")
+}

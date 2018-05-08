@@ -83,7 +83,7 @@ import org.codehaus.plexus.velocity.VelocityComponent;
  */
 public class Archetyper {
 
-	public static String getManifestProperty(String property, File file)
+	public static String getManifestProperty(File file, String property)
 		throws IOException {
 
 		try (JarFile jarFile = new JarFile(file)) {
@@ -141,7 +141,7 @@ public class Archetyper {
 			projectTemplatesArgs.getTemplate());
 
 		String liferayVersionRange = getManifestProperty(
-			"Liferay-Versions", templateFile);
+			templateFile, "Liferay-Versions");
 
 		if (Objects.nonNull(liferayVersionRange) &&
 			Objects.isNull(liferayVersion)) {

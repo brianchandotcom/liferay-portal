@@ -84,7 +84,7 @@ public class ProjectTemplates {
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
 							String bundleDescription =
 								Archetyper.getManifestProperty(
-									"Bundle-Description", path.toFile());
+									path.toFile(), "Bundle-Description");
 
 							templates.put(template, bundleDescription);
 						}

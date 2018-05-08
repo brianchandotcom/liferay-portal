@@ -63,7 +63,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -761,41 +760,6 @@ public class JournalDisplayContext {
 		_keywords = ParamUtil.getString(_request, "keywords");
 
 		return _keywords;
-	}
-
-	public String getLayoutBreadcrumb(Layout layout) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Locale locale = themeDisplay.getLocale();
-
-		List<Layout> ancestors = layout.getAncestors();
-
-		StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
-
-		if (layout.isPrivateLayout()) {
-			sb.append(LanguageUtil.get(_request, "private-pages"));
-		}
-		else {
-			sb.append(LanguageUtil.get(_request, "public-pages"));
-		}
-
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.GREATER_THAN);
-		sb.append(StringPool.SPACE);
-
-		Collections.reverse(ancestors);
-
-		for (Layout ancestor : ancestors) {
-			sb.append(HtmlUtil.escape(ancestor.getName(locale)));
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.GREATER_THAN);
-			sb.append(StringPool.SPACE);
-		}
-
-		sb.append(HtmlUtil.escape(layout.getName(locale)));
-
-		return sb.toString();
 	}
 
 	public int getMaxAddMenuItems() {

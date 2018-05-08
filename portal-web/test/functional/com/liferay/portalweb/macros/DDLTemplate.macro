@@ -251,7 +251,9 @@
 			<var name="searchTerm" value="${ddlTemplateName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#DDM_TEMPLATE_INFO" value1="There are no results." />
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no results." />
+		</execute>
 	</command>
 
 	<command name="editDisplayTemplateCP">

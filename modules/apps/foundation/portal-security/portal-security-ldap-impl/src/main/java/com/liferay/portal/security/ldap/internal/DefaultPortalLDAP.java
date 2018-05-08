@@ -974,7 +974,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setLdapFilterValidator(
 		LDAPFilterValidator ldapFilterValidator) {
@@ -1013,6 +1013,12 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			systemLDAPConfigurationProvider) {
 
 		_systemLDAPConfigurationProvider = systemLDAPConfigurationProvider;
+	}
+
+	protected void unsetLdapFilterValidator(
+		LDAPFilterValidator ldapFilterValidator) {
+
+		_ldapFilterValidator = null;
 	}
 
 	private Attributes _getAttributes(

@@ -188,12 +188,18 @@ public class SoapExtender {
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setSoapDescriptorBuilder(
 		SoapDescriptorBuilder soapDescriptorBuilder) {
 
 		_soapDescriptorBuilder = soapDescriptorBuilder;
+	}
+
+	protected void unsetSoapDescriptorBuilder(
+		SoapDescriptorBuilder soapDescriptorBuilder) {
+
+		_soapDescriptorBuilder = null;
 	}
 
 	private org.apache.felix.dm.Component _component;

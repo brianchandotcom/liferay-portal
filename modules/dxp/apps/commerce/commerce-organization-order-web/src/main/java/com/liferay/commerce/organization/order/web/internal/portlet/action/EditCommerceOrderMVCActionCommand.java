@@ -54,6 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_CART_CONTENT_MINI,
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORGANIZATION_OPEN_ORDER,
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER,
 		"mvc.command.name=editCommerceOrder"

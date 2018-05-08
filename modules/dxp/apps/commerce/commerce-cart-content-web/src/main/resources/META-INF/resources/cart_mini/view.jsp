@@ -46,6 +46,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</div>
 
 			<div class="autofit-col">
+				<liferay-commerce:order-transitions
+					commerceOrderId="<%= commerceCartContentMiniDisplayContext.getCommerceOrderId() %>"
+					cssClass="btn btn-outline-light"
+				/>
+			</div>
+
+			<div class="autofit-col">
 				<div><a class="btn btn-outline-light" href="<%= commerceCartContentMiniDisplayContext.getCommerceCartPortletURL() %>"><liferay-ui:message key="edit-cart" /></a></div>
 			</div>
 		</li>
@@ -144,4 +151,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</div>
 		</li>
 	</ul>
+
+	<%@ include file="/cart_mini/transition.jspf" %>
+
+	<aui:script use="aui-base">
+		var orderTransition = A.one('#<portlet:namespace />orderTransition');
+
+		orderTransition.delegate(
+			'click',
+			function(event) {
+				<portlet:namespace />transition(event);
+			},
+			'.transition-link'
+		);
+	</aui:script>
 </liferay-ddm:template-renderer>

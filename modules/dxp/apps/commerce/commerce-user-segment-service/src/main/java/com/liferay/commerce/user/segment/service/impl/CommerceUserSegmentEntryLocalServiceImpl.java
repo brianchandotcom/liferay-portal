@@ -106,6 +106,11 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public void cleanUserSegmentsChache(long groupId) {
+		MultiVMPoolUtil.removePortalCache("USER_SEGMENTS_" + groupId);
+	}
+
+	@Override
 	public void deleteCommerceUserSegmentEntries(long groupId)
 		throws PortalException {
 

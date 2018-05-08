@@ -30,6 +30,7 @@ dependencies {
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:journal:journal-taglib")
 	compileOnly project(":apps:layout:layout-item-selector-api")
+	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:rss:rss-api")

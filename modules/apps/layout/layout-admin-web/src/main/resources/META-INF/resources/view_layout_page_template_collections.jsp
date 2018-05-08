@@ -32,11 +32,28 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 		<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 			<ul class="nav nav-nested">
 				<li class="nav-item">
+					<portlet:renderURL var="editLayoutPageTemplateCollectionURL">
+						<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+					</portlet:renderURL>
+
 					<c:choose>
 						<c:when test="<%= ListUtil.isNotEmpty(layoutPageTemplateCollections) %>">
-							<strong class="text-uppercase">
-								<liferay-ui:message key="collections" />
-							</strong>
+							<div class="align-items-center autofit-row">
+								<div class="autofit-col autofit-col-expand">
+									<strong class="text-uppercase">
+										<liferay-ui:message key="collections" />
+									</strong>
+								</div>
+
+								<div class="autofit-col autofit-col-end">
+									<liferay-ui:icon
+										icon="plus"
+										iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+										markupView="lexicon"
+										url="<%= editLayoutPageTemplateCollectionURL %>"
+									/>
+								</div>
+							</div>
 
 							<ul class="nav nav-stacked">
 
@@ -76,10 +93,6 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 							<p class="text-center">
 								<liferay-ui:message key="collections-are-needed-to-create-page-templates" />
 							</p>
-
-							<portlet:renderURL var="editLayoutPageTemplateCollectionURL">
-								<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
-							</portlet:renderURL>
 
 							<aui:a cssClass="btn btn-primary" href="<%= editLayoutPageTemplateCollectionURL %>" label="add-collection" />
 						</c:otherwise>

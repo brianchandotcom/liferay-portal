@@ -132,8 +132,6 @@ public class WeDeployForecastServiceImpl
 		sb.append(forecast.getPeriod());
 		sb.append('-');
 		sb.append(forecast.getTime());
-		sb.append('-');
-		sb.append(forecast.getAssertivity());
 
 		return sb.toString();
 	}

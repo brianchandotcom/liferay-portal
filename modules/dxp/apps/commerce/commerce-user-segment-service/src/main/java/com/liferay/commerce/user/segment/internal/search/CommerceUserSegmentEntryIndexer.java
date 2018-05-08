@@ -79,6 +79,16 @@ public class CommerceUserSegmentEntryIndexer
 		boolean criterionType = GetterUtil.getBoolean(
 			searchContext.getAttribute("criterionType"));
 
+		boolean active = GetterUtil.getBoolean(
+			searchContext.getAttribute("active"));
+
+		if (active) {
+			TermFilter termFilter = new TermFilter(
+				"active", Boolean.TRUE.toString());
+
+			contextBooleanFilter.add(termFilter, BooleanClauseOccur.MUST);
+		}
+
 		if (criterionType) {
 			List<CommerceUserSegmentCriterionType>
 				commerceUserSegmentCriterionTypes =
@@ -148,6 +158,7 @@ public class CommerceUserSegmentEntryIndexer
 		document.addNumberSortable(
 			Field.PRIORITY, commerceUserSegmentEntry.getPriority());
 
+		document.addKeyword("active", commerceUserSegmentEntry.isActive());
 		try {
 			List<CommerceUserSegmentCriterion> commerceUserSegmentCriteria =
 				_commerceUserSegmentCriterionLocalService.

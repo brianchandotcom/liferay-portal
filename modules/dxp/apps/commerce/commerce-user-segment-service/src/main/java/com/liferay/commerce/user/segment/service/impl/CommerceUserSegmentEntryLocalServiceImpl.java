@@ -354,6 +354,7 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
+		attributes.put("active", true);
 		attributes.put("criterionType", true);
 		attributes.put("organizationId", organizationId);
 

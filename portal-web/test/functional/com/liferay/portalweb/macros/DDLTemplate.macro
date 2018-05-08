@@ -432,14 +432,6 @@
 		</if>
 	</command>
 
-	<command name="viewDefaultNoTemplatesCP">
-		<execute macro="DDLNavigator#gotoManageTemplates">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#DDM_TEMPLATE_INFO" value1="There are no results." />
-	</command>
-
 	<command name="viewDisplayTemplateCP">
 		<execute macro="DDLNavigator#gotoManageTemplates">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />

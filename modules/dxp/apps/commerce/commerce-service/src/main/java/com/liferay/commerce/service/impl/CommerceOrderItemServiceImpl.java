@@ -148,7 +148,7 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public BaseModelSearchResult<CommerceOrderItem> search(
-			long commerceOrderId, String sku, String title, boolean andOperator,
+			long commerceOrderId, String sku, String name, boolean andOperator,
 			int start, int end, Sort sort)
 		throws PortalException {
 
@@ -156,7 +156,7 @@ public class CommerceOrderItemServiceImpl
 			getPermissionChecker(), commerceOrderId, ActionKeys.VIEW);
 
 		return commerceOrderItemLocalService.search(
-			commerceOrderId, sku, title, andOperator, start, end, sort);
+			commerceOrderId, sku, name, andOperator, start, end, sort);
 	}
 
 	@Override

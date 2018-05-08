@@ -115,7 +115,7 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setShippedQuantity(shippedQuantity);
 		commerceOrderItem.setJson(json);
 		commerceOrderItem.setPrice(price);
-		commerceOrderItem.setTitleMap(cpDefinition.getTitleMap());
+		commerceOrderItem.setNameMap(cpDefinition.getNameMap());
 		commerceOrderItem.setSku(cpInstance.getSku());
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
 
@@ -274,7 +274,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<CommerceOrderItem> search(
-			long commerceOrderId, String sku, String title, boolean andOperator,
+			long commerceOrderId, String sku, String name, boolean andOperator,
 			int start, int end, Sort sort)
 		throws PortalException {
 
@@ -283,7 +283,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		searchContext.setAndSearch(andOperator);
 		searchContext.setAttribute(CommerceOrderItemIndexer.FIELD_SKU, sku);
-		searchContext.setAttribute(Field.TITLE, title);
+		searchContext.setAttribute(Field.NAME, name);
 
 		return searchCommerceOrderItems(searchContext);
 	}

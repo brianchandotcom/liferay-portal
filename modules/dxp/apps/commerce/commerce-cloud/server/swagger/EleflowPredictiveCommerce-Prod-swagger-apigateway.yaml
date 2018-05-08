@@ -26,6 +26,8 @@ paths:
           description: "200 OK"
           schema:
             $ref: "#/definitions/Forecast"
+      security:
+      - api_key: []
       x-amazon-apigateway-request-validator: "basic"
       x-amazon-apigateway-integration:
         uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-GetForecastsFunction-5H8LFLL0CJAN/invocations"
@@ -49,6 +51,8 @@ paths:
       responses:
         200:
           description: "200 response"
+      security:
+      - api_key: []
       x-amazon-apigateway-request-validator: "basic"
       x-amazon-apigateway-integration:
         uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-PostOrdersFunction-1TDHYCTTX36GW/invocations"
@@ -73,6 +77,8 @@ paths:
           description: "200 response"
           schema:
             $ref: "#/definitions/ForecastScheduler"
+      security:
+      - api_key: []
       x-amazon-apigateway-request-validator: "basic"
       x-amazon-apigateway-integration:
         uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-GetForecastSchedulerFunction-1I5U48TC4UADG/invocations"
@@ -95,6 +101,8 @@ paths:
       responses:
         200:
           description: "200 response"
+      security:
+      - api_key: []
       x-amazon-apigateway-request-validator: "basic"
       x-amazon-apigateway-integration:
         uri: "arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:410615956476:function:PredictiveCommerceAPI-PutForecastSchedulerFunction-1D7PF57BK45ZN/invocations"
@@ -105,6 +113,11 @@ paths:
         httpMethod: "POST"
         contentHandling: "CONVERT_TO_TEXT"
         type: "aws_proxy"
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "x-api-key"
+    in: "header"
 definitions:
   Order:
     type: "object"
@@ -241,6 +254,13 @@ definitions:
                 required:
                 - "date"
                 - "value"
+            level:
+              type: "string"
+              enum:
+              - "company"
+              - "customer"
+              - "sku"
+              - "customer-sku"
             customerId:
               type: "string"
             assertivity:

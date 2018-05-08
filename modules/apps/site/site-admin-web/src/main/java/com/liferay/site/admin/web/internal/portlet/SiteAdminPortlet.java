@@ -204,6 +204,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 				_log.debug(pe, pe);
 			}
 
+			hideDefaultSuccessMessage(actionRequest);
+
 			groupExceptionRequestHandler.handlePortalException(
 				actionRequest, actionResponse, pe);
 		}

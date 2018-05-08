@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Portal Security Audit Event Generators
 Bundle-SymbolicName: com.liferay.portal.security.audit.event.generators
 Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Audit
 -include: ../../../../../../modules/apps/foundation/app.bnd

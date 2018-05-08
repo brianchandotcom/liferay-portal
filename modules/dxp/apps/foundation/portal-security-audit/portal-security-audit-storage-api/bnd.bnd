@@ -7,6 +7,4 @@ Export-Package:\
 	com.liferay.portal.security.audit.storage.model,\
 	com.liferay.portal.security.audit.storage.service,\
 	com.liferay.portal.security.audit.storage.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Audit
 -include: ../../../../../../modules/apps/foundation/app.bnd

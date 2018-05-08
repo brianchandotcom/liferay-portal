@@ -36,8 +36,7 @@ public class JavaServiceUtilCheck extends BaseFileCheck {
 
 		String className = JavaSourceUtil.getClassName(fileName);
 
-		if (absolutePath.contains("/wsrp/internal/bind/") ||
-			className.equals("BaseServiceImpl") ||
+		if (className.equals("BaseServiceImpl") ||
 			!className.endsWith("ServiceImpl")) {
 
 			return content;

@@ -40,7 +40,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= editArticleDisplayPageDisplayContext.getLayoutUuid() %>" />
 
-		<aui:input id="assetDisplayPageId" ignoreRequestValue="<%= true %>" name="assetDisplayPageId" type="hidden" value="" />
+		<aui:input id="assetDisplayPageId" ignoreRequestValue="<%= true %>" name="assetDisplayPageId" type="hidden" value="<%= editArticleDisplayPageDisplayContext.getAssetDisplayPageId() %>" />
 
 		<p class="text-muted">
 			<liferay-ui:message key="default-display-page-help" />

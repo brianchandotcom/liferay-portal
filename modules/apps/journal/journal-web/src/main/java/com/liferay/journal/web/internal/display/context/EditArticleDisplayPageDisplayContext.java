@@ -15,9 +15,13 @@
 package com.liferay.journal.web.internal.display.context;
 
 import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSelectorCriterion;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -27,6 +31,8 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,6 +82,36 @@ public class EditArticleDisplayPageDisplayContext {
 		_article = ActionUtil.getArticle(_request);
 
 		return _article;
+	}
+
+	public long getAssetDisplayPageId() throws PortalException {
+		if (_assetDisplayPageId > 0) {
+			return _assetDisplayPageId;
+		}
+
+		long assetDisplayPageId = 0;
+
+		JournalArticle journalArticle = getArticle();
+
+		if (journalArticle == null) {
+			_assetDisplayPageId = assetDisplayPageId;
+
+			return _assetDisplayPageId;
+		}
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			journalArticle.getGroupId(),
+			journalArticle.getArticleResourceUuid());
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			AssetDisplayPageEntryLocalServiceUtil.
+				fetchFirstAssetDisplayPageEntry(assetEntry.getEntryId());
+
+		if (assetDisplayPageEntry != null) {
+			_assetDisplayPageId = assetDisplayPageEntry.getLayoutId();
+		}
+
+		return _assetDisplayPageId;
 	}
 
 	public String getDisplayPageItemSelectorURL() throws PortalException {
@@ -132,6 +168,12 @@ public class EditArticleDisplayPageDisplayContext {
 	}
 
 	public String getDisplayPageName() throws Exception {
+		String assetDisplayPageName = _getAssetDisplayPageName();
+
+		if (Validator.isNotNull(assetDisplayPageName)) {
+			return assetDisplayPageName;
+		}
+
 		String layoutUuid = getLayoutUuid();
 
 		if (Validator.isNull(layoutUuid)) {
@@ -218,6 +260,24 @@ public class EditArticleDisplayPageDisplayContext {
 		return true;
 	}
 
+	private String _getAssetDisplayPageName() throws PortalException {
+		long assetDisplayPageId = getAssetDisplayPageId();
+
+		if (assetDisplayPageId == 0) {
+			return StringPool.BLANK;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntry(assetDisplayPageId);
+
+		if (layoutPageTemplateEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return layoutPageTemplateEntry.getName();
+	}
+
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -254,6 +314,7 @@ public class EditArticleDisplayPageDisplayContext {
 	}
 
 	private JournalArticle _article;
+	private Long _assetDisplayPageId;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;

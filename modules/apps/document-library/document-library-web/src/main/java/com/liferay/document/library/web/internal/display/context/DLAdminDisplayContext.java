@@ -111,8 +111,7 @@ public class DLAdminDisplayContext {
 
 		_permissionChecker = _themeDisplay.getPermissionChecker();
 
-		_computeFolder();
-		_computeRootFolder();
+		_computeFolders();
 	}
 
 	public String getDisplayStyle() {
@@ -254,8 +253,10 @@ public class DLAdminDisplayContext {
 		return mvcRenderCommandName.equals("/document_library/search");
 	}
 
-	private void _computeFolder() {
+	private void _computeFolders() {
 		try {
+			_computeRootFolder();
+
 			_folder = (Folder)_request.getAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FOLDER);
 

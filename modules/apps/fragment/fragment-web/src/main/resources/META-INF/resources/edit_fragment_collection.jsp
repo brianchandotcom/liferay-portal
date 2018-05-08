@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = fragmentDisplayContext.getEditFragmentCollectionRedirect();
+String redirect = fragmentDisplayContext.getRedirect();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

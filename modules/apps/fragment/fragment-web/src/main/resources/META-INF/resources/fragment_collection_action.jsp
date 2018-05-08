@@ -31,6 +31,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFragmentCollectionURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
+			<portlet:param name="redirect" value="<%= fragmentDisplayContext.getRedirect() %>" />
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 		</portlet:renderURL>
 
@@ -67,8 +68,12 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 	/>
 
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.DELETE) %>">
+		<portlet:renderURL var="redirectURL">
+			<portlet:param name="mvcRenderCommandName" value="/fragment/view" />
+		</portlet:renderURL>
+
 		<portlet:actionURL name="/fragment/delete_fragment_collection" var="deleteFragmentCollectionURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 		</portlet:actionURL>
 

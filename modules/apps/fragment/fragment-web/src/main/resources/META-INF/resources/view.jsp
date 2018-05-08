@@ -35,6 +35,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 					<li class="nav-item">
 						<portlet:renderURL var="editFragmentCollectionURL">
 							<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:renderURL>
 
 						<c:choose>

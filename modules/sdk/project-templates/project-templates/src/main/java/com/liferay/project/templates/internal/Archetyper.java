@@ -127,8 +127,9 @@ public class Archetyper {
 			templateFile, "Liferay-Versions");
 
 		if (Objects.nonNull(liferayVersions) &&
-				Objects.isNull(liferayVersion) &&
-					(!_isSupported(liferayVersion, liferayVersions))) {
+			Objects.isNull(liferayVersion) &&
+			!_isSupported(liferayVersion, liferayVersions)) {
+
 			throw new Exception(
 				"Specified Liferay Version is invalid. Must be in range " +
 					liferayVersions);

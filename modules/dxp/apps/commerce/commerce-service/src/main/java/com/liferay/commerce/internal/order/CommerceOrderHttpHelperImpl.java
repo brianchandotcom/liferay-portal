@@ -176,10 +176,11 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			commerceOrder = _getUserCurrentCommerceOrder(themeDisplay);
 		}
 
-		if ((commerceOrder != null) &&
-			!_commerceOrderModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), commerceOrder,
-				ActionKeys.UPDATE)) {
+		if (((commerceOrder != null) && !commerceOrder.isOpen()) ||
+			((commerceOrder != null) &&
+			 !_commerceOrderModelResourcePermission.contains(
+				 themeDisplay.getPermissionChecker(), commerceOrder,
+				 ActionKeys.UPDATE))) {
 
 			return null;
 		}

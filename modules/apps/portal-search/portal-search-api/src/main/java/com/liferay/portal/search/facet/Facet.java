@@ -14,11 +14,16 @@
 
 package com.liferay.portal.search.facet;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author André de Oliveira
  */
+@ProviderType
 public interface Facet extends com.liferay.portal.kernel.search.facet.Facet {
 
 	public void select(String... selections);
+
+	public void setAggregationName(String aggregationName);
 
 }

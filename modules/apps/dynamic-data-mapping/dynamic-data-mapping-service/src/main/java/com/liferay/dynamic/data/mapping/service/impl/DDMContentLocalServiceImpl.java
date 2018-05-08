@@ -105,7 +105,19 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		validate(name, data);
+		try {
+			validate(name, data);
+		}
+		catch (ContentNameException cne) {
+			throw new ContentNameException(
+				"Invalid empty name for content id " +
+					contentId,
+				cne.getCause());
+		}
+		catch (ContentException ce) {
+			throw new ContentException(
+				"Invalid empty data for DDM Content " + name, ce.getCause());
+		}
 
 		DDMContent content = ddmContentPersistence.findByPrimaryKey(contentId);
 
@@ -120,11 +132,12 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 
 	protected void validate(String name, String data) throws PortalException {
 		if (Validator.isNull(name)) {
-			throw new ContentNameException("Name is null");
+			throw new ContentNameException("DDMContent name is null");
 		}
 
 		if (Validator.isNull(data)) {
-			throw new ContentException("Data is null");
+			throw new ContentException(
+				"DDMContent data is null for content " + name);
 		}
 	}
 

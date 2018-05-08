@@ -3634,6 +3634,14 @@ information. Make sure to commit in all build services results.
 		</trycatch>
 	</target>
 
+	<target name="subrepository-functional-bundle-tomcat80-mysql56-jdk8">
+		<antcall target="compile" />
+
+		<antcall inheritAll="false" target="install-portal-snapshots" />
+
+		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
+	</target>
+
 	<target name="subrepository-functional-tomcat80-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>

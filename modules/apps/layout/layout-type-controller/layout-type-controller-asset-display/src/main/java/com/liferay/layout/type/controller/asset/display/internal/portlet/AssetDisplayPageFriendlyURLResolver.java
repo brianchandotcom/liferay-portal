@@ -155,8 +155,9 @@ public class AssetDisplayPageFriendlyURLResolver
 		long groupId, AssetEntry assetEntry) {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.fetchFirstAssetDisplayPageEntry(
-				assetEntry.getEntryId());
+			_assetDisplayPageEntryLocalService.
+				fetchAssetDisplayPageEntryByAssetEntryId(
+					assetEntry.getEntryId());
 
 		if (assetDisplayPageEntry != null) {
 			return assetDisplayPageEntry.getLayoutId();

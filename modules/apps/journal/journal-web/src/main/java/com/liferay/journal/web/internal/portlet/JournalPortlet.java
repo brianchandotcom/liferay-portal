@@ -1461,7 +1461,8 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private void _updateAssetDisplayPage(
-		JournalArticle article, long assetDisplayPageId) {
+			JournalArticle article, long assetDisplayPageId)
+		throws PortalException {
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());

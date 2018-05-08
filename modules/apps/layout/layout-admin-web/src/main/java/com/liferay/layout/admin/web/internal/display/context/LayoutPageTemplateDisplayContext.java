@@ -182,19 +182,6 @@ public class LayoutPageTemplateDisplayContext {
 		return _layoutPageTemplateCollectionId;
 	}
 
-	public String getLayoutPageTemplateCollectionTitle()
-		throws PortalException {
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			getLayoutPageTemplateCollection();
-
-		if (layoutPageTemplateCollection == null) {
-			return LanguageUtil.get(_request, "add-collection");
-		}
-
-		return layoutPageTemplateCollection.getName();
-	}
-
 	public SearchContainer getLayoutPageTemplateEntriesSearchContainer() {
 		if (_layoutPageTemplateEntriesSearchContainer != null) {
 			return _layoutPageTemplateEntriesSearchContainer;
@@ -375,31 +362,6 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	public String getRedirect() {
-		String redirect = ParamUtil.getString(_request, "redirect");
-
-		if (Validator.isNull(redirect)) {
-			PortletURL backURL = _renderResponse.createRenderURL();
-
-			backURL.setParameter(
-				"mvcPath", "/view_layout_page_template_collections.jsp");
-			backURL.setParameter("tabs1", "page-templates");
-
-			long layoutPageTemplateCollectionId =
-				getLayoutPageTemplateCollectionId();
-
-			if (getLayoutPageTemplateCollectionId() > 0) {
-				backURL.setParameter(
-					"layoutPageTemplateCollectionId",
-					String.valueOf(layoutPageTemplateCollectionId));
-			}
-
-			redirect = backURL.toString();
-		}
-
-		return redirect;
 	}
 
 	public String getSearchActionURL() {

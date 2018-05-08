@@ -15,15 +15,19 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,6 +57,8 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
+		LayoutPageTemplateCollection layoutPageTemplateCollection = null;
+
 		if (layoutPageTemplateCollectionId <= 0) {
 
 			// Add layout page template collection
@@ -60,23 +66,54 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			_layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					serviceContext.getScopeGroupId(), name, description,
-					serviceContext);
+			layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionService.
+					addLayoutPageTemplateCollection(
+						serviceContext.getScopeGroupId(), name, description,
+						serviceContext);
 		}
 		else {
 
 			// Update layout page template collection
 
-			_layoutPageTemplateCollectionService.
-				updateLayoutPageTemplateCollection(
-					layoutPageTemplateCollectionId, name, description);
+			layoutPageTemplateCollection =
+				_layoutPageTemplateCollectionService.
+					updateLayoutPageTemplateCollection(
+						layoutPageTemplateCollectionId, name, description);
 		}
+
+		String redirect = getRedirectURL(
+			actionResponse, layoutPageTemplateCollection);
+
+		sendRedirect(actionRequest, actionResponse, redirect);
+	}
+
+	protected String getRedirectURL(
+		ActionResponse actionResponse,
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(actionResponse);
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcPath", "/view_layout_page_template_collections.jsp");
+		portletURL.setParameter("tabs1", "page-templates");
+		portletURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId()));
+
+		return portletURL.toString();
 	}
 
 	@Reference
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -35,37 +35,21 @@
 		}
 
 		.search-info {
-			background-color: #D3E8F1;
+			background: none;
+			font-size: 0.875rem;
+			margin-top: 20px;
 
-			@include hyphens;
-
-			margin-bottom: 0.5em;
-			padding: 0.5em 0.75em;
-			padding-right: 30px;
-			position: relative;
-
-			.keywords {
-				float: none;
-				font-size: 1.4em;
-				font-weight: bold;
-			}
-
-			.change-search-folder {
-				position: absolute;
-				right: 30px;
-				top: 0.3em;
-			}
-
-			.close-search {
-				margin-top: -8px;
-				position: absolute;
-				right: 5px;
-				top: 50%;
-
-				@include respond-to(phone) {
-					.icon-remove {
-						font-size: 22px;
-					}
+			a {
+				margin-right: 8px;
+				max-width: 180px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				&:first-child {
+					margin-left: 16px;
+				}
+				&.active {
+					cursor: default;
+					pointer-events: none;
 				}
 			}
 		}

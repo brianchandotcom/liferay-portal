@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchResult;
@@ -608,9 +609,18 @@ public class DLAdminDisplayContext {
 			String className = searchResult.getClassName();
 
 			try {
-				if (className.equals(DLFileEntry.class.getName()) ||
-					FileEntry.class.isAssignableFrom(
-						Class.forName(className))) {
+				List<RelatedSearchResult<FileEntry>>
+					fileEntryRelatedSearchResults =
+						searchResult.getFileEntryRelatedSearchResults();
+
+				if (!fileEntryRelatedSearchResults.isEmpty()) {
+					fileEntryRelatedSearchResults.forEach(
+						fileEntryRelatedSearchResult -> dlSearchResults.add(
+							fileEntryRelatedSearchResult.getModel()));
+				}
+				else if (className.equals(DLFileEntry.class.getName()) ||
+						 FileEntry.class.isAssignableFrom(
+							 Class.forName(className))) {
 
 					fileEntry = DLAppLocalServiceUtil.getFileEntry(
 						searchResult.getClassPK());

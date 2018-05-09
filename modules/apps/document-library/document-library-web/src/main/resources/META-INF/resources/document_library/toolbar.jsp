@@ -42,10 +42,6 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 	viewTypeItems="<%= dlAdminManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<c:if test="<%= dlAdminManagementToolbarDisplayContext.isShowSearchInfo() %>">
-	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />
-</c:if>
-
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
 		if (<%= dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {

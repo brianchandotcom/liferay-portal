@@ -39,17 +39,17 @@ if (searchFolderId > 0) {
 	folder = DLAppServiceUtil.getFolder(searchFolderId);
 }
 
-List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 String keywords = ParamUtil.getString(request, "keywords");
-
-boolean showRepositoryTabs = ParamUtil.getBoolean(request, "showRepositoryTabs");
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("entry-selector");
 entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(folderId=" + String.valueOf(folderId) + ")");
 %>
+
+<c:if test='<%= dlAdminDisplayContext.isSearch() && ParamUtil.getBoolean(request, "showSearchInfo") %>'>
+	<liferay-util:include page="/document_library/search_info.jsp" servletContext="<%= application %>" />
+</c:if>
 
 <aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
 <aui:input name="searchRepositoryId" type="hidden" value="<%= searchRepositoryId %>" />
@@ -168,93 +168,9 @@ entriesChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletRespons
 	</div>
 </liferay-util:buffer>
 
-<c:choose>
-	<c:when test="<%= showRepositoryTabs %>">
-
-		<%
-		PortletURL searchRepositoryURL = liferayPortletResponse.createRenderURL();
-
-		searchRepositoryURL.setParameter("mvcRenderCommandName", "/document_library/search");
-		searchRepositoryURL.setParameter("repositoryId", String.valueOf(scopeGroupId));
-		searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(scopeGroupId));
-		searchRepositoryURL.setParameter("keywords", keywords);
-		searchRepositoryURL.setParameter("showRepositoryTabs", Boolean.TRUE.toString());
-		searchRepositoryURL.setParameter("showSearchInfo", Boolean.TRUE.toString());
-
-		String[] tabsUrls = {searchRepositoryURL.toString()};
-
-		String selectedTab = LanguageUtil.get(request, "local");
-
-		for (Folder mountFolder : mountFolders) {
-			if (mountFolder.getRepositoryId() == searchRepositoryId) {
-				selectedTab = HtmlUtil.escape(mountFolder.getName());
-			}
-
-			searchRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
-			searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(mountFolder.getRepositoryId()));
-
-			tabsUrls = ArrayUtil.append(tabsUrls, searchRepositoryURL.toString());
-		}
-		%>
-
-		<div class="search-results-container" id="<portlet:namespace />searchResultsContainer">
-			<liferay-ui:tabs
-				names='<%= LanguageUtil.get(request, "local") + "," + HtmlUtil.escape(ListUtil.toString(mountFolders, "name")) %>'
-				refresh="<%= false %>"
-				urls="<%= tabsUrls %>"
-				value="<%= selectedTab %>"
-			>
-				<liferay-ui:section>
-					<div class="local-search-results" data-repositoryId="<%= scopeGroupId %>" <%= scopeGroupId == searchRepositoryId ? "data-searchProcessed" : "" %> id="<portlet:namespace />searchResultsContainer<%= scopeGroupId %>">
-						<c:choose>
-							<c:when test="<%= scopeGroupId == searchRepositoryId %>">
-								<%= searchResults %>
-							</c:when>
-							<c:otherwise>
-								<div class="alert alert-info">
-									<liferay-ui:message key="searching,-please-wait" />
-								</div>
-
-								<div class="loading-animation"></div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</liferay-ui:section>
-
-				<%
-				for (Folder mountFolder : mountFolders) {
-				%>
-
-					<liferay-ui:section>
-						<div data-repositoryId="<%= mountFolder.getRepositoryId() %>" <%= mountFolder.getRepositoryId() == searchRepositoryId ? "data-searchProcessed" : "" %> id="<portlet:namespace />searchResultsContainer<%= mountFolder.getRepositoryId() %>">
-							<c:choose>
-								<c:when test="<%= mountFolder.getRepositoryId() == searchRepositoryId %>">
-									<%= searchResults %>
-								</c:when>
-								<c:otherwise>
-									<div class="alert alert-info">
-										<liferay-ui:message key="searching,-please-wait" />
-									</div>
-
-									<div class="loading-animation"></div>
-								</c:otherwise>
-							</c:choose>
-						</div>
-					</liferay-ui:section>
-
-				<%
-				}
-				%>
-
-			</liferay-ui:tabs>
-		</div>
-	</c:when>
-	<c:otherwise>
-		<div class="repository-search-results" data-repositoryId="<%= searchRepositoryId %>" id="<%= liferayPortletResponse.getNamespace() + "searchResultsContainer" + searchRepositoryId %>">
-			<%= searchResults %>
-		</div>
-	</c:otherwise>
-</c:choose>
+<div class="repository-search-results" data-repositoryId="<%= searchRepositoryId %>" id="<%= liferayPortletResponse.getNamespace() + "searchResultsContainer" + searchRepositoryId %>">
+	<%= searchResults %>
+</div>
 
 <%
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));

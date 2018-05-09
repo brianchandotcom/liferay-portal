@@ -160,8 +160,9 @@ public class PriceListNestedCollectionResource
 		try {
 			List<CommercePriceList> commercePriceLists =
 				_commercePriceListService.getCommercePriceLists(
-					groupId, pagination.getStartPosition(),
-					pagination.getEndPosition());
+					groupId, WorkflowConstants.STATUS_APPROVED,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null);
 
 			if (ListUtil.isEmpty(commercePriceLists)) {
 				if (_log.isDebugEnabled()) {

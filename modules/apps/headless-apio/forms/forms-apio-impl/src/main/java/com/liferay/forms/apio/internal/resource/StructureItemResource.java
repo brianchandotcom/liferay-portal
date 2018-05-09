@@ -75,7 +75,7 @@ public class StructureItemResource
 			DDMStructure::getParentStructureId
 		).addNested(
 			"successPage", this::_getSuccessPage,
-			nestedBuilder -> nestedBuilder.nestedTypes(
+			nestedBuilder -> nestedBuilder.types(
 				"FormSuccessPageSettings"
 			).addBoolean(
 				"isEnabled", DDMFormSuccessPageSettings::isEnabled

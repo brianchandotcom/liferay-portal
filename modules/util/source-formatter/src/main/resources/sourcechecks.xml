@@ -13,6 +13,7 @@
 		<check name="BNDRangeCheck" />
 		<check name="BNDSchemaVersionCheck" />
 		<check name="BNDStylingCheck" />
+		<check name="BNDSuiteCheck" />
 		<check name="BNDWhitespaceCheck" />
 
 		<!-- Module checks -->

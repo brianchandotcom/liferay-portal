@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -43,7 +44,7 @@ public class PriceListHelper {
 
 	public CommercePriceList addCommercePriceList(
 			long groupId, String currency, String name, Double priority,
-			Boolean neverExpire)
+			Boolean neverExpire, Date displayDate, Date expirationDate)
 
 		throws PortalException {
 
@@ -62,6 +63,10 @@ public class PriceListHelper {
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
 
+		if (displayDate != null) {
+			displayCalendar = _convertDateToCalendar(displayDate);
+		}
+
 		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
 		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
 		int displayDateYear = displayCalendar.get(Calendar.YEAR);
@@ -77,6 +82,10 @@ public class PriceListHelper {
 			serviceContext.getTimeZone());
 
 		expirationCalendar.add(Calendar.MONTH, 1);
+
+		if (expirationDate != null) {
+			expirationCalendar = _convertDateToCalendar(expirationDate);
+		}
 
 		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
 		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
@@ -125,6 +134,14 @@ public class PriceListHelper {
 		serviceContext.setUserId(user.getUserId());
 
 		return serviceContext;
+	}
+
+	private Calendar _convertDateToCalendar(Date date) {
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.setTime(date);
+
+		return calendar;
 	}
 
 	private long _getCommerceCurrencyId(Long groupId, String currencyCode)

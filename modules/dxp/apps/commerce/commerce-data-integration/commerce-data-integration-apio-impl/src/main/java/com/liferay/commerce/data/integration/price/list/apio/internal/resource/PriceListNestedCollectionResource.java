@@ -119,7 +119,9 @@ public class PriceListNestedCollectionResource
 				groupId, priceListCreatorForm.getCurrency(),
 				priceListCreatorForm.getName(),
 				priceListCreatorForm.getPriority(),
-				priceListCreatorForm.isNeverExpire());
+				priceListCreatorForm.isNeverExpire(),
+				priceListCreatorForm.getDisplayDate(),
+				priceListCreatorForm.getExpirationDate());
 		}
 		catch (NoSuchCurrencyException nsce) {
 			throw new NotFoundException(nsce.getLocalizedMessage());

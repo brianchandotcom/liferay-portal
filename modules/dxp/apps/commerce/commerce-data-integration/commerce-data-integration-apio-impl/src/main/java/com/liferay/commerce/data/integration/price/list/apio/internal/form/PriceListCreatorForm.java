@@ -48,11 +48,11 @@ public class PriceListCreatorForm {
 		).addOptionalDate(
 			"displayDate", PriceListCreatorForm::_setDisplayDate
 		).addOptionalDate(
-			"expirationDate", PriceListCreatorForm::_setDisplayDate
-		).addOptionalDouble(
-			"priority", PriceListCreatorForm::_setPriority
+			"expirationDate", PriceListCreatorForm::_setExpirationDate
 		).addRequiredBoolean(
 			"neverExpire", PriceListCreatorForm::_setNeverExpire
+		).addRequiredDouble(
+			"priority", PriceListCreatorForm::_setPriority
 		).addRequiredString(
 			"currency", PriceListCreatorForm::setCurrency
 		).addRequiredString(
@@ -65,11 +65,11 @@ public class PriceListCreatorForm {
 	}
 
 	public Date getDisplayDate() {
-		return new Date(_displayDate.getTime());
+		return _displayDate;
 	}
 
 	public Date getExpirationDate() {
-		return new Date(_expirationDate.getTime());
+		return _expirationDate;
 	}
 
 	public String getName() {
@@ -93,7 +93,7 @@ public class PriceListCreatorForm {
 	}
 
 	private void _setExpirationDate(Date expirationDate) {
-		_displayDate = expirationDate;
+		_expirationDate = expirationDate;
 	}
 
 	private void _setName(String name) {

@@ -14,14 +14,10 @@
 
 package com.liferay.exportimport.internal.background.task;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
-
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
@@ -99,8 +95,10 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED,
-				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED,
+				ExportImportLifecycleConstants.
+					PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
@@ -144,8 +142,10 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED,
-				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED,
+				ExportImportLifecycleConstants.
+					PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
@@ -154,8 +154,10 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED,
-				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED,
+				ExportImportLifecycleConstants.
+					PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);

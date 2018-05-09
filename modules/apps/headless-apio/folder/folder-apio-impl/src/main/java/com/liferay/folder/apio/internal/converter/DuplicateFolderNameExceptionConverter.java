@@ -14,11 +14,11 @@
 
 package com.liferay.folder.apio.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
+
+import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,7 +36,7 @@ public class DuplicateFolderNameExceptionConverter
 	public APIError map(DuplicateFolderNameException dfne) {
 		return new APIError(
 			dfne, "Duplicate folder", "bad-request",
-			BAD_REQUEST.getStatusCode());
+			Status.BAD_REQUEST.getStatusCode());
 	}
 
 }

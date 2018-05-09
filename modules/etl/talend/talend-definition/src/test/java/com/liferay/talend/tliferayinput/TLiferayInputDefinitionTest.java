@@ -20,9 +20,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 
-import static org.talend.components.api.component.ComponentDefinition.RETURN_ERROR_MESSAGE_PROP;
-import static org.talend.components.api.component.ComponentDefinition.RETURN_TOTAL_RECORD_COUNT_PROP;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +30,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import org.talend.components.api.component.ComponentDefinition;
 import org.talend.components.api.component.ConnectorTopology;
 import org.talend.components.api.component.runtime.ExecutionEngine;
 import org.talend.daikon.exception.TalendRuntimeException;
@@ -78,8 +76,11 @@ public class TLiferayInputDefinitionTest {
 		assertThat(propertyList, hasSize(2));
 
 		Assert.assertTrue(
-			propertyList.contains(RETURN_TOTAL_RECORD_COUNT_PROP));
-		Assert.assertTrue(propertyList.contains(RETURN_ERROR_MESSAGE_PROP));
+			propertyList.contains(
+				ComponentDefinition.RETURN_TOTAL_RECORD_COUNT_PROP));
+		Assert.assertTrue(
+			propertyList.contains(
+				ComponentDefinition.RETURN_ERROR_MESSAGE_PROP));
 	}
 
 	@Test

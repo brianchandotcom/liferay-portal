@@ -14,12 +14,6 @@
 
 package com.liferay.exportimport.internal.controller;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
-
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
@@ -44,6 +38,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.lar.PermissionImporter;
@@ -204,7 +199,8 @@ public class LayoutImportController implements ImportController {
 				exportImportConfiguration, file);
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_LAYOUT_IMPORT_STARTED, getProcessFlag(),
+				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
+				getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				_portletDataContextFactory.clonePortletDataContext(
@@ -220,7 +216,8 @@ public class LayoutImportController implements ImportController {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_LAYOUT_IMPORT_SUCCEEDED, getProcessFlag(),
+				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
+				getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				_portletDataContextFactory.clonePortletDataContext(
@@ -231,7 +228,8 @@ public class LayoutImportController implements ImportController {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_LAYOUT_IMPORT_FAILED, getProcessFlag(),
+				ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_FAILED,
+				getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				_portletDataContextFactory.clonePortletDataContext(
@@ -669,10 +667,12 @@ public class LayoutImportController implements ImportController {
 
 	protected int getProcessFlag() {
 		if (ExportImportThreadLocal.isLayoutStagingInProcess()) {
-			return PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
+			return ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 		}
 
-		return PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS;
+		return ExportImportLifecycleConstants.
+			PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS;
 	}
 
 	/**

@@ -14,12 +14,6 @@
 
 package com.liferay.exportimport.internal.controller;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
-
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetLink;
@@ -46,6 +40,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
@@ -146,7 +141,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 				exportImportConfiguration);
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
+				ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED,
+				getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				_portletDataContextFactory.clonePortletDataContext(
@@ -157,7 +153,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 			ExportImportThreadLocal.setPortletExportInProcess(false);
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
+				ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED,
+				getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				_portletDataContextFactory.clonePortletDataContext(
@@ -169,7 +166,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 			ExportImportThreadLocal.setPortletExportInProcess(false);
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
+				ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED,
+				getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
 				_portletDataContextFactory.clonePortletDataContext(
@@ -1317,10 +1315,12 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 	protected int getProcessFlag() {
 		if (ExportImportThreadLocal.isPortletStagingInProcess()) {
-			return PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
+			return ExportImportLifecycleConstants.
+				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 		}
 
-		return PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
+		return ExportImportLifecycleConstants.
+			PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 	}
 
 	@Reference(unbind = "-")

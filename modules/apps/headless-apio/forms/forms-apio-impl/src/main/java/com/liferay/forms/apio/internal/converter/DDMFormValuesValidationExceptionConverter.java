@@ -14,11 +14,11 @@
 
 package com.liferay.forms.apio.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+
+import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,7 +36,7 @@ public class DDMFormValuesValidationExceptionConverter
 	public APIError map(DDMFormValuesValidationException ddmfvve) {
 		return new APIError(
 			ddmfvve, "Wrong values", ddmfvve.getMessage(), "bad-request",
-			BAD_REQUEST.getStatusCode());
+			Status.BAD_REQUEST.getStatusCode());
 	}
 
 }

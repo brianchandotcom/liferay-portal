@@ -14,10 +14,7 @@
 
 package com.liferay.exportimport.internal.lifecycle;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED;
-
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -74,9 +71,15 @@ public class EventRemotePropagatorExportImportLifecycleListener
 
 	@Activate
 	protected void activate() {
-		_propagatedEventTypes.add(EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED);
-		_propagatedEventTypes.add(EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED);
-		_propagatedEventTypes.add(EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED);
+		_propagatedEventTypes.add(
+			ExportImportLifecycleConstants.
+				EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED);
+		_propagatedEventTypes.add(
+			ExportImportLifecycleConstants.
+				EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED);
+		_propagatedEventTypes.add(
+			ExportImportLifecycleConstants.
+				EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED);
 	}
 
 	private boolean _eventNeedsToBePropagated(

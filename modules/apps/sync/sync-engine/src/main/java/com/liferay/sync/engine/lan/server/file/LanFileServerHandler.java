@@ -14,13 +14,6 @@
 
 package com.liferay.sync.engine.lan.server.file;
 
-import static io.netty.handler.codec.http.HttpMethod.GET;
-import static io.netty.handler.codec.http.HttpMethod.HEAD;
-import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
-import static io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
-import static io.netty.handler.codec.http.HttpResponseStatus.OK;
-import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
-
 import com.liferay.sync.engine.lan.util.LanTokenUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
@@ -44,9 +37,11 @@ import io.netty.handler.codec.http.HttpChunkedInput;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpUtil;
+import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.traffic.TrafficCounter;
 
 import java.nio.file.Files;
@@ -87,19 +82,19 @@ public class LanFileServerHandler
 		DecoderResult decoderResult = fullHttpRequest.decoderResult();
 
 		if (!decoderResult.isSuccess()) {
-			_sendError(channelHandlerContext, BAD_REQUEST);
+			_sendError(channelHandlerContext, HttpResponseStatus.BAD_REQUEST);
 
 			return;
 		}
 
-		if (fullHttpRequest.method() == GET) {
+		if (fullHttpRequest.method() == HttpMethod.GET) {
 			processGetRequest(channelHandlerContext, fullHttpRequest);
 		}
-		else if (fullHttpRequest.method() == HEAD) {
+		else if (fullHttpRequest.method() == HttpMethod.HEAD) {
 			processHeadRequest(channelHandlerContext, fullHttpRequest);
 		}
 		else {
-			_sendError(channelHandlerContext, BAD_REQUEST);
+			_sendError(channelHandlerContext, HttpResponseStatus.BAD_REQUEST);
 		}
 	}
 
@@ -147,7 +142,7 @@ public class LanFileServerHandler
 			_logger.error(
 				"Client {}: did not send token", channel.remoteAddress());
 
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
@@ -159,7 +154,7 @@ public class LanFileServerHandler
 				"Client {}: token not found or expired",
 				channel.remoteAddress());
 
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
@@ -175,7 +170,7 @@ public class LanFileServerHandler
 					channel.remoteAddress(), fullHttpRequest.uri());
 			}
 
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
@@ -183,7 +178,7 @@ public class LanFileServerHandler
 		if (_syncTrafficShapingHandler.getConnectionsCount() >=
 				PropsValues.SYNC_LAN_SERVER_MAX_CONNECTIONS) {
 
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
@@ -217,7 +212,7 @@ public class LanFileServerHandler
 		SyncFile syncFile = _getSyncFile(fullHttpRequest);
 
 		if (syncFile == null) {
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
@@ -225,7 +220,7 @@ public class LanFileServerHandler
 		String lanTokenKey = syncFile.getLanTokenKey();
 
 		if ((lanTokenKey == null) || lanTokenKey.isEmpty()) {
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
@@ -236,12 +231,13 @@ public class LanFileServerHandler
 			encryptedToken = LanTokenUtil.createEncryptedToken(lanTokenKey);
 		}
 		catch (Exception e) {
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
 
-		HttpResponse httpResponse = new DefaultFullHttpResponse(HTTP_1_1, OK);
+		HttpResponse httpResponse = new DefaultFullHttpResponse(
+			HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
 
 		HttpHeaders httpHeaders = httpResponse.headers();
 
@@ -275,7 +271,7 @@ public class LanFileServerHandler
 					path);
 			}
 
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
@@ -313,12 +309,13 @@ public class LanFileServerHandler
 				channel.remoteAddress(), path, currentTime, modifiedTime,
 				previousModifiedTime);
 
-			_sendError(channelHandlerContext, NOT_FOUND);
+			_sendError(channelHandlerContext, HttpResponseStatus.NOT_FOUND);
 
 			return;
 		}
 
-		HttpResponse httpResponse = new DefaultHttpResponse(HTTP_1_1, OK);
+		HttpResponse httpResponse = new DefaultHttpResponse(
+			HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
 
 		long size = Files.size(path);
 
@@ -418,7 +415,8 @@ public class LanFileServerHandler
 		HttpResponseStatus httpResponseStatus) {
 
 		ChannelFuture channelFuture = channelHandlerContext.writeAndFlush(
-			new DefaultFullHttpResponse(HTTP_1_1, httpResponseStatus));
+			new DefaultFullHttpResponse(
+				HttpVersion.HTTP_1_1, httpResponseStatus));
 
 		channelFuture.addListener(ChannelFutureListener.CLOSE);
 	}

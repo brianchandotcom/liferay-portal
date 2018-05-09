@@ -14,13 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_SUCCEEDED;
-
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.controller.PortletImportController;
@@ -36,6 +29,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -807,7 +801,8 @@ public class LayoutStagedModelDataHandler
 
 			try {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
+					ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
@@ -825,14 +820,17 @@ public class LayoutStagedModelDataHandler
 						PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
 
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_EXPORT_SUCCEEDED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 			}
 			catch (Throwable t) {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
+					ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext),
@@ -1339,7 +1337,8 @@ public class LayoutStagedModelDataHandler
 
 			try {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
+					ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
@@ -1368,14 +1367,17 @@ public class LayoutStagedModelDataHandler
 				}
 
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_IMPORT_SUCCEEDED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 			}
 			catch (Throwable t) {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
+					ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext),

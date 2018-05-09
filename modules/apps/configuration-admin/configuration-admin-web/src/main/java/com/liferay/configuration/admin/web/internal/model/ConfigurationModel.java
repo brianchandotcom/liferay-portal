@@ -14,8 +14,6 @@
 
 package com.liferay.configuration.admin.web.internal.model;
 
-import static com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.XML_NAMESPACE;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
@@ -86,7 +84,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	public String getCategory() {
 		Map<String, String> extensionAttributes =
 			_extendedObjectClassDefinition.getExtensionAttributes(
-				XML_NAMESPACE);
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
 		return GetterUtil.get(
 			extensionAttributes.get("category"), "third-party");
@@ -169,7 +168,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	public String getLabelAttribute() {
 		Map<String, String> extensionAttributes =
 			_extendedObjectClassDefinition.getExtensionAttributes(
-				XML_NAMESPACE);
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
 		return GetterUtil.get(
 			extensionAttributes.get("factoryInstanceLabelAttribute"),
@@ -184,7 +184,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	public String getScope() {
 		Map<String, String> extensionAttributes =
 			_extendedObjectClassDefinition.getExtensionAttributes(
-				XML_NAMESPACE);
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
 		return GetterUtil.get(
 			extensionAttributes.get("scope"), Scope.SYSTEM.toString());
@@ -228,7 +229,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	public boolean isGenerateUI() {
 		Map<String, String> extensionAttributes =
 			_extendedObjectClassDefinition.getExtensionAttributes(
-				XML_NAMESPACE);
+				com.liferay.portal.configuration.metatype.annotations.
+					ExtendedObjectClassDefinition.XML_NAMESPACE);
 
 		return GetterUtil.get(extensionAttributes.get("generateUI"), true);
 	}

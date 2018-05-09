@@ -14,9 +14,7 @@
 
 package com.liferay.exportimport.internal.background.task.display;
 
-import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
-import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL;
-
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -52,9 +50,11 @@ public class LayoutStagingBackgroundTaskDisplay
 							taskContextMap, "exportImportConfigurationId"));
 
 			if ((exportImportConfiguration.getType() !=
-					TYPE_PUBLISH_LAYOUT_LOCAL) &&
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_LAYOUT_LOCAL) &&
 				(exportImportConfiguration.getType() !=
-					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL)) {
+					ExportImportConfigurationConstants.
+						TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL)) {
 
 				return;
 			}

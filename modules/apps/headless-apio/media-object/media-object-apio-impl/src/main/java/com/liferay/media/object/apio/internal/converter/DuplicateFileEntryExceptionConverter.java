@@ -14,11 +14,11 @@
 
 package com.liferay.media.object.apio.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+
+import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,7 +36,7 @@ public class DuplicateFileEntryExceptionConverter
 	public APIError map(DuplicateFileEntryException dfee) {
 		return new APIError(
 			dfee, "Duplicate entry", "bad-request",
-			BAD_REQUEST.getStatusCode());
+			Status.BAD_REQUEST.getStatusCode());
 	}
 
 }

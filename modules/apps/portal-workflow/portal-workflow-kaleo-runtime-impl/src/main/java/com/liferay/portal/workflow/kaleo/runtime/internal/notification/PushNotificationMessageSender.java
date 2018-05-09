@@ -14,8 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification;
 
-import static com.liferay.push.notifications.constants.PushNotificationsDestinationNames.PUSH_NOTIFICATION;
-
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +26,7 @@ import com.liferay.portal.workflow.kaleo.runtime.notification.BaseNotificationSe
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
+import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 
 import java.util.Collection;
 import java.util.Map;
@@ -120,7 +119,8 @@ public class PushNotificationMessageSender
 			notificationRecipients.values(), notificationMessage,
 			executionContext);
 
-		messageBus.sendMessage(PUSH_NOTIFICATION, message);
+		messageBus.sendMessage(
+			PushNotificationsDestinationNames.PUSH_NOTIFICATION, message);
 	}
 
 	@Reference

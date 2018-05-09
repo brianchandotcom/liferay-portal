@@ -14,9 +14,6 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import static com.liferay.exportimport.kernel.lar.StagedModelType.REFERRER_CLASS_NAME_ALL;
-import static com.liferay.exportimport.kernel.lar.StagedModelType.REFERRER_CLASS_NAME_ANY;
-
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -141,12 +138,14 @@ public class DeletionSystemEventImporter {
 			smt -> smt.getClassNameId() == stagedModelType.getClassNameId();
 
 		Predicate<StagedModelType> allReferrerClassNamePredicate =
-			smt -> REFERRER_CLASS_NAME_ALL.equals(smt.getReferrerClassName());
+			smt -> StagedModelType.REFERRER_CLASS_NAME_ALL.equals(
+				smt.getReferrerClassName());
 
 		Predicate<StagedModelType> anyReferrerClassNamePredicate =
 			smt -> Validator.isNotNull(
 				stagedModelType.getReferrerClassName()) &&
-				   REFERRER_CLASS_NAME_ANY.equals(smt.getReferrerClassName());
+				   StagedModelType.REFERRER_CLASS_NAME_ANY.equals(
+					smt.getReferrerClassName());
 
 		boolean hasSimilar = stream.anyMatch(
 			classNameIdPredicate.and(

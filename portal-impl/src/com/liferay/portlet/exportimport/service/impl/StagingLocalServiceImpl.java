@@ -14,12 +14,11 @@
 
 package com.liferay.portlet.exportimport.service.impl;
 
-import static com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET_REMOTE;
-
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.exportimport.kernel.exception.ExportImportIOException;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
@@ -467,7 +466,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		try {
 			if (exportImportConfiguration.getType() ==
-					TYPE_PUBLISH_PORTLET_REMOTE) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE) {
 
 				ExportImportThreadLocal.setPortletImportInProcess(true);
 				ExportImportThreadLocal.setPortletStagingInProcess(true);
@@ -500,7 +500,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			MissingReferences missingReferences = null;
 
 			if (exportImportConfiguration.getType() ==
-					TYPE_PUBLISH_PORTLET_REMOTE) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE) {
 
 				exportImportLocalService.importPortletDataDeletions(
 					exportImportConfiguration, file);
@@ -537,7 +538,8 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 		finally {
 			if (exportImportConfiguration.getType() ==
-					TYPE_PUBLISH_PORTLET_REMOTE) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE) {
 
 				ExportImportThreadLocal.setPortletImportInProcess(false);
 				ExportImportThreadLocal.setPortletStagingInProcess(false);

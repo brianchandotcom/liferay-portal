@@ -14,8 +14,6 @@
 
 package com.liferay.talend.runtime;
 
-import static com.liferay.talend.runtime.apio.constants.SchemaOrgConstants.Vocabulary.WEB_SITES;
-
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +27,7 @@ import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 import com.liferay.talend.runtime.apio.constants.SchemaOrgConstants;
+import com.liferay.talend.runtime.apio.constants.SchemaOrgConstants.Vocabulary;
 import com.liferay.talend.runtime.apio.jsonld.ApioForm;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.runtime.apio.jsonld.ApioSingleModel;
@@ -548,7 +547,8 @@ public class LiferaySourceOrSink
 		Stream<Map.Entry<String, String>> stream =
 			resourceCollectionEntrySet.stream();
 
-		return stream.anyMatch(entry -> WEB_SITES.equals(entry.getValue()));
+		return stream.anyMatch(
+			entry -> Vocabulary.WEB_SITES.equals(entry.getValue()));
 	}
 
 	@Override
@@ -783,7 +783,7 @@ public class LiferaySourceOrSink
 			resourceCollectionEntrySet.stream();
 
 		Optional<String> webSiteHrefOptional = stream.filter(
-			entry -> WEB_SITES.equals(entry.getValue())
+			entry -> Vocabulary.WEB_SITES.equals(entry.getValue())
 		).map(
 			Map.Entry::getKey
 		).findFirst();

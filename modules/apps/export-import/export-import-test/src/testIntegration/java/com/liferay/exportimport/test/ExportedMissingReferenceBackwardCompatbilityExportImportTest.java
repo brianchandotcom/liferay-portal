@@ -14,15 +14,12 @@
 
 package com.liferay.exportimport.test;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
-
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEventListenerRegistryUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
@@ -161,11 +158,14 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 			throws Exception {
 
 			if (((exportImportLifecycleEvent.getCode() !=
-					EVENT_PORTLET_EXPORT_SUCCEEDED) ||
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_EXPORT_SUCCEEDED) ||
 				 (exportImportLifecycleEvent.getProcessFlag() !=
-					 PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS)) &&
+					 ExportImportLifecycleConstants.
+						 PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS)) &&
 				(exportImportLifecycleEvent.getCode() !=
-					EVENT_LAYOUT_EXPORT_SUCCEEDED)) {
+					ExportImportLifecycleConstants.
+						EVENT_LAYOUT_EXPORT_SUCCEEDED)) {
 
 				return;
 			}

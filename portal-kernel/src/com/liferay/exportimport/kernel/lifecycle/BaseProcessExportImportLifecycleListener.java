@@ -14,34 +14,6 @@
 
 package com.liferay.exportimport.kernel.lifecycle;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
-
 import java.io.Serializable;
 
 import java.util.List;
@@ -65,75 +37,148 @@ public abstract class BaseProcessExportImportLifecycleListener
 		int code = exportImportLifecycleEvent.getCode();
 		int processFlag = exportImportLifecycleEvent.getProcessFlag();
 
-		if (processFlag == PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS) {
-			if (code == EVENT_LAYOUT_EXPORT_FAILED) {
-				onProcessFailed(exportImportLifecycleEvent.getAttributes());
-			}
-			else if (code == EVENT_LAYOUT_EXPORT_STARTED) {
-				onProcessStarted(exportImportLifecycleEvent.getAttributes());
-			}
-			else if (code == EVENT_LAYOUT_EXPORT_SUCCEEDED) {
-				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
-			}
-		}
-		else if (processFlag == PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS) {
-			if (code == EVENT_LAYOUT_IMPORT_FAILED) {
-				onProcessFailed(exportImportLifecycleEvent.getAttributes());
-			}
-			else if (code == EVENT_LAYOUT_IMPORT_STARTED) {
-				onProcessStarted(exportImportLifecycleEvent.getAttributes());
-			}
-			else if (code == EVENT_LAYOUT_IMPORT_SUCCEEDED) {
-				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
-			}
-		}
-		else if (processFlag == PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS) {
-			if ((code == EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED) ||
-				(code == EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED)) {
+		if (processFlag ==
+				ExportImportLifecycleConstants.
+					PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS) {
+
+			if (code ==
+					ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED) {
 
 				onProcessFailed(exportImportLifecycleEvent.getAttributes());
 			}
-			else if ((code == EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) ||
-					 (code == EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED)) {
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_LAYOUT_EXPORT_STARTED) {
 
 				onProcessStarted(exportImportLifecycleEvent.getAttributes());
 			}
-			else if ((code == EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) ||
-					 (code == EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED)) {
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_LAYOUT_EXPORT_SUCCEEDED) {
 
 				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
 			}
 		}
-		else if (processFlag == PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS) {
-			if (code == EVENT_PORTLET_EXPORT_FAILED) {
+		else if (processFlag ==
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS) {
+
+			if (code ==
+					ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_FAILED) {
+
 				onProcessFailed(exportImportLifecycleEvent.getAttributes());
 			}
-			else if (code == EVENT_PORTLET_EXPORT_STARTED) {
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_LAYOUT_IMPORT_STARTED) {
+
 				onProcessStarted(exportImportLifecycleEvent.getAttributes());
 			}
-			else if (code == EVENT_PORTLET_EXPORT_SUCCEEDED) {
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_LAYOUT_IMPORT_SUCCEEDED) {
+
 				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
 			}
 		}
-		else if (processFlag == PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS) {
-			if (code == EVENT_PORTLET_IMPORT_FAILED) {
+		else if (processFlag ==
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS) {
+
+			if ((code ==
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED) ||
+				(code ==
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED)) {
+
 				onProcessFailed(exportImportLifecycleEvent.getAttributes());
 			}
-			else if (code == EVENT_PORTLET_IMPORT_STARTED) {
+			else if ((code ==
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED) ||
+					 (code ==
+						 ExportImportLifecycleConstants.
+							 EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED)) {
+
 				onProcessStarted(exportImportLifecycleEvent.getAttributes());
 			}
-			else if (code == EVENT_PORTLET_IMPORT_SUCCEEDED) {
+			else if ((code ==
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) ||
+					 (code ==
+						 ExportImportLifecycleConstants.
+							 EVENT_PUBLICATION_LAYOUT_REMOTE_SUCCEEDED)) {
+
 				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
 			}
 		}
-		else if (processFlag == PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS) {
-			if (code == EVENT_PUBLICATION_PORTLET_LOCAL_FAILED) {
+		else if (processFlag ==
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS) {
+
+			if (code ==
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_EXPORT_FAILED) {
+
 				onProcessFailed(exportImportLifecycleEvent.getAttributes());
 			}
-			else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_PORTLET_EXPORT_STARTED) {
+
 				onProcessStarted(exportImportLifecycleEvent.getAttributes());
 			}
-			else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_PORTLET_EXPORT_SUCCEEDED) {
+
+				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
+			}
+		}
+		else if (processFlag ==
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS) {
+
+			if (code ==
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_IMPORT_FAILED) {
+
+				onProcessFailed(exportImportLifecycleEvent.getAttributes());
+			}
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_PORTLET_IMPORT_STARTED) {
+
+				onProcessStarted(exportImportLifecycleEvent.getAttributes());
+			}
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_PORTLET_IMPORT_SUCCEEDED) {
+
+				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
+			}
+		}
+		else if (processFlag ==
+					ExportImportLifecycleConstants.
+						PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS) {
+
+			if (code ==
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_PORTLET_LOCAL_FAILED) {
+
+				onProcessFailed(exportImportLifecycleEvent.getAttributes());
+			}
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
+
+				onProcessStarted(exportImportLifecycleEvent.getAttributes());
+			}
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
+
 				onProcessSucceeded(exportImportLifecycleEvent.getAttributes());
 			}
 		}

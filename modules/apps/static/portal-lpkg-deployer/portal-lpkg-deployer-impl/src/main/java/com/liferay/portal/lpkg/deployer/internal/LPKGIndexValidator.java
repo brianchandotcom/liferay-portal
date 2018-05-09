@@ -14,8 +14,6 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.local.LocalProcessExecutor;
@@ -62,6 +60,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -277,8 +276,9 @@ public class LPKGIndexValidator {
 				_log.info(
 					String.format(
 						"LPKG validation time %02d:%02ds",
-						MILLISECONDS.toMinutes(duration),
-						MILLISECONDS.toSeconds(duration % Time.MINUTE)));
+						TimeUnit.MILLISECONDS.toMinutes(duration),
+						TimeUnit.MILLISECONDS.toSeconds(
+							duration % Time.MINUTE)));
 			}
 		}
 

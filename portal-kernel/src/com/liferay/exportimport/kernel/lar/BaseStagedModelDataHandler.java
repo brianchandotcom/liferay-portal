@@ -14,13 +14,6 @@
 
 package com.liferay.exportimport.kernel.lar;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_SUCCEEDED;
-
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
@@ -91,8 +84,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		try {
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_STAGED_MODEL_EXPORT_STARTED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.
+					EVENT_STAGED_MODEL_EXPORT_STARTED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel));
@@ -118,16 +112,17 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			portletDataContext.cleanUpMissingReferences(stagedModel);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_STAGED_MODEL_EXPORT_SUCCEEDED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.
+					EVENT_STAGED_MODEL_EXPORT_SUCCEEDED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel));
 		}
 		catch (PortletDataException pde) {
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_STAGED_MODEL_EXPORT_FAILED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_FAILED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel), pde);
@@ -136,8 +131,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 		catch (Throwable t) {
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_STAGED_MODEL_EXPORT_FAILED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_FAILED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel), t);
@@ -355,8 +350,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		try {
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_STAGED_MODEL_IMPORT_STARTED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.
+					EVENT_STAGED_MODEL_IMPORT_STARTED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel));
@@ -389,16 +385,17 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				stagedModel.getStagedModelType());
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_STAGED_MODEL_IMPORT_SUCCEEDED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.
+					EVENT_STAGED_MODEL_IMPORT_SUCCEEDED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel));
 		}
 		catch (PortletDataException pde) {
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_STAGED_MODEL_IMPORT_FAILED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_FAILED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel), pde);
@@ -407,8 +404,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 		catch (Throwable t) {
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-				EVENT_STAGED_MODEL_IMPORT_FAILED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_FAILED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
 				new TransientValue<T>(stagedModel), t);

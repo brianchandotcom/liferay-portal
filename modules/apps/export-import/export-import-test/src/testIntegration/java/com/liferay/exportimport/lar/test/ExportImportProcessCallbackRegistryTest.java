@@ -14,12 +14,9 @@
 
 package com.liferay.exportimport.lar.test;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
-
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -320,14 +317,20 @@ public class ExportImportProcessCallbackRegistryTest {
 
 	protected void startProcess(String processId) {
 		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-			EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED,
-			PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS, processId);
+			ExportImportLifecycleConstants.
+				EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+			processId);
 	}
 
 	protected void stopProcess(String processId) {
 		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
-			EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED,
-			PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS, processId);
+			ExportImportLifecycleConstants.
+				EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
+			processId);
 	}
 
 	private String _processId;

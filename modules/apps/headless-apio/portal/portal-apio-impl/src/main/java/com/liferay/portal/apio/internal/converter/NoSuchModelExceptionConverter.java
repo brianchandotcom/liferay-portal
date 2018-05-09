@@ -14,11 +14,11 @@
 
 package com.liferay.portal.apio.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
-
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+
+import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,7 +35,8 @@ public class NoSuchModelExceptionConverter
 	@Override
 	public APIError map(NoSuchModelException nsme) {
 		return new APIError(
-			nsme, "Resource not found", "not-found", NOT_FOUND.getStatusCode());
+			nsme, "Resource not found", "not-found",
+			Status.NOT_FOUND.getStatusCode());
 	}
 
 }

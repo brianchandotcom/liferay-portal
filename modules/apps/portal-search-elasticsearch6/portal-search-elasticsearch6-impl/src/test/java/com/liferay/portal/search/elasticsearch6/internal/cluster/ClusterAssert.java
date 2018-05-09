@@ -14,9 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.cluster;
 
-import static org.elasticsearch.cluster.health.ClusterHealthStatus.GREEN;
-import static org.elasticsearch.cluster.health.ClusterHealthStatus.YELLOW;
-
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.HealthExpectations;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
@@ -25,6 +22,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.cluster.health.ClusterHealthStatus;
 
 import org.junit.Assert;
 
@@ -45,7 +43,7 @@ public class ClusterAssert {
 					activeShards = 1;
 					numberOfDataNodes = 1;
 					numberOfNodes = 1;
-					status = YELLOW;
+					status = ClusterHealthStatus.YELLOW;
 					unassignedShards = 1;
 				}
 			});
@@ -63,7 +61,7 @@ public class ClusterAssert {
 					activeShards = 1;
 					numberOfDataNodes = 2;
 					numberOfNodes = 2;
-					status = GREEN;
+					status = ClusterHealthStatus.GREEN;
 					unassignedShards = 0;
 				}
 			});
@@ -81,7 +79,7 @@ public class ClusterAssert {
 					activeShards = 1;
 					numberOfDataNodes = 1;
 					numberOfNodes = 1;
-					status = GREEN;
+					status = ClusterHealthStatus.GREEN;
 					unassignedShards = 0;
 				}
 			});
@@ -99,7 +97,7 @@ public class ClusterAssert {
 					activeShards = 2;
 					numberOfDataNodes = 2;
 					numberOfNodes = 2;
-					status = YELLOW;
+					status = ClusterHealthStatus.YELLOW;
 					unassignedShards = 1;
 				}
 			});
@@ -117,7 +115,7 @@ public class ClusterAssert {
 					activeShards = 2;
 					numberOfDataNodes = 2;
 					numberOfNodes = 2;
-					status = GREEN;
+					status = ClusterHealthStatus.GREEN;
 					unassignedShards = 0;
 				}
 			});
@@ -135,7 +133,7 @@ public class ClusterAssert {
 					activeShards = 2;
 					numberOfDataNodes = 1;
 					numberOfNodes = 1;
-					status = YELLOW;
+					status = ClusterHealthStatus.YELLOW;
 					unassignedShards = 2;
 				}
 			});
@@ -153,7 +151,7 @@ public class ClusterAssert {
 					activeShards = 4;
 					numberOfDataNodes = 2;
 					numberOfNodes = 2;
-					status = GREEN;
+					status = ClusterHealthStatus.GREEN;
 					unassignedShards = 0;
 				}
 			});
@@ -171,7 +169,7 @@ public class ClusterAssert {
 					activeShards = 2;
 					numberOfDataNodes = 2;
 					numberOfNodes = 2;
-					status = GREEN;
+					status = ClusterHealthStatus.GREEN;
 					unassignedShards = 0;
 				}
 			});
@@ -189,7 +187,7 @@ public class ClusterAssert {
 					activeShards = 3;
 					numberOfDataNodes = 3;
 					numberOfNodes = 3;
-					status = GREEN;
+					status = ClusterHealthStatus.GREEN;
 					unassignedShards = 0;
 				}
 			});

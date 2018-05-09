@@ -14,11 +14,11 @@
 
 package com.liferay.portal.apio.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.NOT_FOUND;
-
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+
+import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,8 @@ public class PrincipalExceptionExceptionConverter
 	@Override
 	public APIError map(PrincipalException pe) {
 		return new APIError(
-			pe, "Resource not found", "not-found", NOT_FOUND.getStatusCode());
+			pe, "Resource not found", "not-found",
+			Status.NOT_FOUND.getStatusCode());
 	}
 
 }

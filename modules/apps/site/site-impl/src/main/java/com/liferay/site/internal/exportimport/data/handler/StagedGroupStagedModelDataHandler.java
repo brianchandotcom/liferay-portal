@@ -14,13 +14,6 @@
 
 package com.liferay.site.internal.exportimport.data.handler;
 
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED;
-import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_SUCCEEDED;
-
 import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.controller.PortletImportController;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
@@ -36,6 +29,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
@@ -369,8 +363,8 @@ public class StagedGroupStagedModelDataHandler
 
 		try {
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_STARTED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext));
 
@@ -390,15 +384,15 @@ public class StagedGroupStagedModelDataHandler
 					PortletDataHandlerKeys.PORTLET_SETUP));
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext));
 		}
 		catch (Throwable t) {
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-				EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
-				portletDataContext.getExportImportProcessId(),
+				ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_FAILED,
+				getProcessFlag(), portletDataContext.getExportImportProcessId(),
 				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext),
 				t);
@@ -572,7 +566,8 @@ public class StagedGroupStagedModelDataHandler
 
 			try {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
+					ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
@@ -601,14 +596,17 @@ public class StagedGroupStagedModelDataHandler
 				}
 
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
+					ExportImportLifecycleConstants.
+						EVENT_PORTLET_IMPORT_SUCCEEDED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext));
 			}
 			catch (Throwable t) {
 				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
-					EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
+					ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED,
+					getProcessFlag(),
 					portletDataContext.getExportImportProcessId(),
 					_portletDataContextFactory.clonePortletDataContext(
 						portletDataContext),

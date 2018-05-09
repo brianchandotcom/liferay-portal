@@ -14,10 +14,10 @@
 
 package com.liferay.portal.apio.internal.converter;
 
-import static javax.ws.rs.core.Response.Status.FORBIDDEN;
-
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
+
+import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +34,7 @@ public class SecurityExceptionConverter
 	public APIError map(SecurityException se) {
 		return new APIError(
 			se, "Not permitted to access", "forbidden",
-			FORBIDDEN.getStatusCode());
+			Status.FORBIDDEN.getStatusCode());
 	}
 
 }

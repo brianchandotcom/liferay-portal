@@ -1469,15 +1469,15 @@ public class JournalPortlet extends MVCPortlet {
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
-            _assetDisplayPageEntryLocalService.
-                fetchAssetDisplayPageEntryByAssetEntryId(
-                    assetEntry.getEntryId());
+			_assetDisplayPageEntryLocalService.
+				fetchAssetDisplayPageEntryByAssetEntryId(
+					assetEntry.getEntryId());
 
 		if (assetDisplayPageEntry != null) {
-            _assetDisplayPageEntryLocalService.
-                deleteAssetDisplayPageEntryByAssetEntryId(
-                    assetEntry.getEntryId());
-        }
+			_assetDisplayPageEntryLocalService.
+				deleteAssetDisplayPageEntryByAssetEntryId(
+					assetEntry.getEntryId());
+		}
 
 		if (assetDisplayPageId > 0) {
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(

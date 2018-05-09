@@ -48,7 +48,7 @@ class CPDefinitionOptionValueDetail extends Component {
 				var name = optionValueDetail.querySelector('#' + instance.namespace + 'optionValueName');
 
 				if (name) {
-                    name.addEventListener(
+					name.addEventListener(
 						'keyup',
 						(event) => {
 							var target = event.target;

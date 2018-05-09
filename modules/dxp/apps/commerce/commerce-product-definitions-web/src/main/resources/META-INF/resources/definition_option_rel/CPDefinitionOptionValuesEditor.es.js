@@ -114,7 +114,7 @@ CPDefinitionOptionValuesEditor.STATE = {
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
 	_cpDefinitionOptionValueRels: Config.array().value([]),
-    _newCPDefinitionOptionValueRelName: Config.string().value('')
+	_newCPDefinitionOptionValueRelName: Config.string().value('')
 };
 
 // Register component

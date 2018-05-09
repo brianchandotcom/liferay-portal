@@ -113,7 +113,7 @@ CPOptionValuesEditor.STATE = {
 	optionValueURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
-    _newOptionValueName: Config.string().value(''),
+	_newOptionValueName: Config.string().value(''),
 	_optionValues: Config.array().value([])
 };
 

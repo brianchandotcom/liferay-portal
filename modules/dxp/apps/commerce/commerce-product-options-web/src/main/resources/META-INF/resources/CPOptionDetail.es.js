@@ -46,7 +46,7 @@ class CPOptionDetail extends Component {
 				var name = optionDetail.querySelector('#' + instance.namespace + 'name');
 
 				if (name) {
-                    name.addEventListener(
+					name.addEventListener(
 						'keyup',
 						(event) => {
 							var target = event.target;

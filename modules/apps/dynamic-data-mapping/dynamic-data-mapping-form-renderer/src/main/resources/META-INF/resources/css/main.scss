@@ -257,6 +257,10 @@ body .ddm-user-view-content {
 .form-builder-select-field {
 	position: relative;
 
+	.option-selected-placeholder {
+		color: #6a6c7d;
+	}
+
 	.dropdown-menu {
 		display: block;
 		max-width: initial;
@@ -265,6 +269,14 @@ body .ddm-user-view-content {
 
 		.dropdown-section, .dropdown-item, .no-results-list {
 			padding: 0.5rem 1rem;
+		}
+
+		.placeholder-dropdown-item {
+			color: #a7a9bc;
+
+			&:hover {
+				color: #a7a9bc;
+			}
 		}
 	}
 

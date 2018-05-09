@@ -31,7 +31,7 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 	%>
 
 	<portlet:actionURL name="/layout/reset_merge_fail_count_and_merge" var="portletURL">
-		<portlet:param name="mvcPath" value="/view.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="/layout/view" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 		<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />

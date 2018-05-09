@@ -18,6 +18,8 @@
 
 <%
 LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
+
+List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTemplateDisplayContext.getLayoutPageTemplateCollections();
 %>
 
 <clay:navigation-bar
@@ -25,80 +27,108 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
-<clay:management-toolbar
-	actionDropdownItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateCollectionsActionDropdownItems() %>"
-	clearResultsURL="<%= layoutPageTemplateDisplayContext.getClearResultsURL() %>"
-	componentId="layoutPageTemplateCollectionsManagementToolbar"
-	creationMenu="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) ? layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionsCreationMenu() : null %>"
-	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateCollectionsManagementBar() %>"
-	filterDropdownItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= layoutPageTemplateDisplayContext.getSearchActionURL() %>"
-	searchContainerId="layoutPageTemplateCollections"
-	searchFormName="searchFm"
-	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateCollectionsSearch() %>"
-	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
-	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
-/>
+<div class="container-fluid container-fluid-max-xl container-view">
+	<div class="row">
+		<div class="col-lg-3">
+			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
+				<ul class="nav nav-nested">
+					<li class="nav-item">
+						<portlet:renderURL var="editLayoutPageTemplateCollectionURL">
+							<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_collection" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</portlet:renderURL>
 
-<portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
+						<c:choose>
+							<c:when test="<%= ListUtil.isNotEmpty(layoutPageTemplateCollections) %>">
+								<div class="align-items-center autofit-row">
+									<div class="autofit-col autofit-col-expand">
+										<strong class="text-uppercase">
+											<liferay-ui:message key="collections" />
+										</strong>
+									</div>
 
-<aui:form action="<%= deleteLayoutPageTemplateCollectionURL %>" cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:search-container
-		id="layoutPageTemplateCollections"
-		searchContainer="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionsSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.layout.page.template.model.LayoutPageTemplateCollection"
-			keyProperty="layoutPageTemplateCollectionId"
-			modelVar="layoutPageTemplateCollection"
-		>
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
-				<portlet:param name="tabs1" value="page-templates" />
-				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
-			</portlet:renderURL>
+									<div class="autofit-col autofit-col-end">
+										<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
+											<liferay-ui:icon
+												icon="plus"
+												iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+												markupView="lexicon"
+												url="<%= editLayoutPageTemplateCollectionURL %>"
+											/>
+										</c:if>
+									</div>
+								</div>
+
+								<ul class="nav nav-stacked">
+
+									<%
+									for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
+									%>
+
+										<li class="nav-item">
+
+											<%
+											PortletURL layoutPageTemplateCollectionURL = renderResponse.createRenderURL();
+
+											layoutPageTemplateCollectionURL.setParameter("layoutPageTemplateCollectionId", String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()));
+											layoutPageTemplateCollectionURL.setParameter("tabs1", "page-templates");
+											%>
+
+											<a class="nav-link truncate-text <%= (layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() == layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= layoutPageTemplateCollectionURL.toString() %>">
+												<%= layoutPageTemplateCollection.getName() %>
+											</a>
+										</li>
+
+									<%
+									}
+									%>
+
+								</ul>
+							</c:when>
+							<c:otherwise>
+								<p class="text-uppercase">
+									<strong><liferay-ui:message key="collections" /></strong>
+								</p>
+
+								<h2 class="text-center">
+									<liferay-ui:message key="no-collections-yet" />
+								</h2>
+
+								<p class="text-center">
+									<liferay-ui:message key="collections-are-needed-to-create-page-templates" />
+								</p>
+
+								<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
+									<aui:a cssClass="btn btn-primary" href="<%= editLayoutPageTemplateCollectionURL %>" label="add-collection" />
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="col-lg-9">
 
 			<%
-			row.setCssClass("entry-card lfr-asset-folder");
+			LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDisplayContext.getLayoutPageTemplateCollection();
 			%>
 
-			<liferay-ui:search-container-column-text>
-				<liferay-ui:search-container-column-text
-					colspan="<%= 2 %>"
-				>
-					<liferay-frontend:horizontal-card
-						actionJsp="/layout_page_template_collection_action.jsp"
-						actionJspServletContext="<%= application %>"
-						resultRow="<%= row %>"
-						rowChecker="<%= searchContainer.getRowChecker() %>"
-						text="<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>"
-						url="<%= rowURL.toString() %>"
-					>
-						<liferay-frontend:horizontal-card-col>
-							<liferay-frontend:horizontal-card-icon
-								icon="folder"
-							/>
-						</liferay-frontend:horizontal-card-col>
-					</liferay-frontend:horizontal-card>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+			<c:if test="<%= layoutPageTemplateCollection != null %>">
+				<div class="sheet">
+					<div class="align-items-center autofit-row h3">
+						<div class="autofit-col">
+							<%= layoutPageTemplateCollection.getName() %>
+						</div>
 
-		<liferay-ui:search-iterator
-			displayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>"
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</aui:form>
+						<div class="autofit-col autofit-col-end inline-item-after">
+							<liferay-util:include page="/layout_page_template_collection_action.jsp" servletContext="<%= application %>" />
+						</div>
+					</div>
 
-<aui:script sandbox="<%= true %>">
-	window.deleteLayoutPageTemplateCollections = function() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
-		}
-	}
-</aui:script>
+					<liferay-util:include page="/view_layout_page_template_entries.jsp" servletContext="<%= application %>" />
+				</div>
+			</c:if>
+		</div>
+	</div>
+</div>

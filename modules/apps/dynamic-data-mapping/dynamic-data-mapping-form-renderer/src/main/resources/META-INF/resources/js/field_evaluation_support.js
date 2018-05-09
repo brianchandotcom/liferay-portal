@@ -25,9 +25,13 @@ AUI.add(
 				var evaluationTriggerEvents = instance.get('evaluationTriggerEvents');
 
 				instance._eventHandlers.push(
-					instance.after(evaluationTriggerEvents, function() {
-						instance.evaluate();
-					})
+					instance.after(
+						evaluationTriggerEvents,
+						function() {
+							instance._setEvaluating();
+							instance.evaluate();
+						}
+					)
 				);
 			},
 
@@ -63,6 +67,16 @@ AUI.add(
 				}
 
 				return evaluator;
+			},
+
+			_setEvaluating: function() {
+				var instance = this;
+
+				var evaluator = instance.get('evaluator');
+
+				if (evaluator) {
+					evaluator.setEvaluating();
+				}
 			}
 		};
 

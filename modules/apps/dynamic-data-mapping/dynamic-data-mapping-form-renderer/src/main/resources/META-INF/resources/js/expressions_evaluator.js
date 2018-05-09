@@ -104,6 +104,12 @@ AUI.add(
 						return instance._evaluating;
 					},
 
+					setEvaluating: function() {
+						var instance = this;
+
+						instance._evaluating = true;
+					},
+
 					stop: function() {
 						var instance = this;
 

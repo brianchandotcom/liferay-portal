@@ -134,8 +134,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-			long groupId, int start, int end)
-		throws PortalException {
+		long groupId, int start, int end) {
 
 		return layoutPageTemplateCollectionPersistence.findByGroupId(
 			groupId, start, end);
@@ -143,9 +142,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-			long groupId, int start, int end,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
-		throws PortalException {
+		long groupId, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return layoutPageTemplateCollectionPersistence.findByGroupId(
 			groupId, start, end, orderByComparator);

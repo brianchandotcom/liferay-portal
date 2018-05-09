@@ -17,21 +17,23 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
 
-LayoutPageTemplateCollection layoutPageTemplateCollection = (LayoutPageTemplateCollection)row.getObject();
+LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDisplayContext.getLayoutPageTemplateCollection();
 %>
 
 <liferay-ui:icon-menu
-	direction="left-side"
+	direction="down"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
+	triggerCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
 >
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editLayoutPageTemplateCollectionURL">
-			<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+			<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_collection" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="tabs1" value="page-templates" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
 		</portlet:renderURL>
@@ -60,8 +62,13 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = (LayoutPageTemplateC
 	</c:if>
 
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.DELETE) %>">
+		<portlet:renderURL var="redirectURL">
+			<portlet:param name="mvcRenderCommandName" value="/layout/view" />
+			<portlet:param name="tabs1" value="page-templates" />
+		</portlet:renderURL>
+
 		<portlet:actionURL name="/layout/delete_layout_page_template_collection" var="deleteLayoutPageTemplateCollectionURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
 		</portlet:actionURL>
 

@@ -271,12 +271,10 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 
 		File tempDir = tempDirPath.toFile();
 
-		WebXMLBuilder.main(
-			new String[] {
-				portalWebDir + "WEB-INF/web.xml",
-				pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/web.xml",
-				tempDir.getAbsolutePath() + "/web.xml"
-			});
+		new WebXMLBuilder(
+			portalWebDir + "WEB-INF/web.xml",
+			pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/web.xml",
+			tempDir.getAbsolutePath() + "/web.xml");
 
 		File portalWebXml = new File(portalWebDir + "WEB-INF/web.xml");
 		File tmpWebXml = new File(tempDir + "/web.xml");

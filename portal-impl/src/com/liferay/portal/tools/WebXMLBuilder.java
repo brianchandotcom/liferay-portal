@@ -50,43 +50,6 @@ public class WebXMLBuilder {
 		}
 	}
 
-	public static String organizeWebXML(String webXML)
-		throws DocumentException, IOException {
-
-		webXML = HtmlUtil.stripComments(webXML);
-
-		Document document = UnsecureSAXReaderUtil.read(webXML);
-
-		Element rootElement = document.getRootElement();
-
-		double version = 2.3;
-
-		version = GetterUtil.getDouble(
-			rootElement.attributeValue("version"), version);
-
-		XMLDescriptor xmlDescriptor = null;
-
-		if (version == 2.3) {
-			xmlDescriptor = new WebXML23Descriptor();
-		}
-		else if (version == 2.4) {
-			xmlDescriptor = new WebXML24Descriptor();
-		}
-		else {
-			xmlDescriptor = new WebXML30Descriptor();
-		}
-
-		XMLMerger xmlMerger = new XMLMerger(xmlDescriptor);
-
-		DocumentImpl documentImpl = (DocumentImpl)document;
-
-		xmlMerger.organizeXML(documentImpl.getWrappedDocument());
-
-		webXML = document.formattedString();
-
-		return webXML;
-	}
-
 	public static void mergeWebXML(
 		String originalWebXML, String customWebXML, String mergedWebXML) {
 
@@ -128,6 +91,43 @@ public class WebXMLBuilder {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static String organizeWebXML(String webXML)
+		throws DocumentException, IOException {
+
+		webXML = HtmlUtil.stripComments(webXML);
+
+		Document document = UnsecureSAXReaderUtil.read(webXML);
+
+		Element rootElement = document.getRootElement();
+
+		double version = 2.3;
+
+		version = GetterUtil.getDouble(
+			rootElement.attributeValue("version"), version);
+
+		XMLDescriptor xmlDescriptor = null;
+
+		if (version == 2.3) {
+			xmlDescriptor = new WebXML23Descriptor();
+		}
+		else if (version == 2.4) {
+			xmlDescriptor = new WebXML24Descriptor();
+		}
+		else {
+			xmlDescriptor = new WebXML30Descriptor();
+		}
+
+		XMLMerger xmlMerger = new XMLMerger(xmlDescriptor);
+
+		DocumentImpl documentImpl = (DocumentImpl)document;
+
+		xmlMerger.organizeXML(documentImpl.getWrappedDocument());
+
+		webXML = document.formattedString();
+
+		return webXML;
 	}
 
 	protected static String getCustomContent(String customWebXML)

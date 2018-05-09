@@ -654,10 +654,11 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
 	public List<User> getOrganizationUsers(long organizationId, int start,
-		int end) {
+		int end) throws PortalException {
 		return organizationPersistence.getUsers(organizationId, start, end);
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.commerce.data.integration.price.list.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.apio.architect.form.Form.Builder;
 
 import java.util.Date;
 
@@ -26,37 +25,37 @@ import java.util.Date;
  * @author Zoltán Takács
  * @review
  */
-public class PriceListCreatorForm {
+public class PriceListForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code PriceListCreatorForm}
+	 * Builds a {@code Form} that generates {@code PriceListForm}
 	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a product creator form
+	 * @return a product form
 	 * @review
 	 */
-	public static Form<PriceListCreatorForm> buildForm(
-		Form.Builder<PriceListCreatorForm> formBuilder) {
+	public static Form<PriceListForm> buildForm(
+		Form.Builder<PriceListForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The price list creator form"
+			__ -> "The price list form"
 		).description(
-			__ -> "This form can be used to create a price list"
+			__ -> "This form can be used to create or update a price list"
 		).constructor(
-			PriceListCreatorForm::new
+			PriceListForm::new
 		).addOptionalDate(
-			"displayDate", PriceListCreatorForm::_setDisplayDate
+			"displayDate", PriceListForm::_setDisplayDate
 		).addOptionalDate(
-			"expirationDate", PriceListCreatorForm::_setExpirationDate
+			"expirationDate", PriceListForm::_setExpirationDate
 		).addRequiredBoolean(
-			"neverExpire", PriceListCreatorForm::_setNeverExpire
+			"neverExpire", PriceListForm::_setNeverExpire
 		).addRequiredDouble(
-			"priority", PriceListCreatorForm::_setPriority
+			"priority", PriceListForm::_setPriority
 		).addRequiredString(
-			"currency", PriceListCreatorForm::setCurrency
+			"currency", PriceListForm::setCurrency
 		).addRequiredString(
-			"name", PriceListCreatorForm::_setName
+			"name", PriceListForm::_setName
 		).build();
 	}
 

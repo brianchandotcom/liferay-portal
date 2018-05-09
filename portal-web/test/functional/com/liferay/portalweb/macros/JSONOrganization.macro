@@ -47,7 +47,7 @@
 
 		<echo>## * Organization Site: ${organizationSite}</echo>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
 			<arg value="$['organizationId']" />
 			<return name="organizationId" />
@@ -100,7 +100,7 @@
 
 		<echo>## * User Email Address: ${userEmailAddress}</echo>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
 			<arg value="$" />
 			<return name="temp" />
@@ -136,7 +136,7 @@
 
 		<echo>## * Organization Name: ${organizationName}</echo>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
 			<arg value="$['organizationId']" />
 			<return name="organizationId" />
@@ -233,10 +233,8 @@
 		</execute>
 
 		<var name="curl">
-			${portalURL}/api/jsonws/organization/get-organizations \
-				-u test@liferay.com:test \
-				-d companyId=${companyId} \
-				-d parentOrganizationId=0
+			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/0 \
+				-u test@liferay.com:test
 		</var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
@@ -277,9 +275,8 @@
 		</execute>
 
 		<var name="curl">
-			${portalURL}/api/jsonws/organization/get-organization \
-				-u test@liferay.com:test \
-				-d organizationId=${organizationId}
+			${portalURL}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
+				-u test@liferay.com:test
 		</var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">

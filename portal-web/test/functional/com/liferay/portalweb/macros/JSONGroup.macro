@@ -63,7 +63,7 @@
 
 		<echo>## * Group Name: ${groupName}</echo>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
 			<arg value="$['groupId']" />
 			<return name="groupId" />
@@ -133,7 +133,7 @@
 
 		<echo>## * User Email Address: ${userEmailAddress}</echo>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
 			<arg value="$" />
 			<return name="temp" />
@@ -186,7 +186,7 @@
 
 		<echo>## * User Email Address: ${userEmailAddress}</echo>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
 			<arg value="$" />
 			<return name="temp" />
@@ -222,7 +222,7 @@
 				-d groupId=${groupId}
 		</var>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
 			<arg value="$" />
 			<return name="temp" />
@@ -369,11 +369,8 @@
 		</execute>
 
 		<var name="curl">
-			${portalURL}/api/jsonws/group/get-groups \
-				-u test@liferay.com:test \
-				-d companyId=${companyId} \
-				-d parentGroupId=0 \
-				-d site=true
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/true \
+				-u test@liferay.com:test
 		</var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
@@ -418,9 +415,8 @@
 		</execute>
 
 		<var name="curl">
-			${portalURL}/api/jsonws/group/get-group \
-				-u test@liferay.com:test \
-				-d groupId=${groupId}
+			${portalURL}/api/jsonws/group/get-group/group-id/${groupId} \
+				-u test@liferay.com:test
 		</var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">

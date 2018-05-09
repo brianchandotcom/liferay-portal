@@ -194,6 +194,19 @@ public class FragmentsEditorContext {
 		soyContext.put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
+
+		if (layoutPageTemplateEntry.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED) {
+
+			soyContext.put(
+				"status",
+				WorkflowConstants.getStatusLabel(
+					layoutPageTemplateEntry.getStatus()));
+		}
+
 		soyContext.put(
 			"updateFragmentEntryLinksURL",
 			_getFragmentEntryActionURL("/layout/update_fragment_entry_links"));

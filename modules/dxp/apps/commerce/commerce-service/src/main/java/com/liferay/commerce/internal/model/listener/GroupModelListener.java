@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.model.listener;
 import com.liferay.commerce.service.CommerceAvailabilityRangeLocalService;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceWarehouseLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -48,6 +49,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 		try {
 			_commerceCountryLocalService.importDefaultCountries(serviceContext);
+			_commerceWarehouseLocalService.getDefaultCommerceWarehouse(
+				serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -80,5 +83,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CommerceWarehouseLocalService _commerceWarehouseLocalService;
 
 }

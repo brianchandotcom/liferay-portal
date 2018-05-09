@@ -19,8 +19,6 @@ package com.liferay.commerce.constants;
  */
 public class CommerceWarehouseConstants {
 
-	public static final long DEFAULT_ID = 0;
-
 	public static final String DEFAULT_NAME = "default";
 
 }

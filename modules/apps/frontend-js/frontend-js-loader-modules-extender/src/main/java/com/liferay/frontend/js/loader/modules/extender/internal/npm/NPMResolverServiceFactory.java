@@ -16,7 +16,13 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.net.URL;
 
 import java.util.Hashtable;
 
@@ -51,7 +57,34 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 	public NPMResolver getService(
 		Bundle bundle, ServiceRegistration<NPMResolver> serviceRegistration) {
 
-		return new NPMResolverImpl(bundle, _jsonFactory, _npmRegistry);
+		URL url = bundle.getResource("META-INF/resources/package.json");
+
+		if (url == null) {
+			return null;
+		}
+
+		try {
+			String content = StringUtil.read(url.openStream());
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(content);
+
+			String name = jsonObject.getString("name");
+			String version = jsonObject.getString("version");
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(bundle.getBundleId());
+			sb.append(StringPool.SLASH);
+			sb.append(name);
+			sb.append(StringPool.AT);
+			sb.append(version);
+
+			return new NPMResolverImpl(
+				sb.toString(), _jsonFactory, _npmRegistry);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

@@ -15,6 +15,8 @@
 package com.liferay.commerce.internal.verify;
 
 import com.liferay.commerce.service.CommerceCountryLocalService;
+import com.liferay.commerce.service.CommerceWarehouseLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -42,6 +44,7 @@ public class CommerceServiceVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyCountries();
+		verifyDefaultWarehouses();
 	}
 
 	protected void verifyCountries() throws Exception {
@@ -76,8 +79,40 @@ public class CommerceServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected void verifyDefaultWarehouse(Group group) throws PortalException {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setLanguageId(group.getDefaultLanguageId());
+		serviceContext.setScopeGroupId(group.getGroupId());
+		serviceContext.setUserId(group.getCreatorUserId());
+
+		_commerceWarehouseLocalService.getDefaultCommerceWarehouse(
+			serviceContext);
+	}
+
+	protected void verifyDefaultWarehouses() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<Company> companies = _companyLocalService.getCompanies();
+
+			for (Company company : companies) {
+				List<Group> groups = _groupLocalService.getGroups(
+					company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
+					true);
+
+				for (Group group : groups) {
+					verifyDefaultWarehouse(group);
+				}
+			}
+		}
+	}
+
 	@Reference
 	private CommerceCountryLocalService _commerceCountryLocalService;
+
+	@Reference
+	private CommerceWarehouseLocalService _commerceWarehouseLocalService;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

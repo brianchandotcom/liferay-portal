@@ -20,6 +20,7 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
+	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
@@ -32,6 +33,7 @@
 	{@param? _handleMappeableFieldClicked: any}
 	{@param? _handleMappeableFieldSelected: any}
 	{@param? _handleMappingTypeSelected: any}
+	{@param? _handlePublishButtonClick: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
 	{@param? _handleSelectMappingDialogVisibleChanged: any}
@@ -68,6 +70,7 @@
 			label: string
 		]
 	]}
+	{@param? status: string}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
 	<div id="{$id}">
@@ -75,11 +78,14 @@
 			{param availableLanguages: $availableLanguages /}
 			{param defaultLanguageId: $defaultLanguageId /}
 			{param languageId: $languageId /}
+			{param redirectURL: $redirectURL /}
 			{param spritemap: $spritemap /}
 			{param dirty: $_dirty /}
+			{param handlePublishButtonClick: $_handlePublishButtonClick /}
 			{param handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
 			{param handleTranslationLanguageChange: $_handleTranslationLanguageChange /}
 			{param lastSaveDate: $_lastSaveDate /}
+			{param status: $status /}
 			{param translationStatus: $_translationStatus /}
 		{/call}
 
@@ -255,9 +261,11 @@
 	{@param languageId: string}
 	{@param spritemap: string}
 	{@param? dirty: bool}
+	{@param? handlePublishButtonClick: any}
 	{@param? handleToggleContextualSidebarButtonClick: any}
 	{@param? handleTranslationLanguageChange: any}
 	{@param? lastSaveDate: string}
+	{@param? status: string}
 	{@param? translationStatus: [
 		languageValues: list<[languageId: string, values: list<string>]>,
 		translationKeys: list<string>
@@ -288,6 +296,16 @@
 			</ul>
 
 			<ul class="navbar-nav">
+				{if $status}
+					<li class="nav-item">
+						<span class="label label-secondary">{$status}</span>
+					</li>
+				{/if}
+				<li class="nav-item">
+					<button class="btn btn-primary nav-btn" data-onclick="{$handlePublishButtonClick}">
+						{msg desc=""}publish{/msg}
+					</button>
+				</li>
 				<li class="nav-item">
 					<button class="btn btn-secondary nav-btn" data-onclick="{$handleToggleContextualSidebarButtonClick}">
 						<svg class="icon-monospaced lexicon-icon">

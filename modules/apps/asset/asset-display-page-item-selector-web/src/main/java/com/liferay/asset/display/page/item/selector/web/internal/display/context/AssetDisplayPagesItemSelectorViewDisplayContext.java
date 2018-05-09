@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Objects;
@@ -112,7 +113,8 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 						_assetDisplayPageSelectorCriterion.getClassNameId(),
 						_assetDisplayPageSelectorCriterion.getClassTypeId(),
 						_getKeywords(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+						WorkflowConstants.STATUS_APPROVED);
 
 			layoutPageTemplateEntries =
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
@@ -121,6 +123,7 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 					_assetDisplayPageSelectorCriterion.getClassTypeId(),
 					_getKeywords(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+					WorkflowConstants.STATUS_APPROVED,
 					assetDisplayPageSearchContainer.getStart(),
 					assetDisplayPageSearchContainer.getEnd(),
 					assetDisplayPageSearchContainer.getOrderByComparator());
@@ -132,7 +135,8 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 						_themeDisplay.getScopeGroupId(),
 						_assetDisplayPageSelectorCriterion.getClassNameId(),
 						_assetDisplayPageSelectorCriterion.getClassTypeId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+						WorkflowConstants.STATUS_APPROVED);
 
 			layoutPageTemplateEntries =
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
@@ -140,6 +144,7 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 					_assetDisplayPageSelectorCriterion.getClassNameId(),
 					_assetDisplayPageSelectorCriterion.getClassTypeId(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+					WorkflowConstants.STATUS_APPROVED,
 					assetDisplayPageSearchContainer.getStart(),
 					assetDisplayPageSearchContainer.getEnd(),
 					assetDisplayPageSearchContainer.getOrderByComparator());

@@ -606,6 +606,39 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Callback executed when the publish button is clicked
+	 * @private
+	 * @review
+	 */
+
+	_handlePublishButtonClick() {
+		const formData = new FormData();
+
+		formData.append(
+			`${this.portletNamespace}classPK`,
+			this.classPK
+		);
+
+		fetch(
+			this.publishLayoutPageTemplateEntryURL,
+			{
+				body: formData,
+				credentials: 'include',
+				method: 'POST'
+			}
+		).then(
+			() => {
+				if (Liferay.SPA) {
+					Liferay.SPA.app.navigate(this.redirectURL);
+				}
+				else {
+					location.href = this.redirectURL;
+				}
+			}
+		);
+	}
+
+	/**
 	 * Callback executed when the sidebar visible state should be toggled
 	 * @private
 	 * @review
@@ -980,6 +1013,28 @@ FragmentsEditor.STATE = {
 	 */
 
 	portletNamespace: Config.string().required(),
+
+	/**
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	publishLayoutPageTemplateEntryURL: Config.string().required(),
+
+	/**
+	 * URL for redirect.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	redirectURL: Config.string().required(),
 
 	/**
 	 * URL for getting a fragment content.

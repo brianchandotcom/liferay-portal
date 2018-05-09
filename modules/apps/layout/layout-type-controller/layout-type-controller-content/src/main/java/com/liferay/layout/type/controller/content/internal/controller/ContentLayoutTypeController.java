@@ -117,7 +117,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	protected String getEditPage() {
-		return _EDIT_PAGE;
+		return null;
 	}
 
 	@Override
@@ -132,8 +132,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
-
-	private static final String _EDIT_PAGE = "/layout/edit/content.jsp";
 
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +

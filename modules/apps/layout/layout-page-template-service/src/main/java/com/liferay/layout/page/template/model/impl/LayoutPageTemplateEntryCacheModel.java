@@ -65,7 +65,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{layoutPageTemplateEntryId=");
 		sb.append(layoutPageTemplateEntryId);
@@ -95,6 +95,14 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		sb.append(htmlPreviewEntryId);
 		sb.append(", defaultTemplate=");
 		sb.append(defaultTemplate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -144,6 +152,22 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		layoutPageTemplateEntryImpl.setType(type);
 		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
 		layoutPageTemplateEntryImpl.setDefaultTemplate(defaultTemplate);
+		layoutPageTemplateEntryImpl.setStatus(status);
+		layoutPageTemplateEntryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			layoutPageTemplateEntryImpl.setStatusByUserName("");
+		}
+		else {
+			layoutPageTemplateEntryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			layoutPageTemplateEntryImpl.setStatusDate(null);
+		}
+		else {
+			layoutPageTemplateEntryImpl.setStatusDate(new Date(statusDate));
+		}
 
 		layoutPageTemplateEntryImpl.resetOriginalValues();
 
@@ -175,6 +199,12 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		htmlPreviewEntryId = objectInput.readLong();
 
 		defaultTemplate = objectInput.readBoolean();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -216,6 +246,19 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		objectOutput.writeLong(htmlPreviewEntryId);
 
 		objectOutput.writeBoolean(defaultTemplate);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long layoutPageTemplateEntryId;
@@ -232,4 +275,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 	public int type;
 	public long htmlPreviewEntryId;
 	public boolean defaultTemplate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

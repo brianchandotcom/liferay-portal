@@ -79,6 +79,10 @@
 		<column name="type" type="int" />
 		<column name="htmlPreviewEntryId" type="long" />
 		<column name="defaultTemplate" type="boolean" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -108,10 +112,26 @@
 			<finder-column name="layoutPageTemplateCollectionId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
+		<finder name="G_L_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateCollectionId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_T_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 			<finder-column name="type" />
+		</finder>
+		<finder name="G_T_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_L_LikeN_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateCollectionId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="G_C_C_T" return-type="Collection">
 			<finder-column name="groupId" />
@@ -125,12 +145,40 @@
 			<finder-column name="classTypeId" />
 			<finder-column name="defaultTemplate" />
 		</finder>
+		<finder name="G_T_LikeN_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+			<finder-column name="type" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_C_C_LikeN_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classTypeId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 			<finder-column name="type" />
+		</finder>
+		<finder name="G_C_C_T_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classTypeId" />
+			<finder-column name="type" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_C_C_D_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classTypeId" />
+			<finder-column name="defaultTemplate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_C_C_LikeN_T_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classTypeId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+			<finder-column name="type" />
+			<finder-column name="status" />
 		</finder>
 
 		<!-- References -->

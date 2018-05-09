@@ -45,7 +45,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long[] fragmentEntryIds,
+			String name, int type, long[] fragmentEntryIds, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -73,6 +73,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setName(name);
 		layoutPageTemplateEntry.setType(type);
+		layoutPageTemplateEntry.setStatus(status);
+		layoutPageTemplateEntry.setStatusByUserId(userId);
+		layoutPageTemplateEntry.setStatusByUserName(user.getFullName());
+		layoutPageTemplateEntry.setStatusDate(new Date());
 
 		// HTML preview
 
@@ -104,13 +108,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, long[] fragmentEntryIds, ServiceContext serviceContext)
+			String name, long[] fragmentEntryIds, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name,
 			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, fragmentEntryIds,
-			serviceContext);
+			status, serviceContext);
 	}
 
 	@Override

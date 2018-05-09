@@ -438,6 +438,24 @@ public class FriendlyURLEntryLocalServiceUtil {
 			classPK, defaultLanguageId, urlTitleMap);
 	}
 
+	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization updateFriendlyURLEntryLocalization(
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry,
+		String languageId, String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFriendlyURLEntryLocalization(friendlyURLEntry,
+			languageId, urlTitle);
+	}
+
+	public static java.util.List<com.liferay.friendly.url.model.FriendlyURLEntryLocalization> updateFriendlyURLEntryLocalizations(
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry,
+		java.util.Map<String, String> urlTitleMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFriendlyURLEntryLocalizations(friendlyURLEntry,
+			urlTitleMap);
+	}
+
 	public static com.liferay.friendly.url.model.FriendlyURLEntryLocalization updateFriendlyURLLocalization(
 		com.liferay.friendly.url.model.FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
 		return getService()

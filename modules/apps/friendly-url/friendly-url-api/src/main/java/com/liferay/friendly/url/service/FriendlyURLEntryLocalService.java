@@ -358,6 +358,14 @@ public interface FriendlyURLEntryLocalService extends BaseLocalService,
 		long classNameId, long classPK, String defaultLanguageId,
 		Map<String, String> urlTitleMap) throws PortalException;
 
+	public FriendlyURLEntryLocalization updateFriendlyURLEntryLocalization(
+		FriendlyURLEntry friendlyURLEntry, String languageId, String urlTitle)
+		throws PortalException;
+
+	public List<FriendlyURLEntryLocalization> updateFriendlyURLEntryLocalizations(
+		FriendlyURLEntry friendlyURLEntry, Map<String, String> urlTitleMap)
+		throws PortalException;
+
 	public FriendlyURLEntryLocalization updateFriendlyURLLocalization(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization);
 

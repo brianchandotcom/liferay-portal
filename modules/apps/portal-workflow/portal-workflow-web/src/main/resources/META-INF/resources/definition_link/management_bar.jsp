@@ -17,5 +17,9 @@
 <%@ include file="/definition_link/init.jsp" %>
 
 <clay:management-toolbar
+	filterItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
+	namespace="<%= renderResponse.getNamespace() %>"
 	selectable="false"
+	sortingOrder="<%= workflowDefinitionLinkDisplayContext.getOrderByType() %>"
+	sortingURL="<%= workflowDefinitionLinkDisplayContext.getSortingURL() %>"
 />

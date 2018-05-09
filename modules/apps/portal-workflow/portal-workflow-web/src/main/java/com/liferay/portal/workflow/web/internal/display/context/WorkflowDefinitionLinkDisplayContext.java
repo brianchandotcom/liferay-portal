@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
@@ -62,8 +64,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -130,6 +135,37 @@ public class WorkflowDefinitionLinkDisplayContext {
 				_workflowDefinitionLinkRequestHelper.getRequest(),
 				"no-workflow");
 		}
+	}
+
+	public DropdownItemList getFilterOptions(HttpServletRequest request) {
+		return new DropdownItemList() {
+			{
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getOrderByDropdownItem(
+											"resource",
+											_getCurrentOrder(request)));
+
+									add(
+										_getOrderByDropdownItem(
+											"workflow",
+											_getCurrentOrder(request)));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(
+								_workflowDefinitionLinkRequestHelper.
+									getRequest(),
+								"order-by"));
+					});
+			}
+		};
 	}
 
 	public long getGroupId() {
@@ -212,6 +248,11 @@ public class WorkflowDefinitionLinkDisplayContext {
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
 		}
+
+		String orderByType = ParamUtil.getString(
+			_request, "orderByType", "asc");
+
+		portletURL.setParameter("orderByType", orderByType);
 
 		return portletURL;
 	}
@@ -330,6 +371,26 @@ public class WorkflowDefinitionLinkDisplayContext {
 		searchContainer.setResults(results);
 
 		return searchContainer;
+	}
+
+	public String getSortingURL() throws PortletException {
+		String orderByType = ParamUtil.getString(
+			_request, "orderByType", "asc");
+
+		LiferayPortletResponse response =
+			_workflowDefinitionLinkRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = response.createRenderURL();
+
+		portletURL.setParameter(
+			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
+
+		portletURL.setParameter(
+			"tab", WorkflowWebKeys.WORKFLOW_TAB_DEFINITION_LINK);
+
+		portletURL.setParameter("orderByCol", getOrderByCol());
+
+		return portletURL.toString();
 	}
 
 	public String getWorkflowDefinitionLabel(
@@ -566,6 +627,25 @@ public class WorkflowDefinitionLinkDisplayContext {
 		}
 
 		return false;
+	}
+
+	private String _getCurrentOrder(HttpServletRequest request) {
+		return ParamUtil.getString(request, "orderByCol", "resource");
+	}
+
+	private Consumer<DropdownItem> _getOrderByDropdownItem(
+		String orderByCol, String currentOrder) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(Objects.equals(currentOrder, orderByCol));
+
+			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_workflowDefinitionLinkRequestHelper.getRequest(),
+					orderByCol));
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

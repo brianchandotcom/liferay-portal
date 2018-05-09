@@ -39,6 +39,7 @@ contextObjects.put("cpCategoryContentDisplayContext", cpCategoryContentDisplayCo
 >
 	<c:if test="<%= assetCategory != null %>">
 		<div class="category-detail">
+
 			<%
 			String imgURL = cpCategoryContentDisplayContext.getDefaultImageSrc(themeDisplay);
 			%>

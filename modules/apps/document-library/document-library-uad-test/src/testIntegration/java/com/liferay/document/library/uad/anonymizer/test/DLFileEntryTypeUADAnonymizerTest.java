@@ -15,37 +15,38 @@
 package com.liferay.document.library.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.document.library.uad.constants.DLUADConstants;
 import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestHelper;
+
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
+
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * @author William Newbury
+ * @author Brian Wing Shun Chan
+ * @generated
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryTypeUADAnonymizerTest
-	extends BaseUADAnonymizerTestCase<DLFileEntryType> {
-
+public class DLFileEntryTypeUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFileEntryType> {
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -53,17 +54,15 @@ public class DLFileEntryTypeUADAnonymizerTest
 	}
 
 	@Override
-	protected DLFileEntryType addBaseModel(long userId) throws Exception {
+	protected DLFileEntryType addBaseModel(long userId)
+		throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected DLFileEntryType addBaseModel(
-			long userId, boolean deleteAfterTestRun)
-		throws Exception {
-
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeUADTestHelper.addDLFileEntryType(userId);
+	protected DLFileEntryType addBaseModel(long userId,
+		boolean deleteAfterTestRun) throws Exception {
+		DLFileEntryType dlFileEntryType = _dlFileEntryTypeUADTestHelper.addDLFileEntryType(userId);
 
 		if (deleteAfterTestRun) {
 			_dlFileEntryTypes.add(dlFileEntryType);
@@ -75,7 +74,6 @@ public class DLFileEntryTypeUADAnonymizerTest
 	@Override
 	protected void deleteBaseModels(List<DLFileEntryType> baseModels)
 		throws Exception {
-
 		_dlFileEntryTypeUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -87,15 +85,12 @@ public class DLFileEntryTypeUADAnonymizerTest
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.getDLFileEntryType(baseModelPK);
+		DLFileEntryType dlFileEntryType = _dlFileEntryTypeLocalService.getDLFileEntryType(baseModelPK);
 
 		String userName = dlFileEntryType.getUserName();
 
 		if ((dlFileEntryType.getUserId() != user.getUserId()) &&
-			!userName.equals(user.getFullName())) {
-
+				!userName.equals(user.getFullName())) {
 			return true;
 		}
 
@@ -104,27 +99,19 @@ public class DLFileEntryTypeUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_dlFileEntryTypeLocalService.fetchDLFileEntryType(baseModelPK) ==
-				null) {
-
+		if (_dlFileEntryTypeLocalService.fetchDLFileEntryType(baseModelPK) == null) {
 			return true;
 		}
 
 		return false;
 	}
 
+	@DeleteAfterTestRun
+	private final List<DLFileEntryType> _dlFileEntryTypes = new ArrayList<DLFileEntryType>();
 	@Inject
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@DeleteAfterTestRun
-	private final List<DLFileEntryType> _dlFileEntryTypes = new ArrayList<>();
-
 	@Inject
 	private DLFileEntryTypeUADTestHelper _dlFileEntryTypeUADTestHelper;
-
-	@Inject(
-		filter = "model.class.name=" + DLUADConstants.CLASS_NAME_DL_FILE_ENTRY_TYPE
-	)
+	@Inject(filter = "component.name=*.DLFileEntryTypeUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
-
 }

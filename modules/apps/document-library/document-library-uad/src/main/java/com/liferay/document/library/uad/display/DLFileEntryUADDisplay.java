@@ -16,7 +16,6 @@ package com.liferay.document.library.uad.display;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.uad.constants.DLUADConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Portal;
@@ -29,13 +28,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author William Newbury
+ * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + DLUADConstants.CLASS_NAME_DL_FILE_ENTRY,
-	service = UADDisplay.class
-)
+@Component(immediate = true, service = UADDisplay.class)
 public class DLFileEntryUADDisplay extends BaseDLFileEntryUADDisplay {
 
 	@Override

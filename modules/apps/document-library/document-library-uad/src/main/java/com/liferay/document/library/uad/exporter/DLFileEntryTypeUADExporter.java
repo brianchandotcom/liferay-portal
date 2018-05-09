@@ -14,42 +14,13 @@
 
 package com.liferay.document.library.uad.exporter;
 
-import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.document.library.uad.constants.DLUADConstants;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
 import com.liferay.user.associated.data.exporter.UADExporter;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author William Newbury
+ * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + DLUADConstants.CLASS_NAME_DL_FILE_ENTRY_TYPE,
-	service = UADExporter.class
-)
-public class DLFileEntryTypeUADExporter
-	extends DynamicQueryUADExporter<DLFileEntryType> {
-
-	public String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
-	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return _dlFileEntryTypeLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	protected String[] doGetUserIdFieldNames() {
-		return DLUADConstants.USER_ID_FIELD_NAMES_DL_FILE_ENTRY_TYPE;
-	}
-
-	@Reference
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
+@Component(immediate = true, service = UADExporter.class)
+public class DLFileEntryTypeUADExporter extends BaseDLFileEntryTypeUADExporter {
 }

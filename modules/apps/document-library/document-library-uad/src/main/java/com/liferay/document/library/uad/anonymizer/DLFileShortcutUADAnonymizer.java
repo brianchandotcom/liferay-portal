@@ -14,19 +14,14 @@
 
 package com.liferay.document.library.uad.anonymizer;
 
-import com.liferay.document.library.uad.constants.DLUADConstants;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author William Newbury
+ * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = "model.class.name=" + DLUADConstants.CLASS_NAME_DL_FILE_SHORTCUT,
-	service = UADAnonymizer.class
-)
+@Component(immediate = true, service = UADAnonymizer.class)
 public class DLFileShortcutUADAnonymizer
 	extends BaseDLFileShortcutUADAnonymizer {
 }

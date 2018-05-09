@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.document.library.uad.anonymizer.test;
+package com.liferay.document.library.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
 
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+import com.liferay.user.associated.data.exporter.UADExporter;
+import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
 import org.junit.After;
 import org.junit.ClassRule;
@@ -43,7 +41,7 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFileEntry> {
+public class DLFileEntryUADExporterTest extends BaseUADExporterTestCase<DLFileEntry> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
@@ -55,62 +53,27 @@ public class DLFileEntryUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFi
 
 	@Override
 	protected DLFileEntry addBaseModel(long userId) throws Exception {
-		return addBaseModel(userId, true);
-	}
-
-	@Override
-	protected DLFileEntry addBaseModel(long userId, boolean deleteAfterTestRun)
-		throws Exception {
 		DLFileEntry dlFileEntry = _dlFileEntryUADTestHelper.addDLFileEntry(userId);
 
-		if (deleteAfterTestRun) {
-			_dlFileEntries.add(dlFileEntry);
-		}
+		_dlFileEntries.add(dlFileEntry);
 
 		return dlFileEntry;
 	}
 
 	@Override
-	protected void deleteBaseModels(List<DLFileEntry> baseModels)
-		throws Exception {
-		_dlFileEntryUADTestHelper.cleanUpDependencies(baseModels);
+	protected String getPrimaryKeyName() {
+		return "fileEntryId";
 	}
 
 	@Override
-	protected UADAnonymizer getUADAnonymizer() {
-		return _uadAnonymizer;
-	}
-
-	@Override
-	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
-		throws Exception {
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(baseModelPK);
-
-		String userName = dlFileEntry.getUserName();
-
-		if ((dlFileEntry.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_dlFileEntryLocalService.fetchDLFileEntry(baseModelPK) == null) {
-			return true;
-		}
-
-		return false;
+	protected UADExporter getUADExporter() {
+		return _uadExporter;
 	}
 
 	@DeleteAfterTestRun
 	private final List<DLFileEntry> _dlFileEntries = new ArrayList<DLFileEntry>();
 	@Inject
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-	@Inject
 	private DLFileEntryUADTestHelper _dlFileEntryUADTestHelper;
-	@Inject(filter = "component.name=*.DLFileEntryUADAnonymizer")
-	private UADAnonymizer _uadAnonymizer;
+	@Inject(filter = "component.name=*.DLFileEntryUADExporter")
+	private UADExporter _uadExporter;
 }

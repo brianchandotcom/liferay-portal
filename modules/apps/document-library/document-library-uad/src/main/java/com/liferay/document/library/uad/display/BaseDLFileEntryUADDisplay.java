@@ -17,19 +17,20 @@ package com.liferay.document.library.uad.display;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.constants.DLUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+
 import com.liferay.user.associated.data.display.BaseModelUADDisplay;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the base implementation for the Document Library File Entry UAD display.
+ * Provides the base implementation for the DLFileEntry UAD display.
  *
  * <p>
  * This implementation exists only as a container for the default methods
@@ -37,33 +38,29 @@ import org.osgi.service.component.annotations.Reference;
  * {@link DLFileEntryUADDisplay}.
  * </p>
  *
- * @author William Newbury
+ * @author Brian Wing Shun Chan
+ * @generated
  */
-public abstract class BaseDLFileEntryUADDisplay
-	extends BaseModelUADDisplay<DLFileEntry> {
-
+public abstract class BaseDLFileEntryUADDisplay extends BaseModelUADDisplay<DLFileEntry> {
 	@Override
 	public DLFileEntry get(Serializable primaryKey) throws PortalException {
-		return dlFileEntryLocalService.getDLFileEntry(
-			Long.valueOf(primaryKey.toString()));
+		return dlFileEntryLocalService.getDLFileEntry(Long.valueOf(
+				primaryKey.toString()));
 	}
 
+	@Override
 	public String getApplicationName() {
 		return DLUADConstants.APPLICATION_NAME;
 	}
 
+	@Override
 	public String[] getDisplayFieldNames() {
-		return new String[] {"fileName", "extension", "title", "description"};
+		return new String[] { "fileName", "extension", "title", "description" };
 	}
 
 	@Override
-	public String getKey() {
-		return DLUADConstants.CLASS_NAME_DL_FILE_ENTRY;
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		return "DLFileEntry";
+	public Class<DLFileEntry> getTypeClass() {
+		return DLFileEntry.class;
 	}
 
 	@Override
@@ -77,9 +74,8 @@ public abstract class BaseDLFileEntryUADDisplay
 	}
 
 	@Override
-	protected List<DLFileEntry> doGetRange(
-		DynamicQuery dynamicQuery, int start, int end) {
-
+	protected List<DLFileEntry> doGetRange(DynamicQuery dynamicQuery,
+		int start, int end) {
 		return dlFileEntryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,5 +86,4 @@ public abstract class BaseDLFileEntryUADDisplay
 
 	@Reference
 	protected DLFileEntryLocalService dlFileEntryLocalService;
-
 }

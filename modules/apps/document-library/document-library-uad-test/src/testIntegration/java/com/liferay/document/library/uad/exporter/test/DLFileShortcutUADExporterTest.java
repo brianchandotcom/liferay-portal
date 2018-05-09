@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.document.library.uad.anonymizer.test;
+package com.liferay.document.library.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
-import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.uad.test.DLFileShortcutUADTestHelper;
 
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
-import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+import com.liferay.user.associated.data.exporter.UADExporter;
+import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
 import org.junit.After;
@@ -44,8 +42,8 @@ import java.util.List;
  * @generated
  */
 @RunWith(Arquillian.class)
-public class DLFileShortcutUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFileShortcut>
-	implements WhenHasStatusByUserIdField {
+public class DLFileShortcutUADExporterTest extends BaseUADExporterTestCase<DLFileShortcut>
+	implements WhenHasStatusByUserIdField<DLFileShortcut> {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
@@ -69,65 +67,27 @@ public class DLFileShortcutUADAnonymizerTest extends BaseUADAnonymizerTestCase<D
 	@Override
 	protected DLFileShortcut addBaseModel(long userId)
 		throws Exception {
-		return addBaseModel(userId, true);
-	}
-
-	@Override
-	protected DLFileShortcut addBaseModel(long userId,
-		boolean deleteAfterTestRun) throws Exception {
 		DLFileShortcut dlFileShortcut = _dlFileShortcutUADTestHelper.addDLFileShortcut(userId);
 
-		if (deleteAfterTestRun) {
-			_dlFileShortcuts.add(dlFileShortcut);
-		}
+		_dlFileShortcuts.add(dlFileShortcut);
 
 		return dlFileShortcut;
 	}
 
 	@Override
-	protected void deleteBaseModels(List<DLFileShortcut> baseModels)
-		throws Exception {
-		_dlFileShortcutUADTestHelper.cleanUpDependencies(baseModels);
+	protected String getPrimaryKeyName() {
+		return "fileShortcutId";
 	}
 
 	@Override
-	protected UADAnonymizer getUADAnonymizer() {
-		return _uadAnonymizer;
-	}
-
-	@Override
-	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
-		throws Exception {
-		DLFileShortcut dlFileShortcut = _dlFileShortcutLocalService.getDLFileShortcut(baseModelPK);
-
-		String userName = dlFileShortcut.getUserName();
-		String statusByUserName = dlFileShortcut.getStatusByUserName();
-
-		if ((dlFileShortcut.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName()) &&
-				(dlFileShortcut.getStatusByUserId() != user.getUserId()) &&
-				!statusByUserName.equals(user.getFullName())) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_dlFileShortcutLocalService.fetchDLFileShortcut(baseModelPK) == null) {
-			return true;
-		}
-
-		return false;
+	protected UADExporter getUADExporter() {
+		return _uadExporter;
 	}
 
 	@DeleteAfterTestRun
 	private final List<DLFileShortcut> _dlFileShortcuts = new ArrayList<DLFileShortcut>();
 	@Inject
-	private DLFileShortcutLocalService _dlFileShortcutLocalService;
-	@Inject
 	private DLFileShortcutUADTestHelper _dlFileShortcutUADTestHelper;
-	@Inject(filter = "component.name=*.DLFileShortcutUADAnonymizer")
-	private UADAnonymizer _uadAnonymizer;
+	@Inject(filter = "component.name=*.DLFileShortcutUADExporter")
+	private UADExporter _uadExporter;
 }

@@ -15,12 +15,16 @@
 package com.liferay.document.library.uad.anonymizer;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.constants.DLUADConstants;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,27 +38,30 @@ import java.util.List;
  * {@link DLFileEntryUADAnonymizer}.
  * </p>
  *
- * @author William Newbury
+ * @author Brian Wing Shun Chan
+ * @generated
  */
-public class BaseDLFileEntryUADAnonymizer
+public abstract class BaseDLFileEntryUADAnonymizer
 	extends DynamicQueryUADAnonymizer<DLFileEntry> {
-
 	@Override
-	public void autoAnonymize(
-			DLFileEntry dlFileEntry, long userId, User anonymousUser)
-		throws PortalException {
-
+	public void autoAnonymize(DLFileEntry dlFileEntry, long userId,
+		User anonymousUser) throws PortalException {
 		if (dlFileEntry.getUserId() == userId) {
 			dlFileEntry.setUserId(anonymousUser.getUserId());
 			dlFileEntry.setUserName(anonymousUser.getFullName());
 		}
 
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+		dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
 	}
 
 	@Override
 	public void delete(DLFileEntry dlFileEntry) throws PortalException {
-		DLFileEntryLocalServiceUtil.deleteFileEntry(dlFileEntry);
+		dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public String getApplicationName() {
+		return DLUADConstants.APPLICATION_NAME;
 	}
 
 	@Override
@@ -63,8 +70,13 @@ public class BaseDLFileEntryUADAnonymizer
 	}
 
 	@Override
+	public Class<DLFileEntry> getTypeClass() {
+		return DLFileEntry.class;
+	}
+
+	@Override
 	protected ActionableDynamicQuery doGetActionableDynamicQuery() {
-		return DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
+		return dlFileEntryLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
@@ -72,4 +84,6 @@ public class BaseDLFileEntryUADAnonymizer
 		return DLUADConstants.USER_ID_FIELD_NAMES_DL_FILE_ENTRY;
 	}
 
+	@Reference
+	protected DLFileEntryLocalService dlFileEntryLocalService;
 }

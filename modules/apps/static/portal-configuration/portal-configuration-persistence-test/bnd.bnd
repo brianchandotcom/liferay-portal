@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Portal Configuration Persistence Test
 Bundle-SymbolicName: com.liferay.portal.configuration.persistence.test
 Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Configuration Framework
 -includeresource: test-classes/integration

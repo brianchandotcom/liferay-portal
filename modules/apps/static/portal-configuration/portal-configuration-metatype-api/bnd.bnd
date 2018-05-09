@@ -6,5 +6,3 @@ Export-Package:\
 	com.liferay.portal.configuration.metatype.bnd.util,\
 	com.liferay.portal.configuration.metatype.definitions,\
 	com.liferay.portal.configuration.metatype.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Metatype Ext

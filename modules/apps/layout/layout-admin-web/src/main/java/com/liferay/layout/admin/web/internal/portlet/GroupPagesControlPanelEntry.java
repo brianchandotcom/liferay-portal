@@ -38,19 +38,6 @@ import org.osgi.service.component.annotations.Component;
 public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override
-	protected boolean hasAccessPermissionDenied(
-			PermissionChecker permissionChecker, Group group, Portlet portlet)
-		throws Exception {
-
-		if (group.isCompany()) {
-			return true;
-		}
-
-		return super.hasAccessPermissionDenied(
-			permissionChecker, group, portlet);
-	}
-
-	@Override
 	protected boolean hasPermissionImplicitlyGranted(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {

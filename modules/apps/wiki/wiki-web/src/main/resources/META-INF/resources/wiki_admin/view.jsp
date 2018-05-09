@@ -62,7 +62,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/wiki_admin/view");
+						navigationItem.setHref((PortletURL)renderResponse.createRenderURL(), "mvcRenderCommandName", "/wiki_admin/view");
 						navigationItem.setLabel(LanguageUtil.get(request, "wikis"));
 					});
 			}

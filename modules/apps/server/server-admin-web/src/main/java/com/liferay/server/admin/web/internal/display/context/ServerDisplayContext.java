@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +49,7 @@ public class ServerDisplayContext {
 						navigationItem -> {
 							navigationItem.setActive(tabs1.equals(tabs1Name));
 							navigationItem.setHref(
-								_renderResponse.createRenderURL(),
+								(PortletURL)_renderResponse.createRenderURL(),
 								"mvcRenderCommandName", "/server_admin/view",
 								"tabs1", tabs1Name, "tabs2", tabs2);
 							navigationItem.setLabel(

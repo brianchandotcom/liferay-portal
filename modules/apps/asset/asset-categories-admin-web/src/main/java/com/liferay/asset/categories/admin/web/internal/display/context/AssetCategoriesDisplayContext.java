@@ -111,8 +111,8 @@ public class AssetCategoriesDisplayContext {
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/view_categories.jsp", "vocabularyId",
+							(PortletURL)_renderResponse.createRenderURL(),
+							"mvcPath", "/view_categories.jsp", "vocabularyId",
 							String.valueOf(getVocabularyId()));
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "categories"));
@@ -212,7 +212,7 @@ public class AssetCategoriesDisplayContext {
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(
-							_renderResponse.createRenderURL());
+							(PortletURL)_renderResponse.createRenderURL());
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "vocabularies"));
 					});

@@ -490,8 +490,8 @@ public class DDMFormAdminDisplayContext {
 					navigationItem -> {
 						navigationItem.setActive(currentTab.equals("forms"));
 						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "currentTab",
-							"forms");
+							(PortletURL)_renderResponse.createRenderURL(),
+							"currentTab", "forms");
 						navigationItem.setLabel(
 							LanguageUtil.get(request, "forms"));
 					});
@@ -501,8 +501,8 @@ public class DDMFormAdminDisplayContext {
 						navigationItem.setActive(
 							currentTab.equals("element-set"));
 						navigationItem.setHref(
-							_renderResponse.createRenderURL(), "currentTab",
-							"element-set");
+							(PortletURL)_renderResponse.createRenderURL(),
+							"currentTab", "element-set");
 						navigationItem.setLabel(
 							LanguageUtil.get(request, "element-sets"));
 					});

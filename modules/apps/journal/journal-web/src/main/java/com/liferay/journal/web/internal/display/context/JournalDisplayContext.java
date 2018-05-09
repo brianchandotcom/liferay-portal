@@ -783,14 +783,15 @@ public class JournalDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationBarItems(String currentItem) {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
 		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
 						navigationItem.setActive(
 							currentItem.equals("web-content"));
-						navigationItem.setHref(
-							_liferayPortletResponse.createRenderURL());
+						navigationItem.setHref(portletURL);
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "web-content"));
 					});

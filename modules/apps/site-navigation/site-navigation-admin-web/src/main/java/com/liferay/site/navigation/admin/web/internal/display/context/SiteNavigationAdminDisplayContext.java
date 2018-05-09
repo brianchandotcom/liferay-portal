@@ -185,13 +185,14 @@ public class SiteNavigationAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
 		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setHref(
-							_liferayPortletResponse.createRenderURL());
+						navigationItem.setHref(portletURL);
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "menus"));
 					});

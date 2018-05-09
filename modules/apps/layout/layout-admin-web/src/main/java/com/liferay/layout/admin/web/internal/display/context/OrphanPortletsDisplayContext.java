@@ -125,6 +125,7 @@ public class OrphanPortletsDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
 
@@ -133,8 +134,7 @@ public class OrphanPortletsDisplayContext {
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setHref(
-							_liferayPortletResponse.createRenderURL());
+						navigationItem.setHref(portletURL);
 						navigationItem.setLabel(
 							LanguageUtil.get(request, "orphan-portlets"));
 					});

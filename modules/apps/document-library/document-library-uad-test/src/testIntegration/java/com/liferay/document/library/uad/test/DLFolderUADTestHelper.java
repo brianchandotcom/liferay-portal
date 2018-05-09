@@ -16,7 +16,6 @@ package com.liferay.document.library.uad.test;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -34,14 +33,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFolderUADTestHelper {
 
 	public DLFolder addDLFolder(long userId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return _dlFolderLocalService.addFolder(
 			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),
 			false, 0L, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false, serviceContext);
+			RandomTestUtil.randomString(), false,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public DLFolder addDLFolderWithStatusByUserId(
@@ -50,13 +46,10 @@ public class DLFolderUADTestHelper {
 
 		DLFolder dlFolder = addDLFolder(userId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return _dlFolderLocalService.updateStatus(
 			statusByUserId, dlFolder.getFolderId(),
-			WorkflowConstants.STATUS_DRAFT, null, serviceContext);
+			WorkflowConstants.STATUS_DRAFT, null,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public void cleanUpDependencies(List<DLFolder> dlFolders) throws Exception {

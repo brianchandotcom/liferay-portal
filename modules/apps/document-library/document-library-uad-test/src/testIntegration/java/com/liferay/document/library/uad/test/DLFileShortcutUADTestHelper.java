@@ -46,8 +46,7 @@ public class DLFileShortcutUADTestHelper {
 
 	public DLFileShortcut addDLFileShortcut(long userId) throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
+			ServiceContextTestUtil.getServiceContext();
 
 		DLFolder dlFolder = _dlFolderLocalService.addFolder(
 			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),
@@ -79,13 +78,10 @@ public class DLFileShortcutUADTestHelper {
 
 		DLFileShortcut dlFileShortcut = addDLFileShortcut(userId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return _dlFileShortcutLocalService.updateStatus(
 			statusByUserId, dlFileShortcut.getFileShortcutId(),
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_DRAFT,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	public void cleanUpDependencies(List<DLFileShortcut> dlFileShortcuts)

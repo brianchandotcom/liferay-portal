@@ -46,8 +46,7 @@ public class DLFileEntryTypeUADTestHelper {
 
 	public DLFileEntryType addDLFileEntryType(long userId) throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
+			ServiceContextTestUtil.getServiceContext();
 
 		DDMForm ddmForm = new DDMForm();
 

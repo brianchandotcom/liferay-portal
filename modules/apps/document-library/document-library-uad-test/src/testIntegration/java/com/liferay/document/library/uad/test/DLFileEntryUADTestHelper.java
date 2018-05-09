@@ -43,8 +43,7 @@ public class DLFileEntryUADTestHelper {
 
 	public DLFileEntry addDLFileEntry(long userId) throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
+			ServiceContextTestUtil.getServiceContext();
 
 		DLFolder dlFolder = _dlFolderLocalService.addFolder(
 			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),

@@ -61,4 +61,12 @@ public interface CommercePriceEntry extends CommercePriceEntryModel,
 
 	public com.liferay.commerce.product.model.CPInstance getCPInstance()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.commerce.currency.model.CommerceMoney getPriceMoney(
+		long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.commerce.currency.model.CommerceMoney getPromoPriceMoney(
+		long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

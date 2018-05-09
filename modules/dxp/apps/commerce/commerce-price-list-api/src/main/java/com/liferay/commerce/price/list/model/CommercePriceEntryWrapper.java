@@ -294,6 +294,13 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 		return _commercePriceEntry.getPrice();
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceMoney getPriceMoney(
+		long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceEntry.getPriceMoney(commerceCurrencyId);
+	}
+
 	/**
 	* Returns the primary key of this commerce price entry.
 	*
@@ -317,6 +324,13 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	@Override
 	public BigDecimal getPromoPrice() {
 		return _commercePriceEntry.getPromoPrice();
+	}
+
+	@Override
+	public com.liferay.commerce.currency.model.CommerceMoney getPromoPriceMoney(
+		long commerceCurrencyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceEntry.getPromoPriceMoney(commerceCurrencyId);
 	}
 
 	/**

@@ -730,7 +730,7 @@ public class LDAPAuth implements Authenticator {
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setLdapUserImporter(LDAPUserImporter ldapUserImporter) {
 		_ldapUserImporter = ldapUserImporter;
@@ -748,7 +748,7 @@ public class LDAPAuth implements Authenticator {
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setPortalLDAP(PortalLDAP portalLDAP) {
 		_portalLDAP = portalLDAP;
@@ -773,6 +773,14 @@ public class LDAPAuth implements Authenticator {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	protected void unsetLdapUserImporter(LDAPUserImporter ldapUserImporter) {
+		_ldapUserImporter = null;
+	}
+
+	protected void unsetPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LDAPAuth.class);

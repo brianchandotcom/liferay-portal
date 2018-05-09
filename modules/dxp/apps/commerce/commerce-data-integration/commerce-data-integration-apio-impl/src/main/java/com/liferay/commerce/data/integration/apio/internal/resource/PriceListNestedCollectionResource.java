@@ -35,9 +35,9 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceListHelper;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -73,7 +73,9 @@ public class PriceListNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCommercePriceList, (credentials, s) -> true,
+			this::_addCommercePriceList,
+			_priceListPermissionChecker.forAdding(
+				CommercePriceListConstants.RESOURCE_NAME),
 			PriceListForm::buildForm
 		).build();
 	}
@@ -90,11 +92,14 @@ public class PriceListNestedCollectionResource
 		return builder.addGetter(
 			_priceListHelper::getCommercePriceList
 		).addUpdater(
-			this::_updateCommercePriceList, (credentials, s) -> true,
+			this::_updateCommercePriceList,
+			_priceListPermissionChecker.forUpdating(
+				CommercePriceListConstants.RESOURCE_NAME),
 			PriceListForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceListService::deleteCommercePriceList),
-			_hasPermission.forDeleting(CommercePriceList.class)
+			_priceListPermissionChecker.forDeleting(
+				CommercePriceListConstants.RESOURCE_NAME)
 		).build();
 	}
 
@@ -207,9 +212,9 @@ public class PriceListNestedCollectionResource
 	private CommercePriceListService _commercePriceListService;
 
 	@Reference
-	private HasPermission _hasPermission;
+	private PriceListHelper _priceListHelper;
 
 	@Reference
-	private PriceListHelper _priceListHelper;
+	private PriceListPermissionChecker _priceListPermissionChecker;
 
 }

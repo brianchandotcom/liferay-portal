@@ -156,6 +156,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
 						groupSelectorURL.setParameter("manualMembership", Boolean.TRUE.toString());
 						groupSelectorURL.setParameter("eventName", eventName);
+						groupSelectorURL.setParameter("type", "assignable-sites");
 						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 						%>
 

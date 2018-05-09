@@ -381,13 +381,8 @@
 </tr>
 <!--VALIDATION-->
 <tr>
-	<td>VALIDATION_TYPE</td>
-	<td>//div[contains(@data-fieldname,'validation')]/div/following-sibling::div//select[contains(@class,'type')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VALIDATION_ARGUMENT</td>
-	<td>//div[contains(@data-fieldname,'validation')]/div/following-sibling::div//select[contains(@class,'validation')]</td>
+	<td>//div[contains(@data-fieldname,'validation')]//select</td>
 	<td></td>
 </tr>
 <tr>

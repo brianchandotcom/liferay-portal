@@ -614,7 +614,8 @@ public class AssetBrowserDisplayContext {
 		return (int)AssetEntryLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), groupIds, themeDisplay.getUserId(),
 			assetRendererFactory.getClassName(), getSubtypeSelectionId(),
-			_getKeywords(), _isShowNonindexable(), _getStatuses());
+			_getKeywords(), null, null, _isShowNonindexable(), false,
+			_getStatuses(), false);
 	}
 
 	private boolean _isShowNonindexable() {

@@ -235,8 +235,7 @@ public class ImporterFactory {
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(!(portlet.preferences.translator.portlet.id=" + ResourcesImporterConstants.PORTLET_ID_DEFAULT + "))",
-		unbind = "unsetPortletPreferencesTranslator"
+		target = "(!(portlet.preferences.translator.portlet.id=" + ResourcesImporterConstants.PORTLET_ID_DEFAULT + "))"
 	)
 	protected void setPortletPreferencesTranslator(
 		PortletPreferencesTranslator portletPreferencesTranslator,

@@ -82,8 +82,7 @@ public class LiferayAccessTokenServiceRegistrator {
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeAccessTokenGrantHandler"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addAccessTokenGrantHandler(
 		AccessTokenGrantHandler accessTokenGrantHandler) {

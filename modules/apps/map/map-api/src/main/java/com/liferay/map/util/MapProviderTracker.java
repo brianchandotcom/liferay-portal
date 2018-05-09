@@ -43,8 +43,7 @@ public class MapProviderTracker {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterMapProvider"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void registerMapProvider(MapProvider mapProvider) {
 		_mapProviders.put(mapProvider.getKey(), mapProvider);

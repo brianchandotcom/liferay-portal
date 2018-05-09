@@ -65,8 +65,7 @@ public class DDMFormFunctionsServlet extends HttpServlet {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeDDMExpressionFunction"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDDMExpressionFunction(
 		DDMExpressionFunction ddmExpressionFunction,

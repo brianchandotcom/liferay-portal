@@ -16,7 +16,6 @@ package com.liferay.commerce.shipping.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.constants.CommerceWarehouseConstants;
 import com.liferay.commerce.exception.CommerceWarehouseActiveException;
 import com.liferay.commerce.exception.CommerceWarehouseNameException;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
@@ -142,9 +141,8 @@ public class EditCommerceShippingSettingsMVCActionCommand
 			commerceShippingOriginLocatorKey + "Origin--longitude--");
 
 		_commerceWarehouseService.updateDefaultCommerceWarehouse(
-			CommerceWarehouseConstants.DEFAULT_ID, name, street1, street2,
-			street3, city, zip, commerceRegionId, commerceCountryId, latitude,
-			longitude, serviceContext);
+			name, street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, latitude, longitude, serviceContext);
 	}
 
 	protected void updateOrigin(

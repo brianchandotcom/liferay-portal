@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.shipping.origin.locator.address.internal;
 
-import com.liferay.commerce.constants.CommerceWarehouseConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -92,7 +91,8 @@ public class AddressCommerceShippingOriginLocator
 		CommerceAddress commerceAddress =
 			_commerceAddressLocalService.createCommerceAddress(0);
 
-		CommerceWarehouse commerceWarehouse = _getDefaultCommerceWarehouse();
+		CommerceWarehouse commerceWarehouse = _getDefaultCommerceWarehouse(
+			commerceOrder.getSiteGroupId());
 
 		commerceAddress.setName(commerceWarehouse.getName());
 		commerceAddress.setStreet1(commerceWarehouse.getStreet1());
@@ -166,11 +166,11 @@ public class AddressCommerceShippingOriginLocator
 		modifiableSettings.store();
 	}
 
-	private CommerceWarehouse _getDefaultCommerceWarehouse()
+	private CommerceWarehouse _getDefaultCommerceWarehouse(long groupId)
 		throws PortalException {
 
-		return _commerceWarehouseLocalService.getCommerceWarehouse(
-			CommerceWarehouseConstants.DEFAULT_ID);
+		return _commerceWarehouseLocalService.fetchDefaultCommerceWarehouse(
+			groupId);
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

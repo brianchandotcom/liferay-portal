@@ -130,6 +130,7 @@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.portal.util.LayoutTypeControllerTracker" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@

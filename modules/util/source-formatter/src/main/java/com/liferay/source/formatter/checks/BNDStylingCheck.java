@@ -91,7 +91,9 @@ public class BNDStylingCheck extends BaseFileCheck {
 
 			String s = content.substring(x + 1, matcher.start());
 
-			if (s.contains("-Description: ")) {
+			if (s.contains("-Description: ") ||
+				s.contains("Liferay-Versions: ")) {
+
 				continue;
 			}
 

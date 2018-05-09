@@ -81,6 +81,10 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 							</liferay-frontend:vertical-card-header>
 
 							<liferay-frontend:vertical-card-footer>
+								<span class="label <%= (layoutPageTemplateEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "label-success" : "label-secondary" %>">
+									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(layoutPageTemplateEntry.getStatus()) %>" />
+								</span>
+
 								<div class="row">
 									<div class="col text-truncate">
 
@@ -145,6 +149,10 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 							</liferay-frontend:vertical-card-header>
 
 							<liferay-frontend:vertical-card-footer>
+								<span class="label <%= (layoutPageTemplateEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "label-success" : "label-secondary" %>">
+									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(layoutPageTemplateEntry.getStatus()) %>" />
+								</span>
+
 								<div class="row">
 									<div class="col text-truncate">
 

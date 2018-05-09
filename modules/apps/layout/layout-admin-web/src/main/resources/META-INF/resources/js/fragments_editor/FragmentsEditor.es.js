@@ -2,6 +2,7 @@ import 'frontend-taglib/contextual_sidebar/ContextualSidebar.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import {object} from 'metal';
 
 import './dialogs/SelectMappingDialog.es';
 import './dialogs/SelectMappingTypeDialog.es';
@@ -21,11 +22,6 @@ import templates from './FragmentsEditor.soy';
  * }}
  */
 
-const ADDED_FRAGMENTS_TAB = {
-	id: 'added',
-	label: Liferay.Language.get('added')
-};
-
 /**
  * FragmentsEditor
  * @review
@@ -39,10 +35,6 @@ class FragmentsEditor extends Component {
 	 */
 
 	created() {
-		this._sidebarTabs = this.fragmentEntryLinks.length > 0 ?
-			[...this.sidebarTabs, ADDED_FRAGMENTS_TAB] :
-			[...this.sidebarTabs];
-
 		this.on('languageIdChanged', this._handleLanguageIdChange);
 	}
 
@@ -90,6 +82,32 @@ class FragmentsEditor extends Component {
 					this._dirty = false;
 				}
 			);
+		}
+	}
+
+	/**
+	 * Enable or disable added tab depending on we have fragments or not
+	 * @private
+	 * @review
+	 */
+
+	_enabledAddedTab(enabled) {
+		const addedTabIndex = this.sidebarTabs.findIndex(tab => tab.id === 'added');
+
+		if (addedTabIndex !== -1) {
+			const newAddedTab = object.mixin(
+				{},
+				this.sidebarTabs[addedTabIndex],
+				{
+					enabled: enabled
+				}
+			);
+
+			const newSidebarTabs = [...this.sidebarTabs];
+
+			newSidebarTabs[addedTabIndex] = newAddedTab;
+
+			this.sidebarTabs = newSidebarTabs;
 		}
 	}
 
@@ -362,10 +380,7 @@ class FragmentsEditor extends Component {
 
 							this._dirty = false;
 
-							this._sidebarTabs = [
-								...this.sidebarTabs,
-								ADDED_FRAGMENTS_TAB
-							];
+							this._enabledAddedTab(true);
 
 							this._focusFragmentEntryLink(
 								response.fragmentEntryLinkId
@@ -455,7 +470,8 @@ class FragmentsEditor extends Component {
 
 			if (this.fragmentEntryLinks.length === 0) {
 				this._sidebarSelectedTab = FragmentsEditor.DEFAULT_TAB_ID;
-				this._sidebarTabs = [...this.sidebarTabs];
+
+				this._enabledAddedTab(false);
 			}
 
 			this._translationStatus = this._getTranslationStatus(
@@ -1028,6 +1044,7 @@ FragmentsEditor.STATE = {
 	sidebarTabs: Config.arrayOf(
 		Config.shapeOf(
 			{
+				enabled: Config.bool().required(),
 				id: Config.string().required(),
 				label: Config.string().required()
 			}
@@ -1181,29 +1198,8 @@ FragmentsEditor.STATE = {
 	_sidebarSelectedTab: Config
 		.string()
 		.internal()
-		.value(FragmentsEditor.DEFAULT_TAB_ID),
+		.value(FragmentsEditor.DEFAULT_TAB_ID)
 
-	/**
-	 * Internal copy of the selected tabs that will be mutated.
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {Array<{
-	 * 	 id: string,
-	 * 	 label: string
-	 * }>}
-	 */
-
-	_sidebarTabs: Config.arrayOf(
-		Config.shapeOf(
-			{
-				id: Config.string().required(),
-				label: Config.string().required()
-			}
-		)
-	).value([])
 };
 
 Soy.register(FragmentsEditor, templates);

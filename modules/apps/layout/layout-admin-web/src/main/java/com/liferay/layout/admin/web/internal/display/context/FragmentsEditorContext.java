@@ -324,23 +324,44 @@ public class FragmentsEditorContext {
 		return soyContext;
 	}
 
-	private SoyContext _getSidebarTab(String label) {
-		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
-
-		soyContext.put("id", label);
-		soyContext.put(
-			"label", LanguageUtil.get(_themeDisplay.getLocale(), label));
-
-		return soyContext;
-	}
-
 	private List<SoyContext> _getSidebarTabs() {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
-		soyContexts.add(_getSidebarTab("available"));
+		SoyContext availableSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		availableSoyContext.put("enabled", true);
+		availableSoyContext.put("id", "available");
+		availableSoyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "available"));
+
+		soyContexts.add(availableSoyContext);
+
+		SoyContext addedSoyContext = SoyContextFactoryUtil.createSoyContext();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
+				_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
+
+		addedSoyContext.put("enabled", fragmentEntryLinks.isEmpty());
+
+		addedSoyContext.put("id", "added");
+		addedSoyContext.put(
+			"label", LanguageUtil.get(_themeDisplay.getLocale(), "added"));
+
+		soyContexts.add(addedSoyContext);
 
 		if (_showMapping) {
-			soyContexts.add(_getSidebarTab("mapping"));
+			SoyContext mappingSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
+
+			mappingSoyContext.put("enabled", true);
+			mappingSoyContext.put("id", "mapping");
+			mappingSoyContext.put(
+				"label",
+				LanguageUtil.get(_themeDisplay.getLocale(), "mapping"));
+
+			soyContexts.add(mappingSoyContext);
 		}
 
 		return soyContexts;

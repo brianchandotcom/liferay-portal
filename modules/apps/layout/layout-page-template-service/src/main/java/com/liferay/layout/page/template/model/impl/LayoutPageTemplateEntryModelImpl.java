@@ -136,7 +136,8 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 	public static final long LAYOUTPAGETEMPLATECOLLECTIONID_COLUMN_BITMASK = 16L;
 	public static final long NAME_COLUMN_BITMASK = 32L;
-	public static final long TYPE_COLUMN_BITMASK = 64L;
+	public static final long STATUS_COLUMN_BITMASK = 64L;
+	public static final long TYPE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -678,7 +679,19 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -952,6 +965,10 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 
 		layoutPageTemplateEntryModelImpl._setOriginalDefaultTemplate = false;
 
+		layoutPageTemplateEntryModelImpl._originalStatus = layoutPageTemplateEntryModelImpl._status;
+
+		layoutPageTemplateEntryModelImpl._setOriginalStatus = false;
+
 		layoutPageTemplateEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -1202,6 +1219,8 @@ public class LayoutPageTemplateEntryModelImpl extends BaseModelImpl<LayoutPageTe
 	private boolean _originalDefaultTemplate;
 	private boolean _setOriginalDefaultTemplate;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;

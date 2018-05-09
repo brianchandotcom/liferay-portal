@@ -14,4 +14,5 @@ dependencies {
 	compileOnly project(":apps:petra:petra-model-adapter")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:portal:portal-upgrade-api")
+	compileOnly project(":core:petra:petra-string")
 }

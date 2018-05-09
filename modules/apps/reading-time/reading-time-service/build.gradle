@@ -16,6 +16,7 @@ dependencies {
 	compileOnly project(":apps:portal:portal-spring-extender-api")
 	compileOnly project(":apps:reading-time:reading-time-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-string")
 
 	testCompile project(":core:petra:petra-lang")
 }

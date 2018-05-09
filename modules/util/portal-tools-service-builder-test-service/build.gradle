@@ -11,5 +11,6 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":util:portal-tools-service-builder-test-api")
 }

@@ -56,11 +56,23 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 				<%
 				for (CommerceShippingMethod commerceShippingMethod : commerceShippingMethods) {
 					List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptions(commerceShippingMethod);
+				%>
 
+					<c:if test="<%= commerceShippingOptions.isEmpty() %>">
+						<li class="commerce-shipping-types list-group-item list-group-item-flex">
+							<div class="autofit-col autofit-col-expand">
+								<div class="alert alert-info">
+									<liferay-ui:message arguments="<%= commerceShippingMethod.getName(locale) %>" key="x-is-not-available" translateArguments="<%= false %>" />
+								</div>
+							</div>
+						</li>
+					</c:if>
+
+					<%
 					for (CommerceShippingOption commerceShippingOption : commerceShippingOptions) {
 						String curCommerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceShippingMethod.getCommerceShippingMethodId(), commerceShippingOption.getName());
 						String label = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionLabel(commerceShippingOption);
-				%>
+					%>
 
 						<li class="commerce-shipping-types list-group-item list-group-item-flex">
 							<div class="autofit-col autofit-col-expand">

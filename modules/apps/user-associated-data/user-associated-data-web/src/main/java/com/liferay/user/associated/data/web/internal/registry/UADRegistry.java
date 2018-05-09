@@ -69,20 +69,12 @@ public class UADRegistry {
 		return _uadAnonymizerServiceTrackerMap.getService(key);
 	}
 
-	public Set<String> getUADAnonymizerKeySet() {
-		return _uadAnonymizerServiceTrackerMap.keySet();
-	}
-
 	public Collection<UADAnonymizer> getUADAnonymizers() {
 		return _uadAnonymizerServiceTrackerMap.values();
 	}
 
 	public UADDisplay getUADDisplay(String key) {
 		return _uadDisplayServiceTrackerMap.getService(key);
-	}
-
-	public Set<String> getUADDisplayKeySet() {
-		return _uadDisplayServiceTrackerMap.keySet();
 	}
 
 	public Collection<UADDisplay> getUADDisplays() {
@@ -95,14 +87,6 @@ public class UADRegistry {
 
 	public UADExporter getUADExporter(String key) {
 		return _uadExporterServiceTrackerMap.getService(key);
-	}
-
-	public Set<String> getUADExporterKeySet() {
-		return _uadExporterServiceTrackerMap.keySet();
-	}
-
-	public Collection<UADExporter> getUADExporters() {
-		return _uadExporterServiceTrackerMap.values();
 	}
 
 	@Activate

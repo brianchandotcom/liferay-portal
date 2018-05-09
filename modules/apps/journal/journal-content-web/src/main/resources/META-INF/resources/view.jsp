@@ -148,9 +148,10 @@ if (journalContentDisplayContext.isShowArticle()) {
 							/>
 						</div>
 
-						<div class="journal-content-article">
-							<%= articleDisplay.getContent() %>
-						</div>
+						<liferay-journal:journal-article
+							articleId="<%= articleDisplay.getArticleId() %>"
+							groupId="<%= articleDisplay.getGroupId() %>"
+						/>
 
 						<c:if test="<%= articleDisplay.isPaginate() %>">
 

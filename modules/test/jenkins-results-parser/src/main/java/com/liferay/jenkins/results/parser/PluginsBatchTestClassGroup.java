@@ -36,15 +36,12 @@ import java.util.Properties;
  */
 public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
-	public static class PluginsBatchTestClass extends TestClass {
+	public static class PluginsBatchTestClass extends BaseTestClass {
 
-		protected static TestClass getInstance(
+		protected static PluginsBatchTestClass getInstance(
 			File pluginDir, String batchName) {
 
-			TestClass testClass = new PluginsBatchTestClass(
-				pluginDir, batchName);
-
-			return testClass;
+			return new PluginsBatchTestClass(pluginDir, batchName);
 		}
 
 		protected PluginsBatchTestClass(File file, String batchName) {

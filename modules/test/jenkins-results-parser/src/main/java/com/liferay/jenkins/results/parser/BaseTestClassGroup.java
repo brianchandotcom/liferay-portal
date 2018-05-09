@@ -22,26 +22,82 @@ import java.util.List;
 /**
  * @author Peter Yoo
  */
-public abstract class BaseTestClassGroup extends TestClassGroup {
+public abstract class BaseTestClassGroup {
 
-	public List<TestClass> getTestClasses() {
+	public List<BaseTestClass> getTestClasses() {
 		return testClasses;
 	}
 
 	public List<File> getTestClassFiles() {
 		List<File> testClassFiles = new ArrayList<>();
 
-		for (TestClass testClass : testClasses) {
+		for (BaseTestClass testClass : testClasses) {
 			testClassFiles.add(testClass.getFile());
 		}
 
 		return testClassFiles;
 	}
 
-	protected void addTestClass(TestClass testClass) {
+	public static class BaseTestClass implements Comparable<BaseTestClass> {
+
+		@Override
+		public int compareTo(BaseTestClass testClass) {
+			if (testClass == null) {
+				throw new NullPointerException("test class is NULL");
+			}
+
+			return _file.compareTo(testClass.getFile());
+		}
+
+		protected BaseTestClass(File file) {
+			_file = file;
+		}
+
+		protected void addTestMethod(BaseTestMethod testMethod) {
+			_testMethods.add(testMethod);
+		}
+
+		protected void addTestMethod(String methodName) {
+			addTestMethod(new BaseTestMethod(methodName, this));
+		}
+
+		protected File getFile() {
+			return _file;
+		}
+
+		protected List<BaseTestMethod> getTestMethods() {
+			return _testMethods;
+		}
+
+		private final File _file;
+		private final List<BaseTestMethod> _testMethods = new ArrayList<>();
+
+	}
+
+	public static class BaseTestMethod {
+
+		protected BaseTestMethod(String name, BaseTestClass testClass) {
+			_name = name;
+			_testClass = testClass;
+		}
+
+		protected String getName() {
+			return _name;
+		}
+
+		protected BaseTestClass getTestClass() {
+			return _testClass;
+		}
+
+		private final String _name;
+		private final BaseTestClass _testClass;
+
+	}
+
+	protected void addTestClass(BaseTestClass testClass) {
 		testClasses.add(testClass);
 	}
 
-	protected final List<TestClass> testClasses = new ArrayList<>();
+	protected final List<BaseTestClass> testClasses = new ArrayList<>();
 
 }

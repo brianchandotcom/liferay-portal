@@ -52,9 +52,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return portalTestProperties;
 	}
 
-	public static class BatchTestClass extends TestClass {
+	public static class BatchTestClass extends BaseTestClass {
 
-		protected static TestClass getInstance(
+		protected static BatchTestClass getInstance(
 			PortalGitWorkingDirectory portalGitWorkingDirectory,
 			String batchName) {
 
@@ -198,7 +198,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		int id = 0;
 
-		for (List<TestClass> axisTestClasses :
+		for (List<BaseTestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {
 
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
@@ -206,7 +206,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 			axisTestClassGroups.put(id, axisTestClassGroup);
 
-			for (TestClass axisTestClass : axisTestClasses) {
+			for (BaseTestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 

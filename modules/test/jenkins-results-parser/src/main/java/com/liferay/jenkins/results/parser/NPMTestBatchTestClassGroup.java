@@ -39,15 +39,12 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		return new AxisTestClassGroup(this, axisId);
 	}
 
-	public static class NPMTestBatchTestClass extends TestClass {
+	public static class NPMTestBatchTestClass extends BaseTestClass {
 
 		protected static NPMTestBatchTestClass getInstance(
 			File moduleDir, String batchName) {
 
-			NPMTestBatchTestClass npmTestBatchTestClass =
-				new NPMTestBatchTestClass(moduleDir, batchName);
-
-			return npmTestBatchTestClass;
+			return new NPMTestBatchTestClass(moduleDir, batchName);
 		}
 
 		protected NPMTestBatchTestClass(File file, String batchName) {

@@ -35,12 +35,12 @@ import java.util.List;
  */
 public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
-	public static class TCKBatchTestClass extends TestClass {
+	public static class TCKBatchTestClass extends BaseTestClass {
 
-		protected static TestClass getInstance(File warFile, String batchName) {
-			TestClass testClass = new TCKBatchTestClass(warFile, batchName);
+		protected static TCKBatchTestClass getInstance(
+			File warFile, String batchName) {
 
-			return testClass;
+			return new TCKBatchTestClass(warFile, batchName);
 		}
 
 		protected TCKBatchTestClass(File file, String batchName) {

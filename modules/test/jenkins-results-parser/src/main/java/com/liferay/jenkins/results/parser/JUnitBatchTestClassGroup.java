@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
  */
 public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
-	public static class JunitBatchTestClass extends TestClass {
+	public static class JunitBatchTestClass extends BaseTestClass {
 
 		protected static JunitBatchTestClass getInstance(
 			GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
@@ -247,7 +247,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			JunitBatchTestClass parentJunitBatchTestClass = getInstance(
 				_gitWorkingDirectory, parentFullClassName);
 
-			for (TestMethod testMethod :
+			for (BaseTestMethod testMethod :
 					parentJunitBatchTestClass.getTestMethods()) {
 
 				addTestMethod(testMethod);
@@ -372,7 +372,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		int id = 0;
 
-		for (List<TestClass> axisTestClasses :
+		for (List<BaseTestClass> axisTestClasses :
 				Lists.partition(testClasses, axisSize)) {
 
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
@@ -380,7 +380,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			axisTestClassGroups.put(id, axisTestClassGroup);
 
-			for (TestClass axisTestClass : axisTestClasses) {
+			for (BaseTestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
 
@@ -435,7 +435,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 						return FileVisitResult.CONTINUE;
 					}
 
-					private TestClass _getPackagePathClassFile(Path path) {
+					private BaseTestClass _getPackagePathClassFile(Path path) {
 						String filePath = path.toString();
 
 						Matcher matcher = _packagePathPattern.matcher(filePath);

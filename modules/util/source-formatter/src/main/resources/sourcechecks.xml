@@ -13,7 +13,9 @@
 		<check name="BNDRangeCheck" />
 		<check name="BNDSchemaVersionCheck" />
 		<check name="BNDStylingCheck" />
-		<check name="BNDSuiteCheck" />
+		<check name="BNDSuiteCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="BNDWhitespaceCheck" />
 
 		<!-- Module checks -->

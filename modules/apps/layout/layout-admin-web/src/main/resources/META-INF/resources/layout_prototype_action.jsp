@@ -102,7 +102,7 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 	</c:if>
 
 	<c:if test="<%= LayoutPrototypePermissionUtil.contains(permissionChecker, layoutPrototype.getLayoutPrototypeId(), ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteLayoutPrototypes" var="deleteLayoutPrototypesURL">
+		<portlet:actionURL name="/layout_prototype/delete_layout_prototype" var="deleteLayoutPrototypesURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 		</portlet:actionURL>

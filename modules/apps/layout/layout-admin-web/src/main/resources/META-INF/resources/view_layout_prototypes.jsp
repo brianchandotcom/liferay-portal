@@ -37,7 +37,7 @@
 	viewTypeItems="<%= layoutPrototypeDisplayContext.getViewTypeItems() %>"
 />
 
-<portlet:actionURL name="deleteLayoutPrototypes" var="deleteLayoutPrototypesURL">
+<portlet:actionURL name="/layout_prototype/delete_layout_prototype" var="deleteLayoutPrototypesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 

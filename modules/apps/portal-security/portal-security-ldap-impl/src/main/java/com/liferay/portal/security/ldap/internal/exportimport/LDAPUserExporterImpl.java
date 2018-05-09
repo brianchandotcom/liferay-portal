@@ -394,12 +394,18 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	public void setPortalToLDAPConverter(
 		PortalToLDAPConverter portalToLDAPConverter) {
 
 		_portalToLDAPConverter = portalToLDAPConverter;
+	}
+
+	public void unsetPortalToLDAPConverter(
+		PortalToLDAPConverter portalToLDAPConverter) {
+
+		_portalToLDAPConverter = null;
 	}
 
 	protected Binding addGroup(
@@ -465,7 +471,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setPortalLDAP(PortalLDAP portalLDAP) {
 		_portalLDAP = portalLDAP;
@@ -481,6 +487,10 @@ public class LDAPUserExporterImpl implements UserExporter {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	protected void unsetPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

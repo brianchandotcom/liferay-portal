@@ -118,7 +118,7 @@ public class FormInstanceNestedCollectionResource
 			DDMFormInstance::getStructureId
 		).addNested(
 			"settings", this::_getSettings,
-			nestedBuilder -> nestedBuilder.nestedTypes(
+			nestedBuilder -> nestedBuilder.types(
 				"FormInstanceSettings"
 			).addString(
 				"emailFromAddress", DDMFormInstanceSettings::emailFromAddress

@@ -138,8 +138,11 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		Repository repository = addPortletRepository(
 			groupId, portletId, serviceContext);
 
-		serviceContext.setAttribute("className", className);
-		serviceContext.setAttribute("classPK", String.valueOf(classPK));
+		if (Validator.isNotNull(className) && (classPK > 0)) {
+			serviceContext.setAttribute("className", className);
+			serviceContext.setAttribute("classPK", String.valueOf(classPK));
+		}
+
 		serviceContext.setIndexingEnabled(indexingEnabled);
 
 		if (Validator.isNull(mimeType) ||

@@ -531,8 +531,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		FileEntry originalFileEntry =
 			PortletFileRepositoryUtil.addPortletFileEntry(
-				groupId, userId, BlogsEntry.class.getName(), entryId,
-				BlogsConstants.SERVICE_NAME, folder.getFolderId(), imageBytes,
+				groupId, userId, null, 0, BlogsConstants.SERVICE_NAME,
+				folder.getFolderId(), imageBytes,
 				_getUniqueFileName(
 					groupId, imageSelector.getImageTitle(),
 					folder.getFolderId()),

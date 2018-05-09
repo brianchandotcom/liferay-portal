@@ -22,6 +22,7 @@ import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.WorkspaceUtil;
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
@@ -46,10 +47,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.ServiceLoader;
-import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.Manifest;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -79,33 +78,6 @@ import org.codehaus.plexus.velocity.VelocityComponent;
  */
 public class Archetyper {
 
-	public static String getManifestProperty(File file, String property)
-		throws IOException {
-
-		try (JarFile jarFile = new JarFile(file)) {
-			Manifest manifest = jarFile.getManifest();
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			return attributes.getValue(property);
-		}
-	}
-
-	public static String getTemplateName(String name) {
-		String projectTemplatesString = "project.templates.";
-
-		int projectTemplatesEndIndex =
-			name.indexOf(projectTemplatesString) +
-				projectTemplatesString.length();
-
-		String templateName = name.substring(
-			projectTemplatesEndIndex, name.lastIndexOf('-'));
-
-		templateName = templateName.replace('.', '-');
-
-		return templateName;
-	}
-
 	public ArchetypeGenerationResult generateProject(
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
 		throws Exception {
@@ -120,14 +92,14 @@ public class Archetyper {
 
 		File templateFile = _getTemplateFile(projectTemplatesArgs);
 
-		String liferayVersions = getManifestProperty(
+		String liferayVersions = FileUtil.getManifestProperty(
 			templateFile, "Liferay-Versions");
 
-		if (Objects.nonNull(liferayVersions) &&
-			!_isSupported(liferayVersion, liferayVersions)) {
+		if ((liferayVersions != null) &&
+			!_isInVersionRange(liferayVersion, liferayVersions)) {
 
 			throw new IllegalArgumentException(
-				"Specified Liferay Version is invalid. Must be in range " +
+				"Specified Liferay version is invalid. Must be in range " +
 					liferayVersions);
 		}
 
@@ -258,23 +230,22 @@ public class Archetyper {
 		String template = projectTemplatesArgs.getTemplate();
 
 		for (File archetypesDir : projectTemplatesArgs.getArchetypesDirs()) {
-			if (archetypesDir.isDirectory()) {
-				try (DirectoryStream<Path> directoryStream =
-						Files.newDirectoryStream(
-							archetypesDir.toPath(), "*.project.templates.*")) {
+			if (!archetypesDir.isDirectory()) {
+				continue;
+			}
 
-					Iterator<Path> iterator = directoryStream.iterator();
+			try (DirectoryStream<Path> directoryStream =
+					Files.newDirectoryStream(
+						archetypesDir.toPath(), "*.project.templates.*")) {
 
-					while (iterator.hasNext()) {
-						Path path = iterator.next();
+				for (Path path : directoryStream) {
+					String fileName = String.valueOf(path.getFileName());
 
-						String fileName = String.valueOf(path.getFileName());
+					String templateName = ProjectTemplatesUtil.getTemplateName(
+						fileName);
 
-						String templateName = getTemplateName(fileName);
-
-						if (Objects.equals(template, templateName)) {
-							return path.toFile();
-						}
+					if (templateName.equals(template)) {
+						return path.toFile();
 					}
 				}
 			}
@@ -289,7 +260,9 @@ public class Archetyper {
 		return _getArchetypeFile(artifactId, archetypesFile);
 	}
 
-	private static boolean _isSupported(String versionString, String range) {
+	private static boolean _isInVersionRange(
+		String versionString, String range) {
+
 		Version version = new Version(versionString);
 
 		VersionRange versionRange = new VersionRange(range);

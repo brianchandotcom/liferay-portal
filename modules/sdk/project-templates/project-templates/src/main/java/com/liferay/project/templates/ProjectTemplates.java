@@ -19,6 +19,7 @@ import com.beust.jcommander.ParameterException;
 
 import com.liferay.project.templates.internal.Archetyper;
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
@@ -83,11 +84,12 @@ public class ProjectTemplates {
 
 						String fileName = String.valueOf(path.getFileName());
 
-						String template = Archetyper.getTemplateName(fileName);
+						String template = ProjectTemplatesUtil.getTemplateName(
+							fileName);
 
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
 							String bundleDescription =
-								Archetyper.getManifestProperty(
+								FileUtil.getManifestProperty(
 									path.toFile(), "Bundle-Description");
 
 							templates.put(template, bundleDescription);
@@ -112,7 +114,8 @@ public class ProjectTemplates {
 							continue;
 						}
 
-						template = Archetyper.getTemplateName(template);
+						template = ProjectTemplatesUtil.getTemplateName(
+							template);
 
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
 							try (InputStream inputStream =

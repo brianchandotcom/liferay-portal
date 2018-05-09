@@ -74,12 +74,12 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException;
+		int type, long[] fragmentEntryIds, int status,
+		ServiceContext serviceContext) throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		long[] fragmentEntryIds, ServiceContext serviceContext)
+		long[] fragmentEntryIds, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -270,6 +270,9 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, boolean defaultTemplate);
+
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(long userId,
+		long layoutPageTemplateEntryId, int status) throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, long classNameId, long classTypeId)

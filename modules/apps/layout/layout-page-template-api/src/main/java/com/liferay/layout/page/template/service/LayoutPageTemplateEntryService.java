@@ -58,12 +58,12 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	 */
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long groupId,
 		long layoutPageTemplateCollectionId, String name, int type,
-		long[] fragmentEntryIds, ServiceContext serviceContext)
+		long[] fragmentEntryIds, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long groupId,
 		long layoutPageTemplateCollectionId, String name,
-		long[] fragmentEntryIds, ServiceContext serviceContext)
+		long[] fragmentEntryIds, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public List<LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
@@ -161,6 +161,9 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, boolean defaultTemplate)
 		throws PortalException;
+
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, int status) throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, long classNameId, long classTypeId)

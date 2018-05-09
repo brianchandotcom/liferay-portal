@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.fragment.web.internal.portlet.action;
+package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso
@@ -28,18 +27,19 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/view_fragment_entries"
+		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
+		"mvc.command.name=/layout/view"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewFragmentEntriesMVCRenderCommand implements MVCRenderCommand {
+public class ViewMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/view_fragment_entries.jsp";
+		return "/view.jsp";
 	}
 
 }

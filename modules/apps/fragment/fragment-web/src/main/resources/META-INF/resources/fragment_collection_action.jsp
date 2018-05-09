@@ -17,21 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-FragmentCollection fragmentCollection = (FragmentCollection)row.getObject();
+FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollection();
 %>
 
 <liferay-ui:icon-menu
-	direction="left-side"
+	direction="down"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
+	triggerCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
 >
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFragmentCollectionURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
+			<portlet:param name="redirect" value="<%= fragmentDisplayContext.getRedirect() %>" />
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 		</portlet:renderURL>
 
@@ -68,8 +68,12 @@ FragmentCollection fragmentCollection = (FragmentCollection)row.getObject();
 	/>
 
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.DELETE) %>">
+		<portlet:renderURL var="redirectURL">
+			<portlet:param name="mvcRenderCommandName" value="/fragment/view" />
+		</portlet:renderURL>
+
 		<portlet:actionURL name="/fragment/delete_fragment_collection" var="deleteFragmentCollectionURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 		</portlet:actionURL>
 

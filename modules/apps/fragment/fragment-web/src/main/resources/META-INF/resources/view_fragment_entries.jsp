@@ -16,17 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "collections"), fragmentDisplayContext.getFragmentCollectionsRedirect());
-PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragmentCollectionTitle(), null);
-%>
-
 <liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-fragment-entry-cannot-be-deleted-because-it-is-required-by-one-or-more-page-templates" />
-
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"
-/>
 
 <clay:management-toolbar
 	actionDropdownItems="<%= fragmentDisplayContext.getFragmentEntryActionItemsDropdownItems() %>"
@@ -45,15 +35,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, fragmentDisplayContext.getFragment
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
-	<div id="breadcrumb">
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showPortletBreadcrumb="<%= true %>"
-		/>
-	</div>
-
 	<liferay-ui:search-container
 		id="fragmentEntries"
 		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"

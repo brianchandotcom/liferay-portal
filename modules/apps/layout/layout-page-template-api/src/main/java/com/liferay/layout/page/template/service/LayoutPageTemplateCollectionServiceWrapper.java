@@ -66,15 +66,13 @@ public class LayoutPageTemplateCollectionServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId) {
 		return _layoutPageTemplateCollectionService.getLayoutPageTemplateCollections(groupId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, int start, int end) {
 		return _layoutPageTemplateCollectionService.getLayoutPageTemplateCollections(groupId,
 			start, end);
 	}
@@ -82,8 +80,7 @@ public class LayoutPageTemplateCollectionServiceWrapper
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator) {
 		return _layoutPageTemplateCollectionService.getLayoutPageTemplateCollections(groupId,
 			start, end, orderByComparator);
 	}
@@ -91,8 +88,7 @@ public class LayoutPageTemplateCollectionServiceWrapper
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator) {
 		return _layoutPageTemplateCollectionService.getLayoutPageTemplateCollections(groupId,
 			name, start, end, orderByComparator);
 	}

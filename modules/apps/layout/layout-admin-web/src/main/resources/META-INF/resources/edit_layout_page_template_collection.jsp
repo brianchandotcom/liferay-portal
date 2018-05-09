@@ -17,18 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPageTemplateDisplayContext(renderRequest, renderResponse, request);
+String redirect = ParamUtil.getString(request, "redirect");
 
-String redirect = layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionRedirect();
+long layoutPageTemplateCollectionId = ParamUtil.getLong(request, "layoutPageTemplateCollectionId");
+
+LayoutPageTemplateCollection layoutPageTemplateCollection = LayoutPageTemplateCollectionLocalServiceUtil.fetchLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionTitle());
+renderResponse.setTitle((layoutPageTemplateCollection != null) ? layoutPageTemplateCollection.getName() : LanguageUtil.get(request, "add-collection"));
 %>
 
 <portlet:actionURL name="/layout/edit_layout_page_template_collection" var="editLayoutPageTemplateCollectionURL">
-	<portlet:param name="mvcPath" value="/edit_layout_page_template_collection.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_collection" />
 	<portlet:param name="tabs1" value="page-templates" />
 </portlet:actionURL>
 
@@ -37,13 +39,13 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 	name="fm"
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="layoutPageTemplateCollectionId" type="hidden" value="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId() %>" />
+	<aui:input name="layoutPageTemplateCollectionId" type="hidden" value="<%= layoutPageTemplateCollectionId %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= DuplicateLayoutPageTemplateCollectionException.class %>" message="please-enter-a-unique-name" />
 		<liferay-ui:error exception="<%= LayoutPageTemplateCollectionNameException.class %>" message="please-enter-a-valid-name" />
 
-		<aui:model-context bean="<%= layoutPageTemplateDisplayContext.getLayoutPageTemplateCollection() %>" model="<%= LayoutPageTemplateCollection.class %>" />
+		<aui:model-context bean="<%= layoutPageTemplateCollection %>" model="<%= LayoutPageTemplateCollection.class %>" />
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>

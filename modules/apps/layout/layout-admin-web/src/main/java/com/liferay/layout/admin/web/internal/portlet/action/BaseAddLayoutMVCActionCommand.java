@@ -44,7 +44,7 @@ public abstract class BaseAddLayoutMVCActionCommand
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("mvcRenderCommandName", "/layout/view");
 
 		return portletURL.toString();
 	}

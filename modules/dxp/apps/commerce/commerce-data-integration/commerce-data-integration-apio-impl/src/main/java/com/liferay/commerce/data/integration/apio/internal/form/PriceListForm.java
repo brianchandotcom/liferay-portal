@@ -12,7 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.data.integration.price.list.apio.internal.form;
+package com.liferay.commerce.data.integration.apio.internal.form;
+
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.CURRENCY;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.DISPLAY_DATE;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.EXPIRATION_DATE;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.NAME;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.NEVER_EXPIRE;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.PRIORITY;
 
 import com.liferay.apio.architect.form.Form;
 
@@ -45,17 +52,17 @@ public class PriceListForm {
 		).constructor(
 			PriceListForm::new
 		).addOptionalDate(
-			"displayDate", PriceListForm::_setDisplayDate
+			DISPLAY_DATE, PriceListForm::_setDisplayDate
 		).addOptionalDate(
-			"expirationDate", PriceListForm::_setExpirationDate
+			EXPIRATION_DATE, PriceListForm::_setExpirationDate
 		).addRequiredBoolean(
-			"neverExpire", PriceListForm::_setNeverExpire
+			NEVER_EXPIRE, PriceListForm::_setNeverExpire
 		).addRequiredDouble(
-			"priority", PriceListForm::_setPriority
+			PRIORITY, PriceListForm::_setPriority
 		).addRequiredString(
-			"currency", PriceListForm::setCurrency
+			CURRENCY, PriceListForm::setCurrency
 		).addRequiredString(
-			"name", PriceListForm::_setName
+			NAME, PriceListForm::_setName
 		).build();
 	}
 

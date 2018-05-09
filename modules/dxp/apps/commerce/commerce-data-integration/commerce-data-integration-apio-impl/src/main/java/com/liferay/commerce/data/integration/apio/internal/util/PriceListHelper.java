@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.data.integration.price.list.apio.internal.util;
+package com.liferay.commerce.data.integration.apio.internal.util;
 
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;

@@ -12,15 +12,27 @@
  * details.
  */
 
-package com.liferay.commerce.data.integration.price.list.apio.identifier;
-
-import com.liferay.apio.architect.identifier.Identifier;
+package com.liferay.commerce.data.integration.apio.constants;
 
 /**
- * Holds information about a {@code CommercePriceList} identifier.
- *
  * @author Zoltán Takács
- * @review
  */
-public interface PriceListIdentifier extends Identifier<Long> {
+public interface PriceListFieldConstants {
+
+	public static final String CURRENCY = "currency";
+
+	public static final String DATE_CREATED = "dateCreated";
+
+	public static final String DATE_MODIFIED = "dateModified";
+
+	public static final String DISPLAY_DATE = "displayDate";
+
+	public static final String EXPIRATION_DATE = "expirationDate";
+
+	public static final String NAME = "name";
+
+	public static final String NEVER_EXPIRE = "neverExpire";
+
+	public static final String PRIORITY = "priority";
+
 }

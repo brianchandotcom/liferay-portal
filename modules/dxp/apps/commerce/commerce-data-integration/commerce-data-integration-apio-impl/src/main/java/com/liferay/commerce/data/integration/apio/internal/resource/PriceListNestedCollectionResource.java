@@ -12,8 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.data.integration.price.list.apio.internal.resource;
+package com.liferay.commerce.data.integration.apio.internal.resource;
 
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.CURRENCY;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.DATE_CREATED;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.DATE_MODIFIED;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.DISPLAY_DATE;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.EXPIRATION_DATE;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.NAME;
+import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.PRIORITY;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.apio.architect.functional.Try;
@@ -25,9 +32,9 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.data.integration.price.list.apio.identifier.PriceListIdentifier;
-import com.liferay.commerce.data.integration.price.list.apio.internal.form.PriceListForm;
-import com.liferay.commerce.data.integration.price.list.apio.internal.util.PriceListHelper;
+import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
+import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
+import com.liferay.commerce.data.integration.apio.internal.util.PriceListHelper;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -103,15 +110,19 @@ public class PriceListNestedCollectionResource
 			"webSite", "priceLists", WebSiteIdentifier.class,
 			CommercePriceList::getGroupId
 		).addDate(
-			"dateCreated", CommercePriceList::getCreateDate
+			DATE_CREATED, CommercePriceList::getCreateDate
 		).addDate(
-			"dateModified", CommercePriceList::getModifiedDate
+			DATE_MODIFIED, CommercePriceList::getModifiedDate
+		).addDate(
+			DISPLAY_DATE, CommercePriceList::getDisplayDate
+		).addDate(
+			EXPIRATION_DATE, CommercePriceList::getExpirationDate
 		).addNumber(
-			"priority", CommercePriceList::getPriority
+			PRIORITY, CommercePriceList::getPriority
 		).addString(
-			"currency", this::_getCurrencyCode
+			CURRENCY, this::_getCurrencyCode
 		).addString(
-			"name", CommercePriceList::getName
+			NAME, CommercePriceList::getName
 		).build();
 	}
 

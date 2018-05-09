@@ -10,5 +10,3 @@ Export-Package:\
 	com.liferay.knowledge.base.service.persistence,\
 	com.liferay.knowledge.base.util,\
 	com.liferay.knowledge.base.util.comparator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Knowledge Base

@@ -1,8 +1,6 @@
 Bundle-Name: Liferay Sync Service
 Bundle-SymbolicName: com.liferay.sync.service
 Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Sync Connector
 Liferay-Require-SchemaVersion: 1.0.4
 Liferay-Service: true
 -dsannotations-options: inherit

@@ -19,5 +19,3 @@ Export-Package:\
 	com.liferay.adaptive.media.image.url,\
 	com.liferay.adaptive.media.image.util,\
 	com.liferay.adaptive.media.image.validator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Adaptive Media

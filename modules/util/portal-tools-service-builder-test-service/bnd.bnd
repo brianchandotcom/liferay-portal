@@ -1,7 +1,5 @@
 Bundle-Name: Liferay Portal Tools Service Builder Test Service
 Bundle-SymbolicName: com.liferay.portal.tools.service.builder.test.service
 Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

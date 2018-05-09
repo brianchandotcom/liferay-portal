@@ -5,5 +5,3 @@ Export-Package:\
 	com.liferay.osgi.service.tracker.collections,\
 	com.liferay.osgi.service.tracker.collections.list,\
 	com.liferay.osgi.service.tracker.collections.map
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

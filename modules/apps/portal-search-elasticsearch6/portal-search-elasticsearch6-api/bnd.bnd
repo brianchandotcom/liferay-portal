@@ -5,6 +5,4 @@ Export-Package:\
 	com.liferay.portal.search.elasticsearch6.configuration,\
 	com.liferay.portal.search.elasticsearch6.constants,\
 	com.liferay.portal.search.elasticsearch6.settings
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Search
 -dsannotations-options: inherit

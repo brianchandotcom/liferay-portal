@@ -9,5 +9,3 @@ Export-Package:\
 	com.liferay.push.notifications.service,\
 	com.liferay.push.notifications.service.persistence,\
 	com.liferay.push.notifications.util.comparator
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

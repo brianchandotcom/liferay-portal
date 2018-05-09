@@ -5,6 +5,4 @@ Import-Package:\
 	!org.apache.xmlbeans.*,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /web-form-web

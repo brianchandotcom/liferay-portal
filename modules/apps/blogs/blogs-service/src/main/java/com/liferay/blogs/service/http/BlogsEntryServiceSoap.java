@@ -145,6 +145,20 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.blogs.model.BlogsEntrySoap[] getEntriesPrevAndNext(
+		long entryId) throws RemoteException {
+		try {
+			com.liferay.blogs.model.BlogsEntry[] returnValue = BlogsEntryServiceUtil.getEntriesPrevAndNext(entryId);
+
+			return com.liferay.blogs.model.BlogsEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.blogs.model.BlogsEntrySoap getEntry(long entryId)
 		throws RemoteException {
 		try {

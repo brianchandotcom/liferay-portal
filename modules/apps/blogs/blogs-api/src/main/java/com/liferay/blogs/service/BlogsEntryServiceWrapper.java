@@ -115,6 +115,13 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	}
 
 	@Override
+	public com.liferay.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryService.getEntriesPrevAndNext(entryId);
+	}
+
+	@Override
 	public com.liferay.blogs.model.BlogsEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.getEntry(entryId);

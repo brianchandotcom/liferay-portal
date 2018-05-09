@@ -18,6 +18,7 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.base.BlogsEntryServiceBaseImpl;
 import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
+import com.liferay.blogs.util.comparator.EntryIdComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -236,6 +237,51 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return exportToRSS(
 			name, name, type, version, displayStyle, feedURL, entryURL,
 			blogsEntries, themeDisplay);
+	}
+
+	@Override
+	public BlogsEntry[] getEntriesPrevAndNext(long entryId)
+		throws PortalException {
+
+		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		_blogsEntryFolderModelResourcePermission.check(
+			getPermissionChecker(), entry, ActionKeys.VIEW);
+
+		BlogsEntry[] entries =
+			blogsEntryPersistence.filterFindByG_D_S_PrevAndNext(
+				entryId, entry.getGroupId(), entry.getDisplayDate(),
+				WorkflowConstants.STATUS_APPROVED, new EntryIdComparator(true));
+
+		if (entries[0] == null) {
+			entries[0] = blogsEntryPersistence.fetchByG_LtD_S_Last(
+				entry.getGroupId(), entry.getDisplayDate(),
+				WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+
+			if ((entries[0] != null) &&
+				!_blogsEntryFolderModelResourcePermission.contains(
+					getPermissionChecker(), entries[0], ActionKeys.VIEW)) {
+
+				entries[0] = null;
+			}
+		}
+
+		if (entries[2] == null) {
+			entries[2] = blogsEntryPersistence.fetchByG_GtD_S_First(
+				entry.getGroupId(), entry.getDisplayDate(),
+				WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+
+			if ((entries[2] != null) &&
+				!_blogsEntryFolderModelResourcePermission.contains(
+					getPermissionChecker(), entries[2], ActionKeys.VIEW)) {
+
+				entries[2] = null;
+			}
+		}
+
+		return entries;
 	}
 
 	@Override

@@ -134,12 +134,6 @@ AUI.add(
 						);
 					},
 
-					getValue: function() {
-						var instance = this;
-
-						return instance.get('value');
-					},
-
 					showErrorMessage: function() {
 						var instance = this;
 

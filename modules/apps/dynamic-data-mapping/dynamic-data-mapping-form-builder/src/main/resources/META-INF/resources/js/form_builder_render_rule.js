@@ -246,14 +246,18 @@ AUI.add(
 
 						container.one('.additional-info-' + index).empty();
 
-						var target = instance._actionFactory.createAction(type, index, action, container);
+						var target;
 
-						target.render(container);
+						if (type) {
+							target = instance._actionFactory.createAction(type, index, action, container);
 
-						target.conditionChange(instance._getConditionSelectedFieldsPage());
+							target.render(container);
 
-						if (action && action.target) {
-							target.set('value', action.target);
+							target.conditionChange(instance._getConditionSelectedFieldsPage());
+
+							if (action && action.target) {
+								target.set('value', action.target);
+							}
 						}
 
 						instance._actions[index + '-action'] = target;
@@ -438,7 +442,7 @@ AUI.add(
 						if (fieldName && fieldName.match('-target')) {
 							var index = fieldName.split('-')[0];
 
-							instance._createTargetSelect(index, event.newVal[0]);
+							instance._createTargetSelect(index, event.newVal[0], null);
 						}
 					},
 

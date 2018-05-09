@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -70,11 +69,10 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		int start, int end) {
 
-		return LayoutPageTemplateEntryLocalServiceUtil.
-			getLayoutPageTemplateEntries(
-				_themeDisplay.getScopeGroupId(),
-				getLayoutPageTemplateCollectionId(),
-				WorkflowConstants.STATUS_APPROVED, start, end);
+		return LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
+			_themeDisplay.getScopeGroupId(),
+			getLayoutPageTemplateCollectionId(),
+			WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 
 	public int getLayoutPageTemplateEntriesCount() {

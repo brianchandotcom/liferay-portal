@@ -80,10 +80,10 @@ public class UADApplicationExportHelper {
 	public List<UADApplicationExportDisplay> getUADApplicationExportDisplays(
 		long groupId, long userId) {
 
-		Set<String> exporterApplicationNames =
+		Set<String> exporterApplicationKeys =
 			_uadRegistry.getApplicationUADExportersKeySet();
 
-		Iterator<String> iterator = exporterApplicationNames.iterator();
+		Iterator<String> iterator = exporterApplicationKeys.iterator();
 
 		List<UADApplicationExportDisplay> uadApplicationExportDisplays =
 			new ArrayList<>();

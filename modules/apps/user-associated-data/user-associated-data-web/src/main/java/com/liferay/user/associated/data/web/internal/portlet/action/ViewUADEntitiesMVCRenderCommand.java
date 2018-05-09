@@ -85,7 +85,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setActionDropdownItems(
 				_getActionDropdownItems(renderRequest, renderResponse));
-			viewUADEntitiesDisplay.setApplicationName(applicationKey);
+			viewUADEntitiesDisplay.setApplicationKey(applicationKey);
 
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(renderResponse);

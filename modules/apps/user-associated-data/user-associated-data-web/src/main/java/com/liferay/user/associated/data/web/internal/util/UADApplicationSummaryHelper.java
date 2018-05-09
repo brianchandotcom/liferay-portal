@@ -200,7 +200,7 @@ public class UADApplicationSummaryHelper {
 		String orderByColumn, String orderByType) {
 
 		Comparator<UADApplicationSummaryDisplay> comparator =
-			Comparator.comparing(UADApplicationSummaryDisplay::getName);
+			Comparator.comparing(UADApplicationSummaryDisplay::getKey);
 
 		if (orderByColumn.equals("items") || orderByColumn.equals("status")) {
 			comparator = Comparator.comparingInt(
@@ -359,7 +359,7 @@ public class UADApplicationSummaryHelper {
 
 		uadApplicationSummaryDisplay.setCount(count);
 
-		uadApplicationSummaryDisplay.setName(applicationKey);
+		uadApplicationSummaryDisplay.setKey(applicationKey);
 
 		if (count > 0) {
 			uadApplicationSummaryDisplay.setViewURL(
@@ -390,10 +390,10 @@ public class UADApplicationSummaryHelper {
 
 		uadApplicationSummaryDisplays.sort(
 			(uadApplicationSummaryDisplay, uadApplicationSummaryDisplay2) -> {
-				String applicationKey1 = uadApplicationSummaryDisplay.getName();
+				String applicationKey1 = uadApplicationSummaryDisplay.getKey();
 
 				return applicationKey1.compareTo(
-					uadApplicationSummaryDisplay2.getName());
+					uadApplicationSummaryDisplay2.getKey());
 			});
 
 		return uadApplicationSummaryDisplays;

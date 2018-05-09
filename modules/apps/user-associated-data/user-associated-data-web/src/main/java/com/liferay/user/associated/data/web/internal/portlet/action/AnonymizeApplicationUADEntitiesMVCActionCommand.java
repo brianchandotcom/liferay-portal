@@ -49,12 +49,12 @@ public class AnonymizeApplicationUADEntitiesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String applicationName = ParamUtil.getString(
-			actionRequest, "applicationName");
+		String applicationKey = ParamUtil.getString(
+			actionRequest, "applicationKey");
 
 		List<UADAnonymizer> uadAnonymizers =
 			_uadApplicationSummaryHelper.getApplicationUADAnonymizers(
-				applicationName);
+				applicationKey);
 
 		for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
 			User selectedUser = getSelectedUser(actionRequest);

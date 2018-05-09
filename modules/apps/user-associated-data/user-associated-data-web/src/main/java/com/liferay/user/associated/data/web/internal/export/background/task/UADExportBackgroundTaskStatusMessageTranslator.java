@@ -43,11 +43,11 @@ public class UADExportBackgroundTaskStatusMessageTranslator
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
 		long applicationDataTotal = message.getLong("applicationDataTotal");
-		String applicationName = message.getString("applicationName");
+		String applicationKey = message.getString("applicationKey");
 
 		backgroundTaskStatus.setAttribute(
 			"applicationDataTotal", applicationDataTotal);
-		backgroundTaskStatus.setAttribute("applicationName", applicationName);
+		backgroundTaskStatus.setAttribute("applicationKey", applicationKey);
 	}
 
 	private synchronized void _translateEntityMessage(
@@ -57,15 +57,15 @@ public class UADExportBackgroundTaskStatusMessageTranslator
 			backgroundTaskStatus.getAttribute("applicationDataCounter"));
 		long applicationDataTotal = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute("applicationDataTotal"));
-		String applicationName = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute("applicationName"));
+		String applicationKey = GetterUtil.getString(
+			backgroundTaskStatus.getAttribute("applicationKey"));
 		String entityName = message.getString("entityName");
 
 		backgroundTaskStatus.setAttribute(
 			"applicationDataCounter", ++applicationDataCounter);
 		backgroundTaskStatus.setAttribute(
 			"applicationDataTotal", applicationDataTotal);
-		backgroundTaskStatus.setAttribute("applicationName", applicationName);
+		backgroundTaskStatus.setAttribute("applicationKey", applicationKey);
 		backgroundTaskStatus.setAttribute("entityName", entityName);
 	}
 

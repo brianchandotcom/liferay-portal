@@ -49,14 +49,14 @@ public class ExportApplicationDataMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String[] applicationNames = StringUtil.split(
-			ParamUtil.getString(actionRequest, "applicationNames"));
+		String[] applicationKeys = StringUtil.split(
+			ParamUtil.getString(actionRequest, "applicationKeys"));
 
-		for (String applicationName : applicationNames) {
+		for (String applicationKey : applicationKeys) {
 			long selUserId = getSelectedUserId(actionRequest);
 
 			UADExporter.exportApplicationDataInBackground(
-				applicationName, selUserId, themeDisplay.getScopeGroupId());
+				applicationKey, selUserId, themeDisplay.getScopeGroupId());
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");

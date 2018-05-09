@@ -553,6 +553,7 @@ public class CommerceOrderListDisplayContext {
 
 		searchContext.setAttribute(Field.ENTRY_CLASS_PK, _keywords);
 		searchContext.setAttribute("faceted", Boolean.TRUE);
+		searchContext.setAttribute("purchaseOrderNumber", _keywords);
 		searchContext.setAttribute(
 			"siteGroupId", _commerceOrderRequestHelper.getSiteGroupId());
 		searchContext.setAttribute(

@@ -98,6 +98,7 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 			searchQuery, fullQueryBooleanFilter, searchContext);
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
+		addSearchTerm(searchQuery, searchContext, "purchaseOrderNumber", false);
 	}
 
 	@Override
@@ -123,6 +124,8 @@ public class CommerceOrderIndexer extends BaseIndexer<CommerceOrder> {
 		document.addKeyword(
 			"orderOrganizationId", commerceOrder.getOrderOrganizationId());
 		document.addKeyword("orderStatus", commerceOrder.getOrderStatus());
+		document.addKeyword(
+			"purchaseOrderNumber", commerceOrder.getPurchaseOrderNumber());
 		document.addKeyword("siteGroupId", commerceOrder.getSiteGroupId());
 		document.addNumber("total", commerceOrder.getTotal());
 

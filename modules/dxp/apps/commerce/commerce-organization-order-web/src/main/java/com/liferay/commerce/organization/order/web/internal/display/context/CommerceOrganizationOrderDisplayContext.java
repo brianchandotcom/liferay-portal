@@ -722,6 +722,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		}
 
 		searchContext.setAttribute(Field.ENTRY_CLASS_PK, _keywords);
+		searchContext.setAttribute("purchaseOrderNumber", _keywords);
 
 		searchContext.setAttribute(
 			"useSearchResultPermissionFilter", useSearchResultPermissionFilter);

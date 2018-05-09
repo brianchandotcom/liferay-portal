@@ -404,8 +404,11 @@ public class JournalArticleAssetRenderer
 					assetEntry.getEntryId());
 
 		if (assetDisplayPageEntry != null) {
-			return
-				themeDisplay.getPortalURL() + "/a/" + assetEntry.getEntryId();
+			Group group = themeDisplay.getScopeGroup();
+
+			String displayURL = group.getDisplayURL(themeDisplay);
+
+			return displayURL + "/a/" + assetEntry.getEntryId();
 		}
 
 		String hitLayoutURL = getHitLayoutURL(

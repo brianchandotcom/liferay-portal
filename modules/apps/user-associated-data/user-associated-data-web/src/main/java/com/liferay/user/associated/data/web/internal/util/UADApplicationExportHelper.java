@@ -19,18 +19,17 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskManagerUtil;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,31 +40,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UADApplicationExportHelper.class)
 public class UADApplicationExportHelper {
 
-	public int getApplicationDataCount(String applicationName, long userId) {
-		List<UADExporter> uadExporters = getApplicationUADExporters(
-			applicationName);
-
-		Stream<UADExporter> uadExporterStream = uadExporters.stream();
-
-		return uadExporterStream.mapToInt(
-			uadExporter -> {
-				try {
-					return (int)uadExporter.count(userId);
-				}
-				catch (PortalException pe) {
-					_log.error(pe, pe);
-
-					return 0;
-				}
-			}).sum();
-	}
-
 	public Date getApplicationLastExportDate(
-		String applicationName, long groupId, long userId) {
+		String applicationKey, long groupId, long userId) {
 
 		BackgroundTask backgroundTask =
 			UADExportBackgroundTaskManagerUtil.fetchLastBackgroundTask(
-				applicationName, groupId, userId,
+				applicationKey, groupId, userId,
 				BackgroundTaskConstants.STATUS_SUCCESSFUL);
 
 		if (backgroundTask != null) {
@@ -75,55 +55,48 @@ public class UADApplicationExportHelper {
 		return null;
 	}
 
-	public Stream<String> getApplicationNames() {
-		Collection<UADExporter> uadExporters = _uadRegistry.getUADExporters();
-
-		Stream<UADExporter> uadExporterStream = uadExporters.stream();
-
-		return uadExporterStream.map(
-			UADExporter::getApplicationName
-		).distinct(
-		).sorted();
-	}
-
-	public List<UADExporter> getApplicationUADExporters(
-		String applicationName) {
-
-		Collection<UADExporter> uadExporters = _uadRegistry.getUADExporters();
-
-		Stream<UADExporter> uadExporterStream = uadExporters.stream();
-
-		return uadExporterStream.filter(
-			uadExporter -> applicationName.equals(
-				uadExporter.getApplicationName())
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	public UADApplicationExportDisplay getUADApplicationExportDisplay(
-		String applicationName, long groupId, long userId) {
+		String applicationKey, long groupId, long userId) {
 
-		List<UADExporter> uadExporters = getApplicationUADExporters(
-			applicationName);
+		List<UADExporter> uadExporters =
+			_uadRegistry.getApplicationUADExporters(applicationKey);
+
+		int applicationDataCount = 0;
+
+		for (UADExporter uadExporter : uadExporters) {
+			try {
+				applicationDataCount += (int)uadExporter.count(userId);
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+		}
 
 		return new UADApplicationExportDisplay(
-			applicationName, getApplicationDataCount(applicationName, userId),
-			ListUtil.isNotEmpty(uadExporters),
-			getApplicationLastExportDate(applicationName, groupId, userId));
+			applicationKey, applicationDataCount, !uadExporters.isEmpty(),
+			getApplicationLastExportDate(applicationKey, groupId, userId));
 	}
 
 	public List<UADApplicationExportDisplay> getUADApplicationExportDisplays(
 		long groupId, long userId) {
 
-		Stream<String> applicationNameStream = getApplicationNames();
+		Set<String> exporterApplicationNames =
+			_uadRegistry.getApplicationUADExportersKeySet();
 
-		return applicationNameStream.map(
-			applicationName ->
-				getUADApplicationExportDisplay(applicationName, groupId, userId)
-		).collect(
-			Collectors.toList()
-		);
+		Iterator<String> iterator = exporterApplicationNames.iterator();
+
+		List<UADApplicationExportDisplay> uadApplicationExportDisplays =
+			new ArrayList<>();
+
+		while (iterator.hasNext()) {
+			String applicationKey = iterator.next();
+
+			uadApplicationExportDisplays.add(
+				getUADApplicationExportDisplay(
+					applicationKey, groupId, userId));
+		}
+
+		return uadApplicationExportDisplays;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

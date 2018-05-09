@@ -38,6 +38,7 @@ import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -74,8 +75,8 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			User selectedUser = _selectedUserHelper.getSelectedUser(
 				renderRequest);
 
-			String applicationName = ParamUtil.getString(
-				renderRequest, "applicationName");
+			String applicationKey = ParamUtil.getString(
+				renderRequest, "applicationKey");
 			String uadRegistryKey = ParamUtil.getString(
 				renderRequest, "uadRegistryKey");
 
@@ -84,7 +85,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setActionDropdownItems(
 				_getActionDropdownItems(renderRequest, renderResponse));
-			viewUADEntitiesDisplay.setApplicationName(applicationName);
+			viewUADEntitiesDisplay.setApplicationName(applicationKey);
 
 			LiferayPortletResponse liferayPortletResponse =
 				_portal.getLiferayPortletResponse(renderResponse);
@@ -94,7 +95,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 			viewUADEntitiesDisplay.setNavigationItems(
 				_getNavigationItems(
-					applicationName, uadRegistryKey, currentURL,
+					applicationKey, uadRegistryKey, currentURL,
 					liferayPortletResponse));
 
 			UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
@@ -175,8 +176,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private List<NavigationItem> _getNavigationItems(
-			String applicationName, String uadRegistryKey,
-			PortletURL currentURL,
+			String applicationKey, String uadRegistryKey, PortletURL currentURL,
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {
 
@@ -186,12 +186,11 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		PortletURL tabPortletURL = PortletURLUtil.clone(
 			currentURL, liferayPortletResponse);
 
-		for (UADDisplay uadDisplay : _uadRegistry.getUADDisplays()) {
-			if (!applicationName.equals(uadDisplay.getApplicationName())) {
-				continue;
-			}
+		Collection<UADDisplay> applicationUADDisplays =
+			_uadRegistry.getApplicationUADDisplays(applicationKey);
 
-			navigationItemList.add(
+		applicationUADDisplays.forEach(
+			uadDisplay -> navigationItemList.add(
 				navigationItem -> {
 					Class<?> uadClass = uadDisplay.getTypeClass();
 
@@ -201,8 +200,7 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 						tabPortletURL, "uadRegistryKey", uadClass.getName());
 
 					navigationItem.setLabel(uadDisplay.getTypeName(locale));
-				});
-		}
+				}));
 
 		return navigationItemList;
 	}

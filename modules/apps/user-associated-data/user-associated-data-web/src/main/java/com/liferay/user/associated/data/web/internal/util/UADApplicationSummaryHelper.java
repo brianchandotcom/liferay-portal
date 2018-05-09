@@ -34,9 +34,13 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -119,9 +123,15 @@ public class UADApplicationSummaryHelper {
 		Predicate<UADApplicationSummaryDisplay> predicate = getPredicate(
 			getNavigation(renderRequest));
 
-		Supplier<Stream<UADApplicationSummaryDisplay>> streamSupplier = () ->
-			getUADApplicationSummaryDisplayStream(portletRequest, userId).
-				filter(predicate);
+		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
+			getUADApplicationSummaryDisplays(portletRequest, userId);
+
+		Supplier<Stream<UADApplicationSummaryDisplay>> streamSupplier = () -> {
+			Stream<UADApplicationSummaryDisplay> stream =
+				uadApplicationSummaryDisplays.stream();
+
+			return stream.filter(predicate);
+		};
 
 		Stream<UADApplicationSummaryDisplay> summaryDisplayStream =
 			streamSupplier.get();
@@ -149,10 +159,10 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public List<UADAnonymizer> getApplicationUADAnonymizers(
-		String applicationName) {
+		String applicationKey) {
 
-		Stream<UADDisplay> uadDisplayStream = getApplicationUADDisplayStream(
-			applicationName);
+		Stream<UADDisplay> uadDisplayStream =
+			_uadRegistry.getApplicationUADDisplayStream(applicationKey);
 
 		return uadDisplayStream.map(
 			UADDisplay::getTypeClass
@@ -163,17 +173,6 @@ public class UADApplicationSummaryHelper {
 		).collect(
 			Collectors.toList()
 		);
-	}
-
-	public Stream<UADDisplay> getApplicationUADDisplayStream(
-		String applicationName) {
-
-		Stream<UADDisplay> uadDisplayStream =
-			_uadRegistry.getUADDisplayStream();
-
-		return uadDisplayStream.filter(
-			uadDisplay -> applicationName.equals(
-				uadDisplay.getApplicationName()));
 	}
 
 	public PortletURL getBaseURL(
@@ -215,16 +214,19 @@ public class UADApplicationSummaryHelper {
 		return comparator;
 	}
 
-	public String getDefaultUADRegistryKey(String applicationName) {
-		Stream<UADDisplay> uadDisplayStream = getApplicationUADDisplayStream(
-			applicationName);
+	public String getDefaultUADRegistryKey(String applicationKey) {
+		List<UADDisplay> uadDisplays = _uadRegistry.getApplicationUADDisplays(
+			applicationKey);
 
-		return uadDisplayStream.map(
-			UADDisplay::getTypeClass
-		).map(
-			Class::getName
-		).findFirst(
-		).get();
+		UADDisplay uadDisplay = uadDisplays.get(0);
+
+		if (uadDisplay == null) {
+			return null;
+		}
+
+		Class<?> typeClass = uadDisplay.getTypeClass();
+
+		return typeClass.getName();
 	}
 
 	public DropdownItemList getFilterByNavigationDropdownItemList(
@@ -344,45 +346,61 @@ public class UADApplicationSummaryHelper {
 	}
 
 	public UADApplicationSummaryDisplay getUADApplicationSummaryDisplay(
-		PortletRequest portletRequest, String applicationName, long userId) {
+		PortletRequest portletRequest, String applicationKey, long userId) {
 
 		UADApplicationSummaryDisplay uadApplicationSummaryDisplay =
 			new UADApplicationSummaryDisplay();
 
+		Collection<UADDisplay> applicationUADDisplays =
+			_uadRegistry.getApplicationUADDisplays(applicationKey);
+
 		int count = getReviewableUADEntitiesCount(
-			getApplicationUADDisplayStream(applicationName), userId);
+			applicationUADDisplays.stream(), userId);
 
 		uadApplicationSummaryDisplay.setCount(count);
 
-		uadApplicationSummaryDisplay.setName(applicationName);
+		uadApplicationSummaryDisplay.setName(applicationKey);
 
 		if (count > 0) {
 			uadApplicationSummaryDisplay.setViewURL(
-				getViewURL(portletRequest, applicationName, userId));
+				getViewURL(portletRequest, applicationKey, userId));
 		}
 
 		return uadApplicationSummaryDisplay;
 	}
 
-	public Stream<UADApplicationSummaryDisplay>
-		getUADApplicationSummaryDisplayStream(
-			PortletRequest portletRequest, long userId) {
+	public List<UADApplicationSummaryDisplay> getUADApplicationSummaryDisplays(
+		PortletRequest portletRequest, long userId) {
 
-		Stream<UADDisplay> uadDisplayStream =
-			_uadRegistry.getUADDisplayStream();
+		List<UADApplicationSummaryDisplay> uadApplicationSummaryDisplays =
+			new ArrayList<>();
 
-		return uadDisplayStream.map(
-			UADDisplay::getApplicationName
-		).distinct(
-		).sorted(
-		).map(
-			applicationName -> getUADApplicationSummaryDisplay(
-				portletRequest, applicationName, userId)
-		);
+		Set<String> applicationUADDisplayKeySet =
+			_uadRegistry.getApplicationUADDisplaysKeySet();
+
+		Iterator<String> iterator = applicationUADDisplayKeySet.iterator();
+
+		while (iterator.hasNext()) {
+			String applicationKey = iterator.next();
+
+			uadApplicationSummaryDisplays.add(
+				getUADApplicationSummaryDisplay(
+					portletRequest, applicationKey, userId));
+		}
+
+		uadApplicationSummaryDisplays.sort(
+			(uadApplicationSummaryDisplay, uadApplicationSummaryDisplay2) -> {
+				String applicationKey1 = uadApplicationSummaryDisplay.getName();
+
+				return applicationKey1.compareTo(
+					uadApplicationSummaryDisplay2.getName());
+			});
+
+		return uadApplicationSummaryDisplays;
 	}
 
 	public String getViewURL(
-		PortletRequest portletRequest, String applicationName, long userId) {
+		PortletRequest portletRequest, String applicationKey, long userId) {
 
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			portletRequest, UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
@@ -391,9 +409,9 @@ public class UADApplicationSummaryHelper {
 		liferayPortletURL.setParameter(
 			"mvcRenderCommandName", "/view_uad_entities");
 		liferayPortletURL.setParameter("p_u_i_d", String.valueOf(userId));
-		liferayPortletURL.setParameter("applicationName", applicationName);
+		liferayPortletURL.setParameter("applicationKey", applicationKey);
 		liferayPortletURL.setParameter(
-			"uadRegistryKey", getDefaultUADRegistryKey(applicationName));
+			"uadRegistryKey", getDefaultUADRegistryKey(applicationKey));
 
 		return liferayPortletURL.toString();
 	}

@@ -805,13 +805,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public boolean getReady();
 
 	/**
-	* Returns <code>true</code> if the portlet supports remoting.
-	*
-	* @return <code>true</code> if the portlet supports remoting
-	*/
-	public boolean getRemoteable();
-
-	/**
 	* Returns the render timeout of the portlet.
 	*
 	* @return the render timeout of the portlet
@@ -1389,13 +1382,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @return <code>true</code> if the portlet is ready to be used
 	*/
 	public boolean isReady();
-
-	/**
-	* Returns <code>true</code> if the portlet supports remoting.
-	*
-	* @return <code>true</code> if the portlet supports remoting
-	*/
-	public boolean isRemoteable();
 
 	/**
 	* Returns <code>true</code> if the portlet will only process namespaced
@@ -2045,14 +2031,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @param ready whether the portlet is ready to be used
 	*/
 	public void setReady(boolean ready);
-
-	/**
-	* Set to <code>true</code> if the portlet supports remoting
-	*
-	* @param remoteable boolean value for whether or not the the portlet
-	supports remoting
-	*/
-	public void setRemoteable(boolean remoteable);
 
 	/**
 	* Sets the render timeout of the portlet.

@@ -1858,10 +1858,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getBoolean(
 				portletElement.elementText("instanceable"),
 				portletModel.isInstanceable()));
-		portletModel.setRemoteable(
-			GetterUtil.getBoolean(
-				portletElement.elementText("remoteable"),
-				portletModel.isRemoteable()));
 		portletModel.setScopeable(
 			GetterUtil.getBoolean(
 				portletElement.elementText("scopeable"),

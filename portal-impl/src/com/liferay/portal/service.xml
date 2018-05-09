@@ -566,7 +566,7 @@
 
 		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
-	<entity local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -702,7 +702,7 @@
 		<reference entity="ExportImportConfiguration" package-path="com.liferay.portlet.exportimport" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>
-	<entity local-service="true" name="LayoutBranch" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
+	<entity local-service="true" name="LayoutBranch" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
 
 		<!-- PK fields -->
 
@@ -754,7 +754,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutFriendlyURL" remote-service="false" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity local-service="true" name="LayoutFriendlyURL" remote-service="false" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -815,7 +815,7 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutPrototype" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity local-service="true" name="LayoutPrototype" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -854,7 +854,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutRevision" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
+	<entity local-service="true" name="LayoutRevision" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
 
 		<!-- PK fields -->
 
@@ -1029,7 +1029,7 @@
 		<reference entity="PluginSetting" package-path="com.liferay.portal" />
 		<reference entity="VirtualHost" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutSetBranch" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
+	<entity local-service="true" name="LayoutSetBranch" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
 
 		<!-- PK fields -->
 
@@ -1098,7 +1098,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutSetPrototype" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
+	<entity local-service="true" name="LayoutSetPrototype" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 

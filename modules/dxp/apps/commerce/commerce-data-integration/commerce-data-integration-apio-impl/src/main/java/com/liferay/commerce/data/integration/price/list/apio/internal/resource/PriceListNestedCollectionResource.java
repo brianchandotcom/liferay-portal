@@ -103,6 +103,8 @@ public class PriceListNestedCollectionResource
 			"dateCreated", CommercePriceList::getCreateDate
 		).addDate(
 			"dateModified", CommercePriceList::getModifiedDate
+		).addNumber(
+			"priority", CommercePriceList::getPriority
 		).addString(
 			"currency", this::_getCurrencyCode
 		).addString(

@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -170,6 +171,12 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			catch (IOException ioe) {
 				throw new RuntimeException(
 					"Unable to read file " + packageJSONFile.getPath(), ioe);
+			}
+			catch (JSONException jsone) {
+				System.out.println(
+					"Invalid JSON file " + packageJSONFile.getPath());
+
+				continue;
 			}
 
 			if (!jsonObject.has("scripts")) {

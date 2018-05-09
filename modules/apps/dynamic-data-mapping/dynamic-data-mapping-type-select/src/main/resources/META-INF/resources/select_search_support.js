@@ -31,7 +31,7 @@ AUI.add(
 
 				var options = instance.get('options');
 
-				instance._renderList(options);
+				instance._renderList(options, true);
 
 				searchInputNode.val('');
 			},
@@ -39,7 +39,9 @@ AUI.add(
 			_afterCloseList: function() {
 				var instance = this;
 
-				instance.clearFilter();
+				if (instance._showSearch()) {
+					instance.clearFilter();
+				}
 			},
 
 			_afterOpenList: function() {
@@ -47,7 +49,9 @@ AUI.add(
 
 				var searchInputNode = instance._getInputSearch();
 
-				searchInputNode.focus();
+				if (instance._showSearch()) {
+					searchInputNode.focus();
+				}
 			},
 
 			_afterStartSearching: function(event) {
@@ -64,7 +68,7 @@ AUI.add(
 					}
 				);
 
-				instance._renderList(filteredOptions);
+				instance._renderList(filteredOptions, false);
 
 				instance._visitDOMListItems(
 					A.bind(instance._applyFilterStyleOnItem, instance, term)
@@ -96,22 +100,23 @@ AUI.add(
 
 				new renderer(context, container);
 
-				return container.firstChild.firstElementChild.innerHTML;
+				return container.firstElementChild.innerHTML;
 			},
 
-			_renderList: function(options) {
+			_renderList: function(options, showPlaceholderOption) {
 				var instance = this;
 
 				var template = instance._getTemplate(
 					{
 						multiple: instance.get('multiple'),
 						options: options,
+						showPlaceholderOption: showPlaceholderOption,
 						strings: instance.get('strings'),
 						value: instance.getValue()
 					}
 				);
 
-				var optionsList = instance.get('container').one('.inline-scroller');
+				var optionsList = instance.get('container').one('.dropdown-visible');
 
 				if (optionsList) {
 					optionsList.setHTML(template);

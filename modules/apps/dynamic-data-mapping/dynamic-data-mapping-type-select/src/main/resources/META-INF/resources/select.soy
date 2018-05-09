@@ -28,6 +28,8 @@
 	{@param? required: bool}
 	{@param? selectCaretDoubleIcon: html}
 	{@param? selectSearchIcon: html}
+	{@param? showSearch: bool}
+	{@param? showPlaceholderOption: bool}
 	{@param? showLabel: bool}
 	{@param? tip: string}
 	{let $displayValues: length($value) > 0 ? $value : length($predefinedValue) > 0 ? $predefinedValue : null /}
@@ -117,20 +119,22 @@
 				{if not $readOnly}
 					<div class="drop-chosen {$open ? '' : 'hide'}">
 						<div aria-labelledby="theDropdownToggleId" class="dropdown-menu">
+							{if $showSearch}
 								<div class="dropdown-section">
 									<div class="input-group input-group-sm">
 										<div class="input-group-item">
 											<input autocomplete="off" class="drop-chosen-search form-control input-group-inset input-group-inset-after" placeholder="{$strings.search}" type="text">
 											<span class="input-group-inset-item input-group-inset-item-after">
-												<button class="btn btn-link" type="button">
-														{if $selectSearchIcon}
-															{$selectSearchIcon}
-														{/if}
+												<button class="btn btn-unstyled" type="button">
+													{if $selectSearchIcon}
+														{$selectSearchIcon}
+													{/if}
 												</button>
 											</span>
 										</div>
 									</div>
 								</div>
+							{/if}
 							{call .select_options data="all" /}
 						</div>
 					</div>
@@ -241,6 +245,26 @@
 	<option {if $dir}dir="{$dir}"{/if} {$selected} value="{$option.value}">{$option.label}</option>
 {/template}
 
+{template .select_option_placeholder}
+	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
+	{@param value: list<string>}
+
+	<li class="select-option-item">
+		{let $itemAttributes kind="attributes"}
+			class="
+			{if length($value) == 0} active{sp} {/if}
+			dropdown-item{sp}
+			placeholder-dropdown-item
+			"
+
+			title="{$strings.chooseAnOption}"
+		{/let}
+		<a {$itemAttributes}>
+			{$strings.chooseAnOption}
+		</a>
+	</li>
+{/template}
+
 /**
  * Prints the DDM form select field UI itens.
  */
@@ -250,18 +274,20 @@
 	{@param value: list<string>}
 	{@param? fixedOptions: list<[label: string, value: string]>}
 	{@param? multiple: bool}
+	{@param? showPlaceholderOption: bool}
 
 	<ul class="dropdown-visible list-unstyled results-chosen">
-		{if length($options) > 0}
-			<div class="inline-scroller">
-				{call .plot_dropdown_rows}
-					{param fixed: false /}
-					{param multiple: $multiple /}
-					{param options: $options /}
-					{param value: $value /}
-				{/call}
-			</div>
-		{/if}
+		<div class="inline-scroller">
+			{if $showPlaceholderOption}
+				{call .select_option_placeholder data="all" /}
+			{/if}
+			{call .plot_dropdown_rows}
+				{param fixed: false /}
+				{param multiple: $multiple /}
+				{param options: $options /}
+				{param value: $value /}
+			{/call}
+		</div>
 		{if $fixedOptions}
 			{if length($options) > 0 and length($fixedOptions) > 0}
 				<div class="dropdown-divider"></div>
@@ -273,7 +299,7 @@
 				{param value: $value /}
 			{/call}
 		{/if}
-		{if length($options) == 0}
+		{if $fixedOptions and length($fixedOptions) == 0 and length($options) == 0}
 			<li class="no-results-list">
 				<span>
 					{$strings.emptyList}

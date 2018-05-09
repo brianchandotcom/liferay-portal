@@ -320,7 +320,7 @@ public class CommerceOrderItemServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
 		HttpPrincipal httpPrincipal, long commerceOrderId, String sku,
-		String title, boolean andOperator, int start, int end,
+		String name, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -328,7 +328,7 @@ public class CommerceOrderItemServiceHttp {
 					"search", _searchParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceOrderId, sku, title, andOperator, start, end, sort);
+					commerceOrderId, sku, name, andOperator, start, end, sort);
 
 			Object returnObj = null;
 

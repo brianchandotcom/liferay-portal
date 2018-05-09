@@ -296,6 +296,7 @@
 		</field>
 		<field name="latitude" type="double" />
 		<field name="longitude" type="double" />
+		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceWarehouseItem">
 		<field name="commerceWarehouseItemId" type="long" />

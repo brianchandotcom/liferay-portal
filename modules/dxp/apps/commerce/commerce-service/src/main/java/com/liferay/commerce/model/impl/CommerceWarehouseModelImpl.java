@@ -87,7 +87,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 			{ "commerceRegionId", Types.BIGINT },
 			{ "commerceCountryId", Types.BIGINT },
 			{ "latitude", Types.DOUBLE },
-			{ "longitude", Types.DOUBLE }
+			{ "longitude", Types.DOUBLE },
+			{ "primary_", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -111,9 +112,10 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("latitude", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("longitude", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouse (commerceWarehouseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,active_ BOOLEAN,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,latitude DOUBLE,longitude DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouse (commerceWarehouseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,active_ BOOLEAN,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,latitude DOUBLE,longitude DOUBLE,primary_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceWarehouse";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceWarehouse.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceWarehouse.name ASC";
@@ -132,7 +134,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 2L;
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long PRIMARY_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -166,6 +169,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		model.setCommerceCountryId(soapModel.getCommerceCountryId());
 		model.setLatitude(soapModel.getLatitude());
 		model.setLongitude(soapModel.getLongitude());
+		model.setPrimary(soapModel.isPrimary());
 
 		return model;
 	}
@@ -250,6 +254,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		attributes.put("commerceCountryId", getCommerceCountryId());
 		attributes.put("latitude", getLatitude());
 		attributes.put("longitude", getLongitude());
+		attributes.put("primary", isPrimary());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -371,6 +376,12 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 		if (longitude != null) {
 			setLongitude(longitude);
+		}
+
+		Boolean primary = (Boolean)attributes.get("primary");
+
+		if (primary != null) {
+			setPrimary(primary);
 		}
 	}
 
@@ -689,6 +700,35 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		_longitude = longitude;
 	}
 
+	@JSON
+	@Override
+	public boolean getPrimary() {
+		return _primary;
+	}
+
+	@JSON
+	@Override
+	public boolean isPrimary() {
+		return _primary;
+	}
+
+	@Override
+	public void setPrimary(boolean primary) {
+		_columnBitmask |= PRIMARY_COLUMN_BITMASK;
+
+		if (!_setOriginalPrimary) {
+			_setOriginalPrimary = true;
+
+			_originalPrimary = _primary;
+		}
+
+		_primary = primary;
+	}
+
+	public boolean getOriginalPrimary() {
+		return _originalPrimary;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -739,6 +779,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		commerceWarehouseImpl.setCommerceCountryId(getCommerceCountryId());
 		commerceWarehouseImpl.setLatitude(getLatitude());
 		commerceWarehouseImpl.setLongitude(getLongitude());
+		commerceWarehouseImpl.setPrimary(isPrimary());
 
 		commerceWarehouseImpl.resetOriginalValues();
 
@@ -812,6 +853,10 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		commerceWarehouseModelImpl._originalCommerceCountryId = commerceWarehouseModelImpl._commerceCountryId;
 
 		commerceWarehouseModelImpl._setOriginalCommerceCountryId = false;
+
+		commerceWarehouseModelImpl._originalPrimary = commerceWarehouseModelImpl._primary;
+
+		commerceWarehouseModelImpl._setOriginalPrimary = false;
 
 		commerceWarehouseModelImpl._columnBitmask = 0;
 	}
@@ -920,12 +965,14 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 		commerceWarehouseCacheModel.longitude = getLongitude();
 
+		commerceWarehouseCacheModel.primary = isPrimary();
+
 		return commerceWarehouseCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{commerceWarehouseId=");
 		sb.append(getCommerceWarehouseId());
@@ -965,6 +1012,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		sb.append(getLatitude());
 		sb.append(", longitude=");
 		sb.append(getLongitude());
+		sb.append(", primary=");
+		sb.append(isPrimary());
 		sb.append("}");
 
 		return sb.toString();
@@ -972,7 +1021,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceWarehouse");
@@ -1054,6 +1103,10 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 			"<column><column-name>longitude</column-name><column-value><![CDATA[");
 		sb.append(getLongitude());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>primary</column-name><column-value><![CDATA[");
+		sb.append(isPrimary());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1090,6 +1143,9 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 	private boolean _setOriginalCommerceCountryId;
 	private double _latitude;
 	private double _longitude;
+	private boolean _primary;
+	private boolean _originalPrimary;
+	private boolean _setOriginalPrimary;
 	private long _columnBitmask;
 	private CommerceWarehouse _escapedModel;
 }

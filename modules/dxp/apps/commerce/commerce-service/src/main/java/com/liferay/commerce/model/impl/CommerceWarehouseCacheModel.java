@@ -65,7 +65,7 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{commerceWarehouseId=");
 		sb.append(commerceWarehouseId);
@@ -105,6 +105,8 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		sb.append(latitude);
 		sb.append(", longitude=");
 		sb.append(longitude);
+		sb.append(", primary=");
+		sb.append(primary);
 		sb.append("}");
 
 		return sb.toString();
@@ -195,6 +197,7 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		commerceWarehouseImpl.setCommerceCountryId(commerceCountryId);
 		commerceWarehouseImpl.setLatitude(latitude);
 		commerceWarehouseImpl.setLongitude(longitude);
+		commerceWarehouseImpl.setPrimary(primary);
 
 		commerceWarehouseImpl.resetOriginalValues();
 
@@ -230,6 +233,8 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		latitude = objectInput.readDouble();
 
 		longitude = objectInput.readDouble();
+
+		primary = objectInput.readBoolean();
 	}
 
 	@Override
@@ -311,6 +316,8 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		objectOutput.writeDouble(latitude);
 
 		objectOutput.writeDouble(longitude);
+
+		objectOutput.writeBoolean(primary);
 	}
 
 	public long commerceWarehouseId;
@@ -332,4 +339,5 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 	public long commerceCountryId;
 	public double latitude;
 	public double longitude;
+	public boolean primary;
 }

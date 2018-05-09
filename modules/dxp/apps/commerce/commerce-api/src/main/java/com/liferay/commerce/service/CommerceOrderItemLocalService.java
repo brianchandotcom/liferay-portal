@@ -277,7 +277,7 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrderItem> search(
-		long commerceOrderId, String sku, String title, boolean andOperator,
+		long commerceOrderId, String sku, String name, boolean andOperator,
 		int start, int end, Sort sort) throws PortalException;
 
 	/**

@@ -106,10 +106,10 @@ public class CommerceOrderItemServiceWrapper implements CommerceOrderItemService
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
-		long commerceOrderId, String sku, String title, boolean andOperator,
+		long commerceOrderId, String sku, String name, boolean andOperator,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderItemService.search(commerceOrderId, sku, title,
+		return _commerceOrderItemService.search(commerceOrderId, sku, name,
 			andOperator, start, end, sort);
 	}
 

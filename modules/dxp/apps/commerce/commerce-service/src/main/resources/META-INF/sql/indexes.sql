@@ -63,6 +63,7 @@ create unique index IX_BA569BFA on CommerceTaxMethod (groupId, engineKey[$COLUMN
 
 create index IX_81487FD9 on CommerceWarehouse (groupId, active_, commerceCountryId);
 create index IX_4500A0CA on CommerceWarehouse (groupId, commerceCountryId);
+create index IX_5F7D8BED on CommerceWarehouse (groupId, primary_);
 
 create index IX_B905F012 on CommerceWarehouseItem (CPInstanceId);
 create unique index IX_8FBE7F43 on CommerceWarehouseItem (commerceWarehouseId, CPInstanceId);

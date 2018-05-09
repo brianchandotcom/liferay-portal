@@ -65,6 +65,10 @@ public interface CommerceWarehouseService extends BaseService {
 	public void deleteCommerceWarehouse(long commerceWarehouseId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWarehouse fetchDefaultCommerceWarehouse(long groupId)
+		throws PortalException;
+
 	public CommerceWarehouse geolocateCommerceWarehouse(
 		long commerceWarehouseId) throws PortalException;
 
@@ -126,9 +130,9 @@ public interface CommerceWarehouseService extends BaseService {
 		double longitude, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CommerceWarehouse updateDefaultCommerceWarehouse(
-		long commerceWarehouseId, String name, String street1, String street2,
-		String street3, String city, String zip, long commerceRegionId,
-		long commerceCountryId, double latitude, double longitude,
-		ServiceContext serviceContext) throws PortalException;
+	public CommerceWarehouse updateDefaultCommerceWarehouse(String name,
+		String street1, String street2, String street3, String city,
+		String zip, long commerceRegionId, long commerceCountryId,
+		double latitude, double longitude, ServiceContext serviceContext)
+		throws PortalException;
 }

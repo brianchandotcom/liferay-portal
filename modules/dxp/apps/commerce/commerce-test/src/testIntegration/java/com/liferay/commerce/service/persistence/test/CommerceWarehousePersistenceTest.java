@@ -159,6 +159,8 @@ public class CommerceWarehousePersistenceTest {
 
 		newCommerceWarehouse.setLongitude(RandomTestUtil.nextDouble());
 
+		newCommerceWarehouse.setPrimary(RandomTestUtil.randomBoolean());
+
 		_commerceWarehouses.add(_persistence.update(newCommerceWarehouse));
 
 		CommerceWarehouse existingCommerceWarehouse = _persistence.findByPrimaryKey(newCommerceWarehouse.getPrimaryKey());
@@ -203,6 +205,8 @@ public class CommerceWarehousePersistenceTest {
 			newCommerceWarehouse.getLatitude());
 		AssertUtils.assertEquals(existingCommerceWarehouse.getLongitude(),
 			newCommerceWarehouse.getLongitude());
+		Assert.assertEquals(existingCommerceWarehouse.isPrimary(),
+			newCommerceWarehouse.isPrimary());
 	}
 
 	@Test
@@ -226,6 +230,14 @@ public class CommerceWarehousePersistenceTest {
 			RandomTestUtil.nextLong());
 
 		_persistence.countByG_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_P() throws Exception {
+		_persistence.countByG_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -265,7 +277,7 @@ public class CommerceWarehousePersistenceTest {
 			"modifiedDate", true, "name", true, "description", true, "active",
 			true, "street1", true, "street2", true, "street3", true, "city",
 			true, "zip", true, "commerceRegionId", true, "commerceCountryId",
-			true, "latitude", true, "longitude", true);
+			true, "latitude", true, "longitude", true, "primary", true);
 	}
 
 	@Test
@@ -503,6 +515,8 @@ public class CommerceWarehousePersistenceTest {
 		commerceWarehouse.setLatitude(RandomTestUtil.nextDouble());
 
 		commerceWarehouse.setLongitude(RandomTestUtil.nextDouble());
+
+		commerceWarehouse.setPrimary(RandomTestUtil.randomBoolean());
 
 		_commerceWarehouses.add(_persistence.update(commerceWarehouse));
 

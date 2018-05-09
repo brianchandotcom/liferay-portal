@@ -301,7 +301,8 @@ create table CommerceWarehouse (
 	commerceRegionId LONG,
 	commerceCountryId LONG,
 	latitude DOUBLE,
-	longitude DOUBLE
+	longitude DOUBLE,
+	primary_ BOOLEAN
 );
 
 create table CommerceWarehouseItem (

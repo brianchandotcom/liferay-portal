@@ -77,6 +77,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 		attributes.put("commerceCountryId", getCommerceCountryId());
 		attributes.put("latitude", getLatitude());
 		attributes.put("longitude", getLongitude());
+		attributes.put("primary", isPrimary());
 
 		return attributes;
 	}
@@ -195,6 +196,12 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 
 		if (longitude != null) {
 			setLongitude(longitude);
+		}
+
+		Boolean primary = (Boolean)attributes.get("primary");
+
+		if (primary != null) {
+			setPrimary(primary);
 		}
 	}
 
@@ -361,6 +368,16 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	}
 
 	/**
+	* Returns the primary of this commerce warehouse.
+	*
+	* @return the primary of this commerce warehouse
+	*/
+	@Override
+	public boolean getPrimary() {
+		return _commerceWarehouse.getPrimary();
+	}
+
+	/**
 	* Returns the primary key of this commerce warehouse.
 	*
 	* @return the primary key of this commerce warehouse
@@ -478,6 +495,16 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	@Override
 	public boolean isNew() {
 		return _commerceWarehouse.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce warehouse is primary.
+	*
+	* @return <code>true</code> if this commerce warehouse is primary; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPrimary() {
+		return _commerceWarehouse.isPrimary();
 	}
 
 	@Override
@@ -639,6 +666,16 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	@Override
 	public void setNew(boolean n) {
 		_commerceWarehouse.setNew(n);
+	}
+
+	/**
+	* Sets whether this commerce warehouse is primary.
+	*
+	* @param primary the primary of this commerce warehouse
+	*/
+	@Override
+	public void setPrimary(boolean primary) {
+		_commerceWarehouse.setPrimary(primary);
 	}
 
 	/**

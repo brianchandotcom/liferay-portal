@@ -374,6 +374,27 @@ public interface CommerceWarehouseModel extends BaseModel<CommerceWarehouse>,
 	 */
 	public void setLongitude(double longitude);
 
+	/**
+	 * Returns the primary of this commerce warehouse.
+	 *
+	 * @return the primary of this commerce warehouse
+	 */
+	public boolean getPrimary();
+
+	/**
+	 * Returns <code>true</code> if this commerce warehouse is primary.
+	 *
+	 * @return <code>true</code> if this commerce warehouse is primary; <code>false</code> otherwise
+	 */
+	public boolean isPrimary();
+
+	/**
+	 * Sets whether this commerce warehouse is primary.
+	 *
+	 * @param primary the primary of this commerce warehouse
+	 */
+	public void setPrimary(boolean primary);
+
 	@Override
 	public boolean isNew();
 

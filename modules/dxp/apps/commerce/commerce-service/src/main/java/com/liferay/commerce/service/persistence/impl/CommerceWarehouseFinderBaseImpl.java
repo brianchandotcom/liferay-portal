@@ -45,6 +45,7 @@ public class CommerceWarehouseFinderBaseImpl extends BasePersistenceImpl<Commerc
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("active", "active_");
+			dbColumnNames.put("primary", "primary_");
 
 			field.set(this, dbColumnNames);
 		}

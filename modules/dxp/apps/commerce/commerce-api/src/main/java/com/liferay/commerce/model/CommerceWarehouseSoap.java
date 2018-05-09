@@ -53,6 +53,7 @@ public class CommerceWarehouseSoap implements Serializable {
 		soapModel.setCommerceCountryId(model.getCommerceCountryId());
 		soapModel.setLatitude(model.getLatitude());
 		soapModel.setLongitude(model.getLongitude());
+		soapModel.setPrimary(model.isPrimary());
 
 		return soapModel;
 	}
@@ -264,6 +265,18 @@ public class CommerceWarehouseSoap implements Serializable {
 		_longitude = longitude;
 	}
 
+	public boolean getPrimary() {
+		return _primary;
+	}
+
+	public boolean isPrimary() {
+		return _primary;
+	}
+
+	public void setPrimary(boolean primary) {
+		_primary = primary;
+	}
+
 	private long _commerceWarehouseId;
 	private long _groupId;
 	private long _companyId;
@@ -283,4 +296,5 @@ public class CommerceWarehouseSoap implements Serializable {
 	private long _commerceCountryId;
 	private double _latitude;
 	private double _longitude;
+	private boolean _primary;
 }

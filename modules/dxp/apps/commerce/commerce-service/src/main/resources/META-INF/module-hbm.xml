@@ -304,6 +304,7 @@
 		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="latitude" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="longitude" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property column="primary_" name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceWarehouseItemImpl" table="CommerceWarehouseItem">
 		<id name="commerceWarehouseItemId" type="long">

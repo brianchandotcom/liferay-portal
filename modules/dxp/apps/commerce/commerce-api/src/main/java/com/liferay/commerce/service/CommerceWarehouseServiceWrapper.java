@@ -54,6 +54,13 @@ public class CommerceWarehouseServiceWrapper implements CommerceWarehouseService
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceWarehouse fetchDefaultCommerceWarehouse(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseService.fetchDefaultCommerceWarehouse(groupId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceWarehouse geolocateCommerceWarehouse(
 		long commerceWarehouseId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -165,13 +172,13 @@ public class CommerceWarehouseServiceWrapper implements CommerceWarehouseService
 
 	@Override
 	public com.liferay.commerce.model.CommerceWarehouse updateDefaultCommerceWarehouse(
-		long commerceWarehouseId, String name, String street1, String street2,
-		String street3, String city, String zip, long commerceRegionId,
-		long commerceCountryId, double latitude, double longitude,
+		String name, String street1, String street2, String street3,
+		String city, String zip, long commerceRegionId, long commerceCountryId,
+		double latitude, double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceWarehouseService.updateDefaultCommerceWarehouse(commerceWarehouseId,
-			name, street1, street2, street3, city, zip, commerceRegionId,
+		return _commerceWarehouseService.updateDefaultCommerceWarehouse(name,
+			street1, street2, street3, city, zip, commerceRegionId,
 			commerceCountryId, latitude, longitude, serviceContext);
 	}
 

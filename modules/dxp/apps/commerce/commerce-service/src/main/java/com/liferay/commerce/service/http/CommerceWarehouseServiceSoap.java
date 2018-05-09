@@ -99,6 +99,20 @@ public class CommerceWarehouseServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceWarehouseSoap fetchDefaultCommerceWarehouse(
+		long groupId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.fetchDefaultCommerceWarehouse(groupId);
+
+			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceWarehouseSoap geolocateCommerceWarehouse(
 		long commerceWarehouseId) throws RemoteException {
 		try {
@@ -299,16 +313,15 @@ public class CommerceWarehouseServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseSoap updateDefaultCommerceWarehouse(
-		long commerceWarehouseId, String name, String street1, String street2,
-		String street3, String city, String zip, long commerceRegionId,
-		long commerceCountryId, double latitude, double longitude,
+		String name, String street1, String street2, String street3,
+		String city, String zip, long commerceRegionId, long commerceCountryId,
+		double latitude, double longitude,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.updateDefaultCommerceWarehouse(commerceWarehouseId,
-					name, street1, street2, street3, city, zip,
-					commerceRegionId, commerceCountryId, latitude, longitude,
-					serviceContext);
+			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.updateDefaultCommerceWarehouse(name,
+					street1, street2, street3, city, zip, commerceRegionId,
+					commerceCountryId, latitude, longitude, serviceContext);
 
 			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
 		}

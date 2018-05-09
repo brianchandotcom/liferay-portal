@@ -49,23 +49,23 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long userId, long groupId, long layoutPageTemplateCollectionId,
-		String name, int type, long[] fragmentEntryIds,
+		String name, int type, long[] fragmentEntryIds, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(userId,
 			groupId, layoutPageTemplateCollectionId, name, type,
-			fragmentEntryIds, serviceContext);
+			fragmentEntryIds, status, serviceContext);
 	}
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long userId, long groupId, long layoutPageTemplateCollectionId,
-		String name, long[] fragmentEntryIds,
+		String name, long[] fragmentEntryIds, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(userId,
 			groupId, layoutPageTemplateCollectionId, name, fragmentEntryIds,
-			serviceContext);
+			status, serviceContext);
 	}
 
 	/**
@@ -329,6 +329,14 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 		long layoutPageTemplateEntryId, boolean defaultTemplate) {
 		return _layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
 			defaultTemplate);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long userId, long layoutPageTemplateEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(userId,
+			layoutPageTemplateEntryId, status);
 	}
 
 	@Override

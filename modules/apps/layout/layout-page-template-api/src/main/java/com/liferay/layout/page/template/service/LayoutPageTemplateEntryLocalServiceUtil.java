@@ -56,23 +56,23 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long userId, long groupId, long layoutPageTemplateCollectionId,
-		String name, int type, long[] fragmentEntryIds,
+		String name, int type, long[] fragmentEntryIds, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPageTemplateEntry(userId, groupId,
 			layoutPageTemplateCollectionId, name, type, fragmentEntryIds,
-			serviceContext);
+			status, serviceContext);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long userId, long groupId, long layoutPageTemplateCollectionId,
-		String name, long[] fragmentEntryIds,
+		String name, long[] fragmentEntryIds, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPageTemplateEntry(userId, groupId,
-			layoutPageTemplateCollectionId, name, fragmentEntryIds,
+			layoutPageTemplateCollectionId, name, fragmentEntryIds, status,
 			serviceContext);
 	}
 
@@ -320,6 +320,14 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 		return getService()
 				   .updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
 			defaultTemplate);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long userId, long layoutPageTemplateEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutPageTemplateEntry(userId,
+			layoutPageTemplateEntryId, status);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(

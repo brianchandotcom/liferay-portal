@@ -2,5 +2,3 @@ Bundle-Name: Liferay Adaptive Media Image Item Selector API
 Bundle-SymbolicName: com.liferay.adaptive.media.image.item.selector.api
 Bundle-Version: 2.0.0
 Export-Package: com.liferay.adaptive.media.image.item.selector
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Adaptive Media

@@ -4,5 +4,3 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.petra.io,\
 	com.liferay.petra.io.unsync
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

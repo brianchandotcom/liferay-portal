@@ -8,5 +8,3 @@ Export-Package:\
 	com.liferay.portal.security.wedeploy.auth.model,\
 	com.liferay.portal.security.wedeploy.auth.service,\
 	com.liferay.portal.security.wedeploy.auth.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

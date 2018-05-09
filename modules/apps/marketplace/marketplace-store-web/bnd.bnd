@@ -1,7 +1,5 @@
 Bundle-Name: Liferay Marketplace Store Web
 Bundle-SymbolicName: com.liferay.marketplace.store.web
 Bundle-Version: 4.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /marketplace-store-web
 -dsannotations-options: inherit

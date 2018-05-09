@@ -1,7 +1,5 @@
 Bundle-Name: Liferay Push Notifications Service
 Bundle-SymbolicName: com.liferay.push.notifications.service
 Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
 Liferay-Require-SchemaVersion: 1.0.6
 Liferay-Service: true

@@ -352,7 +352,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				axisTestClassGroups.put(id, axisTestClassGroup);
 
 				for (File autoBalanceTestFile : _autoBalanceTestFiles) {
-					String filePath = autoBalanceTestFile.toString();
+					String filePath = autoBalanceTestFile.getPath();
 
 					filePath = filePath.replace(".java", ".class");
 
@@ -388,7 +388,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			if (_includeAutoBalanceTests) {
 				for (File autoBalanceTestFile : _autoBalanceTestFiles) {
-					String filePath = autoBalanceTestFile.toString();
+					String filePath = autoBalanceTestFile.getPath();
 
 					filePath = filePath.replace(".java", ".class");
 

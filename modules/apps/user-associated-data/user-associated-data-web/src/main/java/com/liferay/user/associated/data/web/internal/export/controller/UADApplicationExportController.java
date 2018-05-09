@@ -46,13 +46,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UADApplicationExportController.class)
 public class UADApplicationExportController {
 
-	public File export(String applicationName, long userId) throws Exception {
+	public File export(String applicationKey, long userId) throws Exception {
 		try {
 			_uadExportBackgroundTaskStatusMessageSender.sendStatusMessage(
-				"application", applicationName,
-				_getApplicationDataCount(applicationName, userId));
+				"application", applicationKey,
+				_getApplicationDataCount(applicationKey, userId));
 
-			File file = _exportApplicationData(applicationName, userId);
+			File file = _exportApplicationData(applicationKey, userId);
 
 			return file;
 		}
@@ -61,13 +61,13 @@ public class UADApplicationExportController {
 		}
 	}
 
-	private File _exportApplicationData(String applicationName, long userId)
+	private File _exportApplicationData(String applicationKey, long userId)
 		throws PortalException {
 
-		ZipWriter zipWriter = _getZipWriter(applicationName, userId);
+		ZipWriter zipWriter = _getZipWriter(applicationKey, userId);
 
 		for (String uadRegistryKey :
-				_getApplicationUADEntityRegistryKeys(applicationName)) {
+				_getApplicationUADEntityRegistryKeys(applicationKey)) {
 
 			UADExporter uadExporter = _uadRegistry.getUADExporter(
 				uadRegistryKey);
@@ -83,7 +83,8 @@ public class UADApplicationExportController {
 
 					for (String entry : entries) {
 						zipWriter.addEntry(
-							_getEntryPath(uadRegistryKey, entry),
+							_getEntryPath(
+								applicationKey, uadRegistryKey, entry),
 							zipReader.getEntryAsInputStream(entry));
 
 						_uadExportBackgroundTaskStatusMessageSender.
@@ -99,13 +100,13 @@ public class UADApplicationExportController {
 		return zipWriter.getFile();
 	}
 
-	private long _getApplicationDataCount(String applicationName, long userId)
+	private long _getApplicationDataCount(String applicationKey, long userId)
 		throws PortalException {
 
 		long totalCount = 0;
 
 		for (String uadRegistryKey :
-				_getApplicationUADEntityRegistryKeys(applicationName)) {
+				_getApplicationUADEntityRegistryKeys(applicationKey)) {
 
 			UADExporter uadExporter = _uadRegistry.getUADExporter(
 				uadRegistryKey);
@@ -116,22 +117,11 @@ public class UADApplicationExportController {
 		return totalCount;
 	}
 
-	private Stream<UADDisplay> _getApplicationUADDisplayStream(
-		String applicationName) {
+	private List<String> _getApplicationUADEntityRegistryKeys(
+		String applicationKey) {
 
 		Stream<UADDisplay> uadDisplayStream =
-			_uadRegistry.getUADDisplayStream();
-
-		return uadDisplayStream.filter(
-			uadDisplay -> applicationName.equals(
-				uadDisplay.getApplicationName()));
-	}
-
-	private List<String> _getApplicationUADEntityRegistryKeys(
-		String applicationName) {
-
-		Stream<UADDisplay> uadDisplayStream = _getApplicationUADDisplayStream(
-			applicationName);
+			_uadRegistry.getApplicationUADDisplayStream(applicationKey);
 
 		return uadDisplayStream.map(
 			UADDisplay::getTypeClass
@@ -142,12 +132,12 @@ public class UADApplicationExportController {
 		);
 	}
 
-	private String _getEntryPath(String uadRegistryKey, String fileName) {
-		UADDisplay uadDisplay = _uadRegistry.getUADDisplay(uadRegistryKey);
+	private String _getEntryPath(
+		String applicationKey, String uadRegistryKey, String fileName) {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(uadDisplay.getApplicationName());
+		sb.append(applicationKey);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(uadRegistryKey);
 		sb.append(StringPool.FORWARD_SLASH);
@@ -156,7 +146,7 @@ public class UADApplicationExportController {
 		return sb.toString();
 	}
 
-	private ZipWriter _getZipWriter(String applicationName, long userId) {
+	private ZipWriter _getZipWriter(String applicationKey, long userId) {
 		User user = _userLocalService.fetchUser(userId);
 
 		StringBundler sb = new StringBundler(8);
@@ -172,7 +162,7 @@ public class UADApplicationExportController {
 		}
 
 		sb.append(StringPool.UNDERLINE);
-		sb.append(applicationName);
+		sb.append(applicationKey);
 		sb.append(StringPool.UNDERLINE);
 		sb.append(Time.getShortTimestamp());
 		sb.append(".zip");

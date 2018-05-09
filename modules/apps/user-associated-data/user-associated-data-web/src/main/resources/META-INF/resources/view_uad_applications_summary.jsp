@@ -77,14 +77,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				<liferay-ui:search-container-row
 					className="com.liferay.user.associated.data.web.internal.display.UADApplicationSummaryDisplay"
 					escapedModel="<%= true %>"
-					keyProperty="name"
+					keyProperty="key"
 					modelVar="uadApplicationSummaryDisplay"
 				>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand table-list-title"
 						href="<%= uadApplicationSummaryDisplay.getViewURL() %>"
 						name="name"
-						property="name"
+						property="key"
 					/>
 
 					<liferay-ui:search-container-column-text

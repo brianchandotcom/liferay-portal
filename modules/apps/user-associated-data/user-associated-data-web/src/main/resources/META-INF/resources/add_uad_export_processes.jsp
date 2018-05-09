@@ -36,7 +36,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "exportApplicationData();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= viewUADExportProcesses.toString() %>" />
 		<aui:input name="p_u_i_d" type="hidden" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-		<aui:input name="applicationNames" type="hidden" />
+		<aui:input name="applicationKeys" type="hidden" />
 
 		<div class="sheet sheet-lg">
 			<div class="sheet-section">
@@ -64,13 +64,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 					<liferay-ui:search-container-row
 						className="com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay"
-						keyProperty="applicationName"
+						keyProperty="applicationKey"
 						modelVar="uadApplicationExportDisplay"
 					>
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand table-list-title"
 							name="application"
-							property="applicationName"
+							property="applicationKey"
 						/>
 
 						<liferay-ui:search-container-column-text
@@ -112,7 +112,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	function <portlet:namespace />exportApplicationData() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('applicationNames').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds'));
+		form.fm('applicationKeys').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds'));
 
 		submitForm(form, '<portlet:actionURL name="/export_application_data" />');
 	}

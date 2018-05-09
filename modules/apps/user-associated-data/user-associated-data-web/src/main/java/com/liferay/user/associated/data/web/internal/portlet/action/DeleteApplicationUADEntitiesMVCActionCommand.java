@@ -47,12 +47,12 @@ public class DeleteApplicationUADEntitiesMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String applicationName = ParamUtil.getString(
-			actionRequest, "applicationName");
+		String applicationKey = ParamUtil.getString(
+			actionRequest, "applicationKey");
 
 		List<UADAnonymizer> uadAnonymizers =
 			_uadApplicationSummaryHelper.getApplicationUADAnonymizers(
-				applicationName);
+				applicationKey);
 
 		for (UADAnonymizer uadAnonymizer : uadAnonymizers) {
 			long selectedUserId = getSelectedUserId(actionRequest);

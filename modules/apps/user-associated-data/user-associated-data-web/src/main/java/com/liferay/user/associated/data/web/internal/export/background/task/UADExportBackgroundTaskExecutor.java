@@ -51,7 +51,7 @@ public class UADExportBackgroundTaskExecutor
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 
-		String applicationName = backgroundTask.getName();
+		String applicationKey = backgroundTask.getName();
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
@@ -59,7 +59,7 @@ public class UADExportBackgroundTaskExecutor
 		long userId = (long)taskContextMap.get("userId");
 
 		File file = _uadApplicationExportController.export(
-			applicationName, userId);
+			applicationKey, userId);
 
 		_backgroundTaskManager.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), file.getName(), file);

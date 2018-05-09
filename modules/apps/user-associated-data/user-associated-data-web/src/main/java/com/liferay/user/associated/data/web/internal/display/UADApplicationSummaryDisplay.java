@@ -23,8 +23,8 @@ public class UADApplicationSummaryDisplay {
 		return _count;
 	}
 
-	public String getName() {
-		return _name;
+	public String getKey() {
+		return _key;
 	}
 
 	public String getViewURL() {
@@ -35,8 +35,8 @@ public class UADApplicationSummaryDisplay {
 		_count = count;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setKey(String key) {
+		_key = key;
 	}
 
 	public void setViewURL(String viewURL) {
@@ -44,7 +44,7 @@ public class UADApplicationSummaryDisplay {
 	}
 
 	private int _count;
-	private String _name;
+	private String _key;
 	private String _viewURL;
 
 }

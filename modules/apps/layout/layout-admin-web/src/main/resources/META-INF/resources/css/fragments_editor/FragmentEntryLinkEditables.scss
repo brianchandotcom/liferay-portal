@@ -1,58 +1,47 @@
-$gridSize: 8px;
+$accentColor: #80ACFF;
+$defaultColor: #A7A9BC;
 $translatedColor: #3DC513;
-$untranslatedColor: #A7A9BC;
 
-.fragments-editor__fragment-entry-links {
-	lfr-editable {
-		box-shadow: 0 0 0 1px transparent;
-		cursor: pointer;
-		display: block;
-		position: relative;
-		transition: box-shadow ease 0.2s;
+.fragments-editor__fragment-entry-links lfr-editable {
+	box-shadow: 0 0 0 1px transparent;
+	cursor: pointer;
+	display: block;
+	position: relative;
+	transition: box-shadow ease 0.2s;
 
-		&:hover {
-			box-shadow: 0 0 0 1px #80ACFF;
-		}
-
-		&:focus,
-		&:focus-within {
-			background-color: fade_out(#80ACFF, 0.9);
-			box-shadow: 0 0 0 1px #0B5FFF;
-		}
-
-		& > div[data-lfr-editable-id] {
-			display: inline;
-			outline: none;
-		}
+	& > div[data-lfr-editable-id] {
+		display: inline;
+		outline: none;
 	}
 
-	&.translating {
-		.translated,
-		.untranslated {
-			background-size: $gridSize $gridSize;
-		}
+	&:hover {
+		box-shadow: 0 0 0 1px fade_out($accentColor, 0.6);
+	}
 
-		.translated,
-		.translated[type="image"]:after {
-			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($translatedColor, 0.75) 50%, transparent calc(50% + 1px), transparent 100%);
-			box-shadow: 0 0 0 1px fade_out($translatedColor, 0.4);
-		}
+	&:focus,
+	&:focus-within {
+		background-color: fade_out($accentColor, 0.9);
+		box-shadow: 0 0 0 1px $accentColor;
+	}
+}
 
-		.untranslated,
-		.untranslated[type="image"]:after {
-			background-color: fade_out($untranslatedColor, 0.9);
-			box-shadow: 0 0 0 1px fade_out($untranslatedColor, 0.4);
-		}
+.fragments-editor__fragment-entry-links.translating lfr-editable {
+	background-color: fade_out($defaultColor, 0.9);
+	box-shadow: 0 0 0 1px $defaultColor;
 
-		.translated[type="image"]:after,
-		.untranslated[type="image"]:after {
-			background-size: $gridSize $gridSize;
-			content: '';
-			height: 100%;
-			left: 0;
-			position: absolute;
-			top: 0;
-			width: 100%;
-		}
+	&.translated,
+	&.translated[type="image"]:after {
+		background-color: fade_out($translatedColor, 0.9);
+		box-shadow: 0 0 0 1px $translatedColor;
+	}
+
+	&:hover {
+		box-shadow: 0 0 0 1px fade_out($accentColor, 0.6);
+	}
+
+	&:focus,
+	&:focus-within {
+		background-color: fade_out($accentColor, 0.9);
+		box-shadow: 0 0 0 1px $accentColor;
 	}
 }

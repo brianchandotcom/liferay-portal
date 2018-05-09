@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,6 +94,11 @@ public class AssetDisplayPageFriendlyURLResolver
 					LAYOUT_PAGE_TEMPLATE_ENTRY_ID,
 				layoutPageTemplateEntryId);
 		}
+
+		Locale locale = _portal.getLocale(request);
+
+		_portal.addPageSubtitle(assetEntry.getTitle(locale), request);
+		_portal.addPageDescription(assetEntry.getDescription(locale), request);
 
 		Layout layout = getAssetDisplayLayout(groupId);
 

@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -80,6 +81,7 @@ public class LiferayAccessTokenServiceRegistrator {
 
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		unbind = "removeAccessTokenGrantHandler"
 	)

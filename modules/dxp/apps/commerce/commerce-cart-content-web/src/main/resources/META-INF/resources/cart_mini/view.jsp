@@ -125,15 +125,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</div>
 
 	<ul class="commerce-order-items-footer">
-		<li class="autofit-row commerce-delivery">
-			<div class="autofit-col autofit-col-expand">
-				<div class="commerce-description"><liferay-ui:message key="delivery" /></div>
-			</div>
-
-			<div class="autofit-col">
-				<div class="commerce-value">Free</div>
-			</div>
-		</li>
 		<li class="autofit-row commerce-tax">
 			<div class="autofit-col autofit-col-expand">
 				<div class="commerce-description"><liferay-ui:message key="tax" /></div>

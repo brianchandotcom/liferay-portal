@@ -393,12 +393,71 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	protected void appendOrderByComparator(
+		com.liferay.petra.string.StringBundler sb, String entityAlias,
+		OrderByComparator<T> orderByComparator) {
+
+		appendOrderByComparator(sb, entityAlias, orderByComparator, false);
+	}
+
+	protected void appendOrderByComparator(
+		com.liferay.petra.string.StringBundler sb, String entityAlias,
+		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
+
+		sb.append(ORDER_BY_CLAUSE);
+
+		String[] orderByFields = orderByComparator.getOrderByFields();
+
+		int length = orderByFields.length;
+
+		if ((_databaseOrderByMaxColumns > 0) &&
+			(_databaseOrderByMaxColumns < length)) {
+
+			length = _databaseOrderByMaxColumns;
+		}
+
+		for (int i = 0; i < length; i++) {
+			sb.append(getColumnName(entityAlias, orderByFields[i], sqlQuery));
+
+			if ((i + 1) < length) {
+				if (orderByComparator.isAscending(orderByFields[i])) {
+					sb.append(ORDER_BY_ASC_HAS_NEXT);
+				}
+				else {
+					sb.append(ORDER_BY_DESC_HAS_NEXT);
+				}
+			}
+			else {
+				if (orderByComparator.isAscending(orderByFields[i])) {
+					sb.append(ORDER_BY_ASC);
+				}
+				else {
+					sb.append(ORDER_BY_DESC);
+				}
+			}
+		}
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #appendOrderByComparator(
+	 *             com.liferay.petra.string.Stringbundler, String,
+	 *             OrderByComparator<T>)}
+	 */
+	@Deprecated
+	protected void appendOrderByComparator(
 		StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator) {
 
 		appendOrderByComparator(sb, entityAlias, orderByComparator, false);
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link
+	 *             #appendOrderByComparator(
+	 *             com.liferay.petra.string.Stringbundler, String,
+	 *             OrderByComparator<T>, boolean)}
+	 */
+	@Deprecated
 	protected void appendOrderByComparator(
 		StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator, boolean sqlQuery) {

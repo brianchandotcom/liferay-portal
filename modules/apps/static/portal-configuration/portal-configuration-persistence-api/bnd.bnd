@@ -5,5 +5,3 @@ Export-Package:\
 	com.liferay.portal.configuration.persistence,\
 	com.liferay.portal.configuration.persistence.listener,\
 	com.liferay.portal.configuration.persistence.upgrade
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Configuration Framework

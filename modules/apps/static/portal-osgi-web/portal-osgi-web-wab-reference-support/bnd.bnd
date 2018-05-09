@@ -5,5 +5,3 @@ Import-Package:\
 	!com.liferay.util.xml,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: WAB

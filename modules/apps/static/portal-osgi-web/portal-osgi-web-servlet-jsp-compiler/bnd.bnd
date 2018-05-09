@@ -62,8 +62,6 @@ Import-Package:\
 	org.xml.sax.helpers,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: OSGI JSP support
 Provide-Capability:\
 	liferay.extender;\
 		liferay.extender="jsp.extender";\

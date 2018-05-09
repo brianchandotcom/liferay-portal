@@ -5,5 +5,3 @@ Export-Package:\
 	com.liferay.osgi.util,\
 	com.liferay.osgi.util.bundle,\
 	com.liferay.osgi.util.service
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

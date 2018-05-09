@@ -29,10 +29,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -41,8 +42,13 @@ import java.io.Serializable;
 import java.net.ConnectException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jodd.http.HttpException;
 import jodd.http.HttpRequest;
@@ -109,6 +115,24 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	@Override
 	public Class<?> getSettings() {
 		return DDMRESTDataProviderSettings.class;
+	}
+
+	protected String buildURL(
+		DDMDataProviderRequest ddmDataProviderRequest,
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
+
+		Map<String, String> pathParameters = getPathParameters(
+			ddmDataProviderRequest, ddmRESTDataProviderSettings);
+
+		String url = ddmRESTDataProviderSettings.url();
+
+		for (Entry<String, String> pathParameter : pathParameters.entrySet()) {
+			url = StringUtil.replaceFirst(
+				url, String.format("{%s}", pathParameter.getKey()),
+				pathParameter.getValue());
+		}
+
+		return url;
 	}
 
 	protected DDMDataProviderRequest createDDMDataProviderRequest(
@@ -237,7 +261,7 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				DDMRESTDataProviderSettings.class);
 
 		HttpRequest httpRequest = HttpRequest.get(
-			ddmRESTDataProviderSettings.url());
+			buildURL(ddmDataProviderRequest, ddmRESTDataProviderSettings));
 
 		if (StringUtil.startsWith(
 				ddmRESTDataProviderSettings.url(), Http.HTTPS)) {
@@ -288,6 +312,48 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return httpRequest.url();
 	}
 
+	protected Map<String, String> getPathParameters(
+		DDMDataProviderRequest ddmDataProviderRequest,
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
+
+		Map<String, String> parameters = ddmDataProviderRequest.getParameters();
+
+		Map<String, String> pathParameters = new HashMap<>();
+
+		Matcher matcher = _pathParameterPattern.matcher(
+			ddmRESTDataProviderSettings.url());
+
+		while (matcher.find()) {
+			String parameterName = matcher.group(1);
+
+			if (parameters.containsKey(parameterName)) {
+				pathParameters.put(
+					parameterName, parameters.get(parameterName));
+			}
+		}
+
+		return pathParameters;
+	}
+
+	protected Map<String, String> getQueryParameters(
+		DDMDataProviderRequest ddmDataProviderRequest,
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
+
+		Map<String, String> pathParameters = getPathParameters(
+			ddmDataProviderRequest, ddmRESTDataProviderSettings);
+
+		return MapUtil.filter(
+			ddmDataProviderRequest.getParameters(),
+			new PredicateFilter<Entry<String, String>>() {
+
+				@Override
+				public boolean filter(Entry<String, String> parameter) {
+					return !pathParameters.containsKey(parameter.getKey());
+				}
+
+			});
+	}
+
 	protected String normalizePath(String path) {
 		if (StringUtil.startsWith(path, StringPool.PERIOD) ||
 			StringUtil.startsWith(path, StringPool.DOLLAR)) {
@@ -296,11 +362,6 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		}
 
 		return StringPool.PERIOD.concat(path);
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -330,10 +391,12 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 				ddmDataProviderRequest.getParameter("paginationEnd"));
 		}
 
-		httpRequest.query(ddmDataProviderRequest.getParameters());
+		httpRequest.query(
+			getQueryParameters(
+				ddmDataProviderRequest, ddmRESTDataProviderSettings));
 	}
 
-	private JSONFactory _jsonFactory;
+	private final Pattern _pathParameterPattern = Pattern.compile("\\{(.*)\\}");
 	private PortalCache<String, DDMRESTDataProviderResult> _portalCache;
 
 	private static class DDMRESTDataProviderResult implements Serializable {

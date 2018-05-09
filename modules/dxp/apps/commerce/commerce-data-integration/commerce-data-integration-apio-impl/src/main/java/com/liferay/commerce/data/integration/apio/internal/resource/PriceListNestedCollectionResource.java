@@ -132,8 +132,7 @@ public class PriceListNestedCollectionResource
 	}
 
 	private CommercePriceList _addCommercePriceList(
-			Long groupId, PriceListForm priceListForm)
-		throws PortalException {
+		Long groupId, PriceListForm priceListForm) {
 
 		try {
 			return _priceListHelper.addCommercePriceList(
@@ -187,8 +186,7 @@ public class PriceListNestedCollectionResource
 	}
 
 	private CommercePriceList _updateCommercePriceList(
-			Long commercePriceListId, PriceListForm priceListForm)
-		throws PortalException {
+		Long commercePriceListId, PriceListForm priceListForm) {
 
 		try {
 			return _priceListHelper.updateCommercePriceList(

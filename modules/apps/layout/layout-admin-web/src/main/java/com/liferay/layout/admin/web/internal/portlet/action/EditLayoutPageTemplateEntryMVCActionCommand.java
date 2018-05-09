@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,7 +64,8 @@ public class EditLayoutPageTemplateEntryMVCActionCommand
 
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				serviceContext.getScopeGroupId(),
-				layoutPageTemplateCollectionId, name, null, serviceContext);
+				layoutPageTemplateCollectionId, name, null,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
 		}
 		else {
 

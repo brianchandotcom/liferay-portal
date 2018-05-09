@@ -1841,12 +1841,12 @@ tell application "System Events"
 		tell menu bar item "Develop" of menu bar 1
 			click
 			delay 1
-				set checkValue to (value of attribute "AXMenuItemMarkChar" of menu item "Allow Remote Automation" of menu 1)
-				if checkValue is not equal to "✓" then
-					click menu item "Allow Remote Automation" of menu 1
-				else
-					key code 53
-				end if
+			set checkValue to (value of attribute "AXMenuItemMarkChar" of menu item "Allow Remote Automation" of menu 1)
+			if checkValue is not equal to "✓" then
+				click menu item "Allow Remote Automation" of menu 1
+			else
+				key code 53
+			end if
 		end tell
 	end tell
 end tell

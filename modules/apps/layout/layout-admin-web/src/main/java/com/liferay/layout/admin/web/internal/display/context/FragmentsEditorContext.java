@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -173,6 +174,10 @@ public class FragmentsEditorContext {
 
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
+			"publishLayoutPageTemplateEntryURL",
+			_getFragmentEntryActionURL(
+				"/layout/publish_layout_page_template_entry"));
+		soyContext.put(
 			"renderFragmentEntryURL",
 			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
 
@@ -181,9 +186,27 @@ public class FragmentsEditorContext {
 		}
 
 		soyContext.put("sidebarTabs", _getSidebarTabs());
+
+		String redirect = ParamUtil.getString(_request, "redirect");
+
+		soyContext.put("redirectURL", redirect);
+
 		soyContext.put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
+
+		if (layoutPageTemplateEntry.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED) {
+
+			soyContext.put(
+				"status",
+				WorkflowConstants.getStatusLabel(
+					layoutPageTemplateEntry.getStatus()));
+		}
+
 		soyContext.put(
 			"updateFragmentEntryLinksURL",
 			_getFragmentEntryActionURL("/layout/update_fragment_entry_links"));

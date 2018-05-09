@@ -1827,6 +1827,17 @@ delay 1
 
 tell application "System Events"
 	tell process "Safari"
+		click menu item "Preferences…" of menu "Safari" of ¬
+			menu bar item "Safari" of menu bar 1
+		set frontmost to true
+		tell window 1
+			click button "Advanced" of toolbar 1
+			delay 1
+			set checkValue to (value of checkbox "Show Develop menu in menu bar" of group 1 of group 1)
+			if checkValue is not equal to 1 then
+				click checkbox "Show Develop menu in menu bar" of group 1 of group 1
+			end if
+		end tell
 		tell menu bar item "Develop" of menu bar 1
 			click
 			delay 1

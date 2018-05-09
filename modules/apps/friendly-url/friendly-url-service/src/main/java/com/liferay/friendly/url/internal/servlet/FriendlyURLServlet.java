@@ -15,8 +15,11 @@
 package com.liferay.friendly.url.internal.servlet;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.ExpiredModelException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -325,6 +328,13 @@ public class FriendlyURLServlet extends HttpServlet {
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(pe);
+			}
+
+			if (pe instanceof ExpiredModelException) {
+				portal.sendError(
+					HttpServletResponse.SC_GONE, pe, request, response);
+
+				return;
 			}
 
 			if (pe instanceof NoSuchGroupException ||

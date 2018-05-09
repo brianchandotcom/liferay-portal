@@ -18,6 +18,8 @@ import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -72,6 +74,21 @@ public class StructureItemResource
 			"structure", StructureIdentifier.class,
 			DDMStructure::getParentStructureId
 		).addNested(
+			"successPage", this::_getSuccessPage,
+			nestedBuilder -> nestedBuilder.nestedTypes(
+				"FormSuccessPageSettings"
+			).addBoolean(
+				"isEnabled", DDMFormSuccessPageSettings::isEnabled
+			).addLocalizedStringByLocale(
+				"headline",
+				(ddmFormSuccessPageSettings, locale) ->
+					ddmFormSuccessPageSettings.getTitle().getString(locale)
+			).addLocalizedStringByLocale(
+				"text",
+				(ddmFormSuccessPageSettings, locale) ->
+					ddmFormSuccessPageSettings.getBody().getString(locale)
+			).build()
+		).addNested(
 			"version", this::_getVersion,
 			nestedBuilder -> nestedBuilder.nestedTypes(
 				"StructureVersion"
@@ -93,6 +110,14 @@ public class StructureItemResource
 		).addString(
 			"structureKey", DDMStructure::getStructureKey
 		).build();
+	}
+
+	private DDMFormSuccessPageSettings _getSuccessPage(
+		DDMStructure ddmStructure) {
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		return ddmForm.getDDMFormSuccessPageSettings();
 	}
 
 	private DDMStructureVersion _getVersion(DDMStructure ddmStructure) {

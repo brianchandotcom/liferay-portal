@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -45,9 +46,12 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,7 +79,7 @@ public class FormInstanceNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "form-instance";
+		return "form-instances";
 	}
 
 	@Override
@@ -99,7 +103,7 @@ public class FormInstanceNestedCollectionResource
 		).identifier(
 			DDMFormInstance::getFormInstanceId
 		).addBidirectionalModel(
-			"interactionService", "form-instance", WebSiteIdentifier.class,
+			"interactionService", "formInstances", WebSiteIdentifier.class,
 			DDMFormInstance::getGroupId
 		).addDate(
 			"dateCreated", DDMFormInstance::getCreateDate
@@ -112,6 +116,36 @@ public class FormInstanceNestedCollectionResource
 		).addLinkedModel(
 			"structure", StructureIdentifier.class,
 			DDMFormInstance::getStructureId
+		).addNested(
+			"settings", this::_getSettings,
+			nestedBuilder -> nestedBuilder.nestedTypes(
+				"FormInstanceSettings"
+			).addString(
+				"emailFromAddress", DDMFormInstanceSettings::emailFromAddress
+			).addString(
+				"emailFromName", DDMFormInstanceSettings::emailFromName
+			).addString(
+				"emailSubject", DDMFormInstanceSettings::emailSubject
+			).addString(
+				"emailToAddress", DDMFormInstanceSettings::emailToAddress
+			).addBoolean(
+				"published", DDMFormInstanceSettings::published
+			).addString(
+				"redirectURL", DDMFormInstanceSettings::redirectURL
+			).addBoolean(
+				"requireAuthentication",
+				DDMFormInstanceSettings::requireAuthentication
+			).addBoolean(
+				"requireCaptcha", DDMFormInstanceSettings::requireCaptcha
+			).addBoolean(
+				"sendEmailNotification",
+				DDMFormInstanceSettings::sendEmailNotification
+			).addString(
+				"storageType", DDMFormInstanceSettings::storageType
+			).addString(
+				"workflowDefinition",
+				DDMFormInstanceSettings::workflowDefinition
+			).build()
 		).addNested(
 			"version", this::_getVersion,
 			nestedBuilder -> nestedBuilder.nestedTypes(
@@ -127,7 +161,9 @@ public class FormInstanceNestedCollectionResource
 		).addLocalizedStringByLocale(
 			"name", DDMFormInstance::getName
 		).addString(
-			"settings", DDMFormInstance::getSettings
+			"defaultLanguage", DDMFormInstance::getDefaultLanguageId
+		).addStringList(
+			"availableLanguages", this::_getAvailableLanguages
 		).build();
 	}
 
@@ -172,6 +208,15 @@ public class FormInstanceNestedCollectionResource
 		return ddmFormInstance;
 	}
 
+	private List<String> _getAvailableLanguages(
+		DDMFormInstance ddmFormInstance) {
+
+		Stream<String> availableLanguagesStream = Arrays.stream(
+			ddmFormInstance.getAvailableLanguageIds());
+
+		return availableLanguagesStream.collect(Collectors.toList());
+	}
+
 	private PageItems<DDMFormInstance> _getPageItems(
 		Pagination pagination, Long groupId, Company company) {
 
@@ -184,6 +229,16 @@ public class FormInstanceNestedCollectionResource
 			company.getCompanyId(), groupId);
 
 		return new PageItems<>(ddmFormInstances, count);
+	}
+
+	private DDMFormInstanceSettings _getSettings(
+		DDMFormInstance ddmFormInstance) {
+
+		return Try.fromFallible(
+			ddmFormInstance::getSettingsModel
+		).orElse(
+			null
+		);
 	}
 
 	private DDMFormInstanceVersion _getVersion(

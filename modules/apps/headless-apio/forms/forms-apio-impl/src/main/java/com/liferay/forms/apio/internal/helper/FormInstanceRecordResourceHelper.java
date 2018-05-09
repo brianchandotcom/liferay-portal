@@ -59,7 +59,7 @@ public class FormInstanceRecordResourceHelper {
 		for (FormFieldValue formFieldValue : formFieldValues) {
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-			ddmFormFieldValue.setInstanceId(formFieldValue.instanceId);
+			ddmFormFieldValue.setInstanceId(formFieldValue.identifier);
 			ddmFormFieldValue.setName(formFieldValue.name);
 
 			LocalizedValue localizedValue = new LocalizedValue();

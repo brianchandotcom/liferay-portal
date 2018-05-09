@@ -1,0 +1,47 @@
+$accentColor: #80ACFF;
+$defaultColor: #A7A9BC;
+$translatedColor: #3DC513;
+
+.fragments-editor__fragment-entry-links lfr-editable {
+	box-shadow: 0 0 0 1px transparent;
+	cursor: pointer;
+	display: block;
+	position: relative;
+	transition: box-shadow ease 0.2s;
+
+	& > div[data-lfr-editable-id] {
+		display: inline;
+		outline: none;
+	}
+
+	&:hover {
+		box-shadow: 0 0 0 1px fade_out($accentColor, 0.6);
+	}
+
+	&:focus,
+	&:focus-within {
+		background-color: fade_out($accentColor, 0.9);
+		box-shadow: 0 0 0 1px $accentColor;
+	}
+}
+
+.fragments-editor__fragment-entry-links.translating lfr-editable {
+	background-color: fade_out($defaultColor, 0.9);
+	box-shadow: 0 0 0 1px $defaultColor;
+
+	&.translated,
+	&.translated[type="image"]:after {
+		background-color: fade_out($translatedColor, 0.9);
+		box-shadow: 0 0 0 1px $translatedColor;
+	}
+
+	&:hover {
+		box-shadow: 0 0 0 1px fade_out($accentColor, 0.6);
+	}
+
+	&:focus,
+	&:focus-within {
+		background-color: fade_out($accentColor, 0.9);
+		box-shadow: 0 0 0 1px $accentColor;
+	}
+}

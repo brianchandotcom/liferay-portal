@@ -21,11 +21,10 @@ import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceWarehouseLocalService;
-import com.liferay.commerce.shipping.origin.locator.address.internal.configuration.AddressCommerceShippingOriginLocatorGroupServiceConfiguration;
+import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.shipping.origin.locator.address.internal.constants.AddressCommerceShippingOriginLocatorConstants;
-import com.liferay.commerce.util.SuffixParameterMapSettingsLocator;
+import com.liferay.commerce.shipping.origin.locator.address.internal.display.context.AddressCommerceShippingOriginLocatorDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -116,25 +114,15 @@ public class AddressCommerceShippingOriginLocator
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		AddressCommerceShippingOriginLocatorGroupServiceConfiguration
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration =
-				_configurationProvider.getConfiguration(
-					AddressCommerceShippingOriginLocatorGroupServiceConfiguration.class,
-					new SuffixParameterMapSettingsLocator(
-						renderRequest.getParameterMap(), KEY + "Origin--",
-						StringPool.DOUBLE_DASH,
-						new GroupServiceSettingsLocator(
-							themeDisplay.getScopeGroupId(),
-							AddressCommerceShippingOriginLocatorConstants.
-								SERVICE_NAME)));
+		AddressCommerceShippingOriginLocatorDisplayContext
+			addressCommerceShippingOriginLocatorDisplayContext =
+				new AddressCommerceShippingOriginLocatorDisplayContext(
+					KEY, _commerceWarehouseService, _configurationProvider,
+					renderRequest);
 
 		renderRequest.setAttribute(
-			AddressCommerceShippingOriginLocatorGroupServiceConfiguration.class.
-				getName(),
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration);
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			addressCommerceShippingOriginLocatorDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -183,6 +171,9 @@ public class AddressCommerceShippingOriginLocator
 
 	@Reference
 	private CommerceWarehouseLocalService _commerceWarehouseLocalService;
+
+	@Reference
+	private CommerceWarehouseService _commerceWarehouseService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

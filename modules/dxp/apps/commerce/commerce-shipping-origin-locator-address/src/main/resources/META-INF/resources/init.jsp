@@ -21,7 +21,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.shipping.origin.locator.address.internal.AddressCommerceShippingOriginLocator" %><%@
-page import="com.liferay.commerce.shipping.origin.locator.address.internal.configuration.AddressCommerceShippingOriginLocatorGroupServiceConfiguration" %>
+page import="com.liferay.commerce.shipping.origin.locator.address.internal.display.context.AddressCommerceShippingOriginLocatorDisplayContext" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-frontend:defineObjects />
 

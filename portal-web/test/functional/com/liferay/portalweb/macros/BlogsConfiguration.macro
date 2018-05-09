@@ -94,7 +94,7 @@
 		<var name="key_portletName" value="Blogs" />
 
 		<execute function="AssertElementPresent" locator1="Portlet#TITLE" />
-		<var name="key_text" value="New Blog Entry" />
+		<var name="key_text" value="New Entry" />
 
 		<execute function="AssertElementNotPresent" locator1="Button#ANY" />
 
@@ -149,7 +149,7 @@
 	</command>
 
 	<command name="viewNoPermissionPG">
-		<var name="key_text" value="New Blog Entry" />
+		<var name="key_text" value="New Entry" />
 
 		<execute function="AssertElementNotPresent" locator1="Button#ANY" />
 		<execute function="AssertElementNotPresent" locator1="Blogs#SUBSCRIBE_LINK" />

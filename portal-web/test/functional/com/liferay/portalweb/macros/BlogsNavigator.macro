@@ -6,9 +6,9 @@
 				<execute function="Click" locator1="Blogs#ADD_BLOGS_ENTRY" />
 			</then>
 			<else>
-				<var name="key_text" value="New Blog Entry" />
+				<var name="key_text" value="New Entry" />
 
-				<execute function="AssertClick" locator1="Button#ANY" value1="New Blog Entry" />
+				<execute function="AssertClick" locator1="Button#ANY" value1="New Entry" />
 			</else>
 		</if>
 

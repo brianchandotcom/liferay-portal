@@ -38,9 +38,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -390,12 +392,20 @@ public class SiteBrowserDisplayContext {
 	}
 
 	private List<Group> _filterGroups(
-		List<Group> groups, PermissionChecker permissionChecker) {
+			List<Group> groups, PermissionChecker permissionChecker)
+		throws PortalException {
 
 		List<Group> filteredGroups = new ArrayList<>();
 
+		String type = getType();
+
 		for (Group group : groups) {
-			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
+			if (permissionChecker.isGroupAdmin(group.getGroupId()) ||
+				(type.equals("assignable-sites") &&
+				 GroupPermissionUtil.contains(
+					 permissionChecker, group.getGroupId(),
+					 ActionKeys.ASSIGN_MEMBERS))) {
+
 				filteredGroups.add(group);
 			}
 		}
@@ -499,7 +509,9 @@ public class SiteBrowserDisplayContext {
 
 		boolean filterManageableGroups = true;
 
-		if (permissionChecker.isCompanyAdmin()) {
+		if (permissionChecker.isCompanyAdmin() ||
+			type.equals("assignable-sites")) {
+
 			filterManageableGroups = false;
 		}
 

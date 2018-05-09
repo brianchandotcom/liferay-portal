@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Adaptive Media Item Selector Upload Web
 Bundle-SymbolicName: com.liferay.adaptive.media.item.selector.upload.web
 Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Adaptive Media
 -dsannotations-options: inherit

@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Adaptive Media Blogs Editor Configuration
 Bundle-SymbolicName: com.liferay.adaptive.media.blogs.editor.configuration
 Bundle-Version: 2.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Adaptive Media
 -dsannotations-options: inherit

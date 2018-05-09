@@ -106,6 +106,4 @@ Import-Package:\
 	com.liferay.portal.search.analysis,\
 	\
 	*
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Elasticsearch
 -dsannotations-options: inherit

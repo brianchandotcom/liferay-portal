@@ -5,5 +5,3 @@ Export-Package:\
 	com.liferay.portal.tools.service.builder.test.exception,\
 	com.liferay.portal.tools.service.builder.test.model,\
 	com.liferay.portal.tools.service.builder.test.service.persistence
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

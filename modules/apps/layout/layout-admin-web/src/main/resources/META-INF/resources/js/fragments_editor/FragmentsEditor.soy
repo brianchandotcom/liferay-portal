@@ -70,6 +70,7 @@
 			label: string
 		]
 	]}
+	{@param? status: string}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
 	<div id="{$id}">
@@ -84,6 +85,7 @@
 			{param handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
 			{param handleTranslationLanguageChange: $_handleTranslationLanguageChange /}
 			{param lastSaveDate: $_lastSaveDate /}
+			{param status: $status /}
 			{param translationStatus: $_translationStatus /}
 		{/call}
 
@@ -263,6 +265,7 @@
 	{@param? handleToggleContextualSidebarButtonClick: any}
 	{@param? handleTranslationLanguageChange: any}
 	{@param? lastSaveDate: string}
+	{@param? status: string}
 	{@param? translationStatus: [
 		languageValues: list<[languageId: string, values: list<string>]>,
 		translationKeys: list<string>
@@ -293,6 +296,11 @@
 			</ul>
 
 			<ul class="navbar-nav">
+				{if $status}
+					<li class="nav-item">
+						<span class="label label-secondary">{$status}</span>
+					</li>
+				{/if}
 				<li class="nav-item">
 					<button class="btn btn-primary nav-btn" data-onclick="{$handlePublishButtonClick}">
 						{msg desc=""}publish{/msg}

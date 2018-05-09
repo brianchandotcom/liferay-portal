@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
@@ -22,6 +23,11 @@ import javax.portlet.PortletRequest;
  */
 public class ActionRequestImpl
 	extends ClientDataRequestImpl implements ActionRequest {
+
+	@Override
+	public ActionParameters getActionParameters() {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public String getLifecycle() {

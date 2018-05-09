@@ -40,16 +40,19 @@ import java.io.Writer;
 import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.portlet.ActionURL;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 import javax.portlet.filter.PortletResponseWrapper;
 
@@ -218,8 +221,13 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	}
 
 	@Override
-	public PortletURL createActionURL() {
-		return createActionURL(portletName);
+	public <T extends PortletURL & ActionURL> T createActionURL() {
+		return (T)createActionURL(portletName);
+	}
+
+	@Override
+	public ActionURL createActionURL(MimeResponse.Copy copy) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -278,8 +286,13 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	}
 
 	@Override
-	public PortletURL createRenderURL() {
-		return createRenderURL(portletName);
+	public <T extends PortletURL & RenderURL> T createRenderURL() {
+		return (T)createRenderURL(portletName);
+	}
+
+	@Override
+	public RenderURL createRenderURL(MimeResponse.Copy copy) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -378,6 +391,21 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		}
 
 		return properties;
+	}
+
+	@Override
+	public String getProperty(String key) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Collection<String> getPropertyNames() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public Collection<String> getPropertyValues(String key) {
+		throw new UnsupportedOperationException();
 	}
 
 	public URLEncoder getUrlEncoder() {

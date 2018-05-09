@@ -50,6 +50,10 @@ Provide-Capability:\
 		version:Version="${Bundle-Version}",\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
+		uri="http://xmlns.jcp.org/portlet_3_0";\
+		version:Version="${Bundle-Version}",\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/aui";\
 		version:Version="${Bundle-Version}",\
 	osgi.extender;\

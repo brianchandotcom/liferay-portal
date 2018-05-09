@@ -27,14 +27,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletAsyncContext;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceParameters;
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -49,6 +53,11 @@ public class ResourceRequestImpl
 	}
 
 	@Override
+	public DispatcherType getDispatcherType() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String getETag() {
 		return null;
 	}
@@ -56,6 +65,11 @@ public class ResourceRequestImpl
 	@Override
 	public String getLifecycle() {
 		return PortletRequest.RESOURCE_PHASE;
+	}
+
+	@Override
+	public PortletAsyncContext getPortletAsyncContext() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -96,6 +110,36 @@ public class ResourceRequestImpl
 	@Override
 	public String getResourceID() {
 		return _resourceID;
+	}
+
+	@Override
+	public ResourceParameters getResourceParameters() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isAsyncStarted() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isAsyncSupported() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public PortletAsyncContext startPortletAsync()
+		throws IllegalStateException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public PortletAsyncContext startPortletAsync(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IllegalStateException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

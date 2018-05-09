@@ -50,9 +50,8 @@ AUI.add(
 
 				var newParameters = [];
 
-				AUI.$.each(
-					parameterArray,
-					function(index, item) {
+				parameterArray.forEach(
+					function(item, index) {
 						var itemSplit = item.split('=');
 
 						if (itemSplit) {

@@ -69,8 +69,7 @@ public class MultiLanguageNotificationRecipientEvaluator
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(scripting.language=*)",
-		unbind = "removeNotificationRecipientEvaluator"
+		target = "(scripting.language=*)"
 	)
 	protected void addNotificationRecipientEvaluator(
 		NotificationRecipientEvaluator notificationRecipientEvaluator,

@@ -105,6 +105,8 @@ public class UADRegistry {
 
 	@Deactivate
 	protected void deactivate() {
+		_bundleUADDisplayServiceTrackerMap.close();
+		_bundleUADExporterServiceTrackerMap.close();
 		_uadAnonymizerServiceTrackerMap.close();
 		_uadDisplayServiceTrackerMap.close();
 		_uadExporterServiceTrackerMap.close();

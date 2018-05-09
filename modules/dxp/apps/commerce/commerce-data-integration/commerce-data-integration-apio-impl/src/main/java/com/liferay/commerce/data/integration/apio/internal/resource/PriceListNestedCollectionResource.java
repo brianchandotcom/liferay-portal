@@ -152,7 +152,7 @@ public class PriceListNestedCollectionResource
 
 	private String _getCurrencyCode(CommercePriceList commercePriceList) {
 		CommerceCurrency commerceCurrency = Try.fromFallible(
-			() -> commercePriceList.getCommerceCurrency()
+			commercePriceList::getCommerceCurrency
 		).getUnchecked();
 
 		return commerceCurrency.getCode();

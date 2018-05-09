@@ -183,7 +183,11 @@ renderResponse.setTitle(categoryDisplayName);
 						</p>
 					</c:if>
 
-					<%= request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_FORM_HTML) %>
+					<%
+					ConfigurationFormRenderer configurationFormRenderer = (ConfigurationFormRenderer)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_FORM_RENDERER);
+
+					configurationFormRenderer.render(request, response);
+					%>
 
 					<aui:button-row>
 						<c:choose>

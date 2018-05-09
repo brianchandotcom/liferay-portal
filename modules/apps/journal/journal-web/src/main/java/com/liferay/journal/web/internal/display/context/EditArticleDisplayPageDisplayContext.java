@@ -85,7 +85,7 @@ public class EditArticleDisplayPageDisplayContext {
 	}
 
 	public long getAssetDisplayPageId() throws PortalException {
-		if (_assetDisplayPageId > 0) {
+		if ((_assetDisplayPageId != null) && (_assetDisplayPageId > 0)) {
 			return _assetDisplayPageId;
 		}
 

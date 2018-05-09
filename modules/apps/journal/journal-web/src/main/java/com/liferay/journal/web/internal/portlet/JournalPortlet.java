@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
@@ -1467,8 +1468,16 @@ public class JournalPortlet extends MVCPortlet {
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		_assetDisplayPageEntryLocalService.
-			deleteAssetDisplayPageEntryByAssetEntryId(assetEntry.getEntryId());
+		AssetDisplayPageEntry assetDisplayPageEntry =
+            _assetDisplayPageEntryLocalService.
+                fetchAssetDisplayPageEntryByAssetEntryId(
+                    assetEntry.getEntryId());
+
+		if (assetDisplayPageEntry != null) {
+            _assetDisplayPageEntryLocalService.
+                deleteAssetDisplayPageEntryByAssetEntryId(
+                    assetEntry.getEntryId());
+        }
 
 		if (assetDisplayPageId > 0) {
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(

@@ -465,7 +465,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				if (formatHandler != null) {
 					body = _addBodyAttachmentTempFiles(
 						themeDisplay, message.getBody(), message,
-						new ArrayList<String>(), formatHandler);
+						formatHandler);
 
 					message.setBody(body);
 
@@ -473,17 +473,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 			else {
-				List<String> existingFiles = new ArrayList<>();
-
-				for (int i = 1; i <= 5; i++) {
-					String path = ParamUtil.getString(
-						actionRequest, "existingPath" + i);
-
-					if (Validator.isNotNull(path)) {
-						existingFiles.add(path);
-					}
-				}
-
 				message = _mbMessageService.getMessage(messageId);
 
 				MBMessageFormatUploadHandler formatHandler =
@@ -491,15 +480,14 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 				if (formatHandler != null) {
 					body = _addBodyAttachmentTempFiles(
-						themeDisplay, body, message, existingFiles,
-						formatHandler);
+						themeDisplay, body, message, formatHandler);
 				}
 
 				// Update message
 
 				message = _mbMessageService.updateMessage(
-					messageId, subject, body, inputStreamOVPs, existingFiles,
-					priority, allowPingbacks, serviceContext);
+					messageId, subject, body, inputStreamOVPs, priority,
+					allowPingbacks, serviceContext);
 
 				if (message.isRoot()) {
 					_mbThreadLocalService.updateQuestion(
@@ -544,7 +532,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 	private String _addBodyAttachmentTempFiles(
 			ThemeDisplay themeDisplay, String body, MBMessage message,
-			List<String> existingFiles,
 			MBMessageFormatUploadHandler formatHandler)
 		throws PortalException {
 
@@ -560,16 +547,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 						message.getGroupId(), themeDisplay.getUserId(),
 						message.getMessageId(), folder.getFolderId(),
 						tempMBAttachmentFileEntries);
-
-			for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
-					mbAttachmentFileEntryReferences) {
-
-				FileEntry mbAttachmentFileEntry =
-					mbAttachmentFileEntryReference.getMBAttachmentFileEntry();
-
-				existingFiles.add(
-					String.valueOf(mbAttachmentFileEntry.getFileEntryId()));
-			}
 
 			body = formatHandler.replaceImageReferences(
 				body, mbAttachmentFileEntryReferences);

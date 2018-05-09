@@ -578,6 +578,16 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public MBMessage updateMessage(long userId, long messageId, String subject,
 		String body,
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+		double priority, boolean allowPingbacks, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, long, String, String, List, double, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public MBMessage updateMessage(long userId, long messageId, String subject,
+		String body,
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
 		List<String> existingFiles, double priority, boolean allowPingbacks,
 		ServiceContext serviceContext) throws PortalException;
 

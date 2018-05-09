@@ -377,9 +377,8 @@ public class MBMessageStagedModelDataHandler
 						importedMessage = _mbMessageLocalService.updateMessage(
 							userId, existingMessage.getMessageId(),
 							message.getSubject(), message.getBody(),
-							inputStreamOVPs, Collections.emptyList(),
-							message.getPriority(), message.getAllowPingbacks(),
-							serviceContext);
+							inputStreamOVPs, message.getPriority(),
+							message.getAllowPingbacks(), serviceContext);
 					}
 				}
 			}

@@ -275,6 +275,21 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.message.boards.model.MBMessageDisplay getMessageDisplay(
+		long messageId, int status) throws RemoteException {
+		try {
+			com.liferay.message.boards.model.MBMessageDisplay returnValue = MBMessageServiceUtil.getMessageDisplay(messageId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static String[] getTempAttachmentNames(long groupId,
 		String folderName) throws RemoteException {
 		try {
@@ -417,6 +432,30 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.message.boards.model.MBMessageSoap updateMessage(
+		long messageId, String subject, String body,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
+		double priority, boolean allowPingbacks,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.message.boards.model.MBMessage returnValue = MBMessageServiceUtil.updateMessage(messageId,
+					subject, body, inputStreamOVPs, priority, allowPingbacks,
+					serviceContext);
+
+			return com.liferay.message.boards.model.MBMessageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, String, String, List, double, boolean, ServiceContext)}
+	*/
+	@Deprecated
 	public static com.liferay.message.boards.model.MBMessageSoap updateMessage(
 		long messageId, String subject, String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,

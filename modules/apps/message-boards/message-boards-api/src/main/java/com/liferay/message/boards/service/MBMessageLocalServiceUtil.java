@@ -813,6 +813,21 @@ public class MBMessageLocalServiceUtil {
 	public static com.liferay.message.boards.model.MBMessage updateMessage(
 		long userId, long messageId, String subject, String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
+		double priority, boolean allowPingbacks,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateMessage(userId, messageId, subject, body,
+			inputStreamOVPs, priority, allowPingbacks, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, long, String, String, List, double, boolean, ServiceContext)}
+	*/
+	@Deprecated
+	public static com.liferay.message.boards.model.MBMessage updateMessage(
+		long userId, long messageId, String subject, String body,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
 		java.util.List<String> existingFiles, double priority,
 		boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

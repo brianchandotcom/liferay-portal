@@ -1097,13 +1097,50 @@ public class MBMessageServiceHttp {
 		HttpPrincipal httpPrincipal, long messageId, String subject,
 		String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
+		double priority, boolean allowPingbacks,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
+					"updateMessage", _updateMessageParameterTypes33);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					messageId, subject, body, inputStreamOVPs, priority,
+					allowPingbacks, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.message.boards.model.MBMessage)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.message.boards.model.MBMessage updateMessage(
+		HttpPrincipal httpPrincipal, long messageId, String subject,
+		String body,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<String, java.io.InputStream>> inputStreamOVPs,
 		java.util.List<String> existingFiles, double priority,
 		boolean allowPingbacks,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
-					"updateMessage", _updateMessageParameterTypes33);
+					"updateMessage", _updateMessageParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					messageId, subject, body, inputStreamOVPs, existingFiles,
@@ -1252,6 +1289,11 @@ public class MBMessageServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateMessageParameterTypes33 = new Class[] {
+			long.class, String.class, String.class, java.util.List.class,
+			double.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateMessageParameterTypes34 = new Class[] {
 			long.class, String.class, String.class, java.util.List.class,
 			java.util.List.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

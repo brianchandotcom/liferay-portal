@@ -760,6 +760,72 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	public MBMessage updateMessage(
 			long messageId, String subject, String body,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
+			double priority, boolean allowPingbacks,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		boolean preview = ParamUtil.getBoolean(serviceContext, "preview");
+
+		if (preview &&
+			_messageModelResourcePermission.contains(
+				getPermissionChecker(), message, ActionKeys.UPDATE)) {
+
+			checkReplyToPermission(
+				message.getGroupId(), message.getCategoryId(),
+				message.getParentMessageId());
+		}
+		else {
+			_messageModelResourcePermission.check(
+				getPermissionChecker(), messageId, ActionKeys.UPDATE);
+		}
+
+		if (LockManagerUtil.isLocked(
+				MBThread.class.getName(), message.getThreadId())) {
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Thread is locked for class name ");
+			sb.append(MBThread.class.getName());
+			sb.append(" and class PK ");
+			sb.append(message.getThreadId());
+
+			throw new LockedThreadException(sb.toString());
+		}
+
+		if (!ModelResourcePermissionHelper.contains(
+				_categoryModelResourcePermission, getPermissionChecker(),
+				message.getGroupId(), message.getCategoryId(),
+				ActionKeys.ADD_FILE)) {
+
+			inputStreamOVPs = Collections.emptyList();
+		}
+
+		if (!ModelResourcePermissionHelper.contains(
+				_categoryModelResourcePermission, getPermissionChecker(),
+				message.getGroupId(), message.getCategoryId(),
+				ActionKeys.UPDATE_THREAD_PRIORITY)) {
+
+			MBThread thread = mbThreadLocalService.getThread(
+				message.getThreadId());
+
+			priority = thread.getPriority();
+		}
+
+		return mbMessageLocalService.updateMessage(
+			getGuestOrUserId(), messageId, subject, body, inputStreamOVPs,
+			priority, allowPingbacks, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, String, String, List, double, boolean, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public MBMessage updateMessage(
+			long messageId, String subject, String body,
+			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
 			List<String> existingFiles, double priority, boolean allowPingbacks,
 			ServiceContext serviceContext)
 		throws PortalException {

@@ -39,7 +39,9 @@
 	{@param? _handleSelectMappingDialogVisibleChanged: any}
 	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
 	{@param? _handleSidebarTabClick: any}
+	{@param? _handleToggleHighlightMapping: any}
 	{@param? _handleTranslationLanguageChange: any}
+	{@param? _highlightMapping: bool}
 	{@param? _lastSaveDate: string}
 	{@param? _selectMappingDialogEditableId: string}
 	{@param? _selectMappingDialogFragmentEntryLinkId: string}
@@ -95,6 +97,10 @@
 
 				{if $languageId != $defaultLanguageId}
 					{sp}translating
+				{/if}
+
+				{if $_highlightMapping}
+					{sp}mapping
 				{/if}
 			{/let}
 
@@ -196,7 +202,11 @@
 						{/call}
 					{elseif $_sidebarSelectedTab == 'mapping'}
 						{call com.liferay.layout.admin.web.SidebarMapping.render}
-							{param events: ['selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick] /}
+							{param events: [
+								'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
+								'toggleHighlightMapping': $_handleToggleHighlightMapping
+							] /}
+							{param highlightMapping: $_highlightMapping ?: false /}
 							{param selectedMappingTypes: $selectedMappingTypes /}
 							{param spritemap: $spritemap /}
 						{/call}

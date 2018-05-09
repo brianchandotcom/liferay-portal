@@ -649,6 +649,16 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Toggle highlightMapping attribute value
+	 * @private
+	 * @review
+	 */
+
+	_handleToggleHighlightMapping() {
+		this._highlightMapping = !this._highlightMapping;
+	}
+
+	/**
 	 * Callback executed when the translation language has changed
 	 * @private
 	 * @param {{languageId: string}} event
@@ -1164,6 +1174,20 @@ FragmentsEditor.STATE = {
 	 */
 
 	_dirty: Config.bool()
+		.internal()
+		.value(false),
+
+	/**
+	 * If true, editable values should be highlighted.
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	_highlightMapping: Config.bool()
 		.internal()
 		.value(false),
 

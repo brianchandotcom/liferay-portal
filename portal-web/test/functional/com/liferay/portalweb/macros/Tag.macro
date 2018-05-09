@@ -67,7 +67,8 @@
 
 		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
 
-		<execute macro="Tag#viewRequiredField" />
+		<execute function="AssertTextPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
+		<execute function="AssertTextPresent" locator1="Message#ERROR_2" value1="Tag name cannot be an empty string." />
 	</command>
 
 	<command name="gotoMerge">
@@ -152,10 +153,5 @@
 		<var name="key_tagName" value="${tagName}" />
 
 		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
-	</command>
-
-	<command name="viewRequiredField">
-		<execute function="AssertTextPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
-		<execute function="AssertTextPresent" locator1="Message#ERROR_2" value1="Tag name cannot be an empty string." />
 	</command>
 </definition>

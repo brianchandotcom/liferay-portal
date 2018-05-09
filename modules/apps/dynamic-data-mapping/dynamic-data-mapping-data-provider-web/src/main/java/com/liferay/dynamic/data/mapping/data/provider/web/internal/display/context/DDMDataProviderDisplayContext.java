@@ -470,7 +470,7 @@ public class DDMDataProviderDisplayContext {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(
-				_renderResponse.createRenderURL(), "mvcPath",
+				(PortletURL)_renderResponse.createRenderURL(), "mvcPath",
 				"/edit_data_provider.jsp", "redirect",
 				PortalUtil.getCurrentURL(request), "groupId",
 				String.valueOf(themeDisplay.getScopeGroupId()), "type",

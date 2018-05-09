@@ -372,10 +372,13 @@ public class JournalDisplayContext {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {
+							PortletURL portletURL =
+								_liferayPortletResponse.createRenderURL();
+
 							dropdownItem.setHref(
-								_liferayPortletResponse.createRenderURL(),
-								"mvcPath", "/edit_folder.jsp", "redirect",
-								PortalUtil.getCurrentURL(_request), "groupId",
+								portletURL, "mvcPath", "/edit_folder.jsp",
+								"redirect", PortalUtil.getCurrentURL(_request),
+								"groupId",
 								String.valueOf(themeDisplay.getScopeGroupId()),
 								"parentFolderId",
 								String.valueOf(getFolderId()));

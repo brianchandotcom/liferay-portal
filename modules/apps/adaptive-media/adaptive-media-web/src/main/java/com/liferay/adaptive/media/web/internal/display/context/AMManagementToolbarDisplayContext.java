@@ -57,7 +57,7 @@ public class AMManagementToolbarDisplayContext {
 		creationMenu.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					_liferayPortletResponse.createRenderURL(),
+					(PortletURL)_liferayPortletResponse.createRenderURL(),
 					"mvcRenderCommandName",
 					"/adaptive_media/edit_image_configuration_entry",
 					"redirect", _currentURLObj.toString());

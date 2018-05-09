@@ -75,9 +75,9 @@ public class UADExportProcessDisplayContext {
 		creationMenu.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/add_uad_export_processes", "backURL",
-					PortalUtil.getCurrentURL(_request), "p_u_i_d",
+					(PortletURL)_renderResponse.createRenderURL(),
+					"mvcRenderCommandName", "/add_uad_export_processes",
+					"backURL", PortalUtil.getCurrentURL(_request), "p_u_i_d",
 					String.valueOf(selectedUser.getUserId()));
 				dropdownItem.setLabel("add-export-processes");
 			});

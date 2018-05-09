@@ -1012,7 +1012,8 @@ public class LayoutsAdminDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(isPublicPages());
-						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setHref(
+							getPortletURL(), "navigation", "public-pages");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "public-pages"));
 					});
@@ -1020,7 +1021,8 @@ public class LayoutsAdminDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(isPrivatePages());
-						dropdownItem.setHref(getPortletURL());
+						dropdownItem.setHref(
+							getPortletURL(), "navigation", "private-pages");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "private-pages"));
 					});

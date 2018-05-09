@@ -67,7 +67,8 @@
 
 		<execute function="AssertElementPresent" locator1="Icon#ASTERISK" />
 
-		<execute macro="Alert#viewRequiredField" />
+		<execute function="AssertTextPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
+		<execute function="AssertTextPresent" locator1="Message#ERROR_2" value1="Tag name cannot be an empty string." />
 	</command>
 
 	<command name="gotoMerge">

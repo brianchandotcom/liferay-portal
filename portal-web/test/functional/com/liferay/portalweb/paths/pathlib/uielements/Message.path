@@ -24,11 +24,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DDM_TEMPLATE_INFO</td>
-	<td>//div[contains(@id,'DDMPortlet')]//div[contains(@class,'empty-result-message')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DRAFT_AUTO_SAVE</td>
 	<td>//div/small[contains(@id,'saveStatus') and contains(.,'Draft Saved at')]</td>
 	<td></td>

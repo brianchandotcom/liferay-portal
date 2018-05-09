@@ -251,7 +251,9 @@
 			<var name="searchTerm" value="${ddlTemplateName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#DDM_TEMPLATE_INFO" value1="There are no results." />
+		<execute macro="Portlet#viewEmptyMessage">
+			<var name="message" value="There are no results." />
+		</execute>
 	</command>
 
 	<command name="editDisplayTemplateCP">
@@ -428,14 +430,6 @@
 				</if>
 			</then>
 		</if>
-	</command>
-
-	<command name="viewDefaultNoTemplatesCP">
-		<execute macro="DDLNavigator#gotoManageTemplates">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#DDM_TEMPLATE_INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewDisplayTemplateCP">

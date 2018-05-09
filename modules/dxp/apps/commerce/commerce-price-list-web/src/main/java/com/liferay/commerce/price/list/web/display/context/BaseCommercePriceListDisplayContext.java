@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.price.list.web.display.context;
 
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.web.internal.servlet.taglib.ui.CommercePriceListScreenNavigationConstants;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
@@ -28,8 +27,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.math.BigDecimal;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,11 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseCommercePriceListDisplayContext<T> {
 
 	public BaseCommercePriceListDisplayContext(
-		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		HttpServletRequest httpServletRequest) {
 
-		this.commercePriceFormatter = commercePriceFormatter;
 		this.commercePriceListActionHelper = commercePriceListActionHelper;
 		this.httpServletRequest = httpServletRequest;
 
@@ -56,10 +51,6 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 
 		_defaultOrderByCol = "create-date";
 		_defaultOrderByType = "desc";
-	}
-
-	public String format(BigDecimal price) {
-		return commercePriceFormatter.format(price);
 	}
 
 	public CommercePriceList getCommercePriceList() throws PortalException {
@@ -199,7 +190,6 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 		return ParamUtil.getString(httpServletRequest, "navigation");
 	}
 
-	protected final CommercePriceFormatter commercePriceFormatter;
 	protected final CommercePriceListActionHelper commercePriceListActionHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;

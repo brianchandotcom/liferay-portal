@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -124,9 +125,10 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		CommercePriceList commercePriceList =
 			commercePriceEntry.getCommercePriceList();
 
-		return _commercePriceFormatter.format(
-			commercePriceList.getCommerceCurrency(),
-			commerceTierPriceEntry.getPrice());
+		CommerceMoney priceMoney = commercePriceEntry.getPriceMoney(
+			commercePriceList.getCommerceCurrencyId());
+
+		return priceMoney.toString();
 	}
 
 	public String getContextTitle() throws PortalException {

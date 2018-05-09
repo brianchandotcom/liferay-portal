@@ -18,25 +18,22 @@
 
 <%
 CommercePriceEntry commercePriceEntry = null;
-String price = StringPool.BLANK;
-String promoPrice = StringPool.BLANK;
 
 if (portletName.equals(CommercePriceListPortletKeys.COMMERCE_PRICE_LIST)) {
 	CommercePriceEntryDisplayContext commercePriceEntryDisplayContext = (CommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 	commercePriceEntry = commercePriceEntryDisplayContext.getCommercePriceEntry();
-	price = commercePriceEntryDisplayContext.format(commercePriceEntry.getPrice());
-	promoPrice = commercePriceEntryDisplayContext.format(commercePriceEntry.getPrice());
 }
 else {
 	CPInstanceCommercePriceEntryDisplayContext cpInstanceCommercePriceEntryDisplayContext = (CPInstanceCommercePriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 	commercePriceEntry = cpInstanceCommercePriceEntryDisplayContext.getCommercePriceEntry();
-	price = cpInstanceCommercePriceEntryDisplayContext.format(commercePriceEntry.getPrice());
-	promoPrice = cpInstanceCommercePriceEntryDisplayContext.format(commercePriceEntry.getPrice());
 }
 
 CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
+
+CommerceMoney priceMoney = commercePriceEntry.getPriceMoney(commercePriceList.getCommerceCurrencyId());
+CommerceMoney promoPriceMoney = commercePriceEntry.getPromoPriceMoney(commercePriceList.getCommerceCurrencyId());
 
 CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
 
@@ -51,7 +48,7 @@ String currencyCode = commerceCurrency.getCode();
 <aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 
 <aui:fieldset>
-	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= price %>" />
+	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= priceMoney.toString() %>" />
 
-	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= promoPrice %>" />
+	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= promoPriceMoney.toString() %>" />
 </aui:fieldset>

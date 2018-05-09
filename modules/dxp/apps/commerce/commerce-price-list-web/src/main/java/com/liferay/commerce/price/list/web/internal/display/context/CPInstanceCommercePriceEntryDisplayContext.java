@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.math.BigDecimal;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -57,7 +55,6 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	public CPInstanceCommercePriceEntryDisplayContext(
 		ActionHelper actionHelper,
 		CommercePriceEntryService commercePriceEntryService,
-		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
@@ -66,16 +63,11 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			CommercePriceEntry.class.getSimpleName());
 
 		_commercePriceEntryService = commercePriceEntryService;
-		_commercePriceFormatter = commercePriceFormatter;
 		_commercePriceListActionHelper = commercePriceListActionHelper;
 		_itemSelector = itemSelector;
 
 		setDefaultOrderByCol("create-date");
 		setDefaultOrderByType("desc");
-	}
-
-	public String format(BigDecimal price) {
-		return _commercePriceFormatter.format(price);
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() {
@@ -102,9 +94,10 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		CommercePriceList commercePriceList =
 			commercePriceEntry.getCommercePriceList();
 
-		return _commercePriceFormatter.format(
-			commercePriceList.getCommerceCurrency(),
-			commercePriceEntry.getPrice());
+		CommerceMoney priceMoney = commercePriceEntry.getPriceMoney(
+			commercePriceList.getCommerceCurrencyId());
+
+		return priceMoney.toString();
 	}
 
 	public CPInstance getCPInstance() throws PortalException {
@@ -273,7 +266,6 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	}
 
 	private final CommercePriceEntryService _commercePriceEntryService;
-	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private CPInstance _cpInstance;
 	private final ItemSelector _itemSelector;

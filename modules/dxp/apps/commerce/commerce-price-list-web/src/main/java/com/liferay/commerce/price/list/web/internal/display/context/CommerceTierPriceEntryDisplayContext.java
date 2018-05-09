@@ -15,7 +15,7 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -50,14 +50,11 @@ public class CommerceTierPriceEntryDisplayContext
 	extends BaseCommercePriceListDisplayContext<CommerceTierPriceEntry> {
 
 	public CommerceTierPriceEntryDisplayContext(
-		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceTierPriceEntryService commerceTierPriceEntryService,
 		HttpServletRequest httpServletRequest) {
 
-		super(
-			commercePriceFormatter, commercePriceListActionHelper,
-			httpServletRequest);
+		super(commercePriceListActionHelper, httpServletRequest);
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
@@ -116,11 +113,41 @@ public class CommerceTierPriceEntryDisplayContext
 			CommerceTierPriceEntry commerceTierPriceEntry)
 		throws PortalException {
 
+		if (commerceTierPriceEntry == null) {
+			CommerceCurrency commerceCurrency = getCommercePriceListCurrency();
+
+			CommerceMoney zero = commerceCurrency.getZero();
+
+			return zero.toString();
+		}
+
 		CommercePriceList commercePriceList = getCommercePriceList();
 
-		return commercePriceFormatter.format(
-			commercePriceList.getCommerceCurrency(),
-			commerceTierPriceEntry.getPrice());
+		CommerceMoney priceMoney = commerceTierPriceEntry.getPriceMoney(
+			commercePriceList.getCommerceCurrencyId());
+
+		return priceMoney.toString();
+	}
+
+	public String getCommerceTierPriceEntryPromoPrice(
+			CommerceTierPriceEntry commerceTierPriceEntry)
+		throws PortalException {
+
+		if (commerceTierPriceEntry == null) {
+			CommerceCurrency commerceCurrency = getCommercePriceListCurrency();
+
+			CommerceMoney zero = commerceCurrency.getZero();
+
+			return zero.toString();
+		}
+
+		CommercePriceList commercePriceList = getCommercePriceList();
+
+		CommerceMoney promoPriceMoney =
+			commerceTierPriceEntry.getPromoPriceMoney(
+				commercePriceList.getCommerceCurrencyId());
+
+		return promoPriceMoney.toString();
 	}
 
 	public String getContextTitle() throws PortalException {

@@ -16,17 +16,18 @@ package com.liferay.layout.uad.test;
 
 import com.liferay.portal.kernel.model.LayoutPrototype;
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = LayoutPrototypeUADTestHelper.class)
 public class LayoutPrototypeUADTestHelper {
+
 	/**
 	 * Implement addLayoutPrototype() to enable some UAD tests.
 	 *
@@ -34,8 +35,7 @@ public class LayoutPrototypeUADTestHelper {
 	 * Several UAD tests depend on creating one or more valid LayoutPrototypes with a specified user ID in order to execute correctly. Implement addLayoutPrototype() such that it creates a valid LayoutPrototype with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
 	 * </p>
 	 */
-	public LayoutPrototype addLayoutPrototype(long userId)
-		throws Exception {
+	public LayoutPrototype addLayoutPrototype(long userId) throws Exception {
 		Assume.assumeTrue(false);
 
 		return null;
@@ -51,4 +51,5 @@ public class LayoutPrototypeUADTestHelper {
 	public void cleanUpDependencies(List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 	}
+
 }

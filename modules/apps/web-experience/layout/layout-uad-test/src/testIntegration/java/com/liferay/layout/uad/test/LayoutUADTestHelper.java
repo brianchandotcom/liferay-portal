@@ -16,17 +16,18 @@ package com.liferay.layout.uad.test;
 
 import com.liferay.portal.kernel.model.Layout;
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = LayoutUADTestHelper.class)
 public class LayoutUADTestHelper {
+
 	/**
 	 * Implement addLayout() to enable some UAD tests.
 	 *
@@ -47,7 +48,7 @@ public class LayoutUADTestHelper {
 	 * Several UAD tests depend on creating one or more valid Layouts with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<Layout> layouts) such that any additional objects created during the construction of layouts are safely removed.
 	 * </p>
 	 */
-	public void cleanUpDependencies(List<Layout> layouts)
-		throws Exception {
+	public void cleanUpDependencies(List<Layout> layouts) throws Exception {
 	}
+
 }

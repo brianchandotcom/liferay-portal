@@ -16,17 +16,18 @@ package com.liferay.layout.uad.test;
 
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = LayoutFriendlyURLUADTestHelper.class)
 public class LayoutFriendlyURLUADTestHelper {
+
 	/**
 	 * Implement addLayoutFriendlyURL() to enable some UAD tests.
 	 *
@@ -36,6 +37,7 @@ public class LayoutFriendlyURLUADTestHelper {
 	 */
 	public LayoutFriendlyURL addLayoutFriendlyURL(long userId)
 		throws Exception {
+
 		Assume.assumeTrue(false);
 
 		return null;
@@ -51,4 +53,5 @@ public class LayoutFriendlyURLUADTestHelper {
 	public void cleanUpDependencies(List<LayoutFriendlyURL> layoutFriendlyURLs)
 		throws Exception {
 	}
+
 }

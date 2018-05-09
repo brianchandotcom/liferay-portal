@@ -16,17 +16,18 @@ package com.liferay.layout.uad.test;
 
 import com.liferay.portal.kernel.model.LayoutBranch;
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = LayoutBranchUADTestHelper.class)
 public class LayoutBranchUADTestHelper {
+
 	/**
 	 * Implement addLayoutBranch() to enable some UAD tests.
 	 *
@@ -50,4 +51,5 @@ public class LayoutBranchUADTestHelper {
 	public void cleanUpDependencies(List<LayoutBranch> layoutBranchs)
 		throws Exception {
 	}
+
 }

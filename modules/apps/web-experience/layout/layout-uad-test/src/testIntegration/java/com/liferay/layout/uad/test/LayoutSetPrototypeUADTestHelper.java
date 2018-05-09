@@ -16,17 +16,18 @@ package com.liferay.layout.uad.test;
 
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = LayoutSetPrototypeUADTestHelper.class)
 public class LayoutSetPrototypeUADTestHelper {
+
 	/**
 	 * Implement addLayoutSetPrototype() to enable some UAD tests.
 	 *
@@ -36,6 +37,7 @@ public class LayoutSetPrototypeUADTestHelper {
 	 */
 	public LayoutSetPrototype addLayoutSetPrototype(long userId)
 		throws Exception {
+
 		Assume.assumeTrue(false);
 
 		return null;
@@ -49,6 +51,8 @@ public class LayoutSetPrototypeUADTestHelper {
 	 * </p>
 	 */
 	public void cleanUpDependencies(
-		List<LayoutSetPrototype> layoutSetPrototypes) throws Exception {
+			List<LayoutSetPrototype> layoutSetPrototypes)
+		throws Exception {
 	}
+
 }

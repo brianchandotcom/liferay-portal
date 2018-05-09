@@ -22,6 +22,7 @@ import com.liferay.commerce.model.CommerceGeocoder;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.base.CommerceWarehouseLocalServiceBaseImpl;
+import com.liferay.commerce.util.comparator.CommerceWarehouseNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -115,6 +116,12 @@ public class CommerceWarehouseLocalServiceImpl
 			commerceWarehouseLocalService.deleteCommerceWarehouse(
 				commerceWarehouse);
 		}
+	}
+
+	@Override
+	public CommerceWarehouse fetchDefaultCommerceWarehouse(long groupId) {
+		return commerceWarehousePersistence.fetchByG_P_First(
+			groupId, true, new CommerceWarehouseNameComparator(true));
 	}
 
 	@Override
@@ -212,15 +219,15 @@ public class CommerceWarehouseLocalServiceImpl
 		throws PortalException {
 
 		CommerceWarehouse commerceWarehouse =
-			commerceWarehousePersistence.fetchByPrimaryKey(
-				CommerceWarehouseConstants.DEFAULT_ID);
+			commerceWarehousePersistence.fetchByG_P_First(
+				serviceContext.getScopeGroupId(), true,
+				new CommerceWarehouseNameComparator(true));
 
 		if (commerceWarehouse != null) {
 			return commerceWarehouse;
 		}
 
 		return _addDefaultCommerceWarehouse(
-			CommerceWarehouseConstants.DEFAULT_ID,
 			CommerceWarehouseConstants.DEFAULT_NAME, null, null, null, null,
 			null, 0, 0, -1, -1, serviceContext);
 	}
@@ -294,10 +301,10 @@ public class CommerceWarehouseLocalServiceImpl
 
 	@Override
 	public CommerceWarehouse updateDefaultCommerceWarehouse(
-			long commerceWarehouseId, String name, String street1,
-			String street2, String street3, String city, String zip,
-			long commerceRegionId, long commerceCountryId, double latitude,
-			double longitude, ServiceContext serviceContext)
+			String name, String street1, String street2, String street3,
+			String city, String zip, long commerceRegionId,
+			long commerceCountryId, double latitude, double longitude,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		List<CommerceWarehouse> commerceWarehouses =
@@ -310,17 +317,19 @@ public class CommerceWarehouseLocalServiceImpl
 		}
 
 		CommerceWarehouse commerceWarehouse =
-			commerceWarehousePersistence.fetchByPrimaryKey(commerceWarehouseId);
+			commerceWarehousePersistence.fetchByG_P_First(
+				serviceContext.getScopeGroupId(), true,
+				new CommerceWarehouseNameComparator(true));
 
 		if (commerceWarehouse == null) {
 			return _addDefaultCommerceWarehouse(
-				commerceWarehouseId, name, street1, street2, street3, city, zip,
-				commerceRegionId, commerceCountryId, latitude, longitude,
-				serviceContext);
+				name, street1, street2, street3, city, zip, commerceRegionId,
+				commerceCountryId, latitude, longitude, serviceContext);
 		}
 
 		return commerceWarehouseLocalService.updateCommerceWarehouse(
-			commerceWarehouseId, name, null, true, street1, street2, street3,
+			commerceWarehouse.getCommerceWarehouseId(), name,
+			commerceWarehouse.getDescription(), true, street1, street2, street3,
 			city, zip, commerceRegionId, commerceCountryId, latitude, longitude,
 			serviceContext);
 	}
@@ -349,10 +358,10 @@ public class CommerceWarehouseLocalServiceImpl
 	}
 
 	private CommerceWarehouse _addDefaultCommerceWarehouse(
-			long commerceWarehouseId, String name, String street1,
-			String street2, String street3, String city, String zip,
-			long commerceRegionId, long commerceCountryId, double latitude,
-			double longitude, ServiceContext serviceContext)
+			String name, String street1, String street2, String street3,
+			String city, String zip, long commerceRegionId,
+			long commerceCountryId, double latitude, double longitude,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -361,6 +370,8 @@ public class CommerceWarehouseLocalServiceImpl
 		validate(
 			name, true, commerceRegionId, commerceCountryId, latitude,
 			longitude);
+
+		long commerceWarehouseId = counterLocalService.increment();
 
 		CommerceWarehouse commerceWarehouse =
 			commerceWarehousePersistence.create(commerceWarehouseId);
@@ -380,6 +391,7 @@ public class CommerceWarehouseLocalServiceImpl
 		commerceWarehouse.setCommerceCountryId(commerceCountryId);
 		commerceWarehouse.setLatitude(latitude);
 		commerceWarehouse.setLongitude(longitude);
+		commerceWarehouse.setPrimary(true);
 
 		commerceWarehousePersistence.update(commerceWarehouse);
 

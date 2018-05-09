@@ -65,6 +65,18 @@ public class CommerceWarehouseServiceImpl
 	}
 
 	@Override
+	public CommerceWarehouse fetchDefaultCommerceWarehouse(long groupId)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
+
+		return commerceWarehouseLocalService.fetchDefaultCommerceWarehouse(
+			groupId);
+	}
+
+	@Override
 	public CommerceWarehouse geolocateCommerceWarehouse(
 			long commerceWarehouseId)
 		throws PortalException {
@@ -197,10 +209,10 @@ public class CommerceWarehouseServiceImpl
 
 	@Override
 	public CommerceWarehouse updateDefaultCommerceWarehouse(
-			long commerceWarehouseId, String name, String street1,
-			String street2, String street3, String city, String zip,
-			long commerceRegionId, long commerceCountryId, double latitude,
-			double longitude, ServiceContext serviceContext)
+			String name, String street1, String street2, String street3,
+			String city, String zip, long commerceRegionId,
+			long commerceCountryId, double latitude, double longitude,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -208,9 +220,8 @@ public class CommerceWarehouseServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
 
 		return commerceWarehouseLocalService.updateDefaultCommerceWarehouse(
-			commerceWarehouseId, name, street1, street2, street3, city, zip,
-			commerceRegionId, commerceCountryId, latitude, longitude,
-			serviceContext);
+			name, street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, latitude, longitude, serviceContext);
 	}
 
 }

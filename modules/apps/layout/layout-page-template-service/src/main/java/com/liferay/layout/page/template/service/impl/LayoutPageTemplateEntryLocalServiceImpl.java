@@ -345,6 +345,26 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long userId, long layoutPageTemplateEntryId, int status)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.findByPrimaryKey(
+				layoutPageTemplateEntryId);
+
+		layoutPageTemplateEntry.setStatus(status);
+		layoutPageTemplateEntry.setStatusByUserId(userId);
+		layoutPageTemplateEntry.setStatusByUserName(user.getScreenName());
+		layoutPageTemplateEntry.setStatusDate(new Date());
+
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException {
 

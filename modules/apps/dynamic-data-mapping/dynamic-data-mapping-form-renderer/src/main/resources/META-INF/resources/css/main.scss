@@ -17,8 +17,8 @@
 .ddm-form-builder-app {
 	.lfr-ddm-form-page {
 		> .row {
-			margin-left: 18px;
-			margin-right: 18px;
+			margin-left: 20px;
+			margin-right: 20px;
 		}
 	}
 }
@@ -234,17 +234,10 @@ body .ddm-user-view-content {
 }
 
 .portal-popup {
-	$side-spacing: 32px;
 	padding: 0;
 
 	&.open {
 		padding: 0;
-	}
-
-	.lfr-ddm-form-page-description,
-	.lfr-ddm-form-page-title {
-		padding-left: $side-spacing;
-		padding-right: $side-spacing;
 	}
 }
 
@@ -376,6 +369,11 @@ body .ddm-user-view-content {
 			}
 		}
 	}
+}
+
+.lfr-ddm-form-page-description, .lfr-ddm-form-page-title {
+	padding-left: 32px;
+	padding-right: 32px;
 }
 
 .lfr-ddm-form-paginated .pagination {

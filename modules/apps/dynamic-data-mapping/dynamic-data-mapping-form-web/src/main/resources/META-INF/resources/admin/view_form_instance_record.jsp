@@ -35,6 +35,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 			<aui:workflow-status markupView="lexicon" model="<%= DDMFormInstanceRecord.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= formInstanceRecordVersion.getStatus() %>" version="<%= formInstanceRecordVersion.getVersion() %>" />
 		</div>
 	</c:if>
+</div>
 
+<div class="container-fluid-1280 ddm-form-builder-app form-entry">
 	<%= ddmFormAdminDisplayContext.getDDMFormHTML(renderRequest) %>
 </div>

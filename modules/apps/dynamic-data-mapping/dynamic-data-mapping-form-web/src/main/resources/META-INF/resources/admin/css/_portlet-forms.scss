@@ -1,4 +1,4 @@
-.portlet-forms {
+.portlet-forms, .form-entry {
 	label {
 		float: initial;
 	}
@@ -20,7 +20,6 @@
 	.ddm-form-basic-info {
 		.ddm-form-name,
 		.ddm-form-description {
-			color: $form-header-text-color;
 			margin: 0;
 		}
 
@@ -55,7 +54,6 @@
 	.form-builder-page-header-title,
 	.lfr-ddm-form-page-description,
 	.lfr-ddm-form-page-title {
-		color: #728694;
 		font-weight: normal;
 		resize: none;
 		word-break: normal;

@@ -741,6 +741,7 @@
 		<column name="commerceCountryId" type="long" />
 		<column name="latitude" type="double" />
 		<column name="longitude" type="double" />
+		<column name="primary" type="boolean" />
 
 		<!-- Order -->
 
@@ -760,6 +761,10 @@
 		<finder name="G_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="commerceCountryId" />
+		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="primary" />
 		</finder>
 		<finder name="G_A_C" return-type="Collection">
 			<finder-column name="groupId" />

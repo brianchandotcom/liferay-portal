@@ -20,7 +20,7 @@
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= layoutPrototypeDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
 />
 
 <clay:management-toolbar

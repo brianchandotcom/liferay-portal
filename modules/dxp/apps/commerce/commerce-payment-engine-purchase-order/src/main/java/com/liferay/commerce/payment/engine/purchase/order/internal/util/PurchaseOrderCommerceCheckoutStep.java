@@ -116,7 +116,7 @@ public class PurchaseOrderCommerceCheckoutStep
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		return false;
+		return isActive(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

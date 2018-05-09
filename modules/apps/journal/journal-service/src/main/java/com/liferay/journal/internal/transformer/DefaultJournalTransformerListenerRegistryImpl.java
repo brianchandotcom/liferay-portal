@@ -48,8 +48,7 @@ public class DefaultJournalTransformerListenerRegistryImpl
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")",
-		unbind = "unregisterTransformerListener"
+		target = "(javax.portlet.name=" + JournalPortletKeys.JOURNAL + ")"
 	)
 	public void registerTransformerListener(
 		TransformerListener transformerListener) {

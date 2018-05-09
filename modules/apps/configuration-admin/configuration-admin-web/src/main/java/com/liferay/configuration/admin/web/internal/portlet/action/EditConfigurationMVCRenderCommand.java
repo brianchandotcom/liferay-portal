@@ -151,8 +151,7 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")(mvc.command.name=/edit_configuration)(configurationPid=*))",
-		unbind = "removeRenderCommand"
+		target = "(&(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")(mvc.command.name=/edit_configuration)(configurationPid=*))"
 	)
 	protected void addRenderCommand(
 		MVCRenderCommand mvcRenderCommand, Map<String, Object> properties) {

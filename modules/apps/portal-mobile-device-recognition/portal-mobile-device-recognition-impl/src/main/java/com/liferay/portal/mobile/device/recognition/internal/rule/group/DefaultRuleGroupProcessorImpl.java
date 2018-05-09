@@ -95,8 +95,7 @@ public class DefaultRuleGroupProcessorImpl implements RuleGroupProcessor {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeRuleHandler"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addRuleHandler(RuleHandler ruleHandler) {
 		RuleHandler oldRuleHandler = _ruleHandlers.put(

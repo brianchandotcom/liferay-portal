@@ -38,8 +38,7 @@ public class NodeBuilderRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeNodeValidator"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addNodeValidator(
 		NodeBuilder<Node> nodeBuilder, Map<String, Object> properties) {

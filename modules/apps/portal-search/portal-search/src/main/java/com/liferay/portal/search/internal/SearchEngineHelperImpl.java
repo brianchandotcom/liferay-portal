@@ -288,8 +288,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeSearchEngineConfigurator"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addSearchEngineConfigurator(
 		SearchEngineConfigurator searchEngineConfigurator) {

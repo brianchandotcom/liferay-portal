@@ -79,8 +79,7 @@ public class PortletSharedSearchRequestImpl
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removePortletSharedSearchContributor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addPortletSharedSearchContributor(
 		PortletSharedSearchContributor portletSharedSearchContributor) {

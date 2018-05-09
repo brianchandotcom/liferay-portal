@@ -330,7 +330,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)", unbind = "unregisterDestination"
+		target = "(destination.name=*)"
 	)
 	protected synchronized void registerDestination(
 		Destination destination, Map<String, Object> properties) {
@@ -362,8 +362,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)",
-		unbind = "unregisterDestinationEventListener"
+		target = "(destination.name=*)"
 	)
 	protected synchronized void registerDestinationEventListener(
 		DestinationEventListener destinationEventListener,
@@ -390,8 +389,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterMessageBusEventListener"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void registerMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener) {
@@ -403,7 +401,7 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)", unbind = "unregisterMessageListener"
+		target = "(destination.name=*)"
 	)
 	protected synchronized void registerMessageListener(
 		MessageListener messageListener, Map<String, Object> properties) {

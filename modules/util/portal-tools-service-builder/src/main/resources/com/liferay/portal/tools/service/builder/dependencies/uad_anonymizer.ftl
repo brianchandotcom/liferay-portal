@@ -1,4 +1,4 @@
-package ${packagePath}.uad.anonymizer;
+package ${entity.UADPackagePath}.uad.anonymizer;
 
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 

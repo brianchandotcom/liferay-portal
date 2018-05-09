@@ -1,7 +1,7 @@
-package ${packagePath}.uad.exporter.test;
+package ${entity.UADPackagePath}.uad.exporter.test;
 
 import ${apiPackagePath}.model.${entity.name};
-import ${packagePath}.uad.test.${entity.name}UADTestHelper;
+import ${entity.UADPackagePath}.uad.test.${entity.name}UADTestHelper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

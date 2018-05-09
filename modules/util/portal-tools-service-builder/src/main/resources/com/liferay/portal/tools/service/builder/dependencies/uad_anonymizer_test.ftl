@@ -1,8 +1,8 @@
-package ${packagePath}.uad.anonymizer.test;
+package ${entity.UADPackagePath}.uad.anonymizer.test;
 
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.${entity.name}LocalService;
-import ${packagePath}.uad.test.${entity.name}UADTestHelper;
+import ${entity.UADPackagePath}.uad.test.${entity.name}UADTestHelper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;

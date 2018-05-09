@@ -76,8 +76,6 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getTargetEntityName(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getTestDirName()),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getUADDirName()),
-			_getAbsolutePath(
-				baseDir, serviceBuilderArgs.getUADTestIntegrationDirName()),
 			true);
 	}
 

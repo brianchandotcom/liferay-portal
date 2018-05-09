@@ -1,4 +1,4 @@
-package ${packagePath}.uad.display;
+package ${entity.UADPackagePath}.uad.display;
 
 import com.liferay.user.associated.data.display.UADDisplay;
 

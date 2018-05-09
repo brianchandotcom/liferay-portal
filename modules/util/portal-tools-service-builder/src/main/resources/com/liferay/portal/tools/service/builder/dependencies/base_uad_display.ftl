@@ -1,8 +1,8 @@
-package ${packagePath}.uad.display;
+package ${entity.UADPackagePath}.uad.display;
 
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.${entity.name}LocalService;
-import ${packagePath}.uad.constants.${portletShortName}UADConstants;
+import ${entity.UADPackagePath}.uad.constants.${entity.UADApplicationName}UADConstants;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +36,7 @@ public abstract class Base${entity.name}UADDisplay extends BaseModelUADDisplay<$
 
 	@Override
 	public String getApplicationName() {
-		return ${portletShortName}UADConstants.APPLICATION_NAME;
+		return ${entity.UADApplicationName}UADConstants.APPLICATION_NAME;
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public abstract class Base${entity.name}UADDisplay extends BaseModelUADDisplay<$
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return ${portletShortName}UADConstants.USER_ID_FIELD_NAMES_${entity.constantName};
+		return ${entity.UADApplicationName}UADConstants.USER_ID_FIELD_NAMES_${entity.constantName};
 	}
 
 	@Reference

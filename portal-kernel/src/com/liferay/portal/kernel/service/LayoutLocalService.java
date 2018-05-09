@@ -954,7 +954,7 @@ public interface LayoutLocalService extends BaseLocalService,
 	* @return all the layouts whose friendly URLs are <code>null</code>
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getNullFriendlyURLLayouts();
 

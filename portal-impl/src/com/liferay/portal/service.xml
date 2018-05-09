@@ -566,7 +566,7 @@
 
 		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
-	<entity local-service="true" name="Layout" remote-service="true" uuid="true">
+	<entity local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -580,7 +580,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -702,7 +702,7 @@
 		<reference entity="ExportImportConfiguration" package-path="com.liferay.portlet.exportimport" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>
-	<entity local-service="true" name="LayoutBranch" remote-service="true">
+	<entity local-service="true" name="LayoutBranch" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
 
 		<!-- PK fields -->
 
@@ -716,7 +716,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 
 		<!-- Other fields -->
 
@@ -754,7 +754,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutFriendlyURL" remote-service="false" uuid="true">
+	<entity local-service="true" name="LayoutFriendlyURL" remote-service="false" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -768,7 +768,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -815,7 +815,7 @@
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutPrototype" remote-service="true" uuid="true">
+	<entity local-service="true" name="LayoutPrototype" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -825,7 +825,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -854,7 +854,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutRevision" remote-service="true">
+	<entity local-service="true" name="LayoutRevision" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
 
 		<!-- PK fields -->
 
@@ -868,7 +868,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -893,7 +893,7 @@
 		<column name="css" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
-		<column name="statusByUserName" type="String" />
+		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
@@ -1029,7 +1029,7 @@
 		<reference entity="PluginSetting" package-path="com.liferay.portal" />
 		<reference entity="VirtualHost" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutSetBranch" remote-service="true">
+	<entity local-service="true" name="LayoutSetBranch" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout">
 
 		<!-- PK fields -->
 
@@ -1043,7 +1043,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 
@@ -1098,7 +1098,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutSetPrototype" remote-service="true" uuid="true">
+	<entity local-service="true" name="LayoutSetPrototype" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/web-experience/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1108,7 +1108,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 

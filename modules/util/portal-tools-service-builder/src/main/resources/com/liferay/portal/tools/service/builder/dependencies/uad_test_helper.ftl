@@ -1,4 +1,4 @@
-package ${packagePath}.uad.test;
+package ${entity.UADPackagePath}.uad.test;
 
 import ${apiPackagePath}.model.${entity.name};
 
@@ -23,7 +23,6 @@ public class ${entity.name}UADTestHelper {
 	 * <p>
 	 * Several UAD tests depend on creating one or more valid ${entity.names} with a specified user ID in order to execute correctly. Implement add${entity.name}() such that it creates a valid ${entity.name} with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
 	 * </p>
-	 *
 	 */
 	public ${entity.name} add${entity.name}(long userId) throws Exception {
 		Assume.assumeTrue(false);
@@ -38,7 +37,6 @@ public class ${entity.name}UADTestHelper {
 		 * <p>
 		 * Several UAD tests depend on creating one or more valid ${entity.names} with specified user ID and status by user ID in order to execute correctly. Implement add${entity.name}WithStatusByUserId() such that it creates a valid ${entity.name} with the specified user ID and status by user ID values and returns it in order to enable the UAD tests that depend on it.
 		 * </p>
-		 *
 		 */
 		public ${entity.name} add${entity.name}WithStatusByUserId(long userId, long statusByUserId) throws Exception {
 			Assume.assumeTrue(false);
@@ -53,7 +51,6 @@ public class ${entity.name}UADTestHelper {
 	 * <p>
 	 * Several UAD tests depend on creating one or more valid ${entity.names} with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<${entity.name}> ${entity.varNames}) such that any additional objects created during the construction of ${entity.varNames} are safely removed.
 	 * </p>
-	 *
 	 */
 	public void cleanUpDependencies(List<${entity.name}> ${entity.varNames}) throws Exception {
 	}

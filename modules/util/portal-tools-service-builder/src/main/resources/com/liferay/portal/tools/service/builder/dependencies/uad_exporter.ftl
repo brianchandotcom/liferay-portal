@@ -1,4 +1,4 @@
-package ${packagePath}.uad.exporter;
+package ${entity.UADPackagePath}.uad.exporter;
 
 import com.liferay.user.associated.data.exporter.UADExporter;
 

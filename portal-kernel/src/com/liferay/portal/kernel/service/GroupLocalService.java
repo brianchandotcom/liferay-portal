@@ -787,7 +787,7 @@ public interface GroupLocalService extends BaseLocalService,
 	URLs
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Group> getNullFriendlyURLGroups();
 

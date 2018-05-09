@@ -5265,6 +5265,2014 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_G_T_LIKEN_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_T_LIKEN_TYPE_2 = "layoutPageTemplateEntry.type = ?";
 	private static final String _FINDER_COLUMN_G_T_LIKEN_TYPE_2_SQL = "layoutPageTemplateEntry.type_ = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_L_S = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_L_S = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			},
+			LayoutPageTemplateEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.LAYOUTPAGETEMPLATECOLLECTIONID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.STATUS_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_L_S = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @return the matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status) {
+		return findByG_L_S(groupId, layoutPageTemplateCollectionId, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status, int start, int end) {
+		return findByG_L_S(groupId, layoutPageTemplateCollectionId, status,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return findByG_L_S(groupId, layoutPageTemplateCollectionId, status,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_L_S;
+			finderArgs = new Object[] {
+					groupId, layoutPageTemplateCollectionId, status
+				};
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_L_S;
+			finderArgs = new Object[] {
+					groupId, layoutPageTemplateCollectionId, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<LayoutPageTemplateEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LayoutPageTemplateEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutPageTemplateEntry layoutPageTemplateEntry : list) {
+					if ((groupId != layoutPageTemplateEntry.getGroupId()) ||
+							(layoutPageTemplateCollectionId != layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) ||
+							(status != layoutPageTemplateEntry.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_L_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_L_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+			query.append(_FINDER_COLUMN_G_L_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(layoutPageTemplateCollectionId);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_L_S_First(long groupId,
+		long layoutPageTemplateCollectionId, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_L_S_First(groupId,
+				layoutPageTemplateCollectionId, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", layoutPageTemplateCollectionId=");
+		msg.append(layoutPageTemplateCollectionId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_L_S_First(long groupId,
+		long layoutPageTemplateCollectionId, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		List<LayoutPageTemplateEntry> list = findByG_L_S(groupId,
+				layoutPageTemplateCollectionId, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_L_S_Last(long groupId,
+		long layoutPageTemplateCollectionId, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_L_S_Last(groupId,
+				layoutPageTemplateCollectionId, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", layoutPageTemplateCollectionId=");
+		msg.append(layoutPageTemplateCollectionId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_L_S_Last(long groupId,
+		long layoutPageTemplateCollectionId, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		int count = countByG_L_S(groupId, layoutPageTemplateCollectionId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutPageTemplateEntry> list = findByG_L_S(groupId,
+				layoutPageTemplateCollectionId, status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] findByG_L_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId,
+		long layoutPageTemplateCollectionId, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = getByG_L_S_PrevAndNext(session, layoutPageTemplateEntry,
+					groupId, layoutPageTemplateCollectionId, status,
+					orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = getByG_L_S_PrevAndNext(session, layoutPageTemplateEntry,
+					groupId, layoutPageTemplateCollectionId, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry getByG_L_S_PrevAndNext(Session session,
+		LayoutPageTemplateEntry layoutPageTemplateEntry, long groupId,
+		long layoutPageTemplateCollectionId, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_L_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+		query.append(_FINDER_COLUMN_G_L_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(layoutPageTemplateCollectionId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @return the matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status) {
+		return filterFindByG_L_S(groupId, layoutPageTemplateCollectionId,
+			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status, int start, int end) {
+		return filterFindByG_L_S(groupId, layoutPageTemplateCollectionId,
+			status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_L_S(groupId, layoutPageTemplateCollectionId, status,
+				start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+		query.append(_FINDER_COLUMN_G_L_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS,
+					LayoutPageTemplateEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE,
+					LayoutPageTemplateEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(layoutPageTemplateCollectionId);
+
+			qPos.add(status);
+
+			return (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+				getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] filterFindByG_L_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId,
+		long layoutPageTemplateCollectionId, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_L_S_PrevAndNext(layoutPageTemplateEntryId, groupId,
+				layoutPageTemplateCollectionId, status, orderByComparator);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = filterGetByG_L_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId,
+					layoutPageTemplateCollectionId, status, orderByComparator,
+					true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = filterGetByG_L_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId,
+					layoutPageTemplateCollectionId, status, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry filterGetByG_L_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long layoutPageTemplateCollectionId, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+		query.append(_FINDER_COLUMN_G_L_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutPageTemplateEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutPageTemplateEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(layoutPageTemplateCollectionId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status) {
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry : findByG_L_S(
+				groupId, layoutPageTemplateCollectionId, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(layoutPageTemplateEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @return the number of matching layout page template entries
+	 */
+	@Override
+	public int countByG_L_S(long groupId, long layoutPageTemplateCollectionId,
+		int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_L_S;
+
+		Object[] finderArgs = new Object[] {
+				groupId, layoutPageTemplateCollectionId, status
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_L_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_L_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+			query.append(_FINDER_COLUMN_G_L_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(layoutPageTemplateCollectionId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param status the status
+	 * @return the number of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_L_S(long groupId,
+		long layoutPageTemplateCollectionId, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_L_S(groupId, layoutPageTemplateCollectionId, status);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_L_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+		query.append(_FINDER_COLUMN_G_L_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(layoutPageTemplateCollectionId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_L_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_L_S_LAYOUTPAGETEMPLATECOLLECTIONID_2 =
+		"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ? AND ";
+	private static final String _FINDER_COLUMN_G_L_S_STATUS_2 = "layoutPageTemplateEntry.status = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName()
+			},
+			LayoutPageTemplateEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.TYPE_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.STATUS_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_T_S = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_T_S(long groupId, int type,
+		int status) {
+		return findByG_T_S(groupId, type, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_T_S(long groupId, int type,
+		int status, int start, int end) {
+		return findByG_T_S(groupId, type, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_T_S(long groupId, int type,
+		int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return findByG_T_S(groupId, type, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_T_S(long groupId, int type,
+		int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S;
+			finderArgs = new Object[] { groupId, type, status };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_S;
+			finderArgs = new Object[] {
+					groupId, type, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<LayoutPageTemplateEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LayoutPageTemplateEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutPageTemplateEntry layoutPageTemplateEntry : list) {
+					if ((groupId != layoutPageTemplateEntry.getGroupId()) ||
+							(type != layoutPageTemplateEntry.getType()) ||
+							(status != layoutPageTemplateEntry.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_T_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_T_S_TYPE_2);
+
+			query.append(_FINDER_COLUMN_G_T_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(type);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_T_S_First(long groupId, int type,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_T_S_First(groupId,
+				type, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_T_S_First(long groupId, int type,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		List<LayoutPageTemplateEntry> list = findByG_T_S(groupId, type, status,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_T_S_Last(long groupId, int type,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_T_S_Last(groupId,
+				type, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_T_S_Last(long groupId, int type,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		int count = countByG_T_S(groupId, type, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutPageTemplateEntry> list = findByG_T_S(groupId, type, status,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] findByG_T_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = getByG_T_S_PrevAndNext(session, layoutPageTemplateEntry,
+					groupId, type, status, orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = getByG_T_S_PrevAndNext(session, layoutPageTemplateEntry,
+					groupId, type, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry getByG_T_S_PrevAndNext(Session session,
+		LayoutPageTemplateEntry layoutPageTemplateEntry, long groupId,
+		int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_T_S_TYPE_2);
+
+		query.append(_FINDER_COLUMN_G_T_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(type);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_T_S(long groupId,
+		int type, int status) {
+		return filterFindByG_T_S(groupId, type, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_T_S(long groupId,
+		int type, int status, int start, int end) {
+		return filterFindByG_T_S(groupId, type, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_T_S(long groupId,
+		int type, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_T_S(groupId, type, status, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_T_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS,
+					LayoutPageTemplateEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE,
+					LayoutPageTemplateEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(type);
+
+			qPos.add(status);
+
+			return (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+				getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] filterFindByG_T_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_T_S_PrevAndNext(layoutPageTemplateEntryId, groupId,
+				type, status, orderByComparator);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = filterGetByG_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, type, status,
+					orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = filterGetByG_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, type, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry filterGetByG_T_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_T_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutPageTemplateEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutPageTemplateEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(type);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_T_S(long groupId, int type, int status) {
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry : findByG_T_S(
+				groupId, type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
+			remove(layoutPageTemplateEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching layout page template entries
+	 */
+	@Override
+	public int countByG_T_S(long groupId, int type, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_T_S;
+
+		Object[] finderArgs = new Object[] { groupId, type, status };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_T_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_T_S_TYPE_2);
+
+			query.append(_FINDER_COLUMN_G_T_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(type);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_T_S(long groupId, int type, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_T_S(groupId, type, status);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_T_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(type);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_T_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_S_TYPE_2 = "layoutPageTemplateEntry.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_S_TYPE_2_SQL = "layoutPageTemplateEntry.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_S_STATUS_2 = "layoutPageTemplateEntry.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_T = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
 			LayoutPageTemplateEntryImpl.class,
@@ -7394,6 +9402,2271 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_G_C_C_D_CLASSNAMEID_2 = "layoutPageTemplateEntry.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_D_CLASSTYPEID_2 = "layoutPageTemplateEntry.classTypeId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_D_DEFAULTTEMPLATE_2 = "layoutPageTemplateEntry.defaultTemplate = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_L_LIKEN_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_LikeN_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_L_LIKEN_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_L_LikeN_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @return the matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status) {
+		return findByG_L_LikeN_S(groupId, layoutPageTemplateCollectionId, name,
+			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		int start, int end) {
+		return findByG_L_LikeN_S(groupId, layoutPageTemplateCollectionId, name,
+			status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return findByG_L_LikeN_S(groupId, layoutPageTemplateCollectionId, name,
+			status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_L_LIKEN_S;
+		finderArgs = new Object[] {
+				groupId, layoutPageTemplateCollectionId, name, status,
+				
+				start, end, orderByComparator
+			};
+
+		List<LayoutPageTemplateEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LayoutPageTemplateEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutPageTemplateEntry layoutPageTemplateEntry : list) {
+					if ((groupId != layoutPageTemplateEntry.getGroupId()) ||
+							(layoutPageTemplateCollectionId != layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) ||
+							!StringUtil.wildcardMatches(
+								layoutPageTemplateEntry.getName(), name, '_',
+								'%', '\\', false) ||
+							(status != layoutPageTemplateEntry.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_1);
+			}
+			else if (name.equals("")) {
+				query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(layoutPageTemplateCollectionId);
+
+				if (bindName) {
+					qPos.add(StringUtil.toLowerCase(name));
+				}
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_L_LikeN_S_First(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_L_LikeN_S_First(groupId,
+				layoutPageTemplateCollectionId, name, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", layoutPageTemplateCollectionId=");
+		msg.append(layoutPageTemplateCollectionId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_L_LikeN_S_First(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		List<LayoutPageTemplateEntry> list = findByG_L_LikeN_S(groupId,
+				layoutPageTemplateCollectionId, name, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_L_LikeN_S_Last(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_L_LikeN_S_Last(groupId,
+				layoutPageTemplateCollectionId, name, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", layoutPageTemplateCollectionId=");
+		msg.append(layoutPageTemplateCollectionId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_L_LikeN_S_Last(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		int count = countByG_L_LikeN_S(groupId, layoutPageTemplateCollectionId,
+				name, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutPageTemplateEntry> list = findByG_L_LikeN_S(groupId,
+				layoutPageTemplateCollectionId, name, status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] findByG_L_LikeN_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = getByG_L_LikeN_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId,
+					layoutPageTemplateCollectionId, name, status,
+					orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = getByG_L_LikeN_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId,
+					layoutPageTemplateCollectionId, name, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry getByG_L_LikeN_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(layoutPageTemplateCollectionId);
+
+		if (bindName) {
+			qPos.add(StringUtil.toLowerCase(name));
+		}
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @return the matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status) {
+		return filterFindByG_L_LikeN_S(groupId, layoutPageTemplateCollectionId,
+			name, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		int start, int end) {
+		return filterFindByG_L_LikeN_S(groupId, layoutPageTemplateCollectionId,
+			name, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_L_LikeN_S(groupId, layoutPageTemplateCollectionId,
+				name, status, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS,
+					LayoutPageTemplateEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE,
+					LayoutPageTemplateEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(layoutPageTemplateCollectionId);
+
+			if (bindName) {
+				qPos.add(StringUtil.toLowerCase(name));
+			}
+
+			qPos.add(status);
+
+			return (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+				getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] filterFindByG_L_LikeN_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId,
+		long layoutPageTemplateCollectionId, String name, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_L_LikeN_S_PrevAndNext(layoutPageTemplateEntryId,
+				groupId, layoutPageTemplateCollectionId, name, status,
+				orderByComparator);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = filterGetByG_L_LikeN_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId,
+					layoutPageTemplateCollectionId, name, status,
+					orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = filterGetByG_L_LikeN_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId,
+					layoutPageTemplateCollectionId, name, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry filterGetByG_L_LikeN_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutPageTemplateEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutPageTemplateEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(layoutPageTemplateCollectionId);
+
+		if (bindName) {
+			qPos.add(StringUtil.toLowerCase(name));
+		}
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status) {
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry : findByG_L_LikeN_S(
+				groupId, layoutPageTemplateCollectionId, name, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(layoutPageTemplateEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @return the number of matching layout page template entries
+	 */
+	@Override
+	public int countByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_L_LIKEN_S;
+
+		Object[] finderArgs = new Object[] {
+				groupId, layoutPageTemplateCollectionId, name, status
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_1);
+			}
+			else if (name.equals("")) {
+				query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(layoutPageTemplateCollectionId);
+
+				if (bindName) {
+					qPos.add(StringUtil.toLowerCase(name));
+				}
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param layoutPageTemplateCollectionId the layout page template collection ID
+	 * @param name the name
+	 * @param status the status
+	 * @return the number of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_L_LikeN_S(long groupId,
+		long layoutPageTemplateCollectionId, String name, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_L_LikeN_S(groupId, layoutPageTemplateCollectionId,
+				name, status);
+		}
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_LAYOUTPAGETEMPLATECOLLECTIONID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_L_LIKEN_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_L_LIKEN_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(layoutPageTemplateCollectionId);
+
+			if (bindName) {
+				qPos.add(StringUtil.toLowerCase(name));
+			}
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_L_LIKEN_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_L_LIKEN_S_LAYOUTPAGETEMPLATECOLLECTIONID_2 =
+		"layoutPageTemplateEntry.layoutPageTemplateCollectionId = ? AND ";
+	private static final String _FINDER_COLUMN_G_L_LIKEN_S_NAME_1 = "layoutPageTemplateEntry.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_L_LIKEN_S_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ? AND ";
+	private static final String _FINDER_COLUMN_G_L_LIKEN_S_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
+	private static final String _FINDER_COLUMN_G_L_LIKEN_S_STATUS_2 = "layoutPageTemplateEntry.status = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_LIKEN_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_LikeN_S",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_LIKEN_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T_LikeN_S",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_T_LikeN_S(long groupId,
+		String name, int type, int status) {
+		return findByG_T_LikeN_S(groupId, name, type, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_T_LikeN_S(long groupId,
+		String name, int type, int status, int start, int end) {
+		return findByG_T_LikeN_S(groupId, name, type, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_T_LikeN_S(long groupId,
+		String name, int type, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return findByG_T_LikeN_S(groupId, name, type, status, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_T_LikeN_S(long groupId,
+		String name, int type, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_LIKEN_S;
+		finderArgs = new Object[] {
+				groupId, name, type, status,
+				
+				start, end, orderByComparator
+			};
+
+		List<LayoutPageTemplateEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LayoutPageTemplateEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutPageTemplateEntry layoutPageTemplateEntry : list) {
+					if ((groupId != layoutPageTemplateEntry.getGroupId()) ||
+							!StringUtil.wildcardMatches(
+								layoutPageTemplateEntry.getName(), name, '_',
+								'%', '\\', false) ||
+							(type != layoutPageTemplateEntry.getType()) ||
+							(status != layoutPageTemplateEntry.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_1);
+			}
+			else if (name.equals("")) {
+				query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_TYPE_2);
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindName) {
+					qPos.add(StringUtil.toLowerCase(name));
+				}
+
+				qPos.add(type);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_T_LikeN_S_First(long groupId,
+		String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_T_LikeN_S_First(groupId,
+				name, type, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_T_LikeN_S_First(long groupId,
+		String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		List<LayoutPageTemplateEntry> list = findByG_T_LikeN_S(groupId, name,
+				type, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_T_LikeN_S_Last(long groupId,
+		String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_T_LikeN_S_Last(groupId,
+				name, type, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_T_LikeN_S_Last(long groupId,
+		String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		int count = countByG_T_LikeN_S(groupId, name, type, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutPageTemplateEntry> list = findByG_T_LikeN_S(groupId, name,
+				type, status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] findByG_T_LikeN_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, String name, int type,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = getByG_T_LikeN_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, name, type, status,
+					orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = getByG_T_LikeN_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, name, type, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry getByG_T_LikeN_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(6);
+		}
+
+		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_GROUPID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_TYPE_2);
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindName) {
+			qPos.add(StringUtil.toLowerCase(name));
+		}
+
+		qPos.add(type);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_T_LikeN_S(long groupId,
+		String name, int type, int status) {
+		return filterFindByG_T_LikeN_S(groupId, name, type, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_T_LikeN_S(long groupId,
+		String name, int type, int status, int start, int end) {
+		return filterFindByG_T_LikeN_S(groupId, name, type, status, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_T_LikeN_S(long groupId,
+		String name, int type, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_T_LikeN_S(groupId, name, type, status, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_GROUPID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS,
+					LayoutPageTemplateEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE,
+					LayoutPageTemplateEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindName) {
+				qPos.add(StringUtil.toLowerCase(name));
+			}
+
+			qPos.add(type);
+
+			qPos.add(status);
+
+			return (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+				getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] filterFindByG_T_LikeN_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, String name, int type,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_T_LikeN_S_PrevAndNext(layoutPageTemplateEntryId,
+				groupId, name, type, status, orderByComparator);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = filterGetByG_T_LikeN_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, name, type, status,
+					orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = filterGetByG_T_LikeN_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, name, type, status,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry filterGetByG_T_LikeN_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_GROUPID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutPageTemplateEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutPageTemplateEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		if (bindName) {
+			qPos.add(StringUtil.toLowerCase(name));
+		}
+
+		qPos.add(type);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_T_LikeN_S(long groupId, String name, int type,
+		int status) {
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry : findByG_T_LikeN_S(
+				groupId, name, type, status, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(layoutPageTemplateEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching layout page template entries
+	 */
+	@Override
+	public int countByG_T_LikeN_S(long groupId, String name, int type,
+		int status) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_T_LIKEN_S;
+
+		Object[] finderArgs = new Object[] { groupId, name, type, status };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_1);
+			}
+			else if (name.equals("")) {
+				query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_TYPE_2);
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (bindName) {
+					qPos.add(StringUtil.toLowerCase(name));
+				}
+
+				qPos.add(type);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_T_LikeN_S(long groupId, String name, int type,
+		int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_T_LikeN_S(groupId, name, type, status);
+		}
+
+		StringBundler query = new StringBundler(5);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_GROUPID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_T_LIKEN_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_T_LIKEN_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (bindName) {
+				qPos.add(StringUtil.toLowerCase(name));
+			}
+
+			qPos.add(type);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_T_LIKEN_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_LIKEN_S_NAME_1 = "layoutPageTemplateEntry.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_T_LIKEN_S_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ? AND ";
+	private static final String _FINDER_COLUMN_G_T_LIKEN_S_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
+	private static final String _FINDER_COLUMN_G_T_LIKEN_S_TYPE_2 = "layoutPageTemplateEntry.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_LIKEN_S_TYPE_2_SQL = "layoutPageTemplateEntry.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_G_T_LIKEN_S_STATUS_2 = "layoutPageTemplateEntry.status = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_LIKEN_T =
 		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -8575,6 +12848,3485 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_TYPE_2 = "layoutPageTemplateEntry.type = ?";
 	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_TYPE_2_SQL = "layoutPageTemplateEntry.type_ = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_T_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			},
+			LayoutPageTemplateEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.CLASSTYPEID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.TYPE_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.STATUS_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_T_S = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_T_S(long groupId,
+		long classNameId, long classTypeId, int type, int status) {
+		return findByG_C_C_T_S(groupId, classNameId, classTypeId, type, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_T_S(long groupId,
+		long classNameId, long classTypeId, int type, int status, int start,
+		int end) {
+		return findByG_C_C_T_S(groupId, classNameId, classTypeId, type, status,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_T_S(long groupId,
+		long classNameId, long classTypeId, int type, int status, int start,
+		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return findByG_C_C_T_S(groupId, classNameId, classTypeId, type, status,
+			start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_T_S(long groupId,
+		long classNameId, long classTypeId, int type, int status, int start,
+		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_S;
+			finderArgs = new Object[] {
+					groupId, classNameId, classTypeId, type, status
+				};
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_T_S;
+			finderArgs = new Object[] {
+					groupId, classNameId, classTypeId, type, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<LayoutPageTemplateEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LayoutPageTemplateEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutPageTemplateEntry layoutPageTemplateEntry : list) {
+					if ((groupId != layoutPageTemplateEntry.getGroupId()) ||
+							(classNameId != layoutPageTemplateEntry.getClassNameId()) ||
+							(classTypeId != layoutPageTemplateEntry.getClassTypeId()) ||
+							(type != layoutPageTemplateEntry.getType()) ||
+							(status != layoutPageTemplateEntry.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(7 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(7);
+			}
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSTYPEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_TYPE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classTypeId);
+
+				qPos.add(type);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_C_C_T_S_First(long groupId,
+		long classNameId, long classTypeId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_C_T_S_First(groupId,
+				classNameId, classTypeId, type, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classTypeId=");
+		msg.append(classTypeId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_C_C_T_S_First(long groupId,
+		long classNameId, long classTypeId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		List<LayoutPageTemplateEntry> list = findByG_C_C_T_S(groupId,
+				classNameId, classTypeId, type, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_C_C_T_S_Last(long groupId,
+		long classNameId, long classTypeId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_C_T_S_Last(groupId,
+				classNameId, classTypeId, type, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classTypeId=");
+		msg.append(classTypeId);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_C_C_T_S_Last(long groupId,
+		long classNameId, long classTypeId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		int count = countByG_C_C_T_S(groupId, classNameId, classTypeId, type,
+				status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutPageTemplateEntry> list = findByG_C_C_T_S(groupId,
+				classNameId, classTypeId, type, status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] findByG_C_C_T_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long classNameId,
+		long classTypeId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = getByG_C_C_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					type, status, orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = getByG_C_C_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					type, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry getByG_C_C_T_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long classNameId, long classTypeId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSTYPEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_TYPE_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classTypeId);
+
+		qPos.add(type);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_T_S(long groupId,
+		long classNameId, long classTypeId, int type, int status) {
+		return filterFindByG_C_C_T_S(groupId, classNameId, classTypeId, type,
+			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_T_S(long groupId,
+		long classNameId, long classTypeId, int type, int status, int start,
+		int end) {
+		return filterFindByG_C_C_T_S(groupId, classNameId, classTypeId, type,
+			status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_T_S(long groupId,
+		long classNameId, long classTypeId, int type, int status, int start,
+		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_C_T_S(groupId, classNameId, classTypeId, type,
+				status, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSTYPEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS,
+					LayoutPageTemplateEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE,
+					LayoutPageTemplateEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classTypeId);
+
+			qPos.add(type);
+
+			qPos.add(status);
+
+			return (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+				getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] filterFindByG_C_C_T_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long classNameId,
+		long classTypeId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_C_T_S_PrevAndNext(layoutPageTemplateEntryId,
+				groupId, classNameId, classTypeId, type, status,
+				orderByComparator);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = filterGetByG_C_C_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					type, status, orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = filterGetByG_C_C_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					type, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry filterGetByG_C_C_T_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long classNameId, long classTypeId, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(9 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSTYPEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutPageTemplateEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutPageTemplateEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classTypeId);
+
+		qPos.add(type);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_C_C_T_S(long groupId, long classNameId,
+		long classTypeId, int type, int status) {
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry : findByG_C_C_T_S(
+				groupId, classNameId, classTypeId, type, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(layoutPageTemplateEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching layout page template entries
+	 */
+	@Override
+	public int countByG_C_C_T_S(long groupId, long classNameId,
+		long classTypeId, int type, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_T_S;
+
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classTypeId, type, status
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSTYPEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_TYPE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_T_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classTypeId);
+
+				qPos.add(type);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_C_C_T_S(long groupId, long classNameId,
+		long classTypeId, int type, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_C_C_T_S(groupId, classNameId, classTypeId, type,
+				status);
+		}
+
+		StringBundler query = new StringBundler(6);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_CLASSTYPEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_C_C_T_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classTypeId);
+
+			qPos.add(type);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_T_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_S_CLASSNAMEID_2 = "layoutPageTemplateEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_S_CLASSTYPEID_2 = "layoutPageTemplateEntry.classTypeId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_S_TYPE_2 = "layoutPageTemplateEntry.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_S_TYPE_2_SQL = "layoutPageTemplateEntry.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_T_S_STATUS_2 = "layoutPageTemplateEntry.status = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_D_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_D_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_D_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_D_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Integer.class.getName()
+			},
+			LayoutPageTemplateEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.CLASSTYPEID_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.DEFAULTTEMPLATE_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.STATUS_COLUMN_BITMASK |
+			LayoutPageTemplateEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_D_S = new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_D_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @return the matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_D_S(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate, int status) {
+		return findByG_C_C_D_S(groupId, classNameId, classTypeId,
+			defaultTemplate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_D_S(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, int start, int end) {
+		return findByG_C_C_D_S(groupId, classNameId, classTypeId,
+			defaultTemplate, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_D_S(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return findByG_C_C_D_S(groupId, classNameId, classTypeId,
+			defaultTemplate, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_D_S(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_D_S;
+			finderArgs = new Object[] {
+					groupId, classNameId, classTypeId, defaultTemplate, status
+				};
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_D_S;
+			finderArgs = new Object[] {
+					groupId, classNameId, classTypeId, defaultTemplate, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<LayoutPageTemplateEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LayoutPageTemplateEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutPageTemplateEntry layoutPageTemplateEntry : list) {
+					if ((groupId != layoutPageTemplateEntry.getGroupId()) ||
+							(classNameId != layoutPageTemplateEntry.getClassNameId()) ||
+							(classTypeId != layoutPageTemplateEntry.getClassTypeId()) ||
+							(defaultTemplate != layoutPageTemplateEntry.isDefaultTemplate()) ||
+							(status != layoutPageTemplateEntry.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(7 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(7);
+			}
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSTYPEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_DEFAULTTEMPLATE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classTypeId);
+
+				qPos.add(defaultTemplate);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_C_C_D_S_First(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_C_D_S_First(groupId,
+				classNameId, classTypeId, defaultTemplate, status,
+				orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classTypeId=");
+		msg.append(classTypeId);
+
+		msg.append(", defaultTemplate=");
+		msg.append(defaultTemplate);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_C_C_D_S_First(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		List<LayoutPageTemplateEntry> list = findByG_C_C_D_S(groupId,
+				classNameId, classTypeId, defaultTemplate, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_C_C_D_S_Last(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_C_D_S_Last(groupId,
+				classNameId, classTypeId, defaultTemplate, status,
+				orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(12);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classTypeId=");
+		msg.append(classTypeId);
+
+		msg.append(", defaultTemplate=");
+		msg.append(defaultTemplate);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_C_C_D_S_Last(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		int count = countByG_C_C_D_S(groupId, classNameId, classTypeId,
+				defaultTemplate, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutPageTemplateEntry> list = findByG_C_C_D_S(groupId,
+				classNameId, classTypeId, defaultTemplate, status, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] findByG_C_C_D_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long classNameId,
+		long classTypeId, boolean defaultTemplate, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = getByG_C_C_D_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					defaultTemplate, status, orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = getByG_C_C_D_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					defaultTemplate, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry getByG_C_C_D_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long classNameId, long classTypeId,
+		boolean defaultTemplate, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(7);
+		}
+
+		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSTYPEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_DEFAULTTEMPLATE_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classTypeId);
+
+		qPos.add(defaultTemplate);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @return the matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_D_S(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate, int status) {
+		return filterFindByG_C_C_D_S(groupId, classNameId, classTypeId,
+			defaultTemplate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_D_S(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, int start, int end) {
+		return filterFindByG_C_C_D_S(groupId, classNameId, classTypeId,
+			defaultTemplate, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_D_S(long groupId,
+		long classNameId, long classTypeId, boolean defaultTemplate,
+		int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_C_D_S(groupId, classNameId, classTypeId,
+				defaultTemplate, status, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSTYPEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_DEFAULTTEMPLATE_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS,
+					LayoutPageTemplateEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE,
+					LayoutPageTemplateEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classTypeId);
+
+			qPos.add(defaultTemplate);
+
+			qPos.add(status);
+
+			return (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+				getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] filterFindByG_C_C_D_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long classNameId,
+		long classTypeId, boolean defaultTemplate, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_C_D_S_PrevAndNext(layoutPageTemplateEntryId,
+				groupId, classNameId, classTypeId, defaultTemplate, status,
+				orderByComparator);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = filterGetByG_C_C_D_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					defaultTemplate, status, orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = filterGetByG_C_C_D_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					defaultTemplate, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry filterGetByG_C_C_D_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long classNameId, long classTypeId,
+		boolean defaultTemplate, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(9 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSTYPEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_DEFAULTTEMPLATE_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutPageTemplateEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutPageTemplateEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classTypeId);
+
+		qPos.add(defaultTemplate);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_C_C_D_S(long groupId, long classNameId,
+		long classTypeId, boolean defaultTemplate, int status) {
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry : findByG_C_C_D_S(
+				groupId, classNameId, classTypeId, defaultTemplate, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(layoutPageTemplateEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @return the number of matching layout page template entries
+	 */
+	@Override
+	public int countByG_C_C_D_S(long groupId, long classNameId,
+		long classTypeId, boolean defaultTemplate, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_D_S;
+
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classTypeId, defaultTemplate, status
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSTYPEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_DEFAULTTEMPLATE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_D_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classTypeId);
+
+				qPos.add(defaultTemplate);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param defaultTemplate the default template
+	 * @param status the status
+	 * @return the number of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_C_C_D_S(long groupId, long classNameId,
+		long classTypeId, boolean defaultTemplate, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_C_C_D_S(groupId, classNameId, classTypeId,
+				defaultTemplate, status);
+		}
+
+		StringBundler query = new StringBundler(6);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_CLASSTYPEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_DEFAULTTEMPLATE_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_D_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classTypeId);
+
+			qPos.add(defaultTemplate);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_D_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_D_S_CLASSNAMEID_2 = "layoutPageTemplateEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_D_S_CLASSTYPEID_2 = "layoutPageTemplateEntry.classTypeId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_D_S_DEFAULTTEMPLATE_2 = "layoutPageTemplateEntry.defaultTemplate = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_D_S_STATUS_2 = "layoutPageTemplateEntry.status = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_LIKEN_T_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED,
+			LayoutPageTemplateEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_LikeN_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_C_LIKEN_T_S =
+		new FinderPath(LayoutPageTemplateEntryModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutPageTemplateEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_C_LikeN_T_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName()
+			});
+
+	/**
+	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T_S(long groupId,
+		long classNameId, long classTypeId, String name, int type, int status) {
+		return findByG_C_C_LikeN_T_S(groupId, classNameId, classTypeId, name,
+			type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T_S(long groupId,
+		long classNameId, long classTypeId, String name, int type, int status,
+		int start, int end) {
+		return findByG_C_C_LikeN_T_S(groupId, classNameId, classTypeId, name,
+			type, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T_S(long groupId,
+		long classNameId, long classTypeId, String name, int type, int status,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return findByG_C_C_LikeN_T_S(groupId, classNameId, classTypeId, name,
+			type, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching layout page template entries
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T_S(long groupId,
+		long classNameId, long classTypeId, String name, int type, int status,
+		int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_LIKEN_T_S;
+		finderArgs = new Object[] {
+				groupId, classNameId, classTypeId, name, type, status,
+				
+				start, end, orderByComparator
+			};
+
+		List<LayoutPageTemplateEntry> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LayoutPageTemplateEntry>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutPageTemplateEntry layoutPageTemplateEntry : list) {
+					if ((groupId != layoutPageTemplateEntry.getGroupId()) ||
+							(classNameId != layoutPageTemplateEntry.getClassNameId()) ||
+							(classTypeId != layoutPageTemplateEntry.getClassTypeId()) ||
+							!StringUtil.wildcardMatches(
+								layoutPageTemplateEntry.getName(), name, '_',
+								'%', '\\', false) ||
+							(type != layoutPageTemplateEntry.getType()) ||
+							(status != layoutPageTemplateEntry.getStatus())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(8 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(8);
+			}
+
+			query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSTYPEID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_1);
+			}
+			else if (name.equals("")) {
+				query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classTypeId);
+
+				if (bindName) {
+					qPos.add(StringUtil.toLowerCase(name));
+				}
+
+				qPos.add(type);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_C_C_LikeN_T_S_First(long groupId,
+		long classNameId, long classTypeId, String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_C_LikeN_T_S_First(groupId,
+				classNameId, classTypeId, name, type, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(14);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classTypeId=");
+		msg.append(classTypeId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_C_C_LikeN_T_S_First(long groupId,
+		long classNameId, long classTypeId, String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		List<LayoutPageTemplateEntry> list = findByG_C_C_LikeN_T_S(groupId,
+				classNameId, classTypeId, name, type, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry findByG_C_C_LikeN_T_S_Last(long groupId,
+		long classNameId, long classTypeId, String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByG_C_C_LikeN_T_S_Last(groupId,
+				classNameId, classTypeId, name, type, status, orderByComparator);
+
+		if (layoutPageTemplateEntry != null) {
+			return layoutPageTemplateEntry;
+		}
+
+		StringBundler msg = new StringBundler(14);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", classNameId=");
+		msg.append(classNameId);
+
+		msg.append(", classTypeId=");
+		msg.append(classTypeId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append(", type=");
+		msg.append(type);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchPageTemplateEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry fetchByG_C_C_LikeN_T_S_Last(long groupId,
+		long classNameId, long classTypeId, String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		int count = countByG_C_C_LikeN_T_S(groupId, classNameId, classTypeId,
+				name, type, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LayoutPageTemplateEntry> list = findByG_C_C_LikeN_T_S(groupId,
+				classNameId, classTypeId, name, type, status, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] findByG_C_C_LikeN_T_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long classNameId,
+		long classTypeId, String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = getByG_C_C_LikeN_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					name, type, status, orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = getByG_C_C_LikeN_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					name, type, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry getByG_C_C_LikeN_T_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long classNameId, long classTypeId, String name,
+		int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(9 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(8);
+		}
+
+		query.append(_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSTYPEID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classTypeId);
+
+		if (bindName) {
+			qPos.add(StringUtil.toLowerCase(name));
+		}
+
+		qPos.add(type);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @return the matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_LikeN_T_S(
+		long groupId, long classNameId, long classTypeId, String name,
+		int type, int status) {
+		return filterFindByG_C_C_LikeN_T_S(groupId, classNameId, classTypeId,
+			name, type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @return the range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_LikeN_T_S(
+		long groupId, long classNameId, long classTypeId, String name,
+		int type, int status, int start, int end) {
+		return filterFindByG_C_C_LikeN_T_S(groupId, classNameId, classTypeId,
+			name, type, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param start the lower bound of the range of layout page template entries
+	 * @param end the upper bound of the range of layout page template entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public List<LayoutPageTemplateEntry> filterFindByG_C_C_LikeN_T_S(
+		long groupId, long classNameId, long classTypeId, String name,
+		int type, int status, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_C_LikeN_T_S(groupId, classNameId, classTypeId,
+				name, type, status, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(8 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(9);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSTYPEID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS,
+					LayoutPageTemplateEntryImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE,
+					LayoutPageTemplateEntryImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classTypeId);
+
+			if (bindName) {
+				qPos.add(StringUtil.toLowerCase(name));
+			}
+
+			qPos.add(type);
+
+			qPos.add(status);
+
+			return (List<LayoutPageTemplateEntry>)QueryUtil.list(q,
+				getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next layout page template entry
+	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	 */
+	@Override
+	public LayoutPageTemplateEntry[] filterFindByG_C_C_LikeN_T_S_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long classNameId,
+		long classTypeId, String name, int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws NoSuchPageTemplateEntryException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_C_LikeN_T_S_PrevAndNext(layoutPageTemplateEntryId,
+				groupId, classNameId, classTypeId, name, type, status,
+				orderByComparator);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry = findByPrimaryKey(layoutPageTemplateEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LayoutPageTemplateEntry[] array = new LayoutPageTemplateEntryImpl[3];
+
+			array[0] = filterGetByG_C_C_LikeN_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					name, type, status, orderByComparator, true);
+
+			array[1] = layoutPageTemplateEntry;
+
+			array[2] = filterGetByG_C_C_LikeN_T_S_PrevAndNext(session,
+					layoutPageTemplateEntry, groupId, classNameId, classTypeId,
+					name, type, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LayoutPageTemplateEntry filterGetByG_C_C_LikeN_T_S_PrevAndNext(
+		Session session, LayoutPageTemplateEntry layoutPageTemplateEntry,
+		long groupId, long classNameId, long classTypeId, String name,
+		int type, int status,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(10 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(9);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSTYPEID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, LayoutPageTemplateEntryImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, LayoutPageTemplateEntryImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(classNameId);
+
+		qPos.add(classTypeId);
+
+		if (bindName) {
+			qPos.add(StringUtil.toLowerCase(name));
+		}
+
+		qPos.add(type);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(layoutPageTemplateEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LayoutPageTemplateEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 */
+	@Override
+	public void removeByG_C_C_LikeN_T_S(long groupId, long classNameId,
+		long classTypeId, String name, int type, int status) {
+		for (LayoutPageTemplateEntry layoutPageTemplateEntry : findByG_C_C_LikeN_T_S(
+				groupId, classNameId, classTypeId, name, type, status,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(layoutPageTemplateEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching layout page template entries
+	 */
+	@Override
+	public int countByG_C_C_LikeN_T_S(long groupId, long classNameId,
+		long classTypeId, String name, int type, int status) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_C_LIKEN_T_S;
+
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, classTypeId, name, type, status
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(7);
+
+			query.append(_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSTYPEID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_1);
+			}
+			else if (name.equals("")) {
+				query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				qPos.add(classTypeId);
+
+				if (bindName) {
+					qPos.add(StringUtil.toLowerCase(name));
+				}
+
+				qPos.add(type);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classTypeId the class type ID
+	 * @param name the name
+	 * @param type the type
+	 * @param status the status
+	 * @return the number of matching layout page template entries that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_C_C_LikeN_T_S(long groupId, long classNameId,
+		long classTypeId, String name, int type, int status) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_C_C_LikeN_T_S(groupId, classNameId, classTypeId,
+				name, type, status);
+		}
+
+		StringBundler query = new StringBundler(7);
+
+		query.append(_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSTYPEID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2_SQL);
+
+		query.append(_FINDER_COLUMN_G_C_C_LIKEN_T_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				LayoutPageTemplateEntry.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(classNameId);
+
+			qPos.add(classTypeId);
+
+			if (bindName) {
+				qPos.add(StringUtil.toLowerCase(name));
+			}
+
+			qPos.add(type);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_GROUPID_2 = "layoutPageTemplateEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSNAMEID_2 = "layoutPageTemplateEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_CLASSTYPEID_2 = "layoutPageTemplateEntry.classTypeId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_1 = "layoutPageTemplateEntry.name IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_2 = "lower(layoutPageTemplateEntry.name) LIKE ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_NAME_3 = "(layoutPageTemplateEntry.name IS NULL OR layoutPageTemplateEntry.name LIKE '') AND ";
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2 = "layoutPageTemplateEntry.type = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_TYPE_2_SQL = "layoutPageTemplateEntry.type_ = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_LIKEN_T_S_STATUS_2 = "layoutPageTemplateEntry.status = ?";
 
 	public LayoutPageTemplateEntryPersistenceImpl() {
 		setModelClass(LayoutPageTemplateEntry.class);
@@ -8922,6 +16674,26 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 
 			args = new Object[] {
 					layoutPageTemplateEntryModelImpl.getGroupId(),
+					layoutPageTemplateEntryModelImpl.getLayoutPageTemplateCollectionId(),
+					layoutPageTemplateEntryModelImpl.getStatus()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_L_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_L_S,
+				args);
+
+			args = new Object[] {
+					layoutPageTemplateEntryModelImpl.getGroupId(),
+					layoutPageTemplateEntryModelImpl.getType(),
+					layoutPageTemplateEntryModelImpl.getStatus()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
+				args);
+
+			args = new Object[] {
+					layoutPageTemplateEntryModelImpl.getGroupId(),
 					layoutPageTemplateEntryModelImpl.getClassNameId(),
 					layoutPageTemplateEntryModelImpl.getClassTypeId(),
 					layoutPageTemplateEntryModelImpl.getType()
@@ -8940,6 +16712,30 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_D, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_D,
+				args);
+
+			args = new Object[] {
+					layoutPageTemplateEntryModelImpl.getGroupId(),
+					layoutPageTemplateEntryModelImpl.getClassNameId(),
+					layoutPageTemplateEntryModelImpl.getClassTypeId(),
+					layoutPageTemplateEntryModelImpl.getType(),
+					layoutPageTemplateEntryModelImpl.getStatus()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_T_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_S,
+				args);
+
+			args = new Object[] {
+					layoutPageTemplateEntryModelImpl.getGroupId(),
+					layoutPageTemplateEntryModelImpl.getClassNameId(),
+					layoutPageTemplateEntryModelImpl.getClassTypeId(),
+					layoutPageTemplateEntryModelImpl.isDefaultTemplate(),
+					layoutPageTemplateEntryModelImpl.getStatus()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_D_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_D_S,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -9010,6 +16806,52 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 			}
 
 			if ((layoutPageTemplateEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_L_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						layoutPageTemplateEntryModelImpl.getOriginalGroupId(),
+						layoutPageTemplateEntryModelImpl.getOriginalLayoutPageTemplateCollectionId(),
+						layoutPageTemplateEntryModelImpl.getOriginalStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_L_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_L_S,
+					args);
+
+				args = new Object[] {
+						layoutPageTemplateEntryModelImpl.getGroupId(),
+						layoutPageTemplateEntryModelImpl.getLayoutPageTemplateCollectionId(),
+						layoutPageTemplateEntryModelImpl.getStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_L_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_L_S,
+					args);
+			}
+
+			if ((layoutPageTemplateEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						layoutPageTemplateEntryModelImpl.getOriginalGroupId(),
+						layoutPageTemplateEntryModelImpl.getOriginalType(),
+						layoutPageTemplateEntryModelImpl.getOriginalStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
+					args);
+
+				args = new Object[] {
+						layoutPageTemplateEntryModelImpl.getGroupId(),
+						layoutPageTemplateEntryModelImpl.getType(),
+						layoutPageTemplateEntryModelImpl.getStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_T_S,
+					args);
+			}
+
+			if ((layoutPageTemplateEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						layoutPageTemplateEntryModelImpl.getOriginalGroupId(),
@@ -9056,6 +16898,60 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_D, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_D,
+					args);
+			}
+
+			if ((layoutPageTemplateEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						layoutPageTemplateEntryModelImpl.getOriginalGroupId(),
+						layoutPageTemplateEntryModelImpl.getOriginalClassNameId(),
+						layoutPageTemplateEntryModelImpl.getOriginalClassTypeId(),
+						layoutPageTemplateEntryModelImpl.getOriginalType(),
+						layoutPageTemplateEntryModelImpl.getOriginalStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_S,
+					args);
+
+				args = new Object[] {
+						layoutPageTemplateEntryModelImpl.getGroupId(),
+						layoutPageTemplateEntryModelImpl.getClassNameId(),
+						layoutPageTemplateEntryModelImpl.getClassTypeId(),
+						layoutPageTemplateEntryModelImpl.getType(),
+						layoutPageTemplateEntryModelImpl.getStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_T_S,
+					args);
+			}
+
+			if ((layoutPageTemplateEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_D_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						layoutPageTemplateEntryModelImpl.getOriginalGroupId(),
+						layoutPageTemplateEntryModelImpl.getOriginalClassNameId(),
+						layoutPageTemplateEntryModelImpl.getOriginalClassTypeId(),
+						layoutPageTemplateEntryModelImpl.getOriginalDefaultTemplate(),
+						layoutPageTemplateEntryModelImpl.getOriginalStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_D_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_D_S,
+					args);
+
+				args = new Object[] {
+						layoutPageTemplateEntryModelImpl.getGroupId(),
+						layoutPageTemplateEntryModelImpl.getClassNameId(),
+						layoutPageTemplateEntryModelImpl.getClassTypeId(),
+						layoutPageTemplateEntryModelImpl.isDefaultTemplate(),
+						layoutPageTemplateEntryModelImpl.getStatus()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_D_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_D_S,
 					args);
 			}
 		}

@@ -257,6 +257,22 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_L_S() throws Exception {
+		_persistence.countByG_L_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_L_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByG_T_S() throws Exception {
+		_persistence.countByG_T_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_T_S(0L, 0, 0);
+	}
+
+	@Test
 	public void testCountByG_C_C_T() throws Exception {
 		_persistence.countByG_C_C_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -275,6 +291,26 @@ public class LayoutPageTemplateEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_L_LikeN_S() throws Exception {
+		_persistence.countByG_L_LikeN_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByG_L_LikeN_S(0L, 0L, "null", 0);
+
+		_persistence.countByG_L_LikeN_S(0L, 0L, (String)null, 0);
+	}
+
+	@Test
+	public void testCountByG_T_LikeN_S() throws Exception {
+		_persistence.countByG_T_LikeN_S(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_T_LikeN_S(0L, "null", 0, 0);
+
+		_persistence.countByG_T_LikeN_S(0L, (String)null, 0, 0);
+	}
+
+	@Test
 	public void testCountByG_C_C_LikeN_T() throws Exception {
 		_persistence.countByG_C_C_LikeN_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
@@ -283,6 +319,36 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		_persistence.countByG_C_C_LikeN_T(0L, 0L, 0L, "null", 0);
 
 		_persistence.countByG_C_C_LikeN_T(0L, 0L, 0L, (String)null, 0);
+	}
+
+	@Test
+	public void testCountByG_C_C_T_S() throws Exception {
+		_persistence.countByG_C_C_T_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_T_S(0L, 0L, 0L, 0, 0);
+	}
+
+	@Test
+	public void testCountByG_C_C_D_S() throws Exception {
+		_persistence.countByG_C_C_D_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_D_S(0L, 0L, 0L,
+			RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
+	public void testCountByG_C_C_LikeN_T_S() throws Exception {
+		_persistence.countByG_C_C_LikeN_T_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_C_C_LikeN_T_S(0L, 0L, 0L, "null", 0, 0);
+
+		_persistence.countByG_C_C_LikeN_T_S(0L, 0L, 0L, (String)null, 0, 0);
 	}
 
 	@Test

@@ -1018,13 +1018,46 @@ public interface UserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getOrganizationUsers(long organizationId);
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getOrganizationUsers(long organizationId, int start,
-		int end);
+		int end) throws PortalException;
+
+	/**
+	* Returns the users belonging to the organization with the status.
+	*
+	* @param organizationId the primary key of the organization
+	* @param status the workflow status
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getOrganizationUsers(long organizationId, int status,
+		int start, int end, OrderByComparator<User> obc)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getOrganizationUsers(long organizationId, int start,
 		int end, OrderByComparator<User> orderByComparator);
+
+	/**
+	* Returns the users belonging to the organization with the status.
+	*
+	* @param organizationId the primary key of the organization
+	* @param status the workflow status
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @return the users who belong to a group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getOrganizationUsers(long organizationId, int status,
+		OrderByComparator<User> obc) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getOrganizationUsersCount(long organizationId);

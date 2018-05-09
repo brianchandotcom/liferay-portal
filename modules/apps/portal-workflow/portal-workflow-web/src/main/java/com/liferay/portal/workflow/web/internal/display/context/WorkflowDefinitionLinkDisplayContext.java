@@ -18,6 +18,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -101,6 +102,14 @@ public class WorkflowDefinitionLinkDisplayContext {
 			_request);
 
 		_resourceBundleLoader = resourceBundleLoader;
+	}
+
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	public String getDefaultWorkflowDefinitionLabel(String className)
@@ -373,6 +382,18 @@ public class WorkflowDefinitionLinkDisplayContext {
 		return searchContainer;
 	}
 
+	public String getSearchURL() {
+		PortletURL portletURL = getPortletURL();
+
+		ThemeDisplay themeDisplay =
+			_workflowDefinitionLinkRequestHelper.getThemeDisplay();
+
+		portletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+
+		return portletURL.toString();
+	}
+
 	public String getSortingURL() throws PortletException {
 		String orderByType = ParamUtil.getString(
 			_request, "orderByType", "asc");
@@ -391,6 +412,12 @@ public class WorkflowDefinitionLinkDisplayContext {
 		portletURL.setParameter("orderByCol", getOrderByCol());
 
 		return portletURL.toString();
+	}
+
+	public int getTotalItems() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
 	}
 
 	public String getWorkflowDefinitionLabel(
@@ -417,6 +444,12 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		return HtmlUtil.escapeAttribute(workflowDefinition.getName()) +
 			StringPool.AT + workflowDefinition.getVersion();
+	}
+
+	public boolean isDisabledManagementBar() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return !searchContainer.hasResults();
 	}
 
 	public boolean isWorkflowDefinitionSelected(

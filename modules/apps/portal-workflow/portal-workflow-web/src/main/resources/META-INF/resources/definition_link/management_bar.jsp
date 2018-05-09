@@ -17,9 +17,16 @@
 <%@ include file="/definition_link/init.jsp" %>
 
 <clay:management-toolbar
-	filterItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
+	clearResultsURL="<%= workflowDefinitionLinkDisplayContext.getClearResultsURL() %>"
+	disabled="<%= workflowDefinitionLinkDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
+	itemsTotal="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= workflowDefinitionLinkDisplayContext.getSearchURL() %>"
+	searchContainerId="workflowDefinitionLinks"
+	searchFormName="fm1"
 	selectable="false"
 	sortingOrder="<%= workflowDefinitionLinkDisplayContext.getOrderByType() %>"
 	sortingURL="<%= workflowDefinitionLinkDisplayContext.getSortingURL() %>"
+	totalItems="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"
 />

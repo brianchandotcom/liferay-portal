@@ -71,6 +71,8 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -202,7 +204,14 @@ public class FedExCommerceShippingOptionHelper {
 		for (Map.Entry<CommerceAddress, List<CommerceOrderItem>> entry :
 				originAddresses.entrySet()) {
 
-			_executeRateRequest(rates, entry.getValue(), entry.getKey());
+			try {
+				_executeRateRequest(rates, entry.getValue(), entry.getKey());
+			}
+			catch (CommerceShippingEngineException csee) {
+				_log.error(csee, csee);
+
+				continue;
+			}
 		}
 
 		List<CommerceShippingOption> commerceShippingOptions = new ArrayList<>(
@@ -803,6 +812,9 @@ public class FedExCommerceShippingOptionHelper {
 
 		return new WebAuthenticationDetail(null, webAuthenticationCredential);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FedExCommerceShippingOptionHelper.class);
 
 	private final CommerceContext _commerceContext;
 	private final CommerceCurrency _commerceCurrency;

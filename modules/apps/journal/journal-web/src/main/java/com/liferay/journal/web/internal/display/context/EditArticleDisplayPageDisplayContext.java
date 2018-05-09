@@ -85,7 +85,7 @@ public class EditArticleDisplayPageDisplayContext {
 	}
 
 	public long getAssetDisplayPageId() throws PortalException {
-		if ((_assetDisplayPageId != null) && (_assetDisplayPageId > 0)) {
+		if (_assetDisplayPageId > 0) {
 			return _assetDisplayPageId;
 		}
 
@@ -315,7 +315,7 @@ public class EditArticleDisplayPageDisplayContext {
 	}
 
 	private JournalArticle _article;
-	private Long _assetDisplayPageId;
+	private long _assetDisplayPageId;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final HttpServletRequest _request;

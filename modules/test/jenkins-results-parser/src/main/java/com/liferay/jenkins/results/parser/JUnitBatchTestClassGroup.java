@@ -260,8 +260,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			JenkinsResultsParserUtil.combine(
 				"\\t(?<annotations>(@[\\s\\S]+?))public\\s+void\\s+",
 				"(?<methodName>[^\\(\\s]+)"));
-		private static Pattern _packageNamePattern = Pattern.compile(
-			"package (?<packageName>[^;]+);");
 
 		private final String _className;
 		private final GitWorkingDirectory _gitWorkingDirectory;

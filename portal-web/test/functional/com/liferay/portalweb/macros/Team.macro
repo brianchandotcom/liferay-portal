@@ -28,8 +28,8 @@
 			<var name="searchTerm" value="${teamName}" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
@@ -54,8 +54,8 @@
 				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 			</then>
 			<else>
-				<execute macro="Portlet#changeDisplayStyle">
-					<var name="displayStyle" value="icon" />
+				<execute macro="LexiconEntry#changeDisplayStyle">
+					<var name="displayStyle" value="cards" />
 				</execute>
 
 				<var name="key_cardText" value="${userScreenName}" />
@@ -86,8 +86,8 @@
 			<var name="searchTerm" value="${teamName}" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
@@ -114,8 +114,8 @@
 				<execute function="AssertTextNotPresent" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 			</then>
 			<else>
-				<execute macro="Portlet#changeDisplayStyle">
-					<var name="displayStyle" value="icon" />
+				<execute macro="LexiconEntry#changeDisplayStyle">
+					<var name="displayStyle" value="cards" />
 				</execute>
 
 				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
@@ -144,8 +144,8 @@
 	<command name="deleteCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
@@ -160,8 +160,8 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -271,8 +271,8 @@
 	<command name="viewCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />

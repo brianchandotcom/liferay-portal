@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.List;
@@ -67,13 +68,13 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
-			int start, int end)
-		throws PortalException {
+		int start, int end) {
 
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			getLayoutPageTemplateEntries(
 				_themeDisplay.getScopeGroupId(),
-				getLayoutPageTemplateCollectionId(), start, end);
+				getLayoutPageTemplateCollectionId(),
+				WorkflowConstants.STATUS_APPROVED, start, end);
 	}
 
 	public int getLayoutPageTemplateEntriesCount() {

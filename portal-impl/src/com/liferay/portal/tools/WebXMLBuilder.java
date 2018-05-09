@@ -43,7 +43,7 @@ public class WebXMLBuilder {
 		ToolDependencies.wireBasic();
 
 		if (args.length == 3) {
-			new WebXMLBuilder(args[0], args[1], args[2]);
+			mergeWebXML(args[0], args[1], args[2]);
 		}
 		else {
 			throw new IllegalArgumentException();
@@ -87,7 +87,7 @@ public class WebXMLBuilder {
 		return webXML;
 	}
 
-	public WebXMLBuilder(
+	public static void mergeWebXML(
 		String originalWebXML, String customWebXML, String mergedWebXML) {
 
 		try {
@@ -130,7 +130,9 @@ public class WebXMLBuilder {
 		}
 	}
 
-	protected String getCustomContent(String customWebXML) throws IOException {
+	protected static String getCustomContent(String customWebXML)
+		throws IOException {
+
 		String customContent = FileUtil.read(customWebXML);
 
 		int x = customContent.indexOf("<web-app");
@@ -142,7 +144,7 @@ public class WebXMLBuilder {
 		return customContent.substring(x, y);
 	}
 
-	protected int getMergedContentIndex(String content) {
+	protected static int getMergedContentIndex(String content) {
 		int x = content.indexOf("<web-app");
 
 		x = content.indexOf(">", x) + 1;
@@ -150,7 +152,7 @@ public class WebXMLBuilder {
 		return x;
 	}
 
-	protected int getOriginalContentIndex(String content) {
+	protected static int getOriginalContentIndex(String content) {
 		int x = content.indexOf(AbsoluteRedirectsFilter.class.getName());
 
 		if (x == -1) {

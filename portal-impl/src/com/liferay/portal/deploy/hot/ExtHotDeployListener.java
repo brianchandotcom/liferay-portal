@@ -271,7 +271,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 
 		File tempDir = tempDirPath.toFile();
 
-		new WebXMLBuilder(
+		WebXMLBuilder.mergeWebXML(
 			portalWebDir + "WEB-INF/web.xml",
 			pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/web.xml",
 			tempDir.getAbsolutePath() + "/web.xml");

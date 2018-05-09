@@ -16,6 +16,8 @@ package com.liferay.commerce.price.list.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
 import com.liferay.commerce.product.model.CPInstance;
@@ -40,6 +42,21 @@ public class CommercePriceEntryImpl extends CommercePriceEntryBaseImpl {
 	@Override
 	public CPInstance getCPInstance() throws PortalException {
 		return CPInstanceLocalServiceUtil.getCPInstance(getCPInstanceId());
+	}
+
+	@Override
+	public CommerceMoney getPriceMoney(long commerceCurrencyId)
+		throws PortalException {
+
+		return CommerceMoneyFactoryUtil.create(commerceCurrencyId, getPrice());
+	}
+
+	@Override
+	public CommerceMoney getPromoPriceMoney(long commerceCurrencyId)
+		throws PortalException {
+
+		return CommerceMoneyFactoryUtil.create(
+			commerceCurrencyId, getPromoPrice());
 	}
 
 }

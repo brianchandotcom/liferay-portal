@@ -72,9 +72,7 @@ public class CommerceUserSegmentHelperTest {
 	}
 
 	@Test
-	public void testCommerceUserSegmentEntryWithDifferentGroupThanUser()
-		throws Exception {
-
+	public void testAddCommerceUserSegmentEntryInOtherGroup() throws Exception {
 		frutillaRule.scenario(
 			"Create a User Segment Entry with GroupId different from the user"
 		).given(
@@ -113,7 +111,7 @@ public class CommerceUserSegmentHelperTest {
 	}
 
 	@Test
-	public void testGetOrganizationCommerceUserSegmentIds() throws Exception {
+	public void testGetCommerceUserSegmentIdsOfOrganization() throws Exception {
 		frutillaRule.scenario(
 			"Test for CommerceUserSegmentHelper.getCommerceUserSegmentIds"
 		).given(
@@ -144,6 +142,51 @@ public class CommerceUserSegmentHelperTest {
 					_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 					CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
 					String.valueOf(_organization.getOrganizationId()), 0,
+					serviceContext);
+
+		long[] commerceUserSegmentIDs =
+			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
+				_group1.getGroupId(), 0, _user.getUserId());
+
+		Assert.assertEquals(
+			true,
+			ArrayUtil.contains(
+				commerceUserSegmentIDs,
+				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId()));
+	}
+
+	@Test
+	public void testGetCommerceUserSegmentIdsOfRole() throws Exception {
+		frutillaRule.scenario(
+			"Test for CommerceUserSegmentHelper"
+		).given(
+			"A role type user segment"
+		).and(
+			"A group"
+		).and(
+			"An organization"
+		).and(
+			"A user"
+		).when(
+			"The method getCommerceUserSegmentIds is invoked"
+		).then(
+			"A list of user segment IDs should be retrieved"
+		);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
+
+		_commerceUserSegmentEntry =
+			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+				_group1.getGroupId(), true, false, _user.getUserId(),
+				serviceContext);
+
+		_commerceUserSegmentCriterion =
+			_comCommerceUserSegmentCriterionService.
+				addCommerceUserSegmentCriterion(
+					_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+					CommerceUserSegmentCriterionConstants.TYPE_ROLE,
+					String.valueOf(RoleConstants.ORGANIZATION_ADMINISTRATOR), 0,
 					serviceContext);
 
 		long[] commerceUserSegmentIDs =
@@ -245,51 +288,6 @@ public class CommerceUserSegmentHelperTest {
 
 		Assert.assertEquals(
 			false,
-			ArrayUtil.contains(
-				commerceUserSegmentIDs,
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId()));
-	}
-
-	@Test
-	public void testRoleCommerceUserSegmentIds() throws Exception {
-		frutillaRule.scenario(
-			"Test for CommerceUserSegmentHelper"
-		).given(
-			"A role type user segment"
-		).and(
-			"A group"
-		).and(
-			"An organization"
-		).and(
-			"A user"
-		).when(
-			"The method getCommerceUserSegmentIds is invoked"
-		).then(
-			"A list of user segment IDs should be retrieved"
-		);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
-
-		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
-				_group1.getGroupId(), true, false, _user.getUserId(),
-				serviceContext);
-
-		_commerceUserSegmentCriterion =
-			_comCommerceUserSegmentCriterionService.
-				addCommerceUserSegmentCriterion(
-					_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-					CommerceUserSegmentCriterionConstants.TYPE_ROLE,
-					String.valueOf(RoleConstants.ORGANIZATION_ADMINISTRATOR), 0,
-					serviceContext);
-
-		long[] commerceUserSegmentIDs =
-			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
-				_group1.getGroupId(), 0, _user.getUserId());
-
-		Assert.assertEquals(
-			true,
 			ArrayUtil.contains(
 				commerceUserSegmentIDs,
 				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId()));

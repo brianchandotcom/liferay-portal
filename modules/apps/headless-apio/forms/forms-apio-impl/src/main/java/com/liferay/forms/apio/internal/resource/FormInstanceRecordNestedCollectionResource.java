@@ -89,7 +89,7 @@ public class FormInstanceRecordNestedCollectionResource
 	}
 
 	@Override
-	public Representor<DDMFormInstanceRecord, Long> representor(
+	public Representor<DDMFormInstanceRecord> representor(
 		Representor.Builder<DDMFormInstanceRecord, Long> builder) {
 
 		return builder.types(
@@ -111,7 +111,7 @@ public class FormInstanceRecordNestedCollectionResource
 			"fieldValues", FormInstanceRecordResourceHelper::getFieldValuesJSON
 		).addNested(
 			"version", this::_getVersion,
-			nestedBuilder -> nestedBuilder.nestedTypes(
+			nestedBuilder -> nestedBuilder.types(
 				"FormInstanceRecordVersion"
 			).addLinkedModel(
 				"author", PersonIdentifier.class,

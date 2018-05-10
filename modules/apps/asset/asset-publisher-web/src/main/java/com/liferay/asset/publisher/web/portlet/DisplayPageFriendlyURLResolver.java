@@ -14,9 +14,15 @@
 
 package com.liferay.asset.publisher.web.portlet;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
@@ -26,6 +32,9 @@ import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -33,7 +42,11 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -72,6 +85,151 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 		JournalArticle journalArticle =
 			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		AssetDisplayPageEntry assetDisplayPageEntry = _getAssetDisplayPageEntry(
+			assetEntry);
+
+		if (assetDisplayPageEntry != null) {
+			return _getDisplayPageURL(
+				assetEntry, groupId, mainPath, requestContext);
+		}
+
+		String layoutActualURL = _getBasicLayoutURL(
+			groupId, privateLayout, mainPath, friendlyURL, params,
+			requestContext, urlTitle, journalArticle);
+
+		return layoutActualURL;
+	}
+
+	@Override
+	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
+			long companyId, long groupId, boolean privateLayout,
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
+		throws PortalException {
+
+		Layout layout = getJournalArticleLayout(
+			groupId, privateLayout, friendlyURL);
+
+		return new LayoutFriendlyURLComposite(layout, friendlyURL);
+	}
+
+	@Override
+	public String getURLSeparator() {
+		return JournalArticleConstants.CANONICAL_URL_SEPARATOR;
+	}
+
+	protected Layout getJournalArticleLayout(
+			long groupId, boolean privateLayout, String friendlyURL)
+		throws PortalException {
+
+		String urlTitle = friendlyURL.substring(
+			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
+
+		JournalArticle journalArticle =
+			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		try {
+			Layout layout = _getAssetDisplayPageEntryLayout(
+				assetEntry, groupId);
+
+			if (layout != null) {
+				return layout;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return _layoutLocalService.getLayoutByUuidAndGroupId(
+			journalArticle.getLayoutUuid(), groupId, privateLayout);
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetTagLocalService(
+		AssetTagLocalService assetTagLocalService) {
+
+		_assetTagLocalService = assetTagLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	private Layout _createAssetDisplayLayout(long groupId)
+		throws PortalException {
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		return _layoutLocalService.addLayout(
+			defaultUserId, groupId, false, 0, "Asset Display Page", null, null,
+			"asset_display", true, null, serviceContext);
+	}
+
+	private Layout _getAssetDisplayLayout(long groupId) throws PortalException {
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			groupId, false, "asset_display");
+
+		if (!ListUtil.isEmpty(layouts)) {
+			return layouts.get(0);
+		}
+
+		return _createAssetDisplayLayout(groupId);
+	}
+
+	private AssetDisplayPageEntry _getAssetDisplayPageEntry(
+		AssetEntry assetEntry) {
+
+		return _assetDisplayPageEntryLocalService.
+			fetchAssetDisplayPageEntryByAssetEntryId(assetEntry.getEntryId());
+	}
+
+	private Layout _getAssetDisplayPageEntryLayout(
+			AssetEntry assetEntry, long groupId)
+		throws PortalException {
+
+		if (_getAssetDisplayPageEntry(assetEntry) != null) {
+			return _getAssetDisplayLayout(groupId);
+		}
+
+		return null;
+	}
+
+	private String _getBasicLayoutURL(
+			long groupId, boolean privateLayout, String mainPath,
+			String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext, String urlTitle,
+			JournalArticle journalArticle)
+		throws PortalException {
 
 		Layout layout = getJournalArticleLayout(
 			groupId, privateLayout, friendlyURL);
@@ -186,58 +344,43 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		return layoutActualURL;
 	}
 
-	@Override
-	public LayoutFriendlyURLComposite getLayoutFriendlyURLComposite(
-			long companyId, long groupId, boolean privateLayout,
-			String friendlyURL, Map<String, String[]> params,
+	private String _getDisplayPageURL(
+			AssetEntry assetEntry, long groupId, String mainPath,
 			Map<String, Object> requestContext)
 		throws PortalException {
 
-		Layout layout = getJournalArticleLayout(
-			groupId, privateLayout, friendlyURL);
+		AssetDisplayContributor assetDisplayContributor =
+			_assetDisplayContributorTracker.getAssetDisplayContributor(
+				assetEntry.getClassName());
 
-		return new LayoutFriendlyURLComposite(layout, friendlyURL);
+		if (assetDisplayContributor == null) {
+			throw new PortalException();
+		}
+
+		HttpServletRequest request = (HttpServletRequest)requestContext.get(
+			"request");
+
+		request.setAttribute(
+			"ASSET_DISPLAY_CONTRIBUTOR", assetDisplayContributor);
+		request.setAttribute("ASSET_ENTRY", assetEntry);
+
+		Layout layout = _getAssetDisplayPageEntryLayout(assetEntry, groupId);
+
+		return _portal.getLayoutActualURL(layout, mainPath);
 	}
 
-	@Override
-	public String getURLSeparator() {
-		return JournalArticleConstants.CANONICAL_URL_SEPARATOR;
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayPageFriendlyURLResolver.class);
 
-	protected Layout getJournalArticleLayout(
-			long groupId, boolean privateLayout, String friendlyURL)
-		throws PortalException {
+	@Reference
+	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
 
-		String urlTitle = friendlyURL.substring(
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
-		JournalArticle journalArticle =
-			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
-
-		return _layoutLocalService.getLayoutByUuidAndGroupId(
-			journalArticle.getLayoutUuid(), groupId, privateLayout);
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetTagLocalService(
-		AssetTagLocalService assetTagLocalService) {
-
-		_assetTagLocalService = assetTagLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	private AssetTagLocalService _assetTagLocalService;
 
@@ -248,6 +391,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Http _http;
 
 	private JournalArticleLocalService _journalArticleLocalService;
@@ -255,5 +401,8 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -20,23 +20,66 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
- * UserWrapper that includes a {@code ThemeDisplay} object
+ * User wrapper that includes a {@code ThemeDisplay} object to allow getting the
+ * different absolute URLs.
  *
  * @author Eduardo Perez
+ * @review
  */
 public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 
+	/**
+	 * Creates a new {@link UserWrapper}.
+	 *
+	 * @param  user the user being wrapped
+	 * @param  themeDisplay the {@link ThemeDisplay} of the current request
+	 * @review
+	 */
 	public UserWrapper(User user, ThemeDisplay themeDisplay) {
 		super(user);
 
 		_themeDisplay = themeDisplay;
 	}
 
+	/**
+	 * Returns the user's dashboard URL.
+	 *
+	 * @return the user's dashboard URL
+	 * @review
+	 */
 	public String getDashboardURL() {
-		return getGroupURL(true);
+		return _getGroupURL(true);
 	}
 
-	public String getGroupURL(boolean isPrivate) {
+	/**
+	 * Returns the user's portrait URL.
+	 *
+	 * @return the user's portrait URL
+	 * @review
+	 */
+	public String getPortraitURL() {
+		return Try.success(
+			getPortraitId()
+		).filter(
+			portraitId -> portraitId != 0
+		).map(
+			__ -> getPortraitURL(_themeDisplay)
+		).orElse(
+			null
+		);
+	}
+
+	/**
+	 * Returns the user's profile URL.
+	 *
+	 * @return the user's profile URL
+	 * @review
+	 */
+	public String getProfileURL() {
+		return _getGroupURL(false);
+	}
+
+	private String _getGroupURL(boolean isPrivate) {
 		return Try.fromFallible(
 			() -> {
 				if ((isPrivate && (getPrivateLayoutsPageCount() > 0)) ||
@@ -52,24 +95,6 @@ public class UserWrapper extends com.liferay.portal.kernel.model.UserWrapper {
 		).orElse(
 			null
 		);
-	}
-
-	public String getPortraitURL() {
-		return Try.fromFallible(
-			() -> {
-				if (getPortraitId() != 0) {
-					return getPortraitURL(_themeDisplay);
-				}
-
-				return null;
-			}
-		).orElse(
-			null
-		);
-	}
-
-	public String getProfileURL() {
-		return getGroupURL(false);
 	}
 
 	private final ThemeDisplay _themeDisplay;

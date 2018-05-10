@@ -37,10 +37,11 @@ import javax.ws.rs.ServerErrorException;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Lets resources provide {@code ThemeDisplay} as a parameter to the methods of
+ * Lets resources provide {@link ThemeDisplay} as a parameter to the methods of
  * the different routes builders.
  *
  * @author Eduardo Perez
+ * @review
  */
 @Component(immediate = true)
 public class ThemeDisplayProvider implements Provider<ThemeDisplay> {

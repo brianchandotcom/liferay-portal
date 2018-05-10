@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -45,6 +46,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -86,7 +89,7 @@ public class PersonCollectionResource
 		ItemRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getUserWrapperById, ThemeDisplay.class
+			this::_getUserWrapper, ThemeDisplay.class
 		).addRemover(
 			idempotent(_userService::deleteUser),
 			_hasPermission.forDeleting(User.class)
@@ -107,9 +110,9 @@ public class PersonCollectionResource
 		).addDate(
 			"birthDate", PersonCollectionResource::_getBirthday
 		).addLocalizedStringByLocale(
-			"honorificPrefix", this::_getPrefix
+			"honorificPrefix", _getContactField(Contact::getPrefixId)
 		).addLocalizedStringByLocale(
-			"honorificSuffix", this::_getSuffix
+			"honorificSuffix", _getContactField(Contact::getSuffixId)
 		).addString(
 			"additionalName", User::getMiddleName
 		).addString(
@@ -158,23 +161,39 @@ public class PersonCollectionResource
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return new UserWrapper(
-			_userLocalService.addUser(
-				UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
-				personCreatorForm.getPassword1(),
-				personCreatorForm.getPassword2(),
-				personCreatorForm.hasAlternateName(),
-				personCreatorForm.getAlternateName(),
-				personCreatorForm.getEmail(), 0, StringPool.BLANK,
-				LocaleUtil.getDefault(), personCreatorForm.getGivenName(),
-				StringPool.BLANK, personCreatorForm.getFamilyName(), 0, 0,
-				personCreatorForm.isMale(),
-				personCreatorForm.getBirthdayMonth(),
-				personCreatorForm.getBirthdayDay(),
-				personCreatorForm.getBirthdayYear(),
-				personCreatorForm.getJobTitle(), null, null, null, null, false,
-				new ServiceContext()),
-			themeDisplay);
+		User user = _userLocalService.addUser(
+			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
+			personCreatorForm.getPassword1(), personCreatorForm.getPassword2(),
+			personCreatorForm.hasAlternateName(),
+			personCreatorForm.getAlternateName(), personCreatorForm.getEmail(),
+			0, StringPool.BLANK, LocaleUtil.getDefault(),
+			personCreatorForm.getGivenName(), StringPool.BLANK,
+			personCreatorForm.getFamilyName(), 0, 0, personCreatorForm.isMale(),
+			personCreatorForm.getBirthdayMonth(),
+			personCreatorForm.getBirthdayDay(),
+			personCreatorForm.getBirthdayYear(),
+			personCreatorForm.getJobTitle(), null, null, null, null, false,
+			new ServiceContext());
+
+		return new UserWrapper(user, themeDisplay);
+	}
+
+	private BiFunction<UserWrapper, Locale, String> _getContactField(
+		Function<Contact, Long> function) {
+
+		return (user, locale) -> Try.fromFallible(
+			user::getContact
+		).map(
+			function::apply
+		).map(
+			_listTypeLocalService::getListType
+		).map(
+			ListType::getName
+		).map(
+			name -> LanguageUtil.get(locale, name)
+		).orElse(
+			null
+		);
 	}
 
 	private PageItems<UserWrapper> _getPageItems(
@@ -198,40 +217,7 @@ public class PersonCollectionResource
 		return new PageItems<>(userWrappers, count);
 	}
 
-	private String _getPrefix(User user, Locale locale) {
-		return Try.fromFallible(
-			() -> {
-				Contact contact = user.getContact();
-
-				long prefixId = contact.getPrefixId();
-
-				return _listTypeLocalService.getListType(prefixId);
-			}
-		).map(
-			listType -> LanguageUtil.get(locale, listType.getName())
-		).orElse(
-			null
-		);
-	}
-
-	private String _getSuffix(User user, Locale locale) {
-		return Try.fromFallible(
-			() -> {
-				Contact contact = user.getContact();
-
-				long suffixId = contact.getSuffixId();
-
-				return _listTypeLocalService.getListType(suffixId);
-			}
-		).map(
-			listType -> LanguageUtil.get(locale, listType.getName())
-		).orElse(
-			null
-		);
-	}
-
-	private UserWrapper _getUserWrapperById(
-			long userId, ThemeDisplay themeDisplay)
+	private UserWrapper _getUserWrapper(long userId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		User user = _userService.getUserById(userId);
@@ -253,8 +239,9 @@ public class PersonCollectionResource
 		user.setLastName(personUpdaterForm.getFamilyName());
 		user.setJobTitle(personUpdaterForm.getJobTitle());
 
-		return new UserWrapper(
-			_userLocalService.updateUser(user), themeDisplay);
+		User updatedUser = _userLocalService.updateUser(user);
+
+		return new UserWrapper(updatedUser, themeDisplay);
 	}
 
 	@Reference

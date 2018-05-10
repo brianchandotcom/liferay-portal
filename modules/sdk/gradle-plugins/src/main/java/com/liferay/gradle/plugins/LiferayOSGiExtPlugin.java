@@ -156,7 +156,9 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			});
 
 		copy.include("META-INF/MANIFEST.MF");
-		copy.setDescription("Unzips the original module's MANIFEST.MF.");
+		copy.setDescription(
+			"Unzips the original module's manifest file to a temporary " +
+				"directory.");
 		copy.setDestinationDir(copy.getTemporaryDir());
 		copy.setIncludeEmptyDirs(false);
 

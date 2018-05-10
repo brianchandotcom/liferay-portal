@@ -198,8 +198,9 @@ public class FragmentsEditorContext {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
-		if (layoutPageTemplateEntry.getStatus() !=
-				WorkflowConstants.STATUS_APPROVED) {
+		if ((layoutPageTemplateEntry != null) &&
+			(layoutPageTemplateEntry.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED)) {
 
 			soyContext.put(
 				"status",

@@ -395,13 +395,14 @@ public class SiteBrowserDisplayContext {
 			List<Group> groups, PermissionChecker permissionChecker)
 		throws PortalException {
 
-		List<Group> filteredGroups = new ArrayList<>();
+		boolean filterManageableGroups = ParamUtil.getBoolean(
+			_request, "filterManageableGroups", true);
 
-		String type = getType();
+		List<Group> filteredGroups = new ArrayList<>();
 
 		for (Group group : groups) {
 			if (permissionChecker.isGroupAdmin(group.getGroupId()) ||
-				(type.equals("assignable-sites") &&
+				(!filterManageableGroups &&
 				 GroupPermissionUtil.contains(
 					 permissionChecker, group.getGroupId(),
 					 ActionKeys.ASSIGN_MEMBERS))) {
@@ -507,11 +508,10 @@ public class SiteBrowserDisplayContext {
 			themeDisplay.getPermissionChecker();
 		User user = themeDisplay.getUser();
 
-		boolean filterManageableGroups = true;
+		boolean filterManageableGroups = ParamUtil.getBoolean(
+			_request, "filterManageableGroups", true);
 
-		if (permissionChecker.isCompanyAdmin() ||
-			type.equals("assignable-sites")) {
-
+		if (permissionChecker.isCompanyAdmin()) {
 			filterManageableGroups = false;
 		}
 

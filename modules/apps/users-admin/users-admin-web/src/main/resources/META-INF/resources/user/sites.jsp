@@ -153,10 +153,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 						PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 
 						groupSelectorURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+						groupSelectorURL.setParameter("filterManageableGroups", Boolean.FALSE.toString());
 						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
 						groupSelectorURL.setParameter("manualMembership", Boolean.TRUE.toString());
 						groupSelectorURL.setParameter("eventName", eventName);
-						groupSelectorURL.setParameter("type", "assignable-sites");
 						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 						%>
 

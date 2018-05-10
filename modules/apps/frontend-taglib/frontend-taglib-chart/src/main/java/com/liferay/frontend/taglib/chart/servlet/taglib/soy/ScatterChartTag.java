@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class ScatterChartTag extends BaseChartTag {
 
 	public ScatterChartTag() {
-		super("ScatterChart");
+		super("ScatterChart", "ClayScatterChart.render");
 	}
 
 }

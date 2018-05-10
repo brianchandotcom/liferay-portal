@@ -41,13 +41,19 @@ import org.osgi.framework.FrameworkUtil;
  */
 public abstract class BaseChartTag extends TemplateRendererTag {
 
-	public BaseChartTag(String moduleBaseName) {
+	public BaseChartTag(String moduleBaseName, String templateNamespace) {
 		_moduleBaseName = moduleBaseName;
+		_templateNamespace = templateNamespace;
 	}
 
 	@Override
 	public int doStartTag() {
-		setTemplateNamespace("ClayChart.render");
+		if (_templateNamespace != null) {
+			setTemplateNamespace(_templateNamespace);
+		}
+		else {
+			setTemplateNamespace("ClayChart.render");
+		}
 
 		_outputStylesheetLink();
 		_outputTilesSVG();
@@ -149,5 +155,6 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		BaseChartTag.class.getName() + "_SVG";
 
 	private final String _moduleBaseName;
+	private final String _templateNamespace;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class AreaSplineChartTag extends BaseChartTag {
 
 	public AreaSplineChartTag() {
-		super("AreaSplineChart");
+		super("AreaSplineChart", "ClayAreaSplineChart.render");
 	}
 
 }

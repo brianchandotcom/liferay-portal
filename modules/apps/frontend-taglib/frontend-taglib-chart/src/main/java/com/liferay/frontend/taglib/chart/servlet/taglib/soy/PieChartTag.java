@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class PieChartTag extends BaseChartTag {
 
 	public PieChartTag() {
-		super("PieChart");
+		super("PieChart", "ClayPieChart.render");
 	}
 
 }

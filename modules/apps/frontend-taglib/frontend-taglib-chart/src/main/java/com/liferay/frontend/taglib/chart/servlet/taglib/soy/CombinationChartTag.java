@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class CombinationChartTag extends BaseChartTag {
 
 	public CombinationChartTag() {
-		super("Chart");
+		super("Chart", null);
 	}
 
 }

@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class GaugeChartTag extends BaseChartTag {
 
 	public GaugeChartTag() {
-		super("GaugeChart");
+		super("GaugeChart", "ClayGaugeChart.render");
 	}
 
 }

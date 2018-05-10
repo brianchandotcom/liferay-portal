@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.chart.sample.web.internal.display.context;
 
+import com.liferay.frontend.taglib.chart.model.MixedDataColumn;
 import com.liferay.frontend.taglib.chart.model.MultiValueColumn;
 import com.liferay.frontend.taglib.chart.model.SingleValueColumn;
 import com.liferay.frontend.taglib.chart.model.TypedMultiValueColumn;
@@ -32,7 +33,12 @@ import com.liferay.frontend.taglib.chart.model.point.line.LineChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.scatter.ScatterChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.spline.SplineChartConfig;
 import com.liferay.frontend.taglib.chart.model.point.step.StepChartConfig;
+import com.liferay.frontend.taglib.chart.model.predictive.PredictiveChartConfig;
 import com.liferay.petra.string.StringPool;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -54,6 +60,7 @@ public class ChartSampleDisplayContext {
 		_initLineChartConfig();
 		_initPieChartConfig();
 		_initPollingIntervalLineChartConfig();
+		_initPredictiveChartConfig();
 		_initScatterChartConfig();
 		_initSplineChartConfig();
 		_initStepChartConfig();
@@ -101,6 +108,10 @@ public class ChartSampleDisplayContext {
 
 	public LineChartConfig getPollingIntervalLineChartConfig() {
 		return _pollingIntervalLineChartConfig;
+	}
+
+	public PredictiveChartConfig getPredictiveChartConfig() {
+		return _predictiveChartConfig;
 	}
 
 	public ScatterChartConfig getScatterChartConfig() {
@@ -206,6 +217,45 @@ public class ChartSampleDisplayContext {
 		_pollingIntervalLineChartConfig.setPollingInterval(2000);
 	}
 
+	private void _initPredictiveChartConfig() {
+		MixedDataColumn mixedDataColumn1 = new MixedDataColumn(
+			"data1", 130, 340, 200, 500, 80, 240, 40,
+			new Number[] {370, 400, 450}, new Number[] {210, 240, 270},
+			new Number[] {150, 180, 210}, new Number[] {60, 90, 120},
+			new Number[] {310, 340, 370});
+
+		_predictiveChartConfig.addDataColumn(mixedDataColumn1);
+
+		MixedDataColumn mixedDataColumn2 = new MixedDataColumn(
+			"data2", 210, 160, 50, 125, 230, 110, 90,
+			Arrays.asList(170, 200, 230), Arrays.asList(10, 40, 70),
+			Arrays.asList(350, 380, 410), Arrays.asList(260, 290, 320),
+			Arrays.asList(30, 70, 150));
+
+		_predictiveChartConfig.addDataColumn(mixedDataColumn2);
+
+		_predictiveChartConfig.setAxisXTickFormat("%b");
+
+		_predictiveChartConfig.setPredictionDate("2018-07-01");
+
+		List<String> timeseries = new ArrayList<>();
+
+		timeseries.add("2018-01-01");
+		timeseries.add("2018-02-01");
+		timeseries.add("2018-03-01");
+		timeseries.add("2018-04-01");
+		timeseries.add("2018-05-01");
+		timeseries.add("2018-06-01");
+		timeseries.add("2018-07-01");
+		timeseries.add("2018-08-01");
+		timeseries.add("2018-09-01");
+		timeseries.add("2018-10-01");
+		timeseries.add("2018-11-01");
+		timeseries.add("2018-12-01");
+
+		_predictiveChartConfig.setTimeseries(timeseries);
+	}
+
 	private void _initScatterChartConfig() {
 		_scatterChartConfig.addColumns(
 			new MultiValueColumn("data1", 100, 20, 30),
@@ -240,6 +290,8 @@ public class ChartSampleDisplayContext {
 	private LineChartConfig _pollingIntervalLineChartConfig =
 		new LineChartConfig();
 	private final PortletRequest _portletRequest;
+	private PredictiveChartConfig _predictiveChartConfig =
+		new PredictiveChartConfig();
 	private ScatterChartConfig _scatterChartConfig = new ScatterChartConfig();
 	private SplineChartConfig _splineChartConfig = new SplineChartConfig();
 	private StepChartConfig _stepChartConfig = new StepChartConfig();

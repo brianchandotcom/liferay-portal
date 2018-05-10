@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class DonutChartTag extends BaseChartTag {
 
 	public DonutChartTag() {
-		super("DonutChart");
+		super("DonutChart", "ClayDonutChart.render");
 	}
 
 }

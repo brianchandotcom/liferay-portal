@@ -154,6 +154,18 @@
 	</div>
 </div>
 
+<div class="container-fluid">
+	<div class="row">
+		<div class="col predictive">
+			<chart:predictive
+				componentId="predictive-chart"
+				config="<%= chartSampleDisplayContext.getPredictiveChartConfig() %>"
+				id="predictive-chart"
+			/>
+		</div>
+	</div>
+</div>
+
 <aui:script>
 	Liferay.componentReady('polling-interval-line-chart').then(
 		function(chart) {
@@ -171,6 +183,43 @@
 					]
 				);
 			};
+		}
+	);
+
+	Liferay.componentReady('predictive-chart').then(
+		function(chart) {
+			var oldData = chart.data.slice();
+
+			setTimeout(
+				function() {
+					var newData = {
+						data: [
+							[230, 230, 230],
+							[20, 20, 20],
+							[120, 120, 120],
+							[450, 450, 450],
+							[70, 70, 70],
+							[280, 280, 280],
+							[60, 60, 60],
+							[140, 140, 140],
+							[220, 245, 305],
+							[240, 275, 295],
+							[200, 235, 325],
+							[110, 145, 235],
+						],
+						id: 'data3'
+					};
+
+					chart.data = new Promise(
+						function(resolve, reject) {
+							oldData.push(newData);
+							resolve(oldData);
+						}
+					);
+
+				},
+				4000
+			);
 		}
 	);
 </aui:script>

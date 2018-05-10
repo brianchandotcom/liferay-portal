@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class SplineChartTag extends BaseChartTag {
 
 	public SplineChartTag() {
-		super("SplineChart");
+		super("SplineChart", "ClaySplineChart.render");
 	}
 
 }

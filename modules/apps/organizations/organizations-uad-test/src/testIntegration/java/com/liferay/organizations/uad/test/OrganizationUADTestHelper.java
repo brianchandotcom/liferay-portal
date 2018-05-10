@@ -15,18 +15,21 @@
 package com.liferay.organizations.uad.test;
 
 import com.liferay.portal.kernel.model.Organization;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = OrganizationUADTestHelper.class)
 public class OrganizationUADTestHelper {
+
 	/**
 	 * Implement addOrganization() to enable some UAD tests.
 	 *
@@ -35,9 +38,9 @@ public class OrganizationUADTestHelper {
 	 * </p>
 	 */
 	public Organization addOrganization(long userId) throws Exception {
-		Assume.assumeTrue(false);
-
-		return null;
+		return _organizationLocalService.addOrganization(
+			userId, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), false);
 	}
 
 	/**
@@ -50,4 +53,8 @@ public class OrganizationUADTestHelper {
 	public void cleanUpDependencies(List<Organization> organizations)
 		throws Exception {
 	}
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
 }

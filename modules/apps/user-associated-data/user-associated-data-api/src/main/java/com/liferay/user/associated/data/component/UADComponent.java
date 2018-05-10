@@ -19,10 +19,6 @@ package com.liferay.user.associated.data.component;
  */
 public interface UADComponent<T> {
 
-	public default String getApplicationName() {
-		return "other";
-	}
-
 	public Class<T> getTypeClass();
 
 }

@@ -19,8 +19,6 @@ package com.liferay.announcements.uad.constants;
  */
 public class AnnouncementsUADConstants {
 
-	public static final String APPLICATION_NAME = "Announcements";
-
 	public static final String[] USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY =
 		{"userId"};
 

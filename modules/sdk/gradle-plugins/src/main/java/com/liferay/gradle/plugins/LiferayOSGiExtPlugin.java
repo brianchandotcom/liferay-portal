@@ -92,9 +92,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		_configureTaskDeploy(project, jar);
 	}
 
-	private Configuration _addConfigurationOriginalModule(
-		final Project project) {
-
+	private Configuration _addConfigurationOriginalModule(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, ORIGINAL_MODULE_CONFIGURATION_NAME);
 

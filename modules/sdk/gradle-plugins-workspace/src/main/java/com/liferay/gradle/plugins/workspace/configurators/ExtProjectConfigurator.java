@@ -62,7 +62,7 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public void apply(Project project) {
-		final WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
+		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
 		boolean extProject = _isExtProject(project);
@@ -125,9 +125,9 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureLiferay(
-		Project project, final WorkspaceExtension workspaceExtension) {
+		Project project, WorkspaceExtension workspaceExtension) {
 
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
 		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());

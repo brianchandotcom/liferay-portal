@@ -77,7 +77,7 @@ public class CSSCommentsCheck extends BaseFileCheck {
 	}
 
 	private final Pattern _commentFormatPattern = Pattern.compile(
-		"^-* ?(\\S.*?\\S) ?-*$");
+		"^-* ?(\\S[ \\w]*?\\S) ?-*$");
 	private final Pattern _commentPattern = Pattern.compile(
 		"/\\*[\n ](.*)[\n ]\\*/");
 

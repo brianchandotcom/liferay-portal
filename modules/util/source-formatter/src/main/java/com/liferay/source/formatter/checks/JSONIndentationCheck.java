@@ -57,7 +57,7 @@ public class JSONIndentationCheck extends BaseFileCheck {
 			}
 		}
 
-		if (sb.length() > 0) {
+		if (!fileName.endsWith("/package.json") && (sb.length() > 0)) {
 			sb.setIndex(sb.index() - 1);
 		}
 

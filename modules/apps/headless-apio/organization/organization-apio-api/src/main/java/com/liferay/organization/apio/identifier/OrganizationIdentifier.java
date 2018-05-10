@@ -17,10 +17,11 @@ package com.liferay.organization.apio.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Organization} identifier. It's identified
+ * Holds information about an {@code Organization} identifier. It's identified
  * by the internal {@code Organization#getOrganizationId()}.
  *
  * @author Eduardo Perez
+ * @review
  */
 public interface OrganizationIdentifier extends Identifier<Long> {
 }

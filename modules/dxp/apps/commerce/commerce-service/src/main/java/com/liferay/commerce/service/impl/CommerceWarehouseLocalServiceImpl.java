@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.constants.CommerceWarehouseConstants;
 import com.liferay.commerce.exception.CommerceWarehouseActiveException;
 import com.liferay.commerce.exception.CommerceWarehouseCommerceRegionIdException;
 import com.liferay.commerce.exception.CommerceWarehouseNameException;
 import com.liferay.commerce.model.CommerceGeocoder;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceWarehouse;
+import com.liferay.commerce.model.CommerceWarehouseConstants;
 import com.liferay.commerce.service.base.CommerceWarehouseLocalServiceBaseImpl;
 import com.liferay.commerce.util.comparator.CommerceWarehouseNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;

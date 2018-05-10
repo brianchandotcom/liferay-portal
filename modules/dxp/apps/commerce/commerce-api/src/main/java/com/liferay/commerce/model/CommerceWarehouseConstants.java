@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.constants;
+package com.liferay.commerce.model;
 
 /**
  * @author Andrea Di Giorgi

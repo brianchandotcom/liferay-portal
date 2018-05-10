@@ -29,23 +29,15 @@ public class LDAPUserImporterImplTest {
 		Assert.assertEquals(
 			"cn=User\\\\,with\\\\,commas,ou=users,dc=example,dc=com",
 			escapeLDAPName(
-				normalizeLdapName(
-					"cn=User\\,with\\,commas,ou=users,dc=example,dc=com")));
+				"cn=User\\,with\\,commas,ou=users,dc=example,dc=com"));
 		Assert.assertEquals(
-			"cn=User\\\\,with\\\\,commas,ou=users,dc=example,dc=com",
+			"cn=User\\\\2cwith\\\\2ccommas,ou=users,dc=example,dc=com",
 			escapeLDAPName(
-				normalizeLdapName(
-					"cn=User\\2cwith\\2ccommas,ou=users,dc=example,dc=com")));
+				"cn=User\\2cwith\\2ccommas,ou=users,dc=example,dc=com"));
 	}
 
 	protected String escapeLDAPName(String query) {
 		return _ldapUserImporterImpl.escapeLDAPName(query);
-	}
-
-	protected String normalizeLdapName(String name)
-		throws InvalidNameException {
-
-		return _ldapUserImporterImpl.normalizeLdapName(name);
 	}
 
 	private static final LDAPUserImporterImpl _ldapUserImporterImpl =

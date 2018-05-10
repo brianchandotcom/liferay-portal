@@ -103,6 +103,7 @@
 		]
 	},
 	{
+		"hidden": true,
 		"layoutTemplateId": "1_column",
 		"name": "User Management",
 		"portlets": [

@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.internal.CSSBuilderDefaultsPlugin;
@@ -24,72 +26,77 @@ import com.liferay.gradle.plugins.internal.XMLFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 import java.util.concurrent.Callable;
 import java.util.jar.Attributes;
-import java.util.jar.Attributes.Name;
+import java.util.jar.JarFile;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.java.archives.Manifest;
-import org.gradle.api.logging.Logger;
+import org.gradle.api.java.archives.ManifestMergeDetails;
+import org.gradle.api.java.archives.ManifestMergeSpec;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
-import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
-
-import org.osgi.framework.Version;
+import org.gradle.util.VersionNumber;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class LiferayOSGiExtPlugin implements Plugin<Project> {
 
 	public static final String ORIGINAL_MODULE_CONFIGURATION_NAME =
 		"originalModule";
 
-	public static final String UNZIP_ORIGINAL_MODULE_JAVA_TASK_NAME =
-		"unzipOriginalModuleJava";
-
-	public static final String UNZIP_ORIGINAL_MODULE_MANIFEST_TASK_NAME =
-		"unzipOriginalModuleManifest";
-
-	public static final String UNZIP_ORIGINAL_MODULE_RESOURCES_TASK_NAME =
-		"unzipOriginalModuleResources";
+	public static final String UNZIP_ORIGINAL_MODULE_TASK_NAME =
+		"unzipOriginalModule";
 
 	@Override
 	public void apply(final Project project) {
 		_applyPlugins(project);
 
-		Configuration originalModuleConfiguration =
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		final Configuration originalModuleConfiguration =
 			_addConfigurationOriginalModule(project);
+
+		Sync unzipOriginalModuleTask = _addTaskUnzipOriginalModule(
+			project, originalModuleConfiguration);
 
 		_configureConfigurationCompileOnly(
 			project, originalModuleConfiguration);
 
-		_addTaskUnzipOriginalModuleJava(project, originalModuleConfiguration);
-		_addTaskUnzipOriginalModuleResources(
-			project, originalModuleConfiguration);
-
-		Copy copy = _addTaskUnzipOriginalModuleManifest(
-			project, originalModuleConfiguration);
-
-		Jar jar = _configureTaskJar(project, copy);
-
 		_configureTaskDeploy(project, jar);
+
+		_configureTaskJar(jar, unzipOriginalModuleTask);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureProject(project, originalModuleConfiguration);
+				}
+
+			});
 	}
 
 	private Configuration _addConfigurationOriginalModule(Project project) {
@@ -104,13 +111,13 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private Copy _addTaskUnzipOriginalModuleJava(
+	private Sync _addTaskUnzipOriginalModule(
 		final Project project, final Configuration configuration) {
 
-		Copy copy = GradleUtil.addTask(
-			project, UNZIP_ORIGINAL_MODULE_JAVA_TASK_NAME, Copy.class);
+		Sync sync = GradleUtil.addTask(
+			project, UNZIP_ORIGINAL_MODULE_TASK_NAME, Sync.class);
 
-		copy.from(
+		sync.from(
 			new Callable<FileTree>() {
 
 				@Override
@@ -120,84 +127,20 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 
 			});
 
-		copy.include("**/*.class");
-		copy.setDescription("Unzips the original module's java classes.");
-		copy.setIncludeEmptyDirs(false);
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		copy.setDestinationDir(sourceSetOutput.getClassesDir());
-
-		Task compileJavaTask = GradleUtil.getTask(
-			project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
-
-		compileJavaTask.dependsOn(copy);
-
-		return copy;
-	}
-
-	private Copy _addTaskUnzipOriginalModuleManifest(
-		final Project project, final Configuration configuration) {
-
-		Copy copy = GradleUtil.addTask(
-			project, UNZIP_ORIGINAL_MODULE_MANIFEST_TASK_NAME, Copy.class);
-
-		copy.from(
-			new Callable<FileTree>() {
+		sync.into(
+			new Callable<File>() {
 
 				@Override
-				public FileTree call() {
-					return project.zipTree(configuration.getSingleFile());
+				public File call() {
+					return new File(project.getBuildDir(), "original-module");
 				}
 
 			});
 
-		copy.include("META-INF/MANIFEST.MF");
-		copy.setDescription(
-			"Unzips the original module's manifest file to a temporary " +
-				"directory.");
-		copy.setDestinationDir(copy.getTemporaryDir());
-		copy.setIncludeEmptyDirs(false);
+		sync.setDescription(
+			"Unzips the original module into a temporary directory.");
 
-		return copy;
-	}
-
-	private Copy _addTaskUnzipOriginalModuleResources(
-		final Project project, final Configuration configuration) {
-
-		Copy copy = GradleUtil.addTask(
-			project, UNZIP_ORIGINAL_MODULE_RESOURCES_TASK_NAME, Copy.class);
-
-		copy.from(
-			new Callable<FileTree>() {
-
-				@Override
-				public FileTree call() {
-					return project.zipTree(configuration.getSingleFile());
-				}
-
-			});
-
-		copy.exclude("**/*.class", "**/MANIFEST.MF");
-		copy.setDescription("Unzips the original module's resources.");
-		copy.setIncludeEmptyDirs(false);
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		copy.setDestinationDir(sourceSetOutput.getResourcesDir());
-
-		Task processResourcesTask = GradleUtil.getTask(
-			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-		processResourcesTask.dependsOn(copy);
-
-		return copy;
+		return sync;
 	}
 
 	private void _applyPlugins(Project project) {
@@ -227,6 +170,40 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
+	private void _configureProject(
+		Project project, Configuration originalModuleConfiguration) {
+
+		try (JarFile jarFile = new JarFile(
+				originalModuleConfiguration.getSingleFile())) {
+
+			java.util.jar.Manifest manifest = jarFile.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			String version = attributes.getValue(Constants.BUNDLE_VERSION);
+
+			VersionNumber versionNumber = VersionNumber.parse(version);
+
+			if (Validator.isNull(versionNumber.getQualifier())) {
+				version += '.' + _VERSION_SUFFIX;
+			}
+			else {
+				version += '-' + _VERSION_SUFFIX;
+			}
+
+			project.setVersion(version);
+
+			BasePluginConvention basePluginConvention =
+				GradleUtil.getConvention(project, BasePluginConvention.class);
+
+			basePluginConvention.setArchivesBaseName(
+				attributes.getValue(Constants.BUNDLE_SYMBOLICNAME));
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
+	}
+
 	private void _configureTaskDeploy(Project project, Jar jar) {
 		Copy copy = (Copy)GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
@@ -240,7 +217,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			new Callable<File>() {
 
 				@Override
-				public File call() throws Exception {
+				public File call() {
 					return new File(
 						liferayExtension.getAppServerParentDir(),
 						"osgi/marketplace/override");
@@ -249,79 +226,75 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			});
 	}
 
-	private Jar _configureTaskJar(Project project, final Copy copy) {
-		final Jar jar = (Jar)GradleUtil.getTask(
-			project, JavaPlugin.JAR_TASK_NAME);
+	private Jar _configureTaskJar(
+		final Jar jar, final Sync unzipOriginalModuleTask) {
 
-		jar.dependsOn(copy);
-		jar.mustRunAfter(copy);
+		jar.dependsOn(unzipOriginalModuleTask);
 
-		jar.manifest(
-			new Closure<Void>(project) {
+		jar.from(
+			new Callable<File>() {
 
-				@SuppressWarnings("unused")
-				public void doCall(Manifest manifest) {
-					File file = new File(
-						copy.getTemporaryDir(), "META-INF/MANIFEST.MF");
+				@Override
+				public File call() throws Exception {
+					return unzipOriginalModuleTask.getDestinationDir();
+				}
 
-					if (!file.exists()) {
-						Logger logger = jar.getLogger();
+			});
 
-						logger.info("MANIFEST.MF not found");
+		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 
-						return;
+		Manifest manifest = jar.getManifest();
+
+		manifest.attributes(
+			Collections.singletonMap(
+				Constants.BUNDLE_VERSION,
+				new Object() {
+
+					@Override
+					public String toString() {
+						return jar.getVersion();
 					}
 
-					try (FileInputStream fileInputStream =
-							new FileInputStream(file)) {
+				}));
 
-						Map<String, Object> map = new HashMap<>();
+		manifest.from(
+			new Callable<File>() {
 
-						java.util.jar.Manifest originalManifest =
-							new java.util.jar.Manifest(fileInputStream);
+				@Override
+				public File call() {
+					return new File(
+						unzipOriginalModuleTask.getDestinationDir(),
+						"META-INF/MANIFEST.MF");
+				}
 
-						Attributes attributes =
-							originalManifest.getMainAttributes();
+			},
+			new Closure<Void>(jar) {
 
-						for (Object key : attributes.keySet()) {
-							Name name = (Name)key;
+				@SuppressWarnings("unused")
+				public void doCall(ManifestMergeSpec manifestMergeSpec) {
+					manifestMergeSpec.eachEntry(
+						new Action<ManifestMergeDetails>() {
 
-							String value = attributes.getValue(name);
+							@Override
+							public void execute(
+								ManifestMergeDetails manifestMergeDetails) {
 
-							String nameString = name.toString();
+								if (Constants.BUNDLE_VERSION.equals(
+										manifestMergeDetails.getKey())) {
 
-							if (nameString.equals("Bundle-Version")) {
-								Version version = Version.parseVersion(value);
-
-								String qualifier = version.getQualifier();
-
-								String suffix = "ext";
-
-								if (qualifier.isEmpty()) {
-									value += '.' + suffix;
-								}
-								else {
-									value += '-' + suffix;
+									manifestMergeDetails.setValue(
+										manifestMergeDetails.getBaseValue());
 								}
 							}
 
-							map.put(nameString, value);
-						}
-
-						jar.setArchiveName(
-							attributes.getValue("Bundle-SymbolicName") +
-								".jar");
-
-						manifest.attributes(map);
-					}
-					catch (Exception e) {
-						e.printStackTrace();
-					}
+						});
 				}
 
 			});
 
 		return jar;
 	}
+
+	private static final String _VERSION_SUFFIX = "ext";
 
 }

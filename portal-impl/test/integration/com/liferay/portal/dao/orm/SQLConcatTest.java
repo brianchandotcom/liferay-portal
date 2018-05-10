@@ -98,6 +98,14 @@ public class SQLConcatTest {
 			"This ( is ( (a) test to ensure parentheses are parsed correctly");
 	}
 
+	@Test
+	public void testConcatWithUnspacedArguments() throws Exception {
+		_assertConcat(
+			"select CONCAT('This is a ',data,' for unspaced arguments') from " +
+				"SQLConcatTest",
+			"This is a test for unspaced arguments");
+	}
+
 	private void _assertConcat(String query, String expected) throws Exception {
 		try (Connection con = DataAccess.getConnection();
 			PreparedStatement ps = con.prepareStatement(

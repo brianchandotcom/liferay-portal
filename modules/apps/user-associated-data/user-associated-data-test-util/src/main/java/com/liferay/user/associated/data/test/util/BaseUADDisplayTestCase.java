@@ -73,12 +73,6 @@ public abstract class BaseUADDisplayTestCase<T> {
 	}
 
 	@Test
-	public void testGetApplicationName() {
-		Assert.assertEquals(
-			getApplicationName(), _uadDisplay.getApplicationName());
-	}
-
-	@Test
 	public void testGetTypeName() {
 		Assert.assertTrue(
 			"The type name should not be null",
@@ -86,8 +80,6 @@ public abstract class BaseUADDisplayTestCase<T> {
 	}
 
 	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
-
-	protected abstract String getApplicationName();
 
 	protected abstract UADDisplay<T> getUADDisplay();
 

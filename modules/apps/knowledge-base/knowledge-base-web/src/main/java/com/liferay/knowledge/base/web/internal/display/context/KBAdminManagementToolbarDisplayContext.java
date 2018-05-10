@@ -295,13 +295,13 @@ public class KBAdminManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = _getCurrentSortingURL();
+		PortletURL currentSortingURL = _getCurrentSortingURL();
 
-		sortingURL.setParameter(
+		currentSortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
-		return sortingURL;
+		return currentSortingURL;
 	}
 
 	public int getTotal() {

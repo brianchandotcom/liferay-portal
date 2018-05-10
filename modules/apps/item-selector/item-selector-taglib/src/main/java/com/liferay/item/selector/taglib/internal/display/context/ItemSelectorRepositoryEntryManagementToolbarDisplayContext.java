@@ -85,14 +85,14 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = _getCurrentSortingURL();
+		PortletURL currentSortingURL = _getCurrentSortingURL();
 
 		String orderByType = getOrderByType();
 
-		sortingURL.setParameter(
+		currentSortingURL.setParameter(
 			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
 
-		return sortingURL;
+		return currentSortingURL;
 	}
 
 	public ViewTypeItemList getViewTypes() throws PortletException {

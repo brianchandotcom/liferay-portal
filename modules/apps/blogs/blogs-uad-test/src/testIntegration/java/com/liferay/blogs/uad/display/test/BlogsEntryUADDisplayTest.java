@@ -17,7 +17,6 @@ package com.liferay.blogs.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.uad.constants.BlogsUADConstants;
 import com.liferay.blogs.uad.test.BlogsEntryUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,11 +53,6 @@ public class BlogsEntryUADDisplayTest extends BaseUADDisplayTestCase<BlogsEntry>
 		_blogsEntries.add(blogsEntry);
 
 		return blogsEntry;
-	}
-
-	@Override
-	protected String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

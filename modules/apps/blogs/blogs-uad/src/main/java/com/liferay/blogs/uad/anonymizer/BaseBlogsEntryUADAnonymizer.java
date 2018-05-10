@@ -65,11 +65,6 @@ public abstract class BaseBlogsEntryUADAnonymizer
 	}
 
 	@Override
-	public String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList("title", "subtitle", "urlTitle", "description",
 			"content", "smallImage", "smallImageId");

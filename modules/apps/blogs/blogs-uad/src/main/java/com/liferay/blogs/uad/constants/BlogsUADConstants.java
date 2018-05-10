@@ -19,7 +19,6 @@ package com.liferay.blogs.uad.constants;
  * @generated
  */
 public class BlogsUADConstants {
-	public static final String APPLICATION_NAME = "Blogs";
 	public static final String[] USER_ID_FIELD_NAMES_BLOGS_ENTRY = {
 			"userId", "statusByUserId"
 		};

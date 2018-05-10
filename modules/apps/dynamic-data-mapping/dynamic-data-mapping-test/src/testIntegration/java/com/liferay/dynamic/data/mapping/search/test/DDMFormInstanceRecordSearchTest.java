@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -79,7 +80,7 @@ public class DDMFormInstanceRecordSearchTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_user = UserTestUtil.addOmniAdminUser();
+		_user = UserTestUtil.addUser();
 
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 
@@ -93,6 +94,21 @@ public class DDMFormInstanceRecordSearchTest {
 		_ddmFormInstanceRecordTestHelper = new DDMFormInstanceRecordTestHelper(
 			_group, ddmFormInstance);
 		_searchContext = getSearchContext(_group, _user, ddmFormInstance);
+	}
+
+	@Test
+	public void testBasicSearchWithDefaultUser() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+
+		User user = UserLocalServiceUtil.getDefaultUser(companyId);
+
+		addDDMFormInstanceRecord("Joe Bloggs", "Simple description");
+
+		_searchContext.setKeywords("Simple description");
+
+		_searchContext.setUserId(user.getUserId());
+
+		assertSearch("description", 1);
 	}
 
 	@Test

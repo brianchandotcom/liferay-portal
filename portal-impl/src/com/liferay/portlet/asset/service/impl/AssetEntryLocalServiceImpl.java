@@ -597,9 +597,17 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		long classTypeId, String keywords, boolean showNonindexable,
 		int[] statuses) {
 
-		return searchCount(
-			companyId, groupIds, userId, className, classTypeId, keywords,
-			keywords, keywords, null, null, showNonindexable, statuses, false);
+		try {
+			SearchContext searchContext = buildSearchContext(
+				companyId, groupIds, userId, classTypeId, keywords, null, null,
+				showNonindexable, statuses, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			return doSearchCount(companyId, className, searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	@Override

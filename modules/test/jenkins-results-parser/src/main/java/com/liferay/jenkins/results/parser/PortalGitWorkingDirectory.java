@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -156,6 +157,18 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return moduleDirsList;
 	}
 
+	public List<File> getNPMTestModuleDirsList() throws IOException {
+		List<File> npmModuleDirsList = new ArrayList<>();
+
+		for (File moduleDir : getModuleDirsList()) {
+			if (_isNPMTestModuleDir(moduleDir)) {
+				npmModuleDirsList.add(moduleDir);
+			}
+		}
+
+		return npmModuleDirsList;
+	}
+
 	private boolean _isNPMTestModuleDir(File moduleDir) {
 		List<File> packageJSONFiles = JenkinsResultsParserUtil.findFiles(
 			moduleDir, "package\\.json");
@@ -167,9 +180,11 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				jsonObject = JenkinsResultsParserUtil.createJSONObject(
 					JenkinsResultsParserUtil.read(packageJSONFile));
 			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Unable to read file " + packageJSONFile.getPath(), ioe);
+			catch (IOException | JSONException e) {
+				System.out.println(
+					"Unable to read invalid JSON " + packageJSONFile.getPath());
+
+				continue;
 			}
 
 			if (!jsonObject.has("scripts")) {

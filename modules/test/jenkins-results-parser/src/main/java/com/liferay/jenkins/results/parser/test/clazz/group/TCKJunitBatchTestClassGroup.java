@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.test.clazz.group;
+
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +37,22 @@ import java.util.List;
  * @author Michael Hashimoto
  */
 public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
+
+	public static class TCKBatchTestClass extends BaseTestClass {
+
+		protected static TCKBatchTestClass getInstance(
+			File warFile, String batchName) {
+
+			return new TCKBatchTestClass(warFile, batchName);
+		}
+
+		protected TCKBatchTestClass(File file, String batchName) {
+			super(file);
+
+			addTestMethod(batchName);
+		}
+
+	}
 
 	protected TCKJunitBatchTestClassGroup(
 		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
@@ -58,12 +77,12 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		_testClassNameIncludePathMatchers = _getTestClassNamesPathMatchers(
 			"test.batch.class.names.includes");
 
-		setTestClassFiles();
+		setTestClasses();
 
 		setAxisTestClassGroups();
 	}
 
-	protected void setTestClassFiles() {
+	protected void setTestClasses() {
 		try {
 			Files.walkFileTree(
 				_tckHomeDirectory.toPath(),
@@ -79,7 +98,9 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 						}
 
 						if (_pathIncluded(filePath)) {
-							testClassFiles.add(filePath.toFile());
+							testClasses.add(
+								TCKBatchTestClass.getInstance(
+									filePath.toFile(), batchName));
 						}
 
 						return FileVisitResult.CONTINUE;
@@ -116,7 +137,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 				ioe);
 		}
 
-		Collections.sort(testClassFiles);
+		Collections.sort(testClasses);
 	}
 
 	private List<PathMatcher> _getTestClassNamesPathMatchers(

@@ -12,7 +12,11 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.test.clazz.group;
+
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PluginsGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +39,22 @@ import java.util.Properties;
  * @author Michael Hashimoto
  */
 public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
+
+	public static class PluginsBatchTestClass extends BaseTestClass {
+
+		protected static PluginsBatchTestClass getInstance(
+			File pluginDir, String batchName) {
+
+			return new PluginsBatchTestClass(pluginDir, batchName);
+		}
+
+		protected PluginsBatchTestClass(File file, String batchName) {
+			super(file);
+
+			addTestMethod(batchName);
+		}
+
+	}
 
 	protected PluginsBatchTestClassGroup(
 		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
@@ -59,7 +79,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 			_pluginNamesIncludePathMatchers = _getPluginNamesPathMatchers(
 				"test.batch.plugin.names.includes");
 
-			setTestClassFiles();
+			setTestClasses();
 
 			setAxisTestClassGroups();
 		}
@@ -68,7 +88,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 		}
 	}
 
-	protected void setTestClassFiles() {
+	protected void setTestClasses() {
 		File workingDirectory =
 			_pluginsGitWorkingDirectory.getWorkingDirectory();
 
@@ -99,7 +119,9 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 							File file = filePath.toFile();
 
-							testClassFiles.add(file.getParentFile());
+							testClasses.add(
+								PluginsBatchTestClass.getInstance(
+									file.getParentFile(), batchName));
 						}
 
 						return FileVisitResult.CONTINUE;
@@ -136,7 +158,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 				ioe);
 		}
 
-		Collections.sort(testClassFiles);
+		Collections.sort(testClasses);
 	}
 
 	private List<PathMatcher> _getPluginNamesPathMatchers(String propertyName) {

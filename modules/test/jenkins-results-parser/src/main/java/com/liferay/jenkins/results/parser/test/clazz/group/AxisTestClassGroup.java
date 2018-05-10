@@ -12,22 +12,33 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
-
-import java.io.File;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.liferay.jenkins.results.parser.test.clazz.group;
 
 /**
- * @author Peter Yoo
+ * @author Michael Hashimoto
  */
-public abstract class BaseTestClassGroup implements TestClassGroup {
+public class AxisTestClassGroup extends BaseTestClassGroup {
 
-	public List<File> getTestClassFiles() {
-		return testClassFiles;
+	public String getBatchName() {
+		return _batchTestClassGroup.getBatchName();
 	}
 
-	protected final List<File> testClassFiles = new ArrayList<>();
+	public BatchTestClassGroup getBatchTestClassGroup() {
+		return _batchTestClassGroup;
+	}
+
+	public int getId() {
+		return _id;
+	}
+
+	protected AxisTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup, int id) {
+
+		_batchTestClassGroup = batchTestClassGroup;
+		_id = id;
+	}
+
+	private final BatchTestClassGroup _batchTestClassGroup;
+	private final int _id;
 
 }

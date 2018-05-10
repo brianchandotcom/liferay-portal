@@ -26,14 +26,12 @@ import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.organization.order.web.internal.configuration.CommerceOrganizationOpenOrderPortletInstanceConfiguration;
 import com.liferay.commerce.organization.order.web.internal.display.context.util.CommerceOrganizationOrderRequestHelper;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.organization.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.commerce.search.facet.NegatableSimpleFacet;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -106,7 +104,6 @@ public class CommerceOrganizationOrderDisplayContext {
 
 	public CommerceOrganizationOrderDisplayContext(
 			CommerceAddressService commerceAddressService,
-			CommerceOrderHelper commerceOrderHelper,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderLocalService commerceOrderLocalService,
 			CommerceOrderNoteService commerceOrderNoteService,
@@ -119,7 +116,6 @@ public class CommerceOrganizationOrderDisplayContext {
 		throws PortalException {
 
 		_commerceAddressService = commerceAddressService;
-		_commerceOrderHelper = commerceOrderHelper;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
 		_commerceOrderNoteService = commerceOrderNoteService;
@@ -159,7 +155,7 @@ public class CommerceOrganizationOrderDisplayContext {
 			renderRequest, "commerceOrderNoteId");
 		_keywords = ParamUtil.getString(renderRequest, "keywords");
 		_showFilter = ParamUtil.getBoolean(renderRequest, "showFilter");
-		_tabs1 = ParamUtil.getString(renderRequest, "tabs1", "pending");
+		_tabs1 = ParamUtil.getString(renderRequest, "tabs1", "orders");
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -414,8 +410,8 @@ public class CommerceOrganizationOrderDisplayContext {
 	public List<NavigationItem> getNavigationItems() {
 		List<NavigationItem> navigationItems = new ArrayList<>(2);
 
-		navigationItems.add(_getNavigationItem("pending", 0));
-		navigationItems.add(_getNavigationItem("archived", 0));
+		navigationItems.add(_getNavigationItem("orders", 0));
+		navigationItems.add(_getNavigationItem("open-orders", 0));
 
 		return navigationItems;
 	}
@@ -507,11 +503,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	}
 
 	public boolean isShowAddButton() {
-		if (_tabs1.equals("pending")) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	public boolean isShowFilter() {
@@ -561,32 +553,18 @@ public class CommerceOrganizationOrderDisplayContext {
 		searchContext.addFacet(facet);
 	}
 
-	private void _addFacetOrderStatus(
-		SearchContext searchContext,
-		CommerceOrderDisplayTerms commerceOrderDisplayTerms) {
+	private void _addFacetOrderStatus(SearchContext searchContext) {
+		SimpleFacet simpleFacet = new SimpleFacet(searchContext);
 
-		NegatableSimpleFacet negatableSimpleFacet = new NegatableSimpleFacet(
-			searchContext);
+		simpleFacet.setFieldName("orderStatus");
 
-		negatableSimpleFacet.setFieldName("orderStatus");
+		searchContext.addFacet(simpleFacet);
 
-		searchContext.addFacet(negatableSimpleFacet);
-
-		boolean negated = false;
-		int orderStatus = commerceOrderDisplayTerms.getOrderStatus();
-
-		if (_tabs1.equals("pending")) {
-			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
+		if (_tabs1.equals("open-orders")) {
+			searchContext.setAttribute(
+				simpleFacet.getFieldId(),
+				String.valueOf(CommerceOrderConstants.ORDER_STATUS_OPEN));
 		}
-		else if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
-			negated = true;
-			orderStatus = CommerceOrderConstants.ORDER_STATUS_OPEN;
-		}
-
-		negatableSimpleFacet.setNegated(negated);
-
-		searchContext.setAttribute(
-			negatableSimpleFacet.getFieldId(), String.valueOf(orderStatus));
 	}
 
 	private List<KeyValuePair> _buildFacetKeyValuePairs(
@@ -636,11 +614,12 @@ public class CommerceOrganizationOrderDisplayContext {
 			(CommerceOrderDisplayTerms)_searchContainer.getDisplayTerms();
 
 		_addFacetCreateDate(searchContext, commerceOrderDisplayTerms);
-		_addFacetOrderStatus(searchContext, commerceOrderDisplayTerms);
+
+		_addFacetOrderStatus(searchContext);
 
 		boolean useSearchResultPermissionFilter = true;
 
-		if (_tabs1.equals("archived")) {
+		if (_tabs1.equals("orders")) {
 			_addFacetAdvanceStatus(searchContext, commerceOrderDisplayTerms);
 
 			useSearchResultPermissionFilter = false;
@@ -674,7 +653,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	}
 
 	private String _getEmptyResultsMessage(boolean filterByStatuses) {
-		String pattern = "there-are-no-x-orders";
+		String pattern = "there-are-no-x";
 
 		CommerceOrderDisplayTerms commerceOrderDisplayTerms =
 			(CommerceOrderDisplayTerms)_searchContainer.getDisplayTerms();
@@ -688,7 +667,7 @@ public class CommerceOrganizationOrderDisplayContext {
 			  (commerceOrderDisplayTerms.getOrderStatus() !=
 				  CommerceOrderConstants.ORDER_STATUS_ANY)))) {
 
-			pattern = "no-x-orders-were-found";
+			pattern = "no-x-were-found";
 		}
 
 		HttpServletRequest httpServletRequest =
@@ -698,8 +677,7 @@ public class CommerceOrganizationOrderDisplayContext {
 			LanguageUtil.get(httpServletRequest, _tabs1),
 			_commerceOrganizationOrderRequestHelper.getLocale());
 
-		return LanguageUtil.format(
-			httpServletRequest, pattern, argument, false);
+		return LanguageUtil.format(httpServletRequest, pattern, argument);
 	}
 
 	private String _getFacetCreateDateRange(
@@ -776,7 +754,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	private void _initSearch() throws PortalException {
 		boolean filterByStatuses = true;
 
-		if (_tabs1.equals("pending")) {
+		if (_tabs1.equals("open-orders")) {
 			filterByStatuses = false;
 		}
 
@@ -787,7 +765,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		_searchContainer.setEmptyResultsMessage(
 			_getEmptyResultsMessage(filterByStatuses));
 
-		if (_tabs1.equals("pending")) {
+		if (_tabs1.equals("open-orders")) {
 			_searchContainer.setRowChecker(
 				new EmptyOnClickRowChecker(
 					_commerceOrganizationOrderRequestHelper.
@@ -802,7 +780,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		_searchContainer.setTotal(baseModelSearchResult.getLength());
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
 
-		if (_tabs1.equals("archived")) {
+		if (_tabs1.equals("orders")) {
 			_availableAdvanceStatusKVPs = _buildFacetKeyValuePairs(
 				searchContext, "advanceStatus", Function.identity());
 
@@ -813,8 +791,7 @@ public class CommerceOrganizationOrderDisplayContext {
 
 					return CommerceOrderConstants.getOrderStatusLabel(
 						orderStatus);
-				},
-				String.valueOf(CommerceOrderConstants.ORDER_STATUS_OPEN));
+				});
 		}
 		else {
 			_availableAdvanceStatusKVPs = Collections.emptyList();
@@ -829,7 +806,6 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatDateTime;
 	private final Format _commerceOrderDateFormatTime;
-	private final CommerceOrderHelper _commerceOrderHelper;
 	private final long _commerceOrderId;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private SearchContainer<CommerceOrderItem>

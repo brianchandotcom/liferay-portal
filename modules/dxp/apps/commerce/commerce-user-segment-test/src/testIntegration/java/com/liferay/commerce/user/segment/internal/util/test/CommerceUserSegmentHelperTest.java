@@ -64,6 +64,7 @@ public class CommerceUserSegmentHelperTest {
 	@Before
 	public void setUp() throws Exception {
 		_group1 = GroupTestUtil.addGroup();
+		_group2 = GroupTestUtil.addGroup();
 
 		_organization = OrganizationTestUtil.addOrganization();
 
@@ -83,8 +84,6 @@ public class CommerceUserSegmentHelperTest {
 		).then(
 			"The Entry should not be available"
 		);
-
-		_group2 = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group2.getGroupId());

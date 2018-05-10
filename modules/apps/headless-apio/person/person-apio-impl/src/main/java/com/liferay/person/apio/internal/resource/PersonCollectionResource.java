@@ -100,7 +100,7 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public Representor<UserWrapper, Long> representor(
+	public Representor<UserWrapper> representor(
 		Representor.Builder<UserWrapper, Long> builder) {
 
 		return builder.types(

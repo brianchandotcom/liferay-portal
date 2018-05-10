@@ -31,7 +31,7 @@ import java.util.Map;
 public class UADExporter {
 
 	public static long exportApplicationDataInBackground(
-			String applicationName, long userId, long groupId)
+			String applicationKey, long userId, long groupId)
 		throws PortalException {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
@@ -40,7 +40,7 @@ public class UADExporter {
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
-				userId, groupId, applicationName,
+				userId, groupId, applicationKey,
 				UADExportBackgroundTaskExecutor.class.getName(), taskContextMap,
 				new ServiceContext());
 

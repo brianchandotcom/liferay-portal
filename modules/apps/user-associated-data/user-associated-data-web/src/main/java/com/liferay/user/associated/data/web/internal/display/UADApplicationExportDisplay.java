@@ -22,17 +22,17 @@ import java.util.Date;
 public class UADApplicationExportDisplay {
 
 	public UADApplicationExportDisplay(
-		String applicationName, int dataCount, boolean exportSupported,
+		String applicationKey, int dataCount, boolean exportSupported,
 		Date lastExportDate) {
 
-		_applicationName = applicationName;
+		_applicationKey = applicationKey;
 		_dataCount = dataCount;
 		_exportSupported = exportSupported;
 		_lastExportDate = lastExportDate;
 	}
 
-	public String getApplicationName() {
-		return _applicationName;
+	public String getApplicationKey() {
+		return _applicationKey;
 	}
 
 	public int getDataCount() {
@@ -47,7 +47,7 @@ public class UADApplicationExportDisplay {
 		return _exportSupported;
 	}
 
-	private final String _applicationName;
+	private final String _applicationKey;
 	private final int _dataCount;
 	private final boolean _exportSupported;
 	private final Date _lastExportDate;

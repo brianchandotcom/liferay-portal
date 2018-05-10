@@ -30,8 +30,8 @@ public class ViewUADEntitiesDisplay {
 		return _actionDropdownItems;
 	}
 
-	public String getApplicationName() {
-		return _applicationName;
+	public String getApplicationKey() {
+		return _applicationKey;
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -56,8 +56,8 @@ public class ViewUADEntitiesDisplay {
 		_actionDropdownItems = getActionDropdownItems;
 	}
 
-	public void setApplicationName(String applicationName) {
-		_applicationName = applicationName;
+	public void setApplicationKey(String applicationKey) {
+		_applicationKey = applicationKey;
 	}
 
 	public void setNavigationItems(List<NavigationItem> navigationItems) {
@@ -77,7 +77,7 @@ public class ViewUADEntitiesDisplay {
 	}
 
 	private List<DropdownItem> _actionDropdownItems;
-	private String _applicationName;
+	private String _applicationKey;
 	private List<NavigationItem> _navigationItems;
 	private SearchContainer<UADEntity> _searchContainer;
 	private String _typeName;

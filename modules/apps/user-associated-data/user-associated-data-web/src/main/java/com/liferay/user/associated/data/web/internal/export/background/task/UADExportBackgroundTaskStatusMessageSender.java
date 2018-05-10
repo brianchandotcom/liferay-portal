@@ -44,7 +44,7 @@ public class UADExportBackgroundTaskStatusMessageSender {
 	}
 
 	public void sendStatusMessage(
-		String messageType, String applicationName, long total) {
+		String messageType, String applicationKey, long total) {
 
 		Message message = new Message();
 
@@ -52,7 +52,7 @@ public class UADExportBackgroundTaskStatusMessageSender {
 			BackgroundTaskConstants.BACKGROUND_TASK_ID,
 			BackgroundTaskThreadLocal.getBackgroundTaskId());
 		message.put("applicationDataTotal", total);
-		message.put("applicationName", applicationName);
+		message.put("applicationKey", applicationKey);
 		message.put("messageType", messageType);
 
 		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(

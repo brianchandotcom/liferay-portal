@@ -282,7 +282,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #getEntries(long, long, long,
 	boolean, int, int)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AnnouncementsEntry> getEntries(long classNameId, long classPK,
 		boolean alert, int start, int end);
@@ -314,7 +314,7 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #getEntriesCount(long, long,
 	long, boolean)}
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(long classNameId, long classPK, boolean alert);
 

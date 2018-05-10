@@ -12,14 +12,20 @@
  * details.
  */
 
-package com.liferay.apio.architect.sample.liferay.portal.internal.identifier;
+package com.liferay.apio.architect.writer.alias;
 
-import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.representor.BaseRepresentor;
+
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
- * Represent the identifier for a {@code BlogPosting} resource.
+ * Defines a type alias for a function that receives the resource name and
+ * returns an optional {@link BaseRepresentor} for that class.
  *
  * @author Alejandro Hernández
  */
-public interface BlogPostingIdentifier extends Identifier<Long> {
+@FunctionalInterface
+public interface BaseRepresentorFunction
+	extends Function<String, Optional<? extends BaseRepresentor<?>>> {
 }

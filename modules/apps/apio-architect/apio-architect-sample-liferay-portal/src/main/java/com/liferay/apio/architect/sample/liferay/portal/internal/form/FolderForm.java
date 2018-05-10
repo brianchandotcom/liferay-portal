@@ -18,20 +18,18 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 
 /**
- * Instances of this class represent the values extracted from a folder form.
+ * Represents the values extracted from a folder form.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class FolderForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code FolderForm} depending on the
-	 * HTTP body.
+	 * Builds a {@code Form} that generates {@code FolderForm} that depends on
+	 * the HTTP body.
 	 *
-	 * @param  formBuilder the {@code Form} builder
-	 * @return a folder form
-	 * @review
+	 * @param  formBuilder the form builder
+	 * @return the folder form
 	 */
 	public static Form<FolderForm> buildForm(Builder<FolderForm> formBuilder) {
 		return formBuilder.title(
@@ -48,20 +46,18 @@ public class FolderForm {
 	}
 
 	/**
-	 * Returns the folder's description
+	 * Returns the folder's description.
 	 *
 	 * @return the folder's description
-	 * @review
 	 */
 	public String getDescription() {
 		return _description;
 	}
 
 	/**
-	 * Returns the folder's name
+	 * Returns the folder's name.
 	 *
 	 * @return the folder's name
-	 * @review
 	 */
 	public String getName() {
 		return _name;

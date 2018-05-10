@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.apio.architect.routes.ItemRoutes;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -29,6 +30,8 @@ import java.util.Optional;
  */
 @ProviderType
 public interface ItemRouterManager {
+
+	public Map<String, ItemRoutes> getItemRoutes();
 
 	/**
 	 * Returns the item routes for the item resource's name.

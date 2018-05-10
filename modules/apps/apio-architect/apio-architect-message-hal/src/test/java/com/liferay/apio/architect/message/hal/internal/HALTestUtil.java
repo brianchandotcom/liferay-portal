@@ -269,12 +269,6 @@ public class HALTestUtil {
 
 		Conditions firstEmbeddedLinkConditions = builder.where(
 			"linked3", isALinkTo("localhost/p/third-inner-model/fifth")
-		).where(
-			"bidirectionalModel3",
-			isALinkTo("localhost/p/first-inner-model/" + id)
-		).where(
-			"relatedCollection3",
-			isALinkTo("localhost/p/model/" + id + "/models")
 		).build();
 
 		Conditions conditions = builder.where(

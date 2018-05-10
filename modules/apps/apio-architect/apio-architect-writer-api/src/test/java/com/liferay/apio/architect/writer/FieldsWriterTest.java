@@ -681,7 +681,7 @@ public class FieldsWriterTest {
 		assertThat(types, contains("Type 1", "Type 2"));
 	}
 
-	private FieldsWriter<RootModel, String> _fieldsWriter;
+	private FieldsWriter<RootModel> _fieldsWriter;
 	private final RequestInfo _requestInfo = Mockito.mock(RequestInfo.class);
 
 }

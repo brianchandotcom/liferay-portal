@@ -12,14 +12,36 @@
  * details.
  */
 
-package com.liferay.apio.architect.sample.liferay.portal.internal.identifier;
+package com.liferay.apio.architect.representor.function;
 
-import com.liferay.apio.architect.identifier.Identifier;
+import java.util.function.Function;
 
 /**
- * Represent the identifier for a {@code MediaObject} resource.
+ * Instances of this class represent the key which represents a model's field
+ * and the function to calculate that field.
  *
  * @author Alejandro Hernández
+ * @review
  */
-public interface MediaObjectIdentifier extends Identifier<Long> {
+public class FieldFunction<T, S> {
+
+	public FieldFunction(String key, Function<T, S> function) {
+		this.key = key;
+		this.function = function;
+	}
+
+	/**
+	 * The function that transforms the model into the field
+	 *
+	 * @review
+	 */
+	public final Function<T, S> function;
+
+	/**
+	 * The field key
+	 *
+	 * @review
+	 */
+	public final String key;
+
 }

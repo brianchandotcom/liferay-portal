@@ -27,5 +27,5 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface RepresentorFunction
-	extends Function<String, Optional<Representor<?, ?>>> {
+	extends Function<String, Optional<Representor<?>>> {
 }

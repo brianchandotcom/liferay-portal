@@ -27,6 +27,7 @@ import com.liferay.apio.architect.sample.internal.auth.PermissionChecker;
 import com.liferay.apio.architect.sample.internal.form.PersonForm;
 import com.liferay.apio.architect.sample.internal.identifier.PersonIdentifier;
 import com.liferay.apio.architect.sample.internal.model.PersonModel;
+import com.liferay.apio.architect.sample.internal.model.PostalAddressModel;
 
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +82,7 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public Representor<PersonModel, Long> representor(
+	public Representor<PersonModel> representor(
 		Representor.Builder<PersonModel, Long> builder) {
 
 		return builder.types(
@@ -90,8 +91,21 @@ public class PersonCollectionResource
 			PersonModel::getId
 		).addDate(
 			"birthDate", PersonModel::getBirthDate
-		).addString(
-			"address", PersonModel::getAddress
+		).addNested(
+			"address", PersonModel::getPostalAddressModel,
+			nestedBuilder -> nestedBuilder.types(
+				"PostalAddress"
+			).addString(
+				"addressCountry", PostalAddressModel::getCountryCode
+			).addString(
+				"addressLocality", PostalAddressModel::getCity
+			).addString(
+				"addressRegion", PostalAddressModel::getState
+			).addString(
+				"postalCode", PostalAddressModel::getZipCode
+			).addString(
+				"streetAddress", PostalAddressModel::getStreetAddress
+			).build()
 		).addString(
 			"email", PersonModel::getEmail
 		).addString(
@@ -115,7 +129,7 @@ public class PersonCollectionResource
 		}
 
 		return PersonModel.create(
-			personForm.getAddress(), personForm.getImage(),
+			personForm.getPostalAddressModel(), personForm.getImage(),
 			personForm.getBirthDate(), personForm.getEmail(),
 			personForm.getGivenName(), personForm.getJobTitles(),
 			personForm.getFamilyName());
@@ -152,7 +166,7 @@ public class PersonCollectionResource
 		}
 
 		Optional<PersonModel> optional = PersonModel.update(
-			personForm.getAddress(), personForm.getImage(),
+			personForm.getPostalAddressModel(), personForm.getImage(),
 			personForm.getBirthDate(), personForm.getEmail(),
 			personForm.getGivenName(), personForm.getJobTitles(),
 			personForm.getFamilyName(), id);

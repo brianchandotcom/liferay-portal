@@ -90,7 +90,7 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	@Override
-	public Representor<BlogsEntry, Long> representor(
+	public Representor<BlogsEntry> representor(
 		Representor.Builder<BlogsEntry, Long> builder) {
 
 		return builder.types(

@@ -15,8 +15,13 @@
 package com.liferay.apio.architect.documentation;
 
 import com.liferay.apio.architect.alias.RequestFunction;
+import com.liferay.apio.architect.representor.Representor;
+import com.liferay.apio.architect.routes.CollectionRoutes;
+import com.liferay.apio.architect.routes.ItemRoutes;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Represents the API's auto-documentation.
@@ -27,11 +32,16 @@ public class Documentation {
 
 	public Documentation(
 		RequestFunction<Optional<APITitle>> apiTitleRequestFunction,
-		RequestFunction<Optional<APIDescription>>
-			apiDescriptionRequestFunction) {
+		RequestFunction<Optional<APIDescription>> apiDescriptionRequestFunction,
+		Supplier<Map<String, Representor>> representorMapSupplier,
+		Supplier<Map<String, CollectionRoutes>> collectionRoutesMapSupplier,
+		Supplier<Map<String, ItemRoutes>> itemRoutesMapSupplier) {
 
 		_apiTitleRequestFunction = apiTitleRequestFunction;
 		_apiDescriptionRequestFunction = apiDescriptionRequestFunction;
+		_representorMapSupplier = representorMapSupplier;
+		_routesMapSupplier = collectionRoutesMapSupplier;
+		_itemRoutesMapSupplier = itemRoutesMapSupplier;
 	}
 
 	/**
@@ -65,8 +75,23 @@ public class Documentation {
 		);
 	}
 
+	public Supplier<Map<String, ItemRoutes>> getItemRoutesMapSupplier() {
+		return _itemRoutesMapSupplier;
+	}
+
+	public Supplier<Map<String, Representor>> getRepresentorMapSupplier() {
+		return _representorMapSupplier;
+	}
+
+	public Supplier<Map<String, CollectionRoutes>> getRoutesMapSupplier() {
+		return _routesMapSupplier;
+	}
+
 	private final RequestFunction<Optional<APIDescription>>
 		_apiDescriptionRequestFunction;
 	private final RequestFunction<Optional<APITitle>> _apiTitleRequestFunction;
+	private final Supplier<Map<String, ItemRoutes>> _itemRoutesMapSupplier;
+	private final Supplier<Map<String, Representor>> _representorMapSupplier;
+	private final Supplier<Map<String, CollectionRoutes>> _routesMapSupplier;
 
 }

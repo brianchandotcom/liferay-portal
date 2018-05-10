@@ -34,6 +34,7 @@ import com.liferay.apio.architect.test.util.json.JsonMatchers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -380,10 +381,9 @@ public class JSONLDTestUtil {
 	public static Matcher<JsonElement> isAJsonObjectWithTheSecondNested(
 		String id) {
 
-		List<Matcher<? super JsonElement>> theContext = Arrays.asList(
-			aJsonObjectWhere("bidirectionalModel3", IS_A_TYPE_ID_JSON_OBJECT),
-			aJsonObjectWhere("linked3", IS_A_TYPE_ID_JSON_OBJECT),
-			aJsonObjectWhere("relatedCollection3", IS_A_TYPE_ID_JSON_OBJECT));
+		List<Matcher<? super JsonElement>> theContext =
+			Collections.singletonList(
+				aJsonObjectWhere("linked3", IS_A_TYPE_ID_JSON_OBJECT));
 
 		Builder builder = new Builder();
 
@@ -392,17 +392,11 @@ public class JSONLDTestUtil {
 		).where(
 			"@type", containsTheTypes("Type 4")
 		).where(
-			"bidirectionalModel3",
-			isALinkTo("localhost/p/first-inner-model/" + id)
-		).where(
 			"linked3", isALinkTo("localhost/p/third-inner-model/fifth")
 		).where(
 			"nested3", isAJsonObjectWithTheThirdNested()
 		).where(
 			"number1", is(aJsonInt(equalTo(42)))
-		).where(
-			"relatedCollection3",
-			isALinkTo("localhost/p/model/" + id + "/models")
 		).where(
 			"string1", is(aJsonString(equalTo(id)))
 		).build();

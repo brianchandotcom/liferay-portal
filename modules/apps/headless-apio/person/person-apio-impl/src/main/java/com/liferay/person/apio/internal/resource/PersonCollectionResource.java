@@ -89,7 +89,7 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public Representor<User, Long> representor(
+	public Representor<User> representor(
 		Representor.Builder<User, Long> builder) {
 
 		return builder.types(

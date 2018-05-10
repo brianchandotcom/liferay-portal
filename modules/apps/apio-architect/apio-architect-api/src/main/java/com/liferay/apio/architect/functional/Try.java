@@ -435,8 +435,8 @@ public abstract class Try<T> {
 	public abstract Optional<T> toOptional();
 
 	/**
-	 * Applies {@code failureConsumer} if this is a {@code Failure}, or {@code
-	 * successConsumer} if this is a {@code Success}.
+	 * Applies {@code failureConsumer} if the current {@code Try} instance is a
+	 * {@code Failure}, or {@code successConsumer} if it's a {@code Success}.
 	 *
 	 * <p>
 	 * If {@code successConsumer} throws an {@code Exception}, this method
@@ -444,11 +444,10 @@ public abstract class Try<T> {
 	 * Exception}.
 	 * </p>
 	 *
-	 * @param  failureConsumer the consumer to apply when this {@code Try} is a
-	 *         {@code Failure}
-	 * @param  successConsumer the consumer to apply when this {@code Try} is a
-	 *         {@code Success}
-	 * @review
+	 * @param failureConsumer the consumer to apply when this {@code Try} is a
+	 *        {@code Failure}
+	 * @param successConsumer the consumer to apply when this {@code Try} is a
+	 *        {@code Success}
 	 */
 	public abstract void voidFold(
 		Consumer<Exception> failureConsumer,
@@ -594,6 +593,7 @@ public abstract class Try<T> {
 			ThrowableFunction<? super Exception, Try<T>> throwableFunction) {
 
 			Objects.requireNonNull(throwableFunction);
+
 			try {
 				return throwableFunction.apply(_exception);
 			}

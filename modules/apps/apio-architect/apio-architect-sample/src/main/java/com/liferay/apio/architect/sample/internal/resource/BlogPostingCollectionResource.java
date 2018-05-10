@@ -85,7 +85,7 @@ public class BlogPostingCollectionResource
 	}
 
 	@Override
-	public Representor<BlogPostingModel, Long> representor(
+	public Representor<BlogPostingModel> representor(
 		Representor.Builder<BlogPostingModel, Long> builder) {
 
 		return builder.types(

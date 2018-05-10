@@ -143,7 +143,7 @@ public class HALPageMessageMapper<T> implements PageMessageMapper<T> {
 		JSONObjectBuilder itemJSONObjectBuilder, SingleModel<T> singleModel,
 		HttpHeaders httpHeaders) {
 
-		Optional<Representor<T, Object>> optional =
+		Optional<Representor<T>> optional =
 			representableManager.getRepresentorOptional(
 				singleModel.getResourceName());
 

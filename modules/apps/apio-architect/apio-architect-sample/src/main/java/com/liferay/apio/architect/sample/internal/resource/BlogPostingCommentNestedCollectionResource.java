@@ -88,7 +88,7 @@ public class BlogPostingCommentNestedCollectionResource implements
 	}
 
 	@Override
-	public Representor<BlogPostingCommentModel, Long> representor(
+	public Representor<BlogPostingCommentModel> representor(
 		Representor.Builder<BlogPostingCommentModel, Long> builder) {
 
 		return builder.types(

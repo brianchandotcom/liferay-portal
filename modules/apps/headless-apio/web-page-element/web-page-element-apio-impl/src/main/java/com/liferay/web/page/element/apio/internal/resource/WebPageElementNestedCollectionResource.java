@@ -87,7 +87,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	@Override
-	public Representor<JournalArticle, Long> representor(
+	public Representor<JournalArticle> representor(
 		Representor.Builder<JournalArticle, Long> builder) {
 
 		return builder.types(

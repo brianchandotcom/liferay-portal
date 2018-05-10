@@ -15,6 +15,7 @@
 package com.liferay.apio.architect.sample.internal.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.apio.architect.sample.internal.model.PostalAddressModel;
 
 import java.util.Collections;
 import java.util.Date;
@@ -43,30 +44,29 @@ public class PersonForm {
 			__ -> "This form can be used to create or update a person"
 		).constructor(
 			PersonForm::new
-		).addOptionalStringList(
-			"jobTitle", PersonForm::_setJobTitles
 		).addRequiredDate(
 			"birthDate", PersonForm::_setBirthDate
+		).addOptionalStringList(
+			"jobTitle", PersonForm::_setJobTitles
+		).addRequiredString(
+			"addressCountry", PersonForm::_setCountryCode
+		).addRequiredString(
+			"addressLocality", PersonForm::_setCity
+		).addRequiredString(
+			"addressRegion", PersonForm::_setState
 		).addRequiredString(
 			"givenName", PersonForm::_setGivenName
-		).addRequiredString(
-			"address", PersonForm::_setAddress
 		).addRequiredString(
 			"image", PersonForm::_setImage
 		).addRequiredString(
 			"email", PersonForm::_setEmail
 		).addRequiredString(
 			"familyName", PersonForm::_setFamilyName
+		).addRequiredString(
+			"postalCode", PersonForm::_setZipCode
+		).addRequiredString(
+			"streetAddress", PersonForm::_setStreetAddress
 		).build();
-	}
-
-	/**
-	 * Returns the person's address.
-	 *
-	 * @return the person's address
-	 */
-	public String getAddress() {
-		return _address;
 	}
 
 	/**
@@ -123,12 +123,26 @@ public class PersonForm {
 		return _jobTitles;
 	}
 
-	private void _setAddress(String address) {
-		_address = address;
+	/**
+	 * Returns the person's address.
+	 *
+	 * @return the person's address
+	 */
+	public PostalAddressModel getPostalAddressModel() {
+		return new PostalAddressModel(
+			_countryCode, _state, _city, _zipCode, _streetAddress);
 	}
 
 	private void _setBirthDate(Date birthDate) {
 		_birthDate = birthDate;
+	}
+
+	private void _setCity(String city) {
+		_city = city;
+	}
+
+	private void _setCountryCode(String countryCode) {
+		_countryCode = countryCode;
 	}
 
 	private void _setEmail(String emailAddress) {
@@ -151,12 +165,28 @@ public class PersonForm {
 		_jobTitles = jobTitles;
 	}
 
-	private String _address;
+	private void _setState(String state) {
+		_state = state;
+	}
+
+	private void _setStreetAddress(String streetAddress) {
+		_streetAddress = streetAddress;
+	}
+
+	private void _setZipCode(String zipCode) {
+		_zipCode = zipCode;
+	}
+
 	private Date _birthDate;
+	private String _city;
+	private String _countryCode;
 	private String _email;
 	private String _familyName;
 	private String _givenName;
 	private String _image;
 	private List<String> _jobTitles = Collections.emptyList();
+	private String _state;
+	private String _streetAddress;
+	private String _zipCode;
 
 }

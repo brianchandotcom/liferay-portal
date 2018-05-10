@@ -12,14 +12,32 @@
  * details.
  */
 
-package com.liferay.apio.architect.sample.liferay.portal.internal.identifier;
+package com.liferay.apio.architect.representor.function;
 
-import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.representor.NestedRepresentor;
+
+import java.util.function.Function;
 
 /**
- * Represent the identifier for a {@code WebSite} resource.
+ * Instances of this class represent a {@code Representor} nested field.
  *
  * @author Alejandro Hernández
+ * @review
  */
-public interface WebSiteIdentifier extends Identifier<Long> {
+public class NestedFieldFunction<T, S> extends FieldFunction<T, S> {
+
+	public NestedFieldFunction(
+		String key, Function<T, S> function,
+		NestedRepresentor<S> nestedRepresentor) {
+
+		super(key, function);
+
+		this.nestedRepresentor = nestedRepresentor;
+	}
+
+	/**
+	 * The field's {@code NestedRepresentor}
+	 */
+	public final NestedRepresentor<S> nestedRepresentor;
+
 }

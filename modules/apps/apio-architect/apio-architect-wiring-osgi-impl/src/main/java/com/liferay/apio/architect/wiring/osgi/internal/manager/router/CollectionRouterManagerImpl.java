@@ -37,6 +37,7 @@ import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -55,6 +56,11 @@ public class CollectionRouterManagerImpl
 
 	public CollectionRouterManagerImpl() {
 		super(CollectionRouter.class, 1);
+	}
+
+	@Override
+	public Map<String, CollectionRoutes> getCollectionRoutes() {
+		return INSTANCE.getCollectionRoutes(this::_computeCollectionRoutes);
 	}
 
 	@Override

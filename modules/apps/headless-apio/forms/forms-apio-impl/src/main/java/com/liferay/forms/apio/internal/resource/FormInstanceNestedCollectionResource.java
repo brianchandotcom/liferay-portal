@@ -95,7 +95,7 @@ public class FormInstanceNestedCollectionResource
 	}
 
 	@Override
-	public Representor<DDMFormInstance, Long> representor(
+	public Representor<DDMFormInstance> representor(
 		Representor.Builder<DDMFormInstance, Long> builder) {
 
 		return builder.types(
@@ -118,7 +118,7 @@ public class FormInstanceNestedCollectionResource
 			DDMFormInstance::getStructureId
 		).addNested(
 			"settings", this::_getSettings,
-			nestedBuilder -> nestedBuilder.nestedTypes(
+			nestedBuilder -> nestedBuilder.types(
 				"FormInstanceSettings"
 			).addString(
 				"emailFromAddress", DDMFormInstanceSettings::emailFromAddress
@@ -148,7 +148,7 @@ public class FormInstanceNestedCollectionResource
 			).build()
 		).addNested(
 			"version", this::_getVersion,
-			nestedBuilder -> nestedBuilder.nestedTypes(
+			nestedBuilder -> nestedBuilder.types(
 				"FormInstanceVersion"
 			).addLinkedModel(
 				"author", PersonIdentifier.class,

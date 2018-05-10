@@ -74,6 +74,6 @@ public interface Representable<T, S, U extends Identifier<S>> {
 	 * @param builder the representor builder used to create the representor
 	 * @see   Representor.Builder
 	 */
-	public Representor<T, S> representor(Builder<T, S> builder);
+	public Representor<T> representor(Builder<T, S> builder);
 
 }

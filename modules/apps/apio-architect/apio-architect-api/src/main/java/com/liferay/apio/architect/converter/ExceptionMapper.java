@@ -19,9 +19,9 @@ import aQute.bnd.annotation.ConsumerType;
 import com.liferay.apio.architect.error.APIError;
 
 /**
- * Defines an interface whose instances map between an exception and its
- * {@link APIError} representation. Use the exception's message to provide
- * meaningful information about the error.
+ * Defines an interface whose instances map between an exception and its {@link
+ * APIError} representation. Use the exception's message to provide meaningful
+ * information about the error.
  *
  * @author Alejandro Hernández
  * @param  <T> the exception's type

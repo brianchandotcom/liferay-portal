@@ -29,10 +29,12 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
+import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceEntryHelper;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,6 +65,9 @@ public class PriceEntryNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getPageItems
+		).addCreator(
+			this::_addCommercePriceEntry, (a, b) -> true,
+			PriceEntryForm::buildForm
 		).build();
 	}
 
@@ -104,6 +109,19 @@ public class PriceEntryNestedCollectionResource
 		).addString(
 			SKU, PriceEntryHelper::getSKU
 		).build();
+	}
+
+	private CommercePriceEntry _addCommercePriceEntry(
+		Long commercePriceListId, PriceEntryForm priceEntryForm) {
+
+		try {
+			return _priceEntryHelper.addCommercePriceEntry(
+				priceEntryForm.getSkuID(), commercePriceListId,
+				priceEntryForm.getPrice(), priceEntryForm.getPromoPrice());
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
 	}
 
 	private PageItems<CommercePriceEntry> _getPageItems(

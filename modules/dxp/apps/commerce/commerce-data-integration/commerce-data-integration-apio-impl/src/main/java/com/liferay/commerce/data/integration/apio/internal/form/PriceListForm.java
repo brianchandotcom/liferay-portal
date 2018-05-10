@@ -60,7 +60,7 @@ public class PriceListForm {
 		).addRequiredDouble(
 			PRIORITY, PriceListForm::_setPriority
 		).addRequiredString(
-			CURRENCY, PriceListForm::setCurrency
+			CURRENCY, PriceListForm::_setCurrency
 		).addRequiredString(
 			NAME, PriceListForm::_setName
 		).build();
@@ -90,7 +90,7 @@ public class PriceListForm {
 		return _neverExpire;
 	}
 
-	public void setCurrency(String currency) {
+	private void _setCurrency(String currency) {
 		_currency = currency;
 	}
 

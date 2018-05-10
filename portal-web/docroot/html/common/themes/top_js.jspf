@@ -449,11 +449,13 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 		})('https://analytics.liferay.com/analytics-all-min.js', function() {
 			Analytics.create({analyticsKey: '<%= HtmlUtil.escapeJS(analyticsKey) %>'});
 
-			Analytics.registerMiddleware(function(request) {
-				request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+			Analytics.registerMiddleware(
+				function(request) {
+					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
 
-				return request;
-			});
+					return request;
+				}
+			);
 
 			Analytics.send('view', 'Layout');
 

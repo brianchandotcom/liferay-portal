@@ -70,7 +70,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand table-list-title"
 							name="application"
-							property="applicationKey"
+							value="<%= UADLanguageUtil.getApplicationName(uadApplicationExportDisplay.getApplicationKey(), locale) %>"
 						/>
 
 						<liferay-ui:search-container-column-text

@@ -60,6 +60,10 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
+		if (bundleWiring == null) {
+			return null;
+		}
+
 		List<BundleCapability> bundleCapabilities =
 			bundleWiring.getCapabilities("soy");
 

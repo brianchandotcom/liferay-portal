@@ -28,9 +28,12 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,10 +66,13 @@ public class DDMFormTaglibUtil {
 	}
 
 	public static String getFormBuilderContext(
-		long ddmStructureId, ThemeDisplay themeDisplay) {
+		long ddmStructureId, HttpServletRequest request) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String serializedFormBuilderContext = ParamUtil.getString(
-			themeDisplay.getRequest(), "serializedFormBuilderContext");
+			request, "serializedFormBuilderContext");
 
 		if (Validator.isNotNull(serializedFormBuilderContext)) {
 			return serializedFormBuilderContext;

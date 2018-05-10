@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 
-	public String getDDMFormBuilderContext(ThemeDisplay themeDisplay) {
+	public String getDDMFormBuilderContext(HttpServletRequest request) {
 		return DDMFormTaglibUtil.getFormBuilderContext(
-			GetterUtil.getLong(getDdmStructureId()), themeDisplay);
+			GetterUtil.getLong(getDdmStructureId()), request);
 	}
 
 	protected DDMForm getDDMForm() {
@@ -80,13 +80,8 @@ public class DDMFormBuilderTag extends BaseDDMFormBuilderTag {
 			request, "fieldSettingsDDMFormContextURL",
 			ddmFormBuilderSettingsResponse.getFieldSettingsDDMFormContextURL());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		setNamespacedAttribute(
-			request, "formBuilderContext",
-			getDDMFormBuilderContext(themeDisplay));
-
+			request, "formBuilderContext", getDDMFormBuilderContext(request));
 		setNamespacedAttribute(
 			request, "functionsMetadata",
 			ddmFormBuilderSettingsResponse.getFunctionsMetadata());

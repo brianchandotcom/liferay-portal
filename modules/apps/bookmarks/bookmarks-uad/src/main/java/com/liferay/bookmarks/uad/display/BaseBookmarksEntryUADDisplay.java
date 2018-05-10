@@ -48,11 +48,6 @@ public abstract class BaseBookmarksEntryUADDisplay
 	}
 
 	@Override
-	public String getApplicationName() {
-		return BookmarksUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] {"name", "description", "url"};
 	}

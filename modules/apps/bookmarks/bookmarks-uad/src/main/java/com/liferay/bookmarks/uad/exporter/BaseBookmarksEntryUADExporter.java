@@ -38,11 +38,6 @@ public abstract class BaseBookmarksEntryUADExporter
 	extends DynamicQueryUADExporter<BookmarksEntry> {
 
 	@Override
-	public String getApplicationName() {
-		return BookmarksUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public Class<BookmarksEntry> getTypeClass() {
 		return BookmarksEntry.class;
 	}

@@ -57,11 +57,15 @@ public class JSONIndentationCheck extends BaseFileCheck {
 			}
 		}
 
-		if (sb.length() > 0) {
-			sb.setIndex(sb.index() - 1);
+		String newContent = StringUtil.trimTrailing(sb.toString());
+
+		if (fileName.endsWith("/package.json") &&
+			newContent.equals(StringUtil.trimTrailing(content))) {
+
+			return content;
 		}
 
-		return sb.toString();
+		return newContent;
 	}
 
 	private String _fixIndentation(String line, int expectedTabCount) {

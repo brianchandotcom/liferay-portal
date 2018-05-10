@@ -15,12 +15,19 @@
 package com.liferay.layout.uad.test;
 
 import com.liferay.portal.kernel.model.LayoutBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
+import com.liferay.portal.kernel.service.LayoutBranchLocalService;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
 
-import org.junit.Assume;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,9 +43,21 @@ public class LayoutBranchUADTestHelper {
 	 * </p>
 	 */
 	public LayoutBranch addLayoutBranch(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
 
-		return null;
+		LayoutSetBranch layoutSetBranch =
+			_layoutSetBranchLocalService.addLayoutSetBranch(
+				userId, TestPropsValues.getGroupId(), false,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, LayoutSetBranchConstants.ALL_BRANCHES, serviceContext);
+
+		serviceContext.setUserId(userId);
+
+		return _layoutBranchLocalService.addLayoutBranch(
+			layoutSetBranch.getLayoutSetBranchId(), serviceContext.getPlid(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			serviceContext);
 	}
 
 	/**
@@ -50,6 +69,17 @@ public class LayoutBranchUADTestHelper {
 	 */
 	public void cleanUpDependencies(List<LayoutBranch> layoutBranchs)
 		throws Exception {
+
+		for (LayoutBranch layoutBranch : layoutBranchs) {
+			_layoutSetBranchLocalService.deleteLayoutSetBranch(
+				layoutBranch.getLayoutSetBranchId());
+		}
 	}
+
+	@Reference
+	private LayoutBranchLocalService _layoutBranchLocalService;
+
+	@Reference
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 }

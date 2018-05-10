@@ -41,11 +41,6 @@ public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase<${entit
 	}
 
 	@Override
-	protected String getApplicationName() {
-		return ${entity.UADApplicationName}UADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	protected UADDisplay getUADDisplay() {
 		return _uadDisplay;
 	}

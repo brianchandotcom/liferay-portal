@@ -18,7 +18,10 @@
 	<ul class="navbar-nav navbar-nav-end">
 		<li class="b2b-user nav-item">
 			<div class="nav-link">
-				<@liferay.user_personal_bar />
+				<@liferay_commerce["user-management-bar"]
+					href=userManagementUrl
+					showNotifications=true
+				/>
 			</div>
 		</li>
 		<li class="b2b-account dropdown dropdown-wide nav-item">

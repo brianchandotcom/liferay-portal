@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Objects;
@@ -224,22 +225,25 @@ public class FragmentItemSelectorViewDisplayContext {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
 				themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
 				_getKeywords(), fragmentEntriesSearchContainer.getStart(),
+				WorkflowConstants.STATUS_APPROVED,
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
 					themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
-					_getKeywords());
+					_getKeywords(), WorkflowConstants.STATUS_APPROVED);
 		}
 		else {
 			fragmentEntries = FragmentEntryServiceUtil.getFragmentEntries(
 				themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
+				WorkflowConstants.STATUS_APPROVED,
 				fragmentEntriesSearchContainer.getStart(),
 				fragmentEntriesSearchContainer.getEnd(), orderByComparator);
 
 			fragmentEntriesCount =
 				FragmentEntryServiceUtil.getFragmentCollectionsCount(
-					themeDisplay.getScopeGroupId(), _getFragmentCollectionId());
+					themeDisplay.getScopeGroupId(), _getFragmentCollectionId(),
+					WorkflowConstants.STATUS_APPROVED);
 		}
 
 		fragmentEntriesSearchContainer.setResults(fragmentEntries);

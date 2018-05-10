@@ -84,7 +84,8 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		_configureConfigurationCompileOnly(
 			project, originalModuleConfiguration);
 
-		_configureTaskDeploy(project, jar);
+		_configureLiferay(project);
+		_configureTaskDeploy(jar);
 
 		_configureTaskJar(jar, unzipOriginalModuleTask);
 
@@ -170,6 +171,23 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
+	private void _configureLiferay(Project project) {
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		liferayExtension.setDeployDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() {
+					return new File(
+						liferayExtension.getAppServerParentDir(),
+						"osgi/marketplace/override");
+				}
+
+			});
+	}
+
 	private void _configureProject(
 		Project project, Configuration originalModuleConfiguration) {
 
@@ -204,26 +222,11 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskDeploy(Project project, Jar jar) {
+	private void _configureTaskDeploy(Jar jar) {
 		Copy copy = (Copy)GradleUtil.getTask(
-			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
-
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+			jar.getProject(), LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		copy.from(jar);
-
-		liferayExtension.setDeployDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() {
-					return new File(
-						liferayExtension.getAppServerParentDir(),
-						"osgi/marketplace/override");
-				}
-
-			});
 	}
 
 	private Jar _configureTaskJar(

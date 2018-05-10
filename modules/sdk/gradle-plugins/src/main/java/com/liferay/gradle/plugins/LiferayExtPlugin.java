@@ -75,6 +75,7 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		Configuration portalConfiguration = GradleUtil.getConfiguration(
 			project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 
+		_configureLiferay(project);
 		_configureTaskDeploy(war);
 
 		Jar extKernelJar = _addSourceSet(
@@ -271,6 +272,22 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, WarPlugin.class);
 	}
 
+	private void _configureLiferay(Project project) {
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		liferayExtension.setDeployDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						liferayExtension.getAppServerParentDir(), "deploy");
+				}
+
+			});
+	}
+
 	private void _configureTaskBuildExtInfoBaseDir(
 		Sync buildExtInfoBaseDirTask, final BuildExtInfoTask buildExtInfoTask) {
 
@@ -294,26 +311,10 @@ public class LiferayExtPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskDeploy(War war) {
-		Project project = war.getProject();
-
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
-
 		Copy copy = (Copy)GradleUtil.getTask(
-			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
+			war.getProject(), LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		copy.from(war);
-
-		liferayExtension.setDeployDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						liferayExtension.getAppServerParentDir(), "deploy");
-				}
-
-			});
 	}
 
 	private void _configureTaskExtImplJar(

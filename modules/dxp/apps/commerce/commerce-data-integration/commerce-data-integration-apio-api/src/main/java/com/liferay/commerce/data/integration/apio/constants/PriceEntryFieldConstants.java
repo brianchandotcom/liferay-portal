@@ -31,4 +31,6 @@ public interface PriceEntryFieldConstants {
 
 	public static final String SKU = "sku";
 
+	public static final String SKU_ID = "skuID";
+
 }

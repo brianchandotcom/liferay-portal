@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -27,6 +28,10 @@ public class NavigationItem extends HashMap<String, Object> {
 
 	public void setActive(boolean active) {
 		put("active", active);
+	}
+
+	public void setData(Map<String, Object> data) {
+		put("data", data);
 	}
 
 	public void setDisabled(boolean disabled) {

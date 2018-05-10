@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.search.WorkflowInstanceSearch;
 import com.liferay.portal.workflow.web.internal.util.WorkflowInstancePortletUtil;
@@ -48,8 +51,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -137,6 +144,52 @@ public class WorkflowInstanceViewDisplayContext
 
 	public Date getEndDate(WorkflowInstance workflowInstance) {
 		return workflowInstance.getEndDate();
+	}
+
+	public DropdownItemList getFilterOptions(HttpServletRequest request) {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getFilterNavigationDropdownItem(
+											"all"));
+
+									add(
+										_getFilterNavigationDropdownItem(
+											"pending"));
+
+									add(
+										_getFilterNavigationDropdownItem(
+											"completed"));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "filter"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getOrderByDropdownItem(
+											"last-activity-date"));
+
+									add(_getOrderByDropdownItem("end-date"));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public String getHeaderTitle() {
@@ -245,6 +298,36 @@ public class WorkflowInstanceViewDisplayContext
 		return _searchContainer;
 	}
 
+	public String getSortingURL(HttpServletRequest request)
+		throws PortletException {
+
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+		LiferayPortletResponse response =
+			workflowInstanceRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = response.createRenderURL();
+
+		portletURL.setParameter(
+			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
+
+		String instanceNavigation = ParamUtil.getString(request, "navigation");
+
+		if (Validator.isNotNull(instanceNavigation)) {
+			portletURL.setParameter("navigation", instanceNavigation);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		portletURL.setParameter("tab", WorkflowWebKeys.WORKFLOW_TAB_INSTANCE);
+
+		return portletURL.toString();
+	}
+
 	public String getStatus(WorkflowInstance workflowInstance) {
 		return LanguageUtil.get(
 			workflowInstanceRequestHelper.getRequest(),
@@ -255,6 +338,8 @@ public class WorkflowInstanceViewDisplayContext
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("tab", "monitoring");
+
+		portletURL.setParameter("orderByType", getOrderByType());
 
 		return portletURL;
 	}
@@ -399,6 +484,31 @@ public class WorkflowInstanceViewDisplayContext
 				searchContainer.getEmptyResultsMessage() +
 					"-with-the-specified-search-criteria");
 		}
+	}
+
+	private Consumer<DropdownItem> _getFilterNavigationDropdownItem(
+		String navigation) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(Objects.equals(getNavigation(), navigation));
+
+			dropdownItem.setHref(
+				getViewPortletURL(), "navigation", navigation, "mvcPath",
+				"/view.jsp");
+
+			dropdownItem.setLabel(LanguageUtil.get(request, navigation));
+
+		};
+	}
+
+	private Consumer<DropdownItem> _getOrderByDropdownItem(String orderByCol) {
+		return dropdownItem -> {
+			dropdownItem.setActive(Objects.equals(getOrderByCol(), orderByCol));
+
+			dropdownItem.setHref(getViewPortletURL(), "orderByCol", orderByCol);
+
+			dropdownItem.setLabel(LanguageUtil.get(request, orderByCol));
+		};
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};

@@ -17,6 +17,9 @@
 <%@ include file="/instance/init.jsp" %>
 
 <clay:management-toolbar
-	namespace="<%= renderResponse.getNamespece() %>"
+	filterItems="<%= workflowInstanceViewDisplayContext.getFilterOptions(request) %>"
+	namespace="<%= renderResponse.getNamespace() %>"
 	selectable="<%= false %>"
+	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
+	sortingURL="<%= workflowInstanceViewDisplayContext.getSortingURL(request) %>"
 />

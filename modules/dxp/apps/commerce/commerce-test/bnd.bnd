@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Commerce Test
 Bundle-SymbolicName: com.liferay.commerce.test
 Bundle-Version: 1.0.0
--includeresource: test-classes/integration
+-includeresource:\
+	test-classes/integration,\
+	@lib/frutilla.jar

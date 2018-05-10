@@ -26,12 +26,12 @@ import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderShippingAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.web.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -154,12 +154,9 @@ public abstract class BaseAddressCommerceCheckoutStep
 			commerceAddressId = commerceAddress.getCommerceAddressId();
 		}
 
-		if (!CommerceOrderPermission.contains(
-				themeDisplay.getPermissionChecker(), commerceOrder,
-				CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS)) {
-
-			return;
-		}
+		commerceOrderModelResourcePermission.check(
+			themeDisplay.getPermissionChecker(), commerceOrder,
+			CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER);
 
 		updateCommerceOrderAddress(commerceOrder, commerceAddressId);
 	}
@@ -173,6 +170,12 @@ public abstract class BaseAddressCommerceCheckoutStep
 
 	@Reference
 	protected CommerceOrderLocalService commerceOrderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	protected ModelResourcePermission<CommerceOrder>
+		commerceOrderModelResourcePermission;
 
 	@Reference
 	protected CommerceOrderService commerceOrderService;

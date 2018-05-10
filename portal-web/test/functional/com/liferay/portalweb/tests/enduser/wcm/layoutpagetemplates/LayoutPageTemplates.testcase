@@ -111,10 +111,10 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<var name="htmlSnippet"><![CDATA[
-<div>${line.separator}
-<lfr-editable id="test" type="text">Edit Me</lfr-editable>${line.separator}
-</div>${line.separator}]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_1.html" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />
@@ -170,14 +170,24 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<var name="htmlSnippet"><![CDATA[
-<div>${line.separator}
-<lfr-editable id="test" type="image"><img src="http://placehold.it/640x360" /></lfr-editable>${line.separator}
-</div>${line.separator}]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_4.html" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />
 			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="cssSnippet" />
+			<var name="fileName" value="Document_4.css" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="css" />
+			<var name="templateScript" value="${cssSnippet}" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />-->
@@ -368,15 +378,25 @@
 			<var name="fragmentName" value="Fragment 1" />
 		</execute>
 
-		<var name="htmlSnippet"><![CDATA[
-<div>${line.separator}
-Test Content 1${line.separator}
-</div>${line.separator}]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_1.html" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />
 			<var name="templateScript" value="${htmlSnippet}" />
 		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="cssSnippet" />
+			<var name="fileName" value="Document_1.css" />
+		</execute>
+
+		 <execute macro="Fragment#typeFragmentEditor">
+		 	<var name="editor" value="css" />
+		 	<var name="templateScript" value="${cssSnippet}" />
+		 </execute>
 
 		<execute macro="PortletEntry#publish" />
 
@@ -384,14 +404,24 @@ Test Content 1${line.separator}
 			<var name="fragmentName" value="Fragment 2" />
 		</execute>
 
-		<var name="htmlSnippet"><![CDATA[
-<div>${line.separator}
-Test Content 2${line.separator}
-</div>${line.separator}]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_2.html" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />
 			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="cssSnippet" />
+			<var name="fileName" value="Document_2.css" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="css" />
+			<var name="templateScript" value="${cssSnippet}" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

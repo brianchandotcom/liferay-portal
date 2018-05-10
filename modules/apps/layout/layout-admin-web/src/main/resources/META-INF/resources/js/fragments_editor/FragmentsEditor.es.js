@@ -656,6 +656,24 @@ class FragmentsEditor extends Component {
 
 	_handleToggleHighlightMapping() {
 		this._highlightMapping = !this._highlightMapping;
+
+		this.fragmentEntryLinks
+			.map(
+				fragmentEntryLink => this._getFragmentEntryLinkComponent(
+					fragmentEntryLink.fragmentEntryLinkId
+				)
+			)
+			.filter(
+				fragmentEntryLinkComponent => fragmentEntryLinkComponent
+			)
+			.forEach(
+				fragmentEntryLinkComponent => {
+					fragmentEntryLinkComponent.updateEditableStatus(
+						this.languageId,
+						this.defaultLanguageId
+					);
+				}
+			);
 	}
 
 	/**

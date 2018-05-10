@@ -262,90 +262,105 @@ if (!roles.isEmpty()) {
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script use="aui-base">
-	var form = A.one('#<portlet:namespace />fm');
+<aui:script require="metal-dom/src/dom">
+	let dom = metalDomSrcDom.default;
 
-	var modified = function(panel) {
-		var modifiedNotice = panel.one('.panel-heading .sheet-subtitle .modified-notice');
+	var form = document.querySelector('#<portlet:namespace />fm');
 
-		if (modifiedNotice == null) {
-			var displayTitle = panel.one('.panel-heading .sheet-subtitle');
+	if (form) {
+		var <portlet:namespace />modified = function(panel) {
+			var modifiedNotice = panel.querySelector('.panel-heading .sheet-subtitle .modified-notice');
 
-			displayTitle.append('<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>');
-		}
-	};
+			if (!modifiedNotice) {
+				var displayTitle = panel.querySelector('.panel-heading .sheet-subtitle');
 
-	var customizeAnnouncementsDisplayedCheckbox = form.one('#<portlet:namespace />customizeAnnouncementsDisplayed');
-
-	customizeAnnouncementsDisplayedCheckbox.on(
-		'change',
-		function() {
-			modified(A.one('#announcementsDisplayedPanel'));
-
-			var announcementsDisplayed = form.one('#<portlet:namespace />announcementsDisplayed');
-
-			if (announcementsDisplayed) {
-				announcementsDisplayed.toggleClass('hide');
+				dom.append(displayTitle, '<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>');
 			}
 		}
-	);
 
-	var selected = form.all('.left-selector');
+		var customizeAnnouncementsDisplayedCheckbox = form.querySelector('#<portlet:namespace />customizeAnnouncementsDisplayed');
 
-	var selectedHTML = '';
+		if (customizeAnnouncementsDisplayedCheckbox) {
+			customizeAnnouncementsDisplayedCheckbox.addEventListener(
+				'change',
+				function() {
+					<portlet:namespace />modified(document.querySelector('#announcementsDisplayedPanel'));
 
-	for (var i = selected._nodes.length - 1; i >= 0; --i) {
-		selectedHTML = selectedHTML.concat(selected._nodes[i].innerHTML);
+					var announcementsDisplayed = form.querySelector('#<portlet:namespace />announcementsDisplayed');
+
+					if (announcementsDisplayed) {
+						dom.toggleClass(announcementsDisplayed, 'hide');
+					}
+				}
+			);
+		}
 	}
-
-	Liferay.on(
-		'inputmoveboxes:moveItem',
-		function(event) {
-			var currSelectedHTML = '';
-
-			for (var i = selected._nodes.length - 1; i >= 0; --i) {
-				currSelectedHTML = currSelectedHTML.concat(selected._nodes[i].innerHTML);
-			}
-
-			if (selectedHTML != currSelectedHTML) {
-				modified(A.one('#announcementsDisplayedPanel'));
-			}
-		}
-	);
-
-	var pageDeltaInput = form.one('select[name=<portlet:namespace />preferences--pageDelta--]');
-
-	pageDeltaInput.on(
-		'change',
-		function(event) {
-			modified(A.one('#displaySettingsPanel'));
-		}
-	);
 </aui:script>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfigurations',
-		function() {
-			if (document.<portlet:namespace />fm.<portlet:namespace />selectedScopeGroupIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />selectedScopeGroupIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeGroupIds);
+	var <portlet:namespace />form = document.querySelector('#<portlet:namespace />fm');
+
+	if (<portlet:namespace />form) {
+		var selected = <portlet:namespace />form.querySelectorAll('.left-selector');
+
+		var selectedHTML = '';
+
+		for (var i = selected.length - 1; i >= 0; --i) {
+			selectedHTML = selectedHTML.concat(selected[i].innerHTML);
+		}
+
+		Liferay.on(
+			'inputmoveboxes:moveItem',
+			function(event) {
+				var currSelectedHTML = '';
+
+				for (var i = selected.length - 1; i >= 0; --i) {
+					currSelectedHTML = currSelectedHTML.concat(selected[i].innerHTML);
+				}
+
+				if (selectedHTML != currSelectedHTML) {
+					var announcementsDisplayedPanel = document.querySelector('#announcementsDisplayedPanel');
+
+					if (announcementsDisplayedPanel) {
+						modified(announcementsDisplayedPanel);
+					}
+				}
+			}
+		);
+
+		var pageDeltaInput = <portlet:namespace />form.querySelector('select[name=<portlet:namespace />preferences--pageDelta--]');
+
+		if (pageDeltaInput) {
+			pageDeltaInput.on(
+				'change',
+				function(event) {
+					var displaySettingsPanel = document.querySelector('#displaySettingsPanel');
+
+					if (displaySettingsPanel) {
+						modified(displaySettingsPanel);
+					}
+				}
+			);
+		}
+
+		function <portlet:namespace />saveConfigurations() {
+			if (<portlet:namespace />form.<portlet:namespace />selectedScopeGroupIds) {
+				<portlet:namespace />form.<portlet:namespace />selectedScopeGroupIds.value = Liferay.Util.listSelect(<portlet:namespace />form.<portlet:namespace />currentScopeGroupIds);
 			}
 
-			if (document.<portlet:namespace />fm.<portlet:namespace />selectedScopeOrganizationIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />selectedScopeOrganizationIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeOrganizationIds);
+			if (<portlet:namespace />form.<portlet:namespace />selectedScopeOrganizationIds) {
+				<portlet:namespace />form.<portlet:namespace />selectedScopeOrganizationIds.value = Liferay.Util.listSelect(<portlet:namespace />form.<portlet:namespace />currentScopeOrganizationIds);
 			}
 
-			if (document.<portlet:namespace />fm.<portlet:namespace />selectedScopeRoleIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />selectedScopeRoleIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeRoleIds);
+			if (<portlet:namespace />form.<portlet:namespace />selectedScopeRoleIds) {
+				<portlet:namespace />form.<portlet:namespace />selectedScopeRoleIds.value = Liferay.Util.listSelect(<portlet:namespace />form.<portlet:namespace />currentScopeRoleIds);
 			}
 
-			if (document.<portlet:namespace />fm.<portlet:namespace />selectedScopeUserGroupIds) {
-				document.<portlet:namespace />fm.<portlet:namespace />selectedScopeUserGroupIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentScopeUserGroupIds);
+			if (<portlet:namespace />form.<portlet:namespace />selectedScopeUserGroupIds) {
+				<portlet:namespace />form.<portlet:namespace />selectedScopeUserGroupIds.value = Liferay.Util.listSelect(<portlet:namespace />form.<portlet:namespace />currentScopeUserGroupIds);
 			}
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+			submitForm(<portlet:namespace />form);
+		}
+	}
 </aui:script>

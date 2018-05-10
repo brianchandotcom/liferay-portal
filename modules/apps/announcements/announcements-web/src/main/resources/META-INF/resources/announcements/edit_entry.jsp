@@ -167,21 +167,18 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	function <portlet:namespace />getContent() {
-		return window.<portlet:namespace />contentEditor.getHTML();
-	}
+	var <portlet:namespace />form = document.querySelector('#<portlet:namespace />fm');
 
-	function <portlet:namespace />getTitle() {
-		return window.<portlet:namespace />titleEditor.getText();
-	}
+	if (<portlet:namespace />form) {
+		function <portlet:namespace />saveEntry() {
+			<portlet:namespace />form.action = '<portlet:actionURL name="/announcements/edit_entry"><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /></portlet:actionURL>';
+			<portlet:namespace />form.target = '';
 
-	function <portlet:namespace />saveEntry() {
-		document.<portlet:namespace />fm.action = '<portlet:actionURL name="/announcements/edit_entry"><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /></portlet:actionURL>';
-		document.<portlet:namespace />fm.target = '';
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
-		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
-		document.<portlet:namespace />fm.<portlet:namespace />title.value = <portlet:namespace />getTitle();
+			<portlet:namespace />form.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
+			<portlet:namespace />form.<portlet:namespace />content.value = window.<portlet:namespace />contentEditor.getHTML();
+			<portlet:namespace />form.<portlet:namespace />title.value = window.<portlet:namespace />titleEditor.getText();
 
-		submitForm(document.<portlet:namespace />fm);
+			submitForm(<portlet:namespace />form);
+		}
 	}
 </aui:script>

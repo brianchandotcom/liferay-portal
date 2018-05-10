@@ -50,13 +50,13 @@ public class PersonNestedCollectionRouter implements
 		NestedCollectionRoutes.Builder<User, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class
+			this::_getPageItems
 		).build();
 	}
 
 	private PageItems<User> _getPageItems(
-			Pagination pagination, Long organizationId, Company company)
-		throws PortalException {
+		Pagination pagination, Long organizationId)
+			throws PortalException {
 
 		List<User> organizationUsers = _userService.getOrganizationUsers(
 			organizationId, WorkflowConstants.STATUS_APPROVED,

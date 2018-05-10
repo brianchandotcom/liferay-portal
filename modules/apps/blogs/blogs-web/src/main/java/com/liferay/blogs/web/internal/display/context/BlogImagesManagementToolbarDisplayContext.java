@@ -132,22 +132,13 @@ public class BlogImagesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
+		PortletURL currentSortingURL = _getCurrentSortingURL();
 
-		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
-
-		sortingURL.setParameter(
+		currentSortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
-		String keywords = ParamUtil.getString(_request, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			sortingURL.setParameter("keywords", keywords);
-		}
-
-		return sortingURL;
+		return currentSortingURL;
 	}
 
 	public ViewTypeItemList getViewTypes() {
@@ -189,6 +180,21 @@ public class BlogImagesManagementToolbarDisplayContext {
 		};
 	}
 
+	private PortletURL _getCurrentSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			_currentURLObj, _liferayPortletResponse);
+
+		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			sortingURL.setParameter("keywords", keywords);
+		}
+
+		return sortingURL;
+	}
+
 	private List<DropdownItem> _getOrderByDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -198,7 +204,7 @@ public class BlogImagesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								"title".equals(getOrderByCol()));
 							dropdownItem.setHref(
-								getSortingURL(), "orderByCol", "title");
+								_getCurrentSortingURL(), "orderByCol", "title");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "title"));
 						}));
@@ -209,7 +215,7 @@ public class BlogImagesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								"size".equals(getOrderByCol()));
 							dropdownItem.setHref(
-								getSortingURL(), "orderByCol", "size");
+								_getCurrentSortingURL(), "orderByCol", "size");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "size"));
 						}));

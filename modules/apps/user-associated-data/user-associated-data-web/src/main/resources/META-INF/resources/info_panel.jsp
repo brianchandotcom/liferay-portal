@@ -48,7 +48,7 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 					</li>
 				</ul>
 
-				<h3 class="sidebar-title"><%= StringUtil.shorten(String.valueOf(displayValues.get(identifierFieldName)), 200) %></h3>
+				<h3 class="sidebar-title"><%= SafeDisplayValueUtil.get(displayValues.get(identifierFieldName)) %></h3>
 
 				<h5 class="sidebar-subtitle"><%= uadDisplay.getTypeName(locale) %></h5>
 			</div>
@@ -64,7 +64,7 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 					%>
 
 						<dt class="sidebar-dt"><%= entry.getKey() %></dt>
-						<dd class="sidebar-dd"><%= StringUtil.shorten(String.valueOf(entry.getValue()), 200) %></dd>
+						<dd class="sidebar-dd"><%= SafeDisplayValueUtil.get(entry.getValue()) %></dd>
 
 					<%
 					}

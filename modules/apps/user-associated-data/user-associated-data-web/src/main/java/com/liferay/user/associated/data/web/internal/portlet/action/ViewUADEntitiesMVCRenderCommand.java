@@ -35,6 +35,7 @@ import com.liferay.user.associated.data.web.internal.constants.UADWebKeys;
 import com.liferay.user.associated.data.web.internal.display.UADEntity;
 import com.liferay.user.associated.data.web.internal.display.ViewUADEntitiesDisplay;
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
+import com.liferay.user.associated.data.web.internal.util.SafeDisplayValueUtil;
 import com.liferay.user.associated.data.web.internal.util.SelectedUserHelper;
 
 import java.util.ArrayList;
@@ -138,7 +139,9 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 
 		for (String columnFieldName : uadDisplay.getColumnFieldNames()) {
 			uadEntity.addColumnEntry(
-				columnFieldName, columnFieldValues.get(columnFieldName));
+				columnFieldName,
+				SafeDisplayValueUtil.get(
+					columnFieldValues.get(columnFieldName)));
 		}
 
 		return uadEntity;

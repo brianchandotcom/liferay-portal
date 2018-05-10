@@ -47,7 +47,7 @@
 <!--APPLICATIONS-->
 <tr>
 	<td>APPLICATIONS_ACCORDION_PANEL_TITLE</td>
-	<td>//div[contains(@id,'Accordion')]//div[@class='panel-title' and contains(.,'Applications')]</td>
+	<td>//div[contains(@id,'Accordion')]//div[@class='panel-title' and contains(.,'Widgets')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,12 +67,12 @@
 </tr>
 <tr>
 	<td>SIDEBAR_APPLICATIONS_PANEL_COLLAPSED</td>
-	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='false' and contains(.,'Applications')]</td>
+	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='false' and contains(.,'Widgets')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SIDEBAR_APPLICATIONS_PANEL_EXPANDED</td>
-	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='true' and contains(.,'Applications')]</td>
+	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='true' and contains(.,'Widgets')]</td>
 	<td></td>
 </tr>
 <tr>

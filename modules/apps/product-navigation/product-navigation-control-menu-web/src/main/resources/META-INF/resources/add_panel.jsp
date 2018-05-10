@@ -48,7 +48,7 @@
 								<div class="panel-heading" id="<portlet:namespace />addApplicationHeading" role="tab">
 									<div class="panel-title">
 										<a aria-controls="#<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="<%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %> collapse-icon collapse-icon-middle panel-toggler" data-qa-id="addMenuAddApplicationCategory" data-toggle="collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
-											<span class="category-name"><liferay-ui:message key="applications" /></span>
+											<span class="category-name"><liferay-ui:message key="widgets" /></span>
 
 											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 

@@ -72,9 +72,9 @@ refererURL.setParameter("updateLayout", "true");
 
 		<c:if test="<%= layout.isTypePortlet() %>">
 			<div class="add-portlet-message">
-				<h4><liferay-ui:message key="adding-applications" /></h4>
+				<h4><liferay-ui:message key="adding-widgets" /></h4>
 
-				<h6 class="info-message"><liferay-ui:message key="to-add-a-portlet-to-the-page-just-drag-it" /></h6>
+				<h6 class="info-message"><liferay-ui:message key="to-add-a-widget-to-the-page-just-drag-it" /></h6>
 
 				<h6><aui:icon image="live" label="can-be-added-once" markupView="lexicon" /></h6>
 
@@ -89,7 +89,7 @@ refererURL.setParameter("updateLayout", "true");
 			%>
 
 			<div class="button-holder">
-				<aui:button href="<%= marketplaceURL.toString() %>" primary="<%= true %>" value="install-more-applications" />
+				<aui:button href="<%= marketplaceURL.toString() %>" primary="<%= true %>" value="install-more-widgets" />
 			</div>
 		</c:if>
 	</div>

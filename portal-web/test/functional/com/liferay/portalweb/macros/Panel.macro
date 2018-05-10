@@ -22,7 +22,7 @@
 				<condition function="IsVisible" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" />
 			</and>
 			<then>
-				<execute function="AssertClick" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" value1="Applications" />
+				<execute function="AssertClick" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_COLLAPSED" value1="Widgets" />
 
 				<execute function="AssertElementPresent" locator1="ControlMenuAddPanel#SIDEBAR_APPLICATIONS_PANEL_EXPANDED" />
 			</then>

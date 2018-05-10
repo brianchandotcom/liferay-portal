@@ -63,7 +63,7 @@ public class CommerceUserSegmentHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group1 = GroupTestUtil.addGroup();
 
 		_organization = OrganizationTestUtil.addOrganization();
 
@@ -104,7 +104,7 @@ public class CommerceUserSegmentHelperTest {
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
-				_group.getGroupId(), 0, _user.getUserId());
+				_group1.getGroupId(), 0, _user.getUserId());
 
 		Assert.assertEquals(
 			false,
@@ -132,11 +132,11 @@ public class CommerceUserSegmentHelperTest {
 		);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
 			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
-				_group.getGroupId(), true, false, _user.getUserId(),
+				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
@@ -149,7 +149,7 @@ public class CommerceUserSegmentHelperTest {
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
-				_group.getGroupId(), 0, _user.getUserId());
+				_group1.getGroupId(), 0, _user.getUserId());
 
 		Assert.assertEquals(
 			true,
@@ -177,11 +177,11 @@ public class CommerceUserSegmentHelperTest {
 		);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
 			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
-				_group.getGroupId(), true, false, _user.getUserId(),
+				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
@@ -193,7 +193,7 @@ public class CommerceUserSegmentHelperTest {
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
-				_group.getGroupId(), 0, _user.getUserId());
+				_group1.getGroupId(), 0, _user.getUserId());
 
 		Assert.assertEquals(
 			true,
@@ -219,11 +219,11 @@ public class CommerceUserSegmentHelperTest {
 		);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
 			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
-				_group.getGroupId(), true, false, _user.getUserId(),
+				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
@@ -238,11 +238,11 @@ public class CommerceUserSegmentHelperTest {
 			_organization.getOrganizationId(), new long[] {_user.getUserId()});
 
 		_commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
-			_group.getGroupId());
+			_group1.getGroupId());
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
-				_group.getGroupId(), 0, _user.getUserId());
+				_group1.getGroupId(), 0, _user.getUserId());
 
 		Assert.assertEquals(
 			false,
@@ -270,11 +270,11 @@ public class CommerceUserSegmentHelperTest {
 		);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
 			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
-				_group.getGroupId(), true, false, _user.getUserId(),
+				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
@@ -287,7 +287,7 @@ public class CommerceUserSegmentHelperTest {
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
-				_group.getGroupId(), 0, _user.getUserId());
+				_group1.getGroupId(), 0, _user.getUserId());
 
 		Assert.assertEquals(
 			true,
@@ -317,7 +317,7 @@ public class CommerceUserSegmentHelperTest {
 	private CommerceUserSegmentHelper _commerceUserSegmentHelper;
 
 	@DeleteAfterTestRun
-	private Group _group;
+	private Group _group1;
 
 	@DeleteAfterTestRun
 	private Group _group2;

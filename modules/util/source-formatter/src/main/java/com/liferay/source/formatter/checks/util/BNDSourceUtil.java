@@ -101,7 +101,7 @@ public class BNDSourceUtil {
 		"Liferay-Releng-Marketplace", "Liferay-Releng-Portal-Required",
 		"Liferay-Releng-Public", "Liferay-Releng-Restart-Required",
 		"Liferay-Releng-Suite", "Liferay-Releng-Support-Url",
-		"Liferay-Releng-Supported"
+		"Liferay-Releng-Supported", "Liferay-Versions"
 	};
 
 	private static final String[] _BND_BND_DEFINITION_KEYS = {

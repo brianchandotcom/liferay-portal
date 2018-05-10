@@ -29,11 +29,15 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
-import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryForm;
+import com.liferay.commerce.data.integration.apio.internal.exceptions.UnprocessableEntityException;
+import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryCreatorForm;
+import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpdaterForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceEntryHelper;
+import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -42,7 +46,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
+
+import org.apache.http.HttpStatus;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,7 +74,7 @@ public class PriceEntryNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommercePriceEntry, (a, b) -> true,
-			PriceEntryForm::buildForm
+			PriceEntryCreatorForm::buildForm
 		).build();
 	}
 
@@ -112,12 +119,25 @@ public class PriceEntryNestedCollectionResource
 	}
 
 	private CommercePriceEntry _addCommercePriceEntry(
-		Long commercePriceListId, PriceEntryForm priceEntryForm) {
+		Long commercePriceListId, PriceEntryCreatorForm priceEntryCreatorForm) {
 
 		try {
 			return _priceEntryHelper.addCommercePriceEntry(
-				priceEntryForm.getSkuID(), commercePriceListId,
-				priceEntryForm.getPrice(), priceEntryForm.getPromoPrice());
+				priceEntryCreatorForm.getSkuID(), commercePriceListId,
+				priceEntryCreatorForm.getPrice(),
+				priceEntryCreatorForm.getPromoPrice());
+		}
+		catch (NoSuchCPInstanceException nscpie) {
+			throw new NotFoundException(
+				"Unable to find CPInstance with ID " +
+					priceEntryCreatorForm.getSkuID(),
+				nscpie);
+		}
+		catch (DuplicateCommercePriceEntryException dcpee) {
+			throw new UnprocessableEntityException(
+				"Duplicate Product Instance with ID " +
+					priceEntryCreatorForm.getSkuID(),
+				HttpStatus.SC_UNPROCESSABLE_ENTITY, dcpee);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

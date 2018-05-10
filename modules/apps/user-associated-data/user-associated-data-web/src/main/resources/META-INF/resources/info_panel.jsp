@@ -55,6 +55,8 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 
 			<div class="sidebar-body">
 				<dl class="sidebar-block sidebar-dl sidebar-section">
+					<dt class="sidebar-dt"><%= LanguageUtil.get(request, "primary-key") %></dt>
+					<dd class="sidebar-dd"><%= primaryKey %></dd>
 
 					<%
 					for (Map.Entry<String, Object> entry : displayValues.entrySet()) {

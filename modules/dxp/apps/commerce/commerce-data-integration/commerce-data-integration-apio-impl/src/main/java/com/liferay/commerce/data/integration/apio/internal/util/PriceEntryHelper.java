@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.data.integration.apio.internal.util;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -40,9 +40,17 @@ public class PriceEntryHelper {
 	public static String getProductName(CommercePriceEntry commercePriceEntry) {
 		CPInstance cpInstance = _getCPInstance(commercePriceEntry);
 
-		CPDefinition cpDefinition = Try.fromFallible(
-			cpInstance::getCPDefinition
-		).getUnchecked();
+		CPDefinition cpDefinition = null;
+
+		try {
+			cpDefinition = cpInstance.getCPDefinition();
+		}
+		catch (PortalException pe) {
+			throw new NotFoundException(
+				"Unable to find Product Definition for Product Instance with " +
+					"ID " + cpInstance.getCPDefinitionId(),
+				pe);
+		}
 
 		return cpDefinition.getName();
 	}
@@ -63,6 +71,13 @@ public class PriceEntryHelper {
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());
+
+		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(skuID);
+
+		if (cpInstance == null) {
+			throw new NotFoundException(
+				"Unable to find Product Instance with ID: " + skuID);
+		}
 
 		return _commercePriceEntryService.addCommercePriceEntry(
 			skuID, commercePriceListId, BigDecimal.valueOf(price),
@@ -85,9 +100,19 @@ public class PriceEntryHelper {
 	private static CPInstance _getCPInstance(
 		CommercePriceEntry commercePriceEntry) {
 
-		return Try.fromFallible(
-			commercePriceEntry::getCPInstance
-		).getUnchecked();
+		CPInstance cpInstance = null;
+
+		try {
+			cpInstance = commercePriceEntry.getCPInstance();
+		}
+		catch (PortalException pe) {
+			throw new NotFoundException(
+				"Unable to find Product Instance for Price Entry with ID " +
+					commercePriceEntry.getCommercePriceEntryId(),
+				pe);
+		}
+
+		return cpInstance;
 	}
 
 	@Reference
@@ -95,6 +120,9 @@ public class PriceEntryHelper {
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private PriceListHelper _priceListHelper;

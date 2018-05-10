@@ -44,8 +44,8 @@
 	</tear-down>
 
 	<command name="AddLayoutPageTemplateRemoveFragment" priority="5">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -78,8 +78,8 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#add">
@@ -103,8 +103,8 @@
 	</command>
 
 	<command name="ChangeEditableText" priority="5">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -137,8 +137,8 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#add">
@@ -162,8 +162,8 @@
 	</command>
 
 	<command ignore="true" name="ChangeEditableImage" priority="5">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -206,8 +206,8 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#add">
@@ -264,8 +264,8 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#add">
@@ -282,8 +282,8 @@
 			<var name="navItem" value="Page Templates" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LexiconEntry#delete">
@@ -337,8 +337,8 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#add">
@@ -355,8 +355,8 @@
 			<var name="navItem" value="Page Templates" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#rename">
@@ -370,8 +370,8 @@
 	</command>
 
 	<command name="ReorderFragments" priority="5">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -440,8 +440,8 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#add">
@@ -500,8 +500,8 @@
 	</command>
 
 	<command name="ViewDraftFragmentDoesNotDisplayInSidebar" priority="4">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -522,8 +522,8 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#add">

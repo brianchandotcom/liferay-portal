@@ -99,6 +99,11 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Override
+	public boolean isPrimaryType() {
+		return true;
+	}
+
+	@Override
 	public boolean isSitemapable() {
 		return false;
 	}

@@ -211,6 +211,15 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isPrimaryType() {
+		if (_type.equals(LayoutConstants.TYPE_PORTLET)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isSitemapable() {
 		return _sitemapable;
 	}

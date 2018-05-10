@@ -474,6 +474,24 @@ public class FriendlyURLEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.friendly.url.model.FriendlyURLEntryLocalization updateFriendlyURLEntryLocalization(
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry,
+		String languageId, String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _friendlyURLEntryLocalService.updateFriendlyURLEntryLocalization(friendlyURLEntry,
+			languageId, urlTitle);
+	}
+
+	@Override
+	public java.util.List<com.liferay.friendly.url.model.FriendlyURLEntryLocalization> updateFriendlyURLEntryLocalizations(
+		com.liferay.friendly.url.model.FriendlyURLEntry friendlyURLEntry,
+		java.util.Map<String, String> urlTitleMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _friendlyURLEntryLocalService.updateFriendlyURLEntryLocalizations(friendlyURLEntry,
+			urlTitleMap);
+	}
+
+	@Override
 	public com.liferay.friendly.url.model.FriendlyURLEntryLocalization updateFriendlyURLLocalization(
 		com.liferay.friendly.url.model.FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
 		return _friendlyURLEntryLocalService.updateFriendlyURLLocalization(friendlyURLEntryLocalization);

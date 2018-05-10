@@ -132,6 +132,9 @@ generated or not.
 The uad-entity-type-description value specifies a description of the entity type
 to be displayed in the GDPR UI.
 
+If the versioned value is true, then the service will generate a version table,
+columns and methods to version the entity.
+
 The deprecated value specifies whether the entity's services are deprecated.
 -->
 <!ATTLIST entity
@@ -152,6 +155,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	mvcc-enabled CDATA #IMPLIED
 	trash-enabled CDATA #IMPLIED
 	uad-entity-type-description CDATA #IMPLIED
+	versioned CDATA #IMPLIED
 	deprecated CDATA #IMPLIED
 >
 
@@ -359,6 +363,19 @@ true. A defaultLanguageId column is generated for the entity table and several
 columns, finders, and update methods are generated for the localized entity.
 -->
 <!ELEMENT localized-entity (column*, localized-column+, order?, finder*)>
+
+<!--
+The name value specifies the name of the localized entity. If this value is not
+set, then the parent entity's name is used with "Localization" appended.
+
+The table value specifies the name of the table that this localized entity maps
+to in the database. If this value is not set, then the name of the table is the
+same as the name of the localized entity.
+-->
+<!ATTLIST localized-entity
+	name CDATA #IMPLIED
+	table CDATA #IMPLIED
+>
 
 <!--
 The localized-column element represents a column in the localization table.

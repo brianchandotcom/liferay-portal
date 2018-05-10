@@ -79,6 +79,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 					elementClasses='<%= "btn-sm" + (searchFolderId == rootFolderId ? " active" : "") %>'
 					href="<%= searchEverywhereURL.toString() %>"
 					label='<%= LanguageUtil.get(resourceBundle, "everywhere") %>'
+					title='<%= LanguageUtil.get(resourceBundle, "everywhere") %>'
 				/>
 			</c:if>
 
@@ -89,6 +90,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 					href="<%= searchFolderURL.toString() %>"
 					icon="folder"
 					label="<%= folder.getName() %>"
+					title="<%= folder.getName() %>"
 				/>
 			</c:if>
 
@@ -107,6 +109,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 					href="<%= searchRepositoryURL.toString() %>"
 					icon="repository"
 					label='<%= LanguageUtil.get(request, "local") %>'
+					title='<%= LanguageUtil.get(request, "local") %>'
 				/>
 
 				<%

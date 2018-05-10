@@ -76,7 +76,7 @@ public class OrganizationCollectionResource
 	}
 
 	@Override
-	public Representor<Organization, Long> representor(
+	public Representor<Organization> representor(
 		Representor.Builder<Organization, Long> builder) {
 
 		return builder.types(
@@ -91,7 +91,7 @@ public class OrganizationCollectionResource
 			"website", WebSiteIdentifier.class, this::_getSiteId
 		).addNested(
 			"location", organization -> organization,
-			nestedBuilder -> nestedBuilder.nestedTypes(
+			nestedBuilder -> nestedBuilder.types(
 				"PostalAddress"
 			).addLocalizedStringByLocale(
 				"addressCountry", this::_getCountry

@@ -17,7 +17,6 @@ package com.liferay.contacts.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.uad.constants.ContactsUADConstants;
 import com.liferay.contacts.uad.test.EntryUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,11 +53,6 @@ public class EntryUADDisplayTest extends BaseUADDisplayTestCase<Entry> {
 		_entries.add(entry);
 
 		return entry;
-	}
-
-	@Override
-	protected String getApplicationName() {
-		return ContactsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

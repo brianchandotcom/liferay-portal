@@ -90,9 +90,13 @@ public class ConcatCheck extends StringConcatenationCheck {
 			1, literalStringValue2.length() - 1);
 
 		if (literalStringAST1.getLineNo() == literalStringAST2.getLineNo()) {
-			log(
-				literalStringAST1.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
-				literalStringValue1, literalStringValue2);
+			if (!literalStringValue1.endsWith("\\n") ||
+				literalStringValue2.equals("\\n")) {
+
+				log(
+					literalStringAST1.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+					literalStringValue1, literalStringValue2);
+			}
 
 			return;
 		}

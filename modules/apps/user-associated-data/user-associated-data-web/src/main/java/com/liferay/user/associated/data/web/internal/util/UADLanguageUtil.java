@@ -17,9 +17,13 @@ package com.liferay.user.associated.data.web.internal.util;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.user.associated.data.component.UADComponent;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Drew Brokke
@@ -43,6 +47,14 @@ public class UADLanguageUtil {
 		return LanguageUtil.get(
 			resourceBundle, "application.name." + applicationKey,
 			applicationKey);
+	}
+
+	public static <T extends UADComponent> String getApplicationName(
+		T uadComponent, Locale locale) {
+
+		Bundle bundle = FrameworkUtil.getBundle(uadComponent.getClass());
+
+		return getApplicationName(bundle.getSymbolicName(), locale);
 	}
 
 }

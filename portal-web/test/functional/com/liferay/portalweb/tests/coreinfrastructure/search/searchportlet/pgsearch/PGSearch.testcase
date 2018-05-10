@@ -286,7 +286,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryCategoryQuotes" priority="4">
+	<command ignore="true" name="SearchBlogsEntryCategoryQuotes" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

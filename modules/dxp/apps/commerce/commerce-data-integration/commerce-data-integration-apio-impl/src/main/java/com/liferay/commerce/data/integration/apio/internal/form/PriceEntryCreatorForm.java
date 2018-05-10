@@ -22,36 +22,36 @@ import com.liferay.apio.architect.form.Form;
 
 /**
  * Instances of this class represent the values extracted from a price entry
- * form.
+ * creator form.
  *
  * @author Zoltán Takács
  * @review
  */
-public class PriceEntryForm {
+public class PriceEntryCreatorForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code PriceEntryForm}
+	 * Builds a {@code Form} that generates {@code PriceEntryCreatorForm}
 	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a product form
+	 * @return a product creator form
 	 * @review
 	 */
-	public static Form<PriceEntryForm> buildForm(
-		Form.Builder<PriceEntryForm> formBuilder) {
+	public static Form<PriceEntryCreatorForm> buildForm(
+		Form.Builder<PriceEntryCreatorForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The price entry form"
+			__ -> "The price entry creator form"
 		).description(
-			__ -> "This form can be used to create or update a price entry"
+			__ -> "This form can be used to create a price entry"
 		).constructor(
-			PriceEntryForm::new
+			PriceEntryCreatorForm::new
 		).addRequiredDouble(
-			PRICE, PriceEntryForm::_setPrice
+			PRICE, PriceEntryCreatorForm::_setPrice
 		).addRequiredDouble(
-			PROMO_PRICE, PriceEntryForm::_setPromoPrice
+			PROMO_PRICE, PriceEntryCreatorForm::_setPromoPrice
 		).addRequiredLong(
-			SKU_ID, PriceEntryForm::_setSkuID
+			SKU_ID, PriceEntryCreatorForm::_setSkuID
 		).build();
 	}
 

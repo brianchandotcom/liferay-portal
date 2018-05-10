@@ -161,7 +161,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeEditableImage" priority="5"><!--
+	<command ignore="true" name="ChangeEditableImage" priority="5">
 		<execute macro="LexiconEntry#gotoEntry">
 			<var name="rowEntry" value="Collection Name" />
 		</execute>
@@ -190,7 +190,7 @@
 			<var name="templateScript" value="${cssSnippet}" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />-->
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />

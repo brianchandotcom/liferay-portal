@@ -39,7 +39,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 	<portlet:actionURL name="/anonymize_application_uad_entities" var="anonymizeUADEntitiesURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-		<portlet:param name="applicationKey" value="<%= uadApplicationSummaryDisplay.getKey() %>" />
+		<portlet:param name="applicationKey" value="<%= uadApplicationSummaryDisplay.getApplicationKey() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -50,7 +50,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 	<portlet:actionURL name="/delete_application_uad_entities" var="deleteUADEntitiesURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="p_u_i_d" value="<%= String.valueOf(selectedUser.getUserId()) %>" />
-		<portlet:param name="applicationKey" value="<%= uadApplicationSummaryDisplay.getKey() %>" />
+		<portlet:param name="applicationKey" value="<%= uadApplicationSummaryDisplay.getApplicationKey() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

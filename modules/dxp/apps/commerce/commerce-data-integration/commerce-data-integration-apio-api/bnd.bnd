@@ -4,4 +4,4 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.data.integration.apio.constants,\
 	com.liferay.commerce.data.integration.apio.identifiers,\
-	com.liferay.commerce.data.integration.apio.resource
+	com.liferay.commerce.data.integration.apio.security.permission

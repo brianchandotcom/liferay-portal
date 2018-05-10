@@ -34,6 +34,7 @@ import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceListHelper;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.data.integration.apio.resource;
+package com.liferay.commerce.data.integration.apio.security.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
 

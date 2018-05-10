@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.google.common.collect.Lists;
+
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;

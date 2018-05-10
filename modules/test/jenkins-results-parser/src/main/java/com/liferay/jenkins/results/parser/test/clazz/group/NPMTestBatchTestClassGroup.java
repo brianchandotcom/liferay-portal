@@ -14,12 +14,12 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+
 import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
-
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 /**
  * @author Michael Hashimoto

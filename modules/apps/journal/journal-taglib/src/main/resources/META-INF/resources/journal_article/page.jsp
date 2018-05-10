@@ -23,7 +23,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 boolean showTitle = GetterUtil.getBoolean((String)request.getAttribute("liferay-journal:journal-article:showTitle"));
 %>
 
-<div class="journal-content-article" id="<portlet:namespace/>journal_content_article_<%= articleDisplay.getArticleId() %>">
+<div class="journal-content-article">
 	<c:if test="<%= showTitle %>">
 		<%= articleDisplay.getTitle() %>
 	</c:if>

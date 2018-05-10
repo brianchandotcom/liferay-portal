@@ -74,13 +74,16 @@ public class CommerceUserSegmentHelperTest {
 	@Test
 	public void testAddCommerceUserSegmentEntryInOtherGroup() throws Exception {
 		frutillaRule.scenario(
-			"Create a User Segment Entry with GroupId different from the user"
+			"Add a user segment entry in a different group"
 		).given(
-			"Create a User Segment Entry"
+			"A user segment entry added to a group"
+		).and(
+			"A user"
 		).when(
-			"The GroupId is different from the one of the 'current session'"
+			"I try to get all user segment entries of the user for a " +
+				"different group"
 		).then(
-			"The Entry should not be available"
+			"The newly created user segment entry should not be returned"
 		);
 
 		ServiceContext serviceContext =

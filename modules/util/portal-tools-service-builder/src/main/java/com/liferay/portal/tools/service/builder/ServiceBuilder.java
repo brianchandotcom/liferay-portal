@@ -248,170 +248,108 @@ public class ServiceBuilder {
 				System.err.println(e.getMessage());
 			}
 			else {
-				StringBundler sb = new StringBundler(160);
+				String message = StringBundler.concat(
+					"Please set these arguments. Sample values are:\n\n",
+					"\tservice.api.dir=${basedir}/../portal-kernel/src\n",
+					"\tservice.auto.import.default.references=true\n",
+					"\tservice.auto.namespace.tables=false\n",
+					"\tservice.bean.locator.util=com.liferay.portal.kernel.",
+					"bean.PortalBeanLocatorUtil\n",
+					"\tservice.build.number=1\n",
+					"\tservice.build.number.increment=true\n",
+					"\tservice.hbm.file=",
+					"${basedir}/src/META-INF/portal-hbm.xml\n",
+					"\tservice.impl.dir=${basedir}/src\n",
+					"\tservice.input.file=${service.file}\n",
+					"\tservice.model.hints.configs=",
+					StringUtil.merge(ServiceBuilderArgs.MODEL_HINTS_CONFIGS),
+					"\n", "\tservice.model.hints.file=",
+					"${basedir}/src/META-INF/portal-model-hints.xml\n",
+					"\tservice.osgi.module=false\n", "\tservice.plugin.name=\n",
+					"\tservice.props.util=com.liferay.portal.util.PropsUtil\n",
+					"\tservice.read.only.prefixes=",
+					StringUtil.merge(ServiceBuilderArgs.READ_ONLY_PREFIXES),
+					"\n", "\tservice.resource.actions.configs=",
+					StringUtil.merge(
+						ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS),
+					"\n", "\tservice.resources.dir=${basedir}/src\n",
+					"\tservice.spring.file=",
+					"${basedir}/src/META-INF/portal-spring.xml\n",
+					"\tservice.spring.namespaces=beans\n",
+					"\tservice.sql.dir=${basedir}/../sql\n",
+					"\tservice.sql.file=portal-tables.sql\n",
+					"\tservice.sql.indexes.file=indexes.sql\n",
+					"\tservice.sql.sequences.file=sequences.sql\n",
+					"\tservice.target.entity.name=",
+					"${service.target.entity.name}\n",
+					"\tservice.test.dir=${basedir}/test/integration\n\n",
+					"You can also customize the generated code by overriding ",
+					"the default templates with these optional system ",
+					"properties:\n\n", "\t-Dservice.tpl.bad_alias_names=",
+					_TPL_ROOT, "bad_alias_names.txt\n",
+					"\t-Dservice.tpl.bad_column_names=", _TPL_ROOT,
+					"bad_column_names.txt\n", "\t-Dservice.tpl.bad_json_types=",
+					_TPL_ROOT, "bad_json_types.txt\n",
+					"\t-Dservice.tpl.bad_table_names=", _TPL_ROOT,
+					"bad_table_names.txt\n", "\t-Dservice.tpl.base_mode_impl=",
+					_TPL_ROOT, "base_mode_impl.ftl\n",
+					"\t-Dservice.tpl.blob_model=", _TPL_ROOT,
+					"blob_model.ftl\n",
+					"\t-Dservice.tpl.copyright.txt=copyright.txt\n",
+					"\t-Dservice.tpl.ejb_pk=", _TPL_ROOT, "ejb_pk.ftl\n",
+					"\t-Dservice.tpl.exception=", _TPL_ROOT, "exception.ftl\n",
+					"\t-Dservice.tpl.extended_model=", _TPL_ROOT,
+					"extended_model.ftl\n",
+					"\t-Dservice.tpl.extended_model_base_impl=", _TPL_ROOT,
+					"extended_model_base_impl.ftl\n",
+					"\t-Dservice.tpl.extended_model_impl=", _TPL_ROOT,
+					"extended_model_impl.ftl\n", "\t-Dservice.tpl.finder=",
+					_TPL_ROOT, "finder.ftl\n",
+					"\t-Dservice.tpl.finder_base_impl=", _TPL_ROOT,
+					"finder_base_impl.ftl\n", "\t-Dservice.tpl.finder_util=",
+					_TPL_ROOT, "finder_util.ftl\n", "\t-Dservice.tpl.hbm_xml=",
+					_TPL_ROOT, "hbm_xml.ftl\n", "\t-Dservice.tpl.json_js=",
+					_TPL_ROOT, "json_js.ftl\n",
+					"\t-Dservice.tpl.json_js_method=", _TPL_ROOT,
+					"json_js_method.ftl\n", "\t-Dservice.tpl.model=", _TPL_ROOT,
+					"model.ftl\n", "\t-Dservice.tpl.model_cache=", _TPL_ROOT,
+					"model_cache.ftl\n", "\t-Dservice.tpl.model_hints_xml=",
+					_TPL_ROOT, "model_hints_xml.ftl\n",
+					"\t-Dservice.tpl.model_impl=", _TPL_ROOT,
+					"model_impl.ftl\n", "\t-Dservice.tpl.model_soap=",
+					_TPL_ROOT, "model_soap.ftl\n",
+					"\t-Dservice.tpl.model_wrapper=", _TPL_ROOT,
+					"model_wrapper.ftl\n", "\t-Dservice.tpl.persistence=",
+					_TPL_ROOT, "persistence.ftl\n",
+					"\t-Dservice.tpl.persistence_impl=", _TPL_ROOT,
+					"persistence_impl.ftl\n",
+					"\t-Dservice.tpl.persistence_util=", _TPL_ROOT,
+					"persistence_util.ftl\n", "\t-Dservice.tpl.props=",
+					_TPL_ROOT, "props.ftl\n", "\t-Dservice.tpl.service=",
+					_TPL_ROOT, "service.ftl\n",
+					"\t-Dservice.tpl.service_base_impl=", _TPL_ROOT,
+					"service_base_impl.ftl\n", "\t-Dservice.tpl.service_clp=",
+					_TPL_ROOT, "service_clp.ftl\n",
+					"\t-Dservice.tpl.service_clp_invoker=", _TPL_ROOT,
+					"service_clp_invoker.ftl\n",
+					"\t-Dservice.tpl.service_clp_message_listener=", _TPL_ROOT,
+					"service_clp_message_listener.ftl\n",
+					"\t-Dservice.tpl.service_clp_serializer=", _TPL_ROOT,
+					"service_clp_serializer.ftl\n",
+					"\t-Dservice.tpl.service_http=", _TPL_ROOT,
+					"service_http.ftl\n", "\t-Dservice.tpl.service_impl=",
+					_TPL_ROOT, "service_impl.ftl\n",
+					"\t-Dservice.tpl.service_props_util=", _TPL_ROOT,
+					"service_props_util.ftl\n", "\t-Dservice.tpl.service_soap=",
+					_TPL_ROOT, "service_soap.ftl\n",
+					"\t-Dservice.tpl.service_util=", _TPL_ROOT,
+					"service_util.ftl\n", "\t-Dservice.tpl.service_wrapper=",
+					_TPL_ROOT, "service_wrapper.ftl\n",
+					"\t-Dservice.tpl.spring_xml=", _TPL_ROOT,
+					"spring_xml.ftl\n", "\t-Dservice.tpl.spring_xml_session=",
+					_TPL_ROOT, "spring_xml_session.ftl");
 
-				sb.append("Please set these arguments. Sample values are:\n");
-				sb.append("\n");
-				sb.append("\tservice.api.dir=${basedir}/../portal-kernel/src\n");
-				sb.append("\tservice.auto.import.default.references=true\n");
-				sb.append("\tservice.auto.namespace.tables=false\n");
-				sb.append("\tservice.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil\n");
-				sb.append("\tservice.build.number=1\n");
-				sb.append("\tservice.build.number.increment=true\n");
-				sb.append("\tservice.hbm.file=${basedir}/src/META-INF/portal-hbm.xml\n");
-				sb.append("\tservice.impl.dir=${basedir}/src\n");
-				sb.append("\tservice.input.file=${service.file}\n");
-				sb.append("\tservice.model.hints.configs=");
-				sb.append(StringUtil.merge(ServiceBuilderArgs.MODEL_HINTS_CONFIGS));
-				sb.append("\n");
-				sb.append("\tservice.model.hints.file=${basedir}/src/META-INF/portal-model-hints.xml\n");
-				sb.append("\tservice.osgi.module=false\n");
-				sb.append("\tservice.plugin.name=\n");
-				sb.append("\tservice.props.util=com.liferay.portal.util.PropsUtil\n");
-				sb.append("\tservice.read.only.prefixes=");
-				sb.append(StringUtil.merge(ServiceBuilderArgs.READ_ONLY_PREFIXES));
-				sb.append("\n");
-				sb.append("\tservice.resource.actions.configs=");
-				sb.append(StringUtil.merge(ServiceBuilderArgs.RESOURCE_ACTION_CONFIGS));
-				sb.append("\n");
-				sb.append("\tservice.resources.dir=${basedir}/src\n");
-				sb.append("\tservice.spring.file=${basedir}/src/META-INF/portal-spring.xml\n");
-				sb.append("\tservice.spring.namespaces=beans\n");
-				sb.append("\tservice.sql.dir=${basedir}/../sql\n");
-				sb.append("\tservice.sql.file=portal-tables.sql\n");
-				sb.append("\tservice.sql.indexes.file=indexes.sql\n");
-				sb.append("\tservice.sql.sequences.file=sequences.sql\n");
-				sb.append("\tservice.target.entity.name=${service.target.entity.name}\n");
-				sb.append("\tservice.test.dir=${basedir}/test/integration\n");
-				sb.append("\n");
-				sb.append("You can also customize the generated code by overriding the default templates with these optional system properties:\n");
-				sb.append("\n");
-				sb.append("\t-Dservice.tpl.bad_alias_names=");
-				sb.append(_TPL_ROOT);
-				sb.append("bad_alias_names.txt\n");
-				sb.append("\t-Dservice.tpl.bad_column_names=");
-				sb.append(_TPL_ROOT);
-				sb.append("bad_column_names.txt\n");
-				sb.append("\t-Dservice.tpl.bad_json_types=");
-				sb.append(_TPL_ROOT);
-				sb.append("bad_json_types.txt\n");
-				sb.append("\t-Dservice.tpl.bad_table_names=");
-				sb.append(_TPL_ROOT);
-				sb.append("bad_table_names.txt\n");
-				sb.append("\t-Dservice.tpl.base_mode_impl=");
-				sb.append(_TPL_ROOT);
-				sb.append("base_mode_impl.ftl\n");
-				sb.append("\t-Dservice.tpl.blob_model=");
-				sb.append(_TPL_ROOT);
-				sb.append("blob_model.ftl\n");
-				sb.append("\t-Dservice.tpl.copyright.txt=copyright.txt\n");
-				sb.append("\t-Dservice.tpl.ejb_pk=");
-				sb.append(_TPL_ROOT);
-				sb.append("ejb_pk.ftl\n");
-				sb.append("\t-Dservice.tpl.exception=");
-				sb.append(_TPL_ROOT);
-				sb.append("exception.ftl\n");
-				sb.append("\t-Dservice.tpl.extended_model=");
-				sb.append(_TPL_ROOT);
-				sb.append("extended_model.ftl\n");
-				sb.append("\t-Dservice.tpl.extended_model_base_impl=");
-				sb.append(_TPL_ROOT);
-				sb.append("extended_model_base_impl.ftl\n");
-				sb.append("\t-Dservice.tpl.extended_model_impl=");
-				sb.append(_TPL_ROOT);
-				sb.append("extended_model_impl.ftl\n");
-				sb.append("\t-Dservice.tpl.finder=");
-				sb.append(_TPL_ROOT);
-				sb.append("finder.ftl\n");
-				sb.append("\t-Dservice.tpl.finder_base_impl=");
-				sb.append(_TPL_ROOT);
-				sb.append("finder_base_impl.ftl\n");
-				sb.append("\t-Dservice.tpl.finder_util=");
-				sb.append(_TPL_ROOT);
-				sb.append("finder_util.ftl\n");
-				sb.append("\t-Dservice.tpl.hbm_xml=");
-				sb.append(_TPL_ROOT);
-				sb.append("hbm_xml.ftl\n");
-				sb.append("\t-Dservice.tpl.json_js=");
-				sb.append(_TPL_ROOT);
-				sb.append("json_js.ftl\n");
-				sb.append("\t-Dservice.tpl.json_js_method=");
-				sb.append(_TPL_ROOT);
-				sb.append("json_js_method.ftl\n");
-				sb.append("\t-Dservice.tpl.model=");
-				sb.append(_TPL_ROOT);
-				sb.append("model.ftl\n");
-				sb.append("\t-Dservice.tpl.model_cache=");
-				sb.append(_TPL_ROOT);
-				sb.append("model_cache.ftl\n");
-				sb.append("\t-Dservice.tpl.model_hints_xml=");
-				sb.append(_TPL_ROOT);
-				sb.append("model_hints_xml.ftl\n");
-				sb.append("\t-Dservice.tpl.model_impl=");
-				sb.append(_TPL_ROOT);
-				sb.append("model_impl.ftl\n");
-				sb.append("\t-Dservice.tpl.model_soap=");
-				sb.append(_TPL_ROOT);
-				sb.append("model_soap.ftl\n");
-				sb.append("\t-Dservice.tpl.model_wrapper=");
-				sb.append(_TPL_ROOT);
-				sb.append("model_wrapper.ftl\n");
-				sb.append("\t-Dservice.tpl.persistence=");
-				sb.append(_TPL_ROOT);
-				sb.append("persistence.ftl\n");
-				sb.append("\t-Dservice.tpl.persistence_impl=");
-				sb.append(_TPL_ROOT);
-				sb.append("persistence_impl.ftl\n");
-				sb.append("\t-Dservice.tpl.persistence_util=");
-				sb.append(_TPL_ROOT);
-				sb.append("persistence_util.ftl\n");
-				sb.append("\t-Dservice.tpl.props=");
-				sb.append(_TPL_ROOT);
-				sb.append("props.ftl\n");
-				sb.append("\t-Dservice.tpl.service=");
-				sb.append(_TPL_ROOT);
-				sb.append("service.ftl\n");
-				sb.append("\t-Dservice.tpl.service_base_impl=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_base_impl.ftl\n");
-				sb.append("\t-Dservice.tpl.service_clp=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_clp.ftl\n");
-				sb.append("\t-Dservice.tpl.service_clp_invoker=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_clp_invoker.ftl\n");
-				sb.append("\t-Dservice.tpl.service_clp_message_listener=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_clp_message_listener.ftl\n");
-				sb.append("\t-Dservice.tpl.service_clp_serializer=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_clp_serializer.ftl\n");
-				sb.append("\t-Dservice.tpl.service_http=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_http.ftl\n");
-				sb.append("\t-Dservice.tpl.service_impl=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_impl.ftl\n");
-				sb.append("\t-Dservice.tpl.service_props_util=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_props_util.ftl\n");
-				sb.append("\t-Dservice.tpl.service_soap=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_soap.ftl\n");
-				sb.append("\t-Dservice.tpl.service_util=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_util.ftl\n");
-				sb.append("\t-Dservice.tpl.service_wrapper=");
-				sb.append(_TPL_ROOT);
-				sb.append("service_wrapper.ftl\n");
-				sb.append("\t-Dservice.tpl.spring_xml=");
-				sb.append(_TPL_ROOT);
-				sb.append("spring_xml.ftl\n");
-				sb.append("\t-Dservice.tpl.spring_xml_session=");
-				sb.append(_TPL_ROOT);
-				sb.append("spring_xml_session.ftl");
-
-				System.out.println(sb.toString());
+				System.out.println(message);
 			}
 
 			ArgumentsUtil.processMainException(arguments, e);
@@ -933,7 +871,9 @@ public class ServiceBuilder {
 
 				_createProps();
 
-				for (String uadApplicationName : _uadApplicationEntities.keySet()) {
+				for (String uadApplicationName :
+						_uadApplicationEntities.keySet()) {
+
 					_createUADBnd(uadApplicationName);
 					_createUADConstants(uadApplicationName);
 					_createUADTestBnd(uadApplicationName);
@@ -1782,7 +1722,8 @@ public class ServiceBuilder {
 	}
 
 	public boolean isReadOnlyMethod(
-		JavaMethod javaMethod, List<String> txRequiredMethodNames, String[] prefixes) {
+		JavaMethod javaMethod, List<String> txRequiredMethodNames,
+		String[] prefixes) {
 
 		List<JavaAnnotation> javaAnnotations = javaMethod.getAnnotations();
 
@@ -1816,7 +1757,8 @@ public class ServiceBuilder {
 	public boolean isServiceReadOnlyMethod(
 		JavaMethod method, List<String> txRequiredMethodNames) {
 
-		return isReadOnlyMethod(method, txRequiredMethodNames, _readOnlyPrefixes);
+		return isReadOnlyMethod(
+			method, txRequiredMethodNames, _readOnlyPrefixes);
 	}
 
 	public boolean isSoapMethod(JavaMethod method) {
@@ -2134,8 +2076,8 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				entity.getUADOutputPath(), "/uad/anonymizer/Base", entity.getName(),
-				"UADAnonymizer.java"));
+				entity.getUADOutputPath(), "/uad/anonymizer/Base",
+				entity.getName(), "UADAnonymizer.java"));
 
 		ToolsUtil.writeFile(
 			file, content, _author, _jalopySettings, _modifiedFileNames);
@@ -2154,8 +2096,8 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				entity.getUADOutputPath(), "/uad/display/Base", entity.getName(),
-				"UADDisplay.java"));
+				entity.getUADOutputPath(), "/uad/display/Base",
+				entity.getName(), "UADDisplay.java"));
 
 		ToolsUtil.writeFile(
 			file, content, _author, _jalopySettings, _modifiedFileNames);
@@ -2174,8 +2116,8 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				entity.getUADOutputPath(), "/uad/exporter/Base", entity.getName(),
-				"UADExporter.java"));
+				entity.getUADOutputPath(), "/uad/exporter/Base",
+				entity.getName(), "UADExporter.java"));
 
 		ToolsUtil.writeFile(
 			file, content, _author, _jalopySettings, _modifiedFileNames);
@@ -2657,15 +2599,13 @@ public class ServiceBuilder {
 		content = content.substring(lastImportEnd + 1);
 
 		if (!xmlFile.exists()) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("<?xml version=\"1.0\"?>\n");
-			sb.append("<!DOCTYPE hibernate-mapping PUBLIC \"-//Hibernate/Hibernate Mapping DTD 3.0//EN\" \"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd\">\n");
-			sb.append("\n");
-			sb.append("<hibernate-mapping auto-import=\"false\" default-lazy=\"false\">\n");
-			sb.append("</hibernate-mapping>");
-
-			String xml = sb.toString();
+			String xml = StringBundler.concat(
+				"<?xml version=\"1.0\"?>\n",
+				"<!DOCTYPE hibernate-mapping PUBLIC \"-//Hibernate/Hibernate ",
+				"Mapping DTD 3.0//EN\" \"http://hibernate.sourceforge.net",
+				"/hibernate-mapping-3.0.dtd\">\n\n",
+				"<hibernate-mapping auto-import=\"false\" default-lazy=",
+				"\"false\">\n", "</hibernate-mapping>");
 
 			_write(xmlFile, xml);
 		}
@@ -3654,7 +3594,8 @@ public class ServiceBuilder {
 				if (entityFinder.isDBIndex()) {
 					List<String> dbNames = new ArrayList<>();
 
-					List<EntityColumn> entityColumns = entityFinder.getEntityColumns();
+					List<EntityColumn> entityColumns =
+						entityFinder.getEntityColumns();
 
 					for (EntityColumn entityColumn : entityColumns) {
 						dbNames.add(entityColumn.getDBName());
@@ -3757,7 +3698,9 @@ public class ServiceBuilder {
 
 						String tableName = line.substring(x, y);
 
-						if (tableName.compareTo(entityMapping.getTableName()) > 0) {
+						if (tableName.compareTo(entityMapping.getTableName()) >
+								0) {
+
 							sb.append(newCreateTableString);
 							sb.append("\n\n");
 
@@ -4024,8 +3967,9 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				entity.getUADTestIntegrationOutputPath(), "/uad/anonymizer/test/",
-				entity.getName(), "UADAnonymizerTest.java"));
+				entity.getUADTestIntegrationOutputPath(),
+				"/uad/anonymizer/test/", entity.getName(),
+				"UADAnonymizerTest.java"));
 
 		ToolsUtil.writeFile(
 			file, content, _author, _jalopySettings, _modifiedFileNames);
@@ -4060,7 +4004,9 @@ public class ServiceBuilder {
 		}
 	}
 
-	private void _createUADConstants(String uadApplicationName) throws Exception {
+	private void _createUADConstants(String uadApplicationName)
+		throws Exception {
+
 		Map<String, Object> context = _getContext();
 
 		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
@@ -4216,8 +4162,8 @@ public class ServiceBuilder {
 
 		File file = new File(
 			StringBundler.concat(
-				entity.getUADTestIntegrationOutputPath(), "/uad/test/", entity.getName(),
-				"UADTestHelper.java"));
+				entity.getUADTestIntegrationOutputPath(), "/uad/test/",
+				entity.getName(), "UADTestHelper.java"));
 
 		if (!file.exists()) {
 			ToolsUtil.writeFile(
@@ -4379,7 +4325,8 @@ public class ServiceBuilder {
 	}
 
 	private List<EntityColumn> _getBlobEntityColumns(Entity entity) {
-		List<EntityColumn> blobEntityColumns = new ArrayList<>(entity.getBlobEntityColumns());
+		List<EntityColumn> blobEntityColumns = new ArrayList<>(
+			entity.getBlobEntityColumns());
 
 		Iterator<EntityColumn> iterator = blobEntityColumns.iterator();
 
@@ -4680,7 +4627,8 @@ public class ServiceBuilder {
 
 	private String _getCreateTableSQL(Entity entity) {
 		List<EntityColumn> pkEntityColumns = entity.getPKEntityColumns();
-		List<EntityColumn> regularEntityColumns = entity.getRegularEntityColumns();
+		List<EntityColumn> regularEntityColumns =
+			entity.getRegularEntityColumns();
 
 		if (regularEntityColumns.isEmpty()) {
 			return null;
@@ -4783,7 +4731,8 @@ public class ServiceBuilder {
 				sb.append("TEXT");
 			}
 			else if (type.equals("String")) {
-				int maxLength = getMaxLength(entity.getName(), entityColumn.getName());
+				int maxLength = getMaxLength(
+					entity.getName(), entityColumn.getName());
 
 				if (entityColumn.isLocalized() && (maxLength < 4000)) {
 					maxLength = 4000;
@@ -4826,7 +4775,9 @@ public class ServiceBuilder {
 				sb.append(" default 0 not null");
 			}
 
-			if (((i + 1) != regularEntityColumns.size()) || entity.hasCompoundPK()) {
+			if (((i + 1) != regularEntityColumns.size()) ||
+				entity.hasCompoundPK()) {
+
 				sb.append(",");
 			}
 
@@ -5159,7 +5110,8 @@ public class ServiceBuilder {
 				}
 
 				if (!entity.hasEntityColumn(property) &&
-					!entity.hasEntityColumn(Introspector.decapitalize(property))) {
+					!entity.hasEntityColumn(
+						Introspector.decapitalize(property))) {
 
 					property = Introspector.decapitalize(property);
 
@@ -5182,7 +5134,8 @@ public class ServiceBuilder {
 					property.indexOf("set") + 3, property.length() - 1);
 
 				if (!entity.hasEntityColumn(property) &&
-					!entity.hasEntityColumn(Introspector.decapitalize(property))) {
+					!entity.hasEntityColumn(
+						Introspector.decapitalize(property))) {
 
 					property = Introspector.decapitalize(property);
 
@@ -5454,7 +5407,8 @@ public class ServiceBuilder {
 			}
 
 			if (_autoNamespaceTables) {
-				tableName = _portletShortName + StringPool.UNDERLINE + entityName;
+				tableName =
+					_portletShortName + StringPool.UNDERLINE + entityName;
 			}
 		}
 
@@ -5615,7 +5569,8 @@ public class ServiceBuilder {
 				columnElement.attributeValue("filter-primary"));
 			String columnEntityName = columnElement.attributeValue("entity");
 
-			String mappingTableName = columnElement.attributeValue("mapping-table");
+			String mappingTableName = columnElement.attributeValue(
+				"mapping-table");
 
 			if (Validator.isNotNull(mappingTableName)) {
 				if (_badTableNames.contains(mappingTableName)) {
@@ -5624,7 +5579,8 @@ public class ServiceBuilder {
 
 				if (_autoNamespaceTables) {
 					mappingTableName =
-						_portletShortName + StringPool.UNDERLINE + mappingTableName;
+						_portletShortName + StringPool.UNDERLINE +
+							mappingTableName;
 				}
 			}
 
@@ -5659,9 +5615,9 @@ public class ServiceBuilder {
 
 			EntityColumn entityColumn = new EntityColumn(
 				columnName, columnDBName, columnType, primary, accessor,
-				filterPrimary, columnEntityName, mappingTableName, idType, idParam,
-				convertNull, lazy, localized, colJsonEnabled, containerModel,
-				parentContainerModel, uadAnonymizeFieldName,
+				filterPrimary, columnEntityName, mappingTableName, idType,
+				idParam, convertNull, lazy, localized, colJsonEnabled,
+				containerModel, parentContainerModel, uadAnonymizeFieldName,
 				uadNonanonymizable);
 
 			if (primary) {
@@ -5745,7 +5701,8 @@ public class ServiceBuilder {
 					orderColByAscending = false;
 				}
 
-				int index = entityColumns.indexOf(new EntityColumn(orderColName));
+				int index = entityColumns.indexOf(
+					new EntityColumn(orderColName));
 
 				if (index < 0) {
 					throw new IllegalArgumentException(
@@ -5902,7 +5859,8 @@ public class ServiceBuilder {
 				String finderColArrayableOperator = GetterUtil.getString(
 					finderColumnElement.attributeValue("arrayable-operator"));
 
-				EntityColumn entityColumn = Entity.getEntityColumn(finderColumnName, entityColumns);
+				EntityColumn entityColumn = Entity.getEntityColumn(
+					finderColumnName, entityColumns);
 
 				if (!entityColumn.isFinderPath()) {
 					entityColumn.setFinderPath(true);
@@ -5940,7 +5898,8 @@ public class ServiceBuilder {
 				String referenceEntityName = referenceElement.attributeValue(
 					"entity");
 
-				referenceEntityNames.add(referencePackagePath + "." + referenceEntityName);
+				referenceEntityNames.add(
+					referencePackagePath + "." + referenceEntityName);
 			}
 
 			if (!_packagePath.equals("com.liferay.counter")) {
@@ -6004,7 +5963,8 @@ public class ServiceBuilder {
 
 				uadApplicationEntities.add(entity);
 
-				_uadApplicationEntities.put(uadApplicationName, uadApplicationEntities);
+				_uadApplicationEntities.put(
+					uadApplicationName, uadApplicationEntities);
 			}
 			else {
 				List<Entity> uadApplicationEntities =
@@ -6104,8 +6064,10 @@ public class ServiceBuilder {
 		newLocalizedColumnElement = newLocalizedEntityElement.addElement(
 			"column");
 
-		newLocalizedColumnElement.addAttribute("name", pkEntityColumn.getName());
-		newLocalizedColumnElement.addAttribute("type", pkEntityColumn.getType());
+		newLocalizedColumnElement.addAttribute(
+			"name", pkEntityColumn.getName());
+		newLocalizedColumnElement.addAttribute(
+			"type", pkEntityColumn.getType());
 
 		newLocalizedColumnElement = newLocalizedEntityElement.addElement(
 			"column");
@@ -6141,7 +6103,8 @@ public class ServiceBuilder {
 				}
 			}
 
-			localizedEntityColumns.add(new EntityColumn(columnName, columnDBName));
+			localizedEntityColumns.add(
+				new EntityColumn(columnName, columnDBName));
 
 			newLocalizedColumnElement = newLocalizedEntityElement.addElement(
 				"column");
@@ -6343,22 +6306,22 @@ public class ServiceBuilder {
 	private void _removeBaseUADAnonymizer(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				entity.getUADOutputPath(), "/uad/anonymizer/Base", entity.getName(),
-				"UADAnonymizer.java"));
+				entity.getUADOutputPath(), "/uad/anonymizer/Base",
+				entity.getName(), "UADAnonymizer.java"));
 	}
 
 	private void _removeBaseUADDisplay(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				entity.getUADOutputPath(), "/uad/display/Base", entity.getName(),
-				"UADDisplay.java"));
+				entity.getUADOutputPath(), "/uad/display/Base",
+				entity.getName(), "UADDisplay.java"));
 	}
 
 	private void _removeBaseUADExporter(Entity entity) {
 		_deleteFile(
 			StringBundler.concat(
-				entity.getUADOutputPath(), "/uad/exporter/Base", entity.getName(),
-				"UADExporter.java"));
+				entity.getUADOutputPath(), "/uad/exporter/Base",
+				entity.getName(), "UADExporter.java"));
 	}
 
 	private void _removeBlobModels(Entity entity, String outputPath) {
@@ -6662,13 +6625,16 @@ public class ServiceBuilder {
 			return;
 		}
 
-		for (String referenceEntityNames : entity.getUnresolvedResolvedReferenceEntityNames()) {
+		for (String referenceEntityNames :
+				entity.getUnresolvedResolvedReferenceEntityNames()) {
+
 			Entity referenceEntity = getEntity(referenceEntityNames);
 
 			if (referenceEntity == null) {
 				throw new ServiceBuilderException(
 					StringBundler.concat(
-						"Unable to resolve reference ", referenceEntityNames, " in ",
+						"Unable to resolve reference ", referenceEntityNames,
+						" in ",
 						ListUtil.toString(_entities, Entity.NAME_ACCESSOR)));
 			}
 
@@ -6753,7 +6719,8 @@ public class ServiceBuilder {
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";
-	private String _tplBaseUADAnonymizer = _TPL_ROOT + "base_uad_anonymizer.ftl";
+	private String _tplBaseUADAnonymizer =
+		_TPL_ROOT + "base_uad_anonymizer.ftl";
 	private String _tplBaseUADDisplay = _TPL_ROOT + "base_uad_display.ftl";
 	private String _tplBaseUADExporter = _TPL_ROOT + "base_uad_exporter.ftl";
 	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";

@@ -117,8 +117,10 @@ boolean hasDistributionScope = false;
 	</c:if>
 </aui:select>
 
-<aui:script>
-	if (<%= !hasDistributionScope %>) {
-		AUI.$('#<portlet:namespace />fieldSet').addClass('hide');
-	}
-</aui:script>
+<c:if test="<%= !hasDistributionScope %>">
+	<aui:script require="metal-dom/src/dom">
+		let dom = metalDomSrcDom.default;
+
+		dom.addClasses('#<portlet:namespace />fieldSet', 'hide');
+	</aui:script>
+</c:if>

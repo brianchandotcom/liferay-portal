@@ -193,12 +193,19 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			var form = document.querySelector('#<portlet:namespace />fm);
 
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			if (form) {
+				form.setAttribute('method', 'post');
 
-			submitForm(form, '<portlet:actionURL name="/announcements/edit_entry" />');
+				var cmd = form.querySelector('#<%= Constants.CMD %>');
+
+				if (cmd) {
+					cmd.value = '<%= Constants.DELETE %>';
+				}
+
+				submitForm(form, '<portlet:actionURL name="/announcements/edit_entry" />');
+			}
 		}
 	}
 </aui:script>

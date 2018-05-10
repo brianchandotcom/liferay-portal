@@ -102,14 +102,14 @@ public class CommerceUserSegmentHelperTest {
 					String.valueOf(_organization.getOrganizationId()), 0,
 					serviceContext);
 
-		long[] commerceUserSegmentIDs =
+		long[] commerceUserSegmentIds =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
 				_group1.getGroupId(), 0, _user.getUserId());
 
 		Assert.assertEquals(
 			false,
 			ArrayUtil.contains(
-				commerceUserSegmentIDs,
+				commerceUserSegmentIds,
 				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId()));
 	}
 

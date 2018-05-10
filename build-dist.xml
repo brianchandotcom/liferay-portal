@@ -3129,7 +3129,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 						<mirrors-get
 							dest="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}"
-							src="http://files.liferay.com/private/apps/ibm/websphere/8.5.5/${app.server.websphere.custom.zip.name}"
+							src="http://files.liferay.com/private/apps/ibm/websphere/9.0.0/${app.server.websphere.custom.zip.name}"
 							verbose="true"
 						/>
 					</try>
@@ -3138,7 +3138,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 .
 
 Please download the Websphere custom zip file from
-http://mirrors/files.liferay.com/private/apps/ibm/websphere/8.5.5 and
+http://mirrors/files.liferay.com/private/apps/ibm/websphere/9.0.0 and
 place it here: ${app.server.parent.dir}/${app.server.websphere.custom.zip.name}. Then rerun
 this task.
 						</fail>

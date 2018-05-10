@@ -676,46 +676,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		return exportActionableDynamicQuery;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileEntryTypeLocalService(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
-
-		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFileShortcutLocalService(
-		DLFileShortcutLocalService dlFileShortcutLocalService) {
-
-		_dlFileShortcutLocalService = dlFileShortcutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLFolderLocalService(
-		DLFolderLocalService dlFolderLocalService) {
-
-		_dlFolderLocalService = dlFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRepositoryLocalService(
-		RepositoryLocalService repositoryLocalService) {
-
-		_repositoryLocalService = repositoryLocalService;
-	}
-
 	private Collection<Long> _getExportableRepositoryIds(
 		PortletDataContext portletDataContext) {
 
@@ -734,18 +694,29 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		return exportableRepositoryIds;
 	}
 
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
 	private ServiceTrackerList
 		<DLExportableRepositoryPublisher, DLExportableRepositoryPublisher>
 			_dlExportableRepositoryPublishers;
+
+	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
+
+	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private RepositoryLocalService _repositoryLocalService;
 
 }

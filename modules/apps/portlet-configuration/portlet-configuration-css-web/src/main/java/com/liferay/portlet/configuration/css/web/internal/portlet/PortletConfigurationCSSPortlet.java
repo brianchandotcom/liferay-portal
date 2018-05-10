@@ -15,6 +15,7 @@
 package com.liferay.portlet.configuration.css.web.internal.portlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -34,7 +35,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.configuration.css.web.internal.configuration.PortletConfigurationCSSPortletConfiguration;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSPortletKeys;
+import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSWebKeys;
+
+import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
@@ -44,15 +49,21 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
+	configurationPid = "com.liferay.portlet.configuration.css.web.internal.configuration.PortletConfigurationCSSPortletConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -161,6 +172,27 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 		portletSetup.setValue("portletSetupCss", css);
 
 		portletSetup.store();
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_portletConfigurationCSSPortletConfiguration =
+			ConfigurableUtil.createConfigurable(
+				PortletConfigurationCSSPortletConfiguration.class, properties);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			PortletConfigurationCSSWebKeys.
+				PORTLET_CONFIGURATION_CSS_PORTLET_CONFIGURATION,
+			_portletConfigurationCSSPortletConfiguration);
+
+		super.doDispatch(renderRequest, renderResponse);
 	}
 
 	protected JSONObject getAdvancedDataJSONObject(
@@ -561,5 +593,8 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	private volatile PortletConfigurationCSSPortletConfiguration
+		_portletConfigurationCSSPortletConfiguration;
 
 }

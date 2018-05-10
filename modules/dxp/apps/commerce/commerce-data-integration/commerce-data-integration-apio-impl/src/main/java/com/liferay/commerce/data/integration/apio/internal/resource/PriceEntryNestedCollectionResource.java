@@ -20,6 +20,7 @@ import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFie
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.PRICE;
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.PROMO_PRICE;
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.SKU;
+import static com.liferay.commerce.price.list.constants.CommercePriceListConstants.RESOURCE_NAME;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.apio.architect.pagination.PageItems;
@@ -33,7 +34,7 @@ import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifie
 import com.liferay.commerce.data.integration.apio.internal.exceptions.UnprocessableEntityException;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpdaterForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceEntryPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceEntryHelper;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -74,7 +75,8 @@ public class PriceEntryNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCommercePriceEntry, (a, b) -> true,
+			this::_addCommercePriceEntry,
+			_priceEntryPermissionChecker.forAdding(RESOURCE_NAME),
 			PriceEntryCreatorForm::buildForm
 		).build();
 	}
@@ -91,11 +93,12 @@ public class PriceEntryNestedCollectionResource
 		return builder.addGetter(
 			_priceEntryHelper::getCommercePriceEntry
 		).addUpdater(
-			this::_updateCommercePriceEntry, (a, b) -> true,
+			this::_updateCommercePriceEntry,
+			_priceEntryPermissionChecker.forUpdating(RESOURCE_NAME),
 			PriceEntryUpdaterForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceEntryService::deleteCommercePriceEntry),
-			(a, b) -> true
+			_priceEntryPermissionChecker.forDeleting(RESOURCE_NAME)
 		).build();
 	}
 
@@ -202,6 +205,6 @@ public class PriceEntryNestedCollectionResource
 	private PriceEntryHelper _priceEntryHelper;
 
 	@Reference
-	private PriceListPermissionChecker _priceListPermissionChecker;
+	private PriceEntryPermissionChecker _priceEntryPermissionChecker;
 
 }

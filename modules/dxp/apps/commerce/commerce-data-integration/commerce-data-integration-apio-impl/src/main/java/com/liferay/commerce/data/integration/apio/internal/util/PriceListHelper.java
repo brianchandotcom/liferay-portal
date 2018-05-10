@@ -21,11 +21,7 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
 import java.util.Calendar;
@@ -59,7 +55,8 @@ public class PriceListHelper {
 			priority = 0D;
 		}
 
-		ServiceContext serviceContext = getServiceContext(groupId);
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			groupId);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
@@ -120,36 +117,6 @@ public class PriceListHelper {
 		return commercePriceList;
 	}
 
-	/**
-	 * Compose the ServiceContext object which needed for the operation on the
-	 * resource.
-	 *
-	 * @param  groupId
-	 * @return ServiceContext
-	 * @throws PortalException
-	 */
-	public ServiceContext getServiceContext(long groupId)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			serviceContext = new ServiceContext();
-		}
-
-		User user = _userService.getUserById(PrincipalThreadLocal.getUserId());
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setTimeZone(user.getTimeZone());
-		serviceContext.setUserId(user.getUserId());
-
-		return serviceContext;
-	}
-
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, String currency, String name,
 			Double priority, Boolean neverExpire, Date displayDate,
@@ -171,7 +138,8 @@ public class PriceListHelper {
 			priority = 0D;
 		}
 
-		ServiceContext serviceContext = getServiceContext(groupId);
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			groupId);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
@@ -255,6 +223,6 @@ public class PriceListHelper {
 	private CommercePriceListService _commercePriceListService;
 
 	@Reference
-	private UserService _userService;
+	private ServiceContextHelper _serviceContextHelper;
 
 }

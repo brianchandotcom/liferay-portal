@@ -16,36 +16,13 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
-import com.liferay.gradle.plugins.internal.AlloyTaglibDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.CSSBuilderDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.DBSupportDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.EclipseDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.FindBugsDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.IdeaDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.JSModuleConfigGeneratorDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.JavadocFormatterDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.JspCDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.ServiceBuilderDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.TLDFormatterDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.TestIntegrationDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.UpgradeTableBuilderDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.WSDDBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.WatchOSGiPlugin;
 import com.liferay.gradle.plugins.internal.XMLFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
-import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
-import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
-import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
-import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
-import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
-import com.liferay.gradle.plugins.soy.SoyPlugin;
-import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
-import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
-import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
-import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 
 import groovy.lang.Closure;
@@ -72,6 +49,7 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
+import org.gradle.plugins.ide.idea.IdeaPlugin;
 
 import org.osgi.framework.Version;
 
@@ -224,45 +202,16 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, EclipsePlugin.class);
+		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
-		GradleUtil.applyPlugin(project, NodePlugin.class);
-
-		if (GradleUtil.hasTask(project, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
-			GradleUtil.applyPlugin(project, JSTranspilerBasePlugin.class);
-		}
-		else {
-			GradleUtil.applyPlugin(
-				project, JSModuleConfigGeneratorPlugin.class);
-			GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
-		}
-
-		GradleUtil.applyPlugin(project, EclipsePlugin.class);
-		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, JspCPlugin.class);
-		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, SoyPlugin.class);
-		GradleUtil.applyPlugin(project, SoyTranslationPlugin.class);
-		GradleUtil.applyPlugin(project, TLDDocBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 
-		AlloyTaglibDefaultsPlugin.INSTANCE.apply(project);
 		CSSBuilderDefaultsPlugin.INSTANCE.apply(project);
-		DBSupportDefaultsPlugin.INSTANCE.apply(project);
 		EclipseDefaultsPlugin.INSTANCE.apply(project);
-		FindBugsDefaultsPlugin.INSTANCE.apply(project);
 		IdeaDefaultsPlugin.INSTANCE.apply(project);
-		JSModuleConfigGeneratorDefaultsPlugin.INSTANCE.apply(project);
-		JavadocFormatterDefaultsPlugin.INSTANCE.apply(project);
-		JspCDefaultsPlugin.INSTANCE.apply(project);
-		ServiceBuilderDefaultsPlugin.INSTANCE.apply(project);
-		TLDFormatterDefaultsPlugin.INSTANCE.apply(project);
-		TestIntegrationDefaultsPlugin.INSTANCE.apply(project);
-		UpgradeTableBuilderDefaultsPlugin.INSTANCE.apply(project);
-		WSDDBuilderDefaultsPlugin.INSTANCE.apply(project);
 		WatchOSGiPlugin.INSTANCE.apply(project);
 		XMLFormatterDefaultsPlugin.INSTANCE.apply(project);
 	}

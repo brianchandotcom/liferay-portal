@@ -1,8 +1,8 @@
 ## Imports
 
-- Do not use wildcards:
+### Do not use wildcards:
 
-### Example
+#### Example
 
 Incorrect:
 
@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 ```
 
-- Import classes, not methods:
+### Import classes, not methods:
 
-### Example
+#### Example
 
 Incorrect:
 
@@ -40,4 +40,56 @@ import org.junit.Assert;
 ...
 
 Assert.assertTrue(user.isActive());
+```
+
+### Do not import constants:
+
+Avoid importing constants, instead import the class
+
+#### Example
+
+Incorrect:
+
+```java
+import static com.liferay.portal.kernel.util.ActionKeys.UPDATE;
+
+...
+
+doSomething(UPDATE);
+```
+
+Correct:
+
+```java
+import com.liferay.portal.kernel.util.ActionKeys;
+
+...
+
+doSomething(ActionKeys.UPDATE);
+```
+
+In case there is already an imported class with the same name, use the Fully
+Qualified Name instead.
+
+#### Example
+
+Incorrect:
+
+```java
+import static com.liferay.portal.kernel.util.ActionKeys.UPDATE;
+
+import com.liferay.portal.util.ActionKeys;
+...
+
+doSomething(UPDATE);
+```
+
+Correct:
+
+```java
+import com.liferay.portal.util.ActionKeys;
+
+...
+
+doSomething(com.liferay.portal.kernel.util.ActionKeys.UPDATE);
 ```

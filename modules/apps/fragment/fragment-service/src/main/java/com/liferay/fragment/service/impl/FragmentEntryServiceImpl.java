@@ -177,10 +177,10 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
-		long fragmentCollectionId, int status) {
+		long groupId, long fragmentCollectionId, int status) {
 
 		return fragmentEntryLocalService.getFragmentEntries(
-			fragmentCollectionId, status);
+			groupId, fragmentCollectionId, status);
 	}
 
 	@Override

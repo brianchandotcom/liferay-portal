@@ -58,9 +58,27 @@ public class JavaImportsCheck extends BaseFileCheck {
 				getLineCount(content, matcher.end()));
 		}
 
+		matcher = _importConstantPattern.matcher(content);
+
+		while (matcher.find()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Do not import constant '");
+			sb.append(matcher.group(1));
+			sb.append("', import class '");
+			sb.append(matcher.group(2));
+			sb.append("' instead or use Fully Qualified Name");
+
+			addMessage(
+				fileName, sb.toString(), "imports.markdown",
+				getLineCount(content, matcher.end()));
+		}
+
 		return content;
 	}
 
+	private final Pattern _importConstantPattern = Pattern.compile(
+		"\nimport static ((.*)\\.[A-Z_]*);");
 	private final Pattern _importMethodPattern = Pattern.compile(
 		"\nimport static ((.*\\.(Assert|(Power)?Mockito))\\.[a-z]\\w*);");
 

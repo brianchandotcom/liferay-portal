@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.commerce.headless.product.apio.internal.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
@@ -14,10 +28,8 @@ import com.liferay.commerce.headless.product.apio.identifier.ProductInstanceIden
 import com.liferay.commerce.headless.product.apio.internal.form.ProductInstanceCreatorForm;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductInstanceHelper;
-import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -33,226 +45,234 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-import java.text.ParseException;
-import java.util.Collections;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true)
 public class ProductInstanceNestedCollectionResource
-        implements
-        NestedCollectionResource<Document, Long,
-                ProductInstanceIdentifier, Long, ProductDefinitionIdentifier> {
+	implements
+		NestedCollectionResource<Document, Long, ProductInstanceIdentifier,
+			Long, ProductDefinitionIdentifier> {
 
-    @Override
-    public NestedCollectionRoutes<Document, Long> collectionRoutes(
-            NestedCollectionRoutes.Builder<Document, Long> builder) {
+	@Override
+	public NestedCollectionRoutes<Document, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Document, Long> builder) {
 
-        return builder.addGetter(
-                this::_getPageItems
-        ).addCreator(
-                this::_addCPInstance,
-                (credentials, s) -> true,
-                ProductInstanceCreatorForm::buildForm
-        ).build();
-    }
+		return builder.addGetter(
+			this::_getPageItems
+		).addCreator(
+			this::_addCPInstance, (credentials, s) -> true,
+			ProductInstanceCreatorForm::buildForm
+		).build();
+	}
 
-    @Override
-    public String getName() {
-        return "product-skus";
-    }
+	@Override
+	public String getName() {
+		return "product-skus";
+	}
 
-    @Override
-    public ItemRoutes<Document, Long> itemRoutes(
-            ItemRoutes.Builder<Document, Long> builder) {
+	@Override
+	public ItemRoutes<Document, Long> itemRoutes(
+		ItemRoutes.Builder<Document, Long> builder) {
 
-        return builder.addGetter(
-            this::_getCPInstance
-        ).addUpdater(
-            this::_updateCPInstance,
-            (credentials, s) -> true,
-            ProductInstanceCreatorForm::buildForm
-        ).addRemover(
-            idempotent(_cpInstanceService::deleteCPInstance),
-            _hasPermission.forDeleting(CPInstance.class)
-        ).build();
-    }
+		return builder.addGetter(
+			this::_getCPInstance
+		).addUpdater(
+			this::_updateCPInstance, (credentials, s) -> true,
+			ProductInstanceCreatorForm::buildForm
+		).addRemover(
+			idempotent(_cpInstanceService::deleteCPInstance),
+			_hasPermission.forDeleting(CPInstance.class)
+		).build();
+	}
 
-    @Override
-    public Representor<Document, Long> representor(
-            Representor.Builder<Document, Long> builder) {
+	@Override
+	public Representor<Document, Long> representor(
+		Representor.Builder<Document, Long> builder) {
 
-        return builder.types(
-                "ProductSKUs"
-        ).identifier(
-                document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
-        ).addBidirectionalModel(
-                "product", "productSKUs", ProductDefinitionIdentifier.class,
-                document -> GetterUtil.getLong(
-                        document.get(
-                                CPInstanceIndexer.FIELD_CP_DEFINITION_ID))
-        ).addDate(
-                "dateCreated",
-                document -> Try.fromFallible(
-                        () -> document.getDate(Field.CREATE_DATE)
-                ).getUnchecked()
-        ).addDate(
-                "dateModified",
-                document -> Try.fromFallible(
-                        () -> document.getDate(Field.MODIFIED_DATE)
-                ).getUnchecked()
-        ).addString(
-                "sku", document -> document.get(CPInstanceIndexer.FIELD_SKU)
-        ).build();
-    }
+		return builder.types(
+			"ProductSKUs"
+		).identifier(
+			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
+		).addBidirectionalModel(
+			"product", "productSKUs", ProductDefinitionIdentifier.class,
+			document -> GetterUtil.getLong(
+				document.get(CPInstanceIndexer.FIELD_CP_DEFINITION_ID))
+		).addDate(
+			"dateCreated",
+			document -> Try.fromFallible(
+				() -> document.getDate(Field.CREATE_DATE)
+			).getUnchecked()
+		).addDate(
+			"dateModified",
+			document -> Try.fromFallible(
+				() -> document.getDate(Field.MODIFIED_DATE)
+			).getUnchecked()
+		).addString(
+			"sku", document -> document.get(CPInstanceIndexer.FIELD_SKU)
+		).build();
+	}
 
-    private Document _addCPInstance(
-            Long cpDefinitionId, ProductInstanceCreatorForm form)
-            throws PortalException {
+	private Document _addCPInstance(
+			Long cpDefinitionId, ProductInstanceCreatorForm form)
+		throws PortalException {
 
-        try {
-            CPInstance cpInstance =
-                _productInstanceHelper.createCPInstance(
-                    cpDefinitionId, form.getSku(), form.getGtin(), form.getManufacturerPartNumber(), form.getPurchasable(),
-                        form.getWidth(), form.getHeight(), form.getDepth(), form.getWeight(),
-                        form.getCost(), form.getPrice(), form.getPromoPrice(), form.getPublished(),
-                        form.getDisplayDate(), form.getExpirationDate(), form.getNeverExpire());
+		try {
+			CPInstance cpInstance = _productInstanceHelper.createCPInstance(
+				cpDefinitionId, form.getSku(), form.getGtin(),
+				form.getManufacturerPartNumber(), form.getPurchasable(),
+				form.getWidth(), form.getHeight(), form.getDepth(),
+				form.getWeight(), form.getCost(), form.getPrice(),
+				form.getPromoPrice(), form.getPublished(),
+				form.getDisplayDate(), form.getExpirationDate(),
+				form.getNeverExpire());
 
-            Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-                    CPInstance.class);
+			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
+				CPInstance.class);
 
-            return indexer.getDocument(cpInstance);
-        }
-        catch (CPInstanceDisplayDateException dd) {
-            throw new BadRequestException("Display Date no defined on Product Instance " + form.getSku(), dd);
-        }
-        catch (CPInstanceExpirationDateException dd) {
-            throw new BadRequestException("Expiration Date no defined on Product Instance " + form.getSku(), dd);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			return indexer.getDocument(cpInstance);
+		}
+		catch (CPInstanceDisplayDateException cpidde) {
+			throw new BadRequestException(
+				"Display Date no defined on Product Instance " + form.getSku(),
+				cpidde);
+		}
+		catch (CPInstanceExpirationDateException cpiede) {
+			throw new BadRequestException(
+				"Expiration Date no defined on Product Instance " + form.getSku(),
+				cpiede);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-    private Document _updateCPInstance(Long cpInstanceId, ProductInstanceCreatorForm form) {
-        try {
-            CPInstance cpInstance =
-                    _productInstanceHelper.updateCPInstance(
-                            cpInstanceId, form.getSku(), form.getGtin(), form.getManufacturerPartNumber(), form.getPurchasable(),
-                            form.getWidth(), form.getHeight(), form.getDepth(), form.getWeight(),
-                            form.getCost(), form.getPrice(), form.getPromoPrice(), form.getPublished(),
-                            form.getDisplayDate(), form.getExpirationDate(), form.getNeverExpire());
+	private Document _getCPInstance(Long cpInstanceId) {
+		try {
+			ServiceContext serviceContext =
+				_productIndexerHelper.getServiceContext();
 
-            Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-                    CPInstance.class);
+			SearchContext searchContext =
+				_productInstanceHelper.buildSearchContext(
+					String.valueOf(cpInstanceId), null,
+					String.valueOf(cpInstanceId), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null, serviceContext);
 
-            return indexer.getDocument(cpInstance);
-        }
-        catch (CPInstanceDisplayDateException dd) {
-            throw new BadRequestException("Display Date not defined on Product Instance " + form.getSku(), dd);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
+				CPInstance.class);
 
-    private PageItems<Document> _getPageItems(
-            Pagination pagination, Long cpDefinitionId) {
+			Hits hits = indexer.search(searchContext);
 
-        try {
-            ServiceContext serviceContext =
-                    _productIndexerHelper.getServiceContext();
+			if (hits.getLength() == 0) {
+				throw new NotFoundException(
+					"Unable to find product option with ID " + cpInstanceId);
+			}
 
-            SearchContext searchContext =
-                    _productInstanceHelper.buildSearchContext(
-                            null, String.valueOf(cpDefinitionId), null,
-                            pagination.getStartPosition(), pagination.getEndPosition(),
-                            null, serviceContext);
+			if (hits.getLength() > 1) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"More than one document found for product sku with ID " +
+							cpInstanceId);
+				}
 
-            Indexer<CPInstance> indexer =
-                    _productIndexerHelper.getIndexer(CPInstance.class);
+				CPInstance cpInstance = _cpInstanceService.getCPInstance(
+					cpInstanceId);
 
-            Hits hits = indexer.search(searchContext);
+				return indexer.getDocument(cpInstance);
+			}
 
-            List<Document> documents = Collections.<Document>emptyList();
+			List<Document> documents = hits.toList();
 
-            if (hits.getLength() > 0) {
-                documents = hits.toList();
-            }
+			return documents.get(0);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-            return new PageItems<>(documents, hits.getLength());
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+	private PageItems<Document> _getPageItems(
+		Pagination pagination, Long cpDefinitionId) {
 
-    private Document _getCPInstance(Long cpInstanceId) {
-        try {
-            ServiceContext serviceContext =
-                    _productIndexerHelper.getServiceContext();
+		try {
+			ServiceContext serviceContext =
+				_productIndexerHelper.getServiceContext();
 
-            SearchContext searchContext =
-                    _productInstanceHelper.buildSearchContext(
-                            String.valueOf(cpInstanceId), null,
-                            String.valueOf(cpInstanceId), QueryUtil.ALL_POS,
-                            QueryUtil.ALL_POS, null, serviceContext);
+			SearchContext searchContext =
+				_productInstanceHelper.buildSearchContext(
+					null, String.valueOf(cpDefinitionId), null,
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null, serviceContext);
 
-            Indexer<CPInstance> indexer =
-                    _productIndexerHelper.getIndexer(CPInstance.class);
+			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
+				CPInstance.class);
 
-            Hits hits = indexer.search(searchContext);
+			Hits hits = indexer.search(searchContext);
 
-            if (hits.getLength() == 0) {
-                throw new NotFoundException(
-                        "Unable to find product option with ID " +
-                                cpInstanceId);
-            }
+			List<Document> documents = Collections.<Document>emptyList();
 
-            if (hits.getLength() > 1) {
-                if (_log.isWarnEnabled()) {
-                    _log.warn(
-                            "More than one document found for product sku " +
-                                    "with ID " + cpInstanceId);
-                }
+			if (hits.getLength() > 0) {
+				documents = hits.toList();
+			}
 
-                CPInstance cpInstance =
-                        _cpInstanceService.getCPInstance(
-                                cpInstanceId);
+			return new PageItems<>(documents, hits.getLength());
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-                return indexer.getDocument(cpInstance);
-            }
+	private Document _updateCPInstance(
+		Long cpInstanceId, ProductInstanceCreatorForm form) {
 
-            List<Document> documents = hits.toList();
+		try {
+			CPInstance cpInstance = _productInstanceHelper.updateCPInstance(
+				cpInstanceId, form.getSku(), form.getGtin(),
+				form.getManufacturerPartNumber(), form.getPurchasable(),
+				form.getWidth(), form.getHeight(), form.getDepth(),
+				form.getWeight(), form.getCost(), form.getPrice(),
+				form.getPromoPrice(), form.getPublished(),
+				form.getDisplayDate(), form.getExpirationDate(),
+				form.getNeverExpire());
 
-            return documents.get(0);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
+				CPInstance.class);
 
-    private static final Log _log = LogFactoryUtil.getLog(
-            ProductInstanceNestedCollectionResource.class);
+			return indexer.getDocument(cpInstance);
+		}
+		catch (CPInstanceDisplayDateException cpidde) {
+			throw new BadRequestException(
+				"Display Date not defined on Product Instance " + form.getSku(),
+				cpidde);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-    @Reference
-    private CPInstanceService _cpInstanceService;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProductInstanceNestedCollectionResource.class);
 
-    @Reference
-    private ProductInstanceHelper _productInstanceHelper;
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
-    @Reference
-    private ProductIndexerHelper _productIndexerHelper;
+	@Reference
+	private HasPermission _hasPermission;
 
-    @Reference
-    private HasPermission _hasPermission;
+	@Reference
+	private ProductIndexerHelper _productIndexerHelper;
+
+	@Reference
+	private ProductInstanceHelper _productInstanceHelper;
 
 }

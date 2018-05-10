@@ -771,7 +771,10 @@ class FragmentsEditor extends Component {
 					const fragmentEntryLinkComponent = this.refs[`fragmentEntryLink_${fragmentEntryLink.fragmentEntryLinkId}`];
 
 					if (fragmentEntryLinkComponent) {
-						fragmentEntryLinkComponent.updateTranslationStatus(this.languageId, this.defaultLanguageId);
+						fragmentEntryLinkComponent.updateEditableStatus(
+							this.languageId,
+							this.defaultLanguageId
+						);
 					}
 
 					this._dirty = false;

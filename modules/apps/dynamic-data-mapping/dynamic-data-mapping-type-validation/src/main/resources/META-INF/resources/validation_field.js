@@ -26,9 +26,12 @@ AUI.add(
 					strings: {
 						value: {
 							email: Liferay.Language.get('email'),
-							errorMessageGoesHere: Liferay.Language.get('error-message-goes-here'),
+							errorMessage: Liferay.Language.get('error-message'),
+							ifInput: Liferay.Language.get('if-input'),
+							showErrorMessage: Liferay.Language.get('show-error-message'),
 							url: Liferay.Language.get('url'),
-							validation: Liferay.Language.get('validation')
+							validationMessage: Liferay.Language.get('validation'),
+							theValue: Liferay.Language.get('the-value')
 						}
 					},
 
@@ -77,8 +80,6 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
-						var strings = instance.get('strings');
-
 						var parameterMessage = '';
 
 						var selectedValidation = instance.get('selectedValidation');
@@ -93,12 +94,11 @@ AUI.add(
 							ValidationField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								enableValidationValue: !!(value && value.expression),
-								errorMessagePlaceholder: strings.errorMessageGoesHere,
 								errorMessageValue: instance.get('errorMessageValue'),
 								parameterMessagePlaceholder: parameterMessage,
 								parameterValue: instance.get('parameterValue'),
-								validationMessage: strings.validation,
-								validationsOptions: instance._getValidationsOptions()
+								strings: instance.get('strings'),
+								validationsOptions: instance._getValidationsOptions(),
 							}
 						);
 					},

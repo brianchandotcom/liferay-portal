@@ -24,7 +24,6 @@ import java.util.Set;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
@@ -35,17 +34,6 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Andrea Di Giorgi
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
-
-	public static <T extends Task> T addTask(
-		Project project, String name, Class<T> clazz, boolean overwrite) {
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put(Task.TASK_OVERWRITE, overwrite);
-		args.put(Task.TASK_TYPE, clazz);
-
-		return (T)project.task(args, name);
-	}
 
 	public static String getArchivesBaseName(Project project) {
 		BasePluginConvention basePluginConvention = getConvention(

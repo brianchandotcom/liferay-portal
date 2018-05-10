@@ -68,10 +68,10 @@ public class AnnouncementsEntryFinderUtil {
 	}
 
 	public static int countByScopes(long companyId, long userId,
-		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.util.LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue) {
 		return getFinder()
 				   .countByScopes(companyId, userId, scopes, displayDateMonth,
@@ -133,10 +133,10 @@ public class AnnouncementsEntryFinderUtil {
 
 	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsEntry> findByScopes(
 		long companyId, long userId,
-		java.util.LinkedHashMap<java.lang.Long, long[]> scopes,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		java.util.LinkedHashMap<Long, long[]> scopes, int displayDateMonth,
+		int displayDateDay, int displayDateYear, int displayDateHour,
+		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
+		int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean alert, int flagValue, int start,
 		int end) {
 		return getFinder()

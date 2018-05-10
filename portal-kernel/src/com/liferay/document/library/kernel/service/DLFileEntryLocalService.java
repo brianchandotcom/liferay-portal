@@ -553,7 +553,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getMisversionedFileEntries();
 
@@ -563,7 +563,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@java.lang.Deprecated
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getOrphanedFileEntries();
 

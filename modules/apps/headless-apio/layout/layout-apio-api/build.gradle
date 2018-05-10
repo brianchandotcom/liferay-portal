@@ -1,3 +1,3 @@
 dependencies {
-	compileOnly group: "com.liferay", name: "com.liferay.apio.architect.api", version: "1.0.0-20180501.155949-29"
+	compileOnly project(":apps:foundation:apio-architect:apio-architect-api")
 }

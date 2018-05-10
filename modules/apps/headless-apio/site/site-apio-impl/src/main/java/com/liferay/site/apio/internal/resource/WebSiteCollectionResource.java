@@ -68,7 +68,7 @@ public class WebSiteCollectionResource
 	}
 
 	@Override
-	public Representor<Group, Long> representor(
+	public Representor<Group> representor(
 		Representor.Builder<Group, Long> builder) {
 
 		return builder.types(

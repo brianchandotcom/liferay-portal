@@ -250,7 +250,7 @@ public class PortletSharedSearchRequestImpl
 
 		return searchSettings -> portletSharedSearchContributor.contribute(
 			new PortletSharedSearchSettingsImpl(
-				searchSettings, portletPreferencesOptional,
+				searchSettings, portletId, portletPreferencesOptional,
 				portletSharedRequestHelper, renderRequest));
 	}
 

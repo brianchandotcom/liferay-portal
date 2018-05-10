@@ -107,14 +107,21 @@
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryKey" />
 		</finder>
-		<finder name="FCI_S" return-type="Collection">
-			<finder-column name="fragmentCollectionId" />
-			<finder-column name="status" />
-		</finder>
 		<finder name="G_FCI_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentCollectionId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+		</finder>
+		<finder name="G_FCI_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentCollectionId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_FCI_LikeN_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentCollectionId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+			<finder-column name="status" />
 		</finder>
 
 		<!-- References -->

@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.taglib.servlet.taglib.internal.servlet;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.price.CommercePriceCalculation;
@@ -44,6 +46,14 @@ public class ServletContextUtil {
 
 	public static final CommercePriceCalculation getCommercePriceCalculation() {
 		return _instance._getCommercePriceCalculation();
+	}
+
+	public static final PanelAppRegistry getPanelAppRegistry() {
+		return _instance._getPanelAppRegistry();
+	}
+
+	public static final PanelCategoryRegistry getPanelCategoryRegistry() {
+		return _instance._getPanelCategoryRegistry();
 	}
 
 	public static final ServletContext getServletContext() {
@@ -86,6 +96,18 @@ public class ServletContextUtil {
 		_commercePriceCalculation = commercePriceCalculation;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		_panelAppRegistry = panelAppRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		_panelCategoryRegistry = panelCategoryRegistry;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.taglib)",
 		unbind = "-"
@@ -108,6 +130,14 @@ public class ServletContextUtil {
 		return _commercePriceCalculation;
 	}
 
+	private PanelAppRegistry _getPanelAppRegistry() {
+		return _panelAppRegistry;
+	}
+
+	private PanelCategoryRegistry _getPanelCategoryRegistry() {
+		return _panelCategoryRegistry;
+	}
+
 	private ServletContext _getServletContext() {
 		return _servletContext;
 	}
@@ -118,6 +148,8 @@ public class ServletContextUtil {
 	private ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
 	private CommercePriceCalculation _commercePriceCalculation;
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
 	private ServletContext _servletContext;
 
 }

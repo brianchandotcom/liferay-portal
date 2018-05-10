@@ -97,6 +97,21 @@ public class PriceEntryHelper {
 		return commercePriceEntry;
 	}
 
+	public CommercePriceEntry updateCommercePriceEntry(
+			Long commercePriceEntryId, Double price, Double promoPrice)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry = getCommercePriceEntry(
+			commercePriceEntryId);
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commercePriceEntry.getGroupId());
+
+		return _commercePriceEntryService.updateCommercePriceEntry(
+			commercePriceEntryId, BigDecimal.valueOf(price),
+			BigDecimal.valueOf(promoPrice), serviceContext);
+	}
+
 	private static CPInstance _getCPInstance(
 		CommercePriceEntry commercePriceEntry) {
 

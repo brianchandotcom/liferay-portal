@@ -89,6 +89,9 @@ public class PriceEntryNestedCollectionResource
 
 		return builder.addGetter(
 			_priceEntryHelper::getCommercePriceEntry
+		).addUpdater(
+			this::_updateCommercePriceEntry, (a, b) -> true,
+			PriceEntryUpdaterForm::buildForm
 		).build();
 	}
 
@@ -168,6 +171,20 @@ public class PriceEntryNestedCollectionResource
 		}
 		catch (SystemException se) {
 			throw new ServerErrorException(500, se);
+		}
+	}
+
+	private CommercePriceEntry _updateCommercePriceEntry(
+		Long commercePriceEntryId,
+		PriceEntryUpdaterForm priceEntryUpdaterForm) {
+
+		try {
+			return _priceEntryHelper.updateCommercePriceEntry(
+				commercePriceEntryId, priceEntryUpdaterForm.getPrice(),
+				priceEntryUpdaterForm.getPromoPrice());
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
 		}
 	}
 

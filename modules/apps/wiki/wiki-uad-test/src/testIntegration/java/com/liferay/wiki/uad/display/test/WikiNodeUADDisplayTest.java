@@ -25,7 +25,6 @@ import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.uad.constants.WikiUADConstants;
 import com.liferay.wiki.uad.test.WikiNodeUADTestHelper;
 
 import org.junit.After;
@@ -54,11 +53,6 @@ public class WikiNodeUADDisplayTest extends BaseUADDisplayTestCase<WikiNode> {
 		_wikiNodes.add(wikiNode);
 
 		return wikiNode;
-	}
-
-	@Override
-	protected String getApplicationName() {
-		return WikiUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

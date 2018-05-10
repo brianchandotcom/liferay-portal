@@ -49,11 +49,6 @@ public abstract class BaseWikiNodeUADDisplay extends BaseModelUADDisplay<WikiNod
 	}
 
 	@Override
-	public String getApplicationName() {
-		return WikiUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "name", "description" };
 	}

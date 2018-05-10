@@ -23,10 +23,10 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.organization.apio.identifier.OrganizationIdentifier;
 import com.liferay.person.apio.identifier.PersonIdentifier;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -108,17 +108,18 @@ public class OrganizationCollectionResource
 	private static Long _getParentOrganizationId(Organization organization) {
 		long parentOrganizationId = organization.getParentOrganizationId();
 
-		if (parentOrganizationId == 0) {
+		if (parentOrganizationId <= 0) {
 			return null;
 		}
-		else {
-			return parentOrganizationId;
-		}
+
+		return parentOrganizationId;
 	}
 
 	private String _getCountry(Organization organization, Locale locale) {
-		return Try.fromFallible(
-			() -> _countryService.getCountry(organization.getCountryId())
+		return Try.success(
+			organization.getCountryId()
+		).map(
+			_countryService::getCountry
 		).map(
 			country -> country.getName(locale)
 		).orElse(
@@ -127,8 +128,7 @@ public class OrganizationCollectionResource
 	}
 
 	private PageItems<Organization> _getPageItems(
-			Pagination pagination, Company company)
-		throws PortalException {
+		Pagination pagination, Company company) {
 
 		List<Organization> organizations =
 			_organizationService.getOrganizations(
@@ -141,10 +141,12 @@ public class OrganizationCollectionResource
 	}
 
 	private String _getRegion(Organization organization) {
-		return Try.fromFallible(
-			() -> _regionService.getRegion(organization.getRegionId())
+		return Try.success(
+			organization.getRegionId()
 		).map(
-			region -> region.getName()
+			_regionService::getRegion
+		).map(
+			Region::getName
 		).orElse(
 			null
 		);

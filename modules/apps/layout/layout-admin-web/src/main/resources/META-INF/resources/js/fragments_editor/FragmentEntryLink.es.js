@@ -90,6 +90,15 @@ class FragmentEntryLink extends Component {
 							processor.process();
 						}
 					);
+
+					this._update(
+						this.languageId,
+						this.defaultLanguageId,
+						[
+							this._updateEditableValues,
+							this._updateEditableStatus
+						]
+					);
 				}
 			);
 		}
@@ -101,7 +110,9 @@ class FragmentEntryLink extends Component {
 	 */
 
 	shouldUpdate(changes) {
-		return !!changes.content || !!changes.showMapping;
+		return !!changes.content ||
+				!!changes.showMapping ||
+				!!changes.languageId;
 	}
 
 	/**
@@ -135,46 +146,15 @@ class FragmentEntryLink extends Component {
 
 		editableValues[editableId] = object.mixin({}, editableValue, content);
 
+		this._update(
+			this.languageId,
+			this.defaultLanguageId,
+			[this._updateEditableStatus]
+		);
+
 		return {
 			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: editableValues
 		};
-	}
-
-	/**
-	 * Updates the editable values for a given langaugeId.
-	 * @param {string} languageId The current language id
-	 * @param {string} defaultLanguageId The default language id
-	 * @review
-	 */
-
-	update(languageId, defaultLanguageId) {
-		this._update(
-			languageId,
-			defaultLanguageId,
-			[
-				this._updateEditableValues,
-				this._updateEditableStatus
-			]
-		);
-	}
-
-	/**
-	 * Updates the editable status for a given languageId.
-	 * This public method is useful when the caller knows the data inside the
-	 * fragment entry link is valid and only wants to see changes in the
-	 * translation status of the editable values, but wants to avoid changes in
-	 * the editables themselves.
-	 * @param {string} languageId The current language id
-	 * @param {string} defaultLanguageId The default language id
-	 * @review
-	 */
-
-	updateEditableStatus(languageId, defaultLanguageId) {
-		this._update(
-			languageId,
-			defaultLanguageId,
-			[this._updateEditableStatus]
-		);
 	}
 
 	/**
@@ -301,15 +281,20 @@ class FragmentEntryLink extends Component {
 	_updateEditableStatus(editableId, value, defaultValue, mappedField) {
 		const element = this.element.querySelector(`lfr-editable[id="${editableId}"]`);
 
-		element.classList.remove(
-			'mapped',
-			'translated',
-			'unmapped',
-			'untranslated'
-		);
+		if (element) {
+			element.classList.remove(
+				'mapped',
+				'translated',
+				'unmapped',
+				'untranslated'
+			);
 
-		element.classList.add(mappedField ? 'mapped' : 'unmapped');
-		element.classList.add(value ? 'translated' : 'untranslated');
+			const mapped = !!mappedField;
+			const translated = !mappedField && !!value;
+
+			element.classList.add(mapped ? 'mapped' : 'unmapped');
+			element.classList.add(translated ? 'translated' : 'untranslated');
+		}
 	}
 
 	/**
@@ -387,6 +372,17 @@ FragmentEntryLink.STATE = {
 	defaultEditorConfiguration: Config.object().value({}),
 
 	/**
+	 * Default language id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	defaultLanguageId: Config.string().required(),
+
+	/**
 	 * Editable values that should be used instead of the default ones
 	 * inside editable fields.
 	 * @default {}
@@ -419,6 +415,17 @@ FragmentEntryLink.STATE = {
 	 */
 
 	imageSelectorURL: Config.string().required(),
+
+	/**
+	 * Currently selected language id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	languageId: Config.string().required(),
 
 	/**
 	 * Fragment name

@@ -34,10 +34,6 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 
-	created() {
-		this.on('languageIdChanged', this._handleLanguageIdChange);
-	}
-
 	rendered(firstRender) {
 		if (firstRender) {
 			this._translationStatus = this._getTranslationStatus(
@@ -496,20 +492,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed when the language id has changed
-	 * @private
-	 * @review
-	 */
-
-	_handleLanguageIdChange() {
-		Object.keys(this.refs).filter(
-			key => key.startsWith('fragmentEntryLink_')
-		).forEach(
-			key => this.refs[key].update(this.languageId, this.defaultLanguageId)
-		);
-	}
-
-	/**
 	 * Callback executed when a mappeable fragment has been clicked
 	 * @param {!{ fragmentEntryLinkId: !string, editableId: !string }} event
 	 * @private
@@ -656,24 +638,6 @@ class FragmentsEditor extends Component {
 
 	_handleToggleHighlightMapping() {
 		this._highlightMapping = !this._highlightMapping;
-
-		this.fragmentEntryLinks
-			.map(
-				fragmentEntryLink => this._getFragmentEntryLinkComponent(
-					fragmentEntryLink.fragmentEntryLinkId
-				)
-			)
-			.filter(
-				fragmentEntryLinkComponent => fragmentEntryLinkComponent
-			)
-			.forEach(
-				fragmentEntryLinkComponent => {
-					fragmentEntryLinkComponent.updateEditableStatus(
-						this.languageId,
-						this.defaultLanguageId
-					);
-				}
-			);
 	}
 
 	/**
@@ -785,15 +749,6 @@ class FragmentsEditor extends Component {
 						Object.keys(this.availableLanguages).filter(languageId => languageId !== '_INJECTED_DATA_'),
 						this._getEditableValues()
 					);
-
-					const fragmentEntryLinkComponent = this.refs[`fragmentEntryLink_${fragmentEntryLink.fragmentEntryLinkId}`];
-
-					if (fragmentEntryLinkComponent) {
-						fragmentEntryLinkComponent.updateEditableStatus(
-							this.languageId,
-							this.defaultLanguageId
-						);
-					}
 
 					this._dirty = false;
 				}

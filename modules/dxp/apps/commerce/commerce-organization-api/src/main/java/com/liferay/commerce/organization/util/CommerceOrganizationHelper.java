@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface CommerceOrganizationHelper {
 
+	public String getCommerceUserPortletURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
 	public Organization getCurrentOrganization(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;

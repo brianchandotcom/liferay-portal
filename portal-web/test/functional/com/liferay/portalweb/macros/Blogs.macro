@@ -80,7 +80,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
 	</command>
 
 	<command name="addEntryWithHTML">

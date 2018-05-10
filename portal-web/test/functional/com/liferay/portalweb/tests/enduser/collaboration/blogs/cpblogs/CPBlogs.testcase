@@ -841,7 +841,9 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
+
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -879,7 +881,9 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
+
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -962,7 +966,9 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
+
+		<execute function="Pause" locator1="30000" />
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
 			<var name="entryTitle" value="Blogs Entry Title" />

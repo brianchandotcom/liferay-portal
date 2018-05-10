@@ -19,11 +19,6 @@ package com.liferay.layout.type.controller.asset.display.internal.constants;
  */
 public class AssetDisplayLayoutTypeControllerWebKeys {
 
-	public static final String ASSET_DISPLAY_CONTRIBUTOR =
-		"ASSET_DISPLAY_CONTRIBUTOR";
-
-	public static final String ASSET_ENTRY = "ASSET_ENTRY";
-
 	public static final String LAYOUT_FRAGMENTS = "LAYOUT_FRAGMENTS";
 
 }

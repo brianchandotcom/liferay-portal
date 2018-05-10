@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.internal.constants;
+package com.liferay.asset.display.contributor.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-public class AssetPublisherDisplayPageWebKeys {
+public class AssetDisplayWebKeys {
 
 	public static final String ASSET_DISPLAY_CONTRIBUTOR =
 		"ASSET_DISPLAY_CONTRIBUTOR";

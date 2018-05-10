@@ -355,8 +355,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getDLFileEntryTypeActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws Exception {
+		final PortletDataContext portletDataContext) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_dlFileEntryTypeLocalService.getExportActionableDynamicQuery(
@@ -400,8 +399,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getDLFileShortcutActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws Exception {
+		final PortletDataContext portletDataContext) {
 
 		final ExportActionableDynamicQuery exportActionableDynamicQuery =
 			_dlFileShortcutLocalService.getExportActionableDynamicQuery(
@@ -447,8 +445,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getFileEntryActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws Exception {
+		final PortletDataContext portletDataContext) {
 
 		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
 			portletDataContext);
@@ -548,8 +545,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getFolderActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws Exception {
+		final PortletDataContext portletDataContext) {
 
 		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
 			portletDataContext);
@@ -602,8 +598,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	protected ActionableDynamicQuery getRepositoryActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws Exception {
+		final PortletDataContext portletDataContext) {
 
 		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
 			portletDataContext);

@@ -145,11 +145,28 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public int getFragmentCollectionsCount(
+		long groupId, long fragmentCollectionId, int status) {
+
+		return fragmentEntryPersistence.filterCountByG_FCI_S(
+			groupId, fragmentCollectionId, status);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
 		long groupId, long fragmentCollectionId, String name) {
 
 		return fragmentEntryPersistence.filterCountByG_FCI_LikeN(
 			groupId, fragmentCollectionId,
 			_customSQL.keywords(name, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(
+		long groupId, long fragmentCollectionId, String name, int status) {
+
+		return fragmentEntryPersistence.filterCountByG_FCI_LikeN_S(
+			groupId, fragmentCollectionId,
+			_customSQL.keywords(name, WildcardMode.SURROUND)[0], status);
 	}
 
 	@Override
@@ -176,11 +193,33 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return fragmentEntryPersistence.filterFindByG_FCI_S(
+			groupId, fragmentCollectionId, status, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator) {
 
 		return fragmentEntryPersistence.filterFindByG_FCI(
 			groupId, fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int status,
+		int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return fragmentEntryPersistence.filterFindByG_FCI_LikeN_S(
+			groupId, fragmentCollectionId,
+			_customSQL.keywords(name, WildcardMode.SURROUND)[0], status, start,
+			end, orderByComparator);
 	}
 
 	@Override

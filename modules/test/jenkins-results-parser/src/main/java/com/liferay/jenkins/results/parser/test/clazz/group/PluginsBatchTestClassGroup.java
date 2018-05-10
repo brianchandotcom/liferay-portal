@@ -12,7 +12,11 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.test.clazz.group;
+
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PluginsGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 import java.io.IOException;

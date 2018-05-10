@@ -1386,7 +1386,7 @@
 
 		<reference entity="ListType" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="PasswordPolicy" remote-service="true" uuid="true">
+	<entity local-service="true" name="PasswordPolicy" remote-service="true" uad-application-name="Password Policies Admin" uad-dir-path="../modules/apps/password-policies-admin/password-policies-admin-uad/src/main/java" uad-package-path="com.liferay.password.policies.admin" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1396,7 +1396,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 

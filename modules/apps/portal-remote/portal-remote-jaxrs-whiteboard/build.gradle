@@ -1,0 +1,42 @@
+task deployConfigs(type: Copy)
+
+dependencies {
+	compileInclude group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "0.0.1-20180514.145224-80"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.2.4"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.2.4"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.2.4"
+	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.2.4"
+	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
+
+	compileOnly group: "javax.json", name: "javax.json-api", version: "1.0"
+	compileOnly group: "org.apache.aries.spec", name: "org.apache.aries.javax.annotation-api", version: "0.0.2-20180505.023515-4"
+	compileOnly group: "org.apache.aries.spec", name: "org.apache.aries.javax.jax.rs-api", version: "0.0.1-20180514.145128-46"
+	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs", version: "1.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.util.function", version: "1.1.0"
+	compileOnly group: "org.osgi", name: "org.osgi.util.promise", version: "1.1.0"
+}
+
+deploy {
+	finalizedBy deployConfigs
+}
+
+deployConfigs {
+	ext {
+		autoClean = false
+	}
+
+	from "configs"
+	into new File(liferay.liferayHome, "osgi/configs")
+}
+
+deployDependencies {
+	from (configurations.compileOnly) {
+		include "org.osgi.util.promise-*.jar"
+		include "org.osgi.util.function-*.jar"
+		include "org.osgi.service.jaxrs-*.jar"
+		include "javax.json-api*.jar"
+		include "org.apache.aries.jax.rs.whiteboard-*.jar"
+		include "org.apache.aries.javax.jax.rs-api*.jar"
+		include "org.apache.aries.javax.annotation-api*.jar"
+	}
+}

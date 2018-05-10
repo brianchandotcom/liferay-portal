@@ -564,7 +564,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords" />
 	</command>
 
-	<command name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
+	<command ignore="true" name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

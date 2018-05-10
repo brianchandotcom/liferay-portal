@@ -84,7 +84,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
 
 		<div class="col-lg-9">
 			<div class="sheet">
-				<h3>
+				<h3 class="sheet-title">
 					<c:choose>
 						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
 

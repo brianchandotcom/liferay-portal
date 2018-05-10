@@ -327,37 +327,13 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL sortingURL = PortletURLUtil.clone(
-			_currentURLObj, _liferayPortletResponse);
+		PortletURL currentSortingURL = _getCurrentSortingURL();
 
-		MBCategory category = (MBCategory)_request.getAttribute(
-			WebKeys.MESSAGE_BOARDS_CATEGORY);
-
-		long categoryId = MBUtil.getCategoryId(_request, category);
-
-		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			sortingURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view");
-		}
-		else {
-			sortingURL.setParameter(
-				"mvcRenderCommandName", "/message_boards/view_category");
-			sortingURL.setParameter("mbCategoryId", String.valueOf(categoryId));
-		}
-
-		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
-
-		String keywords = ParamUtil.getString(_request, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			sortingURL.setParameter("keywords", keywords);
-		}
-
-		sortingURL.setParameter(
+		currentSortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
-		return sortingURL;
+		return currentSortingURL;
 	}
 
 	public ViewTypeItemList getViewTypes() throws PortletException {
@@ -426,6 +402,36 @@ public class MBEntriesManagementToolbarDisplayContext {
 		searchContainer.setOrderByCol(orderByCol);
 		searchContainer.setOrderByComparator(orderByComparator);
 		searchContainer.setOrderByType(orderByType);
+	}
+
+	private PortletURL _getCurrentSortingURL() throws PortletException {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			_currentURLObj, _liferayPortletResponse);
+
+		MBCategory category = (MBCategory)_request.getAttribute(
+			WebKeys.MESSAGE_BOARDS_CATEGORY);
+
+		long categoryId = MBUtil.getCategoryId(_request, category);
+
+		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			sortingURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
+		}
+		else {
+			sortingURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view_category");
+			sortingURL.setParameter("mbCategoryId", String.valueOf(categoryId));
+		}
+
+		sortingURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
+
+		String keywords = ParamUtil.getString(_request, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			sortingURL.setParameter("keywords", keywords);
+		}
+
+		return sortingURL;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -500,7 +506,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								"title".equals(getOrderByCol()));
 							dropdownItem.setHref(
-								getSortingURL(), "orderByCol", "title");
+								_getCurrentSortingURL(), "orderByCol", "title");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "title"));
 						}));
@@ -511,7 +517,8 @@ public class MBEntriesManagementToolbarDisplayContext {
 							dropdownItem.setActive(
 								"modified-date".equals(getOrderByCol()));
 							dropdownItem.setHref(
-								getSortingURL(), "orderByCol", "modified-date");
+								_getCurrentSortingURL(), "orderByCol",
+								"modified-date");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "modified-date"));
 						}));

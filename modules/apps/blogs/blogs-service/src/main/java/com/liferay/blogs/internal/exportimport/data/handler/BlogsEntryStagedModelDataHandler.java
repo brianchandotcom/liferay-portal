@@ -283,8 +283,7 @@ public class BlogsEntryStagedModelDataHandler
 					entry.getContent(), displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					allowPingbacks, allowTrackbacks, trackbacks,
-					entry.getCoverImageCaption(), new ImageSelector(),
-					new ImageSelector(), serviceContext);
+					entry.getCoverImageCaption(), null, null, serviceContext);
 			}
 		}
 		else {

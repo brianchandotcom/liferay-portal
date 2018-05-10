@@ -40,11 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseLayoutFriendlyURLUADExporter
 	extends DynamicQueryUADExporter<LayoutFriendlyURL> {
 	@Override
-	public String getApplicationName() {
-		return LayoutUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public Class<LayoutFriendlyURL> getTypeClass() {
 		return LayoutFriendlyURL.class;
 	}

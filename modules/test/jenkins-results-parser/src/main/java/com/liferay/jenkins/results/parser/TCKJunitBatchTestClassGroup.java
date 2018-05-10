@@ -38,7 +38,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 	public static class TCKBatchTestClass extends BaseTestClass {
 
 		protected static TCKBatchTestClass getInstance(
-			File warFile, String batchName) {
+			String batchName, File warFile) {
 
 			return new TCKBatchTestClass(warFile, batchName);
 		}
@@ -97,7 +97,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 						if (_pathIncluded(filePath)) {
 							testClasses.add(
 								TCKBatchTestClass.getInstance(
-									filePath.toFile(), batchName));
+									batchName, filePath.toFile()));
 						}
 
 						return FileVisitResult.CONTINUE;

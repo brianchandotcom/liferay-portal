@@ -55,8 +55,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	public static class BatchTestClass extends BaseTestClass {
 
 		protected static BatchTestClass getInstance(
-			PortalGitWorkingDirectory portalGitWorkingDirectory,
-			String batchName) {
+			String batchName,
+			PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
 			File file = new File(
 				portalGitWorkingDirectory.getWorkingDirectory(),

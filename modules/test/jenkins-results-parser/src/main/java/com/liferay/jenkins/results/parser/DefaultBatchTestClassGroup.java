@@ -28,7 +28,7 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 		AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(this, 0);
 
 		axisTestClassGroup.addTestClass(
-			BatchTestClass.getInstance(portalGitWorkingDirectory, batchName));
+			BatchTestClass.getInstance(batchName, portalGitWorkingDirectory));
 
 		axisTestClassGroups.put(0, axisTestClassGroup);
 	}

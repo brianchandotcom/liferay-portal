@@ -39,7 +39,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 	public static class PluginsBatchTestClass extends BaseTestClass {
 
 		protected static PluginsBatchTestClass getInstance(
-			File pluginDir, String batchName) {
+			String batchName, File pluginDir) {
 
 			return new PluginsBatchTestClass(pluginDir, batchName);
 		}
@@ -117,7 +117,7 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 							testClasses.add(
 								PluginsBatchTestClass.getInstance(
-									file.getParentFile(), batchName));
+									batchName, file.getParentFile()));
 						}
 
 						return FileVisitResult.CONTINUE;

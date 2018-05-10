@@ -42,7 +42,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 	public static class NPMTestBatchTestClass extends BaseTestClass {
 
 		protected static NPMTestBatchTestClass getInstance(
-			File moduleDir, String batchName) {
+			String batchName, File moduleDir) {
 
 			return new NPMTestBatchTestClass(moduleDir, batchName);
 		}
@@ -86,7 +86,7 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 		for (File moduleDir : moduleDirs) {
 			NPMTestBatchTestClass npmTestBatchTestClass =
-				NPMTestBatchTestClass.getInstance(moduleDir, batchName);
+				NPMTestBatchTestClass.getInstance(batchName, moduleDir);
 
 			testClasses.add(npmTestBatchTestClass);
 

@@ -45,7 +45,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	public static class JunitBatchTestClass extends BaseTestClass {
 
 		protected static JunitBatchTestClass getInstance(
-			GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
+			File file, GitWorkingDirectory gitWorkingDirectory, File srcFile) {
 
 			if (_junitTestClasses.containsKey(file)) {
 				return _junitTestClasses.get(file);
@@ -60,7 +60,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		protected static JunitBatchTestClass getInstance(
-			GitWorkingDirectory gitWorkingDirectory, String fullClassName) {
+			String fullClassName, GitWorkingDirectory gitWorkingDirectory) {
 
 			String filePath = fullClassName.substring(
 				0, fullClassName.lastIndexOf("."));
@@ -100,7 +100,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			if (srcFiles.size() > 1) {
 			}
 
-			return getInstance(gitWorkingDirectory, file, matchingSrcFile);
+			return getInstance(file, gitWorkingDirectory, matchingSrcFile);
 		}
 
 		protected JunitBatchTestClass(
@@ -245,7 +245,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			JunitBatchTestClass parentJunitBatchTestClass = getInstance(
-				_gitWorkingDirectory, parentFullClassName);
+				parentFullClassName, _gitWorkingDirectory);
 
 			for (BaseTestMethod testMethod :
 					parentJunitBatchTestClass.getTestMethods()) {
@@ -356,7 +356,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 					axisTestClassGroup.addTestClass(
 						JunitBatchTestClass.getInstance(
-							portalGitWorkingDirectory, new File(filePath),
+							new File(filePath), portalGitWorkingDirectory,
 							autoBalanceTestFile));
 				}
 			}
@@ -392,7 +392,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 					axisTestClassGroup.addTestClass(
 						JunitBatchTestClass.getInstance(
-							portalGitWorkingDirectory, new File(filePath),
+							new File(filePath), portalGitWorkingDirectory,
 							autoBalanceTestFile));
 				}
 			}
@@ -447,13 +447,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 								".java", ".class");
 
 							return JunitBatchTestClass.getInstance(
-								portalGitWorkingDirectory,
-								new File(packagePath), path.toFile());
+								new File(packagePath),
+								portalGitWorkingDirectory, path.toFile());
 						}
 
 						return JunitBatchTestClass.getInstance(
-							portalGitWorkingDirectory,
 							new File(filePath.replace(".java", ".class")),
+							portalGitWorkingDirectory,
 							path.toFile());
 					}
 

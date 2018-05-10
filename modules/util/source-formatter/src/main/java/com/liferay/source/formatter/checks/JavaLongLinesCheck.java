@@ -182,6 +182,17 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 			indent += StringPool.TAB;
 		}
 
+		if (trimmedLine.matches("\\w+\\.\\w+[,);]*")) {
+			int x = line.indexOf(StringPool.PERIOD);
+
+			String firstLine = line.substring(0, x + 1);
+			String secondLine = indent + StringPool.TAB + line.substring(x + 1);
+
+			return StringUtil.replace(
+				content, "\n" + line + "\n",
+				StringBundler.concat("\n", firstLine, "\n", secondLine, "\n"));
+		}
+
 		if (line.endsWith(StringPool.OPEN_PARENTHESIS) ||
 			line.endsWith(StringPool.SEMICOLON)) {
 

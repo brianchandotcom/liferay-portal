@@ -73,7 +73,10 @@ public class RootEndpointImpl implements RootEndpoint {
 					httpServletRequest, APIDescription.class);
 
 		_documentation = new Documentation(
-			apiTitleRequestFunction, apiDescriptionRequestFunction);
+			apiTitleRequestFunction, apiDescriptionRequestFunction,
+			() -> _representableManager.getRepresentors(),
+			() -> _collectionRouterManager.getCollectionRoutes(),
+			() -> _itemRouterManager.getItemRoutes());
 	}
 
 	@Override

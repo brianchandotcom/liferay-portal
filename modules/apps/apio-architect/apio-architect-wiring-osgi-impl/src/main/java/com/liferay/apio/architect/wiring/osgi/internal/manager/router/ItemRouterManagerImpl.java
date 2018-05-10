@@ -32,6 +32,7 @@ import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -49,6 +50,11 @@ public class ItemRouterManagerImpl
 
 	public ItemRouterManagerImpl() {
 		super(ItemRouter.class, 2);
+	}
+
+	@Override
+	public Map<String, ItemRoutes> getItemRoutes() {
+		return INSTANCE.getItemRoutesMap(this::_computeItemRoutes);
 	}
 
 	@Override

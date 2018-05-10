@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.writer;
 
-import static com.liferay.apio.architect.unsafe.Unsafe.unsafeCast;
 import static com.liferay.apio.architect.writer.url.URLCreator.createCollectionPageURL;
 import static com.liferay.apio.architect.writer.url.URLCreator.createCollectionURL;
 import static com.liferay.apio.architect.writer.url.URLCreator.createFormURL;
@@ -31,10 +30,12 @@ import com.liferay.apio.architect.message.json.PageMessageMapper;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageType;
-import com.liferay.apio.architect.representor.Representor;
+import com.liferay.apio.architect.representor.BaseRepresentor;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.single.model.SingleModel;
+import com.liferay.apio.architect.unsafe.Unsafe;
 import com.liferay.apio.architect.uri.Path;
+import com.liferay.apio.architect.writer.alias.BaseRepresentorFunction;
 import com.liferay.apio.architect.writer.alias.PathFunction;
 import com.liferay.apio.architect.writer.alias.RepresentorFunction;
 import com.liferay.apio.architect.writer.alias.ResourceNameFunction;
@@ -43,9 +44,9 @@ import com.liferay.apio.architect.writer.alias.SingleModelFunction;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Writes a page.
@@ -83,8 +84,9 @@ public class PageWriter<T> {
 	/**
 	 * Writes the handled {@link Page} to a string. This method uses a {@link
 	 * FieldsWriter} to write the different fields of its items' {@link
-	 * Representor}. If no {@code Representor} or {@code Path} exist for the
-	 * model, this method returns {@code Optional#empty()}.
+	 * com.liferay.apio.architect.representor.Representor}. If no {@code
+	 * Representor} or {@code Path} exist for the model, this method returns
+	 * {@code Optional#empty()}.
 	 *
 	 * @return the representation of the {@code Page}, if the {@code
 	 *         Representor} and {@code Path} exist for the model; returns {@code
@@ -226,7 +228,8 @@ public class PageWriter<T> {
 
 			/**
 			 * Adds information to the builder about the function that gets a
-			 * class's {@link Representor}.
+			 * class's {@link
+			 * com.liferay.apio.architect.representor.Representor}.
 			 *
 			 * @param  representorFunction the function that gets a class's
 			 *         {@code Representor}
@@ -266,7 +269,8 @@ public class PageWriter<T> {
 
 			/**
 			 * Adds information to the builder about the function that gets the
-			 * name of a class's {@link Representor}.
+			 * name of a class's {@link
+			 * com.liferay.apio.architect.representor.Representor}.
 			 *
 			 * @param  resourceNameFunction the function that gets the name of a
 			 *         class's {@code Representor}
@@ -325,15 +329,22 @@ public class PageWriter<T> {
 	}
 
 	private void _writeItem(SingleModel<T> singleModel) {
-		Optional<FieldsWriter<T, ?>> optional = getFieldsWriter(
-			singleModel, null, _requestInfo, _pathFunction,
-			_representorFunction, _singleModelFunction);
+		Optional<Path> pathOptional = getPathOptional(
+			singleModel, _pathFunction, _representorFunction::apply);
+
+		if (!pathOptional.isPresent()) {
+			return;
+		}
+
+		Optional<FieldsWriter<T>> optional = getFieldsWriter(
+			singleModel, null, _requestInfo, _representorFunction::apply,
+			_singleModelFunction, pathOptional.get());
 
 		if (!optional.isPresent()) {
 			return;
 		}
 
-		FieldsWriter<T, ?> fieldsWriter = optional.get();
+		FieldsWriter<T> fieldsWriter = optional.get();
 
 		JSONObjectBuilder itemJsonObjectBuilder = new JSONObjectBuilder();
 
@@ -387,7 +398,8 @@ public class PageWriter<T> {
 
 		fieldsWriter.writeRelatedModels(
 			embeddedSingleModel -> getPathOptional(
-				embeddedSingleModel, _pathFunction, _representorFunction),
+				embeddedSingleModel, _pathFunction,
+				_representorFunction::apply),
 			(embeddedSingleModel, embeddedPathElements1) ->
 				_writeItemEmbeddedModelFields(
 					embeddedSingleModel, embeddedPathElements1,
@@ -409,7 +421,7 @@ public class PageWriter<T> {
 					embeddedPathElements, url));
 
 		_writeNestedResources(
-			_representorFunction, singleModel, itemJsonObjectBuilder,
+			_representorFunction::apply, singleModel, itemJsonObjectBuilder,
 			singleModel, null);
 
 		_pageMessageMapper.onFinishItem(
@@ -423,25 +435,32 @@ public class PageWriter<T> {
 
 		_writeItemEmbeddedModelFields(
 			singleModel, embeddedPathElements, itemJsonObjectBuilder,
-			_representorFunction, singleModel);
+			_representorFunction::apply, singleModel);
 	}
 
 	private <S, U> void _writeItemEmbeddedModelFields(
 		SingleModel<S> singleModel, FunctionalList<String> embeddedPathElements,
 		JSONObjectBuilder itemJsonObjectBuilder,
-		RepresentorFunction representorFunction,
+		BaseRepresentorFunction baseRepresentorFunction,
 		SingleModel<U> rootSingleModel) {
 
-		Optional<FieldsWriter<S, ?>> optional = getFieldsWriter(
-			singleModel, embeddedPathElements, _requestInfo, _pathFunction,
-			representorFunction, _representorFunction, _singleModelFunction,
-			rootSingleModel);
+		Optional<Path> pathOptional = getPathOptional(
+			singleModel, _pathFunction, baseRepresentorFunction,
+			_representorFunction, rootSingleModel);
 
-		if (!optional.isPresent()) {
+		if (!pathOptional.isPresent()) {
 			return;
 		}
 
-		FieldsWriter<S, ?> fieldsWriter = optional.get();
+		Optional<FieldsWriter<S>> fieldsWriterOptional = getFieldsWriter(
+			singleModel, embeddedPathElements, _requestInfo,
+			baseRepresentorFunction, _singleModelFunction, pathOptional.get());
+
+		if (!fieldsWriterOptional.isPresent()) {
+			return;
+		}
+
+		FieldsWriter<S> fieldsWriter = fieldsWriterOptional.get();
 
 		fieldsWriter.writeBooleanFields(
 			(field, value) ->
@@ -502,7 +521,8 @@ public class PageWriter<T> {
 
 		fieldsWriter.writeRelatedModels(
 			embeddedSingleModel -> getPathOptional(
-				embeddedSingleModel, _pathFunction, _representorFunction),
+				embeddedSingleModel, _pathFunction,
+				_representorFunction::apply),
 			(embeddedSingleModel, embeddedModelEmbeddedPathElements) ->
 				_writeItemEmbeddedModelFields(
 					embeddedSingleModel, embeddedModelEmbeddedPathElements,
@@ -524,43 +544,43 @@ public class PageWriter<T> {
 					resourceEmbeddedPathElements, url));
 
 		_writeNestedResources(
-			representorFunction, singleModel, itemJsonObjectBuilder,
+			baseRepresentorFunction, singleModel, itemJsonObjectBuilder,
 			rootSingleModel, embeddedPathElements);
 	}
 
 	private <S, U> void _writeNestedResources(
-		RepresentorFunction representorFunction, SingleModel<U> singleModel,
-		JSONObjectBuilder itemJsonObjectBuilder, SingleModel<S> rootSingleModel,
+		BaseRepresentorFunction baseRepresentorFunction,
+		SingleModel<U> singleModel, JSONObjectBuilder itemJsonObjectBuilder,
+		SingleModel<S> rootSingleModel,
 		FunctionalList<String> embeddedPathElements) {
 
-		Optional<Representor<U, ?>> representorOptional = unsafeCast(
-			representorFunction.apply(singleModel.getResourceName()));
+		baseRepresentorFunction.apply(
+			singleModel.getResourceName()
+		).<BaseRepresentor<U>>map(
+			Unsafe::unsafeCast
+		).map(
+			BaseRepresentor::getNestedFieldFunctions
+		).map(
+			List::stream
+		).orElseGet(
+			Stream::empty
+		).forEach(
+			nestedFieldFunction -> {
+				Function<U, ?> nestedMapper = nestedFieldFunction.function;
 
-		representorOptional.ifPresent(
-			_representor -> {
-				Map<String, Representor<?, ?>> nested =
-					_representor.getNested();
+				Object mappedModel = nestedMapper.apply(singleModel.getModel());
 
-				nested.forEach(
-					(key, value) -> {
-						Map<String, Function<U, ?>> nestedFunctions =
-							_representor.getNestedFunctions();
+				FunctionalList<String> embeddedNestedPathElements =
+					new FunctionalList<>(
+						embeddedPathElements, nestedFieldFunction.key);
 
-						Function<U, ?> nestedMapper = nestedFunctions.get(key);
-
-						Object mappedModel = nestedMapper.apply(
-							singleModel.getModel());
-
-						FunctionalList<String> embeddedNestedPathElements =
-							new FunctionalList<>(embeddedPathElements, key);
-
-						_writeItemEmbeddedModelFields(
-							new SingleModel<>(
-								mappedModel, "", Collections.emptyList()),
-							embeddedNestedPathElements, itemJsonObjectBuilder,
-							__ -> Optional.of(value), rootSingleModel);
-					});
-			});
+				_writeItemEmbeddedModelFields(
+					new SingleModel<>(mappedModel, "", Collections.emptyList()),
+					embeddedNestedPathElements, itemJsonObjectBuilder,
+					__ -> Optional.of(nestedFieldFunction.nestedRepresentor),
+					rootSingleModel);
+			}
+		);
 	}
 
 	private void _writePageURLs() {

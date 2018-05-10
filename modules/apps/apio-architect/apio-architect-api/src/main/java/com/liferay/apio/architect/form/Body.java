@@ -21,20 +21,18 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * Instances of this interface represent the current HTTP request body.
+ * Represents the current HTTP request body.
  *
  * @author Alejandro Hernández
- * @review
  */
 public interface Body {
 
 	/**
-	 * Creates a new {@code Body} from two lambdas.
+	 * Creates and returns a new {@code Body} from two lambdas.
 	 *
 	 * @param  valueFunction the function used to obtain values
 	 * @param  valueListFunction the function used to obtain lists of values
-	 * @return the body instance
-	 * @review
+	 * @return the body
 	 */
 	public static Body create(
 		Function<String, Optional<String>> valueFunction,
@@ -56,14 +54,13 @@ public interface Body {
 	}
 
 	/**
-	 * Creates a new {@code Body} from four lambdas.
+	 * Creates and returns a new {@code Body} from four lambdas.
 	 *
 	 * @param  valueFunction the function used to obtain values
 	 * @param  valueListFunction the function used to obtain lists of values
 	 * @param  fileListFunction the function used to obtain lists of files
 	 * @param  fileFunction the function used to obtain files
-	 * @return the body instance
-	 * @review
+	 * @return the body
 	 */
 	public static Body create(
 		Function<String, Optional<String>> valueFunction,
@@ -97,48 +94,44 @@ public interface Body {
 	}
 
 	/**
-	 * Returns a list of files from the body, if present. Returns {@code
+	 * Returns a list of files from the body, if present; returns {@code
 	 * Optional#empty()} otherwise.
 	 *
 	 * @param  key the key for extracting the list of files
 	 * @return the list, if present; {@code Optional#empty()} otherwise
-	 * @review
 	 */
 	public default Optional<List<BinaryFile>> getFileListOptional(String key) {
 		return Optional.empty();
 	}
 
 	/**
-	 * Returns a binary file from the body, if present. Returns {@code
+	 * Returns a binary file from the body, if present; returns {@code
 	 * Optional#empty()} otherwise.
 	 *
 	 * @param  key the key for extracting the file
 	 * @return the file, if present; {@code Optional#empty()} otherwise
-	 * @review
 	 */
 	public default Optional<BinaryFile> getFileOptional(String key) {
 		return Optional.empty();
 	}
 
 	/**
-	 * Returns a list of values from the body, if present. Returns {@code
+	 * Returns a list of values from the body, if present; returns {@code
 	 * Optional#empty()} otherwise.
 	 *
 	 * @param  key the key for extracting the list of values
 	 * @return the list, if present; {@code Optional#empty()} otherwise
-	 * @review
 	 */
 	public default Optional<List<String>> getValueListOptional(String key) {
 		return Optional.empty();
 	}
 
 	/**
-	 * Returns a value from the body, if present. Returns {@code
+	 * Returns a value from the body, if present; returns {@code
 	 * Optional#empty()} otherwise.
 	 *
 	 * @param  key the key for extracting the value
 	 * @return the value, if present; {@code Optional#empty()} otherwise
-	 * @review
 	 */
 	public Optional<String> getValueOptional(String key);
 

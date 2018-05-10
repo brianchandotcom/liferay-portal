@@ -56,8 +56,6 @@ public class PersonModel {
 		for (long index = 0; index < 10; index++) {
 			Faker faker = new Faker();
 
-			Address address = faker.address();
-
 			Internet internet = faker.internet();
 
 			DateAndTime dateAndTime = faker.date();
@@ -80,10 +78,16 @@ public class PersonModel {
 				Collectors.toList()
 			);
 
+			Address address = faker.address();
+
+			PostalAddressModel postalAddressModel = new PostalAddressModel(
+				address.countryCode(), address.state(), address.city(),
+				address.zipCode(), address.streetAddress());
+
 			PersonModel personModel = new PersonModel(
-				address.fullAddress(), internet.avatar(), birthDate,
-				internet.safeEmailAddress(), name.firstName(), jobTitles,
-				name.lastName(), _count.get());
+				internet.avatar(), birthDate, internet.safeEmailAddress(),
+				name.firstName(), jobTitles, name.lastName(),
+				postalAddressModel, _count.get());
 
 			_personModels.put(_count.getAndIncrement(), personModel);
 		}
@@ -92,7 +96,7 @@ public class PersonModel {
 	/**
 	 * Adds a new person.
 	 *
-	 * @param  address the person's address
+	 * @param  postalAddressModel the person's address
 	 * @param  avatar the person's avatar
 	 * @param  birthDate the person's birth date
 	 * @param  email the person's email
@@ -102,12 +106,13 @@ public class PersonModel {
 	 * @return the new person
 	 */
 	public static PersonModel create(
-		String address, String avatar, Date birthDate, String email,
-		String firstName, List<String> jobTitles, String lastName) {
+		PostalAddressModel postalAddressModel, String avatar, Date birthDate,
+		String email, String firstName, List<String> jobTitles,
+		String lastName) {
 
 		PersonModel personModel = new PersonModel(
-			address, avatar, birthDate, email, firstName, jobTitles, lastName,
-			_count.get());
+			avatar, birthDate, email, firstName, jobTitles, lastName,
+			postalAddressModel, _count.get());
 
 		_personModels.put(_count.getAndIncrement(), personModel);
 
@@ -169,7 +174,7 @@ public class PersonModel {
 	 * Updates the person that matches the specified ID, if that person exists;
 	 * returns {@code Optional#empty()} otherwise.
 	 *
-	 * @param  address the person's address
+	 * @param  postalAddressModel the person's address
 	 * @param  avatar the person's avatar
 	 * @param  birthDate the person's birth date
 	 * @param  email the person's email
@@ -181,8 +186,9 @@ public class PersonModel {
 	 *         otherwise
 	 */
 	public static Optional<PersonModel> update(
-		String address, String avatar, Date birthDate, String email,
-		String firstName, List<String> jobTitles, String lastName, long id) {
+		PostalAddressModel postalAddressModel, String avatar, Date birthDate,
+		String email, String firstName, List<String> jobTitles, String lastName,
+		long id) {
 
 		PersonModel personModel = _personModels.get(id);
 
@@ -191,21 +197,12 @@ public class PersonModel {
 		}
 
 		personModel = new PersonModel(
-			avatar, address, birthDate, email, firstName, jobTitles, lastName,
-			id);
+			avatar, birthDate, email, firstName, jobTitles, lastName,
+			postalAddressModel, id);
 
 		_personModels.put(id, personModel);
 
 		return Optional.of(personModel);
-	}
-
-	/**
-	 * Returns the person's address.
-	 *
-	 * @return the person's address
-	 */
-	public String getAddress() {
-		return _address;
 	}
 
 	/**
@@ -280,17 +277,27 @@ public class PersonModel {
 		return _lastName;
 	}
 
-	private PersonModel(
-		String address, String avatar, Date birthDate, String email,
-		String firstName, List<String> jobTitles, String lastName, long id) {
+	/**
+	 * Returns the person's address.
+	 *
+	 * @return the person's address
+	 */
+	public PostalAddressModel getPostalAddressModel() {
+		return _postalAddressModel;
+	}
 
-		_address = address;
+	private PersonModel(
+		String avatar, Date birthDate, String email, String firstName,
+		List<String> jobTitles, String lastName,
+		PostalAddressModel postalAddressModel, long id) {
+
 		_avatar = avatar;
 		_birthDate = birthDate;
 		_email = email;
 		_firstName = firstName;
 		_jobTitles = jobTitles;
 		_lastName = lastName;
+		_postalAddressModel = postalAddressModel;
 		_id = id;
 	}
 
@@ -298,7 +305,6 @@ public class PersonModel {
 	private static final Map<Long, PersonModel> _personModels =
 		new ConcurrentHashMap<>();
 
-	private final String _address;
 	private final String _avatar;
 	private final Date _birthDate;
 	private final String _email;
@@ -306,5 +312,6 @@ public class PersonModel {
 	private final long _id;
 	private final List<String> _jobTitles;
 	private final String _lastName;
+	private final PostalAddressModel _postalAddressModel;
 
 }

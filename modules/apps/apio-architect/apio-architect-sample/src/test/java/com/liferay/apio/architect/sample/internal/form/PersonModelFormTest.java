@@ -22,6 +22,9 @@ import static com.liferay.apio.architect.test.util.form.FormMatchers.isReturnedI
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.apio.architect.sample.internal.model.PostalAddressModel;
+
+import java.util.function.Function;
 
 import org.hamcrest.Matcher;
 
@@ -40,7 +43,14 @@ public class PersonModelFormTest {
 			builder -> builder.whereDate(
 				"birthDate", isReturnedIn(PersonForm::getBirthDate)
 			).whereString(
-				"address", isReturnedIn(PersonForm::getAddress)
+				"addressCountry",
+				isReturnedIn(_personForm(PostalAddressModel::getCountryCode))
+			).whereString(
+				"addressLocality",
+				isReturnedIn(_personForm(PostalAddressModel::getCity))
+			).whereString(
+				"addressRegion",
+				isReturnedIn(_personForm(PostalAddressModel::getState))
 			).whereString(
 				"email", isReturnedIn(PersonForm::getEmail)
 			).whereString(
@@ -51,9 +61,21 @@ public class PersonModelFormTest {
 				"image", isReturnedIn(PersonForm::getImage)
 			).whereStringList(
 				"jobTitle", isReturnedIn(PersonForm::getJobTitles)
+			).whereString(
+				"postalCode",
+				isReturnedIn(_personForm(PostalAddressModel::getZipCode))
+			).whereString(
+				"streetAddress",
+				isReturnedIn(_personForm(PostalAddressModel::getStreetAddress))
 			).build());
 
 		assertThat(form, isAFormWithConditions);
+	}
+
+	private Function<PersonForm, String> _personForm(
+		Function<PostalAddressModel, String> function) {
+
+		return personForm -> function.apply(personForm.getPostalAddressModel());
 	}
 
 }

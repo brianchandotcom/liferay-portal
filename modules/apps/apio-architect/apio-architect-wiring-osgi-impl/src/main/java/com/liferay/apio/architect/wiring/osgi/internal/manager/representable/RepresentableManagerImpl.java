@@ -78,11 +78,14 @@ public class RepresentableManagerImpl
 	}
 
 	@Override
-	public <T, U> Optional<Representor<T, U>> getRepresentorOptional(
-		String name) {
-
+	public <T> Optional<Representor<T>> getRepresentorOptional(String name) {
 		return INSTANCE.getRepresentorOptional(
 			name, this::_computeRepresentables);
+	}
+
+	@Override
+	public Map<String, Representor> getRepresentors() {
+		return INSTANCE.getRepresentorMap(this::_computeRepresentables);
 	}
 
 	@Override
@@ -170,7 +173,7 @@ public class RepresentableManagerImpl
 		).toString();
 	}
 
-	private <T, S, U extends Identifier<S>> Representor<T, S> _getRepresentor(
+	private <T, S, U extends Identifier<S>> Representor<T> _getRepresentor(
 		Representable<T, S, U> representable, Class<U> clazz,
 		Map<String, List<RelatedCollection<?>>> relatedCollections) {
 

@@ -32,5 +32,5 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface UpdateItemFunction<T, S>
-	extends RequestFunction <Function<S, Function<Body, Try<SingleModel<T>>>>> {
+	extends RequestFunction<Function<S, Function<Body, Try<SingleModel<T>>>>> {
 }

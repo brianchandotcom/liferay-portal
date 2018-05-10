@@ -14,9 +14,7 @@
 
 package com.liferay.apio.architect.representor;
 
-import static com.liferay.apio.architect.representor.RepresentorTestUtil.testFieldFunctions;
 import static com.liferay.apio.architect.representor.RepresentorTestUtil.testFields;
-import static com.liferay.apio.architect.representor.RepresentorTestUtil.testMap;
 import static com.liferay.apio.architect.representor.RepresentorTestUtil.testRelatedModel;
 
 import static java.util.Arrays.asList;
@@ -40,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -163,28 +160,27 @@ public class RepresentorTest {
 
 	@Test
 	public void testLinks() {
-		Map<String, String> links = _representor.getLinks();
-
-		assertThat(links.keySet(), contains("link1", "link2"));
-		assertThat(links.values(), contains("Link 1", "Link 2"));
+		testFields(
+			_dummy, _representor.getLinkFunctions(), asList("link1", "link2"),
+			asList("Link 1", "Link 2"));
 	}
 
 	@Test
 	public void testPrimitiveFunctions() {
-		testFieldFunctions(
+		testFields(
 			_dummy, _representor.getBooleanFunctions(),
 			asList("boolean1", "boolean2"), asList(true, false));
 
-		testMap(
-			_representor.getLocalizedStringFunctions(),
-			biFunction -> biFunction.apply(_dummy, () -> Locale.US),
+		testFields(
+			_dummy, _representor.getLocalizedStringFunctions(),
+			function -> function.apply(() -> Locale.US),
 			asList("localized1", "localized2"), asList("en1", "en2"));
 
-		testFieldFunctions(
+		testFields(
 			_dummy, _representor.getNumberFunctions(),
 			asList("number1", "number2"), asList(1L, 2L));
 
-		testFieldFunctions(
+		testFields(
 			_dummy, _representor.getStringFunctions(),
 			asList("date1", "date2", "nullDate", "string1", "string2"),
 			asList(
@@ -194,19 +190,19 @@ public class RepresentorTest {
 
 	@Test
 	public void testPrimitiveListFunctions() {
-		testFieldFunctions(
+		testFields(
 			_dummy, _representor.getBooleanListFunctions(),
 			asList("booleanList1", "booleanList2"),
 			asList(
 				asList(true, false, false, true),
 				asList(false, false, true, false)));
 
-		testFieldFunctions(
+		testFields(
 			_dummy, _representor.getNumberListFunctions(),
 			asList("numberList1", "numberList2"),
 			asList(asList(1, 2, 3, 4, 5), asList(6, 7, 8, 9, 10)));
 
-		testFieldFunctions(
+		testFields(
 			_dummy, _representor.getStringListFunctions(),
 			asList("stringList1", "stringList2"),
 			asList(asList("a", "b", "c", "d"), asList("e", "f", "g", "h")));
@@ -266,7 +262,7 @@ public class RepresentorTest {
 	private final Dummy _dummy = new Dummy(23);
 	private List<String> _keys;
 	private List<Class<?>> _relatedCollectionsClasses;
-	private Representor<Dummy, Integer> _representor;
+	private Representor<Dummy> _representor;
 
 	private interface IntegerIdentifier extends Identifier<Integer> {
 	}

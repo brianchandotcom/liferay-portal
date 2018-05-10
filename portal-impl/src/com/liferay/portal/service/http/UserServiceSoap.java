@@ -765,6 +765,84 @@ public class UserServiceSoap {
 	}
 
 	/**
+	* Returns the users belonging to the organization with the status.
+	*
+	* @param organizationId the primary key of the organization
+	* @param status the workflow status
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	*/
+	public static com.liferay.portal.kernel.model.UserSoap[] getOrganizationUsers(
+		long organizationId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.User> returnValue = UserServiceUtil.getOrganizationUsers(organizationId,
+					status, start, end, obc);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the users belonging to the organization with the status.
+	*
+	* @param organizationId the primary key of the organization
+	* @param status the workflow status
+	* @param obc the comparator to order the users by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @return the users who belong to a group
+	*/
+	public static com.liferay.portal.kernel.model.UserSoap[] getOrganizationUsers(
+		long organizationId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.User> returnValue = UserServiceUtil.getOrganizationUsers(organizationId,
+					status, obc);
+
+			return com.liferay.portal.kernel.model.UserSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the number of users with the status belonging to the
+	* organization.
+	*
+	* @param organizationId the primary key of the organization
+	* @param status the workflow status
+	* @return the number of users with the status belonging to the organization
+	*/
+	public static int getOrganizationUsersCount(long organizationId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = UserServiceUtil.getOrganizationUsersCount(organizationId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the primary keys of all the users belonging to the role.
 	*
 	* @param roleId the primary key of the role

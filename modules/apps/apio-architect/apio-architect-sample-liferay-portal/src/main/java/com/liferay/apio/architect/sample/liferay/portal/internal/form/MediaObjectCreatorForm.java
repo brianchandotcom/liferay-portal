@@ -19,21 +19,18 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 
 /**
- * Instances of this class represent the values extracted from a media object
- * form.
+ * Represents the values extracted from a media object form.
  *
  * @author Alejandro Hernández
- * @review
  */
 public class MediaObjectCreatorForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code MediaObjectCreatorForm}
-	 * depending on the HTTP body.
+	 * Builds and returns a {@code Form} that generates a {@code
+	 * MediaObjectCreatorForm} that depends on the HTTP body.
 	 *
-	 * @param  formBuilder the {@code Form} builder
-	 * @return a folder form
-	 * @review
+	 * @param  formBuilder the form builder
+	 * @return the form
 	 */
 	public static Form<MediaObjectCreatorForm> buildForm(
 		Builder<MediaObjectCreatorForm> formBuilder) {
@@ -56,40 +53,36 @@ public class MediaObjectCreatorForm {
 	}
 
 	/**
-	 * Returns the media object's binary file
+	 * Returns the media object's binary file.
 	 *
-	 * @return the media object's binary file
-	 * @review
+	 * @return the binary file
 	 */
 	public BinaryFile getBinaryFile() {
 		return _binaryFile;
 	}
 
 	/**
-	 * Returns the media object's description
+	 * Returns the media object's description.
 	 *
-	 * @return the media object's description
-	 * @review
+	 * @return the description
 	 */
 	public String getDescription() {
 		return _description;
 	}
 
 	/**
-	 * Returns the media object's name
+	 * Returns the media object's name.
 	 *
-	 * @return the media object's name
-	 * @review
+	 * @return the name
 	 */
 	public String getName() {
 		return _name;
 	}
 
 	/**
-	 * Returns the media object's title
+	 * Returns the media object's title.
 	 *
-	 * @return the media object's title
-	 * @review
+	 * @return the title
 	 */
 	public String getTitle() {
 		return _title;

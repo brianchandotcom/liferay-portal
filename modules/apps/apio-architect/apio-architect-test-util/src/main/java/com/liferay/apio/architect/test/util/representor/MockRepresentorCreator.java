@@ -28,7 +28,6 @@ import com.liferay.apio.architect.test.util.model.SecondEmbeddedModel;
 import com.liferay.apio.architect.test.util.model.ThirdEmbeddedModel;
 
 import java.util.Date;
-import java.util.function.Function;
 
 /**
  * Provides methods that create {@link Representor} objects for {@link
@@ -48,7 +47,7 @@ public class MockRepresentorCreator {
 	 *
 	 * @return the mock {@code Representor} for {@code FirstEmbeddedModel}
 	 */
-	public static Representor<FirstEmbeddedModel, String>
+	public static Representor<FirstEmbeddedModel>
 		createFirstEmbeddedModelRepresentor() {
 
 		Representor.Builder<FirstEmbeddedModel, String> builder =
@@ -91,8 +90,8 @@ public class MockRepresentorCreator {
 	 * @param  activateNulls whether to add {@code null} empty values
 	 * @return the mock {@code Representor} for {@code RootModel}
 	 */
-	public static Representor<RootModel, String>
-		createRootModelRepresentor(boolean activateNulls) {
+	public static Representor<RootModel> createRootModelRepresentor(
+		boolean activateNulls) {
 
 		Representor.Builder<RootModel, String> builder =
 			new Representor.Builder<>(RootModelId.class);
@@ -156,7 +155,7 @@ public class MockRepresentorCreator {
 				"stringList2", __ -> asList("f", "g", "h", "i", "j")
 			).addNested(
 				"nested1", __ -> (FirstEmbeddedModel)() -> "id 1",
-				nestedBuilder -> nestedBuilder.nestedTypes(
+				nestedBuilder -> nestedBuilder.types(
 					"Type 3"
 				).addNumber(
 					"number1", __ -> 2017
@@ -167,13 +166,8 @@ public class MockRepresentorCreator {
 				).build()
 			).addNested(
 				"nested2", rootModel -> (SecondEmbeddedModel)rootModel::getId,
-				nestedBuilder -> nestedBuilder.nestedTypes(
+				nestedBuilder -> nestedBuilder.types(
 					"Type 4"
-				).addBidirectionalModel(
-					"bidirectionalModel3", "bidirectionalKey",
-					FirstEmbeddedId.class,
-					(Function<SecondEmbeddedModel, String>)
-						SecondEmbeddedModel::getId
 				).addString(
 					"string1", SecondEmbeddedModel::getId
 				).addNumber(
@@ -181,18 +175,14 @@ public class MockRepresentorCreator {
 				).addLinkedModel(
 					"linked3", ThirdEmbeddedId.class, __ -> "fifth"
 				).addNested(
-					"nested3", __ -> () -> "id 3",
-					(Representor.Builder<ThirdEmbeddedModel, ?>
-						thirdEmbeddedModelBuilder) ->
-						thirdEmbeddedModelBuilder.nestedTypes(
-							"Type 5"
-						).addString(
-							"string1", ThirdEmbeddedModel::getId
-						).build()
+					"nested3", __ -> (ThirdEmbeddedModel)() -> "id 3",
+					thirdNestedBuilder -> thirdNestedBuilder.types(
+						"Type 5"
+					).addString(
+						"string1", ThirdEmbeddedModel::getId
+					).build()
 				).addNumber(
 					"number1", __ -> 42
-				).addRelatedCollection(
-					"relatedCollection3", ThirdEmbeddedId.class
 				).addString(
 					"string1", SecondEmbeddedModel::getId
 				).build()
@@ -226,7 +216,7 @@ public class MockRepresentorCreator {
 	 *
 	 * @return the mock {@code Representor} for {@code SecondEmbeddedModel}
 	 */
-	public static Representor<SecondEmbeddedModel, String>
+	public static Representor<SecondEmbeddedModel>
 		createSecondEmbeddedModelRepresentor() {
 
 		Representor.Builder<SecondEmbeddedModel, String> builder =
@@ -266,7 +256,7 @@ public class MockRepresentorCreator {
 	 *
 	 * @return the mock {@code Representor} for {@code ThirdEmbeddedModel}
 	 */
-	public static Representor<ThirdEmbeddedModel, String>
+	public static Representor<ThirdEmbeddedModel>
 		createThirdEmbeddedModelRepresentor() {
 
 		Representor.Builder<ThirdEmbeddedModel, String> builder =

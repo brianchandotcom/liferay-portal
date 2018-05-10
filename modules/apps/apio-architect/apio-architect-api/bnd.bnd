@@ -31,6 +31,7 @@ Export-Package:\
 	com.liferay.apio.architect.provider,\
 	com.liferay.apio.architect.related,\
 	com.liferay.apio.architect.representor,\
+	com.liferay.apio.architect.representor.function,\
 	com.liferay.apio.architect.request,\
 	com.liferay.apio.architect.resource,\
 	com.liferay.apio.architect.response.control,\

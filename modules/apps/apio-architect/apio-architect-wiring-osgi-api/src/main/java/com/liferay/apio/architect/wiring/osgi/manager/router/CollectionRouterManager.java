@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -30,6 +31,8 @@ import java.util.Optional;
  */
 @ProviderType
 public interface CollectionRouterManager {
+
+	public Map<String, CollectionRoutes> getCollectionRoutes();
 
 	/**
 	 * Returns the collection routes for the collection resource's name.

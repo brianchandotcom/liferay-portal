@@ -58,7 +58,7 @@ public class MockWriterUtil {
 	 *
 	 * @return the model class's {@code Representor}
 	 */
-	public static Optional<Representor<?, ?>>
+	public static Optional<Representor<?>>
 		getRepresentorOptional(String resourceName) {
 
 		if ("root".equals(resourceName)) {

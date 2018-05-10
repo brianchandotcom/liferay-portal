@@ -14,22 +14,16 @@
 
 package com.liferay.apio.architect.representor;
 
-import static java.util.function.Function.identity;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.representor.dummy.Dummy;
+import com.liferay.apio.architect.representor.function.FieldFunction;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Provides utilities for testing the {@code Representor} class.
@@ -39,75 +33,60 @@ import java.util.stream.Stream;
 public class RepresentorTestUtil {
 
 	/**
-	 * Tests that a {@code Map<String, Function<T, S>>} has a key list equal to
+	 * Tests that a {@code List<FieldFunction<T, S>>} has a key list equal to
 	 * the provided key list, and a value list (obtained by applying {@code t}
-	 * to each value) equal to the provided value list.
-	 *
-	 * @param t the {@code t} instance
-	 * @param map the map to test
-	 * @param keyList the expected key list
-	 * @param valueList the expected value list
-	 */
-	public static <T, S> void testFieldFunctions(
-		T t, Map<String, ? extends Function<T, S>> map, List<String> keyList,
-		List<S> valueList) {
-
-		testFields(t, map, identity(), keyList, valueList);
-	}
-
-	/**
-	 * Tests that a {@code Map<String, Function<T, S>>} has a key list equal to
-	 * the provided key list, and a value list (obtained by applying {@code t}
-	 * to each value, and transformed with the provided function), equal to the
+	 * to each function and then applying the provided function) equal to the
 	 * provided value list.
 	 *
-	 * @param t the {@code t} instance
-	 * @param map the map to test
-	 * @param function the function that transforms the map's values
-	 * @param keyList the expected key list
-	 * @param valueList the expected value list
+	 * @param  t the {@code t} instance
+	 * @param  list the list to test
+	 * @param  function the function to transform each value
+	 * @param  keys the expected key list
+	 * @param  values the expected value list
+	 * @review
 	 */
 	public static <T, S, U> void testFields(
-		T t, Map<String, ? extends Function<T, S>> map, Function<S, U> function,
-		List<String> keyList, List<U> valueList) {
+		T t, List<FieldFunction<T, S>> list, Function<S, U> function,
+		List<String> keys, List<U> values) {
 
-		testMap(
-			map,
-			f -> f.andThen(
+		if (keys.size() != values.size()) {
+			throw new AssertionError(
+				"The keys and values lists should have equal size");
+		}
+
+		assertThat(list.size(), is(keys.size()));
+
+		for (int i = 0; i < keys.size(); i++) {
+			FieldFunction<T, S> fieldFunction = list.get(i);
+
+			assertThat(fieldFunction.key, is(keys.get(i)));
+
+			U u = fieldFunction.function.andThen(
 				function
 			).apply(
 				t
-			),
-			keyList, valueList);
+			);
+
+			assertThat(u, is(values.get(i)));
+		}
 	}
 
 	/**
-	 * Tests that a {@code Map<String, U>} has a key list equal to the provided
-	 * key list, and a value list (transformed with the provided function) equal
-	 * to the provided value list.
+	 * Tests that a {@code List<FieldFunction<T, S>>} has a key list equal to
+	 * the provided key list, and a value list (obtained by applying {@code t}
+	 * to each function) equal to the provided value list.
 	 *
-	 * @param map the map to test
-	 * @param function the function that transforms the map's values
-	 * @param keyList the expected key list
-	 * @param valueList the expected value list
+	 * @param  t the {@code t} instance
+	 * @param  list the list to test
+	 * @param  keys the expected key list
+	 * @param  values the expected value list
+	 * @review
 	 */
-	public static <T, S> void testMap(
-		Map<String, T> map, Function<T, S> function, List<String> keyList,
-		List<S> valueList) {
+	public static <T, S> void testFields(
+		T t, List<FieldFunction<T, S>> list, List<String> keys,
+		List<S> values) {
 
-		assertThat(map.keySet(), contains(keyList.toArray()));
-
-		Collection<T> values = map.values();
-
-		Stream<T> stream = values.stream();
-
-		List<S> list = stream.map(
-			function
-		).collect(
-			Collectors.toList()
-		);
-
-		assertThat(list, contains(valueList.toArray()));
+		testFields(t, list, Function.identity(), keys, values);
 	}
 
 	/**

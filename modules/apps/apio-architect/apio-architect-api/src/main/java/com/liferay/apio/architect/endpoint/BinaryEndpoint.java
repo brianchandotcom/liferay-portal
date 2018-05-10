@@ -37,8 +37,7 @@ import javax.ws.rs.PathParam;
 public class BinaryEndpoint {
 
 	public BinaryEndpoint(
-		Function<String, Optional<Representor<Object, Object>>>
-			representorFunction,
+		Function<String, Optional<Representor<Object>>> representorFunction,
 		BiFunction<String, String, Try<SingleModel<Object>>>
 			singleModelFunction) {
 
@@ -68,18 +67,16 @@ public class BinaryEndpoint {
 		).mapOptional(
 			model -> _representorFunction.apply(
 				name
+			).flatMap(
+				representor -> representor.getBinaryFunction(binaryId)
 			).map(
-				Representor::getBinaryFunctions
-			).map(
-				binaryFunctions -> binaryFunctions.get(binaryId)
-			).map(
-				binaryFunction -> binaryFunction.apply(model)
+				function -> function.apply(model)
 			),
 			notFound(name, id, binaryId)
 		);
 	}
 
-	private final Function<String, Optional<Representor<Object, Object>>>
+	private final Function<String, Optional<Representor<Object>>>
 		_representorFunction;
 	private final BiFunction<String, String, Try<SingleModel<Object>>>
 		_singleModelFunction;

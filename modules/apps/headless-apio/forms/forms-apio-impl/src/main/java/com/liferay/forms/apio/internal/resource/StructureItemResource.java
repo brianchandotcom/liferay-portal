@@ -55,7 +55,7 @@ public class StructureItemResource
 	}
 
 	@Override
-	public Representor<DDMStructure, Long> representor(
+	public Representor<DDMStructure> representor(
 		Representor.Builder<DDMStructure, Long> builder) {
 
 		return builder.types(
@@ -90,7 +90,7 @@ public class StructureItemResource
 			).build()
 		).addNested(
 			"version", this::_getVersion,
-			nestedBuilder -> nestedBuilder.nestedTypes(
+			nestedBuilder -> nestedBuilder.types(
 				"StructureVersion"
 			).addLinkedModel(
 				"author", PersonIdentifier.class, DDMStructureVersion::getUserId

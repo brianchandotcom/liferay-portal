@@ -70,7 +70,7 @@ public class DataProviderInstanceNestedCollectionResource
 	}
 
 	@Override
-	public Representor<DDMDataProviderInstance, Long> representor(
+	public Representor<DDMDataProviderInstance> representor(
 		Representor.Builder<DDMDataProviderInstance, Long> builder) {
 
 		return builder.types(

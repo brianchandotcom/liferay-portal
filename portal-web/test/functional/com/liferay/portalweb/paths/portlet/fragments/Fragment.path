@@ -23,6 +23,11 @@
 	<td>//div[contains(@class,'fragment-editor')]/div[contains(@class,'source-editor')][3]//textarea</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PREVIEW_IFRAME</td>
+	<td>//iframe[@class='fragment-preview__content']</td>
+	<td></td>
+</tr>
 <!--FRAGMENT_SIDEBAR-->
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>

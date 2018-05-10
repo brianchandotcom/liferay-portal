@@ -116,9 +116,14 @@
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="//div[@class='fragment-preview__frame']//span[@class='test'][contains(@style,'2px dashed red')]" />
+		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
 
-		<execute function="AssertCssValue" locator1="//div[@class='fragment-preview__frame']//span[@class='test'][contains(@style,'2px dashed red')]" locator2="color" value1="rgba(255, 0, 0, 1)" />
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
+		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
+
+		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
+
+		<execute function="Confirm" value1="Form submitted" />
 
 		<execute function="SelectFrameTop" />
 	</command>

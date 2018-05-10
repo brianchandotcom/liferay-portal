@@ -251,6 +251,15 @@ ManagementToolbar.STATE = {
 	searchActionURL: Config.string(),
 
 	/**
+	 * Method of the search form.
+	 * @default GET
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+	searchFormMethod: Config.oneOf(['GET', 'POST']).value('GET'),
+
+	/**
 	 * Id to get a instance of the searchContainer.
 	 * @default undefined
 	 * @instance

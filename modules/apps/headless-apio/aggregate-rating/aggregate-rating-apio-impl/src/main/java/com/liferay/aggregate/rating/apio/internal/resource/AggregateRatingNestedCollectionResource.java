@@ -19,7 +19,6 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
@@ -49,7 +48,8 @@ public class AggregateRatingNestedCollectionResource
 		ItemRoutes.Builder<RatingsStats, ClassNameClassPK> builder) {
 
 		return builder.addGetter(
-			this::_getAggregateRating
+			classNameClassPK -> _ratingsStatsLocalService.getStats(
+				classNameClassPK.getClassName(), classNameClassPK.getClassPK())
 		).build();
 	}
 
@@ -71,13 +71,6 @@ public class AggregateRatingNestedCollectionResource
 		).addNumber(
 			"worstRating", __ -> 0
 		).build();
-	}
-
-	private RatingsStats _getAggregateRating(ClassNameClassPK classNameClassPK)
-		throws PortalException {
-
-		return _ratingsStatsLocalService.getStats(
-			classNameClassPK.getClassName(), classNameClassPK.getClassPK());
 	}
 
 	@Reference

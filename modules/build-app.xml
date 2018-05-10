@@ -246,7 +246,7 @@
 				excludes="${build.modules.excludes}"
 				includes="${app.module.dirs}"
 			/>
-			<property name="liferay.releng.app.title.prefix" value="${liferay.releng.app.title.prefix}" />
+			<property name="liferay.releng.app.title" value="${Liferay-Releng-App-Title}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 			<property name="osgi.static.modules" value="${osgi.static.modules}" />
 			<property name="project.dir" value="${project.dir}" />

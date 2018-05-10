@@ -233,35 +233,16 @@
 
 	<target if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
-		<property file="../app.bnd" />
-		<property file="../subsystem.bnd" />
-		<property file="../../subsystem.bnd" />
 
-		<condition property="app.title" value="${Liferay-Releng-Subsystem-Title}">
-			<isset property="Liferay-Releng-Subsystem-Title" />
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${liferay.releng.app.title} SPI/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<matches pattern=".*\.spi" string="${Bundle-SymbolicName}" />
 		</condition>
 
-		<condition property="app.title" value="${Liferay-Releng-App-Title}">
-			<isset property="Liferay-Releng-App-Title" />
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${liferay.releng.app.title} API/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<isset property="Export-Package" />
 		</condition>
 
-		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${app.title} SPI/${Bundle-SymbolicName}-${Bundle-Version}.jar">
-			<and>
-				<isset property="app.title" />
-				<matches pattern=".*\.spi" string="${Bundle-SymbolicName}" />
-			</and>
-		</condition>
-
-		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${app.title} API/${Bundle-SymbolicName}-${Bundle-Version}.jar">
-			<and>
-				<isset property="app.title" />
-				<isset property="Export-Package" />
-			</and>
-		</condition>
-
-		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${app.title} Impl/${Bundle-SymbolicName}-${Bundle-Version}.jar">
-			<isset property="app.title" />
-		</condition>
+		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${liferay.releng.app.title} Impl/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
 
 		<basename file=".." property="subsystem.dir.name" />
 

@@ -3,7 +3,7 @@
 <custom-sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBArticleFinder.countByUrlTitle">
 		SELECT
-			count(*)
+			COUNT(*) AS COUNT_VALUE
 		FROM
 			KBArticle
 		INNER JOIN

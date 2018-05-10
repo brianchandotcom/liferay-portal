@@ -49,11 +49,6 @@ public abstract class BaseMBCategoryUADDisplay extends BaseModelUADDisplay<MBCat
 	}
 
 	@Override
-	public String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "name", "description" };
 	}

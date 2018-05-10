@@ -39,11 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseMBMessageUADExporter extends DynamicQueryUADExporter<MBMessage> {
 	@Override
-	public String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public Class<MBMessage> getTypeClass() {
 		return MBMessage.class;
 	}

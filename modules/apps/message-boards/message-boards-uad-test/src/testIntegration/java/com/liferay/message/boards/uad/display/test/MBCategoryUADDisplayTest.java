@@ -17,7 +17,6 @@ package com.liferay.message.boards.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.uad.constants.MBUADConstants;
 import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,11 +53,6 @@ public class MBCategoryUADDisplayTest extends BaseUADDisplayTestCase<MBCategory>
 		_mbCategories.add(mbCategory);
 
 		return mbCategory;
-	}
-
-	@Override
-	protected String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

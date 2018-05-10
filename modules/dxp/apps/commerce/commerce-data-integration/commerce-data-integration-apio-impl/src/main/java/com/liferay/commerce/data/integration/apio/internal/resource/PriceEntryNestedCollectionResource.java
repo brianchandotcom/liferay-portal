@@ -20,6 +20,7 @@ import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFie
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.PRICE;
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.PROMO_PRICE;
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.SKU;
+import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -92,6 +93,9 @@ public class PriceEntryNestedCollectionResource
 		).addUpdater(
 			this::_updateCommercePriceEntry, (a, b) -> true,
 			PriceEntryUpdaterForm::buildForm
+		).addRemover(
+			idempotent(_commercePriceEntryService::deleteCommercePriceEntry),
+			(a, b) -> true
 		).build();
 	}
 

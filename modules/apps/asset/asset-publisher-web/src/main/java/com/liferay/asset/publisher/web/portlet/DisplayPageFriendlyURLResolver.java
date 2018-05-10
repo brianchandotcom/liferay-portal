@@ -25,6 +25,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherDisplayPageWebKeys;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
@@ -361,8 +362,10 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			"request");
 
 		request.setAttribute(
-			"ASSET_DISPLAY_CONTRIBUTOR", assetDisplayContributor);
-		request.setAttribute("ASSET_ENTRY", assetEntry);
+			AssetPublisherDisplayPageWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			assetDisplayContributor);
+		request.setAttribute(
+			AssetPublisherDisplayPageWebKeys.ASSET_ENTRY, assetEntry);
 
 		Layout layout = _getAssetDisplayPageEntryLayout(assetEntry, groupId);
 

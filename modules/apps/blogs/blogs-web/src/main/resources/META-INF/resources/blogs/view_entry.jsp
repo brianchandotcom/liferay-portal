@@ -97,13 +97,17 @@ if (portletTitleBasedNavigation) {
 								<div class="card">
 
 									<%
-									String smallImageURL = previousEntry.getSmallImageURL(themeDisplay);
+									String imageURL = previousEntry.getCoverImageURL(themeDisplay);
+
+									if (Validator.isNull(imageURL)) {
+										imageURL = previousEntry.getSmallImageURL(themeDisplay);
+									}
 									%>
 
-									<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
+									<c:if test="<%= Validator.isNotNull(imageURL) %>">
 										<div class="card-header">
 											<div class="aspect-ratio aspect-ratio-8-to-3">
-												<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= HtmlUtil.escape(smallImageURL) %>" />
+												<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= HtmlUtil.escape(imageURL) %>" />
 											</div>
 										</div>
 									</c:if>
@@ -254,13 +258,17 @@ if (portletTitleBasedNavigation) {
 								<div class="card">
 
 									<%
-									String smallImageURL = nextEntry.getSmallImageURL(themeDisplay);
+									String imageURL = previousEntry.getCoverImageURL(themeDisplay);
+
+									if (Validator.isNull(imageURL)) {
+										imageURL = previousEntry.getSmallImageURL(themeDisplay);
+									}
 									%>
 
-									<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
+									<c:if test="<%= Validator.isNotNull(imageURL) %>">
 										<div class="card-header">
 											<div class="aspect-ratio aspect-ratio-8-to-3">
-												<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= HtmlUtil.escape(smallImageURL) %>" />
+												<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= HtmlUtil.escape(imageURL) %>" />
 											</div>
 										</div>
 									</c:if>

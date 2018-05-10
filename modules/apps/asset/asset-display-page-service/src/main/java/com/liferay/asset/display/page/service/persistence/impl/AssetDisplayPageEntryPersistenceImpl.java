@@ -82,23 +82,10 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETENTRYID =
-		new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_ASSETENTRYID = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID =
-		new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetEntryId",
-			new String[] { Long.class.getName() },
+			AssetDisplayPageEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByAssetEntryId", new String[] { Long.class.getName() },
 			AssetDisplayPageEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETENTRYID = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
@@ -106,134 +93,81 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the asset display page entries where assetEntryId = &#63;.
+	 * Returns the asset display page entry where assetEntryId = &#63; or throws a {@link NoSuchDisplayPageEntryException} if it could not be found.
 	 *
 	 * @param assetEntryId the asset entry ID
-	 * @return the matching asset display page entries
+	 * @return the matching asset display page entry
+	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
 	 */
 	@Override
-	public List<AssetDisplayPageEntry> findByAssetEntryId(long assetEntryId) {
-		return findByAssetEntryId(assetEntryId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+	public AssetDisplayPageEntry findByAssetEntryId(long assetEntryId)
+		throws NoSuchDisplayPageEntryException {
+		AssetDisplayPageEntry assetDisplayPageEntry = fetchByAssetEntryId(assetEntryId);
+
+		if (assetDisplayPageEntry == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("assetEntryId=");
+			msg.append(assetEntryId);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchDisplayPageEntryException(msg.toString());
+		}
+
+		return assetDisplayPageEntry;
 	}
 
 	/**
-	 * Returns a range of all the asset display page entries where assetEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetDisplayPageEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
+	 * Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param assetEntryId the asset entry ID
-	 * @param start the lower bound of the range of asset display page entries
-	 * @param end the upper bound of the range of asset display page entries (not inclusive)
-	 * @return the range of matching asset display page entries
+	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
 	 */
 	@Override
-	public List<AssetDisplayPageEntry> findByAssetEntryId(long assetEntryId,
-		int start, int end) {
-		return findByAssetEntryId(assetEntryId, start, end, null);
+	public AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId) {
+		return fetchByAssetEntryId(assetEntryId, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the asset display page entries where assetEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetDisplayPageEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
+	 * Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param assetEntryId the asset entry ID
-	 * @param start the lower bound of the range of asset display page entries
-	 * @param end the upper bound of the range of asset display page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset display page entries
-	 */
-	@Override
-	public List<AssetDisplayPageEntry> findByAssetEntryId(long assetEntryId,
-		int start, int end,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
-		return findByAssetEntryId(assetEntryId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset display page entries where assetEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetDisplayPageEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param start the lower bound of the range of asset display page entries
-	 * @param end the upper bound of the range of asset display page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching asset display page entries
+	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
 	 */
 	@Override
-	public List<AssetDisplayPageEntry> findByAssetEntryId(long assetEntryId,
-		int start, int end,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator,
+	public AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId,
 		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] { assetEntryId };
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID;
-			finderArgs = new Object[] { assetEntryId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETENTRYID;
-			finderArgs = new Object[] {
-					assetEntryId,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<AssetDisplayPageEntry> list = null;
+		Object result = null;
 
 		if (retrieveFromCache) {
-			list = (List<AssetDisplayPageEntry>)finderCache.getResult(finderPath,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
 					finderArgs, this);
+		}
 
-			if ((list != null) && !list.isEmpty()) {
-				for (AssetDisplayPageEntry assetDisplayPageEntry : list) {
-					if ((assetEntryId != assetDisplayPageEntry.getAssetEntryId())) {
-						list = null;
+		if (result instanceof AssetDisplayPageEntry) {
+			AssetDisplayPageEntry assetDisplayPageEntry = (AssetDisplayPageEntry)result;
 
-						break;
-					}
-				}
+			if ((assetEntryId != assetDisplayPageEntry.getAssetEntryId())) {
+				result = null;
 			}
 		}
 
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(3);
-			}
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE);
 
 			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL);
-			}
 
 			String sql = query.toString();
 
@@ -248,25 +182,28 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 
 				qPos.add(assetEntryId);
 
-				if (!pagination) {
-					list = (List<AssetDisplayPageEntry>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+				List<AssetDisplayPageEntry> list = q.list();
 
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+						finderArgs, list);
 				}
 				else {
-					list = (List<AssetDisplayPageEntry>)QueryUtil.list(q,
-							getDialect(), start, end);
+					AssetDisplayPageEntry assetDisplayPageEntry = list.get(0);
+
+					result = assetDisplayPageEntry;
+
+					cacheResult(assetDisplayPageEntry);
+
+					if ((assetDisplayPageEntry.getAssetEntryId() != assetEntryId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+							finderArgs, assetDisplayPageEntry);
+					}
 				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+					finderArgs);
 
 				throw processException(e);
 			}
@@ -275,278 +212,26 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 			}
 		}
 
-		return list;
-	}
-
-	/**
-	 * Returns the first asset display page entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByAssetEntryId_First(long assetEntryId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException {
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByAssetEntryId_First(assetEntryId,
-				orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("assetEntryId=");
-		msg.append(assetEntryId);
-
-		msg.append("}");
-
-		throw new NoSuchDisplayPageEntryException(msg.toString());
-	}
-
-	/**
-	 * Returns the first asset display page entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByAssetEntryId_First(long assetEntryId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
-		List<AssetDisplayPageEntry> list = findByAssetEntryId(assetEntryId, 0,
-				1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByAssetEntryId_Last(long assetEntryId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator)
-		throws NoSuchDisplayPageEntryException {
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByAssetEntryId_Last(assetEntryId,
-				orderByComparator);
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("assetEntryId=");
-		msg.append(assetEntryId);
-
-		msg.append("}");
-
-		throw new NoSuchDisplayPageEntryException(msg.toString());
-	}
-
-	/**
-	 * Returns the last asset display page entry in the ordered set where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByAssetEntryId_Last(long assetEntryId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator) {
-		int count = countByAssetEntryId(assetEntryId);
-
-		if (count == 0) {
+		if (result instanceof List<?>) {
 			return null;
 		}
-
-		List<AssetDisplayPageEntry> list = findByAssetEntryId(assetEntryId,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
+		else {
+			return (AssetDisplayPageEntry)result;
 		}
-
-		return null;
 	}
 
 	/**
-	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where assetEntryId = &#63;.
+	 * Removes the asset display page entry where assetEntryId = &#63; from the database.
 	 *
-	 * @param assetDisplayPageEntryId the primary key of the current asset display page entry
 	 * @param assetEntryId the asset entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
+	 * @return the asset display page entry that was removed
 	 */
 	@Override
-	public AssetDisplayPageEntry[] findByAssetEntryId_PrevAndNext(
-		long assetDisplayPageEntryId, long assetEntryId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator)
+	public AssetDisplayPageEntry removeByAssetEntryId(long assetEntryId)
 		throws NoSuchDisplayPageEntryException {
-		AssetDisplayPageEntry assetDisplayPageEntry = findByPrimaryKey(assetDisplayPageEntryId);
+		AssetDisplayPageEntry assetDisplayPageEntry = findByAssetEntryId(assetEntryId);
 
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetDisplayPageEntry[] array = new AssetDisplayPageEntryImpl[3];
-
-			array[0] = getByAssetEntryId_PrevAndNext(session,
-					assetDisplayPageEntry, assetEntryId, orderByComparator, true);
-
-			array[1] = assetDisplayPageEntry;
-
-			array[2] = getByAssetEntryId_PrevAndNext(session,
-					assetDisplayPageEntry, assetEntryId, orderByComparator,
-					false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected AssetDisplayPageEntry getByAssetEntryId_PrevAndNext(
-		Session session, AssetDisplayPageEntry assetDisplayPageEntry,
-		long assetEntryId,
-		OrderByComparator<AssetDisplayPageEntry> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE);
-
-		query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(assetEntryId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetDisplayPageEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<AssetDisplayPageEntry> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the asset display page entries where assetEntryId = &#63; from the database.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 */
-	@Override
-	public void removeByAssetEntryId(long assetEntryId) {
-		for (AssetDisplayPageEntry assetDisplayPageEntry : findByAssetEntryId(
-				assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(assetDisplayPageEntry);
-		}
+		return remove(assetDisplayPageEntry);
 	}
 
 	/**
@@ -601,232 +286,6 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	}
 
 	private static final String _FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2 = "assetDisplayPageEntry.assetEntryId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_A_L = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByA_L",
-			new String[] { Long.class.getName(), Long.class.getName() },
-			AssetDisplayPageEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK |
-			AssetDisplayPageEntryModelImpl.LAYOUTID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_A_L = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_L",
-			new String[] { Long.class.getName(), Long.class.getName() });
-
-	/**
-	 * Returns the asset display page entry where assetEntryId = &#63; and layoutId = &#63; or throws a {@link NoSuchDisplayPageEntryException} if it could not be found.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param layoutId the layout ID
-	 * @return the matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByA_L(long assetEntryId, long layoutId)
-		throws NoSuchDisplayPageEntryException {
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByA_L(assetEntryId,
-				layoutId);
-
-		if (assetDisplayPageEntry == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("assetEntryId=");
-			msg.append(assetEntryId);
-
-			msg.append(", layoutId=");
-			msg.append(layoutId);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchDisplayPageEntryException(msg.toString());
-		}
-
-		return assetDisplayPageEntry;
-	}
-
-	/**
-	 * Returns the asset display page entry where assetEntryId = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param layoutId the layout ID
-	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByA_L(long assetEntryId, long layoutId) {
-		return fetchByA_L(assetEntryId, layoutId, true);
-	}
-
-	/**
-	 * Returns the asset display page entry where assetEntryId = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param layoutId the layout ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByA_L(long assetEntryId, long layoutId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { assetEntryId, layoutId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_A_L,
-					finderArgs, this);
-		}
-
-		if (result instanceof AssetDisplayPageEntry) {
-			AssetDisplayPageEntry assetDisplayPageEntry = (AssetDisplayPageEntry)result;
-
-			if ((assetEntryId != assetDisplayPageEntry.getAssetEntryId()) ||
-					(layoutId != assetDisplayPageEntry.getLayoutId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_A_L_ASSETENTRYID_2);
-
-			query.append(_FINDER_COLUMN_A_L_LAYOUTID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(assetEntryId);
-
-				qPos.add(layoutId);
-
-				List<AssetDisplayPageEntry> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_A_L, finderArgs,
-						list);
-				}
-				else {
-					AssetDisplayPageEntry assetDisplayPageEntry = list.get(0);
-
-					result = assetDisplayPageEntry;
-
-					cacheResult(assetDisplayPageEntry);
-
-					if ((assetDisplayPageEntry.getAssetEntryId() != assetEntryId) ||
-							(assetDisplayPageEntry.getLayoutId() != layoutId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_A_L,
-							finderArgs, assetDisplayPageEntry);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_A_L, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (AssetDisplayPageEntry)result;
-		}
-	}
-
-	/**
-	 * Removes the asset display page entry where assetEntryId = &#63; and layoutId = &#63; from the database.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param layoutId the layout ID
-	 * @return the asset display page entry that was removed
-	 */
-	@Override
-	public AssetDisplayPageEntry removeByA_L(long assetEntryId, long layoutId)
-		throws NoSuchDisplayPageEntryException {
-		AssetDisplayPageEntry assetDisplayPageEntry = findByA_L(assetEntryId,
-				layoutId);
-
-		return remove(assetDisplayPageEntry);
-	}
-
-	/**
-	 * Returns the number of asset display page entries where assetEntryId = &#63; and layoutId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param layoutId the layout ID
-	 * @return the number of matching asset display page entries
-	 */
-	@Override
-	public int countByA_L(long assetEntryId, long layoutId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_L;
-
-		Object[] finderArgs = new Object[] { assetEntryId, layoutId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_A_L_ASSETENTRYID_2);
-
-			query.append(_FINDER_COLUMN_A_L_LAYOUTID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(assetEntryId);
-
-				qPos.add(layoutId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_A_L_ASSETENTRYID_2 = "assetDisplayPageEntry.assetEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_A_L_LAYOUTID_2 = "assetDisplayPageEntry.layoutId = ?";
 
 	public AssetDisplayPageEntryPersistenceImpl() {
 		setModelClass(AssetDisplayPageEntry.class);
@@ -843,11 +302,9 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 			AssetDisplayPageEntryImpl.class,
 			assetDisplayPageEntry.getPrimaryKey(), assetDisplayPageEntry);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_A_L,
-			new Object[] {
-				assetDisplayPageEntry.getAssetEntryId(),
-				assetDisplayPageEntry.getLayoutId()
-			}, assetDisplayPageEntry);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+			new Object[] { assetDisplayPageEntry.getAssetEntryId() },
+			assetDisplayPageEntry);
 
 		assetDisplayPageEntry.resetOriginalValues();
 	}
@@ -926,13 +383,12 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	protected void cacheUniqueFindersCache(
 		AssetDisplayPageEntryModelImpl assetDisplayPageEntryModelImpl) {
 		Object[] args = new Object[] {
-				assetDisplayPageEntryModelImpl.getAssetEntryId(),
-				assetDisplayPageEntryModelImpl.getLayoutId()
+				assetDisplayPageEntryModelImpl.getAssetEntryId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_A_L, args, Long.valueOf(1),
-			false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_A_L, args,
+		finderCache.putResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID, args,
 			assetDisplayPageEntryModelImpl, false);
 	}
 
@@ -941,23 +397,21 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 		boolean clearCurrent) {
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					assetDisplayPageEntryModelImpl.getAssetEntryId(),
-					assetDisplayPageEntryModelImpl.getLayoutId()
+					assetDisplayPageEntryModelImpl.getAssetEntryId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_A_L, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_A_L, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID, args);
 		}
 
 		if ((assetDisplayPageEntryModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_A_L.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_ASSETENTRYID.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
-					assetDisplayPageEntryModelImpl.getOriginalAssetEntryId(),
-					assetDisplayPageEntryModelImpl.getOriginalLayoutId()
+					assetDisplayPageEntryModelImpl.getOriginalAssetEntryId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_A_L, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_A_L, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID, args);
 		}
 	}
 
@@ -1100,38 +554,9 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 		}
 		else
 		 if (isNew) {
-			Object[] args = new Object[] {
-					assetDisplayPageEntryModelImpl.getAssetEntryId()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
-				args);
-
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((assetDisplayPageEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						assetDisplayPageEntryModelImpl.getOriginalAssetEntryId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
-					args);
-
-				args = new Object[] {
-						assetDisplayPageEntryModelImpl.getAssetEntryId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
-					args);
-			}
 		}
 
 		entityCache.putResult(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,

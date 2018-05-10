@@ -1,1 +1,1 @@
-create unique index IX_363E2721 on AssetDisplayPageEntry (assetEntryId, layoutId);
+create unique index IX_924C5988 on AssetDisplayPageEntry (assetEntryId);

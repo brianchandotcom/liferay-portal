@@ -6,9 +6,5 @@ Export-Package:\
 	com.liferay.commerce.configuration.definition,\
 	com.liferay.commerce.model.impl,\
 	com.liferay.commerce.service.permission
-Import-Package:\
-	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
-	\
-	*
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

@@ -2,10 +2,6 @@ Bundle-Name: Liferay Commerce Taglib
 Bundle-SymbolicName: com.liferay.commerce.taglib
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.commerce.taglib.servlet.taglib
-Import-Package:\
-	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
-	\
-	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability:\

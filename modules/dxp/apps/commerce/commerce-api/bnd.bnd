@@ -18,7 +18,3 @@ Export-Package:\
 	com.liferay.commerce.tax,\
 	com.liferay.commerce.util,\
 	com.liferay.commerce.util.comparator
-Import-Package:\
-	com.liferay.portal.kernel.model;version="[1.0.0,1.2.0)",\
-	\
-	*

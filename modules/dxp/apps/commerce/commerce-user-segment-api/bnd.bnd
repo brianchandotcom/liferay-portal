@@ -10,7 +10,3 @@ Export-Package:\
 	com.liferay.commerce.user.segment.service.persistence,\
 	com.liferay.commerce.user.segment.util,\
 	com.liferay.commerce.user.segment.util.comparator
-Import-Package:\
-	com.liferay.portal.kernel.model;version="[1.0.0,1.2.0)",\
-	\
-	*

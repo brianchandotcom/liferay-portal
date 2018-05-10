@@ -9,6 +9,5 @@ Export-Package:\
 	com.liferay.commerce.product.type.virtual.service.persistence
 Import-Package:\
 	com.liferay.journal.model;version="[1.0.0,3)",\
-	com.liferay.portal.kernel.model;version="[1.0.0,1.2.0)",\
 	\
 	*

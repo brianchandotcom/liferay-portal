@@ -6,10 +6,6 @@ Export-Package:\
 	com.liferay.commerce.product.definitions.web.display.context,\
 	com.liferay.commerce.product.definitions.web.portlet.action,\
 	com.liferay.commerce.product.definitions.web.servlet.taglib.ui
-Import-Package:\
-	com.liferay.portal.kernel.portlet;version="[7.11.0,8.1)",\
-	\
-	*
 Provide-Capability:\
 	soy;\
 		type="commerce-product-definitions-web";\

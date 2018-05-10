@@ -4,8 +4,4 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.checkout.web.constants,\
 	com.liferay.commerce.checkout.web.util
-Import-Package:\
-	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
-	\
-	*
 -dsannotations-options: inherit

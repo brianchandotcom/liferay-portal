@@ -9,7 +9,3 @@ Export-Package:\
 	com.liferay.commerce.currency.service.persistence,\
 	com.liferay.commerce.currency.util,\
 	com.liferay.commerce.currency.util.comparator
-Import-Package:\
-	com.liferay.portal.kernel.model;version="[1.0.0,1.2.0)",\
-	\
-	*

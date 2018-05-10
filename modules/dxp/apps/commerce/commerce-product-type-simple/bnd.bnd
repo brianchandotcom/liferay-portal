@@ -2,8 +2,4 @@ Bundle-Name: Liferay Commerce Product Type Simple
 Bundle-SymbolicName: com.liferay.commerce.product.type.simple
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.commerce.product.type.simple.constants
-Import-Package:\
-	com.liferay.portal.kernel.portlet;version="[7.0.0,8.1)",\
-	\
-	*
 Web-ContextPath: /commerce-product-type-simple

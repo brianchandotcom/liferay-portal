@@ -652,9 +652,9 @@
 
 	<command name="deleteCP">
 		<if>
-			<condition function="IsElementPresent" locator1="Button#DELETE" />
+			<condition function="IsElementPresent" locator1="Button#DELETE_ENTRY" />
 			<then>
-				<execute function="ClickNoError" locator1="Button#DELETE" />
+				<execute function="ClickNoError" locator1="Button#DELETE_ENTRY" />
 			</then>
 			<else>
 				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS">

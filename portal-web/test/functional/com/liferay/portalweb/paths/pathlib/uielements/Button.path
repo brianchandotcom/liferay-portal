@@ -309,6 +309,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_ENTRY</td>
+	<td>//li[contains(@class,'nav-item')]/a[contains(@href,'deleteEntries')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_ROW</td>
 	<td>//button[contains(@class,'delete-row')]</td>
 	<td></td>

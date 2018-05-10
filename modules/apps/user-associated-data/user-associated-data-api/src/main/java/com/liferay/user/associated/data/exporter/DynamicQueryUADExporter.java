@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.user.associated.data.exception.UADExporterException;
 import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.File;
@@ -56,7 +55,7 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 			return xml.getBytes(StringPool.UTF8);
 		}
 		catch (UnsupportedEncodingException uee) {
-			throw new UADExporterException(uee);
+			throw new PortalException(uee);
 		}
 	}
 

@@ -1,0 +1,36 @@
+dependencies {
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.2.4"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.2.4"
+	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.2.4"
+	compileInclude group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.2.4"
+	compileInclude group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
+
+	compileOnly group: "javax.json", name: "javax.json-api", version: "1.0"
+	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "0.0.1-20180509.011411-78"
+	compileOnly group: "org.apache.aries.spec", name: "org.apache.aries.javax.annotation-api", version: "0.0.2-20180505.023515-4"
+	compileOnly group: "org.apache.aries.spec", name: "org.apache.aries.javax.jax.rs-api", version: "0.0.1-20180226.141959-28"
+	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs", version: "1.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.util.function", version: "1.1.0"
+	compileOnly group: "org.osgi", name: "org.osgi.util.promise", version: "1.1.0"
+}
+
+deployDependencies {
+	from configurations.compileOnly
+
+	include "org.apache.aries.jax.rs.whiteboard-*.jar"
+	include "org.osgi.util.promise-*.jar"
+	include "org.osgi.util.function-*.jar"
+	include "org.osgi.service.jaxrs-*.jar"
+	include "org.apache.aries.javax.jax.rs-api*.jar"
+	include "org.apache.aries.javax.annotation-api*.jar"
+	include "javax.json-api*.jar"
+}
+
+repositories {
+	maven {
+		url "http://repository.apache.org/snapshots/"
+	}
+	maven {
+		url "https://oss.sonatype.org/content/groups/osgi/"
+	}
+}

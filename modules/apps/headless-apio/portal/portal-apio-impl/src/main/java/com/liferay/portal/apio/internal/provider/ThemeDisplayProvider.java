@@ -18,12 +18,10 @@ import com.liferay.apio.architect.provider.Provider;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collection;
@@ -37,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * Lets resources provide {@code ThemeDisplay} as a parameter to the methods of
@@ -65,9 +62,6 @@ public class ThemeDisplayProvider implements Provider<ThemeDisplay> {
 			throw new ServerErrorException(500, pe);
 		}
 	}
-
-	@Reference
-	private Portal _portal;
 
 	private static class EmptyHttpServletResponse
 		implements HttpServletResponse {
@@ -114,7 +108,7 @@ public class ThemeDisplayProvider implements Provider<ThemeDisplay> {
 		}
 
 		@Override
-		public void flushBuffer() throws IOException {
+		public void flushBuffer() {
 		}
 
 		@Override
@@ -153,7 +147,7 @@ public class ThemeDisplayProvider implements Provider<ThemeDisplay> {
 		}
 
 		@Override
-		public ServletOutputStream getOutputStream() throws IOException {
+		public ServletOutputStream getOutputStream() {
 			return null;
 		}
 
@@ -163,7 +157,7 @@ public class ThemeDisplayProvider implements Provider<ThemeDisplay> {
 		}
 
 		@Override
-		public PrintWriter getWriter() throws IOException {
+		public PrintWriter getWriter() {
 			return null;
 		}
 
@@ -181,15 +175,15 @@ public class ThemeDisplayProvider implements Provider<ThemeDisplay> {
 		}
 
 		@Override
-		public void sendError(int sc) throws IOException {
+		public void sendError(int sc) {
 		}
 
 		@Override
-		public void sendError(int sc, String msg) throws IOException {
+		public void sendError(int sc, String msg) {
 		}
 
 		@Override
-		public void sendRedirect(String location) throws IOException {
+		public void sendRedirect(String location) {
 		}
 
 		@Override

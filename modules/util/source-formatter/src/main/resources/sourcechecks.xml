@@ -126,6 +126,7 @@
 		<check name="JavaServiceImplCheck" />
 		<check name="JavaSignatureStylingCheck" />
 		<check name="JavaStaticBlockCheck" />
+		<check name="JavaStaticImportsCheck" />
 		<check name="JavaStopWatchCheck" />
 		<check name="JavaStylingCheck" />
 		<check name="JavaSystemExceptionCheck" />

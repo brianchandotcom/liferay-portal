@@ -4338,8 +4338,8 @@ version 1.0.207.
 to version 2.3.144.
 - [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
 1.0.617.
-- [LPS-79959]: Update the default value of the
-`liferay.appServers.jboss.version` property to `7.1.0`.
+- [LPS-79959]: Update the `liferay.appServers.jboss.version` property's default
+value to `7.1.0`.
 - [LPS-80184]: Update the [Liferay Gradle Plugins Service Builder] dependency to
 version 2.1.25.
 - [LPS-80184]: Update the [Liferay Portal Tools Service Builder] dependency to

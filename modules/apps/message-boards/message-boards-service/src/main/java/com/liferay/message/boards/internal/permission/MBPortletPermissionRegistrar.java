@@ -17,6 +17,7 @@ package com.liferay.message.boards.internal.permission;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
+import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
@@ -47,6 +48,7 @@ public class MBPortletPermissionRegistrar {
 			PortletResourcePermission.class,
 			PortletResourcePermissionFactory.create(
 				MBConstants.RESOURCE_NAME,
+				new MBPortletPermissionLogic(_mbBanLocalService),
 				new StagedPortletPermissionLogic(
 					_stagingPermission, MBPortletKeys.MESSAGE_BOARDS)),
 			properties);
@@ -56,6 +58,9 @@ public class MBPortletPermissionRegistrar {
 	public void deactivate() {
 		_serviceRegistration.unregister();
 	}
+
+	@Reference
+	private MBBanLocalService _mbBanLocalService;
 
 	private ServiceRegistration<PortletResourcePermission> _serviceRegistration;
 

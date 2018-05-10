@@ -97,7 +97,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			project, ORIGINAL_MODULE_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Configures the original module you would like to extend.");
+			"Configures the original module to extend.");
 		configuration.setTransitive(false);
 		configuration.setVisible(false);
 

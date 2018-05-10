@@ -14,9 +14,13 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.controller;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -24,7 +28,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -66,10 +69,11 @@ public class AssetDisplayLayoutTypeController
 			Layout layout)
 		throws Exception {
 
-		long layoutPageTemplateEntryId = GetterUtil.getLong(
-			request.getAttribute(
-				AssetDisplayLayoutTypeControllerWebKeys.
-					LAYOUT_PAGE_TEMPLATE_ENTRY_ID));
+		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
+			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY);
+
+		long layoutPageTemplateEntryId = _getLayoutPageTemplateEntryId(
+			layout.getGroupId(), assetEntry);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
@@ -141,6 +145,31 @@ public class AssetDisplayLayoutTypeController
 		this.servletContext = servletContext;
 	}
 
+	private long _getLayoutPageTemplateEntryId(
+		long groupId, AssetEntry assetEntry) {
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.
+				fetchAssetDisplayPageEntryByAssetEntryId(
+					assetEntry.getEntryId());
+
+		if (assetDisplayPageEntry != null) {
+			return assetDisplayPageEntry.getLayoutId();
+		}
+
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
+				groupId, assetEntry.getClassNameId(),
+				assetEntry.getClassTypeId());
+
+		if (defaultLayoutPageTemplateEntry != null) {
+			return defaultLayoutPageTemplateEntry.
+				getLayoutPageTemplateEntryId();
+		}
+
+		return 0;
+	}
+
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
@@ -148,7 +177,14 @@ public class AssetDisplayLayoutTypeController
 	private static final String _VIEW_PAGE = "/layout/view/asset_display.jsp";
 
 	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
+
+	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

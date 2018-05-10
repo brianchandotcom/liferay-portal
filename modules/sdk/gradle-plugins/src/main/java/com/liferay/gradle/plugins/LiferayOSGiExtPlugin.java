@@ -226,11 +226,11 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskDeploy(Project project, Jar jar) {
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
-
 		Copy copy = (Copy)GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
+
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
 
 		copy.from(jar);
 

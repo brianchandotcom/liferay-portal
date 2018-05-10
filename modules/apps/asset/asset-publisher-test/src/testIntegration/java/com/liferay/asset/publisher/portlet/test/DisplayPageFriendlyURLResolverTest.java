@@ -16,10 +16,13 @@ package com.liferay.asset.publisher.portlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.ExpiredModelException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -55,10 +58,11 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * Tests whether the friendly URL resolves for existent and nonexistent web
- * content articles in the Asset Publisher.
+ * Tests whether the friendly URL resolves for existent, nonexistent or expired
+ * web content articles in the Asset Publisher.
  *
  * @author Eduardo Garcia
+ * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
 public class DisplayPageFriendlyURLResolverTest {
@@ -73,10 +77,7 @@ public class DisplayPageFriendlyURLResolverTest {
 		ServiceTestUtil.initPermissions();
 
 		_group = GroupTestUtil.addGroup();
-	}
 
-	@Test
-	public void testJournalArticleFriendlyURL() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -116,30 +117,58 @@ public class DisplayPageFriendlyURLResolverTest {
 
 		contentMap.put(LocaleUtil.US, "This test content is in English.");
 
-		JournalTestUtil.addArticle(
+		_article = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, titleMap, titleMap,
 			contentMap, layout.getUuid(), LocaleUtil.US, null, false, false,
 			serviceContext);
+	}
 
+	@Test
+	public void testJournalArticleFriendlyURL() throws Exception {
 		String actualURL = PortalUtil.getActualURL(
 			_group.getGroupId(), false, Portal.PATH_MAIN,
 			"/-/test-journal-article", new HashMap<String, String[]>(),
 			getRequestContext());
 
 		Assert.assertNotNull(actualURL);
+	}
 
-		try {
-			PortalUtil.getActualURL(
-				_group.getGroupId(), false, Portal.PATH_MAIN,
-				"/-/nonexistent-test-journal-article",
-				new HashMap<String, String[]>(), getRequestContext());
+	@Test(expected = NoSuchLayoutException.class)
+	public void testJournalArticleFriendlyURLWithNonExistentArticle()
+		throws Exception {
 
-			Assert.fail();
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
+		PortalUtil.getActualURL(
+			_group.getGroupId(), false, Portal.PATH_MAIN,
+			"/-/nonexistent-test-journal-article",
+			new HashMap<String, String[]>(), getRequestContext());
+	}
+
+	@Test(expected = ExpiredModelException.class)
+	public void testJournalArticleFriendlyURLWithExpiredArticle() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		JournalArticleLocalServiceUtil.expireArticle(
+			_article.getUserId(), _article.getGroupId(), _article.getArticleId(),
+			_article.getUrlTitle(), serviceContext);
+
+		PortalUtil.getActualURL(
+			_group.getGroupId(), false, Portal.PATH_MAIN,
+			"/-/test-journal-article", new HashMap<String, String[]>(),
+			getRequestContext());
+	}
+
+	@Test(expected = NoSuchLayoutException.class)
+	public void testJournalArticleFriendlyURLWithTrashedArticle() throws Exception {
+		JournalArticleLocalServiceUtil.moveArticleToTrash(
+			_article.getUserId(), _article);
+
+		PortalUtil.getActualURL(
+			_group.getGroupId(), false, Portal.PATH_MAIN,
+			"/-/test-journal-article", new HashMap<String, String[]>(),
+			getRequestContext());
 	}
 
 	protected Map<String, Object> getRequestContext() {
@@ -152,6 +181,8 @@ public class DisplayPageFriendlyURLResolverTest {
 
 		return requestContext;
 	}
+
+	private JournalArticle _article;
 
 	@DeleteAfterTestRun
 	private Group _group;

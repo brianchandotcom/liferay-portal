@@ -4443,6 +4443,16 @@ version 2.1.29.
 - [LPS-80544]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.212.
 
+## 3.12.0 - 2018-05-09
+
+### Added
+- [LPS-79453]: Add the `com.liferay.osgi.ext.plugin` plugin to build Ext OSGi
+modules.
+
+### Fixed
+- [LPS-79453]: Avoid adding the `-ext` suffix twice when building Ext plugins.
+- [LPS-79453]: Fix the `deploy` task of Ext plugins.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -4797,6 +4807,7 @@ version 1.0.212.
 [LPS-79386]: https://issues.liferay.com/browse/LPS-79386
 [LPS-79388]: https://issues.liferay.com/browse/LPS-79388
 [LPS-79450]: https://issues.liferay.com/browse/LPS-79450
+[LPS-79453]: https://issues.liferay.com/browse/LPS-79453
 [LPS-79576]: https://issues.liferay.com/browse/LPS-79576
 [LPS-79623]: https://issues.liferay.com/browse/LPS-79623
 [LPS-79665]: https://issues.liferay.com/browse/LPS-79665

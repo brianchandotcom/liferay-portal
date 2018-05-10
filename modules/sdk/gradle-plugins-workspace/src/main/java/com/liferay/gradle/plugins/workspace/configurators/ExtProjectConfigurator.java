@@ -66,16 +66,16 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		boolean extProject = _isExtProject(project);
+		boolean extPlugin = _isExtPlugin(project);
 
-		_applyPlugins(project, extProject);
+		_applyPlugins(project, extPlugin);
 
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
 		_configureLiferay(project, workspaceExtension);
-		_configureRootTaskDistBundle(project, extProject);
+		_configureRootTaskDistBundle(project, extPlugin);
 	}
 
 	@Override
@@ -116,8 +116,8 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 
 	protected static final String NAME = "ext";
 
-	private void _applyPlugins(Project project, boolean extProject) {
-		if (extProject) {
+	private void _applyPlugins(Project project, boolean extPlugin) {
+		if (extPlugin) {
 			GradleUtil.applyPlugin(project, LiferayExtPlugin.class);
 		}
 		else {
@@ -135,7 +135,7 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureRootTaskDistBundle(
-		Project project, boolean extProject) {
+		Project project, boolean extPlugin) {
 
 		Copy copy = (Copy)GradleUtil.getTask(
 			project.getRootProject(),
@@ -144,7 +144,7 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 		String dirName = null;
 		String taskName = null;
 
-		if (extProject) {
+		if (extPlugin) {
 			dirName = "osgi/war";
 			taskName = WarPlugin.WAR_TASK_NAME;
 		}
@@ -167,7 +167,7 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
-	private boolean _isExtProject(Project project) {
+	private boolean _isExtPlugin(Project project) {
 		if (FileUtil.exists(project, "src/main/webapp")) {
 			return true;
 		}

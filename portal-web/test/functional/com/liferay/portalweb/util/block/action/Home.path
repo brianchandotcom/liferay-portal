@@ -263,7 +263,7 @@
 </tr>
 <tr>
 	<td>PAGE_2</td>
-	<td>//div[contains(@id,'navbar')]/ul/li[2]/a</td>
+	<td>//div[contains(@id,'navbar')]/ul/li[2]/a/span/span</td>
 	<td>2nd Page</td>
 </tr>
 <tr>

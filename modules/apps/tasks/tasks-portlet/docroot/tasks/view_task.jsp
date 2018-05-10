@@ -206,13 +206,13 @@ TasksEntry tasksEntry = TasksEntryLocalServiceUtil.fetchTasksEntry(tasksEntryId)
 				<aui:button name="deleteTasksEntry" value="delete" />
 
 				<aui:script use="aui-io-deprecated">
-					var deleteTasksEntry = A.one('#<portlet:namespace />deleteTasksEntry');
+					var <portlet:namespace />deleteTasksEntry = document.querySelector('#<portlet:namespace />deleteTasksEntry');
 
-					if (deleteTasksEntry) {
-						deleteTasksEntry.on(
+					if (<portlet:namespace />deleteTasksEntry) {
+						<portlet:namespace />deleteTasksEntry.addEventListener(
 							'click',
 							function(event) {
-								if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this-entry") %>')) {
+								if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this-entry" />')) {
 									A.io.request(
 										'<portlet:actionURL name="deleteTasksEntry" />',
 										{

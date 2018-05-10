@@ -20,6 +20,7 @@
 boolean checked = GetterUtil.getBoolean(request.getAttribute("liferay-staging:radio:checked"));
 boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-staging:radio:disabled"));
 String id = GetterUtil.getString(request.getAttribute("liferay-staging:radio:id"));
+boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-staging:radio:ignoreRequestValue"));
 boolean inline = GetterUtil.getBoolean(request.getAttribute("liferay-staging:radio:inline"));
 String labelKey = GetterUtil.getString(request.getAttribute("liferay-staging:radio:label"));
 String name = GetterUtil.getString(request.getAttribute("liferay-staging:radio:name"));
@@ -28,6 +29,20 @@ String value = GetterUtil.getString(request.getAttribute("liferay-staging:radio:
 
 if (Validator.isNull(id)) {
 	id = name;
+}
+
+String checkedStringValue = String.valueOf(checked);
+
+if (value != null) {
+	checkedStringValue = value;
+}
+
+if (!ignoreRequestValue) {
+	String requestValue = ParamUtil.getString(request, name);
+
+	if (Validator.isNotNull(requestValue)) {
+		checked = checkedStringValue.equals(requestValue);
+	}
 }
 
 String checkedString = (checked) ? "checked" : "";

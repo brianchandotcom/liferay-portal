@@ -679,6 +679,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to ignore the value saved from the request object. The default value is false.</description>
+			<name>ignoreRequestValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>Whether the radio button is displayed inline. The default is false.</description>
 			<name>inline</name>
 			<required>false</required>

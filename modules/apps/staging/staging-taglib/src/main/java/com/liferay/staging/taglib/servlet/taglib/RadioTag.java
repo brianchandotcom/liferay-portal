@@ -41,6 +41,10 @@ public class RadioTag extends IncludeTag {
 		_id = id;
 	}
 
+	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
+		_ignoreRequestValue = ignoreRequestValue;
+	}
+
 	public void setInline(boolean inline) {
 		_inline = inline;
 	}
@@ -75,6 +79,7 @@ public class RadioTag extends IncludeTag {
 		_checked = false;
 		_disabled = false;
 		_id = StringPool.BLANK;
+		_ignoreRequestValue = false;
 		_inline = false;
 		_label = StringPool.BLANK;
 		_name = StringPool.BLANK;
@@ -92,6 +97,8 @@ public class RadioTag extends IncludeTag {
 		request.setAttribute("liferay-staging:radio:checked", _checked);
 		request.setAttribute("liferay-staging:radio:disabled", _disabled);
 		request.setAttribute("liferay-staging:radio:id", _id);
+		request.setAttribute(
+			"liferay-staging:radio:ignoreRequestValue", _ignoreRequestValue);
 		request.setAttribute("liferay-staging:radio:inline", _inline);
 		request.setAttribute("liferay-staging:radio:label", _label);
 		request.setAttribute("liferay-staging:radio:name", _name);
@@ -104,6 +111,7 @@ public class RadioTag extends IncludeTag {
 	private boolean _checked;
 	private boolean _disabled;
 	private String _id = StringPool.BLANK;
+	private boolean _ignoreRequestValue;
 	private boolean _inline;
 	private String _label = StringPool.BLANK;
 	private String _name = StringPool.BLANK;

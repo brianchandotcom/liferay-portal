@@ -1320,13 +1320,23 @@ public class PortalImpl implements Portal {
 			String completeURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException {
 
-		return getCanonicalURL(completeURL, themeDisplay, layout, false);
+		return getCanonicalURL(completeURL, themeDisplay, layout, false, true);
 	}
 
 	@Override
 	public String getCanonicalURL(
 			String completeURL, ThemeDisplay themeDisplay, Layout layout,
-			boolean forceLayoutFriendlyURL)
+			boolean forceLayoutFriendlyUR)
+		throws PortalException {
+
+		return getCanonicalURL(
+			completeURL, themeDisplay, layout, forceLayoutFriendlyUR, true);
+	}
+
+	@Override
+	public String getCanonicalURL(
+			String completeURL, ThemeDisplay themeDisplay, Layout layout,
+			boolean forceLayoutFriendlyURL, boolean includeQueryString)
 		throws PortalException {
 
 		String groupFriendlyURL = StringPool.BLANK;
@@ -1422,13 +1432,21 @@ public class PortalImpl implements Portal {
 			}
 
 			sb.append(canonicalLayoutFriendlyURL);
-			sb.append(parametersURL);
+
+			if (includeQueryString) {
+				sb.append(parametersURL);
+			}
 
 			return sb.toString();
 		}
 
-		return groupFriendlyURL.concat(canonicalLayoutFriendlyURL).concat(
-			parametersURL);
+		groupFriendlyURL = groupFriendlyURL.concat(canonicalLayoutFriendlyURL);
+
+		if (includeQueryString) {
+			groupFriendlyURL = groupFriendlyURL.concat(parametersURL);
+		}
+
+		return groupFriendlyURL;
 	}
 
 	@Override

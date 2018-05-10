@@ -44,10 +44,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		protected static NPMTestBatchTestClass getInstance(
 			String batchName, File moduleDir) {
 
-			return new NPMTestBatchTestClass(moduleDir, batchName);
+			return new NPMTestBatchTestClass(batchName, moduleDir);
 		}
 
-		protected NPMTestBatchTestClass(File file, String batchName) {
+		protected NPMTestBatchTestClass(String batchName, File file) {
 			super(file);
 
 			addTestMethod(batchName);

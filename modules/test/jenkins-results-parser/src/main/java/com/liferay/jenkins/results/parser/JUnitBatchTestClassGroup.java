@@ -52,7 +52,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			}
 
 			JunitBatchTestClass junitTestClass = new JunitBatchTestClass(
-				gitWorkingDirectory, file, srcFile);
+				file, gitWorkingDirectory, srcFile);
 
 			_junitTestClasses.put(file, junitTestClass);
 
@@ -104,7 +104,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		protected JunitBatchTestClass(
-			GitWorkingDirectory gitWorkingDirectory, File file, File srcFile) {
+			File file, GitWorkingDirectory gitWorkingDirectory, File srcFile) {
 
 			super(file);
 
@@ -453,8 +453,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 						return JunitBatchTestClass.getInstance(
 							new File(filePath.replace(".java", ".class")),
-							portalGitWorkingDirectory,
-							path.toFile());
+							portalGitWorkingDirectory, path.toFile());
 					}
 
 					private boolean _pathExcluded(Path path) {

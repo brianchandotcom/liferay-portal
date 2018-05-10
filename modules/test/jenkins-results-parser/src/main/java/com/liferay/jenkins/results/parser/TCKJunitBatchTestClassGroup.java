@@ -40,10 +40,10 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		protected static TCKBatchTestClass getInstance(
 			String batchName, File warFile) {
 
-			return new TCKBatchTestClass(warFile, batchName);
+			return new TCKBatchTestClass(batchName, warFile);
 		}
 
-		protected TCKBatchTestClass(File file, String batchName) {
+		protected TCKBatchTestClass(String batchName, File file) {
 			super(file);
 
 			addTestMethod(batchName);

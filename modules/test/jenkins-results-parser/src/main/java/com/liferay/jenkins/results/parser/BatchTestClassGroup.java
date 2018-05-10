@@ -62,10 +62,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				portalGitWorkingDirectory.getWorkingDirectory(),
 				"build-test-batch.xml");
 
-			return new BatchTestClass(file, batchName);
+			return new BatchTestClass(batchName, file);
 		}
 
-		protected BatchTestClass(File file, String batchName) {
+		protected BatchTestClass(String batchName, File file) {
 			super(file);
 
 			addTestMethod(batchName);

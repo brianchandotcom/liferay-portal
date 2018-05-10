@@ -15,12 +15,15 @@
 package com.liferay.layout.uad.test;
 
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
 
-import org.junit.Assume;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,9 +39,11 @@ public class LayoutPrototypeUADTestHelper {
 	 * </p>
 	 */
 	public LayoutPrototype addLayoutPrototype(long userId) throws Exception {
-		Assume.assumeTrue(false);
-
-		return null;
+		return _layoutPrototypeLocalService.addLayoutPrototype(
+			userId, TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), true,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	/**
@@ -51,5 +56,8 @@ public class LayoutPrototypeUADTestHelper {
 	public void cleanUpDependencies(List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 	}
+
+	@Reference
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

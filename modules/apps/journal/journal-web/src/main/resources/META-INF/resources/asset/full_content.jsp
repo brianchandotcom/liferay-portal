@@ -24,9 +24,8 @@ AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)request.
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 %>
 
-<liferay-journal:journal-article
-	articleId="<%= articleDisplay.getArticleId() %>"
-	groupId="<%= articleDisplay.getGroupId() %>"
+<liferay-journal:journal-article-display
+	articleDisplay="<%= articleDisplay %>"
 />
 
 <c:if test="<%= articleDisplay.isPaginate() %>">

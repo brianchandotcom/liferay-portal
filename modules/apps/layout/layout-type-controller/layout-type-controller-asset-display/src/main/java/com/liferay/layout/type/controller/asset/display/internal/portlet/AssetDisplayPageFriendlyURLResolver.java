@@ -16,10 +16,10 @@ package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
-import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -76,10 +76,9 @@ public class AssetDisplayPageFriendlyURLResolver
 			"request");
 
 		request.setAttribute(
-			AssetDisplayLayoutTypeControllerWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
 			assetDisplayContributor);
-		request.setAttribute(
-			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY, assetEntry);
+		request.setAttribute(AssetDisplayWebKeys.ASSET_ENTRY, assetEntry);
 
 		Locale locale = _portal.getLocale(request);
 

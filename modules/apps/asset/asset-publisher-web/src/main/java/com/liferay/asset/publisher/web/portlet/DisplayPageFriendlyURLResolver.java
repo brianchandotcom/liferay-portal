@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.portlet;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
+import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -25,7 +26,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.constants.AssetPublisherDisplayPageWebKeys;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
@@ -362,10 +362,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			"request");
 
 		request.setAttribute(
-			AssetPublisherDisplayPageWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
 			assetDisplayContributor);
-		request.setAttribute(
-			AssetPublisherDisplayPageWebKeys.ASSET_ENTRY, assetEntry);
+		request.setAttribute(AssetDisplayWebKeys.ASSET_ENTRY, assetEntry);
 
 		Layout layout = _getAssetDisplayPageEntryLayout(assetEntry, groupId);
 

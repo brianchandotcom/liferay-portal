@@ -14,6 +14,7 @@
 
 package com.liferay.layout.type.controller.asset.display.internal.controller;
 
+import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -70,7 +71,7 @@ public class AssetDisplayLayoutTypeController
 		throws Exception {
 
 		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
-			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY);
+			AssetDisplayWebKeys.ASSET_ENTRY);
 
 		long layoutPageTemplateEntryId = _getLayoutPageTemplateEntryId(
 			layout.getGroupId(), assetEntry);

@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.util.FileUtil;
 
 import groovy.lang.Closure;
 
@@ -36,17 +37,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
-import org.gradle.api.tasks.bundling.War;
-import org.gradle.jvm.tasks.Jar;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class ExtProjectConfigurator extends BaseProjectConfigurator {
 
@@ -140,84 +141,55 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 			project.getRootProject(),
 			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
 
+		String dirName = null;
+		String taskName = null;
+
 		if (extProject) {
-			final War war = (War)GradleUtil.getTask(
-				project, WarPlugin.WAR_TASK_NAME);
-
-			copy.into(
-				"osgi/war",
-				new Closure<Void>(project) {
-
-					@SuppressWarnings("unused")
-					public void doCall(CopySourceSpec copySourceSpec) {
-						copySourceSpec.from(war);
-					}
-
-				});
+			dirName = "osgi/war";
+			taskName = WarPlugin.WAR_TASK_NAME;
 		}
 		else {
-			final Jar jar = (Jar)GradleUtil.getTask(
-				project, JavaPlugin.JAR_TASK_NAME);
-
-			copy.into(
-				"osgi/marketplace/override",
-				new Closure<Void>(project) {
-
-					@SuppressWarnings("unused")
-					public void doCall(CopySourceSpec copySourceSpec) {
-						copySourceSpec.from(jar);
-					}
-
-				});
+			dirName = "osgi/marketplace/override";
+			taskName = JavaPlugin.JAR_TASK_NAME;
 		}
+
+		final Task task = GradleUtil.getTask(project, taskName);
+
+		copy.into(
+			dirName,
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySourceSpec copySourceSpec) {
+					copySourceSpec.from(task);
+				}
+
+			});
 	}
 
 	private boolean _isExtProject(Project project) {
-		File webappDir = project.file("src/main/webapp");
-
-		if (webappDir.exists()) {
+		if (FileUtil.exists(project, "src/main/webapp")) {
 			return true;
 		}
 
-		File extImplDir = project.file(
-			"src/" + LiferayExtPlugin.EXT_IMPL_SOURCESET_NAME);
-
-		if (extImplDir.exists()) {
-			return true;
-		}
-
-		File extKernelDir = project.file(
-			"src/" + LiferayExtPlugin.EXT_KERNEL_SOURCESET_NAME);
-
-		if (extKernelDir.exists()) {
-			return true;
-		}
-
-		File extUtilBridgesDir = project.file(
-			"src/" + LiferayExtPlugin.EXT_UTIL_BRIDGES_SOURCESET_NAME);
-
-		if (extUtilBridgesDir.exists()) {
-			return true;
-		}
-
-		File extUtilJavaDir = project.file(
-			"src/" + LiferayExtPlugin.EXT_UTIL_JAVA_SOURCESET_NAME);
-
-		if (extUtilJavaDir.exists()) {
-			return true;
-		}
-
-		File extUtilTaglibDir = project.file(
-			"src/" + LiferayExtPlugin.EXT_UTIL_TAGLIB_SOURCESET_NAME);
-
-		if (extUtilTaglibDir.exists()) {
-			return true;
+		for (String name : _EXT_SOURCESET_NAMES) {
+			if (FileUtil.exists(project, "src/" + name)) {
+				return true;
+			}
 		}
 
 		return false;
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
+
+	private static final String[] _EXT_SOURCESET_NAMES = {
+		LiferayExtPlugin.EXT_IMPL_SOURCESET_NAME,
+		LiferayExtPlugin.EXT_KERNEL_SOURCESET_NAME,
+		LiferayExtPlugin.EXT_UTIL_BRIDGES_SOURCESET_NAME,
+		LiferayExtPlugin.EXT_UTIL_JAVA_SOURCESET_NAME,
+		LiferayExtPlugin.EXT_UTIL_TAGLIB_SOURCESET_NAME
+	};
 
 	private final boolean _defaultRepositoryEnabled;
 

@@ -52,10 +52,10 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<var name="htmlSnippet"><![CDATA[
-<div>${line.separator}
-<span class="test">This is a test.</span>${line.separator}
-</div>${line.separator}]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_3.html" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />

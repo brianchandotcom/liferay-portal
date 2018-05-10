@@ -19,4 +19,5 @@ dependencies {
 	compileOnly project(":private:apps:commerce:commerce-data-integration:commerce-data-integration-apio-api")
 	compileOnly project(":private:apps:commerce:commerce-price-list-api")
 	compileOnly project(":private:apps:commerce:commerce-price-list-service")
+	compileOnly project(":private:apps:commerce:commerce-product-api")
 }

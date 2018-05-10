@@ -16,8 +16,10 @@ package com.liferay.commerce.data.integration.apio.internal.resource;
 
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.DATE_CREATED;
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.DATE_MODIFIED;
+import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.NAME;
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.PRICE;
 import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.PROMO_PRICE;
+import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.SKU;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -97,6 +99,10 @@ public class PriceEntryNestedCollectionResource
 			PRICE, CommercePriceEntry::getPrice
 		).addNumber(
 			PROMO_PRICE, CommercePriceEntry::getPromoPrice
+		).addString(
+			NAME, PriceEntryHelper::getProductName
+		).addString(
+			SKU, PriceEntryHelper::getSKU
 		).build();
 	}
 

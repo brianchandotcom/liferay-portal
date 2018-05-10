@@ -14,8 +14,11 @@
 
 package com.liferay.commerce.data.integration.apio.internal.util;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 
 import javax.ws.rs.NotFoundException;
 
@@ -28,6 +31,22 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = PriceEntryHelper.class)
 public class PriceEntryHelper {
 
+	public static String getProductName(CommercePriceEntry commercePriceEntry) {
+		CPInstance cpInstance = _getCPInstance(commercePriceEntry);
+
+		CPDefinition cpDefinition = Try.fromFallible(
+			() -> cpInstance.getCPDefinition()
+		).getUnchecked();
+
+		return cpDefinition.getName();
+	}
+
+	public static String getSKU(CommercePriceEntry commercePriceEntry) {
+		CPInstance cpInstance = _getCPInstance(commercePriceEntry);
+
+		return cpInstance.getSku();
+	}
+
 	public CommercePriceEntry getCommercePriceEntry(Long commercePriceEntryId) {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.fetchCommercePriceEntry(
@@ -39,6 +58,14 @@ public class PriceEntryHelper {
 		}
 
 		return commercePriceEntry;
+	}
+
+	private static CPInstance _getCPInstance(
+		CommercePriceEntry commercePriceEntry) {
+
+		return Try.fromFallible(
+			() -> commercePriceEntry.getCPInstance()
+		).getUnchecked();
 	}
 
 	@Reference

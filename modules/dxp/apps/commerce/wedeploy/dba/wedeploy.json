@@ -1,0 +1,14 @@
+{
+	"id": "dba",
+	"image": "wedeploy/lms-mariadb:10.2.14-1.0",
+	"memory": 2048,
+	"cpu": 2,
+	"env": {
+		"MYSQL_DATABASE": "lportal",
+		"MYSQL_ROOT_PASSWORD": "mypassw0rd",
+		"WEDEPLOY_PROJECT_BACKUP_AWS_ACCESS_KEY": "AKIAJBTZVCQ3AEZXGUHA",
+		"WEDEPLOY_PROJECT_BACKUP_AWS_SECRET_KEY": "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",
+		"WEDEPLOY_PROJECT_BACKUP_AWS_S3_PATH": "s3://wedeploy-backup-lms"
+	},
+	"zeroDowntime": false
+}

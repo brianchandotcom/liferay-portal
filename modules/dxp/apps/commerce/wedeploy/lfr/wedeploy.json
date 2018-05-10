@@ -1,0 +1,18 @@
+{
+	"id": "lfr",
+	"image": "wedeploy/lms-liferay-ce:7.1.0-a2-1.3",
+	"memory": 8192,
+	"cpu": 8,
+	"env": {
+		"WEDEPLOY_PROJECT_BACKUP_AWS_ACCESS_KEY": "AKIAIDKEQZD2RMI7T3FQ",
+		"WEDEPLOY_PROJECT_BACKUP_AWS_SECRET_KEY": "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",
+		"WEDEPLOY_PROJECT_BACKUP_AWS_S3_PATH": "s3://wedeploy-backup-lms"
+	},
+	"dependencies": [
+    "dba",
+    "els"
+	],
+	"volumes": {
+		"data": "/opt/liferay/data"
+	}
+}

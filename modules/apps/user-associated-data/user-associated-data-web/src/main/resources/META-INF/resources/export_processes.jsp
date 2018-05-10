@@ -33,7 +33,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		>
 			<div>
 				<h5>
-					<liferay-ui:message key="<%= backgroundTask.getName() %>" />
+					<liferay-ui:message key="<%= UADLanguageUtil.getApplicationName(backgroundTask.getName(), locale) %>" />
 				</h5>
 
 				<clay:label

@@ -21,7 +21,7 @@ CategoryCPAttachmentFileEntriesDisplayContext categoryCPAttachmentFileEntriesDis
 
 CPAttachmentFileEntry cpAttachmentFileEntry = categoryCPAttachmentFileEntriesDisplayContext.getCPAttachmentFileEntry();
 
-long assetCategoryId = ParamUtil.getLong(request, "assetCategoryId");
+long categoryId = ParamUtil.getLong(request, "categoryId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -34,14 +34,13 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 <aui:form action="<%= editAssetCategoryCPAttachmentFileEntryActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="assetCategoryId" type="hidden" value="<%= assetCategoryId %>" />
+	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="cpAttachmentFileEntryId" type="hidden" value="<%= (cpAttachmentFileEntry == null) ? 0 : cpAttachmentFileEntry.getCPAttachmentFileEntryId() %>" />
 	<aui:input name="type" type="hidden" value="<%= CPAttachmentFileEntryConstants.TYPE_IMAGE %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= backURL %>"
 			formModelBean="<%= cpAttachmentFileEntry %>"
 			id="<%= CategoryCPAttachmentFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_CP_ATTACHMENT_FILE_ENTRY %>"
 			markupView="lexicon"
@@ -80,9 +79,7 @@ renderResponse.setTitle((cpAttachmentFileEntry == null) ? LanguageUtil.get(reque
 </aui:form>
 
 <aui:script use="aui-base,event-input">
-	var publishButton = A.one('#<portlet:namespace />publishButton');
-
-	publishButton.on(
+	A.one('#<portlet:namespace />publishButton').on(
 		'click',
 		function() {
 			var workflowActionInput = A.one('#<portlet:namespace />workflowAction');

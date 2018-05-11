@@ -95,8 +95,7 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 		long cpAttachmentFileEntryId = ParamUtil.getLong(
 			actionRequest, "cpAttachmentFileEntryId");
 
-		long assetCategoryId = ParamUtil.getLong(
-			actionRequest, "assetCategoryId");
+		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
 		int displayDateMonth = ParamUtil.getInteger(
@@ -155,7 +154,7 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 			long classNameId = _portal.getClassNameId(AssetCategory.class);
 
 			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
-				classNameId, assetCategoryId, fileEntryId, displayDateMonth,
+				classNameId, categoryId, fileEntryId, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,

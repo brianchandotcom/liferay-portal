@@ -32,7 +32,7 @@ CPAttachmentFileEntry cpAttachmentFileEntry = (CPAttachmentFileEntry)row.getObje
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editAssetCategoryCPAttachmentFileEntry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="assetCategoryId" value="<%= String.valueOf(cpAttachmentFileEntry.getClassPK()) %>" />
+		<portlet:param name="categoryId" value="<%= String.valueOf(cpAttachmentFileEntry.getClassPK()) %>" />
 		<portlet:param name="cpAttachmentFileEntryId" value="<%= String.valueOf(cpAttachmentFileEntry.getCPAttachmentFileEntryId()) %>" />
 	</portlet:renderURL>
 

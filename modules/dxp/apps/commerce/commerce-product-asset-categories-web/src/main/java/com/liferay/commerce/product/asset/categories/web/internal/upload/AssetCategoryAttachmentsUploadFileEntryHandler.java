@@ -63,11 +63,10 @@ public class AssetCategoryAttachmentsUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long assetCategoryId = ParamUtil.getLong(
-			uploadPortletRequest, "assetCategoryId");
+		long categoryId = ParamUtil.getLong(uploadPortletRequest, "categoryId");
 
 		AssetCategory assetCategory = assetCategoryService.fetchCategory(
-			assetCategoryId);
+			categoryId);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
@@ -93,22 +92,22 @@ public class AssetCategoryAttachmentsUploadFileEntryHandler
 	}
 
 	protected FileEntry addFileEntry(
-			long assetCategoryId, String fileName, String contentType,
+			long categoryId, String fileName, String contentType,
 			InputStream inputStream, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Folder folder = cpAttachmentFileEntryLocalService.getAttachmentsFolder(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-			AssetCategory.class.getName(), assetCategoryId);
+			AssetCategory.class.getName(), categoryId);
 
 		String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
 			themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			AssetCategory.class.getName(), assetCategoryId,
-			CPConstants.SERVICE_NAME, folder.getFolderId(), inputStream,
-			uniqueFileName, contentType, true);
+			AssetCategory.class.getName(), categoryId, CPConstants.SERVICE_NAME,
+			folder.getFolderId(), inputStream, uniqueFileName, contentType,
+			true);
 	}
 
 	@Reference

@@ -36,7 +36,7 @@ public class TempAssetCategoryAttachmentsUploadFileEntryHandler
 
 	@Override
 	protected FileEntry addFileEntry(
-			long assetCategoryId, String fileName, String contentType,
+			long categoryId, String fileName, String contentType,
 			InputStream inputStream, ThemeDisplay themeDisplay)
 		throws PortalException {
 

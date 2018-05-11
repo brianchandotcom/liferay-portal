@@ -366,6 +366,11 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			assetDisplayContributor);
 		request.setAttribute(AssetDisplayWebKeys.ASSET_ENTRY, assetEntry);
 
+		Locale locale = _portal.getLocale(request);
+
+		_portal.addPageSubtitle(assetEntry.getTitle(locale), request);
+		_portal.addPageDescription(assetEntry.getDescription(locale), request);
+
 		Layout layout = _getAssetDisplayPageEntryLayout(assetEntry, groupId);
 
 		return _portal.getLayoutActualURL(layout, mainPath);

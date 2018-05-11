@@ -128,7 +128,8 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		portletDataContext.setEndDate(getEndDate());
 
-		portletDataHandler.prepareManifestSummary(portletDataContext);
+		portletDataHandler.exportData(
+			portletDataContext, portletId, new PortletPreferencesImpl());
 
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
@@ -145,22 +146,32 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			DLFolder.class.getName());
 
 		Assert.assertEquals(0, folderModelAdditionCounter.getValue());
+	}
 
-		modelAdditionCounters.clear();
+	@Test
+	public void testCustomRepositoryEntriesPrepareManifestSummary()
+		throws Exception {
 
-		portletDataHandler.exportData(
-			portletDataContext, portletId, new PortletPreferencesImpl());
+		initContext();
 
-		manifestSummary = portletDataContext.getManifestSummary();
+		addRepositoryEntries();
 
-		modelAdditionCounters = manifestSummary.getModelAdditionCounters();
+		portletDataContext.setEndDate(getEndDate());
 
-		fileEntryModelAdditionCounter = modelAdditionCounters.get(
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
+
+		LongWrapper fileEntryModelAdditionCounter = modelAdditionCounters.get(
 			DLFileEntry.class.getName());
 
 		Assert.assertEquals(0, fileEntryModelAdditionCounter.getValue());
 
-		folderModelAdditionCounter = modelAdditionCounters.get(
+		LongWrapper folderModelAdditionCounter = modelAdditionCounters.get(
 			DLFolder.class.getName());
 
 		Assert.assertEquals(0, folderModelAdditionCounter.getValue());

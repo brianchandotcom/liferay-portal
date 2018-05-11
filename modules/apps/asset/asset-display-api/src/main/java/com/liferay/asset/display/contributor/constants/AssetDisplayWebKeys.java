@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.asset.display.internal.constants;
+package com.liferay.asset.display.contributor.constants;
 
 /**
- * @author Jürgen Kappler
+ * @author Eudaldo Alonso
  */
-public class AssetDisplayLayoutTypeControllerWebKeys {
+public class AssetDisplayWebKeys {
 
-	public static final String LAYOUT_FRAGMENTS = "LAYOUT_FRAGMENTS";
+	public static final String ASSET_DISPLAY_CONTRIBUTOR =
+		"ASSET_DISPLAY_CONTRIBUTOR";
+
+	public static final String ASSET_ENTRY = "ASSET_ENTRY";
 
 }

@@ -15,8 +15,8 @@
 package com.liferay.layout.type.controller.asset.display.internal.display.context;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -44,11 +44,10 @@ public class AssetDisplayLayoutTypeControllerDisplayContext {
 
 		AssetDisplayContributor assetDisplayContributor =
 			(AssetDisplayContributor)_request.getAttribute(
-				AssetDisplayLayoutTypeControllerWebKeys.
-					ASSET_DISPLAY_CONTRIBUTOR);
+				AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR);
 
 		AssetEntry assetEntry = (AssetEntry)_request.getAttribute(
-			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY);
+			AssetDisplayWebKeys.ASSET_ENTRY);
 
 		return assetDisplayContributor.getAssetDisplayFieldsValues(
 			assetEntry, themeDisplay.getLocale());

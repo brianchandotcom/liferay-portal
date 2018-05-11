@@ -372,7 +372,18 @@ public class JournalArticleAssetRenderer
 		String linkToLayoutUuid = GetterUtil.getString(
 			portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
 
-		if (Validator.isNotNull(_article.getLayoutUuid()) &&
+		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(), getClassPK());
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			AssetDisplayPageEntryLocalServiceUtil.
+				fetchAssetDisplayPageEntryByAssetEntryId(
+					assetEntry.getEntryId());
+
+		if ((Validator.isNotNull(_article.getLayoutUuid()) ||
+			 (assetDisplayPageEntry != null)) &&
 			Validator.isNull(linkToLayoutUuid)) {
 
 			Group group = themeDisplay.getScopeGroup();
@@ -391,24 +402,6 @@ public class JournalArticleAssetRenderer
 				groupFriendlyURL.concat(
 					JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
 						_article.getUrlTitle()));
-		}
-
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
-
-		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-			JournalArticle.class.getName(), getClassPK());
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			AssetDisplayPageEntryLocalServiceUtil.
-				fetchAssetDisplayPageEntryByAssetEntryId(
-					assetEntry.getEntryId());
-
-		if (assetDisplayPageEntry != null) {
-			Group group = themeDisplay.getScopeGroup();
-
-			String displayURL = group.getDisplayURL(themeDisplay);
-
-			return displayURL + "/a/" + assetEntry.getEntryId();
 		}
 
 		String hitLayoutURL = getHitLayoutURL(

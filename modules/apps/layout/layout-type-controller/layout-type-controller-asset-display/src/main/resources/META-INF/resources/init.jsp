@@ -20,7 +20,8 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
+<%@ page import="com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys" %><%@
+page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
 page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
@@ -37,7 +38,7 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <%
-AssetEntry assetEntry = (AssetEntry)request.getAttribute(AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY);
+AssetEntry assetEntry = (AssetEntry)request.getAttribute(AssetDisplayWebKeys.ASSET_ENTRY);
 List<FragmentEntryLink> fragmentEntryLinks = (List<FragmentEntryLink>)request.getAttribute(AssetDisplayLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);
 
 AssetDisplayLayoutTypeControllerDisplayContext assetDisplayLayoutTypeControllerDisplayContext = new AssetDisplayLayoutTypeControllerDisplayContext(request);

@@ -186,6 +186,12 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 				continue;
 			}
+			catch (JSONException jsone) {
+				System.out.println(
+					"Invalid JSON file " + packageJSONFile.getPath());
+
+				continue;
+			}
 
 			if (!jsonObject.has("scripts")) {
 				continue;

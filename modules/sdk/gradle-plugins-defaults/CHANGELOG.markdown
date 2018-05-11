@@ -3520,7 +3520,7 @@ version 2.2.3.
 - [LPS-80544]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.38.
 
-## 5.3.117 - 2018-05-09
+## 5.3.117 - 2018-05-10
 
 ### Changed
 - [LPS-79453]: Update the [Liferay Gradle Plugins] dependency to version 3.12.0.

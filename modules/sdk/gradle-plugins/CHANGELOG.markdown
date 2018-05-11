@@ -4443,7 +4443,7 @@ version 2.1.29.
 - [LPS-80544]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.212.
 
-## 3.12.0 - 2018-05-09
+## 3.12.0 - 2018-05-10
 
 ### Added
 - [LPS-79453]: Add the `com.liferay.osgi.ext.plugin` plugin to build Ext OSGi

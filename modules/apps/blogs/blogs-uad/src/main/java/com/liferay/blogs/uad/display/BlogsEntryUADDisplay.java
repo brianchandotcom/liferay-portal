@@ -35,6 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 
 	@Override
+	public String[] getColumnFieldNames() {
+		return new String[] {"title", "subtitle", "description", "content"};
+	}
+
+	@Override
 	public String getEditURL(
 			BlogsEntry blogsEntry, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse)

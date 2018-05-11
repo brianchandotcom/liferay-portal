@@ -35,6 +35,12 @@ public class CommerceAddressImpl extends CommerceAddressBaseImpl {
 	}
 
 	@Override
+	public CommerceCountry fetchCommerceCountry() {
+		return CommerceCountryLocalServiceUtil.fetchCommerceCountry(
+			getCommerceCountryId());
+	}
+
+	@Override
 	public CommerceCountry getCommerceCountry() throws PortalException {
 		return CommerceCountryLocalServiceUtil.getCommerceCountry(
 			getCommerceCountryId());

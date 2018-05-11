@@ -235,33 +235,34 @@ public class EditQuestionMVCActionCommand extends BaseMVCActionCommand {
 			String param = enu.nextElement();
 
 			if (param.startsWith(CHOICE_DESCRIPTION_PREFIX)) {
-				try {
-					String id = param.substring(
-						CHOICE_DESCRIPTION_PREFIX.length(),
-						param.indexOf(CharPool.UNDERLINE));
+				int endIndex = param.indexOf(CharPool.UNDERLINE);
 
-					if (readParameters.contains(id)) {
-						continue;
-					}
-
-					String choiceName = ParamUtil.getString(
-						actionRequest, CHOICE_NAME_PREFIX + id);
-
-					Map<Locale, String> localeChoiceDescriptionMap =
-						LocalizationUtil.getLocalizationMap(
-							actionRequest, CHOICE_DESCRIPTION_PREFIX + id);
-
-					PollsChoice choice = PollsChoiceUtil.create(0);
-
-					choice.setName(choiceName);
-					choice.setDescriptionMap(localeChoiceDescriptionMap);
-
-					choices.add(choice);
-
-					readParameters.add(id);
+				if (endIndex < 0) {
+					endIndex = param.length();
 				}
-				catch (Exception e) {
+
+				String id = param.substring(
+					CHOICE_DESCRIPTION_PREFIX.length(), endIndex);
+
+				if (readParameters.contains(id)) {
+					continue;
 				}
+
+				String choiceName = ParamUtil.getString(
+					actionRequest, CHOICE_NAME_PREFIX + id);
+
+				Map<Locale, String> localeChoiceDescriptionMap =
+					LocalizationUtil.getLocalizationMap(
+						actionRequest, CHOICE_DESCRIPTION_PREFIX + id);
+
+				PollsChoice choice = PollsChoiceUtil.create(0);
+
+				choice.setName(choiceName);
+				choice.setDescriptionMap(localeChoiceDescriptionMap);
+
+				choices.add(choice);
+
+				readParameters.add(id);
 			}
 		}
 

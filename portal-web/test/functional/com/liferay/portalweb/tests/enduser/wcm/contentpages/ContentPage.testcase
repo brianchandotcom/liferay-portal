@@ -46,8 +46,8 @@
 	<command name="AddContentPage" priority="5">
 		<property name="portal.acceptance" value="pending" />
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -89,8 +89,8 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#add">

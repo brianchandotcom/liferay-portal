@@ -27,20 +27,20 @@ long questionId = BeanParamUtil.getLong(question, request, "questionId");
 
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
-if (question != null) {
-	if (question.getExpirationDate() != null) {
-		neverExpire = false;
-	}
-}
+String choicesAction = ParamUtil.getString(request, "choicesAction", StringPool.BLANK);
+
+int choiceName = ParamUtil.getInteger(request, "choiceName");
+
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 List choices = new ArrayList();
-
-int oldChoicesCount = 0;
 
 if (question != null) {
 	choices = PollsChoiceLocalServiceUtil.getChoices(questionId);
 
-	oldChoicesCount = choices.size();
+	if (question.getExpirationDate() != null) {
+		neverExpire = false;
+	}
 }
 
 int choicesCount = ParamUtil.getInteger(request, "choicesCount", choices.size());
@@ -49,15 +49,15 @@ if (choicesCount < 2) {
 	choicesCount = 2;
 }
 
-int choiceName = ParamUtil.getInteger(request, "choiceName");
-
 boolean deleteChoice = false;
+boolean addChoice = false;
 
-if (choiceName > 0) {
+if (StringUtil.equals(choicesAction, PollsWebKeys.ADD_CHOICE_ACTION)) {
+	addChoice = true;
+}
+else if (StringUtil.equals(choicesAction, PollsWebKeys.DELETE_CHOICE_ACTION)) {
 	deleteChoice = true;
 }
-
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 if (showHeader) {
 	renderResponse.setTitle(question == null ? LanguageUtil.get(request, "new-poll") : question.getTitle(locale));
@@ -77,6 +77,7 @@ portletDisplay.setURLBack(redirect);
 	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 	<aui:input name="questionId" type="hidden" value="<%= questionId %>" />
 	<aui:input name="neverExpire" type="hidden" value="<%= neverExpire %>" />
+	<aui:input name="choicesAction" type="hidden" value="" />
 	<aui:input name="choicesCount" type="hidden" value="<%= choicesCount %>" />
 	<aui:input name="choiceName" type="hidden" value="" />
 
@@ -106,25 +107,29 @@ portletDisplay.setURLBack(redirect);
 					String paramName = null;
 
 					if (deleteChoice && (i >= choiceName)) {
-						paramName = EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + ((char)(96 + i + 1));
+						paramName = EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + ((char)(c + 1));
 					}
 					else {
 						paramName = EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + c;
 					}
 
-					if ((question != null) && ((i - 1) < choices.size())) {
+					Map<Locale, String> localeChoiceDescriptionMap = LocalizationUtil.getLocalizationMap(renderRequest, paramName);
+
+					String value = GetterUtil.getString(LocalizationUtil.updateLocalization(localeChoiceDescriptionMap, "", "Description", LocaleUtil.toLanguageId(locale)));
+
+					if ((question != null) && !addChoice && !deleteChoice) {
 						choice = (PollsChoice)choices.get(i - 1);
+
+						value = choice.getDescription();
 					}
 				%>
 
 					<div class="input-group-default">
-						<aui:model-context bean="<%= choice %>" model="<%= PollsChoice.class %>" />
-
 						<aui:input name="<%= EditQuestionMVCActionCommand.CHOICE_NAME_PREFIX + c %>" type="hidden" value="<%= c %>" />
 
-						<aui:input fieldParam="<%= paramName %>" label="<%= c + StringPool.PERIOD %>" name="description" />
+						<aui:input ignoreRequestValue="<%= true %>" label="<%= c + StringPool.PERIOD %>" localized="<%= true %>" name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + c %>" type="text" value="<%= value %>" />
 
-						<c:if test="<%= (choicesCount > 2) && (i == choicesCount) %>">
+						<c:if test="<%= (choicesCount > 2) %>">
 							<div class="input-group-addon">
 								<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
 							</div>
@@ -163,6 +168,7 @@ portletDisplay.setURLBack(redirect);
 
 		var neverExpire = form.fm('fmexpirationDate').prop('checked');
 
+		form.fm('choicesAction').val('<%= PollsWebKeys.ADD_CHOICE_ACTION %>');
 		form.fm('choicesCount').val('<%= choicesCount + 1 %>');
 		form.fm('neverExpire').val(neverExpire);
 
@@ -179,8 +185,9 @@ portletDisplay.setURLBack(redirect);
 
 		var neverExpire = form.fm('fmexpirationDate').prop('checked');
 
+		form.fm('choicesAction').val('<%= PollsWebKeys.DELETE_CHOICE_ACTION %>');
 		form.fm('choicesCount').val('<%= choicesCount - 1 %>');
-		form.fm('choiceName').val('<%= choiceName %>');
+		form.fm('choiceName').val(choiceName);
 		form.fm('neverExpire').val(neverExpire);
 
 		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="deletePollChoiceURL">

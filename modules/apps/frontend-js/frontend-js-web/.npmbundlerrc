@@ -1,6 +1,6 @@
 {
-    "config": {
-    	"imports": {
+	"config": {
+		"imports": {
 			"frontend-js-metal-web": {
 				"metal": "^2.16.2",
 				"metal-anim": "^2.0.0",
@@ -14,12 +14,12 @@
 				"metal-soy": "^2.16.4",
 				"metal-state": "^2.0.0"
 			}
-    	}
-    },
-    "exclude": {
-    	"*": true
-    },
-    "ignore": ["**/*.js", "!**/*.es.js", "!**/*.soy.js"],
-    "output": "classes/META-INF/resources/"
+		}
+	},
+	"exclude": {
+		"*": true
+	},
+	"ignore": ["**/*.js", "!**/*.es.js", "!**/*.soy.js"],
+	"output": "classes/META-INF/resources/"
 }
 

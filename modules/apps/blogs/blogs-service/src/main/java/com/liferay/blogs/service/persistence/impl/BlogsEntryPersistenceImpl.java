@@ -3204,7 +3204,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LTD;
 		finderArgs = new Object[] {
-				groupId, displayDate,
+				groupId, _getTime(displayDate),
 				
 				start, end, orderByComparator
 			};
@@ -3961,7 +3961,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByG_LtD(long groupId, Date displayDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_LTD;
 
-		Object[] finderArgs = new Object[] { groupId, displayDate };
+		Object[] finderArgs = new Object[] { groupId, _getTime(displayDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -6533,7 +6533,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTD;
 		finderArgs = new Object[] {
-				companyId, displayDate,
+				companyId, _getTime(displayDate),
 				
 				start, end, orderByComparator
 			};
@@ -6944,7 +6944,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByC_LtD(long companyId, Date displayDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTD;
 
-		Object[] finderArgs = new Object[] { companyId, displayDate };
+		Object[] finderArgs = new Object[] { companyId, _getTime(displayDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -8164,7 +8164,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTD_S;
 		finderArgs = new Object[] {
-				displayDate, status,
+				_getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -8575,7 +8575,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByLtD_S(Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTD_S;
 
-		Object[] finderArgs = new Object[] { displayDate, status };
+		Object[] finderArgs = new Object[] { _getTime(displayDate), status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -8735,7 +8735,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_LTD;
 		finderArgs = new Object[] {
-				groupId, userId, displayDate,
+				groupId, userId, _getTime(displayDate),
 				
 				start, end, orderByComparator
 			};
@@ -9530,7 +9530,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByG_U_LtD(long groupId, long userId, Date displayDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_LTD;
 
-		Object[] finderArgs = new Object[] { groupId, userId, displayDate };
+		Object[] finderArgs = new Object[] {
+				groupId, userId, _getTime(displayDate)
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -12255,12 +12257,12 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_D_S;
-			finderArgs = new Object[] { groupId, displayDate, status };
+			finderArgs = new Object[] { groupId, _getTime(displayDate), status };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_D_S;
 			finderArgs = new Object[] {
-					groupId, displayDate, status,
+					groupId, _getTime(displayDate), status,
 					
 					start, end, orderByComparator
 				};
@@ -13055,7 +13057,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByG_D_S(long groupId, Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_D_S;
 
-		Object[] finderArgs = new Object[] { groupId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				groupId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -13291,7 +13295,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_GTD_S;
 		finderArgs = new Object[] {
-				groupId, displayDate, status,
+				groupId, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -14086,7 +14090,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByG_GtD_S(long groupId, Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_GTD_S;
 
-		Object[] finderArgs = new Object[] { groupId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				groupId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -14322,7 +14328,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LTD_S;
 		finderArgs = new Object[] {
-				groupId, displayDate, status,
+				groupId, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -15117,7 +15123,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByG_LtD_S(long groupId, Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_LTD_S;
 
-		Object[] finderArgs = new Object[] { groupId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				groupId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -15355,7 +15363,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LTD_NOTS;
 		finderArgs = new Object[] {
-				groupId, displayDate, status,
+				groupId, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -16150,7 +16158,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByG_LtD_NotS(long groupId, Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_LTD_NOTS;
 
-		Object[] finderArgs = new Object[] { groupId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				groupId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -17538,7 +17548,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTD_S;
 		finderArgs = new Object[] {
-				companyId, displayDate, status,
+				companyId, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -17972,7 +17982,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByC_LtD_S(long companyId, Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTD_S;
 
-		Object[] finderArgs = new Object[] { companyId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				companyId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -18141,7 +18153,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTD_NOTS;
 		finderArgs = new Object[] {
-				companyId, displayDate, status,
+				companyId, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -18575,7 +18587,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	public int countByC_LtD_NotS(long companyId, Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTD_NOTS;
 
-		Object[] finderArgs = new Object[] { companyId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				companyId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -18749,7 +18763,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_LTD_S;
 		finderArgs = new Object[] {
-				groupId, userId, displayDate, status,
+				groupId, userId, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -19588,7 +19602,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_LTD_S;
 
-		Object[] finderArgs = new Object[] { groupId, userId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				groupId, userId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -19842,7 +19858,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_U_LTD_NOTS;
 		finderArgs = new Object[] {
-				groupId, userId, displayDate, status,
+				groupId, userId, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -20683,7 +20699,9 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_U_LTD_NOTS;
 
-		Object[] finderArgs = new Object[] { groupId, userId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				groupId, userId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -21936,6 +21954,15 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_BLOGSENTRY = "SELECT blogsEntry FROM BlogsEntry blogsEntry";
 	private static final String _SQL_SELECT_BLOGSENTRY_WHERE_PKS_IN = "SELECT blogsEntry FROM BlogsEntry blogsEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_BLOGSENTRY_WHERE = "SELECT blogsEntry FROM BlogsEntry blogsEntry WHERE ";

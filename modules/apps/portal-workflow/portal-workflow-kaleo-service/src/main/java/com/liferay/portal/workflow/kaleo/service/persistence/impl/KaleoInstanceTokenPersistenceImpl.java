@@ -2335,13 +2335,15 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_PKITI_CD;
 			finderArgs = new Object[] {
-					companyId, parentKaleoInstanceTokenId, completionDate
+					companyId, parentKaleoInstanceTokenId,
+					_getTime(completionDate)
 				};
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_PKITI_CD;
 			finderArgs = new Object[] {
-					companyId, parentKaleoInstanceTokenId, completionDate,
+					companyId, parentKaleoInstanceTokenId,
+					_getTime(completionDate),
 					
 					start, end, orderByComparator
 				};
@@ -2792,7 +2794,7 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_PKITI_CD;
 
 		Object[] finderArgs = new Object[] {
-				companyId, parentKaleoInstanceTokenId, completionDate
+				companyId, parentKaleoInstanceTokenId, _getTime(completionDate)
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -3683,6 +3685,15 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_KALEOINSTANCETOKEN = "SELECT kaleoInstanceToken FROM KaleoInstanceToken kaleoInstanceToken";
 	private static final String _SQL_SELECT_KALEOINSTANCETOKEN_WHERE_PKS_IN = "SELECT kaleoInstanceToken FROM KaleoInstanceToken kaleoInstanceToken WHERE kaleoInstanceTokenId IN (";
 	private static final String _SQL_SELECT_KALEOINSTANCETOKEN_WHERE = "SELECT kaleoInstanceToken FROM KaleoInstanceToken kaleoInstanceToken WHERE ";

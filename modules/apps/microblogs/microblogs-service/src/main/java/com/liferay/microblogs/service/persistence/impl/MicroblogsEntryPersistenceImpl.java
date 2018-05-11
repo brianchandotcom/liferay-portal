@@ -7137,13 +7137,13 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_C_T_S;
 			finderArgs = new Object[] {
-					userId, createDate, type, socialRelationType
+					userId, _getTime(createDate), type, socialRelationType
 				};
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_C_T_S;
 			finderArgs = new Object[] {
-					userId, createDate, type, socialRelationType,
+					userId, _getTime(createDate), type, socialRelationType,
 					
 					start, end, orderByComparator
 				};
@@ -7611,7 +7611,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_C_T_S;
 
 		Object[] finderArgs = new Object[] {
-				userId, createDate, type, socialRelationType
+				userId, _getTime(createDate), type, socialRelationType
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -8720,6 +8720,15 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_MICROBLOGSENTRY = "SELECT microblogsEntry FROM MicroblogsEntry microblogsEntry";
 	private static final String _SQL_SELECT_MICROBLOGSENTRY_WHERE_PKS_IN = "SELECT microblogsEntry FROM MicroblogsEntry microblogsEntry WHERE microblogsEntryId IN (";
 	private static final String _SQL_SELECT_MICROBLOGSENTRY_WHERE = "SELECT microblogsEntry FROM MicroblogsEntry microblogsEntry WHERE ";

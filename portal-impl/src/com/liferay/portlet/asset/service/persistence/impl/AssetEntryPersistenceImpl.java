@@ -1704,11 +1704,15 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PUBLISHDATE;
-			finderArgs = new Object[] { publishDate };
+			finderArgs = new Object[] { _getTime(publishDate) };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PUBLISHDATE;
-			finderArgs = new Object[] { publishDate, start, end, orderByComparator };
+			finderArgs = new Object[] {
+					_getTime(publishDate),
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<AssetEntry> list = null;
@@ -2094,7 +2098,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public int countByPublishDate(Date publishDate) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_PUBLISHDATE;
 
-		Object[] finderArgs = new Object[] { publishDate };
+		Object[] finderArgs = new Object[] { _getTime(publishDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2245,12 +2249,12 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_EXPIRATIONDATE;
-			finderArgs = new Object[] { expirationDate };
+			finderArgs = new Object[] { _getTime(expirationDate) };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_EXPIRATIONDATE;
 			finderArgs = new Object[] {
-					expirationDate,
+					_getTime(expirationDate),
 					
 					start, end, orderByComparator
 				};
@@ -2640,7 +2644,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public int countByExpirationDate(Date expirationDate) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_EXPIRATIONDATE;
 
-		Object[] finderArgs = new Object[] { expirationDate };
+		Object[] finderArgs = new Object[] { _getTime(expirationDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -4439,13 +4443,15 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_P_E;
 			finderArgs = new Object[] {
-					groupId, classNameId, publishDate, expirationDate
+					groupId, classNameId, _getTime(publishDate),
+					_getTime(expirationDate)
 				};
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_P_E;
 			finderArgs = new Object[] {
-					groupId, classNameId, publishDate, expirationDate,
+					groupId, classNameId, _getTime(publishDate),
+					_getTime(expirationDate),
 					
 					start, end, orderByComparator
 				};
@@ -4937,7 +4943,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_P_E;
 
 		Object[] finderArgs = new Object[] {
-				groupId, classNameId, publishDate, expirationDate
+				groupId, classNameId, _getTime(publishDate),
+				_getTime(expirationDate)
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -6609,6 +6616,15 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	@BeanReference(type = AssetTagPersistence.class)
 	protected AssetTagPersistence assetTagPersistence;
 	protected TableMapper<AssetEntry, com.liferay.asset.kernel.model.AssetTag> assetEntryToAssetTagTableMapper;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_ASSETENTRY = "SELECT assetEntry FROM AssetEntry assetEntry";
 	private static final String _SQL_SELECT_ASSETENTRY_WHERE_PKS_IN = "SELECT assetEntry FROM AssetEntry assetEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_ASSETENTRY_WHERE = "SELECT assetEntry FROM AssetEntry assetEntry WHERE ";

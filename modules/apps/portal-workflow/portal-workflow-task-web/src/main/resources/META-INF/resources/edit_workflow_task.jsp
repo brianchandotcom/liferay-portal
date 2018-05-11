@@ -82,7 +82,7 @@ renderResponse.setTitle(headerTitle);
 
 										<div class="card-col-content card-col-gutters">
 											<div class="lfr-asset-assigned">
-												<%= workflowTaskDisplayContext.getWorkflowTaskAssigneeUserName(workflowTask) %>
+												<%= HtmlUtil.escape(workflowTaskDisplayContext.getWorkflowTaskAssigneeUserName(workflowTask)) %>
 											</div>
 										</div>
 									</c:when>

@@ -45,13 +45,13 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 			String defaultWorkflowDefinitionLabel = workflowDefinitionLinkDisplayContext.getDefaultWorkflowDefinitionLabel(className);
 			%>
 
-			<aui:option><%= defaultWorkflowDefinitionLabel %></aui:option>
+			<aui:option><%= HtmlUtil.escape(defaultWorkflowDefinitionLabel) %></aui:option>
 
 			<%
 			for (WorkflowDefinition workflowDefinition : workflowDefinitionLinkDisplayContext.getWorkflowDefinitions()) {
 			%>
 
-				<aui:option label="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionLabel(workflowDefinition) %>" selected="<%= workflowDefinitionLinkDisplayContext.isWorkflowDefinitionSelected(workflowDefinition, className) %>" value="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionValue(workflowDefinition) %>" />
+				<aui:option label="<%= HtmlUtil.escape(workflowDefinitionLinkDisplayContext.getWorkflowDefinitionLabel(workflowDefinition)) %>" selected="<%= workflowDefinitionLinkDisplayContext.isWorkflowDefinitionSelected(workflowDefinition, className) %>" value="<%= workflowDefinitionLinkDisplayContext.getWorkflowDefinitionValue(workflowDefinition) %>" />
 
 			<%
 			}
@@ -62,5 +62,5 @@ String resource = workflowDefinitionLinkSearchEntry.getResource();
 </div>
 
 <div id="<%= randomNamespace %>definitionLabel">
-	<%= workflowDefinitionLinkSearchEntry.getWorkflowDefinitionLabel() %>
+	<%= HtmlUtil.escape(workflowDefinitionLinkSearchEntry.getWorkflowDefinitionLabel()) %>
 </div>

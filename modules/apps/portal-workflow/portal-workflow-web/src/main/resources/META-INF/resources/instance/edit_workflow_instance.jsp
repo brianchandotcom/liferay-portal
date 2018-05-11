@@ -48,7 +48,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 				<aui:col width="<%= 60 %>">
 					<aui:field-wrapper label="state">
 						<aui:fieldset>
-							<%= workflowInstanceEditDisplayContext.getWorkflowInstanceState() %>
+							<%= HtmlUtil.escape(workflowInstanceEditDisplayContext.getWorkflowInstanceState()) %>
 						</aui:fieldset>
 					</aui:field-wrapper>
 				</aui:col>

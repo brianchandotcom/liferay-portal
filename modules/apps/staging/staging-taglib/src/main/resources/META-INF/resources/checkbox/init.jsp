@@ -22,6 +22,7 @@ long deletions = GetterUtil.getLong(request.getAttribute("liferay-staging:checkb
 String descriptionKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:description"));
 boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-staging:checkbox:disabled"));
 String id = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:id"));
+boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-staging:checkbox:ignoreRequestValue"));
 long items = GetterUtil.getLong(request.getAttribute("liferay-staging:checkbox:items"));
 String labelKey = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:label"));
 String name = GetterUtil.getString(request.getAttribute("liferay-staging:checkbox:name"));
@@ -31,6 +32,10 @@ String warningKey = GetterUtil.getString(request.getAttribute("liferay-staging:c
 
 if (Validator.isNull(id)) {
 	id = name;
+}
+
+if (!ignoreRequestValue && Validator.isNotNull(ParamUtil.getString(request, "checkboxNames"))) {
+	checked = ParamUtil.getBoolean(request, name, false);
 }
 
 String checkedString = (checked) ? "checked" : "";

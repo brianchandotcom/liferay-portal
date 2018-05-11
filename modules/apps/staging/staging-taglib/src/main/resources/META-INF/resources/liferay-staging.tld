@@ -71,6 +71,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to ignore the value saved from the request object. The default value is false.</description>
+			<name>ignoreRequestValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>The number of items. It is displayed after the label when it is greater than zero.</description>
 			<name>items</name>
 			<required>false</required>

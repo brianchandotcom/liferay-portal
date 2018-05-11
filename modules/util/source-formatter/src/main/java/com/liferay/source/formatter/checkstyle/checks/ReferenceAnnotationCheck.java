@@ -158,7 +158,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 				modifiersAST.branchContains(TokenTypes.LITERAL_VOLATILE)) {
 
 				log(
-					variableDefAST.getLineNo(), _MSG_MISSING_VOLATILE,
+					variableDefAST.getLineNo(), _MSG_INCORRECT_VOLATILE,
 					variableName);
 
 				return;
@@ -243,13 +243,13 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	private static final String _MSG_INCORRECT_GREEDY_POLICY_OPTION =
 		"greedy.policy.option.incorrect";
 
+	private static final String _MSG_INCORRECT_VOLATILE = "volatile.incorrect";
+
 	private static final String _MSG_MISSING_DYNAMIC_POLICY_UNBIND =
 		"unbind.dynamic.policy.missing";
 
 	private static final String _MSG_MISSING_STATIC_POLICY_UNBIND =
 		"unbind.static.policy.missing";
-
-	private static final String _MSG_MISSING_VOLATILE = "volatile.missing";
 
 	private static final String _MSG_REDUNDANT_DEFAULT_UNBIND =
 		"default.unbind.redundant";

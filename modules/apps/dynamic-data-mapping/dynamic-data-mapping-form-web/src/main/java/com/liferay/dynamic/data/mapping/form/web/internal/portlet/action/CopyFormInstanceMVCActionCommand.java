@@ -15,17 +15,13 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -71,40 +67,16 @@ public class CopyFormInstanceMVCActionCommand
 			formInstance.getStructureId(), serviceContext);
 	}
 
-	protected void copySettingsStorageTypeValue(
-			DDMFormValues settingsDDMFormValues,
-			DDMFormValues defaultSettingsDDMFormValues)
-		throws Exception {
-
-		DDMFormFieldValue storageTypeDDMFormFieldValue =
-			getStorageTypeDDMFormFieldValue(defaultSettingsDDMFormValues);
-
-		if (storageTypeDDMFormFieldValue == null) {
-			return;
-		}
-
-		String storageType = saveFormInstanceMVCCommandHelper.getStorageType(
-			settingsDDMFormValues);
-
-		storageTypeDDMFormFieldValue.setValue(
-			new UnlocalizedValue(storageType));
-	}
-
 	protected DDMFormValues createFormInstanceSettingsDDMFormValues(
-			ActionRequest actionRequest, DDMFormInstance formInstance)
+			DDMFormInstance formInstance)
 		throws Exception {
 
-		DDMForm settingsDDMForm = DDMFormFactory.create(
-			DDMFormInstanceSettings.class);
+		DDMFormValues settingsDDMFormValuesCopy =
+			formInstance.getSettingsDDMFormValues();
 
-		DDMFormValues defaultSettingsDDMFormValues =
-			ddmFormValuesFactory.create(actionRequest, settingsDDMForm);
+		setDefaultPublishedDDMFormFieldValue(settingsDDMFormValuesCopy);
 
-		copySettingsStorageTypeValue(
-			formInstance.getSettingsDDMFormValues(),
-			defaultSettingsDDMFormValues);
-
-		return defaultSettingsDDMFormValues;
+		return settingsDDMFormValuesCopy;
 	}
 
 	@Override
@@ -132,8 +104,7 @@ public class CopyFormInstanceMVCActionCommand
 				formInstance.getSettingsDDMFormValues());
 
 		DDMFormValues settingsDDMFormValues =
-			createFormInstanceSettingsDDMFormValues(
-				actionRequest, formInstance);
+			createFormInstanceSettingsDDMFormValues(formInstance);
 
 		ddmFormInstanceService.updateFormInstance(
 			formInstanceCopy.getFormInstanceId(), settingsDDMFormValues);
@@ -160,25 +131,20 @@ public class CopyFormInstanceMVCActionCommand
 		return ResourceBundleUtil.getBundle("content.Language", locale, clazz);
 	}
 
-	protected DDMFormFieldValue getStorageTypeDDMFormFieldValue(
+	protected void setDefaultPublishedDDMFormFieldValue(
 		DDMFormValues ddmFormValues) {
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
 
-			if (Objects.equals(ddmFormFieldValue.getName(), "storageType")) {
-				return ddmFormFieldValue;
+			if (Objects.equals(ddmFormFieldValue.getName(), "published")) {
+				ddmFormFieldValue.setValue(new UnlocalizedValue("false"));
 			}
 		}
-
-		return null;
 	}
 
 	@Reference
 	protected DDMFormInstanceService ddmFormInstanceService;
-
-	@Reference
-	protected DDMFormValuesFactory ddmFormValuesFactory;
 
 	@Reference
 	protected DDMStructureService ddmStructureService;

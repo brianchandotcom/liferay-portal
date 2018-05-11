@@ -44,7 +44,9 @@
 	</command>
 
 	<command name="clickPublish">
-		<execute function="ScrollWebElementIntoView" locator1="Button#PUBLISH" />
+		<execute function="ScrollWebElementIntoView" locator1="Button#ANY">
+			<var name="key_text" value="Publish" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 	</command>

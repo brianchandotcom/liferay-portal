@@ -15,18 +15,23 @@
 package com.liferay.roles.uad.test;
 
 import com.liferay.portal.kernel.model.Role;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = RoleUADTestHelper.class)
 public class RoleUADTestHelper {
+
 	/**
 	 * Implement addRole() to enable some UAD tests.
 	 *
@@ -35,9 +40,13 @@ public class RoleUADTestHelper {
 	 * </p>
 	 */
 	public Role addRole(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		String name = RandomTestUtil.randomString(
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
 
-		return null;
+		return _roleLocalService.addRole(
+			userId, null, 0, name, null, null, RoleConstants.TYPE_REGULAR, null,
+			null);
 	}
 
 	/**
@@ -49,4 +58,8 @@ public class RoleUADTestHelper {
 	 */
 	public void cleanUpDependencies(List<Role> roles) throws Exception {
 	}
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
 }

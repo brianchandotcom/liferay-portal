@@ -3437,6 +3437,8 @@ ${output.content}</echo>
 					<then>
 						<exec executable="git" output="${project.dir}/build.services.diff.txt">
 							<arg value="diff" />
+							<arg value="--" />
+							<arg value="." />
 							<arg value=":!*/*-portlet-service.jar" />
 							<arg value=":!*/src/main/resources/service.properties" />
 							<arg value=":!*/src/service.properties" />

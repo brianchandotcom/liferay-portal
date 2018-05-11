@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Document Library UAD
+Bundle-SymbolicName: com.liferay.document.library.uad
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit

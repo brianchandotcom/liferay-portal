@@ -15,12 +15,20 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderPayment;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,20 +39,34 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderConfirmationCheckoutStepDisplayContext {
 
 	public OrderConfirmationCheckoutStepDisplayContext(
-			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderPaymentLocalService commerceOrderPaymentLocalService,
+			CommerceOrderService commerceOrderService,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_commerceOrderPaymentLocalService = commerceOrderPaymentLocalService;
+		_commerceOrderService = commerceOrderService;
 		_httpServletRequest = httpServletRequest;
-
-		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
-			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 	}
 
 	public CommerceOrder getCommerceOrder() throws PortalException {
+		if (_commerceOrder != null) {
+			return _commerceOrder;
+		}
+
+		_commerceOrder = (CommerceOrder)_httpServletRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		if (_commerceOrder != null) {
+			return _commerceOrder;
+		}
+
+		long commerceOrderId = ParamUtil.getLong(
+			_httpServletRequest, "order_confirmation.jsp-commerceOrderId");
+
+		_commerceOrder = _commerceOrderService.fetchCommerceOrder(
+			commerceOrderId);
+
 		return _commerceOrder;
 	}
 
@@ -53,21 +75,67 @@ public class OrderConfirmationCheckoutStepDisplayContext {
 
 		return
 			_commerceOrderPaymentLocalService.fetchLatestCommerceOrderPayment(
-				_commerceOrder.getCommerceOrderId());
+				getCommerceOrderId());
 	}
 
 	public String getOrderDetailURL() throws PortalException {
-		PortletURL portletURL =
-			_commerceOrderHttpHelper.getCommerceCartPortletURL(
-				_httpServletRequest);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		return portletURL.toString();
+		long groupId = themeDisplay.getScopeGroupId();
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
+
+		if (plid > 0) {
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				_httpServletRequest,
+				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER, plid,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName", "editCommerceOrder");
+			portletURL.setParameter(
+				"commerceOrderId", String.valueOf(getCommerceOrderId()));
+
+			return portletURL.toString();
+		}
+
+		plid = PortalUtil.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
+
+		if (plid > 0) {
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				_httpServletRequest,
+				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER, plid,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName", "viewCommerceOrderItems");
+			portletURL.setParameter(
+				"commerceOrderId", String.valueOf(getCommerceOrderId()));
+
+			return portletURL.toString();
+		}
+
+		return StringPool.BLANK;
 	}
 
-	private final CommerceOrder _commerceOrder;
-	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	protected long getCommerceOrderId() throws PortalException {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder == null) {
+			return 0;
+		}
+
+		return commerceOrder.getCommerceOrderId();
+	}
+
+	private CommerceOrder _commerceOrder;
 	private final CommerceOrderPaymentLocalService
 		_commerceOrderPaymentLocalService;
+	private final CommerceOrderService _commerceOrderService;
 	private final HttpServletRequest _httpServletRequest;
 
 }

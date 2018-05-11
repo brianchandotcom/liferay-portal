@@ -20,8 +20,8 @@ import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -79,6 +79,10 @@ public class OrderConfirmationCommerceCheckoutStep
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrder.class.getName(), actionRequest);
 
+		actionResponse.setRenderParameter(
+			"order_confirmation.jsp-commerceOrderId",
+			String.valueOf(commerceOrderId));
+
 		_actionHelper.startPayment(
 			commerceOrderId, actionRequest, actionResponse, serviceContext);
 	}
@@ -92,7 +96,7 @@ public class OrderConfirmationCommerceCheckoutStep
 		OrderConfirmationCheckoutStepDisplayContext
 			orderConfirmationCheckoutStepDisplayContext =
 				new OrderConfirmationCheckoutStepDisplayContext(
-					_commerceOrderHttpHelper, _commerceOrderPaymentLocalService,
+					_commerceOrderPaymentLocalService, _commerceOrderService,
 					httpServletRequest);
 
 		httpServletRequest.setAttribute(
@@ -116,10 +120,10 @@ public class OrderConfirmationCommerceCheckoutStep
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
 
 	@Reference
-	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
+	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

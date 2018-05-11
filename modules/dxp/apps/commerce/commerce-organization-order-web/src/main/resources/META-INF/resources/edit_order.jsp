@@ -341,11 +341,13 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 <aui:script use="aui-base">
 	var orderTransition = A.one('#<portlet:namespace />orderTransition');
 
-	orderTransition.delegate(
-		'click',
-		function(event) {
-			<portlet:namespace />transition(event);
-		},
-		'.transition-link'
-	);
+	if (orderTransition) {
+		orderTransition.delegate(
+			'click',
+			function(event) {
+				<portlet:namespace />transition(event);
+			},
+			'.transition-link'
+		);
+	}
 </aui:script>

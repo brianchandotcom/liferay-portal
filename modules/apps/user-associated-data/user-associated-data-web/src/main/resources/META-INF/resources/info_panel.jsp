@@ -26,7 +26,7 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 		<c:when test="<%= ListUtil.isEmpty(uadEntities) %>">
 			<div class="sidebar-header">
 				<h3 class="sidebar-title"><%= uadDisplay.getTypeName(locale) %></h3>
-				<h5 class="sidebar-subtitle"><%= uadDisplay.getApplicationName() %></h5>
+				<h5 class="sidebar-subtitle"><%= UADLanguageUtil.getApplicationName(uadDisplay, locale) %></h5>
 			</div>
 		</c:when>
 		<c:when test="<%= ListUtil.isNotEmpty(uadEntities) && (uadEntities.size() == 1) %>">

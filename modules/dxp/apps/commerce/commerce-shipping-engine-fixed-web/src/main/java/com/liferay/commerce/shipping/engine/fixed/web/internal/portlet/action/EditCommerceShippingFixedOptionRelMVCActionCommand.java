@@ -127,8 +127,8 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		String zip = ParamUtil.getString(actionRequest, "zip");
 		double weightFrom = ParamUtil.getDouble(actionRequest, "weightFrom");
 		double weightTo = ParamUtil.getDouble(actionRequest, "weightTo");
-		String fixedPrice = ParamUtil.getString(actionRequest, "fixedPrice");
-		String rateUnitWeightPrice = ParamUtil.getString(
+		double fixedPrice = ParamUtil.getDouble(actionRequest, "fixedPrice");
+		double rateUnitWeightPrice = ParamUtil.getDouble(
 			actionRequest, "rateUnitWeightPrice");
 		double ratePercentage = ParamUtil.getDouble(
 			actionRequest, "ratePercentage");

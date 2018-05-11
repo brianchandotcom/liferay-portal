@@ -125,7 +125,7 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		String amount = ParamUtil.getString(actionRequest, "amount");
+		double amount = ParamUtil.getDouble(actionRequest, "amount");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

@@ -24,8 +24,5 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 String userName = kaleoDesignerDisplayContext.getUserNameOrBlank(kaleoDefinitionVersion);
 %>
 
-<div class="flex-col flex-col-expand">
-	<div class="version"><%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %></div>
-
-	<div class="sidebar-caption"><%= userName %></div>
-</div>
+<div class="list-group-title"><%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %></div>
+<div class="list-group-subtitle"><%= userName %></div>

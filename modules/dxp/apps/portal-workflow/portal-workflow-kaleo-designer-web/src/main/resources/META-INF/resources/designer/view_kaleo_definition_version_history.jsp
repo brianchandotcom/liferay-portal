@@ -22,6 +22,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.
 
 <liferay-ui:search-container
 	id="kaleoDefinitionVersions"
+	cssClass="lfr-sidebar-list-group-workflow sidebar-list-group"
 >
 	<liferay-ui:search-container-results
 		results="<%= kaleoDesignerDisplayContext.getKaleoDefinitionVersions(kaleoDefinitionVersion) %>"
@@ -31,7 +32,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.
 		className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
 	>
 		<liferay-ui:search-container-column-jsp
-			cssClass="lfr-version-column"
+			cssClass="autofit-col-expand"
 			path="/designer/kaleo_definition_version_history_info.jsp"
 		/>
 
@@ -41,7 +42,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="list"
+		displayStyle="descriptive"
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>

@@ -19,7 +19,6 @@ import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.organization.apio.identifier.OrganizationIdentifier;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -33,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * Provides the information necessary to expose the <a
  * href="http://schema.org/Organization">Organization</a> resources contained
  * inside an <a href="http://schema.org/Organization">Organization</a> through a
- * web API.
- * The resources are mapped from the internal model {@link Organization}.
+ * web API. The resources are mapped from the internal model {@link
+ * Organization}.
  *
  * @author Eduardo Perez
  * @review

@@ -20,7 +20,6 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.organization.apio.identifier.OrganizationIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
@@ -34,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Provides the information necessary to expose the <a
  * href="http://schema.org/Person">Person</a> resources contained inside an <a
- * href="http://schema.org/Organization">Organization</a> through a web API.
- * The resources are mapped from the internal model {@link User}.
+ * href="http://schema.org/Organization">Organization</a> through a web API. The
+ * resources are mapped from the internal model {@link User}.
  *
  * @author Eduardo Perez
  * @review
@@ -55,8 +54,8 @@ public class PersonNestedCollectionRouter implements
 	}
 
 	private PageItems<User> _getPageItems(
-		Pagination pagination, Long organizationId)
-			throws PortalException {
+			Pagination pagination, Long organizationId)
+		throws PortalException {
 
 		List<User> organizationUsers = _userService.getOrganizationUsers(
 			organizationId, WorkflowConstants.STATUS_APPROVED,

@@ -27,9 +27,9 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose <a
- * href="http://schema.org/AggregateRating">AggregateRating</a> resources through
- * a web API.
- * The resources are mapped from the internal model {@link RatingsStats}.
+ * href="http://schema.org/AggregateRating">AggregateRating</a> resources
+ * through a web API. The resources are mapped from the internal model {@link
+ * RatingsStats}.
  *
  * @author Alejandro Hernández
  */

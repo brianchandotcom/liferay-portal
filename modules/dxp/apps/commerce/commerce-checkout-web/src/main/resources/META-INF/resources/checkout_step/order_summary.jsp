@@ -50,7 +50,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 				<li class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
 						<h5 class="commerce-title">
-							Items (#)
+							<liferay-ui:message arguments="<%= orderSummaryCheckoutStepDisplayContext.getCommerceOrderItemsQuantity() %>" key="items-x" translateArguments="<%= false %>" />
 						</h5>
 					</div>
 				</li>

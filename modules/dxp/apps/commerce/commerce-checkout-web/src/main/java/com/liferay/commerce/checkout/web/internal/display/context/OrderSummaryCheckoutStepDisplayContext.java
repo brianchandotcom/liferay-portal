@@ -20,6 +20,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.price.CommercePriceCalculation;
@@ -45,15 +46,18 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderSummaryCheckoutStepDisplayContext {
 
 	public OrderSummaryCheckoutStepDisplayContext(
+			CommerceOrderHttpHelper commerceOrderHttpHelper,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 			CommercePriceCalculation commercePriceCalculation,
 			CPInstanceHelper cpInstanceHelper,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commercePriceCalculation = commercePriceCalculation;
 		_cpInstanceHelper = cpInstanceHelper;
+		_httpServletRequest = httpServletRequest;
 
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
@@ -63,6 +67,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	public CommerceOrder getCommerceOrder() {
 		return _commerceOrder;
+	}
+
+	public int getCommerceOrderItemsQuantity() throws PortalException {
+		return _commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
+			_httpServletRequest);
 	}
 
 	public String getCommerceOrderItemThumbnailSrc(
@@ -132,9 +141,11 @@ public class OrderSummaryCheckoutStepDisplayContext {
 
 	private final CommerceContext _commerceContext;
 	private final CommerceOrder _commerceOrder;
+	private final CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
 	private final CommercePriceCalculation _commercePriceCalculation;
 	private final CPInstanceHelper _cpInstanceHelper;
+	private final HttpServletRequest _httpServletRequest;
 
 }

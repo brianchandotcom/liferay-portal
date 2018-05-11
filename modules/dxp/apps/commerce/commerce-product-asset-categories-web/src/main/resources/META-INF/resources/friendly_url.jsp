@@ -55,21 +55,15 @@ renderResponse.setTitle(category.getTitle(locale));
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<div class="commerce-product-definition-url-title form-group">
-				<label for="<portlet:namespace />friendlyURL"><liferay-ui:message key="friendly-url" /> <liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>/news</em>", false) %>' /></label>
+			<div class="form-group">
+				<label for="<portlet:namespace />urlTitleMapAsXML"><liferay-ui:message key="friendly-url" /><liferay-ui:icon-help message='<%= LanguageUtil.format(request, "for-example-x", "<em>news</em>", false) %>' /></label>
 
-				<div class="input-group lfr-friendly-url-input-group">
-					<span class="input-group-addon" id="<portlet:namespace />urlBase">
-						<span class="input-group-constrain"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
-					</span>
-
-					<liferay-ui:input-localized
-						cssClass="form-control"
-						defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
-						name="urlTitleMapAsXML"
-						xml="<%= HttpUtil.decodeURL(titleMapAsXML) %>"
-					/>
-				</div>
+				<liferay-ui:input-localized
+					defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
+					inputAddon="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>"
+					name="urlTitleMapAsXML"
+					xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>"
+				/>
 			</div>
 
 			<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />

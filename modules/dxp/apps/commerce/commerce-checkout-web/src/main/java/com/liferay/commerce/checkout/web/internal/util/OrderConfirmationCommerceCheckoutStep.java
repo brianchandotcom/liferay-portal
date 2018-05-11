@@ -20,6 +20,7 @@ import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -96,8 +97,8 @@ public class OrderConfirmationCommerceCheckoutStep
 		OrderConfirmationCheckoutStepDisplayContext
 			orderConfirmationCheckoutStepDisplayContext =
 				new OrderConfirmationCheckoutStepDisplayContext(
-					_commerceOrderPaymentLocalService, _commerceOrderService,
-					httpServletRequest);
+					_commerceOrderHttpHelper, _commerceOrderPaymentLocalService,
+					_commerceOrderService, httpServletRequest);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
@@ -118,6 +119,9 @@ public class OrderConfirmationCommerceCheckoutStep
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
 	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(layoutsAdminDisplayContext, request);
+SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletURL()));
@@ -25,119 +25,195 @@ portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletUR
 renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= selectLayoutPageTemplateEntryDisplayContext.getNavigationItems() %>"
-/>
+<div class="container-fluid container-fluid-max-xl container-view">
+	<div class="row">
+		<div class="col-lg-3">
+			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
+				<ul class="nav nav-nested">
+					<li class="nav-item">
+						<strong class="text-uppercase">
+							<liferay-ui:message key="collections" />
+						</strong>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
-	<c:choose>
-		<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
-			<liferay-ui:search-container
-				id="layoutPageTemplateEntries"
-				total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntriesCount() %>"
-			>
-				<liferay-ui:search-container-results
-					results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
-				/>
+						<ul class="nav nav-stacked">
 
-				<liferay-ui:search-container-row
-					className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
-					keyProperty="layoutPageTemplateEntryId"
-					modelVar="layoutPageTemplateEntry"
-				>
+							<%
+							List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(scopeGroupId);
 
-					<%
-					row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-					%>
+							for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
+								long layoutPageTemplateCollectionId = layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+							%>
 
-					<liferay-ui:search-container-column-text>
+								<li class="nav-item">
+									<a class="nav-link truncate-text <%= (selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId() == layoutPageTemplateCollectionId) ? "active" : StringPool.BLANK %>" href="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollectionId) %>">
+										<%= layoutPageTemplateCollection.getName() %>
+									</a>
+								</li>
+
+							<%
+							}
+							%>
+
+							<li class="nav-item">
+
+								<%
+								String basicPagesURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "basic-pages");
+								%>
+
+								<a class="nav-link truncate-text <%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() ? "active" : StringPool.BLANK %>" href="<%= basicPagesURL %>">
+									<liferay-ui:message key="basic-pages" />
+								</a>
+							</li>
+							<li class="nav-item">
+
+								<%
+								String globalTemplatesURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(0, layoutsAdminDisplayContext.getSelPlid(), "global-templates");
+								%>
+
+								<a class="nav-link truncate-text <%= selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates() ? "active" : StringPool.BLANK %>" href="<%= globalTemplatesURL %>">
+									<liferay-ui:message key="global-templates" />
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="col-lg-9">
+			<div class="sheet">
+				<h3>
+					<c:choose>
+						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
+
+							<%
+							LayoutPageTemplateCollection layoutPageTemplateCollection = LayoutPageTemplateCollectionLocalServiceUtil.fetchLayoutPageTemplateCollection(selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId());
+							%>
+
+							<c:if test="<%= layoutPageTemplateCollection != null %>">
+								<%= layoutPageTemplateCollection.getName() %>
+							</c:if>
+						</c:when>
+						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
+							<liferay-ui:message key="basic-pages" />
+						</c:when>
+						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isGlobalTemplates() %>">
+							<liferay-ui:message key="global-templates" />
+						</c:when>
+					</c:choose>
+				</h3>
+
+				<c:choose>
+					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
+						<liferay-ui:search-container
+							id="layoutPageTemplateEntries"
+							total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntriesCount() %>"
+						>
+							<liferay-ui:search-container-results
+								results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntries(searchContainer.getStart(), searchContainer.getEnd()) %>"
+							/>
+
+							<liferay-ui:search-container-row
+								className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
+								keyProperty="layoutPageTemplateEntryId"
+								modelVar="layoutPageTemplateEntry"
+							>
+
+								<%
+								row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+								%>
+
+								<liferay-ui:search-container-column-text>
+
+									<%
+									Map<String, Object> addLayoutData = new HashMap<>();
+
+									addLayoutData.put("layout-page-template-entry-id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+									%>
+
+									<liferay-frontend:icon-vertical-card
+										actionJspServletContext="<%= application %>"
+										cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
+										data="<%= addLayoutData %>"
+										icon="page"
+										resultRow="<%= row %>"
+										rowChecker="<%= searchContainer.getRowChecker() %>"
+										title="<%= layoutPageTemplateEntry.getName() %>"
+										url="javascript:;"
+									>
+										<liferay-frontend:vertical-card-header>
+											<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+										</liferay-frontend:vertical-card-header>
+									</liferay-frontend:icon-vertical-card>
+								</liferay-ui:search-container-column-text>
+							</liferay-ui:search-container-row>
+
+							<liferay-ui:search-iterator
+								displayStyle="icon"
+								markupView="lexicon"
+							/>
+						</liferay-ui:search-container>
+
+						<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">
+							<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
+							<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
+							<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
+							<portlet:param name="portletResource" value="<%= layoutsAdminDisplayContext.getPortletResource() %>" />
+							<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
+							<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
+							<portlet:param name="explicitCreation" value="<%= Boolean.TRUE.toString() %>" />
+						</portlet:actionURL>
 
 						<%
-						Map<String, Object> addLayoutData = new HashMap<>();
-
-						addLayoutData.put("layout-page-template-entry-id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+						String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavigationMenuNames();
 						%>
 
-						<liferay-frontend:icon-vertical-card
-							actionJspServletContext="<%= application %>"
-							cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
-							data="<%= addLayoutData %>"
-							icon="page"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= layoutPageTemplateEntry.getName() %>"
-							url="javascript:;"
-						>
-							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-							</liferay-frontend:vertical-card-header>
-						</liferay-frontend:icon-vertical-card>
-					</liferay-ui:search-container-column-text>
-				</liferay-ui:search-container-row>
+						<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
+							var addLayoutActionOptionQueryClickHandler = dom.delegate(
+								document.body,
+								'click',
+								'.<portlet:namespace />add-layout-action-option',
+								function(event) {
+									var actionElement = event.delegateTarget;
 
-				<liferay-ui:search-iterator
-					displayStyle="icon"
-					markupView="lexicon"
-				/>
-			</liferay-ui:search-container>
+									modalCommands.openSimpleInputModal(
+										{
+											<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
+												checkboxFieldLabel: '<liferay-ui:message arguments="<%= autoSiteNavigationMenuNames %>" key="add-this-page-to-the-following-menus-x" />',
+												checkboxFieldName: 'TypeSettingsProperties--addToAutoMenus--',
+												checkboxFieldValue: true,
+											</c:if>
 
-			<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">
-				<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
-				<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
-				<portlet:param name="portletResource" value="<%= layoutsAdminDisplayContext.getPortletResource() %>" />
-				<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
-				<portlet:param name="explicitCreation" value="<%= Boolean.TRUE.toString() %>" />
-			</portlet:actionURL>
+											dialogTitle: '<liferay-ui:message key="add-page" />',
+											formSubmitURL: '<%= addLayoutURL %>',
+											idFieldName: 'TypeSettingsProperties--layoutPageTemplateEntryId--',
+											idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
+											mainFieldName: 'name',
+											mainFieldLabel: '<liferay-ui:message key="name" />',
+											namespace: '<portlet:namespace />',
+											spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+										}
+									);
+								}
+							);
 
-			<%
-			String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavigationMenuNames();
-			%>
+							function handleDestroyPortlet () {
+								addLayoutActionOptionQueryClickHandler.removeListener();
 
-			<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-				var addLayoutActionOptionQueryClickHandler = dom.delegate(
-					document.body,
-					'click',
-					'.<portlet:namespace />add-layout-action-option',
-					function(event) {
-						var actionElement = event.delegateTarget;
-
-						modalCommands.openSimpleInputModal(
-							{
-								<c:if test="<%= Validator.isNotNull(autoSiteNavigationMenuNames) %>">
-									checkboxFieldLabel: '<liferay-ui:message arguments="<%= autoSiteNavigationMenuNames %>" key="add-this-page-to-the-following-menus-x" />',
-									checkboxFieldName: 'TypeSettingsProperties--addToAutoMenus--',
-									checkboxFieldValue: true,
-								</c:if>
-
-								dialogTitle: '<liferay-ui:message key="add-page" />',
-								formSubmitURL: '<%= addLayoutURL %>',
-								idFieldName: 'TypeSettingsProperties--layoutPageTemplateEntryId--',
-								idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
-								mainFieldName: 'name',
-								mainFieldLabel: '<liferay-ui:message key="name" />',
-								namespace: '<portlet:namespace />',
-								spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+								Liferay.detach('destroyPortlet', handleDestroyPortlet);
 							}
-						);
-					}
-				);
 
-				function handleDestroyPortlet () {
-					addLayoutActionOptionQueryClickHandler.removeListener();
-
-					Liferay.detach('destroyPortlet', handleDestroyPortlet);
-				}
-
-				Liferay.on('destroyPortlet', handleDestroyPortlet);
-			</aui:script>
-		</c:when>
-		<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
-			<liferay-util:include page="/select_basic_pages.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:otherwise>
-			<liferay-util:include page="/select_global_templates.jsp" servletContext="<%= application %>" />
-		</c:otherwise>
-	</c:choose>
-</aui:form>
+							Liferay.on('destroyPortlet', handleDestroyPortlet);
+						</aui:script>
+					</c:when>
+					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isBasicPages() %>">
+						<liferay-util:include page="/select_basic_pages.jsp" servletContext="<%= application %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-util:include page="/select_global_templates.jsp" servletContext="<%= application %>" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</div>
+</div>

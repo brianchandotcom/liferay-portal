@@ -14,14 +14,9 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
@@ -44,10 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectLayoutPageTemplateEntryDisplayContext {
 
 	public SelectLayoutPageTemplateEntryDisplayContext(
-		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
 		HttpServletRequest request) {
-
-		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 
 		_request = request;
 
@@ -97,67 +89,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		List<LayoutPrototype> layoutPrototypes = getLayoutPrototypes();
 
 		return layoutPrototypes.size();
-	}
-
-	public List<NavigationItem> getNavigationItems() throws PortalException {
-		return new NavigationItemList() {
-			{
-				List<LayoutPageTemplateCollection>
-					layoutPageTemplateCollections =
-						LayoutPageTemplateCollectionServiceUtil.
-							getLayoutPageTemplateCollections(
-								_themeDisplay.getScopeGroupId());
-
-				for (LayoutPageTemplateCollection layoutPageTemplateCollection :
-						layoutPageTemplateCollections) {
-
-					long layoutPageTemplateCollectionId =
-						layoutPageTemplateCollection.
-							getLayoutPageTemplateCollectionId();
-
-					add(
-						navigationItem -> {
-							navigationItem.setActive(
-								getLayoutPageTemplateCollectionId() ==
-									layoutPageTemplateCollectionId);
-							navigationItem.setHref(
-								_layoutsAdminDisplayContext.
-									getSelectLayoutPageTemplateEntryURL(
-										layoutPageTemplateCollectionId));
-							navigationItem.setLabel(
-								layoutPageTemplateCollection.getName());
-						});
-				}
-
-				String basicPagesURL =
-					_layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(
-							0, _layoutsAdminDisplayContext.getSelPlid(),
-							"basic-pages");
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(isBasicPages());
-						navigationItem.setHref(basicPagesURL);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "basic-pages"));
-					});
-
-				String globalTemplatesURL =
-					_layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(
-							0, _layoutsAdminDisplayContext.getSelPlid(),
-							"global-templates");
-
-				add(
-					navigationItem -> {
-						navigationItem.setActive(isGlobalTemplates());
-						navigationItem.setHref(globalTemplatesURL);
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "global-templates"));
-					});
-			}
-		};
 	}
 
 	public String getSelectedTab() {
@@ -234,7 +165,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 	private Long _layoutPageTemplateCollectionId;
 	private List<LayoutPrototype> _layoutPrototypes;
-	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final HttpServletRequest _request;
 	private String _selectedTab;
 	private final ThemeDisplay _themeDisplay;

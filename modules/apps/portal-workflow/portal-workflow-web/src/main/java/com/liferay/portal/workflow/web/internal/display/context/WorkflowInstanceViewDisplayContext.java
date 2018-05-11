@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -342,6 +343,17 @@ public class WorkflowInstanceViewDisplayContext
 		portletURL.setParameter("orderByType", getOrderByType());
 
 		return portletURL;
+	}
+
+	public ViewTypeItemList getViewTypes() {
+		return new ViewTypeItemList(getViewPortletURL(), getDisplayStyle()) {
+
+			{
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+
+		};
 	}
 
 	public boolean isNavigationAll() {

@@ -1,4 +1,4 @@
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%--
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -22,5 +22,5 @@
 	selectable="<%= false %>"
 	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
 	sortingURL="<%= workflowInstanceViewDisplayContext.getSortingURL(request) %>"
-
+	viewTypeItems="<%= workflowInstanceViewDisplayContext.getViewTypes() %>"
 />

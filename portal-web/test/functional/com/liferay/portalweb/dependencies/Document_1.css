@@ -1,9 +1,9 @@
 .fragment-header .title {
+	border-bottom: solid thin black;
+	border-top: solid thin black;
 	font-family: inherit;
 	font-size: 1.5em;
 	font-weight: 300;
-	border-bottom: solid thin black;
-	border-top: solid thin black;
 	padding: 1em;
 	text-align: center;
 	text-transform: uppercase;

@@ -331,12 +331,16 @@ public class FedExCommerceShippingOptionHelper {
 	private Address _getAddress(CommerceAddress commerceAddress)
 		throws PortalException {
 
+		CommerceCountry commerceCountry =
+			commerceAddress.fetchCommerceCountry();
+
+		if (commerceCountry == null) {
+			return null;
+		}
+
 		Address address = new Address();
 
 		address.setCity(commerceAddress.getCity());
-
-		CommerceCountry commerceCountry = commerceAddress.getCommerceCountry();
-
 		address.setCountryCode(commerceCountry.getTwoLettersISOCode());
 		address.setCountryName(commerceCountry.getName(LocaleUtil.US));
 

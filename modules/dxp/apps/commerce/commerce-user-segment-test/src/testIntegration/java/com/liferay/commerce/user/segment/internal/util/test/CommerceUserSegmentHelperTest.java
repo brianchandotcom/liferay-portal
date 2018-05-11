@@ -77,7 +77,7 @@ public class CommerceUserSegmentHelperTest {
 			"Add a user segment entry in a group, and try to retrieve all " +
 				"user segment entries of a user but for a different group"
 		).given(
-			"I add an organization user uegment"
+			"I add an organization user segment"
 		).when(
 			"The group is different from the one used for retrieving the " +
 				"valid segment entries"

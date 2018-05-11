@@ -15,18 +15,21 @@
 package com.liferay.password.policies.admin.uad.test;
 
 import com.liferay.portal.kernel.model.PasswordPolicy;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portlet.passwordpoliciesadmin.util.test.PasswordPolicyTestUtil;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = PasswordPolicyUADTestHelper.class)
 public class PasswordPolicyUADTestHelper {
+
 	/**
 	 * Implement addPasswordPolicy() to enable some UAD tests.
 	 *
@@ -34,11 +37,12 @@ public class PasswordPolicyUADTestHelper {
 	 * Several UAD tests depend on creating one or more valid PasswordPolicies with a specified user ID in order to execute correctly. Implement addPasswordPolicy() such that it creates a valid PasswordPolicy with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
 	 * </p>
 	 */
-	public PasswordPolicy addPasswordPolicy(long userId)
-		throws Exception {
-		Assume.assumeTrue(false);
+	public PasswordPolicy addPasswordPolicy(long userId) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), userId);
 
-		return null;
+		return PasswordPolicyTestUtil.addPasswordPolicy(serviceContext);
 	}
 
 	/**
@@ -51,4 +55,5 @@ public class PasswordPolicyUADTestHelper {
 	public void cleanUpDependencies(List<PasswordPolicy> passwordPolicies)
 		throws Exception {
 	}
+
 }

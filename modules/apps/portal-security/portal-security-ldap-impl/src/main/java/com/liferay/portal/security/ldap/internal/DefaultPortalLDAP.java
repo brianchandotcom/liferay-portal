@@ -812,7 +812,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(groupMappings.getProperty("user"));
 			sb.append(StringPool.EQUAL);
-			sb.append(userDN);
+			sb.append(StringUtil.replace(userDN, '\\', "\\\\"));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			SearchControls searchControls = new SearchControls(
@@ -868,7 +868,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(userMappings.getProperty(UserConverterKeys.GROUP));
 			sb.append(StringPool.EQUAL);
-			sb.append(groupDN);
+			sb.append(StringUtil.replace(groupDN, '\\', "\\\\"));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			SearchControls searchControls = new SearchControls(

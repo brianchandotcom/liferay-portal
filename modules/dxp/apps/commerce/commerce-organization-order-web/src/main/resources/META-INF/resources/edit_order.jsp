@@ -153,11 +153,9 @@ CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerc
 					</div>
 				</c:if>
 
-				<c:if test="<%= Validator.isNotNull(commerceOrder.getPurchaseOrderNumber()) %>">
-					<div class="order-details-subtitle purchase-order-number">
-						<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceOrder.getPurchaseOrderNumber()) %>" key="purchase-order-number-x" translateArguments="<%= false %>" />
-					</div>
-				</c:if>
+				<div class="order-details-subtitle purchase-order-number">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceOrder.getPurchaseOrderNumber()) %>" key="purchase-order-number-x" translateArguments="<%= false %>" />
+				</div>
 			</div>
 		</div>
 

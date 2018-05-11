@@ -70,17 +70,17 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionOptionValueRelServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId, String[] titleMapLanguageIds,
-		String[] titleMapValues, double priority, String key,
+		long cpDefinitionOptionRelId, String[] nameMapLanguageIds,
+		String[] nameMapValues, double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 
 			com.liferay.commerce.product.model.CPDefinitionOptionValueRel returnValue =
 				CPDefinitionOptionValueRelServiceUtil.addCPDefinitionOptionValueRel(cpDefinitionOptionRelId,
-					titleMap, priority, key, serviceContext);
+					nameMap, priority, key, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}
@@ -219,17 +219,17 @@ public class CPDefinitionOptionValueRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId, String[] titleMapLanguageIds,
-		String[] titleMapValues, double priority, String key,
+		long cpDefinitionOptionValueRelId, String[] nameMapLanguageIds,
+		String[] nameMapValues, double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 
 			com.liferay.commerce.product.model.CPDefinitionOptionValueRel returnValue =
 				CPDefinitionOptionValueRelServiceUtil.updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
-					titleMap, priority, key, serviceContext);
+					nameMap, priority, key, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
 		}

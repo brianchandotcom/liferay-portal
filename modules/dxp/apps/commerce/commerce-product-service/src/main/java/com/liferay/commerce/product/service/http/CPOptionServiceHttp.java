@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPOptionServiceHttp {
 	public static com.liferay.commerce.product.model.CPOption addCPOption(
 		HttpPrincipal httpPrincipal,
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, boolean facetable, boolean required,
 		boolean skuContributor, String key,
@@ -67,9 +67,9 @@ public class CPOptionServiceHttp {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
 					"addCPOption", _addCPOptionParameterTypes0);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
-					required, skuContributor, key, serviceContext);
+			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
+					descriptionMap, ddmFormFieldTypeName, facetable, required,
+					skuContributor, key, serviceContext);
 
 			Object returnObj = null;
 
@@ -458,7 +458,7 @@ public class CPOptionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPOption updateCPOption(
 		HttpPrincipal httpPrincipal, long cpOptionId,
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, boolean facetable, boolean required,
 		boolean skuContributor, String key,
@@ -469,7 +469,7 @@ public class CPOptionServiceHttp {
 					"updateCPOption", _updateCPOptionParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpOptionId, titleMap, descriptionMap, ddmFormFieldTypeName,
+					cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
 					facetable, required, skuContributor, key, serviceContext);
 
 			Object returnObj = null;

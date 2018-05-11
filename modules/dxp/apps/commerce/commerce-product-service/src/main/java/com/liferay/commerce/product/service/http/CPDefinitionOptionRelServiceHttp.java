@@ -93,7 +93,7 @@ public class CPDefinitionOptionRelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, long cpOptionId,
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, double priority, boolean facetable,
 		boolean required, boolean skuContributor, boolean importOptionValue,
@@ -105,7 +105,7 @@ public class CPDefinitionOptionRelServiceHttp {
 					_addCPDefinitionOptionRelParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionId, cpOptionId, titleMap, descriptionMap,
+					cpDefinitionId, cpOptionId, nameMap, descriptionMap,
 					ddmFormFieldTypeName, priority, facetable, required,
 					skuContributor, importOptionValue, serviceContext);
 
@@ -530,7 +530,7 @@ public class CPDefinitionOptionRelServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		HttpPrincipal httpPrincipal, long cpDefinitionOptionRelId,
-		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		long cpOptionId, java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, double priority, boolean facetable,
 		boolean required, boolean skuContributor,
@@ -542,7 +542,7 @@ public class CPDefinitionOptionRelServiceHttp {
 					_updateCPDefinitionOptionRelParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpDefinitionOptionRelId, cpOptionId, titleMap,
+					cpDefinitionOptionRelId, cpOptionId, nameMap,
 					descriptionMap, ddmFormFieldTypeName, priority, facetable,
 					required, skuContributor, serviceContext);
 

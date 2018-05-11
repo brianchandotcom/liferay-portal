@@ -76,8 +76,8 @@ public class CPInstanceLocalServiceUtil {
 		long cpDefinitionId, String sku, String gtin,
 		String manufacturerPartNumber, boolean purchasable, String ddmContent,
 		double width, double height, double depth, double weight,
-		java.math.BigDecimal cost, java.math.BigDecimal price,
-		java.math.BigDecimal promoPrice, boolean published,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		java.math.BigDecimal cost, boolean published,
 		String externalReferenceCode, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -87,7 +87,7 @@ public class CPInstanceLocalServiceUtil {
 		return getService()
 				   .addCPInstance(cpDefinitionId, sku, gtin,
 			manufacturerPartNumber, purchasable, ddmContent, width, height,
-			depth, weight, cost, price, promoPrice, published,
+			depth, weight, price, promoPrice, cost, published,
 			externalReferenceCode, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -476,8 +476,8 @@ public class CPInstanceLocalServiceUtil {
 	public static com.liferay.commerce.product.model.CPInstance updateCPInstance(
 		long cpInstanceId, String sku, String gtin,
 		String manufacturerPartNumber, boolean purchasable, double width,
-		double height, double depth, double weight, java.math.BigDecimal cost,
-		java.math.BigDecimal price, java.math.BigDecimal pomoPrice,
+		double height, double depth, double weight, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
@@ -487,7 +487,7 @@ public class CPInstanceLocalServiceUtil {
 		return getService()
 				   .updateCPInstance(cpInstanceId, sku, gtin,
 			manufacturerPartNumber, purchasable, width, height, depth, weight,
-			cost, price, pomoPrice, published, displayDateMonth,
+			price, promoPrice, cost, published, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -495,12 +495,12 @@ public class CPInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPInstance updatePricingInfo(
-		long cpInstanceId, java.math.BigDecimal cost,
-		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		long cpInstanceId, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updatePricingInfo(cpInstanceId, cost, price, promoPrice,
+				   .updatePricingInfo(cpInstanceId, price, promoPrice, cost,
 			serviceContext);
 	}
 

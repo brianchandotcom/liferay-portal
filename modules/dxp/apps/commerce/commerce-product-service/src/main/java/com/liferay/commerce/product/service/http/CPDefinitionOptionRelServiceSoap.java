@@ -88,22 +88,22 @@ public class CPDefinitionOptionRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap addCPDefinitionOptionRel(
-		long cpDefinitionId, long cpOptionId, String[] titleMapLanguageIds,
-		String[] titleMapValues, String[] descriptionMapLanguageIds,
+		long cpDefinitionId, long cpOptionId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
 		String[] descriptionMapValues, String ddmFormFieldTypeName,
 		double priority, boolean facetable, boolean required,
 		boolean skuContributor, boolean importOptionValue,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
 				CPDefinitionOptionRelServiceUtil.addCPDefinitionOptionRel(cpDefinitionId,
-					cpOptionId, titleMap, descriptionMap, ddmFormFieldTypeName,
+					cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
 					priority, facetable, required, skuContributor,
 					importOptionValue, serviceContext);
 
@@ -277,21 +277,21 @@ public class CPDefinitionOptionRelServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId,
-		String[] titleMapLanguageIds, String[] titleMapValues,
+		String[] nameMapLanguageIds, String[] nameMapValues,
 		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		String ddmFormFieldTypeName, double priority, boolean facetable,
 		boolean required, boolean skuContributor,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
 				CPDefinitionOptionRelServiceUtil.updateCPDefinitionOptionRel(cpDefinitionOptionRelId,
-					cpOptionId, titleMap, descriptionMap, ddmFormFieldTypeName,
+					cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
 					priority, facetable, required, skuContributor,
 					serviceContext);
 

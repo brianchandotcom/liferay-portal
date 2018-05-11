@@ -70,19 +70,19 @@ import java.util.Map;
 @ProviderType
 public class CPOptionServiceSoap {
 	public static com.liferay.commerce.product.model.CPOptionSoap addCPOption(
-		String[] titleMapLanguageIds, String[] titleMapValues,
+		String[] nameMapLanguageIds, String[] nameMapValues,
 		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		String ddmFormFieldTypeName, boolean facetable, boolean required,
 		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.commerce.product.model.CPOption returnValue = CPOptionServiceUtil.addCPOption(titleMap,
+			com.liferay.commerce.product.model.CPOption returnValue = CPOptionServiceUtil.addCPOption(nameMap,
 					descriptionMap, ddmFormFieldTypeName, facetable, required,
 					skuContributor, key, serviceContext);
 
@@ -242,20 +242,20 @@ public class CPOptionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionSoap updateCPOption(
-		long cpOptionId, String[] titleMapLanguageIds, String[] titleMapValues,
+		long cpOptionId, String[] nameMapLanguageIds, String[] nameMapValues,
 		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
 		String ddmFormFieldTypeName, boolean facetable, boolean required,
 		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(titleMapLanguageIds,
-					titleMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
 			com.liferay.commerce.product.model.CPOption returnValue = CPOptionServiceUtil.updateCPOption(cpOptionId,
-					titleMap, descriptionMap, ddmFormFieldTypeName, facetable,
+					nameMap, descriptionMap, ddmFormFieldTypeName, facetable,
 					required, skuContributor, key, serviceContext);
 
 			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModel(returnValue);

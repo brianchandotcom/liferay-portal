@@ -79,9 +79,9 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
-		attributes.put("cost", getCost());
 		attributes.put("price", getPrice());
 		attributes.put("promoPrice", getPromoPrice());
+		attributes.put("cost", getCost());
 		attributes.put("published", isPublished());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("displayDate", getDisplayDate());
@@ -206,12 +206,6 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 			setWeight(weight);
 		}
 
-		BigDecimal cost = (BigDecimal)attributes.get("cost");
-
-		if (cost != null) {
-			setCost(cost);
-		}
-
 		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
@@ -222,6 +216,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 
 		if (promoPrice != null) {
 			setPromoPrice(promoPrice);
+		}
+
+		BigDecimal cost = (BigDecimal)attributes.get("cost");
+
+		if (cost != null) {
+			setCost(cost);
 		}
 
 		Boolean published = (Boolean)attributes.get("published");

@@ -90,7 +90,7 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public void setLayoutUuid(String layoutUuid);
 
-	public void setNameMap(java.util.Map<java.util.Locale, String> titleMap);
+	public void setNameMap(java.util.Map<java.util.Locale, String> nameMap);
 
 	public void setShortDescriptionMap(
 		java.util.Map<java.util.Locale, String> shortDescriptionMap);

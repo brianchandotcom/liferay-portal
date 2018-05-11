@@ -96,8 +96,8 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public CPInstance addCPInstance(long cpDefinitionId, String sku,
 		String gtin, String manufacturerPartNumber, boolean purchasable,
 		String ddmContent, double width, double height, double depth,
-		double weight, BigDecimal cost, BigDecimal price,
-		BigDecimal promoPrice, boolean published, String externalReferenceCode,
+		double weight, BigDecimal price, BigDecimal promoPrice,
+		BigDecimal cost, boolean published, String externalReferenceCode,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
@@ -388,15 +388,15 @@ public interface CPInstanceLocalService extends BaseLocalService,
 	public CPInstance updateCPInstance(long cpInstanceId, String sku,
 		String gtin, String manufacturerPartNumber, boolean purchasable,
 		double width, double height, double depth, double weight,
-		BigDecimal cost, BigDecimal price, BigDecimal pomoPrice,
+		BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPInstance updatePricingInfo(long cpInstanceId, BigDecimal cost,
-		BigDecimal price, BigDecimal promoPrice, ServiceContext serviceContext)
+	public CPInstance updatePricingInfo(long cpInstanceId, BigDecimal price,
+		BigDecimal promoPrice, BigDecimal cost, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPInstance updateShippingInfo(long cpInstanceId, double width,

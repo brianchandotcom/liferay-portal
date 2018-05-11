@@ -89,7 +89,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
-		long cpOptionId, Map<Locale, String> titleMap,
+		long cpOptionId, Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 		double priority, boolean facetable, boolean required,
 		boolean skuContributor, boolean importOptionValue,
@@ -355,7 +355,7 @@ public interface CPDefinitionOptionRelLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 		long cpDefinitionOptionRelId, long cpOptionId,
-		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, double priority, boolean facetable,
 		boolean required, boolean skuContributor, ServiceContext serviceContext)
 		throws PortalException;

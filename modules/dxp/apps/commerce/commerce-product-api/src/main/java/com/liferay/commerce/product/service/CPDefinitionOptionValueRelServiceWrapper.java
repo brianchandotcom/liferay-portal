@@ -37,12 +37,12 @@ public class CPDefinitionOptionValueRelServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId,
-		java.util.Map<java.util.Locale, String> titleMap, double priority,
+		java.util.Map<java.util.Locale, String> nameMap, double priority,
 		String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionValueRelService.addCPDefinitionOptionValueRel(cpDefinitionOptionRelId,
-			titleMap, priority, key, serviceContext);
+			nameMap, priority, key, serviceContext);
 	}
 
 	@Override
@@ -132,12 +132,12 @@ public class CPDefinitionOptionValueRelServiceWrapper
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId,
-		java.util.Map<java.util.Locale, String> titleMap, double priority,
+		java.util.Map<java.util.Locale, String> nameMap, double priority,
 		String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionOptionValueRelService.updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
-			titleMap, priority, key, serviceContext);
+			nameMap, priority, key, serviceContext);
 	}
 
 	@Override

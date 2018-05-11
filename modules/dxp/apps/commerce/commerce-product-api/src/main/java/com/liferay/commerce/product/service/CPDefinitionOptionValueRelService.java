@@ -63,7 +63,7 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionOptionValueRelServiceUtil} to access the cp definition option value rel remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionOptionValueRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
-		long cpDefinitionOptionRelId, Map<Locale, String> titleMap,
+		long cpDefinitionOptionRelId, Map<Locale, String> nameMap,
 		double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -118,7 +118,7 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 		throws PortalException;
 
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
-		long cpDefinitionOptionValueRelId, Map<Locale, String> titleMap,
+		long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
 		double priority, String key, ServiceContext serviceContext)
 		throws PortalException;
 }

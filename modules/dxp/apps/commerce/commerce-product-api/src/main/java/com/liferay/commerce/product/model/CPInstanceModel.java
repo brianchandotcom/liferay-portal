@@ -366,20 +366,6 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	public void setWeight(double weight);
 
 	/**
-	 * Returns the cost of this cp instance.
-	 *
-	 * @return the cost of this cp instance
-	 */
-	public BigDecimal getCost();
-
-	/**
-	 * Sets the cost of this cp instance.
-	 *
-	 * @param cost the cost of this cp instance
-	 */
-	public void setCost(BigDecimal cost);
-
-	/**
 	 * Returns the price of this cp instance.
 	 *
 	 * @return the price of this cp instance
@@ -406,6 +392,20 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	 * @param promoPrice the promo price of this cp instance
 	 */
 	public void setPromoPrice(BigDecimal promoPrice);
+
+	/**
+	 * Returns the cost of this cp instance.
+	 *
+	 * @return the cost of this cp instance
+	 */
+	public BigDecimal getCost();
+
+	/**
+	 * Sets the cost of this cp instance.
+	 *
+	 * @param cost the cost of this cp instance
+	 */
+	public void setCost(BigDecimal cost);
 
 	/**
 	 * Returns the published of this cp instance.

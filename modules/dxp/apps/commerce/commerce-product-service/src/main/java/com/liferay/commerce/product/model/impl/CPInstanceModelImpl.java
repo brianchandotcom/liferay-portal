@@ -98,9 +98,9 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			{ "height", Types.DOUBLE },
 			{ "depth", Types.DOUBLE },
 			{ "weight", Types.DOUBLE },
-			{ "cost", Types.DECIMAL },
 			{ "price", Types.DECIMAL },
 			{ "promoPrice", Types.DECIMAL },
+			{ "cost", Types.DECIMAL },
 			{ "published", Types.BOOLEAN },
 			{ "externalReferenceCode", Types.VARCHAR },
 			{ "displayDate", Types.TIMESTAMP },
@@ -132,9 +132,9 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("weight", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("cost", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("cost", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("published", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
@@ -146,7 +146,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,DDMContent TEXT null,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,cost DECIMAL(30, 16) null,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,published BOOLEAN,externalReferenceCode VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,DDMContent TEXT null,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,cost DECIMAL(30, 16) null,published BOOLEAN,externalReferenceCode VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpInstance.displayDate DESC, cpInstance.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPInstance.displayDate DESC, CPInstance.createDate DESC";
@@ -202,9 +202,9 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		model.setHeight(soapModel.getHeight());
 		model.setDepth(soapModel.getDepth());
 		model.setWeight(soapModel.getWeight());
-		model.setCost(soapModel.getCost());
 		model.setPrice(soapModel.getPrice());
 		model.setPromoPrice(soapModel.getPromoPrice());
+		model.setCost(soapModel.getCost());
 		model.setPublished(soapModel.isPublished());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setDisplayDate(soapModel.getDisplayDate());
@@ -296,9 +296,9 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		attributes.put("height", getHeight());
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
-		attributes.put("cost", getCost());
 		attributes.put("price", getPrice());
 		attributes.put("promoPrice", getPromoPrice());
+		attributes.put("cost", getCost());
 		attributes.put("published", isPublished());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("displayDate", getDisplayDate());
@@ -426,12 +426,6 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			setWeight(weight);
 		}
 
-		BigDecimal cost = (BigDecimal)attributes.get("cost");
-
-		if (cost != null) {
-			setCost(cost);
-		}
-
 		BigDecimal price = (BigDecimal)attributes.get("price");
 
 		if (price != null) {
@@ -442,6 +436,12 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		if (promoPrice != null) {
 			setPromoPrice(promoPrice);
+		}
+
+		BigDecimal cost = (BigDecimal)attributes.get("cost");
+
+		if (cost != null) {
+			setCost(cost);
 		}
 
 		Boolean published = (Boolean)attributes.get("published");
@@ -814,17 +814,6 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@JSON
 	@Override
-	public BigDecimal getCost() {
-		return _cost;
-	}
-
-	@Override
-	public void setCost(BigDecimal cost) {
-		_cost = cost;
-	}
-
-	@JSON
-	@Override
 	public BigDecimal getPrice() {
 		return _price;
 	}
@@ -843,6 +832,17 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	@Override
 	public void setPromoPrice(BigDecimal promoPrice) {
 		_promoPrice = promoPrice;
+	}
+
+	@JSON
+	@Override
+	public BigDecimal getCost() {
+		return _cost;
+	}
+
+	@Override
+	public void setCost(BigDecimal cost) {
+		_cost = cost;
 	}
 
 	@JSON
@@ -1264,9 +1264,9 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		cpInstanceImpl.setHeight(getHeight());
 		cpInstanceImpl.setDepth(getDepth());
 		cpInstanceImpl.setWeight(getWeight());
-		cpInstanceImpl.setCost(getCost());
 		cpInstanceImpl.setPrice(getPrice());
 		cpInstanceImpl.setPromoPrice(getPromoPrice());
+		cpInstanceImpl.setCost(getCost());
 		cpInstanceImpl.setPublished(isPublished());
 		cpInstanceImpl.setExternalReferenceCode(getExternalReferenceCode());
 		cpInstanceImpl.setDisplayDate(getDisplayDate());
@@ -1464,11 +1464,11 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		cpInstanceCacheModel.weight = getWeight();
 
-		cpInstanceCacheModel.cost = getCost();
-
 		cpInstanceCacheModel.price = getPrice();
 
 		cpInstanceCacheModel.promoPrice = getPromoPrice();
+
+		cpInstanceCacheModel.cost = getCost();
 
 		cpInstanceCacheModel.published = isPublished();
 
@@ -1572,12 +1572,12 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getDepth());
 		sb.append(", weight=");
 		sb.append(getWeight());
-		sb.append(", cost=");
-		sb.append(getCost());
 		sb.append(", price=");
 		sb.append(getPrice());
 		sb.append(", promoPrice=");
 		sb.append(getPromoPrice());
+		sb.append(", cost=");
+		sb.append(getCost());
 		sb.append(", published=");
 		sb.append(isPublished());
 		sb.append(", externalReferenceCode=");
@@ -1682,16 +1682,16 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getWeight());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>cost</column-name><column-value><![CDATA[");
-		sb.append(getCost());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>price</column-name><column-value><![CDATA[");
 		sb.append(getPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>promoPrice</column-name><column-value><![CDATA[");
 		sb.append(getPromoPrice());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>cost</column-name><column-value><![CDATA[");
+		sb.append(getCost());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>published</column-name><column-value><![CDATA[");
@@ -1766,9 +1766,9 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	private double _height;
 	private double _depth;
 	private double _weight;
-	private BigDecimal _cost;
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
+	private BigDecimal _cost;
 	private boolean _published;
 	private String _externalReferenceCode;
 	private Date _displayDate;

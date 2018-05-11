@@ -44,13 +44,13 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	 */
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel addCPDefinitionOptionValueRel(
 		long cpDefinitionOptionRelId,
-		java.util.Map<java.util.Locale, String> titleMap, double priority,
+		java.util.Map<java.util.Locale, String> nameMap, double priority,
 		String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCPDefinitionOptionValueRel(cpDefinitionOptionRelId,
-			titleMap, priority, key, serviceContext);
+			nameMap, priority, key, serviceContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
@@ -137,13 +137,13 @@ public class CPDefinitionOptionValueRelServiceUtil {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId,
-		java.util.Map<java.util.Locale, String> titleMap, double priority,
+		java.util.Map<java.util.Locale, String> nameMap, double priority,
 		String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId,
-			titleMap, priority, key, serviceContext);
+			nameMap, priority, key, serviceContext);
 	}
 
 	public static CPDefinitionOptionValueRelService getService() {

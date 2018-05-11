@@ -48,12 +48,12 @@ public class CPOptionValueLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue addCPOptionValue(
-		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		long cpOptionId, java.util.Map<java.util.Locale, String> nameMap,
 		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionValueLocalService.addCPOptionValue(cpOptionId,
-			titleMap, priority, key, serviceContext);
+		return _cpOptionValueLocalService.addCPOptionValue(cpOptionId, nameMap,
+			priority, key, serviceContext);
 	}
 
 	/**
@@ -388,12 +388,12 @@ public class CPOptionValueLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionValue updateCPOptionValue(
-		long cpOptionValueId, java.util.Map<java.util.Locale, String> titleMap,
+		long cpOptionValueId, java.util.Map<java.util.Locale, String> nameMap,
 		double priority, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionValueLocalService.updateCPOptionValue(cpOptionValueId,
-			titleMap, priority, key, serviceContext);
+			nameMap, priority, key, serviceContext);
 	}
 
 	@Override

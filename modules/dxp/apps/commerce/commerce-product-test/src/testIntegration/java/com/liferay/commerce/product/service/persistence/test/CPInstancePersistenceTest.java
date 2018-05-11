@@ -161,11 +161,11 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setWeight(RandomTestUtil.nextDouble());
 
-		newCPInstance.setCost(new BigDecimal(RandomTestUtil.nextDouble()));
-
 		newCPInstance.setPrice(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCPInstance.setPromoPrice(new BigDecimal(RandomTestUtil.nextDouble()));
+
+		newCPInstance.setCost(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		newCPInstance.setPublished(RandomTestUtil.randomBoolean());
 
@@ -226,12 +226,12 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getDepth());
 		AssertUtils.assertEquals(existingCPInstance.getWeight(),
 			newCPInstance.getWeight());
-		Assert.assertEquals(existingCPInstance.getCost(),
-			newCPInstance.getCost());
 		Assert.assertEquals(existingCPInstance.getPrice(),
 			newCPInstance.getPrice());
 		Assert.assertEquals(existingCPInstance.getPromoPrice(),
 			newCPInstance.getPromoPrice());
+		Assert.assertEquals(existingCPInstance.getCost(),
+			newCPInstance.getCost());
 		Assert.assertEquals(existingCPInstance.isPublished(),
 			newCPInstance.isPublished());
 		Assert.assertEquals(existingCPInstance.getExternalReferenceCode(),
@@ -389,8 +389,8 @@ public class CPInstancePersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"CPDefinitionId", true, "sku", true, "gtin", true,
 			"manufacturerPartNumber", true, "purchasable", true, "width", true,
-			"height", true, "depth", true, "weight", true, "cost", true,
-			"price", true, "promoPrice", true, "published", true,
+			"height", true, "depth", true, "weight", true, "price", true,
+			"promoPrice", true, "cost", true, "published", true,
 			"externalReferenceCode", true, "displayDate", true,
 			"expirationDate", true, "lastPublishDate", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
@@ -652,11 +652,11 @@ public class CPInstancePersistenceTest {
 
 		cpInstance.setWeight(RandomTestUtil.nextDouble());
 
-		cpInstance.setCost(new BigDecimal(RandomTestUtil.nextDouble()));
-
 		cpInstance.setPrice(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		cpInstance.setPromoPrice(new BigDecimal(RandomTestUtil.nextDouble()));
+
+		cpInstance.setCost(new BigDecimal(RandomTestUtil.nextDouble()));
 
 		cpInstance.setPublished(RandomTestUtil.randomBoolean());
 

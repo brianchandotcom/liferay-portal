@@ -223,9 +223,9 @@
 		<property name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="weight" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="cost" type="org.hibernate.type.BigDecimalType" />
 		<property name="price" type="org.hibernate.type.BigDecimalType" />
 		<property name="promoPrice" type="org.hibernate.type.BigDecimalType" />
+		<property name="cost" type="org.hibernate.type.BigDecimalType" />
 		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />

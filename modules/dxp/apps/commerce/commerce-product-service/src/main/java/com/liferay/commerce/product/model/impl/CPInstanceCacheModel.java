@@ -105,12 +105,12 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sb.append(depth);
 		sb.append(", weight=");
 		sb.append(weight);
-		sb.append(", cost=");
-		sb.append(cost);
 		sb.append(", price=");
 		sb.append(price);
 		sb.append(", promoPrice=");
 		sb.append(promoPrice);
+		sb.append(", cost=");
+		sb.append(cost);
 		sb.append(", published=");
 		sb.append(published);
 		sb.append(", externalReferenceCode=");
@@ -207,9 +207,9 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		cpInstanceImpl.setHeight(height);
 		cpInstanceImpl.setDepth(depth);
 		cpInstanceImpl.setWeight(weight);
-		cpInstanceImpl.setCost(cost);
 		cpInstanceImpl.setPrice(price);
 		cpInstanceImpl.setPromoPrice(promoPrice);
+		cpInstanceImpl.setCost(cost);
 		cpInstanceImpl.setPublished(published);
 
 		if (externalReferenceCode == null) {
@@ -293,9 +293,9 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		depth = objectInput.readDouble();
 
 		weight = objectInput.readDouble();
-		cost = (BigDecimal)objectInput.readObject();
 		price = (BigDecimal)objectInput.readObject();
 		promoPrice = (BigDecimal)objectInput.readObject();
+		cost = (BigDecimal)objectInput.readObject();
 
 		published = objectInput.readBoolean();
 		externalReferenceCode = objectInput.readUTF();
@@ -377,9 +377,9 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		objectOutput.writeDouble(depth);
 
 		objectOutput.writeDouble(weight);
-		objectOutput.writeObject(cost);
 		objectOutput.writeObject(price);
 		objectOutput.writeObject(promoPrice);
+		objectOutput.writeObject(cost);
 
 		objectOutput.writeBoolean(published);
 
@@ -426,9 +426,9 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public double height;
 	public double depth;
 	public double weight;
-	public BigDecimal cost;
 	public BigDecimal price;
 	public BigDecimal promoPrice;
+	public BigDecimal cost;
 	public boolean published;
 	public String externalReferenceCode;
 	public long displayDate;

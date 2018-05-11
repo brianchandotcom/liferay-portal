@@ -62,7 +62,7 @@ public interface CPOptionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPOptionServiceUtil} to access the cp option remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPOptionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPOption addCPOption(Map<Locale, String> titleMap,
+	public CPOption addCPOption(Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 		boolean facetable, boolean required, boolean skuContributor,
 		String key, ServiceContext serviceContext) throws PortalException;
@@ -114,7 +114,7 @@ public interface CPOptionService extends BaseService {
 		throws PortalException;
 
 	public CPOption updateCPOption(long cpOptionId,
-		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, boolean facetable, boolean required,
 		boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException;

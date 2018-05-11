@@ -43,14 +43,14 @@ public class CPOptionServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPOptionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.model.CPOption addCPOption(
-		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, boolean facetable, boolean required,
 		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCPOption(titleMap, descriptionMap, ddmFormFieldTypeName,
+				   .addCPOption(nameMap, descriptionMap, ddmFormFieldTypeName,
 			facetable, required, skuContributor, key, serviceContext);
 	}
 
@@ -134,14 +134,14 @@ public class CPOptionServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOption updateCPOption(
-		long cpOptionId, java.util.Map<java.util.Locale, String> titleMap,
+		long cpOptionId, java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, boolean facetable, boolean required,
 		boolean skuContributor, String key,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCPOption(cpOptionId, titleMap, descriptionMap,
+				   .updateCPOption(cpOptionId, nameMap, descriptionMap,
 			ddmFormFieldTypeName, facetable, required, skuContributor, key,
 			serviceContext);
 	}

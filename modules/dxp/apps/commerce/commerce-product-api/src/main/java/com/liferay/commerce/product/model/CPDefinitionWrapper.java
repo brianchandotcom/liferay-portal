@@ -1354,8 +1354,8 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
-	public void setNameMap(Map<java.util.Locale, String> titleMap) {
-		_cpDefinition.setNameMap(titleMap);
+	public void setNameMap(Map<java.util.Locale, String> nameMap) {
+		_cpDefinition.setNameMap(nameMap);
 	}
 
 	@Override

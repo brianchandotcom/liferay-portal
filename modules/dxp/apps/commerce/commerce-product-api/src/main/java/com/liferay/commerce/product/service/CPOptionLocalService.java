@@ -83,7 +83,7 @@ public interface CPOptionLocalService extends BaseLocalService,
 	public CPOption addCPOption(CPOption cpOption);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPOption addCPOption(Map<Locale, String> titleMap,
+	public CPOption addCPOption(Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
 		boolean facetable, boolean required, boolean skuContributor,
 		String key, ServiceContext serviceContext) throws PortalException;
@@ -337,7 +337,7 @@ public interface CPOptionLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CPOption updateCPOption(long cpOptionId,
-		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 		String ddmFormFieldTypeName, boolean facetable, boolean required,
 		boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException;

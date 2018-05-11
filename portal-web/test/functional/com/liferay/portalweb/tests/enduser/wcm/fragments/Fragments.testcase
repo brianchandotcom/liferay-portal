@@ -46,8 +46,8 @@
 	<command name="AddCollectionFragmentWithSnippets" priority="5">
 		<property name="portal.acceptance" value="pending" />
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -60,8 +60,8 @@
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -69,32 +69,30 @@
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 
-		<var name="htmlSnippet"><![CDATA[
-<html>${line.separator}
-<div>${line.separator}
-<span class="test">This is a test.</span>${line.separator}
-</div>${line.separator}
-</html>]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_3.html" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />
 			<var name="templateScript" value="${htmlSnippet}" />
 		</execute>
 
-		<var name="cssSnippet"><![CDATA[
-.test{${line.separator}
-	color:red${line.separator}
-}]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="cssSnippet" />
+			<var name="fileName" value="Document_3.css" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="css" />
 			<var name="templateScript" value="${cssSnippet}" />
 		</execute>
 
-		<var name="javascriptSnippet"><![CDATA[
-var element = document.querySelector(".test");${line.separator}${line.separator}
-element.style.border='2px dashed red';
-]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="javascriptSnippet" />
+			<var name="fileName" value="Document_3.js" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="javascript" />
@@ -109,8 +107,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -118,9 +116,14 @@ element.style.border='2px dashed red';
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="//div[@class='fragment-preview__frame']//span[@class='test'][contains(@style,'2px dashed red')]" />
+		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
 
-		<execute function="AssertCssValue" locator1="//div[@class='fragment-preview__frame']//span[@class='test'][contains(@style,'2px dashed red')]" locator2="color" value1="rgba(255, 0, 0, 1)" />
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
+		<execute function="AssertElementPresent" locator1="Button#CANCEL" />
+
+		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Submit" />
+
+		<execute function="Confirm" value1="Form submitted" />
 
 		<execute function="SelectFrameTop" />
 	</command>
@@ -128,8 +131,8 @@ element.style.border='2px dashed red';
 	<command name="DeleteFragment" priority="5">
 		<property name="portal.acceptance" value="pending" />
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -142,8 +145,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#delete">
@@ -156,8 +159,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#viewNoEntry">
@@ -190,8 +193,8 @@ element.style.border='2px dashed red';
 	</command>
 
 	<command name="RenameFragment" priority="4">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -204,8 +207,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -225,8 +228,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#viewEntryName">
@@ -235,8 +238,8 @@ element.style.border='2px dashed red';
 	</command>
 
 	<command name="ViewCannotDeleteFragmentInUse" priority="5">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -292,8 +295,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#delete">
@@ -303,8 +306,8 @@ element.style.border='2px dashed red';
 	</command>
 
 	<command name="ViewEmptyFragmentCannotBePublished" priority="4">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -333,8 +336,8 @@ element.style.border='2px dashed red';
 	</command>
 
 	<command name="ViewOnlyDraftFragmentsCanBeSaved" priority="4">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -353,8 +356,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
 		</execute>
 
 		<execute macro="PortletEntry#viewWorkflowStatus">

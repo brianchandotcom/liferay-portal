@@ -1,0 +1,21 @@
+<definition>
+	<command name="addPage">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${pageTemplateName}" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageName}" />
+		</execute>
+
+		<execute macro="Modal#submit" />
+	</command>
+
+	<command name="viewContentPG">
+		<execute function="AssertTextEquals" locator1="Fragment#CONTENT_PAGE_FRAGMENT" value1="${content}">
+			<var name="key_content" value="${content}" />
+		</execute>
+	</command>
+</definition>

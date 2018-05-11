@@ -1,6 +1,16 @@
 <definition>
 	<command name="addCollection">
-		<execute macro="LexiconEntry#gotoAdd" />
+		<if>
+			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_PLUS" />
+			<then>
+				<execute function="Click" locator1="NavNested#NAV_NESTED_PLUS" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="Button#ANY" value1="Add Collection">
+					<var name="key_text" value="Add Collection" />
+				</execute>
+			</else>
+		</if>
 
 		<execute macro="Collection#editCollection">
 			<var name="collectionDescription" value="${collectionDescription}" />
@@ -25,5 +35,19 @@
 				</execute>
 			</then>
 		</if>
+	</command>
+
+	<command name="renameCollection">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute macro="Collection#editCollection">
+			<var name="collectionDescription" value="${collectionDescription}" />
+			<var name="collectionName" value="${collectionName}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
 	</command>
 </definition>

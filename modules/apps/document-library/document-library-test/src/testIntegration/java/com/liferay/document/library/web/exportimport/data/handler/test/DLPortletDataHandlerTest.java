@@ -16,6 +16,7 @@ package com.liferay.document.library.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -65,11 +66,18 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -96,6 +104,20 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		super.setUp();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			DLExportableRepositoryPublisher.class,
+			new CountingDLExportableRepositoryPublisher(_atomicInteger),
+			new HashMap<>());
+	}
+
+	@After
+	public void tearDown() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -172,6 +194,29 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		Assert.assertEquals(0, foldersCount);
+	}
+
+	@Test
+	public void testDLExportableRepositoryPublisherIsInvokedWhenExporting()
+		throws Exception {
+
+		initContext();
+
+		portletDataHandler.exportData(
+			portletDataContext, DLPortletKeys.DOCUMENT_LIBRARY, null);
+
+		Assert.assertTrue(_atomicInteger.get() >= 1);
+	}
+
+	@Test
+	public void testDLExportableRepositoryPublisherIsInvokedWhenPreparingSummary()
+		throws Exception {
+
+		initContext();
+
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		Assert.assertTrue(_atomicInteger.get() >= 1);
 	}
 
 	@Override
@@ -379,6 +424,28 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Override
 	protected boolean isGetExportModelCountTested() {
 		return true;
+	}
+
+	private final AtomicInteger _atomicInteger = new AtomicInteger(0);
+	private ServiceRegistration<DLExportableRepositoryPublisher>
+		_serviceRegistration;
+
+	private static class CountingDLExportableRepositoryPublisher
+		implements DLExportableRepositoryPublisher {
+
+		public CountingDLExportableRepositoryPublisher(
+			AtomicInteger atomicInteger) {
+
+			_atomicInteger = atomicInteger;
+		}
+
+		@Override
+		public void publish(long groupId, Consumer<Long> repositoryIdConsumer) {
+			_atomicInteger.incrementAndGet();
+		}
+
+		private final AtomicInteger _atomicInteger;
+
 	}
 
 }

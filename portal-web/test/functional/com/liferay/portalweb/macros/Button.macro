@@ -1,4 +1,10 @@
 <definition>
+	<command name="click">
+		<execute function="Click" locator1="Button#ANY">
+			<var name="key_text" value="${button}" />
+		</execute>
+	</command>
+
 	<command name="clickAddRow">
 		<execute function="Click" locator1="Button#ADD_ROW" />
 	</command>
@@ -31,6 +37,12 @@
 		<execute function="AssertClick" locator1="Button#NEXT" value1="Next" />
 	</command>
 
+	<command name="clickNoError">
+		<execute function="ClickNoError" locator1="Button#ANY">
+			<var name="key_text" value="${button}" />
+		</execute>
+	</command>
+
 	<command name="clickPublish">
 		<execute function="ScrollWebElementIntoView" locator1="Button#PUBLISH" />
 
@@ -59,5 +71,17 @@
 
 	<command name="clickUpdate">
 		<execute function="AssertClick" locator1="Button#UPDATE" value1="Update" />
+	</command>
+
+	<command name="viewNotPresent">
+		<execute function="AssertElementNotPresent" locator1="Button#ANY">
+			<var name="key_text" value="${button}" />
+		</execute>
+	</command>
+
+	<command name="viewPresent">
+		<execute function="AssertElementPresent" locator1="Button#ANY">
+			<var name="key_text" value="${button}" />
+		</execute>
 	</command>
 </definition>

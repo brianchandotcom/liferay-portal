@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Modified;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-xsl-content",
-		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.include=false",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",

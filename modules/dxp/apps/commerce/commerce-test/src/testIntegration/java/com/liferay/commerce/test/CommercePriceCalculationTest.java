@@ -89,7 +89,7 @@ public class CommercePriceCalculationTest {
 		frutillaRule.scenario(
 			"Check Price List price functionality"
 		).given(
-			"An organization with site true"
+			"An organization with a site"
 		).and(
 			"A buyer user in that organization"
 		).when(
@@ -180,7 +180,7 @@ public class CommercePriceCalculationTest {
 		frutillaRule.scenario(
 			"Check Price List price functionality"
 		).given(
-			"An organization with site true"
+			"An organization with a site"
 		).and(
 			"A buyer user in that organization"
 		).when(
@@ -254,7 +254,7 @@ public class CommercePriceCalculationTest {
 		frutillaRule.scenario(
 			"Check Price List price functionality in different currency"
 		).given(
-			"An organization with site true"
+			"An organization with a site"
 		).and(
 			"A buyer user in that organization"
 		).when(
@@ -357,7 +357,7 @@ public class CommercePriceCalculationTest {
 		frutillaRule.scenario(
 			"Check Tier Price functionality"
 		).given(
-			"An organization with site true"
+			"An organization with a site"
 		).and(
 			"A buyer user in that organization"
 		).when(

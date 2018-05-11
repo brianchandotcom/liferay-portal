@@ -20,7 +20,7 @@ documentation contains extensive explanations, examples, and reference material
 for you to consult time and time again.
 
 For more information, visit the links listed in the
-[Additional Resources](#additional-resources) section, below.
+[Additional Resources](#additional-resources) section below.
 
 # Building Liferay Portal
 
@@ -40,7 +40,7 @@ repo from Github and build the platform using Apache Ant.
 To build Liferay Portal from source, do the following:
 
 * Fork the liferay-portal repo on Github -
-  [https://github.com/liferay/liferay-portal](https://github.com/liferay/liferay-portal)
+  [https://github.com/liferay/liferay-portal](https://github.com/liferay/liferay-portal).
 
 * Clone the forked repo's master branch (or preferred branch) with no commit
   history:
@@ -59,7 +59,7 @@ To build Liferay Portal from source, do the following:
 * Test the newly built bundle:
 
       cd ../bundles
-      ./tomcat-9.0.6/bin/startup.sh
+      ./tomcat-9.0.6/bin/startup.[bat|sh]
 
 ## Building a Module in liferay-portal
 
@@ -68,7 +68,7 @@ platform. You must, however, compile the entire platform once using the method
 explained above. This is due to the fact that the initial build initializes the
 build environment.
 
-To build a module, (e.g., a module located in
+To build a module (e.g., a module located in
 `liferay-portal/modules/apps/comment/comment-web`), run
 
     cd liferay-portal/modules
@@ -101,7 +101,7 @@ Create a ticket in JIRA by doing the following:
     * Select an appropriate category for the issue.
     * Select the earliest version of the product affected by the issue.
     * Respond to the Contributor License Agreement displayed by clicking the
-      Contribute Solution button.
+      *Contribute Solution* button.
 
     If a ticket already exists for the issue, participate via the existing
     ticket.

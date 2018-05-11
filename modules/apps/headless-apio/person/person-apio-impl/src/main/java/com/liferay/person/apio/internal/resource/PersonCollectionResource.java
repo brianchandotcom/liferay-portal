@@ -26,19 +26,30 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.person.apio.internal.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.form.PersonUpdaterForm;
+import com.liferay.person.apio.model.UserWrapper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,17 +65,17 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class PersonCollectionResource
-	implements CollectionResource<User, Long, PersonIdentifier> {
+	implements CollectionResource<UserWrapper, Long, PersonIdentifier> {
 
 	@Override
-	public CollectionRoutes<User> collectionRoutes(
-		CollectionRoutes.Builder<User> builder) {
+	public CollectionRoutes<UserWrapper> collectionRoutes(
+		CollectionRoutes.Builder<UserWrapper> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class
+			this::_getPageItems, Company.class, ThemeDisplay.class
 		).addCreator(
-			this::_addUser, Company.class, _hasPermission::forAddingUsers,
-			PersonCreatorForm::buildForm
+			this::_addUser, Company.class, ThemeDisplay.class,
+			_hasPermission::forAddingUsers, PersonCreatorForm::buildForm
 		).build();
 	}
 
@@ -74,23 +85,23 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<User, Long> itemRoutes(
-		ItemRoutes.Builder<User, Long> builder) {
+	public ItemRoutes<UserWrapper, Long> itemRoutes(
+		ItemRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
-			_userService::getUserById
+			this::_getUserWrapper, ThemeDisplay.class
 		).addRemover(
 			idempotent(_userService::deleteUser),
 			_hasPermission.forDeleting(User.class)
 		).addUpdater(
-			this::_updateUser, _hasPermission.forUpdating(User.class),
-			PersonUpdaterForm::buildForm
+			this::_updateUser, ThemeDisplay.class,
+			_hasPermission.forUpdating(User.class), PersonUpdaterForm::buildForm
 		).build();
 	}
 
 	@Override
-	public Representor<User, Long> representor(
-		Representor.Builder<User, Long> builder) {
+	public Representor<UserWrapper, Long> representor(
+		Representor.Builder<UserWrapper, Long> builder) {
 
 		return builder.types(
 			"Person"
@@ -98,10 +109,16 @@ public class PersonCollectionResource
 			User::getUserId
 		).addDate(
 			"birthDate", PersonCollectionResource::_getBirthday
+		).addLocalizedStringByLocale(
+			"honorificPrefix", _getContactField(Contact::getPrefixId)
+		).addLocalizedStringByLocale(
+			"honorificSuffix", _getContactField(Contact::getSuffixId)
 		).addString(
 			"additionalName", User::getMiddleName
 		).addString(
 			"alternateName", User::getScreenName
+		).addString(
+			"dashboardURL", UserWrapper::getDashboardURL
 		).addString(
 			"email", User::getEmailAddress
 		).addString(
@@ -111,9 +128,13 @@ public class PersonCollectionResource
 		).addString(
 			"givenName", User::getFirstName
 		).addString(
+			"image", UserWrapper::getPortraitURL
+		).addString(
 			"jobTitle", User::getJobTitle
 		).addString(
 			"name", User::getFullName
+		).addString(
+			"profileURL", UserWrapper::getProfileURL
 		).build();
 	}
 
@@ -135,10 +156,12 @@ public class PersonCollectionResource
 		);
 	}
 
-	private User _addUser(PersonCreatorForm personCreatorForm, Company company)
+	private UserWrapper _addUser(
+			PersonCreatorForm personCreatorForm, Company company,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return _userLocalService.addUser(
+		User user = _userLocalService.addUser(
 			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
 			personCreatorForm.getPassword1(), personCreatorForm.getPassword2(),
 			personCreatorForm.hasAlternateName(),
@@ -151,21 +174,60 @@ public class PersonCollectionResource
 			personCreatorForm.getBirthdayYear(),
 			personCreatorForm.getJobTitle(), null, null, null, null, false,
 			new ServiceContext());
+
+		return new UserWrapper(user, themeDisplay);
 	}
 
-	private PageItems<User> _getPageItems(
-			Pagination pagination, Company company)
+	private BiFunction<UserWrapper, Locale, String> _getContactField(
+		Function<Contact, Long> function) {
+
+		return (user, locale) -> Try.fromFallible(
+			user::getContact
+		).map(
+			function::apply
+		).map(
+			_listTypeLocalService::getListType
+		).map(
+			ListType::getName
+		).map(
+			name -> LanguageUtil.get(locale, name)
+		).orElse(
+			null
+		);
+	}
+
+	private PageItems<UserWrapper> _getPageItems(
+			Pagination pagination, Company company, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<User> users = _userService.getCompanyUsers(
-			company.getCompanyId(), pagination.getStartPosition(),
-			pagination.getEndPosition());
+		List<UserWrapper> userWrappers = Stream.of(
+			_userService.getCompanyUsers(
+				company.getCompanyId(), pagination.getStartPosition(),
+				pagination.getEndPosition())
+		).flatMap(
+			List::stream
+		).map(
+			user -> new UserWrapper(user, themeDisplay)
+		).collect(
+			Collectors.toList()
+		);
+
 		int count = _userService.getCompanyUsersCount(company.getCompanyId());
 
-		return new PageItems<>(users, count);
+		return new PageItems<>(userWrappers, count);
 	}
 
-	private User _updateUser(Long userId, PersonUpdaterForm personUpdaterForm)
+	private UserWrapper _getUserWrapper(long userId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		User user = _userService.getUserById(userId);
+
+		return new UserWrapper(user, themeDisplay);
+	}
+
+	private UserWrapper _updateUser(
+			Long userId, PersonUpdaterForm personUpdaterForm,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		User user = _userService.getUserById(userId);
@@ -177,11 +239,16 @@ public class PersonCollectionResource
 		user.setLastName(personUpdaterForm.getFamilyName());
 		user.setJobTitle(personUpdaterForm.getJobTitle());
 
-		return _userLocalService.updateUser(user);
+		User updatedUser = _userLocalService.updateUser(user);
+
+		return new UserWrapper(updatedUser, themeDisplay);
 	}
 
 	@Reference
 	private HasPermission _hasPermission;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -15,9 +15,11 @@
 package com.liferay.portal.upgrade.internal.registry;
 
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator.Registry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,9 +49,46 @@ public class UpgradeStepRegistry implements Registry {
 		UpgradeStep... upgradeSteps) {
 
 		_upgradeInfos.addAll(
-			UpgradeStepRegistratorTracker.createUpgradeInfos(
+			_createUpgradeInfos(
 				fromSchemaVersionString, toSchemaVersionString, _buildNumber,
 				upgradeSteps));
+	}
+
+	private List<UpgradeInfo> _createUpgradeInfos(
+		String fromSchemaVersionString, String toSchemaVersionString,
+		int buildNumber, UpgradeStep... upgradeSteps) {
+
+		if (ArrayUtil.isEmpty(upgradeSteps)) {
+			return Collections.emptyList();
+		}
+
+		List<UpgradeInfo> upgradeInfos = new ArrayList<>();
+
+		String upgradeInfoFromSchemaVersionString = fromSchemaVersionString;
+
+		for (int i = 0; i < upgradeSteps.length - 1; i++) {
+			UpgradeStep upgradeStep = upgradeSteps[i];
+
+			String upgradeInfoToSchemaVersionString =
+				toSchemaVersionString + "-step" + (i - upgradeSteps.length + 1);
+
+			UpgradeInfo upgradeInfo = new UpgradeInfo(
+				upgradeInfoFromSchemaVersionString,
+				upgradeInfoToSchemaVersionString, buildNumber, upgradeStep);
+
+			upgradeInfos.add(upgradeInfo);
+
+			upgradeInfoFromSchemaVersionString =
+				upgradeInfoToSchemaVersionString;
+		}
+
+		UpgradeInfo upgradeInfo = new UpgradeInfo(
+			upgradeInfoFromSchemaVersionString, toSchemaVersionString,
+			buildNumber, upgradeSteps[upgradeSteps.length - 1]);
+
+		upgradeInfos.add(upgradeInfo);
+
+		return upgradeInfos;
 	}
 
 	private final int _buildNumber;

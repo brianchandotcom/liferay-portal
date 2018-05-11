@@ -21,14 +21,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Properties;
@@ -50,43 +48,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true)
 public class UpgradeStepRegistratorTracker {
-
-	protected static List<UpgradeInfo> createUpgradeInfos(
-		String fromSchemaVersionString, String toSchemaVersionString,
-		int buildNumber, UpgradeStep... upgradeSteps) {
-
-		if (ArrayUtil.isEmpty(upgradeSteps)) {
-			return Collections.emptyList();
-		}
-
-		List<UpgradeInfo> upgradeInfos = new ArrayList<>();
-
-		String upgradeInfoFromSchemaVersionString = fromSchemaVersionString;
-
-		for (int i = 0; i < upgradeSteps.length - 1; i++) {
-			UpgradeStep upgradeStep = upgradeSteps[i];
-
-			String upgradeInfoToSchemaVersionString =
-				toSchemaVersionString + "-step" + (i - upgradeSteps.length + 1);
-
-			UpgradeInfo upgradeInfo = new UpgradeInfo(
-				upgradeInfoFromSchemaVersionString,
-				upgradeInfoToSchemaVersionString, buildNumber, upgradeStep);
-
-			upgradeInfos.add(upgradeInfo);
-
-			upgradeInfoFromSchemaVersionString =
-				upgradeInfoToSchemaVersionString;
-		}
-
-		UpgradeInfo upgradeInfo = new UpgradeInfo(
-			upgradeInfoFromSchemaVersionString, toSchemaVersionString,
-			buildNumber, upgradeSteps[upgradeSteps.length - 1]);
-
-		upgradeInfos.add(upgradeInfo);
-
-		return upgradeInfos;
-	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

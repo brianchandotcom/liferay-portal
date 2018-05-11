@@ -26,16 +26,19 @@ import org.junit.Test;
 /**
  * @author Carlos Sierra Andrés
  */
-public class UpgradeStepRegistratorTrackerTest {
+public class UpgradeStepRegistryTest {
 
 	@Test
 	public void testCreateUpgradeInfos() {
+		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
 
-		List<UpgradeInfo> upgradeInfos =
-			UpgradeStepRegistratorTracker.createUpgradeInfos(
-				"0.0.0", "1.0.0", 0, testUpgradeStep, testUpgradeStep,
-				testUpgradeStep, testUpgradeStep);
+		upgradeStepRegistry.register(
+			"0.0.0", "1.0.0", testUpgradeStep, testUpgradeStep, testUpgradeStep,
+			testUpgradeStep);
+
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 4, upgradeInfos.size());
 		Assert.assertEquals(
@@ -51,20 +54,24 @@ public class UpgradeStepRegistratorTrackerTest {
 
 	@Test
 	public void testCreateUpgradeInfosWithNoSteps() {
-		List<UpgradeInfo> upgradeInfos =
-			UpgradeStepRegistratorTracker.createUpgradeInfos(
-				"0.0.0", "1.0.0", 0);
+		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+
+		upgradeStepRegistry.register("0.0.0", "1.0.0");
+
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertTrue(upgradeInfos.toString(), upgradeInfos.isEmpty());
 	}
 
 	@Test
 	public void testCreateUpgradeInfosWithOneStep() {
+		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
 
-		List<UpgradeInfo> upgradeInfos =
-			UpgradeStepRegistratorTracker.createUpgradeInfos(
-				"0.0.0", "1.0.0", 0, testUpgradeStep);
+		upgradeStepRegistry.register("0.0.0", "1.0.0", testUpgradeStep);
+
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 		Assert.assertEquals(

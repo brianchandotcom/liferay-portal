@@ -54,22 +54,37 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<var name="htmlSnippet"><![CDATA[<div>${line.separator}<span class="test">This is a test.</span>
-	   ${line.separator}</div>]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_3.html" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="html" />
 			<var name="templateScript" value="${htmlSnippet}" />
 		</execute>
 
-		<var name="cssSnippet"><![CDATA[.test{${line.separator}background-color:red${line.separator}}]]></var>
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="cssSnippet" />
+			<var name="fileName" value="Document_3.css" />
+		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
 			<var name="editor" value="css" />
 			<var name="templateScript" value="${cssSnippet}" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="javascriptSnippet" />
+			<var name="fileName" value="Document_3.js" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="javascript" />
+			<var name="templateScript" value="${javascriptSnippet}" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Test Site Name" />

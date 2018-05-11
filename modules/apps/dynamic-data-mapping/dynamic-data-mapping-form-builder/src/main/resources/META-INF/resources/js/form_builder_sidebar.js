@@ -83,13 +83,13 @@ AUI.add(
 
 						var closeButton = boundingBox.one('.' + CSS_CLASS_CLOSE);
 
-						var backButton = boundingBox.one('.' + CSS_CLASS_BACK);
-
 						instance._eventHandlers.push(
 							A.one('doc').on('key', A.bind('_afterPressEscapeKey', instance), 'esc'),
 							boundingBox.on('transitionend', A.bind('_onTransitionEnd', instance)),
 							closeButton.on('click', A.bind('_afterClickCloseButton', instance))
 						);
+
+						var backButton = boundingBox.one('.' + CSS_CLASS_BACK);
 
 						if (backButton) {
 							instance._eventHandlers.push(

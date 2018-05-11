@@ -18,7 +18,6 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:journal:journal-content-asset-addon-entry:journal-content-asset-addon-entry-api")
-	compileOnly project(":apps:journal:journal-taglib")
 	compileOnly project(":apps:journal:journal-web")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

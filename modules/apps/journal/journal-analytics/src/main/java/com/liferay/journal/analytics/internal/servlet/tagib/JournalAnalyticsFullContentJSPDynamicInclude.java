@@ -15,11 +15,12 @@
 package com.liferay.journal.analytics.internal.servlet.tagib;
 
 import com.liferay.journal.analytics.internal.contants.JournalWebKeys;
-import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -31,10 +32,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author Alejandro Tardín
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class JournalAnalyticsPageJSPDynamicInclude
+public class JournalAnalyticsFullContentJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
@@ -43,16 +44,15 @@ public class JournalAnalyticsPageJSPDynamicInclude
 			String key)
 		throws IOException {
 
-		JournalArticleDisplay articleDisplay =
-			(JournalArticleDisplay)request.getAttribute(
-				"liferay-journal:journal-article:articleDisplay");
+		JournalArticle article = (JournalArticle)request.getAttribute(
+			WebKeys.JOURNAL_ARTICLE);
 
-		if (articleDisplay == null) {
+		if (article == null) {
 			return;
 		}
 
 		request.setAttribute(
-			JournalWebKeys.JOURNAL_ARTICLE_ID, articleDisplay.getArticleId());
+			JournalWebKeys.JOURNAL_ARTICLE_ID, article.getArticleId());
 
 		super.include(request, response, key);
 	}
@@ -60,7 +60,7 @@ public class JournalAnalyticsPageJSPDynamicInclude
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.journal.taglib#/journal_article/page.jsp#post");
+			"com.liferay.journal.web#/asset/full_content.jsp#post");
 	}
 
 	@Override
@@ -82,6 +82,6 @@ public class JournalAnalyticsPageJSPDynamicInclude
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalAnalyticsPageJSPDynamicInclude.class);
+		JournalAnalyticsFullContentJSPDynamicInclude.class);
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.tasks.BuildExtInfoTask;
 
@@ -33,6 +34,7 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.bundling.Jar;
@@ -72,6 +74,9 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 		Configuration portalConfiguration = GradleUtil.getConfiguration(
 			project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+
+		_configureLiferay(project);
+		_configureTaskDeploy(war);
 
 		Jar extKernelJar = _addSourceSet(
 			war, warPluginConvention, EXT_KERNEL_SOURCESET_NAME,
@@ -267,6 +272,22 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, WarPlugin.class);
 	}
 
+	private void _configureLiferay(Project project) {
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		liferayExtension.setDeployDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						liferayExtension.getAppServerParentDir(), "deploy");
+				}
+
+			});
+	}
+
 	private void _configureTaskBuildExtInfoBaseDir(
 		Sync buildExtInfoBaseDirTask, final BuildExtInfoTask buildExtInfoTask) {
 
@@ -287,6 +308,13 @@ public class LiferayExtPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private void _configureTaskDeploy(War war) {
+		Copy copy = (Copy)GradleUtil.getTask(
+			war.getProject(), LiferayBasePlugin.DEPLOY_TASK_NAME);
+
+		copy.from(war);
 	}
 
 	private void _configureTaskExtImplJar(
@@ -313,7 +341,13 @@ public class LiferayExtPlugin implements Plugin<Project> {
 	private void _configureTaskWar(
 		War war, final BuildExtInfoTask buildExtInfoTask) {
 
-		war.setAppendix("ext");
+		Project project = war.getProject();
+
+		String name = project.getName();
+
+		if (!name.endsWith("-ext")) {
+			war.setAppendix("ext");
+		}
 
 		CopySpec copySpec = war.getWebInf();
 

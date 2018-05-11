@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.data.integration.apio.internal.security.permission;
 
-import static com.liferay.commerce.price.list.constants.CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS;
 import static com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory.openSingleValueMap;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.data.integration.apio.security.permission.CollectionPermissionChecker;
+import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -58,7 +58,8 @@ public class PriceListPermissionChecker implements CollectionPermissionChecker {
 				portletResourcePermission -> permissionCheckerTry.map(
 					permissionChecker -> portletResourcePermission.contains(
 						permissionChecker, groupId,
-						MANAGE_COMMERCE_PRICE_LISTS))
+						CommercePriceListActionKeys.
+							MANAGE_COMMERCE_PRICE_LISTS))
 			).orElse(
 				false
 			);
@@ -84,7 +85,8 @@ public class PriceListPermissionChecker implements CollectionPermissionChecker {
 				portletResourcePermission -> permissionCheckerTry.map(
 					permissionChecker -> portletResourcePermission.contains(
 						permissionChecker, commercePriceList.getGroupId(),
-						MANAGE_COMMERCE_PRICE_LISTS))
+						CommercePriceListActionKeys.
+							MANAGE_COMMERCE_PRICE_LISTS))
 			).orElse(
 				false
 			);
@@ -110,7 +112,8 @@ public class PriceListPermissionChecker implements CollectionPermissionChecker {
 				portletResourcePermission -> permissionCheckerTry.map(
 					permissionChecker -> portletResourcePermission.contains(
 						permissionChecker, commercePriceList.getGroupId(),
-						MANAGE_COMMERCE_PRICE_LISTS))
+						CommercePriceListActionKeys.
+							MANAGE_COMMERCE_PRICE_LISTS))
 			).orElse(
 				false
 			);

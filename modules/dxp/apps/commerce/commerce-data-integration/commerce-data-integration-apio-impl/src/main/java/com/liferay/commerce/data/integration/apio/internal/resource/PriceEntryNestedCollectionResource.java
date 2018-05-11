@@ -14,13 +14,6 @@
 
 package com.liferay.commerce.data.integration.apio.internal.resource;
 
-import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.DATE_CREATED;
-import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.DATE_MODIFIED;
-import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.NAME;
-import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.PRICE;
-import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.PROMO_PRICE;
-import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants.SKU;
-import static com.liferay.commerce.price.list.constants.CommercePriceListConstants.RESOURCE_NAME;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import static javax.ws.rs.core.Response.Status.CONFLICT;
@@ -31,6 +24,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
@@ -38,6 +32,7 @@ import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryCreato
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpdaterForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceEntryPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceEntryHelper;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
@@ -76,7 +71,8 @@ public class PriceEntryNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommercePriceEntry,
-			_priceEntryPermissionChecker.forAdding(RESOURCE_NAME),
+			_priceEntryPermissionChecker.forAdding(
+				CommercePriceListConstants.RESOURCE_NAME),
 			PriceEntryCreatorForm::buildForm
 		).build();
 	}
@@ -94,11 +90,13 @@ public class PriceEntryNestedCollectionResource
 			_priceEntryHelper::getCommercePriceEntry
 		).addUpdater(
 			this::_updateCommercePriceEntry,
-			_priceEntryPermissionChecker.forUpdating(RESOURCE_NAME),
+			_priceEntryPermissionChecker.forUpdating(
+				CommercePriceListConstants.RESOURCE_NAME),
 			PriceEntryUpdaterForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceEntryService::deleteCommercePriceEntry),
-			_priceEntryPermissionChecker.forDeleting(RESOURCE_NAME)
+			_priceEntryPermissionChecker.forDeleting(
+				CommercePriceListConstants.RESOURCE_NAME)
 		).build();
 	}
 
@@ -114,17 +112,20 @@ public class PriceEntryNestedCollectionResource
 			"priceList", "priceEntries", PriceListIdentifier.class,
 			CommercePriceEntry::getCommercePriceListId
 		).addDate(
-			DATE_CREATED, CommercePriceEntry::getCreateDate
+			PriceEntryFieldConstants.DATE_CREATED,
+			CommercePriceEntry::getCreateDate
 		).addDate(
-			DATE_MODIFIED, CommercePriceEntry::getModifiedDate
+			PriceEntryFieldConstants.DATE_MODIFIED,
+			CommercePriceEntry::getModifiedDate
 		).addNumber(
-			PRICE, CommercePriceEntry::getPrice
+			PriceEntryFieldConstants.PRICE, CommercePriceEntry::getPrice
 		).addNumber(
-			PROMO_PRICE, CommercePriceEntry::getPromoPrice
+			PriceEntryFieldConstants.PROMO_PRICE,
+			CommercePriceEntry::getPromoPrice
 		).addString(
-			NAME, PriceEntryHelper::getProductName
+			PriceEntryFieldConstants.NAME, PriceEntryHelper::getProductName
 		).addString(
-			SKU, PriceEntryHelper::getSKU
+			PriceEntryFieldConstants.SKU, PriceEntryHelper::getSKU
 		).build();
 	}
 

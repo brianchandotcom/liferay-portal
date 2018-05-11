@@ -14,14 +14,8 @@
 
 package com.liferay.commerce.data.integration.apio.internal.form;
 
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.CURRENCY;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.DISPLAY_DATE;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.EXPIRATION_DATE;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.NAME;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.NEVER_EXPIRE;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.PRIORITY;
-
 import com.liferay.apio.architect.form.Form;
+import com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants;
 
 import java.util.Date;
 
@@ -52,17 +46,18 @@ public class PriceListForm {
 		).constructor(
 			PriceListForm::new
 		).addOptionalDate(
-			DISPLAY_DATE, PriceListForm::_setDisplayDate
+			PriceListFieldConstants.DISPLAY_DATE, PriceListForm::_setDisplayDate
 		).addOptionalDate(
-			EXPIRATION_DATE, PriceListForm::_setExpirationDate
+			PriceListFieldConstants.EXPIRATION_DATE,
+			PriceListForm::_setExpirationDate
 		).addRequiredBoolean(
-			NEVER_EXPIRE, PriceListForm::_setNeverExpire
+			PriceListFieldConstants.NEVER_EXPIRE, PriceListForm::_setNeverExpire
 		).addRequiredDouble(
-			PRIORITY, PriceListForm::_setPriority
+			PriceListFieldConstants.PRIORITY, PriceListForm::_setPriority
 		).addRequiredString(
-			CURRENCY, PriceListForm::_setCurrency
+			PriceListFieldConstants.CURRENCY, PriceListForm::_setCurrency
 		).addRequiredString(
-			NAME, PriceListForm::_setName
+			PriceListFieldConstants.NAME, PriceListForm::_setName
 		).build();
 	}
 

@@ -14,13 +14,6 @@
 
 package com.liferay.commerce.data.integration.apio.internal.resource;
 
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.CURRENCY;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.DATE_CREATED;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.DATE_MODIFIED;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.DISPLAY_DATE;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.EXPIRATION_DATE;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.NAME;
-import static com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants.PRIORITY;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.apio.architect.functional.Try;
@@ -32,6 +25,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
@@ -116,19 +110,23 @@ public class PriceListNestedCollectionResource
 			"webSite", "priceLists", WebSiteIdentifier.class,
 			CommercePriceList::getGroupId
 		).addDate(
-			DATE_CREATED, CommercePriceList::getCreateDate
+			PriceListFieldConstants.DATE_CREATED,
+			CommercePriceList::getCreateDate
 		).addDate(
-			DATE_MODIFIED, CommercePriceList::getModifiedDate
+			PriceListFieldConstants.DATE_MODIFIED,
+			CommercePriceList::getModifiedDate
 		).addDate(
-			DISPLAY_DATE, CommercePriceList::getDisplayDate
+			PriceListFieldConstants.DISPLAY_DATE,
+			CommercePriceList::getDisplayDate
 		).addDate(
-			EXPIRATION_DATE, CommercePriceList::getExpirationDate
+			PriceListFieldConstants.EXPIRATION_DATE,
+			CommercePriceList::getExpirationDate
 		).addNumber(
-			PRIORITY, CommercePriceList::getPriority
+			PriceListFieldConstants.PRIORITY, CommercePriceList::getPriority
 		).addString(
-			CURRENCY, this::_getCurrencyCode
+			PriceListFieldConstants.CURRENCY, this::_getCurrencyCode
 		).addString(
-			NAME, CommercePriceList::getName
+			PriceListFieldConstants.NAME, CommercePriceList::getName
 		).build();
 	}
 

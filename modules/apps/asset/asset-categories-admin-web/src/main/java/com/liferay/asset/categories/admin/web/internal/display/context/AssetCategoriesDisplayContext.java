@@ -74,8 +74,10 @@ import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparat
 import com.liferay.portlet.asset.util.comparator.AssetCategoryLeftCategoryIdComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -225,9 +227,11 @@ public class AssetCategoriesDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedCategories();");
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("action", "deleteSelectedCategories");
+
+						dropdownItem.setData(data);
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -656,9 +660,11 @@ public class AssetCategoriesDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedVocabularies();");
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("action", "deleteSelectedVocabularies");
+
+						dropdownItem.setData(data);
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -1016,9 +1022,12 @@ public class AssetCategoriesDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.setActive(_isNavigationCategory());
-							dropdownItem.setHref(
-								"javascript:" + _renderResponse.getNamespace() +
-									"selectCategory();");
+
+							Map<String, Object> data = new HashMap<>();
+
+							data.put("action", "selectCategory");
+
+							dropdownItem.setData(data);
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "category"));
 						});

@@ -15,12 +15,16 @@
 package com.liferay.layout.uad.test;
 
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
 
-import org.junit.Assume;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,9 +40,11 @@ public class LayoutSetBranchUADTestHelper {
 	 * </p>
 	 */
 	public LayoutSetBranch addLayoutSetBranch(long userId) throws Exception {
-		Assume.assumeTrue(false);
-
-		return null;
+		return _layoutSetBranchLocalService.addLayoutSetBranch(
+			userId, TestPropsValues.getGroupId(), false,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
+			LayoutSetBranchConstants.ALL_BRANCHES,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	/**
@@ -51,5 +57,8 @@ public class LayoutSetBranchUADTestHelper {
 	public void cleanUpDependencies(List<LayoutSetBranch> layoutSetBranchs)
 		throws Exception {
 	}
+
+	@Reference
+	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 }

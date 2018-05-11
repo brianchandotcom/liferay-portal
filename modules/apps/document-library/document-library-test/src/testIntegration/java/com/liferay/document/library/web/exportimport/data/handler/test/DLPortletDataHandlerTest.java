@@ -71,6 +71,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,16 +108,17 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceRegistration = registry.registerService(
-			DLExportableRepositoryPublisher.class,
-			new CountingDLExportableRepositoryPublisher(_atomicInteger),
-			new HashMap<>());
+		_serviceRegistrations.add(
+			registry.registerService(
+				DLExportableRepositoryPublisher.class,
+				new CountingDLExportableRepositoryPublisher(_atomicInteger),
+				new HashMap<>()));
 	}
 
 	@After
 	public void tearDown() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
+		if (_serviceRegistrations != null) {
+			_serviceRegistrations.forEach(ServiceRegistration::unregister);
 		}
 	}
 
@@ -438,8 +440,9 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	private final AtomicInteger _atomicInteger = new AtomicInteger(0);
-	private ServiceRegistration<DLExportableRepositoryPublisher>
-		_serviceRegistration;
+	private final Collection
+		<ServiceRegistration<DLExportableRepositoryPublisher>>
+			_serviceRegistrations = new ArrayList<>();
 
 	private static class CountingDLExportableRepositoryPublisher
 		implements DLExportableRepositoryPublisher {

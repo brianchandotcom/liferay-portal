@@ -20,15 +20,11 @@ prepareWeDeployModules {
 
 wedeploy {
 	args "deploy"
-
-	String weDeployProjectName = project.properties["project"]
-
-	if (weDeployProjectName) {
-		args "--project", weDeployProjectName
-	}
+	args "--project", project.properties["roject"]
 
 	dependsOn prepareWeDeployModules
 	description = "Deploys Liferay Commerce to WeDeploy."
 	executable = "we"
 	group = "upload"
+	workingDir = "wedeploy"
 }

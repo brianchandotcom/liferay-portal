@@ -33,7 +33,13 @@ public class CommerceCloudClientConstants {
 	public static final String[] ORDER_FORECAST_LEVELS =
 		{"COMPANY", "CUSTOMER", "CUSTOMER_SKU", "SKU"};
 
-	public static final String[] ORDER_FORECAST_PERIODS;
+	public static final String ORDER_FORECAST_PERIOD_MONTHLY =
+		StringUtil.toUpperCase(
+			CommerceForecastEntryConstants.PERIOD_LABEL_MONTHLY);
+
+	public static final String ORDER_FORECAST_PERIOD_WEEKLY =
+		StringUtil.toUpperCase(
+			CommerceForecastEntryConstants.PERIOD_LABEL_WEEKLY);
 
 	public static final int[] ORDER_FORECAST_SYNC_STATUSES = {
 		CommerceOrderConstants.ORDER_STATUS_AWAITING_FULFILLMENT,
@@ -46,23 +52,11 @@ public class CommerceCloudClientConstants {
 		CommerceOrderConstants.ORDER_STATUS_TRANSMITTED
 	};
 
-	public static final String[] ORDER_FORECAST_TARGETS;
-
-	private static String[] _fixLabels(String... labels) {
-		for (int i = 0; i < labels.length; i++) {
-			labels[i] = StringUtil.toUpperCase(labels[i]);
-		}
-
-		return labels;
-	}
-
-	static {
-		ORDER_FORECAST_PERIODS = _fixLabels(
-			CommerceForecastEntryConstants.PERIOD_LABEL_WEEKLY,
-			CommerceForecastEntryConstants.PERIOD_LABEL_MONTHLY);
-		ORDER_FORECAST_TARGETS = _fixLabels(
-			CommerceForecastEntryConstants.TARGET_LABEL_QUANTITY,
-			CommerceForecastEntryConstants.TARGET_LABEL_REVENUE);
-	}
+	public static final String[] ORDER_FORECAST_TARGETS = {
+		StringUtil.toUpperCase(
+			CommerceForecastEntryConstants.TARGET_LABEL_QUANTITY),
+		StringUtil.toUpperCase(
+			CommerceForecastEntryConstants.TARGET_LABEL_REVENUE)
+	};
 
 }

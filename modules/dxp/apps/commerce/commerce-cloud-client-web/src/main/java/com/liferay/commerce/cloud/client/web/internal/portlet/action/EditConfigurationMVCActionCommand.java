@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -76,11 +77,37 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected JSONArray toJSONArray(String[] array) {
+	protected JSONArray getOrderForecastItemsConfiguration(
+		ActionRequest actionRequest) {
+
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (String value : array) {
-			jsonArray.put(value);
+		int[] orderForecastItemIndexes = StringUtil.split(
+			ParamUtil.getString(actionRequest, "orderForecastItemIndexes"), 0);
+
+		for (int i = 0; i < orderForecastItemIndexes.length; i++) {
+			int ahead = ParamUtil.getInteger(
+				actionRequest, "orderForecastItemAhead" + i);
+
+			if (ahead <= 0) {
+				continue;
+			}
+
+			String level = ParamUtil.getString(
+				actionRequest, "orderForecastItemLevel" + i);
+			String period = ParamUtil.getString(
+				actionRequest, "orderForecastItemPeriod" + i);
+			String target = ParamUtil.getString(
+				actionRequest, "orderForecastItemTarget" + i);
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+			jsonObject.put("ahead", ahead);
+			jsonObject.put("level", level);
+			jsonObject.put("period", period);
+			jsonObject.put("target", target);
+
+			jsonArray.put(jsonObject);
 		}
 
 		return jsonArray;
@@ -126,23 +153,16 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateOrderForecastConfiguration(ActionRequest actionRequest)
 		throws Exception {
 
-		// Server configuration
-
-		int ahead = ParamUtil.getInteger(actionRequest, "ahead");
 		String frequency = ParamUtil.getString(actionRequest, "frequency");
-		String[] levels = ParamUtil.getStringValues(actionRequest, "levels");
-		String[] periods = ParamUtil.getStringValues(actionRequest, "periods");
-		String[] targets = ParamUtil.getStringValues(actionRequest, "targets");
+		JSONArray itemsJSONArray = getOrderForecastItemsConfiguration(
+			actionRequest);
 		String timeZoneOffset = ParamUtil.getString(
 			actionRequest, "timeZoneOffset");
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("ahead", ahead);
 		jsonObject.put("frequency", frequency);
-		jsonObject.put("levels", toJSONArray(levels));
-		jsonObject.put("periods", toJSONArray(periods));
-		jsonObject.put("targets", toJSONArray(targets));
+		jsonObject.put("items", itemsJSONArray);
 		jsonObject.put("timeZoneOffset", timeZoneOffset);
 
 		_commerceCloudClient.updateOrderForecastConfiguration(jsonObject);

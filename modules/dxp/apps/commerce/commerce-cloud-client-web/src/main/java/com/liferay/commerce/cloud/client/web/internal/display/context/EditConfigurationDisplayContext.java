@@ -19,6 +19,7 @@ import com.liferay.commerce.cloud.client.exception.CommerceCloudClientException;
 import com.liferay.commerce.cloud.client.util.CommerceCloudClient;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -111,6 +112,30 @@ public class EditConfigurationDisplayContext {
 		value = StringUtil.toLowerCase(value);
 
 		return StringUtil.replace(value, CharPool.UNDERLINE, CharPool.DASH);
+	}
+
+	public JSONArray getOrderForecastItemsConfiguration() {
+		JSONObject orderForecastConfigurationJSONObject =
+			getOrderForecastConfiguration();
+
+		if (orderForecastConfigurationJSONObject == null) {
+			return null;
+		}
+
+		JSONArray jsonArray = orderForecastConfigurationJSONObject.getJSONArray(
+			"items");
+
+		if ((jsonArray == null) || (jsonArray.length() == 0)) {
+			jsonArray = _jsonFactory.createJSONArray();
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+			jsonObject.put("ahead", 1);
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
 	}
 
 	public String getOrderStatusLabel(int orderStatus) {

@@ -228,6 +228,7 @@
 			<message key="unbind.dynamic.policy.missing" value="Always specify a valid ''unbind'' method when using ''policy = ReferencePolicy.DYNAMIC'' policy. See https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/component/annotations/Reference.html#unbind()" />
 			<message key="unbind.static.policy.missing" value="Specify ''unbind'' method. Use ''unbind = {0}'' when ''unbind'' method is not needed. See https://osgi.org/javadoc/r4v43/cmpn/org/osgi/service/component/annotations/Reference.html#unbind()" />
 			<message key="volatile.incorrect" value="Variable ''{0}'' should not be volatile" />
+			<message key="volatile.missing" value="Variable ''{0}'' should be volatile" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SelfReferenceCheck">
 			<message key="self.reference.unneeded" value="Reference to method ''{0}'' does not need ''{1}''" />

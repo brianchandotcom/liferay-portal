@@ -43,7 +43,7 @@ public class ToggleEditLayoutModeProductNavigationControlMenuEntry
 
 	@Override
 	public String getIconJspPath() {
-		return "/control/menu/toggle_edit_layout_mode.jsp";
+		return "/entries/toggle_edit_layout_mode.jsp";
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class ToggleEditLayoutModeProductNavigationControlMenuEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		target = "(osgi.web.symbolicname=com.liferay.product.navigation.control.menu.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

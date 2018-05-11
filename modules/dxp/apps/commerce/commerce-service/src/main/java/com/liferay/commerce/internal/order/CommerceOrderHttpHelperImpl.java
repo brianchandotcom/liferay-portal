@@ -95,6 +95,14 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		CommerceOrder commerceOrder = getCurrentCommerceOrder(
 			httpServletRequest);
 
+		return getCommerceCartPortletURL(httpServletRequest, commerceOrder);
+	}
+
+	@Override
+	public PortletURL getCommerceCartPortletURL(
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
+		throws PortalException {
+
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 		long plid = _portal.getPlidFromPortletId(
@@ -124,8 +132,25 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				httpServletRequest, CommercePortletKeys.COMMERCE_CART_CONTENT);
 		}
 
-		return _getPortletURL(
-			httpServletRequest, CommercePortletKeys.COMMERCE_ORDER_CONTENT);
+		plid = _portal.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_ORDER_CONTENT);
+
+		if (plid > 0) {
+			PortletURL portletURL = _getPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_ORDER_CONTENT);
+
+			if (commerceOrder != null) {
+				portletURL.setParameter(
+					"mvcRenderCommandName", "viewCommerceOrderItems");
+				portletURL.setParameter(
+					"commerceOrderId",
+					String.valueOf(commerceOrder.getCommerceOrderId()));
+			}
+
+			return portletURL;
+		}
+
+		return null;
 	}
 
 	@Override

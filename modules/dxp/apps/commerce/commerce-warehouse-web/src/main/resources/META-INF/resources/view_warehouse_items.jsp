@@ -44,7 +44,7 @@ if (Validator.isNotNull(backURL)) {
 		<table class="show-quick-actions-on-hover table table-autofit table-list table-responsive-lg">
 			<thead>
 				<tr>
-					<th class="table-cell-content"><liferay-ui:message key="title" /></th>
+					<th class="table-cell-content"><liferay-ui:message key="warehouse" /></th>
 					<th><liferay-ui:message key="quantity" /></th>
 					<th></th>
 				</tr>

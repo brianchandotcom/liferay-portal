@@ -59,7 +59,9 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 			_checkGreedyOption(annotationAST, policyName);
 
-			if (detailAST.getType() != TokenTypes.METHOD_DEF) {
+			if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
+				_checkVolatileVariable(detailAST, policyName);
+
 				continue;
 			}
 
@@ -158,11 +160,31 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 				modifiersAST.branchContains(TokenTypes.LITERAL_VOLATILE)) {
 
 				log(
-					variableDefAST.getLineNo(), _MSG_INCORRECT_VOLATILE,
+					identAST.getLineNo(), _MSG_INCORRECT_VOLATILE,
 					variableName);
 
 				return;
 			}
+		}
+	}
+
+	private void _checkVolatileVariable(
+		DetailAST variableDefAST, String policyName) {
+
+		if (!policyName.endsWith(_POLICY_DYNAMIC)) {
+			return;
+		}
+
+		DetailAST modifiersAST = variableDefAST.findFirstToken(
+			TokenTypes.MODIFIERS);
+
+		if (!modifiersAST.branchContains(TokenTypes.LITERAL_VOLATILE)) {
+			DetailAST identAST = variableDefAST.findFirstToken(
+				TokenTypes.IDENT);
+
+			log(
+				identAST.getLineNo(), _MSG_MISSING_VOLATILE,
+				identAST.getText());
 		}
 	}
 
@@ -250,6 +272,8 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 	private static final String _MSG_MISSING_STATIC_POLICY_UNBIND =
 		"unbind.static.policy.missing";
+
+	private static final String _MSG_MISSING_VOLATILE = "volatile.missing";
 
 	private static final String _MSG_REDUNDANT_DEFAULT_UNBIND =
 		"default.unbind.redundant";

@@ -3452,9 +3452,7 @@ ${output.content}</echo>
 						<delete file="${project.dir}/build.services.diff.txt" />
 
 						<if>
-							<not>
-								<equals arg1="${build.services.diff.txt.content}" arg2="" />
-							</not>
+							<isset property="build.services.diff.txt.content" />
 							<then>
 								<echo message="${build.services.diff.txt.content}" />
 

@@ -3440,6 +3440,7 @@ ${output.content}</echo>
 							<arg value="--" />
 							<arg value="." />
 							<arg value=":!*/*-portlet-service.jar" />
+							<arg value=":!*/packageinfo" />
 							<arg value=":!*/src/main/resources/service.properties" />
 							<arg value=":!*/src/service.properties" />
 						</exec>

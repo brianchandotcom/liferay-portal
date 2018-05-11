@@ -81,13 +81,13 @@ public class ContactModelListener extends BaseLDAPExportModelListener<Contact> {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private LDAPSettings _ldapSettings;
+	private volatile LDAPSettings _ldapSettings;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private UserExporter _userExporter;
+	private volatile UserExporter _userExporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

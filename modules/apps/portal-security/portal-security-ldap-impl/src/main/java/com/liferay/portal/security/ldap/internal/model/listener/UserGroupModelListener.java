@@ -105,6 +105,6 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private UserExporter _userExporter;
+	private volatile UserExporter _userExporter;
 
 }

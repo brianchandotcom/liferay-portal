@@ -132,7 +132,7 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private LDAPSettings _ldapSettings;
+	private volatile LDAPSettings _ldapSettings;
 
 	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;
@@ -141,7 +141,7 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private UserExporter _userExporter;
+	private volatile UserExporter _userExporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

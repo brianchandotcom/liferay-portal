@@ -1433,6 +1433,13 @@ app.server.type=@{app.server.type}]]></echo>
 							<delete dir="${liferay.home}/osgi/static" />
 							<delete dir="${liferay.home}/osgi/war" />
 
+							<delete>
+								<fileset
+									dir="${liferay.home}/osgi/test"
+									excludes="com.liferay.portal.test.jar,com.liferay.portal.test.integration.jar"
+								/>
+							</delete>
+
 							<trycatch>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />

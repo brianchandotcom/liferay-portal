@@ -35,26 +35,12 @@ else {
 }
 
 String searchContainerId = "publishLayoutProcesses";
-
-PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		portletURL.setParameter("tabs1", "processes");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="processes" selected='<%= tabs1.equals("processes") %>' />
-
-		<%
-		portletURL.setParameter("tabs1", "scheduled");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="scheduled" selected='<%= tabs1.equals("scheduled") %>' />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems="<%= stagingProcessesWebDisplayContext.getNavigationItems() %>"
+/>
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("processes") %>'>
@@ -66,8 +52,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-util:param name="orderByType" value="<%= orderByType %>" />
 			<liferay-util:param name="searchContainerId" value="<%= searchContainerId %>" />
 		</liferay-util:include>
-
-		<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= tabs1.equals("scheduled") %>'>
 		<liferay-util:include page="/scheduled_list/view.jsp" servletContext="<%= application %>" />

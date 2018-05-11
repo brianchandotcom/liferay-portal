@@ -29,7 +29,9 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 %>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroupId, ActionKeys.PUBLISH_STAGING) %>">
-	<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu
+		inline="<%= true %>"
+	>
 
 		<%
 		for (ExportImportConfiguration exportImportConfiguration : exportImportConfigurations) {

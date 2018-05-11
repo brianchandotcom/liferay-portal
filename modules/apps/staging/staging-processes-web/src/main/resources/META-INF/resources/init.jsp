@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
@@ -88,6 +89,8 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.staging.constants.StagingConfigurationPortletKeys" %><%@
 page import="com.liferay.staging.constants.StagingProcessesPortletKeys" %><%@
 page import="com.liferay.staging.processes.web.internal.dao.search.PublishResultRowSplitter" %><%@
+page import="com.liferay.staging.processes.web.internal.display.context.PublishTemplatesDisplayContext" %><%@
+page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationDisplayTerms" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
@@ -123,6 +126,10 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
 int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
+
+PublishTemplatesDisplayContext publishTemplatesDisplayContext = new PublishTemplatesDisplayContext(renderResponse, request);
+
+StagingProcessesWebDisplayContext stagingProcessesWebDisplayContext = new StagingProcessesWebDisplayContext(renderResponse, request);
 %>
 
 <%@ include file="/init-ext.jsp" %>

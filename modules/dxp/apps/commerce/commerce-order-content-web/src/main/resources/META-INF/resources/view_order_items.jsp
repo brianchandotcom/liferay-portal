@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 CommerceOrderItemContentDisplayContext commerceOrderItemContentDisplayContext = (CommerceOrderItemContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceOrder commerceOrder = commerceOrderItemContentDisplayContext.getCommerceOrder();
@@ -34,7 +32,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <div class="commerce-orders-container container-fluid-1280" id="<portlet:namespace />orderItemsContainer">
 	<liferay-ui:header
-		backURL="<%= redirect %>"
+		backURL="<%= renderResponse.createRenderURL() %>"
 		title="back"
 	/>
 

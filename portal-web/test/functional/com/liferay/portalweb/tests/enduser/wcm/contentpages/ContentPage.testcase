@@ -117,6 +117,8 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
+		<execute macro="Button#clickPublish" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />

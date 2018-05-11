@@ -48,7 +48,9 @@
 			<var name="key_text" value="Publish" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute macro="Button#click">
+			<var name="button" value="Publish" />
+		</execute>
 	</command>
 
 	<command name="clickRemove">

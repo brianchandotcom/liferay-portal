@@ -14,17 +14,22 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,9 +62,19 @@ public class DeleteUserMVCActionCommand extends BaseUADMVCActionCommand {
 			portletRequest, UsersAdminPortletKeys.USERS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
+		HttpServletRequest request = _portalImpl.getHttpServletRequest(
+			actionRequest);
+
+		MultiSessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(request, "user-successfully-deleted"));
+
 		sendRedirect(
 			actionRequest, actionResponse, liferayPortletURL.toString());
 	}
+
+	@Reference
+	private Portal _portalImpl;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -107,12 +107,12 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 				if (policyName.endsWith(_POLICY_DYNAMIC)) {
 					log(
 						annotationAST.getLineNo(),
-						_MSG_DYNAMIC_POLICY_MISSING_UNBIND);
+						_MSG_MISSING_DYNAMIC_POLICY_UNBIND);
 				}
 				else {
 					log(
 						annotationAST.getLineNo(),
-						_MSG_STATIC_POLICY_MISSING_UNBIND, _NO_UNBIND);
+						_MSG_MISSING_STATIC_POLICY_UNBIND, _NO_UNBIND);
 				}
 			}
 		}
@@ -122,7 +122,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		else if (unbindName.equals(_NO_UNBIND) &&
 				 policyName.endsWith(_POLICY_DYNAMIC)) {
 
-			log(annotationAST.getLineNo(), _MSG_DYNAMIC_POLICY_MISSING_UNBIND);
+			log(annotationAST.getLineNo(), _MSG_MISSING_DYNAMIC_POLICY_UNBIND);
 		}
 	}
 
@@ -158,7 +158,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 				modifiersAST.branchContains(TokenTypes.LITERAL_VOLATILE)) {
 
 				log(
-					variableDefAST.getLineNo(), _MSG_VOLATILE_MISSING,
+					variableDefAST.getLineNo(), _MSG_MISSING_VOLATILE,
 					variableName);
 
 				return;
@@ -240,19 +240,19 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		return sb.toString();
 	}
 
-	private static final String _MSG_DYNAMIC_POLICY_MISSING_UNBIND =
-		"missing.unbind.dynamic.policy";
-
 	private static final String _MSG_INCORRECT_GREEDY_POLICY_OPTION =
 		"greedy.policy.option.incorrect";
 
+	private static final String _MSG_MISSING_DYNAMIC_POLICY_UNBIND =
+		"unbind.dynamic.policy.missing";
+
+	private static final String _MSG_MISSING_STATIC_POLICY_UNBIND =
+		"unbind.static.policy.missing";
+
+	private static final String _MSG_MISSING_VOLATILE = "volatile.missing";
+
 	private static final String _MSG_REDUNDANT_DEFAULT_UNBIND =
 		"default.unbind.redundant";
-
-	private static final String _MSG_STATIC_POLICY_MISSING_UNBIND =
-		"missing.unbind.static.policy";
-
-	private static final String _MSG_VOLATILE_MISSING = "missing.volatile";
 
 	private static final String _NO_UNBIND = "\"-\"";
 

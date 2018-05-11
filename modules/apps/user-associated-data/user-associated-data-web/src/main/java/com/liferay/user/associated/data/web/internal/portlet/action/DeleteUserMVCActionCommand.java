@@ -53,16 +53,16 @@ public class DeleteUserMVCActionCommand extends BaseUADMVCActionCommand {
 
 		_userLocalService.deleteUser(getSelectedUserId(actionRequest));
 
-		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-			actionRequest, UsersAdminPortletKeys.USERS_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
 		HttpServletRequest request = _portalImpl.getHttpServletRequest(
 			actionRequest);
 
 		MultiSessionMessages.add(
 			actionRequest, "requestProcessed",
 			LanguageUtil.get(request, "user-successfully-deleted"));
+
+		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
+			actionRequest, UsersAdminPortletKeys.USERS_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
 		sendRedirect(
 			actionRequest, actionResponse, liferayPortletURL.toString());

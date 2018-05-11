@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2942,8 +2945,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	@Override
 	protected DDMFormInstanceRecordVersion removeImpl(
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
-		ddmFormInstanceRecordVersion = toUnwrappedModel(ddmFormInstanceRecordVersion);
-
 		Session session = null;
 
 		try {
@@ -2975,9 +2976,23 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	@Override
 	public DDMFormInstanceRecordVersion updateImpl(
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
-		ddmFormInstanceRecordVersion = toUnwrappedModel(ddmFormInstanceRecordVersion);
-
 		boolean isNew = ddmFormInstanceRecordVersion.isNew();
+
+		if (!(ddmFormInstanceRecordVersion instanceof DDMFormInstanceRecordVersionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmFormInstanceRecordVersion.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmFormInstanceRecordVersion);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmFormInstanceRecordVersion proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMFormInstanceRecordVersion implementation " +
+				ddmFormInstanceRecordVersion.getClass());
+		}
 
 		DDMFormInstanceRecordVersionModelImpl ddmFormInstanceRecordVersionModelImpl =
 			(DDMFormInstanceRecordVersionModelImpl)ddmFormInstanceRecordVersion;
@@ -3154,36 +3169,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		ddmFormInstanceRecordVersion.resetOriginalValues();
 
 		return ddmFormInstanceRecordVersion;
-	}
-
-	protected DDMFormInstanceRecordVersion toUnwrappedModel(
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
-		if (ddmFormInstanceRecordVersion instanceof DDMFormInstanceRecordVersionImpl) {
-			return ddmFormInstanceRecordVersion;
-		}
-
-		DDMFormInstanceRecordVersionImpl ddmFormInstanceRecordVersionImpl = new DDMFormInstanceRecordVersionImpl();
-
-		ddmFormInstanceRecordVersionImpl.setNew(ddmFormInstanceRecordVersion.isNew());
-		ddmFormInstanceRecordVersionImpl.setPrimaryKey(ddmFormInstanceRecordVersion.getPrimaryKey());
-
-		ddmFormInstanceRecordVersionImpl.setFormInstanceRecordVersionId(ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId());
-		ddmFormInstanceRecordVersionImpl.setGroupId(ddmFormInstanceRecordVersion.getGroupId());
-		ddmFormInstanceRecordVersionImpl.setCompanyId(ddmFormInstanceRecordVersion.getCompanyId());
-		ddmFormInstanceRecordVersionImpl.setUserId(ddmFormInstanceRecordVersion.getUserId());
-		ddmFormInstanceRecordVersionImpl.setUserName(ddmFormInstanceRecordVersion.getUserName());
-		ddmFormInstanceRecordVersionImpl.setCreateDate(ddmFormInstanceRecordVersion.getCreateDate());
-		ddmFormInstanceRecordVersionImpl.setFormInstanceId(ddmFormInstanceRecordVersion.getFormInstanceId());
-		ddmFormInstanceRecordVersionImpl.setFormInstanceVersion(ddmFormInstanceRecordVersion.getFormInstanceVersion());
-		ddmFormInstanceRecordVersionImpl.setFormInstanceRecordId(ddmFormInstanceRecordVersion.getFormInstanceRecordId());
-		ddmFormInstanceRecordVersionImpl.setVersion(ddmFormInstanceRecordVersion.getVersion());
-		ddmFormInstanceRecordVersionImpl.setStatus(ddmFormInstanceRecordVersion.getStatus());
-		ddmFormInstanceRecordVersionImpl.setStatusByUserId(ddmFormInstanceRecordVersion.getStatusByUserId());
-		ddmFormInstanceRecordVersionImpl.setStatusByUserName(ddmFormInstanceRecordVersion.getStatusByUserName());
-		ddmFormInstanceRecordVersionImpl.setStatusDate(ddmFormInstanceRecordVersion.getStatusDate());
-		ddmFormInstanceRecordVersionImpl.setStorageId(ddmFormInstanceRecordVersion.getStorageId());
-
-		return ddmFormInstanceRecordVersionImpl;
 	}
 
 	/**

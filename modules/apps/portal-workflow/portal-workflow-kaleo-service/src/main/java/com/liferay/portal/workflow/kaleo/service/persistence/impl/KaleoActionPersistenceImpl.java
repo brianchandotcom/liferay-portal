@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
@@ -40,6 +41,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoActionPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2558,8 +2561,6 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 
 	@Override
 	protected KaleoAction removeImpl(KaleoAction kaleoAction) {
-		kaleoAction = toUnwrappedModel(kaleoAction);
-
 		Session session = null;
 
 		try {
@@ -2590,9 +2591,23 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 
 	@Override
 	public KaleoAction updateImpl(KaleoAction kaleoAction) {
-		kaleoAction = toUnwrappedModel(kaleoAction);
-
 		boolean isNew = kaleoAction.isNew();
+
+		if (!(kaleoAction instanceof KaleoActionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoAction.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoAction);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoAction proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoAction implementation " +
+				kaleoAction.getClass());
+		}
 
 		KaleoActionModelImpl kaleoActionModelImpl = (KaleoActionModelImpl)kaleoAction;
 
@@ -2776,38 +2791,6 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 		kaleoAction.resetOriginalValues();
 
 		return kaleoAction;
-	}
-
-	protected KaleoAction toUnwrappedModel(KaleoAction kaleoAction) {
-		if (kaleoAction instanceof KaleoActionImpl) {
-			return kaleoAction;
-		}
-
-		KaleoActionImpl kaleoActionImpl = new KaleoActionImpl();
-
-		kaleoActionImpl.setNew(kaleoAction.isNew());
-		kaleoActionImpl.setPrimaryKey(kaleoAction.getPrimaryKey());
-
-		kaleoActionImpl.setKaleoActionId(kaleoAction.getKaleoActionId());
-		kaleoActionImpl.setGroupId(kaleoAction.getGroupId());
-		kaleoActionImpl.setCompanyId(kaleoAction.getCompanyId());
-		kaleoActionImpl.setUserId(kaleoAction.getUserId());
-		kaleoActionImpl.setUserName(kaleoAction.getUserName());
-		kaleoActionImpl.setCreateDate(kaleoAction.getCreateDate());
-		kaleoActionImpl.setModifiedDate(kaleoAction.getModifiedDate());
-		kaleoActionImpl.setKaleoClassName(kaleoAction.getKaleoClassName());
-		kaleoActionImpl.setKaleoClassPK(kaleoAction.getKaleoClassPK());
-		kaleoActionImpl.setKaleoDefinitionVersionId(kaleoAction.getKaleoDefinitionVersionId());
-		kaleoActionImpl.setKaleoNodeName(kaleoAction.getKaleoNodeName());
-		kaleoActionImpl.setName(kaleoAction.getName());
-		kaleoActionImpl.setDescription(kaleoAction.getDescription());
-		kaleoActionImpl.setExecutionType(kaleoAction.getExecutionType());
-		kaleoActionImpl.setScript(kaleoAction.getScript());
-		kaleoActionImpl.setScriptLanguage(kaleoAction.getScriptLanguage());
-		kaleoActionImpl.setScriptRequiredContexts(kaleoAction.getScriptRequiredContexts());
-		kaleoActionImpl.setPriority(kaleoAction.getPriority());
-
-		return kaleoActionImpl;
 	}
 
 	/**

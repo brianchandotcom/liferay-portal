@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.model.PortletItemModel;
 import com.liferay.portal.kernel.model.User;
@@ -725,7 +726,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 	private static final ClassLoader _classLoader = PortletItem.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			PortletItem.class
+			PortletItem.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _portletItemId;

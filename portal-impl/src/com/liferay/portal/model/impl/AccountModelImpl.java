@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.AccountModel;
 import com.liferay.portal.kernel.model.AccountSoap;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -956,7 +957,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	private static final ClassLoader _classLoader = Account.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Account.class
+			Account.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _accountId;

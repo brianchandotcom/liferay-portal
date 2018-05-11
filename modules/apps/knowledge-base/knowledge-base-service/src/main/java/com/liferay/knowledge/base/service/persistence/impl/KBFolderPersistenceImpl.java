@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,6 +50,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3272,8 +3274,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 	@Override
 	protected KBFolder removeImpl(KBFolder kbFolder) {
-		kbFolder = toUnwrappedModel(kbFolder);
-
 		Session session = null;
 
 		try {
@@ -3304,9 +3304,23 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 	@Override
 	public KBFolder updateImpl(KBFolder kbFolder) {
-		kbFolder = toUnwrappedModel(kbFolder);
-
 		boolean isNew = kbFolder.isNew();
+
+		if (!(kbFolder instanceof KBFolderModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kbFolder.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kbFolder);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kbFolder proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KBFolder implementation " +
+				kbFolder.getClass());
+		}
 
 		KBFolderModelImpl kbFolderModelImpl = (KBFolderModelImpl)kbFolder;
 
@@ -3463,33 +3477,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		kbFolder.resetOriginalValues();
 
 		return kbFolder;
-	}
-
-	protected KBFolder toUnwrappedModel(KBFolder kbFolder) {
-		if (kbFolder instanceof KBFolderImpl) {
-			return kbFolder;
-		}
-
-		KBFolderImpl kbFolderImpl = new KBFolderImpl();
-
-		kbFolderImpl.setNew(kbFolder.isNew());
-		kbFolderImpl.setPrimaryKey(kbFolder.getPrimaryKey());
-
-		kbFolderImpl.setUuid(kbFolder.getUuid());
-		kbFolderImpl.setKbFolderId(kbFolder.getKbFolderId());
-		kbFolderImpl.setGroupId(kbFolder.getGroupId());
-		kbFolderImpl.setCompanyId(kbFolder.getCompanyId());
-		kbFolderImpl.setUserId(kbFolder.getUserId());
-		kbFolderImpl.setUserName(kbFolder.getUserName());
-		kbFolderImpl.setCreateDate(kbFolder.getCreateDate());
-		kbFolderImpl.setModifiedDate(kbFolder.getModifiedDate());
-		kbFolderImpl.setParentKBFolderId(kbFolder.getParentKBFolderId());
-		kbFolderImpl.setName(kbFolder.getName());
-		kbFolderImpl.setUrlTitle(kbFolder.getUrlTitle());
-		kbFolderImpl.setDescription(kbFolder.getDescription());
-		kbFolderImpl.setLastPublishDate(kbFolder.getLastPublishDate());
-
-		return kbFolderImpl;
 	}
 
 	/**

@@ -24,6 +24,7 @@ import com.liferay.journal.model.JournalArticleResourceModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -481,7 +482,7 @@ public class JournalArticleResourceModelImpl extends BaseModelImpl<JournalArticl
 
 	private static final ClassLoader _classLoader = JournalArticleResource.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			JournalArticleResource.class
+			JournalArticleResource.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

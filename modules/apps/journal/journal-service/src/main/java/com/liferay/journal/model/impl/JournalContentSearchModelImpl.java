@@ -24,6 +24,7 @@ import com.liferay.journal.model.JournalContentSearchModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -561,7 +562,7 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	private static final ClassLoader _classLoader = JournalContentSearch.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			JournalContentSearch.class
+			JournalContentSearch.class, ModelWrapper.class
 		};
 	private long _contentSearchId;
 	private long _groupId;

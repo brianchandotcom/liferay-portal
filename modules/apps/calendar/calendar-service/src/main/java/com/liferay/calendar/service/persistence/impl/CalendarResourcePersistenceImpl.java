@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -6470,8 +6472,6 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 	@Override
 	protected CalendarResource removeImpl(CalendarResource calendarResource) {
-		calendarResource = toUnwrappedModel(calendarResource);
-
 		Session session = null;
 
 		try {
@@ -6502,9 +6502,23 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 	@Override
 	public CalendarResource updateImpl(CalendarResource calendarResource) {
-		calendarResource = toUnwrappedModel(calendarResource);
-
 		boolean isNew = calendarResource.isNew();
+
+		if (!(calendarResource instanceof CalendarResourceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(calendarResource.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(calendarResource);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in calendarResource proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CalendarResource implementation " +
+				calendarResource.getClass());
+		}
 
 		CalendarResourceModelImpl calendarResourceModelImpl = (CalendarResourceModelImpl)calendarResource;
 
@@ -6741,37 +6755,6 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		calendarResource.resetOriginalValues();
 
 		return calendarResource;
-	}
-
-	protected CalendarResource toUnwrappedModel(
-		CalendarResource calendarResource) {
-		if (calendarResource instanceof CalendarResourceImpl) {
-			return calendarResource;
-		}
-
-		CalendarResourceImpl calendarResourceImpl = new CalendarResourceImpl();
-
-		calendarResourceImpl.setNew(calendarResource.isNew());
-		calendarResourceImpl.setPrimaryKey(calendarResource.getPrimaryKey());
-
-		calendarResourceImpl.setUuid(calendarResource.getUuid());
-		calendarResourceImpl.setCalendarResourceId(calendarResource.getCalendarResourceId());
-		calendarResourceImpl.setGroupId(calendarResource.getGroupId());
-		calendarResourceImpl.setCompanyId(calendarResource.getCompanyId());
-		calendarResourceImpl.setUserId(calendarResource.getUserId());
-		calendarResourceImpl.setUserName(calendarResource.getUserName());
-		calendarResourceImpl.setCreateDate(calendarResource.getCreateDate());
-		calendarResourceImpl.setModifiedDate(calendarResource.getModifiedDate());
-		calendarResourceImpl.setClassNameId(calendarResource.getClassNameId());
-		calendarResourceImpl.setClassPK(calendarResource.getClassPK());
-		calendarResourceImpl.setClassUuid(calendarResource.getClassUuid());
-		calendarResourceImpl.setCode(calendarResource.getCode());
-		calendarResourceImpl.setName(calendarResource.getName());
-		calendarResourceImpl.setDescription(calendarResource.getDescription());
-		calendarResourceImpl.setActive(calendarResource.isActive());
-		calendarResourceImpl.setLastPublishDate(calendarResource.getLastPublishDate());
-
-		return calendarResourceImpl;
 	}
 
 	/**

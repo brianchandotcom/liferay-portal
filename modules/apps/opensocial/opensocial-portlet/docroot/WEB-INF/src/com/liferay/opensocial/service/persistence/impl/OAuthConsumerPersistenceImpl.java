@@ -40,10 +40,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1139,8 +1142,6 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 	@Override
 	protected OAuthConsumer removeImpl(OAuthConsumer oAuthConsumer) {
-		oAuthConsumer = toUnwrappedModel(oAuthConsumer);
-
 		Session session = null;
 
 		try {
@@ -1171,9 +1172,23 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 	@Override
 	public OAuthConsumer updateImpl(OAuthConsumer oAuthConsumer) {
-		oAuthConsumer = toUnwrappedModel(oAuthConsumer);
-
 		boolean isNew = oAuthConsumer.isNew();
+
+		if (!(oAuthConsumer instanceof OAuthConsumerModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(oAuthConsumer.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(oAuthConsumer);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in oAuthConsumer proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom OAuthConsumer implementation " +
+				oAuthConsumer.getClass());
+		}
 
 		OAuthConsumerModelImpl oAuthConsumerModelImpl = (OAuthConsumerModelImpl)oAuthConsumer;
 
@@ -1268,29 +1283,6 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		oAuthConsumer.resetOriginalValues();
 
 		return oAuthConsumer;
-	}
-
-	protected OAuthConsumer toUnwrappedModel(OAuthConsumer oAuthConsumer) {
-		if (oAuthConsumer instanceof OAuthConsumerImpl) {
-			return oAuthConsumer;
-		}
-
-		OAuthConsumerImpl oAuthConsumerImpl = new OAuthConsumerImpl();
-
-		oAuthConsumerImpl.setNew(oAuthConsumer.isNew());
-		oAuthConsumerImpl.setPrimaryKey(oAuthConsumer.getPrimaryKey());
-
-		oAuthConsumerImpl.setOAuthConsumerId(oAuthConsumer.getOAuthConsumerId());
-		oAuthConsumerImpl.setCompanyId(oAuthConsumer.getCompanyId());
-		oAuthConsumerImpl.setCreateDate(oAuthConsumer.getCreateDate());
-		oAuthConsumerImpl.setModifiedDate(oAuthConsumer.getModifiedDate());
-		oAuthConsumerImpl.setGadgetKey(oAuthConsumer.getGadgetKey());
-		oAuthConsumerImpl.setServiceName(oAuthConsumer.getServiceName());
-		oAuthConsumerImpl.setConsumerKey(oAuthConsumer.getConsumerKey());
-		oAuthConsumerImpl.setConsumerSecret(oAuthConsumer.getConsumerSecret());
-		oAuthConsumerImpl.setKeyType(oAuthConsumer.getKeyType());
-
-		return oAuthConsumerImpl;
 	}
 
 	/**

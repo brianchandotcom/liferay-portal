@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -44,6 +45,8 @@ import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -820,8 +823,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 
 	@Override
 	protected RatingsStats removeImpl(RatingsStats ratingsStats) {
-		ratingsStats = toUnwrappedModel(ratingsStats);
-
 		Session session = null;
 
 		try {
@@ -852,9 +853,23 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 
 	@Override
 	public RatingsStats updateImpl(RatingsStats ratingsStats) {
-		ratingsStats = toUnwrappedModel(ratingsStats);
-
 		boolean isNew = ratingsStats.isNew();
+
+		if (!(ratingsStats instanceof RatingsStatsModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ratingsStats.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ratingsStats);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ratingsStats proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom RatingsStats implementation " +
+				ratingsStats.getClass());
+		}
 
 		RatingsStatsModelImpl ratingsStatsModelImpl = (RatingsStatsModelImpl)ratingsStats;
 
@@ -933,27 +948,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 		ratingsStats.resetOriginalValues();
 
 		return ratingsStats;
-	}
-
-	protected RatingsStats toUnwrappedModel(RatingsStats ratingsStats) {
-		if (ratingsStats instanceof RatingsStatsImpl) {
-			return ratingsStats;
-		}
-
-		RatingsStatsImpl ratingsStatsImpl = new RatingsStatsImpl();
-
-		ratingsStatsImpl.setNew(ratingsStats.isNew());
-		ratingsStatsImpl.setPrimaryKey(ratingsStats.getPrimaryKey());
-
-		ratingsStatsImpl.setStatsId(ratingsStats.getStatsId());
-		ratingsStatsImpl.setCompanyId(ratingsStats.getCompanyId());
-		ratingsStatsImpl.setClassNameId(ratingsStats.getClassNameId());
-		ratingsStatsImpl.setClassPK(ratingsStats.getClassPK());
-		ratingsStatsImpl.setTotalEntries(ratingsStats.getTotalEntries());
-		ratingsStatsImpl.setTotalScore(ratingsStats.getTotalScore());
-		ratingsStatsImpl.setAverageScore(ratingsStats.getAverageScore());
-
-		return ratingsStatsImpl;
 	}
 
 	/**

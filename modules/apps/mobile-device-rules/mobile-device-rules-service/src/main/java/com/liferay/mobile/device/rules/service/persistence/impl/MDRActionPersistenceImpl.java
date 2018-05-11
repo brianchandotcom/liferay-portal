@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2204,8 +2206,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 	@Override
 	protected MDRAction removeImpl(MDRAction mdrAction) {
-		mdrAction = toUnwrappedModel(mdrAction);
-
 		Session session = null;
 
 		try {
@@ -2236,9 +2236,23 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 	@Override
 	public MDRAction updateImpl(MDRAction mdrAction) {
-		mdrAction = toUnwrappedModel(mdrAction);
-
 		boolean isNew = mdrAction.isNew();
+
+		if (!(mdrAction instanceof MDRActionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mdrAction.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mdrAction);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mdrAction proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MDRAction implementation " +
+				mdrAction.getClass());
+		}
 
 		MDRActionModelImpl mdrActionModelImpl = (MDRActionModelImpl)mdrAction;
 
@@ -2393,36 +2407,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		mdrAction.resetOriginalValues();
 
 		return mdrAction;
-	}
-
-	protected MDRAction toUnwrappedModel(MDRAction mdrAction) {
-		if (mdrAction instanceof MDRActionImpl) {
-			return mdrAction;
-		}
-
-		MDRActionImpl mdrActionImpl = new MDRActionImpl();
-
-		mdrActionImpl.setNew(mdrAction.isNew());
-		mdrActionImpl.setPrimaryKey(mdrAction.getPrimaryKey());
-
-		mdrActionImpl.setUuid(mdrAction.getUuid());
-		mdrActionImpl.setActionId(mdrAction.getActionId());
-		mdrActionImpl.setGroupId(mdrAction.getGroupId());
-		mdrActionImpl.setCompanyId(mdrAction.getCompanyId());
-		mdrActionImpl.setUserId(mdrAction.getUserId());
-		mdrActionImpl.setUserName(mdrAction.getUserName());
-		mdrActionImpl.setCreateDate(mdrAction.getCreateDate());
-		mdrActionImpl.setModifiedDate(mdrAction.getModifiedDate());
-		mdrActionImpl.setClassNameId(mdrAction.getClassNameId());
-		mdrActionImpl.setClassPK(mdrAction.getClassPK());
-		mdrActionImpl.setRuleGroupInstanceId(mdrAction.getRuleGroupInstanceId());
-		mdrActionImpl.setName(mdrAction.getName());
-		mdrActionImpl.setDescription(mdrAction.getDescription());
-		mdrActionImpl.setType(mdrAction.getType());
-		mdrActionImpl.setTypeSettings(mdrAction.getTypeSettings());
-		mdrActionImpl.setLastPublishDate(mdrAction.getLastPublishDate());
-
-		return mdrActionImpl;
 	}
 
 	/**

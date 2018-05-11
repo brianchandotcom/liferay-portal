@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3961,8 +3963,6 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 
 	@Override
 	protected FragmentEntryLink removeImpl(FragmentEntryLink fragmentEntryLink) {
-		fragmentEntryLink = toUnwrappedModel(fragmentEntryLink);
-
 		Session session = null;
 
 		try {
@@ -3993,9 +3993,23 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 
 	@Override
 	public FragmentEntryLink updateImpl(FragmentEntryLink fragmentEntryLink) {
-		fragmentEntryLink = toUnwrappedModel(fragmentEntryLink);
-
 		boolean isNew = fragmentEntryLink.isNew();
+
+		if (!(fragmentEntryLink instanceof FragmentEntryLinkModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(fragmentEntryLink.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(fragmentEntryLink);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in fragmentEntryLink proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom FragmentEntryLink implementation " +
+				fragmentEntryLink.getClass());
+		}
 
 		FragmentEntryLinkModelImpl fragmentEntryLinkModelImpl = (FragmentEntryLinkModelImpl)fragmentEntryLink;
 
@@ -4246,40 +4260,6 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 		fragmentEntryLink.resetOriginalValues();
 
 		return fragmentEntryLink;
-	}
-
-	protected FragmentEntryLink toUnwrappedModel(
-		FragmentEntryLink fragmentEntryLink) {
-		if (fragmentEntryLink instanceof FragmentEntryLinkImpl) {
-			return fragmentEntryLink;
-		}
-
-		FragmentEntryLinkImpl fragmentEntryLinkImpl = new FragmentEntryLinkImpl();
-
-		fragmentEntryLinkImpl.setNew(fragmentEntryLink.isNew());
-		fragmentEntryLinkImpl.setPrimaryKey(fragmentEntryLink.getPrimaryKey());
-
-		fragmentEntryLinkImpl.setUuid(fragmentEntryLink.getUuid());
-		fragmentEntryLinkImpl.setFragmentEntryLinkId(fragmentEntryLink.getFragmentEntryLinkId());
-		fragmentEntryLinkImpl.setGroupId(fragmentEntryLink.getGroupId());
-		fragmentEntryLinkImpl.setCompanyId(fragmentEntryLink.getCompanyId());
-		fragmentEntryLinkImpl.setUserId(fragmentEntryLink.getUserId());
-		fragmentEntryLinkImpl.setUserName(fragmentEntryLink.getUserName());
-		fragmentEntryLinkImpl.setCreateDate(fragmentEntryLink.getCreateDate());
-		fragmentEntryLinkImpl.setModifiedDate(fragmentEntryLink.getModifiedDate());
-		fragmentEntryLinkImpl.setOriginalFragmentEntryLinkId(fragmentEntryLink.getOriginalFragmentEntryLinkId());
-		fragmentEntryLinkImpl.setFragmentEntryId(fragmentEntryLink.getFragmentEntryId());
-		fragmentEntryLinkImpl.setClassNameId(fragmentEntryLink.getClassNameId());
-		fragmentEntryLinkImpl.setClassPK(fragmentEntryLink.getClassPK());
-		fragmentEntryLinkImpl.setCss(fragmentEntryLink.getCss());
-		fragmentEntryLinkImpl.setHtml(fragmentEntryLink.getHtml());
-		fragmentEntryLinkImpl.setJs(fragmentEntryLink.getJs());
-		fragmentEntryLinkImpl.setEditableValues(fragmentEntryLink.getEditableValues());
-		fragmentEntryLinkImpl.setPosition(fragmentEntryLink.getPosition());
-		fragmentEntryLinkImpl.setLastPropagationDate(fragmentEntryLink.getLastPropagationDate());
-		fragmentEntryLinkImpl.setNamespace(fragmentEntryLink.getNamespace());
-
-		return fragmentEntryLinkImpl;
 	}
 
 	/**

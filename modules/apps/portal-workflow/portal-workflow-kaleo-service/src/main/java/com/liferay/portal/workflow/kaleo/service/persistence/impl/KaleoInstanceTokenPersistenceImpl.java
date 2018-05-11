@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException;
@@ -40,6 +41,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoInstanceTokenPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -3011,8 +3014,6 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 	@Override
 	protected KaleoInstanceToken removeImpl(
 		KaleoInstanceToken kaleoInstanceToken) {
-		kaleoInstanceToken = toUnwrappedModel(kaleoInstanceToken);
-
 		Session session = null;
 
 		try {
@@ -3043,9 +3044,23 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 
 	@Override
 	public KaleoInstanceToken updateImpl(KaleoInstanceToken kaleoInstanceToken) {
-		kaleoInstanceToken = toUnwrappedModel(kaleoInstanceToken);
-
 		boolean isNew = kaleoInstanceToken.isNew();
+
+		if (!(kaleoInstanceToken instanceof KaleoInstanceTokenModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoInstanceToken.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoInstanceToken);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoInstanceToken proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoInstanceToken implementation " +
+				kaleoInstanceToken.getClass());
+		}
 
 		KaleoInstanceTokenModelImpl kaleoInstanceTokenModelImpl = (KaleoInstanceTokenModelImpl)kaleoInstanceToken;
 
@@ -3260,37 +3275,6 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 		kaleoInstanceToken.resetOriginalValues();
 
 		return kaleoInstanceToken;
-	}
-
-	protected KaleoInstanceToken toUnwrappedModel(
-		KaleoInstanceToken kaleoInstanceToken) {
-		if (kaleoInstanceToken instanceof KaleoInstanceTokenImpl) {
-			return kaleoInstanceToken;
-		}
-
-		KaleoInstanceTokenImpl kaleoInstanceTokenImpl = new KaleoInstanceTokenImpl();
-
-		kaleoInstanceTokenImpl.setNew(kaleoInstanceToken.isNew());
-		kaleoInstanceTokenImpl.setPrimaryKey(kaleoInstanceToken.getPrimaryKey());
-
-		kaleoInstanceTokenImpl.setKaleoInstanceTokenId(kaleoInstanceToken.getKaleoInstanceTokenId());
-		kaleoInstanceTokenImpl.setGroupId(kaleoInstanceToken.getGroupId());
-		kaleoInstanceTokenImpl.setCompanyId(kaleoInstanceToken.getCompanyId());
-		kaleoInstanceTokenImpl.setUserId(kaleoInstanceToken.getUserId());
-		kaleoInstanceTokenImpl.setUserName(kaleoInstanceToken.getUserName());
-		kaleoInstanceTokenImpl.setCreateDate(kaleoInstanceToken.getCreateDate());
-		kaleoInstanceTokenImpl.setModifiedDate(kaleoInstanceToken.getModifiedDate());
-		kaleoInstanceTokenImpl.setKaleoDefinitionVersionId(kaleoInstanceToken.getKaleoDefinitionVersionId());
-		kaleoInstanceTokenImpl.setKaleoInstanceId(kaleoInstanceToken.getKaleoInstanceId());
-		kaleoInstanceTokenImpl.setParentKaleoInstanceTokenId(kaleoInstanceToken.getParentKaleoInstanceTokenId());
-		kaleoInstanceTokenImpl.setCurrentKaleoNodeId(kaleoInstanceToken.getCurrentKaleoNodeId());
-		kaleoInstanceTokenImpl.setCurrentKaleoNodeName(kaleoInstanceToken.getCurrentKaleoNodeName());
-		kaleoInstanceTokenImpl.setClassName(kaleoInstanceToken.getClassName());
-		kaleoInstanceTokenImpl.setClassPK(kaleoInstanceToken.getClassPK());
-		kaleoInstanceTokenImpl.setCompleted(kaleoInstanceToken.isCompleted());
-		kaleoInstanceTokenImpl.setCompletionDate(kaleoInstanceToken.getCompletionDate());
-
-		return kaleoInstanceTokenImpl;
 	}
 
 	/**

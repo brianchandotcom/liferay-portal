@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2073,8 +2076,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 	@Override
 	protected MBStatsUser removeImpl(MBStatsUser mbStatsUser) {
-		mbStatsUser = toUnwrappedModel(mbStatsUser);
-
 		Session session = null;
 
 		try {
@@ -2105,9 +2106,23 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 	@Override
 	public MBStatsUser updateImpl(MBStatsUser mbStatsUser) {
-		mbStatsUser = toUnwrappedModel(mbStatsUser);
-
 		boolean isNew = mbStatsUser.isNew();
+
+		if (!(mbStatsUser instanceof MBStatsUserModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mbStatsUser.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mbStatsUser);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mbStatsUser proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MBStatsUser implementation " +
+				mbStatsUser.getClass());
+		}
 
 		MBStatsUserModelImpl mbStatsUserModelImpl = (MBStatsUserModelImpl)mbStatsUser;
 
@@ -2202,26 +2217,6 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		mbStatsUser.resetOriginalValues();
 
 		return mbStatsUser;
-	}
-
-	protected MBStatsUser toUnwrappedModel(MBStatsUser mbStatsUser) {
-		if (mbStatsUser instanceof MBStatsUserImpl) {
-			return mbStatsUser;
-		}
-
-		MBStatsUserImpl mbStatsUserImpl = new MBStatsUserImpl();
-
-		mbStatsUserImpl.setNew(mbStatsUser.isNew());
-		mbStatsUserImpl.setPrimaryKey(mbStatsUser.getPrimaryKey());
-
-		mbStatsUserImpl.setStatsUserId(mbStatsUser.getStatsUserId());
-		mbStatsUserImpl.setGroupId(mbStatsUser.getGroupId());
-		mbStatsUserImpl.setCompanyId(mbStatsUser.getCompanyId());
-		mbStatsUserImpl.setUserId(mbStatsUser.getUserId());
-		mbStatsUserImpl.setMessageCount(mbStatsUser.getMessageCount());
-		mbStatsUserImpl.setLastPostDate(mbStatsUser.getLastPostDate());
-
-		return mbStatsUserImpl;
 	}
 
 	/**

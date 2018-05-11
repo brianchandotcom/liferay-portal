@@ -27,6 +27,7 @@ import com.liferay.message.boards.model.MBThreadFlagModel;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -700,7 +701,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	private static final ClassLoader _classLoader = MBThreadFlag.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			MBThreadFlag.class
+			MBThreadFlag.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

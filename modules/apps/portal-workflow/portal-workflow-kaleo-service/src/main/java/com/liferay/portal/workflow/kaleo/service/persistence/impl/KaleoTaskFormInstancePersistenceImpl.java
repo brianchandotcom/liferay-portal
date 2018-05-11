@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -41,6 +42,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormInstanceModelIm
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormInstancePersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3123,8 +3126,6 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 	@Override
 	protected KaleoTaskFormInstance removeImpl(
 		KaleoTaskFormInstance kaleoTaskFormInstance) {
-		kaleoTaskFormInstance = toUnwrappedModel(kaleoTaskFormInstance);
-
 		Session session = null;
 
 		try {
@@ -3156,9 +3157,23 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 	@Override
 	public KaleoTaskFormInstance updateImpl(
 		KaleoTaskFormInstance kaleoTaskFormInstance) {
-		kaleoTaskFormInstance = toUnwrappedModel(kaleoTaskFormInstance);
-
 		boolean isNew = kaleoTaskFormInstance.isNew();
+
+		if (!(kaleoTaskFormInstance instanceof KaleoTaskFormInstanceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoTaskFormInstance.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoTaskFormInstance);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoTaskFormInstance proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoTaskFormInstance implementation " +
+				kaleoTaskFormInstance.getClass());
+		}
 
 		KaleoTaskFormInstanceModelImpl kaleoTaskFormInstanceModelImpl = (KaleoTaskFormInstanceModelImpl)kaleoTaskFormInstance;
 
@@ -3372,38 +3387,6 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 		kaleoTaskFormInstance.resetOriginalValues();
 
 		return kaleoTaskFormInstance;
-	}
-
-	protected KaleoTaskFormInstance toUnwrappedModel(
-		KaleoTaskFormInstance kaleoTaskFormInstance) {
-		if (kaleoTaskFormInstance instanceof KaleoTaskFormInstanceImpl) {
-			return kaleoTaskFormInstance;
-		}
-
-		KaleoTaskFormInstanceImpl kaleoTaskFormInstanceImpl = new KaleoTaskFormInstanceImpl();
-
-		kaleoTaskFormInstanceImpl.setNew(kaleoTaskFormInstance.isNew());
-		kaleoTaskFormInstanceImpl.setPrimaryKey(kaleoTaskFormInstance.getPrimaryKey());
-
-		kaleoTaskFormInstanceImpl.setKaleoTaskFormInstanceId(kaleoTaskFormInstance.getKaleoTaskFormInstanceId());
-		kaleoTaskFormInstanceImpl.setGroupId(kaleoTaskFormInstance.getGroupId());
-		kaleoTaskFormInstanceImpl.setCompanyId(kaleoTaskFormInstance.getCompanyId());
-		kaleoTaskFormInstanceImpl.setUserId(kaleoTaskFormInstance.getUserId());
-		kaleoTaskFormInstanceImpl.setUserName(kaleoTaskFormInstance.getUserName());
-		kaleoTaskFormInstanceImpl.setCreateDate(kaleoTaskFormInstance.getCreateDate());
-		kaleoTaskFormInstanceImpl.setModifiedDate(kaleoTaskFormInstance.getModifiedDate());
-		kaleoTaskFormInstanceImpl.setKaleoDefinitionVersionId(kaleoTaskFormInstance.getKaleoDefinitionVersionId());
-		kaleoTaskFormInstanceImpl.setKaleoInstanceId(kaleoTaskFormInstance.getKaleoInstanceId());
-		kaleoTaskFormInstanceImpl.setKaleoTaskId(kaleoTaskFormInstance.getKaleoTaskId());
-		kaleoTaskFormInstanceImpl.setKaleoTaskInstanceTokenId(kaleoTaskFormInstance.getKaleoTaskInstanceTokenId());
-		kaleoTaskFormInstanceImpl.setKaleoTaskFormId(kaleoTaskFormInstance.getKaleoTaskFormId());
-		kaleoTaskFormInstanceImpl.setFormValues(kaleoTaskFormInstance.getFormValues());
-		kaleoTaskFormInstanceImpl.setFormValueEntryGroupId(kaleoTaskFormInstance.getFormValueEntryGroupId());
-		kaleoTaskFormInstanceImpl.setFormValueEntryId(kaleoTaskFormInstance.getFormValueEntryId());
-		kaleoTaskFormInstanceImpl.setFormValueEntryUuid(kaleoTaskFormInstance.getFormValueEntryUuid());
-		kaleoTaskFormInstanceImpl.setMetadata(kaleoTaskFormInstance.getMetadata());
-
-		return kaleoTaskFormInstanceImpl;
 	}
 
 	/**

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupModel;
 import com.liferay.portal.kernel.model.GroupSoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1620,7 +1621,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	private static final ClassLoader _classLoader = Group.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Group.class
+			Group.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private String _uuid;

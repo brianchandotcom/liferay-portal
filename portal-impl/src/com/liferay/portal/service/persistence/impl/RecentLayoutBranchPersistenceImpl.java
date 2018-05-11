@@ -35,11 +35,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.RecentLayoutBranchPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.RecentLayoutBranchImpl;
 import com.liferay.portal.model.impl.RecentLayoutBranchModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2080,8 +2083,6 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 	@Override
 	protected RecentLayoutBranch removeImpl(
 		RecentLayoutBranch recentLayoutBranch) {
-		recentLayoutBranch = toUnwrappedModel(recentLayoutBranch);
-
 		Session session = null;
 
 		try {
@@ -2112,9 +2113,23 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 
 	@Override
 	public RecentLayoutBranch updateImpl(RecentLayoutBranch recentLayoutBranch) {
-		recentLayoutBranch = toUnwrappedModel(recentLayoutBranch);
-
 		boolean isNew = recentLayoutBranch.isNew();
+
+		if (!(recentLayoutBranch instanceof RecentLayoutBranchModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(recentLayoutBranch.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(recentLayoutBranch);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in recentLayoutBranch proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom RecentLayoutBranch implementation " +
+				recentLayoutBranch.getClass());
+		}
 
 		RecentLayoutBranchModelImpl recentLayoutBranchModelImpl = (RecentLayoutBranchModelImpl)recentLayoutBranch;
 
@@ -2238,29 +2253,6 @@ public class RecentLayoutBranchPersistenceImpl extends BasePersistenceImpl<Recen
 		recentLayoutBranch.resetOriginalValues();
 
 		return recentLayoutBranch;
-	}
-
-	protected RecentLayoutBranch toUnwrappedModel(
-		RecentLayoutBranch recentLayoutBranch) {
-		if (recentLayoutBranch instanceof RecentLayoutBranchImpl) {
-			return recentLayoutBranch;
-		}
-
-		RecentLayoutBranchImpl recentLayoutBranchImpl = new RecentLayoutBranchImpl();
-
-		recentLayoutBranchImpl.setNew(recentLayoutBranch.isNew());
-		recentLayoutBranchImpl.setPrimaryKey(recentLayoutBranch.getPrimaryKey());
-
-		recentLayoutBranchImpl.setMvccVersion(recentLayoutBranch.getMvccVersion());
-		recentLayoutBranchImpl.setRecentLayoutBranchId(recentLayoutBranch.getRecentLayoutBranchId());
-		recentLayoutBranchImpl.setGroupId(recentLayoutBranch.getGroupId());
-		recentLayoutBranchImpl.setCompanyId(recentLayoutBranch.getCompanyId());
-		recentLayoutBranchImpl.setUserId(recentLayoutBranch.getUserId());
-		recentLayoutBranchImpl.setLayoutBranchId(recentLayoutBranch.getLayoutBranchId());
-		recentLayoutBranchImpl.setLayoutSetBranchId(recentLayoutBranch.getLayoutSetBranchId());
-		recentLayoutBranchImpl.setPlid(recentLayoutBranch.getPlid());
-
-		return recentLayoutBranchImpl;
 	}
 
 	/**

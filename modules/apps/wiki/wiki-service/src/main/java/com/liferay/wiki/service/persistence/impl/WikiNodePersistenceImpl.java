@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.wiki.service.persistence.WikiNodePersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4785,8 +4787,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 	@Override
 	protected WikiNode removeImpl(WikiNode wikiNode) {
-		wikiNode = toUnwrappedModel(wikiNode);
-
 		Session session = null;
 
 		try {
@@ -4817,9 +4817,23 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 	@Override
 	public WikiNode updateImpl(WikiNode wikiNode) {
-		wikiNode = toUnwrappedModel(wikiNode);
-
 		boolean isNew = wikiNode.isNew();
+
+		if (!(wikiNode instanceof WikiNodeModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(wikiNode.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(wikiNode);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in wikiNode proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom WikiNode implementation " +
+				wikiNode.getClass());
+		}
 
 		WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
 
@@ -5052,36 +5066,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		wikiNode.resetOriginalValues();
 
 		return wikiNode;
-	}
-
-	protected WikiNode toUnwrappedModel(WikiNode wikiNode) {
-		if (wikiNode instanceof WikiNodeImpl) {
-			return wikiNode;
-		}
-
-		WikiNodeImpl wikiNodeImpl = new WikiNodeImpl();
-
-		wikiNodeImpl.setNew(wikiNode.isNew());
-		wikiNodeImpl.setPrimaryKey(wikiNode.getPrimaryKey());
-
-		wikiNodeImpl.setUuid(wikiNode.getUuid());
-		wikiNodeImpl.setNodeId(wikiNode.getNodeId());
-		wikiNodeImpl.setGroupId(wikiNode.getGroupId());
-		wikiNodeImpl.setCompanyId(wikiNode.getCompanyId());
-		wikiNodeImpl.setUserId(wikiNode.getUserId());
-		wikiNodeImpl.setUserName(wikiNode.getUserName());
-		wikiNodeImpl.setCreateDate(wikiNode.getCreateDate());
-		wikiNodeImpl.setModifiedDate(wikiNode.getModifiedDate());
-		wikiNodeImpl.setName(wikiNode.getName());
-		wikiNodeImpl.setDescription(wikiNode.getDescription());
-		wikiNodeImpl.setLastPostDate(wikiNode.getLastPostDate());
-		wikiNodeImpl.setLastPublishDate(wikiNode.getLastPublishDate());
-		wikiNodeImpl.setStatus(wikiNode.getStatus());
-		wikiNodeImpl.setStatusByUserId(wikiNode.getStatusByUserId());
-		wikiNodeImpl.setStatusByUserName(wikiNode.getStatusByUserName());
-		wikiNodeImpl.setStatusDate(wikiNode.getStatusDate());
-
-		return wikiNodeImpl;
 	}
 
 	/**

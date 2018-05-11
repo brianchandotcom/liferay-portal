@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1869,8 +1871,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 	@Override
 	protected LayoutSet removeImpl(LayoutSet layoutSet) {
-		layoutSet = toUnwrappedModel(layoutSet);
-
 		Session session = null;
 
 		try {
@@ -1901,9 +1901,23 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 
 	@Override
 	public LayoutSet updateImpl(LayoutSet layoutSet) {
-		layoutSet = toUnwrappedModel(layoutSet);
-
 		boolean isNew = layoutSet.isNew();
+
+		if (!(layoutSet instanceof LayoutSetModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(layoutSet.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(layoutSet);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in layoutSet proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom LayoutSet implementation " +
+				layoutSet.getClass());
+		}
 
 		LayoutSetModelImpl layoutSetModelImpl = (LayoutSetModelImpl)layoutSet;
 
@@ -2024,35 +2038,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSet.resetOriginalValues();
 
 		return layoutSet;
-	}
-
-	protected LayoutSet toUnwrappedModel(LayoutSet layoutSet) {
-		if (layoutSet instanceof LayoutSetImpl) {
-			return layoutSet;
-		}
-
-		LayoutSetImpl layoutSetImpl = new LayoutSetImpl();
-
-		layoutSetImpl.setNew(layoutSet.isNew());
-		layoutSetImpl.setPrimaryKey(layoutSet.getPrimaryKey());
-
-		layoutSetImpl.setMvccVersion(layoutSet.getMvccVersion());
-		layoutSetImpl.setLayoutSetId(layoutSet.getLayoutSetId());
-		layoutSetImpl.setGroupId(layoutSet.getGroupId());
-		layoutSetImpl.setCompanyId(layoutSet.getCompanyId());
-		layoutSetImpl.setCreateDate(layoutSet.getCreateDate());
-		layoutSetImpl.setModifiedDate(layoutSet.getModifiedDate());
-		layoutSetImpl.setPrivateLayout(layoutSet.isPrivateLayout());
-		layoutSetImpl.setLogoId(layoutSet.getLogoId());
-		layoutSetImpl.setThemeId(layoutSet.getThemeId());
-		layoutSetImpl.setColorSchemeId(layoutSet.getColorSchemeId());
-		layoutSetImpl.setCss(layoutSet.getCss());
-		layoutSetImpl.setPageCount(layoutSet.getPageCount());
-		layoutSetImpl.setSettings(layoutSet.getSettings());
-		layoutSetImpl.setLayoutSetPrototypeUuid(layoutSet.getLayoutSetPrototypeUuid());
-		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(layoutSet.isLayoutSetPrototypeLinkEnabled());
-
-		return layoutSetImpl;
 	}
 
 	/**

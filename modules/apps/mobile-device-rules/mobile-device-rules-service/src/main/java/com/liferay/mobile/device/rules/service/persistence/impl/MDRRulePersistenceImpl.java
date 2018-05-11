@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2191,8 +2193,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 	@Override
 	protected MDRRule removeImpl(MDRRule mdrRule) {
-		mdrRule = toUnwrappedModel(mdrRule);
-
 		Session session = null;
 
 		try {
@@ -2223,9 +2223,23 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 	@Override
 	public MDRRule updateImpl(MDRRule mdrRule) {
-		mdrRule = toUnwrappedModel(mdrRule);
-
 		boolean isNew = mdrRule.isNew();
+
+		if (!(mdrRule instanceof MDRRuleModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mdrRule.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mdrRule);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mdrRule proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MDRRule implementation " +
+				mdrRule.getClass());
+		}
 
 		MDRRuleModelImpl mdrRuleModelImpl = (MDRRuleModelImpl)mdrRule;
 
@@ -2374,34 +2388,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		mdrRule.resetOriginalValues();
 
 		return mdrRule;
-	}
-
-	protected MDRRule toUnwrappedModel(MDRRule mdrRule) {
-		if (mdrRule instanceof MDRRuleImpl) {
-			return mdrRule;
-		}
-
-		MDRRuleImpl mdrRuleImpl = new MDRRuleImpl();
-
-		mdrRuleImpl.setNew(mdrRule.isNew());
-		mdrRuleImpl.setPrimaryKey(mdrRule.getPrimaryKey());
-
-		mdrRuleImpl.setUuid(mdrRule.getUuid());
-		mdrRuleImpl.setRuleId(mdrRule.getRuleId());
-		mdrRuleImpl.setGroupId(mdrRule.getGroupId());
-		mdrRuleImpl.setCompanyId(mdrRule.getCompanyId());
-		mdrRuleImpl.setUserId(mdrRule.getUserId());
-		mdrRuleImpl.setUserName(mdrRule.getUserName());
-		mdrRuleImpl.setCreateDate(mdrRule.getCreateDate());
-		mdrRuleImpl.setModifiedDate(mdrRule.getModifiedDate());
-		mdrRuleImpl.setRuleGroupId(mdrRule.getRuleGroupId());
-		mdrRuleImpl.setName(mdrRule.getName());
-		mdrRuleImpl.setDescription(mdrRule.getDescription());
-		mdrRuleImpl.setType(mdrRule.getType());
-		mdrRuleImpl.setTypeSettings(mdrRule.getTypeSettings());
-		mdrRuleImpl.setLastPublishDate(mdrRule.getLastPublishDate());
-
-		return mdrRuleImpl;
 	}
 
 	/**

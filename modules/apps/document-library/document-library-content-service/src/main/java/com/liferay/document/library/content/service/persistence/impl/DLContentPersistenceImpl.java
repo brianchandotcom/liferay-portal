@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2434,8 +2436,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 	@Override
 	protected DLContent removeImpl(DLContent dlContent) {
-		dlContent = toUnwrappedModel(dlContent);
-
 		Session session = null;
 
 		try {
@@ -2466,9 +2466,23 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 	@Override
 	public DLContent updateImpl(DLContent dlContent) {
-		dlContent = toUnwrappedModel(dlContent);
-
 		boolean isNew = dlContent.isNew();
+
+		if (!(dlContent instanceof DLContentModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(dlContent.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(dlContent);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in dlContent proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DLContent implementation " +
+				dlContent.getClass());
+		}
 
 		DLContentModelImpl dlContentModelImpl = (DLContentModelImpl)dlContent;
 
@@ -2583,28 +2597,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		dlContent.resetOriginalValues();
 
 		return dlContent;
-	}
-
-	protected DLContent toUnwrappedModel(DLContent dlContent) {
-		if (dlContent instanceof DLContentImpl) {
-			return dlContent;
-		}
-
-		DLContentImpl dlContentImpl = new DLContentImpl();
-
-		dlContentImpl.setNew(dlContent.isNew());
-		dlContentImpl.setPrimaryKey(dlContent.getPrimaryKey());
-
-		dlContentImpl.setContentId(dlContent.getContentId());
-		dlContentImpl.setGroupId(dlContent.getGroupId());
-		dlContentImpl.setCompanyId(dlContent.getCompanyId());
-		dlContentImpl.setRepositoryId(dlContent.getRepositoryId());
-		dlContentImpl.setPath(dlContent.getPath());
-		dlContentImpl.setVersion(dlContent.getVersion());
-		dlContentImpl.setData(dlContent.getData());
-		dlContentImpl.setSize(dlContent.getSize());
-
-		return dlContentImpl;
 	}
 
 	/**

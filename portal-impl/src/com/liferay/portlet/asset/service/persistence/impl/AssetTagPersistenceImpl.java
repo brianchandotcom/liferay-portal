@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +58,7 @@ import com.liferay.portlet.asset.model.impl.AssetTagModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -5682,8 +5684,6 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	@Override
 	protected AssetTag removeImpl(AssetTag assetTag) {
-		assetTag = toUnwrappedModel(assetTag);
-
 		assetTagToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(assetTag.getPrimaryKey());
 
 		Session session = null;
@@ -5716,9 +5716,23 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	@Override
 	public AssetTag updateImpl(AssetTag assetTag) {
-		assetTag = toUnwrappedModel(assetTag);
-
 		boolean isNew = assetTag.isNew();
+
+		if (!(assetTag instanceof AssetTagModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(assetTag.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(assetTag);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in assetTag proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom AssetTag implementation " +
+				assetTag.getClass());
+		}
 
 		AssetTagModelImpl assetTagModelImpl = (AssetTagModelImpl)assetTag;
 
@@ -5889,31 +5903,6 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		assetTag.resetOriginalValues();
 
 		return assetTag;
-	}
-
-	protected AssetTag toUnwrappedModel(AssetTag assetTag) {
-		if (assetTag instanceof AssetTagImpl) {
-			return assetTag;
-		}
-
-		AssetTagImpl assetTagImpl = new AssetTagImpl();
-
-		assetTagImpl.setNew(assetTag.isNew());
-		assetTagImpl.setPrimaryKey(assetTag.getPrimaryKey());
-
-		assetTagImpl.setUuid(assetTag.getUuid());
-		assetTagImpl.setTagId(assetTag.getTagId());
-		assetTagImpl.setGroupId(assetTag.getGroupId());
-		assetTagImpl.setCompanyId(assetTag.getCompanyId());
-		assetTagImpl.setUserId(assetTag.getUserId());
-		assetTagImpl.setUserName(assetTag.getUserName());
-		assetTagImpl.setCreateDate(assetTag.getCreateDate());
-		assetTagImpl.setModifiedDate(assetTag.getModifiedDate());
-		assetTagImpl.setName(assetTag.getName());
-		assetTagImpl.setAssetCount(assetTag.getAssetCount());
-		assetTagImpl.setLastPublishDate(assetTag.getLastPublishDate());
-
-		return assetTagImpl;
 	}
 
 	/**

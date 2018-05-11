@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.model.ExpandoRowModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -426,7 +427,7 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 	private static final ClassLoader _classLoader = ExpandoRow.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ExpandoRow.class
+			ExpandoRow.class, ModelWrapper.class
 		};
 	private long _rowId;
 	private long _companyId;

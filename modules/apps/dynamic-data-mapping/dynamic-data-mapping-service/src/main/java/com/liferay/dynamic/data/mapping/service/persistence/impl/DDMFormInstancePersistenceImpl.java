@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -3042,8 +3044,6 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 
 	@Override
 	protected DDMFormInstance removeImpl(DDMFormInstance ddmFormInstance) {
-		ddmFormInstance = toUnwrappedModel(ddmFormInstance);
-
 		Session session = null;
 
 		try {
@@ -3074,9 +3074,23 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 
 	@Override
 	public DDMFormInstance updateImpl(DDMFormInstance ddmFormInstance) {
-		ddmFormInstance = toUnwrappedModel(ddmFormInstance);
-
 		boolean isNew = ddmFormInstance.isNew();
+
+		if (!(ddmFormInstance instanceof DDMFormInstanceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmFormInstance.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmFormInstance);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmFormInstance proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMFormInstance implementation " +
+				ddmFormInstance.getClass());
+		}
 
 		DDMFormInstanceModelImpl ddmFormInstanceModelImpl = (DDMFormInstanceModelImpl)ddmFormInstance;
 
@@ -3230,36 +3244,6 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 		ddmFormInstance.resetOriginalValues();
 
 		return ddmFormInstance;
-	}
-
-	protected DDMFormInstance toUnwrappedModel(DDMFormInstance ddmFormInstance) {
-		if (ddmFormInstance instanceof DDMFormInstanceImpl) {
-			return ddmFormInstance;
-		}
-
-		DDMFormInstanceImpl ddmFormInstanceImpl = new DDMFormInstanceImpl();
-
-		ddmFormInstanceImpl.setNew(ddmFormInstance.isNew());
-		ddmFormInstanceImpl.setPrimaryKey(ddmFormInstance.getPrimaryKey());
-
-		ddmFormInstanceImpl.setUuid(ddmFormInstance.getUuid());
-		ddmFormInstanceImpl.setFormInstanceId(ddmFormInstance.getFormInstanceId());
-		ddmFormInstanceImpl.setGroupId(ddmFormInstance.getGroupId());
-		ddmFormInstanceImpl.setCompanyId(ddmFormInstance.getCompanyId());
-		ddmFormInstanceImpl.setUserId(ddmFormInstance.getUserId());
-		ddmFormInstanceImpl.setUserName(ddmFormInstance.getUserName());
-		ddmFormInstanceImpl.setVersionUserId(ddmFormInstance.getVersionUserId());
-		ddmFormInstanceImpl.setVersionUserName(ddmFormInstance.getVersionUserName());
-		ddmFormInstanceImpl.setCreateDate(ddmFormInstance.getCreateDate());
-		ddmFormInstanceImpl.setModifiedDate(ddmFormInstance.getModifiedDate());
-		ddmFormInstanceImpl.setStructureId(ddmFormInstance.getStructureId());
-		ddmFormInstanceImpl.setVersion(ddmFormInstance.getVersion());
-		ddmFormInstanceImpl.setName(ddmFormInstance.getName());
-		ddmFormInstanceImpl.setDescription(ddmFormInstance.getDescription());
-		ddmFormInstanceImpl.setSettings(ddmFormInstance.getSettings());
-		ddmFormInstanceImpl.setLastPublishDate(ddmFormInstance.getLastPublishDate());
-
-		return ddmFormInstanceImpl;
 	}
 
 	/**

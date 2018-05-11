@@ -24,6 +24,7 @@ import com.liferay.external.data.source.test.model.TestEntityModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -318,7 +319,7 @@ public class TestEntityModelImpl extends BaseModelImpl<TestEntity>
 
 	private static final ClassLoader _classLoader = TestEntity.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			TestEntity.class
+			TestEntity.class, ModelWrapper.class
 		};
 	private long _id;
 	private String _data;

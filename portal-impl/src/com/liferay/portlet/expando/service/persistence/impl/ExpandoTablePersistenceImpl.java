@@ -36,12 +36,15 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import com.liferay.portlet.expando.model.impl.ExpandoTableImpl;
 import com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1110,8 +1113,6 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	@Override
 	protected ExpandoTable removeImpl(ExpandoTable expandoTable) {
-		expandoTable = toUnwrappedModel(expandoTable);
-
 		Session session = null;
 
 		try {
@@ -1142,9 +1143,23 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 
 	@Override
 	public ExpandoTable updateImpl(ExpandoTable expandoTable) {
-		expandoTable = toUnwrappedModel(expandoTable);
-
 		boolean isNew = expandoTable.isNew();
+
+		if (!(expandoTable instanceof ExpandoTableModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(expandoTable.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(expandoTable);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in expandoTable proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom ExpandoTable implementation " +
+				expandoTable.getClass());
+		}
 
 		ExpandoTableModelImpl expandoTableModelImpl = (ExpandoTableModelImpl)expandoTable;
 
@@ -1223,24 +1238,6 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		expandoTable.resetOriginalValues();
 
 		return expandoTable;
-	}
-
-	protected ExpandoTable toUnwrappedModel(ExpandoTable expandoTable) {
-		if (expandoTable instanceof ExpandoTableImpl) {
-			return expandoTable;
-		}
-
-		ExpandoTableImpl expandoTableImpl = new ExpandoTableImpl();
-
-		expandoTableImpl.setNew(expandoTable.isNew());
-		expandoTableImpl.setPrimaryKey(expandoTable.getPrimaryKey());
-
-		expandoTableImpl.setTableId(expandoTable.getTableId());
-		expandoTableImpl.setCompanyId(expandoTable.getCompanyId());
-		expandoTableImpl.setClassNameId(expandoTable.getClassNameId());
-		expandoTableImpl.setName(expandoTable.getName());
-
-		return expandoTableImpl;
 	}
 
 	/**

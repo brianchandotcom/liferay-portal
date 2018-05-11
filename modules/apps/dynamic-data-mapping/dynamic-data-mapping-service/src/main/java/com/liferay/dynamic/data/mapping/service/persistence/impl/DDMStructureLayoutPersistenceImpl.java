@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1953,8 +1955,6 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	@Override
 	protected DDMStructureLayout removeImpl(
 		DDMStructureLayout ddmStructureLayout) {
-		ddmStructureLayout = toUnwrappedModel(ddmStructureLayout);
-
 		Session session = null;
 
 		try {
@@ -1985,9 +1985,23 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 
 	@Override
 	public DDMStructureLayout updateImpl(DDMStructureLayout ddmStructureLayout) {
-		ddmStructureLayout = toUnwrappedModel(ddmStructureLayout);
-
 		boolean isNew = ddmStructureLayout.isNew();
+
+		if (!(ddmStructureLayout instanceof DDMStructureLayoutModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmStructureLayout.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmStructureLayout);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmStructureLayout proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMStructureLayout implementation " +
+				ddmStructureLayout.getClass());
+		}
 
 		DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl = (DDMStructureLayoutModelImpl)ddmStructureLayout;
 
@@ -2119,31 +2133,6 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		ddmStructureLayout.resetOriginalValues();
 
 		return ddmStructureLayout;
-	}
-
-	protected DDMStructureLayout toUnwrappedModel(
-		DDMStructureLayout ddmStructureLayout) {
-		if (ddmStructureLayout instanceof DDMStructureLayoutImpl) {
-			return ddmStructureLayout;
-		}
-
-		DDMStructureLayoutImpl ddmStructureLayoutImpl = new DDMStructureLayoutImpl();
-
-		ddmStructureLayoutImpl.setNew(ddmStructureLayout.isNew());
-		ddmStructureLayoutImpl.setPrimaryKey(ddmStructureLayout.getPrimaryKey());
-
-		ddmStructureLayoutImpl.setUuid(ddmStructureLayout.getUuid());
-		ddmStructureLayoutImpl.setStructureLayoutId(ddmStructureLayout.getStructureLayoutId());
-		ddmStructureLayoutImpl.setGroupId(ddmStructureLayout.getGroupId());
-		ddmStructureLayoutImpl.setCompanyId(ddmStructureLayout.getCompanyId());
-		ddmStructureLayoutImpl.setUserId(ddmStructureLayout.getUserId());
-		ddmStructureLayoutImpl.setUserName(ddmStructureLayout.getUserName());
-		ddmStructureLayoutImpl.setCreateDate(ddmStructureLayout.getCreateDate());
-		ddmStructureLayoutImpl.setModifiedDate(ddmStructureLayout.getModifiedDate());
-		ddmStructureLayoutImpl.setStructureVersionId(ddmStructureLayout.getStructureVersionId());
-		ddmStructureLayoutImpl.setDefinition(ddmStructureLayout.getDefinition());
-
-		return ddmStructureLayoutImpl;
 	}
 
 	/**

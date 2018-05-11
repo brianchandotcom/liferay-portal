@@ -685,7 +685,7 @@
 </tr>
 <tr>
 	<td>SELECT_FILE</td>
-	<td>//button[contains(.,'Select File')]</td>
+	<td>//button[contains(.,'Select File')] | //label[contains(.,'Select File')]</td>
 	<td></td>
 </tr>
 <tr>

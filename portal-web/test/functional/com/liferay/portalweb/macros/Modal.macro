@@ -1,7 +1,5 @@
 <definition>
 	<command name="submit">
 		<execute macro="Button#clickModalSubmit" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 </definition>

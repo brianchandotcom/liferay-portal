@@ -14,7 +14,8 @@
 	</condition>
 
 	<macrodef name="fetch-portal">
-		<attribute name="fetch.portal.branch.name" />
+		<attribute name="fetch.portal.local.branch.name" />
+		<attribute name="fetch.portal.remote.branch.name" />
 		<attribute name="fetch.portal.repository.name" />
 
 		<sequential>
@@ -24,14 +25,22 @@
 				<isset property="env.JENKINS_HOME" />
 			</condition>
 
-			<echo>git fetch --force --no-tags ${fetch.portal.repository.url} @{fetch.portal.branch.name}</echo>
+			<local name="fetch.portal.branch.name" />
+
+			<condition else="@{fetch.portal.remote.branch.name}" property="fetch.portal.branch.name" value="@{fetch.portal.local.branch.name}">
+				<not>
+					<equals arg1="${fetch.portal.local.branch.name}" arg2="" />
+				</not>
+			</condition>
+
+			<echo>git fetch --force --no-tags ${fetch.portal.repository.url} @{fetch.portal.remote.branch.name}:${fetch.portal.branch.name}</echo>
 
 			<exec executable="git">
 				<arg value="fetch" />
 				<arg value="--force" />
 				<arg value="--no-tags" />
 				<arg value="${fetch.portal.repository.url}" />
-				<arg value="@{fetch.portal.branch.name}" />
+				<arg value="@{fetch.portal.remote.branch.name}:${fetch.portal.branch.name}" />
 			</exec>
 		</sequential>
 	</macrodef>
@@ -259,7 +268,7 @@
 		</condition>
 
 		<fetch-portal
-			fetch.portal.branch.name="${public.branch.name}"
+			fetch.portal.remote.branch.name="${public.branch.name}"
 			fetch.portal.repository.name="liferay-portal"
 			unless:set="portal.git.commit.available"
 		/>
@@ -346,7 +355,7 @@
 		</condition>
 
 		<fetch-portal
-			fetch.portal.branch.name="${private.branch.name}"
+			fetch.portal.remote.branch.name="${private.branch.name}"
 			fetch.portal.repository.name="liferay-portal-ee"
 			unless:set="portal.private.git.commit.available"
 		/>

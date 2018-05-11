@@ -42,9 +42,9 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 							<c:when test="<%= ListUtil.isNotEmpty(fragmentCollections) %>">
 								<div class="align-items-center autofit-row">
 									<div class="autofit-col autofit-col-expand">
-										<strong class="text-uppercase">
-											<liferay-ui:message key="collections" />
-										</strong>
+										<p class="text-uppercase">
+											<strong><liferay-ui:message key="collections" /></strong>
+										</p>
 									</div>
 
 									<div class="autofit-col autofit-col-end">

@@ -4457,6 +4457,12 @@ to version 2.3.152.
 - [LPS-79453]: Add the `com.liferay.osgi.ext.plugin` plugin to build Ext OSGi
 modules.
 
+### Changed
+- [LPS-80332]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.153.
+- [LPS-80332]: Update the [Liferay Source Formatter] dependency to version
+1.0.626.
+
 ### Fixed
 - [LPS-79453]: Avoid adding the `-ext` suffix twice when building Ext plugins.
 - [LPS-79453]: Fix the `deploy` task of Ext plugins.

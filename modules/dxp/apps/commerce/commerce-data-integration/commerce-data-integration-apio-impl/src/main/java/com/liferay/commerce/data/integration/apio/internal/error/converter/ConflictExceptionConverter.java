@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.data.integration.apio.internal.error.converter;
 
-import com.liferay.apio.architect.converter.ExceptionConverter;
+import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
 
@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true)
 public class ConflictExceptionConverter
-	implements ExceptionConverter<ConflictException> {
+	implements ExceptionMapper<ConflictException> {
 
 	@Override
-	public APIError convert(ConflictException ce) {
+	public APIError map(ConflictException ce) {
 		Response.Status status = Response.Status.CONFLICT;
 
 		return new APIError(

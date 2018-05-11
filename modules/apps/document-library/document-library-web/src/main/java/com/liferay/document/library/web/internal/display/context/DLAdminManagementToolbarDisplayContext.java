@@ -126,7 +126,7 @@ public class DLAdminManagementToolbarDisplayContext {
 								dropdownItem.setIcon("unlock");
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, "checkin"));
-								dropdownItem.setQuickAction(true);
+								dropdownItem.setQuickAction(false);
 							}));
 
 					add(
@@ -142,7 +142,7 @@ public class DLAdminManagementToolbarDisplayContext {
 								dropdownItem.setLabel(
 									LanguageUtil.get(
 										_request, "checkout[document]"));
-								dropdownItem.setQuickAction(true);
+								dropdownItem.setQuickAction(false);
 							}));
 
 					add(

@@ -15,18 +15,22 @@
 package com.liferay.site.teams.uad.test;
 
 import com.liferay.portal.kernel.model.Team;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.service.TeamLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = TeamUADTestHelper.class)
 public class TeamUADTestHelper {
+
 	/**
 	 * Implement addTeam() to enable some UAD tests.
 	 *
@@ -35,9 +39,10 @@ public class TeamUADTestHelper {
 	 * </p>
 	 */
 	public Team addTeam(long userId) throws Exception {
-		Assume.assumeTrue(false);
-
-		return null;
+		return _teamLocalService.addTeam(
+			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	/**
@@ -49,4 +54,8 @@ public class TeamUADTestHelper {
 	 */
 	public void cleanUpDependencies(List<Team> teams) throws Exception {
 	}
+
+	@Reference
+	private TeamLocalService _teamLocalService;
+
 }

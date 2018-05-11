@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -218,10 +217,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 					continue;
 				}
 
-				if (_legacyPackageNames.contains(dependencyPackageName)) {
-					continue;
-				}
-
 				printWriter.write(delimiter2);
 
 				StringBundler aliasSB = new StringBundler(1);
@@ -344,6 +339,21 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			}
 		}
 
+		Map<String, String> globalAliases = _npmRegistry.getGlobalAliases();
+
+		for (Map.Entry<String, String> alias : globalAliases.entrySet()) {
+			printWriter.write(delimiter);
+			printWriter.write(StringPool.QUOTE);
+			printWriter.write(alias.getKey());
+			printWriter.write(StringPool.QUOTE);
+			printWriter.write(StringPool.COLON);
+			printWriter.write(StringPool.QUOTE);
+			printWriter.write(alias.getValue());
+			printWriter.write(StringPool.QUOTE);
+
+			delimiter = ",\n";
+		}
+
 		printWriter.println("\n};");
 
 		printWriter.println(
@@ -373,9 +383,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	protected void setNPMRegistry(NPMRegistry npmRegistry) {
 		_npmRegistry = npmRegistry;
 	}
-
-	private static final Set<String> _legacyPackageNames = new HashSet<>(
-		Arrays.asList("map-common"));
 
 	private ComponentContext _componentContext;
 	private volatile Details _details;

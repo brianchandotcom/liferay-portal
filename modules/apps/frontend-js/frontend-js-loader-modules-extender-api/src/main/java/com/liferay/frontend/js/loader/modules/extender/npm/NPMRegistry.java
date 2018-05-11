@@ -15,11 +15,14 @@
 package com.liferay.frontend.js.loader.modules.extender.npm;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author Iván Zaera Avellón
  */
 public interface NPMRegistry {
+
+	public Map<String, String> getGlobalAliases();
 
 	public JSModule getJSModule(String identifier);
 

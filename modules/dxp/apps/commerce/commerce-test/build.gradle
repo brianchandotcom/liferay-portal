@@ -1,5 +1,3 @@
-apply plugin: "com.liferay.poshi.runner.resources.defaults"
-
 copyLibs {
 	enabled = true
 }
@@ -18,8 +16,4 @@ dependencies {
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":private:apps:commerce:commerce-service")
 	testIntegrationCompile project(":private:apps:commerce:commerce-user-segment-api")
-}
-
-poshiRunnerResources {
-	baseNameDir "commerce", "src/testFunctional"
 }

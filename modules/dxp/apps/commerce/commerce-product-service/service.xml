@@ -537,9 +537,9 @@
 		<column name="height" type="double" />
 		<column name="depth" type="double" />
 		<column name="weight" type="double" />
-		<column name="cost" type="BigDecimal" />
 		<column name="price" type="BigDecimal" />
 		<column name="promoPrice" type="BigDecimal" />
+		<column name="cost" type="BigDecimal" />
 		<column name="published" type="boolean" />
 		<column name="externalReferenceCode" type="String" />
 		<column name="displayDate" type="Date" />

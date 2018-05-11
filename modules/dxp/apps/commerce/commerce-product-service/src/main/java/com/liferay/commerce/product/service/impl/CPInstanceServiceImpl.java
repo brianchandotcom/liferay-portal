@@ -70,11 +70,10 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
 			String ddmContent, double width, double height, double depth,
-			double weight, BigDecimal cost, BigDecimal price,
-			BigDecimal promoPrice, boolean published,
-			String externalReferenceCode, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			double weight, BigDecimal price, BigDecimal promoPrice,
+			BigDecimal cost, boolean published, String externalReferenceCode,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -86,7 +85,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
-			ddmContent, width, height, depth, weight, cost, price, promoPrice,
+			ddmContent, width, height, depth, weight, price, promoPrice, cost,
 			published, externalReferenceCode, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
@@ -266,8 +265,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, BigDecimal cost,
-			BigDecimal price, BigDecimal promoPrice, boolean published,
+			double height, double depth, double weight, BigDecimal price,
+			BigDecimal promoPrice, BigDecimal cost, boolean published,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -281,7 +280,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		return cpInstanceLocalService.updateCPInstance(
 			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable, width,
-			height, depth, weight, cost, price, promoPrice, published,
+			height, depth, weight, price, promoPrice, cost, published,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -290,8 +289,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance updatePricingInfo(
-			long cpInstanceId, BigDecimal cost, BigDecimal price,
-			BigDecimal promoPrice, ServiceContext serviceContext)
+			long cpInstanceId, BigDecimal price, BigDecimal promoPrice,
+			BigDecimal cost, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionPermission.checkCPInstance(
@@ -299,7 +298,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updatePricingInfo(
-			cpInstanceId, cost, price, promoPrice, serviceContext);
+			cpInstanceId, price, promoPrice, cost, serviceContext);
 	}
 
 	@Override

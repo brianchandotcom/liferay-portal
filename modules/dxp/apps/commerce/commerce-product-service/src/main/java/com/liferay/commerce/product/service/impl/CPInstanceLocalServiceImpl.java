@@ -112,11 +112,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
 			String ddmContent, double width, double height, double depth,
-			double weight, BigDecimal cost, BigDecimal price,
-			BigDecimal promoPrice, boolean published,
-			String externalReferenceCode, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
+			double weight, BigDecimal price, BigDecimal promoPrice,
+			BigDecimal cost, boolean published, String externalReferenceCode,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, ServiceContext serviceContext)
@@ -170,9 +169,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setHeight(height);
 		cpInstance.setDepth(depth);
 		cpInstance.setWeight(weight);
-		cpInstance.setCost(cost);
 		cpInstance.setPrice(price);
 		cpInstance.setPromoPrice(promoPrice);
+		cpInstance.setCost(cost);
 		cpInstance.setPublished(published);
 		cpInstance.setExternalReferenceCode(externalReferenceCode);
 		cpInstance.setDisplayDate(displayDate);
@@ -563,12 +562,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return cpInstanceLocalService.updateCPInstance(
 			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable,
 			cpInstance.getWidth(), cpInstance.getHeight(),
-			cpInstance.getDepth(), cpInstance.getWeight(), cpInstance.getCost(),
-			cpInstance.getPrice(), cpInstance.getPromoPrice(), published,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			cpInstance.getDepth(), cpInstance.getWeight(),
+			cpInstance.getPrice(), cpInstance.getPromoPrice(),
+			cpInstance.getCost(), published, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -576,8 +576,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	public CPInstance updateCPInstance(
 			long cpInstanceId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, BigDecimal cost,
-			BigDecimal price, BigDecimal pomoPrice, boolean published,
+			double height, double depth, double weight, BigDecimal price,
+			BigDecimal promoPrice, BigDecimal cost, boolean published,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
@@ -619,9 +619,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setHeight(height);
 		cpInstance.setDepth(depth);
 		cpInstance.setWeight(weight);
-		cpInstance.setCost(cost);
 		cpInstance.setPrice(price);
-		cpInstance.setPromoPrice(pomoPrice);
+		cpInstance.setPromoPrice(promoPrice);
+		cpInstance.setCost(cost);
 		cpInstance.setPublished(published);
 		cpInstance.setDisplayDate(displayDate);
 		cpInstance.setExpirationDate(expirationDate);
@@ -649,8 +649,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 	@Override
 	public CPInstance updatePricingInfo(
-			long cpInstanceId, BigDecimal cost, BigDecimal price,
-			BigDecimal promoPrice, ServiceContext serviceContext)
+			long cpInstanceId, BigDecimal price, BigDecimal promoPrice,
+			BigDecimal cost, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPInstance cpInstance = cpInstancePersistence.findByPrimaryKey(
@@ -660,9 +660,9 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstance.setModifiedDate(serviceContext.getModifiedDate(now));
 
-		cpInstance.setCost(cost);
 		cpInstance.setPrice(price);
 		cpInstance.setPromoPrice(promoPrice);
+		cpInstance.setCost(cost);
 
 		return cpInstancePersistence.update(cpInstance);
 	}
@@ -739,8 +739,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable,
 			String ddmContent, double width, double height, double depth,
-			double weight, BigDecimal cost, BigDecimal price,
-			BigDecimal promoPrice, boolean published, Date displayDate,
+			double weight, BigDecimal price, BigDecimal promoPrice,
+			BigDecimal cost, boolean published, Date displayDate,
 			Date expirationDate, boolean neverExpire,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -776,7 +776,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
-			ddmContent, width, height, depth, weight, cost, price, promoPrice,
+			ddmContent, width, height, depth, weight, price, promoPrice, cost,
 			published, StringPool.BLANK, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,

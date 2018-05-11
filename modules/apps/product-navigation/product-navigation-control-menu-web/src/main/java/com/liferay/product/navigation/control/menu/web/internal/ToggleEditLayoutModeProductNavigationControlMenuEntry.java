@@ -14,9 +14,11 @@
 
 package com.liferay.product.navigation.control.menu.web.internal;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.web.internal.util.ProductNavigationControlMenuUtil;
 
 import java.util.Locale;
 
@@ -57,7 +59,11 @@ public class ToggleEditLayoutModeProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) {
+	public boolean isShow(HttpServletRequest request) throws PortalException {
+		if (!ProductNavigationControlMenuUtil.isEditEnabled(request)) {
+			return false;
+		}
+
 		return false;
 	}
 

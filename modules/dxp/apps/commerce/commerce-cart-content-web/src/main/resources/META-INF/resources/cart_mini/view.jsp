@@ -42,7 +42,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<ul class="commerce-order-items-header">
 		<li class="autofit-row">
 			<div class="autofit-col autofit-col-expand">
-				<h4 class="commerce-title">Items (#)</h4>
+				<h4 class="commerce-title">
+					<liferay-ui:message arguments="<%= commerceCartContentMiniDisplayContext.getCommerceOrderItemsQuantity() %>" key="items-x" translateArguments="<%= false %>" />
+				</h4>
 			</div>
 
 			<div class="autofit-col">
@@ -157,12 +159,14 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<aui:script use="aui-base">
 		var orderTransition = A.one('#<portlet:namespace />orderTransition');
 
-		orderTransition.delegate(
-			'click',
-			function(event) {
-				<portlet:namespace />transition(event);
-			},
-			'.transition-link'
-		);
+		if (orderTransition) {
+			orderTransition.delegate(
+				'click',
+				function(event) {
+					<portlet:namespace />transition(event);
+				},
+				'.transition-link'
+			);
+		}
 	</aui:script>
 </liferay-ddm:template-renderer>

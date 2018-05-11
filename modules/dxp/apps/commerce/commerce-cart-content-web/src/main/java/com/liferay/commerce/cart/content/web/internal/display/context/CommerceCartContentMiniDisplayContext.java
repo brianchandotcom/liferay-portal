@@ -67,6 +67,11 @@ public class CommerceCartContentMiniDisplayContext
 		return portletURL.toString();
 	}
 
+	public int getCommerceOrderItemsQuantity() throws PortalException {
+		return _commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
+			commerceCartContentRequestHelper.getRequest());
+	}
+
 	public String getDisplayStyle() {
 		return
 			_commerceCartContentMiniPortletInstanceConfiguration.displayStyle();

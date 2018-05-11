@@ -23,7 +23,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 boolean showTitle = GetterUtil.getBoolean((String)request.getAttribute("liferay-journal:journal-article:showTitle"));
 %>
 
-<div class="clearfix journal-content-article" id="<portlet:namespace/>journal_content_article_<%= articleDisplay.getArticleId() %>">
+<div class="clearfix journal-content-article" data-analytics-asset-id="<%= articleDisplay.getArticleId() %>" data-analytics-asset-title="<%= articleDisplay.getTitle() %>" data-analytics-asset-type="web-content" id="<portlet:namespace/>journal_content_article_<%= articleDisplay.getArticleId() %>">
 	<c:if test="<%= showTitle %>">
 		<%= articleDisplay.getTitle() %>
 	</c:if>

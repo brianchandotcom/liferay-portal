@@ -1,9 +1,9 @@
 {
-	"id": "els",
 	"cpu": 4,
-	"memory": 6144,
 	"env": {
 		"ES_JAVA_OPTS": "-Xms4g -Xmx4g"
 	},
+	"id": "els",
+	"memory": 6144,
 	"zeroDowntime": false
 }

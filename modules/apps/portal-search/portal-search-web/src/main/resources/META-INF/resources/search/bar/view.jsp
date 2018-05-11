@@ -32,7 +32,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 %>
 
 <c:choose>
-	<c:when test="<%= searchBarPortletDisplayContext.isDestinationConfigured() %>">
+	<c:when test="<%= searchBarPortletDisplayContext.isDestinationUnreachable() %>">
 		<div class="alert alert-info text-center">
 			<liferay-ui:message key="this-search-bar-is-not-visible-to-users-yet" />
 
@@ -40,21 +40,17 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 		</div>
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL name="redirectSearchBar" var="portletURL">
-			<portlet:param name="mvcActionCommandName" value="redirectSearchBar" />
-		</portlet:actionURL>
-
-		<aui:form action="<%= portletURL %>" method="post" name="fm">
+		<aui:form action="<%= searchBarPortletDisplayContext.getSearchURL() %>" method="get" name="fm">
 			<aui:fieldset id="searchContainer">
 				<div class="input-group search-bar">
 					<aui:field-wrapper inlineField="<%= true %>">
-						<aui:input autoFocus="<%= true %>" cssClass="search-bar-keywords-input search-input" label="" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder="search-..." title="search" type="text" value="<%= searchBarPortletDisplayContext.getKeywords() %>" />
+						<aui:input autoFocus="<%= true %>" cssClass="search-bar-keywords-input search-input" data-qa-id="searchInput" label="" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder="search-..." title="search" type="text" useNamespace="<%= false %>" value="<%= searchBarPortletDisplayContext.getKeywords() %>" />
 					</aui:field-wrapper>
 
 					<c:choose>
 						<c:when test="<%= searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope() %>">
 							<aui:field-wrapper inlineField="<%= true %>">
-								<aui:select cssClass="search-select" label="" name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" title="scope">
+								<aui:select cssClass="search-bar-scope-select search-select" label="" name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" title="scope" useNamespace="<%= false %>">
 									<c:if test="<%= searchBarPortletDisplayContext.isAvailableEverythingSearchScope() %>">
 										<aui:option label="all-sites" selected="<%= searchBarPortletDisplayContext.isSelectedEverythingSearchScope() %>" value="<%= searchBarPortletDisplayContext.getEverythingSearchScopeParameterString() %>" />
 									</c:if>

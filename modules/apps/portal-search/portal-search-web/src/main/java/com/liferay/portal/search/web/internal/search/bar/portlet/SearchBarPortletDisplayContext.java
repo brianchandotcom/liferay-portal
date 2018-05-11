@@ -43,12 +43,16 @@ public class SearchBarPortletDisplayContext {
 		return _scopeParameterValue;
 	}
 
+	public String getSearchURL() {
+		return _searchURL;
+	}
+
 	public boolean isAvailableEverythingSearchScope() {
 		return _availableEverythingSearchScope;
 	}
 
-	public boolean isDestinationConfigured() {
-		return _destinationConfigured;
+	public boolean isDestinationUnreachable() {
+		return _destinationUnreachable;
 	}
 
 	public boolean isLetTheUserChooseTheSearchScope() {
@@ -76,8 +80,8 @@ public class SearchBarPortletDisplayContext {
 			searchScopeCurrentSiteParameterString;
 	}
 
-	public void setDestinationConfigured(boolean destinationConfigured) {
-		_destinationConfigured = destinationConfigured;
+	public void setDestinationUnreachable(boolean destinationUnreachable) {
+		_destinationUnreachable = destinationUnreachable;
 	}
 
 	public void setEverythingSearchScopeParameterString(
@@ -109,6 +113,10 @@ public class SearchBarPortletDisplayContext {
 		_scopeParameterValue = scopeParameterValue;
 	}
 
+	public void setSearchURL(String searchURL) {
+		_searchURL = searchURL;
+	}
+
 	public void setSelectedCurrentSiteSearchScope(
 		boolean selectedCurrentSiteSearchScope) {
 
@@ -123,13 +131,14 @@ public class SearchBarPortletDisplayContext {
 
 	private boolean _availableEverythingSearchScope;
 	private String _currentSiteSearchScopeParameterString;
-	private boolean _destinationConfigured;
+	private boolean _destinationUnreachable;
 	private String _everythingSearchScopeParameterString;
 	private String _keywords;
 	private String _keywordsParameterName;
 	private boolean _letTheUserChooseTheSearchScope;
 	private String _scopeParameterName;
 	private String _scopeParameterValue;
+	private String _searchURL;
 	private boolean _selectedCurrentSiteSearchScope;
 	private boolean _selectedEverythingSearchScope;
 

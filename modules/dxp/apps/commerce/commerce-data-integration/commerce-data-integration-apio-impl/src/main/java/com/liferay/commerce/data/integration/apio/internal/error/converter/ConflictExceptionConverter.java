@@ -14,29 +14,28 @@
 
 package com.liferay.commerce.data.integration.apio.internal.error.converter;
 
+import static javax.ws.rs.core.Response.Status.CONFLICT;
+
 import com.liferay.apio.architect.converter.ExceptionConverter;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.commerce.data.integration.apio.internal.exceptions.UnprocessableEntityException;
-
-import org.apache.http.HttpStatus;
+import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code NotAcceptableException} to its {@link APIError}
- * representation.
+ * Converts a {@code ConflictException} to its {@link APIError} representation.
  *
  * @author Zoltán Takács
  */
 @Component(immediate = true)
-public class UnprocessableEntityExceptionConverter
-	implements ExceptionConverter<UnprocessableEntityException> {
+public class ConflictExceptionConverter
+	implements ExceptionConverter<ConflictException> {
 
 	@Override
-	public APIError convert(UnprocessableEntityException uee) {
+	public APIError convert(ConflictException ce) {
 		return new APIError(
-			uee, "Unable to process the contained instructions in the request",
-			"unprocessable-entity", HttpStatus.SC_UNPROCESSABLE_ENTITY);
+			ce, "Unable to process the contained instructions in the request",
+			"Conflict", CONFLICT.getStatusCode());
 	}
 
 }

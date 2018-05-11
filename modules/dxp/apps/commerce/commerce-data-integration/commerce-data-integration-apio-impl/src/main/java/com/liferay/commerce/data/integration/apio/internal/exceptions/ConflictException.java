@@ -20,42 +20,32 @@ import javax.ws.rs.core.Response;
 /**
  * @author Zoltán Takács
  */
-public class UnprocessableEntityException extends ClientErrorException {
+public class ConflictException extends ClientErrorException {
 
-	public UnprocessableEntityException(int status) {
+	public ConflictException(int status) {
 		super(status);
 	}
 
-	public UnprocessableEntityException(int status, Throwable cause) {
+	public ConflictException(Response.Status status) {
+		super(status);
+	}
+
+	public ConflictException(Response.Status status, Throwable cause) {
 		super(status, cause);
 	}
 
-	public UnprocessableEntityException(Response response) {
-		super(response);
-	}
-
-	public UnprocessableEntityException(Response response, Throwable cause) {
-		super(response, cause);
-	}
-
-	public UnprocessableEntityException(String message, int status) {
-		super(message, status);
-	}
-
-	public UnprocessableEntityException(
-		String message, int status, Throwable cause) {
-
+	public ConflictException(String message, int status, Throwable cause) {
 		super(message, status, cause);
 	}
 
-	public UnprocessableEntityException(String message, Response response) {
-		super(message, response);
+	public ConflictException(String message, Response.Status status) {
+		super(message, status);
 	}
 
-	public UnprocessableEntityException(
-		String message, Response response, Throwable cause) {
+	public ConflictException(
+		String message, Response.Status status, Throwable cause) {
 
-		super(message, response, cause);
+		super(message, status, cause);
 	}
 
 }

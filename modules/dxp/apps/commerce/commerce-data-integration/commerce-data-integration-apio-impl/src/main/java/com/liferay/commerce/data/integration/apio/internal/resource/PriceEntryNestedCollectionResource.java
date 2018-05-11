@@ -23,6 +23,8 @@ import static com.liferay.commerce.data.integration.apio.constants.PriceEntryFie
 import static com.liferay.commerce.price.list.constants.CommercePriceListConstants.RESOURCE_NAME;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
+import static javax.ws.rs.core.Response.Status.CONFLICT;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -31,7 +33,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
-import com.liferay.commerce.data.integration.apio.internal.exceptions.UnprocessableEntityException;
+import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpdaterForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceEntryPermissionChecker;
@@ -50,8 +52,6 @@ import java.util.List;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-
-import org.apache.http.HttpStatus;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -144,10 +144,10 @@ public class PriceEntryNestedCollectionResource
 				nscpie);
 		}
 		catch (DuplicateCommercePriceEntryException dcpee) {
-			throw new UnprocessableEntityException(
+			throw new ConflictException(
 				"Duplicate Product Instance with ID " +
 					priceEntryCreatorForm.getSkuID(),
-				HttpStatus.SC_UNPROCESSABLE_ENTITY, dcpee);
+				CONFLICT.getStatusCode(), dcpee);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

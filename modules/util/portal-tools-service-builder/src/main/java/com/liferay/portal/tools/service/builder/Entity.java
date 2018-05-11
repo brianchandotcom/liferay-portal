@@ -95,8 +95,8 @@ public class Entity implements Comparable<Entity> {
 		this(
 			null, null, null, name, null, null, null, false, false, false, true,
 			null, null, null, null, null, true, false, false, false, false,
-			null, null, null, false, null, null, null, null, null, null, null,
-			null, null, null, false);
+			null, false, null, null, false, null, null, null, null, null, null,
+			null, null, null, null, false);
 	}
 
 	public Entity(
@@ -106,8 +106,8 @@ public class Entity implements Comparable<Entity> {
 		String persistenceClass, String finderClassName, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
 		boolean dynamicUpdateEnabled, boolean jsonEnabled, boolean mvccEnabled,
-		boolean trashEnabled, String uadApplicationName, String uadOutputPath,
-		String uadPackagePath, boolean deprecated,
+		boolean trashEnabled, String uadApplicationName, boolean uadAutoDelete,
+		String uadOutputPath, String uadPackagePath, boolean deprecated,
 		List<EntityColumn> pkEntityColumns,
 		List<EntityColumn> regularEntityColumns,
 		List<EntityColumn> blobEntityColumns,
@@ -134,6 +134,7 @@ public class Entity implements Comparable<Entity> {
 		_mvccEnabled = mvccEnabled;
 		_trashEnabled = trashEnabled;
 		_uadApplicationName = uadApplicationName;
+		_uadAutoDelete = uadAutoDelete;
 		_uadOutputPath = uadOutputPath;
 		_uadPackagePath = uadPackagePath;
 		_deprecated = deprecated;
@@ -623,6 +624,10 @@ public class Entity implements Comparable<Entity> {
 
 	public String getUADApplicationName() {
 		return _uadApplicationName;
+	}
+
+	public boolean getUADAutoDelete() {
+		return _uadAutoDelete;
 	}
 
 	public List<EntityColumn> getUADEntityColumns() {
@@ -1213,6 +1218,7 @@ public class Entity implements Comparable<Entity> {
 	private final String _txManager;
 	private final List<String> _txRequiredMethodNames;
 	private final String _uadApplicationName;
+	private final boolean _uadAutoDelete;
 	private final String _uadOutputPath;
 	private final String _uadPackagePath;
 	private List<String> _unresolvedReferenceEntityNames;

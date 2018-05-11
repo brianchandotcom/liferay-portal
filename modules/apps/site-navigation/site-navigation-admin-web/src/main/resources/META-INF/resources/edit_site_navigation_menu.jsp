@@ -128,6 +128,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 <aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
 	var siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(
 		{
+			dragAndDropMenuItemSelector: '.site-navigation-menu-item',
 			editSiteNavigationMenuItemParentURL: '<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_item_parent"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>',
 			menuContainerSelector: '.site-navigation-menu-container',
 			menuItemContainerSelector: '.container-item',

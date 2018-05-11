@@ -164,47 +164,58 @@ definitions:
   ForecastScheduler:
     type: "object"
     required:
+    - "forecasts"
     - "frequency"
     - "timezone"
     properties:
-      ahead:
-        type: "number"
-        description: "Forecast n periods ahead."
       timezone:
         type: "string"
         description: "Forecast  process is  supposed to run in the first minutes of\
           \ the day in this timezone."
         pattern: "^(?:Z|[+-](?:2[0-3]|[01][0-9]):[0-5][0-9])$"
-      periods:
-        type: "array"
-        description: "Periodicity of the forecast."
-        items:
-          type: "string"
-          enum:
-          - "monthly"
-          - "weekly"
       callbackURL:
         type: "string"
         description: "URL to POST the date when the forecast is done. The receive\
           \ is supposed to call the GET /forecast with the date passed."
-      targets:
+      forecasts:
         type: "array"
-        description: "Targets of the forecast."
+        description: "Forecast Specifications to be run."
         items:
-          type: "string"
-          enum:
-          - "revenue"
-          - "quantity"
-      levels:
-        type: "array"
-        description: "The levels the target has to be aggregated and forecasted"
-        items:
-          type: "string"
-          enum:
-          - "company"
-          - "customer"
-          - "sku"
-          - "customer-sku"
+          type: "object"
+          properties:
+            period:
+              type: "string"
+              enum:
+              - "monthly"
+              - "weekly"
+            level:
+              type: "string"
+              description: "The level of the target has to be aggregated and forecasted"
+              enum:
+              - "company"
+              - "customer"
+              - "sku"
+              - "customer-sku"
+            ahead:
+              type: "number"
+              description: "Forecast n periods ahead."
+            ids:
+              type: "array"
+              description: "Level ids to be included in the forecast. Abssence of\
+                \ this proprety means all elegible."
+              items:
+                type: "string"
+            target:
+              type: "string"
+              description: "The target to be forecasted"
+              enum:
+              - "revenue"
+              - "quantity"
+          required:
+          - "ahead"
+          - "level"
+          - "period"
+          - "target"
       frequency:
         type: "string"
         description: "The frequency that the scheduler has to run."
@@ -212,7 +223,7 @@ definitions:
         - "daily"
         - "weekly"
         - "monthly"
-        default: "daily"
+        default: "monthly"
   Forecast:
     type: "object"
     required:

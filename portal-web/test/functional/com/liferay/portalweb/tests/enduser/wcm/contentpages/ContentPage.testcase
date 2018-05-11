@@ -139,8 +139,16 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
-		<execute macro="ContentPages#viewContentPG">
-			<var name="content" value="This is a test." />
+		<for list="Submit,Cancel" param="button">
+			<execute macro="Button#viewPresent">
+				<var name="button" value="${button}" />
+			</execute>
+		</for>
+
+		<execute macro="Button#clickNoError">
+			<var name="button" value="Submit" />
 		</execute>
+
+		<execute function="Confirm" value1="Form submitted" />
 	</command>
 </definition>

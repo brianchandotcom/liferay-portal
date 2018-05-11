@@ -39,11 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseDLFolderUADExporter extends DynamicQueryUADExporter<DLFolder> {
 	@Override
-	public String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public Class<DLFolder> getTypeClass() {
 		return DLFolder.class;
 	}

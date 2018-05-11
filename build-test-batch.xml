@@ -306,7 +306,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<arg line="${database.service.cmd.start}" />
 					</exec>
 
-					<display-database-diagnostic-log database.type="@{database.type}" exec.result="${exec.result}" />
+					<diagnose-database-start database.type="@{database.type}" exec.result="${exec.result}" />
 
 					<antcall inheritall="false" target="copy-optional-jars">
 						<param name="database.type" value="@{database.type}" />
@@ -341,7 +341,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="display-database-diagnostic-log">
+	<macrodef name="diagnose-database-start">
 		<attribute name="database.type" />
 		<attribute name="exec.result" />
 

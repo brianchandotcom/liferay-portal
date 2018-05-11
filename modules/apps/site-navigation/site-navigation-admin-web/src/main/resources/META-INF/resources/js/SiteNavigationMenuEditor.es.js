@@ -31,8 +31,8 @@ class SiteNavigationMenuEditor extends State {
 			{
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: '.drag-icon',
-				sources: this.menuItemSelector,
-				targets: `${this.menuContainerSelector} ${this.menuItemSelector}`
+				sources: this.dragAndDropMenuItemSelector,
+				targets: `${this.menuContainerSelector} ${this.dragAndDropMenuItemSelector}`
 			});
 
 		this._dragDrop.on(
@@ -417,6 +417,17 @@ class SiteNavigationMenuEditor extends State {
  */
 
 SiteNavigationMenuEditor.STATE = {
+
+	/**
+	 * Selector that handles the drag and drop item.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf SiteNavigationMenuEditor
+	 * @type {!string}
+	 */
+
+	dragAndDropMenuItemSelector: Config.string().required(),
 
 	/**
 	 * URL for edit site navigation menu item parent action.

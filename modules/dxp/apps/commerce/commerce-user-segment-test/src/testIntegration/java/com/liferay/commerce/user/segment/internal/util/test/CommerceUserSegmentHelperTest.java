@@ -94,7 +94,7 @@ public class CommerceUserSegmentHelperTest {
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
-			_comCommerceUserSegmentCriterionLocalService.
+			_commerceUserSegmentCriterionLocalService.
 				addCommerceUserSegmentCriterion(
 					_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 					CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
@@ -140,7 +140,7 @@ public class CommerceUserSegmentHelperTest {
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
-			_comCommerceUserSegmentCriterionLocalService.
+			_commerceUserSegmentCriterionLocalService.
 				addCommerceUserSegmentCriterion(
 					_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 					CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
@@ -185,7 +185,7 @@ public class CommerceUserSegmentHelperTest {
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
-			_comCommerceUserSegmentCriterionLocalService.
+			_commerceUserSegmentCriterionLocalService.
 				addCommerceUserSegmentCriterion(
 					_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 					CommerceUserSegmentCriterionConstants.TYPE_ROLE,
@@ -230,7 +230,7 @@ public class CommerceUserSegmentHelperTest {
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
-			_comCommerceUserSegmentCriterionLocalService.
+			_commerceUserSegmentCriterionLocalService.
 				addCommerceUserSegmentCriterion(
 					_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 					CommerceUserSegmentCriterionConstants.TYPE_USER,
@@ -273,7 +273,7 @@ public class CommerceUserSegmentHelperTest {
 				serviceContext);
 
 		_commerceUserSegmentCriterion =
-			_comCommerceUserSegmentCriterionLocalService.
+			_commerceUserSegmentCriterionLocalService.
 				addCommerceUserSegmentCriterion(
 					_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 					CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
@@ -300,12 +300,12 @@ public class CommerceUserSegmentHelperTest {
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();
 
-	@Inject
-	private CommerceUserSegmentCriterionLocalService
-		_comCommerceUserSegmentCriterionLocalService;
-
 	@DeleteAfterTestRun
 	private CommerceUserSegmentCriterion _commerceUserSegmentCriterion;
+
+	@Inject
+	private CommerceUserSegmentCriterionLocalService
+		_commerceUserSegmentCriterionLocalService;
 
 	@DeleteAfterTestRun
 	private CommerceUserSegmentEntry _commerceUserSegmentEntry;

@@ -102,65 +102,6 @@
 		<execute macro="LayoutPageTemplates#viewEditorEmpty" />
 	</command>
 
-	<command name="ChangeEditableText" priority="5">
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
-
-		<execute macro="Fragment#addFragment">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="TestCase#getFileContent">
-			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Document_1.html" />
-		</execute>
-
-		<execute macro="Fragment#typeFragmentEditor">
-			<var name="editor" value="html" />
-			<var name="templateScript" value="${htmlSnippet}" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Page Templates" />
-		</execute>
-
-		<execute macro="Collection#addCollection">
-			<var name="collectionName" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#selectFragment">
-			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#editFragmentText">
-			<var name="fragmentName" value="Fragment Name" />
-			<var name="id" value="test" />
-			<var name="text" value="Editing Finished" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#viewFragment">
-			<var name="fragmentName" value="Editing Finished" />
-		</execute>
-	</command>
-
 	<command ignore="true" name="ChangeEditableImage" priority="5">
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
@@ -220,8 +161,67 @@
 		</execute>
 
 		<execute macro="LayoutPageTemplates#editFragmentImage">
-			<var name="fragmentName" value="Fragment Name" />
 			<var name="fileName" value="Document_1.png" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+	</command>
+
+	<command name="ChangeEditableText" priority="5">
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_1.html" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Page Templates" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionName" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#editFragmentText">
+			<var name="fragmentName" value="Fragment Name" />
+			<var name="id" value="test" />
+			<var name="text" value="Editing Finished" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewFragment">
+			<var name="fragmentName" value="Editing Finished" />
 		</execute>
 	</command>
 
@@ -307,13 +307,13 @@
 		</execute>
 
 		<execute macro="Collection#addCollection">
-			<var name="collectionName" value="Collection Name Original" />
 			<var name="collectionDescription" value="Collection Description Original" />
+			<var name="collectionName" value="Collection Name Original" />
 		</execute>
 
 		<execute macro="Collection#renameCollection">
-			<var name="collectionName" value="Collection Name New" />
 			<var name="collectionDescription" value="Collection Description New" />
+			<var name="collectionName" value="Collection Name New" />
 			<var name="rowEntry" value="Collection Name Original" />
 		</execute>
 
@@ -393,10 +393,10 @@
 			<var name="fileName" value="Document_1.css" />
 		</execute>
 
-		 <execute macro="Fragment#typeFragmentEditor">
-		 	<var name="editor" value="css" />
-		 	<var name="templateScript" value="${cssSnippet}" />
-		 </execute>
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="css" />
+			<var name="templateScript" value="${cssSnippet}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 

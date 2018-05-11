@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
+import com.liferay.portlet.configuration.css.web.internal.configuration.PortletConfigurationCSSPortletConfiguration;
+import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSWebKeys;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -84,6 +86,12 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		_portletResource = portletResource;
 		_portletSetup = portletSetup;
 		_portletSetupJSONObject = portletSetupJSONObject;
+
+		_portletConfigurationCSSPortletConfiguration =
+			(PortletConfigurationCSSPortletConfiguration)
+				_renderRequest.getAttribute(
+					PortletConfigurationCSSWebKeys.
+						PORTLET_CONFIGURATION_CSS_PORTLET_CONFIGURATION);
 	}
 
 	public String getBackgroundColor() {
@@ -339,6 +347,10 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		return borderPropertyJSONObject.getBoolean("sameForAll");
 	}
 
+	public boolean isShowLinkToPage() {
+		return _portletConfigurationCSSPortletConfiguration.showLinkToPage();
+	}
+
 	public boolean isSpacingSameForAll(String property) {
 		JSONObject spacingDataJSONObject =
 			_portletSetupJSONObject.getJSONObject("spacingData");
@@ -395,6 +407,8 @@ public class PortletConfigurationCSSPortletDisplayContext {
 
 	private DecimalFormat _decimalFormat;
 	private String _linkToLayoutUuid;
+	private final PortletConfigurationCSSPortletConfiguration
+		_portletConfigurationCSSPortletConfiguration;
 	private String _portletDecoratorId;
 	private final String _portletResource;
 	private final PortletPreferences _portletSetup;

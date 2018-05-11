@@ -41,21 +41,23 @@ contextUseForAllTitle.put("inputSelector", ".custom-title input");
 	/>
 </aui:field-wrapper>
 
-<aui:select label="link-portlet-urls-to-page" name="linkToLayoutUuid">
-	<aui:option label="current-page" selected="<%= Objects.equals(StringPool.BLANK, portletConfigurationCSSPortletDisplayContext.getLinkToLayoutUuid()) %>" value="" />
+<c:if test="<%= portletConfigurationCSSPortletDisplayContext.isShowLinkToPage() %>">
+	<aui:select label="link-portlet-urls-to-page" name="linkToLayoutUuid">
+		<aui:option label="current-page" selected="<%= Objects.equals(StringPool.BLANK, portletConfigurationCSSPortletDisplayContext.getLinkToLayoutUuid()) %>" value="" />
 
-	<%
-	for (LayoutDescription layoutDescription : portletConfigurationCSSPortletDisplayContext.getLayoutDescriptions()) {
-		Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
-	%>
+		<%
+		for (LayoutDescription layoutDescription : portletConfigurationCSSPortletDisplayContext.getLayoutDescriptions()) {
+			Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
+		%>
 
-		<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), portletConfigurationCSSPortletDisplayContext.getLinkToLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+			<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), portletConfigurationCSSPortletDisplayContext.getLinkToLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
-</aui:select>
+	</aui:select>
+</c:if>
 
 <aui:select label="portlet-decorators" name="portletDecoratorId">
 

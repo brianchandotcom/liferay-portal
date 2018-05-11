@@ -17,7 +17,7 @@ package com.liferay.commerce.cloud.server.model;
 import io.vertx.codegen.annotations.DataObject;
 import io.vertx.core.json.JsonObject;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -32,48 +32,24 @@ public class ForecastConfiguration implements JsonSerializable {
 		ForecastConfigurationConverter.fromJson(jsonObject, this);
 	}
 
-	public int getAhead() {
-		return _ahead;
-	}
-
-	public Frequency getFrequency() {
+	public ForecastFrequency getFrequency() {
 		return _frequency;
 	}
 
-	public Set<Level> getLevels() {
-		return _levels;
-	}
-
-	public Set<ForecastPeriod> getPeriods() {
-		return _periods;
-	}
-
-	public Set<ForecastTarget> getTargets() {
-		return _targets;
+	public List<ForecastItemConfiguration> getItems() {
+		return _items;
 	}
 
 	public String getTimeZoneOffset() {
 		return _timeZoneOffset;
 	}
 
-	public void setAhead(int ahead) {
-		_ahead = ahead;
-	}
-
-	public void setFrequency(Frequency frequency) {
+	public void setFrequency(ForecastFrequency frequency) {
 		_frequency = frequency;
 	}
 
-	public void setLevels(Set<Level> levels) {
-		_levels = levels;
-	}
-
-	public void setPeriods(Set<ForecastPeriod> periods) {
-		_periods = periods;
-	}
-
-	public void setTargets(Set<ForecastTarget> targets) {
-		_targets = targets;
+	public void setItems(List<ForecastItemConfiguration> items) {
+		_items = items;
 	}
 
 	public void setTimeZoneOffset(String timeZoneOffset) {
@@ -89,23 +65,8 @@ public class ForecastConfiguration implements JsonSerializable {
 		return jsonObject;
 	}
 
-	public enum Frequency {
-
-		DAILY, MONTHLY, WEEKLY
-
-	}
-
-	public enum Level {
-
-		COMPANY, CUSTOMER, CUSTOMER_SKU, SKU
-
-	}
-
-	private int _ahead;
-	private Frequency _frequency;
-	private Set<Level> _levels;
-	private Set<ForecastPeriod> _periods;
-	private Set<ForecastTarget> _targets;
+	private ForecastFrequency _frequency;
+	private List<ForecastItemConfiguration> _items;
 	private String _timeZoneOffset;
 
 }

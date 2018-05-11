@@ -14,17 +14,18 @@
 
 package com.liferay.commerce.cloud.server.eleflow.util;
 
-import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler.FrequencyEnum;
-import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler.LevelsEnum;
-import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler.PeriodsEnum;
-import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler.TargetsEnum;
-import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Frequency;
-import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Level;
+import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastForecasts;
+import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler;
+import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastSchedulerForecasts;
+import com.liferay.commerce.cloud.server.model.ForecastFrequency;
+import com.liferay.commerce.cloud.server.model.ForecastLevel;
 import com.liferay.commerce.cloud.server.model.ForecastPeriod;
 import com.liferay.commerce.cloud.server.model.ForecastTarget;
 
 import java.time.LocalDate;
 
+import java.util.EnumSet;
+import java.util.Set;
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -37,10 +38,13 @@ public class EleflowUtilTest {
 
 	@Test
 	public void testFromEleflow() {
-		_testFromEleflow(FrequencyEnum.values(), FrequencyEnum.class);
-		_testFromEleflow(LevelsEnum.values(), LevelsEnum.class);
-		_testFromEleflow(PeriodsEnum.values(), PeriodsEnum.class);
-		_testFromEleflow(TargetsEnum.values(), TargetsEnum.class);
+		_testFromEleflow(EleflowForecastForecasts.LevelEnum.class);
+		_testFromEleflow(EleflowForecastForecasts.PeriodEnum.class);
+		_testFromEleflow(EleflowForecastForecasts.TargetEnum.class);
+		_testFromEleflow(EleflowForecastScheduler.FrequencyEnum.class);
+		_testFromEleflow(EleflowForecastSchedulerForecasts.LevelEnum.class);
+		_testFromEleflow(EleflowForecastSchedulerForecasts.PeriodEnum.class);
+		_testFromEleflow(EleflowForecastSchedulerForecasts.TargetEnum.class);
 	}
 
 	@Test
@@ -58,14 +62,33 @@ public class EleflowUtilTest {
 
 	@Test
 	public void testToEleflow() {
-		_testToEleflow(ForecastPeriod.values(), PeriodsEnum::fromValue);
-		_testToEleflow(ForecastTarget.values(), TargetsEnum::fromValue);
-		_testToEleflow(Frequency.values(), FrequencyEnum::fromValue);
-		_testToEleflow(Level.values(), LevelsEnum::fromValue);
+		_testToEleflow(
+			ForecastFrequency.class,
+			EleflowForecastScheduler.FrequencyEnum::fromValue);
+
+		_testToEleflow(
+			ForecastLevel.class, EleflowForecastForecasts.LevelEnum::fromValue);
+		_testToEleflow(
+			ForecastLevel.class,
+			EleflowForecastSchedulerForecasts.LevelEnum::fromValue);
+
+		_testToEleflow(
+			ForecastPeriod.class,
+			EleflowForecastForecasts.PeriodEnum::fromValue);
+		_testToEleflow(
+			ForecastPeriod.class,
+			EleflowForecastSchedulerForecasts.PeriodEnum::fromValue);
+
+		_testToEleflow(
+			ForecastTarget.class,
+			EleflowForecastForecasts.TargetEnum::fromValue);
+		_testToEleflow(
+			ForecastTarget.class,
+			EleflowForecastSchedulerForecasts.TargetEnum::fromValue);
 	}
 
-	private <E extends Enum<E>> void _testFromEleflow(
-		E[] values, Class<E> clazz) {
+	private <E extends Enum<E>> void _testFromEleflow(Class<E> clazz) {
+		Set<E> values = EnumSet.allOf(clazz);
 
 		for (E value : values) {
 			Assert.assertNotNull(EleflowUtil.fromEleflow(value, clazz));
@@ -73,7 +96,9 @@ public class EleflowUtilTest {
 	}
 
 	private <D extends Enum<D>, E extends Enum<E>> void _testToEleflow(
-		D[] values, Function<String, E> function) {
+		Class<D> clazz, Function<String, E> function) {
+
+		Set<D> values = EnumSet.allOf(clazz);
 
 		for (D value : values) {
 			Assert.assertNotNull(EleflowUtil.toEleflow(value, function));

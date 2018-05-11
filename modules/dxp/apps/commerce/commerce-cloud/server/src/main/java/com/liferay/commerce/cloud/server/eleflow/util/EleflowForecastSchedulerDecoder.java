@@ -15,10 +15,10 @@
 package com.liferay.commerce.cloud.server.eleflow.util;
 
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastScheduler;
+import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastSchedulerForecasts;
 import com.liferay.commerce.cloud.server.model.ForecastConfiguration;
-import com.liferay.commerce.cloud.server.model.ForecastConfiguration.Level;
-import com.liferay.commerce.cloud.server.model.ForecastPeriod;
-import com.liferay.commerce.cloud.server.model.ForecastTarget;
+import com.liferay.commerce.cloud.server.model.ForecastFrequency;
+import com.liferay.commerce.cloud.server.model.ForecastItemConfiguration;
 
 import java.util.function.Function;
 
@@ -34,25 +34,23 @@ public class EleflowForecastSchedulerDecoder
 
 		ForecastConfiguration forecastScheduler = new ForecastConfiguration();
 
-		forecastScheduler.setAhead(
-			EleflowUtil.getInteger(eleflowForecastScheduler.getAhead()));
 		forecastScheduler.setFrequency(
 			EleflowUtil.fromEleflow(
 				eleflowForecastScheduler.getFrequency(),
-				ForecastConfiguration.Frequency.class));
-		forecastScheduler.setLevels(
-			EleflowUtil.fromEleflow(
-				eleflowForecastScheduler.getLevels(), Level.class));
-		forecastScheduler.setPeriods(
-			EleflowUtil.fromEleflow(
-				eleflowForecastScheduler.getPeriods(), ForecastPeriod.class));
-		forecastScheduler.setTargets(
-			EleflowUtil.fromEleflow(
-				eleflowForecastScheduler.getTargets(), ForecastTarget.class));
+				ForecastFrequency.class));
+		forecastScheduler.setItems(
+			EleflowUtil.map(
+				eleflowForecastScheduler.getForecasts(),
+				_eleflowForecastSchedulerForecastsDecoder));
 		forecastScheduler.setTimeZoneOffset(
 			eleflowForecastScheduler.getTimezone());
 
 		return forecastScheduler;
 	}
+
+	private static final
+		Function<EleflowForecastSchedulerForecasts, ForecastItemConfiguration>
+			_eleflowForecastSchedulerForecastsDecoder =
+				new EleflowForecastSchedulerForecastsDecoder();
 
 }

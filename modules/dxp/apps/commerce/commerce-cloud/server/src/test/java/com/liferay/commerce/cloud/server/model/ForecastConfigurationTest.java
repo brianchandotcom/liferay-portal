@@ -20,8 +20,8 @@ import io.vertx.core.json.JsonObject;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.EnumSet;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,19 +41,41 @@ public class ForecastConfigurationTest {
 		ForecastConfiguration forecastScheduler = new ForecastConfiguration(
 			jsonObject);
 
-		Assert.assertEquals(123, forecastScheduler.getAhead());
 		Assert.assertEquals(
-			ForecastConfiguration.Frequency.DAILY,
-			forecastScheduler.getFrequency());
+			ForecastFrequency.DAILY, forecastScheduler.getFrequency());
+
+		List<ForecastItemConfiguration> forecastItemConfigurations =
+			forecastScheduler.getItems();
+
 		Assert.assertEquals(
-			Collections.singleton(ForecastConfiguration.Level.COMPANY),
-			forecastScheduler.getLevels());
-		Assert.assertEquals(
-			EnumSet.of(ForecastPeriod.MONTHLY, ForecastPeriod.WEEKLY),
-			forecastScheduler.getPeriods());
-		Assert.assertEquals(
-			EnumSet.of(ForecastTarget.REVENUE), forecastScheduler.getTargets());
+			forecastItemConfigurations.toString(), 2,
+			forecastItemConfigurations.size());
+
+		_assertForecastItemConfiguration(
+			forecastItemConfigurations.get(0), 123,
+			Arrays.asList("foo", "bar", "baz"), ForecastLevel.COMPANY,
+			ForecastPeriod.MONTHLY, ForecastTarget.REVENUE);
+		_assertForecastItemConfiguration(
+			forecastItemConfigurations.get(1), 456, null,
+			ForecastLevel.CUSTOMER_SKU, ForecastPeriod.WEEKLY,
+			ForecastTarget.QUANTITY);
+
 		Assert.assertEquals("+03:00", forecastScheduler.getTimeZoneOffset());
+	}
+
+	private void _assertForecastItemConfiguration(
+		ForecastItemConfiguration forecastItemConfiguration, int ahead,
+		List<String> ids, ForecastLevel forecastLevel,
+		ForecastPeriod forecastPeriod, ForecastTarget forecastTarget) {
+
+		Assert.assertEquals(ahead, forecastItemConfiguration.getAhead());
+		Assert.assertEquals(ids, forecastItemConfiguration.getIds());
+		Assert.assertEquals(
+			forecastLevel, forecastItemConfiguration.getLevel());
+		Assert.assertEquals(
+			forecastPeriod, forecastItemConfiguration.getPeriod());
+		Assert.assertEquals(
+			forecastTarget, forecastItemConfiguration.getTarget());
 	}
 
 }

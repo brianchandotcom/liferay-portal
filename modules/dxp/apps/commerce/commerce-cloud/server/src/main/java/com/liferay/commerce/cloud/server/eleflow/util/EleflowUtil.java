@@ -24,10 +24,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -47,18 +44,6 @@ public class EleflowUtil {
 		name = name.toUpperCase();
 
 		return Enum.valueOf(clazz, name);
-	}
-
-	public static <D extends Enum<D>, E extends Enum<E>> Set<D> fromEleflow(
-		Iterable<E> values, Class<D> clazz) {
-
-		EnumSet<D> enumSet = EnumSet.noneOf(clazz);
-
-		for (E value : values) {
-			enumSet.add(fromEleflow(value, clazz));
-		}
-
-		return enumSet;
 	}
 
 	public static String getDateString(long time) {
@@ -112,6 +97,10 @@ public class EleflowUtil {
 	}
 
 	public static <T, R> List<R> map(List<T> values, Function<T, R> function) {
+		if (values == null) {
+			return null;
+		}
+
 		Stream<T> stream = values.stream();
 
 		return stream.map(
@@ -130,18 +119,6 @@ public class EleflowUtil {
 		name = name.toLowerCase();
 
 		return function.apply(name);
-	}
-
-	public static <D extends Enum<D>, E extends Enum<E>> List<E> toEleflow(
-		Set<D> values, Function<String, E> function) {
-
-		List<E> list = new ArrayList<>(values.size());
-
-		for (D value : values) {
-			list.add(toEleflow(value, function));
-		}
-
-		return list;
 	}
 
 	private static final String _DEFAULT_ELEFLOW_HOST =

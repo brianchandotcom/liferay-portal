@@ -1,16 +1,20 @@
 {
-	"ahead": 123,
 	"callbackURL": "https://example.com",
-	"companyId": "foo",
 	"frequency": "DAILY",
-	"levels": [
-		"COMPANY"
-	],
-	"periods": [
-		"MONTHLY", "WEEKLY"
-	],
-	"targets": [
-		"REVENUE"
+	"items": [
+		{
+			"ahead": 123,
+			"ids": ["foo", "bar", "baz"],
+			"level": "COMPANY",
+			"period": "MONTHLY",
+			"target": "REVENUE"
+		},
+		{
+			"ahead": 456,
+			"level": "CUSTOMER_SKU",
+			"period": "WEEKLY",
+			"target": "QUANTITY"
+		}
 	],
 	"timeZoneOffset": "+03:00"
 }

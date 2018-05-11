@@ -42,8 +42,6 @@ announcementsEntriesSearchContainer.setRowChecker(new AnnouncementsEntryChecker(
 announcementsEntriesSearchContainer.setTotal(AnnouncementsEntryLocalServiceUtil.getEntriesCount(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts")));
 announcementsEntriesSearchContainer.setResults(AnnouncementsEntryLocalServiceUtil.getEntries(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()));
 
-List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContainer.getResults();
-
 AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, announcementsEntriesSearchContainer);
 %>
 
@@ -81,59 +79,6 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	selectable="<%= true %>"
 	showSearch="false"
 />
-
-<liferay-frontend:management-bar
-	disabled="<%= announcementsEntries.isEmpty() %>"
-	includeCheckBox="<%= true %>"
-	searchContainerId="announcementsEntries"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= currentURLObj %>"
-			selectedDisplayStyle='<%= "list" %>'
-		/>
-
-		<portlet:renderURL var="addEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="distributionScope" value="<%= distributionScope %>" />
-			<portlet:param name="alert" value='<%= String.valueOf(navigation.equals("alerts")) %>' />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				title='<%= navigation.equals("alerts") ? LanguageUtil.get(resourceBundle, "add-alert") : LanguageUtil.get(resourceBundle, "add-announcement") %>'
-				url="<%= addEntryURL %>"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-
-		<%
-		AnnouncementsAdminViewDisplayContext announcementsAdminViewDisplayContext = new DefaultAnnouncementsAdminViewDisplayContext(request);
-		%>
-
-		<liferay-frontend:management-bar-navigation
-			disabled="<%= false %>"
-			label="<%= announcementsAdminViewDisplayContext.getCurrentDistributionScopeLabel() %>"
-			navigationKeys="<%= announcementsAdminViewDisplayContext.getDistributionScopes() %>"
-			navigationParam="distributionScope"
-			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
-			icon="times"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= currentURL %>" method="get" name="fm">

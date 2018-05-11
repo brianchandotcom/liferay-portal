@@ -56,6 +56,20 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 			() -> doAssertFacet(function, queryContributor, expectedTerms));
 	}
 
+	protected JSONObject createDataJSONObject() {
+		JSONObject jsonObject = Mockito.mock(JSONObject.class);
+
+		Mockito.doAnswer(
+			invocation -> invocation.getArgumentAt(1, String.class)
+		).when(
+			jsonObject
+		).getString(
+			Mockito.anyString(), Mockito.anyString()
+		);
+
+		return jsonObject;
+	}
+
 	protected Void doAssertFacet(
 			Function<SearchContext, Facet> function,
 			QueryContributor queryContributor, List<String> expectedFrequencies)
@@ -80,7 +94,7 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 	protected Facet initFacet(Facet facet) {
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		facetConfiguration.setDataJSONObject(Mockito.mock(JSONObject.class));
+		facetConfiguration.setDataJSONObject(createDataJSONObject());
 
 		return facet;
 	}
@@ -100,7 +114,7 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 	}
 
 	protected JSONObject setUpMaxTerms(int maxTerms) {
-		JSONObject jsonObject = Mockito.mock(JSONObject.class);
+		JSONObject jsonObject = createDataJSONObject();
 
 		Mockito.doReturn(
 			maxTerms

@@ -25,6 +25,7 @@ import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -40,7 +41,9 @@ public class SearchResponseImpl implements SearchResponse {
 
 	@Override
 	public Facet getFacet(String name) {
-		return _searchContext.getFacet(name);
+		Map<String, Facet> facets = _searchContext.getFacets();
+
+		return facets.get(name);
 	}
 
 	/**

@@ -12,18 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.facet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portal.search.web.internal.custom.facet.constants;
 
 /**
- * @author André de Oliveira
+ * @author Wade Cao
  */
-@ProviderType
-public interface Facet extends com.liferay.portal.kernel.search.facet.Facet {
+public class CustomFacetPortletKeys {
 
-	public void select(String... selections);
-
-	public void setAggregationName(String aggregationName);
+	public static final String CUSTOM_FACET =
+		"com_liferay_portal_search_web_custom_facet_portlet_CustomFacetPortlet";
 
 }

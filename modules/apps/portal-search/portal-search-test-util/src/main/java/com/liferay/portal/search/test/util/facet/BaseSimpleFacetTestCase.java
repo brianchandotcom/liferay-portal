@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.mockito.Mockito;
-
 /**
  * @author Bryan Engler
  * @author André de Oliveira
@@ -142,7 +140,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 
 		assertFacet(
 			QueryContributors.mustNotTerm(getField(), presentButUnmatched),
-			Mockito.mock(JSONObject.class), Arrays.asList("One=1"));
+			createDataJSONObject(), Arrays.asList("One=1"));
 	}
 
 }

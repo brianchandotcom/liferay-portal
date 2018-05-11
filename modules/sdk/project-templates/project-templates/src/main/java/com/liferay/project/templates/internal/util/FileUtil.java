@@ -37,11 +37,14 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
+import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.Manifest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public class FileUtil {
 
@@ -216,6 +219,18 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	public static String getManifestProperty(File file, String name)
+		throws IOException {
+
+		try (JarFile jarFile = new JarFile(file)) {
+			Manifest manifest = jarFile.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			return attributes.getValue(name);
+		}
 	}
 
 	public static Path getRootDir(Path dirPath, String markerFileName) {

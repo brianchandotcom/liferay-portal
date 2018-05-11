@@ -3,7 +3,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import org.gradle.execution.ProjectConfigurer
 
-task cleanProjectTemplateTests(type: Delete)
+task cleanProjectTemplatesTests(type: Delete)
 task uploadProjectTemplateArchives
 task writeProjectTemplateVersions
 
@@ -28,7 +28,7 @@ bundle {
 	includeTransitiveDependencies = true
 }
 
-cleanProjectTemplateTests {
+cleanProjectTemplatesTests {
 	delete fileTree(dir: processTestResources.destinationDir, include: "*.jar")
 }
 
@@ -62,6 +62,7 @@ configurations {
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
 
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: mavenDistributionVersion
@@ -105,7 +106,6 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.8"
 
 	testCompile gradleTestKit()
-	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.5.0"
 	testCompile group: "com.googlecode.java-diff-utils", name: "diffutils", version: "1.3.0"
 	testCompile group: "junit", name: "junit", version: "4.12"
 	testCompile group: "net.diibadaaba.zipdiff", name: "zipdiff", version: "1.0"
@@ -121,7 +121,7 @@ processResources {
 }
 
 processTestResources {
-	dependsOn cleanProjectTemplateTests
+	dependsOn cleanProjectTemplatesTests
 	from configurations.projectTemplatesTests
 }
 

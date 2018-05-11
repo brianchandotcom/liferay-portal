@@ -2,6 +2,7 @@ Bundle-Description: Creates a Liferay module project that customizes a Liferay p
 Bundle-Name: Liferay Project Templates Portlet Configuration Icon
 Bundle-SymbolicName: com.liferay.project.templates.portlet.configuration.icon
 Bundle-Version: 1.0.8
+Liferay-Versions: [7,8)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

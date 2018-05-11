@@ -19,6 +19,7 @@ import com.beust.jcommander.ParameterException;
 
 import com.liferay.project.templates.internal.Archetyper;
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ProjectTemplatesUtil;
 import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
@@ -81,26 +82,17 @@ public class ProjectTemplates {
 					while (iterator.hasNext()) {
 						Path path = iterator.next();
 
-						String template = String.valueOf(path.getFileName());
+						String fileName = String.valueOf(path.getFileName());
 
-						template = template.substring(
-							TEMPLATE_BUNDLE_PREFIX.length(),
-							template.lastIndexOf('-'));
-
-						template = template.replace('.', '-');
+						String template = ProjectTemplatesUtil.getTemplateName(
+							fileName);
 
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
-							try (JarFile jarFile = new JarFile(path.toFile())) {
-								Manifest manifest = jarFile.getManifest();
+							String bundleDescription =
+								FileUtil.getManifestProperty(
+									path.toFile(), "Bundle-Description");
 
-								Attributes attributes =
-									manifest.getMainAttributes();
-
-								String bundleDescription = attributes.getValue(
-									"Bundle-Description");
-
-								templates.put(template, bundleDescription);
-							}
+							templates.put(template, bundleDescription);
 						}
 					}
 				}
@@ -122,16 +114,12 @@ public class ProjectTemplates {
 							continue;
 						}
 
-						template = template.substring(
-							TEMPLATE_BUNDLE_PREFIX.length(),
-							template.indexOf("-"));
-
-						template = template.replace('.', '-');
+						template = ProjectTemplatesUtil.getTemplateName(
+							template);
 
 						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
 							try (InputStream inputStream =
 									jarFile.getInputStream(jarEntry);
-
 								JarInputStream jarInputStream =
 									new JarInputStream(inputStream)) {
 

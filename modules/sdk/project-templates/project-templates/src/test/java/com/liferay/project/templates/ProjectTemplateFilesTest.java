@@ -15,6 +15,7 @@
 package com.liferay.project.templates;
 
 import aQute.bnd.osgi.Constants;
+import aQute.bnd.version.VersionRange;
 
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
@@ -352,6 +353,19 @@ public class ProjectTemplateFilesTest {
 				" must match pattern \"" + _bundleDescriptionPattern.pattern() +
 					"\"",
 			matcher.matches());
+
+		String liferayVersions = properties.getProperty("Liferay-Versions");
+
+		Assert.assertTrue(
+			"Missing \"Liferay Versions\" header in " + bndBndPath,
+			Validator.isNotNull(liferayVersions));
+
+		VersionRange versionRange = new VersionRange(liferayVersions);
+
+		Assert.assertTrue(
+			"\"Liferay-Versions\" header in " + bndBndPath + " must be a " +
+				"valid OSGi version range",
+			versionRange.isRange());
 
 		return properties;
 	}

@@ -2,6 +2,7 @@ Bundle-Description: Creates a Liferay Soy portlet as a module project.
 Bundle-Name: Liferay Project Templates Soy Portlet
 Bundle-SymbolicName: com.liferay.project.templates.soy.portlet
 Bundle-Version: 1.0.5
+Liferay-Versions: [7,8)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

@@ -53,7 +53,7 @@ public class ProductCreatorForm {
 		).addRequiredString(
 			"description", ProductCreatorForm::_setDescription
 		).addOptionalString(
-				"shortDescription", ProductCreatorForm::_setShortDescription
+			"shortDescription", ProductCreatorForm::_setShortDescription
 		).addRequiredString(
 			"productTypeName", ProductCreatorForm::_setProductTypeName
 		).addRequiredString(
@@ -73,12 +73,12 @@ public class ProductCreatorForm {
 		return Collections.singletonMap(Locale.getDefault(), _description);
 	}
 
-	public Map<Locale, String> getShortDescriptionMap() {
-		return Collections.singletonMap(Locale.getDefault(), _shortDescritpion);
-	}
-
 	public String getProductTypeName() {
 		return _productTypeName;
+	}
+
+	public Map<Locale, String> getShortDescriptionMap() {
+		return Collections.singletonMap(Locale.getDefault(), _shortDescritpion);
 	}
 
 	public Map<Locale, String> getTitleMap() {
@@ -93,12 +93,12 @@ public class ProductCreatorForm {
 		_description = description;
 	}
 
-	private void _setShortDescription(String shortDescription) {
-		_shortDescritpion = shortDescription;
-	}
-
 	private void _setProductTypeName(String productTypeName) {
 		_productTypeName = productTypeName;
+	}
+
+	private void _setShortDescription(String shortDescription) {
+		_shortDescritpion = shortDescription;
 	}
 
 	private void _setTitle(String title) {
@@ -108,7 +108,7 @@ public class ProductCreatorForm {
 	private List<Long> _assetCategoryIds;
 	private String _description;
 	private String _productTypeName;
-	private String _title;
 	private String _shortDescritpion;
+	private String _title;
 
 }

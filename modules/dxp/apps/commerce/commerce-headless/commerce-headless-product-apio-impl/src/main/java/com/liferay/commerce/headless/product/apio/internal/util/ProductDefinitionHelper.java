@@ -165,17 +165,19 @@ public class ProductDefinitionHelper {
 
 	public CPDefinition updateCPDefinition(
 			long cpDefinitionId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, Map<Locale, String> shortDescriptionMap,
-			String productTypeName, long[] assetCategoryIds)
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> shortDescriptionMap, String productTypeName,
+			long[] assetCategoryIds)
 		throws PortalException {
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(cpDefinitionId);
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
 
 		ServiceContext serviceContext = _productIndexerHelper.getServiceContext(
-				cpDefinition.getGroupId(), assetCategoryIds);
+			cpDefinition.getGroupId(), assetCategoryIds);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-				serviceContext.getTimeZone());
+			serviceContext.getTimeZone());
 
 		if (cpDefinition.getDisplayDate() != null) {
 			displayCalendar.setTime(cpDefinition.getDisplayDate());
@@ -196,7 +198,7 @@ public class ProductDefinitionHelper {
 		}
 
 		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-				serviceContext.getTimeZone());
+			serviceContext.getTimeZone());
 
 		if (cpDefinition.getExpirationDate() != null) {
 			expirationCalendar.setTime(cpDefinition.getExpirationDate());
@@ -217,20 +219,22 @@ public class ProductDefinitionHelper {
 		}
 
 		return _cpDefinitionService.updateCPDefinition(
-			cpDefinitionId, titleMap, shortDescriptionMap,
-			descriptionMap, cpDefinition.getUrlTitleMap(), titleMap,
-			cpDefinition.getMetaDescriptionMap(), cpDefinition.getMetaKeywordsMap(),
-			cpDefinition.getIgnoreSKUCombinations(), cpDefinition.getShippable(),
-			cpDefinition.getFreeShipping(), cpDefinition.getShipSeparately(),
+			cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
+			cpDefinition.getUrlTitleMap(), titleMap,
+			cpDefinition.getMetaDescriptionMap(),
+			cpDefinition.getMetaKeywordsMap(),
+			cpDefinition.getIgnoreSKUCombinations(),
+			cpDefinition.getShippable(), cpDefinition.getFreeShipping(),
+			cpDefinition.getShipSeparately(),
 			cpDefinition.getShippingExtraPrice(), cpDefinition.getWidth(),
 			cpDefinition.getHeight(), cpDefinition.getDepth(),
 			cpDefinition.getWeight(), cpDefinition.getCPTaxCategoryId(),
 			cpDefinition.getTaxExempt(), cpDefinition.getTelcoOrElectronics(),
 			cpDefinition.getDDMStructureKey(), cpDefinition.getPublished(),
-			displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, true, serviceContext);
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, true,
+			serviceContext);
 	}
 
 	@Reference

@@ -114,7 +114,8 @@ public class ProductDefinitionHelper {
 
 	public CPDefinition createCPDefinition(
 			long groupId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String productTypeName,
+			Map<Locale, String> descriptionMap,
+			Map<Locale, String> shortDescriptionMap, String productTypeName,
 			long[] assetCategoryIds)
 		throws PortalException {
 
@@ -154,12 +155,82 @@ public class ProductDefinitionHelper {
 		}
 
 		return _cpDefinitionService.addCPDefinition(
-			titleMap, null, descriptionMap, titleMap, null, null, null,
-			productTypeName, false, true, false, false, 0, 10, 10, 10, 10, 0,
-			false, false, null, true, displayDateMonth, displayDateDay,
+			titleMap, shortDescriptionMap, descriptionMap, titleMap, null, null,
+			null, productTypeName, false, true, false, false, 0, 10, 10, 10, 10,
+			0, false, false, null, true, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, true, serviceContext);
+	}
+
+	public CPDefinition updateCPDefinition(
+			long cpDefinitionId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> shortDescriptionMap,
+			String productTypeName, long[] assetCategoryIds)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(cpDefinitionId);
+
+		ServiceContext serviceContext = _productIndexerHelper.getServiceContext(
+				cpDefinition.getGroupId(), assetCategoryIds);
+
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+				serviceContext.getTimeZone());
+
+		if (cpDefinition.getDisplayDate() != null) {
+			displayCalendar.setTime(cpDefinition.getDisplayDate());
+		}
+		else {
+			displayCalendar.add(Calendar.YEAR, -1);
+		}
+
+		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
+		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = displayCalendar.get(Calendar.YEAR);
+		int displayDateHour = displayCalendar.get(Calendar.HOUR);
+		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
+		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+				serviceContext.getTimeZone());
+
+		if (cpDefinition.getExpirationDate() != null) {
+			expirationCalendar.setTime(cpDefinition.getExpirationDate());
+		}
+		else {
+			expirationCalendar.add(Calendar.MONTH, 1);
+		}
+
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
+		int expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
+
+		if (expirationDateAmPm == Calendar.PM) {
+			expirationDateHour += 12;
+		}
+
+		return _cpDefinitionService.updateCPDefinition(
+			cpDefinitionId, titleMap, shortDescriptionMap,
+			descriptionMap, cpDefinition.getUrlTitleMap(), titleMap,
+			cpDefinition.getMetaDescriptionMap(), cpDefinition.getMetaKeywordsMap(),
+			cpDefinition.getIgnoreSKUCombinations(), cpDefinition.getShippable(),
+			cpDefinition.getFreeShipping(), cpDefinition.getShipSeparately(),
+			cpDefinition.getShippingExtraPrice(), cpDefinition.getWidth(),
+			cpDefinition.getHeight(), cpDefinition.getDepth(),
+			cpDefinition.getWeight(), cpDefinition.getCPTaxCategoryId(),
+			cpDefinition.getTaxExempt(), cpDefinition.getTelcoOrElectronics(),
+			cpDefinition.getDDMStructureKey(), cpDefinition.getPublished(),
+			displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, true, serviceContext);
 	}
 
 	@Reference

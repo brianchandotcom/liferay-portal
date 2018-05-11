@@ -96,6 +96,9 @@ public class ProductNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getCPDefinition
+		).addUpdater(
+				this::_updateCPDefinition, (credentials, s) -> true,
+				ProductCreatorForm::buildForm
 		).addRemover(
 			idempotent(_cpDefinitionService::deleteCPDefinition),
 			_hasPermission.forDeleting(CPDefinition.class)
@@ -155,6 +158,7 @@ public class ProductNestedCollectionResource
 				_productDefinitionHelper.createCPDefinition(
 					webSiteId, productCreatorForm.getTitleMap(),
 					productCreatorForm.getDescriptionMap(),
+					productCreatorForm.getShortDescriptionMap(),
 					productCreatorForm.getProductTypeName(),
 					ArrayUtil.toLongArray(
 						productCreatorForm.getAssetCategoryIds()));
@@ -212,6 +216,35 @@ public class ProductNestedCollectionResource
 			List<Document> documents = hits.toList();
 
 			return documents.get(0);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
+
+	private Document _updateCPDefinition(long cpDefinitionId, ProductCreatorForm productCreatorForm)
+		throws PortalException {
+
+		try {
+			CPDefinition cpDefinition =
+				_productDefinitionHelper.updateCPDefinition(
+					cpDefinitionId, productCreatorForm.getTitleMap(),
+					productCreatorForm.getDescriptionMap(),
+					productCreatorForm.getShortDescriptionMap(),
+					productCreatorForm.getProductTypeName(),
+					ArrayUtil.toLongArray(
+						productCreatorForm.getAssetCategoryIds()));
+
+			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
+					CPDefinition.class);
+
+			return indexer.getDocument(cpDefinition);
+		}
+		catch (CPDefinitionProductTypeNameException cpdptne) {
+			throw new NotFoundException(
+					"Product type not available: " +
+							productCreatorForm.getProductTypeName(),
+					cpdptne);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

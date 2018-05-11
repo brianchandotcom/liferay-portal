@@ -16,8 +16,6 @@ package com.liferay.commerce.data.integration.apio.internal.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
-import static javax.ws.rs.core.Response.Status.CONFLICT;
-
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -47,6 +45,7 @@ import java.util.List;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -145,10 +144,12 @@ public class PriceEntryNestedCollectionResource
 				nscpie);
 		}
 		catch (DuplicateCommercePriceEntryException dcpee) {
+			Response.Status status = Response.Status.CONFLICT;
+
 			throw new ConflictException(
 				"Duplicate Product Instance with ID " +
 					priceEntryCreatorForm.getSkuID(),
-				CONFLICT.getStatusCode(), dcpee);
+				status.getStatusCode(), dcpee);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

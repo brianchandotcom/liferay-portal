@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.data.integration.apio.internal.error.converter;
 
-import static javax.ws.rs.core.Response.Status.CONFLICT;
-
 import com.liferay.apio.architect.converter.ExceptionConverter;
 import com.liferay.apio.architect.error.APIError;
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
+
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,9 +33,11 @@ public class ConflictExceptionConverter
 
 	@Override
 	public APIError convert(ConflictException ce) {
+		Response.Status status = Response.Status.CONFLICT;
+
 		return new APIError(
 			ce, "Unable to process the contained instructions in the request",
-			"Conflict", CONFLICT.getStatusCode());
+			"Conflict", status.getStatusCode());
 	}
 
 }

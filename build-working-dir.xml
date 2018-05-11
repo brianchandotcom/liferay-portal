@@ -13,6 +13,76 @@
 		</not>
 	</condition>
 
+	<macrodef name="checkout-private-apps">
+		<attribute name="checkout.private.apps.dirs" />
+		<attribute name="checkout.private.apps.sha" />
+
+		<sequential>
+			<fetch-portal
+				fetch.portal.local.branch.name="git-branch-private-apps-portal"
+				fetch.portal.remote.branch.name="@{checkout.private.apps.sha}"
+				fetch.portal.repository.name="liferay-portal-ee"
+			/>
+
+			<local name="return.code" />
+
+			<exec executable="git" failonerror="false" resultproperty="return.code">
+				<arg value="tag" />
+				<arg value="--force" />
+				<arg value="git-tag-private-apps-portal" />
+				<arg value="git-branch-private-apps-portal" />
+			</exec>
+
+			<exec executable="git">
+				<arg value="branch" />
+				<arg value="--delete" />
+				<arg value="--force" />
+				<arg value="git-branch-private-apps-portal" />
+			</exec>
+
+			<fail message="Please fetch the private branch from upstream before using this command.">
+				<condition>
+					<not>
+						<equals arg1="${return.code}" arg2="0" />
+					</not>
+				</condition>
+			</fail>
+
+			<local name="checkout.private.apps.dirs.git" />
+
+			<property name="checkout.private.apps.dirs.git" value="@{checkout.private.apps.dirs}"/>
+
+			<script language="javascript">
+				<![CDATA[
+					var checkoutPrivateAppsDirs = project.getProperty("checkout.private.apps.dirs.git");
+
+					project.setProperty("checkout.private.apps.dirs.git", checkoutPrivateAppsDirs.replace(",", " "));
+				]]>
+			</script>
+
+			<echo>git checkout refs/tags/git-private-apps-portal -- ${checkout.private.apps.dirs.git}</echo>
+
+			<exec executable="git" failonerror="true">
+				<arg value="checkout" />
+				<arg value="refs/tags/git-tag-private-apps-portal" />
+				<arg value="--" />
+				<arg line="${checkout.private.apps.dirs.git}" />
+			</exec>
+
+			<exec executable="git">
+				<arg value="reset" />
+				<arg value="HEAD" />
+				<arg value="." />
+			</exec>
+
+			<exec executable="git">
+				<arg value="tag" />
+				<arg value="--delete" />
+				<arg value="git-tag-private-apps-portal" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="fetch-portal">
 		<attribute name="fetch.portal.local.branch.name" />
 		<attribute name="fetch.portal.remote.branch.name" />
@@ -317,6 +387,25 @@
 		</exec>
 	</target>
 
+	<target if="working.dir.checkout.private.apps.project.names" name="checkout-private-projects">
+		<script language="javascript">
+			<![CDATA[
+				var workingDirCheckoutPrivateAppsProjectNames = project.getProperty("working.dir.checkout.private.apps.project.names");
+
+				var projectNames = workingDirCheckoutPrivateAppsProjectNames.split(",");
+
+				for (i = 0; i < projectNames.length; i++) {
+					var task = project.createTask("checkout-private-apps");
+
+					task.setDynamicAttribute("checkout.private.apps.dirs", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".dirs"));
+					task.setDynamicAttribute("checkout.private.apps.sha", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".sha"));
+
+					task.perform();
+				}
+			]]>
+		</script>
+	</target>
+
 	<target if="prepare.working.dir.private" name="checkout-portal-private">
 		<loadfile
 			property="portal.private.git.commit"
@@ -400,7 +489,7 @@
 		</exec>
 	</target>
 
-	<target depends="checkout-portal,checkout-portal-private" name="prepare-working-dir">
+	<target depends="checkout-portal,checkout-portal-private,checkout-private-projects" name="prepare-working-dir">
 		<property name="from.branch.name" value="${public.branch.name}" />
 		<property name="to.branch.name" value="${private.branch.name}" />
 

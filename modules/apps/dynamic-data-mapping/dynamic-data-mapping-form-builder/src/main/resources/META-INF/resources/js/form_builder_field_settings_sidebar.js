@@ -351,14 +351,14 @@ AUI.add(
 
 					_isCopySettings: function(settingsFormFieldContext, previousSettingsFormFieldContext) {
 						var fieldName = settingsFormFieldContext.fieldName;
-						var fieldVisibility = settingsFormFieldContext.visible;
+						var fieldVisible = settingsFormFieldContext.visible;
 
 						var ignoredFieldNames = ['dataType', 'type', 'validation'];
 
 						var previousFieldName = previousSettingsFormFieldContext.fieldName;
-						var previousFieldVisibility = previousSettingsFormFieldContext.visible;
+						var previousFieldVisible = previousSettingsFormFieldContext.visible;
 
-						if ((fieldName === 'name' && previousFieldName === 'name')) {
+						if ((fieldName === 'name') && (previousFieldName === 'name')) {
 							return true;
 						}
 
@@ -366,7 +366,7 @@ AUI.add(
 
 						var sameFieldProperty = (fieldName === previousFieldName);
 
-						var visible = fieldVisibility && previousFieldVisibility;
+						var visible = fieldVisible && previousFieldVisible;
 
 						if (ignoreFieldProperty && sameFieldProperty && visible) {
 							return true;

@@ -15,28 +15,27 @@
 package com.liferay.aggregate.rating.apio.internal.resource;
 
 import com.liferay.aggregate.rating.apio.identifier.AggregateRatingIdentifier;
-import com.liferay.aggregate.rating.apio.internal.AggregateRating;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
-import com.liferay.ratings.kernel.model.RatingsEntry;
-import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
-
-import java.util.List;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose {@link AggregateRating}
- * resources through a web API.
+ * Provides the information necessary to expose <a
+ * href="http://schema.org/AggregateRating">AggregateRating</a> resources through
+ * a web API.
+ * The resources are mapped from the internal model {@link RatingsStats}.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
 public class AggregateRatingNestedCollectionResource
-	implements ItemResource<AggregateRating, ClassNameClassPK,
+	implements ItemResource<RatingsStats, ClassNameClassPK,
 		AggregateRatingIdentifier> {
 
 	@Override
@@ -45,44 +44,36 @@ public class AggregateRatingNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<AggregateRating, ClassNameClassPK> itemRoutes(
-		ItemRoutes.Builder<AggregateRating, ClassNameClassPK> builder) {
+	public ItemRoutes<RatingsStats, ClassNameClassPK> itemRoutes(
+		ItemRoutes.Builder<RatingsStats, ClassNameClassPK> builder) {
 
 		return builder.addGetter(
-			this::_getAggregateRating
+			classNameClassPK -> _ratingsStatsLocalService.getStats(
+				classNameClassPK.getClassName(), classNameClassPK.getClassPK())
 		).build();
 	}
 
 	@Override
-	public Representor<AggregateRating, ClassNameClassPK> representor(
-		Representor.Builder<AggregateRating, ClassNameClassPK> builder) {
+	public Representor<RatingsStats, ClassNameClassPK> representor(
+		Representor.Builder<RatingsStats, ClassNameClassPK> builder) {
 
 		return builder.types(
 			"AggregateRating"
 		).identifier(
-			AggregateRating::getClassNameClassPK
+			ratingStats -> ClassNameClassPK.create(
+				ratingStats.getClassName(), ratingStats.getClassPK())
 		).addNumber(
-			"bestRating", aggregateRating -> 1
+			"bestRating", __ -> 1
 		).addNumber(
-			"ratingCount", AggregateRating::getRatingCount
+			"ratingCount", RatingsStats::getTotalEntries
 		).addNumber(
-			"ratingValue", AggregateRating::getRatingValue
+			"ratingValue", RatingsStats::getAverageScore
 		).addNumber(
-			"worstRating", aggregateRating -> 0
+			"worstRating", __ -> 0
 		).build();
 	}
 
-	private AggregateRating _getAggregateRating(
-		ClassNameClassPK classNameClassPK) {
-
-		List<RatingsEntry> ratingsEntries =
-			_ratingsEntryLocalService.getEntries(
-				classNameClassPK.getClassName(), classNameClassPK.getClassPK());
-
-		return new AggregateRating(classNameClassPK, ratingsEntries);
-	}
-
 	@Reference
-	private RatingsEntryLocalService _ratingsEntryLocalService;
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 }

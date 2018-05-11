@@ -65,8 +65,7 @@ public class DDMExporterFactoryImpl implements DDMExporterFactory {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeDDMFormExporter"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDDMFormExporter(DDMFormExporter ddmExporter) {
 		_ddmFormExporters.put(ddmExporter.getFormat(), ddmExporter);

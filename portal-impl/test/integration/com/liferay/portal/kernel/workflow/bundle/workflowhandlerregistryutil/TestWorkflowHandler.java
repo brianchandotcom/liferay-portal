@@ -181,7 +181,7 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 		return null;
 	}
 
-	@Reference(target = "(test=AtomicState)")
+	@Reference(target = "(test=AtomicState)", unbind = "-")
 	protected void setAtomicBoolean(AtomicBoolean atomicBoolean) {
 		_atomicBoolean = atomicBoolean;
 	}

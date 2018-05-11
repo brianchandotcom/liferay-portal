@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -111,8 +112,11 @@ public class FiftyOneDegreesEngineProxy {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FiftyOneDegreesEngineProxy.class);
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private DataFileProvider _dataFileProvider;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile DataFileProvider _dataFileProvider;
 
 	private Dataset _dataset;
 	private volatile FiftyOneDegreesConfiguration _fiftyOneDegreesConfiguration;

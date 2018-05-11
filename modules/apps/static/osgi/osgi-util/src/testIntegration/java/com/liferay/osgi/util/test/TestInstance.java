@@ -29,12 +29,12 @@ public class TestInstance {
 		return _trackedTwo;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setTrackedOne(TrackedOne trackedOne) {
 		_trackedOne = trackedOne;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setTrackedTwo(TrackedTwo trackedTwo) {
 		_trackedTwo = trackedTwo;
 	}

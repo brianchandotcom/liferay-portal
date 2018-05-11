@@ -56,8 +56,7 @@ public class DefaultNotificationRecipientBuilderRegistry
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeNotificationRecipientBuilder"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addNotificationRecipientBuilder(
 		NotificationRecipientBuilder notificationRecipientBuilder,

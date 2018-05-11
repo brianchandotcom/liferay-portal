@@ -110,8 +110,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeIndexSettingsContributor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addIndexSettingsContributor(
 		IndexSettingsContributor indexSettingsContributor) {

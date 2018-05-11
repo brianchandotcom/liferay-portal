@@ -142,8 +142,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		unbind = "unregisterEditableElementParser"
+		policy = ReferencePolicy.DYNAMIC
 	)
 	public void registerEditableElementParser(
 		EditableElementParser editableElementParser,

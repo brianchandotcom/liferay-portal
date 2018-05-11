@@ -22,5 +22,6 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = UADAnonymizer.class)
-public class PasswordPolicyUADAnonymizer extends BasePasswordPolicyUADAnonymizer {
+public class PasswordPolicyUADAnonymizer
+	extends BasePasswordPolicyUADAnonymizer {
 }

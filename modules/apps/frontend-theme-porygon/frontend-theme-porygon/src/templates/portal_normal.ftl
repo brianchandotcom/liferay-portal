@@ -18,7 +18,7 @@
 		<@liferay.control_menu />
 
 		<div id="wrapper">
-			<header class="navbar navbar-expand-md navbar-dark navbar-porygon">
+			<header class="navbar navbar-dark navbar-expand-md navbar-porygon">
 				<div class="container-fluid" id="banner" role="banner">
 					<div class="navbar-header" id="heading">
 						<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">

@@ -42,6 +42,7 @@ page import="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServ
 page import="com.liferay.announcements.kernel.util.AnnouncementsUtil" %><%@
 page import="com.liferay.announcements.web.constants.AnnouncementsWebKeys" %><%@
 page import="com.liferay.announcements.web.internal.display.context.AnnouncementsAdminViewDisplayContext" %><%@
+page import="com.liferay.announcements.web.internal.display.context.AnnouncementsAdminViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.announcements.web.internal.display.context.AnnouncementsDisplayContext" %><%@
 page import="com.liferay.announcements.web.internal.display.context.DefaultAnnouncementsAdminViewDisplayContext" %><%@
 page import="com.liferay.announcements.web.internal.display.context.DefaultAnnouncementsDisplayContext" %><%@

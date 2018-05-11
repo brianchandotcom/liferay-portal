@@ -43,6 +43,8 @@ announcementsEntriesSearchContainer.setTotal(AnnouncementsEntryLocalServiceUtil.
 announcementsEntriesSearchContainer.setResults(AnnouncementsEntryLocalServiceUtil.getEntries(themeDisplay.getCompanyId(), classNameId, classPK, navigation.equals("alerts"), announcementsEntriesSearchContainer.getStart(), announcementsEntriesSearchContainer.getEnd()));
 
 List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContainer.getResults();
+
+AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewManagementToolbarDisplayContext = new AnnouncementsAdminViewManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, announcementsEntriesSearchContainer);
 %>
 
 <clay:navigation-bar
@@ -67,6 +69,17 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 			}
 		}
 	%>"
+/>
+
+<clay:management-toolbar
+	actionDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	creationMenu="<%= announcementsAdminViewManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= announcementsAdminViewManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= announcementsAdminViewManagementToolbarDisplayContext.getTotal() %>"
+	searchContainerId="announcementsEntries"
+	selectable="<%= true %>"
+	showSearch="false"
 />
 
 <liferay-frontend:management-bar

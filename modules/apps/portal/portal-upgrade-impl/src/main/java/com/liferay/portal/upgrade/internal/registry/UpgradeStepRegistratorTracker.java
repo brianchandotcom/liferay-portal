@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator.Registry;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -210,41 +209,6 @@ public class UpgradeStepRegistratorTracker {
 				serviceRegistration.unregister();
 			}
 		}
-
-	}
-
-	private static class UpgradeStepRegistry implements Registry {
-
-		public List<UpgradeInfo> getUpgradeInfos() {
-			return _upgradeInfos;
-		}
-
-		@Override
-		public void register(
-			String bundleSymbolicName, String fromSchemaVersionString,
-			String toSchemaVersionString, UpgradeStep... upgradeSteps) {
-
-			register(
-				fromSchemaVersionString, toSchemaVersionString, upgradeSteps);
-		}
-
-		@Override
-		public void register(
-			String fromSchemaVersionString, String toSchemaVersionString,
-			UpgradeStep... upgradeSteps) {
-
-			_upgradeInfos.addAll(
-				createUpgradeInfos(
-					fromSchemaVersionString, toSchemaVersionString,
-					_buildNumber, upgradeSteps));
-		}
-
-		private UpgradeStepRegistry(int buildNumber) {
-			_buildNumber = buildNumber;
-		}
-
-		private final int _buildNumber;
-		private final List<UpgradeInfo> _upgradeInfos = new ArrayList<>();
 
 	}
 

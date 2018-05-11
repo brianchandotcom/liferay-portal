@@ -145,7 +145,7 @@ public class PaymentMethodCommerceCheckoutStep
 
 		if (!CommerceOrderPermission.contains(
 				permissionChecker, commerceOrder,
-				CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS)) {
+				CommerceOrderActionKeys.CHECKOUT_COMMERCE_ORDER)) {
 
 			return;
 		}

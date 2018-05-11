@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>ANY</td>
-	<td>//a[normalize-space()='${key_text}']</td>
+	<td>//*[contains(@class,'btn')][normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>

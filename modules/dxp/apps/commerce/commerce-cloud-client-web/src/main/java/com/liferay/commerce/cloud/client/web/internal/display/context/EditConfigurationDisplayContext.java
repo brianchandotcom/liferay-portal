@@ -83,8 +83,8 @@ public class EditConfigurationDisplayContext {
 		return _commerceCloudClientConfiguration;
 	}
 
-	public JSONObject getCommerceCloudOrderForecastConfiguration() {
-		if (_commerceCloudOrderForecastConfiguration == null) {
+	public JSONObject getOrderForecastConfiguration() {
+		if (_orderForecastConfiguration == null) {
 			JSONObject jsonObject = null;
 
 			try {
@@ -101,16 +101,13 @@ public class EditConfigurationDisplayContext {
 				jsonObject.putException(ccce);
 			}
 
-			_commerceCloudOrderForecastConfiguration = Optional.ofNullable(
-				jsonObject);
+			_orderForecastConfiguration = Optional.ofNullable(jsonObject);
 		}
 
-		return _commerceCloudOrderForecastConfiguration.orElse(null);
+		return _orderForecastConfiguration.orElse(null);
 	}
 
-	public String getCommerceCloudOrderForecastConfigurationLabel(
-		String value) {
-
+	public String getOrderForecastConfigurationLabel(String value) {
 		value = StringUtil.toLowerCase(value);
 
 		return StringUtil.replace(value, CharPool.UNDERLINE, CharPool.DASH);
@@ -170,11 +167,11 @@ public class EditConfigurationDisplayContext {
 	private final CommerceCloudClient _commerceCloudClient;
 	private CommerceCloudClientConfiguration _commerceCloudClientConfiguration;
 	private final ResourceBundleLoader _commerceCloudClientResourceBundleLoader;
-	private Optional<JSONObject> _commerceCloudOrderForecastConfiguration;
 	private final ResourceBundleLoader _commerceOrderResourceBundleLoader;
 	private final ConfigurationProvider _configurationProvider;
 	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
+	private Optional<JSONObject> _orderForecastConfiguration;
 	private final Portal _portal;
 	private final RenderResponse _renderResponse;
 

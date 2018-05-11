@@ -50,7 +50,7 @@ public class
 		EditConfigurationDisplayContext editConfigurationDisplayContext) {
 
 		if (editConfigurationDisplayContext.
-				getCommerceCloudOrderForecastConfiguration() != null) {
+				getOrderForecastConfiguration() != null) {
 
 			return true;
 		}

@@ -64,7 +64,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 				updateCommerceCloudClientConfiguration(actionRequest);
 			}
 			else if (cmd.equals("ordersForecasting")) {
-				updateCommerceCloudOrderForecastConfiguration(actionRequest);
+				updateOrderForecastConfiguration(actionRequest);
 
 				updateCommerceCloudClientConfiguration(actionRequest);
 			}
@@ -123,8 +123,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 			CommerceCloudClientConfiguration.class, properties);
 	}
 
-	protected void updateCommerceCloudOrderForecastConfiguration(
-			ActionRequest actionRequest)
+	protected void updateOrderForecastConfiguration(ActionRequest actionRequest)
 		throws Exception {
 
 		// Server configuration

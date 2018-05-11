@@ -116,17 +116,17 @@ public class CommerceTierPriceEntryDisplayContext
 		if (commerceTierPriceEntry == null) {
 			CommerceCurrency commerceCurrency = getCommercePriceListCurrency();
 
-			CommerceMoney zero = commerceCurrency.getZero();
+			CommerceMoney zeroCommerceMoney = commerceCurrency.getZero();
 
-			return zero.toString();
+			return zeroCommerceMoney.toString();
 		}
 
 		CommercePriceList commercePriceList = getCommercePriceList();
 
-		CommerceMoney priceMoney = commerceTierPriceEntry.getPriceMoney(
+		CommerceMoney priceCommerceMoney = commerceTierPriceEntry.getPriceMoney(
 			commercePriceList.getCommerceCurrencyId());
 
-		return priceMoney.toString();
+		return priceCommerceMoney.toString();
 	}
 
 	public String getCommerceTierPriceEntryPromoPrice(
@@ -136,18 +136,18 @@ public class CommerceTierPriceEntryDisplayContext
 		if (commerceTierPriceEntry == null) {
 			CommerceCurrency commerceCurrency = getCommercePriceListCurrency();
 
-			CommerceMoney zero = commerceCurrency.getZero();
+			CommerceMoney zeroCommerceMoney = commerceCurrency.getZero();
 
-			return zero.toString();
+			return zeroCommerceMoney.toString();
 		}
 
 		CommercePriceList commercePriceList = getCommercePriceList();
 
-		CommerceMoney promoPriceMoney =
+		CommerceMoney promoPriceCommerceMoney =
 			commerceTierPriceEntry.getPromoPriceMoney(
 				commercePriceList.getCommerceCurrencyId());
 
-		return promoPriceMoney.toString();
+		return promoPriceCommerceMoney.toString();
 	}
 
 	public String getContextTitle() throws PortalException {

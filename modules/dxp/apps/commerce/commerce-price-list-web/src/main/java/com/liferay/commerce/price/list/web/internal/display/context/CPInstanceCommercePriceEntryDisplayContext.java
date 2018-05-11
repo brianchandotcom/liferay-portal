@@ -94,10 +94,10 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		CommercePriceList commercePriceList =
 			commercePriceEntry.getCommercePriceList();
 
-		CommerceMoney priceMoney = commercePriceEntry.getPriceMoney(
+		CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
 			commercePriceList.getCommerceCurrencyId());
 
-		return priceMoney.toString();
+		return priceCommerceMoney.toString();
 	}
 
 	public CPInstance getCPInstance() throws PortalException {

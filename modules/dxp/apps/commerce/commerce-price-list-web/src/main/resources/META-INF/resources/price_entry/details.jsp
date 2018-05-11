@@ -32,8 +32,8 @@ else {
 
 CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 
-CommerceMoney priceMoney = commercePriceEntry.getPriceMoney(commercePriceList.getCommerceCurrencyId());
-CommerceMoney promoPriceMoney = commercePriceEntry.getPromoPriceMoney(commercePriceList.getCommerceCurrencyId());
+CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(commercePriceList.getCommerceCurrencyId());
+CommerceMoney promoPriceCommerceMoney = commercePriceEntry.getPromoPriceMoney(commercePriceList.getCommerceCurrencyId());
 
 CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
 
@@ -48,7 +48,7 @@ String currencyCode = commerceCurrency.getCode();
 <aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
 
 <aui:fieldset>
-	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= priceMoney.toString() %>" />
+	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= priceCommerceMoney.toString() %>" />
 
-	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= promoPriceMoney.toString() %>" />
+	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= promoPriceCommerceMoney.toString() %>" />
 </aui:fieldset>

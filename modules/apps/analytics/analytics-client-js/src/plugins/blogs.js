@@ -1,4 +1,5 @@
 import debounce from 'metal-debounce';
+import {getClosestAssetElement} from '../utils/assets';
 import {onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
 
@@ -11,22 +12,6 @@ const applicationId = 'blogs';
  */
 function getBlogPayload(blog) {
 	return {entryId: blog.dataset.analyticsAssetId};
-}
-
-/**
- * Returns first blog element ancestor of given element.
- * @param {object} element The DOM element
- * @return {object} The blog element
- */
-function getClosestBlogElement(element) {
-	if (element.closest) {
-		return element.closest('[data-analytics-asset-type="blog"]');
-	}
-	while (
-		(element = element.parentElement) &&
-		element.dataset.analyticsAssetType !== 'blog'
-	);
-	return element;
 }
 
 /**
@@ -103,7 +88,7 @@ function trackBlogViewed(analytics) {
  */
 function trackBlogClicked(analytics) {
 	const onClick = ({target}) => {
-		const blogElement = getClosestBlogElement(target);
+		const blogElement = getClosestAssetElement(target, 'blog');
 
 		if (!isTrackableBlog(blogElement)) {
 			return;

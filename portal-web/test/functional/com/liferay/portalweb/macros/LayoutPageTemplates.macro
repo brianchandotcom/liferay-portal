@@ -9,16 +9,6 @@
 		<execute macro="Modal#submit" />
 	</command>
 
-	<command name="editFragmentText">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<execute function="Type#typeEditor" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT" value1="${text}">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-	</command>
-
 	<command name="editFragmentImage">
 		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
@@ -39,6 +29,16 @@
 		<execute function="SelectFrameTop" />
 
 		<execute function="Click" locator1="Button#ADD" />
+	</command>
+
+	<command name="editFragmentText">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute function="Type#typeEditor" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT" value1="${text}">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
 	</command>
 
 	<command name="expandFragmentCollection">

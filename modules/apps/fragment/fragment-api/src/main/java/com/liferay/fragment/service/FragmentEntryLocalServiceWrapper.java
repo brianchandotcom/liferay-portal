@@ -266,16 +266,16 @@ public class FragmentEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		long fragmentCollectionId, int status) {
+		long fragmentCollectionId, int start, int end) {
 		return _fragmentEntryLocalService.getFragmentEntries(fragmentCollectionId,
-			status);
+			start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		long fragmentCollectionId, int start, int end) {
-		return _fragmentEntryLocalService.getFragmentEntries(fragmentCollectionId,
-			start, end);
+		long groupId, long fragmentCollectionId, int status) {
+		return _fragmentEntryLocalService.getFragmentEntries(groupId,
+			fragmentCollectionId, status);
 	}
 
 	@Override

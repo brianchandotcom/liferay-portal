@@ -235,14 +235,6 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByFCI_S() throws Exception {
-		_persistence.countByFCI_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByFCI_S(0L, 0);
-	}
-
-	@Test
 	public void testCountByG_FCI_LikeN() throws Exception {
 		_persistence.countByG_FCI_LikeN(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), "");
@@ -250,6 +242,24 @@ public class FragmentEntryPersistenceTest {
 		_persistence.countByG_FCI_LikeN(0L, 0L, "null");
 
 		_persistence.countByG_FCI_LikeN(0L, 0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_FCI_S() throws Exception {
+		_persistence.countByG_FCI_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_FCI_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByG_FCI_LikeN_S() throws Exception {
+		_persistence.countByG_FCI_LikeN_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByG_FCI_LikeN_S(0L, 0L, "null", 0);
+
+		_persistence.countByG_FCI_LikeN_S(0L, 0L, (String)null, 0);
 	}
 
 	@Test

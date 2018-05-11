@@ -90,14 +90,22 @@ public interface FragmentEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFragmentCollectionsCount(long groupId,
+		long fragmentCollectionId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentCollectionsCount(long groupId,
 		long fragmentCollectionId, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentCollectionsCount(long groupId,
+		long fragmentCollectionId, String name, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId,
-		int status);
+	public List<FragmentEntry> getFragmentEntries(long groupId,
+		long fragmentCollectionId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
@@ -105,7 +113,17 @@ public interface FragmentEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntry> getFragmentEntries(long groupId,
+		long fragmentCollectionId, int status, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntry> getFragmentEntries(long groupId,
 		long fragmentCollectionId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntry> getFragmentEntries(long groupId,
+		long fragmentCollectionId, String name, int status, int start, int end,
 		OrderByComparator<FragmentEntry> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -102,9 +102,23 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public int getFragmentCollectionsCount(long groupId,
+		long fragmentCollectionId, int status) {
+		return _fragmentEntryService.getFragmentCollectionsCount(groupId,
+			fragmentCollectionId, status);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long groupId,
 		long fragmentCollectionId, String name) {
 		return _fragmentEntryService.getFragmentCollectionsCount(groupId,
 			fragmentCollectionId, name);
+	}
+
+	@Override
+	public int getFragmentCollectionsCount(long groupId,
+		long fragmentCollectionId, String name, int status) {
+		return _fragmentEntryService.getFragmentCollectionsCount(groupId,
+			fragmentCollectionId, name, status);
 	}
 
 	@Override
@@ -115,9 +129,9 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		long fragmentCollectionId, int status) {
-		return _fragmentEntryService.getFragmentEntries(fragmentCollectionId,
-			status);
+		long groupId, long fragmentCollectionId, int status) {
+		return _fragmentEntryService.getFragmentEntries(groupId,
+			fragmentCollectionId, status);
 	}
 
 	@Override
@@ -129,10 +143,28 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
+		return _fragmentEntryService.getFragmentEntries(groupId,
+			fragmentCollectionId, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
 		return _fragmentEntryService.getFragmentEntries(groupId,
 			fragmentCollectionId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long groupId, long fragmentCollectionId, String name, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
+		return _fragmentEntryService.getFragmentEntries(groupId,
+			fragmentCollectionId, name, status, start, end, orderByComparator);
 	}
 
 	@Override

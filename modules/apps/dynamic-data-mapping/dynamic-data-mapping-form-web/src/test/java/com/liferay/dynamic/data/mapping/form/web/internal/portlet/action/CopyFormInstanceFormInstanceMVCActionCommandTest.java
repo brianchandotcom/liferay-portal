@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -32,8 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Locale;
-
-import javax.portlet.ActionRequest;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,21 +54,20 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 	extends PowerMockito {
 
 	@Before
-	public void setUp() throws Exception {
-		setUpCopyFormInstanceMVCActionCommand();
+	public void setUp() {
 		setUpLanguageUtil();
 		setUpResourceBundleUtil();
 	}
 
 	@Test
 	public void testCreateFormInstanceSettingsDDMFormValues() throws Exception {
-		DDMForm expectedFormInstanceSettingsDDMForm = DDMFormFactory.create(
+		DDMForm formInstanceSettingsDDMForm = DDMFormFactory.create(
 			DDMFormInstanceSettings.class);
 
 		DDMFormInstance formInstance = mock(DDMFormInstance.class);
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
-			expectedFormInstanceSettingsDDMForm);
+			formInstanceSettingsDDMForm);
 
 		when(
 			formInstance.getSettingsDDMFormValues()
@@ -78,49 +75,54 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 			ddmFormValues
 		);
 
-		String expectedStorageType = StringUtil.randomString();
-
-		mockSaveFormInstanceMVCCommandHelperGetStorageType(expectedStorageType);
-
 		_copyFormInstanceMVCActionCommand.saveFormInstanceMVCCommandHelper =
 			_saveFormInstanceMVCCommandHelper;
 
-		when(
-			_ddmFormValuesFactory.create(
-				Matchers.any(ActionRequest.class), Matchers.any(DDMForm.class))
-		).thenReturn(
-			ddmFormValues
-		);
-
-		DDMFormValues formInstanceSettingsDDMFormValues =
+		DDMFormValues formInstanceSettingsCopyDDMFormValues =
 			_copyFormInstanceMVCActionCommand.
-				createFormInstanceSettingsDDMFormValues(
-					_actionRequest, formInstance);
+				createFormInstanceSettingsDDMFormValues(formInstance);
 
 		Assert.assertEquals(
-			expectedFormInstanceSettingsDDMForm,
-			formInstanceSettingsDDMFormValues.getDDMForm());
+			formInstanceSettingsDDMForm,
+			formInstanceSettingsCopyDDMFormValues.getDDMForm());
 
 		List<DDMFormFieldValue> formInstanceSettingsDDMFormFieldValues =
-			formInstanceSettingsDDMFormValues.getDDMFormFieldValues();
+			ddmFormValues.getDDMFormFieldValues();
+
+		List<DDMFormFieldValue> formInstanceSettingsCopyDDMFormFieldValues =
+			formInstanceSettingsCopyDDMFormValues.getDDMFormFieldValues();
 
 		Assert.assertEquals(
-			formInstanceSettingsDDMFormFieldValues.toString(),
-			getDDMFormFieldsSize(expectedFormInstanceSettingsDDMForm),
-			formInstanceSettingsDDMFormFieldValues.size());
+			formInstanceSettingsCopyDDMFormFieldValues.toString(),
+			getDDMFormFieldsSize(formInstanceSettingsDDMForm),
+			formInstanceSettingsCopyDDMFormFieldValues.size());
 
-		DDMFormFieldValue storageTypeDDMFormFieldValue =
-			_copyFormInstanceMVCActionCommand.getStorageTypeDDMFormFieldValue(
-				formInstanceSettingsDDMFormValues);
+		for (int i = 0; i < formInstanceSettingsCopyDDMFormFieldValues.size();
+			 i++) {
 
-		Assert.assertNotNull(storageTypeDDMFormFieldValue);
+			DDMFormFieldValue ddmFormFieldValue =
+				formInstanceSettingsDDMFormFieldValues.get(i);
+			DDMFormFieldValue ddmFormFieldValueCopy =
+				formInstanceSettingsCopyDDMFormFieldValues.get(i);
 
-		Value storageTypeDDMFormFieldValueValue =
-			storageTypeDDMFormFieldValue.getValue();
+			Value value = ddmFormFieldValue.getValue();
+			Value valueCopy = ddmFormFieldValueCopy.getValue();
 
-		Assert.assertEquals(
-			expectedStorageType,
-			storageTypeDDMFormFieldValueValue.getString(LocaleUtil.US));
+			DDMFormField ddmFormField = ddmFormFieldValueCopy.getDDMFormField();
+
+			String fieldName = ddmFormField.getName();
+
+			if (Objects.equals(fieldName, "published")) {
+				Assert.assertEquals(
+					"false", valueCopy.getString(LocaleUtil.US));
+
+				continue;
+			}
+
+			Assert.assertEquals(
+				value.getString(LocaleUtil.US),
+				valueCopy.getString(LocaleUtil.US));
+		}
 	}
 
 	protected DDMFormFieldValue createDDMFormFieldValue(
@@ -152,7 +154,7 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			DDMFormFieldValue ddmFormFieldValue =
 				createLocalizedDDMFormFieldValue(
-					ddmFormField.getName(), "test");
+					ddmFormField.getName(), ddmFormField.getName() + "_value");
 
 			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}
@@ -176,29 +178,6 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 		return ddmFormFields.size();
 	}
 
-	protected void mockSaveFormInstanceMVCCommandHelperGetStorageType(
-			String returnStorageType)
-		throws Exception {
-
-		when(
-			_saveFormInstanceMVCCommandHelper.getStorageType(
-				Matchers.any(DDMFormValues.class))
-		).thenReturn(
-			returnStorageType
-		);
-	}
-
-	protected void setUpCopyFormInstanceMVCActionCommand() throws Exception {
-		_copyFormInstanceMVCActionCommand =
-			new CopyFormInstanceMVCActionCommand();
-
-		field(
-			CopyFormInstanceMVCActionCommand.class, "ddmFormValuesFactory"
-		).set(
-			_copyFormInstanceMVCActionCommand, _ddmFormValuesFactory
-		);
-	}
-
 	protected void setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
@@ -219,13 +198,9 @@ public class CopyFormInstanceFormInstanceMVCActionCommandTest
 		);
 	}
 
-	@Mock
-	private ActionRequest _actionRequest;
-
-	private CopyFormInstanceMVCActionCommand _copyFormInstanceMVCActionCommand;
-
-	@Mock
-	private DDMFormValuesFactory _ddmFormValuesFactory;
+	private final CopyFormInstanceMVCActionCommand
+		_copyFormInstanceMVCActionCommand =
+			new CopyFormInstanceMVCActionCommand();
 
 	@Mock
 	private SaveFormInstanceMVCCommandHelper _saveFormInstanceMVCCommandHelper;

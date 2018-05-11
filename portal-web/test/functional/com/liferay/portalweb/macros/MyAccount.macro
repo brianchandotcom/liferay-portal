@@ -52,9 +52,7 @@
 	</command>
 
 	<command name="editPasswordInvalidCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Password" />
-		</execute>
+		<execute macro="UserNavigator#gotoPassword" />
 
 		<if>
 			<isset var="currentPassword" />

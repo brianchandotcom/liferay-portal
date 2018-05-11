@@ -129,8 +129,14 @@ the json-enabled value is true.
 The trash-enabled value specifies whether trash related methods should be
 generated or not.
 
-The uad-entity-type-description value specifies a description of the entity type
-to be displayed in the GDPR UI.
+The uad-application-name value specifies the name of the application that the
+entity type belongs to in the GDPR UI.
+
+The uad-dir-path value specifies the directory path of the generated UAD
+implementations.
+
+The uad-package-path value specifies the package path for the generated UAD
+classes.
 
 The deprecated value specifies whether the entity's services are deprecated.
 -->
@@ -151,7 +157,9 @@ The deprecated value specifies whether the entity's services are deprecated.
 	json-enabled CDATA #IMPLIED
 	mvcc-enabled CDATA #IMPLIED
 	trash-enabled CDATA #IMPLIED
-	uad-entity-type-description CDATA #IMPLIED
+	uad-applicaiton-name CDATA #IMPLIED
+	uad-dir-path CDATA #IMPLIED
+	uad-package-path CDATA #IMPLIED
 	deprecated CDATA #IMPLIED
 >
 

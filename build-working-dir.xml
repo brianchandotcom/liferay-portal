@@ -387,25 +387,6 @@
 		</exec>
 	</target>
 
-	<target if="working.dir.checkout.private.apps.project.names" name="checkout-private-projects">
-		<script language="javascript">
-			<![CDATA[
-				var workingDirCheckoutPrivateAppsProjectNames = project.getProperty("working.dir.checkout.private.apps.project.names");
-
-				var projectNames = workingDirCheckoutPrivateAppsProjectNames.split(",");
-
-				for (i = 0; i < projectNames.length; i++) {
-					var task = project.createTask("checkout-private-apps");
-
-					task.setDynamicAttribute("checkout.private.apps.dirs", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".dirs"));
-					task.setDynamicAttribute("checkout.private.apps.sha", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".sha"));
-
-					task.perform();
-				}
-			]]>
-		</script>
-	</target>
-
 	<target if="prepare.working.dir.private" name="checkout-portal-private">
 		<loadfile
 			property="portal.private.git.commit"
@@ -487,6 +468,25 @@
 			<arg value="--delete" />
 			<arg value="git-commit-portal-private" />
 		</exec>
+	</target>
+
+	<target if="working.dir.checkout.private.apps.project.names" name="checkout-private-projects">
+		<script language="javascript">
+			<![CDATA[
+				var workingDirCheckoutPrivateAppsProjectNames = project.getProperty("working.dir.checkout.private.apps.project.names");
+
+				var projectNames = workingDirCheckoutPrivateAppsProjectNames.split(",");
+
+				for (i = 0; i < projectNames.length; i++) {
+					var task = project.createTask("checkout-private-apps");
+
+					task.setDynamicAttribute("checkout.private.apps.dirs", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".dirs"));
+					task.setDynamicAttribute("checkout.private.apps.sha", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".sha"));
+
+					task.perform();
+				}
+			]]>
+		</script>
 	</target>
 
 	<target depends="checkout-portal,checkout-portal-private,checkout-private-projects" name="prepare-working-dir">

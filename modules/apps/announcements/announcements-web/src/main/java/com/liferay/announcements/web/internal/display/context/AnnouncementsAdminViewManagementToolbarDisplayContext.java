@@ -139,7 +139,7 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 	}
 
 	public boolean isDisabled() {
-		return !_searchContainer.hasResults();
+		return false;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems()

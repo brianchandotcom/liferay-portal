@@ -88,10 +88,10 @@ int trashedEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-tr
 
 				<c:choose>
 					<c:when test="<%= Objects.equals(cmd, Constants.REMOVE) %>">
-						<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, type), trashEntityLink} %>" key="the-x-x-was-removed" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= trashEntityLink %>" key="the-element-x-was-removed" translateArguments="<%= false %>" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, type), trashEntityLink, trashLink.trim()} %>" key="the-x-x-was-moved-to-x" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments="<%= new Object[] {trashEntityLink, trashLink.trim()} %>" key="the-element-x-was-moved-to-x" translateArguments="<%= false %>" />
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>

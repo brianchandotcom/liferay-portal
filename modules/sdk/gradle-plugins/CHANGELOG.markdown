@@ -4443,11 +4443,25 @@ version 2.1.29.
 - [LPS-80544]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.212.
 
-## 3.12.0 - 2018-05-09
+## 3.11.39 - 2018-05-10
+
+### Changed
+- [LPS-80332]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.152.
+- [LPS-80332]: Update the [Liferay Source Formatter] dependency to version
+1.0.625.
+
+## 3.12.0 - 2018-05-10
 
 ### Added
 - [LPS-79453]: Add the `com.liferay.osgi.ext.plugin` plugin to build Ext OSGi
 modules.
+
+### Changed
+- [LPS-80332]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.153.
+- [LPS-80332]: Update the [Liferay Source Formatter] dependency to version
+1.0.626.
 
 ### Fixed
 - [LPS-79453]: Avoid adding the `-ext` suffix twice when building Ext plugins.

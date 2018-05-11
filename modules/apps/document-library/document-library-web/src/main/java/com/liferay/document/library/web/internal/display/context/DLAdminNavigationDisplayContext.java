@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
 import java.util.List;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -94,16 +93,6 @@ public class DLAdminNavigationDisplayContext {
 		};
 	}
 
-	private PortletURL _clonePortletURL() {
-		try {
-			return PortletURLUtil.clone(
-				_currentURLObj, _liferayPortletResponse);
-		}
-		catch (PortletException pe) {
-			throw new RuntimeException(pe);
-		}
-	}
-
 	private Portlet _getPortlet(ThemeDisplay themeDisplay) {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -140,7 +129,8 @@ public class DLAdminNavigationDisplayContext {
 			mvcRenderCommandName.equals(
 				"/document_library/view_file_entry_types"));
 
-		PortletURL viewFileEntryTypesURL = _clonePortletURL();
+		PortletURL viewFileEntryTypesURL =
+			_liferayPortletResponse.createRenderURL();
 
 		viewFileEntryTypesURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view_file_entry_types");

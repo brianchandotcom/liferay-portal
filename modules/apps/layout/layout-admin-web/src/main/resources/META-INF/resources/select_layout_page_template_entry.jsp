@@ -31,9 +31,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
 			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
 				<ul class="nav nav-nested">
 					<li class="nav-item">
-						<strong class="text-uppercase">
-							<liferay-ui:message key="collections" />
-						</strong>
+						<p class="text-uppercase">
+							<strong><liferay-ui:message key="collections" /></strong>
+						</p>
 
 						<ul class="nav nav-stacked">
 

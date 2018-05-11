@@ -68,6 +68,26 @@ public class FragmentDisplayContext {
 		_request = request;
 	}
 
+	public List<DropdownItem> getActionDropdownItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(),
+							"mvcRenderCommandName",
+							"/fragment/edit_fragment_collection", "redirect",
+							themeDisplay.getURLCurrent());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "new"));
+					});
+			}
+		};
+	}
+
 	public String getCssContent() {
 		if (Validator.isNotNull(_cssContent)) {
 			return _cssContent;

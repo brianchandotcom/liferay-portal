@@ -81,6 +81,26 @@ public class LayoutPageTemplateDisplayContext {
 		};
 	}
 
+	public List<DropdownItem> getActionDropdownItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(),
+							"mvcRenderCommandName",
+							"/layout/edit_layout_page_template_collection",
+							"redirect", themeDisplay.getURLCurrent());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "new"));
+					});
+			}
+		};
+	}
+
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 

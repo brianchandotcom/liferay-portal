@@ -37,7 +37,7 @@ public class EmptyResultMessageKeys {
 
 	public enum AnimationType {
 
-		EMPTY, SEARCH, SUCCESS
+		EMPTY, NONE, SEARCH, SUCCESS
 
 	}
 

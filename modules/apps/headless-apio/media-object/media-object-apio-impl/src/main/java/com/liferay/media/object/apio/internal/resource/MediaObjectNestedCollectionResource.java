@@ -77,7 +77,7 @@ public class MediaObjectNestedCollectionResource
 	}
 
 	@Override
-	public Representor<FileEntry, Long> representor(
+	public Representor<FileEntry> representor(
 		Representor.Builder<FileEntry, Long> builder) {
 
 		return builder.types(

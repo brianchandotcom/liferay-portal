@@ -54,7 +54,7 @@ public class AggregateRatingNestedCollectionResource
 	}
 
 	@Override
-	public Representor<AggregateRating, ClassNameClassPK> representor(
+	public Representor<AggregateRating> representor(
 		Representor.Builder<AggregateRating, ClassNameClassPK> builder) {
 
 		return builder.types(

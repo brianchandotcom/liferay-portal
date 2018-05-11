@@ -81,7 +81,7 @@ public class FolderNestedCollectionResource
 	}
 
 	@Override
-	public Representor<Folder, Long> representor(
+	public Representor<Folder> representor(
 		Representor.Builder<Folder, Long> builder) {
 
 		return builder.types(

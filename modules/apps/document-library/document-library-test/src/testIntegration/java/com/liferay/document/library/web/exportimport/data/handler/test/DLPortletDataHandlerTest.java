@@ -234,13 +234,76 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		Assert.assertTrue(atomicInteger.get() >= 1);
 	}
 
+	@Test
+	public void testPublishedCustomRepositoryEntriesExport() throws Exception {
+		long repositoryId = addRepositoryEntries();
+
+		_registerService(
+			new ConstantDLExportableRepositoryPublisher(repositoryId));
+
+		initContext();
+
+		portletDataContext.setEndDate(getEndDate());
+
+		portletDataHandler.exportData(
+			portletDataContext, portletId, new PortletPreferencesImpl());
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
+
+		LongWrapper fileEntryModelAdditionCounter = modelAdditionCounters.get(
+			DLFileEntry.class.getName());
+
+		Assert.assertTrue(fileEntryModelAdditionCounter.getValue() >= 1);
+
+		LongWrapper folderModelAdditionCounter = modelAdditionCounters.get(
+			DLFolder.class.getName());
+
+		Assert.assertTrue(folderModelAdditionCounter.getValue() >= 1);
+	}
+
+	@Test
+	public void testPublishedCustomRepositoryEntriesPrepareManifestSummary()
+		throws Exception {
+
+		long repositoryId = addRepositoryEntries();
+
+		_registerService(
+			new ConstantDLExportableRepositoryPublisher(repositoryId));
+
+		initContext();
+
+		portletDataContext.setEndDate(getEndDate());
+
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
+
+		LongWrapper fileEntryModelAdditionCounter = modelAdditionCounters.get(
+			DLFileEntry.class.getName());
+
+		Assert.assertTrue(fileEntryModelAdditionCounter.getValue() >= 1);
+
+		LongWrapper folderModelAdditionCounter = modelAdditionCounters.get(
+			DLFolder.class.getName());
+
+		Assert.assertTrue(folderModelAdditionCounter.getValue() >= 1);
+	}
+
 	@Override
 	protected void addParameters(Map<String, String[]> parameterMap) {
 		addBooleanParameter(
 			parameterMap, "document_library", "repositories", true);
 	}
 
-	protected void addRepositoryEntries() throws Exception {
+	protected long addRepositoryEntries() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(
 			LiferayRepository.class.getName());
 
@@ -267,6 +330,8 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
+
+		return repository.getRepositoryId();
 	}
 
 	@Override
@@ -452,10 +517,25 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				dlExportableRepositoryPublisher, new HashMap<>()));
 	}
 
-	private final AtomicInteger _atomicInteger = new AtomicInteger(0);
 	private final Collection
 		<ServiceRegistration<DLExportableRepositoryPublisher>>
 			_serviceRegistrations = new ArrayList<>();
+
+	private static class ConstantDLExportableRepositoryPublisher
+		implements DLExportableRepositoryPublisher {
+
+		public ConstantDLExportableRepositoryPublisher(long repositoryId) {
+			_repositoryId = repositoryId;
+		}
+
+		@Override
+		public void publish(long groupId, Consumer<Long> repositoryIdConsumer) {
+			repositoryIdConsumer.accept(_repositoryId);
+		}
+
+		private final long _repositoryId;
+
+	}
 
 	private static class CountingDLExportableRepositoryPublisher
 		implements DLExportableRepositoryPublisher {

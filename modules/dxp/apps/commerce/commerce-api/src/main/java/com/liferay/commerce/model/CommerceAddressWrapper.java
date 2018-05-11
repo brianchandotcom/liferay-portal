@@ -236,6 +236,11 @@ public class CommerceAddressWrapper implements CommerceAddress,
 		return _commerceAddress.compareTo(commerceAddress);
 	}
 
+	@Override
+	public CommerceCountry fetchCommerceCountry() {
+		return _commerceAddress.fetchCommerceCountry();
+	}
+
 	/**
 	* Returns the city of this commerce address.
 	*

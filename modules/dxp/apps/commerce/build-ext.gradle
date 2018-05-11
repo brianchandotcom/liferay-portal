@@ -1,0 +1,34 @@
+task prepareWeDeployModules(type: Sync)
+task wedeploy(type: Exec)
+
+configurations {
+	weDeployModules
+}
+
+dependencies {
+	weDeployModules subprojects.findAll {
+		File lfrbuildPortalFile = it.file(".lfrbuild-portal")
+
+		lfrbuildPortalFile.exists()
+	}
+}
+
+prepareWeDeployModules {
+	from configurations.weDeployModules
+	into "wedeploy/lfr/deploy"
+}
+
+wedeploy {
+	args "deploy"
+
+	String weDeployProjectName = project.properties["project"]
+
+	if (weDeployProjectName) {
+		args "--project", weDeployProjectName
+	}
+
+	dependsOn prepareWeDeployModules
+	description = "Deploys Liferay Commerce to WeDeploy."
+	executable = "we"
+	group = "upload"
+}

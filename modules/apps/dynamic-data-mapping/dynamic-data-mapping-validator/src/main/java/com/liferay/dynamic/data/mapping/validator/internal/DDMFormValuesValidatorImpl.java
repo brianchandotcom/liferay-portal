@@ -84,8 +84,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeDDMFormFieldValueValidator"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDDMFormFieldValueValidator(
 		DDMFormFieldValueValidator ddmFormFieldValueValidator,

@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -97,11 +98,17 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 		NPMResolver npmResolver) {
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private JSONFactory _jsonFactory;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile JSONFactory _jsonFactory;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private NPMRegistry _npmRegistry;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile NPMRegistry _npmRegistry;
 
 	private ServiceRegistration<NPMResolver> _serviceRegistration;
 

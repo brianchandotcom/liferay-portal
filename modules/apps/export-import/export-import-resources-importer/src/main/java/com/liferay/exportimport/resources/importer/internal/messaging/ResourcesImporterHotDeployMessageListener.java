@@ -201,7 +201,7 @@ public class ResourcesImporterHotDeployMessageListener
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.STATIC,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setDestinationFactory(
@@ -222,6 +222,12 @@ public class ResourcesImporterHotDeployMessageListener
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
+	}
+
+	protected void unsetDestinationFactory(
+		DestinationFactory destinationFactory) {
+
+		_destinationFactory = null;
 	}
 
 	private void _importResources(

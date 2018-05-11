@@ -91,8 +91,7 @@ public class BackgroundTaskExecutorRegistryImpl
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeBackgroundTaskExecutor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void addBackgroundTaskExecutor(
 		BackgroundTaskExecutor backgroundTaskExecutor,

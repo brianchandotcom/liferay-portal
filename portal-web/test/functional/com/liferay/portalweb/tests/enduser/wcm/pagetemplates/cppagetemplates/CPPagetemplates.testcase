@@ -26,10 +26,14 @@
 	</tear-down>
 
 	<command name="AddPageTemplate" priority="4">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
@@ -42,10 +46,14 @@
 		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Training" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
@@ -83,10 +91,14 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#gotoPageTemplateViaEdit">
@@ -106,7 +118,7 @@
 
 		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
 
-		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -136,10 +148,14 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#gotoPageTemplateViaEdit">
@@ -154,7 +170,7 @@
 
 		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
 
-		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -172,10 +188,14 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
@@ -183,21 +203,9 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
-		</execute>
-
 		<execute macro="PageTemplate#deactivateAndActivate">
 			<var name="pageTemplateName" value="Page Template Name" />
 			<var name="pageTemplateStatus" value="No" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#viewStatus">
@@ -225,21 +233,19 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#deactivateAndActivate">
 			<var name="pageTemplateName" value="Page Template Name" />
 			<var name="pageTemplateStatus" value="Yes" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#viewStatus">
@@ -271,10 +277,14 @@
 	<command name="DeletePageTemplate" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
@@ -282,34 +292,24 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
-		</execute>
-
 		<execute macro="PageTemplate#deleteCP">
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
-		</execute>
-
-		<execute macro="PageTemplate#viewDefaultCP">
-			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
-		</execute>
+		<execute macro="PageTemplate#viewDefaultCP" />
 	</command>
 
 	<command name="EditPageTemplate" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
@@ -324,10 +324,14 @@
 	</command>
 
 	<command name="EditPageTemplateDescription" priority="4">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
@@ -335,21 +339,9 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
-		</execute>
-
 		<execute macro="PageTemplate#editDescription">
 			<var name="pageTemplateDescription" value="This is a page template description" />
 			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
 		</execute>
 
 		<execute macro="PageTemplate#viewDescription">
@@ -361,10 +353,14 @@
 	<command name="ImportLAR" priority="5">
 		<property name="testray.component.names" value="Training" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="LAR#importPortlet">
@@ -405,14 +401,18 @@
 
 		<execute function="Close#closeWindow" locator1="title=College Landing Page - ${siteName}" />
 
-		<execute function="SelectWindow" locator1="title=Page Templates - Control Panel - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#viewPG">
@@ -441,15 +441,17 @@
 	<command name="LocalizeDefaultPageTemplates" priority="4">
 		<property name="test.name.skip.portal.instance" value="CPPagetemplates#LocalizeDefaultPageTemplates" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
 		</execute>
 
-		<execute macro="PageTemplate#viewDefaultCP">
-			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
+
+		<execute macro="PageTemplate#viewDefaultCP" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="My Account" />
@@ -492,24 +494,30 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
 		</execute>
 
-		<execute macro="PageTemplate#viewDefaultCP">
-			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
+
+		<execute macro="PageTemplate#viewDefaultCP" />
 	</command>
 
 	<command name="ViewEditedPageTemplatePageName" priority="4">
 		<property name="testray.component.names" value="Page Templates" />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
@@ -527,10 +535,14 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Page Templates" />
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="PageTemplate#editCP">

@@ -355,9 +355,9 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 
 			sb.append("(&(bundle.symbolic.name=");
 			sb.append(bundleSymbolicName);
-			sb.append(")(objectClass=(");
+			sb.append(")(objectClass=");
 			sb.append(ResourceBundleLoader.class.getName());
-			sb.append(")resource.bundle.base.name=content.Language))");
+			sb.append("resource.bundle.base.name=content.Language))");
 
 			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
 				serviceTracker = ServiceTrackerFactory.open(

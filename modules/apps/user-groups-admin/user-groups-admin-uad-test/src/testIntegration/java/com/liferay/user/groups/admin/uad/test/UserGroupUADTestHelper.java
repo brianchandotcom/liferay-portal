@@ -15,18 +15,24 @@
 package com.liferay.user.groups.admin.uad.test;
 
 import com.liferay.portal.kernel.model.UserGroup;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = UserGroupUADTestHelper.class)
 public class UserGroupUADTestHelper {
+
 	/**
 	 * Implement addUserGroup() to enable some UAD tests.
 	 *
@@ -35,9 +41,14 @@ public class UserGroupUADTestHelper {
 	 * </p>
 	 */
 	public UserGroup addUserGroup(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		String name = RandomTestUtil.randomString(
+			NumericStringRandomizerBumper.INSTANCE,
+			UniqueStringRandomizerBumper.INSTANCE);
 
-		return null;
+		return _userGroupLocalService.addUserGroup(
+			userId, TestPropsValues.getCompanyId(), name,
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	/**
@@ -50,4 +61,8 @@ public class UserGroupUADTestHelper {
 	public void cleanUpDependencies(List<UserGroup> userGroups)
 		throws Exception {
 	}
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
+
 }

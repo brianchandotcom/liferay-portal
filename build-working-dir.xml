@@ -50,7 +50,7 @@
 
 			<local name="checkout.private.apps.dirs.git" />
 
-			<property name="checkout.private.apps.dirs.git" value="@{checkout.private.apps.dirs}"/>
+			<property name="checkout.private.apps.dirs.git" value="@{checkout.private.apps.dirs}" />
 
 			<script language="javascript">
 				<![CDATA[

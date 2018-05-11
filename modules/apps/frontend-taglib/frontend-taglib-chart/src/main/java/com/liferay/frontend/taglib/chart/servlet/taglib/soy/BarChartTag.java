@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class BarChartTag extends BaseChartTag {
 
 	public BarChartTag() {
-		super("BarChart");
+		super("BarChart", "ClayBarChart.render");
 	}
 
 }

@@ -37,7 +37,7 @@ public abstract class Column extends ChartObject {
 	}
 
 	@JSON(include = false)
-	protected List<Number> getData() {
+	protected <T> List<T> getData() {
 		return get("data", ArrayList.class);
 	}
 

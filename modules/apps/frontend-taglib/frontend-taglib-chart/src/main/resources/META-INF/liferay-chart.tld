@@ -234,6 +234,31 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+<tag>
+	<description><![CDATA[]]></description>
+	<name>predictive</name>
+	<tag-class>com.liferay.frontend.taglib.chart.servlet.taglib.soy.PredictiveChartTag</tag-class>
+	<body-content>empty</body-content>
+	<attribute>
+	  <description></description>
+	  <name>componentId</name>
+	  <required>false</required>
+	  <rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+	  <description></description>
+	  <name>config</name>
+	  <required>true</required>
+	  <rtexprvalue>true</rtexprvalue>
+	  <type>com.liferay.frontend.taglib.chart.model.predictive.PredictiveChartConfig</type>
+	</attribute>
+	<attribute>
+	  <description></description>
+	  <name>id</name>
+	  <required>false</required>
+	  <rtexprvalue>true</rtexprvalue>
+	</attribute>
+</tag>
 	<tag>
 		<description><![CDATA[]]></description>
 		<name>scatter</name>

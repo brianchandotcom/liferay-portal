@@ -17,12 +17,12 @@ package com.liferay.frontend.taglib.chart.servlet.taglib.soy;
 import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 
 /**
- * @author Iván Zaera Avellón
+ * @author Julien Castelain
  */
-public class AreaStepChartTag extends BaseChartTag {
+public class PredictiveChartTag extends BaseChartTag {
 
-	public AreaStepChartTag() {
-		super("AreaStepChart", "ClayAreaStepChart.render");
+	public PredictiveChartTag() {
+		super("PredictiveChart", "ClayPredictiveChart.render");
 	}
 
 }

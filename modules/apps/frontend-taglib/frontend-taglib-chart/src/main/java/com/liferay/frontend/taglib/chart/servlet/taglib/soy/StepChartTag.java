@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 public class StepChartTag extends BaseChartTag {
 
 	public StepChartTag() {
-		super("StepChart");
+		super("StepChart", "ClayStepChart.render");
 	}
 
 }

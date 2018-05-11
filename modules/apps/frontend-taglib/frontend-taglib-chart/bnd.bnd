@@ -18,6 +18,7 @@ Export-Package:\
 	com.liferay.frontend.taglib.chart.model.point.scatter,\
 	com.liferay.frontend.taglib.chart.model.point.spline,\
 	com.liferay.frontend.taglib.chart.model.point.step,\
+	com.liferay.frontend.taglib.chart.model.predictive,\
 	com.liferay.frontend.taglib.chart.servlet.taglib.soy,\
 	com.liferay.frontend.taglib.chart.servlet.taglib.soy.base
 Provide-Capability:\

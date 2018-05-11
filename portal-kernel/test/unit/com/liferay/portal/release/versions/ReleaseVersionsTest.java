@@ -20,6 +20,8 @@ import aQute.bnd.version.Version;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,7 +38,9 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
@@ -85,6 +89,38 @@ public class ReleaseVersionsTest {
 
 		final Set<Path> ignorePaths = new HashSet<>(
 			Arrays.asList(_portalPath.resolve("modules/third-party")));
+
+		Path workingDirPropertiesPath = _portalPath.resolve(
+			"working.dir.properties");
+
+		if (Files.exists(workingDirPropertiesPath)) {
+			Properties properties = _loadProperties(workingDirPropertiesPath);
+
+			Enumeration<?> enumeration = properties.propertyNames();
+
+			while (enumeration.hasMoreElements()) {
+				String name = GetterUtil.getString(enumeration.nextElement());
+
+				if (!name.startsWith("working.dir.checkout.private.apps.") ||
+					!name.endsWith(".dirs")) {
+
+					continue;
+				}
+
+				String dirsValue = properties.getProperty(name);
+
+				List<String> dirs = ListUtil.fromString(
+					GetterUtil.getString(dirsValue), StringPool.COMMA);
+
+				for (String dir : dirs) {
+					Path dirPath = _portalPath.resolve(dir);
+
+					if (Files.exists(dirPath)) {
+						ignorePaths.add(dirPath);
+					}
+				}
+			}
+		}
 
 		Files.walkFileTree(
 			_portalPath,

@@ -82,8 +82,6 @@ List<Role> roles = roleCommerceUserSegmentCriterionTypeDisplayContext.getRoles()
 							if (selectedItems) {
 								var A = AUI();
 
-								selectedItems = selectedItems.split(",");
-
 								A.Array.each(
 									selectedItems,
 									function(item, index, selectedItems) {
@@ -114,17 +112,17 @@ List<Role> roles = roleCommerceUserSegmentCriterionTypeDisplayContext.getRoles()
 
 		var rowColumns = [];
 
-		rowColumns.push(item);
-		rowColumns.push('<a class="float-right modify-link" data-rowId="' + item + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommerceUserSegmentCriterionRoleIcon) %></a>');
+		rowColumns.push(item.name);
+		rowColumns.push('<a class="float-right modify-link" data-rowId="' + item.id + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommerceUserSegmentCriterionRoleIcon) %></a>');
 
-		A.Array.removeItem(<portlet:namespace />deleteCommerceUserSegmentCriterionTypeRoleIds, item);
+		A.Array.removeItem(<portlet:namespace />deleteCommerceUserSegmentCriterionTypeRoleIds, item.id);
 
-		<portlet:namespace />addCommerceUserSegmentCriterionTypeRoleIds.push(item);
+		<portlet:namespace />addCommerceUserSegmentCriterionTypeRoleIds.push(item.id);
 
 		document.<portlet:namespace />fm.<portlet:namespace />addTypeSettings.value = <portlet:namespace />addCommerceUserSegmentCriterionTypeRoleIds.join(',');
 		document.<portlet:namespace />fm.<portlet:namespace />deleteTypeSettings.value = <portlet:namespace />deleteCommerceUserSegmentCriterionTypeRoleIds.join(',');
 
-		searchContainer.addRow(rowColumns, item);
+		searchContainer.addRow(rowColumns, item.id);
 
 		searchContainer.updateDataStore();
 	}

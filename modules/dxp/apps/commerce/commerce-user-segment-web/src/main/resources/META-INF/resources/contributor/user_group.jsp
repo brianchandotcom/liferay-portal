@@ -82,8 +82,6 @@ List<UserGroup> userGroups = userGroupCommerceUserSegmentCriterionTypeDisplayCon
 							if (selectedItems) {
 								var A = AUI();
 
-								selectedItems = selectedItems.split(",");
-
 								A.Array.each(
 									selectedItems,
 									function(item, index, selectedItems) {
@@ -114,17 +112,17 @@ List<UserGroup> userGroups = userGroupCommerceUserSegmentCriterionTypeDisplayCon
 
 		var rowColumns = [];
 
-		rowColumns.push(item);
-		rowColumns.push('<a class="float-right modify-link" data-rowId="' + item + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommerceUserSegmentCriterionUserGroupIcon) %></a>');
+		rowColumns.push(item.name);
+		rowColumns.push('<a class="float-right modify-link" data-rowId="' + item.id + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommerceUserSegmentCriterionUserGroupIcon) %></a>');
 
-		A.Array.removeItem(<portlet:namespace />deleteCommerceUserSegmentCriterionTypeUserGroupIds, item);
+		A.Array.removeItem(<portlet:namespace />deleteCommerceUserSegmentCriterionTypeUserGroupIds, item.id);
 
-		<portlet:namespace />addCommerceUserSegmentCriterionTypeUserGroupIds.push(item);
+		<portlet:namespace />addCommerceUserSegmentCriterionTypeUserGroupIds.push(item.id);
 
 		document.<portlet:namespace />fm.<portlet:namespace />addTypeSettings.value = <portlet:namespace />addCommerceUserSegmentCriterionTypeUserGroupIds.join(',');
 		document.<portlet:namespace />fm.<portlet:namespace />deleteTypeSettings.value = <portlet:namespace />deleteCommerceUserSegmentCriterionTypeUserGroupIds.join(',');
 
-		searchContainer.addRow(rowColumns, item);
+		searchContainer.addRow(rowColumns, item.id);
 
 		searchContainer.updateDataStore();
 	}

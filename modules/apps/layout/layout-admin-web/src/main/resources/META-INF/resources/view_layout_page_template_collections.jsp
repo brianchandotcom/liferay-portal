@@ -90,17 +90,12 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 									<strong><liferay-ui:message key="collections" /></strong>
 								</p>
 
-								<h2 class="text-center">
-									<liferay-ui:message key="there-are-no-collections-yet" />
-								</h2>
-
-								<p class="text-center">
-									<liferay-ui:message key="collections-are-needed-to-create-page-templates" />
-								</p>
-
-								<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
-									<aui:a cssClass="btn btn-primary" href="<%= editLayoutPageTemplateCollectionURL %>" label="add-collection" />
-								</c:if>
+								<liferay-frontend:empty-result-message
+									actionDropdownItems="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) ? layoutPageTemplateDisplayContext.getActionDropdownItems() : null %>"
+									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
+									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-page-templates") %>'
+									elementType='<%= LanguageUtil.get(request, "collections") %>'
+								/>
 							</c:otherwise>
 						</c:choose>
 					</li>

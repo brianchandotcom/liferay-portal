@@ -55,17 +55,18 @@ public class UpgradeStepRegistratorTracker {
 	public static List<ServiceRegistration<UpgradeStep>> register(
 		BundleContext bundleContext, String bundleSymbolicName,
 		String fromSchemaVersionString, String toSchemaVersionString,
-		Dictionary<String, Object> properties, UpgradeStep... upgradeSteps) {
+		int buildNumber, UpgradeStep... upgradeSteps) {
 
 		List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 			new ArrayList<>();
 
 		List<UpgradeInfo> upgradeInfos = createUpgradeInfos(
-			fromSchemaVersionString, toSchemaVersionString,
-			GetterUtil.getInteger(properties.get("build.number")),
+			fromSchemaVersionString, toSchemaVersionString, buildNumber,
 			upgradeSteps);
 
 		for (UpgradeInfo upgradeInfo : upgradeInfos) {
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+
 			properties.put("build.number", upgradeInfo.getBuildNumber());
 			properties.put("upgrade.bundle.symbolic.name", bundleSymbolicName);
 			properties.put("upgrade.db.type", "any");
@@ -242,15 +243,11 @@ public class UpgradeStepRegistratorTracker {
 			String fromSchemaVersionString, String toSchemaVersionString,
 			UpgradeStep... upgradeSteps) {
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("build.number", _buildNumber);
-
 			_serviceRegistrations.addAll(
 				UpgradeStepRegistratorTracker.register(
 					_bundleContext, _bundleSymbolicName,
-					fromSchemaVersionString, toSchemaVersionString, properties,
-					upgradeSteps));
+					fromSchemaVersionString, toSchemaVersionString,
+					_buildNumber, upgradeSteps));
 		}
 
 		private UpgradeStepRegistry(

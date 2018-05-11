@@ -62,8 +62,7 @@ public class CPInstanceShippingInfoScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return CPInstanceScreenNavigationConstants.
-			ENTRY_KEY_SHIPPING_ADJUSTMENT;
+		return CPInstanceScreenNavigationConstants.ENTRY_KEY_SHIPPING_OVERRIDE;
 	}
 
 	@Override
@@ -73,7 +72,7 @@ public class CPInstanceShippingInfoScreenNavigationEntry
 
 		return LanguageUtil.get(
 			resourceBundle,
-			CPInstanceScreenNavigationConstants.ENTRY_KEY_SHIPPING_ADJUSTMENT);
+			CPInstanceScreenNavigationConstants.ENTRY_KEY_SHIPPING_OVERRIDE);
 	}
 
 	@Override

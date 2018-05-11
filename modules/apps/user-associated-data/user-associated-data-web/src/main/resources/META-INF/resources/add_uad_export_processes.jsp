@@ -46,7 +46,20 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					<liferay-ui:message key="please-select-the-applications-for-which-you-want-to-start-an-export-process" />
 				</div>
 
+				<%
+				boolean disableManagementBar = true;
+
+				for (UADApplicationExportDisplay uadApplicationExportDisplay : uadApplicationExportDisplayList) {
+					if (uadApplicationExportDisplay.getDataCount() > 0) {
+						disableManagementBar = false;
+
+						break;
+					}
+				}
+				%>
+
 				<clay:management-toolbar
+					disabled="<%= disableManagementBar %>"
 					namespace="<%= renderResponse.getNamespace() %>"
 					searchContainerId="uadApplicationExportDisplay"
 					selectable="<%= true %>"

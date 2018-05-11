@@ -12,7 +12,11 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.test.clazz.group;
+
+import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
+import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PortalRepositoryJob;
 
 /**
  * @author Michael Hashimoto
@@ -30,7 +34,7 @@ public class TestClassGroupFactory {
 		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
-		if (batchName.startsWith("functional-")) {
+		if (batchName.contains("functional-")) {
 			return new FunctionalBatchTestClassGroup(
 				batchName, portalGitWorkingDirectory, testSuiteName);
 		}

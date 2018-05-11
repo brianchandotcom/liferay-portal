@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,9 +17,10 @@
 <%@ include file="/instance/init.jsp" %>
 
 <clay:management-toolbar
-	filterItems="<%= workflowInstanceViewDisplayContext.getFilterOptions(request) %>"
+	filterDropdownItems="<%= workflowInstanceViewDisplayContext.getFilterOptions(request) %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	selectable="<%= false %>"
 	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
 	sortingURL="<%= workflowInstanceViewDisplayContext.getSortingURL(request) %>"
+
 />

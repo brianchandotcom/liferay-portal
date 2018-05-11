@@ -28,5 +28,4 @@
 	selectable="false"
 	sortingOrder="<%= workflowDefinitionLinkDisplayContext.getOrderByType() %>"
 	sortingURL="<%= workflowDefinitionLinkDisplayContext.getSortingURL() %>"
-	totalItems="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"
 />

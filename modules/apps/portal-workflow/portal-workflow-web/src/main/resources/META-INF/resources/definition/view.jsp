@@ -61,7 +61,6 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 	selectable="<%= false %>"
 	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
 	sortingURL="<%= workflowDefinitionDisplayContext.getSortingURL(request) %>"
-	totalItems="<%= workflowDefinitionDisplayContext.getTotalItems(request, renderRequest, displayedStatus) %>"
 />
 
 <div class="container-fluid-1280 workflow-definition-container">

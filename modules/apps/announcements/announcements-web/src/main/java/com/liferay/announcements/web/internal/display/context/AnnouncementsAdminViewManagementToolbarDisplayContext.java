@@ -81,11 +81,12 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 						PortletURL addEntryURL =
 							_liferayPortletResponse.createRenderURL();
 
+						String navigation = _getNavigation();
+
 						addEntryURL.setParameter(
-							"mvcRenderCommandName",
-							"/announcements/edit_entry");
-						addEntryURL.setParameter(
-							"redirect", PortalUtil.getCurrentURL(_request));
+							"alert",
+							String.valueOf(
+								String.valueOf(navigation.equals("alerts"))));
 
 						String distributionScope = ParamUtil.getString(
 							_request, "distributionScope");
@@ -93,12 +94,11 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 						addEntryURL.setParameter(
 							"distributionScope", distributionScope);
 
-						String navigation = _getNavigation();
-
 						addEntryURL.setParameter(
-							"alert",
-							String.valueOf(
-								String.valueOf(navigation.equals("alerts"))));
+							"mvcRenderCommandName",
+							"/announcements/edit_entry");
+						addEntryURL.setParameter(
+							"redirect", PortalUtil.getCurrentURL(_request));
 
 						dropdownItem.setHref(addEntryURL);
 
@@ -152,16 +152,16 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 						new DefaultAnnouncementsAdminViewDisplayContext(
 							_request);
 
-				Map<String, String> distributionScopes =
-					announcementsAdminViewDisplayContext.
-						getDistributionScopes();
-
 				PortletURL navigationURL = PortletURLUtil.clone(
 					_currentURLObj, _liferayPortletResponse);
 
 				String currentDistributionScopeLabel =
 					announcementsAdminViewDisplayContext.
 						getCurrentDistributionScopeLabel();
+
+				Map<String, String> distributionScopes =
+					announcementsAdminViewDisplayContext.
+						getDistributionScopes();
 
 				for (Map.Entry<String, String> distributionScopeEntry :
 						distributionScopes.entrySet()) {

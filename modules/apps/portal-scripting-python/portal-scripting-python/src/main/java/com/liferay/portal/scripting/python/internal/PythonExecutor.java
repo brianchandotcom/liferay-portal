@@ -37,12 +37,14 @@ import org.python.util.InteractiveInterpreter;
 
 /**
  * @author Alberto Montero
+ * @deprecated As of 7.1.0, with no direct replacement
  */
 @Component(
 	immediate = true,
 	property = "scripting.language=" + PythonExecutor.LANGUAGE,
 	service = ScriptingExecutor.class
 )
+@Deprecated
 public class PythonExecutor extends BaseScriptingExecutor {
 
 	public static final String LANGUAGE = "python";

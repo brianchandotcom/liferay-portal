@@ -38,12 +38,14 @@ import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alberto Montero
+ * @deprecated As of 7.1.0, with no direct replacement
  */
 @Component(
 	immediate = true,
 	property = "scripting.language=" + JavaScriptExecutor.LANGUAGE,
 	service = ScriptingExecutor.class
 )
+@Deprecated
 public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 	public static final String LANGUAGE = "javascript";

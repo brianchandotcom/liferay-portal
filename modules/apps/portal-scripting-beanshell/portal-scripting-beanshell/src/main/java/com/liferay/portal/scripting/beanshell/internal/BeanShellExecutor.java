@@ -29,12 +29,14 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of 7.1.0, with no direct replacement
  */
 @Component(
 	immediate = true,
 	property = "scripting.language=" + BeanShellExecutor.LANGUAGE,
 	service = ScriptingExecutor.class
 )
+@Deprecated
 public class BeanShellExecutor extends BaseScriptingExecutor {
 
 	public static final String LANGUAGE = "beanshell";

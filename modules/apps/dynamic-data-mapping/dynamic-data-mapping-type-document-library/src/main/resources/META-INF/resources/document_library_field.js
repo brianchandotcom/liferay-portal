@@ -151,8 +151,9 @@ AUI.add(
 
 						var value = instance.getValue();
 
-						if (value && value.title && value.uuid)
+						if (value && value.title && value.uuid) {
 							return true;
+						}
 
 						return false;
 					},
@@ -162,7 +163,11 @@ AUI.add(
 
 						var value = instance.getValue();
 
-						return value ? value.title : '';
+						if (value) {
+							return value.title;
+						}
+
+						return '';
 					},
 
 					_handleButtonsClick: function(event) {

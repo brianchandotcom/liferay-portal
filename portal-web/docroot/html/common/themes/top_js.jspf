@@ -190,6 +190,14 @@
 			getBCP47LanguageId: function() {
 				return '<%= LanguageUtil.getBCP47LanguageId(request) %>';
 			},
+			getCanonicalURL: function() {
+
+				<%
+				String completeURL = PortalUtil.getCurrentCompleteURL(request);
+				%>
+
+				return '<%= PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout, true, false) %>';
+			},
 			getCDNBaseURL: function() {
 				return '<%= themeDisplay.getCDNBaseURL() %>';
 			},
@@ -440,6 +448,15 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 			m.parentNode.insertBefore(a, m);
 		})('https://analytics.liferay.com/analytics-all-min.js', function() {
 			Analytics.create({analyticsKey: '<%= HtmlUtil.escapeJS(analyticsKey) %>'});
+
+			Analytics.registerMiddleware(
+				function(request) {
+					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+
+					return request;
+				}
+			);
+
 			Analytics.send('view', 'Layout');
 
 			<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">

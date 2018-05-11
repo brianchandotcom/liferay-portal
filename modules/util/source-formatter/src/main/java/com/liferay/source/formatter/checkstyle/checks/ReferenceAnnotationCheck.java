@@ -71,7 +71,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 			}
 
 			_checkUnbind(classDefAST, detailAST, annotationAST, policyName);
-			_checkVolitileReferenceVariable(classDefAST, detailAST);
+			_checkVolatileReferenceVariable(classDefAST, detailAST);
 		}
 	}
 
@@ -126,7 +126,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkVolitileReferenceVariable(
+	private void _checkVolatileReferenceVariable(
 		DetailAST classDefAST, DetailAST methodDefAST) {
 
 		String methodBody = _getMethodBody(methodDefAST);

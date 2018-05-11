@@ -168,9 +168,36 @@ public class UpgradeStepRegistratorTracker {
 			Collection<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 				new ArrayList<>();
 
+			Class<? extends UpgradeStepRegistrator> clazz =
+				upgradeStepRegistrator.getClass();
+
+			Bundle bundle = FrameworkUtil.getBundle(clazz);
+
+			String bundleSymbolicName = bundle.getSymbolicName();
+
+			int buildNumber = 0;
+
+			try {
+				Configuration configuration =
+					ConfigurationFactoryUtil.getConfiguration(
+						clazz.getClassLoader(), "service");
+
+				Properties properties = configuration.getProperties();
+
+				buildNumber = GetterUtil.getInteger(
+					properties.getProperty("build.number"));
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to read service.properties for " +
+							bundleSymbolicName);
+				}
+			}
+
 			upgradeStepRegistrator.register(
 				new UpgradeStepRegistry(
-					upgradeStepRegistrator, serviceRegistrations));
+					bundleSymbolicName, buildNumber, serviceRegistrations));
 
 			return serviceRegistrations;
 		}
@@ -215,56 +242,30 @@ public class UpgradeStepRegistratorTracker {
 			String fromSchemaVersionString, String toSchemaVersionString,
 			UpgradeStep... upgradeSteps) {
 
-			Class<? extends UpgradeStepRegistrator> clazz =
-				_upgradeStepRegistrator.getClass();
-
-			Bundle bundle = FrameworkUtil.getBundle(clazz);
-
-			String bundleSymbolicName = bundle.getSymbolicName();
-
-			int buildNumber = 0;
-
-			try {
-				if (ArrayUtil.isNotEmpty(upgradeSteps)) {
-					Configuration configuration =
-						ConfigurationFactoryUtil.getConfiguration(
-							clazz.getClassLoader(), "service");
-
-					Properties properties = configuration.getProperties();
-
-					buildNumber = GetterUtil.getInteger(
-						properties.getProperty("build.number"));
-				}
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to read service.properties for " +
-							bundleSymbolicName);
-				}
-			}
-
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			properties.put("build.number", buildNumber);
+			properties.put("build.number", _buildNumber);
 
 			_serviceRegistrations.addAll(
 				UpgradeStepRegistratorTracker.register(
-					_bundleContext, bundleSymbolicName, fromSchemaVersionString,
-					toSchemaVersionString, properties, upgradeSteps));
+					_bundleContext, _bundleSymbolicName,
+					fromSchemaVersionString, toSchemaVersionString, properties,
+					upgradeSteps));
 		}
 
 		private UpgradeStepRegistry(
-			UpgradeStepRegistrator upgradeStepRegistrator,
+			String bundleSymbolicName, int buildNumber,
 			Collection<ServiceRegistration<UpgradeStep>> serviceRegistrations) {
 
-			_upgradeStepRegistrator = upgradeStepRegistrator;
+			_bundleSymbolicName = bundleSymbolicName;
+			_buildNumber = buildNumber;
 			_serviceRegistrations = serviceRegistrations;
 		}
 
+		private final int _buildNumber;
+		private final String _bundleSymbolicName;
 		private final Collection<ServiceRegistration<UpgradeStep>>
 			_serviceRegistrations;
-		private final UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	}
 

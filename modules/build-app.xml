@@ -147,6 +147,38 @@
 		<antcall target="index-modules-and-app-lpkgs" />
 	</target>
 
+	<target name="build-app-lpkg-release">
+		<for param="app.dir">
+			<path>
+				<dirset
+					dir="${modules.dir}"
+				>
+					<include name="apps/*" />
+					<include name="private/apps/*" />
+					<exclude name="${build.exclude.dirs}" />
+				</dirset>
+			</path>
+
+			<sequential>
+				<local name="app.name" />
+				<local name="Liferay-Releng-Bundle" />
+
+				<basename file="@{app.dir}" property="app.name" />
+
+				<property file="@{app.dir}/app.bnd" />
+
+				<if>
+					<equals arg1="${Liferay-Releng-Bundle}" arg2="true" />
+					<then>
+						<ant inheritAll="false" target="build-app-lpkg">
+							<property name="app.name" value="${app.name}" />
+						</ant>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="check-current-branch">
 		<condition property="current.branch.private">
 			<or>

@@ -1422,36 +1422,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-							<for param="app.dir">
-								<path>
-									<dirset
-										dir="modules"
-									>
-										<include name="apps/*" />
-										<include name="private/apps/*" />
-										<exclude name="${build.exclude.dirs}" />
-									</dirset>
-								</path>
-
-								<sequential>
-									<local name="app.name" />
-									<local name="Liferay-Releng-Bundle" />
-
-									<basename file="@{app.dir}" property="app.name" />
-
-									<property file="@{app.dir}/app.bnd" />
-
-									<if>
-										<equals arg1="${Liferay-Releng-Bundle}" arg2="true" />
-										<then>
-											<ant dir="modules" inheritAll="false" target="build-app-lpkg">
-												<property name="app.name" value="${app.name}" />
-												<property name="osgi.dir" value="${app.server.parent.dir}/osgi" />
-											</ant>
-										</then>
-									</if>
-								</sequential>
-							</for>
+							<ant dir="modules" inheritAll="false" target="build-app-lpkg-release" />
 
 							<delete dir="${liferay.home}/osgi/modules" />
 							<delete dir="${liferay.home}/osgi/portal" />

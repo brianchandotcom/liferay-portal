@@ -269,7 +269,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_ELLIPSIS</td>
-	<td>//div[contains(@class,'sidebar-header')]//a[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td>//div[contains(@class,'sidebar')]//a[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -284,7 +284,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_CLOSE</td>
-	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//div[contains(@class,'sidebar-header')]//a[contains(@class,'close')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//a[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <!--DATA_PROVIDER_OUTPUT_PARAMETER-->

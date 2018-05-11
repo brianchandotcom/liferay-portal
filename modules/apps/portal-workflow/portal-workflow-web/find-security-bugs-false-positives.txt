@@ -1,0 +1,17 @@
+com/liferay/asset/kernel/model/AssetRenderer.getURLViewInContext(Lcom/liferay/portal/kernel/portlet/LiferayPortletRequest;Lcom/liferay/portal/kernel/portlet/LiferayPortletResponse;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/dao/search/ResultRow.getParameter("randomNamespace"):SAFE@org/apache/jsp/definition_005flink/edit_005fworkflow_005fdefinition_005flink_jsp
+com/liferay/portal/kernel/dao/search/ResultRow.getParameter("randomNamespace"):SAFE@org/apache/jsp/definition_005flink/workflow_005fdefinition_005flink_005faction_jsp
+com/liferay/portal/kernel/dao/search/ResultRow.getParameter("randomNamespace"):SAFE@org/apache/jsp/definition_005flink/workflow_005fdefinition_005flink_005fresource_jsp
+com/liferay/portal/kernel/dao/search/ResultRow.getParameter("resourceTooltips"):SAFE@org/apache/jsp/definition_005flink/workflow_005fdefinition_005flink_005fresource_jsp
+com/liferay/portal/kernel/theme/ThemeDisplay.getLanguageId()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/HtmlUtil.getAUICompatibleId(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/StringUtil.randomId()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/StringUtil.toLowerCase(Ljava/lang/String;)Ljava/lang/String;:0
+com/liferay/portal/workflow/web/internal/display/context/WorkflowDefinitionDisplayContext.getMessageArguments(Ljava/util/List;)[Ljava/lang/Object;:SAFE
+com/liferay/portal/workflow/web/internal/display/context/WorkflowInstanceEditDisplayContext.getIconCssClass()Ljava/lang/String;:SAFE
+com/liferay/portal/workflow/web/internal/display/context/WorkflowInstanceEditDisplayContext.getPanelTitle()Ljava/lang/String;:SAFE
+com/liferay/portal/workflow/web/internal/display/context/WorkflowInstanceViewDisplayContext.getAssetType(Lcom/liferay/portal/kernel/workflow/WorkflowInstance;)Ljava/lang/String;:SAFE
+com/liferay/portal/workflow/web/internal/search/WorkflowDefinitionLinkSearchEntry.getClassName()Ljava/lang/String;:SAFE
+com/liferay/portal/workflow/web/internal/search/WorkflowDefinitionLinkSearchEntry.getResource()Ljava/lang/String;:SAFE
+com/liferay/taglib/aui/InputTag.setValue(Ljava/lang/Object;)V:0
+com/liferay/taglib/search/DateSearchEntry.getName(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE

@@ -37,7 +37,7 @@ import org.python.util.InteractiveInterpreter;
 
 /**
  * @author Alberto Montero
- * @deprecated As of 7.1.0, with no direct replacement
+ * @deprecated As of 3.0.0, with no direct replacement
  */
 @Component(
 	immediate = true,

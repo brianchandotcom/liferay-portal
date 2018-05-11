@@ -16,14 +16,10 @@ package com.liferay.layout.type.controller.asset.display.internal.portlet;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
-import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
-import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.asset.display.contributor.AssetDisplayWebKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerConstants;
-import com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -80,20 +76,9 @@ public class AssetDisplayPageFriendlyURLResolver
 			"request");
 
 		request.setAttribute(
-			AssetDisplayLayoutTypeControllerWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
+			AssetDisplayWebKeys.ASSET_DISPLAY_CONTRIBUTOR,
 			assetDisplayContributor);
-		request.setAttribute(
-			AssetDisplayLayoutTypeControllerWebKeys.ASSET_ENTRY, assetEntry);
-
-		long layoutPageTemplateEntryId = _getLayoutPageTemplateEntryId(
-			groupId, assetEntry);
-
-		if (layoutPageTemplateEntryId > 0) {
-			request.setAttribute(
-				AssetDisplayLayoutTypeControllerWebKeys.
-					LAYOUT_PAGE_TEMPLATE_ENTRY_ID,
-				layoutPageTemplateEntryId);
-		}
+		request.setAttribute(AssetDisplayWebKeys.ASSET_ENTRY, assetEntry);
 
 		Locale locale = _portal.getLocale(request);
 
@@ -157,37 +142,8 @@ public class AssetDisplayPageFriendlyURLResolver
 			true, null, serviceContext);
 	}
 
-	private long _getLayoutPageTemplateEntryId(
-		long groupId, AssetEntry assetEntry) {
-
-		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.
-				fetchAssetDisplayPageEntryByAssetEntryId(
-					assetEntry.getEntryId());
-
-		if (assetDisplayPageEntry != null) {
-			return assetDisplayPageEntry.getLayoutId();
-		}
-
-		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
-				groupId, assetEntry.getClassNameId(),
-				assetEntry.getClassTypeId());
-
-		if (defaultLayoutPageTemplateEntry != null) {
-			return defaultLayoutPageTemplateEntry.
-				getLayoutPageTemplateEntryId();
-		}
-
-		return 0;
-	}
-
 	@Reference
 	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
-
-	@Reference
-	private AssetDisplayPageEntryLocalService
-		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private AssetEntryService _assetEntryService;
@@ -197,9 +153,6 @@ public class AssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
 	private Portal _portal;

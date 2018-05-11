@@ -106,6 +106,10 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
+		<execute macro="SitePages#deletePage">
+			<var name="pageName" value="Search" />
+		</execute>
+
 		<execute macro="Page#assertCannotDeleteOnlyPage">
 			<var name="pageName" value="Welcome" />
 		</execute>

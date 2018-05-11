@@ -1348,7 +1348,7 @@ public class ModulesStructureTest {
 		SetUtil.fromList(
 			Arrays.asList(
 				"com.liferay.portal.tools.service.builder.version",
-				"com.liferay.source.formatter.version"));
+				"com.liferay.source.formatter.version", "org.gradle.parallel"));
 	private static final List<String> _gradleConfigurations = Arrays.asList(
 		"compileOnly", "provided", "compile", "runtime", "testCompile",
 		"testRuntime", "testIntegrationCompile", "testIntegrationRuntime");

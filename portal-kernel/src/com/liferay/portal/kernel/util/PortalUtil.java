@@ -195,6 +195,8 @@ public class PortalUtil {
 	 * @param title the title of the new breadcrumb entry
 	 * @param url the URL of the new breadcrumb entry
 	 * @param data the HTML5 data parameters of the new breadcrumb entry
+	 * @param portletBreadcrumbEntry whether the entry is a portlet breadcrumb
+	 *        entry
 	 */
 	public static void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url,
@@ -208,8 +210,9 @@ public class PortalUtil {
 	 * Adds the default resource permissions for the portlet to the page in the
 	 * request.
 	 *
-	 * @param request the servlet request for the page
-	 * @param portlet the portlet
+	 * @param  request the servlet request for the page
+	 * @param  portlet the portlet
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static void addPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
@@ -369,6 +372,7 @@ public class PortalUtil {
 	 * @param  layout the page being requested
 	 * @return the alternate URL for the requested canonical URL in the given
 	 *         locale
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static String getAlternateURL(
 			String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
@@ -397,6 +401,7 @@ public class PortalUtil {
 	 * @return the base model instance, or <code>null</code> if the resource
 	 *         permission does not have a base model instance (such as if it's a
 	 *         portlet)
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static BaseModel<?> getBaseModel(
 			ResourcePermission resourcePermission)
@@ -412,6 +417,7 @@ public class PortalUtil {
 	 * @param  primKey the primary key of the model instance to get
 	 * @return the base model instance, or <code>null</code> if the model does
 	 *         not have a base model instance (such as if it's a portlet)
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static BaseModel<?> getBaseModel(String modelName, String primKey)
 		throws PortalException {
@@ -471,6 +477,7 @@ public class PortalUtil {
 	 * @param  layout the page being requested (optionally <code>null</code>).
 	 *         If <code>null</code> is specified, the current page is used.
 	 * @return the canonical URL for the page
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static String getCanonicalURL(
 			String completeURL, ThemeDisplay themeDisplay, Layout layout)
@@ -501,6 +508,7 @@ public class PortalUtil {
 	 * @param  forceLayoutFriendlyURL whether to add the page's friendly URL to
 	 *         the canonical URL
 	 * @return the canonical URL of the page
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static String getCanonicalURL(
 			String completeURL, ThemeDisplay themeDisplay, Layout layout,
@@ -805,6 +813,7 @@ public class PortalUtil {
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
 	 *         no exception to throw was provided
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Date getDate(
 			int month, int day, int year,
@@ -828,6 +837,7 @@ public class PortalUtil {
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
 	 *         no exception to throw was provided
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Date getDate(
 			int month, int day, int year, int hour, int min,
@@ -852,6 +862,7 @@ public class PortalUtil {
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
 	 *         no exception to throw was provided
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Date getDate(
 			int month, int day, int year, int hour, int min, TimeZone timeZone,
@@ -875,6 +886,7 @@ public class PortalUtil {
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
 	 *         no exception to throw was provided
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Date getDate(
 			int month, int day, int year, TimeZone timeZone,

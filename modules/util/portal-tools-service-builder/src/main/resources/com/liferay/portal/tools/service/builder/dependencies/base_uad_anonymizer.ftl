@@ -34,13 +34,19 @@ public abstract class Base${entity.name}UADAnonymizer extends DynamicQueryUADAno
 			<#assign uadUserIdEntityColumn = entity.getEntityColumn(uadUserIdColumnName) />
 
 					if (${entity.varName}.get${uadUserIdEntityColumn.methodName}() == userId) {
-			<#list entity.UADAnonymizableEntityColumnsMap[uadUserIdColumnName] as uadAnonymizableEntityColumn>
-				${entity.varName}.set${uadAnonymizableEntityColumn.methodName}(anonymousUser.get${textFormatter.format(uadAnonymizableEntityColumn.UADAnonymizeFieldName, 6)}());
-			</#list>
+						<#if entity.UADAutoDelete>
+							delete(${entity.varName});
+						<#else>
+							<#list entity.UADAnonymizableEntityColumnsMap[uadUserIdColumnName] as uadAnonymizableEntityColumn>
+								${entity.varName}.set${uadAnonymizableEntityColumn.methodName}(anonymousUser.get${textFormatter.format(uadAnonymizableEntityColumn.UADAnonymizeFieldName, 6)}());
+							</#list>
+						</#if>
 					}
 		</#list>
 
-		${entity.varName}LocalService.update${entity.name}(${entity.varName});
+		<#if !entity.UADAutoDelete>
+			${entity.varName}LocalService.update${entity.name}(${entity.varName});
+		</#if>
 	}
 
 	@Override

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4288,8 +4290,6 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 	@Override
 	protected SAPEntry removeImpl(SAPEntry sapEntry) {
-		sapEntry = toUnwrappedModel(sapEntry);
-
 		Session session = null;
 
 		try {
@@ -4320,9 +4320,23 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 	@Override
 	public SAPEntry updateImpl(SAPEntry sapEntry) {
-		sapEntry = toUnwrappedModel(sapEntry);
-
 		boolean isNew = sapEntry.isNew();
+
+		if (!(sapEntry instanceof SAPEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(sapEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(sapEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in sapEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SAPEntry implementation " +
+				sapEntry.getClass());
+		}
 
 		SAPEntryModelImpl sapEntryModelImpl = (SAPEntryModelImpl)sapEntry;
 
@@ -4502,32 +4516,6 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		sapEntry.resetOriginalValues();
 
 		return sapEntry;
-	}
-
-	protected SAPEntry toUnwrappedModel(SAPEntry sapEntry) {
-		if (sapEntry instanceof SAPEntryImpl) {
-			return sapEntry;
-		}
-
-		SAPEntryImpl sapEntryImpl = new SAPEntryImpl();
-
-		sapEntryImpl.setNew(sapEntry.isNew());
-		sapEntryImpl.setPrimaryKey(sapEntry.getPrimaryKey());
-
-		sapEntryImpl.setUuid(sapEntry.getUuid());
-		sapEntryImpl.setSapEntryId(sapEntry.getSapEntryId());
-		sapEntryImpl.setCompanyId(sapEntry.getCompanyId());
-		sapEntryImpl.setUserId(sapEntry.getUserId());
-		sapEntryImpl.setUserName(sapEntry.getUserName());
-		sapEntryImpl.setCreateDate(sapEntry.getCreateDate());
-		sapEntryImpl.setModifiedDate(sapEntry.getModifiedDate());
-		sapEntryImpl.setAllowedServiceSignatures(sapEntry.getAllowedServiceSignatures());
-		sapEntryImpl.setDefaultSAPEntry(sapEntry.isDefaultSAPEntry());
-		sapEntryImpl.setEnabled(sapEntry.isEnabled());
-		sapEntryImpl.setName(sapEntry.getName());
-		sapEntryImpl.setTitle(sapEntry.getTitle());
-
-		return sapEntryImpl;
 	}
 
 	/**

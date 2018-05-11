@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1527,8 +1530,6 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 	@Override
 	protected DDMTemplateLink removeImpl(DDMTemplateLink ddmTemplateLink) {
-		ddmTemplateLink = toUnwrappedModel(ddmTemplateLink);
-
 		Session session = null;
 
 		try {
@@ -1559,9 +1560,23 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 	@Override
 	public DDMTemplateLink updateImpl(DDMTemplateLink ddmTemplateLink) {
-		ddmTemplateLink = toUnwrappedModel(ddmTemplateLink);
-
 		boolean isNew = ddmTemplateLink.isNew();
+
+		if (!(ddmTemplateLink instanceof DDMTemplateLinkModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmTemplateLink.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmTemplateLink);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmTemplateLink proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMTemplateLink implementation " +
+				ddmTemplateLink.getClass());
+		}
 
 		DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl = (DDMTemplateLinkModelImpl)ddmTemplateLink;
 
@@ -1658,25 +1673,6 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		ddmTemplateLink.resetOriginalValues();
 
 		return ddmTemplateLink;
-	}
-
-	protected DDMTemplateLink toUnwrappedModel(DDMTemplateLink ddmTemplateLink) {
-		if (ddmTemplateLink instanceof DDMTemplateLinkImpl) {
-			return ddmTemplateLink;
-		}
-
-		DDMTemplateLinkImpl ddmTemplateLinkImpl = new DDMTemplateLinkImpl();
-
-		ddmTemplateLinkImpl.setNew(ddmTemplateLink.isNew());
-		ddmTemplateLinkImpl.setPrimaryKey(ddmTemplateLink.getPrimaryKey());
-
-		ddmTemplateLinkImpl.setTemplateLinkId(ddmTemplateLink.getTemplateLinkId());
-		ddmTemplateLinkImpl.setCompanyId(ddmTemplateLink.getCompanyId());
-		ddmTemplateLinkImpl.setClassNameId(ddmTemplateLink.getClassNameId());
-		ddmTemplateLinkImpl.setClassPK(ddmTemplateLink.getClassPK());
-		ddmTemplateLinkImpl.setTemplateId(ddmTemplateLink.getTemplateId());
-
-		return ddmTemplateLinkImpl;
 	}
 
 	/**

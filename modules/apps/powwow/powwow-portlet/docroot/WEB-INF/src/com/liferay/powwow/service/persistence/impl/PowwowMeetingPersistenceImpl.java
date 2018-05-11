@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import com.liferay.powwow.exception.NoSuchMeetingException;
@@ -45,6 +46,8 @@ import com.liferay.powwow.model.impl.PowwowMeetingModelImpl;
 import com.liferay.powwow.service.persistence.PowwowMeetingPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3217,8 +3220,6 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 
 	@Override
 	protected PowwowMeeting removeImpl(PowwowMeeting powwowMeeting) {
-		powwowMeeting = toUnwrappedModel(powwowMeeting);
-
 		Session session = null;
 
 		try {
@@ -3249,9 +3250,23 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 
 	@Override
 	public PowwowMeeting updateImpl(PowwowMeeting powwowMeeting) {
-		powwowMeeting = toUnwrappedModel(powwowMeeting);
-
 		boolean isNew = powwowMeeting.isNew();
+
+		if (!(powwowMeeting instanceof PowwowMeetingModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(powwowMeeting.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(powwowMeeting);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in powwowMeeting proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom PowwowMeeting implementation " +
+				powwowMeeting.getClass());
+		}
 
 		PowwowMeetingModelImpl powwowMeetingModelImpl = (PowwowMeetingModelImpl)powwowMeeting;
 
@@ -3451,35 +3466,6 @@ public class PowwowMeetingPersistenceImpl extends BasePersistenceImpl<PowwowMeet
 		powwowMeeting.resetOriginalValues();
 
 		return powwowMeeting;
-	}
-
-	protected PowwowMeeting toUnwrappedModel(PowwowMeeting powwowMeeting) {
-		if (powwowMeeting instanceof PowwowMeetingImpl) {
-			return powwowMeeting;
-		}
-
-		PowwowMeetingImpl powwowMeetingImpl = new PowwowMeetingImpl();
-
-		powwowMeetingImpl.setNew(powwowMeeting.isNew());
-		powwowMeetingImpl.setPrimaryKey(powwowMeeting.getPrimaryKey());
-
-		powwowMeetingImpl.setPowwowMeetingId(powwowMeeting.getPowwowMeetingId());
-		powwowMeetingImpl.setGroupId(powwowMeeting.getGroupId());
-		powwowMeetingImpl.setCompanyId(powwowMeeting.getCompanyId());
-		powwowMeetingImpl.setUserId(powwowMeeting.getUserId());
-		powwowMeetingImpl.setUserName(powwowMeeting.getUserName());
-		powwowMeetingImpl.setCreateDate(powwowMeeting.getCreateDate());
-		powwowMeetingImpl.setModifiedDate(powwowMeeting.getModifiedDate());
-		powwowMeetingImpl.setPowwowServerId(powwowMeeting.getPowwowServerId());
-		powwowMeetingImpl.setName(powwowMeeting.getName());
-		powwowMeetingImpl.setDescription(powwowMeeting.getDescription());
-		powwowMeetingImpl.setProviderType(powwowMeeting.getProviderType());
-		powwowMeetingImpl.setProviderTypeMetadata(powwowMeeting.getProviderTypeMetadata());
-		powwowMeetingImpl.setLanguageId(powwowMeeting.getLanguageId());
-		powwowMeetingImpl.setCalendarBookingId(powwowMeeting.getCalendarBookingId());
-		powwowMeetingImpl.setStatus(powwowMeeting.getStatus());
-
-		return powwowMeetingImpl;
 	}
 
 	/**

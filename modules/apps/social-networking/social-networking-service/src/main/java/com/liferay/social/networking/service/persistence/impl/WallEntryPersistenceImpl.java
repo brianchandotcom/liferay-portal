@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -41,6 +42,8 @@ import com.liferay.social.networking.model.impl.WallEntryModelImpl;
 import com.liferay.social.networking.service.persistence.WallEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1778,8 +1781,6 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 	@Override
 	protected WallEntry removeImpl(WallEntry wallEntry) {
-		wallEntry = toUnwrappedModel(wallEntry);
-
 		Session session = null;
 
 		try {
@@ -1810,9 +1811,23 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 	@Override
 	public WallEntry updateImpl(WallEntry wallEntry) {
-		wallEntry = toUnwrappedModel(wallEntry);
-
 		boolean isNew = wallEntry.isNew();
+
+		if (!(wallEntry instanceof WallEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(wallEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(wallEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in wallEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom WallEntry implementation " +
+				wallEntry.getClass());
+		}
 
 		WallEntryModelImpl wallEntryModelImpl = (WallEntryModelImpl)wallEntry;
 
@@ -1955,28 +1970,6 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		wallEntry.resetOriginalValues();
 
 		return wallEntry;
-	}
-
-	protected WallEntry toUnwrappedModel(WallEntry wallEntry) {
-		if (wallEntry instanceof WallEntryImpl) {
-			return wallEntry;
-		}
-
-		WallEntryImpl wallEntryImpl = new WallEntryImpl();
-
-		wallEntryImpl.setNew(wallEntry.isNew());
-		wallEntryImpl.setPrimaryKey(wallEntry.getPrimaryKey());
-
-		wallEntryImpl.setWallEntryId(wallEntry.getWallEntryId());
-		wallEntryImpl.setGroupId(wallEntry.getGroupId());
-		wallEntryImpl.setCompanyId(wallEntry.getCompanyId());
-		wallEntryImpl.setUserId(wallEntry.getUserId());
-		wallEntryImpl.setUserName(wallEntry.getUserName());
-		wallEntryImpl.setCreateDate(wallEntry.getCreateDate());
-		wallEntryImpl.setModifiedDate(wallEntry.getModifiedDate());
-		wallEntryImpl.setComments(wallEntry.getComments());
-
-		return wallEntryImpl;
 	}
 
 	/**

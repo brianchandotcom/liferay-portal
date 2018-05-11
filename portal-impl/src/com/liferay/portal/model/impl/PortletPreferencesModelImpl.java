@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
 import com.liferay.portal.kernel.model.PortletPreferencesSoap;
@@ -647,7 +648,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 	private static final ClassLoader _classLoader = PortletPreferences.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			PortletPreferences.class
+			PortletPreferences.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _portletPreferencesId;

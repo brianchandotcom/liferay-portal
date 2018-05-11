@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
@@ -40,6 +41,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2576,8 +2579,6 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 	@Override
 	protected KaleoNotification removeImpl(KaleoNotification kaleoNotification) {
-		kaleoNotification = toUnwrappedModel(kaleoNotification);
-
 		Session session = null;
 
 		try {
@@ -2608,9 +2609,23 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 
 	@Override
 	public KaleoNotification updateImpl(KaleoNotification kaleoNotification) {
-		kaleoNotification = toUnwrappedModel(kaleoNotification);
-
 		boolean isNew = kaleoNotification.isNew();
+
+		if (!(kaleoNotification instanceof KaleoNotificationModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoNotification.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoNotification);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoNotification proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoNotification implementation " +
+				kaleoNotification.getClass());
+		}
 
 		KaleoNotificationModelImpl kaleoNotificationModelImpl = (KaleoNotificationModelImpl)kaleoNotification;
 
@@ -2798,38 +2813,6 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 		kaleoNotification.resetOriginalValues();
 
 		return kaleoNotification;
-	}
-
-	protected KaleoNotification toUnwrappedModel(
-		KaleoNotification kaleoNotification) {
-		if (kaleoNotification instanceof KaleoNotificationImpl) {
-			return kaleoNotification;
-		}
-
-		KaleoNotificationImpl kaleoNotificationImpl = new KaleoNotificationImpl();
-
-		kaleoNotificationImpl.setNew(kaleoNotification.isNew());
-		kaleoNotificationImpl.setPrimaryKey(kaleoNotification.getPrimaryKey());
-
-		kaleoNotificationImpl.setKaleoNotificationId(kaleoNotification.getKaleoNotificationId());
-		kaleoNotificationImpl.setGroupId(kaleoNotification.getGroupId());
-		kaleoNotificationImpl.setCompanyId(kaleoNotification.getCompanyId());
-		kaleoNotificationImpl.setUserId(kaleoNotification.getUserId());
-		kaleoNotificationImpl.setUserName(kaleoNotification.getUserName());
-		kaleoNotificationImpl.setCreateDate(kaleoNotification.getCreateDate());
-		kaleoNotificationImpl.setModifiedDate(kaleoNotification.getModifiedDate());
-		kaleoNotificationImpl.setKaleoClassName(kaleoNotification.getKaleoClassName());
-		kaleoNotificationImpl.setKaleoClassPK(kaleoNotification.getKaleoClassPK());
-		kaleoNotificationImpl.setKaleoDefinitionVersionId(kaleoNotification.getKaleoDefinitionVersionId());
-		kaleoNotificationImpl.setKaleoNodeName(kaleoNotification.getKaleoNodeName());
-		kaleoNotificationImpl.setName(kaleoNotification.getName());
-		kaleoNotificationImpl.setDescription(kaleoNotification.getDescription());
-		kaleoNotificationImpl.setExecutionType(kaleoNotification.getExecutionType());
-		kaleoNotificationImpl.setTemplate(kaleoNotification.getTemplate());
-		kaleoNotificationImpl.setTemplateLanguage(kaleoNotification.getTemplateLanguage());
-		kaleoNotificationImpl.setNotificationTypes(kaleoNotification.getNotificationTypes());
-
-		return kaleoNotificationImpl;
 	}
 
 	/**

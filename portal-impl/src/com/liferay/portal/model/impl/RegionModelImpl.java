@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionModel;
 import com.liferay.portal.kernel.model.RegionSoap;
@@ -558,7 +559,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 
 	private static final ClassLoader _classLoader = Region.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Region.class
+			Region.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _regionId;

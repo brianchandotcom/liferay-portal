@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -41,6 +42,8 @@ import com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImp
 import com.liferay.push.notifications.service.persistence.PushNotificationsDevicePersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -1437,8 +1440,6 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 	@Override
 	protected PushNotificationsDevice removeImpl(
 		PushNotificationsDevice pushNotificationsDevice) {
-		pushNotificationsDevice = toUnwrappedModel(pushNotificationsDevice);
-
 		Session session = null;
 
 		try {
@@ -1470,9 +1471,23 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public PushNotificationsDevice updateImpl(
 		PushNotificationsDevice pushNotificationsDevice) {
-		pushNotificationsDevice = toUnwrappedModel(pushNotificationsDevice);
-
 		boolean isNew = pushNotificationsDevice.isNew();
+
+		if (!(pushNotificationsDevice instanceof PushNotificationsDeviceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(pushNotificationsDevice.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(pushNotificationsDevice);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in pushNotificationsDevice proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom PushNotificationsDevice implementation " +
+				pushNotificationsDevice.getClass());
+		}
 
 		PushNotificationsDeviceModelImpl pushNotificationsDeviceModelImpl = (PushNotificationsDeviceModelImpl)pushNotificationsDevice;
 
@@ -1552,27 +1567,6 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		pushNotificationsDevice.resetOriginalValues();
 
 		return pushNotificationsDevice;
-	}
-
-	protected PushNotificationsDevice toUnwrappedModel(
-		PushNotificationsDevice pushNotificationsDevice) {
-		if (pushNotificationsDevice instanceof PushNotificationsDeviceImpl) {
-			return pushNotificationsDevice;
-		}
-
-		PushNotificationsDeviceImpl pushNotificationsDeviceImpl = new PushNotificationsDeviceImpl();
-
-		pushNotificationsDeviceImpl.setNew(pushNotificationsDevice.isNew());
-		pushNotificationsDeviceImpl.setPrimaryKey(pushNotificationsDevice.getPrimaryKey());
-
-		pushNotificationsDeviceImpl.setPushNotificationsDeviceId(pushNotificationsDevice.getPushNotificationsDeviceId());
-		pushNotificationsDeviceImpl.setCompanyId(pushNotificationsDevice.getCompanyId());
-		pushNotificationsDeviceImpl.setUserId(pushNotificationsDevice.getUserId());
-		pushNotificationsDeviceImpl.setCreateDate(pushNotificationsDevice.getCreateDate());
-		pushNotificationsDeviceImpl.setPlatform(pushNotificationsDevice.getPlatform());
-		pushNotificationsDeviceImpl.setToken(pushNotificationsDevice.getToken());
-
-		return pushNotificationsDeviceImpl;
 	}
 
 	/**

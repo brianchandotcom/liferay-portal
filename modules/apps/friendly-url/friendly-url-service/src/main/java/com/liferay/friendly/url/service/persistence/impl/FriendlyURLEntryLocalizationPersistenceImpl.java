@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1435,8 +1438,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	@Override
 	protected FriendlyURLEntryLocalization removeImpl(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
-		friendlyURLEntryLocalization = toUnwrappedModel(friendlyURLEntryLocalization);
-
 		Session session = null;
 
 		try {
@@ -1468,9 +1469,23 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	@Override
 	public FriendlyURLEntryLocalization updateImpl(
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
-		friendlyURLEntryLocalization = toUnwrappedModel(friendlyURLEntryLocalization);
-
 		boolean isNew = friendlyURLEntryLocalization.isNew();
+
+		if (!(friendlyURLEntryLocalization instanceof FriendlyURLEntryLocalizationModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(friendlyURLEntryLocalization.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(friendlyURLEntryLocalization);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in friendlyURLEntryLocalization proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom FriendlyURLEntryLocalization implementation " +
+				friendlyURLEntryLocalization.getClass());
+		}
 
 		FriendlyURLEntryLocalizationModelImpl friendlyURLEntryLocalizationModelImpl =
 			(FriendlyURLEntryLocalizationModelImpl)friendlyURLEntryLocalization;
@@ -1551,30 +1566,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		friendlyURLEntryLocalization.resetOriginalValues();
 
 		return friendlyURLEntryLocalization;
-	}
-
-	protected FriendlyURLEntryLocalization toUnwrappedModel(
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
-		if (friendlyURLEntryLocalization instanceof FriendlyURLEntryLocalizationImpl) {
-			return friendlyURLEntryLocalization;
-		}
-
-		FriendlyURLEntryLocalizationImpl friendlyURLEntryLocalizationImpl = new FriendlyURLEntryLocalizationImpl();
-
-		friendlyURLEntryLocalizationImpl.setNew(friendlyURLEntryLocalization.isNew());
-		friendlyURLEntryLocalizationImpl.setPrimaryKey(friendlyURLEntryLocalization.getPrimaryKey());
-
-		friendlyURLEntryLocalizationImpl.setMvccVersion(friendlyURLEntryLocalization.getMvccVersion());
-		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryLocalizationId(friendlyURLEntryLocalization.getFriendlyURLEntryLocalizationId());
-		friendlyURLEntryLocalizationImpl.setCompanyId(friendlyURLEntryLocalization.getCompanyId());
-		friendlyURLEntryLocalizationImpl.setFriendlyURLEntryId(friendlyURLEntryLocalization.getFriendlyURLEntryId());
-		friendlyURLEntryLocalizationImpl.setLanguageId(friendlyURLEntryLocalization.getLanguageId());
-		friendlyURLEntryLocalizationImpl.setUrlTitle(friendlyURLEntryLocalization.getUrlTitle());
-		friendlyURLEntryLocalizationImpl.setGroupId(friendlyURLEntryLocalization.getGroupId());
-		friendlyURLEntryLocalizationImpl.setClassNameId(friendlyURLEntryLocalization.getClassNameId());
-		friendlyURLEntryLocalizationImpl.setClassPK(friendlyURLEntryLocalization.getClassPK());
-
-		return friendlyURLEntryLocalizationImpl;
 	}
 
 	/**

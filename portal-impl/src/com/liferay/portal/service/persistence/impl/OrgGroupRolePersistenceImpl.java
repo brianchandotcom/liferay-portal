@@ -36,12 +36,15 @@ import com.liferay.portal.kernel.service.persistence.OrgGroupRolePK;
 import com.liferay.portal.kernel.service.persistence.OrgGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.OrgGroupRoleImpl;
 import com.liferay.portal.model.impl.OrgGroupRoleModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1241,8 +1244,6 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	@Override
 	protected OrgGroupRole removeImpl(OrgGroupRole orgGroupRole) {
-		orgGroupRole = toUnwrappedModel(orgGroupRole);
-
 		Session session = null;
 
 		try {
@@ -1273,9 +1274,23 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	@Override
 	public OrgGroupRole updateImpl(OrgGroupRole orgGroupRole) {
-		orgGroupRole = toUnwrappedModel(orgGroupRole);
-
 		boolean isNew = orgGroupRole.isNew();
+
+		if (!(orgGroupRole instanceof OrgGroupRoleModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(orgGroupRole.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(orgGroupRole);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in orgGroupRole proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom OrgGroupRole implementation " +
+				orgGroupRole.getClass());
+		}
 
 		OrgGroupRoleModelImpl orgGroupRoleModelImpl = (OrgGroupRoleModelImpl)orgGroupRole;
 
@@ -1367,25 +1382,6 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		orgGroupRole.resetOriginalValues();
 
 		return orgGroupRole;
-	}
-
-	protected OrgGroupRole toUnwrappedModel(OrgGroupRole orgGroupRole) {
-		if (orgGroupRole instanceof OrgGroupRoleImpl) {
-			return orgGroupRole;
-		}
-
-		OrgGroupRoleImpl orgGroupRoleImpl = new OrgGroupRoleImpl();
-
-		orgGroupRoleImpl.setNew(orgGroupRole.isNew());
-		orgGroupRoleImpl.setPrimaryKey(orgGroupRole.getPrimaryKey());
-
-		orgGroupRoleImpl.setMvccVersion(orgGroupRole.getMvccVersion());
-		orgGroupRoleImpl.setOrganizationId(orgGroupRole.getOrganizationId());
-		orgGroupRoleImpl.setGroupId(orgGroupRole.getGroupId());
-		orgGroupRoleImpl.setRoleId(orgGroupRole.getRoleId());
-		orgGroupRoleImpl.setCompanyId(orgGroupRole.getCompanyId());
-
-		return orgGroupRoleImpl;
 	}
 
 	/**

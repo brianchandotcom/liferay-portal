@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -45,6 +46,7 @@ import com.liferay.social.kernel.service.persistence.SocialActivitySetPersistenc
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -3710,8 +3712,6 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	@Override
 	protected SocialActivitySet removeImpl(SocialActivitySet socialActivitySet) {
-		socialActivitySet = toUnwrappedModel(socialActivitySet);
-
 		Session session = null;
 
 		try {
@@ -3742,9 +3742,23 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 
 	@Override
 	public SocialActivitySet updateImpl(SocialActivitySet socialActivitySet) {
-		socialActivitySet = toUnwrappedModel(socialActivitySet);
-
 		boolean isNew = socialActivitySet.isNew();
+
+		if (!(socialActivitySet instanceof SocialActivitySetModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(socialActivitySet.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(socialActivitySet);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in socialActivitySet proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SocialActivitySet implementation " +
+				socialActivitySet.getClass());
+		}
 
 		SocialActivitySetModelImpl socialActivitySetModelImpl = (SocialActivitySetModelImpl)socialActivitySet;
 
@@ -3974,32 +3988,6 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 		socialActivitySet.resetOriginalValues();
 
 		return socialActivitySet;
-	}
-
-	protected SocialActivitySet toUnwrappedModel(
-		SocialActivitySet socialActivitySet) {
-		if (socialActivitySet instanceof SocialActivitySetImpl) {
-			return socialActivitySet;
-		}
-
-		SocialActivitySetImpl socialActivitySetImpl = new SocialActivitySetImpl();
-
-		socialActivitySetImpl.setNew(socialActivitySet.isNew());
-		socialActivitySetImpl.setPrimaryKey(socialActivitySet.getPrimaryKey());
-
-		socialActivitySetImpl.setActivitySetId(socialActivitySet.getActivitySetId());
-		socialActivitySetImpl.setGroupId(socialActivitySet.getGroupId());
-		socialActivitySetImpl.setCompanyId(socialActivitySet.getCompanyId());
-		socialActivitySetImpl.setUserId(socialActivitySet.getUserId());
-		socialActivitySetImpl.setCreateDate(socialActivitySet.getCreateDate());
-		socialActivitySetImpl.setModifiedDate(socialActivitySet.getModifiedDate());
-		socialActivitySetImpl.setClassNameId(socialActivitySet.getClassNameId());
-		socialActivitySetImpl.setClassPK(socialActivitySet.getClassPK());
-		socialActivitySetImpl.setType(socialActivitySet.getType());
-		socialActivitySetImpl.setExtraData(socialActivitySet.getExtraData());
-		socialActivitySetImpl.setActivityCount(socialActivitySet.getActivityCount());
-
-		return socialActivitySetImpl;
 	}
 
 	/**

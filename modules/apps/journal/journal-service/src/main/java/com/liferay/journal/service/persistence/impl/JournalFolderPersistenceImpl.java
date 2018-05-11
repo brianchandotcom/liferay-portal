@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,6 +50,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -7561,8 +7563,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	@Override
 	protected JournalFolder removeImpl(JournalFolder journalFolder) {
-		journalFolder = toUnwrappedModel(journalFolder);
-
 		Session session = null;
 
 		try {
@@ -7593,9 +7593,23 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 	@Override
 	public JournalFolder updateImpl(JournalFolder journalFolder) {
-		journalFolder = toUnwrappedModel(journalFolder);
-
 		boolean isNew = journalFolder.isNew();
+
+		if (!(journalFolder instanceof JournalFolderModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(journalFolder.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(journalFolder);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in journalFolder proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom JournalFolder implementation " +
+				journalFolder.getClass());
+		}
 
 		JournalFolderModelImpl journalFolderModelImpl = (JournalFolderModelImpl)journalFolder;
 
@@ -7835,38 +7849,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		journalFolder.resetOriginalValues();
 
 		return journalFolder;
-	}
-
-	protected JournalFolder toUnwrappedModel(JournalFolder journalFolder) {
-		if (journalFolder instanceof JournalFolderImpl) {
-			return journalFolder;
-		}
-
-		JournalFolderImpl journalFolderImpl = new JournalFolderImpl();
-
-		journalFolderImpl.setNew(journalFolder.isNew());
-		journalFolderImpl.setPrimaryKey(journalFolder.getPrimaryKey());
-
-		journalFolderImpl.setUuid(journalFolder.getUuid());
-		journalFolderImpl.setFolderId(journalFolder.getFolderId());
-		journalFolderImpl.setGroupId(journalFolder.getGroupId());
-		journalFolderImpl.setCompanyId(journalFolder.getCompanyId());
-		journalFolderImpl.setUserId(journalFolder.getUserId());
-		journalFolderImpl.setUserName(journalFolder.getUserName());
-		journalFolderImpl.setCreateDate(journalFolder.getCreateDate());
-		journalFolderImpl.setModifiedDate(journalFolder.getModifiedDate());
-		journalFolderImpl.setParentFolderId(journalFolder.getParentFolderId());
-		journalFolderImpl.setTreePath(journalFolder.getTreePath());
-		journalFolderImpl.setName(journalFolder.getName());
-		journalFolderImpl.setDescription(journalFolder.getDescription());
-		journalFolderImpl.setRestrictionType(journalFolder.getRestrictionType());
-		journalFolderImpl.setLastPublishDate(journalFolder.getLastPublishDate());
-		journalFolderImpl.setStatus(journalFolder.getStatus());
-		journalFolderImpl.setStatusByUserId(journalFolder.getStatusByUserId());
-		journalFolderImpl.setStatusByUserName(journalFolder.getStatusByUserName());
-		journalFolderImpl.setStatusDate(journalFolder.getStatusDate());
-
-		return journalFolderImpl;
 	}
 
 	/**

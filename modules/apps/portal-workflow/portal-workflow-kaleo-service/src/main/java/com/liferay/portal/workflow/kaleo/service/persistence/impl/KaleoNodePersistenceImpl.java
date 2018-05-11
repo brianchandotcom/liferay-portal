@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -43,6 +44,7 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNodePersistenc
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1840,8 +1842,6 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 	@Override
 	protected KaleoNode removeImpl(KaleoNode kaleoNode) {
-		kaleoNode = toUnwrappedModel(kaleoNode);
-
 		Session session = null;
 
 		try {
@@ -1872,9 +1872,23 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 	@Override
 	public KaleoNode updateImpl(KaleoNode kaleoNode) {
-		kaleoNode = toUnwrappedModel(kaleoNode);
-
 		boolean isNew = kaleoNode.isNew();
+
+		if (!(kaleoNode instanceof KaleoNodeModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoNode.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoNode);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoNode proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoNode implementation " +
+				kaleoNode.getClass());
+		}
 
 		KaleoNodeModelImpl kaleoNodeModelImpl = (KaleoNodeModelImpl)kaleoNode;
 
@@ -2022,34 +2036,6 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		kaleoNode.resetOriginalValues();
 
 		return kaleoNode;
-	}
-
-	protected KaleoNode toUnwrappedModel(KaleoNode kaleoNode) {
-		if (kaleoNode instanceof KaleoNodeImpl) {
-			return kaleoNode;
-		}
-
-		KaleoNodeImpl kaleoNodeImpl = new KaleoNodeImpl();
-
-		kaleoNodeImpl.setNew(kaleoNode.isNew());
-		kaleoNodeImpl.setPrimaryKey(kaleoNode.getPrimaryKey());
-
-		kaleoNodeImpl.setKaleoNodeId(kaleoNode.getKaleoNodeId());
-		kaleoNodeImpl.setGroupId(kaleoNode.getGroupId());
-		kaleoNodeImpl.setCompanyId(kaleoNode.getCompanyId());
-		kaleoNodeImpl.setUserId(kaleoNode.getUserId());
-		kaleoNodeImpl.setUserName(kaleoNode.getUserName());
-		kaleoNodeImpl.setCreateDate(kaleoNode.getCreateDate());
-		kaleoNodeImpl.setModifiedDate(kaleoNode.getModifiedDate());
-		kaleoNodeImpl.setKaleoDefinitionVersionId(kaleoNode.getKaleoDefinitionVersionId());
-		kaleoNodeImpl.setName(kaleoNode.getName());
-		kaleoNodeImpl.setMetadata(kaleoNode.getMetadata());
-		kaleoNodeImpl.setDescription(kaleoNode.getDescription());
-		kaleoNodeImpl.setType(kaleoNode.getType());
-		kaleoNodeImpl.setInitial(kaleoNode.isInitial());
-		kaleoNodeImpl.setTerminal(kaleoNode.isTerminal());
-
-		return kaleoNodeImpl;
 	}
 
 	/**

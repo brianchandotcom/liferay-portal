@@ -33,10 +33,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1296,8 +1299,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	@Override
 	protected AssetEntryAssetCategoryRel removeImpl(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
-		assetEntryAssetCategoryRel = toUnwrappedModel(assetEntryAssetCategoryRel);
-
 		Session session = null;
 
 		try {
@@ -1329,9 +1330,23 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	@Override
 	public AssetEntryAssetCategoryRel updateImpl(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
-		assetEntryAssetCategoryRel = toUnwrappedModel(assetEntryAssetCategoryRel);
-
 		boolean isNew = assetEntryAssetCategoryRel.isNew();
+
+		if (!(assetEntryAssetCategoryRel instanceof AssetEntryAssetCategoryRelModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(assetEntryAssetCategoryRel.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(assetEntryAssetCategoryRel);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in assetEntryAssetCategoryRel proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom AssetEntryAssetCategoryRel implementation " +
+				assetEntryAssetCategoryRel.getClass());
+		}
 
 		AssetEntryAssetCategoryRelModelImpl assetEntryAssetCategoryRelModelImpl = (AssetEntryAssetCategoryRelModelImpl)assetEntryAssetCategoryRel;
 
@@ -1434,25 +1449,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		assetEntryAssetCategoryRel.resetOriginalValues();
 
 		return assetEntryAssetCategoryRel;
-	}
-
-	protected AssetEntryAssetCategoryRel toUnwrappedModel(
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
-		if (assetEntryAssetCategoryRel instanceof AssetEntryAssetCategoryRelImpl) {
-			return assetEntryAssetCategoryRel;
-		}
-
-		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl = new AssetEntryAssetCategoryRelImpl();
-
-		assetEntryAssetCategoryRelImpl.setNew(assetEntryAssetCategoryRel.isNew());
-		assetEntryAssetCategoryRelImpl.setPrimaryKey(assetEntryAssetCategoryRel.getPrimaryKey());
-
-		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId());
-		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryAssetCategoryRel.getAssetEntryId());
-		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetEntryAssetCategoryRel.getAssetCategoryId());
-		assetEntryAssetCategoryRelImpl.setPriority(assetEntryAssetCategoryRel.getPriority());
-
-		return assetEntryAssetCategoryRelImpl;
 	}
 
 	/**

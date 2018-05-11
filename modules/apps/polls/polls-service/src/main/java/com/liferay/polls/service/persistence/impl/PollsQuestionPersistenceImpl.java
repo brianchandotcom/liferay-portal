@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2567,8 +2569,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 	@Override
 	protected PollsQuestion removeImpl(PollsQuestion pollsQuestion) {
-		pollsQuestion = toUnwrappedModel(pollsQuestion);
-
 		Session session = null;
 
 		try {
@@ -2599,9 +2599,23 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 	@Override
 	public PollsQuestion updateImpl(PollsQuestion pollsQuestion) {
-		pollsQuestion = toUnwrappedModel(pollsQuestion);
-
 		boolean isNew = pollsQuestion.isNew();
+
+		if (!(pollsQuestion instanceof PollsQuestionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(pollsQuestion.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(pollsQuestion);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in pollsQuestion proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom PollsQuestion implementation " +
+				pollsQuestion.getClass());
+		}
 
 		PollsQuestionModelImpl pollsQuestionModelImpl = (PollsQuestionModelImpl)pollsQuestion;
 
@@ -2755,33 +2769,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		pollsQuestion.resetOriginalValues();
 
 		return pollsQuestion;
-	}
-
-	protected PollsQuestion toUnwrappedModel(PollsQuestion pollsQuestion) {
-		if (pollsQuestion instanceof PollsQuestionImpl) {
-			return pollsQuestion;
-		}
-
-		PollsQuestionImpl pollsQuestionImpl = new PollsQuestionImpl();
-
-		pollsQuestionImpl.setNew(pollsQuestion.isNew());
-		pollsQuestionImpl.setPrimaryKey(pollsQuestion.getPrimaryKey());
-
-		pollsQuestionImpl.setUuid(pollsQuestion.getUuid());
-		pollsQuestionImpl.setQuestionId(pollsQuestion.getQuestionId());
-		pollsQuestionImpl.setGroupId(pollsQuestion.getGroupId());
-		pollsQuestionImpl.setCompanyId(pollsQuestion.getCompanyId());
-		pollsQuestionImpl.setUserId(pollsQuestion.getUserId());
-		pollsQuestionImpl.setUserName(pollsQuestion.getUserName());
-		pollsQuestionImpl.setCreateDate(pollsQuestion.getCreateDate());
-		pollsQuestionImpl.setModifiedDate(pollsQuestion.getModifiedDate());
-		pollsQuestionImpl.setTitle(pollsQuestion.getTitle());
-		pollsQuestionImpl.setDescription(pollsQuestion.getDescription());
-		pollsQuestionImpl.setExpirationDate(pollsQuestion.getExpirationDate());
-		pollsQuestionImpl.setLastPublishDate(pollsQuestion.getLastPublishDate());
-		pollsQuestionImpl.setLastVoteDate(pollsQuestion.getLastVoteDate());
-
-		return pollsQuestionImpl;
 	}
 
 	/**

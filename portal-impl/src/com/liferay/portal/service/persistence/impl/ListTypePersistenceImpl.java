@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.impl.ListTypeModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1132,8 +1134,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 	@Override
 	protected ListType removeImpl(ListType listType) {
-		listType = toUnwrappedModel(listType);
-
 		Session session = null;
 
 		try {
@@ -1164,9 +1164,23 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 	@Override
 	public ListType updateImpl(ListType listType) {
-		listType = toUnwrappedModel(listType);
-
 		boolean isNew = listType.isNew();
+
+		if (!(listType instanceof ListTypeModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(listType.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(listType);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in listType proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom ListType implementation " +
+				listType.getClass());
+		}
 
 		ListTypeModelImpl listTypeModelImpl = (ListTypeModelImpl)listType;
 
@@ -1235,24 +1249,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		listType.resetOriginalValues();
 
 		return listType;
-	}
-
-	protected ListType toUnwrappedModel(ListType listType) {
-		if (listType instanceof ListTypeImpl) {
-			return listType;
-		}
-
-		ListTypeImpl listTypeImpl = new ListTypeImpl();
-
-		listTypeImpl.setNew(listType.isNew());
-		listTypeImpl.setPrimaryKey(listType.getPrimaryKey());
-
-		listTypeImpl.setMvccVersion(listType.getMvccVersion());
-		listTypeImpl.setListTypeId(listType.getListTypeId());
-		listTypeImpl.setName(listType.getName());
-		listTypeImpl.setType(listType.getType());
-
-		return listTypeImpl;
 	}
 
 	/**

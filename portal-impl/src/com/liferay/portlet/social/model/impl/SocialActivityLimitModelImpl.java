@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -676,7 +677,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	private static final ClassLoader _classLoader = SocialActivityLimit.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SocialActivityLimit.class
+			SocialActivityLimit.class, ModelWrapper.class
 		};
 	private long _activityLimitId;
 	private long _groupId;

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.PasswordTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.PasswordTrackerImpl;
@@ -43,6 +44,7 @@ import com.liferay.portal.model.impl.PasswordTrackerModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -767,8 +769,6 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 
 	@Override
 	protected PasswordTracker removeImpl(PasswordTracker passwordTracker) {
-		passwordTracker = toUnwrappedModel(passwordTracker);
-
 		Session session = null;
 
 		try {
@@ -799,9 +799,23 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 
 	@Override
 	public PasswordTracker updateImpl(PasswordTracker passwordTracker) {
-		passwordTracker = toUnwrappedModel(passwordTracker);
-
 		boolean isNew = passwordTracker.isNew();
+
+		if (!(passwordTracker instanceof PasswordTrackerModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(passwordTracker.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(passwordTracker);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in passwordTracker proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom PasswordTracker implementation " +
+				passwordTracker.getClass());
+		}
 
 		PasswordTrackerModelImpl passwordTrackerModelImpl = (PasswordTrackerModelImpl)passwordTracker;
 
@@ -870,26 +884,6 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		passwordTracker.resetOriginalValues();
 
 		return passwordTracker;
-	}
-
-	protected PasswordTracker toUnwrappedModel(PasswordTracker passwordTracker) {
-		if (passwordTracker instanceof PasswordTrackerImpl) {
-			return passwordTracker;
-		}
-
-		PasswordTrackerImpl passwordTrackerImpl = new PasswordTrackerImpl();
-
-		passwordTrackerImpl.setNew(passwordTracker.isNew());
-		passwordTrackerImpl.setPrimaryKey(passwordTracker.getPrimaryKey());
-
-		passwordTrackerImpl.setMvccVersion(passwordTracker.getMvccVersion());
-		passwordTrackerImpl.setPasswordTrackerId(passwordTracker.getPasswordTrackerId());
-		passwordTrackerImpl.setCompanyId(passwordTracker.getCompanyId());
-		passwordTrackerImpl.setUserId(passwordTracker.getUserId());
-		passwordTrackerImpl.setCreateDate(passwordTracker.getCreateDate());
-		passwordTrackerImpl.setPassword(passwordTracker.getPassword());
-
-		return passwordTrackerImpl;
 	}
 
 	/**

@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3182,8 +3185,6 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 
 	@Override
 	protected ChangesetEntry removeImpl(ChangesetEntry changesetEntry) {
-		changesetEntry = toUnwrappedModel(changesetEntry);
-
 		Session session = null;
 
 		try {
@@ -3214,9 +3215,23 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 
 	@Override
 	public ChangesetEntry updateImpl(ChangesetEntry changesetEntry) {
-		changesetEntry = toUnwrappedModel(changesetEntry);
-
 		boolean isNew = changesetEntry.isNew();
+
+		if (!(changesetEntry instanceof ChangesetEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(changesetEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(changesetEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in changesetEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom ChangesetEntry implementation " +
+				changesetEntry.getClass());
+		}
 
 		ChangesetEntryModelImpl changesetEntryModelImpl = (ChangesetEntryModelImpl)changesetEntry;
 
@@ -3424,30 +3439,6 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 		changesetEntry.resetOriginalValues();
 
 		return changesetEntry;
-	}
-
-	protected ChangesetEntry toUnwrappedModel(ChangesetEntry changesetEntry) {
-		if (changesetEntry instanceof ChangesetEntryImpl) {
-			return changesetEntry;
-		}
-
-		ChangesetEntryImpl changesetEntryImpl = new ChangesetEntryImpl();
-
-		changesetEntryImpl.setNew(changesetEntry.isNew());
-		changesetEntryImpl.setPrimaryKey(changesetEntry.getPrimaryKey());
-
-		changesetEntryImpl.setChangesetEntryId(changesetEntry.getChangesetEntryId());
-		changesetEntryImpl.setGroupId(changesetEntry.getGroupId());
-		changesetEntryImpl.setCompanyId(changesetEntry.getCompanyId());
-		changesetEntryImpl.setUserId(changesetEntry.getUserId());
-		changesetEntryImpl.setUserName(changesetEntry.getUserName());
-		changesetEntryImpl.setCreateDate(changesetEntry.getCreateDate());
-		changesetEntryImpl.setModifiedDate(changesetEntry.getModifiedDate());
-		changesetEntryImpl.setChangesetCollectionId(changesetEntry.getChangesetCollectionId());
-		changesetEntryImpl.setClassNameId(changesetEntry.getClassNameId());
-		changesetEntryImpl.setClassPK(changesetEntry.getClassPK());
-
-		return changesetEntryImpl;
 	}
 
 	/**

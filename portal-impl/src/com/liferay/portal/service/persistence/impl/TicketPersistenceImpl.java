@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.TicketPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,6 +45,7 @@ import com.liferay.portal.model.impl.TicketModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1731,8 +1733,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 	@Override
 	protected Ticket removeImpl(Ticket ticket) {
-		ticket = toUnwrappedModel(ticket);
-
 		Session session = null;
 
 		try {
@@ -1763,9 +1763,23 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 	@Override
 	public Ticket updateImpl(Ticket ticket) {
-		ticket = toUnwrappedModel(ticket);
-
 		boolean isNew = ticket.isNew();
+
+		if (!(ticket instanceof TicketModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ticket.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ticket);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ticket proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Ticket implementation " +
+				ticket.getClass());
+		}
 
 		TicketModelImpl ticketModelImpl = (TicketModelImpl)ticket;
 
@@ -1878,30 +1892,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		ticket.resetOriginalValues();
 
 		return ticket;
-	}
-
-	protected Ticket toUnwrappedModel(Ticket ticket) {
-		if (ticket instanceof TicketImpl) {
-			return ticket;
-		}
-
-		TicketImpl ticketImpl = new TicketImpl();
-
-		ticketImpl.setNew(ticket.isNew());
-		ticketImpl.setPrimaryKey(ticket.getPrimaryKey());
-
-		ticketImpl.setMvccVersion(ticket.getMvccVersion());
-		ticketImpl.setTicketId(ticket.getTicketId());
-		ticketImpl.setCompanyId(ticket.getCompanyId());
-		ticketImpl.setCreateDate(ticket.getCreateDate());
-		ticketImpl.setClassNameId(ticket.getClassNameId());
-		ticketImpl.setClassPK(ticket.getClassPK());
-		ticketImpl.setKey(ticket.getKey());
-		ticketImpl.setType(ticket.getType());
-		ticketImpl.setExtraInfo(ticket.getExtraInfo());
-		ticketImpl.setExpirationDate(ticket.getExpirationDate());
-
-		return ticketImpl;
 	}
 
 	/**

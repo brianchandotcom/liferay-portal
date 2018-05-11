@@ -39,11 +39,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2464,8 +2467,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	@Override
 	protected LayoutPageTemplateCollection removeImpl(
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-		layoutPageTemplateCollection = toUnwrappedModel(layoutPageTemplateCollection);
-
 		Session session = null;
 
 		try {
@@ -2497,9 +2498,23 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	@Override
 	public LayoutPageTemplateCollection updateImpl(
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-		layoutPageTemplateCollection = toUnwrappedModel(layoutPageTemplateCollection);
-
 		boolean isNew = layoutPageTemplateCollection.isNew();
+
+		if (!(layoutPageTemplateCollection instanceof LayoutPageTemplateCollectionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(layoutPageTemplateCollection.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(layoutPageTemplateCollection);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in layoutPageTemplateCollection proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom LayoutPageTemplateCollection implementation " +
+				layoutPageTemplateCollection.getClass());
+		}
 
 		LayoutPageTemplateCollectionModelImpl layoutPageTemplateCollectionModelImpl =
 			(LayoutPageTemplateCollectionModelImpl)layoutPageTemplateCollection;
@@ -2601,30 +2616,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		layoutPageTemplateCollection.resetOriginalValues();
 
 		return layoutPageTemplateCollection;
-	}
-
-	protected LayoutPageTemplateCollection toUnwrappedModel(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-		if (layoutPageTemplateCollection instanceof LayoutPageTemplateCollectionImpl) {
-			return layoutPageTemplateCollection;
-		}
-
-		LayoutPageTemplateCollectionImpl layoutPageTemplateCollectionImpl = new LayoutPageTemplateCollectionImpl();
-
-		layoutPageTemplateCollectionImpl.setNew(layoutPageTemplateCollection.isNew());
-		layoutPageTemplateCollectionImpl.setPrimaryKey(layoutPageTemplateCollection.getPrimaryKey());
-
-		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
-		layoutPageTemplateCollectionImpl.setGroupId(layoutPageTemplateCollection.getGroupId());
-		layoutPageTemplateCollectionImpl.setCompanyId(layoutPageTemplateCollection.getCompanyId());
-		layoutPageTemplateCollectionImpl.setUserId(layoutPageTemplateCollection.getUserId());
-		layoutPageTemplateCollectionImpl.setUserName(layoutPageTemplateCollection.getUserName());
-		layoutPageTemplateCollectionImpl.setCreateDate(layoutPageTemplateCollection.getCreateDate());
-		layoutPageTemplateCollectionImpl.setModifiedDate(layoutPageTemplateCollection.getModifiedDate());
-		layoutPageTemplateCollectionImpl.setName(layoutPageTemplateCollection.getName());
-		layoutPageTemplateCollectionImpl.setDescription(layoutPageTemplateCollection.getDescription());
-
-		return layoutPageTemplateCollectionImpl;
 	}
 
 	/**

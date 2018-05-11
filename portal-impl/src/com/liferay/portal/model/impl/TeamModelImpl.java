@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.TeamModel;
 import com.liferay.portal.kernel.model.TeamSoap;
@@ -837,7 +838,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	private static final ClassLoader _classLoader = Team.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Team.class
+			Team.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private String _uuid;

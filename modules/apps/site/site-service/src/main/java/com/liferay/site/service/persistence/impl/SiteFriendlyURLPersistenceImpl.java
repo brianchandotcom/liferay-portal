@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.site.service.persistence.SiteFriendlyURLPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3223,8 +3225,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 
 	@Override
 	protected SiteFriendlyURL removeImpl(SiteFriendlyURL siteFriendlyURL) {
-		siteFriendlyURL = toUnwrappedModel(siteFriendlyURL);
-
 		Session session = null;
 
 		try {
@@ -3255,9 +3255,23 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 
 	@Override
 	public SiteFriendlyURL updateImpl(SiteFriendlyURL siteFriendlyURL) {
-		siteFriendlyURL = toUnwrappedModel(siteFriendlyURL);
-
 		boolean isNew = siteFriendlyURL.isNew();
+
+		if (!(siteFriendlyURL instanceof SiteFriendlyURLModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(siteFriendlyURL.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(siteFriendlyURL);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in siteFriendlyURL proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SiteFriendlyURL implementation " +
+				siteFriendlyURL.getClass());
+		}
 
 		SiteFriendlyURLModelImpl siteFriendlyURLModelImpl = (SiteFriendlyURLModelImpl)siteFriendlyURL;
 
@@ -3418,31 +3432,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 		siteFriendlyURL.resetOriginalValues();
 
 		return siteFriendlyURL;
-	}
-
-	protected SiteFriendlyURL toUnwrappedModel(SiteFriendlyURL siteFriendlyURL) {
-		if (siteFriendlyURL instanceof SiteFriendlyURLImpl) {
-			return siteFriendlyURL;
-		}
-
-		SiteFriendlyURLImpl siteFriendlyURLImpl = new SiteFriendlyURLImpl();
-
-		siteFriendlyURLImpl.setNew(siteFriendlyURL.isNew());
-		siteFriendlyURLImpl.setPrimaryKey(siteFriendlyURL.getPrimaryKey());
-
-		siteFriendlyURLImpl.setUuid(siteFriendlyURL.getUuid());
-		siteFriendlyURLImpl.setSiteFriendlyURLId(siteFriendlyURL.getSiteFriendlyURLId());
-		siteFriendlyURLImpl.setCompanyId(siteFriendlyURL.getCompanyId());
-		siteFriendlyURLImpl.setUserId(siteFriendlyURL.getUserId());
-		siteFriendlyURLImpl.setUserName(siteFriendlyURL.getUserName());
-		siteFriendlyURLImpl.setCreateDate(siteFriendlyURL.getCreateDate());
-		siteFriendlyURLImpl.setModifiedDate(siteFriendlyURL.getModifiedDate());
-		siteFriendlyURLImpl.setGroupId(siteFriendlyURL.getGroupId());
-		siteFriendlyURLImpl.setFriendlyURL(siteFriendlyURL.getFriendlyURL());
-		siteFriendlyURLImpl.setLanguageId(siteFriendlyURL.getLanguageId());
-		siteFriendlyURLImpl.setLastPublishDate(siteFriendlyURL.getLastPublishDate());
-
-		return siteFriendlyURLImpl;
 	}
 
 	/**

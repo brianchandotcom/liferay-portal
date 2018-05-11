@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,6 +53,8 @@ import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -5248,8 +5251,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	@Override
 	protected AssetEntry removeImpl(AssetEntry assetEntry) {
-		assetEntry = toUnwrappedModel(assetEntry);
-
 		assetEntryToAssetCategoryTableMapper.deleteLeftPrimaryKeyTableMappings(assetEntry.getPrimaryKey());
 
 		assetEntryToAssetTagTableMapper.deleteLeftPrimaryKeyTableMappings(assetEntry.getPrimaryKey());
@@ -5284,9 +5285,23 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 	@Override
 	public AssetEntry updateImpl(AssetEntry assetEntry) {
-		assetEntry = toUnwrappedModel(assetEntry);
-
 		boolean isNew = assetEntry.isNew();
+
+		if (!(assetEntry instanceof AssetEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(assetEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(assetEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in assetEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom AssetEntry implementation " +
+				assetEntry.getClass());
+		}
 
 		AssetEntryModelImpl assetEntryModelImpl = (AssetEntryModelImpl)assetEntry;
 
@@ -5565,47 +5580,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		assetEntry.resetOriginalValues();
 
 		return assetEntry;
-	}
-
-	protected AssetEntry toUnwrappedModel(AssetEntry assetEntry) {
-		if (assetEntry instanceof AssetEntryImpl) {
-			return assetEntry;
-		}
-
-		AssetEntryImpl assetEntryImpl = new AssetEntryImpl();
-
-		assetEntryImpl.setNew(assetEntry.isNew());
-		assetEntryImpl.setPrimaryKey(assetEntry.getPrimaryKey());
-
-		assetEntryImpl.setEntryId(assetEntry.getEntryId());
-		assetEntryImpl.setGroupId(assetEntry.getGroupId());
-		assetEntryImpl.setCompanyId(assetEntry.getCompanyId());
-		assetEntryImpl.setUserId(assetEntry.getUserId());
-		assetEntryImpl.setUserName(assetEntry.getUserName());
-		assetEntryImpl.setCreateDate(assetEntry.getCreateDate());
-		assetEntryImpl.setModifiedDate(assetEntry.getModifiedDate());
-		assetEntryImpl.setClassNameId(assetEntry.getClassNameId());
-		assetEntryImpl.setClassPK(assetEntry.getClassPK());
-		assetEntryImpl.setClassUuid(assetEntry.getClassUuid());
-		assetEntryImpl.setClassTypeId(assetEntry.getClassTypeId());
-		assetEntryImpl.setListable(assetEntry.isListable());
-		assetEntryImpl.setVisible(assetEntry.isVisible());
-		assetEntryImpl.setStartDate(assetEntry.getStartDate());
-		assetEntryImpl.setEndDate(assetEntry.getEndDate());
-		assetEntryImpl.setPublishDate(assetEntry.getPublishDate());
-		assetEntryImpl.setExpirationDate(assetEntry.getExpirationDate());
-		assetEntryImpl.setMimeType(assetEntry.getMimeType());
-		assetEntryImpl.setTitle(assetEntry.getTitle());
-		assetEntryImpl.setDescription(assetEntry.getDescription());
-		assetEntryImpl.setSummary(assetEntry.getSummary());
-		assetEntryImpl.setUrl(assetEntry.getUrl());
-		assetEntryImpl.setLayoutUuid(assetEntry.getLayoutUuid());
-		assetEntryImpl.setHeight(assetEntry.getHeight());
-		assetEntryImpl.setWidth(assetEntry.getWidth());
-		assetEntryImpl.setPriority(assetEntry.getPriority());
-		assetEntryImpl.setViewCount(assetEntry.getViewCount());
-
-		return assetEntryImpl;
 	}
 
 	/**

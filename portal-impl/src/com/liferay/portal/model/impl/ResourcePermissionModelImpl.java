@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
 import com.liferay.portal.kernel.model.ResourcePermissionSoap;
@@ -773,7 +774,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	private static final ClassLoader _classLoader = ResourcePermission.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ResourcePermission.class
+			ResourcePermission.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _resourcePermissionId;

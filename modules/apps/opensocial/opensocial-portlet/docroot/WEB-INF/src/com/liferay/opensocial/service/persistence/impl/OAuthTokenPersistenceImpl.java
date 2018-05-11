@@ -40,10 +40,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1338,8 +1341,6 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 
 	@Override
 	protected OAuthToken removeImpl(OAuthToken oAuthToken) {
-		oAuthToken = toUnwrappedModel(oAuthToken);
-
 		Session session = null;
 
 		try {
@@ -1370,9 +1371,23 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 
 	@Override
 	public OAuthToken updateImpl(OAuthToken oAuthToken) {
-		oAuthToken = toUnwrappedModel(oAuthToken);
-
 		boolean isNew = oAuthToken.isNew();
+
+		if (!(oAuthToken instanceof OAuthTokenModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(oAuthToken.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(oAuthToken);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in oAuthToken proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom OAuthToken implementation " +
+				oAuthToken.getClass());
+		}
 
 		OAuthTokenModelImpl oAuthTokenModelImpl = (OAuthTokenModelImpl)oAuthToken;
 
@@ -1472,34 +1487,6 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 		oAuthToken.resetOriginalValues();
 
 		return oAuthToken;
-	}
-
-	protected OAuthToken toUnwrappedModel(OAuthToken oAuthToken) {
-		if (oAuthToken instanceof OAuthTokenImpl) {
-			return oAuthToken;
-		}
-
-		OAuthTokenImpl oAuthTokenImpl = new OAuthTokenImpl();
-
-		oAuthTokenImpl.setNew(oAuthToken.isNew());
-		oAuthTokenImpl.setPrimaryKey(oAuthToken.getPrimaryKey());
-
-		oAuthTokenImpl.setOAuthTokenId(oAuthToken.getOAuthTokenId());
-		oAuthTokenImpl.setCompanyId(oAuthToken.getCompanyId());
-		oAuthTokenImpl.setUserId(oAuthToken.getUserId());
-		oAuthTokenImpl.setUserName(oAuthToken.getUserName());
-		oAuthTokenImpl.setCreateDate(oAuthToken.getCreateDate());
-		oAuthTokenImpl.setModifiedDate(oAuthToken.getModifiedDate());
-		oAuthTokenImpl.setGadgetKey(oAuthToken.getGadgetKey());
-		oAuthTokenImpl.setServiceName(oAuthToken.getServiceName());
-		oAuthTokenImpl.setModuleId(oAuthToken.getModuleId());
-		oAuthTokenImpl.setAccessToken(oAuthToken.getAccessToken());
-		oAuthTokenImpl.setTokenName(oAuthToken.getTokenName());
-		oAuthTokenImpl.setTokenSecret(oAuthToken.getTokenSecret());
-		oAuthTokenImpl.setSessionHandle(oAuthToken.getSessionHandle());
-		oAuthTokenImpl.setExpiration(oAuthToken.getExpiration());
-
-		return oAuthTokenImpl;
 	}
 
 	/**

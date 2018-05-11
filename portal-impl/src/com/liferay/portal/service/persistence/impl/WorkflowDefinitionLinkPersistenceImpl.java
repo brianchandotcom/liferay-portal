@@ -37,12 +37,15 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.WorkflowDefinitionLinkImpl;
 import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2389,8 +2392,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	protected WorkflowDefinitionLink removeImpl(
 		WorkflowDefinitionLink workflowDefinitionLink) {
-		workflowDefinitionLink = toUnwrappedModel(workflowDefinitionLink);
-
 		Session session = null;
 
 		try {
@@ -2422,9 +2423,23 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	@Override
 	public WorkflowDefinitionLink updateImpl(
 		WorkflowDefinitionLink workflowDefinitionLink) {
-		workflowDefinitionLink = toUnwrappedModel(workflowDefinitionLink);
-
 		boolean isNew = workflowDefinitionLink.isNew();
+
+		if (!(workflowDefinitionLink instanceof WorkflowDefinitionLinkModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(workflowDefinitionLink.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(workflowDefinitionLink);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in workflowDefinitionLink proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom WorkflowDefinitionLink implementation " +
+				workflowDefinitionLink.getClass());
+		}
 
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
 
@@ -2591,34 +2606,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		workflowDefinitionLink.resetOriginalValues();
 
 		return workflowDefinitionLink;
-	}
-
-	protected WorkflowDefinitionLink toUnwrappedModel(
-		WorkflowDefinitionLink workflowDefinitionLink) {
-		if (workflowDefinitionLink instanceof WorkflowDefinitionLinkImpl) {
-			return workflowDefinitionLink;
-		}
-
-		WorkflowDefinitionLinkImpl workflowDefinitionLinkImpl = new WorkflowDefinitionLinkImpl();
-
-		workflowDefinitionLinkImpl.setNew(workflowDefinitionLink.isNew());
-		workflowDefinitionLinkImpl.setPrimaryKey(workflowDefinitionLink.getPrimaryKey());
-
-		workflowDefinitionLinkImpl.setMvccVersion(workflowDefinitionLink.getMvccVersion());
-		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(workflowDefinitionLink.getWorkflowDefinitionLinkId());
-		workflowDefinitionLinkImpl.setGroupId(workflowDefinitionLink.getGroupId());
-		workflowDefinitionLinkImpl.setCompanyId(workflowDefinitionLink.getCompanyId());
-		workflowDefinitionLinkImpl.setUserId(workflowDefinitionLink.getUserId());
-		workflowDefinitionLinkImpl.setUserName(workflowDefinitionLink.getUserName());
-		workflowDefinitionLinkImpl.setCreateDate(workflowDefinitionLink.getCreateDate());
-		workflowDefinitionLinkImpl.setModifiedDate(workflowDefinitionLink.getModifiedDate());
-		workflowDefinitionLinkImpl.setClassNameId(workflowDefinitionLink.getClassNameId());
-		workflowDefinitionLinkImpl.setClassPK(workflowDefinitionLink.getClassPK());
-		workflowDefinitionLinkImpl.setTypePK(workflowDefinitionLink.getTypePK());
-		workflowDefinitionLinkImpl.setWorkflowDefinitionName(workflowDefinitionLink.getWorkflowDefinitionName());
-		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(workflowDefinitionLink.getWorkflowDefinitionVersion());
-
-		return workflowDefinitionLinkImpl;
 	}
 
 	/**

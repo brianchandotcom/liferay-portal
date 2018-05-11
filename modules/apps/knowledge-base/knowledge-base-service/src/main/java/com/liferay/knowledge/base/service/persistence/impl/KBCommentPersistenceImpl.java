@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -5294,8 +5296,6 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 	@Override
 	protected KBComment removeImpl(KBComment kbComment) {
-		kbComment = toUnwrappedModel(kbComment);
-
 		Session session = null;
 
 		try {
@@ -5326,9 +5326,23 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 	@Override
 	public KBComment updateImpl(KBComment kbComment) {
-		kbComment = toUnwrappedModel(kbComment);
-
 		boolean isNew = kbComment.isNew();
+
+		if (!(kbComment instanceof KBCommentModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kbComment.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kbComment);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kbComment proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KBComment implementation " +
+				kbComment.getClass());
+		}
 
 		KBCommentModelImpl kbCommentModelImpl = (KBCommentModelImpl)kbComment;
 
@@ -5636,34 +5650,6 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		kbComment.resetOriginalValues();
 
 		return kbComment;
-	}
-
-	protected KBComment toUnwrappedModel(KBComment kbComment) {
-		if (kbComment instanceof KBCommentImpl) {
-			return kbComment;
-		}
-
-		KBCommentImpl kbCommentImpl = new KBCommentImpl();
-
-		kbCommentImpl.setNew(kbComment.isNew());
-		kbCommentImpl.setPrimaryKey(kbComment.getPrimaryKey());
-
-		kbCommentImpl.setUuid(kbComment.getUuid());
-		kbCommentImpl.setKbCommentId(kbComment.getKbCommentId());
-		kbCommentImpl.setGroupId(kbComment.getGroupId());
-		kbCommentImpl.setCompanyId(kbComment.getCompanyId());
-		kbCommentImpl.setUserId(kbComment.getUserId());
-		kbCommentImpl.setUserName(kbComment.getUserName());
-		kbCommentImpl.setCreateDate(kbComment.getCreateDate());
-		kbCommentImpl.setModifiedDate(kbComment.getModifiedDate());
-		kbCommentImpl.setClassNameId(kbComment.getClassNameId());
-		kbCommentImpl.setClassPK(kbComment.getClassPK());
-		kbCommentImpl.setContent(kbComment.getContent());
-		kbCommentImpl.setUserRating(kbComment.getUserRating());
-		kbCommentImpl.setLastPublishDate(kbComment.getLastPublishDate());
-		kbCommentImpl.setStatus(kbComment.getStatus());
-
-		return kbCommentImpl;
 	}
 
 	/**

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import com.liferay.portlet.social.model.impl.SocialActivityLimitImpl;
@@ -42,6 +43,8 @@ import com.liferay.social.kernel.model.SocialActivityLimit;
 import com.liferay.social.kernel.service.persistence.SocialActivityLimitPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2238,8 +2241,6 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	@Override
 	protected SocialActivityLimit removeImpl(
 		SocialActivityLimit socialActivityLimit) {
-		socialActivityLimit = toUnwrappedModel(socialActivityLimit);
-
 		Session session = null;
 
 		try {
@@ -2271,9 +2272,23 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	@Override
 	public SocialActivityLimit updateImpl(
 		SocialActivityLimit socialActivityLimit) {
-		socialActivityLimit = toUnwrappedModel(socialActivityLimit);
-
 		boolean isNew = socialActivityLimit.isNew();
+
+		if (!(socialActivityLimit instanceof SocialActivityLimitModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(socialActivityLimit.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(socialActivityLimit);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in socialActivityLimit proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SocialActivityLimit implementation " +
+				socialActivityLimit.getClass());
+		}
 
 		SocialActivityLimitModelImpl socialActivityLimitModelImpl = (SocialActivityLimitModelImpl)socialActivityLimit;
 
@@ -2400,30 +2415,6 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		socialActivityLimit.resetOriginalValues();
 
 		return socialActivityLimit;
-	}
-
-	protected SocialActivityLimit toUnwrappedModel(
-		SocialActivityLimit socialActivityLimit) {
-		if (socialActivityLimit instanceof SocialActivityLimitImpl) {
-			return socialActivityLimit;
-		}
-
-		SocialActivityLimitImpl socialActivityLimitImpl = new SocialActivityLimitImpl();
-
-		socialActivityLimitImpl.setNew(socialActivityLimit.isNew());
-		socialActivityLimitImpl.setPrimaryKey(socialActivityLimit.getPrimaryKey());
-
-		socialActivityLimitImpl.setActivityLimitId(socialActivityLimit.getActivityLimitId());
-		socialActivityLimitImpl.setGroupId(socialActivityLimit.getGroupId());
-		socialActivityLimitImpl.setCompanyId(socialActivityLimit.getCompanyId());
-		socialActivityLimitImpl.setUserId(socialActivityLimit.getUserId());
-		socialActivityLimitImpl.setClassNameId(socialActivityLimit.getClassNameId());
-		socialActivityLimitImpl.setClassPK(socialActivityLimit.getClassPK());
-		socialActivityLimitImpl.setActivityType(socialActivityLimit.getActivityType());
-		socialActivityLimitImpl.setActivityCounterName(socialActivityLimit.getActivityCounterName());
-		socialActivityLimitImpl.setValue(socialActivityLimit.getValue());
-
-		return socialActivityLimitImpl;
 	}
 
 	/**

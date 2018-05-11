@@ -24,6 +24,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -490,7 +491,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 
 	private static final ClassLoader _classLoader = DLSyncEvent.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			DLSyncEvent.class
+			DLSyncEvent.class, ModelWrapper.class
 		};
 	private long _syncEventId;
 	private long _companyId;

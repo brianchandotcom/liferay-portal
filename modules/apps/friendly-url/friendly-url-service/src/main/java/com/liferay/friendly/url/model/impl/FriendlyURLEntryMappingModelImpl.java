@@ -24,6 +24,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntryMappingModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -459,7 +460,7 @@ public class FriendlyURLEntryMappingModelImpl extends BaseModelImpl<FriendlyURLE
 
 	private static final ClassLoader _classLoader = FriendlyURLEntryMapping.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			FriendlyURLEntryMapping.class
+			FriendlyURLEntryMapping.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _friendlyURLEntryMappingId;

@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2703,8 +2706,6 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 	@Override
 	protected ChangesetCollection removeImpl(
 		ChangesetCollection changesetCollection) {
-		changesetCollection = toUnwrappedModel(changesetCollection);
-
 		Session session = null;
 
 		try {
@@ -2736,9 +2737,23 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 	@Override
 	public ChangesetCollection updateImpl(
 		ChangesetCollection changesetCollection) {
-		changesetCollection = toUnwrappedModel(changesetCollection);
-
 		boolean isNew = changesetCollection.isNew();
+
+		if (!(changesetCollection instanceof ChangesetCollectionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(changesetCollection.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(changesetCollection);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in changesetCollection proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom ChangesetCollection implementation " +
+				changesetCollection.getClass());
+		}
 
 		ChangesetCollectionModelImpl changesetCollectionModelImpl = (ChangesetCollectionModelImpl)changesetCollection;
 
@@ -2919,30 +2934,6 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 		changesetCollection.resetOriginalValues();
 
 		return changesetCollection;
-	}
-
-	protected ChangesetCollection toUnwrappedModel(
-		ChangesetCollection changesetCollection) {
-		if (changesetCollection instanceof ChangesetCollectionImpl) {
-			return changesetCollection;
-		}
-
-		ChangesetCollectionImpl changesetCollectionImpl = new ChangesetCollectionImpl();
-
-		changesetCollectionImpl.setNew(changesetCollection.isNew());
-		changesetCollectionImpl.setPrimaryKey(changesetCollection.getPrimaryKey());
-
-		changesetCollectionImpl.setChangesetCollectionId(changesetCollection.getChangesetCollectionId());
-		changesetCollectionImpl.setGroupId(changesetCollection.getGroupId());
-		changesetCollectionImpl.setCompanyId(changesetCollection.getCompanyId());
-		changesetCollectionImpl.setUserId(changesetCollection.getUserId());
-		changesetCollectionImpl.setUserName(changesetCollection.getUserName());
-		changesetCollectionImpl.setCreateDate(changesetCollection.getCreateDate());
-		changesetCollectionImpl.setModifiedDate(changesetCollection.getModifiedDate());
-		changesetCollectionImpl.setName(changesetCollection.getName());
-		changesetCollectionImpl.setDescription(changesetCollection.getDescription());
-
-		return changesetCollectionImpl;
 	}
 
 	/**

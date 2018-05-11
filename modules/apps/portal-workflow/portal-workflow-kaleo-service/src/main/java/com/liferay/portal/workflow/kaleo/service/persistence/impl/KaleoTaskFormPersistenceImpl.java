@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -41,6 +42,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2611,8 +2614,6 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 
 	@Override
 	protected KaleoTaskForm removeImpl(KaleoTaskForm kaleoTaskForm) {
-		kaleoTaskForm = toUnwrappedModel(kaleoTaskForm);
-
 		Session session = null;
 
 		try {
@@ -2643,9 +2644,23 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 
 	@Override
 	public KaleoTaskForm updateImpl(KaleoTaskForm kaleoTaskForm) {
-		kaleoTaskForm = toUnwrappedModel(kaleoTaskForm);
-
 		boolean isNew = kaleoTaskForm.isNew();
+
+		if (!(kaleoTaskForm instanceof KaleoTaskFormModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoTaskForm.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoTaskForm);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoTaskForm proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoTaskForm implementation " +
+				kaleoTaskForm.getClass());
+		}
 
 		KaleoTaskFormModelImpl kaleoTaskFormModelImpl = (KaleoTaskFormModelImpl)kaleoTaskForm;
 
@@ -2816,40 +2831,6 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		kaleoTaskForm.resetOriginalValues();
 
 		return kaleoTaskForm;
-	}
-
-	protected KaleoTaskForm toUnwrappedModel(KaleoTaskForm kaleoTaskForm) {
-		if (kaleoTaskForm instanceof KaleoTaskFormImpl) {
-			return kaleoTaskForm;
-		}
-
-		KaleoTaskFormImpl kaleoTaskFormImpl = new KaleoTaskFormImpl();
-
-		kaleoTaskFormImpl.setNew(kaleoTaskForm.isNew());
-		kaleoTaskFormImpl.setPrimaryKey(kaleoTaskForm.getPrimaryKey());
-
-		kaleoTaskFormImpl.setKaleoTaskFormId(kaleoTaskForm.getKaleoTaskFormId());
-		kaleoTaskFormImpl.setGroupId(kaleoTaskForm.getGroupId());
-		kaleoTaskFormImpl.setCompanyId(kaleoTaskForm.getCompanyId());
-		kaleoTaskFormImpl.setUserId(kaleoTaskForm.getUserId());
-		kaleoTaskFormImpl.setUserName(kaleoTaskForm.getUserName());
-		kaleoTaskFormImpl.setCreateDate(kaleoTaskForm.getCreateDate());
-		kaleoTaskFormImpl.setModifiedDate(kaleoTaskForm.getModifiedDate());
-		kaleoTaskFormImpl.setKaleoDefinitionVersionId(kaleoTaskForm.getKaleoDefinitionVersionId());
-		kaleoTaskFormImpl.setKaleoNodeId(kaleoTaskForm.getKaleoNodeId());
-		kaleoTaskFormImpl.setKaleoTaskId(kaleoTaskForm.getKaleoTaskId());
-		kaleoTaskFormImpl.setKaleoTaskName(kaleoTaskForm.getKaleoTaskName());
-		kaleoTaskFormImpl.setName(kaleoTaskForm.getName());
-		kaleoTaskFormImpl.setDescription(kaleoTaskForm.getDescription());
-		kaleoTaskFormImpl.setFormCompanyId(kaleoTaskForm.getFormCompanyId());
-		kaleoTaskFormImpl.setFormDefinition(kaleoTaskForm.getFormDefinition());
-		kaleoTaskFormImpl.setFormGroupId(kaleoTaskForm.getFormGroupId());
-		kaleoTaskFormImpl.setFormId(kaleoTaskForm.getFormId());
-		kaleoTaskFormImpl.setFormUuid(kaleoTaskForm.getFormUuid());
-		kaleoTaskFormImpl.setMetadata(kaleoTaskForm.getMetadata());
-		kaleoTaskFormImpl.setPriority(kaleoTaskForm.getPriority());
-
-		return kaleoTaskFormImpl;
 	}
 
 	/**

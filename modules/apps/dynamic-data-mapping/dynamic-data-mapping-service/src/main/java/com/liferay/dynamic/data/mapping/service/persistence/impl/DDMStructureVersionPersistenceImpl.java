@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -42,6 +43,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1630,8 +1632,6 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	@Override
 	protected DDMStructureVersion removeImpl(
 		DDMStructureVersion ddmStructureVersion) {
-		ddmStructureVersion = toUnwrappedModel(ddmStructureVersion);
-
 		Session session = null;
 
 		try {
@@ -1663,9 +1663,23 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	@Override
 	public DDMStructureVersion updateImpl(
 		DDMStructureVersion ddmStructureVersion) {
-		ddmStructureVersion = toUnwrappedModel(ddmStructureVersion);
-
 		boolean isNew = ddmStructureVersion.isNew();
+
+		if (!(ddmStructureVersion instanceof DDMStructureVersionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmStructureVersion.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmStructureVersion);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmStructureVersion proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMStructureVersion implementation " +
+				ddmStructureVersion.getClass());
+		}
 
 		DDMStructureVersionModelImpl ddmStructureVersionModelImpl = (DDMStructureVersionModelImpl)ddmStructureVersion;
 
@@ -1771,39 +1785,6 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersion.resetOriginalValues();
 
 		return ddmStructureVersion;
-	}
-
-	protected DDMStructureVersion toUnwrappedModel(
-		DDMStructureVersion ddmStructureVersion) {
-		if (ddmStructureVersion instanceof DDMStructureVersionImpl) {
-			return ddmStructureVersion;
-		}
-
-		DDMStructureVersionImpl ddmStructureVersionImpl = new DDMStructureVersionImpl();
-
-		ddmStructureVersionImpl.setNew(ddmStructureVersion.isNew());
-		ddmStructureVersionImpl.setPrimaryKey(ddmStructureVersion.getPrimaryKey());
-
-		ddmStructureVersionImpl.setStructureVersionId(ddmStructureVersion.getStructureVersionId());
-		ddmStructureVersionImpl.setGroupId(ddmStructureVersion.getGroupId());
-		ddmStructureVersionImpl.setCompanyId(ddmStructureVersion.getCompanyId());
-		ddmStructureVersionImpl.setUserId(ddmStructureVersion.getUserId());
-		ddmStructureVersionImpl.setUserName(ddmStructureVersion.getUserName());
-		ddmStructureVersionImpl.setCreateDate(ddmStructureVersion.getCreateDate());
-		ddmStructureVersionImpl.setStructureId(ddmStructureVersion.getStructureId());
-		ddmStructureVersionImpl.setVersion(ddmStructureVersion.getVersion());
-		ddmStructureVersionImpl.setParentStructureId(ddmStructureVersion.getParentStructureId());
-		ddmStructureVersionImpl.setName(ddmStructureVersion.getName());
-		ddmStructureVersionImpl.setDescription(ddmStructureVersion.getDescription());
-		ddmStructureVersionImpl.setDefinition(ddmStructureVersion.getDefinition());
-		ddmStructureVersionImpl.setStorageType(ddmStructureVersion.getStorageType());
-		ddmStructureVersionImpl.setType(ddmStructureVersion.getType());
-		ddmStructureVersionImpl.setStatus(ddmStructureVersion.getStatus());
-		ddmStructureVersionImpl.setStatusByUserId(ddmStructureVersion.getStatusByUserId());
-		ddmStructureVersionImpl.setStatusByUserName(ddmStructureVersion.getStatusByUserName());
-		ddmStructureVersionImpl.setStatusDate(ddmStructureVersion.getStatusDate());
-
-		return ddmStructureVersionImpl;
 	}
 
 	/**

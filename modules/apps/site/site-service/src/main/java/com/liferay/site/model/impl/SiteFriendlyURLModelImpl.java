@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -742,7 +743,7 @@ public class SiteFriendlyURLModelImpl extends BaseModelImpl<SiteFriendlyURL>
 
 	private static final ClassLoader _classLoader = SiteFriendlyURL.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SiteFriendlyURL.class
+			SiteFriendlyURL.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

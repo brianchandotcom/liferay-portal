@@ -23,6 +23,7 @@ import com.liferay.expando.kernel.model.ExpandoValueSoap;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -691,7 +692,7 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 
 	private static final ClassLoader _classLoader = ExpandoValue.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ExpandoValue.class
+			ExpandoValue.class, ModelWrapper.class
 		};
 	private long _valueId;
 	private long _companyId;

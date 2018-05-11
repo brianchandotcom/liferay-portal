@@ -33,10 +33,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -487,8 +490,6 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	protected AssetDisplayPageEntry removeImpl(
 		AssetDisplayPageEntry assetDisplayPageEntry) {
-		assetDisplayPageEntry = toUnwrappedModel(assetDisplayPageEntry);
-
 		Session session = null;
 
 		try {
@@ -520,9 +521,23 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	@Override
 	public AssetDisplayPageEntry updateImpl(
 		AssetDisplayPageEntry assetDisplayPageEntry) {
-		assetDisplayPageEntry = toUnwrappedModel(assetDisplayPageEntry);
-
 		boolean isNew = assetDisplayPageEntry.isNew();
+
+		if (!(assetDisplayPageEntry instanceof AssetDisplayPageEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(assetDisplayPageEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(assetDisplayPageEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in assetDisplayPageEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom AssetDisplayPageEntry implementation " +
+				assetDisplayPageEntry.getClass());
+		}
 
 		AssetDisplayPageEntryModelImpl assetDisplayPageEntryModelImpl = (AssetDisplayPageEntryModelImpl)assetDisplayPageEntry;
 
@@ -569,24 +584,6 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 		assetDisplayPageEntry.resetOriginalValues();
 
 		return assetDisplayPageEntry;
-	}
-
-	protected AssetDisplayPageEntry toUnwrappedModel(
-		AssetDisplayPageEntry assetDisplayPageEntry) {
-		if (assetDisplayPageEntry instanceof AssetDisplayPageEntryImpl) {
-			return assetDisplayPageEntry;
-		}
-
-		AssetDisplayPageEntryImpl assetDisplayPageEntryImpl = new AssetDisplayPageEntryImpl();
-
-		assetDisplayPageEntryImpl.setNew(assetDisplayPageEntry.isNew());
-		assetDisplayPageEntryImpl.setPrimaryKey(assetDisplayPageEntry.getPrimaryKey());
-
-		assetDisplayPageEntryImpl.setAssetDisplayPageEntryId(assetDisplayPageEntry.getAssetDisplayPageEntryId());
-		assetDisplayPageEntryImpl.setAssetEntryId(assetDisplayPageEntry.getAssetEntryId());
-		assetDisplayPageEntryImpl.setLayoutId(assetDisplayPageEntry.getLayoutId());
-
-		return assetDisplayPageEntryImpl;
 	}
 
 	/**

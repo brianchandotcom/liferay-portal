@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -42,6 +43,8 @@ import com.liferay.social.networking.model.impl.MeetupsRegistrationModelImpl;
 import com.liferay.social.networking.service.persistence.MeetupsRegistrationPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1602,8 +1605,6 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	@Override
 	protected MeetupsRegistration removeImpl(
 		MeetupsRegistration meetupsRegistration) {
-		meetupsRegistration = toUnwrappedModel(meetupsRegistration);
-
 		Session session = null;
 
 		try {
@@ -1635,9 +1636,23 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 	@Override
 	public MeetupsRegistration updateImpl(
 		MeetupsRegistration meetupsRegistration) {
-		meetupsRegistration = toUnwrappedModel(meetupsRegistration);
-
 		boolean isNew = meetupsRegistration.isNew();
+
+		if (!(meetupsRegistration instanceof MeetupsRegistrationModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(meetupsRegistration.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(meetupsRegistration);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in meetupsRegistration proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MeetupsRegistration implementation " +
+				meetupsRegistration.getClass());
+		}
 
 		MeetupsRegistrationModelImpl meetupsRegistrationModelImpl = (MeetupsRegistrationModelImpl)meetupsRegistration;
 
@@ -1769,30 +1784,6 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		meetupsRegistration.resetOriginalValues();
 
 		return meetupsRegistration;
-	}
-
-	protected MeetupsRegistration toUnwrappedModel(
-		MeetupsRegistration meetupsRegistration) {
-		if (meetupsRegistration instanceof MeetupsRegistrationImpl) {
-			return meetupsRegistration;
-		}
-
-		MeetupsRegistrationImpl meetupsRegistrationImpl = new MeetupsRegistrationImpl();
-
-		meetupsRegistrationImpl.setNew(meetupsRegistration.isNew());
-		meetupsRegistrationImpl.setPrimaryKey(meetupsRegistration.getPrimaryKey());
-
-		meetupsRegistrationImpl.setMeetupsRegistrationId(meetupsRegistration.getMeetupsRegistrationId());
-		meetupsRegistrationImpl.setCompanyId(meetupsRegistration.getCompanyId());
-		meetupsRegistrationImpl.setUserId(meetupsRegistration.getUserId());
-		meetupsRegistrationImpl.setUserName(meetupsRegistration.getUserName());
-		meetupsRegistrationImpl.setCreateDate(meetupsRegistration.getCreateDate());
-		meetupsRegistrationImpl.setModifiedDate(meetupsRegistration.getModifiedDate());
-		meetupsRegistrationImpl.setMeetupsEntryId(meetupsRegistration.getMeetupsEntryId());
-		meetupsRegistrationImpl.setStatus(meetupsRegistration.getStatus());
-		meetupsRegistrationImpl.setComments(meetupsRegistration.getComments());
-
-		return meetupsRegistrationImpl;
 	}
 
 	/**

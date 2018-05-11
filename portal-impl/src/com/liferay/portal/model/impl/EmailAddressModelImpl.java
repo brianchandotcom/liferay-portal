@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.EmailAddressModel;
 import com.liferay.portal.kernel.model.EmailAddressSoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -901,7 +902,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	private static final ClassLoader _classLoader = EmailAddress.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			EmailAddress.class
+			EmailAddress.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private String _uuid;

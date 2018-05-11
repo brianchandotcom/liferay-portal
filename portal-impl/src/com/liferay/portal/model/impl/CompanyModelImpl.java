@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyModel;
 import com.liferay.portal.kernel.model.CompanySoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -783,7 +784,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 
 	private static final ClassLoader _classLoader = Company.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Company.class
+			Company.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _companyId;

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ClassNameModel;
 import com.liferay.portal.kernel.model.ClassNameSoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -439,7 +440,7 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 
 	private static final ClassLoader _classLoader = ClassName.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ClassName.class
+			ClassName.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _classNameId;

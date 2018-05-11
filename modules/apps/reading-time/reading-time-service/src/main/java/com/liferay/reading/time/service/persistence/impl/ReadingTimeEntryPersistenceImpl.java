@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.reading.time.service.persistence.ReadingTimeEntryPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2004,8 +2006,6 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 
 	@Override
 	protected ReadingTimeEntry removeImpl(ReadingTimeEntry readingTimeEntry) {
-		readingTimeEntry = toUnwrappedModel(readingTimeEntry);
-
 		Session session = null;
 
 		try {
@@ -2036,9 +2036,23 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 
 	@Override
 	public ReadingTimeEntry updateImpl(ReadingTimeEntry readingTimeEntry) {
-		readingTimeEntry = toUnwrappedModel(readingTimeEntry);
-
 		boolean isNew = readingTimeEntry.isNew();
+
+		if (!(readingTimeEntry instanceof ReadingTimeEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(readingTimeEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(readingTimeEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in readingTimeEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom ReadingTimeEntry implementation " +
+				readingTimeEntry.getClass());
+		}
 
 		ReadingTimeEntryModelImpl readingTimeEntryModelImpl = (ReadingTimeEntryModelImpl)readingTimeEntry;
 
@@ -2169,30 +2183,6 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 		readingTimeEntry.resetOriginalValues();
 
 		return readingTimeEntry;
-	}
-
-	protected ReadingTimeEntry toUnwrappedModel(
-		ReadingTimeEntry readingTimeEntry) {
-		if (readingTimeEntry instanceof ReadingTimeEntryImpl) {
-			return readingTimeEntry;
-		}
-
-		ReadingTimeEntryImpl readingTimeEntryImpl = new ReadingTimeEntryImpl();
-
-		readingTimeEntryImpl.setNew(readingTimeEntry.isNew());
-		readingTimeEntryImpl.setPrimaryKey(readingTimeEntry.getPrimaryKey());
-
-		readingTimeEntryImpl.setUuid(readingTimeEntry.getUuid());
-		readingTimeEntryImpl.setReadingTimeEntryId(readingTimeEntry.getReadingTimeEntryId());
-		readingTimeEntryImpl.setGroupId(readingTimeEntry.getGroupId());
-		readingTimeEntryImpl.setCompanyId(readingTimeEntry.getCompanyId());
-		readingTimeEntryImpl.setCreateDate(readingTimeEntry.getCreateDate());
-		readingTimeEntryImpl.setModifiedDate(readingTimeEntry.getModifiedDate());
-		readingTimeEntryImpl.setClassNameId(readingTimeEntry.getClassNameId());
-		readingTimeEntryImpl.setClassPK(readingTimeEntry.getClassPK());
-		readingTimeEntryImpl.setReadingTime(readingTimeEntry.getReadingTime());
-
-		return readingTimeEntryImpl;
 	}
 
 	/**

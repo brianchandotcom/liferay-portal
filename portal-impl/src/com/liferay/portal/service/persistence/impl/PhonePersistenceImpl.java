@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.PhonePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,6 +48,7 @@ import com.liferay.portal.model.impl.PhoneModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4122,8 +4124,6 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 	@Override
 	protected Phone removeImpl(Phone phone) {
-		phone = toUnwrappedModel(phone);
-
 		Session session = null;
 
 		try {
@@ -4154,9 +4154,23 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 	@Override
 	public Phone updateImpl(Phone phone) {
-		phone = toUnwrappedModel(phone);
-
 		boolean isNew = phone.isNew();
+
+		if (!(phone instanceof PhoneModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(phone.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(phone);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in phone proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Phone implementation " +
+				phone.getClass());
+		}
 
 		PhoneModelImpl phoneModelImpl = (PhoneModelImpl)phone;
 
@@ -4418,34 +4432,6 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		phone.resetOriginalValues();
 
 		return phone;
-	}
-
-	protected Phone toUnwrappedModel(Phone phone) {
-		if (phone instanceof PhoneImpl) {
-			return phone;
-		}
-
-		PhoneImpl phoneImpl = new PhoneImpl();
-
-		phoneImpl.setNew(phone.isNew());
-		phoneImpl.setPrimaryKey(phone.getPrimaryKey());
-
-		phoneImpl.setMvccVersion(phone.getMvccVersion());
-		phoneImpl.setUuid(phone.getUuid());
-		phoneImpl.setPhoneId(phone.getPhoneId());
-		phoneImpl.setCompanyId(phone.getCompanyId());
-		phoneImpl.setUserId(phone.getUserId());
-		phoneImpl.setUserName(phone.getUserName());
-		phoneImpl.setCreateDate(phone.getCreateDate());
-		phoneImpl.setModifiedDate(phone.getModifiedDate());
-		phoneImpl.setClassNameId(phone.getClassNameId());
-		phoneImpl.setClassPK(phone.getClassPK());
-		phoneImpl.setNumber(phone.getNumber());
-		phoneImpl.setExtension(phone.getExtension());
-		phoneImpl.setTypeId(phone.getTypeId());
-		phoneImpl.setPrimary(phone.isPrimary());
-
-		return phoneImpl;
 	}
 
 	/**

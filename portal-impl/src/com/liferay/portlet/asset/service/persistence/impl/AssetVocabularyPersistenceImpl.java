@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,6 +54,7 @@ import com.liferay.portlet.asset.model.impl.AssetVocabularyModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -4836,8 +4838,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	@Override
 	protected AssetVocabulary removeImpl(AssetVocabulary assetVocabulary) {
-		assetVocabulary = toUnwrappedModel(assetVocabulary);
-
 		Session session = null;
 
 		try {
@@ -4868,9 +4868,23 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 	@Override
 	public AssetVocabulary updateImpl(AssetVocabulary assetVocabulary) {
-		assetVocabulary = toUnwrappedModel(assetVocabulary);
-
 		boolean isNew = assetVocabulary.isNew();
+
+		if (!(assetVocabulary instanceof AssetVocabularyModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(assetVocabulary.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(assetVocabulary);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in assetVocabulary proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom AssetVocabulary implementation " +
+				assetVocabulary.getClass());
+		}
 
 		AssetVocabularyModelImpl assetVocabularyModelImpl = (AssetVocabularyModelImpl)assetVocabulary;
 
@@ -5047,33 +5061,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		assetVocabulary.resetOriginalValues();
 
 		return assetVocabulary;
-	}
-
-	protected AssetVocabulary toUnwrappedModel(AssetVocabulary assetVocabulary) {
-		if (assetVocabulary instanceof AssetVocabularyImpl) {
-			return assetVocabulary;
-		}
-
-		AssetVocabularyImpl assetVocabularyImpl = new AssetVocabularyImpl();
-
-		assetVocabularyImpl.setNew(assetVocabulary.isNew());
-		assetVocabularyImpl.setPrimaryKey(assetVocabulary.getPrimaryKey());
-
-		assetVocabularyImpl.setUuid(assetVocabulary.getUuid());
-		assetVocabularyImpl.setVocabularyId(assetVocabulary.getVocabularyId());
-		assetVocabularyImpl.setGroupId(assetVocabulary.getGroupId());
-		assetVocabularyImpl.setCompanyId(assetVocabulary.getCompanyId());
-		assetVocabularyImpl.setUserId(assetVocabulary.getUserId());
-		assetVocabularyImpl.setUserName(assetVocabulary.getUserName());
-		assetVocabularyImpl.setCreateDate(assetVocabulary.getCreateDate());
-		assetVocabularyImpl.setModifiedDate(assetVocabulary.getModifiedDate());
-		assetVocabularyImpl.setName(assetVocabulary.getName());
-		assetVocabularyImpl.setTitle(assetVocabulary.getTitle());
-		assetVocabularyImpl.setDescription(assetVocabulary.getDescription());
-		assetVocabularyImpl.setSettings(assetVocabulary.getSettings());
-		assetVocabularyImpl.setLastPublishDate(assetVocabulary.getLastPublishDate());
-
-		return assetVocabularyImpl;
 	}
 
 	/**

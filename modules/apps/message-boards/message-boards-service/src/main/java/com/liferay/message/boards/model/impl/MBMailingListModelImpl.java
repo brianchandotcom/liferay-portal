@@ -27,6 +27,7 @@ import com.liferay.message.boards.model.MBMailingListModel;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1265,7 +1266,7 @@ public class MBMailingListModelImpl extends BaseModelImpl<MBMailingList>
 
 	private static final ClassLoader _classLoader = MBMailingList.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			MBMailingList.class
+			MBMailingList.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -40,6 +41,7 @@ import com.liferay.sync.service.persistence.SyncDLFileVersionDiffPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -1631,8 +1633,6 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 	@Override
 	protected SyncDLFileVersionDiff removeImpl(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {
-		syncDLFileVersionDiff = toUnwrappedModel(syncDLFileVersionDiff);
-
 		Session session = null;
 
 		try {
@@ -1664,9 +1664,23 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 	@Override
 	public SyncDLFileVersionDiff updateImpl(
 		SyncDLFileVersionDiff syncDLFileVersionDiff) {
-		syncDLFileVersionDiff = toUnwrappedModel(syncDLFileVersionDiff);
-
 		boolean isNew = syncDLFileVersionDiff.isNew();
+
+		if (!(syncDLFileVersionDiff instanceof SyncDLFileVersionDiffModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(syncDLFileVersionDiff.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(syncDLFileVersionDiff);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in syncDLFileVersionDiff proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SyncDLFileVersionDiff implementation " +
+				syncDLFileVersionDiff.getClass());
+		}
 
 		SyncDLFileVersionDiffModelImpl syncDLFileVersionDiffModelImpl = (SyncDLFileVersionDiffModelImpl)syncDLFileVersionDiff;
 
@@ -1742,28 +1756,6 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 		syncDLFileVersionDiff.resetOriginalValues();
 
 		return syncDLFileVersionDiff;
-	}
-
-	protected SyncDLFileVersionDiff toUnwrappedModel(
-		SyncDLFileVersionDiff syncDLFileVersionDiff) {
-		if (syncDLFileVersionDiff instanceof SyncDLFileVersionDiffImpl) {
-			return syncDLFileVersionDiff;
-		}
-
-		SyncDLFileVersionDiffImpl syncDLFileVersionDiffImpl = new SyncDLFileVersionDiffImpl();
-
-		syncDLFileVersionDiffImpl.setNew(syncDLFileVersionDiff.isNew());
-		syncDLFileVersionDiffImpl.setPrimaryKey(syncDLFileVersionDiff.getPrimaryKey());
-
-		syncDLFileVersionDiffImpl.setSyncDLFileVersionDiffId(syncDLFileVersionDiff.getSyncDLFileVersionDiffId());
-		syncDLFileVersionDiffImpl.setFileEntryId(syncDLFileVersionDiff.getFileEntryId());
-		syncDLFileVersionDiffImpl.setSourceFileVersionId(syncDLFileVersionDiff.getSourceFileVersionId());
-		syncDLFileVersionDiffImpl.setTargetFileVersionId(syncDLFileVersionDiff.getTargetFileVersionId());
-		syncDLFileVersionDiffImpl.setDataFileEntryId(syncDLFileVersionDiff.getDataFileEntryId());
-		syncDLFileVersionDiffImpl.setSize(syncDLFileVersionDiff.getSize());
-		syncDLFileVersionDiffImpl.setExpirationDate(syncDLFileVersionDiff.getExpirationDate());
-
-		return syncDLFileVersionDiffImpl;
 	}
 
 	/**

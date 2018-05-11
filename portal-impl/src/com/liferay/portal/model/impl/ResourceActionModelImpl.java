@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceActionModel;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -462,7 +463,7 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 
 	private static final ClassLoader _classLoader = ResourceAction.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ResourceAction.class
+			ResourceAction.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _resourceActionId;

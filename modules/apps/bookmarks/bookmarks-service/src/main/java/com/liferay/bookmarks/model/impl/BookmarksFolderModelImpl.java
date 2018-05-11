@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -1313,7 +1314,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	private static final ClassLoader _classLoader = BookmarksFolder.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			BookmarksFolder.class
+			BookmarksFolder.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ImageModel;
 import com.liferay.portal.kernel.model.ImageSoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -586,7 +587,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	private static final ClassLoader _classLoader = Image.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Image.class
+			Image.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _imageId;

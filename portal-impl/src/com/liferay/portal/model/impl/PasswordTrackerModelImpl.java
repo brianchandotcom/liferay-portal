@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.PasswordTracker;
 import com.liferay.portal.kernel.model.PasswordTrackerModel;
 import com.liferay.portal.kernel.model.User;
@@ -503,7 +504,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	private static final ClassLoader _classLoader = PasswordTracker.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			PasswordTracker.class
+			PasswordTracker.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _passwordTrackerId;

@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2113,8 +2116,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	@Override
 	protected DDMStructureLink removeImpl(DDMStructureLink ddmStructureLink) {
-		ddmStructureLink = toUnwrappedModel(ddmStructureLink);
-
 		Session session = null;
 
 		try {
@@ -2145,9 +2146,23 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	@Override
 	public DDMStructureLink updateImpl(DDMStructureLink ddmStructureLink) {
-		ddmStructureLink = toUnwrappedModel(ddmStructureLink);
-
 		boolean isNew = ddmStructureLink.isNew();
+
+		if (!(ddmStructureLink instanceof DDMStructureLinkModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmStructureLink.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmStructureLink);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmStructureLink proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMStructureLink implementation " +
+				ddmStructureLink.getClass());
+		}
 
 		DDMStructureLinkModelImpl ddmStructureLinkModelImpl = (DDMStructureLinkModelImpl)ddmStructureLink;
 
@@ -2274,26 +2289,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		ddmStructureLink.resetOriginalValues();
 
 		return ddmStructureLink;
-	}
-
-	protected DDMStructureLink toUnwrappedModel(
-		DDMStructureLink ddmStructureLink) {
-		if (ddmStructureLink instanceof DDMStructureLinkImpl) {
-			return ddmStructureLink;
-		}
-
-		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl();
-
-		ddmStructureLinkImpl.setNew(ddmStructureLink.isNew());
-		ddmStructureLinkImpl.setPrimaryKey(ddmStructureLink.getPrimaryKey());
-
-		ddmStructureLinkImpl.setStructureLinkId(ddmStructureLink.getStructureLinkId());
-		ddmStructureLinkImpl.setCompanyId(ddmStructureLink.getCompanyId());
-		ddmStructureLinkImpl.setClassNameId(ddmStructureLink.getClassNameId());
-		ddmStructureLinkImpl.setClassPK(ddmStructureLink.getClassPK());
-		ddmStructureLinkImpl.setStructureId(ddmStructureLink.getStructureId());
-
-		return ddmStructureLinkImpl;
 	}
 
 	/**

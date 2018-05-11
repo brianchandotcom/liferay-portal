@@ -18,17 +18,9 @@
 		<@liferay.control_menu />
 
 		<div id="wrapper">
-			<header class="navbar navbar-inverse navbar-porygon">
+			<header class="navbar navbar-expand-md navbar-dark navbar-porygon">
 				<div class="container-fluid" id="banner" role="banner">
 					<div class="navbar-header" id="heading">
-						<#if has_navigation>
-							<button aria-controls="navigation" aria-expanded="false" class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</#if>
-
 						<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 							<img alt="${logo_description}" height="56" src="${site_logo}" />
 							<#if show_site_name>
@@ -38,6 +30,10 @@
 					</div>
 
 					<#if has_navigation>
+						<button aria-controls="navigation" aria-expanded="false" class="navbar-toggler" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
 						<#include "${full_templates_path}/navigation.ftl" />
 					</#if>
 				</div>

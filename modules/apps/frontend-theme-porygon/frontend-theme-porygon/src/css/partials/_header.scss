@@ -53,6 +53,7 @@ header {
 
 	#search {
 		overflow: hidden;
+		width: 100%;
 
 		&.focus:hover {
 			overflow: visible;
@@ -63,9 +64,9 @@ header {
 		}
 
 		fieldset .form-group {
-
-			// @include color-placeholder(".search-input", $secondary-header-color);
-			// @include color-placeholder(".search-input:focus", $secondary-header-color);
+			&::placeholder, &:focus::placeholder {
+				color: $secondary-header-color;
+			}
 
 			width: 100%;
 
@@ -75,8 +76,14 @@ header {
 					line-height: 18px;
 				}
 
+				@include sm {
+					width: 98%;
+				}
+
+				background-color: transparent;
+				border-radius: 0;
+				border-width: 0 0 2px;
 				text-transform: uppercase;
-				width: 98%;
 			}
 		}
 
@@ -94,7 +101,7 @@ header {
 	}
 
 	.btn-search {
-		@include size(44px, 44px);
+		@include size(40px, 40px);
 
 		overflow: hidden;
 		position: relative;
@@ -111,16 +118,19 @@ header {
 			@include size(24px, 24px);
 			@include transition(top 0.8s $ease-out-back);
 
+			color: $main-header-color;
+			fill: $main-header-color;
+
 			&:nth-of-type(2) {
 				@include transform(scale(0.6));
 
-				top: 44px;
+				top: 40px;
 			}
 		}
 
 		&.open {
 			.lexicon-icon {
-				top: 44px;
+				top: 40px;
 
 				&:nth-of-type(2) {
 					@include transform(scale(1));

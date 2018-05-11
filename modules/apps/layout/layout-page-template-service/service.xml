@@ -83,6 +83,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="layoutPrototypeId" type="long" />
 
 		<!-- Order -->
 

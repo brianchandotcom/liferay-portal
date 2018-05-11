@@ -1019,11 +1019,24 @@ public class PortalImpl implements Portal {
 
 			sb.append(DeterminateKeyGenerator.generate(input));
 			sb.append(StringPool.UNDERLINE);
-			sb.append(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_ID));
-			sb.append(StringPool.UNDERLINE);
-			sb.append(request.getAttribute(WebKeys.RENDER_PORTLET_COLUMN_POS));
 
-			return JS.getSafeName(sb.toString());
+			Object columnId = request.getAttribute(
+				WebKeys.RENDER_PORTLET_COLUMN_ID);
+
+			if (columnId != null) {
+				sb.append(JS.getSafeName(columnId.toString()));
+			}
+
+			sb.append(StringPool.UNDERLINE);
+
+			Object columnPos = request.getAttribute(
+				WebKeys.RENDER_PORTLET_COLUMN_POS);
+
+			if (columnPos != null) {
+				sb.append(JS.getSafeName(columnPos.toString()));
+			}
+
+			return sb.toString();
 		}
 	}
 

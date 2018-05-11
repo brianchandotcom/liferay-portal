@@ -512,16 +512,16 @@ public class PortalUtil {
 	}
 
 	/**
-	 * Returns the canonical URL for the page. The canonical URL is often used
-	 * to distinguish a preferred page from its translations.
+	 * Returns the canonical URL of the page. The canonical URL is often used to
+	 * distinguish a preferred page from its translations.
 	 *
 	 * <p>
-	 * A canonical URL for the page is the preferred URL to specify for a set of
-	 * pages with similar or identical content. The canonical URL is used to
-	 * inform search engines that several URLs point to the same page. It is
-	 * also used to generate the URLs for site maps, the URLs that social
-	 * bookmarks publish (Twitter, Facebook links, etc.), and the URLs in sent
-	 * email. For more information, see <a
+	 * A page's canonical URL is the preferred URL to specify for a set of pages
+	 * with similar or identical content. The canonical URL is used to inform
+	 * search engines that several URLs point to the same page. It is also used
+	 * to generate the URLs for site maps, the URLs that social bookmarks
+	 * publish (Twitter, Facebook links, etc.), and the URLs in sent email. For
+	 * more information, see <a
 	 * href="https://support.google.com/webmasters/answer/139394?hl=en">https://support.google.com/webmasters/answer/139394?hl=en</a>.
 	 * </p>
 	 *
@@ -531,9 +531,10 @@ public class PortalUtil {
 	 *         If <code>null</code> is specified, the current page is used.
 	 * @param  forceLayoutFriendlyURL whether to add the page's friendly URL to
 	 *         the canonical URL
-	 * @param  includeQueryString whether to add the URL query string to
-	 *         the canonical URL
-	 * @return the canonical URL for the page
+	 * @param  includeQueryString whether to add the URL query string to the
+	 *         canonical URL
+	 * @return the canonical URL
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static String getCanonicalURL(
 			String completeURL, ThemeDisplay themeDisplay, Layout layout,

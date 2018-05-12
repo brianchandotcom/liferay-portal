@@ -125,9 +125,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	}
 
 	function <portlet:namespace/>doMultiple(actionURL, message) {
-		var form = document.forms['<portlet:namespace />viewUADEntitiesFm'];
+		var form = document.forms.<portlet:namespace />viewUADEntitiesFm;
 
-		form.elements['<portlet:namespace />primaryKeys'].value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+		form.elements.<portlet:namespace />primaryKeys.value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 		<portlet:namespace />confirmAction('viewUADEntitiesFm', actionURL, message);
 	}

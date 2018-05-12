@@ -162,7 +162,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 						destroyOnHide: true
 					},
 					id: '<portlet:namespace />openInstallFromURLView',
-					title: '<liferay-ui:message key="import" />',
+					title: '<liferay-ui:message key="import-fragments" />',
 					uri: uri
 				}
 			);

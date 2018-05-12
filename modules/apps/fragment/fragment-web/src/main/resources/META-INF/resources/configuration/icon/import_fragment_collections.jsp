@@ -35,7 +35,7 @@
 					destroyOnHide: true
 				},
 				id: '<portlet:namespace />openInstallFromURLView',
-				title: '<liferay-ui:message key="import" />',
+				title: '<liferay-ui:message key="import-collections" />',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import_fragment_collections" /></portlet:renderURL>'
 			}
 		);

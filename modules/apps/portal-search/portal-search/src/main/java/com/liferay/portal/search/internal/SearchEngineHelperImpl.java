@@ -40,13 +40,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -275,7 +276,9 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 
 	@Activate
 	@Modified
-	protected synchronized void activate(Map<String, Object> properties) {
+	protected synchronized void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		SearchEngineHelperConfiguration searchEngineHelperConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SearchEngineHelperConfiguration.class, properties);
@@ -283,24 +286,49 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		Collections.addAll(
 			_excludedEntryClassNames,
 			searchEngineHelperConfiguration.excludedEntryClassNames());
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, SearchEngineConfigurator.class,
+			new ServiceTrackerCustomizer
+				<SearchEngineConfigurator, SearchEngineConfigurator>() {
+
+				@Override
+				public SearchEngineConfigurator addingService(
+					ServiceReference<SearchEngineConfigurator>
+						serviceReference) {
+
+					SearchEngineConfigurator searchEngineConfigurator =
+						bundleContext.getService(serviceReference);
+
+					searchEngineConfigurator.afterPropertiesSet();
+
+					return searchEngineConfigurator;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<SearchEngineConfigurator> serviceReference,
+					SearchEngineConfigurator searchEngineConfigurator) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<SearchEngineConfigurator> serviceReference,
+					SearchEngineConfigurator searchEngineConfigurator) {
+
+					searchEngineConfigurator.destroy();
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
+		_serviceTracker.open();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeSearchEngineConfigurator"
-	)
-	protected void addSearchEngineConfigurator(
-		SearchEngineConfigurator searchEngineConfigurator) {
-
-		searchEngineConfigurator.afterPropertiesSet();
-	}
-
-	protected void removeSearchEngineConfigurator(
-		SearchEngineConfigurator searchEngineConfigurator) {
-
-		searchEngineConfigurator.destroy();
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -314,5 +342,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		new HashMap<>();
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
+	private ServiceTracker<SearchEngineConfigurator, SearchEngineConfigurator>
+		_serviceTracker;
 
 }

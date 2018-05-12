@@ -24,11 +24,6 @@ import com.liferay.portal.search.buffer.IndexerRequestBufferExecutor;
 
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
-
 /**
  * @author Michael C. Han
  */
@@ -41,6 +36,8 @@ public abstract class BaseIndexerRequestBufferExecutor
 	}
 
 	protected void commit(Set<String> searchEngineIds) {
+		IndexWriterHelper indexWriterHelper = getIndexWriterHelper();
+
 		if (indexWriterHelper == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Index writer helper is null");
@@ -77,12 +74,7 @@ public abstract class BaseIndexerRequestBufferExecutor
 		}
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile IndexWriterHelper indexWriterHelper;
+	protected abstract IndexWriterHelper getIndexWriterHelper();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseIndexerRequestBufferExecutor.class);

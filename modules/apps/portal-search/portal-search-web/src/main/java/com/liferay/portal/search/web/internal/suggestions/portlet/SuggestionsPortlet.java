@@ -15,7 +15,6 @@
 package com.liferay.portal.search.web.internal.suggestions.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -24,10 +23,8 @@ import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedR
 import com.liferay.portal.search.web.internal.suggestions.constants.SuggestionsPortletKeys;
 import com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayBuilder;
 import com.liferay.portal.search.web.internal.suggestions.display.context.SuggestionsPortletDisplayContext;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.io.IOException;
@@ -71,26 +68,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class, PortletSharedSearchContributor.class}
+	service = Portlet.class
 )
-public class SuggestionsPortlet
-	extends MVCPortlet implements PortletSharedSearchContributor {
-
-	@Override
-	public void contribute(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		SuggestionsPortletPreferences suggestionsPortletPreferences =
-			new SuggestionsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
-
-		setUpQueryIndexing(
-			suggestionsPortletPreferences, portletSharedSearchSettings);
-		setUpRelatedSuggestions(
-			suggestionsPortletPreferences, portletSharedSearchSettings);
-		setUpSpellCheckSuggestion(
-			suggestionsPortletPreferences, portletSharedSearchSettings);
-	}
+public class SuggestionsPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -155,47 +135,6 @@ public class SuggestionsPortlet
 			suggestionsPortletPreferences.isSpellCheckSuggestionEnabled());
 
 		return suggestionsPortletDisplayBuilder.build();
-	}
-
-	protected void setUpQueryIndexing(
-		SuggestionsPortletPreferences suggestionsPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
-
-		queryConfig.setQueryIndexingEnabled(
-			suggestionsPortletPreferences.isQueryIndexingEnabled());
-		queryConfig.setQueryIndexingThreshold(
-			suggestionsPortletPreferences.getQueryIndexingThreshold());
-	}
-
-	protected void setUpRelatedSuggestions(
-		SuggestionsPortletPreferences suggestionsPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
-
-		queryConfig.setQuerySuggestionEnabled(
-			suggestionsPortletPreferences.isRelatedQueriesSuggestionsEnabled());
-		queryConfig.setQuerySuggestionScoresThreshold(
-			suggestionsPortletPreferences.
-				getRelatedQueriesSuggestionsDisplayThreshold());
-		queryConfig.setQuerySuggestionsMax(
-			suggestionsPortletPreferences.getRelatedQueriesSuggestionsMax());
-	}
-
-	protected void setUpSpellCheckSuggestion(
-		SuggestionsPortletPreferences suggestionsPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
-
-		queryConfig.setCollatedSpellCheckResultEnabled(
-			suggestionsPortletPreferences.isSpellCheckSuggestionEnabled());
-
-		queryConfig.setCollatedSpellCheckResultScoresThreshold(
-			suggestionsPortletPreferences.
-				getSpellCheckSuggestionDisplayThreshold());
 	}
 
 	@Reference

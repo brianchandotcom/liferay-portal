@@ -26,7 +26,6 @@ import java.lang.management.ManagementFactory;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.management.DynamicMBean;
 import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanRegistrationException;
@@ -41,10 +40,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -128,40 +123,8 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 		_mBeanServer = ManagementFactory.getPlatformMBeanServer();
 
 		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
-			"(&(jmx.objectname=*)(objectClass=*MBean)" +
-				"(!(objectClass=javax.management.DynamicMBean)))",
+			_bundleContext, "(&(jmx.objectname=*)(objectClass=*MBean))",
 			new MBeanServiceTrackerCustomizer());
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(jmx.objectname=*)"
-	)
-	protected void addDynamicMBean(
-		DynamicMBean dynamicMBean, Map<String, Object> properties) {
-
-		String objectName = GetterUtil.getString(
-			properties.get("jmx.objectname"));
-
-		String objectNameCacheKey = GetterUtil.getString(
-			properties.get("jmx.objectname.cache.key"));
-
-		if (Validator.isNull(objectNameCacheKey)) {
-			objectNameCacheKey = objectName;
-		}
-
-		try {
-			register(
-				objectNameCacheKey, dynamicMBean, new ObjectName(objectName));
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to register mbean", e);
-			}
-		}
 	}
 
 	@Deactivate
@@ -184,29 +147,6 @@ public class MBeanRegistryImpl implements MBeanRegistry {
 			}
 
 			_objectNameCache.clear();
-		}
-	}
-
-	protected void removeDynamicMBean(
-		DynamicMBean dynamicMBean, Map<String, Object> properties) {
-
-		String objectName = GetterUtil.getString(
-			properties.get("jmx.objectname"));
-
-		String objectNameCacheKey = GetterUtil.getString(
-			properties.get("jmx.objectname.cache.key"));
-
-		if (Validator.isNull(objectNameCacheKey)) {
-			objectNameCacheKey = objectName;
-		}
-
-		try {
-			unregister(objectNameCacheKey, new ObjectName(objectName));
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to register mbean", e);
-			}
 		}
 	}
 

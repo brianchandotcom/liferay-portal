@@ -23,25 +23,26 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 
 /**
- * @author Tina Tian
+ * @author Shuyang Zhou
  */
-@Component(immediate = true, service = SystemChecker.class)
-public class DeclarativeServiceSystemChecker implements SystemChecker {
+@Component(immediate = true)
+public class DeclarativeServiceSoftCircularDependencySystemChecker
+	implements SystemChecker {
 
 	@Override
 	public String check() {
-		return UnsatisfiedComponentUtil.listUnsatisfiedComponents(
-			_serviceComponentRuntime, _bundleContext.getBundles());
+		return SoftCircularDependencyUtil.listSoftCircularDependencies(
+			_serviceComponentRuntime, _bundleContext);
 	}
 
 	@Override
 	public String getName() {
-		return "Declarative Service Component Checker";
+		return "Declarative Service Soft Circular Dependency Checker";
 	}
 
 	@Override
 	public String getOSGiCommand() {
-		return "ds:unsatisfied";
+		return "ds:softCircularDependency";
 	}
 
 	@Override

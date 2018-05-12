@@ -26,7 +26,8 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
  * @author Tina Tian
  */
 @Component(immediate = true)
-public class DeclarativeServiceSystemChecker implements SystemChecker {
+public class DeclarativeServiceUnsatisfiedComponentSystemChecker
+	implements SystemChecker {
 
 	@Override
 	public String check() {
@@ -36,7 +37,7 @@ public class DeclarativeServiceSystemChecker implements SystemChecker {
 
 	@Override
 	public String getName() {
-		return "Declarative Service Component Checker";
+		return "Declarative Service Unsatisfied Component Checker";
 	}
 
 	@Override

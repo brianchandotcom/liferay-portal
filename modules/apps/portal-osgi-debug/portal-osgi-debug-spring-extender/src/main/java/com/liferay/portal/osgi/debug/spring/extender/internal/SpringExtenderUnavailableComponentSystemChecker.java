@@ -22,7 +22,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Tina Tian
  */
 @Component(immediate = true)
-public class SpringExtenderSystemChecker implements SystemChecker {
+public class SpringExtenderUnavailableComponentSystemChecker
+	implements SystemChecker {
 
 	@Override
 	public String check() {
@@ -31,7 +32,7 @@ public class SpringExtenderSystemChecker implements SystemChecker {
 
 	@Override
 	public String getName() {
-		return "Spring Extender Component Checker";
+		return "Spring Extender Unavailable Component Checker";
 	}
 
 	@Override

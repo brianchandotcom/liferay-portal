@@ -1515,6 +1515,29 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private void _startDynamicBundles(Set<Bundle> installedBundles)
 		throws Exception {
 
+		Bundle fileInstallBundle = null;
+
+		for (Bundle bundle : installedBundles) {
+			if ("org.apache.felix.fileinstall".equals(
+					bundle.getSymbolicName())) {
+
+				fileInstallBundle = bundle;
+
+				break;
+			}
+		}
+
+		if (fileInstallBundle == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find FileInstall bundle to synchronize " +
+						"dynamic bundles starting.");
+			}
+		}
+		else {
+			fileInstallBundle.stop(Bundle.STOP_TRANSIENT);
+		}
+
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
@@ -1571,6 +1594,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						be);
 				}
 			}
+		}
+
+		if (fileInstallBundle != null) {
+			fileInstallBundle.start(Bundle.START_TRANSIENT);
 		}
 	}
 

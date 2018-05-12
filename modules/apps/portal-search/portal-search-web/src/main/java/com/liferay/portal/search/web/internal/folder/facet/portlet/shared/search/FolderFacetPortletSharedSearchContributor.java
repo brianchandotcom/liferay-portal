@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.folder.facet.portlet;
+package com.liferay.portal.search.web.internal.folder.facet.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
+import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetBuilder;
+import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetFactory;
+import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortletPreferences;
+import com.liferay.portal.search.web.internal.folder.facet.portlet.FolderFacetPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 

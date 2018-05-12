@@ -12,63 +12,71 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.user.facet.portlet;
+package com.liferay.portal.search.web.internal.tag.facet.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
+import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
+import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetBuilder;
+import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
+import com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortletPreferences;
+import com.liferay.portal.search.web.internal.tag.facet.portlet.TagFacetPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lino Alves
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + UserFacetPortletKeys.USER_FACET
+	property = "javax.portlet.name=" + TagFacetPortletKeys.TAG_FACET
 )
-public class UserFacetPortletSharedSearchContributor
+public class TagFacetPortletSharedSearchContributor
 	implements PortletSharedSearchContributor {
 
 	@Override
 	public void contribute(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		UserFacetPortletPreferences userFacetPortletPreferences =
-			new UserFacetPortletPreferencesImpl(
+		TagFacetPortletPreferences tagFacetPortletPreferences =
+			new TagFacetPortletPreferencesImpl(
 				portletSharedSearchSettings.getPortletPreferences());
 
 		Facet facet = buildFacet(
-			userFacetPortletPreferences, portletSharedSearchSettings);
+			tagFacetPortletPreferences, portletSharedSearchSettings);
 
 		portletSharedSearchSettings.addFacet(facet);
 	}
 
 	protected Facet buildFacet(
-		UserFacetPortletPreferences userFacetPortletPreferences,
+		TagFacetPortletPreferences tagFacetPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		UserFacetBuilder userFacetBuilder = new UserFacetBuilder(
-			userFacetFactory);
+		AssetTagsFacetBuilder assetTagsFacetBuilder = new AssetTagsFacetBuilder(
+			assetTagNamesFacetFactory);
 
-		userFacetBuilder.setFrequencyThreshold(
-			userFacetPortletPreferences.getFrequencyThreshold());
-		userFacetBuilder.setMaxTerms(userFacetPortletPreferences.getMaxTerms());
-		userFacetBuilder.setSearchContext(
+		assetTagsFacetBuilder.setFrequencyThreshold(
+			tagFacetPortletPreferences.getFrequencyThreshold());
+		assetTagsFacetBuilder.setMaxTerms(
+			tagFacetPortletPreferences.getMaxTerms());
+		assetTagsFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
 
 		Optional<String[]> parameterValuesOptional =
 			portletSharedSearchSettings.getParameterValues(
-				userFacetPortletPreferences.getParameterName());
+				tagFacetPortletPreferences.getParameterName());
 
-		parameterValuesOptional.ifPresent(userFacetBuilder::setSelectedUsers);
+		parameterValuesOptional.ifPresent(
+			assetTagsFacetBuilder::setSelectedTags);
 
-		return userFacetBuilder.build();
+		return assetTagsFacetBuilder.build();
 	}
 
-	protected UserFacetFactory userFacetFactory = new UserFacetFactory();
+	@Reference
+	protected AssetTagNamesFacetFactory assetTagNamesFacetFactory;
 
 }

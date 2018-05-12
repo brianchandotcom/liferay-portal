@@ -313,10 +313,9 @@
 			<var name="fieldValue" value="10" />
 		</execute>
 
-		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value="Total" />
+		<execute macro="FormFields#viewTextValue">
 			<var name="fieldName" value="Total" />
-			<var name="fieldValue" value="50.0" />
+			<var name="fieldValue" value="50" />
 		</execute>
 	</command>
 

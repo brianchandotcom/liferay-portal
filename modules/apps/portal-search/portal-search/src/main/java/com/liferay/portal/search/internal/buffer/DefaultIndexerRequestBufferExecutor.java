@@ -16,6 +16,7 @@ package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.buffer.IndexerRequest;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
@@ -26,7 +27,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -88,7 +93,28 @@ public class DefaultIndexerRequestBufferExecutor
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_indexWriterHelperServiceTracker = new ServiceTracker<>(
+			bundleContext, IndexWriterHelper.class, null);
+
+		_indexWriterHelperServiceTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_indexWriterHelperServiceTracker.close();
+	}
+
+	@Override
+	protected IndexWriterHelper getIndexWriterHelper() {
+		return _indexWriterHelperServiceTracker.getService();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultIndexerRequestBufferExecutor.class);
+
+	private ServiceTracker<IndexWriterHelper, IndexWriterHelper>
+		_indexWriterHelperServiceTracker;
 
 }

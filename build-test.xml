@@ -5130,7 +5130,15 @@ go]]></replacevalue>
 												<dirset
 													dir="@{app.dir}"
 												>
-													<include name="*" />
+													<exclude name="**/*-test*" />
+													<include name="**" />
+													<present targetdir="@{app.dir}">
+														<mapper
+															from="*"
+															to="*/bnd.bnd"
+															type="glob"
+														/>
+													</present>
 												</dirset>
 											</path>
 											<sequential>

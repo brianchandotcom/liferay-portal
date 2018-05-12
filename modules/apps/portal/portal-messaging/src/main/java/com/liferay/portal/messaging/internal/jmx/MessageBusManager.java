@@ -27,7 +27,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.management.DynamicMBean;
-import javax.management.MBeanServer;
 import javax.management.NotCompliantMBeanException;
 import javax.management.StandardMBean;
 
@@ -140,10 +139,6 @@ public class MessageBusManager
 		if (mbeanServiceRegistration != null) {
 			mbeanServiceRegistration.unregister();
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBeanServer(MBeanServer mBeanServer) {
 	}
 
 	@Reference(unbind = "-")

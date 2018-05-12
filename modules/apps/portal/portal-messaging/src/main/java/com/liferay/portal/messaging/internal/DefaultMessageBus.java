@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.messaging.internal.configuration.DestinationWorkerConfiguration;
 
@@ -40,15 +41,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -59,6 +65,78 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	service = {ManagedServiceFactory.class, MessageBus.class}
 )
 public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
+
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		_messageListenerServiceTracker = new ServiceTracker<>(
+			bundleContext, MessageListener.class,
+			new ServiceTrackerCustomizer
+				<MessageListener, ObjectValuePair<String, MessageListener>>() {
+
+				@Override
+				public ObjectValuePair<String, MessageListener> addingService(
+					ServiceReference<MessageListener> serviceReference) {
+
+					MessageListener messageListener = bundleContext.getService(
+						serviceReference);
+
+					String destinationName = (String)
+						serviceReference.getProperty("destination.name");
+
+					Thread currentThread = Thread.currentThread();
+
+					ClassLoader contextClassLoader =
+						currentThread.getContextClassLoader();
+
+					try {
+						ClassLoader operatingClassLoader =
+							(ClassLoader)serviceReference.getProperty(
+								"message.listener.operating.class.loader");
+
+						if (operatingClassLoader != null) {
+							currentThread.setContextClassLoader(
+								operatingClassLoader);
+						}
+
+						registerMessageListener(
+							destinationName, messageListener);
+					}
+					finally {
+						currentThread.setContextClassLoader(contextClassLoader);
+					}
+
+					return new ObjectValuePair<>(
+						destinationName, messageListener);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<MessageListener> serviceReference,
+					ObjectValuePair<String, MessageListener> objectValuePair) {
+
+					removedService(serviceReference, objectValuePair);
+
+					ObjectValuePair<String, MessageListener>
+						newObjectValuePair = addingService(serviceReference);
+
+					objectValuePair.setKey(newObjectValuePair.getKey());
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<MessageListener> serviceReference,
+					ObjectValuePair<String, MessageListener> objectValuePair) {
+
+					unregisterMessageListener(
+						objectValuePair.getKey(), objectValuePair.getValue());
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
+		_messageListenerServiceTracker.open();
+	}
 
 	@Override
 	public synchronized void addDestination(Destination destination) {
@@ -286,6 +364,8 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 	@Deactivate
 	protected void deactivate() {
+		_messageListenerServiceTracker.close();
+
 		shutdown(true);
 
 		for (Destination destination : _destinations.values()) {
@@ -399,37 +479,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		addMessageBusEventListener(messageBusEventListener);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)", unbind = "unregisterMessageListener"
-	)
-	protected synchronized void registerMessageListener(
-		MessageListener messageListener, Map<String, Object> properties) {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		try {
-			ClassLoader operatingClassLoader = (ClassLoader)properties.get(
-				"message.listener.operating.class.loader");
-
-			if (operatingClassLoader != null) {
-				currentThread.setContextClassLoader(operatingClassLoader);
-			}
-
-			String destinationName = MapUtil.getString(
-				properties, "destination.name");
-
-			registerMessageListener(destinationName, messageListener);
-		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
-	}
-
 	protected synchronized void unregisterDestination(
 		Destination destination, Map<String, Object> properties) {
 
@@ -466,15 +515,6 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		removeMessageBusEventListener(messageBusEventListener);
 	}
 
-	protected synchronized void unregisterMessageListener(
-		MessageListener messageListener, Map<String, Object> properties) {
-
-		String destinationName = MapUtil.getString(
-			properties, "destination.name");
-
-		unregisterMessageListener(destinationName, messageListener);
-	}
-
 	protected void updateDestination(
 		Destination destination,
 		DestinationWorkerConfiguration destinationWorkerConfiguration) {
@@ -506,6 +546,9 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		new ConcurrentHashMap<>();
 	private final Set<MessageBusEventListener> _messageBusEventListeners =
 		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private ServiceTracker
+		<MessageListener, ObjectValuePair<String, MessageListener>>
+			_messageListenerServiceTracker;
 	private final Map<String, List<MessageListener>> _queuedMessageListeners =
 		new HashMap<>();
 

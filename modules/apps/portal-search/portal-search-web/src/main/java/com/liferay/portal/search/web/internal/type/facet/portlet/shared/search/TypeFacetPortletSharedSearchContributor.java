@@ -12,13 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.type.facet.portlet;
+package com.liferay.portal.search.web.internal.type.facet.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
+import com.liferay.portal.search.web.internal.type.facet.portlet.AssetEntriesFacetBuilder;
+import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferences;
+import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 

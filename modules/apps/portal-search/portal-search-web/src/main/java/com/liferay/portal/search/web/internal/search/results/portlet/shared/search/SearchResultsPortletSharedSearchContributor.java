@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.results.portlet;
+package com.liferay.portal.search.web.internal.search.results.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
+import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferences;
+import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 

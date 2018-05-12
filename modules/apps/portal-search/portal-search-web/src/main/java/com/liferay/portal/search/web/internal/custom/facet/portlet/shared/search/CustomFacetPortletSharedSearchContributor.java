@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.custom.facet.portlet;
+package com.liferay.portal.search.web.internal.custom.facet.portlet.shared.search;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.search.facet.custom.CustomFacetFactory;
 import com.liferay.portal.search.web.internal.custom.facet.builder.CustomFacetBuilder;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
+import com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortletPreferences;
+import com.liferay.portal.search.web.internal.custom.facet.portlet.CustomFacetPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 

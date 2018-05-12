@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.category.facet.portlet;
+package com.liferay.portal.search.web.internal.category.facet.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetBuilder;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetFactory;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
+import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferences;
+import com.liferay.portal.search.web.internal.category.facet.portlet.CategoryFacetPortletPreferencesImpl;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 

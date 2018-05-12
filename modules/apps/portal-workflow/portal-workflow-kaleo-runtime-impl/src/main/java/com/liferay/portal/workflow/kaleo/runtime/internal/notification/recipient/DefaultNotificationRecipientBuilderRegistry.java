@@ -14,20 +14,20 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipient;
 
-import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper.Emitter;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.RecipientType;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilderRegistry;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -43,7 +43,7 @@ public class DefaultNotificationRecipientBuilderRegistry
 		RecipientType recipientType) {
 
 		NotificationRecipientBuilder notificationRecipientBuilder =
-			_notificationRecipientBuilders.get(recipientType);
+			_notificationRecipientBuilders.getService(recipientType);
 
 		if (notificationRecipientBuilder == null) {
 			throw new IllegalArgumentException(
@@ -53,49 +53,42 @@ public class DefaultNotificationRecipientBuilderRegistry
 		return notificationRecipientBuilder;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeNotificationRecipientBuilder"
-	)
-	protected void addNotificationRecipientBuilder(
-		NotificationRecipientBuilder notificationRecipientBuilder,
-		Map<String, Object> properties) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_notificationRecipientBuilders =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, NotificationRecipientBuilder.class, null,
+				new ServiceReferenceMapper
+					<RecipientType, NotificationRecipientBuilder>() {
 
-		RecipientType recipientType = _getRecipientType(
-			notificationRecipientBuilder, properties);
+					@Override
+					public void map(
+						ServiceReference<NotificationRecipientBuilder>
+							serviceReference,
+						Emitter<RecipientType> emitter) {
 
-		_notificationRecipientBuilders.put(
-			recipientType, notificationRecipientBuilder);
+						Object value = serviceReference.getProperty(
+							"recipient.type");
+
+						if (Validator.isNull(value)) {
+							throw new IllegalArgumentException(
+								"The property \"recipient.type\" is invalid " +
+									"for " + serviceReference);
+						}
+
+						emitter.emit(
+							RecipientType.valueOf(String.valueOf(value)));
+					}
+
+				});
 	}
 
-	protected void removeNotificationRecipientBuilder(
-		NotificationRecipientBuilder notificationRecipientBuilder,
-		Map<String, Object> properties) {
-
-		RecipientType recipientType = _getRecipientType(
-			notificationRecipientBuilder, properties);
-
-		_notificationRecipientBuilders.remove(recipientType);
+	@Deactivate
+	protected void deactivate() {
+		_notificationRecipientBuilders.close();
 	}
 
-	private RecipientType _getRecipientType(
-		NotificationRecipientBuilder notificationRecipientBuilder,
-		Map<String, Object> properties) {
-
-		String value = (String)properties.get("recipient.type");
-
-		if (Validator.isNull(value)) {
-			throw new IllegalArgumentException(
-				"The property \"recipient.type\" is invalid for " +
-					ClassUtil.getClassName(notificationRecipientBuilder));
-		}
-
-		return RecipientType.valueOf(value);
-	}
-
-	private final Map<RecipientType, NotificationRecipientBuilder>
-		_notificationRecipientBuilders = new HashMap<>();
+	private ServiceTrackerMap<RecipientType, NotificationRecipientBuilder>
+		_notificationRecipientBuilders;
 
 }

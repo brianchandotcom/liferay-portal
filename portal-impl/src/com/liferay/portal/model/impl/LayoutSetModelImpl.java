@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutSetSoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -935,7 +936,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	private static final ClassLoader _classLoader = LayoutSet.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			LayoutSet.class
+			LayoutSet.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _layoutSetId;

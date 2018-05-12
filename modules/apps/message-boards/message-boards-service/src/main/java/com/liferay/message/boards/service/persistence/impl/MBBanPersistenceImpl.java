@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3420,8 +3422,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 	@Override
 	protected MBBan removeImpl(MBBan mbBan) {
-		mbBan = toUnwrappedModel(mbBan);
-
 		Session session = null;
 
 		try {
@@ -3452,9 +3452,23 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 	@Override
 	public MBBan updateImpl(MBBan mbBan) {
-		mbBan = toUnwrappedModel(mbBan);
-
 		boolean isNew = mbBan.isNew();
+
+		if (!(mbBan instanceof MBBanModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mbBan.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mbBan);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mbBan proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MBBan implementation " +
+				mbBan.getClass());
+		}
 
 		MBBanModelImpl mbBanModelImpl = (MBBanModelImpl)mbBan;
 
@@ -3644,30 +3658,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		mbBan.resetOriginalValues();
 
 		return mbBan;
-	}
-
-	protected MBBan toUnwrappedModel(MBBan mbBan) {
-		if (mbBan instanceof MBBanImpl) {
-			return mbBan;
-		}
-
-		MBBanImpl mbBanImpl = new MBBanImpl();
-
-		mbBanImpl.setNew(mbBan.isNew());
-		mbBanImpl.setPrimaryKey(mbBan.getPrimaryKey());
-
-		mbBanImpl.setUuid(mbBan.getUuid());
-		mbBanImpl.setBanId(mbBan.getBanId());
-		mbBanImpl.setGroupId(mbBan.getGroupId());
-		mbBanImpl.setCompanyId(mbBan.getCompanyId());
-		mbBanImpl.setUserId(mbBan.getUserId());
-		mbBanImpl.setUserName(mbBan.getUserName());
-		mbBanImpl.setCreateDate(mbBan.getCreateDate());
-		mbBanImpl.setModifiedDate(mbBan.getModifiedDate());
-		mbBanImpl.setBanUserId(mbBan.getBanUserId());
-		mbBanImpl.setLastPublishDate(mbBan.getLastPublishDate());
-
-		return mbBanImpl;
 	}
 
 	/**

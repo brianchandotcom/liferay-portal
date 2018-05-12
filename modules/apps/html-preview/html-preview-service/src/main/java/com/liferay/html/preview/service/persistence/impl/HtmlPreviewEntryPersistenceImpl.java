@@ -37,11 +37,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -558,8 +561,6 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 
 	@Override
 	protected HtmlPreviewEntry removeImpl(HtmlPreviewEntry htmlPreviewEntry) {
-		htmlPreviewEntry = toUnwrappedModel(htmlPreviewEntry);
-
 		Session session = null;
 
 		try {
@@ -590,9 +591,23 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 
 	@Override
 	public HtmlPreviewEntry updateImpl(HtmlPreviewEntry htmlPreviewEntry) {
-		htmlPreviewEntry = toUnwrappedModel(htmlPreviewEntry);
-
 		boolean isNew = htmlPreviewEntry.isNew();
+
+		if (!(htmlPreviewEntry instanceof HtmlPreviewEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(htmlPreviewEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(htmlPreviewEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in htmlPreviewEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom HtmlPreviewEntry implementation " +
+				htmlPreviewEntry.getClass());
+		}
 
 		HtmlPreviewEntryModelImpl htmlPreviewEntryModelImpl = (HtmlPreviewEntryModelImpl)htmlPreviewEntry;
 
@@ -662,31 +677,6 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 		htmlPreviewEntry.resetOriginalValues();
 
 		return htmlPreviewEntry;
-	}
-
-	protected HtmlPreviewEntry toUnwrappedModel(
-		HtmlPreviewEntry htmlPreviewEntry) {
-		if (htmlPreviewEntry instanceof HtmlPreviewEntryImpl) {
-			return htmlPreviewEntry;
-		}
-
-		HtmlPreviewEntryImpl htmlPreviewEntryImpl = new HtmlPreviewEntryImpl();
-
-		htmlPreviewEntryImpl.setNew(htmlPreviewEntry.isNew());
-		htmlPreviewEntryImpl.setPrimaryKey(htmlPreviewEntry.getPrimaryKey());
-
-		htmlPreviewEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntry.getHtmlPreviewEntryId());
-		htmlPreviewEntryImpl.setGroupId(htmlPreviewEntry.getGroupId());
-		htmlPreviewEntryImpl.setCompanyId(htmlPreviewEntry.getCompanyId());
-		htmlPreviewEntryImpl.setUserId(htmlPreviewEntry.getUserId());
-		htmlPreviewEntryImpl.setUserName(htmlPreviewEntry.getUserName());
-		htmlPreviewEntryImpl.setCreateDate(htmlPreviewEntry.getCreateDate());
-		htmlPreviewEntryImpl.setModifiedDate(htmlPreviewEntry.getModifiedDate());
-		htmlPreviewEntryImpl.setClassNameId(htmlPreviewEntry.getClassNameId());
-		htmlPreviewEntryImpl.setClassPK(htmlPreviewEntry.getClassPK());
-		htmlPreviewEntryImpl.setFileEntryId(htmlPreviewEntry.getFileEntryId());
-
-		return htmlPreviewEntryImpl;
 	}
 
 	/**

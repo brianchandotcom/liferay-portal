@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2492,8 +2494,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 	@Override
 	protected PollsChoice removeImpl(PollsChoice pollsChoice) {
-		pollsChoice = toUnwrappedModel(pollsChoice);
-
 		Session session = null;
 
 		try {
@@ -2524,9 +2524,23 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 	@Override
 	public PollsChoice updateImpl(PollsChoice pollsChoice) {
-		pollsChoice = toUnwrappedModel(pollsChoice);
-
 		boolean isNew = pollsChoice.isNew();
+
+		if (!(pollsChoice instanceof PollsChoiceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(pollsChoice.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(pollsChoice);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in pollsChoice proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom PollsChoice implementation " +
+				pollsChoice.getClass());
+		}
 
 		PollsChoiceModelImpl pollsChoiceModelImpl = (PollsChoiceModelImpl)pollsChoice;
 
@@ -2679,32 +2693,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		pollsChoice.resetOriginalValues();
 
 		return pollsChoice;
-	}
-
-	protected PollsChoice toUnwrappedModel(PollsChoice pollsChoice) {
-		if (pollsChoice instanceof PollsChoiceImpl) {
-			return pollsChoice;
-		}
-
-		PollsChoiceImpl pollsChoiceImpl = new PollsChoiceImpl();
-
-		pollsChoiceImpl.setNew(pollsChoice.isNew());
-		pollsChoiceImpl.setPrimaryKey(pollsChoice.getPrimaryKey());
-
-		pollsChoiceImpl.setUuid(pollsChoice.getUuid());
-		pollsChoiceImpl.setChoiceId(pollsChoice.getChoiceId());
-		pollsChoiceImpl.setGroupId(pollsChoice.getGroupId());
-		pollsChoiceImpl.setCompanyId(pollsChoice.getCompanyId());
-		pollsChoiceImpl.setUserId(pollsChoice.getUserId());
-		pollsChoiceImpl.setUserName(pollsChoice.getUserName());
-		pollsChoiceImpl.setCreateDate(pollsChoice.getCreateDate());
-		pollsChoiceImpl.setModifiedDate(pollsChoice.getModifiedDate());
-		pollsChoiceImpl.setQuestionId(pollsChoice.getQuestionId());
-		pollsChoiceImpl.setName(pollsChoice.getName());
-		pollsChoiceImpl.setDescription(pollsChoice.getDescription());
-		pollsChoiceImpl.setLastPublishDate(pollsChoice.getLastPublishDate());
-
-		return pollsChoiceImpl;
 	}
 
 	/**

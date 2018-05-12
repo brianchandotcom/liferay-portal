@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -41,6 +42,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoConditionModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoConditionPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1534,8 +1537,6 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 
 	@Override
 	protected KaleoCondition removeImpl(KaleoCondition kaleoCondition) {
-		kaleoCondition = toUnwrappedModel(kaleoCondition);
-
 		Session session = null;
 
 		try {
@@ -1566,9 +1567,23 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 
 	@Override
 	public KaleoCondition updateImpl(KaleoCondition kaleoCondition) {
-		kaleoCondition = toUnwrappedModel(kaleoCondition);
-
 		boolean isNew = kaleoCondition.isNew();
+
+		if (!(kaleoCondition instanceof KaleoConditionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoCondition.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoCondition);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoCondition proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoCondition implementation " +
+				kaleoCondition.getClass());
+		}
 
 		KaleoConditionModelImpl kaleoConditionModelImpl = (KaleoConditionModelImpl)kaleoCondition;
 
@@ -1693,32 +1708,6 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 		kaleoCondition.resetOriginalValues();
 
 		return kaleoCondition;
-	}
-
-	protected KaleoCondition toUnwrappedModel(KaleoCondition kaleoCondition) {
-		if (kaleoCondition instanceof KaleoConditionImpl) {
-			return kaleoCondition;
-		}
-
-		KaleoConditionImpl kaleoConditionImpl = new KaleoConditionImpl();
-
-		kaleoConditionImpl.setNew(kaleoCondition.isNew());
-		kaleoConditionImpl.setPrimaryKey(kaleoCondition.getPrimaryKey());
-
-		kaleoConditionImpl.setKaleoConditionId(kaleoCondition.getKaleoConditionId());
-		kaleoConditionImpl.setGroupId(kaleoCondition.getGroupId());
-		kaleoConditionImpl.setCompanyId(kaleoCondition.getCompanyId());
-		kaleoConditionImpl.setUserId(kaleoCondition.getUserId());
-		kaleoConditionImpl.setUserName(kaleoCondition.getUserName());
-		kaleoConditionImpl.setCreateDate(kaleoCondition.getCreateDate());
-		kaleoConditionImpl.setModifiedDate(kaleoCondition.getModifiedDate());
-		kaleoConditionImpl.setKaleoDefinitionVersionId(kaleoCondition.getKaleoDefinitionVersionId());
-		kaleoConditionImpl.setKaleoNodeId(kaleoCondition.getKaleoNodeId());
-		kaleoConditionImpl.setScript(kaleoCondition.getScript());
-		kaleoConditionImpl.setScriptLanguage(kaleoCondition.getScriptLanguage());
-		kaleoConditionImpl.setScriptRequiredContexts(kaleoCondition.getScriptRequiredContexts());
-
-		return kaleoConditionImpl;
 	}
 
 	/**

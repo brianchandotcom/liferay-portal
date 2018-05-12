@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.PortletImpl;
@@ -43,6 +44,7 @@ import com.liferay.portal.model.impl.PortletModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1054,8 +1056,6 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 	@Override
 	protected Portlet removeImpl(Portlet portlet) {
-		portlet = toUnwrappedModel(portlet);
-
 		Session session = null;
 
 		try {
@@ -1086,9 +1086,23 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 
 	@Override
 	public Portlet updateImpl(Portlet portlet) {
-		portlet = toUnwrappedModel(portlet);
-
 		boolean isNew = portlet.isNew();
+
+		if (!(portlet instanceof PortletModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(portlet.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(portlet);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in portlet proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Portlet implementation " +
+				portlet.getClass());
+		}
 
 		PortletModelImpl portletModelImpl = (PortletModelImpl)portlet;
 
@@ -1159,26 +1173,6 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		portlet.resetOriginalValues();
 
 		return portlet;
-	}
-
-	protected Portlet toUnwrappedModel(Portlet portlet) {
-		if (portlet instanceof PortletImpl) {
-			return portlet;
-		}
-
-		PortletImpl portletImpl = new PortletImpl();
-
-		portletImpl.setNew(portlet.isNew());
-		portletImpl.setPrimaryKey(portlet.getPrimaryKey());
-
-		portletImpl.setMvccVersion(portlet.getMvccVersion());
-		portletImpl.setId(portlet.getId());
-		portletImpl.setCompanyId(portlet.getCompanyId());
-		portletImpl.setPortletId(portlet.getPortletId());
-		portletImpl.setRoles(portlet.getRoles());
-		portletImpl.setActive(portlet.isActive());
-
-		return portletImpl;
 	}
 
 	/**

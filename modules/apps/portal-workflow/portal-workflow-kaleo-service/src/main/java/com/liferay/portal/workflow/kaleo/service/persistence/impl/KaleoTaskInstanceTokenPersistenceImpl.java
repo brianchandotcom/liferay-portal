@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -41,6 +42,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelI
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2706,8 +2709,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 	@Override
 	protected KaleoTaskInstanceToken removeImpl(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-		kaleoTaskInstanceToken = toUnwrappedModel(kaleoTaskInstanceToken);
-
 		Session session = null;
 
 		try {
@@ -2739,9 +2740,23 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 	@Override
 	public KaleoTaskInstanceToken updateImpl(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-		kaleoTaskInstanceToken = toUnwrappedModel(kaleoTaskInstanceToken);
-
 		boolean isNew = kaleoTaskInstanceToken.isNew();
+
+		if (!(kaleoTaskInstanceToken instanceof KaleoTaskInstanceTokenModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoTaskInstanceToken.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoTaskInstanceToken);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoTaskInstanceToken proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoTaskInstanceToken implementation " +
+				kaleoTaskInstanceToken.getClass());
+		}
 
 		KaleoTaskInstanceTokenModelImpl kaleoTaskInstanceTokenModelImpl = (KaleoTaskInstanceTokenModelImpl)kaleoTaskInstanceToken;
 
@@ -2931,40 +2946,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		kaleoTaskInstanceToken.resetOriginalValues();
 
 		return kaleoTaskInstanceToken;
-	}
-
-	protected KaleoTaskInstanceToken toUnwrappedModel(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-		if (kaleoTaskInstanceToken instanceof KaleoTaskInstanceTokenImpl) {
-			return kaleoTaskInstanceToken;
-		}
-
-		KaleoTaskInstanceTokenImpl kaleoTaskInstanceTokenImpl = new KaleoTaskInstanceTokenImpl();
-
-		kaleoTaskInstanceTokenImpl.setNew(kaleoTaskInstanceToken.isNew());
-		kaleoTaskInstanceTokenImpl.setPrimaryKey(kaleoTaskInstanceToken.getPrimaryKey());
-
-		kaleoTaskInstanceTokenImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
-		kaleoTaskInstanceTokenImpl.setGroupId(kaleoTaskInstanceToken.getGroupId());
-		kaleoTaskInstanceTokenImpl.setCompanyId(kaleoTaskInstanceToken.getCompanyId());
-		kaleoTaskInstanceTokenImpl.setUserId(kaleoTaskInstanceToken.getUserId());
-		kaleoTaskInstanceTokenImpl.setUserName(kaleoTaskInstanceToken.getUserName());
-		kaleoTaskInstanceTokenImpl.setCreateDate(kaleoTaskInstanceToken.getCreateDate());
-		kaleoTaskInstanceTokenImpl.setModifiedDate(kaleoTaskInstanceToken.getModifiedDate());
-		kaleoTaskInstanceTokenImpl.setKaleoDefinitionVersionId(kaleoTaskInstanceToken.getKaleoDefinitionVersionId());
-		kaleoTaskInstanceTokenImpl.setKaleoInstanceId(kaleoTaskInstanceToken.getKaleoInstanceId());
-		kaleoTaskInstanceTokenImpl.setKaleoInstanceTokenId(kaleoTaskInstanceToken.getKaleoInstanceTokenId());
-		kaleoTaskInstanceTokenImpl.setKaleoTaskId(kaleoTaskInstanceToken.getKaleoTaskId());
-		kaleoTaskInstanceTokenImpl.setKaleoTaskName(kaleoTaskInstanceToken.getKaleoTaskName());
-		kaleoTaskInstanceTokenImpl.setClassName(kaleoTaskInstanceToken.getClassName());
-		kaleoTaskInstanceTokenImpl.setClassPK(kaleoTaskInstanceToken.getClassPK());
-		kaleoTaskInstanceTokenImpl.setCompletionUserId(kaleoTaskInstanceToken.getCompletionUserId());
-		kaleoTaskInstanceTokenImpl.setCompleted(kaleoTaskInstanceToken.isCompleted());
-		kaleoTaskInstanceTokenImpl.setCompletionDate(kaleoTaskInstanceToken.getCompletionDate());
-		kaleoTaskInstanceTokenImpl.setDueDate(kaleoTaskInstanceToken.getDueDate());
-		kaleoTaskInstanceTokenImpl.setWorkflowContext(kaleoTaskInstanceToken.getWorkflowContext());
-
-		return kaleoTaskInstanceTokenImpl;
 	}
 
 	/**

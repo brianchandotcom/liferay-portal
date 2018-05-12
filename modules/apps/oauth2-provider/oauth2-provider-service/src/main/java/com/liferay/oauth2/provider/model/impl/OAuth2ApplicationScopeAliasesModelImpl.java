@@ -25,6 +25,7 @@ import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliasesModel;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -560,7 +561,7 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 
 	private static final ClassLoader _classLoader = OAuth2ApplicationScopeAliases.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			OAuth2ApplicationScopeAliases.class
+			OAuth2ApplicationScopeAliases.class, ModelWrapper.class
 		};
 	private long _oAuth2ApplicationScopeAliasesId;
 	private long _companyId;

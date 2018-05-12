@@ -15,6 +15,7 @@
 package com.liferay.petra.model.adapter.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.util.ComparatorAdapter;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
@@ -49,7 +50,7 @@ public class ModelAdapterUtil {
 		}
 
 		return (T)ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {clazz},
+			clazz.getClassLoader(), new Class<?>[] {clazz, ModelWrapper.class},
 			new DelegateInvocationHandler(delegateObject));
 	}
 
@@ -122,6 +123,12 @@ public class ModelAdapterUtil {
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws ReflectiveOperationException {
+
+			String methodName = method.getName();
+
+			if (methodName.equals("getWrappedModel")) {
+				return _delegateObject;
+			}
 
 			Class<?> delegateClass = _delegateObject.getClass();
 

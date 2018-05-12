@@ -37,11 +37,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.WorkflowInstanceLinkImpl;
 import com.liferay.portal.model.impl.WorkflowInstanceLinkModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -880,8 +883,6 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	protected WorkflowInstanceLink removeImpl(
 		WorkflowInstanceLink workflowInstanceLink) {
-		workflowInstanceLink = toUnwrappedModel(workflowInstanceLink);
-
 		Session session = null;
 
 		try {
@@ -913,9 +914,23 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	@Override
 	public WorkflowInstanceLink updateImpl(
 		WorkflowInstanceLink workflowInstanceLink) {
-		workflowInstanceLink = toUnwrappedModel(workflowInstanceLink);
-
 		boolean isNew = workflowInstanceLink.isNew();
+
+		if (!(workflowInstanceLink instanceof WorkflowInstanceLinkModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(workflowInstanceLink.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(workflowInstanceLink);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in workflowInstanceLink proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom WorkflowInstanceLink implementation " +
+				workflowInstanceLink.getClass());
+		}
 
 		WorkflowInstanceLinkModelImpl workflowInstanceLinkModelImpl = (WorkflowInstanceLinkModelImpl)workflowInstanceLink;
 
@@ -1021,32 +1036,6 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		workflowInstanceLink.resetOriginalValues();
 
 		return workflowInstanceLink;
-	}
-
-	protected WorkflowInstanceLink toUnwrappedModel(
-		WorkflowInstanceLink workflowInstanceLink) {
-		if (workflowInstanceLink instanceof WorkflowInstanceLinkImpl) {
-			return workflowInstanceLink;
-		}
-
-		WorkflowInstanceLinkImpl workflowInstanceLinkImpl = new WorkflowInstanceLinkImpl();
-
-		workflowInstanceLinkImpl.setNew(workflowInstanceLink.isNew());
-		workflowInstanceLinkImpl.setPrimaryKey(workflowInstanceLink.getPrimaryKey());
-
-		workflowInstanceLinkImpl.setMvccVersion(workflowInstanceLink.getMvccVersion());
-		workflowInstanceLinkImpl.setWorkflowInstanceLinkId(workflowInstanceLink.getWorkflowInstanceLinkId());
-		workflowInstanceLinkImpl.setGroupId(workflowInstanceLink.getGroupId());
-		workflowInstanceLinkImpl.setCompanyId(workflowInstanceLink.getCompanyId());
-		workflowInstanceLinkImpl.setUserId(workflowInstanceLink.getUserId());
-		workflowInstanceLinkImpl.setUserName(workflowInstanceLink.getUserName());
-		workflowInstanceLinkImpl.setCreateDate(workflowInstanceLink.getCreateDate());
-		workflowInstanceLinkImpl.setModifiedDate(workflowInstanceLink.getModifiedDate());
-		workflowInstanceLinkImpl.setClassNameId(workflowInstanceLink.getClassNameId());
-		workflowInstanceLinkImpl.setClassPK(workflowInstanceLink.getClassPK());
-		workflowInstanceLinkImpl.setWorkflowInstanceId(workflowInstanceLink.getWorkflowInstanceId());
-
-		return workflowInstanceLinkImpl;
 	}
 
 	/**

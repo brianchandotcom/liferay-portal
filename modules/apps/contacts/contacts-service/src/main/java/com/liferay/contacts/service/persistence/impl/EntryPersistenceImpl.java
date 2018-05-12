@@ -37,11 +37,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1039,8 +1042,6 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 
 	@Override
 	protected Entry removeImpl(Entry entry) {
-		entry = toUnwrappedModel(entry);
-
 		Session session = null;
 
 		try {
@@ -1071,9 +1072,23 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 
 	@Override
 	public Entry updateImpl(Entry entry) {
-		entry = toUnwrappedModel(entry);
-
 		boolean isNew = entry.isNew();
+
+		if (!(entry instanceof EntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(entry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(entry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in entry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Entry implementation " +
+				entry.getClass());
+		}
 
 		EntryModelImpl entryModelImpl = (EntryModelImpl)entry;
 
@@ -1164,30 +1179,6 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		entry.resetOriginalValues();
 
 		return entry;
-	}
-
-	protected Entry toUnwrappedModel(Entry entry) {
-		if (entry instanceof EntryImpl) {
-			return entry;
-		}
-
-		EntryImpl entryImpl = new EntryImpl();
-
-		entryImpl.setNew(entry.isNew());
-		entryImpl.setPrimaryKey(entry.getPrimaryKey());
-
-		entryImpl.setEntryId(entry.getEntryId());
-		entryImpl.setGroupId(entry.getGroupId());
-		entryImpl.setCompanyId(entry.getCompanyId());
-		entryImpl.setUserId(entry.getUserId());
-		entryImpl.setUserName(entry.getUserName());
-		entryImpl.setCreateDate(entry.getCreateDate());
-		entryImpl.setModifiedDate(entry.getModifiedDate());
-		entryImpl.setFullName(entry.getFullName());
-		entryImpl.setEmailAddress(entry.getEmailAddress());
-		entryImpl.setComments(entry.getComments());
-
-		return entryImpl;
 	}
 
 	/**

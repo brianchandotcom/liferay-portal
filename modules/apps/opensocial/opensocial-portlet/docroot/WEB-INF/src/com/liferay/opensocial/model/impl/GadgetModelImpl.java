@@ -28,6 +28,7 @@ import com.liferay.opensocial.model.GadgetSoap;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -700,7 +701,7 @@ public class GadgetModelImpl extends BaseModelImpl<Gadget>
 
 	private static final ClassLoader _classLoader = Gadget.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Gadget.class
+			Gadget.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

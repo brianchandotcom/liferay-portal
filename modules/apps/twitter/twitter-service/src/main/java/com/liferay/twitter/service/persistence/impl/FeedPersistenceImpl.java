@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -42,6 +43,8 @@ import com.liferay.twitter.model.impl.FeedModelImpl;
 import com.liferay.twitter.service.persistence.FeedPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -545,8 +548,6 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 
 	@Override
 	protected Feed removeImpl(Feed feed) {
-		feed = toUnwrappedModel(feed);
-
 		Session session = null;
 
 		try {
@@ -576,9 +577,23 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 
 	@Override
 	public Feed updateImpl(Feed feed) {
-		feed = toUnwrappedModel(feed);
-
 		boolean isNew = feed.isNew();
+
+		if (!(feed instanceof FeedModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(feed.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(feed);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in feed proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Feed implementation " +
+				feed.getClass());
+		}
 
 		FeedModelImpl feedModelImpl = (FeedModelImpl)feed;
 
@@ -646,29 +661,6 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 		feed.resetOriginalValues();
 
 		return feed;
-	}
-
-	protected Feed toUnwrappedModel(Feed feed) {
-		if (feed instanceof FeedImpl) {
-			return feed;
-		}
-
-		FeedImpl feedImpl = new FeedImpl();
-
-		feedImpl.setNew(feed.isNew());
-		feedImpl.setPrimaryKey(feed.getPrimaryKey());
-
-		feedImpl.setFeedId(feed.getFeedId());
-		feedImpl.setCompanyId(feed.getCompanyId());
-		feedImpl.setUserId(feed.getUserId());
-		feedImpl.setUserName(feed.getUserName());
-		feedImpl.setCreateDate(feed.getCreateDate());
-		feedImpl.setModifiedDate(feed.getModifiedDate());
-		feedImpl.setTwitterUserId(feed.getTwitterUserId());
-		feedImpl.setTwitterScreenName(feed.getTwitterScreenName());
-		feedImpl.setLastStatusId(feed.getLastStatusId());
-
-		return feedImpl;
 	}
 
 	/**

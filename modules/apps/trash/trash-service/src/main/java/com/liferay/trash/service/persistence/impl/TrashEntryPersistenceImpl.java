@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -39,6 +40,8 @@ import com.liferay.trash.model.impl.TrashEntryModelImpl;
 import com.liferay.trash.service.persistence.TrashEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -2616,8 +2619,6 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 
 	@Override
 	protected TrashEntry removeImpl(TrashEntry trashEntry) {
-		trashEntry = toUnwrappedModel(trashEntry);
-
 		Session session = null;
 
 		try {
@@ -2648,9 +2649,23 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 
 	@Override
 	public TrashEntry updateImpl(TrashEntry trashEntry) {
-		trashEntry = toUnwrappedModel(trashEntry);
-
 		boolean isNew = trashEntry.isNew();
+
+		if (!(trashEntry instanceof TrashEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(trashEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(trashEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in trashEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom TrashEntry implementation " +
+				trashEntry.getClass());
+		}
 
 		TrashEntryModelImpl trashEntryModelImpl = (TrashEntryModelImpl)trashEntry;
 
@@ -2774,31 +2789,6 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		trashEntry.resetOriginalValues();
 
 		return trashEntry;
-	}
-
-	protected TrashEntry toUnwrappedModel(TrashEntry trashEntry) {
-		if (trashEntry instanceof TrashEntryImpl) {
-			return trashEntry;
-		}
-
-		TrashEntryImpl trashEntryImpl = new TrashEntryImpl();
-
-		trashEntryImpl.setNew(trashEntry.isNew());
-		trashEntryImpl.setPrimaryKey(trashEntry.getPrimaryKey());
-
-		trashEntryImpl.setEntryId(trashEntry.getEntryId());
-		trashEntryImpl.setGroupId(trashEntry.getGroupId());
-		trashEntryImpl.setCompanyId(trashEntry.getCompanyId());
-		trashEntryImpl.setUserId(trashEntry.getUserId());
-		trashEntryImpl.setUserName(trashEntry.getUserName());
-		trashEntryImpl.setCreateDate(trashEntry.getCreateDate());
-		trashEntryImpl.setClassNameId(trashEntry.getClassNameId());
-		trashEntryImpl.setClassPK(trashEntry.getClassPK());
-		trashEntryImpl.setSystemEventSetKey(trashEntry.getSystemEventSetKey());
-		trashEntryImpl.setTypeSettings(trashEntry.getTypeSettings());
-		trashEntryImpl.setStatus(trashEntry.getStatus());
-
-		return trashEntryImpl;
 	}
 
 	/**

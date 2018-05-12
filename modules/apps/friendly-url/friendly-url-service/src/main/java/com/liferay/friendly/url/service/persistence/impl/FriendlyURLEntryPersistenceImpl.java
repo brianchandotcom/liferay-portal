@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2295,8 +2297,6 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 
 	@Override
 	protected FriendlyURLEntry removeImpl(FriendlyURLEntry friendlyURLEntry) {
-		friendlyURLEntry = toUnwrappedModel(friendlyURLEntry);
-
 		Session session = null;
 
 		try {
@@ -2327,9 +2327,23 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 
 	@Override
 	public FriendlyURLEntry updateImpl(FriendlyURLEntry friendlyURLEntry) {
-		friendlyURLEntry = toUnwrappedModel(friendlyURLEntry);
-
 		boolean isNew = friendlyURLEntry.isNew();
+
+		if (!(friendlyURLEntry instanceof FriendlyURLEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(friendlyURLEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(friendlyURLEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in friendlyURLEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom FriendlyURLEntry implementation " +
+				friendlyURLEntry.getClass());
+		}
 
 		FriendlyURLEntryModelImpl friendlyURLEntryModelImpl = (FriendlyURLEntryModelImpl)friendlyURLEntry;
 
@@ -2493,31 +2507,6 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 		friendlyURLEntry.resetOriginalValues();
 
 		return friendlyURLEntry;
-	}
-
-	protected FriendlyURLEntry toUnwrappedModel(
-		FriendlyURLEntry friendlyURLEntry) {
-		if (friendlyURLEntry instanceof FriendlyURLEntryImpl) {
-			return friendlyURLEntry;
-		}
-
-		FriendlyURLEntryImpl friendlyURLEntryImpl = new FriendlyURLEntryImpl();
-
-		friendlyURLEntryImpl.setNew(friendlyURLEntry.isNew());
-		friendlyURLEntryImpl.setPrimaryKey(friendlyURLEntry.getPrimaryKey());
-
-		friendlyURLEntryImpl.setMvccVersion(friendlyURLEntry.getMvccVersion());
-		friendlyURLEntryImpl.setUuid(friendlyURLEntry.getUuid());
-		friendlyURLEntryImpl.setFriendlyURLEntryId(friendlyURLEntry.getFriendlyURLEntryId());
-		friendlyURLEntryImpl.setGroupId(friendlyURLEntry.getGroupId());
-		friendlyURLEntryImpl.setCompanyId(friendlyURLEntry.getCompanyId());
-		friendlyURLEntryImpl.setCreateDate(friendlyURLEntry.getCreateDate());
-		friendlyURLEntryImpl.setModifiedDate(friendlyURLEntry.getModifiedDate());
-		friendlyURLEntryImpl.setClassNameId(friendlyURLEntry.getClassNameId());
-		friendlyURLEntryImpl.setClassPK(friendlyURLEntry.getClassPK());
-		friendlyURLEntryImpl.setDefaultLanguageId(friendlyURLEntry.getDefaultLanguageId());
-
-		return friendlyURLEntryImpl;
 	}
 
 	/**

@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1581,8 +1584,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	@Override
 	protected DDMDataProviderInstanceLink removeImpl(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-		ddmDataProviderInstanceLink = toUnwrappedModel(ddmDataProviderInstanceLink);
-
 		Session session = null;
 
 		try {
@@ -1614,9 +1615,23 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	@Override
 	public DDMDataProviderInstanceLink updateImpl(
 		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-		ddmDataProviderInstanceLink = toUnwrappedModel(ddmDataProviderInstanceLink);
-
 		boolean isNew = ddmDataProviderInstanceLink.isNew();
+
+		if (!(ddmDataProviderInstanceLink instanceof DDMDataProviderInstanceLinkModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmDataProviderInstanceLink.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmDataProviderInstanceLink);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmDataProviderInstanceLink proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMDataProviderInstanceLink implementation " +
+				ddmDataProviderInstanceLink.getClass());
+		}
 
 		DDMDataProviderInstanceLinkModelImpl ddmDataProviderInstanceLinkModelImpl =
 			(DDMDataProviderInstanceLinkModelImpl)ddmDataProviderInstanceLink;
@@ -1724,25 +1739,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		ddmDataProviderInstanceLink.resetOriginalValues();
 
 		return ddmDataProviderInstanceLink;
-	}
-
-	protected DDMDataProviderInstanceLink toUnwrappedModel(
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-		if (ddmDataProviderInstanceLink instanceof DDMDataProviderInstanceLinkImpl) {
-			return ddmDataProviderInstanceLink;
-		}
-
-		DDMDataProviderInstanceLinkImpl ddmDataProviderInstanceLinkImpl = new DDMDataProviderInstanceLinkImpl();
-
-		ddmDataProviderInstanceLinkImpl.setNew(ddmDataProviderInstanceLink.isNew());
-		ddmDataProviderInstanceLinkImpl.setPrimaryKey(ddmDataProviderInstanceLink.getPrimaryKey());
-
-		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(ddmDataProviderInstanceLink.getDataProviderInstanceLinkId());
-		ddmDataProviderInstanceLinkImpl.setCompanyId(ddmDataProviderInstanceLink.getCompanyId());
-		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceId(ddmDataProviderInstanceLink.getDataProviderInstanceId());
-		ddmDataProviderInstanceLinkImpl.setStructureId(ddmDataProviderInstanceLink.getStructureId());
-
-		return ddmDataProviderInstanceLinkImpl;
 	}
 
 	/**

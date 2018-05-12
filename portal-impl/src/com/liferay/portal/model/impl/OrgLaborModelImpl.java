@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.OrgLaborModel;
 import com.liferay.portal.kernel.model.OrgLaborSoap;
@@ -912,7 +913,7 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	private static final ClassLoader _classLoader = OrgLabor.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			OrgLabor.class
+			OrgLabor.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _orgLaborId;

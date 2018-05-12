@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -4851,8 +4854,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	@Override
 	protected JournalContentSearch removeImpl(
 		JournalContentSearch journalContentSearch) {
-		journalContentSearch = toUnwrappedModel(journalContentSearch);
-
 		Session session = null;
 
 		try {
@@ -4884,9 +4885,23 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	@Override
 	public JournalContentSearch updateImpl(
 		JournalContentSearch journalContentSearch) {
-		journalContentSearch = toUnwrappedModel(journalContentSearch);
-
 		boolean isNew = journalContentSearch.isNew();
+
+		if (!(journalContentSearch instanceof JournalContentSearchModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(journalContentSearch.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(journalContentSearch);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in journalContentSearch proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom JournalContentSearch implementation " +
+				journalContentSearch.getClass());
+		}
 
 		JournalContentSearchModelImpl journalContentSearchModelImpl = (JournalContentSearchModelImpl)journalContentSearch;
 
@@ -5145,28 +5160,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		journalContentSearch.resetOriginalValues();
 
 		return journalContentSearch;
-	}
-
-	protected JournalContentSearch toUnwrappedModel(
-		JournalContentSearch journalContentSearch) {
-		if (journalContentSearch instanceof JournalContentSearchImpl) {
-			return journalContentSearch;
-		}
-
-		JournalContentSearchImpl journalContentSearchImpl = new JournalContentSearchImpl();
-
-		journalContentSearchImpl.setNew(journalContentSearch.isNew());
-		journalContentSearchImpl.setPrimaryKey(journalContentSearch.getPrimaryKey());
-
-		journalContentSearchImpl.setContentSearchId(journalContentSearch.getContentSearchId());
-		journalContentSearchImpl.setGroupId(journalContentSearch.getGroupId());
-		journalContentSearchImpl.setCompanyId(journalContentSearch.getCompanyId());
-		journalContentSearchImpl.setPrivateLayout(journalContentSearch.isPrivateLayout());
-		journalContentSearchImpl.setLayoutId(journalContentSearch.getLayoutId());
-		journalContentSearchImpl.setPortletId(journalContentSearch.getPortletId());
-		journalContentSearchImpl.setArticleId(journalContentSearch.getArticleId());
-
-		return journalContentSearchImpl;
 	}
 
 	/**

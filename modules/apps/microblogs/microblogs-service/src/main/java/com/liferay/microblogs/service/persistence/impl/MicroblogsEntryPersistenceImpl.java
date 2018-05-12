@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -7852,8 +7854,6 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 	@Override
 	protected MicroblogsEntry removeImpl(MicroblogsEntry microblogsEntry) {
-		microblogsEntry = toUnwrappedModel(microblogsEntry);
-
 		Session session = null;
 
 		try {
@@ -7884,9 +7884,23 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 	@Override
 	public MicroblogsEntry updateImpl(MicroblogsEntry microblogsEntry) {
-		microblogsEntry = toUnwrappedModel(microblogsEntry);
-
 		boolean isNew = microblogsEntry.isNew();
+
+		if (!(microblogsEntry instanceof MicroblogsEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(microblogsEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(microblogsEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in microblogsEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MicroblogsEntry implementation " +
+				microblogsEntry.getClass());
+		}
 
 		MicroblogsEntryModelImpl microblogsEntryModelImpl = (MicroblogsEntryModelImpl)microblogsEntry;
 
@@ -8294,32 +8308,6 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		microblogsEntry.resetOriginalValues();
 
 		return microblogsEntry;
-	}
-
-	protected MicroblogsEntry toUnwrappedModel(MicroblogsEntry microblogsEntry) {
-		if (microblogsEntry instanceof MicroblogsEntryImpl) {
-			return microblogsEntry;
-		}
-
-		MicroblogsEntryImpl microblogsEntryImpl = new MicroblogsEntryImpl();
-
-		microblogsEntryImpl.setNew(microblogsEntry.isNew());
-		microblogsEntryImpl.setPrimaryKey(microblogsEntry.getPrimaryKey());
-
-		microblogsEntryImpl.setMicroblogsEntryId(microblogsEntry.getMicroblogsEntryId());
-		microblogsEntryImpl.setCompanyId(microblogsEntry.getCompanyId());
-		microblogsEntryImpl.setUserId(microblogsEntry.getUserId());
-		microblogsEntryImpl.setUserName(microblogsEntry.getUserName());
-		microblogsEntryImpl.setCreateDate(microblogsEntry.getCreateDate());
-		microblogsEntryImpl.setModifiedDate(microblogsEntry.getModifiedDate());
-		microblogsEntryImpl.setCreatorClassNameId(microblogsEntry.getCreatorClassNameId());
-		microblogsEntryImpl.setCreatorClassPK(microblogsEntry.getCreatorClassPK());
-		microblogsEntryImpl.setContent(microblogsEntry.getContent());
-		microblogsEntryImpl.setType(microblogsEntry.getType());
-		microblogsEntryImpl.setParentMicroblogsEntryId(microblogsEntry.getParentMicroblogsEntryId());
-		microblogsEntryImpl.setSocialRelationType(microblogsEntry.getSocialRelationType());
-
-		return microblogsEntryImpl;
 	}
 
 	/**

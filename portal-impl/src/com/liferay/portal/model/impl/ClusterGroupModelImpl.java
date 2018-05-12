@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ClusterGroup;
 import com.liferay.portal.kernel.model.ClusterGroupModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -417,7 +418,7 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	private static final ClassLoader _classLoader = ClusterGroup.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ClusterGroup.class
+			ClusterGroup.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _clusterGroupId;

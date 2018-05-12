@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1604,8 +1607,6 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	@Override
 	protected DDMTemplateVersion removeImpl(
 		DDMTemplateVersion ddmTemplateVersion) {
-		ddmTemplateVersion = toUnwrappedModel(ddmTemplateVersion);
-
 		Session session = null;
 
 		try {
@@ -1636,9 +1637,23 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 
 	@Override
 	public DDMTemplateVersion updateImpl(DDMTemplateVersion ddmTemplateVersion) {
-		ddmTemplateVersion = toUnwrappedModel(ddmTemplateVersion);
-
 		boolean isNew = ddmTemplateVersion.isNew();
+
+		if (!(ddmTemplateVersion instanceof DDMTemplateVersionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmTemplateVersion.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmTemplateVersion);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmTemplateVersion proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMTemplateVersion implementation " +
+				ddmTemplateVersion.getClass());
+		}
 
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl = (DDMTemplateVersionModelImpl)ddmTemplateVersion;
 
@@ -1742,39 +1757,6 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		ddmTemplateVersion.resetOriginalValues();
 
 		return ddmTemplateVersion;
-	}
-
-	protected DDMTemplateVersion toUnwrappedModel(
-		DDMTemplateVersion ddmTemplateVersion) {
-		if (ddmTemplateVersion instanceof DDMTemplateVersionImpl) {
-			return ddmTemplateVersion;
-		}
-
-		DDMTemplateVersionImpl ddmTemplateVersionImpl = new DDMTemplateVersionImpl();
-
-		ddmTemplateVersionImpl.setNew(ddmTemplateVersion.isNew());
-		ddmTemplateVersionImpl.setPrimaryKey(ddmTemplateVersion.getPrimaryKey());
-
-		ddmTemplateVersionImpl.setTemplateVersionId(ddmTemplateVersion.getTemplateVersionId());
-		ddmTemplateVersionImpl.setGroupId(ddmTemplateVersion.getGroupId());
-		ddmTemplateVersionImpl.setCompanyId(ddmTemplateVersion.getCompanyId());
-		ddmTemplateVersionImpl.setUserId(ddmTemplateVersion.getUserId());
-		ddmTemplateVersionImpl.setUserName(ddmTemplateVersion.getUserName());
-		ddmTemplateVersionImpl.setCreateDate(ddmTemplateVersion.getCreateDate());
-		ddmTemplateVersionImpl.setClassNameId(ddmTemplateVersion.getClassNameId());
-		ddmTemplateVersionImpl.setClassPK(ddmTemplateVersion.getClassPK());
-		ddmTemplateVersionImpl.setTemplateId(ddmTemplateVersion.getTemplateId());
-		ddmTemplateVersionImpl.setVersion(ddmTemplateVersion.getVersion());
-		ddmTemplateVersionImpl.setName(ddmTemplateVersion.getName());
-		ddmTemplateVersionImpl.setDescription(ddmTemplateVersion.getDescription());
-		ddmTemplateVersionImpl.setLanguage(ddmTemplateVersion.getLanguage());
-		ddmTemplateVersionImpl.setScript(ddmTemplateVersion.getScript());
-		ddmTemplateVersionImpl.setStatus(ddmTemplateVersion.getStatus());
-		ddmTemplateVersionImpl.setStatusByUserId(ddmTemplateVersion.getStatusByUserId());
-		ddmTemplateVersionImpl.setStatusByUserName(ddmTemplateVersion.getStatusByUserName());
-		ddmTemplateVersionImpl.setStatusDate(ddmTemplateVersion.getStatusDate());
-
-		return ddmTemplateVersionImpl;
 	}
 
 	/**

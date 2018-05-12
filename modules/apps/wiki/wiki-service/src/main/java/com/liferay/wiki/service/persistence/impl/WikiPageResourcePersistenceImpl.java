@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +45,7 @@ import com.liferay.wiki.service.persistence.WikiPageResourcePersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1998,8 +2000,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 	@Override
 	protected WikiPageResource removeImpl(WikiPageResource wikiPageResource) {
-		wikiPageResource = toUnwrappedModel(wikiPageResource);
-
 		Session session = null;
 
 		try {
@@ -2030,9 +2030,23 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 	@Override
 	public WikiPageResource updateImpl(WikiPageResource wikiPageResource) {
-		wikiPageResource = toUnwrappedModel(wikiPageResource);
-
 		boolean isNew = wikiPageResource.isNew();
+
+		if (!(wikiPageResource instanceof WikiPageResourceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(wikiPageResource.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(wikiPageResource);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in wikiPageResource proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom WikiPageResource implementation " +
+				wikiPageResource.getClass());
+		}
 
 		WikiPageResourceModelImpl wikiPageResourceModelImpl = (WikiPageResourceModelImpl)wikiPageResource;
 
@@ -2140,27 +2154,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		wikiPageResource.resetOriginalValues();
 
 		return wikiPageResource;
-	}
-
-	protected WikiPageResource toUnwrappedModel(
-		WikiPageResource wikiPageResource) {
-		if (wikiPageResource instanceof WikiPageResourceImpl) {
-			return wikiPageResource;
-		}
-
-		WikiPageResourceImpl wikiPageResourceImpl = new WikiPageResourceImpl();
-
-		wikiPageResourceImpl.setNew(wikiPageResource.isNew());
-		wikiPageResourceImpl.setPrimaryKey(wikiPageResource.getPrimaryKey());
-
-		wikiPageResourceImpl.setUuid(wikiPageResource.getUuid());
-		wikiPageResourceImpl.setResourcePrimKey(wikiPageResource.getResourcePrimKey());
-		wikiPageResourceImpl.setGroupId(wikiPageResource.getGroupId());
-		wikiPageResourceImpl.setCompanyId(wikiPageResource.getCompanyId());
-		wikiPageResourceImpl.setNodeId(wikiPageResource.getNodeId());
-		wikiPageResourceImpl.setTitle(wikiPageResource.getTitle());
-
-		return wikiPageResourceImpl;
 	}
 
 	/**

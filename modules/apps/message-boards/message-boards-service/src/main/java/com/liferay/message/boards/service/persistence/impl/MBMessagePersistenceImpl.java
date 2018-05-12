@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +58,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19634,8 +19636,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	@Override
 	protected MBMessage removeImpl(MBMessage mbMessage) {
-		mbMessage = toUnwrappedModel(mbMessage);
-
 		Session session = null;
 
 		try {
@@ -19666,9 +19666,23 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 	@Override
 	public MBMessage updateImpl(MBMessage mbMessage) {
-		mbMessage = toUnwrappedModel(mbMessage);
-
 		boolean isNew = mbMessage.isNew();
+
+		if (!(mbMessage instanceof MBMessageModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mbMessage.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mbMessage);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mbMessage proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MBMessage implementation " +
+				mbMessage.getClass());
+		}
 
 		MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
 
@@ -20544,46 +20558,6 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		mbMessage.resetOriginalValues();
 
 		return mbMessage;
-	}
-
-	protected MBMessage toUnwrappedModel(MBMessage mbMessage) {
-		if (mbMessage instanceof MBMessageImpl) {
-			return mbMessage;
-		}
-
-		MBMessageImpl mbMessageImpl = new MBMessageImpl();
-
-		mbMessageImpl.setNew(mbMessage.isNew());
-		mbMessageImpl.setPrimaryKey(mbMessage.getPrimaryKey());
-
-		mbMessageImpl.setUuid(mbMessage.getUuid());
-		mbMessageImpl.setMessageId(mbMessage.getMessageId());
-		mbMessageImpl.setGroupId(mbMessage.getGroupId());
-		mbMessageImpl.setCompanyId(mbMessage.getCompanyId());
-		mbMessageImpl.setUserId(mbMessage.getUserId());
-		mbMessageImpl.setUserName(mbMessage.getUserName());
-		mbMessageImpl.setCreateDate(mbMessage.getCreateDate());
-		mbMessageImpl.setModifiedDate(mbMessage.getModifiedDate());
-		mbMessageImpl.setClassNameId(mbMessage.getClassNameId());
-		mbMessageImpl.setClassPK(mbMessage.getClassPK());
-		mbMessageImpl.setCategoryId(mbMessage.getCategoryId());
-		mbMessageImpl.setThreadId(mbMessage.getThreadId());
-		mbMessageImpl.setRootMessageId(mbMessage.getRootMessageId());
-		mbMessageImpl.setParentMessageId(mbMessage.getParentMessageId());
-		mbMessageImpl.setSubject(mbMessage.getSubject());
-		mbMessageImpl.setBody(mbMessage.getBody());
-		mbMessageImpl.setFormat(mbMessage.getFormat());
-		mbMessageImpl.setAnonymous(mbMessage.isAnonymous());
-		mbMessageImpl.setPriority(mbMessage.getPriority());
-		mbMessageImpl.setAllowPingbacks(mbMessage.isAllowPingbacks());
-		mbMessageImpl.setAnswer(mbMessage.isAnswer());
-		mbMessageImpl.setLastPublishDate(mbMessage.getLastPublishDate());
-		mbMessageImpl.setStatus(mbMessage.getStatus());
-		mbMessageImpl.setStatusByUserId(mbMessage.getStatusByUserId());
-		mbMessageImpl.setStatusByUserName(mbMessage.getStatusByUserName());
-		mbMessageImpl.setStatusDate(mbMessage.getStatusDate());
-
-		return mbMessageImpl;
 	}
 
 	/**

@@ -35,12 +35,15 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -5375,8 +5378,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	@Override
 	protected PortletPreferences removeImpl(
 		PortletPreferences portletPreferences) {
-		portletPreferences = toUnwrappedModel(portletPreferences);
-
 		Session session = null;
 
 		try {
@@ -5407,9 +5408,23 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 	@Override
 	public PortletPreferences updateImpl(PortletPreferences portletPreferences) {
-		portletPreferences = toUnwrappedModel(portletPreferences);
-
 		boolean isNew = portletPreferences.isNew();
+
+		if (!(portletPreferences instanceof PortletPreferencesModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(portletPreferences.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(portletPreferences);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in portletPreferences proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom PortletPreferences implementation " +
+				portletPreferences.getClass());
+		}
 
 		PortletPreferencesModelImpl portletPreferencesModelImpl = (PortletPreferencesModelImpl)portletPreferences;
 
@@ -5663,29 +5678,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		portletPreferences.resetOriginalValues();
 
 		return portletPreferences;
-	}
-
-	protected PortletPreferences toUnwrappedModel(
-		PortletPreferences portletPreferences) {
-		if (portletPreferences instanceof PortletPreferencesImpl) {
-			return portletPreferences;
-		}
-
-		PortletPreferencesImpl portletPreferencesImpl = new PortletPreferencesImpl();
-
-		portletPreferencesImpl.setNew(portletPreferences.isNew());
-		portletPreferencesImpl.setPrimaryKey(portletPreferences.getPrimaryKey());
-
-		portletPreferencesImpl.setMvccVersion(portletPreferences.getMvccVersion());
-		portletPreferencesImpl.setPortletPreferencesId(portletPreferences.getPortletPreferencesId());
-		portletPreferencesImpl.setCompanyId(portletPreferences.getCompanyId());
-		portletPreferencesImpl.setOwnerId(portletPreferences.getOwnerId());
-		portletPreferencesImpl.setOwnerType(portletPreferences.getOwnerType());
-		portletPreferencesImpl.setPlid(portletPreferences.getPlid());
-		portletPreferencesImpl.setPortletId(portletPreferences.getPortletId());
-		portletPreferencesImpl.setPreferences(portletPreferences.getPreferences());
-
-		return portletPreferencesImpl;
 	}
 
 	/**

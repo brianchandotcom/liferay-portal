@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4936,8 +4938,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	protected MDRRuleGroupInstance removeImpl(
 		MDRRuleGroupInstance mdrRuleGroupInstance) {
-		mdrRuleGroupInstance = toUnwrappedModel(mdrRuleGroupInstance);
-
 		Session session = null;
 
 		try {
@@ -4969,9 +4969,23 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	@Override
 	public MDRRuleGroupInstance updateImpl(
 		MDRRuleGroupInstance mdrRuleGroupInstance) {
-		mdrRuleGroupInstance = toUnwrappedModel(mdrRuleGroupInstance);
-
 		boolean isNew = mdrRuleGroupInstance.isNew();
+
+		if (!(mdrRuleGroupInstance instanceof MDRRuleGroupInstanceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mdrRuleGroupInstance.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mdrRuleGroupInstance);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mdrRuleGroupInstance proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MDRRuleGroupInstance implementation " +
+				mdrRuleGroupInstance.getClass());
+		}
 
 		MDRRuleGroupInstanceModelImpl mdrRuleGroupInstanceModelImpl = (MDRRuleGroupInstanceModelImpl)mdrRuleGroupInstance;
 
@@ -5214,34 +5228,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		mdrRuleGroupInstance.resetOriginalValues();
 
 		return mdrRuleGroupInstance;
-	}
-
-	protected MDRRuleGroupInstance toUnwrappedModel(
-		MDRRuleGroupInstance mdrRuleGroupInstance) {
-		if (mdrRuleGroupInstance instanceof MDRRuleGroupInstanceImpl) {
-			return mdrRuleGroupInstance;
-		}
-
-		MDRRuleGroupInstanceImpl mdrRuleGroupInstanceImpl = new MDRRuleGroupInstanceImpl();
-
-		mdrRuleGroupInstanceImpl.setNew(mdrRuleGroupInstance.isNew());
-		mdrRuleGroupInstanceImpl.setPrimaryKey(mdrRuleGroupInstance.getPrimaryKey());
-
-		mdrRuleGroupInstanceImpl.setUuid(mdrRuleGroupInstance.getUuid());
-		mdrRuleGroupInstanceImpl.setRuleGroupInstanceId(mdrRuleGroupInstance.getRuleGroupInstanceId());
-		mdrRuleGroupInstanceImpl.setGroupId(mdrRuleGroupInstance.getGroupId());
-		mdrRuleGroupInstanceImpl.setCompanyId(mdrRuleGroupInstance.getCompanyId());
-		mdrRuleGroupInstanceImpl.setUserId(mdrRuleGroupInstance.getUserId());
-		mdrRuleGroupInstanceImpl.setUserName(mdrRuleGroupInstance.getUserName());
-		mdrRuleGroupInstanceImpl.setCreateDate(mdrRuleGroupInstance.getCreateDate());
-		mdrRuleGroupInstanceImpl.setModifiedDate(mdrRuleGroupInstance.getModifiedDate());
-		mdrRuleGroupInstanceImpl.setClassNameId(mdrRuleGroupInstance.getClassNameId());
-		mdrRuleGroupInstanceImpl.setClassPK(mdrRuleGroupInstance.getClassPK());
-		mdrRuleGroupInstanceImpl.setRuleGroupId(mdrRuleGroupInstance.getRuleGroupId());
-		mdrRuleGroupInstanceImpl.setPriority(mdrRuleGroupInstance.getPriority());
-		mdrRuleGroupInstanceImpl.setLastPublishDate(mdrRuleGroupInstance.getLastPublishDate());
-
-		return mdrRuleGroupInstanceImpl;
 	}
 
 	/**

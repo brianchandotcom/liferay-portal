@@ -27,6 +27,7 @@ import com.liferay.fragment.model.FragmentEntryLinkModel;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1083,7 +1084,7 @@ public class FragmentEntryLinkModelImpl extends BaseModelImpl<FragmentEntryLink>
 
 	private static final ClassLoader _classLoader = FragmentEntryLink.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			FragmentEntryLink.class
+			FragmentEntryLink.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

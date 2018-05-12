@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.model.ExpandoTableModel;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -442,7 +443,7 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 
 	private static final ClassLoader _classLoader = ExpandoTable.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ExpandoTable.class
+			ExpandoTable.class, ModelWrapper.class
 		};
 	private long _tableId;
 	private long _companyId;

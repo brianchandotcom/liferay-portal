@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupModel;
@@ -846,7 +847,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	private static final ClassLoader _classLoader = UserGroup.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			UserGroup.class
+			UserGroup.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private String _uuid;

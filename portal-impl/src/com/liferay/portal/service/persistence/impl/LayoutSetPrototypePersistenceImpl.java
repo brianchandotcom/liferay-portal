@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPrototypePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,6 +50,7 @@ import com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4047,8 +4049,6 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 	@Override
 	protected LayoutSetPrototype removeImpl(
 		LayoutSetPrototype layoutSetPrototype) {
-		layoutSetPrototype = toUnwrappedModel(layoutSetPrototype);
-
 		Session session = null;
 
 		try {
@@ -4079,9 +4079,23 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 	@Override
 	public LayoutSetPrototype updateImpl(LayoutSetPrototype layoutSetPrototype) {
-		layoutSetPrototype = toUnwrappedModel(layoutSetPrototype);
-
 		boolean isNew = layoutSetPrototype.isNew();
+
+		if (!(layoutSetPrototype instanceof LayoutSetPrototypeModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(layoutSetPrototype.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(layoutSetPrototype);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in layoutSetPrototype proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom LayoutSetPrototype implementation " +
+				layoutSetPrototype.getClass());
+		}
 
 		LayoutSetPrototypeModelImpl layoutSetPrototypeModelImpl = (LayoutSetPrototypeModelImpl)layoutSetPrototype;
 
@@ -4263,33 +4277,6 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		layoutSetPrototype.resetOriginalValues();
 
 		return layoutSetPrototype;
-	}
-
-	protected LayoutSetPrototype toUnwrappedModel(
-		LayoutSetPrototype layoutSetPrototype) {
-		if (layoutSetPrototype instanceof LayoutSetPrototypeImpl) {
-			return layoutSetPrototype;
-		}
-
-		LayoutSetPrototypeImpl layoutSetPrototypeImpl = new LayoutSetPrototypeImpl();
-
-		layoutSetPrototypeImpl.setNew(layoutSetPrototype.isNew());
-		layoutSetPrototypeImpl.setPrimaryKey(layoutSetPrototype.getPrimaryKey());
-
-		layoutSetPrototypeImpl.setMvccVersion(layoutSetPrototype.getMvccVersion());
-		layoutSetPrototypeImpl.setUuid(layoutSetPrototype.getUuid());
-		layoutSetPrototypeImpl.setLayoutSetPrototypeId(layoutSetPrototype.getLayoutSetPrototypeId());
-		layoutSetPrototypeImpl.setCompanyId(layoutSetPrototype.getCompanyId());
-		layoutSetPrototypeImpl.setUserId(layoutSetPrototype.getUserId());
-		layoutSetPrototypeImpl.setUserName(layoutSetPrototype.getUserName());
-		layoutSetPrototypeImpl.setCreateDate(layoutSetPrototype.getCreateDate());
-		layoutSetPrototypeImpl.setModifiedDate(layoutSetPrototype.getModifiedDate());
-		layoutSetPrototypeImpl.setName(layoutSetPrototype.getName());
-		layoutSetPrototypeImpl.setDescription(layoutSetPrototype.getDescription());
-		layoutSetPrototypeImpl.setSettings(layoutSetPrototype.getSettings());
-		layoutSetPrototypeImpl.setActive(layoutSetPrototype.isActive());
-
-		return layoutSetPrototypeImpl;
 	}
 
 	/**

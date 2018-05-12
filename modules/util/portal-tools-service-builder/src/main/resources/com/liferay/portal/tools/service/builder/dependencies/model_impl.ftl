@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -1515,7 +1516,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	private static final ClassLoader _classLoader = ${entity.name}.class.getClassLoader();
 
-	private static final Class<?>[] _escapedModelInterfaces = new Class[] {${entity.name}.class};
+	private static final Class<?>[] _escapedModelInterfaces = new Class[] {${entity.name}.class, ModelWrapper.class};
 
 	<#list entity.regularEntityColumns as entityColumn>
 		<#if stringUtil.equals(entityColumn.type, "Blob") && entityColumn.lazy>

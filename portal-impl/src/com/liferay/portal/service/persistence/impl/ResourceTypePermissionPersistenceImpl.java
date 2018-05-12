@@ -35,11 +35,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.ResourceTypePermissionImpl;
 import com.liferay.portal.model.impl.ResourceTypePermissionModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1756,8 +1759,6 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	@Override
 	protected ResourceTypePermission removeImpl(
 		ResourceTypePermission resourceTypePermission) {
-		resourceTypePermission = toUnwrappedModel(resourceTypePermission);
-
 		Session session = null;
 
 		try {
@@ -1789,9 +1790,23 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	@Override
 	public ResourceTypePermission updateImpl(
 		ResourceTypePermission resourceTypePermission) {
-		resourceTypePermission = toUnwrappedModel(resourceTypePermission);
-
 		boolean isNew = resourceTypePermission.isNew();
+
+		if (!(resourceTypePermission instanceof ResourceTypePermissionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(resourceTypePermission.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(resourceTypePermission);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in resourceTypePermission proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom ResourceTypePermission implementation " +
+				resourceTypePermission.getClass());
+		}
 
 		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)resourceTypePermission;
 
@@ -1899,28 +1914,6 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		resourceTypePermission.resetOriginalValues();
 
 		return resourceTypePermission;
-	}
-
-	protected ResourceTypePermission toUnwrappedModel(
-		ResourceTypePermission resourceTypePermission) {
-		if (resourceTypePermission instanceof ResourceTypePermissionImpl) {
-			return resourceTypePermission;
-		}
-
-		ResourceTypePermissionImpl resourceTypePermissionImpl = new ResourceTypePermissionImpl();
-
-		resourceTypePermissionImpl.setNew(resourceTypePermission.isNew());
-		resourceTypePermissionImpl.setPrimaryKey(resourceTypePermission.getPrimaryKey());
-
-		resourceTypePermissionImpl.setMvccVersion(resourceTypePermission.getMvccVersion());
-		resourceTypePermissionImpl.setResourceTypePermissionId(resourceTypePermission.getResourceTypePermissionId());
-		resourceTypePermissionImpl.setCompanyId(resourceTypePermission.getCompanyId());
-		resourceTypePermissionImpl.setGroupId(resourceTypePermission.getGroupId());
-		resourceTypePermissionImpl.setName(resourceTypePermission.getName());
-		resourceTypePermissionImpl.setRoleId(resourceTypePermission.getRoleId());
-		resourceTypePermissionImpl.setActionIds(resourceTypePermission.getActionIds());
-
-		return resourceTypePermissionImpl;
 	}
 
 	/**

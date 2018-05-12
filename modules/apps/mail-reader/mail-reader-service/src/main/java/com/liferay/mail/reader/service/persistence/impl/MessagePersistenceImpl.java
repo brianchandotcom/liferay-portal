@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1539,8 +1541,6 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 
 	@Override
 	protected Message removeImpl(Message message) {
-		message = toUnwrappedModel(message);
-
 		Session session = null;
 
 		try {
@@ -1571,9 +1571,23 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 
 	@Override
 	public Message updateImpl(Message message) {
-		message = toUnwrappedModel(message);
-
 		boolean isNew = message.isNew();
+
+		if (!(message instanceof MessageModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(message.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(message);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in message proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Message implementation " +
+				message.getClass());
+		}
 
 		MessageModelImpl messageModelImpl = (MessageModelImpl)message;
 
@@ -1689,40 +1703,6 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		message.resetOriginalValues();
 
 		return message;
-	}
-
-	protected Message toUnwrappedModel(Message message) {
-		if (message instanceof MessageImpl) {
-			return message;
-		}
-
-		MessageImpl messageImpl = new MessageImpl();
-
-		messageImpl.setNew(message.isNew());
-		messageImpl.setPrimaryKey(message.getPrimaryKey());
-
-		messageImpl.setMessageId(message.getMessageId());
-		messageImpl.setCompanyId(message.getCompanyId());
-		messageImpl.setUserId(message.getUserId());
-		messageImpl.setUserName(message.getUserName());
-		messageImpl.setCreateDate(message.getCreateDate());
-		messageImpl.setModifiedDate(message.getModifiedDate());
-		messageImpl.setAccountId(message.getAccountId());
-		messageImpl.setFolderId(message.getFolderId());
-		messageImpl.setSender(message.getSender());
-		messageImpl.setTo(message.getTo());
-		messageImpl.setCc(message.getCc());
-		messageImpl.setBcc(message.getBcc());
-		messageImpl.setSentDate(message.getSentDate());
-		messageImpl.setSubject(message.getSubject());
-		messageImpl.setPreview(message.getPreview());
-		messageImpl.setBody(message.getBody());
-		messageImpl.setFlags(message.getFlags());
-		messageImpl.setSize(message.getSize());
-		messageImpl.setRemoteMessageId(message.getRemoteMessageId());
-		messageImpl.setContentType(message.getContentType());
-
-		return messageImpl;
 	}
 
 	/**

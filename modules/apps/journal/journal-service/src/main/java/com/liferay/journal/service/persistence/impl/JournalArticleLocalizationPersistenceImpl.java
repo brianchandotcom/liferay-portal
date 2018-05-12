@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1076,8 +1079,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	@Override
 	protected JournalArticleLocalization removeImpl(
 		JournalArticleLocalization journalArticleLocalization) {
-		journalArticleLocalization = toUnwrappedModel(journalArticleLocalization);
-
 		Session session = null;
 
 		try {
@@ -1109,9 +1110,23 @@ public class JournalArticleLocalizationPersistenceImpl
 	@Override
 	public JournalArticleLocalization updateImpl(
 		JournalArticleLocalization journalArticleLocalization) {
-		journalArticleLocalization = toUnwrappedModel(journalArticleLocalization);
-
 		boolean isNew = journalArticleLocalization.isNew();
+
+		if (!(journalArticleLocalization instanceof JournalArticleLocalizationModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(journalArticleLocalization.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(journalArticleLocalization);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in journalArticleLocalization proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom JournalArticleLocalization implementation " +
+				journalArticleLocalization.getClass());
+		}
 
 		JournalArticleLocalizationModelImpl journalArticleLocalizationModelImpl = (JournalArticleLocalizationModelImpl)journalArticleLocalization;
 
@@ -1188,27 +1203,6 @@ public class JournalArticleLocalizationPersistenceImpl
 		journalArticleLocalization.resetOriginalValues();
 
 		return journalArticleLocalization;
-	}
-
-	protected JournalArticleLocalization toUnwrappedModel(
-		JournalArticleLocalization journalArticleLocalization) {
-		if (journalArticleLocalization instanceof JournalArticleLocalizationImpl) {
-			return journalArticleLocalization;
-		}
-
-		JournalArticleLocalizationImpl journalArticleLocalizationImpl = new JournalArticleLocalizationImpl();
-
-		journalArticleLocalizationImpl.setNew(journalArticleLocalization.isNew());
-		journalArticleLocalizationImpl.setPrimaryKey(journalArticleLocalization.getPrimaryKey());
-
-		journalArticleLocalizationImpl.setArticleLocalizationId(journalArticleLocalization.getArticleLocalizationId());
-		journalArticleLocalizationImpl.setCompanyId(journalArticleLocalization.getCompanyId());
-		journalArticleLocalizationImpl.setArticlePK(journalArticleLocalization.getArticlePK());
-		journalArticleLocalizationImpl.setTitle(journalArticleLocalization.getTitle());
-		journalArticleLocalizationImpl.setDescription(journalArticleLocalization.getDescription());
-		journalArticleLocalizationImpl.setLanguageId(journalArticleLocalization.getLanguageId());
-
-		return journalArticleLocalizationImpl;
 	}
 
 	/**

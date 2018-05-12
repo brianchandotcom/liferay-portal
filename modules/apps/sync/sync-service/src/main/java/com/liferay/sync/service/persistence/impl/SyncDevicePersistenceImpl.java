@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import com.liferay.sync.service.persistence.SyncDevicePersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2470,8 +2472,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 
 	@Override
 	protected SyncDevice removeImpl(SyncDevice syncDevice) {
-		syncDevice = toUnwrappedModel(syncDevice);
-
 		Session session = null;
 
 		try {
@@ -2502,9 +2502,23 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 
 	@Override
 	public SyncDevice updateImpl(SyncDevice syncDevice) {
-		syncDevice = toUnwrappedModel(syncDevice);
-
 		boolean isNew = syncDevice.isNew();
+
+		if (!(syncDevice instanceof SyncDeviceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(syncDevice.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(syncDevice);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in syncDevice proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SyncDevice implementation " +
+				syncDevice.getClass());
+		}
 
 		SyncDeviceModelImpl syncDeviceModelImpl = (SyncDeviceModelImpl)syncDevice;
 
@@ -2653,32 +2667,6 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		syncDevice.resetOriginalValues();
 
 		return syncDevice;
-	}
-
-	protected SyncDevice toUnwrappedModel(SyncDevice syncDevice) {
-		if (syncDevice instanceof SyncDeviceImpl) {
-			return syncDevice;
-		}
-
-		SyncDeviceImpl syncDeviceImpl = new SyncDeviceImpl();
-
-		syncDeviceImpl.setNew(syncDevice.isNew());
-		syncDeviceImpl.setPrimaryKey(syncDevice.getPrimaryKey());
-
-		syncDeviceImpl.setUuid(syncDevice.getUuid());
-		syncDeviceImpl.setSyncDeviceId(syncDevice.getSyncDeviceId());
-		syncDeviceImpl.setCompanyId(syncDevice.getCompanyId());
-		syncDeviceImpl.setUserId(syncDevice.getUserId());
-		syncDeviceImpl.setUserName(syncDevice.getUserName());
-		syncDeviceImpl.setCreateDate(syncDevice.getCreateDate());
-		syncDeviceImpl.setModifiedDate(syncDevice.getModifiedDate());
-		syncDeviceImpl.setType(syncDevice.getType());
-		syncDeviceImpl.setBuildNumber(syncDevice.getBuildNumber());
-		syncDeviceImpl.setFeatureSet(syncDevice.getFeatureSet());
-		syncDeviceImpl.setHostname(syncDevice.getHostname());
-		syncDeviceImpl.setStatus(syncDevice.getStatus());
-
-		return syncDeviceImpl;
 	}
 
 	/**

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactModel;
 import com.liferay.portal.kernel.model.ContactSoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1483,7 +1484,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	private static final ClassLoader _classLoader = Contact.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Contact.class
+			Contact.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _contactId;

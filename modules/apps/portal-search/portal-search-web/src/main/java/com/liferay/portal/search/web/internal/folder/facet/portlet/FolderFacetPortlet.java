@@ -17,8 +17,6 @@ package com.liferay.portal.search.web.internal.folder.facet.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.FolderSearchFacetDisplayBuilder;
@@ -26,14 +24,11 @@ import com.liferay.portal.search.web.internal.facet.display.context.FolderSearch
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookupImpl;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import javax.portlet.Portlet;
@@ -70,24 +65,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class, PortletSharedSearchContributor.class}
+	service = Portlet.class
 )
-public class FolderFacetPortlet
-	extends MVCPortlet implements PortletSharedSearchContributor {
-
-	@Override
-	public void contribute(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		FolderFacetPortletPreferences folderFacetPortletPreferences =
-			new FolderFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
-
-		Facet facet = buildFacet(
-			folderFacetPortletPreferences, portletSharedSearchSettings);
-
-		portletSharedSearchSettings.addFacet(facet);
-	}
+public class FolderFacetPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -152,33 +132,6 @@ public class FolderFacetPortlet
 			folderSearchFacetDisplayBuilder::setParameterValues);
 
 		return folderSearchFacetDisplayBuilder.build();
-	}
-
-	protected Facet buildFacet(
-		FolderFacetPortletPreferences folderFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		FolderFacetBuilder folderFacetBuilder = new FolderFacetBuilder(
-			folderFacetFactory);
-
-		folderFacetBuilder.setFrequencyThreshold(
-			folderFacetPortletPreferences.getFrequencyThreshold());
-		folderFacetBuilder.setMaxTerms(
-			folderFacetPortletPreferences.getMaxTerms());
-		folderFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchSettings.getParameterValues(
-				folderFacetPortletPreferences.getParameterName());
-
-		Optional<long[]> foldersOptional = parameterValuesOptional.map(
-			parameterValues -> ListUtil.toLongArray(
-				Arrays.asList(parameterValues), GetterUtil::getLong));
-
-		foldersOptional.ifPresent(folderFacetBuilder::setSelectedFolders);
-
-		return folderFacetBuilder.build();
 	}
 
 	protected String getFieldName() {

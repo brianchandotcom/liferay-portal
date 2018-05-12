@@ -18,10 +18,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetBuilder;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetConfiguration;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.category.facet.builder.AssetCategoriesFacetFactory;
@@ -29,14 +26,11 @@ import com.liferay.portal.search.web.internal.category.facet.constants.CategoryF
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoriesSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoryPermissionCheckerImpl;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.io.IOException;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import javax.portlet.Portlet;
@@ -73,24 +67,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class, PortletSharedSearchContributor.class}
+	service = Portlet.class
 )
-public class CategoryFacetPortlet
-	extends MVCPortlet implements PortletSharedSearchContributor {
-
-	@Override
-	public void contribute(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		CategoryFacetPortletPreferences categoryFacetPortletPreferences =
-			new CategoryFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
-
-		Facet facet = buildFacet(
-			categoryFacetPortletPreferences, portletSharedSearchSettings);
-
-		portletSharedSearchSettings.addFacet(facet);
-	}
+public class CategoryFacetPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -171,34 +150,6 @@ public class CategoryFacetPortlet
 			assetCategoriesSearchFacetDisplayBuilder::setParameterValues);
 
 		return assetCategoriesSearchFacetDisplayBuilder.build();
-	}
-
-	protected Facet buildFacet(
-		CategoryFacetPortletPreferences categoryFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		AssetCategoriesFacetBuilder assetCategoriesFacetBuilder =
-			new AssetCategoriesFacetBuilder(assetCategoriesFacetFactory);
-
-		assetCategoriesFacetBuilder.setFrequencyThreshold(
-			categoryFacetPortletPreferences.getFrequencyThreshold());
-		assetCategoriesFacetBuilder.setMaxTerms(
-			categoryFacetPortletPreferences.getMaxTerms());
-		assetCategoriesFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchSettings.getParameterValues(
-				categoryFacetPortletPreferences.getParameterName());
-
-		Optional<long[]> categoryIdsOptional = parameterValuesOptional.map(
-			parameterValues -> ListUtil.toLongArray(
-				Arrays.asList(parameterValues), GetterUtil::getLong));
-
-		categoryIdsOptional.ifPresent(
-			assetCategoriesFacetBuilder::setSelectedCategoryIds);
-
-		return assetCategoriesFacetBuilder.build();
 	}
 
 	protected String getFieldName() {

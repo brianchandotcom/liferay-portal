@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.facet.display.builder.UserSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.user.facet.constants.UserFacetPortletKeys;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.io.IOException;
 
@@ -66,24 +64,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class, PortletSharedSearchContributor.class}
+	service = Portlet.class
 )
-public class UserFacetPortlet
-	extends MVCPortlet implements PortletSharedSearchContributor {
-
-	@Override
-	public void contribute(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		UserFacetPortletPreferences userFacetPortletPreferences =
-			new UserFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
-
-		Facet facet = buildFacet(
-			userFacetPortletPreferences, portletSharedSearchSettings);
-
-		portletSharedSearchSettings.addFacet(facet);
-	}
+public class UserFacetPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -142,28 +125,6 @@ public class UserFacetPortlet
 		usersOptional.ifPresent(userSearchFacetDisplayBuilder::setParamValues);
 
 		return userSearchFacetDisplayBuilder.build();
-	}
-
-	protected Facet buildFacet(
-		UserFacetPortletPreferences userFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		UserFacetBuilder userFacetBuilder = new UserFacetBuilder(
-			userFacetFactory);
-
-		userFacetBuilder.setFrequencyThreshold(
-			userFacetPortletPreferences.getFrequencyThreshold());
-		userFacetBuilder.setMaxTerms(userFacetPortletPreferences.getMaxTerms());
-		userFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchSettings.getParameterValues(
-				userFacetPortletPreferences.getParameterName());
-
-		parameterValuesOptional.ifPresent(userFacetBuilder::setSelectedUsers);
-
-		return userFacetBuilder.build();
 	}
 
 	protected String getFieldName() {

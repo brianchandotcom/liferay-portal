@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.web.internal.portlet.shared.search;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Layout;
@@ -41,9 +43,7 @@ import com.liferay.portal.search.web.search.request.SearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -52,11 +52,11 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author André de Oliveira
@@ -76,21 +76,12 @@ public class PortletSharedSearchRequestImpl
 		return portletSharedSearchResponse;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removePortletSharedSearchContributor"
-	)
-	protected void addPortletSharedSearchContributor(
-		PortletSharedSearchContributor portletSharedSearchContributor) {
-
-		Class<?> clazz = portletSharedSearchContributor.getClass();
-
-		String className = clazz.getName();
-
-		_portletSharedSearchContributors.put(
-			className, portletSharedSearchContributor);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_portletSharedSearchContributors =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, PortletSharedSearchContributor.class,
+				"javax.portlet.name");
 	}
 
 	protected SearchContainer<Document> buildSearchContainer(
@@ -163,6 +154,11 @@ public class PortletSharedSearchRequestImpl
 					searchRequest::addSearchSettingsContributor));
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_portletSharedSearchContributors.close();
+	}
+
 	protected PortletSharedSearchResponse doSearch(
 		RenderRequest renderRequest) {
 
@@ -217,10 +213,10 @@ public class PortletSharedSearchRequestImpl
 	}
 
 	protected Optional<PortletSharedSearchContributor>
-		getPortletSharedSearchContributor(String className) {
+		getPortletSharedSearchContributor(String portletName) {
 
 		return Optional.ofNullable(
-			_portletSharedSearchContributors.get(className));
+			_portletSharedSearchContributors.getService(portletName));
 	}
 
 	protected Optional<SearchSettingsContributor> getSearchSettingsContributor(
@@ -229,7 +225,7 @@ public class PortletSharedSearchRequestImpl
 
 		Optional<PortletSharedSearchContributor>
 			portletSharedSearchContributorOptional =
-				getPortletSharedSearchContributor(portlet.getPortletClass());
+				getPortletSharedSearchContributor(portlet.getPortletName());
 
 		Optional<SearchSettingsContributor> searchSettingsContributorOptional =
 			portletSharedSearchContributorOptional.map(
@@ -261,16 +257,6 @@ public class PortletSharedSearchRequestImpl
 		return themeDisplaySupplier.getThemeDisplay();
 	}
 
-	protected void removePortletSharedSearchContributor(
-		PortletSharedSearchContributor portletSharedSearchContributor) {
-
-		Class<?> clazz = portletSharedSearchContributor.getClass();
-
-		String className = clazz.getName();
-
-		_portletSharedSearchContributors.remove(className);
-	}
-
 	@Reference
 	protected FacetedSearcherManager facetedSearcherManager;
 
@@ -283,7 +269,7 @@ public class PortletSharedSearchRequestImpl
 	@Reference
 	protected PortletSharedTaskExecutor portletSharedTaskExecutor;
 
-	private final Map<String, PortletSharedSearchContributor>
-		_portletSharedSearchContributors = new HashMap<>();
+	private ServiceTrackerMap<String, PortletSharedSearchContributor>
+		_portletSharedSearchContributors;
 
 }

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
@@ -42,10 +41,8 @@ import com.liferay.portal.search.web.internal.result.display.builder.AssetRender
 import com.liferay.portal.search.web.internal.result.display.builder.SearchResultSummaryDisplayBuilder;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 import com.liferay.portal.search.web.search.result.SearchResultImageContributor;
 
 import java.io.IOException;
@@ -96,23 +93,9 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class, PortletSharedSearchContributor.class}
+	service = Portlet.class
 )
-public class SearchResultsPortlet
-	extends MVCPortlet implements PortletSharedSearchContributor {
-
-	@Override
-	public void contribute(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		SearchResultsPortletPreferences searchResultsPortletPreferences =
-			new SearchResultsPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
-
-		paginate(searchResultsPortletPreferences, portletSharedSearchSettings);
-
-		highlight(searchResultsPortletPreferences, portletSharedSearchSettings);
-	}
+public class SearchResultsPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -386,54 +369,6 @@ public class SearchResultsPortlet
 			urlString, paginationStartParameterName);
 
 		return urlString;
-	}
-
-	protected void highlight(
-		SearchResultsPortletPreferences searchResultsPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		boolean highlightEnabled =
-			searchResultsPortletPreferences.isHighlightEnabled();
-
-		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(highlightEnabled);
-	}
-
-	protected void paginate(
-		SearchResultsPortletPreferences searchResultsPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		String paginationStartParameterName =
-			searchResultsPortletPreferences.getPaginationStartParameterName();
-
-		portletSharedSearchSettings.setPaginationStartParameterName(
-			paginationStartParameterName);
-
-		Optional<String> paginationStartParameterValueOptional =
-			portletSharedSearchSettings.getParameter(
-				paginationStartParameterName);
-
-		Optional<Integer> paginationStartOptional =
-			paginationStartParameterValueOptional.map(Integer::valueOf);
-
-		paginationStartOptional.ifPresent(
-			portletSharedSearchSettings::setPaginationStart);
-
-		String paginationDeltaParameterName =
-			searchResultsPortletPreferences.getPaginationDeltaParameterName();
-
-		Optional<String> paginationDeltaParameterValueOptional =
-			portletSharedSearchSettings.getParameter(
-				paginationDeltaParameterName);
-
-		Optional<Integer> paginationDeltaOptional =
-			paginationDeltaParameterValueOptional.map(Integer::valueOf);
-
-		int paginationDelta = paginationDeltaOptional.orElse(
-			searchResultsPortletPreferences.getPaginationDelta());
-
-		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 	}
 
 	protected void removeSearchResultImageContributor(

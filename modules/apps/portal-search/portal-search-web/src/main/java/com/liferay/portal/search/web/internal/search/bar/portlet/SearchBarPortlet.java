@@ -16,20 +16,13 @@ package com.liferay.portal.search.web.internal.search.bar.portlet;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.io.IOException;
 
@@ -72,24 +65,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class, PortletSharedSearchContributor.class}
+	service = Portlet.class
 )
-public class SearchBarPortlet
-	extends MVCPortlet implements PortletSharedSearchContributor {
-
-	@Override
-	public void contribute(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		SearchBarPortletPreferences searchBarPortletPreferences =
-			new SearchBarPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
-
-		setKeywords(searchBarPortletPreferences, portletSharedSearchSettings);
-
-		filterByThisSite(
-			searchBarPortletPreferences, portletSharedSearchSettings);
-	}
+public class SearchBarPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -168,67 +146,11 @@ public class SearchBarPortlet
 		optional.ifPresent(to);
 	}
 
-	protected void filterByThisSite(
-		SearchBarPortletPreferences searchBarPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		Optional<Long> groupIdOptional = getThisSiteGroupId(
-			searchBarPortletPreferences, portletSharedSearchSettings);
-
-		groupIdOptional.ifPresent(
-			groupId -> {
-				portletSharedSearchSettings.addCondition(
-					new BooleanClauseImpl(
-						new TermQueryImpl(
-							Field.GROUP_ID, String.valueOf(groupId)),
-						BooleanClauseOccur.MUST));
-			});
-	}
-
-	protected long getScopeGroupId(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		ThemeDisplay themeDisplay =
-			portletSharedSearchSettings.getThemeDisplay();
-
-		return themeDisplay.getScopeGroupId();
-	}
-
 	protected long getScopeGroupId(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getScopeGroupId();
-	}
-
-	protected Optional<SearchScope> getSearchScope(
-		SearchBarPortletPreferences searchBarPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		String parameterName =
-			searchBarPortletPreferences.getScopeParameterName();
-
-		Optional<String> parameterValueOptional =
-			portletSharedSearchSettings.getParameter(parameterName);
-
-		Optional<SearchScope> searchScopeOptional = parameterValueOptional.map(
-			SearchScope::getSearchScope);
-
-		return searchScopeOptional;
-	}
-
-	protected Optional<Long> getThisSiteGroupId(
-		SearchBarPortletPreferences searchBarPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		Optional<SearchScope> searchScopeOptional = getSearchScope(
-			searchBarPortletPreferences, portletSharedSearchSettings);
-
-		Optional<SearchScope> thisSiteSearchScopeOptional =
-			searchScopeOptional.filter(SearchScope.THIS_SITE::equals);
-
-		return thisSiteSearchScopeOptional.map(
-			searchScope -> getScopeGroupId(portletSharedSearchSettings));
 	}
 
 	protected boolean isSearchLayoutAvailable(
@@ -249,21 +171,6 @@ public class SearchBarPortlet
 		}
 
 		return false;
-	}
-
-	protected void setKeywords(
-		SearchBarPortletPreferences searchBarPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		Optional<String> parameterValueOptional =
-			portletSharedSearchSettings.getParameter(
-				searchBarPortletPreferences.getKeywordsParameterName());
-
-		parameterValueOptional.ifPresent(
-			portletSharedSearchSettings::setKeywords);
-
-		portletSharedSearchSettings.setKeywordsParameterName(
-			searchBarPortletPreferences.getKeywordsParameterName());
 	}
 
 	@Reference

@@ -16,18 +16,13 @@ package com.liferay.portal.search.web.internal.custom.facet.portlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.facet.custom.CustomFacetFactory;
-import com.liferay.portal.search.web.internal.custom.facet.builder.CustomFacetBuilder;
 import com.liferay.portal.search.web.internal.custom.facet.constants.CustomFacetPortletKeys;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.custom.facet.display.context.CustomFacetDisplayContext;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
-import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.io.IOException;
 
@@ -72,31 +67,9 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {Portlet.class, PortletSharedSearchContributor.class}
+	service = Portlet.class
 )
-public class CustomFacetPortlet
-	extends MVCPortlet implements PortletSharedSearchContributor {
-
-	@Override
-	public void contribute(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		CustomFacetPortletPreferences customFacetPortletPreferences =
-			new CustomFacetPortletPreferencesImpl(
-				portletSharedSearchSettings.getPortletPreferences());
-
-		Optional<String> fieldToAggregateOptional =
-			customFacetPortletPreferences.getAggregationFieldOptional();
-
-		fieldToAggregateOptional.ifPresent(
-			fieldToAggregate -> {
-				Facet facet = buildFacet(
-					fieldToAggregate, customFacetPortletPreferences,
-					portletSharedSearchSettings);
-
-				portletSharedSearchSettings.addFacet(facet);
-			});
-	}
+public class CustomFacetPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -163,30 +136,6 @@ public class CustomFacetPortlet
 		return customFacetDisplayBuilder.build();
 	}
 
-	protected Facet buildFacet(
-		String fieldToAggregate,
-		CustomFacetPortletPreferences customFacetPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		CustomFacetBuilder customFacetBuilder = new CustomFacetBuilder(
-			customFacetFactory);
-
-		customFacetBuilder.setAggregationName(
-			getAggregationName(
-				customFacetPortletPreferences,
-				portletSharedSearchSettings.getPortletId()));
-		customFacetBuilder.setFieldToAggregate(fieldToAggregate);
-		customFacetBuilder.setSearchContext(
-			portletSharedSearchSettings.getSearchContext());
-
-		copy(
-			() -> portletSharedSearchSettings.getParameterValues(
-				getParameterName(customFacetPortletPreferences)),
-			customFacetBuilder::setSelectedFields);
-
-		return customFacetBuilder.build();
-	}
-
 	protected <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
 		Optional<T> optional = from.get();
 
@@ -231,9 +180,6 @@ public class CustomFacetPortlet
 	protected String getPortletId(RenderRequest renderRequest) {
 		return _portal.getPortletId(renderRequest);
 	}
-
-	@Reference
-	protected CustomFacetFactory customFacetFactory;
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;

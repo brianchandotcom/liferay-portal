@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -442,6 +443,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (Validator.isNull(name)) {
 			throw new LayoutPageTemplateEntryNameException(
 				"Name must not be null for group " + groupId);
+		}
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			LayoutPageTemplateEntry.class.getName(), "name");
+
+		if (name.length() > nameMaxLength) {
+			throw new LayoutPageTemplateEntryNameException(
+				"Maximum length of name exceeded");
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

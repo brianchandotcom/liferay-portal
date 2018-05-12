@@ -764,6 +764,26 @@ public class GitWorkingDirectory {
 			getRepositoryName(), "/tree/", branchName, "/", relativePath);
 	}
 
+	public File getJavaFileFromFullClassName(String fullClassName) {
+		if (_javaFiles == null) {
+			_javaFiles = JenkinsResultsParserUtil.findFiles(
+				getWorkingDirectory(), ".*\\.java");
+		}
+
+		String javaClassFilePath =
+			fullClassName.replaceAll("\\.", "/") + ".java";
+
+		for (File javaFile : _javaFiles) {
+			String javaFilePath = javaFile.toString();
+
+			if (javaFilePath.contains(javaClassFilePath)) {
+				return javaFile;
+			}
+		}
+
+		return null;
+	}
+
 	public List<File> getModifiedFilesList() {
 		return getModifiedFilesList(null);
 	}
@@ -1778,6 +1798,7 @@ public class GitWorkingDirectory {
 			"git.working.directory.public.only.repository.names");
 
 	private File _gitDirectory;
+	private List<File> _javaFiles;
 	private final String _repositoryName;
 	private final String _repositoryUsername;
 	private final String _upstreamBranchName;

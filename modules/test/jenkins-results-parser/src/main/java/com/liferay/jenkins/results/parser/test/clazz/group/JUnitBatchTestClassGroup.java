@@ -91,31 +91,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return _junitTestClasses.get(file);
 			}
 
-			String srcFileName = simpleClassName + ".java";
+			File javaFile = gitWorkingDirectory.getJavaFileFromFullClassName(
+				fullClassName);
 
-			List<File> srcFiles = JenkinsResultsParserUtil.findFiles(
-				gitWorkingDirectory.getWorkingDirectory(), srcFileName);
-
-			File matchingSrcFile = null;
-
-			for (File srcFile : srcFiles) {
-				String srcFilePath = srcFile.toString();
-
-				if (srcFilePath.contains(filePath)) {
-					matchingSrcFile = srcFile;
-
-					break;
-				}
-			}
-
-			if (matchingSrcFile == null) {
+			if (javaFile == null) {
 				throw new RuntimeException("No matching files found");
 			}
 
-			if (srcFiles.size() > 1) {
-			}
-
-			return getInstance(file, gitWorkingDirectory, matchingSrcFile);
+			return getInstance(file, gitWorkingDirectory, javaFile);
 		}
 
 		protected JunitBatchTestClass(

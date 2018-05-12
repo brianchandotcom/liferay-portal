@@ -52,6 +52,8 @@ public class SchedulerProxyMessagingConfigurator {
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
 
+		destination.register(_proxyMessageListener);
+
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put("destination.name", destination.getName());
@@ -59,21 +61,22 @@ public class SchedulerProxyMessagingConfigurator {
 		_destinationServiceRegistration = bundleContext.registerService(
 			Destination.class, destination, properties);
 
-		destination.register(_proxyMessageListener);
+		properties.put("destination.ready", true);
+
+		_destinationReadyServiceRegistration = bundleContext.registerService(
+			Object.class, new Object(), properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		if (_destinationServiceRegistration != null) {
-			Destination destination = _bundleContext.getService(
-				_destinationServiceRegistration.getReference());
+		_destinationReadyServiceRegistration.unregister();
 
-			_destinationServiceRegistration.unregister();
+		Destination destination = _bundleContext.getService(
+			_destinationServiceRegistration.getReference());
 
-			destination.destroy();
-		}
+		_destinationServiceRegistration.unregister();
 
-		_bundleContext = null;
+		destination.destroy();
 	}
 
 	@Reference(unbind = "-")
@@ -98,10 +101,10 @@ public class SchedulerProxyMessagingConfigurator {
 		_proxyMessageListener = proxyMessageListener;
 	}
 
-	private volatile BundleContext _bundleContext;
+	private BundleContext _bundleContext;
 	private DestinationFactory _destinationFactory;
-	private volatile ServiceRegistration<Destination>
-		_destinationServiceRegistration;
+	private ServiceRegistration<Object> _destinationReadyServiceRegistration;
+	private ServiceRegistration<Destination> _destinationServiceRegistration;
 	private ProxyMessageListener _proxyMessageListener;
 
 }

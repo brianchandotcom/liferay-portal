@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration;
-import com.liferay.portal.scheduler.internal.messaging.config.SchedulerProxyMessagingConfigurator;
 import com.liferay.portal.scheduler.internal.messaging.config.ScriptingMessageListener;
 
 import java.util.ArrayList;
@@ -887,6 +886,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_destinationFactory = destinationFactory;
 	}
 
+	@Reference(
+		target = "(&(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")(destination.ready=true))",
+		unbind = "-"
+	)
+	protected void setDestinationReady(Object object) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setJsonFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
@@ -895,12 +901,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	@Reference(target = "(scheduler.engine.proxy=true)", unbind = "-")
 	protected void setSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSchedulerProxyMessagingConfigurator(
-		SchedulerProxyMessagingConfigurator
-			schedulerProxyMessagingConfigurator) {
 	}
 
 	protected void unsetAuditRouter(AuditRouter auditRouter) {

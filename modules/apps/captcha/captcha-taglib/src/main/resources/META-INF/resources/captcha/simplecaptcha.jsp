@@ -39,14 +39,22 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 		</aui:input>
 	</div>
 
-	<aui:script sandbox="<%= true %>">
-		$('#<portlet:namespace />refreshCaptcha').on(
-			'click',
-			function() {
-				var url = Liferay.Util.addParams('t=' + $.now(), '<%= url %>');
+	<aui:script>
+		var refreshCaptcha = document.querySelector('#<portlet:namespace />refreshCaptcha');
 
-				$('#<portlet:namespace />captcha').attr('src', url);
-			}
-		);
+		if (refreshCaptcha) {
+			refreshCaptcha.addEventListener(
+				'click',
+				function() {
+					var url = Liferay.Util.addParams('t=' + $.now(), '<%= url %>');
+
+					var captcha = document.querySelector('#<portlet:namespace />captcha');
+
+					if (captcha) {
+						captcha.setAttribute('src', url);
+					}
+				}
+			);
+		}
 	</aui:script>
 </c:if>

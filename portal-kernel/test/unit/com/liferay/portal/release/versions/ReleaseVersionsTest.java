@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -85,6 +86,32 @@ public class ReleaseVersionsTest {
 
 		final Set<Path> ignorePaths = new HashSet<>(
 			Arrays.asList(_portalPath.resolve("modules/third-party")));
+
+		Path workingDirPropertiesPath = _portalPath.resolve(
+			"working.dir.properties");
+
+		if (Files.exists(workingDirPropertiesPath)) {
+			Properties properties = _loadProperties(workingDirPropertiesPath);
+
+			for (String name : properties.stringPropertyNames()) {
+				if (!name.startsWith("working.dir.checkout.private.apps.") ||
+					!name.endsWith(".dirs")) {
+
+					continue;
+				}
+
+				String[] dirNames = StringUtil.split(
+					properties.getProperty(name));
+
+				for (String dirName : dirNames) {
+					Path dirPath = _portalPath.resolve(dirName);
+
+					if (Files.exists(dirPath)) {
+						ignorePaths.add(dirPath);
+					}
+				}
+			}
+		}
 
 		Files.walkFileTree(
 			_portalPath,

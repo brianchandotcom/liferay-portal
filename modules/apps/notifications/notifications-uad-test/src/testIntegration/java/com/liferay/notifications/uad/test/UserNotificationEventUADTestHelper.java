@@ -14,19 +14,23 @@
 
 package com.liferay.notifications.uad.test;
 
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = UserNotificationEventUADTestHelper.class)
 public class UserNotificationEventUADTestHelper {
+
 	/**
 	 * Implement addUserNotificationEvent() to enable some UAD tests.
 	 *
@@ -36,9 +40,12 @@ public class UserNotificationEventUADTestHelper {
 	 */
 	public UserNotificationEvent addUserNotificationEvent(long userId)
 		throws Exception {
-		Assume.assumeTrue(false);
 
-		return null;
+		return _userNotificationEventLocalService.addUserNotificationEvent(
+			userId, RandomTestUtil.randomString(), 0,
+			UserNotificationDeliveryConstants.TYPE_WEBSITE, 0,
+			RandomTestUtil.randomString(), false,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	/**
@@ -49,7 +56,12 @@ public class UserNotificationEventUADTestHelper {
 	 * </p>
 	 */
 	public void cleanUpDependencies(
-		List<UserNotificationEvent> userNotificationEvents)
+			List<UserNotificationEvent> userNotificationEvents)
 		throws Exception {
 	}
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
+
 }

@@ -128,8 +128,52 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 	</div>
 </div>
 
-<aui:script>
+<aui:script require="metal-dom/src/all/dom as dom">
 	window.<portlet:namespace />exportSelectedFragmentCollections = function() {
 		submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_collections" />');
 	}
+
+	<portlet:renderURL var="importFragmentEntriesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/view_import_fragment_entries.jsp" />
+	</portlet:renderURL>
+
+	var importFragmentEntriesActionClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'.<portlet:namespace />import-fragment-entries-action-option > a',
+		function(event) {
+			debugger;
+			var data = event.delegateTarget.dataset;
+
+			event.preventDefault();
+
+			uri = '<%= importFragmentEntriesURL %>';
+
+			uri = Liferay.Util.addParams('<portlet:namespace />fragmentCollectionId=' + data.fragmentCollectionId, uri);
+
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						after: {
+							destroy: function(event) {
+								window.location.reload();
+							}
+						},
+						destroyOnHide: true
+					},
+					id: '<portlet:namespace />openInstallFromURLView',
+					title: '<liferay-ui:message key="import" />',
+					uri: uri
+				}
+			);
+		}
+	);
+
+	function handleDestroyPortlet() {
+		importFragmentEntriesActionClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

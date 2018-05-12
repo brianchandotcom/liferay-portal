@@ -67,6 +67,22 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 		url="<%= exportFragmentCollectionsURL %>"
 	/>
 
+	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.UPDATE) %>">
+
+		<%
+		Map<String, Object> importFragmentEntriesData = new HashMap<String, Object>();
+
+		importFragmentEntriesData.put("fragment-collection-id", String.valueOf(fragmentCollection.getFragmentCollectionId()));
+		%>
+
+		<liferay-ui:icon
+			cssClass='<%= renderResponse.getNamespace() + "import-fragment-entries-action-option" %>'
+			data="<%= importFragmentEntriesData %>"
+			message="import"
+			url="javascript:;"
+		/>
+	</c:if>
+
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/view" />

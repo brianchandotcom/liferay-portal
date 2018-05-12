@@ -70,6 +70,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 											<%
 											PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
 
+											fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
 											fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
 											%>
 

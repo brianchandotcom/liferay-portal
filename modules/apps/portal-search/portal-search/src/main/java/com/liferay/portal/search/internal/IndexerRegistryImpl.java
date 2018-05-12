@@ -42,13 +42,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.ClassUtils;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -58,6 +63,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	immediate = true, service = IndexerRegistry.class
 )
 public class IndexerRegistryImpl implements IndexerRegistry {
+
+	@Deactivate
+	public void deactivate() {
+		_indexerServiceTracker.close();
+	}
 
 	@Override
 	public <T> Indexer<T> getIndexer(Class<T> clazz) {
@@ -97,11 +107,6 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	@Override
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "unregister"
-	)
 	public void register(Indexer<?> indexer) {
 		Class<?> clazz = indexer.getClass();
 
@@ -142,17 +147,46 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 	}
 
 	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_indexerRegistryConfiguration = ConfigurableUtil.createConfigurable(
-			IndexerRegistryConfiguration.class, properties);
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
 
-		for (BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler :
-				_bufferedInvocationHandlers.values()) {
+		modified(properties);
 
-			bufferedIndexerInvocationHandler.setIndexerRegistryConfiguration(
-				_indexerRegistryConfiguration);
-		}
+		_indexerServiceTracker = new ServiceTracker<Indexer<?>, Indexer<?>>(
+			bundleContext, Indexer.class.getName(),
+			new ServiceTrackerCustomizer<Indexer<?>, Indexer<?>>() {
+
+				@Override
+				public Indexer<?> addingService(
+					ServiceReference<Indexer<?>> serviceReference) {
+
+					Indexer<?> indexer = bundleContext.getService(
+						serviceReference);
+
+					register(indexer);
+
+					return indexer;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<Indexer<?>> serviceReference,
+					Indexer<?> indexer) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<Indexer<?>> serviceReference,
+					Indexer<?> indexer) {
+
+					unregister(indexer);
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
+		_indexerServiceTracker.open();
 	}
 
 	@Reference(
@@ -195,6 +229,19 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 					}
 				}
 			}
+		}
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_indexerRegistryConfiguration = ConfigurableUtil.createConfigurable(
+			IndexerRegistryConfiguration.class, properties);
+
+		for (BufferedIndexerInvocationHandler bufferedIndexerInvocationHandler :
+				_bufferedInvocationHandlers.values()) {
+
+			bufferedIndexerInvocationHandler.setIndexerRegistryConfiguration(
+				_indexerRegistryConfiguration);
 		}
 	}
 
@@ -334,6 +381,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		_indexerRequestBufferOverflowHandler;
 	private final Map<String, Indexer<? extends Object>> _indexers =
 		new ConcurrentHashMap<>();
+	private ServiceTracker<Indexer<?>, Indexer<?>> _indexerServiceTracker;
 
 	@Reference
 	private IndexStatusManager _indexStatusManager;

@@ -25,7 +25,7 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = SystemChecker.class)
+@Component(immediate = true)
 public class DeclarativeServiceSystemChecker implements SystemChecker {
 
 	@Override

@@ -1,0 +1,15 @@
+{
+	"dependencies": {
+		"liferay-module-config-generator": "^1.3.3"
+	},
+	"devDependencies": {
+		"karma": "^1.7.1",
+		"liferay-karma-alloy-config": "^0.0.14",
+		"liferay-karma-config": "0.0.3"
+	},
+	"name": "portal-search-web",
+	"scripts": {
+		"test": "karma start"
+	},
+	"version": "3.0.0"
+}

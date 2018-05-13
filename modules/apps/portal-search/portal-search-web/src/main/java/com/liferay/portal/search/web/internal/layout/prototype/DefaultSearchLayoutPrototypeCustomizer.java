@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.search.web.internal.category.facet.constants.CategoryFacetPortletKeys;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
+import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
@@ -64,6 +65,9 @@ public class DefaultSearchLayoutPrototypeCustomizer
 
 		addBorderlessPortlet(
 			layout, UserFacetPortletKeys.USER_FACET, "column-2");
+
+		addBorderlessPortlet(
+			layout, ModifiedFacetPortletKeys.MODIFIED_FACET, "column-2");
 	}
 
 	@Override

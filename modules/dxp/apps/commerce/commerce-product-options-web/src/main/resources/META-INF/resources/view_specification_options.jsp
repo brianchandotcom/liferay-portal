@@ -80,9 +80,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpSpecificationOptionDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpSpecificationOptionDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"title"} %>'
+			orderColumns='<%= new String[] {"label", "modified-date"} %>'
 			portletURL="<%= cpSpecificationOptionDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<aui:form action="<%= String.valueOf(cpSpecificationOptionDisplayContext.getPortletURL()) %>" name="searchFm">
+				<liferay-ui:input-search
+					markupView="lexicon"
+				/>
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -143,32 +151,20 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 							<liferay-ui:search-container-column-text
 								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
-								name="title"
+								name="label"
 								value="<%= HtmlUtil.escape(cpSpecificationOption.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="category"
+								name="group"
 								value="<%= HtmlUtil.escape(cpSpecificationOptionDisplayContext.getCPOptionCategoryTitle(cpSpecificationOption)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="author"
-								property="userName"
-							/>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
 								name="use-in-faceted-navigation"
-								property="facetable"
-							/>
-
-							<liferay-ui:search-container-column-date
-								cssClass="table-cell-content"
-								name="create-date"
-								property="createDate"
+								value='<%= LanguageUtil.get(request, cpSpecificationOption.isFacetable() ? "yes" : "no") %>'
 							/>
 
 							<liferay-ui:search-container-column-date

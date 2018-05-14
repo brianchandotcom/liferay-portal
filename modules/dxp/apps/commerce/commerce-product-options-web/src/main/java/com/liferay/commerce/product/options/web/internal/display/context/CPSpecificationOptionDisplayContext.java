@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,7 +50,7 @@ public class CPSpecificationOptionDisplayContext
 			actionHelper, httpServletRequest,
 			CPSpecificationOption.class.getSimpleName());
 
-		setDefaultOrderByCol("title");
+		setDefaultOrderByCol("label");
 
 		_cpOptionCategoryService = cpOptionCategoryService;
 		_cpSpecificationOptionService = cpSpecificationOptionService;
@@ -102,17 +104,35 @@ public class CPSpecificationOptionDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total =
-			_cpSpecificationOptionService.getCPSpecificationOptionsCount(
-				getScopeGroupId());
+		List<CPSpecificationOption> results;
+		int total;
 
-		searchContainer.setTotal(total);
+		if (isSearch()) {
+			Sort sort = CPOptionsPortletUtil.getCPSpecificationOptionSort(
+				getOrderByCol(), getOrderByType());
 
-		List<CPSpecificationOption> results =
-			_cpSpecificationOptionService.getCPSpecificationOptions(
+			BaseModelSearchResult<CPSpecificationOption>
+				cpSpecificationOptionBaseModelSearchResult =
+					_cpSpecificationOptionService.searchCPSpecificationOptions(
+						cpRequestHelper.getCompanyId(), getScopeGroupId(),
+						getKeywords(), searchContainer.getStart(),
+						searchContainer.getEnd(), sort);
+
+			total = cpSpecificationOptionBaseModelSearchResult.getLength();
+			results =
+				cpSpecificationOptionBaseModelSearchResult.getBaseModels();
+		}
+		else {
+			total =
+				_cpSpecificationOptionService.getCPSpecificationOptionsCount(
+					getScopeGroupId());
+
+			results = _cpSpecificationOptionService.getCPSpecificationOptions(
 				getScopeGroupId(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
+		}
 
+		searchContainer.setTotal(total);
 		searchContainer.setResults(results);
 
 		return searchContainer;

@@ -22,6 +22,7 @@ import com.liferay.commerce.product.util.comparator.CPOptionCategoryPriorityComp
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValueNameComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValuePriorityComparator;
+import com.liferay.commerce.product.util.comparator.CPSpecificationOptionModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPSpecificationOptionTitleComparator;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -119,12 +120,39 @@ public class CPOptionsPortletUtil {
 
 		OrderByComparator<CPSpecificationOption> orderByComparator = null;
 
-		if (orderByCol.equals("title")) {
+		if (orderByCol.equals("label")) {
 			orderByComparator = new CPSpecificationOptionTitleComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPSpecificationOptionModifiedDateComparator(
 				orderByAsc);
 		}
 
 		return orderByComparator;
+	}
+
+	public static Sort getCPSpecificationOptionSort(
+		String orderByCol, String orderByType) {
+
+		boolean reverse = true;
+
+		if (orderByType.equals("asc")) {
+			reverse = false;
+		}
+
+		Sort sort = null;
+
+		if (Objects.equals(orderByCol, "label")) {
+			sort = SortFactoryUtil.create(
+				Field.TITLE, Sort.STRING_TYPE, reverse);
+		}
+		else if (Objects.equals(orderByCol, "modified-date")) {
+			sort = SortFactoryUtil.create(
+				Field.MODIFIED_DATE + "_sortable", reverse);
+		}
+
+		return sort;
 	}
 
 }

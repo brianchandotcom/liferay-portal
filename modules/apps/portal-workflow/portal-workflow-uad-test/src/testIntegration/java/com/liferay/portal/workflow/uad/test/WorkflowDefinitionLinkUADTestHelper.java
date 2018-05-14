@@ -15,18 +15,23 @@
 package com.liferay.portal.workflow.uad.test;
 
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = WorkflowDefinitionLinkUADTestHelper.class)
+@Component(
+	immediate = true, service = WorkflowDefinitionLinkUADTestHelper.class
+)
 public class WorkflowDefinitionLinkUADTestHelper {
+
 	/**
 	 * Implement addWorkflowDefinitionLink() to enable some UAD tests.
 	 *
@@ -36,9 +41,11 @@ public class WorkflowDefinitionLinkUADTestHelper {
 	 */
 	public WorkflowDefinitionLink addWorkflowDefinitionLink(long userId)
 		throws Exception {
-		Assume.assumeTrue(false);
 
-		return null;
+		return _workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+			userId, TestPropsValues.getCompanyId(),
+			TestPropsValues.getGroupId(), null, 0, 0,
+			RandomTestUtil.randomString(), 0);
 	}
 
 	/**
@@ -49,7 +56,12 @@ public class WorkflowDefinitionLinkUADTestHelper {
 	 * </p>
 	 */
 	public void cleanUpDependencies(
-		List<WorkflowDefinitionLink> workflowDefinitionLinks)
+			List<WorkflowDefinitionLink> workflowDefinitionLinks)
 		throws Exception {
 	}
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
 }

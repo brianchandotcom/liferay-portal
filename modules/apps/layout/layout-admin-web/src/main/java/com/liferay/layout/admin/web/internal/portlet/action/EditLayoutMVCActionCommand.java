@@ -135,6 +135,17 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
+		String linkToLayoutUuid = ParamUtil.getString(
+			actionRequest, "linkToLayoutUuid");
+
+		if (Validator.isNotNull(linkToLayoutUuid)) {
+			Layout linkToLayout = _layoutService.getLayoutByUuidAndGroupId(
+				linkToLayoutUuid, groupId, privateLayout);
+
+			formTypeSettingsProperties.put(
+				"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
+		}
+
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 

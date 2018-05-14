@@ -27,6 +27,7 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 <clay:management-toolbar
 	actionDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= dlAdminManagementToolbarDisplayContext.getClearResultsURL() %>"
+	componentId="dlAdminManagementToolbar"
 	creationMenu="<%= dlAdminManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= dlAdminManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= dlAdminManagementToolbarDisplayContext.getFilterDropdownItems() %>"
@@ -42,8 +43,26 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 	viewTypeItems="<%= dlAdminManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
-<aui:script>
-	function <portlet:namespace />deleteEntries() {
+<aui:script sandbox="<%= true %>" use="aui-base,liferay-item-selector-dialog">
+	var checkin = function() {
+		Liferay.fire(
+			'<%= renderResponse.getNamespace() %>editEntry',
+			{
+				action: '<%= Constants.CHECKIN %>'
+			}
+		);
+	};
+
+	var checkout = function() {
+		Liferay.fire(
+			'<%= renderResponse.getNamespace() %>editEntry',
+			{
+				action: '<%= Constants.CHECKOUT %>'
+			}
+		);
+	};
+
+	var deleteEntries = function() {
 		if (<%= dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
@@ -52,7 +71,84 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 				}
 			);
 		}
-	}
+	};
+
+	var download = function() {
+		Liferay.fire(
+			'<%= renderResponse.getNamespace() %>editEntry',
+			{
+				action: 'download'
+			}
+		);
+	};
+
+	var move = function() {
+		Liferay.fire(
+			'<%= renderResponse.getNamespace() %>editEntry',
+			{
+				action: '<%= Constants.MOVE %>'
+			}
+		);
+	};
+
+	<portlet:renderURL var="viewFileEntryTypeURL">
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
+		<portlet:param name="browseBy" value="file-entry-type" />
+		<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+	</portlet:renderURL>
+
+	var openDocumentTypesSelector = function() {
+		var A = AUI();
+
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			{
+				eventName: '<portlet:namespace />selectFileEntryType',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItem = event.newVal;
+
+						if (selectedItem) {
+							var uri = '<%= viewFileEntryTypeURL %>';
+
+							uri = Liferay.Util.addParams('<portlet:namespace />fileEntryTypeId=' + selectedItem, uri);
+
+							location.href = uri;
+						}
+					}
+				},
+				'strings.add': '<liferay-ui:message key="done" />',
+				title: '<liferay-ui:message key="select-document-type" />',
+				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_file_entry_type.jsp" /><portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" /></portlet:renderURL>'
+			}
+		);
+
+		itemSelectorDialog.open();
+
+	};
+
+	var ACTIONS = {
+		'checkin': checkin,
+		'checkout': checkout,
+		'deleteEntries': deleteEntries,
+		'download': download,
+		'move': move,
+		'openDocumentTypesSelector': openDocumentTypesSelector
+	};
+
+	Liferay.componentReady('dlAdminManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				['actionItemClicked', 'filterItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>
 
 <aui:script>

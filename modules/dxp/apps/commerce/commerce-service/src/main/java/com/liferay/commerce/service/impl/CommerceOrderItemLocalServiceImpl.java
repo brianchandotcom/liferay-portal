@@ -316,12 +316,10 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		int newQuantity = quantity - commerceOrderItem.getQuantity();
-
 		validate(
 			commerceOrderItem.getCommerceOrder(),
 			commerceOrderItem.getCPDefinition(),
-			commerceOrderItem.getCPInstance(), newQuantity, price);
+			commerceOrderItem.getCPInstance(), quantity, price);
 
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setJson(json);

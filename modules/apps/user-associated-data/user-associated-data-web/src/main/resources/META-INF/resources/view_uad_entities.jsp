@@ -39,6 +39,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <clay:management-toolbar
 	actionDropdownItems="<%= viewUADEntitiesDisplay.getActionDropdownItems() %>"
+	disabled="<%= uadEntitySearchContainer.getTotal() == 0 %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= uadEntitySearchContainer.getTotal() %>"
 	namespace="<%= renderResponse.getNamespace() %>"

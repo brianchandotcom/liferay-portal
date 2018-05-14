@@ -75,7 +75,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 											%>
 
 											<a class="nav-link truncate-text <%= (layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() == layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= layoutPageTemplateCollectionURL.toString() %>">
-												<%= layoutPageTemplateCollection.getName() %>
+												<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
 											</a>
 										</li>
 
@@ -113,7 +113,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 				<div class="sheet">
 					<div class="align-items-center autofit-row h3">
 						<div class="autofit-col">
-							<%= layoutPageTemplateCollection.getName() %>
+							<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
 						</div>
 
 						<div class="autofit-col autofit-col-end inline-item-after">

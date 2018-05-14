@@ -24,13 +24,47 @@ String articleId = (String)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLE_I
 	AUI().ready(
 		function() {
 			if (window.Analytics) {
+				var applicationId = 'Journal';
+
 				Analytics.send(
 					'viewed',
-					'Journal',
+					applicationId,
 					{
 						articleId: '<%= articleId %>'
 					}
 				);
+
+				var contentElement = document.getElementById('<portlet:namespace/>journal_content_article_<%= articleId %>');
+
+				var onClick = function(event) {
+					var element = event.target;
+					var tagName = element.tagName.toLowerCase();
+
+					var payload = {
+						articleId: '<%= articleId %>',
+						tagName: tagName
+					};
+
+					if (tagName === 'a') {
+						payload.href = element.href;
+						payload.text = element.innerText;
+					}
+					else if (tagName === 'img') {
+						payload.src = element.src;
+					}
+
+					Analytics.send('clicked', applicationId, payload);
+				};
+
+				contentElement.addEventListener('click', onClick);
+
+				var onDestroyPortlet = function() {
+					contentElement.removeEventListener('click', onClick);
+
+					Liferay.detach('destroyPortlet', onDestroyPortlet);
+				};
+
+				Liferay.on('destroyPortlet', onDestroyPortlet);
 			}
 		}
 	);

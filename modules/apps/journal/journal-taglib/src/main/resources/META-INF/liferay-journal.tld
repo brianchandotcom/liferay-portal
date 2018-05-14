@@ -37,4 +37,20 @@
 			<type>boolean</type>
 		</attribute>
 	</tag>
+	<tag>
+		<name>journal-article-display</name>
+		<tag-class>com.liferay.journal.taglib.servlet.taglib.JournalArticleDisplayTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>articleDisplay</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showTitle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
 </taglib>

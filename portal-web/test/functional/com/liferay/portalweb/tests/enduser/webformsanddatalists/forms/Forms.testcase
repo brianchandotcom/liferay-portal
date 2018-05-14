@@ -2693,6 +2693,7 @@
 			<condition function="IsTextNotEqual" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" value1="Checkbox 4">
 				<var name="key_rowNumber" value="2" />
 			</condition>
+
 			<then>
 				<execute macro="FormFields#moveOptionsRow">
 					<var name="rowNumberEnd" value="2" />

@@ -168,7 +168,6 @@ public class DefaultMBAdminListDisplayContext
 			searchContainer.setResults(
 				SearchResultUtil.getSearchResults(hits, _request.getLocale()));
 
-			searchContainer.setSearch(true);
 			searchContainer.setTotal(hits.getLength());
 		}
 		else {

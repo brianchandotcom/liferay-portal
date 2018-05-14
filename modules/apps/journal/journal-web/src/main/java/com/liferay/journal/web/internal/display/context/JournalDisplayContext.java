@@ -993,10 +993,6 @@ public class JournalDisplayContext {
 		SearchContainer articleSearchContainer = new SearchContainer(
 			_liferayPortletRequest, getPortletURL(), null, null);
 
-		if (isSearch()) {
-			articleSearchContainer.setSearch(true);
-		}
-
 		OrderByComparator<JournalArticle> orderByComparator =
 			JournalPortletUtil.getArticleOrderByComparator(
 				getOrderByCol(), getOrderByType());

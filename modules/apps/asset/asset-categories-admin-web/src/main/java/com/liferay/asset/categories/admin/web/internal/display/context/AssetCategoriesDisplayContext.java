@@ -366,10 +366,6 @@ public class AssetCategoriesDisplayContext {
 		SearchContainer categoriesSearchContainer = new SearchContainer(
 			_renderRequest, _getIteratorURL(), null, "there-are-no-categories");
 
-		if (Validator.isNotNull(_getKeywords())) {
-			categoriesSearchContainer.setSearch(true);
-		}
-
 		categoriesSearchContainer.setOrderByCol(_getOrderByCol());
 
 		boolean orderByAsc = false;
@@ -734,12 +730,6 @@ public class AssetCategoriesDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-vocabularies");
 
-		String keywords = _getKeywords();
-
-		if (Validator.isNotNull(keywords)) {
-			vocabulariesSearchContainer.setSearch(true);
-		}
-
 		vocabulariesSearchContainer.setOrderByCol(_getOrderByCol());
 
 		String orderByType = getOrderByType();
@@ -779,6 +769,8 @@ public class AssetCategoriesDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			Sort sort = new Sort("createDate", Sort.LONG_TYPE, orderByAsc);

@@ -63,10 +63,6 @@ public class GroupSearchProvider {
 		GroupSearchTerms searchTerms =
 			(GroupSearchTerms)groupSearch.getSearchTerms();
 
-		if (searchTerms.isSearch()) {
-			groupSearch.setSearch(true);
-		}
-
 		long parentGroupId = getParentGroupId(portletRequest);
 
 		Company company = themeDisplay.getCompany();

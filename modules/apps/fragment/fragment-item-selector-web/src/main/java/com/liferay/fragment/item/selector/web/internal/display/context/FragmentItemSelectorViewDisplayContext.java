@@ -129,10 +129,6 @@ public class FragmentItemSelectorViewDisplayContext {
 				_portletRequest, getPortletURL(), null,
 				"there-are-no-collections");
 
-		if (_isSearch()) {
-			fragmentCollectionsSearchContainer.setSearch(true);
-		}
-
 		OrderByComparator<FragmentCollection> orderByComparator =
 			_getFragmentCollectionOrderByComparator(
 				_getOrderByCol(), getOrderByType());
@@ -204,10 +200,6 @@ public class FragmentItemSelectorViewDisplayContext {
 
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
 			_portletRequest, getPortletURL(), null, "there-are-no-fragments");
-
-		if (_isSearch()) {
-			fragmentEntriesSearchContainer.setSearch(true);
-		}
 
 		OrderByComparator<FragmentEntry> orderByComparator =
 			_getFragmentEntryOrderByComparator(

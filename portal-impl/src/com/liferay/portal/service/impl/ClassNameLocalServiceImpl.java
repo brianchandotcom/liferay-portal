@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ClassNameImpl;
@@ -87,7 +88,10 @@ public class ClassNameLocalServiceImpl
 				return _nullClassName;
 			}
 
-			_classNames.put(value, className);
+			final ClassName callBackClassName = className;
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> _classNames.put(value, callBackClassName));
 		}
 
 		return className;
@@ -109,7 +113,10 @@ public class ClassNameLocalServiceImpl
 			try {
 				className = classNameLocalService.addClassName(value);
 
-				_classNames.put(value, className);
+				final ClassName callBackClassName = className;
+
+				TransactionCommitCallbackUtil.registerCallback(
+					() -> _classNames.put(value, callBackClassName));
 			}
 			catch (Throwable t) {
 				className = classNameLocalService.fetchClassName(value);

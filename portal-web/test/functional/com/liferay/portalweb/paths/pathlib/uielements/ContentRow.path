@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS</td>
-	<td>xpath=(//*[@data-qa-id='row']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_rowNumber}]</td>
+	<td>xpath=(//*[@data-qa-id='row']//*[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,37 +66,37 @@
 <!--ENTRY_CONTENT_ENTRY-->
 <tr>
 	<td>ENTRY_CONTENT_ENTRY</td>
-	<td>//*[@data-qa-id='row'][contains(@*,'${key_rowEntry}') or contains(.,'${key_rowEntry}')]</td>
+	<td>//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_CHECKBOX</td>
-	<td>//*[@data-qa-id='row'][contains(@*,'${key_rowEntry}') or contains(.,'${key_rowEntry}')]//input[@title='Select']</td>
+	<td>//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]//input[@title='Select']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_NAME</td>
-	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_rowEntry}']</td>
+	<td>//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_NAME_LINK</td>
-	<td>//*[@data-qa-id='row']//a[normalize-space(text())='${key_rowEntry}']</td>
+	<td>//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]//a[normalize-space()='${key_rowEntry}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[3]</td>
+	<td>//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_ELLIPSIS</td>
-	<td>//*[@data-qa-id='row'][contains(@*,'${key_rowEntry}') or contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]//*[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_WORKFLOW_STATUS</td>
-	<td>//*[@data-qa-id='row'][contains(@*,'${key_rowEntry}') or contains(.,'${key_rowEntry}')]//span[contains(@class,'workflow-status')]/span</td>
+	<td>//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]//span[contains(@class,'workflow-status')]/span</td>
 	<td></td>
 </tr>
 <!--ENTRY_CONTENT_LIST-->

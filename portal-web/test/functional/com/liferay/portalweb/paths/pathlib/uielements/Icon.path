@@ -291,17 +291,17 @@
 </tr>
 <tr>
 	<td>ROW_VERTICAL_ELLIPSIS</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]//*[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROW_VERTICAL_ELLIPSIS_2</td>
-	<td>xPath=(//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[2]</td>
+	<td>xPath=(//*[contains(@*,'row')][*[contains(.,'${key_rowEntry}')]]//*[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROW_VERTICAL_ELLIPSIS_N</td>
-	<td>xpath=(//*[@data-qa-id='row']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_rowIndexNumber}]</td>
+	<td>xpath=(//*[contains(@*,'row')]//*[*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]])[${key_rowIndexNumber}]</td>
 	<td></td>
 </tr>
 <tr>

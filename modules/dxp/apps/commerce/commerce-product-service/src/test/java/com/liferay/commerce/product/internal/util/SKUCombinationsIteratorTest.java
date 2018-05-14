@@ -146,7 +146,7 @@ public class SKUCombinationsIteratorTest {
 		cpDefinitionOptionRel.setModifiedDate(now);
 		cpDefinitionOptionRel.setCPDefinitionId(
 			cpDefinition.getCPDefinitionId());
-		cpDefinitionOptionRel.setTitle(RandomTestUtil.randomString());
+		cpDefinitionOptionRel.setName(RandomTestUtil.randomString());
 		cpDefinitionOptionRel.setDescription(RandomTestUtil.randomString());
 		cpDefinitionOptionRel.setSkuContributor(true);
 
@@ -174,7 +174,7 @@ public class SKUCombinationsIteratorTest {
 		cpDefinitionOptionValueRel.setModifiedDate(now);
 		cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-		cpDefinitionOptionValueRel.setTitle(RandomTestUtil.randomString());
+		cpDefinitionOptionValueRel.setName(RandomTestUtil.randomString());
 		cpDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
 
 		return cpDefinitionOptionValueRel;

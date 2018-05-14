@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.product.search;
 
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -53,6 +55,12 @@ public class CPSpecificationOptionIndexer
 	public static final String CLASS_NAME =
 		CPSpecificationOption.class.getName();
 
+	public static final String FIELD_CP_OPTION_CATEGORY_ID =
+		"cpOptionCategoryId";
+
+	public static final String FIELD_CP_OPTION_CATEGORY_TITLE =
+		"cpOptionCategoryTitle";
+
 	public static final String FIELD_KEY = "key";
 
 	public CPSpecificationOptionIndexer() {
@@ -75,6 +83,12 @@ public class CPSpecificationOptionIndexer
 			SearchContext searchContext)
 		throws Exception {
 
+		addSearchTerm(
+			searchQuery, searchContext, FIELD_CP_OPTION_CATEGORY_ID, false);
+		addSearchTerm(
+			searchQuery, searchContext, FIELD_CP_OPTION_CATEGORY_TITLE, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, FIELD_CP_OPTION_CATEGORY_TITLE, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
@@ -117,6 +131,10 @@ public class CPSpecificationOptionIndexer
 		Document document = getBaseModelDocument(
 			CLASS_NAME, cpSpecificationOption);
 
+		CPOptionCategory cpOptionCategory =
+			_cpOptionCategoryLocalService.fetchCPOptionCategory(
+				cpSpecificationOption.getCPOptionCategoryId());
+
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
 			cpSpecificationOption.getTitle());
 
@@ -133,6 +151,17 @@ public class CPSpecificationOptionIndexer
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				description);
+
+			if (cpOptionCategory != null) {
+				document.addText(
+					LocalizationUtil.getLocalizedName(
+						FIELD_CP_OPTION_CATEGORY_TITLE, languageId),
+					cpOptionCategory.getTitle(languageId));
+
+				document.addKeyword(
+					FIELD_CP_OPTION_CATEGORY_ID,
+					cpOptionCategory.getCPOptionCategoryId());
+			}
 
 			document.addText(FIELD_KEY, cpSpecificationOption.getKey());
 			document.addText(Field.CONTENT, title);
@@ -227,6 +256,9 @@ public class CPSpecificationOptionIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSpecificationOptionIndexer.class);
+
+	@Reference
+	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 	@Reference
 	private CPSpecificationOptionLocalService

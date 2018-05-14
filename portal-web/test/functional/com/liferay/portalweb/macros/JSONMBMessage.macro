@@ -30,7 +30,7 @@
 
 		<echo>## * Body: ${threadBody}</echo>
 
-		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
 			<arg value="$['messageId']" />
 			<return name="messageId" />

@@ -5,9 +5,8 @@
 		</execute>
 
 		<var name="curl">
-			http://localhost:8080/api/jsonws/company/get-company-by-virtual-host \
-				-u test@liferay.com:test \
-				-d virtualHost=${portalInstanceName}
+			http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+				-u test@liferay.com:test
 		</var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">

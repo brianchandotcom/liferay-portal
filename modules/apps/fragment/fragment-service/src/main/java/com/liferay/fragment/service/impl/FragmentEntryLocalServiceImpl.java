@@ -21,15 +21,12 @@ import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
-import com.liferay.html.preview.model.HtmlPreviewEntry;
-import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -175,12 +172,6 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setStatusByUserName(user.getFullName());
 		fragmentEntry.setStatusDate(new Date());
 
-		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
-			fragmentEntry, serviceContext);
-
-		fragmentEntry.setHtmlPreviewEntryId(
-			htmlPreviewEntry.getHtmlPreviewEntryId());
-
 		fragmentEntryPersistence.update(fragmentEntry);
 
 		// Resources
@@ -211,13 +202,6 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			fragmentEntry.getFragmentEntryId());
-
-		// HTML preview
-
-		if (fragmentEntry.getHtmlPreviewEntryId() > 0) {
-			_htmlPreviewEntryLocalService.deleteHtmlPreviewEntry(
-				fragmentEntry.getHtmlPreviewEntryId());
-		}
 
 		return fragmentEntry;
 	}
@@ -332,12 +316,6 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setStatusByUserName(user.getFullName());
 		fragmentEntry.setStatusDate(new Date());
 
-		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
-			fragmentEntry, serviceContext);
-
-		fragmentEntry.setHtmlPreviewEntryId(
-			htmlPreviewEntry.getHtmlPreviewEntryId());
-
 		fragmentEntryPersistence.update(fragmentEntry);
 
 		return fragmentEntry;
@@ -439,32 +417,7 @@ public class FragmentEntryLocalServiceImpl
 		return bodyHtml;
 	}
 
-	private HtmlPreviewEntry _updateHtmlPreviewEntry(
-			FragmentEntry fragmentEntry, ServiceContext serviceContext)
-		throws PortalException {
-
-		HtmlPreviewEntry htmlPreviewEntry =
-			_htmlPreviewEntryLocalService.fetchHtmlPreviewEntry(
-				fragmentEntry.getHtmlPreviewEntryId());
-
-		if (htmlPreviewEntry != null) {
-			return _htmlPreviewEntryLocalService.updateHtmlPreviewEntry(
-				htmlPreviewEntry.getHtmlPreviewEntryId(),
-				fragmentEntry.getContent(), ContentTypes.IMAGE_PNG,
-				serviceContext);
-		}
-
-		return _htmlPreviewEntryLocalService.addHtmlPreviewEntry(
-			fragmentEntry.getUserId(), fragmentEntry.getGroupId(),
-			classNameLocalService.getClassNameId(FragmentEntry.class),
-			fragmentEntry.getFragmentEntryId(), _getContent(fragmentEntry),
-			ContentTypes.IMAGE_PNG, serviceContext);
-	}
-
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@ServiceReference(type = HtmlPreviewEntryLocalService.class)
-	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;
 
 }

@@ -1233,7 +1233,7 @@
 		<reference entity="UserGroup" package-path="com.liferay.portal" />
 		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="Organization" remote-service="true" uuid="true">
+	<entity local-service="true" name="Organization" remote-service="true" uad-application-name="Organizations" uad-dir-path="../modules/apps/organizations/organizations-uad/src/main/java" uad-package-path="com.liferay.organizations" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1243,7 +1243,7 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="userName" type="String" />
+		<column name="userName" type="String" uad-anonymize-field-name="fullName" />
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 

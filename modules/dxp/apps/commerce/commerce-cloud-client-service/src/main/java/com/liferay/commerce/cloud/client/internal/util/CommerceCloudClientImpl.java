@@ -107,12 +107,12 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	@Override
-	public void syncOrders(
+	public void sync(
 			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws CommerceCloudClientException {
 
 		try {
-			doSyncOrders(commerceCloudForecastOrders);
+			doSync(commerceCloudForecastOrders);
 		}
 		catch (CommerceCloudClientException ccce) {
 			throw ccce;
@@ -208,7 +208,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		return _jsonFactory.createJSONObject(json);
 	}
 
-	protected void doSyncOrders(
+	protected void doSync(
 			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws Exception {
 

@@ -34,7 +34,7 @@ public interface CommerceCloudClient {
 	public JSONObject getOrderForecastConfiguration()
 		throws CommerceCloudClientException;
 
-	public void syncOrders(
+	public void sync(
 			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws CommerceCloudClientException;
 

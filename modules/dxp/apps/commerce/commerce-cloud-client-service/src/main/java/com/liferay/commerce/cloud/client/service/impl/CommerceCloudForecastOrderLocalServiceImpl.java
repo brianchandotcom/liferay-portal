@@ -110,7 +110,7 @@ public class CommerceCloudForecastOrderLocalServiceImpl
 			}
 
 			try {
-				_commerceCloudClient.syncOrders(commerceCloudForecastOrders);
+				_commerceCloudClient.sync(commerceCloudForecastOrders);
 			}
 			catch (CommerceCloudClientException ccce) {
 				_log.error(

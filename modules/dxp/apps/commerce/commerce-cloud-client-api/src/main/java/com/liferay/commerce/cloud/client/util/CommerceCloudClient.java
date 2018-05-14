@@ -28,6 +28,9 @@ import java.util.List;
 @ProviderType
 public interface CommerceCloudClient {
 
+	public void addCommerceForecastEntries(String json)
+		throws CommerceCloudClientException;
+
 	public JSONObject getOrderForecastConfiguration()
 		throws CommerceCloudClientException;
 

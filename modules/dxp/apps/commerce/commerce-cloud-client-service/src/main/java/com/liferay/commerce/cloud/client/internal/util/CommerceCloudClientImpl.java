@@ -19,6 +19,10 @@ import com.liferay.commerce.cloud.client.constants.CommerceCloudClientConstants;
 import com.liferay.commerce.cloud.client.exception.CommerceCloudClientException;
 import com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync;
 import com.liferay.commerce.cloud.client.util.CommerceCloudClient;
+import com.liferay.commerce.forecast.model.CommerceForecastEntry;
+import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
+import com.liferay.commerce.forecast.service.CommerceForecastEntryLocalService;
+import com.liferay.commerce.forecast.service.CommerceForecastValueLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -30,9 +34,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -58,6 +72,24 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true
 )
 public class CommerceCloudClientImpl implements CommerceCloudClient {
+
+	@Override
+	public void addCommerceForecastEntries(String json)
+		throws CommerceCloudClientException {
+
+		try {
+			JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				addCommerceForecastEntry(jsonObject);
+			}
+		}
+		catch (Exception e) {
+			throw new CommerceCloudClientException(e);
+		}
+	}
 
 	@Override
 	public JSONObject getOrderForecastConfiguration()
@@ -115,6 +147,54 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	protected void activate(Map<String, Object> properties) {
 		_commerceCloudClientConfiguration = ConfigurableUtil.createConfigurable(
 			CommerceCloudClientConfiguration.class, properties);
+	}
+
+	protected void addCommerceForecastEntry(JSONObject jsonObject)
+		throws PortalException {
+
+		long companyId = jsonObject.getLong("companyId");
+		Date date = new Date(jsonObject.getLong("time"));
+		String periodString = jsonObject.getString("period");
+		String targetString = jsonObject.getString("target");
+		long customerId = jsonObject.getLong("customerId");
+		String sku = jsonObject.getString("sku");
+		BigDecimal assertivity = _getBigDecimal(jsonObject, "assertivity");
+
+		long userId = getCompanyAdminUserId(companyId);
+
+		int period = CommerceForecastEntryConstants.getLabelPeriod(
+			StringUtil.toLowerCase(periodString));
+		int target = CommerceForecastEntryConstants.getLabelTarget(
+			StringUtil.toLowerCase(targetString));
+
+		CommerceForecastEntry commerceForecastEntry =
+			_commerceForecastEntryLocalService.addCommerceForecastEntry(
+				companyId, userId, date, period, target, customerId, sku,
+				assertivity);
+
+		JSONArray valuesJSONArray = jsonObject.getJSONArray("values");
+
+		for (int i = 0; i < valuesJSONArray.length(); i++) {
+			JSONObject valueJSONObject = valuesJSONArray.getJSONObject(i);
+
+			addCommerceForecastValue(
+				userId, commerceForecastEntry, valueJSONObject);
+		}
+	}
+
+	protected void addCommerceForecastValue(
+			long userId, CommerceForecastEntry commerceForecastEntry,
+			JSONObject jsonObject)
+		throws PortalException {
+
+		Date date = new Date(jsonObject.getLong("time"));
+		BigDecimal lowerValue = _getBigDecimal(jsonObject, "lowerValue");
+		BigDecimal value = _getBigDecimal(jsonObject, "value");
+		BigDecimal upperValue = _getBigDecimal(jsonObject, "upperValue");
+
+		_commerceForecastValueLocalService.addCommerceForecastValue(
+			userId, commerceForecastEntry.getCommerceForecastEntryId(), date,
+			lowerValue, value, upperValue);
 	}
 
 	protected JSONObject doGetOrderForecastConfiguration() throws Exception {
@@ -185,6 +265,32 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		}
 
 		return responseBody;
+	}
+
+	protected long getCompanyAdminUserId(long companyId)
+		throws PortalException {
+
+		if (_companyLocalService.fetchCompany(companyId) == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Company " + companyId +
+						" does not exist, using default company instead");
+			}
+
+			companyId = _portal.getDefaultCompanyId();
+		}
+
+		Role role = _roleLocalService.getRole(
+			companyId, RoleConstants.ADMINISTRATOR);
+
+		long[] userIds = _userLocalService.getRoleUserIds(role.getRoleId());
+
+		if (ArrayUtil.isNotEmpty(userIds)) {
+			return userIds[0];
+		}
+
+		throw new PortalException(
+			"Unable to find an administrator user in company " + companyId);
 	}
 
 	protected JSONObject getJSONObject(
@@ -264,16 +370,51 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		return sb.toString();
 	}
 
+	private static BigDecimal _getBigDecimal(
+		JSONObject jsonObject, String key) {
+
+		String value = jsonObject.getString(key);
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		return new BigDecimal(value);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceCloudClientImpl.class);
+
 	private volatile CommerceCloudClientConfiguration
 		_commerceCloudClientConfiguration;
 
 	@Reference
+	private CommerceForecastEntryLocalService
+		_commerceForecastEntryLocalService;
+
+	@Reference
+	private CommerceForecastValueLocalService
+		_commerceForecastValueLocalService;
+
+	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private Http _http;
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

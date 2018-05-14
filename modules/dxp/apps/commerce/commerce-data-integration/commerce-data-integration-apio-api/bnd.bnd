@@ -2,6 +2,5 @@ Bundle-Name: Liferay Commerce Data Integration Apio API
 Bundle-SymbolicName: com.liferay.commerce.data.integration.apio.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.commerce.data.integration.apio.constants,\
 	com.liferay.commerce.data.integration.apio.identifiers,\
 	com.liferay.commerce.data.integration.apio.security.permission

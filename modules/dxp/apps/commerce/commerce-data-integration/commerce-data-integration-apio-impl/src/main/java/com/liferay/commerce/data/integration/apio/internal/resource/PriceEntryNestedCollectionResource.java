@@ -22,7 +22,6 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
@@ -107,18 +106,15 @@ public class PriceEntryNestedCollectionResource
 			"priceList", "priceEntries", PriceListIdentifier.class,
 			CommercePriceEntry::getCommercePriceListId
 		).addDate(
-			PriceEntryFieldConstants.DATE_CREATED,
-			CommercePriceEntry::getCreateDate
+			"dateCreated", CommercePriceEntry::getCreateDate
 		).addDate(
-			PriceEntryFieldConstants.DATE_MODIFIED,
-			CommercePriceEntry::getModifiedDate
+			"dateModified", CommercePriceEntry::getModifiedDate
 		).addNumber(
-			PriceEntryFieldConstants.PRICE, CommercePriceEntry::getPrice
+			"price", CommercePriceEntry::getPrice
 		).addNumber(
-			PriceEntryFieldConstants.PROMO_PRICE,
-			CommercePriceEntry::getPromoPrice
+			"promoPrice", CommercePriceEntry::getPromoPrice
 		).addString(
-			PriceEntryFieldConstants.SKU, PriceEntryHelper::getSKU
+			"sku", PriceEntryHelper::getSKU
 		).build();
 	}
 

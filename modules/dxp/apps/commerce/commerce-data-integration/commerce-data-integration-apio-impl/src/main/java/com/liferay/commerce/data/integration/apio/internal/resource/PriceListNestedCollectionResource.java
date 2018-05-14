@@ -25,7 +25,6 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.data.integration.apio.constants.PriceListFieldConstants;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
@@ -108,23 +107,19 @@ public class PriceListNestedCollectionResource
 			"webSite", "priceLists", WebSiteIdentifier.class,
 			CommercePriceList::getGroupId
 		).addDate(
-			PriceListFieldConstants.DATE_CREATED,
-			CommercePriceList::getCreateDate
+			"dateCreated", CommercePriceList::getCreateDate
 		).addDate(
-			PriceListFieldConstants.DATE_MODIFIED,
-			CommercePriceList::getModifiedDate
+			"dateModified", CommercePriceList::getModifiedDate
 		).addDate(
-			PriceListFieldConstants.DISPLAY_DATE,
-			CommercePriceList::getDisplayDate
+			"displayDate", CommercePriceList::getDisplayDate
 		).addDate(
-			PriceListFieldConstants.EXPIRATION_DATE,
-			CommercePriceList::getExpirationDate
+			"expirationDate", CommercePriceList::getExpirationDate
 		).addNumber(
-			PriceListFieldConstants.PRIORITY, CommercePriceList::getPriority
+			"priority", CommercePriceList::getPriority
 		).addString(
-			PriceListFieldConstants.CURRENCY, this::_getCurrencyCode
+			"currency", this::_getCurrencyCode
 		).addString(
-			PriceListFieldConstants.NAME, CommercePriceList::getName
+			"name", CommercePriceList::getName
 		).build();
 	}
 

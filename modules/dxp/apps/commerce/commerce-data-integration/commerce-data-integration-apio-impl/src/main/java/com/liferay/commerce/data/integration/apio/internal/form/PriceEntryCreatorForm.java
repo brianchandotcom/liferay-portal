@@ -15,7 +15,6 @@
 package com.liferay.commerce.data.integration.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.commerce.data.integration.apio.constants.PriceEntryFieldConstants;
 
 /**
  * Instances of this class represent the values extracted from a price entry
@@ -44,12 +43,11 @@ public class PriceEntryCreatorForm {
 		).constructor(
 			PriceEntryCreatorForm::new
 		).addRequiredDouble(
-			PriceEntryFieldConstants.PRICE, PriceEntryCreatorForm::_setPrice
+			"price", PriceEntryCreatorForm::_setPrice
 		).addRequiredDouble(
-			PriceEntryFieldConstants.PROMO_PRICE,
-			PriceEntryCreatorForm::_setPromoPrice
+			"promoPrice", PriceEntryCreatorForm::_setPromoPrice
 		).addRequiredLong(
-			PriceEntryFieldConstants.SKU_ID, PriceEntryCreatorForm::_setSkuID
+			"skuID", PriceEntryCreatorForm::_setSkuID
 		).build();
 	}
 

@@ -46,9 +46,9 @@ public class VertxUtil {
 		T result = asyncResult.result();
 
 		if (result instanceof JsonSerializable) {
-			JsonSerializable jsonable = (JsonSerializable)result;
+			JsonSerializable jsonSerializable = (JsonSerializable)result;
 
-			JsonObject jsonObject = jsonable.toJson();
+			JsonObject jsonObject = jsonSerializable.toJson();
 
 			httpServerResponse.end(jsonObject.encodePrettily());
 		}

@@ -16,7 +16,7 @@ package com.liferay.commerce.cloud.client.internal.messaging;
 
 import com.liferay.commerce.cloud.client.configuration.CommerceCloudClientConfiguration;
 import com.liferay.commerce.cloud.client.constants.CommerceCloudClientConstants;
-import com.liferay.commerce.cloud.client.service.CommerceCloudOrderForecastSyncLocalService;
+import com.liferay.commerce.cloud.client.service.CommerceCloudForecastOrderLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -42,9 +42,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = CommerceCloudClientConstants.CONFIGURATION_PID,
 	immediate = true,
-	service = CheckCommerceCloudOrderForecastSyncMessageListener.class
+	service = CheckCommerceCloudForecastOrderMessageListener.class
 )
-public class CheckCommerceCloudOrderForecastSyncMessageListener
+public class CheckCommerceCloudForecastOrderMessageListener
 	extends BaseMessageListener {
 
 	@Activate
@@ -82,16 +82,16 @@ public class CheckCommerceCloudOrderForecastSyncMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_commerceCloudOrderForecastSyncLocalService.
-			checkCommerceCloudOrderForecastSyncs();
+		_commerceCloudForecastOrderLocalService.
+			checkCommerceCloudForecastOrders();
 	}
 
 	private volatile CommerceCloudClientConfiguration
 		_commerceCloudClientConfiguration;
 
 	@Reference
-	private CommerceCloudOrderForecastSyncLocalService
-		_commerceCloudOrderForecastSyncLocalService;
+	private CommerceCloudForecastOrderLocalService
+		_commerceCloudForecastOrderLocalService;
 
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;

@@ -16,7 +16,7 @@ package com.liferay.commerce.cloud.client.internal.messaging;
 
 import com.liferay.commerce.cloud.client.configuration.CommerceCloudClientConfiguration;
 import com.liferay.commerce.cloud.client.constants.CommerceCloudClientConstants;
-import com.liferay.commerce.cloud.client.service.CommerceCloudOrderForecastSyncLocalService;
+import com.liferay.commerce.cloud.client.service.CommerceCloudForecastOrderLocalService;
 import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -57,8 +57,8 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 
 			long commerceOrderId = message.getLong("commerceOrderId");
 
-			_commerceCloudOrderForecastSyncLocalService.
-				addCommerceCloudOrderForecastSync(commerceOrderId);
+			_commerceCloudForecastOrderLocalService.
+				addCommerceCloudForecastOrder(commerceOrderId);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 		_commerceCloudClientConfiguration;
 
 	@Reference
-	private CommerceCloudOrderForecastSyncLocalService
-		_commerceCloudOrderForecastSyncLocalService;
+	private CommerceCloudForecastOrderLocalService
+		_commerceCloudForecastOrderLocalService;
 
 }

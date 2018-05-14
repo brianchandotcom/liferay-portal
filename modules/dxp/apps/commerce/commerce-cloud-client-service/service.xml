@@ -4,11 +4,11 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.cloud.client">
 	<author>Andrea Di Giorgi</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="true" name="CommerceCloudOrderForecastSync" remote-service="false" table="CCOrderForecastSync">
+	<entity local-service="true" name="CommerceCloudForecastOrder" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column db-name="CCOrderForecastSyncId" name="commerceCloudOrderForecastSyncId" primary="true" type="long" />
+		<column name="commerceCloudForecastOrderId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -32,7 +32,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceOrderId" return-type="CommerceCloudOrderForecastSync" unique="true">
+		<finder name="CommerceOrderId" return-type="CommerceCloudForecastOrder" unique="true">
 			<finder-column name="commerceOrderId" />
 		</finder>
 		<finder name="SyncDate" return-type="Collection">

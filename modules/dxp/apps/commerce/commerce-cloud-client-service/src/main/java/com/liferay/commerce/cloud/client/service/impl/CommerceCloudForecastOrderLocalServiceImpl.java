@@ -15,8 +15,8 @@
 package com.liferay.commerce.cloud.client.service.impl;
 
 import com.liferay.commerce.cloud.client.exception.CommerceCloudClientException;
-import com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync;
-import com.liferay.commerce.cloud.client.service.base.CommerceCloudOrderForecastSyncLocalServiceBaseImpl;
+import com.liferay.commerce.cloud.client.model.CommerceCloudForecastOrder;
+import com.liferay.commerce.cloud.client.service.base.CommerceCloudForecastOrderLocalServiceBaseImpl;
 import com.liferay.commerce.cloud.client.util.CommerceCloudClient;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -34,44 +34,43 @@ import java.util.List;
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceCloudOrderForecastSyncLocalServiceImpl
-	extends CommerceCloudOrderForecastSyncLocalServiceBaseImpl {
+public class CommerceCloudForecastOrderLocalServiceImpl
+	extends CommerceCloudForecastOrderLocalServiceBaseImpl {
 
 	@Override
-	public CommerceCloudOrderForecastSync addCommerceCloudOrderForecastSync(
+	public CommerceCloudForecastOrder addCommerceCloudForecastOrder(
 			long commerceOrderId)
 		throws PortalException {
 
-		CommerceCloudOrderForecastSync commerceCloudOrderForecastSync =
-			commerceCloudOrderForecastSyncPersistence.fetchByCommerceOrderId(
+		CommerceCloudForecastOrder commerceCloudForecastOrder =
+			commerceCloudForecastOrderPersistence.fetchByCommerceOrderId(
 				commerceOrderId);
 
-		if (commerceCloudOrderForecastSync != null) {
-			return commerceCloudOrderForecastSync;
+		if (commerceCloudForecastOrder != null) {
+			return commerceCloudForecastOrder;
 		}
 
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
-		long commerceCloudOrderForecastSyncId = counterLocalService.increment();
+		long commerceCloudForecastOrderId = counterLocalService.increment();
 
-		commerceCloudOrderForecastSync =
-			commerceCloudOrderForecastSyncPersistence.create(
-				commerceCloudOrderForecastSyncId);
+		commerceCloudForecastOrder =
+			commerceCloudForecastOrderPersistence.create(
+				commerceCloudForecastOrderId);
 
-		commerceCloudOrderForecastSync.setGroupId(commerceOrder.getGroupId());
-		commerceCloudOrderForecastSync.setCompanyId(
-			commerceOrder.getCompanyId());
-		commerceCloudOrderForecastSync.setCreateDate(new Date());
-		commerceCloudOrderForecastSync.setCommerceOrderId(
+		commerceCloudForecastOrder.setGroupId(commerceOrder.getGroupId());
+		commerceCloudForecastOrder.setCompanyId(commerceOrder.getCompanyId());
+		commerceCloudForecastOrder.setCreateDate(new Date());
+		commerceCloudForecastOrder.setCommerceOrderId(
 			commerceOrder.getCommerceOrderId());
 
-		return commerceCloudOrderForecastSyncPersistence.update(
-			commerceCloudOrderForecastSync);
+		return commerceCloudForecastOrderPersistence.update(
+			commerceCloudForecastOrder);
 	}
 
 	@Override
-	public void checkCommerceCloudOrderForecastSyncs() {
+	public void checkCommerceCloudForecastOrders() {
 		if (_lockManager.isLocked(_CHECK_LOCK_CLASS_NAME, _CHECK_LOCK_KEY)) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Skipping check, another job is still in progress");
@@ -83,7 +82,7 @@ public class CommerceCloudOrderForecastSyncLocalServiceImpl
 		try {
 			_lockManager.lock(_CHECK_LOCK_CLASS_NAME, _CHECK_LOCK_KEY, null);
 
-			doCheckCommerceCloudOrderForecastSyncs();
+			doCheckCommerceCloudForecastOrders();
 		}
 		finally {
 			_lockManager.unlock(_CHECK_LOCK_CLASS_NAME, _CHECK_LOCK_KEY);
@@ -91,37 +90,34 @@ public class CommerceCloudOrderForecastSyncLocalServiceImpl
 	}
 
 	@Override
-	public CommerceCloudOrderForecastSync
-			deleteCommerceCloudOrderForecastSyncByCommerceOrderId(
+	public CommerceCloudForecastOrder
+			deleteCommerceCloudForecastOrderByCommerceOrderId(
 				long commerceOrderId)
 		throws PortalException {
 
-		return
-			commerceCloudOrderForecastSyncPersistence.removeByCommerceOrderId(
-				commerceOrderId);
+		return commerceCloudForecastOrderPersistence.removeByCommerceOrderId(
+			commerceOrderId);
 	}
 
-	protected void doCheckCommerceCloudOrderForecastSyncs() {
+	protected void doCheckCommerceCloudForecastOrders() {
 		while (true) {
-			List<CommerceCloudOrderForecastSync>
-				commerceCloudOrderForecastSyncs =
-					commerceCloudOrderForecastSyncPersistence.findBySyncDate(
-						null, 0, _CHECK_LIMIT);
+			List<CommerceCloudForecastOrder> commerceCloudForecastOrders =
+				commerceCloudForecastOrderPersistence.findBySyncDate(
+					null, 0, _CHECK_LIMIT);
 
-			if (commerceCloudOrderForecastSyncs.isEmpty()) {
+			if (commerceCloudForecastOrders.isEmpty()) {
 				break;
 			}
 
 			try {
-				_commerceCloudClient.syncOrders(
-					commerceCloudOrderForecastSyncs);
+				_commerceCloudClient.syncOrders(commerceCloudForecastOrders);
 			}
 			catch (CommerceCloudClientException ccce) {
 				_log.error(
 					"Unable to synchronize orders " +
 						ListUtil.toString(
-							commerceCloudOrderForecastSyncs,
-							CommerceCloudOrderForecastSync.
+							commerceCloudForecastOrders,
+							CommerceCloudForecastOrder.
 								COMMERCE_ORDER_ID_ACCESSOR,
 							StringPool.COMMA_AND_SPACE),
 					ccce);
@@ -131,21 +127,21 @@ public class CommerceCloudOrderForecastSyncLocalServiceImpl
 
 			Date now = new Date();
 
-			for (CommerceCloudOrderForecastSync commerceCloudOrderForecastSync :
-					commerceCloudOrderForecastSyncs) {
+			for (CommerceCloudForecastOrder commerceCloudForecastOrder :
+					commerceCloudForecastOrders) {
 
-				commerceCloudOrderForecastSync.setSyncDate(now);
+				commerceCloudForecastOrder.setSyncDate(now);
 
-				commerceCloudOrderForecastSyncPersistence.update(
-					commerceCloudOrderForecastSync);
+				commerceCloudForecastOrderPersistence.update(
+					commerceCloudForecastOrder);
 			}
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Succesfully synchronized orders " +
 						ListUtil.toString(
-							commerceCloudOrderForecastSyncs,
-							CommerceCloudOrderForecastSync.
+							commerceCloudForecastOrders,
+							CommerceCloudForecastOrder.
 								COMMERCE_ORDER_ID_ACCESSOR,
 							StringPool.COMMA_AND_SPACE));
 			}
@@ -155,12 +151,12 @@ public class CommerceCloudOrderForecastSyncLocalServiceImpl
 	private static final int _CHECK_LIMIT = 100;
 
 	private static final String _CHECK_LOCK_CLASS_NAME =
-		CommerceCloudOrderForecastSync.class.getName();
+		CommerceCloudForecastOrder.class.getName();
 
 	private static final String _CHECK_LOCK_KEY = "check";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceCloudOrderForecastSyncLocalServiceImpl.class);
+		CommerceCloudForecastOrderLocalServiceImpl.class);
 
 	@ServiceReference(type = CommerceCloudClient.class)
 	private CommerceCloudClient _commerceCloudClient;

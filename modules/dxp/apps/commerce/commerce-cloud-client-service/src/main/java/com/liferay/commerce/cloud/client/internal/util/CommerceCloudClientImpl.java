@@ -17,7 +17,7 @@ package com.liferay.commerce.cloud.client.internal.util;
 import com.liferay.commerce.cloud.client.configuration.CommerceCloudClientConfiguration;
 import com.liferay.commerce.cloud.client.constants.CommerceCloudClientConstants;
 import com.liferay.commerce.cloud.client.exception.CommerceCloudClientException;
-import com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync;
+import com.liferay.commerce.cloud.client.model.CommerceCloudForecastOrder;
 import com.liferay.commerce.cloud.client.util.CommerceCloudClient;
 import com.liferay.commerce.forecast.model.CommerceForecastEntry;
 import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
@@ -108,12 +108,11 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 	@Override
 	public void syncOrders(
-			List<CommerceCloudOrderForecastSync>
-				commerceCloudOrderForecastSyncs)
+			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws CommerceCloudClientException {
 
 		try {
-			doSyncOrders(commerceCloudOrderForecastSyncs);
+			doSyncOrders(commerceCloudForecastOrders);
 		}
 		catch (CommerceCloudClientException ccce) {
 			throw ccce;
@@ -210,8 +209,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	protected void doSyncOrders(
-			List<CommerceCloudOrderForecastSync>
-				commerceCloudOrderForecastSyncs)
+			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws Exception {
 
 		String location = getLocation("/forecast/orders/");
@@ -223,11 +221,10 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (CommerceCloudOrderForecastSync commerceCloudOrderForecastSync :
-				commerceCloudOrderForecastSyncs) {
+		for (CommerceCloudForecastOrder commerceCloudForecastOrder :
+				commerceCloudForecastOrders) {
 
-			JSONObject jsonObject = getJSONObject(
-				commerceCloudOrderForecastSync);
+			JSONObject jsonObject = getJSONObject(commerceCloudForecastOrder);
 
 			jsonArray.put(jsonObject);
 		}
@@ -294,18 +291,18 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	protected JSONObject getJSONObject(
-			CommerceCloudOrderForecastSync commerceCloudOrderForecastSync)
+			CommerceCloudForecastOrder commerceCloudForecastOrder)
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(
-				commerceCloudOrderForecastSync.getCommerceOrderId());
+				commerceCloudForecastOrder.getCommerceOrderId());
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		jsonObject.put("companyId", Long.valueOf(commerceOrder.getCompanyId()));
 
-		Date createDate = commerceCloudOrderForecastSync.getCreateDate();
+		Date createDate = commerceCloudForecastOrder.getCreateDate();
 
 		jsonObject.put("createTime", Long.valueOf(createDate.getTime()));
 

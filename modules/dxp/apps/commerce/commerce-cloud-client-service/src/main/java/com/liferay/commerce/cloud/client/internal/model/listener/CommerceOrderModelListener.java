@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.cloud.client.internal.model.listener;
 
-import com.liferay.commerce.cloud.client.exception.NoSuchCloudOrderForecastSyncException;
-import com.liferay.commerce.cloud.client.service.CommerceCloudOrderForecastSyncLocalService;
+import com.liferay.commerce.cloud.client.exception.NoSuchCloudForecastOrderException;
+import com.liferay.commerce.cloud.client.service.CommerceCloudForecastOrderLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -36,11 +36,11 @@ public class CommerceOrderModelListener
 		throws ModelListenerException {
 
 		try {
-			_commerceCloudOrderForecastSyncLocalService.
-				deleteCommerceCloudOrderForecastSyncByCommerceOrderId(
+			_commerceCloudForecastOrderLocalService.
+				deleteCommerceCloudForecastOrderByCommerceOrderId(
 					commerceOrder.getCommerceOrderId());
 		}
-		catch (NoSuchCloudOrderForecastSyncException nscofse) {
+		catch (NoSuchCloudForecastOrderException nscfoe) {
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
@@ -48,7 +48,7 @@ public class CommerceOrderModelListener
 	}
 
 	@Reference
-	private CommerceCloudOrderForecastSyncLocalService
-		_commerceCloudOrderForecastSyncLocalService;
+	private CommerceCloudForecastOrderLocalService
+		_commerceCloudForecastOrderLocalService;
 
 }

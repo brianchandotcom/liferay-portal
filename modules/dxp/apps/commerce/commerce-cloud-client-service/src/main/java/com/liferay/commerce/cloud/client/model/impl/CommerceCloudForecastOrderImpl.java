@@ -20,10 +20,10 @@ import aQute.bnd.annotation.ProviderType;
  * @author Andrea Di Giorgi
  */
 @ProviderType
-public class CommerceCloudOrderForecastSyncImpl
-	extends CommerceCloudOrderForecastSyncBaseImpl {
+public class CommerceCloudForecastOrderImpl
+	extends CommerceCloudForecastOrderBaseImpl {
 
-	public CommerceCloudOrderForecastSyncImpl() {
+	public CommerceCloudForecastOrderImpl() {
 	}
 
 }

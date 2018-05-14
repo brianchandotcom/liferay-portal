@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.cloud.client.internal.util;
 
-import com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync;
+import com.liferay.commerce.cloud.client.model.CommerceCloudForecastOrder;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -53,7 +53,7 @@ public class CommerceCloudClientImplTest {
 		field.set(_commerceCloudClientImpl, new JSONFactoryImpl());
 
 		Mockito.when(
-			_commerceCloudOrderForecastSync.getCreateDate()
+			_commerceCloudForecastOrder.getCreateDate()
 		).thenReturn(
 			RandomTestUtil.nextDate()
 		);
@@ -68,7 +68,7 @@ public class CommerceCloudClientImplTest {
 	@Test
 	public void testGetJSONObject() throws Exception {
 		JSONObject jsonObject = _commerceCloudClientImpl.getJSONObject(
-			_commerceCloudOrderForecastSync);
+			_commerceCloudForecastOrder);
 
 		String json = jsonObject.toJSONString();
 
@@ -81,7 +81,7 @@ public class CommerceCloudClientImplTest {
 		new CommerceCloudClientImpl();
 
 	@Mock
-	private CommerceCloudOrderForecastSync _commerceCloudOrderForecastSync;
+	private CommerceCloudForecastOrder _commerceCloudForecastOrder;
 
 	@Mock
 	private CommerceOrder _commerceOrder;

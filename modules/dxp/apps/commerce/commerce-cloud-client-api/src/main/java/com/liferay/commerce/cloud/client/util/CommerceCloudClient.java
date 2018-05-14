@@ -17,7 +17,7 @@ package com.liferay.commerce.cloud.client.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.cloud.client.exception.CommerceCloudClientException;
-import com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync;
+import com.liferay.commerce.cloud.client.model.CommerceCloudForecastOrder;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.List;
@@ -35,8 +35,7 @@ public interface CommerceCloudClient {
 		throws CommerceCloudClientException;
 
 	public void syncOrders(
-			List<CommerceCloudOrderForecastSync>
-				commerceCloudOrderForecastSyncs)
+			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws CommerceCloudClientException;
 
 	public void updateOrderForecastConfiguration(JSONObject jsonObject)

@@ -71,7 +71,7 @@ public class EmbeddedWebPageNestedCollectionResource
 	}
 
 	@Override
-	public Representor<Layout, Long> representor(
+	public Representor<Layout> representor(
 		Representor.Builder<Layout, Long> builder) {
 
 		return builder.types(

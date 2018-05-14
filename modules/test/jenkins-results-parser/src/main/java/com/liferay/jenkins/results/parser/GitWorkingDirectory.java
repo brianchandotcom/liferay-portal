@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -765,19 +766,33 @@ public class GitWorkingDirectory {
 	}
 
 	public File getJavaFileFromFullClassName(String fullClassName) {
-		if (_javaFiles == null) {
-			_javaFiles = JenkinsResultsParserUtil.findFiles(
+		if (_javaDirPaths == null) {
+			List<File> javaFiles = JenkinsResultsParserUtil.findFiles(
 				getWorkingDirectory(), ".*\\.java");
+
+			_javaDirPaths = new HashSet<>();
+
+			for (File javaFile : javaFiles) {
+				File parentFile = javaFile.getParentFile();
+
+				_javaDirPaths.add(parentFile.getPath());
+			}
 		}
 
-		String javaClassFilePath =
-			fullClassName.replaceAll("\\.", "/") + ".java";
+		String classFileName =
+			fullClassName.replaceAll(".*\\.([^\\.]+)", "$1") + ".java";
+		String classPackageName = fullClassName.substring(
+			0, fullClassName.lastIndexOf("."));
 
-		for (File javaFile : _javaFiles) {
-			String javaFilePath = javaFile.toString();
+		String classPackagePath = classPackageName.replaceAll("\\.", "/");
 
-			if (javaFilePath.contains(javaClassFilePath)) {
-				return javaFile;
+		for (String javaDirPath : _javaDirPaths) {
+			if (javaDirPath.contains(classPackagePath)) {
+				File classFile = new File(javaDirPath, classFileName);
+
+				if (classFile.exists()) {
+					return classFile;
+				}
 			}
 		}
 
@@ -1798,7 +1813,7 @@ public class GitWorkingDirectory {
 			"git.working.directory.public.only.repository.names");
 
 	private File _gitDirectory;
-	private List<File> _javaFiles;
+	private Set<String> _javaDirPaths;
 	private final String _repositoryName;
 	private final String _repositoryUsername;
 	private final String _upstreamBranchName;

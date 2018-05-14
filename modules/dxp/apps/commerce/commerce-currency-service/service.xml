@@ -44,6 +44,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_C" return-type="CommerceCurrency" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="code" />
+		</finder>
 		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="primary" />

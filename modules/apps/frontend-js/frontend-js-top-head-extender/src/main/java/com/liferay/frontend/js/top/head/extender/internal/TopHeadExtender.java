@@ -61,30 +61,30 @@ public class TopHeadExtender extends AbstractExtender {
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
 		Dictionary<String, String> headers = bundle.getHeaders();
 
-		String liferayTopHeadJsResources = headers.get(
-			"Liferay-Top-Head-JS-Resources");
+		String liferayJsResourcesTopHead = headers.get(
+			"Liferay-JS-Resources-Top-Head");
 
-		String liferayTopHeadAuthenticatedJsResources = headers.get(
-			"Liferay-Top-Head-Authenticated-JS-Resources");
+		String liferayJsResourcesTopHeadAuthenticated = headers.get(
+			"Liferay-JS-Resources-Top-Head-Authenticated");
 
-		if (Validator.isBlank(liferayTopHeadJsResources) &&
-			Validator.isBlank(liferayTopHeadAuthenticatedJsResources)) {
+		if (Validator.isBlank(liferayJsResourcesTopHead) &&
+			Validator.isBlank(liferayJsResourcesTopHeadAuthenticated)) {
 
 			return null;
 		}
 
-		if (Validator.isNull(liferayTopHeadJsResources)) {
-			liferayTopHeadJsResources = StringPool.BLANK;
+		if (Validator.isNull(liferayJsResourcesTopHead)) {
+			liferayJsResourcesTopHead = StringPool.BLANK;
 		}
 
-		if (Validator.isNull(liferayTopHeadAuthenticatedJsResources)) {
-			liferayTopHeadAuthenticatedJsResources = StringPool.BLANK;
+		if (Validator.isNull(liferayJsResourcesTopHeadAuthenticated)) {
+			liferayJsResourcesTopHeadAuthenticated = StringPool.BLANK;
 		}
 
 		TopHeadResourcesImpl topHeadResourcesImpl = new TopHeadResourcesImpl(
-			Arrays.asList(liferayTopHeadJsResources.split(StringPool.COMMA)),
+			Arrays.asList(liferayJsResourcesTopHead.split(StringPool.COMMA)),
 			Arrays.asList(
-				liferayTopHeadAuthenticatedJsResources.split(
+				liferayJsResourcesTopHeadAuthenticated.split(
 					StringPool.COMMA)));
 
 		int liferayTopHeadWeight = GetterUtil.getInteger(

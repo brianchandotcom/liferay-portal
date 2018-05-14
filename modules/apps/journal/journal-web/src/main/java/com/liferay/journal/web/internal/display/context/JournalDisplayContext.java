@@ -155,10 +155,11 @@ public class JournalDisplayContext {
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								"javascript:" +
-									_liferayPortletResponse.getNamespace() +
-										"deleteEntries();");
+							Map<String, Object> data = new HashMap<>();
+
+							data.put("action", "deleteEntries");
+
+							dropdownItem.setData(data);
 
 							boolean trashEnabled = _trashHelper.isTrashEnabled(
 								themeDisplay.getScopeGroupId());
@@ -180,12 +181,12 @@ public class JournalDisplayContext {
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							StringBundler.concat(
-								"javascript:Liferay.fire('",
-								_liferayPortletResponse.getNamespace(),
-								"editEntry', {action: 'expireEntries'});",
-								"void(0);"));
+						HashMap<String, Object> data = new HashMap<>();
+
+						data.put("action", "expireEntries");
+
+						dropdownItem.setData(data);
+
 						dropdownItem.setIcon("time");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "expire"));
@@ -194,12 +195,12 @@ public class JournalDisplayContext {
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							StringBundler.concat(
-								"javascript:Liferay.fire('",
-								_liferayPortletResponse.getNamespace(),
-								"editEntry', {action: 'moveEntries'});",
-								"void(0);"));
+						HashMap<String, Object> data = new HashMap<>();
+
+						data.put("action", "moveEntries");
+
+						dropdownItem.setData(data);
+
 						dropdownItem.setIcon("change");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "move"));
@@ -361,9 +362,6 @@ public class JournalDisplayContext {
 				setHelpText(
 					"you-can-customize-this-menu-or-see-all-you-have-by-" +
 						"clicking-more");
-				setViewMoreURL(
-					"javascript:" + _liferayPortletResponse.getNamespace() +
-						"openViewMoreStructuresSelector();");
 
 				if (JournalFolderPermission.contains(
 						themeDisplay.getPermissionChecker(),
@@ -1614,10 +1612,11 @@ public class JournalDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setActive(isNavigationStructure());
 
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"openStructuresSelector();");
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("action", "openStructuresSelector");
+
+						dropdownItem.setData(data);
 
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "structures"));

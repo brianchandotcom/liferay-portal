@@ -160,9 +160,28 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	window.<portlet:namespace />deleteFeeds = function() {
+	var deleteFeeds = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
 			submitForm(document.<portlet:namespace />fm);
 		}
 	}
+
+	var ACTIONS = {
+		'deleteFeeds': deleteFeeds
+	};
+
+	Liferay.componentReady('journalFeedsManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

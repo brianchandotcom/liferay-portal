@@ -36,7 +36,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -75,9 +77,11 @@ public class JournalHistoryDisplayContext {
 
 					add(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								"javascript:" + _renderResponse.getNamespace() +
-									"deleteArticles();");
+							Map<String, Object> data = new HashMap<>();
+
+							data.put("action", "deleteArticles");
+
+							dropdownItem.setData(data);
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "delete"));
@@ -91,9 +95,11 @@ public class JournalHistoryDisplayContext {
 
 					add(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								"javascript:" + _renderResponse.getNamespace() +
-									"expireArticles();");
+							Map<String, Object> data = new HashMap<>();
+
+							data.put("action", "expireArticles");
+
+							dropdownItem.setData(data);
 							dropdownItem.setIcon("time");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "expire"));

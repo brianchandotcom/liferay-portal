@@ -46,6 +46,17 @@ import java.util.regex.Pattern;
  */
 public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
+	@Override
+	public int getAxisCount() {
+		int axisCount = super.getAxisCount();
+
+		if ((axisCount == 0) && _includeAutoBalanceTests) {
+			return 1;
+		}
+
+		return axisCount;
+	}
+
 	public static class JunitBatchTestClass extends BaseTestClass {
 
 		protected static JunitBatchTestClass getInstance(
@@ -80,31 +91,14 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				return _junitTestClasses.get(file);
 			}
 
-			String srcFileName = simpleClassName + ".java";
+			File javaFile = gitWorkingDirectory.getJavaFileFromFullClassName(
+				fullClassName);
 
-			List<File> srcFiles = JenkinsResultsParserUtil.findFiles(
-				gitWorkingDirectory.getWorkingDirectory(), srcFileName);
-
-			File matchingSrcFile = null;
-
-			for (File srcFile : srcFiles) {
-				String srcFilePath = srcFile.toString();
-
-				if (srcFilePath.contains(filePath)) {
-					matchingSrcFile = srcFile;
-
-					break;
-				}
-			}
-
-			if (matchingSrcFile == null) {
+			if (javaFile == null) {
 				throw new RuntimeException("No matching files found");
 			}
 
-			if (srcFiles.size() > 1) {
-			}
-
-			return getInstance(file, gitWorkingDirectory, matchingSrcFile);
+			return getInstance(file, gitWorkingDirectory, javaFile);
 		}
 
 		protected JunitBatchTestClass(
@@ -342,66 +336,59 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected void setAxisTestClassGroups() {
+		int axisCount = getAxisCount();
+
+		if (axisCount == 0) {
+			return;
+		}
+
 		int testClassCount = testClasses.size();
 
 		if (testClassCount == 0) {
-			if (_includeAutoBalanceTests && !_autoBalanceTestFiles.isEmpty()) {
-				int id = 0;
+			if (!_includeAutoBalanceTests) {
+				return;
+			}
+
+			axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
+		}
+		else {
+			int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
+
+			int id = 0;
+
+			for (List<BaseTestClass> axisTestClasses :
+					Lists.partition(testClasses, axisSize)) {
 
 				AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
 					this, id);
 
+				for (BaseTestClass axisTestClass : axisTestClasses) {
+					axisTestClassGroup.addTestClass(axisTestClass);
+				}
+
 				axisTestClassGroups.put(id, axisTestClassGroup);
 
-				for (File autoBalanceTestFile : _autoBalanceTestFiles) {
-					String filePath = autoBalanceTestFile.getPath();
-
-					filePath = filePath.replace(".java", ".class");
-
-					axisTestClassGroup.addTestClass(
-						JunitBatchTestClass.getInstance(
-							new File(filePath), portalGitWorkingDirectory,
-							autoBalanceTestFile));
-				}
+				id++;
 			}
+		}
 
+		if (!_includeAutoBalanceTests) {
 			return;
 		}
 
-		int axisMaxSize = getAxisMaxSize();
+		for (int i = 0; i < axisCount; i++) {
+			AxisTestClassGroup axisTestClassGroup = axisTestClassGroups.get(i);
 
-		int axisCount = (int)Math.ceil((double)testClassCount / axisMaxSize);
+			for (File autoBalanceTestFile : _autoBalanceTestFiles) {
+				String filePath = autoBalanceTestFile.getPath();
 
-		int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
+				filePath = filePath.replace(".java", ".class");
 
-		int id = 0;
-
-		for (List<BaseTestClass> axisTestClasses :
-				Lists.partition(testClasses, axisSize)) {
-
-			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
-				this, id);
-
-			axisTestClassGroups.put(id, axisTestClassGroup);
-
-			for (BaseTestClass axisTestClass : axisTestClasses) {
-				axisTestClassGroup.addTestClass(axisTestClass);
+				axisTestClassGroup.addTestClass(
+					JunitBatchTestClass.getInstance(
+						new File(filePath), portalGitWorkingDirectory,
+						autoBalanceTestFile));
 			}
-
-			if (_includeAutoBalanceTests) {
-				for (File autoBalanceTestFile : _autoBalanceTestFiles) {
-					String filePath = autoBalanceTestFile.getPath();
-
-					filePath = filePath.replace(".java", ".class");
-
-					axisTestClassGroup.addTestClass(
-						JunitBatchTestClass.getInstance(
-							new File(filePath), portalGitWorkingDirectory,
-							autoBalanceTestFile));
-				}
-			}
-
-			id++;
 		}
 	}
 
@@ -569,7 +556,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		List<File> modifiedJavaFilesList =
 			portalGitWorkingDirectory.getModifiedFilesList(".java");
 
-		if (!modifiedJavaFilesList.isEmpty()) {
+		if (!_autoBalanceTestFiles.isEmpty() &&
+			!modifiedJavaFilesList.isEmpty()) {
+
 			_includeAutoBalanceTests = true;
 
 			return;

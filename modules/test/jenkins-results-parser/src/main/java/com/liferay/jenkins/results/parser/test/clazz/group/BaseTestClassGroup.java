@@ -49,6 +49,14 @@ public abstract class BaseTestClassGroup {
 			return _file.compareTo(testClass.getFile());
 		}
 
+		public File getFile() {
+			return _file;
+		}
+
+		public List<BaseTestMethod> getTestMethods() {
+			return _testMethods;
+		}
+
 		protected BaseTestClass(File file) {
 			_file = file;
 		}
@@ -61,14 +69,6 @@ public abstract class BaseTestClassGroup {
 			addTestMethod(new BaseTestMethod(methodName, this));
 		}
 
-		protected File getFile() {
-			return _file;
-		}
-
-		protected List<BaseTestMethod> getTestMethods() {
-			return _testMethods;
-		}
-
 		private final File _file;
 		private final List<BaseTestMethod> _testMethods = new ArrayList<>();
 
@@ -76,13 +76,13 @@ public abstract class BaseTestClassGroup {
 
 	public static class BaseTestMethod {
 
+		public String getName() {
+			return _name;
+		}
+
 		protected BaseTestMethod(String name, BaseTestClass testClass) {
 			_name = name;
 			_testClass = testClass;
-		}
-
-		protected String getName() {
-			return _name;
 		}
 
 		protected BaseTestClass getTestClass() {

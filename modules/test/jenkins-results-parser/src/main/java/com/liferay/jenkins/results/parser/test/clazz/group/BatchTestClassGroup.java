@@ -36,7 +36,26 @@ import java.util.regex.Pattern;
 public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	public int getAxisCount() {
-		return axisTestClassGroups.size();
+		String axisCount = getFirstPropertyValue("test.batch.axis.count");
+
+		if (axisCount != null) {
+			return Integer.parseInt(axisCount);
+		}
+
+		int testClassCount = testClasses.size();
+
+		if (testClassCount == 0) {
+			return 0;
+		}
+
+		int axisMaxSize = getAxisMaxSize();
+
+		if (axisMaxSize <= 0) {
+			throw new RuntimeException(
+				"'test.batch.axis.max.size' cannot be 0 or less");
+		}
+
+		return (int)Math.ceil((double)testClassCount / axisMaxSize);
 	}
 
 	public AxisTestClassGroup getAxisTestClassGroup(int axisId) {
@@ -93,7 +112,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected int getAxisMaxSize() {
-		String axisMaxSize = _getAxisMaxSizePropertyValue();
+		String axisMaxSize = getFirstPropertyValue("test.batch.axis.max.size");
 
 		if (axisMaxSize != null) {
 			return Integer.parseInt(axisMaxSize);
@@ -193,9 +212,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return;
 		}
 
-		int axisMaxSize = getAxisMaxSize();
-
-		int axisCount = (int)Math.ceil((double)testClassCount / axisMaxSize);
+		int axisCount = getAxisCount();
 
 		int axisSize = (int)Math.ceil((double)testClassCount / axisCount);
 
@@ -207,11 +224,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			AxisTestClassGroup axisTestClassGroup = new AxisTestClassGroup(
 				this, id);
 
-			axisTestClassGroups.put(id, axisTestClassGroup);
-
 			for (BaseTestClass axisTestClass : axisTestClasses) {
 				axisTestClassGroup.addTestClass(axisTestClass);
 			}
+
+			axisTestClassGroups.put(id, axisTestClassGroup);
 
 			id++;
 		}
@@ -224,10 +241,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
-
-	private String _getAxisMaxSizePropertyValue() {
-		return getFirstPropertyValue("test.batch.axis.max.size");
-	}
 
 	private void _setTestRelevantChanges() {
 		String propertyValue = getFirstPropertyValue("test.relevant.changes");

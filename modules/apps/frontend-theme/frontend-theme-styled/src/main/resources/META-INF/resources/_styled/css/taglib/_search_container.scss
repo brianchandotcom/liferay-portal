@@ -14,7 +14,20 @@
 			border-radius: 0;
 
 			h4 {
-				font-size: $font-size-lg;
+				font-size: $font-size-sm;
+				line-height: 1.5;
+				margin-bottom: 0;
+			}
+
+			h5, h6 {
+				font-size: $font-size-sm;
+				font-weight: 400;
+				line-height: 1.5;
+				margin-bottom: 0;
+			}
+
+			h6 + h5 {
+				font-weight: 600;
 			}
 
 			.checkbox {

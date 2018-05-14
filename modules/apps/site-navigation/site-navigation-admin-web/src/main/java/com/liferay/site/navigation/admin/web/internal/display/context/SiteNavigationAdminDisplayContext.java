@@ -45,7 +45,9 @@ import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -78,10 +80,11 @@ public class SiteNavigationAdminDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"deleteSelectedSiteNavigationMenus();");
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("action", "deleteSelectedSiteNavigationMenus");
+
+						dropdownItem.setData(data);
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -127,10 +130,11 @@ public class SiteNavigationAdminDisplayContext {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"addNavigationMenuMenuItem();");
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("action", "addNavigationMenuMenuItem");
+
+						dropdownItem.setData(data);
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "add-menu"));
 					});

@@ -94,7 +94,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 									if (socialBookmark != null) {
 										add(
 											dropdownItem -> {
-												dropdownItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url));
+												dropdownItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url) + "void(0);");
 												dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
 											});
 									}

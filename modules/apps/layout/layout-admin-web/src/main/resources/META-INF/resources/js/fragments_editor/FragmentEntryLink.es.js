@@ -1,10 +1,11 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
-import {isFunction, isObject, object} from 'metal';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+import {addClasses, removeClasses} from 'metal-dom';
+import {isFunction, isObject, object} from 'metal';
 
-import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
 import EditableImageFragmentProcessor from './fragment_processors/EditableImageFragmentProcessor.es';
+import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
 import MappeableFragmentProcessor from './fragment_processors/MappeableFragmentProcessor.es';
 import templates from './FragmentEntryLink.soy';
 
@@ -282,7 +283,8 @@ class FragmentEntryLink extends Component {
 		const element = this.element.querySelector(`lfr-editable[id="${editableId}"]`);
 
 		if (element) {
-			element.classList.remove(
+			removeClasses(
+				element,
 				'mapped',
 				'translated',
 				'unmapped',
@@ -292,8 +294,8 @@ class FragmentEntryLink extends Component {
 			const mapped = !!mappedField;
 			const translated = !mappedField && !!value;
 
-			element.classList.add(mapped ? 'mapped' : 'unmapped');
-			element.classList.add(translated ? 'translated' : 'untranslated');
+			addClasses(element, mapped ? 'mapped' : 'unmapped');
+			addClasses(element, translated ? 'translated' : 'untranslated');
 		}
 	}
 

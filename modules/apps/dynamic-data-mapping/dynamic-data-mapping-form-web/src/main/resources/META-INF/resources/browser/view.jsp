@@ -16,54 +16,28 @@
 
 <%@ include file="/browser/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<portlet:renderURL var="mainURL">
-		<portlet:param name="mvcPath" value="/browser/view.jsp" />
-	</portlet:renderURL>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems="<%= ddmFormBrowserDisplayContext.getNavigationItems() %>"
+/>
 
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="entries" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= ddmFormBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="searchFm">
-			<liferay-ui:input-search
-				markupView="lexicon"
-			/>
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
-
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	clearResultsURL="<%= ddmFormBrowserDisplayContext.getClearResultsURL() %>"
 	disabled="<%= ddmFormBrowserDisplayContext.isDisabledManagementBar() %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= ddmFormBrowserDisplayContext.getPortletURL() %>"
-			/>
-
-			<liferay-frontend:management-bar-sort
-				orderByCol="<%= ddmFormBrowserDisplayContext.getOrderByCol() %>"
-				orderByType="<%= ddmFormBrowserDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"modified-date"} %>'
-				portletURL="<%= ddmFormBrowserDisplayContext.getPortletURL() %>"
-			/>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= ddmFormBrowserDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="<%= ddmFormBrowserDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	filterDropdownItems="<%= ddmFormBrowserDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= ddmFormBrowserDisplayContext.getTotalItems() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= ddmFormBrowserDisplayContext.getSearchActionURL() %>"
+	searchContainerId="<%= ddmFormBrowserDisplayContext.getSearchContainerId() %>"
+	searchFormName="searchFm"
+	sortingOrder="<%= ddmFormBrowserDisplayContext.getOrderByType() %>"
+	sortingURL="<%= ddmFormBrowserDisplayContext.getSortingURL() %>"
+/>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= String.valueOf(ddmFormBrowserDisplayContext.getPortletURL()) %>" method="post" name="selectDDLFormFm">
+	<aui:form action="<%= String.valueOf(ddmFormBrowserDisplayContext.getPortletURL()) %>" method="post" name="selectDDMFormFm">
 		<liferay-ui:search-container
-			id="ddmFormInstance"
+			id="<%= ddmFormBrowserDisplayContext.getSearchContainerId() %>"
 			searchContainer="<%= ddmFormBrowserDisplayContext.getFormInstanceSearch() %>"
 		>
 			<liferay-ui:search-container-row
@@ -74,7 +48,7 @@
 			>
 
 				<%
-				Map<String, Object> data = new HashMap<String, Object>();
+				Map<String, Object> data = new HashMap<>();
 
 				data.put("forminstanceid", formInstance.getFormInstanceId());
 				data.put("forminstancename", formInstance.getName(locale));
@@ -113,5 +87,5 @@
 </div>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectDDLFormFm', '<%= HtmlUtil.escapeJS(ddmFormBrowserDisplayContext.getEventName()) %>');
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectDDMFormFm', '<%= HtmlUtil.escapeJS(ddmFormBrowserDisplayContext.getEventName()) %>');
 </aui:script>

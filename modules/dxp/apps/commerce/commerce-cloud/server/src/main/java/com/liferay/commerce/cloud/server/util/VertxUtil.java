@@ -22,6 +22,7 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServerResponse;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.client.HttpResponse;
@@ -45,7 +46,20 @@ public class VertxUtil {
 
 		T result = asyncResult.result();
 
-		if (result instanceof JsonSerializable) {
+		if (result instanceof Iterable<?>) {
+			JsonArray jsonArray = new JsonArray();
+
+			Iterable<?> iterable = (Iterable<?>)result;
+
+			for (Object object : iterable) {
+				JsonSerializable jsonSerializable = (JsonSerializable)object;
+
+				jsonArray.add(jsonSerializable.toJson());
+			}
+
+			httpServerResponse.end(jsonArray.encodePrettily());
+		}
+		else if (result instanceof JsonSerializable) {
 			JsonSerializable jsonSerializable = (JsonSerializable)result;
 
 			JsonObject jsonObject = jsonSerializable.toJson();

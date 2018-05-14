@@ -267,8 +267,7 @@ public class AssetVocabularyLocalServiceWrapper
 
 	@Override
 	public com.liferay.asset.kernel.model.AssetVocabulary fetchGroupVocabulary(
-		long groupId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, String name) {
 		return _assetVocabularyLocalService.fetchGroupVocabulary(groupId, name);
 	}
 

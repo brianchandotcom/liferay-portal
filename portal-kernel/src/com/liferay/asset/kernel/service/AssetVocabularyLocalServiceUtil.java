@@ -249,8 +249,7 @@ public class AssetVocabularyLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetVocabulary fetchGroupVocabulary(
-		long groupId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, String name) {
 		return getService().fetchGroupVocabulary(groupId, name);
 	}
 

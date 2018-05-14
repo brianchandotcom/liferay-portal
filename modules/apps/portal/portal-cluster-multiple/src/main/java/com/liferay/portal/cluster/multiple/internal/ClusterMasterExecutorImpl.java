@@ -38,13 +38,14 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -53,11 +54,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 	@Override
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
 	public void addClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {
@@ -142,7 +138,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Activate
-	protected synchronized void activate() {
+	protected synchronized void activate(BundleContext bundleContext) {
 		if (!_clusterExecutorImpl.isEnabled() || SPIUtil.isSPI()) {
 			return;
 		}
@@ -159,10 +155,59 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		_enabled = true;
 
 		getMasterClusterNodeId(false);
+
+		_clusterMasterTokenTransitionListenerServiceTracker =
+			new ServiceTracker<>(
+				bundleContext, ClusterMasterTokenTransitionListener.class,
+				new ServiceTrackerCustomizer
+					<ClusterMasterTokenTransitionListener,
+						ClusterMasterTokenTransitionListener>() {
+
+					@Override
+					public ClusterMasterTokenTransitionListener addingService(
+						ServiceReference<ClusterMasterTokenTransitionListener>
+							serviceReference) {
+
+						ClusterMasterTokenTransitionListener
+							clusterMasterTokenTransitionListener =
+								bundleContext.getService(serviceReference);
+
+						_clusterMasterTokenTransitionListeners.add(
+							clusterMasterTokenTransitionListener);
+
+						return clusterMasterTokenTransitionListener;
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<ClusterMasterTokenTransitionListener>
+							serviceReference,
+						ClusterMasterTokenTransitionListener
+							clusterMasterTokenTransitionListener) {
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<ClusterMasterTokenTransitionListener>
+							serviceReference,
+						ClusterMasterTokenTransitionListener
+							clusterMasterTokenTransitionListener) {
+
+						_clusterMasterTokenTransitionListeners.remove(
+							clusterMasterTokenTransitionListener);
+
+						bundleContext.ungetService(serviceReference);
+					}
+
+				});
+
+		_clusterMasterTokenTransitionListenerServiceTracker.open();
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		_clusterMasterTokenTransitionListenerServiceTracker.close();
+
 		if (_clusterEventListener != null) {
 			_clusterExecutorImpl.removeClusterEventListener(
 				_clusterEventListener);
@@ -268,6 +313,10 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	private ClusterExecutorImpl _clusterExecutorImpl;
 	private final Set<ClusterMasterTokenTransitionListener>
 		_clusterMasterTokenTransitionListeners = new HashSet<>();
+	private ServiceTracker
+		<ClusterMasterTokenTransitionListener,
+			ClusterMasterTokenTransitionListener>
+				_clusterMasterTokenTransitionListenerServiceTracker;
 	private boolean _enabled;
 	private volatile String _localClusterNodeId;
 

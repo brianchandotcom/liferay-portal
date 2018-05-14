@@ -34,7 +34,6 @@ import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
-import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
-import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -134,12 +132,6 @@ public class PriceEntryNestedCollectionResource
 				priceEntryCreatorForm.getSkuID(), commercePriceListId,
 				priceEntryCreatorForm.getPrice(),
 				priceEntryCreatorForm.getPromoPrice());
-		}
-		catch (NoSuchCPInstanceException nscpie) {
-			throw new NotFoundException(
-				"Unable to find CPInstance with ID " +
-					priceEntryCreatorForm.getSkuID(),
-				nscpie);
 		}
 		catch (DuplicateCommercePriceEntryException dcpee) {
 			Response.Status status = Response.Status.CONFLICT;

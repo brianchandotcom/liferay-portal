@@ -62,12 +62,6 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 		<%
 		SearchContainer searchContainer = new OrganizationSearch(renderRequest, portletURL);
 
-		OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
-
-		if (!searchTerms.isSearch() && hasAddOrganizationPermission) {
-			searchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-		}
-
 		RowChecker rowChecker = new OrganizationChecker(renderResponse);
 
 		rowChecker.setRowIds("rowIdsOrganization");

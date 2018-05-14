@@ -181,7 +181,6 @@ if (organization != null) {
 
 			<liferay-ui:search-container
 				emptyResultsMessage="no-results-were-found"
-				emptyResultsMessageCssClass="taglib-empty-result-message-header-has-plus-btn"
 				headerNames="name,type,status"
 				id="organizationUsers"
 				iteratorURL="<%= currentURLObj %>"

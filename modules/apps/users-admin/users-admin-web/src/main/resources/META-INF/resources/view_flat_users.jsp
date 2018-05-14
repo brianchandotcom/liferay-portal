@@ -25,13 +25,7 @@ String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-v
 
 SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", portletURL);
 
-UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
-
 boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER);
-
-if (!searchTerms.isSearch() && hasAddUserPermission) {
-	searchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-}
 
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
@@ -56,6 +50,8 @@ else {
 
 String navigation = ParamUtil.getString(request, "navigation", "active");
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-users");
+
+UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
 if (navigation.equals("active")) {
 	status = WorkflowConstants.STATUS_APPROVED;

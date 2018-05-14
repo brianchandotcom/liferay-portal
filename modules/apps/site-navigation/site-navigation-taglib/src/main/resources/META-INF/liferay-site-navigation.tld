@@ -67,10 +67,10 @@
 		</attribute>
 	</tag>
 	<tag>
-	<description>Creates a component for users to navigate through a set of specified navigation menu items.</description>
-	<name>navigation-menu</name>
-	<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag</tag-class>
-	<body-content>JSP</body-content>
+		<description>Creates a component for users to navigate through a set of specified navigation menu items.</description>
+		<name>navigation-menu</name>
+		<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag</tag-class>
+		<body-content>JSP</body-content>
 		<attribute>
 			<description>The group ID of the DDM template to use for rendering the navigation menu (see Application Display Templates).</description>
 			<name>ddmTemplateGroupId</name>

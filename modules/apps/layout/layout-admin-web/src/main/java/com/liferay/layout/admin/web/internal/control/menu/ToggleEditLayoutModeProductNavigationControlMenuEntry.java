@@ -58,7 +58,7 @@ public class ToggleEditLayoutModeProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) {
-		return true;
+		return false;
 	}
 
 	@Override

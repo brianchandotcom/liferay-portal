@@ -148,6 +148,12 @@ public class SearchContainer<R> {
 		if (Validator.isNotNull(cssClass)) {
 			_cssClass = cssClass;
 		}
+
+		String keywords = ParamUtil.getString(portletRequest, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			_search = true;
+		}
 	}
 
 	public SearchContainer(
@@ -365,10 +371,6 @@ public class SearchContainer<R> {
 	}
 
 	public boolean isSearch() {
-		if (_searchTerms != null) {
-			return _searchTerms.isSearch();
-		}
-
 		return _search;
 	}
 

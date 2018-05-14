@@ -50,7 +50,10 @@ public class CMISRepositoryUtil {
 			UnicodeProperties typeSettingsProperties, String typeSettingsKey)
 		throws PortalException, RepositoryException {
 
-		if (!typeSettingsProperties.containsKey(typeSettingsKey)) {
+		if (!typeSettingsProperties.containsKey(typeSettingsKey) ||
+			Validator.isNull(
+				typeSettingsProperties.getProperty(typeSettingsKey))) {
+
 			Repository cmisRepository = getCMISRepository(parameters);
 
 			typeSettingsProperties.setProperty(

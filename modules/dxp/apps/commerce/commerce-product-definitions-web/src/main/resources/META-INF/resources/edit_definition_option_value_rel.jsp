@@ -37,7 +37,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= cpDefinitionOptionValueRel %>" model="<%= CPDefinitionOptionValueRel.class %>" />
 
-		<liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="please-enter-a-unique-key" />
+		<liferay-ui:error exception="<%= CPDefinitionOptionValueRelKeyException.class %>" message="that-key-is-already-being-used" />
 
 		<aui:fieldset>
 			<aui:input id="optionValueName" name="name" />

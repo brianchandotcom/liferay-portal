@@ -46,7 +46,7 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 
 		<aui:model-context bean="<%= cpOption %>" model="<%= CPOption.class %>" />
 
-		<liferay-ui:error exception="<%= CPOptionKeyException.class %>" message="please-enter-a-unique-key" />
+		<liferay-ui:error exception="<%= CPOptionKeyException.class %>" message="that-key-is-already-being-used" />
 
 		<aui:fieldset>
 			<aui:input autoFocus="<%= true %>" name="name" wrapperCssClass="commerce-product-option-title" />

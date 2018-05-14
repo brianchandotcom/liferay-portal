@@ -32,7 +32,7 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 
 <aui:model-context bean="<%= cpSpecificationOption %>" model="<%= CPSpecificationOption.class %>" />
 
-<liferay-ui:error exception="<%= CPSpecificationOptionKeyException.MustNotBeDuplicate.class %>" message="please-enter-a-unique-key" />
+<liferay-ui:error exception="<%= CPSpecificationOptionKeyException.MustNotBeDuplicate.class %>" message="that-key-is-already-being-used" />
 <liferay-ui:error exception="<%= CPSpecificationOptionKeyException.MustNotBeNull.class %>" message="please-enter-a-valid-key" />
 
 <aui:fieldset>

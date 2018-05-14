@@ -51,7 +51,7 @@ public class CPSpecificationOptionInfoPanelMVCResourceCommand
 			_actionHelper.getCPSpecificationOptions(resourceRequest);
 
 		resourceRequest.setAttribute(
-			CPWebKeys.CP_OPTION_CATEGORIES, cpSpecificationOptions);
+			CPWebKeys.CP_SPECIFICATION_OPTIONS, cpSpecificationOptions);
 
 		include(
 			resourceRequest, resourceResponse,

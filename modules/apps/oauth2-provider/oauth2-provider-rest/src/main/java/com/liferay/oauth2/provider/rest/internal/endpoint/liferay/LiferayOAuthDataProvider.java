@@ -126,7 +126,7 @@ public class LiferayOAuthDataProvider
 		throws OAuthServiceException {
 
 		List<String> approvedScope = new ArrayList<>(
-			accessTokenRegistration.getApprovedScope());
+			accessTokenRegistration.getRequestedScope());
 
 		if (approvedScope.isEmpty()) {
 			Client client = accessTokenRegistration.getClient();

@@ -39,7 +39,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -67,9 +69,11 @@ public class FragmentEntryLinkDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"propagate();");
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("action", "propagate");
+
+						dropdownItem.setData(data);
 						dropdownItem.setIcon("upload");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "propagate"));

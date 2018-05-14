@@ -2689,6 +2689,18 @@
 			<var name="rowNumberStart" value="3" />
 		</execute>
 
+		<if>
+			<condition function="IsTextNotEqual" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" value1="Checkbox 4">
+				<var name="key_rowNumber" value="2" />
+			</condition>
+			<then>
+				<execute macro="FormFields#moveOptionsRow">
+					<var name="rowNumberEnd" value="2" />
+					<var name="rowNumberStart" value="3" />
+				</execute>
+			</then>
+		</if>
+
 		<execute macro="FormFields#viewOptionsRowFieldValue">
 			<var name="fieldValue" value="Checkbox 3" />
 			<var name="rowNumber" value="1" />

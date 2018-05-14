@@ -36,7 +36,7 @@
 			</div>
 		</div>
 
-		<div class="mb-4 navbar navbar-expand-md navbar-light navbar-classic py-4">
+		<div class="mb-4 navbar navbar-classic navbar-expand-md navbar-light py-4">
 			<div class="container">
 				<a class="${logo_css_class} align-items-center d-inline-flex" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
 					<img alt="${logo_description}" class="mr-3" height="48" src="${site_logo}" />

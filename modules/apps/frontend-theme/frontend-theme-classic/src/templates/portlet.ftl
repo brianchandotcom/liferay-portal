@@ -53,7 +53,7 @@
 		</#if>
 
 		<#if validator.isNotNull(portlet_display.getPortletDecoratorId()) && !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone")>
-			<div class="autofit-row autofit-float portlet-header">
+			<div class="autofit-float autofit-row portlet-header">
 				<div class="autofit-col autofit-col-expand">
 						<h2 class="portlet-title-text">${portlet_title}</h2>
 				</div>

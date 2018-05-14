@@ -21,7 +21,7 @@
 					<#assign rssFeedEntries = curEntry.getRSSFeedEntries(themeDisplay) />
 
 					<#if rssFeedEntries??>
-						<div id="tab-${curEntry_index}" class="tab-pane">
+						<div class="tab-pane" id="tab-${curEntry_index}">
 							<#list rssFeedEntries as rssFeedEntry>
 								<#if (rssFeedEntry_index > entriesPerFeed?number)>
 									<#break>

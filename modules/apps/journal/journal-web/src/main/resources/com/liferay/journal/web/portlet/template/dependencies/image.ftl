@@ -14,10 +14,10 @@
 
 <#if stringUtil.equals(language, "ftl")>
 ${r"<#if"} ${variableName}?? && ${variableName} != "">
-	<img data-fileentryid="${getVariableReferenceCode(variableFieldEntryId)}" alt="${getVariableReferenceCode(variableAltName)}" src="${getVariableReferenceCode(variableName)}" />
+	<img alt="${getVariableReferenceCode(variableAltName)}" data-fileentryid="${getVariableReferenceCode(variableFieldEntryId)}" src="${getVariableReferenceCode(variableName)}" />
 ${r"</#if>"}
 <#else>
 #if ($${variableName} && $${variableName} != "")
-	<img data-fileentryid="${getVariableReferenceCode(variableFieldEntryId)}" alt="${getVariableReferenceCode(variableAltName)}" src="${getVariableReferenceCode(variableName)}" />
+	<img alt="${getVariableReferenceCode(variableAltName)}" data-fileentryid="${getVariableReferenceCode(variableFieldEntryId)}" src="${getVariableReferenceCode(variableName)}" />
 #end
 </#if>

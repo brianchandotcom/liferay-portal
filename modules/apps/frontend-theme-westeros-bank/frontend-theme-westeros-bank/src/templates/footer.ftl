@@ -2,7 +2,7 @@
 	<nav id="footer-recursive">
 		<div class="container-fluid container-fluid-max-xl">
 			<div class="row">
-				<div class="nav ml-auto small text-uppercase" role="menubar">
+				<div class="ml-auto nav small text-uppercase" role="menubar">
 					<#assign preferencesMap = {"displayDepth": "1", "portletSetupPortletDecoratorId": "barebones"} />
 
 					<@liferay.navigation_menu

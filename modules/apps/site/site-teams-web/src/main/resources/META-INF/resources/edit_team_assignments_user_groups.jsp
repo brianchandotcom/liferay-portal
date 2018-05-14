@@ -191,15 +191,30 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 		itemSelectorDialog.open();
 	}
 
-	Liferay.componentReady('editTeamAssignemntsUserGroupsWebManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('creationButtonClicked', handleAddClick);
-		}
-	);
-
-	window.<portlet:namespace />deleteUserGroups = function() {
+	var deleteUserGroups = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm($(document.<portlet:namespace />fm));
 		}
 	}
+
+	var ACTIONS = {
+		'deleteUserGroups': deleteUserGroups
+	};
+
+	Liferay.componentReady('editTeamAssignemntsUserGroupsWebManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddClick);
+
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

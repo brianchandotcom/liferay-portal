@@ -38,8 +38,10 @@ import com.liferay.portlet.usergroupsadmin.search.UserGroupSearch;
 import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -67,9 +69,11 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + renderResponse.getNamespace() +
-								"deleteUserGroups();");
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("action", "deleteUserGroups");
+
+						dropdownItem.setData(data);
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "delete"));

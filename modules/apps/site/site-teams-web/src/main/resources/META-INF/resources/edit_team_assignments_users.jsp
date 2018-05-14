@@ -169,15 +169,30 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 		itemSelectorDialog.open();
 	}
 
-	Liferay.componentReady('editTeamAssignemntsUsersWebManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('creationButtonClicked', handleAddClick);
-		}
-	);
-
-	window.<portlet:namespace />deleteUsers = function() {
+	var deleteUsers = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(document.<portlet:namespace />fm);
 		}
 	}
+
+	var ACTIONS = {
+		'deleteUsers': deleteUsers
+	};
+
+	Liferay.componentReady('editTeamAssignemntsUsersWebManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddClick);
+
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

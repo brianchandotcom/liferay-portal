@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.data.integration.apio.internal.util;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
@@ -39,7 +40,11 @@ public class PriceEntryHelper {
 	public static String getSKU(CommercePriceEntry commercePriceEntry) {
 		CPInstance cpInstance = _getCPInstance(commercePriceEntry);
 
-		return cpInstance.getSku();
+		return Try.fromFallible(
+			cpInstance::getSku
+		).orElse(
+			null
+		);
 	}
 
 	public CommercePriceEntry addCommercePriceEntry(

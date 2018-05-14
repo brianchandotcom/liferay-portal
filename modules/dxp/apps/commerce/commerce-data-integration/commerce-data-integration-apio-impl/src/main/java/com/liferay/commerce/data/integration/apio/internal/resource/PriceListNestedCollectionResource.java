@@ -16,7 +16,6 @@ package com.liferay.commerce.data.integration.apio.internal.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -24,7 +23,6 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
-import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
@@ -117,7 +115,7 @@ public class PriceListNestedCollectionResource
 		).addNumber(
 			"priority", CommercePriceList::getPriority
 		).addString(
-			"currency", this::_getCurrencyCode
+			"currency", PriceListHelper::getCurrencyCode
 		).addString(
 			"name", CommercePriceList::getName
 		).build();
@@ -142,14 +140,6 @@ public class PriceListNestedCollectionResource
 					priceListForm.getCurrency()),
 				nsce);
 		}
-	}
-
-	private String _getCurrencyCode(CommercePriceList commercePriceList) {
-		CommerceCurrency commerceCurrency = Try.fromFallible(
-			commercePriceList::getCommerceCurrency
-		).getUnchecked();
-
-		return commerceCurrency.getCode();
 	}
 
 	private PageItems<CommercePriceList> _getPageItems(

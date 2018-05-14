@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.data.integration.apio.internal.util;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -35,6 +36,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = PriceListHelper.class)
 public class PriceListHelper {
+
+	public static String getCurrencyCode(CommercePriceList commercePriceList) {
+		return Try.fromFallible(
+			commercePriceList::getCommerceCurrency
+		).map(
+			CommerceCurrency::getCode
+		).orElse(
+			null
+		);
+	}
 
 	public CommercePriceList addCommercePriceList(
 			long groupId, String currency, String name, Double priority,

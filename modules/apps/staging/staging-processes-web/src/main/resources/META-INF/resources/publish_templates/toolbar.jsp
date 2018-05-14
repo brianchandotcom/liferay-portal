@@ -16,45 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String layoutSetBranchId = ParamUtil.getString(request, "layoutSetBranchId");
-String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
-%>
-
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcRenderCommandName" value="viewPublishConfigurations" />
-			</liferay-portlet:renderURL>
-
-			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<portlet:renderURL var="addPublishConfigurationURL">
-			<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			<portlet:param name="layoutSetBranchId" value="<%= layoutSetBranchId %>" />
-			<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "new") %>'
-				url="<%= addPublishConfigurationURL %>"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	creationMenu="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext.getCreationMenu() %>"
+	id="<portlet:namespace/>stagingProcessesWebPublishTemplatesToolbar"
+	searchActionURL="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showCreationMenu="<%= true %>"
+	showSearch="<%= true %>"
+/>

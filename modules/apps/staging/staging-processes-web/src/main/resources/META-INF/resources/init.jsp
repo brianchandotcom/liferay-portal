@@ -90,6 +90,7 @@ page import="com.liferay.staging.constants.StagingProcessesPortletKeys" %><%@
 page import="com.liferay.staging.processes.web.internal.dao.search.PublishResultRowSplitter" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.PublishTemplatesDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebDisplayContext" %><%@
+page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebPublishTemplatesToolbarDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebToolbarDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationDisplayTerms" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms" %><%@
@@ -132,6 +133,8 @@ PublishTemplatesDisplayContext publishTemplatesDisplayContext = new PublishTempl
 StagingProcessesWebDisplayContext stagingProcessesWebDisplayContext = new StagingProcessesWebDisplayContext(renderResponse, request);
 
 StagingProcessesWebToolbarDisplayContext stagingProcessesWebToolbarDisplayContext = new StagingProcessesWebToolbarDisplayContext(request, pageContext, liferayPortletResponse);
+
+StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPublishTemplatesToolbarDisplayContext = new StagingProcessesWebPublishTemplatesToolbarDisplayContext(request, pageContext, liferayPortletResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

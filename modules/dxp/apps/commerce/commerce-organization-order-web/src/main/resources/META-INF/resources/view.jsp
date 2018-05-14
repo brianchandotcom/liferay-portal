@@ -50,6 +50,10 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 					keyProperty="commerceOrderId"
 					modelVar="commerceOrder"
 				>
+					<liferay-ui:search-container-column-text
+						name="order-id"
+						property="commerceOrderId"
+					/>
 
 					<%
 					PortletURL rowURL = renderResponse.createRenderURL();
@@ -81,11 +85,6 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 					<liferay-ui:search-container-column-text
 						name="customer-id"
 						property="customerId"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="order-id"
-						property="commerceOrderId"
 					/>
 
 					<liferay-ui:search-container-column-text

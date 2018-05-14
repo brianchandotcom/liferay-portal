@@ -20,11 +20,40 @@
 CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext = (CommerceOrganizationOrderDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerceOrder();
+
+List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList<>();
 %>
 
 <portlet:actionURL name="editCommerceOrder" var="editCommerceOrderActionURL">
 	<portlet:param name="mvcRenderCommandName" value="editCommerceOrder" />
 </portlet:actionURL>
+
+<liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
+
+	<%
+	CommerceOrderValidatorException cove = (CommerceOrderValidatorException)errorException;
+
+	if (cove != null) {
+		commerceOrderValidatorResults = cove.getCommerceOrderValidatorResults();
+	}
+
+	for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorResults) {
+	%>
+
+		<c:choose>
+			<c:when test="<%= commerceOrderValidatorResult.hasArgument() %>">
+				<liferay-ui:message arguments="<%= commerceOrderValidatorResult.getArgument() %>" key="<%= commerceOrderValidatorResult.getMessage() %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="<%= commerceOrderValidatorResult.getMessage() %>" />
+			</c:otherwise>
+		</c:choose>
+
+	<%
+	}
+	%>
+
+</liferay-ui:error>
 
 <div class="b2b-portlet-content-header">
 	<liferay-ui:icon

@@ -100,19 +100,6 @@ List<CPDefinition> cpDefinitions = cpCompareContentMiniDisplayContext.getCPDefin
 					}
 					%>
 
-					<c:if test="<%= (cpDefinitions.size() < cpCompareContentMiniDisplayContext.getProductsLimit()) %>">
-						<li class="card-page-item card-page-item-shrink compare-add-more">
-							<button class="btn btn-lg btn-monospaced btn-secondary">
-								<liferay-ui:icon
-									icon="plus"
-									localizeMessage="<%= true %>"
-									markupView="lexicon"
-									message="add-more-products-to-compare-list"
-								/>
-							</button>
-						</li>
-					</c:if>
-
 					<li class="card-page-item card-page-item-shrink">
 						<a class="btn btn-link" href="<%= HtmlUtil.escape(cpCompareContentMiniDisplayContext.getClearCompareProductsURL()) %>"><liferay-ui:message key="clear-all" /></a>
 					</li>

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Blogs Analytics
-Bundle-SymbolicName: com.liferay.blogs.analytics
-Bundle-Version: 1.0.0
-Web-ContextPath: /blogs-analytics

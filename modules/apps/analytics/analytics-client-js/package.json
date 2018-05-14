@@ -29,6 +29,7 @@
 		"karma-sinon": "^1.0.5",
 		"karma-sourcemap-loader": "^0.3.7",
 		"karma-webpack": "^3.0.0",
+		"metal-dom": "^2.16.5",
 		"mocha": "^4.0.1",
 		"prettier-eslint-cli": "^4.4.0",
 		"rimraf": "^2.6.2",

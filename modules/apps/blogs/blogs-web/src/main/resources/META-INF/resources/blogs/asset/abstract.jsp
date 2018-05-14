@@ -21,6 +21,8 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
+String entryTitle = BlogsEntryUtil.getDisplayTitle(resourceBundle, entry);
+
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 
 String coverImageURL = entry.getCoverImageURL(themeDisplay);
@@ -39,7 +41,7 @@ String coverImageURL = entry.getCoverImageURL(themeDisplay);
 </c:if>
 
 <div class="portlet-blogs">
-	<div class="entry-body">
+	<div class="entry-body" data-analytics-asset-id="<%= String.valueOf(entry.getEntryId()) %>" data-analytics-asset-title="<%= HtmlUtil.escapeAttribute(entryTitle) %>" data-analytics-asset-type="blog">
 		<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
 			<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
 		</c:if>

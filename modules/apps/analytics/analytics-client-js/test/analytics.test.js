@@ -1,7 +1,7 @@
 import AnalyticsClient from '../src/analytics';
 import {assert, expect} from 'chai';
 
-let Analytics = AnalyticsClient.create();
+let Analytics;
 let EVENT_ID = 0;
 
 const ANALYTICS_IDENTITY = {email: 'foo@bar.com'};
@@ -19,7 +19,7 @@ const fetchMock = window.fetchMock;
  * Sends dummy events to test the Analytics API
  * @param {number} eventsNumber Number of events to send
  */
-function sendDummyEvents(eventsNumber = 5) {
+function sendDummyEvents(client, eventsNumber = 5) {
 	for (let i = 0; i < eventsNumber; i++) {
 		const applicationId = 'test';
 		const eventId = EVENT_ID++;
@@ -29,18 +29,20 @@ function sendDummyEvents(eventsNumber = 5) {
 			c: 3,
 		};
 
-		Analytics.send(eventId, applicationId, properties);
+		client.send(eventId, applicationId, properties);
 	}
 }
 
 describe('Analytics Client', () => {
 	afterEach(() => {
+		Analytics.reset();
+		Analytics.dispose();
 		fetchMock.restore();
 	});
 
 	beforeEach(
 		() => {
-			Analytics.reset();
+			Analytics = AnalyticsClient.create();
 
 			localStorage.removeItem(STORAGE_KEY_EVENTS);
 			localStorage.removeItem(STORAGE_KEY_USER_ID);
@@ -58,9 +60,11 @@ describe('Analytics Client', () => {
 	it('should accept a configuration object', () => {
 		const config = {a: 1, b: 2, c: 3};
 
-		const client = Analytics.create(config);
-		client.config.should.deep.equal(config);
-		client.dispose();
+		Analytics.reset();
+		Analytics.dispose();
+
+		Analytics = Analytics.create(config);
+		Analytics.config.should.deep.equal(config);
 	});
 
 	describe('.flush', () => {
@@ -68,7 +72,7 @@ describe('Analytics Client', () => {
 			Analytics.flush.should.be.a('function');
 		});
 
-		it('should prevent overlapping requests', function(done) {
+		it('should prevent overlapping requests', (done) => {
 			let fetchCalled = 0;
 
 			fetchMock.mock(
@@ -84,7 +88,10 @@ describe('Analytics Client', () => {
 				}
 			);
 
-			Analytics.create(
+			Analytics.reset();
+			Analytics.dispose();
+
+			Analytics = AnalyticsClient.create(
 				{
 					flushInterval: FLUSH_INTERVAL,
 				}
@@ -92,7 +99,7 @@ describe('Analytics Client', () => {
 
 			const spy = sinon.spy(Analytics, 'flush');
 
-			sendDummyEvents(10);
+			sendDummyEvents(Analytics, 10);
 
 			setTimeout(
 				() => {
@@ -106,15 +113,13 @@ describe('Analytics Client', () => {
 
 					Analytics.flush.restore();
 
-					Analytics.dispose();
-
 					done();
 				},
 				FLUSH_INTERVAL * 3
 			);
 		});
 
-		it('should fetch the userId from the identity Service when it is not found on storage', function(done) {
+		it('should fetch the userId from the identity Service when it is not found on storage', () => {
 			let identityCalled = 0;
 			let identityReceived = '';
 			let identityUrl = '';
@@ -138,15 +143,18 @@ describe('Analytics Client', () => {
 				}
 			);
 
-			Analytics.create(
+			Analytics.reset();
+			Analytics.dispose();
+
+			Analytics = AnalyticsClient.create(
 				{
 					analyticsKey: ANALYTICS_KEY
 				}
 			);
 
-			sendDummyEvents();
+			sendDummyEvents(Analytics);
 
-			Analytics.flush()
+			return Analytics.flush()
 				.then(
 					() => {
 						// Identity Service was called
@@ -157,15 +165,11 @@ describe('Analytics Client', () => {
 						// Analytics Service was called and passed the Service User Id
 
 						expect(identityReceived).to.equal(SERVICE_USER_ID);
-
-						Analytics.dispose();
-
-						done();
 					}
 				);
 		});
 
-		it('should use previously stored userIds from the Identity Service', function(done) {
+		it('should use previously stored userIds from the Identity Service', () => {
 			localStorage.setItem(STORAGE_KEY_USER_ID, `"${LOCAL_USER_ID}"`);
 
 			let identityCalled = 0;
@@ -191,16 +195,19 @@ describe('Analytics Client', () => {
 				}
 			);
 
-			Analytics.create(
+			Analytics.reset();
+			Analytics.dispose();
+
+			Analytics = AnalyticsClient.create(
 				{
 					analyticsKey: ANALYTICS_KEY,
 					flushInterval: FLUSH_INTERVAL,
 				}
 			);
 
-			sendDummyEvents();
+			sendDummyEvents(Analytics);
 
-			Analytics.flush()
+			return Analytics.flush()
 				.then(
 					() => {
 						// Identity Service was NOT called
@@ -210,15 +217,11 @@ describe('Analytics Client', () => {
 						// Analytics Service was NOT called and passed the Local User Id
 
 						expect(identityReceived).to.equal(LOCAL_USER_ID);
-
-						Analytics.dispose();
-
-						done();
 					}
 				);
 		});
 
-		it('should get a new userId from the Identity Service if the user identity changed', function(done) {
+		it('should get a new userId from the Identity Service if the user identity changed', () => {
 			localStorage.setItem(STORAGE_KEY_USER_ID, `"${LOCAL_USER_ID}"`);
 
 			let identityCalled = 0;
@@ -246,17 +249,20 @@ describe('Analytics Client', () => {
 				}
 			);
 
-			Analytics.create(
+			Analytics.reset();
+			Analytics.dispose();
+
+			Analytics = AnalyticsClient.create(
 				{
 					analyticsKey: ANALYTICS_KEY,
 				}
 			);
 
-			sendDummyEvents();
+			sendDummyEvents(Analytics);
 
 			Analytics.setIdentity(ANALYTICS_IDENTITY);
 
-			Analytics.flush()
+			return Analytics.flush()
 				.then(
 					() => {
 						// Identity Service WAS called with the user identity
@@ -267,16 +273,15 @@ describe('Analytics Client', () => {
 						// Analytics Service was called and passed the Service User Id
 
 						expect(identityReceived).to.equal(SERVICE_USER_ID);
-
-						Analytics.dispose();
-
-						done();
 					}
 				);
 		});
 
-		it('should only clear the persisted events when done', function() {
-			const analytics = Analytics.create(
+		it('should only clear the persisted events when done', () => {
+			Analytics.reset();
+			Analytics.dispose();
+
+			Analytics = AnalyticsClient.create(
 				{
 					flushInterval: FLUSH_INTERVAL * 10
 				}
@@ -288,7 +293,7 @@ describe('Analytics Client', () => {
 				/send\-analytics\-events$/,
 				function() {
 					// Send events while flush is in progress
-					sendDummyEvents(7);
+					sendDummyEvents(Analytics, 7);
 
 					return new Promise(
 						resolve => {
@@ -298,14 +303,12 @@ describe('Analytics Client', () => {
 				}
 			);
 
-			sendDummyEvents(5);
+			sendDummyEvents(Analytics, 5);
 
-			return analytics.flush().then(() => {
-				const events = analytics.events;
+			return Analytics.flush().then(() => {
+				const events = Analytics.events;
 
 				events.should.have.lengthOf(7);
-
-				Analytics.dispose();
 			});
 		});
 	});
@@ -320,7 +323,6 @@ describe('Analytics Client', () => {
 			const applicationId = 'applicationId';
 			const properties = {a: 1, b: 2, c: 3};
 
-			Analytics.create();
 			Analytics.send(eventId, applicationId, properties);
 
 			const events = Analytics.events;
@@ -332,22 +334,16 @@ describe('Analytics Client', () => {
 				applicationId,
 				properties,
 			});
-
-			Analytics.dispose();
 		});
 
 		it('should persist the given events to the LocalStorage', () => {
 			const eventsNumber = 5;
 
-			Analytics.create();
-
-			sendDummyEvents(eventsNumber);
+			sendDummyEvents(Analytics, eventsNumber);
 
 			const events = JSON.parse(localStorage.getItem(STORAGE_KEY_EVENTS));
 
 			events.should.have.lengthOf.at.least(eventsNumber);
-
-			Analytics.dispose();
 		});
 	});
 });

@@ -1,7 +1,7 @@
 import AnalyticsClient from '../src/analytics';
 import {assert, expect} from 'chai';
 
-let Analytics = AnalyticsClient.create();
+let Analytics;
 
 /**
  * Sends dummy events to test the Analytics API
@@ -22,14 +22,15 @@ function sendDummyEvents(eventsNumber = 5) {
 }
 
 describe('Analytics MiddleWare Integration', () => {
-	beforeEach(() => {
-		fetchMock.mock('*', () => 200);
-		Analytics.create();
-	});
-
 	afterEach(() => {
+		Analytics.reset();
 		Analytics.dispose();
 		fetchMock.restore();
+	});
+
+	beforeEach(() => {
+		fetchMock.mock('*', () => 200);
+		Analytics = AnalyticsClient.create();
 	});
 
 	describe('.registerMiddleware', () => {

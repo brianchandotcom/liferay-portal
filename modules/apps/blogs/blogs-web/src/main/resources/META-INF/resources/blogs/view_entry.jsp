@@ -33,6 +33,8 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
+String entryTitle = BlogsEntryUtil.getDisplayTitle(resourceBundle, entry);
+
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
 
 AssetEntryServiceUtil.incrementViewCounter(assetEntry);
@@ -61,7 +63,7 @@ if (portletTitleBasedNavigation) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
-	renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry));
+	renderResponse.setTitle(entryTitle);
 }
 %>
 
@@ -71,7 +73,7 @@ if (portletTitleBasedNavigation) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="entryId" type="hidden" value="<%= String.valueOf(entryId) %>" />
 
-	<div class="widget-mode-detail">
+	<div class="widget-mode-detail" data-analytics-asset-id="<%= String.valueOf(entryId) %>" data-analytics-asset-title="<%= HtmlUtil.escapeAttribute(entryTitle) %>" data-analytics-asset-type="blog">
 		<liferay-util:include page="/blogs/view_entry_content_detail.jsp" servletContext="<%= application %>" />
 	</div>
 </aui:form>

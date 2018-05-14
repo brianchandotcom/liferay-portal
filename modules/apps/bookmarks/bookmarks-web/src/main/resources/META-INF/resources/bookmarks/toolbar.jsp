@@ -96,7 +96,7 @@ portletURL.setParameter("tag", StringPool.BLANK);
 			<liferay-frontend:management-bar-button
 				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
 				icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
-				label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>'
+				label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>'
 			/>
 		</c:if>
 	</liferay-frontend:management-bar-action-buttons>

@@ -51,7 +51,7 @@ public class SiteRecycleBinFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "recycle-bin");
+		return LanguageUtil.get(locale, getKey());
 	}
 
 	@Override

@@ -178,7 +178,8 @@ public class DLAdminManagementToolbarDisplayContext {
 									dropdownItem.setIcon("trash");
 									dropdownItem.setLabel(
 										LanguageUtil.get(
-											_request, "recycle-bin"));
+											_request,
+											"move-to-the-recycle-bin"));
 								}
 								else {
 									dropdownItem.setIcon("times");

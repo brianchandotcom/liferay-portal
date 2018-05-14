@@ -343,7 +343,7 @@ body .ddm-user-view-content {
 		}
 	}
 
-	.multiple-badge-list {
+	.multiple-label-list {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
@@ -355,10 +355,13 @@ body .ddm-user-view-content {
 
 		li {
 			overflow: hidden;
-			padding-top: 10px;
 		}
 
-		.multiple-badge {
+		span.label-secondary {
+			max-width: 200px;
+		}
+
+		.multiple-label {
 			@extend %text-ellipsis;
 			margin-bottom: 4px;
 			margin-right: 6px;

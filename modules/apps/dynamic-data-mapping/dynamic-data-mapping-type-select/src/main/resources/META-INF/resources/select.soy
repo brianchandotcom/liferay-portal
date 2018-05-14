@@ -18,10 +18,10 @@
 	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
 	{@param value: list<string>}
 	{@param visible: bool}
-	{@param? badgeCloseIcon: html}
 	{@param? dir: string}
 	{@param? fixedOptions: list<[label: string, value: string]>}
 	{@param? label: string}
+	{@param? labelCloseIcon: html}
 	{@param? multiple: bool}
 	{@param? open: bool}
 	{@param? readOnly: bool}
@@ -65,10 +65,10 @@
 				<div class="form-control select-field-trigger" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}" {if $readOnly} disabled{/if}>
 					{if $multiple}
 						{if $displayValues}
-							<ul class="multiple-badge-list">
+							<ul class="multiple-label-list">
 								{foreach $option in $options}
-									{call .badge_item}
-										{param badgeCloseIcon: $badgeCloseIcon /}
+									{call .label_item}
+										{param labelCloseIcon: $labelCloseIcon /}
 										{param option: $option /}
 										{param readOnly: $readOnly /}
 										{param value: $displayValues /}
@@ -76,8 +76,8 @@
 								{/foreach}
 								{if $fixedOptions}
 									{foreach $fixedOption in $fixedOptions}
-										{call .badge_item}
-											{param badgeCloseIcon: $badgeCloseIcon /}
+										{call .label_item}
+											{param labelCloseIcon: $labelCloseIcon /}
 											{param option: $fixedOption /}
 											{param readOnly: $readOnly /}
 											{param value: $displayValues /}
@@ -145,23 +145,29 @@
 {/template}
 
 /**
- * Prints the badge item.
+ * Prints the label item.
  */
-{template .badge_item}
+{template .label_item}
 	{@param option: [label: string, value: string]}
 	{@param value: list<string>}
-	{@param? badgeCloseIcon: html}
+	{@param? labelCloseIcon: html}
 	{@param? readOnly: bool}
 
 	{if $value}
 		{foreach $currentValue in $value}
 			{if $option.value == $currentValue}
 				<li>
-					<span class="badge badge-primary badge-sm multiple-badge" data-original-title="{$option.label}" title="{$option.label}">
-						{$option.label}
-						{if not $readOnly}
-							<a class="trigger-badge-item-close" data-badge-value="{$option.value}" href="javascript:void(0)">{$badgeCloseIcon}</a>
-						{/if}
+					<span class="label label-lg label-secondary multiple-label" data-original-title="{$option.label}" title="{$option.label}">
+						<span class="text-truncate-inline">
+							<span class="text-truncate">{$option.label}</span>
+							{if not $readOnly}
+								<span class="label-item label-item-after">
+									<button aria-label="Close" class="btn btn-unstyled close trigger-label-item-close" data-label-value="{$option.value}" type="button">
+										{$labelCloseIcon}
+									</button>
+								</span>
+							{/if}
+						</span>
 					</span>
 				</li>
 			{/if}

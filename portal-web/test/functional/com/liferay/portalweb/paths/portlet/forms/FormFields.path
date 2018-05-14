@@ -340,7 +340,7 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD_MULTIPLE_OPTION_REMOVE</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//a</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//span[contains(.,'${key_selectOption}')]//button[contains(@class,'trigger-label-item-close')]</td>
 	<td></td>
 </tr>
 <tr>

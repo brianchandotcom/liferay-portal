@@ -13,13 +13,13 @@ AUI.add(
 
 		var CSS_INPUT_SELECT_WRAPPER = A.getClassName('input', 'select', 'wrapper');
 
-		var CSS_SEARCH_CHOSEN = A.getClassName('search', 'chosen');
+		var CSS_SEARCH_CHOSEN = A.getClassName('drop', 'chosen');
 
 		var CSS_SELECT_ARROW_DOWN = A.getClassName('select', 'arrow', 'down', 'container');
 
-		var CSS_SELECT_BADGE_ITEM_CLOSE = A.getClassName('trigger', 'badge', 'item', 'close');
-
 		var CSS_SELECT_DROPDOWN_ITEM = A.getClassName('dropdown', 'item');
+
+		var CSS_SELECT_LABEL_ITEM_CLOSE = A.getClassName('trigger', 'label', 'item', 'close');
 
 		var CSS_SELECT_OPTION_ITEM = A.getClassName('select', 'option', 'item');
 
@@ -102,7 +102,7 @@ AUI.add(
 
 						instance._open = false;
 
-						instance._createBadgeTooltip();
+						instance._createLabelTooltip();
 
 						instance._eventHandlers.push(
 							A.one('doc').after('click', A.bind(instance._afterClickOutside, instance)),
@@ -168,8 +168,8 @@ AUI.add(
 						return A.merge(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								badgeCloseIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('times')),
 								fixedOptions: instance.get('fixedOptions'),
+								labelCloseIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('times')),
 								multiple: instance.get('multiple'),
 								open: instance._open,
 								options: instance.get('options'),
@@ -188,6 +188,18 @@ AUI.add(
 						var instance = this;
 
 						return instance.get('value') || [];
+					},
+
+					hasFocus: function(node) {
+						var instance = this;
+
+						var hasFocus = SelectField.superclass.hasFocus.apply(instance, arguments);
+
+						if (node && node.hasClass('trigger-label-item-close')) {
+							hasFocus = true;
+						}
+
+						return hasFocus;
 					},
 
 					openList: function() {
@@ -269,13 +281,13 @@ AUI.add(
 						instance._preventDocumentClick = false;
 					},
 
-					_createBadgeTooltip: function() {
+					_createLabelTooltip: function() {
 						var instance = this;
 
 						instance._tooltip = new A.TooltipDelegate(
 							{
 								position: 'bottom',
-								trigger: '.multiple-badge-list .multiple-badge',
+								trigger: '.multiple-label-list .multiple-label',
 								triggerHideEvent: ['blur', 'mouseleave'],
 								triggerShowEvent: ['focus', 'mouseover'],
 								visible: false
@@ -297,16 +309,6 @@ AUI.add(
 						return instance.get('container').one('.' + CSS_SELECT_TRIGGER_ACTION);
 					},
 
-					_handleBadgeItemCloseClick: function(target) {
-						var instance = this;
-
-						var value = target.getAttribute('data-badge-value');
-
-						var values = instance._removeValue(value);
-
-						instance.setValue(values);
-					},
-
 					_handleContainerClick: function(event) {
 						var instance = this;
 
@@ -314,7 +316,7 @@ AUI.add(
 
 						var addRepeatebleButton = target.hasClass('lfr-ddm-form-field-repeatable-add-button');
 
-						var closeIconNode = target.ancestor('.' + CSS_SELECT_BADGE_ITEM_CLOSE, true);
+						var closeIconNode = target.ancestor('.' + CSS_SELECT_LABEL_ITEM_CLOSE, true);
 
 						var deleteRepeatebleButton = target.hasClass('lfr-ddm-form-field-repeatable-delete-button');
 
@@ -325,7 +327,7 @@ AUI.add(
 						}
 
 						if (closeIconNode) {
-							instance._handleBadgeItemCloseClick(closeIconNode);
+							instance._handleLabelItemCloseClick(closeIconNode);
 						}
 						else if (optionNode) {
 							instance._handleItemClick(optionNode);
@@ -372,6 +374,16 @@ AUI.add(
 						instance.focus();
 
 						instance._fireStartedFillingEvent();
+					},
+
+					_handleLabelItemCloseClick: function(target) {
+						var instance = this;
+
+						var value = target.getAttribute('data-label-value');
+
+						var values = instance._removeValue(value);
+
+						instance.setValue(values);
 					},
 
 					_handleSelectTriggerClick: function(event) {

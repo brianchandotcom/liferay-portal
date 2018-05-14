@@ -24,6 +24,7 @@ import com.liferay.marketplace.model.ModuleModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -585,7 +586,7 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 	private static final ClassLoader _classLoader = Module.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Module.class
+			Module.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

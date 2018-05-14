@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -1598,7 +1599,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	private static final ClassLoader _classLoader = DLFolder.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			DLFolder.class
+			DLFolder.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

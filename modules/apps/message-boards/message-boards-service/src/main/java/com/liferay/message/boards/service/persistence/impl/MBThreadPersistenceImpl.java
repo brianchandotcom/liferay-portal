@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +58,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -13160,8 +13162,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	@Override
 	protected MBThread removeImpl(MBThread mbThread) {
-		mbThread = toUnwrappedModel(mbThread);
-
 		Session session = null;
 
 		try {
@@ -13192,9 +13192,23 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 	@Override
 	public MBThread updateImpl(MBThread mbThread) {
-		mbThread = toUnwrappedModel(mbThread);
-
 		boolean isNew = mbThread.isNew();
+
+		if (!(mbThread instanceof MBThreadModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mbThread.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mbThread);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mbThread proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MBThread implementation " +
+				mbThread.getClass());
+		}
 
 		MBThreadModelImpl mbThreadModelImpl = (MBThreadModelImpl)mbThread;
 
@@ -13554,43 +13568,6 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		mbThread.resetOriginalValues();
 
 		return mbThread;
-	}
-
-	protected MBThread toUnwrappedModel(MBThread mbThread) {
-		if (mbThread instanceof MBThreadImpl) {
-			return mbThread;
-		}
-
-		MBThreadImpl mbThreadImpl = new MBThreadImpl();
-
-		mbThreadImpl.setNew(mbThread.isNew());
-		mbThreadImpl.setPrimaryKey(mbThread.getPrimaryKey());
-
-		mbThreadImpl.setUuid(mbThread.getUuid());
-		mbThreadImpl.setThreadId(mbThread.getThreadId());
-		mbThreadImpl.setGroupId(mbThread.getGroupId());
-		mbThreadImpl.setCompanyId(mbThread.getCompanyId());
-		mbThreadImpl.setUserId(mbThread.getUserId());
-		mbThreadImpl.setUserName(mbThread.getUserName());
-		mbThreadImpl.setCreateDate(mbThread.getCreateDate());
-		mbThreadImpl.setModifiedDate(mbThread.getModifiedDate());
-		mbThreadImpl.setCategoryId(mbThread.getCategoryId());
-		mbThreadImpl.setRootMessageId(mbThread.getRootMessageId());
-		mbThreadImpl.setRootMessageUserId(mbThread.getRootMessageUserId());
-		mbThreadImpl.setTitle(mbThread.getTitle());
-		mbThreadImpl.setMessageCount(mbThread.getMessageCount());
-		mbThreadImpl.setViewCount(mbThread.getViewCount());
-		mbThreadImpl.setLastPostByUserId(mbThread.getLastPostByUserId());
-		mbThreadImpl.setLastPostDate(mbThread.getLastPostDate());
-		mbThreadImpl.setPriority(mbThread.getPriority());
-		mbThreadImpl.setQuestion(mbThread.isQuestion());
-		mbThreadImpl.setLastPublishDate(mbThread.getLastPublishDate());
-		mbThreadImpl.setStatus(mbThread.getStatus());
-		mbThreadImpl.setStatusByUserId(mbThread.getStatusByUserId());
-		mbThreadImpl.setStatusByUserName(mbThread.getStatusByUserName());
-		mbThreadImpl.setStatusDate(mbThread.getStatusDate());
-
-		return mbThreadImpl;
 	}
 
 	/**

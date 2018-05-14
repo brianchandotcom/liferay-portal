@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.PhoneModel;
 import com.liferay.portal.kernel.model.PhoneSoap;
@@ -941,7 +942,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	private static final ClassLoader _classLoader = Phone.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Phone.class
+			Phone.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private String _uuid;

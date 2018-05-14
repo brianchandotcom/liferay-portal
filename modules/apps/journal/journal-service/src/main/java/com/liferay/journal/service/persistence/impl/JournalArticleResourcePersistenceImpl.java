@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2529,8 +2531,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	protected JournalArticleResource removeImpl(
 		JournalArticleResource journalArticleResource) {
-		journalArticleResource = toUnwrappedModel(journalArticleResource);
-
 		Session session = null;
 
 		try {
@@ -2562,9 +2562,23 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	@Override
 	public JournalArticleResource updateImpl(
 		JournalArticleResource journalArticleResource) {
-		journalArticleResource = toUnwrappedModel(journalArticleResource);
-
 		boolean isNew = journalArticleResource.isNew();
+
+		if (!(journalArticleResource instanceof JournalArticleResourceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(journalArticleResource.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(journalArticleResource);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in journalArticleResource proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom JournalArticleResource implementation " +
+				journalArticleResource.getClass());
+		}
 
 		JournalArticleResourceModelImpl journalArticleResourceModelImpl = (JournalArticleResourceModelImpl)journalArticleResource;
 
@@ -2698,26 +2712,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		journalArticleResource.resetOriginalValues();
 
 		return journalArticleResource;
-	}
-
-	protected JournalArticleResource toUnwrappedModel(
-		JournalArticleResource journalArticleResource) {
-		if (journalArticleResource instanceof JournalArticleResourceImpl) {
-			return journalArticleResource;
-		}
-
-		JournalArticleResourceImpl journalArticleResourceImpl = new JournalArticleResourceImpl();
-
-		journalArticleResourceImpl.setNew(journalArticleResource.isNew());
-		journalArticleResourceImpl.setPrimaryKey(journalArticleResource.getPrimaryKey());
-
-		journalArticleResourceImpl.setUuid(journalArticleResource.getUuid());
-		journalArticleResourceImpl.setResourcePrimKey(journalArticleResource.getResourcePrimKey());
-		journalArticleResourceImpl.setGroupId(journalArticleResource.getGroupId());
-		journalArticleResourceImpl.setCompanyId(journalArticleResource.getCompanyId());
-		journalArticleResourceImpl.setArticleId(journalArticleResource.getArticleId());
-
-		return journalArticleResourceImpl;
 	}
 
 	/**

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -16555,8 +16557,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	protected LayoutPageTemplateEntry removeImpl(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		layoutPageTemplateEntry = toUnwrappedModel(layoutPageTemplateEntry);
-
 		Session session = null;
 
 		try {
@@ -16588,9 +16588,23 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public LayoutPageTemplateEntry updateImpl(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		layoutPageTemplateEntry = toUnwrappedModel(layoutPageTemplateEntry);
-
 		boolean isNew = layoutPageTemplateEntry.isNew();
+
+		if (!(layoutPageTemplateEntry instanceof LayoutPageTemplateEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(layoutPageTemplateEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(layoutPageTemplateEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in layoutPageTemplateEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom LayoutPageTemplateEntry implementation " +
+				layoutPageTemplateEntry.getClass());
+		}
 
 		LayoutPageTemplateEntryModelImpl layoutPageTemplateEntryModelImpl = (LayoutPageTemplateEntryModelImpl)layoutPageTemplateEntry;
 
@@ -16967,39 +16981,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 		layoutPageTemplateEntry.resetOriginalValues();
 
 		return layoutPageTemplateEntry;
-	}
-
-	protected LayoutPageTemplateEntry toUnwrappedModel(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		if (layoutPageTemplateEntry instanceof LayoutPageTemplateEntryImpl) {
-			return layoutPageTemplateEntry;
-		}
-
-		LayoutPageTemplateEntryImpl layoutPageTemplateEntryImpl = new LayoutPageTemplateEntryImpl();
-
-		layoutPageTemplateEntryImpl.setNew(layoutPageTemplateEntry.isNew());
-		layoutPageTemplateEntryImpl.setPrimaryKey(layoutPageTemplateEntry.getPrimaryKey());
-
-		layoutPageTemplateEntryImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-		layoutPageTemplateEntryImpl.setGroupId(layoutPageTemplateEntry.getGroupId());
-		layoutPageTemplateEntryImpl.setCompanyId(layoutPageTemplateEntry.getCompanyId());
-		layoutPageTemplateEntryImpl.setUserId(layoutPageTemplateEntry.getUserId());
-		layoutPageTemplateEntryImpl.setUserName(layoutPageTemplateEntry.getUserName());
-		layoutPageTemplateEntryImpl.setCreateDate(layoutPageTemplateEntry.getCreateDate());
-		layoutPageTemplateEntryImpl.setModifiedDate(layoutPageTemplateEntry.getModifiedDate());
-		layoutPageTemplateEntryImpl.setLayoutPageTemplateCollectionId(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
-		layoutPageTemplateEntryImpl.setClassNameId(layoutPageTemplateEntry.getClassNameId());
-		layoutPageTemplateEntryImpl.setClassTypeId(layoutPageTemplateEntry.getClassTypeId());
-		layoutPageTemplateEntryImpl.setName(layoutPageTemplateEntry.getName());
-		layoutPageTemplateEntryImpl.setType(layoutPageTemplateEntry.getType());
-		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(layoutPageTemplateEntry.getHtmlPreviewEntryId());
-		layoutPageTemplateEntryImpl.setDefaultTemplate(layoutPageTemplateEntry.isDefaultTemplate());
-		layoutPageTemplateEntryImpl.setStatus(layoutPageTemplateEntry.getStatus());
-		layoutPageTemplateEntryImpl.setStatusByUserId(layoutPageTemplateEntry.getStatusByUserId());
-		layoutPageTemplateEntryImpl.setStatusByUserName(layoutPageTemplateEntry.getStatusByUserName());
-		layoutPageTemplateEntryImpl.setStatusDate(layoutPageTemplateEntry.getStatusDate());
-
-		return layoutPageTemplateEntryImpl;
 	}
 
 	/**

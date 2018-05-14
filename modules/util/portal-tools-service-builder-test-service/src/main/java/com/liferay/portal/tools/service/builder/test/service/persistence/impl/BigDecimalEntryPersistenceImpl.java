@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchBigDecimalEntryException;
@@ -36,6 +37,8 @@ import com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryM
 import com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.math.BigDecimal;
 
@@ -1879,8 +1882,6 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 
 	@Override
 	protected BigDecimalEntry removeImpl(BigDecimalEntry bigDecimalEntry) {
-		bigDecimalEntry = toUnwrappedModel(bigDecimalEntry);
-
 		Session session = null;
 
 		try {
@@ -1911,9 +1912,23 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 
 	@Override
 	public BigDecimalEntry updateImpl(BigDecimalEntry bigDecimalEntry) {
-		bigDecimalEntry = toUnwrappedModel(bigDecimalEntry);
-
 		boolean isNew = bigDecimalEntry.isNew();
+
+		if (!(bigDecimalEntry instanceof BigDecimalEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(bigDecimalEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(bigDecimalEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in bigDecimalEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom BigDecimalEntry implementation " +
+				bigDecimalEntry.getClass());
+		}
 
 		BigDecimalEntryModelImpl bigDecimalEntryModelImpl = (BigDecimalEntryModelImpl)bigDecimalEntry;
 
@@ -1988,22 +2003,6 @@ public class BigDecimalEntryPersistenceImpl extends BasePersistenceImpl<BigDecim
 		bigDecimalEntry.resetOriginalValues();
 
 		return bigDecimalEntry;
-	}
-
-	protected BigDecimalEntry toUnwrappedModel(BigDecimalEntry bigDecimalEntry) {
-		if (bigDecimalEntry instanceof BigDecimalEntryImpl) {
-			return bigDecimalEntry;
-		}
-
-		BigDecimalEntryImpl bigDecimalEntryImpl = new BigDecimalEntryImpl();
-
-		bigDecimalEntryImpl.setNew(bigDecimalEntry.isNew());
-		bigDecimalEntryImpl.setPrimaryKey(bigDecimalEntry.getPrimaryKey());
-
-		bigDecimalEntryImpl.setBigDecimalEntryId(bigDecimalEntry.getBigDecimalEntryId());
-		bigDecimalEntryImpl.setBigDecimalValue(bigDecimalEntry.getBigDecimalValue());
-
-		return bigDecimalEntryImpl;
 	}
 
 	/**

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +58,7 @@ import com.liferay.portal.model.impl.UserModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -7776,8 +7778,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	@Override
 	protected User removeImpl(User user) {
-		user = toUnwrappedModel(user);
-
 		userToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(user.getPrimaryKey());
 
 		userToOrganizationTableMapper.deleteLeftPrimaryKeyTableMappings(user.getPrimaryKey());
@@ -7817,9 +7817,23 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	@Override
 	public User updateImpl(User user) {
-		user = toUnwrappedModel(user);
-
 		boolean isNew = user.isNew();
+
+		if (!(user instanceof UserModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(user.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(user);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in user proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom User implementation " +
+				user.getClass());
+		}
 
 		UserModelImpl userModelImpl = (UserModelImpl)user;
 
@@ -8140,62 +8154,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		user.resetOriginalValues();
 
 		return user;
-	}
-
-	protected User toUnwrappedModel(User user) {
-		if (user instanceof UserImpl) {
-			return user;
-		}
-
-		UserImpl userImpl = new UserImpl();
-
-		userImpl.setNew(user.isNew());
-		userImpl.setPrimaryKey(user.getPrimaryKey());
-
-		userImpl.setMvccVersion(user.getMvccVersion());
-		userImpl.setUuid(user.getUuid());
-		userImpl.setUserId(user.getUserId());
-		userImpl.setCompanyId(user.getCompanyId());
-		userImpl.setCreateDate(user.getCreateDate());
-		userImpl.setModifiedDate(user.getModifiedDate());
-		userImpl.setDefaultUser(user.isDefaultUser());
-		userImpl.setContactId(user.getContactId());
-		userImpl.setPassword(user.getPassword());
-		userImpl.setPasswordEncrypted(user.isPasswordEncrypted());
-		userImpl.setPasswordReset(user.isPasswordReset());
-		userImpl.setPasswordModifiedDate(user.getPasswordModifiedDate());
-		userImpl.setDigest(user.getDigest());
-		userImpl.setReminderQueryQuestion(user.getReminderQueryQuestion());
-		userImpl.setReminderQueryAnswer(user.getReminderQueryAnswer());
-		userImpl.setGraceLoginCount(user.getGraceLoginCount());
-		userImpl.setScreenName(user.getScreenName());
-		userImpl.setEmailAddress(user.getEmailAddress());
-		userImpl.setFacebookId(user.getFacebookId());
-		userImpl.setGoogleUserId(user.getGoogleUserId());
-		userImpl.setLdapServerId(user.getLdapServerId());
-		userImpl.setOpenId(user.getOpenId());
-		userImpl.setPortraitId(user.getPortraitId());
-		userImpl.setLanguageId(user.getLanguageId());
-		userImpl.setTimeZoneId(user.getTimeZoneId());
-		userImpl.setGreeting(user.getGreeting());
-		userImpl.setComments(user.getComments());
-		userImpl.setFirstName(user.getFirstName());
-		userImpl.setMiddleName(user.getMiddleName());
-		userImpl.setLastName(user.getLastName());
-		userImpl.setJobTitle(user.getJobTitle());
-		userImpl.setLoginDate(user.getLoginDate());
-		userImpl.setLoginIP(user.getLoginIP());
-		userImpl.setLastLoginDate(user.getLastLoginDate());
-		userImpl.setLastLoginIP(user.getLastLoginIP());
-		userImpl.setLastFailedLoginDate(user.getLastFailedLoginDate());
-		userImpl.setFailedLoginAttempts(user.getFailedLoginAttempts());
-		userImpl.setLockout(user.isLockout());
-		userImpl.setLockoutDate(user.getLockoutDate());
-		userImpl.setAgreedToTermsOfUse(user.isAgreedToTermsOfUse());
-		userImpl.setEmailAddressVerified(user.isEmailAddressVerified());
-		userImpl.setStatus(user.getStatus());
-
-		return userImpl;
 	}
 
 	/**

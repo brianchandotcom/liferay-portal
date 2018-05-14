@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException;
@@ -40,6 +41,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationRecipientMo
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRecipientPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1825,8 +1828,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 	@Override
 	protected KaleoNotificationRecipient removeImpl(
 		KaleoNotificationRecipient kaleoNotificationRecipient) {
-		kaleoNotificationRecipient = toUnwrappedModel(kaleoNotificationRecipient);
-
 		Session session = null;
 
 		try {
@@ -1858,9 +1859,23 @@ public class KaleoNotificationRecipientPersistenceImpl
 	@Override
 	public KaleoNotificationRecipient updateImpl(
 		KaleoNotificationRecipient kaleoNotificationRecipient) {
-		kaleoNotificationRecipient = toUnwrappedModel(kaleoNotificationRecipient);
-
 		boolean isNew = kaleoNotificationRecipient.isNew();
+
+		if (!(kaleoNotificationRecipient instanceof KaleoNotificationRecipientModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoNotificationRecipient.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoNotificationRecipient);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoNotificationRecipient proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoNotificationRecipient implementation " +
+				kaleoNotificationRecipient.getClass());
+		}
 
 		KaleoNotificationRecipientModelImpl kaleoNotificationRecipientModelImpl = (KaleoNotificationRecipientModelImpl)kaleoNotificationRecipient;
 
@@ -2018,38 +2033,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 		kaleoNotificationRecipient.resetOriginalValues();
 
 		return kaleoNotificationRecipient;
-	}
-
-	protected KaleoNotificationRecipient toUnwrappedModel(
-		KaleoNotificationRecipient kaleoNotificationRecipient) {
-		if (kaleoNotificationRecipient instanceof KaleoNotificationRecipientImpl) {
-			return kaleoNotificationRecipient;
-		}
-
-		KaleoNotificationRecipientImpl kaleoNotificationRecipientImpl = new KaleoNotificationRecipientImpl();
-
-		kaleoNotificationRecipientImpl.setNew(kaleoNotificationRecipient.isNew());
-		kaleoNotificationRecipientImpl.setPrimaryKey(kaleoNotificationRecipient.getPrimaryKey());
-
-		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(kaleoNotificationRecipient.getKaleoNotificationRecipientId());
-		kaleoNotificationRecipientImpl.setGroupId(kaleoNotificationRecipient.getGroupId());
-		kaleoNotificationRecipientImpl.setCompanyId(kaleoNotificationRecipient.getCompanyId());
-		kaleoNotificationRecipientImpl.setUserId(kaleoNotificationRecipient.getUserId());
-		kaleoNotificationRecipientImpl.setUserName(kaleoNotificationRecipient.getUserName());
-		kaleoNotificationRecipientImpl.setCreateDate(kaleoNotificationRecipient.getCreateDate());
-		kaleoNotificationRecipientImpl.setModifiedDate(kaleoNotificationRecipient.getModifiedDate());
-		kaleoNotificationRecipientImpl.setKaleoDefinitionVersionId(kaleoNotificationRecipient.getKaleoDefinitionVersionId());
-		kaleoNotificationRecipientImpl.setKaleoNotificationId(kaleoNotificationRecipient.getKaleoNotificationId());
-		kaleoNotificationRecipientImpl.setRecipientClassName(kaleoNotificationRecipient.getRecipientClassName());
-		kaleoNotificationRecipientImpl.setRecipientClassPK(kaleoNotificationRecipient.getRecipientClassPK());
-		kaleoNotificationRecipientImpl.setRecipientRoleType(kaleoNotificationRecipient.getRecipientRoleType());
-		kaleoNotificationRecipientImpl.setRecipientScript(kaleoNotificationRecipient.getRecipientScript());
-		kaleoNotificationRecipientImpl.setRecipientScriptLanguage(kaleoNotificationRecipient.getRecipientScriptLanguage());
-		kaleoNotificationRecipientImpl.setRecipientScriptContexts(kaleoNotificationRecipient.getRecipientScriptContexts());
-		kaleoNotificationRecipientImpl.setAddress(kaleoNotificationRecipient.getAddress());
-		kaleoNotificationRecipientImpl.setNotificationReceptionType(kaleoNotificationRecipient.getNotificationReceptionType());
-
-		return kaleoNotificationRecipientImpl;
 	}
 
 	/**

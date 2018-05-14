@@ -33,10 +33,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -516,8 +519,6 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	protected FriendlyURLEntryMapping removeImpl(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
-		friendlyURLEntryMapping = toUnwrappedModel(friendlyURLEntryMapping);
-
 		Session session = null;
 
 		try {
@@ -549,9 +550,23 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 	@Override
 	public FriendlyURLEntryMapping updateImpl(
 		FriendlyURLEntryMapping friendlyURLEntryMapping) {
-		friendlyURLEntryMapping = toUnwrappedModel(friendlyURLEntryMapping);
-
 		boolean isNew = friendlyURLEntryMapping.isNew();
+
+		if (!(friendlyURLEntryMapping instanceof FriendlyURLEntryMappingModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(friendlyURLEntryMapping.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(friendlyURLEntryMapping);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in friendlyURLEntryMapping proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom FriendlyURLEntryMapping implementation " +
+				friendlyURLEntryMapping.getClass());
+		}
 
 		FriendlyURLEntryMappingModelImpl friendlyURLEntryMappingModelImpl = (FriendlyURLEntryMappingModelImpl)friendlyURLEntryMapping;
 
@@ -599,26 +614,6 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 		friendlyURLEntryMapping.resetOriginalValues();
 
 		return friendlyURLEntryMapping;
-	}
-
-	protected FriendlyURLEntryMapping toUnwrappedModel(
-		FriendlyURLEntryMapping friendlyURLEntryMapping) {
-		if (friendlyURLEntryMapping instanceof FriendlyURLEntryMappingImpl) {
-			return friendlyURLEntryMapping;
-		}
-
-		FriendlyURLEntryMappingImpl friendlyURLEntryMappingImpl = new FriendlyURLEntryMappingImpl();
-
-		friendlyURLEntryMappingImpl.setNew(friendlyURLEntryMapping.isNew());
-		friendlyURLEntryMappingImpl.setPrimaryKey(friendlyURLEntryMapping.getPrimaryKey());
-
-		friendlyURLEntryMappingImpl.setMvccVersion(friendlyURLEntryMapping.getMvccVersion());
-		friendlyURLEntryMappingImpl.setFriendlyURLEntryMappingId(friendlyURLEntryMapping.getFriendlyURLEntryMappingId());
-		friendlyURLEntryMappingImpl.setClassNameId(friendlyURLEntryMapping.getClassNameId());
-		friendlyURLEntryMappingImpl.setClassPK(friendlyURLEntryMapping.getClassPK());
-		friendlyURLEntryMappingImpl.setFriendlyURLEntryId(friendlyURLEntryMapping.getFriendlyURLEntryId());
-
-		return friendlyURLEntryMappingImpl;
 	}
 
 	/**

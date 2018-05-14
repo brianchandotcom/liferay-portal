@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,6 +48,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelIm
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -2722,8 +2724,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	@Override
 	protected DLFileEntryMetadata removeImpl(
 		DLFileEntryMetadata dlFileEntryMetadata) {
-		dlFileEntryMetadata = toUnwrappedModel(dlFileEntryMetadata);
-
 		Session session = null;
 
 		try {
@@ -2755,9 +2755,23 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	@Override
 	public DLFileEntryMetadata updateImpl(
 		DLFileEntryMetadata dlFileEntryMetadata) {
-		dlFileEntryMetadata = toUnwrappedModel(dlFileEntryMetadata);
-
 		boolean isNew = dlFileEntryMetadata.isNew();
+
+		if (!(dlFileEntryMetadata instanceof DLFileEntryMetadataModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(dlFileEntryMetadata.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(dlFileEntryMetadata);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in dlFileEntryMetadata proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DLFileEntryMetadata implementation " +
+				dlFileEntryMetadata.getClass());
+		}
 
 		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl = (DLFileEntryMetadataModelImpl)dlFileEntryMetadata;
 
@@ -2917,28 +2931,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		dlFileEntryMetadata.resetOriginalValues();
 
 		return dlFileEntryMetadata;
-	}
-
-	protected DLFileEntryMetadata toUnwrappedModel(
-		DLFileEntryMetadata dlFileEntryMetadata) {
-		if (dlFileEntryMetadata instanceof DLFileEntryMetadataImpl) {
-			return dlFileEntryMetadata;
-		}
-
-		DLFileEntryMetadataImpl dlFileEntryMetadataImpl = new DLFileEntryMetadataImpl();
-
-		dlFileEntryMetadataImpl.setNew(dlFileEntryMetadata.isNew());
-		dlFileEntryMetadataImpl.setPrimaryKey(dlFileEntryMetadata.getPrimaryKey());
-
-		dlFileEntryMetadataImpl.setUuid(dlFileEntryMetadata.getUuid());
-		dlFileEntryMetadataImpl.setFileEntryMetadataId(dlFileEntryMetadata.getFileEntryMetadataId());
-		dlFileEntryMetadataImpl.setCompanyId(dlFileEntryMetadata.getCompanyId());
-		dlFileEntryMetadataImpl.setDDMStorageId(dlFileEntryMetadata.getDDMStorageId());
-		dlFileEntryMetadataImpl.setDDMStructureId(dlFileEntryMetadata.getDDMStructureId());
-		dlFileEntryMetadataImpl.setFileEntryId(dlFileEntryMetadata.getFileEntryId());
-		dlFileEntryMetadataImpl.setFileVersionId(dlFileEntryMetadata.getFileVersionId());
-
-		return dlFileEntryMetadataImpl;
 	}
 
 	/**

@@ -36,12 +36,15 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1053,8 +1056,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 	@Override
 	protected AnnouncementsFlag removeImpl(AnnouncementsFlag announcementsFlag) {
-		announcementsFlag = toUnwrappedModel(announcementsFlag);
-
 		Session session = null;
 
 		try {
@@ -1085,9 +1086,23 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 	@Override
 	public AnnouncementsFlag updateImpl(AnnouncementsFlag announcementsFlag) {
-		announcementsFlag = toUnwrappedModel(announcementsFlag);
-
 		boolean isNew = announcementsFlag.isNew();
+
+		if (!(announcementsFlag instanceof AnnouncementsFlagModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(announcementsFlag.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(announcementsFlag);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in announcementsFlag proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom AnnouncementsFlag implementation " +
+				announcementsFlag.getClass());
+		}
 
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
 
@@ -1159,27 +1174,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		announcementsFlag.resetOriginalValues();
 
 		return announcementsFlag;
-	}
-
-	protected AnnouncementsFlag toUnwrappedModel(
-		AnnouncementsFlag announcementsFlag) {
-		if (announcementsFlag instanceof AnnouncementsFlagImpl) {
-			return announcementsFlag;
-		}
-
-		AnnouncementsFlagImpl announcementsFlagImpl = new AnnouncementsFlagImpl();
-
-		announcementsFlagImpl.setNew(announcementsFlag.isNew());
-		announcementsFlagImpl.setPrimaryKey(announcementsFlag.getPrimaryKey());
-
-		announcementsFlagImpl.setFlagId(announcementsFlag.getFlagId());
-		announcementsFlagImpl.setCompanyId(announcementsFlag.getCompanyId());
-		announcementsFlagImpl.setUserId(announcementsFlag.getUserId());
-		announcementsFlagImpl.setCreateDate(announcementsFlag.getCreateDate());
-		announcementsFlagImpl.setEntryId(announcementsFlag.getEntryId());
-		announcementsFlagImpl.setValue(announcementsFlag.getValue());
-
-		return announcementsFlagImpl;
 	}
 
 	/**

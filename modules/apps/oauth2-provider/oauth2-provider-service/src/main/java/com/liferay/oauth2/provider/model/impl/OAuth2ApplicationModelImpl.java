@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1030,7 +1031,7 @@ public class OAuth2ApplicationModelImpl extends BaseModelImpl<OAuth2Application>
 
 	private static final ClassLoader _classLoader = OAuth2Application.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			OAuth2Application.class
+			OAuth2Application.class, ModelWrapper.class
 		};
 	private long _oAuth2ApplicationId;
 	private long _companyId;

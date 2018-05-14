@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2957,8 +2959,6 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 	@Override
 	protected MBThreadFlag removeImpl(MBThreadFlag mbThreadFlag) {
-		mbThreadFlag = toUnwrappedModel(mbThreadFlag);
-
 		Session session = null;
 
 		try {
@@ -2989,9 +2989,23 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 	@Override
 	public MBThreadFlag updateImpl(MBThreadFlag mbThreadFlag) {
-		mbThreadFlag = toUnwrappedModel(mbThreadFlag);
-
 		boolean isNew = mbThreadFlag.isNew();
+
+		if (!(mbThreadFlag instanceof MBThreadFlagModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mbThreadFlag.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mbThreadFlag);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mbThreadFlag proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MBThreadFlag implementation " +
+				mbThreadFlag.getClass());
+		}
 
 		MBThreadFlagModelImpl mbThreadFlagModelImpl = (MBThreadFlagModelImpl)mbThreadFlag;
 
@@ -3167,30 +3181,6 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		mbThreadFlag.resetOriginalValues();
 
 		return mbThreadFlag;
-	}
-
-	protected MBThreadFlag toUnwrappedModel(MBThreadFlag mbThreadFlag) {
-		if (mbThreadFlag instanceof MBThreadFlagImpl) {
-			return mbThreadFlag;
-		}
-
-		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
-
-		mbThreadFlagImpl.setNew(mbThreadFlag.isNew());
-		mbThreadFlagImpl.setPrimaryKey(mbThreadFlag.getPrimaryKey());
-
-		mbThreadFlagImpl.setUuid(mbThreadFlag.getUuid());
-		mbThreadFlagImpl.setThreadFlagId(mbThreadFlag.getThreadFlagId());
-		mbThreadFlagImpl.setGroupId(mbThreadFlag.getGroupId());
-		mbThreadFlagImpl.setCompanyId(mbThreadFlag.getCompanyId());
-		mbThreadFlagImpl.setUserId(mbThreadFlag.getUserId());
-		mbThreadFlagImpl.setUserName(mbThreadFlag.getUserName());
-		mbThreadFlagImpl.setCreateDate(mbThreadFlag.getCreateDate());
-		mbThreadFlagImpl.setModifiedDate(mbThreadFlag.getModifiedDate());
-		mbThreadFlagImpl.setThreadId(mbThreadFlag.getThreadId());
-		mbThreadFlagImpl.setLastPublishDate(mbThreadFlag.getLastPublishDate());
-
-		return mbThreadFlagImpl;
 	}
 
 	/**

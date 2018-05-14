@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -45,6 +46,7 @@ import com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -5123,8 +5125,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	@Override
 	protected ExpandoValue removeImpl(ExpandoValue expandoValue) {
-		expandoValue = toUnwrappedModel(expandoValue);
-
 		Session session = null;
 
 		try {
@@ -5155,9 +5155,23 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 	@Override
 	public ExpandoValue updateImpl(ExpandoValue expandoValue) {
-		expandoValue = toUnwrappedModel(expandoValue);
-
 		boolean isNew = expandoValue.isNew();
+
+		if (!(expandoValue instanceof ExpandoValueModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(expandoValue.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(expandoValue);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in expandoValue proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom ExpandoValue implementation " +
+				expandoValue.getClass());
+		}
 
 		ExpandoValueModelImpl expandoValueModelImpl = (ExpandoValueModelImpl)expandoValue;
 
@@ -5428,28 +5442,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		expandoValue.resetOriginalValues();
 
 		return expandoValue;
-	}
-
-	protected ExpandoValue toUnwrappedModel(ExpandoValue expandoValue) {
-		if (expandoValue instanceof ExpandoValueImpl) {
-			return expandoValue;
-		}
-
-		ExpandoValueImpl expandoValueImpl = new ExpandoValueImpl();
-
-		expandoValueImpl.setNew(expandoValue.isNew());
-		expandoValueImpl.setPrimaryKey(expandoValue.getPrimaryKey());
-
-		expandoValueImpl.setValueId(expandoValue.getValueId());
-		expandoValueImpl.setCompanyId(expandoValue.getCompanyId());
-		expandoValueImpl.setTableId(expandoValue.getTableId());
-		expandoValueImpl.setColumnId(expandoValue.getColumnId());
-		expandoValueImpl.setRowId(expandoValue.getRowId());
-		expandoValueImpl.setClassNameId(expandoValue.getClassNameId());
-		expandoValueImpl.setClassPK(expandoValue.getClassPK());
-		expandoValueImpl.setData(expandoValue.getData());
-
-		return expandoValueImpl;
 	}
 
 	/**

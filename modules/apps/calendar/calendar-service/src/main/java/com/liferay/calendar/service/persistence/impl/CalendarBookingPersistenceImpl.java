@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -5752,8 +5754,6 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 
 	@Override
 	protected CalendarBooking removeImpl(CalendarBooking calendarBooking) {
-		calendarBooking = toUnwrappedModel(calendarBooking);
-
 		Session session = null;
 
 		try {
@@ -5784,9 +5784,23 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 
 	@Override
 	public CalendarBooking updateImpl(CalendarBooking calendarBooking) {
-		calendarBooking = toUnwrappedModel(calendarBooking);
-
 		boolean isNew = calendarBooking.isNew();
+
+		if (!(calendarBooking instanceof CalendarBookingModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(calendarBooking.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(calendarBooking);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in calendarBooking proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CalendarBooking implementation " +
+				calendarBooking.getClass());
+		}
 
 		CalendarBookingModelImpl calendarBookingModelImpl = (CalendarBookingModelImpl)calendarBooking;
 
@@ -6088,49 +6102,6 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		calendarBooking.resetOriginalValues();
 
 		return calendarBooking;
-	}
-
-	protected CalendarBooking toUnwrappedModel(CalendarBooking calendarBooking) {
-		if (calendarBooking instanceof CalendarBookingImpl) {
-			return calendarBooking;
-		}
-
-		CalendarBookingImpl calendarBookingImpl = new CalendarBookingImpl();
-
-		calendarBookingImpl.setNew(calendarBooking.isNew());
-		calendarBookingImpl.setPrimaryKey(calendarBooking.getPrimaryKey());
-
-		calendarBookingImpl.setUuid(calendarBooking.getUuid());
-		calendarBookingImpl.setCalendarBookingId(calendarBooking.getCalendarBookingId());
-		calendarBookingImpl.setGroupId(calendarBooking.getGroupId());
-		calendarBookingImpl.setCompanyId(calendarBooking.getCompanyId());
-		calendarBookingImpl.setUserId(calendarBooking.getUserId());
-		calendarBookingImpl.setUserName(calendarBooking.getUserName());
-		calendarBookingImpl.setCreateDate(calendarBooking.getCreateDate());
-		calendarBookingImpl.setModifiedDate(calendarBooking.getModifiedDate());
-		calendarBookingImpl.setCalendarId(calendarBooking.getCalendarId());
-		calendarBookingImpl.setCalendarResourceId(calendarBooking.getCalendarResourceId());
-		calendarBookingImpl.setParentCalendarBookingId(calendarBooking.getParentCalendarBookingId());
-		calendarBookingImpl.setRecurringCalendarBookingId(calendarBooking.getRecurringCalendarBookingId());
-		calendarBookingImpl.setVEventUid(calendarBooking.getVEventUid());
-		calendarBookingImpl.setTitle(calendarBooking.getTitle());
-		calendarBookingImpl.setDescription(calendarBooking.getDescription());
-		calendarBookingImpl.setLocation(calendarBooking.getLocation());
-		calendarBookingImpl.setStartTime(calendarBooking.getStartTime());
-		calendarBookingImpl.setEndTime(calendarBooking.getEndTime());
-		calendarBookingImpl.setAllDay(calendarBooking.isAllDay());
-		calendarBookingImpl.setRecurrence(calendarBooking.getRecurrence());
-		calendarBookingImpl.setFirstReminder(calendarBooking.getFirstReminder());
-		calendarBookingImpl.setFirstReminderType(calendarBooking.getFirstReminderType());
-		calendarBookingImpl.setSecondReminder(calendarBooking.getSecondReminder());
-		calendarBookingImpl.setSecondReminderType(calendarBooking.getSecondReminderType());
-		calendarBookingImpl.setLastPublishDate(calendarBooking.getLastPublishDate());
-		calendarBookingImpl.setStatus(calendarBooking.getStatus());
-		calendarBookingImpl.setStatusByUserId(calendarBooking.getStatusByUserId());
-		calendarBookingImpl.setStatusByUserName(calendarBooking.getStatusByUserName());
-		calendarBookingImpl.setStatusDate(calendarBooking.getStatusDate());
-
-		return calendarBookingImpl;
 	}
 
 	/**

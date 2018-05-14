@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2845,8 +2847,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 	@Override
 	protected JournalFeed removeImpl(JournalFeed journalFeed) {
-		journalFeed = toUnwrappedModel(journalFeed);
-
 		Session session = null;
 
 		try {
@@ -2877,9 +2877,23 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 	@Override
 	public JournalFeed updateImpl(JournalFeed journalFeed) {
-		journalFeed = toUnwrappedModel(journalFeed);
-
 		boolean isNew = journalFeed.isNew();
+
+		if (!(journalFeed instanceof JournalFeedModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(journalFeed.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(journalFeed);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in journalFeed proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom JournalFeed implementation " +
+				journalFeed.getClass());
+		}
 
 		JournalFeedModelImpl journalFeedModelImpl = (JournalFeedModelImpl)journalFeed;
 
@@ -3032,43 +3046,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		journalFeed.resetOriginalValues();
 
 		return journalFeed;
-	}
-
-	protected JournalFeed toUnwrappedModel(JournalFeed journalFeed) {
-		if (journalFeed instanceof JournalFeedImpl) {
-			return journalFeed;
-		}
-
-		JournalFeedImpl journalFeedImpl = new JournalFeedImpl();
-
-		journalFeedImpl.setNew(journalFeed.isNew());
-		journalFeedImpl.setPrimaryKey(journalFeed.getPrimaryKey());
-
-		journalFeedImpl.setUuid(journalFeed.getUuid());
-		journalFeedImpl.setId(journalFeed.getId());
-		journalFeedImpl.setGroupId(journalFeed.getGroupId());
-		journalFeedImpl.setCompanyId(journalFeed.getCompanyId());
-		journalFeedImpl.setUserId(journalFeed.getUserId());
-		journalFeedImpl.setUserName(journalFeed.getUserName());
-		journalFeedImpl.setCreateDate(journalFeed.getCreateDate());
-		journalFeedImpl.setModifiedDate(journalFeed.getModifiedDate());
-		journalFeedImpl.setFeedId(journalFeed.getFeedId());
-		journalFeedImpl.setName(journalFeed.getName());
-		journalFeedImpl.setDescription(journalFeed.getDescription());
-		journalFeedImpl.setDDMStructureKey(journalFeed.getDDMStructureKey());
-		journalFeedImpl.setDDMTemplateKey(journalFeed.getDDMTemplateKey());
-		journalFeedImpl.setDDMRendererTemplateKey(journalFeed.getDDMRendererTemplateKey());
-		journalFeedImpl.setDelta(journalFeed.getDelta());
-		journalFeedImpl.setOrderByCol(journalFeed.getOrderByCol());
-		journalFeedImpl.setOrderByType(journalFeed.getOrderByType());
-		journalFeedImpl.setTargetLayoutFriendlyUrl(journalFeed.getTargetLayoutFriendlyUrl());
-		journalFeedImpl.setTargetPortletId(journalFeed.getTargetPortletId());
-		journalFeedImpl.setContentField(journalFeed.getContentField());
-		journalFeedImpl.setFeedFormat(journalFeed.getFeedFormat());
-		journalFeedImpl.setFeedVersion(journalFeed.getFeedVersion());
-		journalFeedImpl.setLastPublishDate(journalFeed.getLastPublishDate());
-
-		return journalFeedImpl;
 	}
 
 	/**

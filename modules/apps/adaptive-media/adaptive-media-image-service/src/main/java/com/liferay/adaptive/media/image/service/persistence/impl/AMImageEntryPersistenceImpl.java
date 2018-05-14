@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -4661,8 +4663,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 
 	@Override
 	protected AMImageEntry removeImpl(AMImageEntry amImageEntry) {
-		amImageEntry = toUnwrappedModel(amImageEntry);
-
 		Session session = null;
 
 		try {
@@ -4693,9 +4693,23 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 
 	@Override
 	public AMImageEntry updateImpl(AMImageEntry amImageEntry) {
-		amImageEntry = toUnwrappedModel(amImageEntry);
-
 		boolean isNew = amImageEntry.isNew();
+
+		if (!(amImageEntry instanceof AMImageEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(amImageEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(amImageEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in amImageEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom AMImageEntry implementation " +
+				amImageEntry.getClass());
+		}
 
 		AMImageEntryModelImpl amImageEntryModelImpl = (AMImageEntryModelImpl)amImageEntry;
 
@@ -4930,31 +4944,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 		amImageEntry.resetOriginalValues();
 
 		return amImageEntry;
-	}
-
-	protected AMImageEntry toUnwrappedModel(AMImageEntry amImageEntry) {
-		if (amImageEntry instanceof AMImageEntryImpl) {
-			return amImageEntry;
-		}
-
-		AMImageEntryImpl amImageEntryImpl = new AMImageEntryImpl();
-
-		amImageEntryImpl.setNew(amImageEntry.isNew());
-		amImageEntryImpl.setPrimaryKey(amImageEntry.getPrimaryKey());
-
-		amImageEntryImpl.setUuid(amImageEntry.getUuid());
-		amImageEntryImpl.setAmImageEntryId(amImageEntry.getAmImageEntryId());
-		amImageEntryImpl.setGroupId(amImageEntry.getGroupId());
-		amImageEntryImpl.setCompanyId(amImageEntry.getCompanyId());
-		amImageEntryImpl.setCreateDate(amImageEntry.getCreateDate());
-		amImageEntryImpl.setConfigurationUuid(amImageEntry.getConfigurationUuid());
-		amImageEntryImpl.setFileVersionId(amImageEntry.getFileVersionId());
-		amImageEntryImpl.setMimeType(amImageEntry.getMimeType());
-		amImageEntryImpl.setHeight(amImageEntry.getHeight());
-		amImageEntryImpl.setWidth(amImageEntry.getWidth());
-		amImageEntryImpl.setSize(amImageEntry.getSize());
-
-		return amImageEntryImpl;
 	}
 
 	/**

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2657,8 +2659,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 
 	@Override
 	protected App removeImpl(App app) {
-		app = toUnwrappedModel(app);
-
 		Session session = null;
 
 		try {
@@ -2688,9 +2688,23 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 
 	@Override
 	public App updateImpl(App app) {
-		app = toUnwrappedModel(app);
-
 		boolean isNew = app.isNew();
+
+		if (!(app instanceof AppModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(app.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(app);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in app proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom App implementation " +
+				app.getClass());
+		}
 
 		AppModelImpl appModelImpl = (AppModelImpl)app;
 
@@ -2857,34 +2871,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		app.resetOriginalValues();
 
 		return app;
-	}
-
-	protected App toUnwrappedModel(App app) {
-		if (app instanceof AppImpl) {
-			return app;
-		}
-
-		AppImpl appImpl = new AppImpl();
-
-		appImpl.setNew(app.isNew());
-		appImpl.setPrimaryKey(app.getPrimaryKey());
-
-		appImpl.setUuid(app.getUuid());
-		appImpl.setAppId(app.getAppId());
-		appImpl.setCompanyId(app.getCompanyId());
-		appImpl.setUserId(app.getUserId());
-		appImpl.setUserName(app.getUserName());
-		appImpl.setCreateDate(app.getCreateDate());
-		appImpl.setModifiedDate(app.getModifiedDate());
-		appImpl.setRemoteAppId(app.getRemoteAppId());
-		appImpl.setTitle(app.getTitle());
-		appImpl.setDescription(app.getDescription());
-		appImpl.setCategory(app.getCategory());
-		appImpl.setIconURL(app.getIconURL());
-		appImpl.setVersion(app.getVersion());
-		appImpl.setRequired(app.isRequired());
-
-		return appImpl;
 	}
 
 	/**

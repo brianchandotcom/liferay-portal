@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2652,8 +2654,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	@Override
 	protected CalendarNotificationTemplate removeImpl(
 		CalendarNotificationTemplate calendarNotificationTemplate) {
-		calendarNotificationTemplate = toUnwrappedModel(calendarNotificationTemplate);
-
 		Session session = null;
 
 		try {
@@ -2685,9 +2685,23 @@ public class CalendarNotificationTemplatePersistenceImpl
 	@Override
 	public CalendarNotificationTemplate updateImpl(
 		CalendarNotificationTemplate calendarNotificationTemplate) {
-		calendarNotificationTemplate = toUnwrappedModel(calendarNotificationTemplate);
-
 		boolean isNew = calendarNotificationTemplate.isNew();
+
+		if (!(calendarNotificationTemplate instanceof CalendarNotificationTemplateModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(calendarNotificationTemplate.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(calendarNotificationTemplate);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in calendarNotificationTemplate proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CalendarNotificationTemplate implementation " +
+				calendarNotificationTemplate.getClass());
+		}
 
 		CalendarNotificationTemplateModelImpl calendarNotificationTemplateModelImpl =
 			(CalendarNotificationTemplateModelImpl)calendarNotificationTemplate;
@@ -2852,36 +2866,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		calendarNotificationTemplate.resetOriginalValues();
 
 		return calendarNotificationTemplate;
-	}
-
-	protected CalendarNotificationTemplate toUnwrappedModel(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
-		if (calendarNotificationTemplate instanceof CalendarNotificationTemplateImpl) {
-			return calendarNotificationTemplate;
-		}
-
-		CalendarNotificationTemplateImpl calendarNotificationTemplateImpl = new CalendarNotificationTemplateImpl();
-
-		calendarNotificationTemplateImpl.setNew(calendarNotificationTemplate.isNew());
-		calendarNotificationTemplateImpl.setPrimaryKey(calendarNotificationTemplate.getPrimaryKey());
-
-		calendarNotificationTemplateImpl.setUuid(calendarNotificationTemplate.getUuid());
-		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(calendarNotificationTemplate.getCalendarNotificationTemplateId());
-		calendarNotificationTemplateImpl.setGroupId(calendarNotificationTemplate.getGroupId());
-		calendarNotificationTemplateImpl.setCompanyId(calendarNotificationTemplate.getCompanyId());
-		calendarNotificationTemplateImpl.setUserId(calendarNotificationTemplate.getUserId());
-		calendarNotificationTemplateImpl.setUserName(calendarNotificationTemplate.getUserName());
-		calendarNotificationTemplateImpl.setCreateDate(calendarNotificationTemplate.getCreateDate());
-		calendarNotificationTemplateImpl.setModifiedDate(calendarNotificationTemplate.getModifiedDate());
-		calendarNotificationTemplateImpl.setCalendarId(calendarNotificationTemplate.getCalendarId());
-		calendarNotificationTemplateImpl.setNotificationType(calendarNotificationTemplate.getNotificationType());
-		calendarNotificationTemplateImpl.setNotificationTypeSettings(calendarNotificationTemplate.getNotificationTypeSettings());
-		calendarNotificationTemplateImpl.setNotificationTemplateType(calendarNotificationTemplate.getNotificationTemplateType());
-		calendarNotificationTemplateImpl.setSubject(calendarNotificationTemplate.getSubject());
-		calendarNotificationTemplateImpl.setBody(calendarNotificationTemplate.getBody());
-		calendarNotificationTemplateImpl.setLastPublishDate(calendarNotificationTemplate.getLastPublishDate());
-
-		return calendarNotificationTemplateImpl;
 	}
 
 	/**

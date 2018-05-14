@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.model.MembershipRequestModel;
 import com.liferay.portal.kernel.model.MembershipRequestSoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -761,7 +762,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	private static final ClassLoader _classLoader = MembershipRequest.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			MembershipRequest.class
+			MembershipRequest.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _membershipRequestId;

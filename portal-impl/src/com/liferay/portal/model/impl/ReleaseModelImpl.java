@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ReleaseModel;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -649,7 +650,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	private static final ClassLoader _classLoader = Release.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Release.class
+			Release.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _releaseId;

@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketModel;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -688,7 +689,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 	private static final ClassLoader _classLoader = Ticket.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Ticket.class
+			Ticket.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _ticketId;

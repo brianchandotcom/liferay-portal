@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.RepositoryEntry;
 import com.liferay.portal.kernel.model.RepositoryEntryModel;
 import com.liferay.portal.kernel.model.User;
@@ -796,7 +797,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 	private static final ClassLoader _classLoader = RepositoryEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			RepositoryEntry.class
+			RepositoryEntry.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private String _uuid;

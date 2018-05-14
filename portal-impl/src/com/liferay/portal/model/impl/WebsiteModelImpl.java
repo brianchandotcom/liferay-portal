@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.model.WebsiteModel;
@@ -938,7 +939,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 	private static final ClassLoader _classLoader = Website.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Website.class
+			Website.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private String _uuid;

@@ -39,11 +39,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -6066,8 +6069,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 
 	@Override
 	protected FragmentEntry removeImpl(FragmentEntry fragmentEntry) {
-		fragmentEntry = toUnwrappedModel(fragmentEntry);
-
 		Session session = null;
 
 		try {
@@ -6098,9 +6099,23 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 
 	@Override
 	public FragmentEntry updateImpl(FragmentEntry fragmentEntry) {
-		fragmentEntry = toUnwrappedModel(fragmentEntry);
-
 		boolean isNew = fragmentEntry.isNew();
+
+		if (!(fragmentEntry instanceof FragmentEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(fragmentEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(fragmentEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in fragmentEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom FragmentEntry implementation " +
+				fragmentEntry.getClass());
+		}
 
 		FragmentEntryModelImpl fragmentEntryModelImpl = (FragmentEntryModelImpl)fragmentEntry;
 
@@ -6286,38 +6301,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		fragmentEntry.resetOriginalValues();
 
 		return fragmentEntry;
-	}
-
-	protected FragmentEntry toUnwrappedModel(FragmentEntry fragmentEntry) {
-		if (fragmentEntry instanceof FragmentEntryImpl) {
-			return fragmentEntry;
-		}
-
-		FragmentEntryImpl fragmentEntryImpl = new FragmentEntryImpl();
-
-		fragmentEntryImpl.setNew(fragmentEntry.isNew());
-		fragmentEntryImpl.setPrimaryKey(fragmentEntry.getPrimaryKey());
-
-		fragmentEntryImpl.setFragmentEntryId(fragmentEntry.getFragmentEntryId());
-		fragmentEntryImpl.setGroupId(fragmentEntry.getGroupId());
-		fragmentEntryImpl.setCompanyId(fragmentEntry.getCompanyId());
-		fragmentEntryImpl.setUserId(fragmentEntry.getUserId());
-		fragmentEntryImpl.setUserName(fragmentEntry.getUserName());
-		fragmentEntryImpl.setCreateDate(fragmentEntry.getCreateDate());
-		fragmentEntryImpl.setModifiedDate(fragmentEntry.getModifiedDate());
-		fragmentEntryImpl.setFragmentCollectionId(fragmentEntry.getFragmentCollectionId());
-		fragmentEntryImpl.setFragmentEntryKey(fragmentEntry.getFragmentEntryKey());
-		fragmentEntryImpl.setName(fragmentEntry.getName());
-		fragmentEntryImpl.setCss(fragmentEntry.getCss());
-		fragmentEntryImpl.setHtml(fragmentEntry.getHtml());
-		fragmentEntryImpl.setJs(fragmentEntry.getJs());
-		fragmentEntryImpl.setHtmlPreviewEntryId(fragmentEntry.getHtmlPreviewEntryId());
-		fragmentEntryImpl.setStatus(fragmentEntry.getStatus());
-		fragmentEntryImpl.setStatusByUserId(fragmentEntry.getStatusByUserId());
-		fragmentEntryImpl.setStatusByUserName(fragmentEntry.getStatusByUserName());
-		fragmentEntryImpl.setStatusDate(fragmentEntry.getStatusDate());
-
-		return fragmentEntryImpl;
 	}
 
 	/**

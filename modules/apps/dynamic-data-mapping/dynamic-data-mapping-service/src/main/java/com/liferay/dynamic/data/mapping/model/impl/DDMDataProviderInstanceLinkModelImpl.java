@@ -24,6 +24,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -414,7 +415,7 @@ public class DDMDataProviderInstanceLinkModelImpl extends BaseModelImpl<DDMDataP
 
 	private static final ClassLoader _classLoader = DDMDataProviderInstanceLink.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			DDMDataProviderInstanceLink.class
+			DDMDataProviderInstanceLink.class, ModelWrapper.class
 		};
 	private long _dataProviderInstanceLinkId;
 	private long _companyId;

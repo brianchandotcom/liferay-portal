@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,6 +57,7 @@ import com.liferay.portal.model.impl.OrganizationModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -6804,8 +6806,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	@Override
 	protected Organization removeImpl(Organization organization) {
-		organization = toUnwrappedModel(organization);
-
 		organizationToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(organization.getPrimaryKey());
 
 		organizationToUserTableMapper.deleteLeftPrimaryKeyTableMappings(organization.getPrimaryKey());
@@ -6840,9 +6840,23 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	@Override
 	public Organization updateImpl(Organization organization) {
-		organization = toUnwrappedModel(organization);
-
 		boolean isNew = organization.isNew();
+
+		if (!(organization instanceof OrganizationModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(organization.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(organization);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in organization proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Organization implementation " +
+				organization.getClass());
+		}
 
 		OrganizationModelImpl organizationModelImpl = (OrganizationModelImpl)organization;
 
@@ -7048,38 +7062,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		organization.resetOriginalValues();
 
 		return organization;
-	}
-
-	protected Organization toUnwrappedModel(Organization organization) {
-		if (organization instanceof OrganizationImpl) {
-			return organization;
-		}
-
-		OrganizationImpl organizationImpl = new OrganizationImpl();
-
-		organizationImpl.setNew(organization.isNew());
-		organizationImpl.setPrimaryKey(organization.getPrimaryKey());
-
-		organizationImpl.setMvccVersion(organization.getMvccVersion());
-		organizationImpl.setUuid(organization.getUuid());
-		organizationImpl.setOrganizationId(organization.getOrganizationId());
-		organizationImpl.setCompanyId(organization.getCompanyId());
-		organizationImpl.setUserId(organization.getUserId());
-		organizationImpl.setUserName(organization.getUserName());
-		organizationImpl.setCreateDate(organization.getCreateDate());
-		organizationImpl.setModifiedDate(organization.getModifiedDate());
-		organizationImpl.setParentOrganizationId(organization.getParentOrganizationId());
-		organizationImpl.setTreePath(organization.getTreePath());
-		organizationImpl.setName(organization.getName());
-		organizationImpl.setType(organization.getType());
-		organizationImpl.setRecursable(organization.isRecursable());
-		organizationImpl.setRegionId(organization.getRegionId());
-		organizationImpl.setCountryId(organization.getCountryId());
-		organizationImpl.setStatusId(organization.getStatusId());
-		organizationImpl.setComments(organization.getComments());
-		organizationImpl.setLogoId(organization.getLogoId());
-
-		return organizationImpl;
 	}
 
 	/**

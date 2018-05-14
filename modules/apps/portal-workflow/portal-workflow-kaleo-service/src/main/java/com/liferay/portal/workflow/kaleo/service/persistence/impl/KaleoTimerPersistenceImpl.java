@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException;
@@ -40,6 +41,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1478,8 +1481,6 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 
 	@Override
 	protected KaleoTimer removeImpl(KaleoTimer kaleoTimer) {
-		kaleoTimer = toUnwrappedModel(kaleoTimer);
-
 		Session session = null;
 
 		try {
@@ -1510,9 +1511,23 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 
 	@Override
 	public KaleoTimer updateImpl(KaleoTimer kaleoTimer) {
-		kaleoTimer = toUnwrappedModel(kaleoTimer);
-
 		boolean isNew = kaleoTimer.isNew();
+
+		if (!(kaleoTimer instanceof KaleoTimerModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoTimer.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoTimer);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoTimer proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoTimer implementation " +
+				kaleoTimer.getClass());
+		}
 
 		KaleoTimerModelImpl kaleoTimerModelImpl = (KaleoTimerModelImpl)kaleoTimer;
 
@@ -1645,37 +1660,6 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 		kaleoTimer.resetOriginalValues();
 
 		return kaleoTimer;
-	}
-
-	protected KaleoTimer toUnwrappedModel(KaleoTimer kaleoTimer) {
-		if (kaleoTimer instanceof KaleoTimerImpl) {
-			return kaleoTimer;
-		}
-
-		KaleoTimerImpl kaleoTimerImpl = new KaleoTimerImpl();
-
-		kaleoTimerImpl.setNew(kaleoTimer.isNew());
-		kaleoTimerImpl.setPrimaryKey(kaleoTimer.getPrimaryKey());
-
-		kaleoTimerImpl.setKaleoTimerId(kaleoTimer.getKaleoTimerId());
-		kaleoTimerImpl.setGroupId(kaleoTimer.getGroupId());
-		kaleoTimerImpl.setCompanyId(kaleoTimer.getCompanyId());
-		kaleoTimerImpl.setUserId(kaleoTimer.getUserId());
-		kaleoTimerImpl.setUserName(kaleoTimer.getUserName());
-		kaleoTimerImpl.setCreateDate(kaleoTimer.getCreateDate());
-		kaleoTimerImpl.setModifiedDate(kaleoTimer.getModifiedDate());
-		kaleoTimerImpl.setKaleoClassName(kaleoTimer.getKaleoClassName());
-		kaleoTimerImpl.setKaleoClassPK(kaleoTimer.getKaleoClassPK());
-		kaleoTimerImpl.setKaleoDefinitionVersionId(kaleoTimer.getKaleoDefinitionVersionId());
-		kaleoTimerImpl.setName(kaleoTimer.getName());
-		kaleoTimerImpl.setBlocking(kaleoTimer.isBlocking());
-		kaleoTimerImpl.setDescription(kaleoTimer.getDescription());
-		kaleoTimerImpl.setDuration(kaleoTimer.getDuration());
-		kaleoTimerImpl.setScale(kaleoTimer.getScale());
-		kaleoTimerImpl.setRecurrenceDuration(kaleoTimer.getRecurrenceDuration());
-		kaleoTimerImpl.setRecurrenceScale(kaleoTimer.getRecurrenceScale());
-
-		return kaleoTimerImpl;
 	}
 
 	/**

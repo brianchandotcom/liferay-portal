@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -3025,8 +3027,6 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 
 	@Override
 	protected MDRRuleGroup removeImpl(MDRRuleGroup mdrRuleGroup) {
-		mdrRuleGroup = toUnwrappedModel(mdrRuleGroup);
-
 		Session session = null;
 
 		try {
@@ -3057,9 +3057,23 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 
 	@Override
 	public MDRRuleGroup updateImpl(MDRRuleGroup mdrRuleGroup) {
-		mdrRuleGroup = toUnwrappedModel(mdrRuleGroup);
-
 		boolean isNew = mdrRuleGroup.isNew();
+
+		if (!(mdrRuleGroup instanceof MDRRuleGroupModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(mdrRuleGroup.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(mdrRuleGroup);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in mdrRuleGroup proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom MDRRuleGroup implementation " +
+				mdrRuleGroup.getClass());
+		}
 
 		MDRRuleGroupModelImpl mdrRuleGroupModelImpl = (MDRRuleGroupModelImpl)mdrRuleGroup;
 
@@ -3212,31 +3226,6 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		mdrRuleGroup.resetOriginalValues();
 
 		return mdrRuleGroup;
-	}
-
-	protected MDRRuleGroup toUnwrappedModel(MDRRuleGroup mdrRuleGroup) {
-		if (mdrRuleGroup instanceof MDRRuleGroupImpl) {
-			return mdrRuleGroup;
-		}
-
-		MDRRuleGroupImpl mdrRuleGroupImpl = new MDRRuleGroupImpl();
-
-		mdrRuleGroupImpl.setNew(mdrRuleGroup.isNew());
-		mdrRuleGroupImpl.setPrimaryKey(mdrRuleGroup.getPrimaryKey());
-
-		mdrRuleGroupImpl.setUuid(mdrRuleGroup.getUuid());
-		mdrRuleGroupImpl.setRuleGroupId(mdrRuleGroup.getRuleGroupId());
-		mdrRuleGroupImpl.setGroupId(mdrRuleGroup.getGroupId());
-		mdrRuleGroupImpl.setCompanyId(mdrRuleGroup.getCompanyId());
-		mdrRuleGroupImpl.setUserId(mdrRuleGroup.getUserId());
-		mdrRuleGroupImpl.setUserName(mdrRuleGroup.getUserName());
-		mdrRuleGroupImpl.setCreateDate(mdrRuleGroup.getCreateDate());
-		mdrRuleGroupImpl.setModifiedDate(mdrRuleGroup.getModifiedDate());
-		mdrRuleGroupImpl.setName(mdrRuleGroup.getName());
-		mdrRuleGroupImpl.setDescription(mdrRuleGroup.getDescription());
-		mdrRuleGroupImpl.setLastPublishDate(mdrRuleGroup.getLastPublishDate());
-
-		return mdrRuleGroupImpl;
 	}
 
 	/**

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionModel;
 import com.liferay.portal.kernel.model.LayoutRevisionSoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -2135,7 +2136,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	private static final ClassLoader _classLoader = LayoutRevision.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			LayoutRevision.class
+			LayoutRevision.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _layoutRevisionId;

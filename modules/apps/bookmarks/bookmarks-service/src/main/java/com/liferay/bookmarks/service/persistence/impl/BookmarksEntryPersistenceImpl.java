@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12603,8 +12605,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 	@Override
 	protected BookmarksEntry removeImpl(BookmarksEntry bookmarksEntry) {
-		bookmarksEntry = toUnwrappedModel(bookmarksEntry);
-
 		Session session = null;
 
 		try {
@@ -12635,9 +12635,23 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 	@Override
 	public BookmarksEntry updateImpl(BookmarksEntry bookmarksEntry) {
-		bookmarksEntry = toUnwrappedModel(bookmarksEntry);
-
 		boolean isNew = bookmarksEntry.isNew();
+
+		if (!(bookmarksEntry instanceof BookmarksEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(bookmarksEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(bookmarksEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in bookmarksEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom BookmarksEntry implementation " +
+				bookmarksEntry.getClass());
+		}
 
 		BookmarksEntryModelImpl bookmarksEntryModelImpl = (BookmarksEntryModelImpl)bookmarksEntry;
 
@@ -12953,40 +12967,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		bookmarksEntry.resetOriginalValues();
 
 		return bookmarksEntry;
-	}
-
-	protected BookmarksEntry toUnwrappedModel(BookmarksEntry bookmarksEntry) {
-		if (bookmarksEntry instanceof BookmarksEntryImpl) {
-			return bookmarksEntry;
-		}
-
-		BookmarksEntryImpl bookmarksEntryImpl = new BookmarksEntryImpl();
-
-		bookmarksEntryImpl.setNew(bookmarksEntry.isNew());
-		bookmarksEntryImpl.setPrimaryKey(bookmarksEntry.getPrimaryKey());
-
-		bookmarksEntryImpl.setUuid(bookmarksEntry.getUuid());
-		bookmarksEntryImpl.setEntryId(bookmarksEntry.getEntryId());
-		bookmarksEntryImpl.setGroupId(bookmarksEntry.getGroupId());
-		bookmarksEntryImpl.setCompanyId(bookmarksEntry.getCompanyId());
-		bookmarksEntryImpl.setUserId(bookmarksEntry.getUserId());
-		bookmarksEntryImpl.setUserName(bookmarksEntry.getUserName());
-		bookmarksEntryImpl.setCreateDate(bookmarksEntry.getCreateDate());
-		bookmarksEntryImpl.setModifiedDate(bookmarksEntry.getModifiedDate());
-		bookmarksEntryImpl.setFolderId(bookmarksEntry.getFolderId());
-		bookmarksEntryImpl.setTreePath(bookmarksEntry.getTreePath());
-		bookmarksEntryImpl.setName(bookmarksEntry.getName());
-		bookmarksEntryImpl.setUrl(bookmarksEntry.getUrl());
-		bookmarksEntryImpl.setDescription(bookmarksEntry.getDescription());
-		bookmarksEntryImpl.setVisits(bookmarksEntry.getVisits());
-		bookmarksEntryImpl.setPriority(bookmarksEntry.getPriority());
-		bookmarksEntryImpl.setLastPublishDate(bookmarksEntry.getLastPublishDate());
-		bookmarksEntryImpl.setStatus(bookmarksEntry.getStatus());
-		bookmarksEntryImpl.setStatusByUserId(bookmarksEntry.getStatusByUserId());
-		bookmarksEntryImpl.setStatusByUserName(bookmarksEntry.getStatusByUserName());
-		bookmarksEntryImpl.setStatusDate(bookmarksEntry.getStatusDate());
-
-		return bookmarksEntryImpl;
 	}
 
 	/**

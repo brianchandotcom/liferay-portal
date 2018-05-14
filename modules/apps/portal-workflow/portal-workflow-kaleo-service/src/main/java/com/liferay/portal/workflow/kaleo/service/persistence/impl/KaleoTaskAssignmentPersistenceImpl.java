@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
@@ -40,6 +41,8 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentModelImpl
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2583,8 +2586,6 @@ public class KaleoTaskAssignmentPersistenceImpl extends BasePersistenceImpl<Kale
 	@Override
 	protected KaleoTaskAssignment removeImpl(
 		KaleoTaskAssignment kaleoTaskAssignment) {
-		kaleoTaskAssignment = toUnwrappedModel(kaleoTaskAssignment);
-
 		Session session = null;
 
 		try {
@@ -2616,9 +2617,23 @@ public class KaleoTaskAssignmentPersistenceImpl extends BasePersistenceImpl<Kale
 	@Override
 	public KaleoTaskAssignment updateImpl(
 		KaleoTaskAssignment kaleoTaskAssignment) {
-		kaleoTaskAssignment = toUnwrappedModel(kaleoTaskAssignment);
-
 		boolean isNew = kaleoTaskAssignment.isNew();
+
+		if (!(kaleoTaskAssignment instanceof KaleoTaskAssignmentModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoTaskAssignment.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoTaskAssignment);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoTaskAssignment proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoTaskAssignment implementation " +
+				kaleoTaskAssignment.getClass());
+		}
 
 		KaleoTaskAssignmentModelImpl kaleoTaskAssignmentModelImpl = (KaleoTaskAssignmentModelImpl)kaleoTaskAssignment;
 
@@ -2806,38 +2821,6 @@ public class KaleoTaskAssignmentPersistenceImpl extends BasePersistenceImpl<Kale
 		kaleoTaskAssignment.resetOriginalValues();
 
 		return kaleoTaskAssignment;
-	}
-
-	protected KaleoTaskAssignment toUnwrappedModel(
-		KaleoTaskAssignment kaleoTaskAssignment) {
-		if (kaleoTaskAssignment instanceof KaleoTaskAssignmentImpl) {
-			return kaleoTaskAssignment;
-		}
-
-		KaleoTaskAssignmentImpl kaleoTaskAssignmentImpl = new KaleoTaskAssignmentImpl();
-
-		kaleoTaskAssignmentImpl.setNew(kaleoTaskAssignment.isNew());
-		kaleoTaskAssignmentImpl.setPrimaryKey(kaleoTaskAssignment.getPrimaryKey());
-
-		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(kaleoTaskAssignment.getKaleoTaskAssignmentId());
-		kaleoTaskAssignmentImpl.setGroupId(kaleoTaskAssignment.getGroupId());
-		kaleoTaskAssignmentImpl.setCompanyId(kaleoTaskAssignment.getCompanyId());
-		kaleoTaskAssignmentImpl.setUserId(kaleoTaskAssignment.getUserId());
-		kaleoTaskAssignmentImpl.setUserName(kaleoTaskAssignment.getUserName());
-		kaleoTaskAssignmentImpl.setCreateDate(kaleoTaskAssignment.getCreateDate());
-		kaleoTaskAssignmentImpl.setModifiedDate(kaleoTaskAssignment.getModifiedDate());
-		kaleoTaskAssignmentImpl.setKaleoClassName(kaleoTaskAssignment.getKaleoClassName());
-		kaleoTaskAssignmentImpl.setKaleoClassPK(kaleoTaskAssignment.getKaleoClassPK());
-		kaleoTaskAssignmentImpl.setKaleoDefinitionVersionId(kaleoTaskAssignment.getKaleoDefinitionVersionId());
-		kaleoTaskAssignmentImpl.setKaleoNodeId(kaleoTaskAssignment.getKaleoNodeId());
-		kaleoTaskAssignmentImpl.setAssigneeClassName(kaleoTaskAssignment.getAssigneeClassName());
-		kaleoTaskAssignmentImpl.setAssigneeClassPK(kaleoTaskAssignment.getAssigneeClassPK());
-		kaleoTaskAssignmentImpl.setAssigneeActionId(kaleoTaskAssignment.getAssigneeActionId());
-		kaleoTaskAssignmentImpl.setAssigneeScript(kaleoTaskAssignment.getAssigneeScript());
-		kaleoTaskAssignmentImpl.setAssigneeScriptLanguage(kaleoTaskAssignment.getAssigneeScriptLanguage());
-		kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts(kaleoTaskAssignment.getAssigneeScriptRequiredContexts());
-
-		return kaleoTaskAssignmentImpl;
 	}
 
 	/**

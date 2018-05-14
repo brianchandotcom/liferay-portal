@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +58,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -12483,8 +12485,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	@Override
 	protected DLFolder removeImpl(DLFolder dlFolder) {
-		dlFolder = toUnwrappedModel(dlFolder);
-
 		dlFolderToDLFileEntryTypeTableMapper.deleteLeftPrimaryKeyTableMappings(dlFolder.getPrimaryKey());
 
 		Session session = null;
@@ -12517,9 +12517,23 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 	@Override
 	public DLFolder updateImpl(DLFolder dlFolder) {
-		dlFolder = toUnwrappedModel(dlFolder);
-
 		boolean isNew = dlFolder.isNew();
+
+		if (!(dlFolder instanceof DLFolderModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(dlFolder.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(dlFolder);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in dlFolder proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DLFolder implementation " +
+				dlFolder.getClass());
+		}
 
 		DLFolderModelImpl dlFolderModelImpl = (DLFolderModelImpl)dlFolder;
 
@@ -12947,43 +12961,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		dlFolder.resetOriginalValues();
 
 		return dlFolder;
-	}
-
-	protected DLFolder toUnwrappedModel(DLFolder dlFolder) {
-		if (dlFolder instanceof DLFolderImpl) {
-			return dlFolder;
-		}
-
-		DLFolderImpl dlFolderImpl = new DLFolderImpl();
-
-		dlFolderImpl.setNew(dlFolder.isNew());
-		dlFolderImpl.setPrimaryKey(dlFolder.getPrimaryKey());
-
-		dlFolderImpl.setUuid(dlFolder.getUuid());
-		dlFolderImpl.setFolderId(dlFolder.getFolderId());
-		dlFolderImpl.setGroupId(dlFolder.getGroupId());
-		dlFolderImpl.setCompanyId(dlFolder.getCompanyId());
-		dlFolderImpl.setUserId(dlFolder.getUserId());
-		dlFolderImpl.setUserName(dlFolder.getUserName());
-		dlFolderImpl.setCreateDate(dlFolder.getCreateDate());
-		dlFolderImpl.setModifiedDate(dlFolder.getModifiedDate());
-		dlFolderImpl.setRepositoryId(dlFolder.getRepositoryId());
-		dlFolderImpl.setMountPoint(dlFolder.isMountPoint());
-		dlFolderImpl.setParentFolderId(dlFolder.getParentFolderId());
-		dlFolderImpl.setTreePath(dlFolder.getTreePath());
-		dlFolderImpl.setName(dlFolder.getName());
-		dlFolderImpl.setDescription(dlFolder.getDescription());
-		dlFolderImpl.setLastPostDate(dlFolder.getLastPostDate());
-		dlFolderImpl.setDefaultFileEntryTypeId(dlFolder.getDefaultFileEntryTypeId());
-		dlFolderImpl.setHidden(dlFolder.isHidden());
-		dlFolderImpl.setRestrictionType(dlFolder.getRestrictionType());
-		dlFolderImpl.setLastPublishDate(dlFolder.getLastPublishDate());
-		dlFolderImpl.setStatus(dlFolder.getStatus());
-		dlFolderImpl.setStatusByUserId(dlFolder.getStatusByUserId());
-		dlFolderImpl.setStatusByUserName(dlFolder.getStatusByUserName());
-		dlFolderImpl.setStatusDate(dlFolder.getStatusDate());
-
-		return dlFolderImpl;
 	}
 
 	/**

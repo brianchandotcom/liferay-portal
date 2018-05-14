@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.AccountImpl;
@@ -44,6 +45,7 @@ import com.liferay.portal.model.impl.AccountModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -257,8 +259,6 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 
 	@Override
 	protected Account removeImpl(Account account) {
-		account = toUnwrappedModel(account);
-
 		Session session = null;
 
 		try {
@@ -289,9 +289,23 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 
 	@Override
 	public Account updateImpl(Account account) {
-		account = toUnwrappedModel(account);
-
 		boolean isNew = account.isNew();
+
+		if (!(account instanceof AccountModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(account.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(account);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in account proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Account implementation " +
+				account.getClass());
+		}
 
 		AccountModelImpl accountModelImpl = (AccountModelImpl)account;
 
@@ -352,37 +366,6 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		account.resetOriginalValues();
 
 		return account;
-	}
-
-	protected Account toUnwrappedModel(Account account) {
-		if (account instanceof AccountImpl) {
-			return account;
-		}
-
-		AccountImpl accountImpl = new AccountImpl();
-
-		accountImpl.setNew(account.isNew());
-		accountImpl.setPrimaryKey(account.getPrimaryKey());
-
-		accountImpl.setMvccVersion(account.getMvccVersion());
-		accountImpl.setAccountId(account.getAccountId());
-		accountImpl.setCompanyId(account.getCompanyId());
-		accountImpl.setUserId(account.getUserId());
-		accountImpl.setUserName(account.getUserName());
-		accountImpl.setCreateDate(account.getCreateDate());
-		accountImpl.setModifiedDate(account.getModifiedDate());
-		accountImpl.setParentAccountId(account.getParentAccountId());
-		accountImpl.setName(account.getName());
-		accountImpl.setLegalName(account.getLegalName());
-		accountImpl.setLegalId(account.getLegalId());
-		accountImpl.setLegalType(account.getLegalType());
-		accountImpl.setSicCode(account.getSicCode());
-		accountImpl.setTickerSymbol(account.getTickerSymbol());
-		accountImpl.setIndustry(account.getIndustry());
-		accountImpl.setType(account.getType());
-		accountImpl.setSize(account.getSize());
-
-		return accountImpl;
 	}
 
 	/**

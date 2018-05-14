@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,6 +58,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -32095,8 +32097,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 	@Override
 	protected KBArticle removeImpl(KBArticle kbArticle) {
-		kbArticle = toUnwrappedModel(kbArticle);
-
 		Session session = null;
 
 		try {
@@ -32127,9 +32127,23 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 	@Override
 	public KBArticle updateImpl(KBArticle kbArticle) {
-		kbArticle = toUnwrappedModel(kbArticle);
-
 		boolean isNew = kbArticle.isNew();
+
+		if (!(kbArticle instanceof KBArticleModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kbArticle.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kbArticle);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kbArticle proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KBArticle implementation " +
+				kbArticle.getClass());
+		}
 
 		KBArticleModelImpl kbArticleModelImpl = (KBArticleModelImpl)kbArticle;
 
@@ -33028,49 +33042,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		kbArticle.resetOriginalValues();
 
 		return kbArticle;
-	}
-
-	protected KBArticle toUnwrappedModel(KBArticle kbArticle) {
-		if (kbArticle instanceof KBArticleImpl) {
-			return kbArticle;
-		}
-
-		KBArticleImpl kbArticleImpl = new KBArticleImpl();
-
-		kbArticleImpl.setNew(kbArticle.isNew());
-		kbArticleImpl.setPrimaryKey(kbArticle.getPrimaryKey());
-
-		kbArticleImpl.setUuid(kbArticle.getUuid());
-		kbArticleImpl.setKbArticleId(kbArticle.getKbArticleId());
-		kbArticleImpl.setResourcePrimKey(kbArticle.getResourcePrimKey());
-		kbArticleImpl.setGroupId(kbArticle.getGroupId());
-		kbArticleImpl.setCompanyId(kbArticle.getCompanyId());
-		kbArticleImpl.setUserId(kbArticle.getUserId());
-		kbArticleImpl.setUserName(kbArticle.getUserName());
-		kbArticleImpl.setCreateDate(kbArticle.getCreateDate());
-		kbArticleImpl.setModifiedDate(kbArticle.getModifiedDate());
-		kbArticleImpl.setRootResourcePrimKey(kbArticle.getRootResourcePrimKey());
-		kbArticleImpl.setParentResourceClassNameId(kbArticle.getParentResourceClassNameId());
-		kbArticleImpl.setParentResourcePrimKey(kbArticle.getParentResourcePrimKey());
-		kbArticleImpl.setKbFolderId(kbArticle.getKbFolderId());
-		kbArticleImpl.setVersion(kbArticle.getVersion());
-		kbArticleImpl.setTitle(kbArticle.getTitle());
-		kbArticleImpl.setUrlTitle(kbArticle.getUrlTitle());
-		kbArticleImpl.setContent(kbArticle.getContent());
-		kbArticleImpl.setDescription(kbArticle.getDescription());
-		kbArticleImpl.setPriority(kbArticle.getPriority());
-		kbArticleImpl.setSections(kbArticle.getSections());
-		kbArticleImpl.setViewCount(kbArticle.getViewCount());
-		kbArticleImpl.setLatest(kbArticle.isLatest());
-		kbArticleImpl.setMain(kbArticle.isMain());
-		kbArticleImpl.setSourceURL(kbArticle.getSourceURL());
-		kbArticleImpl.setLastPublishDate(kbArticle.getLastPublishDate());
-		kbArticleImpl.setStatus(kbArticle.getStatus());
-		kbArticleImpl.setStatusByUserId(kbArticle.getStatusByUserId());
-		kbArticleImpl.setStatusByUserName(kbArticle.getStatusByUserName());
-		kbArticleImpl.setStatusDate(kbArticle.getStatusDate());
-
-		return kbArticleImpl;
 	}
 
 	/**

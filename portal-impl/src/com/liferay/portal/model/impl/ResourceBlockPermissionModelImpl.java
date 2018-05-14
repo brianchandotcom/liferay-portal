@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.ResourceBlockPermission;
 import com.liferay.portal.kernel.model.ResourceBlockPermissionModel;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -466,7 +467,7 @@ public class ResourceBlockPermissionModelImpl extends BaseModelImpl<ResourceBloc
 
 	private static final ClassLoader _classLoader = ResourceBlockPermission.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ResourceBlockPermission.class
+			ResourceBlockPermission.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _resourceBlockPermissionId;

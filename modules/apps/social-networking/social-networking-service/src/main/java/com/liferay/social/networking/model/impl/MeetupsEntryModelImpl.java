@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -779,7 +780,7 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 
 	private static final ClassLoader _classLoader = MeetupsEntry.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			MeetupsEntry.class
+			MeetupsEntry.class, ModelWrapper.class
 		};
 	private long _meetupsEntryId;
 	private long _companyId;

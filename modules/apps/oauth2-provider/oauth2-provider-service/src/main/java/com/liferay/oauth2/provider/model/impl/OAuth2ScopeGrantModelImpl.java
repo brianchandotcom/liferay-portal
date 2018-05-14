@@ -24,6 +24,7 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrantModel;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -549,7 +550,7 @@ public class OAuth2ScopeGrantModelImpl extends BaseModelImpl<OAuth2ScopeGrant>
 
 	private static final ClassLoader _classLoader = OAuth2ScopeGrant.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			OAuth2ScopeGrant.class
+			OAuth2ScopeGrant.class, ModelWrapper.class
 		};
 	private long _oAuth2ScopeGrantId;
 	private long _companyId;

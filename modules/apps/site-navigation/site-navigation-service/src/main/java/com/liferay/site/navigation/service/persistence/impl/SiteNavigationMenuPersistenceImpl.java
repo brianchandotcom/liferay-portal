@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersist
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3984,8 +3986,6 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 	@Override
 	protected SiteNavigationMenu removeImpl(
 		SiteNavigationMenu siteNavigationMenu) {
-		siteNavigationMenu = toUnwrappedModel(siteNavigationMenu);
-
 		Session session = null;
 
 		try {
@@ -4016,9 +4016,23 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 
 	@Override
 	public SiteNavigationMenu updateImpl(SiteNavigationMenu siteNavigationMenu) {
-		siteNavigationMenu = toUnwrappedModel(siteNavigationMenu);
-
 		boolean isNew = siteNavigationMenu.isNew();
+
+		if (!(siteNavigationMenu instanceof SiteNavigationMenuModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(siteNavigationMenu.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(siteNavigationMenu);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in siteNavigationMenu proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SiteNavigationMenu implementation " +
+				siteNavigationMenu.getClass());
+		}
 
 		SiteNavigationMenuModelImpl siteNavigationMenuModelImpl = (SiteNavigationMenuModelImpl)siteNavigationMenu;
 
@@ -4173,31 +4187,6 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		siteNavigationMenu.resetOriginalValues();
 
 		return siteNavigationMenu;
-	}
-
-	protected SiteNavigationMenu toUnwrappedModel(
-		SiteNavigationMenu siteNavigationMenu) {
-		if (siteNavigationMenu instanceof SiteNavigationMenuImpl) {
-			return siteNavigationMenu;
-		}
-
-		SiteNavigationMenuImpl siteNavigationMenuImpl = new SiteNavigationMenuImpl();
-
-		siteNavigationMenuImpl.setNew(siteNavigationMenu.isNew());
-		siteNavigationMenuImpl.setPrimaryKey(siteNavigationMenu.getPrimaryKey());
-
-		siteNavigationMenuImpl.setSiteNavigationMenuId(siteNavigationMenu.getSiteNavigationMenuId());
-		siteNavigationMenuImpl.setGroupId(siteNavigationMenu.getGroupId());
-		siteNavigationMenuImpl.setCompanyId(siteNavigationMenu.getCompanyId());
-		siteNavigationMenuImpl.setUserId(siteNavigationMenu.getUserId());
-		siteNavigationMenuImpl.setUserName(siteNavigationMenu.getUserName());
-		siteNavigationMenuImpl.setCreateDate(siteNavigationMenu.getCreateDate());
-		siteNavigationMenuImpl.setModifiedDate(siteNavigationMenu.getModifiedDate());
-		siteNavigationMenuImpl.setName(siteNavigationMenu.getName());
-		siteNavigationMenuImpl.setType(siteNavigationMenu.getType());
-		siteNavigationMenuImpl.setAuto(siteNavigationMenu.isAuto());
-
-		return siteNavigationMenuImpl;
 	}
 
 	/**

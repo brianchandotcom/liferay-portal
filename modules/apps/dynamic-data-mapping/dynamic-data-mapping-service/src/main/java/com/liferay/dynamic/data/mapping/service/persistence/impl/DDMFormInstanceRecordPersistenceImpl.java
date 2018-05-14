@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3916,8 +3918,6 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 	@Override
 	protected DDMFormInstanceRecord removeImpl(
 		DDMFormInstanceRecord ddmFormInstanceRecord) {
-		ddmFormInstanceRecord = toUnwrappedModel(ddmFormInstanceRecord);
-
 		Session session = null;
 
 		try {
@@ -3949,9 +3949,23 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 	@Override
 	public DDMFormInstanceRecord updateImpl(
 		DDMFormInstanceRecord ddmFormInstanceRecord) {
-		ddmFormInstanceRecord = toUnwrappedModel(ddmFormInstanceRecord);
-
 		boolean isNew = ddmFormInstanceRecord.isNew();
+
+		if (!(ddmFormInstanceRecord instanceof DDMFormInstanceRecordModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(ddmFormInstanceRecord.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(ddmFormInstanceRecord);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in ddmFormInstanceRecord proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom DDMFormInstanceRecord implementation " +
+				ddmFormInstanceRecord.getClass());
+		}
 
 		DDMFormInstanceRecordModelImpl ddmFormInstanceRecordModelImpl = (DDMFormInstanceRecordModelImpl)ddmFormInstanceRecord;
 
@@ -4199,36 +4213,6 @@ public class DDMFormInstanceRecordPersistenceImpl extends BasePersistenceImpl<DD
 		ddmFormInstanceRecord.resetOriginalValues();
 
 		return ddmFormInstanceRecord;
-	}
-
-	protected DDMFormInstanceRecord toUnwrappedModel(
-		DDMFormInstanceRecord ddmFormInstanceRecord) {
-		if (ddmFormInstanceRecord instanceof DDMFormInstanceRecordImpl) {
-			return ddmFormInstanceRecord;
-		}
-
-		DDMFormInstanceRecordImpl ddmFormInstanceRecordImpl = new DDMFormInstanceRecordImpl();
-
-		ddmFormInstanceRecordImpl.setNew(ddmFormInstanceRecord.isNew());
-		ddmFormInstanceRecordImpl.setPrimaryKey(ddmFormInstanceRecord.getPrimaryKey());
-
-		ddmFormInstanceRecordImpl.setUuid(ddmFormInstanceRecord.getUuid());
-		ddmFormInstanceRecordImpl.setFormInstanceRecordId(ddmFormInstanceRecord.getFormInstanceRecordId());
-		ddmFormInstanceRecordImpl.setGroupId(ddmFormInstanceRecord.getGroupId());
-		ddmFormInstanceRecordImpl.setCompanyId(ddmFormInstanceRecord.getCompanyId());
-		ddmFormInstanceRecordImpl.setUserId(ddmFormInstanceRecord.getUserId());
-		ddmFormInstanceRecordImpl.setUserName(ddmFormInstanceRecord.getUserName());
-		ddmFormInstanceRecordImpl.setVersionUserId(ddmFormInstanceRecord.getVersionUserId());
-		ddmFormInstanceRecordImpl.setVersionUserName(ddmFormInstanceRecord.getVersionUserName());
-		ddmFormInstanceRecordImpl.setCreateDate(ddmFormInstanceRecord.getCreateDate());
-		ddmFormInstanceRecordImpl.setModifiedDate(ddmFormInstanceRecord.getModifiedDate());
-		ddmFormInstanceRecordImpl.setFormInstanceId(ddmFormInstanceRecord.getFormInstanceId());
-		ddmFormInstanceRecordImpl.setFormInstanceVersion(ddmFormInstanceRecord.getFormInstanceVersion());
-		ddmFormInstanceRecordImpl.setStorageId(ddmFormInstanceRecord.getStorageId());
-		ddmFormInstanceRecordImpl.setVersion(ddmFormInstanceRecord.getVersion());
-		ddmFormInstanceRecordImpl.setLastPublishDate(ddmFormInstanceRecord.getLastPublishDate());
-
-		return ddmFormInstanceRecordImpl;
 	}
 
 	/**

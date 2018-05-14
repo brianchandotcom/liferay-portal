@@ -23,6 +23,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnSoap;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -557,7 +558,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 
 	private static final ClassLoader _classLoader = ExpandoColumn.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			ExpandoColumn.class
+			ExpandoColumn.class, ModelWrapper.class
 		};
 	private long _columnId;
 	private long _companyId;

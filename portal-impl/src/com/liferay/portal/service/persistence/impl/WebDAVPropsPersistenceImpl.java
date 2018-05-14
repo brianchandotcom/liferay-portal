@@ -37,11 +37,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.impl.WebDAVPropsImpl;
 import com.liferay.portal.model.impl.WebDAVPropsModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -507,8 +510,6 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 
 	@Override
 	protected WebDAVProps removeImpl(WebDAVProps webDAVProps) {
-		webDAVProps = toUnwrappedModel(webDAVProps);
-
 		Session session = null;
 
 		try {
@@ -539,9 +540,23 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 
 	@Override
 	public WebDAVProps updateImpl(WebDAVProps webDAVProps) {
-		webDAVProps = toUnwrappedModel(webDAVProps);
-
 		boolean isNew = webDAVProps.isNew();
+
+		if (!(webDAVProps instanceof WebDAVPropsModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(webDAVProps.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(webDAVProps);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in webDAVProps proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom WebDAVProps implementation " +
+				webDAVProps.getClass());
+		}
 
 		WebDAVPropsModelImpl webDAVPropsModelImpl = (WebDAVPropsModelImpl)webDAVProps;
 
@@ -610,28 +625,6 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		webDAVProps.resetOriginalValues();
 
 		return webDAVProps;
-	}
-
-	protected WebDAVProps toUnwrappedModel(WebDAVProps webDAVProps) {
-		if (webDAVProps instanceof WebDAVPropsImpl) {
-			return webDAVProps;
-		}
-
-		WebDAVPropsImpl webDAVPropsImpl = new WebDAVPropsImpl();
-
-		webDAVPropsImpl.setNew(webDAVProps.isNew());
-		webDAVPropsImpl.setPrimaryKey(webDAVProps.getPrimaryKey());
-
-		webDAVPropsImpl.setMvccVersion(webDAVProps.getMvccVersion());
-		webDAVPropsImpl.setWebDavPropsId(webDAVProps.getWebDavPropsId());
-		webDAVPropsImpl.setCompanyId(webDAVProps.getCompanyId());
-		webDAVPropsImpl.setCreateDate(webDAVProps.getCreateDate());
-		webDAVPropsImpl.setModifiedDate(webDAVProps.getModifiedDate());
-		webDAVPropsImpl.setClassNameId(webDAVProps.getClassNameId());
-		webDAVPropsImpl.setClassPK(webDAVProps.getClassPK());
-		webDAVPropsImpl.setProps(webDAVProps.getProps());
-
-		return webDAVPropsImpl;
 	}
 
 	/**

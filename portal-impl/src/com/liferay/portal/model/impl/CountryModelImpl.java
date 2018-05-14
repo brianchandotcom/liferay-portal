@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryModel;
 import com.liferay.portal.kernel.model.CountrySoap;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -693,7 +694,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 
 	private static final ClassLoader _classLoader = Country.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			Country.class
+			Country.class, ModelWrapper.class
 		};
 	private long _mvccVersion;
 	private long _countryId;

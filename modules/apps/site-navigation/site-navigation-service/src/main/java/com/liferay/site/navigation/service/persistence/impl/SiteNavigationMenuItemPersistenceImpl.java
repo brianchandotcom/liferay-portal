@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.site.navigation.service.persistence.SiteNavigationMenuItemPer
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1897,8 +1899,6 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	@Override
 	protected SiteNavigationMenuItem removeImpl(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
-		siteNavigationMenuItem = toUnwrappedModel(siteNavigationMenuItem);
-
 		Session session = null;
 
 		try {
@@ -1930,9 +1930,23 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	@Override
 	public SiteNavigationMenuItem updateImpl(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
-		siteNavigationMenuItem = toUnwrappedModel(siteNavigationMenuItem);
-
 		boolean isNew = siteNavigationMenuItem.isNew();
+
+		if (!(siteNavigationMenuItem instanceof SiteNavigationMenuItemModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(siteNavigationMenuItem.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(siteNavigationMenuItem);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in siteNavigationMenuItem proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SiteNavigationMenuItem implementation " +
+				siteNavigationMenuItem.getClass());
+		}
 
 		SiteNavigationMenuItemModelImpl siteNavigationMenuItemModelImpl = (SiteNavigationMenuItemModelImpl)siteNavigationMenuItem;
 
@@ -2093,33 +2107,6 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		siteNavigationMenuItem.resetOriginalValues();
 
 		return siteNavigationMenuItem;
-	}
-
-	protected SiteNavigationMenuItem toUnwrappedModel(
-		SiteNavigationMenuItem siteNavigationMenuItem) {
-		if (siteNavigationMenuItem instanceof SiteNavigationMenuItemImpl) {
-			return siteNavigationMenuItem;
-		}
-
-		SiteNavigationMenuItemImpl siteNavigationMenuItemImpl = new SiteNavigationMenuItemImpl();
-
-		siteNavigationMenuItemImpl.setNew(siteNavigationMenuItem.isNew());
-		siteNavigationMenuItemImpl.setPrimaryKey(siteNavigationMenuItem.getPrimaryKey());
-
-		siteNavigationMenuItemImpl.setSiteNavigationMenuItemId(siteNavigationMenuItem.getSiteNavigationMenuItemId());
-		siteNavigationMenuItemImpl.setGroupId(siteNavigationMenuItem.getGroupId());
-		siteNavigationMenuItemImpl.setCompanyId(siteNavigationMenuItem.getCompanyId());
-		siteNavigationMenuItemImpl.setUserId(siteNavigationMenuItem.getUserId());
-		siteNavigationMenuItemImpl.setUserName(siteNavigationMenuItem.getUserName());
-		siteNavigationMenuItemImpl.setCreateDate(siteNavigationMenuItem.getCreateDate());
-		siteNavigationMenuItemImpl.setModifiedDate(siteNavigationMenuItem.getModifiedDate());
-		siteNavigationMenuItemImpl.setSiteNavigationMenuId(siteNavigationMenuItem.getSiteNavigationMenuId());
-		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
-		siteNavigationMenuItemImpl.setType(siteNavigationMenuItem.getType());
-		siteNavigationMenuItemImpl.setTypeSettings(siteNavigationMenuItem.getTypeSettings());
-		siteNavigationMenuItemImpl.setOrder(siteNavigationMenuItem.getOrder());
-
-		return siteNavigationMenuItemImpl;
 	}
 
 	/**

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>EMPTY_INFO</td>
-	<td>//div[@class='sheet']/div[contains(@class,'sheet-text')]</td>
+	<td>//div[contains(@class,'sheet')]/div[contains(@class,'sheet-text')]</td>
 	<td></td>
 </tr>
 <tr>

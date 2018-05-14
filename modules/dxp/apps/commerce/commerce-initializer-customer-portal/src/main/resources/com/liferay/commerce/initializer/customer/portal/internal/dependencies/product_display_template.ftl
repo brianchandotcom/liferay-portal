@@ -148,16 +148,10 @@
 			</div>
 
 			<#if cpInstance??>
-				<div class="product-detail-info-multiples">
-					<h6 class="commerce-title">Buy Multiples & Save</h6>
-
-					<div class="form-group-autofit">
-							<@liferay_commerce["tier-price"]
-								CPInstanceId=cpInstanceId
-								taglibQuantityInputId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
-							/>
-					</div>
-				</div>
+				<@liferay_commerce["tier-price"]
+					CPInstanceId=cpInstanceId
+					taglibQuantityInputId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
+				/>
 			</#if>
 
 			<div class="form-group-autofit product-detail-info-selections">

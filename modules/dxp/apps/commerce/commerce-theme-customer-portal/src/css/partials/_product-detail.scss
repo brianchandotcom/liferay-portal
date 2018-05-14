@@ -47,7 +47,7 @@
 	@include media-breakpoint-up(md) {
 		flex-grow: 1;
 		padding-left: 3rem;
-		width: auto;
+		width: calc(100% - #{$product-detail-image-widget-width});
 	}
 }
 
@@ -161,77 +161,65 @@
 	}
 }
 
-.product-detail-info-multiples {
-	border-bottom: 1px solid #CCC;
+.commerce-tier-price {
+	.table-responsive {
+		margin-bottom: 1rem;
+		max-height: 500px;
+		overflow: auto;
+	}
+
+	.table {
+		margin-bottom: -$table-border-width;
+		text-align: right;
+
+		thead th {
+			background-color: #F9F9F9;
+			border-color: #F9F9F9;
+			font-weight: $font-weight-light;
+		}
+
+		.price-point-column {
+			text-align: center;
+		}
+	}
+
+	.multiples-row {
+		cursor: $link-cursor;
+	}
+
+	.table-truncate-threshold {
+		~ tr {
+			display: none;
+		}
+	}
+}
+
+.commerce-tier-price.expand {
+	.table-truncate-threshold {
+		~ tr {
+			display: table-row;
+		}
+	}
+
+	.commerce-tier-price-toggler {
+		.view-less {
+			display: inline;
+		}
+
+		.view-more {
+			display: none;
+		}
+	}
+}
+
+.commerce-tier-price-footer {
 	margin-bottom: 1rem;
+	margin-top: 1rem;
+}
 
-	.commerce-custom-control-button {
-		width: calc(100% - #{$grid-gutter-width / 4});
-	}
-
-	.commerce-title {
-		font-weight: $font-weight-normal;
-		margin-bottom: 1.5rem;
-	}
-
-	.form-group-autofit {
-		margin-bottom: 0.5rem;
-
-		@include media-breakpoint-down(lg) {
-			flex-direction: row;
-			flex-wrap: wrap;
-
-			.form-group-item {
-				padding-bottom: $grid-gutter-width / 2;
-				padding-right: $grid-gutter-width / 4;
-				width: 50%;
-
-				&:nth-of-type(2n) {
-					padding-left: $grid-gutter-width / 4;
-					padding-right: 0;
-				}
-
-				&:not(:last-child) {
-					margin-right: 0;
-				}
-			}
-		}
-
-		@include media-breakpoint-up(xl) {
-			flex-direction: row;
-			flex-wrap: wrap;
-
-			.form-group-item {
-				padding-bottom: $grid-gutter-width / 2;
-				padding-right: $grid-gutter-width / 4;
-				width: 25%;
-
-				&:nth-of-type(4n) {
-					padding-left: $grid-gutter-width / 4;
-					padding-right: 0;
-				}
-
-				&:not(:last-child) {
-					margin-right: 0;
-				}
-			}
-		}
-
-		@media (min-width: 2000px) {
-			.form-group-item {
-				width: 14.2857%;
-
-				&:nth-of-type(4n) {
-					padding-left: 0;
-					padding-right: $grid-gutter-width / 4;
-				}
-
-				&:nth-of-type(7n) {
-					padding-left: $grid-gutter-width / 4;
-					padding-right: 0;
-				}
-			}
-		}
+.commerce-tier-price-toggler {
+	.view-less {
+		display: none;
 	}
 }
 

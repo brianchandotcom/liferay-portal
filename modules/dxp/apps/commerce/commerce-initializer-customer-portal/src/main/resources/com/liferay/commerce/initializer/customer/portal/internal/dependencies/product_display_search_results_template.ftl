@@ -113,7 +113,7 @@
 							<#if isIgnoreSKUCombinations>
 								<div class="autofit-row">
 									<div class="autofit-col autofit-col-expand">
-										<div class="custom-control custom-checkbox">
+										<div class="custom-checkbox custom-control">
 											<label>
 												<input class="custom-control-input" type="checkbox">
 												<span class="custom-control-label">

@@ -8,22 +8,22 @@
 					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 					tempor incididunt ut labore et dolore magna aliqua.</p>
 
-					<a href="#" class="btn btn-shadow">
+					<a class="btn btn-shadow" href="#">
 						Example shadow btn
-						<svg class="commerce-icon lexicon-icon lexicon-icon-comments text-light ml-1">
+						<svg class="commerce-icon lexicon-icon lexicon-icon-comments ml-1 text-light">
 							<use xlink:href="${images_folder}/lexicon/icons.svg#comments" />
 						</svg>
 					</a>
 
-					<a href="#" class="btn btn-brand">
-						<svg class="commerce-icon lexicon-icon lexicon-icon-cut text-light ml-1">
+					<a class="btn btn-brand" href="#">
+						<svg class="commerce-icon lexicon-icon lexicon-icon-cut ml-1 text-light">
 							<use xlink:href="${images_folder}/lexicon/icons.svg#cut" />
 						</svg>
 						Example brand btn
 					</a>
 
 					<div class="my-5">
-						 <ul class="nav nav-underline nav-underline-brand flex-row">
+						<ul class="flex-row nav nav-underline nav-underline-brand">
 							<li class="nav-item"><a class="active nav-link" href="#1">Basic</a></li>
 							<li class="nav-item"><a class="nav-link" href="#1">Details</a></li>
 							<li class="nav-item"><a class="nav-link" href="#1">Site Template</a></li>

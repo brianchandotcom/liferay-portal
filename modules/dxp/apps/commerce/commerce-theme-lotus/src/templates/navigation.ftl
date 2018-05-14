@@ -1,12 +1,12 @@
 <div aria-expanded="true" class="collapse navbar-collapse" id="navigationCollapse">
-	<nav class="dropdown-col-md-4 dropdown-full dropdown-wide navbar-nav mr-auto site-navigation" id="navigation" role="navigation">
+	<nav class="dropdown-col-md-4 dropdown-full dropdown-wide mr-auto navbar-nav site-navigation" id="navigation" role="navigation">
 		<@commerce_category_navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 	</nav>
 
-	<ul class="nav navbar-nav navbar-right navbar-recursive">
+	<ul class="nav navbar-nav navbar-recursive navbar-right">
 		<#if show_main_search_icon>
 			<li class="nav-item" id="mainSearchIcon">
-				<a class="nav-link collapsed" role="button" data-toggle="collapse" href="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+				<a aria-controls="collapseSearch" aria-expanded="false" class="collapsed nav-link" data-toggle="collapse" href="#collapseSearch" role="button">
 					<svg class="commerce-icon lexicon-icon lexicon-icon-search">
 						<use xlink:href="${images_folder}/theme-icons.svg#icon-search" />
 					</svg>
@@ -34,17 +34,17 @@
 			<li class="collapse-hover nav-item" id="wishlistIcon">
 				<a class="animate nav-link" href="${wishlistUrl}">
 					<#if wishListItemsCount != 0>
-						<svg class="commerce-icon lexicon-icon icon-heart-full">
+						<svg class="commerce-icon icon-heart-full lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
 						</svg>
 
 						<span class="sticker sticker-outside">${wishListItemsCount}</span>
 					<#else>
-						<svg class="commerce-icon lexicon-icon icon-heart">
+						<svg class="commerce-icon icon-heart lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist" />
 						</svg>
 
-						<svg class="commerce-icon lexicon-icon icon-heart-full" style="display: none">
+						<svg class="commerce-icon icon-heart-full lexicon-icon" style="display: none">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-whislist-full" />
 						</svg>
 					</#if>
@@ -64,15 +64,15 @@
 					<#if orderItemsQuantity != 0>
 						<span class="sticker sticker-outside">${orderItemsQuantity}</span>
 
-						<svg class="commerce-icon lexicon-icon icon-bag-full">
+						<svg class="commerce-icon icon-bag-full lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
 						</svg>
 					<#else>
-						<svg class="commerce-icon lexicon-icon icon-bag">
+						<svg class="commerce-icon icon-bag lexicon-icon">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag" />
 						</svg>
 
-						<svg class="commerce-icon lexicon-icon icon-bag-full" style="display: none">
+						<svg class="commerce-icon icon-bag-full lexicon-icon" style="display: none">
 							<use xlink:href="${images_folder}/theme-icons.svg#icon-bag-full" />
 						</svg>
 					</#if>
@@ -88,13 +88,13 @@
 
 		<li class="nav-item">
 			<#if is_signed_in>
-				<a class="nav-link" role="button" href="${accountUrl}">
+				<a class="nav-link" href="${accountUrl}" role="button">
 					<svg class="commerce-icon lexicon-icon">
 						<use xlink:href="${images_folder}/theme-icons.svg#icon-user" />
 					</svg>
 				</a>
 			<#else>
-				<a class="collapsed nav-link" role="button" data-toggle="collapse" href="#collapseLogin" aria-expanded="false" aria-controls="collapseLogin">
+				<a aria-controls="collapseLogin" aria-expanded="false" class="collapsed nav-link" data-toggle="collapse" href="#collapseLogin" role="button">
 					<svg class="commerce-icon lexicon-icon">
 						<use xlink:href="${images_folder}/theme-icons.svg#icon-user" />
 					</svg>

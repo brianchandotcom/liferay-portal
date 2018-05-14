@@ -1,4 +1,4 @@
-<div class="sidenav sidenav-b2b b2b-site-navigation b2b-site-navigation-open" id="b2bSiteNavigation">
+<div class="b2b-site-navigation b2b-site-navigation-open sidenav sidenav-b2b" id="b2bSiteNavigation">
 	<nav class="tbar">
 		<ul class="tbar-nav">
 			<li class="tbar-item">

@@ -25,7 +25,7 @@
 				</div>
 			</#if>
 
-			<header class="navbar navbar-expand-md navbar-ecommerce">
+			<header class="navbar navbar-ecommerce navbar-expand-md">
 				<div class="container-fluid" id="banner" role="banner">
 					<div class="navbar-brand" id="heading">
 						<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
@@ -38,7 +38,7 @@
 					</div>
 
 					<#if has_navigation>
-						<button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#navigationCollapse" aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<button aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-light navbar-toggler" data-target="#navigationCollapse" data-toggle="collapse" type="button">
 							<span class="navbar-toggler-icon"></span>
 						</button>
 

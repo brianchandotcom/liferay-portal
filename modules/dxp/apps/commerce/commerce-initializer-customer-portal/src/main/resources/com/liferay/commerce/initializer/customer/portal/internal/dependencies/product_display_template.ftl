@@ -206,14 +206,14 @@
 	<div class="product-detail-description">
 		<ul class="nav nav-underline nav-underline-light" role="tablist">
 			<li class="nav-item" role="presentation">
-				<a aria-controls="<@portlet.namespace />description" aria-expanded="true" data-toggle="tab" class="nav-link active" href="#<@portlet.namespace />description"  role="tab">
+				<a aria-controls="<@portlet.namespace />description" aria-expanded="true" class="active nav-link" data-toggle="tab" href="#<@portlet.namespace />description" role="tab">
 					${languageUtil.get(request, "description")}
 				</a>
 			</li>
 
 			<#if simpleCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues()>
 				<li class="nav-item" role="presentation">
-					<a aria-controls="<@portlet.namespace />specification" aria-expanded="false" data-toggle="tab" class="nav-link" href="#<@portlet.namespace />specification"  role="tab">
+					<a aria-controls="<@portlet.namespace />specification" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<@portlet.namespace />specification" role="tab">
 						${languageUtil.get(request, "specifications")}
 					</a>
 				</li>
@@ -221,7 +221,7 @@
 
 			<#if cpAttachmentFileEntries?has_content>
 				<li class="nav-item" role="presentation">
-					<a aria-controls="<@portlet.namespace />attachments" aria-expanded="false" data-toggle="tab" class="nav-link" href="#<@portlet.namespace />attachments"  role="tab">
+					<a aria-controls="<@portlet.namespace />attachments" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<@portlet.namespace />attachments" role="tab">
 						${languageUtil.get(request, "attachments")}
 					</a>
 				</li>
@@ -229,7 +229,7 @@
 		</ul>
 
 		<div class="tab-content">
-			<div class="fade tab-pane active show" id="<@portlet.namespace />description">
+			<div class="active fade show tab-pane" id="<@portlet.namespace />description">
 				<p>${cpDefinition.getDescription(themeDisplay.getLanguageId())}</p>
 			</div>
 

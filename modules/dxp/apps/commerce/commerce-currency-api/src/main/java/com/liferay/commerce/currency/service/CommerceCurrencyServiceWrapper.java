@@ -90,6 +90,13 @@ public class CommerceCurrencyServiceWrapper implements CommerceCurrencyService,
 		return _commerceCurrencyService.getCommerceCurrency(commerceCurrencyId);
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
+		long groupId, String code)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCurrencyService.getCommerceCurrency(groupId, code);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

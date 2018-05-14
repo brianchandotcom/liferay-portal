@@ -91,6 +91,10 @@ public interface CommerceCurrencyService extends BaseService {
 	public CommerceCurrency getCommerceCurrency(long commerceCurrencyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency getCommerceCurrency(long groupId, String code)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

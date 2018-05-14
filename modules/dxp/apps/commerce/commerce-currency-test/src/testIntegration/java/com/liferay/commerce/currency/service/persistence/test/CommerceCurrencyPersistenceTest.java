@@ -233,6 +233,15 @@ public class CommerceCurrencyPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C() throws Exception {
+		_persistence.countByG_C(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_C(0L, "null");
+
+		_persistence.countByG_C(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_P() throws Exception {
 		_persistence.countByG_P(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean());
@@ -496,6 +505,13 @@ public class CommerceCurrencyPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingCommerceCurrency.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceCurrency,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingCommerceCurrency.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceCurrency,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(existingCommerceCurrency.getCode(),
+				ReflectionTestUtil.invoke(existingCommerceCurrency,
+					"getOriginalCode", new Class<?>[0])));
 	}
 
 	protected CommerceCurrency addCommerceCurrency() throws Exception {

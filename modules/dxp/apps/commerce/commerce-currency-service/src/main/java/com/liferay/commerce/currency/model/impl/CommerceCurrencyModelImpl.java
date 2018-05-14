@@ -137,11 +137,12 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 				"value.object.column.bitmask.enabled.com.liferay.commerce.currency.model.CommerceCurrency"),
 			true);
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
-	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long PRIMARY_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long CODE_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long PRIMARY_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -524,7 +525,17 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 
 	@Override
 	public void setCode(String code) {
+		_columnBitmask |= CODE_COLUMN_BITMASK;
+
+		if (_originalCode == null) {
+			_originalCode = _code;
+		}
+
 		_code = code;
+	}
+
+	public String getOriginalCode() {
+		return GetterUtil.getString(_originalCode);
 	}
 
 	@JSON
@@ -929,6 +940,8 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 
 		commerceCurrencyModelImpl._setModifiedDate = false;
 
+		commerceCurrencyModelImpl._originalCode = commerceCurrencyModelImpl._code;
+
 		commerceCurrencyModelImpl._originalPrimary = commerceCurrencyModelImpl._primary;
 
 		commerceCurrencyModelImpl._setOriginalPrimary = false;
@@ -1168,6 +1181,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _code;
+	private String _originalCode;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private BigDecimal _rate;

@@ -500,6 +500,56 @@ public interface CommerceCurrencyPersistence extends BasePersistence<CommerceCur
 	public int countByGroupId(long groupId);
 
 	/**
+	* Returns the commerce currency where groupId = &#63; and code = &#63; or throws a {@link NoSuchCurrencyException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @return the matching commerce currency
+	* @throws NoSuchCurrencyException if a matching commerce currency could not be found
+	*/
+	public CommerceCurrency findByG_C(long groupId, String code)
+		throws NoSuchCurrencyException;
+
+	/**
+	* Returns the commerce currency where groupId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	*/
+	public CommerceCurrency fetchByG_C(long groupId, String code);
+
+	/**
+	* Returns the commerce currency where groupId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	*/
+	public CommerceCurrency fetchByG_C(long groupId, String code,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the commerce currency where groupId = &#63; and code = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @return the commerce currency that was removed
+	*/
+	public CommerceCurrency removeByG_C(long groupId, String code)
+		throws NoSuchCurrencyException;
+
+	/**
+	* Returns the number of commerce currencies where groupId = &#63; and code = &#63;.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @return the number of matching commerce currencies
+	*/
+	public int countByG_C(long groupId, String code);
+
+	/**
 	* Returns all the commerce currencies where groupId = &#63; and primary = &#63;.
 	*
 	* @param groupId the group ID

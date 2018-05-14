@@ -314,6 +314,12 @@ public class CommerceCurrencyLocalServiceUtil {
 		return getService().getCommerceCurrency(commerceCurrencyId);
 	}
 
+	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
+		long groupId, String code)
+		throws com.liferay.commerce.currency.exception.NoSuchCurrencyException {
+		return getService().getCommerceCurrency(groupId, code);
+	}
+
 	/**
 	* Returns the commerce currency matching the UUID and group.
 	*

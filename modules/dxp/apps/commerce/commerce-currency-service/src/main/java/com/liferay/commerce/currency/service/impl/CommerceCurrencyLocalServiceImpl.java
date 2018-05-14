@@ -18,6 +18,7 @@ import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServ
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
+import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.base.CommerceCurrencyLocalServiceBaseImpl;
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
@@ -160,6 +161,13 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public int getCommerceCurrenciesCount(long groupId, boolean active) {
 		return commerceCurrencyPersistence.countByG_A(groupId, active);
+	}
+
+	@Override
+	public CommerceCurrency getCommerceCurrency(long groupId, String code)
+		throws NoSuchCurrencyException {
+
+		return commerceCurrencyPersistence.findByG_C(groupId, code);
 	}
 
 	@Override

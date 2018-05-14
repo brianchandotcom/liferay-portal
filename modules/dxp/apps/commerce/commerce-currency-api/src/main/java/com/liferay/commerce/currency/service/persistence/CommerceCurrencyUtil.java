@@ -661,6 +661,66 @@ public class CommerceCurrencyUtil {
 	}
 
 	/**
+	* Returns the commerce currency where groupId = &#63; and code = &#63; or throws a {@link NoSuchCurrencyException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @return the matching commerce currency
+	* @throws NoSuchCurrencyException if a matching commerce currency could not be found
+	*/
+	public static CommerceCurrency findByG_C(long groupId, String code)
+		throws com.liferay.commerce.currency.exception.NoSuchCurrencyException {
+		return getPersistence().findByG_C(groupId, code);
+	}
+
+	/**
+	* Returns the commerce currency where groupId = &#63; and code = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	*/
+	public static CommerceCurrency fetchByG_C(long groupId, String code) {
+		return getPersistence().fetchByG_C(groupId, code);
+	}
+
+	/**
+	* Returns the commerce currency where groupId = &#63; and code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce currency, or <code>null</code> if a matching commerce currency could not be found
+	*/
+	public static CommerceCurrency fetchByG_C(long groupId, String code,
+		boolean retrieveFromCache) {
+		return getPersistence().fetchByG_C(groupId, code, retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce currency where groupId = &#63; and code = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @return the commerce currency that was removed
+	*/
+	public static CommerceCurrency removeByG_C(long groupId, String code)
+		throws com.liferay.commerce.currency.exception.NoSuchCurrencyException {
+		return getPersistence().removeByG_C(groupId, code);
+	}
+
+	/**
+	* Returns the number of commerce currencies where groupId = &#63; and code = &#63;.
+	*
+	* @param groupId the group ID
+	* @param code the code
+	* @return the number of matching commerce currencies
+	*/
+	public static int countByG_C(long groupId, String code) {
+		return getPersistence().countByG_C(groupId, code);
+	}
+
+	/**
 	* Returns all the commerce currencies where groupId = &#63; and primary = &#63;.
 	*
 	* @param groupId the group ID

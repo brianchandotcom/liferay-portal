@@ -334,6 +334,13 @@ public class CommerceCurrencyLocalServiceWrapper
 		return _commerceCurrencyLocalService.getCommerceCurrency(commerceCurrencyId);
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
+		long groupId, String code)
+		throws com.liferay.commerce.currency.exception.NoSuchCurrencyException {
+		return _commerceCurrencyLocalService.getCommerceCurrency(groupId, code);
+	}
+
 	/**
 	* Returns the commerce currency matching the UUID and group.
 	*

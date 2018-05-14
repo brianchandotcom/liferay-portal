@@ -197,6 +197,21 @@ public class CommerceCurrencyServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap getCommerceCurrency(
+		long groupId, String code) throws RemoteException {
+		try {
+			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.getCommerceCurrency(groupId,
+					code);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap setActive(
 		long commerceCurrencyId, boolean active) throws RemoteException {
 		try {

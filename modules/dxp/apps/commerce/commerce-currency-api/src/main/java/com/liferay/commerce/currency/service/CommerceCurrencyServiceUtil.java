@@ -92,6 +92,12 @@ public class CommerceCurrencyServiceUtil {
 		return getService().getCommerceCurrency(commerceCurrencyId);
 	}
 
+	public static com.liferay.commerce.currency.model.CommerceCurrency getCommerceCurrency(
+		long groupId, String code)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceCurrency(groupId, code);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

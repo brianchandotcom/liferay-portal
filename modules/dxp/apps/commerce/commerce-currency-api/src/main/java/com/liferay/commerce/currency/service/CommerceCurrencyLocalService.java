@@ -16,6 +16,7 @@ package com.liferay.commerce.currency.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -283,6 +284,10 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCurrency getCommerceCurrency(long commerceCurrencyId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCurrency getCommerceCurrency(long groupId, String code)
+		throws NoSuchCurrencyException;
 
 	/**
 	* Returns the commerce currency matching the UUID and group.

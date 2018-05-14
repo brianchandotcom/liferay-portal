@@ -109,6 +109,13 @@ public class CommerceCurrencyServiceImpl
 	}
 
 	@Override
+	public CommerceCurrency getCommerceCurrency(long groupId, String code)
+		throws PortalException {
+
+		return commerceCurrencyLocalService.getCommerceCurrency(groupId, code);
+	}
+
+	@Override
 	public CommerceCurrency setActive(long commerceCurrencyId, boolean active)
 		throws PortalException {
 

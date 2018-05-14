@@ -75,7 +75,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 											%>
 
 											<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-												<%= fragmentCollection.getName() %>
+												<%= HtmlUtil.escape(fragmentCollection.getName()) %>
 											</a>
 										</li>
 
@@ -113,7 +113,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 				<div class="sheet">
 					<div class="align-items-center autofit-row h3">
 						<div class="autofit-col">
-							<%= fragmentCollection.getName() %>
+							<%= HtmlUtil.escape(fragmentCollection.getName()) %>
 						</div>
 
 						<div class="autofit-col autofit-col-end inline-item-after">

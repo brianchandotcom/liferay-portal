@@ -32,14 +32,14 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CommerceCloudClientConfiguration {
 
-	@Meta.AD(deflt = "1", required = false)
-	public int orderForecastSyncCheckInterval();
-
 	@Meta.AD(required = false)
-	public boolean orderForecastSyncEnabled();
+	public boolean forecastingEnabled();
+
+	@Meta.AD(deflt = "1", required = false)
+	public int forecastingOrdersCheckInterval();
 
 	@Meta.AD(deflt = "10", required = false)
-	public int orderForecastSyncStatus();
+	public int forecastingOrderStatus();
 
 	@Meta.AD(required = false)
 	public String projectId();

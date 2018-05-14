@@ -23,8 +23,7 @@ public class CommerceCloudClientScreenNavigationConstants {
 
 	public static final String ENTRY_KEY_CONNECTION = "connection";
 
-	public static final String ENTRY_KEY_ORDERS_FORECASTING =
-		"orders-forecasting";
+	public static final String ENTRY_KEY_FORECASTING = "forecasting";
 
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_CLOUD_CLIENT_CONFIGURATION =

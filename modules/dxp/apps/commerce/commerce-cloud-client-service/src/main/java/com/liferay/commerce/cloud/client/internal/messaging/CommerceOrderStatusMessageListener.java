@@ -53,7 +53,7 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 		int orderStatus = message.getInteger("orderStatus");
 
 		if (orderStatus ==
-				_commerceCloudClientConfiguration.orderForecastSyncStatus()) {
+				_commerceCloudClientConfiguration.forecastingOrderStatus()) {
 
 			long commerceOrderId = message.getLong("commerceOrderId");
 

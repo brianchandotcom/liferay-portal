@@ -53,7 +53,7 @@ public class CheckCommerceCloudForecastOrderMessageListener
 		_commerceCloudClientConfiguration = ConfigurableUtil.createConfigurable(
 			CommerceCloudClientConfiguration.class, properties);
 
-		if (!_commerceCloudClientConfiguration.orderForecastSyncEnabled()) {
+		if (!_commerceCloudClientConfiguration.forecastingEnabled()) {
 			return;
 		}
 
@@ -63,7 +63,7 @@ public class CheckCommerceCloudForecastOrderMessageListener
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			_commerceCloudClientConfiguration.orderForecastSyncCheckInterval(),
+			_commerceCloudClientConfiguration.forecastingOrdersCheckInterval(),
 			TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
@@ -75,7 +75,7 @@ public class CheckCommerceCloudForecastOrderMessageListener
 
 	@Deactivate
 	protected void deactivate() {
-		if (_commerceCloudClientConfiguration.orderForecastSyncEnabled()) {
+		if (_commerceCloudClientConfiguration.forecastingEnabled()) {
 			_schedulerEngineHelper.unregister(this);
 		}
 	}

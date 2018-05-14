@@ -31,14 +31,14 @@ public interface CommerceCloudClient {
 	public void addCommerceForecastEntries(String json)
 		throws CommerceCloudClientException;
 
-	public JSONObject getOrderForecastConfiguration()
+	public JSONObject getForecastingConfiguration()
 		throws CommerceCloudClientException;
 
 	public void sync(
 			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws CommerceCloudClientException;
 
-	public void updateOrderForecastConfiguration(JSONObject jsonObject)
+	public void updateForecastingConfiguration(JSONObject jsonObject)
 		throws CommerceCloudClientException;
 
 }

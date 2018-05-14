@@ -92,11 +92,11 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	@Override
-	public JSONObject getOrderForecastConfiguration()
+	public JSONObject getForecastingConfiguration()
 		throws CommerceCloudClientException {
 
 		try {
-			return doGetOrderForecastConfiguration();
+			return doGetForecastingConfiguration();
 		}
 		catch (CommerceCloudClientException ccce) {
 			throw ccce;
@@ -123,7 +123,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	@Override
-	public void updateOrderForecastConfiguration(JSONObject jsonObject)
+	public void updateForecastingConfiguration(JSONObject jsonObject)
 		throws CommerceCloudClientException {
 
 		String location = getLocation("/forecast/");
@@ -196,7 +196,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 			lowerValue, value, upperValue);
 	}
 
-	protected JSONObject doGetOrderForecastConfiguration() throws Exception {
+	protected JSONObject doGetForecastingConfiguration() throws Exception {
 		String location = getLocation("/forecast/");
 
 		Http.Options options = new Http.Options();

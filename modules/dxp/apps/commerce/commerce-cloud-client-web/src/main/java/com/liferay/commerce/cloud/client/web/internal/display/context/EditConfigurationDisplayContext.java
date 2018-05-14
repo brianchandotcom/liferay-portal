@@ -84,13 +84,12 @@ public class EditConfigurationDisplayContext {
 		return _commerceCloudClientConfiguration;
 	}
 
-	public JSONObject getOrderForecastConfiguration() {
-		if (_orderForecastConfiguration == null) {
+	public JSONObject getForecastingConfiguration() {
+		if (_forecastingConfiguration == null) {
 			JSONObject jsonObject = null;
 
 			try {
-				jsonObject =
-					_commerceCloudClient.getOrderForecastConfiguration();
+				jsonObject = _commerceCloudClient.getForecastingConfiguration();
 			}
 			catch (CommerceCloudClientException.MustBeConfigured mbc) {
 			}
@@ -102,27 +101,27 @@ public class EditConfigurationDisplayContext {
 				jsonObject.putException(ccce);
 			}
 
-			_orderForecastConfiguration = Optional.ofNullable(jsonObject);
+			_forecastingConfiguration = Optional.ofNullable(jsonObject);
 		}
 
-		return _orderForecastConfiguration.orElse(null);
+		return _forecastingConfiguration.orElse(null);
 	}
 
-	public String getOrderForecastConfigurationLabel(String value) {
+	public String getForecastingConfigurationLabel(String value) {
 		value = StringUtil.toLowerCase(value);
 
 		return StringUtil.replace(value, CharPool.UNDERLINE, CharPool.DASH);
 	}
 
-	public JSONArray getOrderForecastItemsConfiguration() {
-		JSONObject orderForecastConfigurationJSONObject =
-			getOrderForecastConfiguration();
+	public JSONArray getForecastingItemsConfiguration() {
+		JSONObject forecastingConfigurationJSONObject =
+			getForecastingConfiguration();
 
-		if (orderForecastConfigurationJSONObject == null) {
+		if (forecastingConfigurationJSONObject == null) {
 			return null;
 		}
 
-		JSONArray jsonArray = orderForecastConfigurationJSONObject.getJSONArray(
+		JSONArray jsonArray = forecastingConfigurationJSONObject.getJSONArray(
 			"items");
 
 		if ((jsonArray == null) || (jsonArray.length() == 0)) {
@@ -194,9 +193,9 @@ public class EditConfigurationDisplayContext {
 	private final ResourceBundleLoader _commerceCloudClientResourceBundleLoader;
 	private final ResourceBundleLoader _commerceOrderResourceBundleLoader;
 	private final ConfigurationProvider _configurationProvider;
+	private Optional<JSONObject> _forecastingConfiguration;
 	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
-	private Optional<JSONObject> _orderForecastConfiguration;
 	private final Portal _portal;
 	private final RenderResponse _renderResponse;
 

@@ -64,8 +64,8 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals("connection")) {
 				updateCommerceCloudClientConfiguration(actionRequest);
 			}
-			else if (cmd.equals("ordersForecasting")) {
-				updateOrderForecastConfiguration(actionRequest);
+			else if (cmd.equals("forecasting")) {
+				updateForecastingConfiguration(actionRequest);
 
 				updateCommerceCloudClientConfiguration(actionRequest);
 			}
@@ -77,28 +77,28 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	protected JSONArray getOrderForecastItemsConfiguration(
+	protected JSONArray getForecastingItemsConfiguration(
 		ActionRequest actionRequest) {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		int[] orderForecastItemIndexes = StringUtil.split(
-			ParamUtil.getString(actionRequest, "orderForecastItemIndexes"), 0);
+		int[] forecastingItemIndexes = StringUtil.split(
+			ParamUtil.getString(actionRequest, "forecastingItemIndexes"), 0);
 
-		for (int i = 0; i < orderForecastItemIndexes.length; i++) {
+		for (int i = 0; i < forecastingItemIndexes.length; i++) {
 			int ahead = ParamUtil.getInteger(
-				actionRequest, "orderForecastItemAhead" + i);
+				actionRequest, "forecastingItemAhead" + i);
 
 			if (ahead <= 0) {
 				continue;
 			}
 
 			String level = ParamUtil.getString(
-				actionRequest, "orderForecastItemLevel" + i);
+				actionRequest, "forecastingItemLevel" + i);
 			String period = ParamUtil.getString(
-				actionRequest, "orderForecastItemPeriod" + i);
+				actionRequest, "forecastingItemPeriod" + i);
 			String target = ParamUtil.getString(
-				actionRequest, "orderForecastItemTarget" + i);
+				actionRequest, "forecastingItemTarget" + i);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -121,15 +121,15 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 			_configurationProvider.getSystemConfiguration(
 				CommerceCloudClientConfiguration.class);
 
-		int orderForecastSyncCheckInterval = ParamUtil.getInteger(
-			actionRequest, "orderForecastSyncCheckInterval",
-			commerceCloudClientConfiguration.orderForecastSyncCheckInterval());
-		boolean orderForecastSyncEnabled = ParamUtil.getBoolean(
-			actionRequest, "orderForecastSyncEnabled",
-			commerceCloudClientConfiguration.orderForecastSyncEnabled());
-		int orderForecastSyncStatus = ParamUtil.getInteger(
-			actionRequest, "orderForecastSyncStatus",
-			commerceCloudClientConfiguration.orderForecastSyncStatus());
+		boolean forecastingEnabled = ParamUtil.getBoolean(
+			actionRequest, "forecastingEnabled",
+			commerceCloudClientConfiguration.forecastingEnabled());
+		int forecastingOrderStatus = ParamUtil.getInteger(
+			actionRequest, "forecastingOrderStatus",
+			commerceCloudClientConfiguration.forecastingOrderStatus());
+		int forecastingOrdersCheckInterval = ParamUtil.getInteger(
+			actionRequest, "forecastingOrdersCheckInterval",
+			commerceCloudClientConfiguration.forecastingOrdersCheckInterval());
 		String projectId = ParamUtil.getString(
 			actionRequest, "projectId",
 			commerceCloudClientConfiguration.projectId());
@@ -139,10 +139,10 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
+		properties.put("forecastingEnabled", forecastingEnabled);
+		properties.put("forecastingOrderStatus", forecastingOrderStatus);
 		properties.put(
-			"orderForecastSyncCheckInterval", orderForecastSyncCheckInterval);
-		properties.put("orderForecastSyncEnabled", orderForecastSyncEnabled);
-		properties.put("orderForecastSyncStatus", orderForecastSyncStatus);
+			"forecastingOrdersCheckInterval", forecastingOrdersCheckInterval);
 		properties.put("projectId", projectId);
 		properties.put("serverUrl", serverUrl);
 
@@ -150,11 +150,11 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 			CommerceCloudClientConfiguration.class, properties);
 	}
 
-	protected void updateOrderForecastConfiguration(ActionRequest actionRequest)
+	protected void updateForecastingConfiguration(ActionRequest actionRequest)
 		throws Exception {
 
 		String frequency = ParamUtil.getString(actionRequest, "frequency");
-		JSONArray itemsJSONArray = getOrderForecastItemsConfiguration(
+		JSONArray itemsJSONArray = getForecastingItemsConfiguration(
 			actionRequest);
 		String timeZoneOffset = ParamUtil.getString(
 			actionRequest, "timeZoneOffset");
@@ -165,7 +165,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		jsonObject.put("items", itemsJSONArray);
 		jsonObject.put("timeZoneOffset", timeZoneOffset);
 
-		_commerceCloudClient.updateOrderForecastConfiguration(jsonObject);
+		_commerceCloudClient.updateForecastingConfiguration(jsonObject);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

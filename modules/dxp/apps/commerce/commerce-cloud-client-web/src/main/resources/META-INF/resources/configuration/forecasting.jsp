@@ -20,36 +20,36 @@
 EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceCloudClientConfiguration commerceCloudClientConfiguration = editConfigurationDisplayContext.getCommerceCloudClientConfiguration();
-JSONObject orderForecastConfigurationJSONObject = editConfigurationDisplayContext.getOrderForecastConfiguration();
+JSONObject forecastingConfigurationJSONObject = editConfigurationDisplayContext.getForecastingConfiguration();
 String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 %>
 
-<aui:input name="<%= Constants.CMD %>" type="hidden" value="ordersForecasting" />
+<aui:input name="<%= Constants.CMD %>" type="hidden" value="forecasting" />
 
 <div class="sheet">
 	<aui:fieldset>
 		<c:choose>
-			<c:when test='<%= orderForecastConfigurationJSONObject.has("exception") %>'>
+			<c:when test='<%= forecastingConfigurationJSONObject.has("exception") %>'>
 				<div class="alert alert-danger">
 					<liferay-ui:message key="commerce-cloud-is-temporarily-unavailable-or-not-configured-properly" />
 				</div>
 			</c:when>
 			<c:otherwise>
-				<aui:input label="enabled" name="orderForecastSyncEnabled" type="checkbox" value="<%= commerceCloudClientConfiguration.orderForecastSyncEnabled() %>" />
+				<aui:input label="enabled" name="forecastingEnabled" type="checkbox" value="<%= commerceCloudClientConfiguration.forecastingEnabled() %>" />
 
-				<div class="<%= commerceCloudClientConfiguration.orderForecastSyncEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />orderForecastSyncOptions">
-					<aui:input label="check-interval" name="orderForecastSyncCheckInterval" suffix="minutes" value="<%= commerceCloudClientConfiguration.orderForecastSyncCheckInterval() %>">
+				<div class="<%= commerceCloudClientConfiguration.forecastingEnabled() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />forecastingSyncOptions">
+					<aui:input label="orders-check-interval" name="forecastingOrdersCheckInterval" suffix="minutes" value="<%= commerceCloudClientConfiguration.forecastingOrdersCheckInterval() %>">
 						<aui:validator name="digits" />
 						<aui:validator name="min">1</aui:validator>
 					</aui:input>
 
-					<aui:select label="order-status" name="orderForecastSyncStatus">
+					<aui:select label="order-status" name="forecastingOrderStatus">
 
 						<%
 						for (int orderStatus : CommerceCloudClientConstants.ORDER_FORECAST_SYNC_STATUSES) {
 						%>
 
-							<aui:option label="<%= editConfigurationDisplayContext.getOrderStatusLabel(orderStatus) %>" selected="<%= orderStatus == commerceCloudClientConfiguration.orderForecastSyncStatus() %>" value="<%= orderStatus %>" />
+							<aui:option label="<%= editConfigurationDisplayContext.getOrderStatusLabel(orderStatus) %>" selected="<%= orderStatus == commerceCloudClientConfiguration.forecastingOrderStatus() %>" value="<%= orderStatus %>" />
 
 						<%
 						}
@@ -60,7 +60,7 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 					<aui:select helpMessage="frequency-help" name="frequency">
 
 						<%
-						String frequency = orderForecastConfigurationJSONObject.getString("frequency");
+						String frequency = forecastingConfigurationJSONObject.getString("frequency");
 
 						for (String curFrequency : CommerceCloudClientConstants.ORDER_FORECAST_FREQUENCIES) {
 						%>
@@ -73,15 +73,15 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 
 					</aui:select>
 
-					<aui:input helpMessage="time-zone-offset-help" name="timeZoneOffset" value='<%= orderForecastConfigurationJSONObject.getString("timeZoneOffset") %>' />
+					<aui:input helpMessage="time-zone-offset-help" name="timeZoneOffset" value='<%= forecastingConfigurationJSONObject.getString("timeZoneOffset") %>' />
 
-					<div id="<portlet:namespace />orderForecastItems">
+					<div id="<portlet:namespace />forecastingItems">
 
 						<%
-						JSONArray orderForecastItemsConfigurationJSONArray = editConfigurationDisplayContext.getOrderForecastItemsConfiguration();
+						JSONArray forecastingItemsConfigurationJSONArray = editConfigurationDisplayContext.getForecastingItemsConfiguration();
 
-						for (int i = 0; i < orderForecastItemsConfigurationJSONArray.length(); i++) {
-							JSONObject jsonObject = orderForecastItemsConfigurationJSONArray.getJSONObject(i);
+						for (int i = 0; i < forecastingItemsConfigurationJSONArray.length(); i++) {
+							JSONObject jsonObject = forecastingItemsConfigurationJSONArray.getJSONObject(i);
 
 							String level = jsonObject.getString("level");
 							String period = jsonObject.getString("period");
@@ -91,23 +91,23 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 							<div>
 								<div class="lfr-form-row lfr-form-row-inline">
 									<div class="row-fields">
-										<aui:input helpMessage="ahead-help" inlineField="<%= true %>" label="ahead" name='<%= "orderForecastItemAhead" + i %>' value='<%= jsonObject.getInt("ahead") %>'>
+										<aui:input helpMessage="ahead-help" inlineField="<%= true %>" label="ahead" name='<%= "forecastingItemAhead" + i %>' value='<%= jsonObject.getInt("ahead") %>'>
 											<aui:validator name="digits" />
 											<aui:validator name="min">1</aui:validator>
 										</aui:input>
 
-										<aui:select inlineField="<%= true %>" label="" name='<%= "orderForecastItemPeriod" + i %>' title="period">
+										<aui:select inlineField="<%= true %>" label="" name='<%= "forecastingItemPeriod" + i %>' title="period">
 											<aui:option label="weeks" selected="<%= CommerceCloudClientConstants.ORDER_FORECAST_PERIOD_WEEKLY.equals(period) %>" value="<%= CommerceCloudClientConstants.ORDER_FORECAST_PERIOD_WEEKLY %>" />
 											<aui:option label="months" selected="<%= CommerceCloudClientConstants.ORDER_FORECAST_PERIOD_MONTHLY.equals(period) %>" value="<%= CommerceCloudClientConstants.ORDER_FORECAST_PERIOD_MONTHLY %>" />
 										</aui:select>
 
-										<aui:select inlineField="<%= true %>" label="target" name='<%= "orderForecastItemTarget" + i %>'>
+										<aui:select inlineField="<%= true %>" label="target" name='<%= "forecastingItemTarget" + i %>'>
 
 											<%
 											for (String curTarget : CommerceCloudClientConstants.ORDER_FORECAST_TARGETS) {
 											%>
 
-												<aui:option label="<%= editConfigurationDisplayContext.getOrderForecastConfigurationLabel(curTarget) %>" selected="<%= curTarget.equals(target) %>" value="<%= curTarget %>" />
+												<aui:option label="<%= editConfigurationDisplayContext.getForecastingConfigurationLabel(curTarget) %>" selected="<%= curTarget.equals(target) %>" value="<%= curTarget %>" />
 
 											<%
 											}
@@ -115,13 +115,13 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 
 										</aui:select>
 
-										<aui:select helpMessage="level-help" inlineField="<%= true %>" label="level" name='<%= "orderForecastItemLevel" + i %>'>
+										<aui:select helpMessage="level-help" inlineField="<%= true %>" label="level" name='<%= "forecastingItemLevel" + i %>'>
 
 											<%
 											for (String curLevel : CommerceCloudClientConstants.ORDER_FORECAST_LEVELS) {
 											%>
 
-												<aui:option label="<%= editConfigurationDisplayContext.getOrderForecastConfigurationLabel(curLevel) %>" selected="<%= curLevel.equals(level) %>" value="<%= curLevel %>" />
+												<aui:option label="<%= editConfigurationDisplayContext.getForecastingConfigurationLabel(curLevel) %>" selected="<%= curLevel.equals(level) %>" value="<%= curLevel %>" />
 
 											<%
 											}
@@ -152,13 +152,13 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 <aui:script use="aui-base,liferay-auto-fields">
 	new Liferay.AutoFields(
 		{
-			contentBox: '#<portlet:namespace />orderForecastItems',
-			fieldIndexes: '<portlet:namespace />orderForecastItemIndexes',
+			contentBox: '#<portlet:namespace />forecastingItems',
+			fieldIndexes: '<portlet:namespace />forecastingItemIndexes',
 			namespace: '<portlet:namespace />'
 		}
 	).render();
 </aui:script>
 
 <aui:script>
-	Liferay.Util.toggleBoxes('<portlet:namespace />orderForecastSyncEnabled', '<portlet:namespace />orderForecastSyncOptions');
+	Liferay.Util.toggleBoxes('<portlet:namespace />forecastingEnabled', '<portlet:namespace />forecastingSyncOptions');
 </aui:script>

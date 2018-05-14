@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionShippingInfoDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
@@ -92,7 +93,8 @@ public class CPDefinitionShippingScreenNavigationEntry
 			CPDefinitionShippingInfoDisplayContext
 				cpDefinitionShippingInfoDisplayContext =
 					new CPDefinitionShippingInfoDisplayContext(
-						_actionHelper, httpServletRequest, _cpDefinitionHelper,
+						_actionHelper, httpServletRequest,
+						_commerceCurrencyService, _cpDefinitionHelper,
 						_cpDefinitionService, _itemSelector,
 						_cpMeasurementUnitService);
 
@@ -114,6 +116,9 @@ public class CPDefinitionShippingScreenNavigationEntry
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

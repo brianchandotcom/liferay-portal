@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -35,6 +37,7 @@ public class CPDefinitionShippingInfoDisplayContext
 
 	public CPDefinitionShippingInfoDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+			CommerceCurrencyService commerceCurrencyService,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPDefinitionService cpDefinitionService, ItemSelector itemSelector,
 			CPMeasurementUnitService cpMeasurementUnitService)
@@ -44,7 +47,24 @@ public class CPDefinitionShippingInfoDisplayContext
 			actionHelper, httpServletRequest, cpDefinitionHelper,
 			cpDefinitionService, itemSelector);
 
+		_commerceCurrencyService = commerceCurrencyService;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
+	}
+
+	public String getCommerceCurrencyCode() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyService.fetchPrimaryCommerceCurrency(
+				themeDisplay.getScopeGroupId());
+
+		if (commerceCurrency == null) {
+			return StringPool.BLANK;
+		}
+
+		return commerceCurrency.getCode();
 	}
 
 	public String getCPMeasurementUnitName(int type) {
@@ -63,6 +83,7 @@ public class CPDefinitionShippingInfoDisplayContext
 		return StringPool.BLANK;
 	}
 
+	private final CommerceCurrencyService _commerceCurrencyService;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 
 }

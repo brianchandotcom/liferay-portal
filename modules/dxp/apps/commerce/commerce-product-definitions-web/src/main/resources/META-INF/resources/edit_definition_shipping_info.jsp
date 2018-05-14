@@ -46,7 +46,7 @@ boolean shipSeparately = BeanParamUtil.getBoolean(cpDefinition, request, "shipSe
 
 				<aui:input checked="<%= shipSeparately %>" label="always-ship-separately" name="shipSeparately" type="toggle-switch" />
 
-				<aui:input name="shippingExtraPrice" />
+				<aui:input name="shippingExtraPrice" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCommerceCurrencyCode() %>" />
 			</div>
 
 			<aui:input name="width" suffix="<%= cpDefinitionShippingInfoDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_DIMENSION) %>" />

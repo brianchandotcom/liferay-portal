@@ -194,5 +194,6 @@
 		<exception>DuplicateLayoutPageTemplateEntry</exception>
 		<exception>LayoutPageTemplateCollectionName</exception>
 		<exception>LayoutPageTemplateEntryName</exception>
+		<exception>RequiredLayoutPageTemplateEntry</exception>
 	</exceptions>
 </service-builder>

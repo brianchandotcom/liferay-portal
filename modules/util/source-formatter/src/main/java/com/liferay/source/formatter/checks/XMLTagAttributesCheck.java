@@ -58,6 +58,11 @@ public class XMLTagAttributesCheck extends TagAttributesCheck {
 		return content;
 	}
 
+	@Override
+	protected Tag sortHTMLTagAttributes(Tag tag) {
+		return tag;
+	}
+
 	private String _formatTagAttributes(String absolutePath, String content)
 		throws Exception {
 

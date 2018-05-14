@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
@@ -60,9 +61,10 @@ import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -115,20 +117,12 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 		_addDefaultSiteNavigationMenu(renderRequest);
 
-		try {
-			getGroup(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof GroupInheritContentException ||
-				e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			renderRequest);
 
-				SessionErrors.add(renderRequest, e.getClass());
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
+		Group group = _groupProvider.getGroup(request);
+
+		renderRequest.setAttribute(WebKeys.GROUP, group);
 
 		if (SessionErrors.contains(
 				renderRequest, NoSuchGroupException.class.getName()) ||
@@ -170,17 +164,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 			super.doDispatch(renderRequest, renderResponse);
 		}
-	}
-
-	protected Group getGroup(PortletRequest portletRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getSiteGroup();
-
-		portletRequest.setAttribute(WebKeys.GROUP, group);
-
-		return group;
 	}
 
 	@Override
@@ -257,6 +240,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 	@Reference
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

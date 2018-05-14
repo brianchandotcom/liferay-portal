@@ -31,7 +31,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		<liferay-ui:search-container-column-text
 			cssClass="autofit-col-expand"
 		>
-			<div id="exportStatus">
+			<div id="<portlet:namespace />exportStatus">
 				<h5>
 					<liferay-ui:message key="<%= UADLanguageUtil.getApplicationName(backgroundTask.getName(), locale) %>" />
 				</h5>

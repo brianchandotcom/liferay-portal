@@ -36,7 +36,6 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.util.List;
 
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -127,7 +125,9 @@ public class PriceEntryNestedCollectionResource
 	}
 
 	private CommercePriceEntry _addCommercePriceEntry(
-		Long commercePriceListId, PriceEntryCreatorForm priceEntryCreatorForm) {
+			Long commercePriceListId,
+			PriceEntryCreatorForm priceEntryCreatorForm)
+		throws PortalException {
 
 		try {
 			return _priceEntryHelper.addCommercePriceEntry(
@@ -149,50 +149,38 @@ public class PriceEntryNestedCollectionResource
 					priceEntryCreatorForm.getSkuID(),
 				status.getStatusCode(), dcpee);
 		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
 	}
 
 	private PageItems<CommercePriceEntry> _getPageItems(
 		Pagination pagination, Long commercePriceListId) {
 
-		try {
-			List<CommercePriceEntry> commercePriceEntries =
-				_commercePriceEntryService.getCommercePriceEntries(
-					commercePriceListId, pagination.getStartPosition(),
-					pagination.getEndPosition());
+		List<CommercePriceEntry> commercePriceEntries =
+			_commercePriceEntryService.getCommercePriceEntries(
+				commercePriceListId, pagination.getStartPosition(),
+				pagination.getEndPosition());
 
-			if (_log.isDebugEnabled()) {
-				if (ListUtil.isEmpty(commercePriceEntries)) {
-					_log.debug(
-						"Unable to find Price Entries in Price List with ID " +
-							commercePriceListId);
-				}
+		if (_log.isDebugEnabled()) {
+			if (ListUtil.isEmpty(commercePriceEntries)) {
+				_log.debug(
+					"Unable to find Price Entries in Price List with ID " +
+						commercePriceListId);
 			}
-
-			int count = _commercePriceEntryService.getCommercePriceEntriesCount(
-				commercePriceListId);
-
-			return new PageItems<>(commercePriceEntries, count);
 		}
-		catch (SystemException se) {
-			throw new ServerErrorException(500, se);
-		}
+
+		int count = _commercePriceEntryService.getCommercePriceEntriesCount(
+			commercePriceListId);
+
+		return new PageItems<>(commercePriceEntries, count);
 	}
 
 	private CommercePriceEntry _updateCommercePriceEntry(
-		Long commercePriceEntryId,
-		PriceEntryUpdaterForm priceEntryUpdaterForm) {
+			Long commercePriceEntryId,
+			PriceEntryUpdaterForm priceEntryUpdaterForm)
+		throws PortalException {
 
-		try {
-			return _priceEntryHelper.updateCommercePriceEntry(
-				commercePriceEntryId, priceEntryUpdaterForm.getPrice(),
-				priceEntryUpdaterForm.getPromoPrice());
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return _priceEntryHelper.updateCommercePriceEntry(
+			commercePriceEntryId, priceEntryUpdaterForm.getPrice(),
+			priceEntryUpdaterForm.getPromoPrice());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

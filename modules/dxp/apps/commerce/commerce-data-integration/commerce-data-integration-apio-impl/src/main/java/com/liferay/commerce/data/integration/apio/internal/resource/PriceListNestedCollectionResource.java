@@ -34,7 +34,6 @@ import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,7 +43,6 @@ import com.liferay.site.apio.identifier.WebSiteIdentifier;
 import java.util.List;
 
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -131,7 +129,8 @@ public class PriceListNestedCollectionResource
 	}
 
 	private CommercePriceList _addCommercePriceList(
-		Long groupId, PriceListForm priceListForm) {
+			Long groupId, PriceListForm priceListForm)
+		throws PortalException {
 
 		try {
 			return _priceListHelper.addCommercePriceList(
@@ -148,9 +147,6 @@ public class PriceListNestedCollectionResource
 					priceListForm.getCurrency()),
 				nsce);
 		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
 	}
 
 	private String _getCurrencyCode(CommercePriceList commercePriceList) {
@@ -164,34 +160,28 @@ public class PriceListNestedCollectionResource
 	private PageItems<CommercePriceList> _getPageItems(
 		Pagination pagination, Long groupId) {
 
-		try {
-			List<CommercePriceList> commercePriceLists =
-				_commercePriceListService.getCommercePriceLists(
-					groupId, WorkflowConstants.STATUS_APPROVED,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null);
+		List<CommercePriceList> commercePriceLists =
+			_commercePriceListService.getCommercePriceLists(
+				groupId, WorkflowConstants.STATUS_APPROVED,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				null);
 
-			if (_log.isDebugEnabled()) {
-				if (ListUtil.isEmpty(commercePriceLists)) {
-					_log.debug(
-						"Unable to find Price Lists on Site with ID " +
-							groupId);
-				}
+		if (_log.isDebugEnabled()) {
+			if (ListUtil.isEmpty(commercePriceLists)) {
+				_log.debug(
+					"Unable to find Price Lists on Site with ID " + groupId);
 			}
-
-			int count = _commercePriceListService.getCommercePriceListsCount(
-				groupId, WorkflowConstants.STATUS_APPROVED);
-
-			return new PageItems<>(commercePriceLists, count);
 		}
-		catch (SystemException se) {
-			throw new ServerErrorException(500, se);
-		}
+
+		int count = _commercePriceListService.getCommercePriceListsCount(
+			groupId, WorkflowConstants.STATUS_APPROVED);
+
+		return new PageItems<>(commercePriceLists, count);
 	}
 
 	private CommercePriceList _updateCommercePriceList(
 			Long commercePriceListId, PriceListForm priceListForm)
-		throws NotFoundException {
+		throws NotFoundException, PortalException {
 
 		try {
 			return _priceListHelper.updateCommercePriceList(
@@ -207,9 +197,6 @@ public class PriceListNestedCollectionResource
 						"should be expressed with 3-letter ISO 4217 format",
 					priceListForm.getCurrency()),
 				nsce);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
 		}
 	}
 

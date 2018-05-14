@@ -768,9 +768,12 @@ AUI.add(
 
 							fieldJSON.value = instance.get('localizationMap');
 
-							var form = instance.getForm();
+							if (instance.get('localizable')) {
+								var form = instance.getForm();
 
-							form.addAvailableLanguageIds(AObject.keys(fieldJSON.value));
+								form.addAvailableLanguageIds(AObject.keys(fieldJSON.value));
+							}
+
 						}
 
 						var fields = instance.get('fields');

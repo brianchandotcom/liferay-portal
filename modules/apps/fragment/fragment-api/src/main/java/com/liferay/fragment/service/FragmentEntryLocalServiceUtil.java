@@ -255,13 +255,14 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		long fragmentCollectionId, int status) {
-		return getService().getFragmentEntries(fragmentCollectionId, status);
+		long fragmentCollectionId, int start, int end) {
+		return getService().getFragmentEntries(fragmentCollectionId, start, end);
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		long fragmentCollectionId, int start, int end) {
-		return getService().getFragmentEntries(fragmentCollectionId, start, end);
+		long groupId, long fragmentCollectionId, int status) {
+		return getService()
+				   .getFragmentEntries(groupId, fragmentCollectionId, status);
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(

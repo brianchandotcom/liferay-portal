@@ -401,6 +401,7 @@ public class FragmentsEditorContext {
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
 				FragmentEntryServiceUtil.getFragmentEntries(
+					_themeDisplay.getScopeGroupId(),
 					fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_APPROVED);
 

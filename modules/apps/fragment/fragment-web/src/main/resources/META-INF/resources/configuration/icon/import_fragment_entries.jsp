@@ -39,7 +39,7 @@ long fragmentCollectionId = ParamUtil.getLong(renderRequest, "fragmentCollection
 					destroyOnHide: true
 				},
 				id: '<portlet:namespace />openInstallFromURLView',
-				title: '<liferay-ui:message key="import" />',
+				title: '<liferay-ui:message key="import-fragments" />',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import_fragment_entries" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" /></portlet:renderURL>'
 			}
 		);

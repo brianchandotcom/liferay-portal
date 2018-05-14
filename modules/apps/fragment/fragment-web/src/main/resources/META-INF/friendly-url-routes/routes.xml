@@ -24,13 +24,13 @@
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/fragment_collection/{fragmentCollectionId:\d+}</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/fragment/view_fragment_entries</implicit-parameter>
+		<pattern>/fragment_collection/new</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/fragment/edit_fragment_collection</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/fragment_collection/new</pattern>
-		<implicit-parameter name="mvcRenderCommandName">/fragment/edit_fragment_collection</implicit-parameter>
+		<pattern>/fragment_collection/{fragmentCollectionId:\d+}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/fragment/view</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>

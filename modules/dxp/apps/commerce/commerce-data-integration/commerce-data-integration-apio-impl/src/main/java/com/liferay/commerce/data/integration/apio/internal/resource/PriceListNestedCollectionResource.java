@@ -141,7 +141,12 @@ public class PriceListNestedCollectionResource
 				priceListForm.getExpirationDate());
 		}
 		catch (NoSuchCurrencyException nsce) {
-			throw new NotFoundException(nsce.getLocalizedMessage());
+			throw new NotFoundException(
+				String.format(
+					"Unable to find currency with code: %s. Currency code " +
+						"should be expressed with 3-letter ISO 4217 format",
+					priceListForm.getCurrency()),
+				nsce);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -185,7 +190,8 @@ public class PriceListNestedCollectionResource
 	}
 
 	private CommercePriceList _updateCommercePriceList(
-		Long commercePriceListId, PriceListForm priceListForm) {
+			Long commercePriceListId, PriceListForm priceListForm)
+		throws NotFoundException {
 
 		try {
 			return _priceListHelper.updateCommercePriceList(
@@ -195,7 +201,12 @@ public class PriceListNestedCollectionResource
 				priceListForm.getExpirationDate());
 		}
 		catch (NoSuchCurrencyException nsce) {
-			throw new NotFoundException(nsce.getLocalizedMessage());
+			throw new NotFoundException(
+				String.format(
+					"Unable to find currency with code: %s. Currency code " +
+						"should be expressed with 3-letter ISO 4217 format",
+					priceListForm.getCurrency()),
+				nsce);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

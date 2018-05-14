@@ -14,20 +14,16 @@
 
 package com.liferay.commerce.data.integration.apio.internal.util;
 
-import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Stream;
 
 import javax.ws.rs.NotFoundException;
 
@@ -196,22 +192,10 @@ public class PriceListHelper {
 	}
 
 	private long _getCommerceCurrencyId(Long groupId, String currencyCode)
-		throws NoSuchCurrencyException {
+		throws PortalException {
 
-		List<CommerceCurrency> commerceCurrencyList =
-			_commerceCurrencyService.getCommerceCurrencies(
-				groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Stream<CommerceCurrency> stream = commerceCurrencyList.stream();
-
-		CommerceCurrency commerceCurrency = stream.filter(
-			currency -> currencyCode.equals(currency.getCode())
-		).findFirst(
-		).orElseThrow(
-			() -> new NoSuchCurrencyException(
-				String.format(
-					"Unable to find currency with code: %s.", currencyCode))
-		);
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyService.getCommerceCurrency(groupId, currencyCode);
 
 		return commerceCurrency.getCommerceCurrencyId();
 	}

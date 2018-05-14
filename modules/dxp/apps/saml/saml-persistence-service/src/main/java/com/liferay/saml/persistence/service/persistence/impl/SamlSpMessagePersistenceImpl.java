@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -40,6 +41,8 @@ import com.liferay.saml.persistence.model.impl.SamlSpMessageModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlSpMessagePersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -1127,8 +1130,6 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 
 	@Override
 	protected SamlSpMessage removeImpl(SamlSpMessage samlSpMessage) {
-		samlSpMessage = toUnwrappedModel(samlSpMessage);
-
 		Session session = null;
 
 		try {
@@ -1159,9 +1160,23 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 
 	@Override
 	public SamlSpMessage updateImpl(SamlSpMessage samlSpMessage) {
-		samlSpMessage = toUnwrappedModel(samlSpMessage);
-
 		boolean isNew = samlSpMessage.isNew();
+
+		if (!(samlSpMessage instanceof SamlSpMessageModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(samlSpMessage.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(samlSpMessage);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in samlSpMessage proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SamlSpMessage implementation " +
+				samlSpMessage.getClass());
+		}
 
 		SamlSpMessageModelImpl samlSpMessageModelImpl = (SamlSpMessageModelImpl)samlSpMessage;
 
@@ -1208,26 +1223,6 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		samlSpMessage.resetOriginalValues();
 
 		return samlSpMessage;
-	}
-
-	protected SamlSpMessage toUnwrappedModel(SamlSpMessage samlSpMessage) {
-		if (samlSpMessage instanceof SamlSpMessageImpl) {
-			return samlSpMessage;
-		}
-
-		SamlSpMessageImpl samlSpMessageImpl = new SamlSpMessageImpl();
-
-		samlSpMessageImpl.setNew(samlSpMessage.isNew());
-		samlSpMessageImpl.setPrimaryKey(samlSpMessage.getPrimaryKey());
-
-		samlSpMessageImpl.setSamlSpMessageId(samlSpMessage.getSamlSpMessageId());
-		samlSpMessageImpl.setCompanyId(samlSpMessage.getCompanyId());
-		samlSpMessageImpl.setCreateDate(samlSpMessage.getCreateDate());
-		samlSpMessageImpl.setSamlIdpEntityId(samlSpMessage.getSamlIdpEntityId());
-		samlSpMessageImpl.setSamlIdpResponseKey(samlSpMessage.getSamlIdpResponseKey());
-		samlSpMessageImpl.setExpirationDate(samlSpMessage.getExpirationDate());
-
-		return samlSpMessageImpl;
 	}
 
 	/**

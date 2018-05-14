@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -42,6 +43,8 @@ import com.liferay.saml.persistence.model.impl.SamlIdpSsoSessionModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlIdpSsoSessionPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -1079,8 +1082,6 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 
 	@Override
 	protected SamlIdpSsoSession removeImpl(SamlIdpSsoSession samlIdpSsoSession) {
-		samlIdpSsoSession = toUnwrappedModel(samlIdpSsoSession);
-
 		Session session = null;
 
 		try {
@@ -1111,9 +1112,23 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 
 	@Override
 	public SamlIdpSsoSession updateImpl(SamlIdpSsoSession samlIdpSsoSession) {
-		samlIdpSsoSession = toUnwrappedModel(samlIdpSsoSession);
-
 		boolean isNew = samlIdpSsoSession.isNew();
+
+		if (!(samlIdpSsoSession instanceof SamlIdpSsoSessionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(samlIdpSsoSession.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(samlIdpSsoSession);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in samlIdpSsoSession proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SamlIdpSsoSession implementation " +
+				samlIdpSsoSession.getClass());
+		}
 
 		SamlIdpSsoSessionModelImpl samlIdpSsoSessionModelImpl = (SamlIdpSsoSessionModelImpl)samlIdpSsoSession;
 
@@ -1184,28 +1199,6 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 		samlIdpSsoSession.resetOriginalValues();
 
 		return samlIdpSsoSession;
-	}
-
-	protected SamlIdpSsoSession toUnwrappedModel(
-		SamlIdpSsoSession samlIdpSsoSession) {
-		if (samlIdpSsoSession instanceof SamlIdpSsoSessionImpl) {
-			return samlIdpSsoSession;
-		}
-
-		SamlIdpSsoSessionImpl samlIdpSsoSessionImpl = new SamlIdpSsoSessionImpl();
-
-		samlIdpSsoSessionImpl.setNew(samlIdpSsoSession.isNew());
-		samlIdpSsoSessionImpl.setPrimaryKey(samlIdpSsoSession.getPrimaryKey());
-
-		samlIdpSsoSessionImpl.setSamlIdpSsoSessionId(samlIdpSsoSession.getSamlIdpSsoSessionId());
-		samlIdpSsoSessionImpl.setCompanyId(samlIdpSsoSession.getCompanyId());
-		samlIdpSsoSessionImpl.setUserId(samlIdpSsoSession.getUserId());
-		samlIdpSsoSessionImpl.setUserName(samlIdpSsoSession.getUserName());
-		samlIdpSsoSessionImpl.setCreateDate(samlIdpSsoSession.getCreateDate());
-		samlIdpSsoSessionImpl.setModifiedDate(samlIdpSsoSession.getModifiedDate());
-		samlIdpSsoSessionImpl.setSamlIdpSsoSessionKey(samlIdpSsoSession.getSamlIdpSsoSessionKey());
-
-		return samlIdpSsoSessionImpl;
 	}
 
 	/**

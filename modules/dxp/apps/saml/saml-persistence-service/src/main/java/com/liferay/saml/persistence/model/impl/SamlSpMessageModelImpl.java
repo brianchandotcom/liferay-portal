@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -505,7 +506,7 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 
 	private static final ClassLoader _classLoader = SamlSpMessage.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SamlSpMessage.class
+			SamlSpMessage.class, ModelWrapper.class
 		};
 	private long _samlSpMessageId;
 	private long _companyId;

@@ -37,11 +37,14 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2681,8 +2684,6 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 
 	@Override
 	protected OAuthApplication removeImpl(OAuthApplication oAuthApplication) {
-		oAuthApplication = toUnwrappedModel(oAuthApplication);
-
 		Session session = null;
 
 		try {
@@ -2713,9 +2714,23 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 
 	@Override
 	public OAuthApplication updateImpl(OAuthApplication oAuthApplication) {
-		oAuthApplication = toUnwrappedModel(oAuthApplication);
-
 		boolean isNew = oAuthApplication.isNew();
+
+		if (!(oAuthApplication instanceof OAuthApplicationModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(oAuthApplication.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(oAuthApplication);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in oAuthApplication proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom OAuthApplication implementation " +
+				oAuthApplication.getClass());
+		}
 
 		OAuthApplicationModelImpl oAuthApplicationModelImpl = (OAuthApplicationModelImpl)oAuthApplication;
 
@@ -2835,36 +2850,6 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 		oAuthApplication.resetOriginalValues();
 
 		return oAuthApplication;
-	}
-
-	protected OAuthApplication toUnwrappedModel(
-		OAuthApplication oAuthApplication) {
-		if (oAuthApplication instanceof OAuthApplicationImpl) {
-			return oAuthApplication;
-		}
-
-		OAuthApplicationImpl oAuthApplicationImpl = new OAuthApplicationImpl();
-
-		oAuthApplicationImpl.setNew(oAuthApplication.isNew());
-		oAuthApplicationImpl.setPrimaryKey(oAuthApplication.getPrimaryKey());
-
-		oAuthApplicationImpl.setOAuthApplicationId(oAuthApplication.getOAuthApplicationId());
-		oAuthApplicationImpl.setCompanyId(oAuthApplication.getCompanyId());
-		oAuthApplicationImpl.setUserId(oAuthApplication.getUserId());
-		oAuthApplicationImpl.setUserName(oAuthApplication.getUserName());
-		oAuthApplicationImpl.setCreateDate(oAuthApplication.getCreateDate());
-		oAuthApplicationImpl.setModifiedDate(oAuthApplication.getModifiedDate());
-		oAuthApplicationImpl.setName(oAuthApplication.getName());
-		oAuthApplicationImpl.setDescription(oAuthApplication.getDescription());
-		oAuthApplicationImpl.setConsumerKey(oAuthApplication.getConsumerKey());
-		oAuthApplicationImpl.setConsumerSecret(oAuthApplication.getConsumerSecret());
-		oAuthApplicationImpl.setAccessLevel(oAuthApplication.getAccessLevel());
-		oAuthApplicationImpl.setLogoId(oAuthApplication.getLogoId());
-		oAuthApplicationImpl.setShareableAccessToken(oAuthApplication.isShareableAccessToken());
-		oAuthApplicationImpl.setCallbackURI(oAuthApplication.getCallbackURI());
-		oAuthApplicationImpl.setWebsiteURL(oAuthApplication.getWebsiteURL());
-
-		return oAuthApplicationImpl;
 	}
 
 	/**

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -40,6 +41,8 @@ import com.liferay.saml.persistence.model.impl.SamlSpAuthRequestModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlSpAuthRequestPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -1133,8 +1136,6 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 
 	@Override
 	protected SamlSpAuthRequest removeImpl(SamlSpAuthRequest samlSpAuthRequest) {
-		samlSpAuthRequest = toUnwrappedModel(samlSpAuthRequest);
-
 		Session session = null;
 
 		try {
@@ -1165,9 +1166,23 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 
 	@Override
 	public SamlSpAuthRequest updateImpl(SamlSpAuthRequest samlSpAuthRequest) {
-		samlSpAuthRequest = toUnwrappedModel(samlSpAuthRequest);
-
 		boolean isNew = samlSpAuthRequest.isNew();
+
+		if (!(samlSpAuthRequest instanceof SamlSpAuthRequestModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(samlSpAuthRequest.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(samlSpAuthRequest);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in samlSpAuthRequest proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SamlSpAuthRequest implementation " +
+				samlSpAuthRequest.getClass());
+		}
 
 		SamlSpAuthRequestModelImpl samlSpAuthRequestModelImpl = (SamlSpAuthRequestModelImpl)samlSpAuthRequest;
 
@@ -1214,26 +1229,6 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 		samlSpAuthRequest.resetOriginalValues();
 
 		return samlSpAuthRequest;
-	}
-
-	protected SamlSpAuthRequest toUnwrappedModel(
-		SamlSpAuthRequest samlSpAuthRequest) {
-		if (samlSpAuthRequest instanceof SamlSpAuthRequestImpl) {
-			return samlSpAuthRequest;
-		}
-
-		SamlSpAuthRequestImpl samlSpAuthRequestImpl = new SamlSpAuthRequestImpl();
-
-		samlSpAuthRequestImpl.setNew(samlSpAuthRequest.isNew());
-		samlSpAuthRequestImpl.setPrimaryKey(samlSpAuthRequest.getPrimaryKey());
-
-		samlSpAuthRequestImpl.setSamlSpAuthnRequestId(samlSpAuthRequest.getSamlSpAuthnRequestId());
-		samlSpAuthRequestImpl.setCompanyId(samlSpAuthRequest.getCompanyId());
-		samlSpAuthRequestImpl.setCreateDate(samlSpAuthRequest.getCreateDate());
-		samlSpAuthRequestImpl.setSamlIdpEntityId(samlSpAuthRequest.getSamlIdpEntityId());
-		samlSpAuthRequestImpl.setSamlSpAuthRequestKey(samlSpAuthRequest.getSamlSpAuthRequestKey());
-
-		return samlSpAuthRequestImpl;
 	}
 
 	/**

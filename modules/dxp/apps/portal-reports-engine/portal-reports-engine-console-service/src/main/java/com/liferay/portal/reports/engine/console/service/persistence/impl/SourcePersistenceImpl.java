@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3039,8 +3041,6 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 
 	@Override
 	protected Source removeImpl(Source source) {
-		source = toUnwrappedModel(source);
-
 		Session session = null;
 
 		try {
@@ -3071,9 +3071,23 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 
 	@Override
 	public Source updateImpl(Source source) {
-		source = toUnwrappedModel(source);
-
 		boolean isNew = source.isNew();
+
+		if (!(source instanceof SourceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(source.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(source);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in source proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Source implementation " +
+				source.getClass());
+		}
 
 		SourceModelImpl sourceModelImpl = (SourceModelImpl)source;
 
@@ -3245,34 +3259,6 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 		source.resetOriginalValues();
 
 		return source;
-	}
-
-	protected Source toUnwrappedModel(Source source) {
-		if (source instanceof SourceImpl) {
-			return source;
-		}
-
-		SourceImpl sourceImpl = new SourceImpl();
-
-		sourceImpl.setNew(source.isNew());
-		sourceImpl.setPrimaryKey(source.getPrimaryKey());
-
-		sourceImpl.setUuid(source.getUuid());
-		sourceImpl.setSourceId(source.getSourceId());
-		sourceImpl.setGroupId(source.getGroupId());
-		sourceImpl.setCompanyId(source.getCompanyId());
-		sourceImpl.setUserId(source.getUserId());
-		sourceImpl.setUserName(source.getUserName());
-		sourceImpl.setCreateDate(source.getCreateDate());
-		sourceImpl.setModifiedDate(source.getModifiedDate());
-		sourceImpl.setLastPublishDate(source.getLastPublishDate());
-		sourceImpl.setName(source.getName());
-		sourceImpl.setDriverClassName(source.getDriverClassName());
-		sourceImpl.setDriverUrl(source.getDriverUrl());
-		sourceImpl.setDriverUserName(source.getDriverUserName());
-		sourceImpl.setDriverPassword(source.getDriverPassword());
-
-		return sourceImpl;
 	}
 
 	/**

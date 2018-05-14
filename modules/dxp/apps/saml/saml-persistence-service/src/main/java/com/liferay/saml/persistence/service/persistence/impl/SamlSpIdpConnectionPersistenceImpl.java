@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -42,6 +43,8 @@ import com.liferay.saml.persistence.model.impl.SamlSpIdpConnectionModelImpl;
 import com.liferay.saml.persistence.service.persistence.SamlSpIdpConnectionPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1077,8 +1080,6 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	@Override
 	protected SamlSpIdpConnection removeImpl(
 		SamlSpIdpConnection samlSpIdpConnection) {
-		samlSpIdpConnection = toUnwrappedModel(samlSpIdpConnection);
-
 		Session session = null;
 
 		try {
@@ -1110,9 +1111,23 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 	@Override
 	public SamlSpIdpConnection updateImpl(
 		SamlSpIdpConnection samlSpIdpConnection) {
-		samlSpIdpConnection = toUnwrappedModel(samlSpIdpConnection);
-
 		boolean isNew = samlSpIdpConnection.isNew();
+
+		if (!(samlSpIdpConnection instanceof SamlSpIdpConnectionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(samlSpIdpConnection.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(samlSpIdpConnection);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in samlSpIdpConnection proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SamlSpIdpConnection implementation " +
+				samlSpIdpConnection.getClass());
+		}
 
 		SamlSpIdpConnectionModelImpl samlSpIdpConnectionModelImpl = (SamlSpIdpConnectionModelImpl)samlSpIdpConnection;
 
@@ -1210,40 +1225,6 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 		samlSpIdpConnection.resetOriginalValues();
 
 		return samlSpIdpConnection;
-	}
-
-	protected SamlSpIdpConnection toUnwrappedModel(
-		SamlSpIdpConnection samlSpIdpConnection) {
-		if (samlSpIdpConnection instanceof SamlSpIdpConnectionImpl) {
-			return samlSpIdpConnection;
-		}
-
-		SamlSpIdpConnectionImpl samlSpIdpConnectionImpl = new SamlSpIdpConnectionImpl();
-
-		samlSpIdpConnectionImpl.setNew(samlSpIdpConnection.isNew());
-		samlSpIdpConnectionImpl.setPrimaryKey(samlSpIdpConnection.getPrimaryKey());
-
-		samlSpIdpConnectionImpl.setSamlSpIdpConnectionId(samlSpIdpConnection.getSamlSpIdpConnectionId());
-		samlSpIdpConnectionImpl.setCompanyId(samlSpIdpConnection.getCompanyId());
-		samlSpIdpConnectionImpl.setUserId(samlSpIdpConnection.getUserId());
-		samlSpIdpConnectionImpl.setUserName(samlSpIdpConnection.getUserName());
-		samlSpIdpConnectionImpl.setCreateDate(samlSpIdpConnection.getCreateDate());
-		samlSpIdpConnectionImpl.setModifiedDate(samlSpIdpConnection.getModifiedDate());
-		samlSpIdpConnectionImpl.setSamlIdpEntityId(samlSpIdpConnection.getSamlIdpEntityId());
-		samlSpIdpConnectionImpl.setAssertionSignatureRequired(samlSpIdpConnection.isAssertionSignatureRequired());
-		samlSpIdpConnectionImpl.setClockSkew(samlSpIdpConnection.getClockSkew());
-		samlSpIdpConnectionImpl.setEnabled(samlSpIdpConnection.isEnabled());
-		samlSpIdpConnectionImpl.setForceAuthn(samlSpIdpConnection.isForceAuthn());
-		samlSpIdpConnectionImpl.setLdapImportEnabled(samlSpIdpConnection.isLdapImportEnabled());
-		samlSpIdpConnectionImpl.setMetadataUrl(samlSpIdpConnection.getMetadataUrl());
-		samlSpIdpConnectionImpl.setMetadataXml(samlSpIdpConnection.getMetadataXml());
-		samlSpIdpConnectionImpl.setMetadataUpdatedDate(samlSpIdpConnection.getMetadataUpdatedDate());
-		samlSpIdpConnectionImpl.setName(samlSpIdpConnection.getName());
-		samlSpIdpConnectionImpl.setNameIdFormat(samlSpIdpConnection.getNameIdFormat());
-		samlSpIdpConnectionImpl.setSignAuthnRequest(samlSpIdpConnection.isSignAuthnRequest());
-		samlSpIdpConnectionImpl.setUserAttributeMappings(samlSpIdpConnection.getUserAttributeMappings());
-
-		return samlSpIdpConnectionImpl;
 	}
 
 	/**

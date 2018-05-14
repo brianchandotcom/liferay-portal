@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3060,8 +3062,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 	@Override
 	protected Definition removeImpl(Definition definition) {
-		definition = toUnwrappedModel(definition);
-
 		Session session = null;
 
 		try {
@@ -3092,9 +3092,23 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 
 	@Override
 	public Definition updateImpl(Definition definition) {
-		definition = toUnwrappedModel(definition);
-
 		boolean isNew = definition.isNew();
+
+		if (!(definition instanceof DefinitionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(definition.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(definition);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in definition proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Definition implementation " +
+				definition.getClass());
+		}
 
 		DefinitionModelImpl definitionModelImpl = (DefinitionModelImpl)definition;
 
@@ -3269,34 +3283,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		definition.resetOriginalValues();
 
 		return definition;
-	}
-
-	protected Definition toUnwrappedModel(Definition definition) {
-		if (definition instanceof DefinitionImpl) {
-			return definition;
-		}
-
-		DefinitionImpl definitionImpl = new DefinitionImpl();
-
-		definitionImpl.setNew(definition.isNew());
-		definitionImpl.setPrimaryKey(definition.getPrimaryKey());
-
-		definitionImpl.setUuid(definition.getUuid());
-		definitionImpl.setDefinitionId(definition.getDefinitionId());
-		definitionImpl.setGroupId(definition.getGroupId());
-		definitionImpl.setCompanyId(definition.getCompanyId());
-		definitionImpl.setUserId(definition.getUserId());
-		definitionImpl.setUserName(definition.getUserName());
-		definitionImpl.setCreateDate(definition.getCreateDate());
-		definitionImpl.setModifiedDate(definition.getModifiedDate());
-		definitionImpl.setName(definition.getName());
-		definitionImpl.setDescription(definition.getDescription());
-		definitionImpl.setSourceId(definition.getSourceId());
-		definitionImpl.setReportName(definition.getReportName());
-		definitionImpl.setReportParameters(definition.getReportParameters());
-		definitionImpl.setLastPublishDate(definition.getLastPublishDate());
-
-		return definitionImpl;
 	}
 
 	/**

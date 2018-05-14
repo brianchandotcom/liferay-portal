@@ -22,6 +22,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -883,7 +884,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 
 	private static final ClassLoader _classLoader = SamlSpSession.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			SamlSpSession.class
+			SamlSpSession.class, ModelWrapper.class
 		};
 	private long _samlSpSessionId;
 	private long _companyId;

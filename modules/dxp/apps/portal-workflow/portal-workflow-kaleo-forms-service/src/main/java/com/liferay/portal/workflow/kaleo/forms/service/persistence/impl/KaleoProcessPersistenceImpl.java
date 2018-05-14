@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessP
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2801,8 +2803,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 
 	@Override
 	protected KaleoProcess removeImpl(KaleoProcess kaleoProcess) {
-		kaleoProcess = toUnwrappedModel(kaleoProcess);
-
 		Session session = null;
 
 		try {
@@ -2833,9 +2833,23 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 
 	@Override
 	public KaleoProcess updateImpl(KaleoProcess kaleoProcess) {
-		kaleoProcess = toUnwrappedModel(kaleoProcess);
-
 		boolean isNew = kaleoProcess.isNew();
+
+		if (!(kaleoProcess instanceof KaleoProcessModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoProcess.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoProcess);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoProcess proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoProcess implementation " +
+				kaleoProcess.getClass());
+		}
 
 		KaleoProcessModelImpl kaleoProcessModelImpl = (KaleoProcessModelImpl)kaleoProcess;
 
@@ -2988,32 +3002,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 		kaleoProcess.resetOriginalValues();
 
 		return kaleoProcess;
-	}
-
-	protected KaleoProcess toUnwrappedModel(KaleoProcess kaleoProcess) {
-		if (kaleoProcess instanceof KaleoProcessImpl) {
-			return kaleoProcess;
-		}
-
-		KaleoProcessImpl kaleoProcessImpl = new KaleoProcessImpl();
-
-		kaleoProcessImpl.setNew(kaleoProcess.isNew());
-		kaleoProcessImpl.setPrimaryKey(kaleoProcess.getPrimaryKey());
-
-		kaleoProcessImpl.setUuid(kaleoProcess.getUuid());
-		kaleoProcessImpl.setKaleoProcessId(kaleoProcess.getKaleoProcessId());
-		kaleoProcessImpl.setGroupId(kaleoProcess.getGroupId());
-		kaleoProcessImpl.setCompanyId(kaleoProcess.getCompanyId());
-		kaleoProcessImpl.setUserId(kaleoProcess.getUserId());
-		kaleoProcessImpl.setUserName(kaleoProcess.getUserName());
-		kaleoProcessImpl.setCreateDate(kaleoProcess.getCreateDate());
-		kaleoProcessImpl.setModifiedDate(kaleoProcess.getModifiedDate());
-		kaleoProcessImpl.setDDLRecordSetId(kaleoProcess.getDDLRecordSetId());
-		kaleoProcessImpl.setDDMTemplateId(kaleoProcess.getDDMTemplateId());
-		kaleoProcessImpl.setWorkflowDefinitionName(kaleoProcess.getWorkflowDefinitionName());
-		kaleoProcessImpl.setWorkflowDefinitionVersion(kaleoProcess.getWorkflowDefinitionVersion());
-
-		return kaleoProcessImpl;
 	}
 
 	/**

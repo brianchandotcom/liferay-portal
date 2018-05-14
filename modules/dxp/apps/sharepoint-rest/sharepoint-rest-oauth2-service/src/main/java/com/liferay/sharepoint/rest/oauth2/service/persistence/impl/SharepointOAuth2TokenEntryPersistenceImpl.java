@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -37,6 +38,8 @@ import com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryM
 import com.liferay.sharepoint.rest.oauth2.service.persistence.SharepointOAuth2TokenEntryPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -557,8 +560,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	@Override
 	protected SharepointOAuth2TokenEntry removeImpl(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-		sharepointOAuth2TokenEntry = toUnwrappedModel(sharepointOAuth2TokenEntry);
-
 		Session session = null;
 
 		try {
@@ -590,9 +591,23 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	@Override
 	public SharepointOAuth2TokenEntry updateImpl(
 		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-		sharepointOAuth2TokenEntry = toUnwrappedModel(sharepointOAuth2TokenEntry);
-
 		boolean isNew = sharepointOAuth2TokenEntry.isNew();
+
+		if (!(sharepointOAuth2TokenEntry instanceof SharepointOAuth2TokenEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(sharepointOAuth2TokenEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(sharepointOAuth2TokenEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in sharepointOAuth2TokenEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SharepointOAuth2TokenEntry implementation " +
+				sharepointOAuth2TokenEntry.getClass());
+		}
 
 		SharepointOAuth2TokenEntryModelImpl sharepointOAuth2TokenEntryModelImpl = (SharepointOAuth2TokenEntryModelImpl)sharepointOAuth2TokenEntry;
 
@@ -640,29 +655,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		sharepointOAuth2TokenEntry.resetOriginalValues();
 
 		return sharepointOAuth2TokenEntry;
-	}
-
-	protected SharepointOAuth2TokenEntry toUnwrappedModel(
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-		if (sharepointOAuth2TokenEntry instanceof SharepointOAuth2TokenEntryImpl) {
-			return sharepointOAuth2TokenEntry;
-		}
-
-		SharepointOAuth2TokenEntryImpl sharepointOAuth2TokenEntryImpl = new SharepointOAuth2TokenEntryImpl();
-
-		sharepointOAuth2TokenEntryImpl.setNew(sharepointOAuth2TokenEntry.isNew());
-		sharepointOAuth2TokenEntryImpl.setPrimaryKey(sharepointOAuth2TokenEntry.getPrimaryKey());
-
-		sharepointOAuth2TokenEntryImpl.setSharepointOAuth2TokenEntryId(sharepointOAuth2TokenEntry.getSharepointOAuth2TokenEntryId());
-		sharepointOAuth2TokenEntryImpl.setUserId(sharepointOAuth2TokenEntry.getUserId());
-		sharepointOAuth2TokenEntryImpl.setUserName(sharepointOAuth2TokenEntry.getUserName());
-		sharepointOAuth2TokenEntryImpl.setCreateDate(sharepointOAuth2TokenEntry.getCreateDate());
-		sharepointOAuth2TokenEntryImpl.setAccessToken(sharepointOAuth2TokenEntry.getAccessToken());
-		sharepointOAuth2TokenEntryImpl.setConfigurationPid(sharepointOAuth2TokenEntry.getConfigurationPid());
-		sharepointOAuth2TokenEntryImpl.setExpirationDate(sharepointOAuth2TokenEntry.getExpirationDate());
-		sharepointOAuth2TokenEntryImpl.setRefreshToken(sharepointOAuth2TokenEntry.getRefreshToken());
-
-		return sharepointOAuth2TokenEntryImpl;
 	}
 
 	/**

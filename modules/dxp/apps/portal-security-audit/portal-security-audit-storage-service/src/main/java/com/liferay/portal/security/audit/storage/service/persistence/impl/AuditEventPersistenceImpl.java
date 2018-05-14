@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.audit.storage.exception.NoSuchEventException;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
@@ -38,6 +39,8 @@ import com.liferay.portal.security.audit.storage.service.persistence.AuditEventP
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -739,8 +742,6 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 
 	@Override
 	protected AuditEvent removeImpl(AuditEvent auditEvent) {
-		auditEvent = toUnwrappedModel(auditEvent);
-
 		Session session = null;
 
 		try {
@@ -771,9 +772,23 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 
 	@Override
 	public AuditEvent updateImpl(AuditEvent auditEvent) {
-		auditEvent = toUnwrappedModel(auditEvent);
-
 		boolean isNew = auditEvent.isNew();
+
+		if (!(auditEvent instanceof AuditEventModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(auditEvent.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(auditEvent);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in auditEvent proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom AuditEvent implementation " +
+				auditEvent.getClass());
+		}
 
 		AuditEventModelImpl auditEventModelImpl = (AuditEventModelImpl)auditEvent;
 
@@ -841,35 +856,6 @@ public class AuditEventPersistenceImpl extends BasePersistenceImpl<AuditEvent>
 		auditEvent.resetOriginalValues();
 
 		return auditEvent;
-	}
-
-	protected AuditEvent toUnwrappedModel(AuditEvent auditEvent) {
-		if (auditEvent instanceof AuditEventImpl) {
-			return auditEvent;
-		}
-
-		AuditEventImpl auditEventImpl = new AuditEventImpl();
-
-		auditEventImpl.setNew(auditEvent.isNew());
-		auditEventImpl.setPrimaryKey(auditEvent.getPrimaryKey());
-
-		auditEventImpl.setAuditEventId(auditEvent.getAuditEventId());
-		auditEventImpl.setCompanyId(auditEvent.getCompanyId());
-		auditEventImpl.setUserId(auditEvent.getUserId());
-		auditEventImpl.setUserName(auditEvent.getUserName());
-		auditEventImpl.setCreateDate(auditEvent.getCreateDate());
-		auditEventImpl.setEventType(auditEvent.getEventType());
-		auditEventImpl.setClassName(auditEvent.getClassName());
-		auditEventImpl.setClassPK(auditEvent.getClassPK());
-		auditEventImpl.setMessage(auditEvent.getMessage());
-		auditEventImpl.setClientHost(auditEvent.getClientHost());
-		auditEventImpl.setClientIP(auditEvent.getClientIP());
-		auditEventImpl.setServerName(auditEvent.getServerName());
-		auditEventImpl.setServerPort(auditEvent.getServerPort());
-		auditEventImpl.setSessionID(auditEvent.getSessionID());
-		auditEventImpl.setAdditionalInfo(auditEvent.getAdditionalInfo());
-
-		return auditEventImpl;
 	}
 
 	/**

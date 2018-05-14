@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.resiliency.spi.exception.NoSuchDefinitionException;
@@ -46,6 +47,8 @@ import com.liferay.portal.resiliency.spi.model.impl.SPIDefinitionModelImpl;
 import com.liferay.portal.resiliency.spi.service.persistence.SPIDefinitionPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -3151,8 +3154,6 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 	@Override
 	protected SPIDefinition removeImpl(SPIDefinition spiDefinition) {
-		spiDefinition = toUnwrappedModel(spiDefinition);
-
 		Session session = null;
 
 		try {
@@ -3183,9 +3184,23 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 
 	@Override
 	public SPIDefinition updateImpl(SPIDefinition spiDefinition) {
-		spiDefinition = toUnwrappedModel(spiDefinition);
-
 		boolean isNew = spiDefinition.isNew();
+
+		if (!(spiDefinition instanceof SPIDefinitionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(spiDefinition.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(spiDefinition);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in spiDefinition proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SPIDefinition implementation " +
+				spiDefinition.getClass());
+		}
 
 		SPIDefinitionModelImpl spiDefinitionModelImpl = (SPIDefinitionModelImpl)spiDefinition;
 
@@ -3310,36 +3325,6 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 		spiDefinition.resetOriginalValues();
 
 		return spiDefinition;
-	}
-
-	protected SPIDefinition toUnwrappedModel(SPIDefinition spiDefinition) {
-		if (spiDefinition instanceof SPIDefinitionImpl) {
-			return spiDefinition;
-		}
-
-		SPIDefinitionImpl spiDefinitionImpl = new SPIDefinitionImpl();
-
-		spiDefinitionImpl.setNew(spiDefinition.isNew());
-		spiDefinitionImpl.setPrimaryKey(spiDefinition.getPrimaryKey());
-
-		spiDefinitionImpl.setSpiDefinitionId(spiDefinition.getSpiDefinitionId());
-		spiDefinitionImpl.setCompanyId(spiDefinition.getCompanyId());
-		spiDefinitionImpl.setUserId(spiDefinition.getUserId());
-		spiDefinitionImpl.setUserName(spiDefinition.getUserName());
-		spiDefinitionImpl.setCreateDate(spiDefinition.getCreateDate());
-		spiDefinitionImpl.setModifiedDate(spiDefinition.getModifiedDate());
-		spiDefinitionImpl.setName(spiDefinition.getName());
-		spiDefinitionImpl.setConnectorAddress(spiDefinition.getConnectorAddress());
-		spiDefinitionImpl.setConnectorPort(spiDefinition.getConnectorPort());
-		spiDefinitionImpl.setDescription(spiDefinition.getDescription());
-		spiDefinitionImpl.setJvmArguments(spiDefinition.getJvmArguments());
-		spiDefinitionImpl.setPortletIds(spiDefinition.getPortletIds());
-		spiDefinitionImpl.setServletContextNames(spiDefinition.getServletContextNames());
-		spiDefinitionImpl.setTypeSettings(spiDefinition.getTypeSettings());
-		spiDefinitionImpl.setStatus(spiDefinition.getStatus());
-		spiDefinitionImpl.setStatusMessage(spiDefinition.getStatusMessage());
-
-		return spiDefinitionImpl;
 	}
 
 	/**

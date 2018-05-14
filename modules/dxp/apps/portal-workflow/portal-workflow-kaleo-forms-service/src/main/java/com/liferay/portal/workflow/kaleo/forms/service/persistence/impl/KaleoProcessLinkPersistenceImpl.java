@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
@@ -36,6 +37,8 @@ import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelI
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessLinkPersistence;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1063,8 +1066,6 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 	@Override
 	protected KaleoProcessLink removeImpl(KaleoProcessLink kaleoProcessLink) {
-		kaleoProcessLink = toUnwrappedModel(kaleoProcessLink);
-
 		Session session = null;
 
 		try {
@@ -1095,9 +1096,23 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 
 	@Override
 	public KaleoProcessLink updateImpl(KaleoProcessLink kaleoProcessLink) {
-		kaleoProcessLink = toUnwrappedModel(kaleoProcessLink);
-
 		boolean isNew = kaleoProcessLink.isNew();
+
+		if (!(kaleoProcessLink instanceof KaleoProcessLinkModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(kaleoProcessLink.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(kaleoProcessLink);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in kaleoProcessLink proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom KaleoProcessLink implementation " +
+				kaleoProcessLink.getClass());
+		}
 
 		KaleoProcessLinkModelImpl kaleoProcessLinkModelImpl = (KaleoProcessLinkModelImpl)kaleoProcessLink;
 
@@ -1175,25 +1190,6 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		kaleoProcessLink.resetOriginalValues();
 
 		return kaleoProcessLink;
-	}
-
-	protected KaleoProcessLink toUnwrappedModel(
-		KaleoProcessLink kaleoProcessLink) {
-		if (kaleoProcessLink instanceof KaleoProcessLinkImpl) {
-			return kaleoProcessLink;
-		}
-
-		KaleoProcessLinkImpl kaleoProcessLinkImpl = new KaleoProcessLinkImpl();
-
-		kaleoProcessLinkImpl.setNew(kaleoProcessLink.isNew());
-		kaleoProcessLinkImpl.setPrimaryKey(kaleoProcessLink.getPrimaryKey());
-
-		kaleoProcessLinkImpl.setKaleoProcessLinkId(kaleoProcessLink.getKaleoProcessLinkId());
-		kaleoProcessLinkImpl.setKaleoProcessId(kaleoProcessLink.getKaleoProcessId());
-		kaleoProcessLinkImpl.setWorkflowTaskName(kaleoProcessLink.getWorkflowTaskName());
-		kaleoProcessLinkImpl.setDDMTemplateId(kaleoProcessLink.getDDMTemplateId());
-
-		return kaleoProcessLinkImpl;
 	}
 
 	/**

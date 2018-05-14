@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,6 +46,7 @@ import com.liferay.saml.persistence.service.persistence.SamlSpSessionPersistence
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1646,8 +1648,6 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 
 	@Override
 	protected SamlSpSession removeImpl(SamlSpSession samlSpSession) {
-		samlSpSession = toUnwrappedModel(samlSpSession);
-
 		Session session = null;
 
 		try {
@@ -1678,9 +1678,23 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 
 	@Override
 	public SamlSpSession updateImpl(SamlSpSession samlSpSession) {
-		samlSpSession = toUnwrappedModel(samlSpSession);
-
 		boolean isNew = samlSpSession.isNew();
+
+		if (!(samlSpSession instanceof SamlSpSessionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(samlSpSession.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(samlSpSession);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in samlSpSession proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom SamlSpSession implementation " +
+				samlSpSession.getClass());
+		}
 
 		SamlSpSessionModelImpl samlSpSessionModelImpl = (SamlSpSessionModelImpl)samlSpSession;
 
@@ -1775,35 +1789,6 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 		samlSpSession.resetOriginalValues();
 
 		return samlSpSession;
-	}
-
-	protected SamlSpSession toUnwrappedModel(SamlSpSession samlSpSession) {
-		if (samlSpSession instanceof SamlSpSessionImpl) {
-			return samlSpSession;
-		}
-
-		SamlSpSessionImpl samlSpSessionImpl = new SamlSpSessionImpl();
-
-		samlSpSessionImpl.setNew(samlSpSession.isNew());
-		samlSpSessionImpl.setPrimaryKey(samlSpSession.getPrimaryKey());
-
-		samlSpSessionImpl.setSamlSpSessionId(samlSpSession.getSamlSpSessionId());
-		samlSpSessionImpl.setCompanyId(samlSpSession.getCompanyId());
-		samlSpSessionImpl.setUserId(samlSpSession.getUserId());
-		samlSpSessionImpl.setUserName(samlSpSession.getUserName());
-		samlSpSessionImpl.setCreateDate(samlSpSession.getCreateDate());
-		samlSpSessionImpl.setModifiedDate(samlSpSession.getModifiedDate());
-		samlSpSessionImpl.setSamlSpSessionKey(samlSpSession.getSamlSpSessionKey());
-		samlSpSessionImpl.setAssertionXml(samlSpSession.getAssertionXml());
-		samlSpSessionImpl.setJSessionId(samlSpSession.getJSessionId());
-		samlSpSessionImpl.setNameIdFormat(samlSpSession.getNameIdFormat());
-		samlSpSessionImpl.setNameIdNameQualifier(samlSpSession.getNameIdNameQualifier());
-		samlSpSessionImpl.setNameIdSPNameQualifier(samlSpSession.getNameIdSPNameQualifier());
-		samlSpSessionImpl.setNameIdValue(samlSpSession.getNameIdValue());
-		samlSpSessionImpl.setSessionIndex(samlSpSession.getSessionIndex());
-		samlSpSessionImpl.setTerminated(samlSpSession.isTerminated());
-
-		return samlSpSessionImpl;
 	}
 
 	/**

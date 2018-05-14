@@ -1512,6 +1512,35 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoConfiguration">
+			<var name="configurationCategory" value="Users" />
+			<var name="configurationName" value="Organization Type" />
+			<var name="configurationScope" value="System Scope" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#ADD" value1="ADD" />
+
+		<for list="Name,Children Types" param="settingName">
+			<execute macro="SystemSettings#editTextAreaSetting">
+				<var name="settingName" value="${settingName}" />
+				<var name="settingValue" value="Location" />
+			</execute>
+		</for>
+
+		<for list="countryEnabled,rootable" param="fieldName">
+			<execute macro="FormFields#enableCheckbox">
+				<var name="fieldName" value="${fieldName}" />
+			</execute>
+		</for>
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
+		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
 			<var name="portlet" value="Users and Organizations" />

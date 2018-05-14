@@ -102,7 +102,9 @@ public class DefaultDynamicDataSourceTargetSource
 
 		String method = methodStack.pop();
 
-		setOperation(Operation.WRITE);
+		if (methodStack.isEmpty()) {
+			_operationType.remove();
+		}
 
 		return method;
 	}

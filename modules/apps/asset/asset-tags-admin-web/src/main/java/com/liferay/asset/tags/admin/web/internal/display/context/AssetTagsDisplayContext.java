@@ -128,8 +128,8 @@ public class AssetTagsDisplayContext {
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_tag.jsp");
+							(PortletURL)_renderResponse.createRenderURL(),
+							"mvcPath", "/edit_tag.jsp");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "add-tag"));
 					});
@@ -231,7 +231,7 @@ public class AssetTagsDisplayContext {
 					navigationItem -> {
 						navigationItem.setActive(true);
 						navigationItem.setHref(
-							_renderResponse.createRenderURL());
+							(PortletURL)_renderResponse.createRenderURL());
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "tags"));
 					});
@@ -456,7 +456,8 @@ public class AssetTagsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
-						dropdownItem.setHref(_renderResponse.createRenderURL());
+						dropdownItem.setHref(
+							(PortletURL)_renderResponse.createRenderURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "all"));
 					});
@@ -470,17 +471,17 @@ public class AssetTagsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "keywords",
-							getKeywords(), "orderByCol", "name", "orderByType",
-							getOrderByType());
+							(PortletURL)_renderResponse.createRenderURL(),
+							"keywords", getKeywords(), "orderByCol", "name",
+							"orderByType", getOrderByType());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "name"));
 					});
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "keywords",
-							getKeywords(), "orderByCol", "usages",
+							(PortletURL)_renderResponse.createRenderURL(),
+							"keywords", getKeywords(), "orderByCol", "usages",
 							"orderByType", getOrderByType());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "usages"));

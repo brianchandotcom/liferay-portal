@@ -24,7 +24,6 @@ import com.liferay.portlet.extra.config.ExtraPortletAppConfigRegistry;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
@@ -61,11 +60,6 @@ public class ResourceResponseImpl
 	}
 
 	@Override
-	public PortletURL createActionURL() {
-		return super.createActionURL();
-	}
-
-	@Override
 	public LiferayPortletURL createLiferayPortletURL(
 		long plid, String portletName, String lifecycle,
 		boolean includeLinkToLayoutUuid) {
@@ -92,18 +86,13 @@ public class ResourceResponseImpl
 	}
 
 	@Override
-	public PortletURL createRenderURL() {
-		return super.createRenderURL();
-	}
-
-	@Override
-	public ResourceURL createResourceURL() {
-		return super.createResourceURL();
-	}
-
-	@Override
 	public String getLifecycle() {
 		return PortletRequest.RESOURCE_PHASE;
+	}
+
+	@Override
+	public int getStatus() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -116,6 +105,11 @@ public class ResourceResponseImpl
 	@Override
 	public void setContentLength(int length) {
 		response.setContentLength(length);
+	}
+
+	@Override
+	public void setContentLengthLong(long length) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -166,6 +160,11 @@ public class ResourceResponseImpl
 				_canSetLocaleEncoding = true;
 			}
 		}
+	}
+
+	@Override
+	public void setStatus(int statusCode) {
+		throw new UnsupportedOperationException();
 	}
 
 	private boolean _canSetLocaleEncoding = true;

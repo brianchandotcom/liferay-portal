@@ -262,7 +262,8 @@ public class JournalHistoryDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
-						dropdownItem.setHref(_renderResponse.createRenderURL());
+						dropdownItem.setHref(
+							(PortletURL)_renderResponse.createRenderURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "all"));
 					});

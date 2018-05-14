@@ -89,8 +89,8 @@ public class JournalFeedsDisplayContext {
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							_renderResponse.createRenderURL(), "mvcPath",
-							"/edit_feed.jsp", "redirect",
+							(PortletURL)_renderResponse.createRenderURL(),
+							"mvcPath", "/edit_feed.jsp", "redirect",
 							themeDisplay.getURLCurrent());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "add-feed"));
@@ -267,7 +267,8 @@ public class JournalFeedsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(true);
-						dropdownItem.setHref(_renderResponse.createRenderURL());
+						dropdownItem.setHref(
+							(PortletURL)_renderResponse.createRenderURL());
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "all"));
 					});

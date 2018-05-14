@@ -94,7 +94,7 @@ searchContainer.setResults(results);
 					add(
 						navigationItem -> {
 							navigationItem.setActive(mvcRenderCommandName.equals("/blogs/view_not_published_entries"));
-							navigationItem.setHref(renderResponse.createRenderURL(), "mvcRenderCommandName", "/blogs/view_not_published_entries");
+							navigationItem.setHref((PortletURL)renderResponse.createRenderURL(), "mvcRenderCommandName", "/blogs/view_not_published_entries");
 							navigationItem.setLabel(LanguageUtil.format(request, "not-published-x", notPublishedEntriesCount, false));
 						});
 				}

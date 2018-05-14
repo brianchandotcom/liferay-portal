@@ -52,7 +52,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 				add(
 					navigationItem -> {
 						navigationItem.setActive(!actionRequired);
-						navigationItem.setHref(renderResponse.createRenderURL(), "actionRequired", StringPool.FALSE);
+						navigationItem.setHref((PortletURL)renderResponse.createRenderURL(), "actionRequired", StringPool.FALSE);
 						navigationItem.setLabel(LanguageUtil.format(request, "notifications-list-x", UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false)));
 					});
 
@@ -60,7 +60,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 					navigationItem -> {
 
 						navigationItem.setActive(actionRequired);
-						navigationItem.setHref(renderResponse.createRenderURL(), "actionRequired", StringPool.TRUE);
+						navigationItem.setHref((PortletURL)renderResponse.createRenderURL(), "actionRequired", StringPool.TRUE);
 						navigationItem.setLabel(LanguageUtil.format(request, "requests-list-x", String.valueOf(UserNotificationEventLocalServiceUtil.getArchivedUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false))));
 					});
 			}

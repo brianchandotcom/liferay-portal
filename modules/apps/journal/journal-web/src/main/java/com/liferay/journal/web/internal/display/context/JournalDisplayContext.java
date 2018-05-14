@@ -372,10 +372,13 @@ public class JournalDisplayContext {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {
+							PortletURL portletURL =
+								_liferayPortletResponse.createRenderURL();
+
 							dropdownItem.setHref(
-								_liferayPortletResponse.createRenderURL(),
-								"mvcPath", "/edit_folder.jsp", "redirect",
-								PortalUtil.getCurrentURL(_request), "groupId",
+								portletURL, "mvcPath", "/edit_folder.jsp",
+								"redirect", PortalUtil.getCurrentURL(_request),
+								"groupId",
 								String.valueOf(themeDisplay.getScopeGroupId()),
 								"parentFolderId",
 								String.valueOf(getFolderId()));
@@ -783,14 +786,15 @@ public class JournalDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationBarItems(String currentItem) {
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
 		return new NavigationItemList() {
 			{
 				add(
 					navigationItem -> {
 						navigationItem.setActive(
 							currentItem.equals("web-content"));
-						navigationItem.setHref(
-							_liferayPortletResponse.createRenderURL());
+						navigationItem.setHref(portletURL);
 						navigationItem.setLabel(
 							LanguageUtil.get(_request, "web-content"));
 					});

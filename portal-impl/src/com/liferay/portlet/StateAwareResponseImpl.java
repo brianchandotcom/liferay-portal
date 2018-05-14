@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.Event;
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.StateAwareResponse;
@@ -83,6 +84,11 @@ public abstract class StateAwareResponseImpl
 	@Override
 	public Map<String, String[]> getRenderParameterMap() {
 		return _params;
+	}
+
+	@Override
+	public MutableRenderParameters getRenderParameters() {
+		throw new UnsupportedOperationException();
 	}
 
 	public User getUser() {

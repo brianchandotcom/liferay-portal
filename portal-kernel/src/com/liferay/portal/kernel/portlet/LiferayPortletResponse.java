@@ -14,12 +14,17 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Portlet;
 
 import java.util.Map;
 
+import javax.portlet.ActionURL;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public interface LiferayPortletResponse extends PortletResponse {
 
 	public void addDateHeader(String name, long date);
@@ -35,7 +41,9 @@ public interface LiferayPortletResponse extends PortletResponse {
 
 	public void addIntHeader(String name, int value);
 
-	public PortletURL createActionURL();
+	public <T extends PortletURL & ActionURL> T createActionURL();
+
+	public ActionURL createActionURL(MimeResponse.Copy copy);
 
 	public LiferayPortletURL createActionURL(String portletName);
 
@@ -51,7 +59,9 @@ public interface LiferayPortletResponse extends PortletResponse {
 	public LiferayPortletURL createLiferayPortletURL(
 		String portletName, String lifecycle);
 
-	public PortletURL createRenderURL();
+	public <T extends PortletURL & RenderURL> T createRenderURL();
+
+	public RenderURL createRenderURL(MimeResponse.Copy copy);
 
 	public LiferayPortletURL createRenderURL(String portletName);
 

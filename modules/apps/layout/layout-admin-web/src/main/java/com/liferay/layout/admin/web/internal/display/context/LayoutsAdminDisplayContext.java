@@ -797,8 +797,8 @@ public class LayoutsAdminDisplayContext {
 		return _millerColumnsEnabled;
 	}
 
-	public boolean isPageTemplates() {
-		if (Objects.equals(getTabs1(), "page-templates")) {
+	public boolean isPagesTab() {
+		if (Objects.equals(getTabs1(), "pages")) {
 			return true;
 		}
 

@@ -90,7 +90,7 @@ public class EditPrivatePagesPortletConfigurationIcon
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(liferayPortletRequest, null);
 
-		if (layoutsAdminDisplayContext.isPageTemplates() ||
+		if (!layoutsAdminDisplayContext.isPagesTab() ||
 			layoutsAdminDisplayContext.isPublicPages()) {
 
 			return false;

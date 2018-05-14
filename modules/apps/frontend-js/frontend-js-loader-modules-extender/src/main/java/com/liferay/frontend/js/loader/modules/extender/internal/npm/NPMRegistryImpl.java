@@ -284,11 +284,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private void _processLegacyBridges(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders();
 
-		String bridgeJSSubmodules = GetterUtil.getString(
-			headers.get("Liferay-Bridge-JS-Submodules"));
+		String jsSubmodulesBridge = GetterUtil.getString(
+			headers.get("Liferay-JS-Submodules-Bridge"));
 
-		if (Validator.isNotNull(bridgeJSSubmodules)) {
-			String[] bridges = bridgeJSSubmodules.split(",");
+		if (Validator.isNotNull(jsSubmodulesBridge)) {
+			String[] bridges = jsSubmodulesBridge.split(",");
 
 			JSONObject packageJSONObject = _getPackageJSONObject(bundle);
 

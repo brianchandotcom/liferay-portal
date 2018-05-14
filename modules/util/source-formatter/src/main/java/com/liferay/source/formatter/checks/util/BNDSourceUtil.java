@@ -108,7 +108,7 @@ public class BNDSourceUtil {
 		"-jsp", "-metatype-inherit", "-sass", "Bundle-ActivationPolicy",
 		"Can-Redefine-Classes", "Can-Retransform-Classes",
 		"Eclipse-PlatformFilter", "Implementation-Version", "JPM-Command",
-		"Liferay-Bridge-JS-Submodules", "Liferay-Configuration-Path",
+		"Liferay-JS-Submodules-Bridge", "Liferay-Configuration-Path",
 		"Liferay-Export-JS-Submodules", "Liferay-JS-Config",
 		"Liferay-Modules-Compat-Adapters", "Liferay-Releng-App-Description",
 		"Liferay-Releng-Module-Group-Description",

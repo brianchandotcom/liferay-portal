@@ -37,7 +37,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.LayoutPrototypeCreateDateComparator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -66,9 +68,11 @@ public class LayoutPrototypeDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedLayoutPrototypes();");
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("action", "deleteSelectedLayoutPrototypes");
+
+						dropdownItem.setData(data);
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

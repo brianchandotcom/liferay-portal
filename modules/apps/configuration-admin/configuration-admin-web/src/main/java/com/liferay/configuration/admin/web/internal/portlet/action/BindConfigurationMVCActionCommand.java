@@ -15,7 +15,9 @@
 package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
+import com.liferay.configuration.admin.web.internal.util.ConfigurationFormRendererRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelToDDMFormConverter;
 import com.liferay.configuration.admin.web.internal.util.DDMFormValuesToPropertiesConverter;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,6 +58,8 @@ import java.util.ResourceBundle;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
@@ -115,23 +120,25 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			themeDisplay.getLocale());
 
-		ConfigurationModelToDDMFormConverter
-			configurationModelToDDMFormConverter =
-				new ConfigurationModelToDDMFormConverter(
-					configurationModel, themeDisplay.getLocale(),
-					resourceBundle);
+		ConfigurationFormRenderer configurationFormRenderer =
+			_configurationFormRendererRetriever.getConfigurationFormRenderer(
+				pid);
 
-		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			actionRequest);
 
-		DDMFormValues ddmFormValues = getDDMFormValues(actionRequest, ddmForm);
+		Dictionary<String, Object> properties = null;
 
-		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
-			new DDMFormValuesToPropertiesConverter(
-				configurationModel, ddmFormValues, _jsonFactory,
-				themeDisplay.getLocale());
+		Map<String, Object> requestParameters =
+			configurationFormRenderer.getRequestParameters(request);
 
-		Dictionary<String, Object> properties =
-			ddmFormValuesToPropertiesConverter.getProperties();
+		if (requestParameters != null) {
+			properties = convertToDictionary(requestParameters);
+		}
+		else {
+			properties = getDDMRequestParams(
+				actionRequest, configurationModel, resourceBundle);
+		}
 
 		properties.put(Constants.SERVICE_PID, pid);
 
@@ -282,10 +289,47 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 		}
 	}
 
+	protected Dictionary<String, Object> convertToDictionary(
+		Map<String, Object> requestParameters) {
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		for (Map.Entry<String, Object> entry : requestParameters.entrySet()) {
+			properties.put(entry.getKey(), entry.getValue());
+		}
+
+		return properties;
+	}
+
 	protected DDMFormValues getDDMFormValues(
 		ActionRequest actionRequest, DDMForm ddmForm) {
 
 		return _ddmFormValuesFactory.create(actionRequest, ddmForm);
+	}
+
+	protected Dictionary<String, Object> getDDMRequestParams(
+		ActionRequest actionRequest, ConfigurationModel configurationModel,
+		ResourceBundle resourceBundle) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ConfigurationModelToDDMFormConverter
+			configurationModelToDDMFormConverter =
+				new ConfigurationModelToDDMFormConverter(
+					configurationModel, themeDisplay.getLocale(),
+					resourceBundle);
+
+		DDMForm ddmForm = configurationModelToDDMFormConverter.getDDMForm();
+
+		DDMFormValues ddmFormValues = getDDMFormValues(actionRequest, ddmForm);
+
+		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
+			new DDMFormValuesToPropertiesConverter(
+				configurationModel, ddmFormValues, _jsonFactory,
+				themeDisplay.getLocale());
+
+		return ddmFormValuesToPropertiesConverter.getProperties();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -295,6 +339,10 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
+	private ConfigurationFormRendererRetriever
+		_configurationFormRendererRetriever;
+
+	@Reference
 	private ConfigurationModelRetriever _configurationModelRetriever;
 
 	@Reference
@@ -302,6 +350,9 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;

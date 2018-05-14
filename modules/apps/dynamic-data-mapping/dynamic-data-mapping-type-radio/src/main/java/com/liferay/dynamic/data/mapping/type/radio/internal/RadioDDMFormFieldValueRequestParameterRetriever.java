@@ -15,11 +15,18 @@
 package com.liferay.dynamic.data.mapping.type.radio.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -37,10 +44,32 @@ public class RadioDDMFormFieldValueRequestParameterRetriever
 			ddmFormFieldParameterName);
 
 		if (parameterValue == null) {
-			return defaultDDMFormFieldParameterValue;
+			return getPredefinedValue(defaultDDMFormFieldParameterValue);
 		}
 
 		return GetterUtil.getString(parameterValue);
 	}
+
+	protected String getPredefinedValue(String predefinedValue) {
+		try {
+			JSONArray predefinedValueJSONArray = _jsonFactory.createJSONArray(
+				predefinedValue);
+
+			return predefinedValueJSONArray.getString(0);
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to parse JSON", jsone);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RadioDDMFormFieldValueRequestParameterRetriever.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

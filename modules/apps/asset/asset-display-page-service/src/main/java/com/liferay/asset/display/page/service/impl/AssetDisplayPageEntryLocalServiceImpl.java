@@ -57,4 +57,12 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			assetEntryId);
 	}
 
+	@Override
+	public int getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+		long layoutPageTemplateEntryId) {
+
+		return assetDisplayPageEntryPersistence.
+			countByLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+	}
+
 }

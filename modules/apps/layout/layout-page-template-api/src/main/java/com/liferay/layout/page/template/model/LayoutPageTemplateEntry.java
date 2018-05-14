@@ -56,6 +56,23 @@ public interface LayoutPageTemplateEntry extends LayoutPageTemplateEntryModel,
 			}
 		};
 
+	public static final Accessor<LayoutPageTemplateEntry, String> NAME_ACCESSOR = new Accessor<LayoutPageTemplateEntry, String>() {
+			@Override
+			public String get(LayoutPageTemplateEntry layoutPageTemplateEntry) {
+				return layoutPageTemplateEntry.getName();
+			}
+
+			@Override
+			public Class<String> getAttributeClass() {
+				return String.class;
+			}
+
+			@Override
+			public Class<LayoutPageTemplateEntry> getTypeClass() {
+				return LayoutPageTemplateEntry.class;
+			}
+		};
+
 	public String getContent()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

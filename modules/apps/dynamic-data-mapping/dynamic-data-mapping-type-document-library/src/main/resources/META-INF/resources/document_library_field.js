@@ -6,11 +6,8 @@ AUI.add(
 		var DocumentLibraryField = A.Component.create(
 			{
 				ATTRS: {
-					clearButtonVisible: {
-						value: false
-					},
-
 					fileEntryTitle: {
+						getter: '_getFileEntryTitle',
 						value: ''
 					},
 
@@ -96,7 +93,7 @@ AUI.add(
 						return A.merge(
 							DocumentLibraryField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								clearButtonVisible: instance.get('clearButtonVisible'),
+								clearButtonVisible: instance._getClearButtonVisible(),
 								fileEntryTitle: instance.get('fileEntryTitle'),
 								strings: instance.get('strings'),
 								value: instance.getStringValue()
@@ -129,11 +126,9 @@ AUI.add(
 
 						if (value.title && value.uuid) {
 							instance.set('fileEntryTitle', value.title);
-							instance.set('clearButtonVisible', true);
 						}
 						else {
 							instance.set('fileEntryTitle', '');
-							instance.set('clearButtonVisible', false);
 						}
 
 						instance.set('value', value);
@@ -149,6 +144,30 @@ AUI.add(
 						DocumentLibraryField.superclass.showErrorMessage.apply(instance, arguments);
 
 						container.all('.form-feedback-indicator').appendTo(container.one('.form-group'));
+					},
+
+					_getClearButtonVisible: function() {
+						var instance = this;
+
+						var value = instance.getValue();
+
+						if (value && value.title && value.uuid) {
+							return true;
+						}
+
+						return false;
+					},
+
+					_getFileEntryTitle: function() {
+						var instance = this;
+
+						var value = instance.getValue();
+
+						if (value) {
+							return value.title;
+						}
+
+						return '';
 					},
 
 					_handleButtonsClick: function(event) {

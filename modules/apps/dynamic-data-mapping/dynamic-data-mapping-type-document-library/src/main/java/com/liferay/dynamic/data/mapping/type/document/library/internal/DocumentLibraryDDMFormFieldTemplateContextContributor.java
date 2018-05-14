@@ -133,7 +133,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getValue());
 
 			if ((valueJSONObject != null) && (valueJSONObject.length() > 0)) {
-				parameters.put("fileEntryTitle", valueJSONObject.get("title"));
 				parameters.put(
 					"fileEntryURL", getFileEntryURL(request, valueJSONObject));
 			}

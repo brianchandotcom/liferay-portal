@@ -134,12 +134,12 @@ public class DDMFormPortlet extends MVCPortlet {
 		try {
 			setRenderRequestAttributes(renderRequest, renderResponse);
 
-			DDMFormDisplayContext ddlFormPortletDisplayContext =
+			DDMFormDisplayContext ddmFormPortletDisplayContext =
 				(DDMFormDisplayContext)renderRequest.getAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 			checkFormIsNotRestricted(
-				renderRequest, renderResponse, ddlFormPortletDisplayContext);
+				renderRequest, renderResponse, ddmFormPortletDisplayContext);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {

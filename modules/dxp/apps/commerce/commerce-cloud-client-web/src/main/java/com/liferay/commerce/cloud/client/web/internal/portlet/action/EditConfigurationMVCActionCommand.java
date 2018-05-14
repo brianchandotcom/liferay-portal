@@ -133,9 +133,9 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		String projectId = ParamUtil.getString(
 			actionRequest, "projectId",
 			commerceCloudClientConfiguration.projectId());
-		String serverUrl = ParamUtil.getString(
-			actionRequest, "serverUrl",
-			commerceCloudClientConfiguration.serverUrl());
+		String serverHost = ParamUtil.getString(
+			actionRequest, "serverHost",
+			commerceCloudClientConfiguration.serverHost());
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
@@ -144,7 +144,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		properties.put(
 			"forecastingOrdersCheckInterval", forecastingOrdersCheckInterval);
 		properties.put("projectId", projectId);
-		properties.put("serverUrl", serverUrl);
+		properties.put("serverHost", serverHost);
 
 		_configurationProvider.saveSystemConfiguration(
 			CommerceCloudClientConfiguration.class, properties);

@@ -45,6 +45,6 @@ public interface CommerceCloudClientConfiguration {
 	public String projectId();
 
 	@Meta.AD(required = false)
-	public String serverUrl();
+	public String serverHost();
 
 }

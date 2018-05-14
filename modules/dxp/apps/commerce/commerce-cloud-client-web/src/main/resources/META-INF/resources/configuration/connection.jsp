@@ -27,7 +27,7 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 
 <div class="sheet">
 	<aui:fieldset>
-		<aui:input name="serverUrl" value="<%= commerceCloudClientConfiguration.serverUrl() %>">
+		<aui:input name="serverHost" value="<%= commerceCloudClientConfiguration.serverHost() %>">
 			<aui:validator name="url" />
 		</aui:input>
 

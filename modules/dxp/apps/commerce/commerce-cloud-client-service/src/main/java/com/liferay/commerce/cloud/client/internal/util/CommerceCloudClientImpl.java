@@ -26,7 +26,6 @@ import com.liferay.commerce.forecast.service.CommerceForecastValueLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -345,21 +344,17 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 				"Project ID is not configured properly");
 		}
 
-		String serverUrl = _commerceCloudClientConfiguration.serverUrl();
+		String serverHost = _commerceCloudClientConfiguration.serverHost();
 
-		if (Validator.isNull(serverUrl)) {
+		if (Validator.isNull(serverHost)) {
 			throw new CommerceCloudClientException.MustBeConfigured(
 				"Server URL is not configured properly");
 		}
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(serverUrl);
-
-		if (serverUrl.charAt(serverUrl.length() - 1) != CharPool.SLASH) {
-			sb.append(CharPool.SLASH);
-		}
-
+		sb.append("https://");
+		sb.append(serverHost);
 		sb.append("projects/");
 		sb.append(projectId);
 		sb.append(path);

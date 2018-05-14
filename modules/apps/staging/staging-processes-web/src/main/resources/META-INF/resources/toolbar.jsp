@@ -38,42 +38,15 @@ portletURL.setParameter("orderByType", orderByType);
 portletURL.setParameter("searchContainerId", String.valueOf(searchContainerId));
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getActionDropdownItems() %>"
+	creationMenu="<%= stagingProcessesWebToolbarDisplayContext.getCreationMenu(GroupPermissionUtil.contains(permissionChecker, stagingGroupId, ActionKeys.PUBLISH_STAGING)) %>"
+	filterDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getFilterDropdownItems() %>"
+	id="<portlet:namespace/>stagingProcessesWebToolbar"
 	searchContainerId="<%= searchContainerId %>"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "completed", "in-progress"} %>'
-			navigationParam="navigation"
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"create-date", "completion-date", "name"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<c:if test='<%= tabs1.equals("processes") %>'>
-			<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + liferayPortletResponse.getNamespace() + "deleteEntries();" %>'
-			icon="times"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	showCreationMenu='<%= tabs1.equals("processes") %>'
+	showSearch="<%= false %>"
+	sortingOrder="<%= stagingProcessesWebToolbarDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= stagingProcessesWebToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= stagingProcessesWebToolbarDisplayContext.getViewTypeItems() %>"
+/>

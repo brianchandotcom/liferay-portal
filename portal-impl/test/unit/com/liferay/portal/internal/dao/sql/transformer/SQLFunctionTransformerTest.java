@@ -215,4 +215,14 @@ public class SQLFunctionTransformerTest {
 		}
 	}
 
+	@Test
+	public void testUnspacedArgumentsFunctionCall() {
+		SQLFunctionTransformer sqlFunctionTransformer =
+			new SQLFunctionTransformer("TEST(", "", " DELIMITER ", "");
+
+		String transformedSQL = sqlFunctionTransformer.transform("TEST(a,' ')");
+
+		Assert.assertEquals("a DELIMITER ' '", transformedSQL);
+	}
+
 }

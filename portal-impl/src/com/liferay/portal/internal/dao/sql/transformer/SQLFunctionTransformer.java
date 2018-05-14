@@ -77,6 +77,8 @@ public class SQLFunctionTransformer {
 						sb.replace(next, next + 1, _replacementDelimiter);
 
 						next = next + _replacementDelimiter.length();
+
+						continue;
 					}
 				}
 				else if (c == CharPool.CLOSE_PARENTHESIS) {

@@ -112,8 +112,6 @@ public class AssetVocabularyStagedModelDataHandler
 
 		String uuid = referenceElement.attributeValue("uuid");
 
-		String displayName = referenceElement.attributeValue("display-name");
-
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
@@ -123,8 +121,10 @@ public class AssetVocabularyStagedModelDataHandler
 
 		groupId = MapUtil.getLong(groupIds, groupId);
 
+		String displayName = referenceElement.attributeValue("display-name");
+
 		try {
-			return validateMissingReference(uuid, displayName, groupId);
+			return validateMissingReference(uuid, groupId, displayName);
 		}
 		catch (Exception e) {
 			return false;
@@ -363,7 +363,7 @@ public class AssetVocabularyStagedModelDataHandler
 	}
 
 	protected boolean validateMissingReference(
-		String uuid, String displayName, long groupId) {
+		String uuid, long groupId, String displayName) {
 
 		AssetVocabulary existingStagedModel = fetchMissingReference(
 			uuid, groupId);

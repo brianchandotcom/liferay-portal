@@ -29,9 +29,9 @@ AUI.add(
 							errorMessage: Liferay.Language.get('error-message'),
 							ifInput: Liferay.Language.get('if-input'),
 							showErrorMessage: Liferay.Language.get('show-error-message'),
+							theValue: Liferay.Language.get('the-value'),
 							url: Liferay.Language.get('url'),
-							validationMessage: Liferay.Language.get('validation'),
-							theValue: Liferay.Language.get('the-value')
+							validationMessage: Liferay.Language.get('validation')
 						}
 					},
 
@@ -98,7 +98,7 @@ AUI.add(
 								parameterMessagePlaceholder: parameterMessage,
 								parameterValue: instance.get('parameterValue'),
 								strings: instance.get('strings'),
-								validationsOptions: instance._getValidationsOptions(),
+								validationsOptions: instance._getValidationsOptions()
 							}
 						);
 					},

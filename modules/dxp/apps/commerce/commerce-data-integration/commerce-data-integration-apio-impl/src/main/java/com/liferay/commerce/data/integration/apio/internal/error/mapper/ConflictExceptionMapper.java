@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.data.integration.apio.internal.error.converter;
+package com.liferay.commerce.data.integration.apio.internal.error.mapper;
 
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Zoltán Takács
  */
 @Component(immediate = true)
-public class ConflictExceptionConverter
+public class ConflictExceptionMapper
 	implements ExceptionMapper<ConflictException> {
 
 	@Override

@@ -22,6 +22,8 @@ import io.vertx.core.Future;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -84,7 +86,8 @@ public class ForecastProcessorVerticle extends AbstractVerticle {
 			});
 	}
 
-	private static final long _DEFAULT_FORECAST_PROCESSOR_INTERVAL = 1000;
+	private static final long _DEFAULT_FORECAST_PROCESSOR_INTERVAL =
+		TimeUnit.MINUTES.toMillis(5);
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		ForecastProcessorVerticle.class);

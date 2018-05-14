@@ -113,8 +113,8 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 
 	public static final String TABLE_SQL_CREATE = "create table CPOptionCategory (uuid_ VARCHAR(75) null,CPOptionCategoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,priority DOUBLE,key_ VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPOptionCategory";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionCategory.title ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPOptionCategory.title ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpOptionCategory.title ASC, cpOptionCategory.priority ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPOptionCategory.title ASC, CPOptionCategory.priority ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -132,6 +132,7 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 	public static final long KEY_COLUMN_BITMASK = 4L;
 	public static final long UUID_COLUMN_BITMASK = 8L;
 	public static final long TITLE_COLUMN_BITMASK = 16L;
+	public static final long PRIORITY_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -689,6 +690,8 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 
 	@Override
 	public void setPriority(double priority) {
+		_columnBitmask = -1L;
+
 		_priority = priority;
 	}
 
@@ -872,6 +875,20 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 		int value = 0;
 
 		value = getTitle().compareTo(cpOptionCategory.getTitle());
+
+		if (value != 0) {
+			return value;
+		}
+
+		if (getPriority() < cpOptionCategory.getPriority()) {
+			value = -1;
+		}
+		else if (getPriority() > cpOptionCategory.getPriority()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
 
 		if (value != 0) {
 			return value;

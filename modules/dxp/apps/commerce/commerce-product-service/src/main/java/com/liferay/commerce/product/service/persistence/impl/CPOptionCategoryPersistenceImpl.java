@@ -111,7 +111,8 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
 			CPOptionCategoryModelImpl.UUID_COLUMN_BITMASK |
-			CPOptionCategoryModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionCategoryModelImpl.TITLE_COLUMN_BITMASK |
+			CPOptionCategoryModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CPOptionCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -916,7 +917,8 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 			new String[] { String.class.getName(), Long.class.getName() },
 			CPOptionCategoryModelImpl.UUID_COLUMN_BITMASK |
 			CPOptionCategoryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPOptionCategoryModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionCategoryModelImpl.TITLE_COLUMN_BITMASK |
+			CPOptionCategoryModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CPOptionCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1506,7 +1508,8 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
 			CPOptionCategoryModelImpl.GROUPID_COLUMN_BITMASK |
-			CPOptionCategoryModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionCategoryModelImpl.TITLE_COLUMN_BITMASK |
+			CPOptionCategoryModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CPOptionCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
@@ -2374,7 +2377,8 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] { Long.class.getName() },
 			CPOptionCategoryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPOptionCategoryModelImpl.TITLE_COLUMN_BITMASK);
+			CPOptionCategoryModelImpl.TITLE_COLUMN_BITMASK |
+			CPOptionCategoryModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(CPOptionCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			CPOptionCategoryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",

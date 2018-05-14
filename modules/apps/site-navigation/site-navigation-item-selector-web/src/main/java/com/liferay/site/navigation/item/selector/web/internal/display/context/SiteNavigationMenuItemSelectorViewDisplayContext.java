@@ -170,10 +170,6 @@ public class SiteNavigationMenuItemSelectorViewDisplayContext {
 			_getPortletRequest(), getPortletURL(), null,
 			"there-are-no-navigation-menus");
 
-		if (Validator.isNotNull(getKeywords())) {
-			searchContainer.setSearch(true);
-		}
-
 		OrderByComparator<SiteNavigationMenu> orderByComparator =
 			_getOrderByComparator(getOrderByCol(), getOrderByType());
 

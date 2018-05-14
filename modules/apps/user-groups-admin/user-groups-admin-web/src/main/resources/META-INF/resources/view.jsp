@@ -43,13 +43,7 @@ String portletURLString = portletURL.toString();
 
 SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, portletURL);
 
-UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)userGroupSearchContainer.getSearchTerms();
-
 boolean hasAddUserGroupPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP);
-
-if (!searchTerms.isSearch() && hasAddUserGroupPermission) {
-	userGroupSearchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-}
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-groups"), null);
 %>

@@ -138,10 +138,6 @@ public class AssetBrowserDisplayContext {
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
 			_renderRequest, getPortletURL());
 
-		if (Validator.isNotNull(_getKeywords())) {
-			assetBrowserSearch.setSearch(true);
-		}
-
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		int total = getTotalItems();

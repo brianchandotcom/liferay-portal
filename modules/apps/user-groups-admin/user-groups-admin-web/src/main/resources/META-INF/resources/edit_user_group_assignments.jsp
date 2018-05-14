@@ -44,12 +44,6 @@ PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
 
 SearchContainer userSearchContainer = new UserSearch(renderRequest, searchURL);
 
-UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
-if (!searchTerms.isSearch()) {
-	userSearchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-}
-
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 if (filterManageableOrganizations) {

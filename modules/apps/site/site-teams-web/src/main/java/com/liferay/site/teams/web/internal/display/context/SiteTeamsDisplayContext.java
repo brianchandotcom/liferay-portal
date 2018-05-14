@@ -204,10 +204,6 @@ public class SiteTeamsDisplayContext {
 
 		searchContainer.setEmptyResultsMessage("there-are-no-site-teams");
 
-		if (Validator.isNotNull(getKeywords())) {
-			searchContainer.setSearch(true);
-		}
-
 		searchContainer.setId("teams");
 		searchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

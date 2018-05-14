@@ -317,17 +317,13 @@ public class AssetTagsDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-tags");
 
-		String keywords = getKeywords();
-
-		if (Validator.isNotNull(keywords)) {
-			tagsSearchContainer.setSearch(true);
-		}
-
 		tagsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		String keywords = getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			Sort sort = null;

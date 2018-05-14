@@ -174,12 +174,6 @@ public class AssetTagsSelectorDisplayContext {
 		SearchContainer tagsSearchContainer = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-tags");
 
-		String keywords = _getKeywords();
-
-		if (Validator.isNotNull(keywords)) {
-			tagsSearchContainer.setSearch(true);
-		}
-
 		String orderByCol = _getOrderByCol();
 
 		tagsSearchContainer.setOrderByCol(orderByCol);
@@ -201,12 +195,12 @@ public class AssetTagsSelectorDisplayContext {
 			new EntriesChecker(_renderRequest, _renderResponse));
 
 		int tagsCount = AssetTagServiceUtil.getTagsCount(
-			themeDisplay.getScopeGroupId(), keywords);
+			themeDisplay.getScopeGroupId(), _getKeywords());
 
 		tagsSearchContainer.setTotal(tagsCount);
 
 		List<AssetTag> tags = AssetTagServiceUtil.getTags(
-			_getGroupIds(), keywords, tagsSearchContainer.getStart(),
+			_getGroupIds(), _getKeywords(), tagsSearchContainer.getStart(),
 			tagsSearchContainer.getEnd(),
 			tagsSearchContainer.getOrderByComparator());
 

@@ -41,12 +41,6 @@ if (tabs3.equals("available")) {
 >
 
 	<%
-	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
-
-	if (!searchTerms.isSearch()) {
-		searchContainer.setEmptyResultsMessageCssClass("taglib-empty-result-message-header-has-plus-btn");
-	}
-
 	LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
 	groupParams.put("site", Boolean.TRUE);
@@ -54,6 +48,8 @@ if (tabs3.equals("available")) {
 	if (tabs3.equals("current")) {
 		groupParams.put("groupsRoles", Long.valueOf(role.getRoleId()));
 	}
+
+	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
 	total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
 

@@ -28,7 +28,7 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 		</p>
 	</c:when>
 	<c:otherwise>
-		<div class="sheet">
+		<div class="sheet taglib-empty-result-message">
 			<div class="<%= cssClass %>"></div>
 
 			<c:if test="<%= Validator.isNotNull(message) %>">

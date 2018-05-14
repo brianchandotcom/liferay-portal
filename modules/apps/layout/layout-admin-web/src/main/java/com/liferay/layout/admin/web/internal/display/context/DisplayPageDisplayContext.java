@@ -109,10 +109,6 @@ public class DisplayPageDisplayContext {
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-display-pages");
 
-		if (isSearch()) {
-			displayPagesSearchContainer.setSearch(true);
-		}
-
 		displayPagesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 

@@ -270,10 +270,6 @@ public class SiteNavigationAdminDisplayContext {
 			_liferayPortletRequest, getPortletURL(), null,
 			"there-are-no-navigation-menus");
 
-		if (Validator.isNotNull(getKeywords())) {
-			searchContainer.setSearch(true);
-		}
-
 		OrderByComparator<SiteNavigationMenu> orderByComparator =
 			SiteNavigationMenuPortletUtil.getOrderByComparator(
 				getOrderByCol(), getOrderByType());

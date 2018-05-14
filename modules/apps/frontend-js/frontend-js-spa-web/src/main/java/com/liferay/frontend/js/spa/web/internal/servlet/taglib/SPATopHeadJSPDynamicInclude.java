@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.spa.web.internal.servlet.taglib.util.SPAUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -97,11 +98,15 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 				"oops"));
 		values.put("validStatusCodes", _spaUtil.getValidStatusCodes());
 
+		String initModuleName = _npmResolver.resolveModuleName(
+			"frontend-js-spa-web/liferay/init.es");
+
 		scriptData.append(
 			null,
 			StringUtil.replaceToStringBundler(
 				_TMPL_CONTENT, StringPool.POUND, StringPool.POUND, values),
-			"frontend-js-spa-web/liferay/init.es", ScriptData.ModulesType.ES6);
+			initModuleName + " as frontendJsSpaWebLiferayInitEs",
+			ScriptData.ModulesType.ES6);
 
 		scriptData.writeTo(response.getWriter());
 	}
@@ -148,6 +153,9 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private Props _props;

@@ -23,11 +23,23 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.IOException;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +67,11 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  */
 @Component(immediate = true, service = NPMRegistry.class)
 public class NPMRegistryImpl implements NPMRegistry {
+
+	@Override
+	public Map<String, String> getGlobalAliases() {
+		return _globalAliases;
+	}
 
 	/**
 	 * Returns the OSGi bundles containing NPM packages that have been deployed
@@ -218,12 +235,42 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_reopenBundleTracker();
 	}
 
+	private JSONObject _getPackageJSONObject(Bundle bundle) {
+		try {
+			URL url = bundle.getResource("package.json");
+
+			if (url == null) {
+				return null;
+			}
+
+			String content;
+
+			try {
+				content = StringUtil.read(url.openStream());
+			}
+			catch (IOException ioe) {
+				return null;
+			}
+
+			if (content == null) {
+				return null;
+			}
+
+			return _jsonFactory.createJSONObject(content);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
 	private synchronized JSBundle _processBundle(Bundle bundle) {
 		for (JSBundleProcessor jsBundleProcessor : _jsBundleProcessors) {
 			JSBundle jsBundle = jsBundleProcessor.process(bundle);
 
 			if (jsBundle != null) {
 				_jsBundles.add(jsBundle);
+
+				_processLegacyBridges(bundle);
 
 				_refreshJSModuleCaches();
 
@@ -232,6 +279,33 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 
 		return null;
+	}
+
+	private void _processLegacyBridges(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String jsSubmodulesBridge = GetterUtil.getString(
+			headers.get("Liferay-JS-Submodules-Bridge"));
+
+		if (Validator.isNotNull(jsSubmodulesBridge)) {
+			String[] bridges = jsSubmodulesBridge.split(",");
+
+			JSONObject packageJSONObject = _getPackageJSONObject(bundle);
+
+			for (String bridge : bridges) {
+				bridge = bridge.trim();
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(packageJSONObject.getString("name"));
+				sb.append(StringPool.AT);
+				sb.append(packageJSONObject.getString("version"));
+				sb.append("/bridge/");
+				sb.append(bridge);
+
+				_globalAliases.put(bridge, sb.toString());
+			}
+		}
 	}
 
 	private synchronized void _refreshJSModuleCaches() {
@@ -277,6 +351,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	private BundleContext _bundleContext;
 	private BundleTracker<JSBundle> _bundleTracker;
+	private final Map<String, String> _globalAliases = new HashMap<>();
 	private final List<JSBundleProcessor> _jsBundleProcessors =
 		new ArrayList<>();
 
@@ -294,6 +369,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 		});
 
 	private Map<String, JSModule> _jsModules = new HashMap<>();
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();
 	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();

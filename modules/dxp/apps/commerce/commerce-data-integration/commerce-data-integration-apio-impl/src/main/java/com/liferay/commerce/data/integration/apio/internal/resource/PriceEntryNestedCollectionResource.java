@@ -122,8 +122,6 @@ public class PriceEntryNestedCollectionResource
 			PriceEntryFieldConstants.PROMO_PRICE,
 			CommercePriceEntry::getPromoPrice
 		).addString(
-			PriceEntryFieldConstants.NAME, PriceEntryHelper::getProductName
-		).addString(
 			PriceEntryFieldConstants.SKU, PriceEntryHelper::getSKU
 		).build();
 	}

@@ -18,7 +18,6 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,24 +35,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = PriceEntryHelper.class)
 public class PriceEntryHelper {
-
-	public static String getProductName(CommercePriceEntry commercePriceEntry) {
-		CPInstance cpInstance = _getCPInstance(commercePriceEntry);
-
-		CPDefinition cpDefinition = null;
-
-		try {
-			cpDefinition = cpInstance.getCPDefinition();
-		}
-		catch (PortalException pe) {
-			throw new NotFoundException(
-				"Unable to find Product Definition for Product Instance with " +
-					"ID " + cpInstance.getCPDefinitionId(),
-				pe);
-		}
-
-		return cpDefinition.getName();
-	}
 
 	public static String getSKU(CommercePriceEntry commercePriceEntry) {
 		CPInstance cpInstance = _getCPInstance(commercePriceEntry);

@@ -1,6 +1,43 @@
 {namespace DDMSidebar}
 
 /**
+* Prints the DDM sidebar nav.
+*/
+{template .sidebar_navigation}
+{@param backButtonIcon: html}
+{@param closeButtonIcon: html}
+{@param? toolbarTemplateContext: [options: list<[buttonClass: string, handler: string, label: string]>]}
+{@param? type: string}
+
+<nav class="component-tbar tbar">
+	<div class="container-fluid">
+		<ul class="tbar-nav">
+			<li class="tbar-item">
+				<a class="component-action form-builder-sidebar-back" href="javascript:;" role="button" tabindex="-1">
+					{$backButtonIcon}
+				</a>
+			</li>
+			<li class="tbar-item tbar-item-expand">
+				<div class="tbar-section">
+					{delcall DDMSidebar.sidebar_toolbar variant="$type" data="all" /}
+				</div>
+			</li>
+			{if $toolbarTemplateContext}
+			<li class="tbar-item">
+				{call .field_options_toolbar data="all" /}
+			</li>
+			{/if}
+			<li class="tbar-item">
+				<a class="component-action form-builder-sidebar-close" href="javascript:;" role="button">
+					{$closeButtonIcon}
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+{/template}
+
+/**
 * Prints the DDM sidebar header.
 */
 {template .header}
@@ -41,6 +78,7 @@
  * Prints the DDM sidebar.
  */
 {template .render}
+	{@param backButtonIcon: html}
 	{@param closeButtonIcon: html}
 	{@param toolbarButtonIcon: html}
 	{@param? bodyContent: html}
@@ -61,7 +99,7 @@
 
 			{delcall DDMSidebar.sidebar_body variant="$type" data="all" /}
 		{else}
-			{call .header data="all" /}
+			{call .sidebar_navigation data="all" /}
 
 			{delcall DDMSidebar.sidebar_body data="all" /}
 		{/if}

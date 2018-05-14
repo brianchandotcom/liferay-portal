@@ -5,6 +5,8 @@ AUI.add(
 
 		var CSS_PREFIX = 'form-builder-sidebar';
 
+		var CSS_CLASS_BACK = A.getClassName(CSS_PREFIX, 'back');
+
 		var CSS_CLASS_CLOSE = A.getClassName(CSS_PREFIX, 'close');
 
 		var CSS_CLASS_TITLE = A.getClassName(CSS_PREFIX, 'title');
@@ -86,6 +88,14 @@ AUI.add(
 							boundingBox.on('transitionend', A.bind('_onTransitionEnd', instance)),
 							closeButton.on('click', A.bind('_afterClickCloseButton', instance))
 						);
+
+						var backButton = boundingBox.one('.' + CSS_CLASS_BACK);
+
+						if (backButton) {
+							instance._eventHandlers.push(
+								backButton.on('click', A.bind('_afterClickBackButton', instance))
+							);
+						}
 					},
 
 					destructor: function() {
@@ -132,6 +142,7 @@ AUI.add(
 						var toolbar = instance.get('toolbar');
 
 						var context = {
+							backButtonIcon: Liferay.Util.getLexiconIconTpl('angle-left'),
 							bodyContent: instance.get('bodyContent'),
 							closeButtonIcon: Liferay.Util.getLexiconIconTpl('times'),
 							description: instance.get('description'),
@@ -169,6 +180,18 @@ AUI.add(
 
 						instance.get('boundingBox').removeClass('closed');
 						instance.get('boundingBox').addClass('open');
+					},
+
+					_afterClickBackButton: function(event) {
+						var instance = this;
+
+						var formBuilder = instance.get('builder');
+
+						event.preventDefault();
+
+						instance.close();
+
+						formBuilder.openSidebarByButton();
 					},
 
 					_afterClickCloseButton: function(event) {

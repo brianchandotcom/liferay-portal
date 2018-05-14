@@ -132,6 +132,9 @@ generated or not.
 The uad-application-name value specifies the name of the application that the
 entity type belongs to in the GDPR UI.
 
+The uad-auto-delete value specifies whether or not the entity should be
+automatically deleted during the auto-anonymization.
+
 The uad-dir-path value specifies the directory path of the generated UAD
 implementations.
 
@@ -158,6 +161,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	mvcc-enabled CDATA #IMPLIED
 	trash-enabled CDATA #IMPLIED
 	uad-applicaiton-name CDATA #IMPLIED
+	uad-auto-delete CDATA #IMPLIED
 	uad-dir-path CDATA #IMPLIED
 	uad-package-path CDATA #IMPLIED
 	deprecated CDATA #IMPLIED

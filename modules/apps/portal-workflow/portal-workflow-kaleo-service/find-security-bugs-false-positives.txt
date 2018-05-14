@@ -1,0 +1,6 @@
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.appendCriteria(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;:0,1
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.get(Ljava/lang/Class;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/dao/orm/custom/sql/CustomSQL.replaceAndOperator(Ljava/lang/String;Z)Ljava/lang/String;:1
+com/liferay/portal/workflow/kaleo/service/persistence/impl/KaleoTaskInstanceTokenFinderImpl.appendOrderByComparator(Lcom/liferay/portal/kernel/util/StringBundler;Ljava/lang/String;Lcom/liferay/portal/kernel/util/OrderByComparator;)V:1,2
+com/liferay/portal/workflow/kaleo/service/persistence/impl/KaleoTaskInstanceTokenFinderImpl.getRoleIds(Lcom/liferay/portal/workflow/kaleo/service/persistence/KaleoTaskInstanceTokenQuery;)Ljava/lang/String;:SAFE
+com/liferay/portal/workflow/kaleo/service/persistence/impl/KaleoTaskInstanceTokenFinderImpl.getSearchByUserRoles(Lcom/liferay/portal/workflow/kaleo/service/persistence/KaleoTaskInstanceTokenQuery;)Ljava/lang/String;:SAFE

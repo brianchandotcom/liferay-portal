@@ -1,0 +1,6 @@
+com/liferay/asset/kernel/model/AssetRenderer.getURLViewInContext(Lcom/liferay/portal/kernel/portlet/LiferayPortletRequest;Lcom/liferay/portal/kernel/portlet/LiferayPortletResponse;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/StringUtil.randomId()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/workflow/WorkflowHandler.getIconCssClass()Ljava/lang/String;:SAFE
+com/liferay/portal/workflow/task/web/internal/display/context/WorkflowTaskDisplayContext.getAssetType(Lcom/liferay/portal/kernel/workflow/WorkflowTask;)Ljava/lang/String;:SAFE
+com/liferay/portal/workflow/task/web/internal/display/context/WorkflowTaskDisplayContext.getPreviewOfTitle(Lcom/liferay/portal/kernel/workflow/WorkflowTask;)Ljava/lang/String;:SAFE
+com/liferay/taglib/search/DateSearchEntry.getName(Ljavax/servlet/http/HttpServletRequest;)Ljava/lang/String;:SAFE

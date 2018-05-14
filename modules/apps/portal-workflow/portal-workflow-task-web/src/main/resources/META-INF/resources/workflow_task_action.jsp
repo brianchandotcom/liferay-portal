@@ -63,7 +63,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 				cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
 				data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
 				id='<%= randomId + HtmlUtil.escapeAttribute(transitionName) + "taskChangeStatusLink" %>'
-				message="<%= message %>"
+				message="<%= HtmlUtil.escape(message) %>"
 				method="get"
 				url="<%= editURL %>"
 			/>

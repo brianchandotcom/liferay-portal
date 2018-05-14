@@ -42,13 +42,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
 
 							for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
 								long layoutPageTemplateCollectionId = layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+
+								int layoutPageTemplateEntriesCount = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId, WorkflowConstants.STATUS_APPROVED);
 							%>
 
-								<li class="nav-item">
-									<a class="nav-link truncate-text <%= (selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId() == layoutPageTemplateCollectionId) ? "active" : StringPool.BLANK %>" href="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollectionId) %>">
-										<%= layoutPageTemplateCollection.getName() %>
-									</a>
-								</li>
+								<c:if test="<%= layoutPageTemplateEntriesCount > 0 %>">
+									<li class="nav-item">
+										<a class="nav-link truncate-text <%= (selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateCollectionId() == layoutPageTemplateCollectionId) ? "active" : StringPool.BLANK %>" href="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollectionId) %>">
+											<%= layoutPageTemplateCollection.getName() %>
+										</a>
+									</li>
+								</c:if>
 
 							<%
 							}

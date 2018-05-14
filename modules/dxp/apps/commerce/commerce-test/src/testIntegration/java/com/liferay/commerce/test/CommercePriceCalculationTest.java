@@ -522,7 +522,6 @@ public class CommercePriceCalculationTest {
 
 		private final CommerceCurrency _commerceCurrency;
 		private final CommerceUserSegmentEntry _commerceUserSegmentEntry;
-		private Organization _organization;
 
 	}
 

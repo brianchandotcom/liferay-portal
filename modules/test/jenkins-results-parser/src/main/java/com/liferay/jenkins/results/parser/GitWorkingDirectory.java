@@ -1619,7 +1619,7 @@ public class GitWorkingDirectory {
 		List<String> shortNames = new ArrayList<>(fullNameList.size());
 
 		for (String fullName : fullNameList) {
-			shortNames.add(fullName.substring(fullName.lastIndexOf("/") + 1));
+			shortNames.add(fullName.substring("refs/heads/".length()));
 		}
 
 		return shortNames;

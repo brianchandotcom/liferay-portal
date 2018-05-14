@@ -17,6 +17,7 @@ package com.liferay.commerce.product.options.web.internal.util;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.util.comparator.CPOptionCategoryModifiedDateComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryPriorityComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionCategoryTitleComparator;
 import com.liferay.commerce.product.util.comparator.CPOptionValueNameComparator;
@@ -47,12 +48,16 @@ public class CPOptionsPortletUtil {
 
 		OrderByComparator<CPOptionCategory> orderByComparator = null;
 
-		if (orderByCol.equals("priority")) {
-			orderByComparator = new CPOptionCategoryPriorityComparator(
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CPOptionCategoryModifiedDateComparator(
 				orderByAsc);
 		}
-		else if (orderByCol.equals("title")) {
+		else if (orderByCol.equals("group")) {
 			orderByComparator = new CPOptionCategoryTitleComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
+			orderByComparator = new CPOptionCategoryPriorityComparator(
+				orderByAsc);
 		}
 
 		return orderByComparator;

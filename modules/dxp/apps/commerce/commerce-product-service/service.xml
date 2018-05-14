@@ -738,6 +738,7 @@
 
 		<order by="asc">
 			<order-column name="title" />
+			<order-column name="priority" />
 		</order>
 
 		<!-- Finder methods -->

@@ -80,7 +80,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpOptionCategoryDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpOptionCategoryDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"priority", "title"} %>'
+			orderColumns='<%= new String[] {"modified-date", "group", "priority"} %>'
 			portletURL="<%= cpOptionCategoryDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -143,25 +143,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 							<liferay-ui:search-container-column-text
 								cssClass="important table-cell-content"
 								href="<%= rowURL %>"
-								name="title"
+								name="group"
 								value="<%= HtmlUtil.escape(cpOptionCategory.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="author"
-								property="userName"
-							/>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
 								property="priority"
-							/>
-
-							<liferay-ui:search-container-column-date
-								cssClass="table-cell-content"
-								name="create-date"
-								property="createDate"
 							/>
 
 							<liferay-ui:search-container-column-date

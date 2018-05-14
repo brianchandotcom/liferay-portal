@@ -1,4 +1,4 @@
-<div class="widget-mode-card row">
+<div class="row widget-mode-card">
 	<#if entries?has_content>
 		<#list entries as curBlogEntry>
 			<#if curBlogEntry.getCoverImageURL(themeDisplay)??>
@@ -143,7 +143,7 @@
 
 					<div class="card-footer">
 						<div class="card-row">
-							<div class="autofit-row autofit-row-center autofit-float widget-toolbar">
+							<div class="autofit-float autofit-row autofit-row-center widget-toolbar">
 								<#if blogsPortletInstanceConfiguration.enableComments()>
 									<div class="autofit-col">
 										<#assign viewCommentsPortletURL = renderResponse.createRenderURL() />

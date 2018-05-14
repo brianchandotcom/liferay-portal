@@ -32,7 +32,7 @@
 							</#if>
 						</a>
 
-						<button  aria-expanded="false" class="collapsed navbar-toggler" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+						<button aria-expanded="false" class="collapsed navbar-toggler" data-target="#navigationCollapse" data-toggle="collapse" type="button">
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>

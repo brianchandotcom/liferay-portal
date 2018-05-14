@@ -38,7 +38,7 @@
 				${tagURL.setParameter("resetCur", "true")}
 				${tagURL.setParameter("tag", entry.getName())}
 
-				<a class ="tag" style="color: ${color};" href="${tagURL}">
+				<a class="tag" href="${tagURL}" style="color: ${color};">
 					${entry.getName()}
 
 					<#if getterUtil.getBoolean(showAssetCount)>

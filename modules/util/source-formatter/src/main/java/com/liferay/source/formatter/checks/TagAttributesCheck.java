@@ -16,12 +16,16 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.checks.TagAttributesCheck.Tag;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -162,6 +166,31 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 	}
 
 	protected Tag sortHTMLTagAttributes(Tag tag) {
+		String tagName = tag.getName();
+
+		if (tagName.equals("liferay-ui:tabs")) {
+			return tag;
+		}
+
+		Map<String, String> attributesMap = tag.getAttributesMap();
+
+		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
+			String attributeValue = entry.getValue();
+
+			if (!attributeValue.matches("([-a-z0-9]+ )+[-a-z0-9]+")) {
+				continue;
+			}
+
+			List<String> htmlAttributes = ListUtil.fromArray(
+				StringUtil.split(attributeValue, StringPool.SPACE));
+
+			Collections.sort(htmlAttributes);
+
+			tag.putAttribute(
+				entry.getKey(),
+				StringUtil.merge(htmlAttributes, StringPool.SPACE));
+		}
+
 		return tag;
 	}
 

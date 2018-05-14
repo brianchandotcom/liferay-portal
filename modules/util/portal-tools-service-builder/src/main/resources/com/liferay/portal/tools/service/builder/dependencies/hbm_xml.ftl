@@ -63,14 +63,15 @@
 					<#assign class = "assigned" />
 				</#if>
 
-				<generator class="${class}"
+				<generator
+					class="${class}"
 
-				<#if stringUtil.equals(class, "sequence")>
-						><param name="sequence">${entityColumn.idParam}</param>
-					</generator>
-				<#else>
-					/>
-				</#if>
+					<#if stringUtil.equals(class, "sequence")>
+							><param name="sequence">${entityColumn.idParam}</param>
+						</generator>
+					<#else>
+						/>
+					</#if>
 			</id>
 		</#if>
 

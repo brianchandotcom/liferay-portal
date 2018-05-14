@@ -58,6 +58,7 @@
 		<check name="FTLLiferayVariableOrderCheck" />
 		<check name="FTLStringRelationalOperatorCheck" />
 		<check name="FTLStylingCheck" />
+		<check name="FTLTagAttributesCheck" />
 		<check name="FTLTagCheck" />
 		<check name="FTLWhitespaceCheck" />
 	</source-processor>

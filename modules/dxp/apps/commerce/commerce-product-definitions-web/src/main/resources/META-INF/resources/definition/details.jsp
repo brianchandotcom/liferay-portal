@@ -75,7 +75,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 				<aui:validator name="required" />
 			</aui:input>
 
-			<aui:input label="short-description" localized="<%= true %>" name="shortDescriptionMapAsXML" type="textarea" />
+			<aui:input label="short-description" localized="<%= true %>" name="shortDescriptionMapAsXML" resizable="<%= true %>" type="textarea" />
 
 			<%
 			String descriptionMapAsXML = StringPool.BLANK;

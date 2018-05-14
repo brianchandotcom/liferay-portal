@@ -130,6 +130,8 @@ if (!searchRestriction) {
 	</c:if>
 
 	<div class="article-content-description">
+		<label for="<portlet:namespace />descriptionMapAsXML"><liferay-ui:message key="summary" /></label>
+
 		<liferay-ui:input-localized
 			cssClass="form-control"
 			editorName="alloyeditor"

@@ -23,13 +23,10 @@ import java.util.function.BiFunction;
  */
 public interface CollectionPermissionChecker {
 
-	public BiFunction<Credentials, Long, Boolean> forAdding(
-		String resourceName);
+	public BiFunction<Credentials, Long, Boolean> forAdding();
 
-	public BiFunction<Credentials, Long, Boolean> forDeleting(
-		String resourceName);
+	public BiFunction<Credentials, Long, Boolean> forDeleting();
 
-	public BiFunction<Credentials, Long, Boolean> forUpdating(
-		String resourceNamel);
+	public BiFunction<Credentials, Long, Boolean> forUpdating();
 
 }

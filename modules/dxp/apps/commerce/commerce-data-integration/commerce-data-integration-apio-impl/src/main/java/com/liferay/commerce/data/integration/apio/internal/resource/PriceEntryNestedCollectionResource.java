@@ -29,7 +29,6 @@ import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryCreato
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpdaterForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceEntryPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceEntryHelper;
-import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
@@ -65,8 +64,7 @@ public class PriceEntryNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommercePriceEntry,
-			_priceEntryPermissionChecker.forAdding(
-				CommercePriceListConstants.RESOURCE_NAME),
+			_priceEntryPermissionChecker.forAdding(),
 			PriceEntryCreatorForm::buildForm
 		).build();
 	}
@@ -84,13 +82,11 @@ public class PriceEntryNestedCollectionResource
 			_priceEntryHelper::getCommercePriceEntry
 		).addUpdater(
 			this::_updateCommercePriceEntry,
-			_priceEntryPermissionChecker.forUpdating(
-				CommercePriceListConstants.RESOURCE_NAME),
+			_priceEntryPermissionChecker.forUpdating(),
 			PriceEntryUpdaterForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceEntryService::deleteCommercePriceEntry),
-			_priceEntryPermissionChecker.forDeleting(
-				CommercePriceListConstants.RESOURCE_NAME)
+			_priceEntryPermissionChecker.forDeleting()
 		).build();
 	}
 

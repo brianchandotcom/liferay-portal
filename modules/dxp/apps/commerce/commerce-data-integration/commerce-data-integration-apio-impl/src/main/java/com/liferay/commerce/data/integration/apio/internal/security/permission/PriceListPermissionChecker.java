@@ -14,15 +14,12 @@
 
 package com.liferay.commerce.data.integration.apio.internal.security.permission;
 
-import static com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory.openSingleValueMap;
-
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.data.integration.apio.security.permission.CollectionPermissionChecker;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -31,8 +28,6 @@ import com.liferay.portal.kernel.service.UserService;
 
 import java.util.function.BiFunction;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,23 +38,15 @@ import org.osgi.service.component.annotations.Reference;
 public class PriceListPermissionChecker implements CollectionPermissionChecker {
 
 	@Override
-	public BiFunction<Credentials, Long, Boolean> forAdding(
-		String resourceName) {
-
+	public BiFunction<Credentials, Long, Boolean> forAdding() {
 		return (credentials, groupId) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
-			return Try.success(
-				resourceName
-			).map(
-				_portletResourcePermissions::getService
-			).flatMap(
-				portletResourcePermission -> permissionCheckerTry.map(
-					permissionChecker -> portletResourcePermission.contains(
-						permissionChecker, groupId,
-						CommercePriceListActionKeys.
-							MANAGE_COMMERCE_PRICE_LISTS))
+			return permissionCheckerTry.map(
+				permissionChecker -> _portletResourcePermission.contains(
+					permissionChecker, groupId,
+					CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS)
 			).orElse(
 				false
 			);
@@ -67,36 +54,12 @@ public class PriceListPermissionChecker implements CollectionPermissionChecker {
 	}
 
 	@Override
-	public BiFunction<Credentials, Long, Boolean> forDeleting(
-		String resourceName) {
-
-		return (credentials, identifier) -> {
-			Try<PermissionChecker> permissionCheckerTry =
-				_getPermissionCheckerTry(credentials);
-
-			CommercePriceList commercePriceList =
-				_commercePriceListService.fetchCommercePriceList(identifier);
-
-			return Try.success(
-				resourceName
-			).map(
-				_portletResourcePermissions::getService
-			).flatMap(
-				portletResourcePermission -> permissionCheckerTry.map(
-					permissionChecker -> portletResourcePermission.contains(
-						permissionChecker, commercePriceList.getGroupId(),
-						CommercePriceListActionKeys.
-							MANAGE_COMMERCE_PRICE_LISTS))
-			).orElse(
-				false
-			);
-		};
+	public BiFunction<Credentials, Long, Boolean> forDeleting() {
+		return _permissionBridge();
 	}
 
 	@Override
-	public BiFunction<Credentials, Long, Boolean> forUpdating(
-		String resourceName) {
-
+	public BiFunction<Credentials, Long, Boolean> forUpdating() {
 		return (credentials, identifier) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
@@ -104,26 +67,14 @@ public class PriceListPermissionChecker implements CollectionPermissionChecker {
 			CommercePriceList commercePriceList =
 				_commercePriceListService.fetchCommercePriceList(identifier);
 
-			return Try.success(
-				resourceName
-			).map(
-				_portletResourcePermissions::getService
-			).flatMap(
-				portletResourcePermission -> permissionCheckerTry.map(
-					permissionChecker -> portletResourcePermission.contains(
-						permissionChecker, commercePriceList.getGroupId(),
-						CommercePriceListActionKeys.
-							MANAGE_COMMERCE_PRICE_LISTS))
+			return permissionCheckerTry.map(
+				permissionChecker -> _portletResourcePermission.contains(
+					permissionChecker, commercePriceList.getGroupId(),
+					CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS)
 			).orElse(
 				false
 			);
 		};
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_portletResourcePermissions = openSingleValueMap(
-			bundleContext, PortletResourcePermission.class, "resource.name");
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -142,11 +93,15 @@ public class PriceListPermissionChecker implements CollectionPermissionChecker {
 		);
 	}
 
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
+	}
+
 	@Reference
 	private CommercePriceListService _commercePriceListService;
 
-	private ServiceTrackerMap<String, PortletResourcePermission>
-		_portletResourcePermissions;
+	@Reference(target = "(resource.name=com.liferay.commerce.price.list)")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private UserService _userService;

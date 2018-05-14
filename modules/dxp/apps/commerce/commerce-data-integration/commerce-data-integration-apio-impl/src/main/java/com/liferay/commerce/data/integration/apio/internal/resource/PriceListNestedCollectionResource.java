@@ -27,7 +27,6 @@ import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifie
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceListHelper;
-import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,9 +63,7 @@ public class PriceListNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommercePriceList,
-			_priceListPermissionChecker.forAdding(
-				CommercePriceListConstants.RESOURCE_NAME),
-			PriceListForm::buildForm
+			_priceListPermissionChecker.forAdding(), PriceListForm::buildForm
 		).build();
 	}
 
@@ -83,13 +80,10 @@ public class PriceListNestedCollectionResource
 			_priceListHelper::getCommercePriceList
 		).addUpdater(
 			this::_updateCommercePriceList,
-			_priceListPermissionChecker.forUpdating(
-				CommercePriceListConstants.RESOURCE_NAME),
-			PriceListForm::buildForm
+			_priceListPermissionChecker.forUpdating(), PriceListForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceListService::deleteCommercePriceList),
-			_priceListPermissionChecker.forDeleting(
-				CommercePriceListConstants.RESOURCE_NAME)
+			_priceListPermissionChecker.forDeleting()
 		).build();
 	}
 

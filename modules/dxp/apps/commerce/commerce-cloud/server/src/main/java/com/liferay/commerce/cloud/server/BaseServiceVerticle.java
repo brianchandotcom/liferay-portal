@@ -73,8 +73,8 @@ public abstract class BaseServiceVerticle<T> extends AbstractVerticle {
 			Class<?> clazz = serviceImpl.getClass();
 
 			logger.info(
-				"Registered service {0} with {1}", serviceInterface.getName(),
-				clazz.getName());
+				"Registered service {0} with {1}",
+				serviceInterface.getSimpleName(), clazz.getSimpleName());
 		}
 	}
 

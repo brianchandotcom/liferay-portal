@@ -1,35 +1,6 @@
 Bundle-Name: Liferay Frontend JS Web
 Bundle-SymbolicName: com.liferay.frontend.js.web
 Bundle-Version: 2.0.0
-Liferay-JS-Submodules-Bridge: frontend-js-web
-Liferay-JS-Resources-Top-Head-Authenticated:\
-	/aui/async-queue/async-queue.js,\
-	/aui/base-build/base-build.js,\
-	/aui/cookie/cookie.js,\
-	/aui/event-touch/event-touch.js,\
-	/aui/overlay/overlay.js,\
-	/aui/querystring-stringify/querystring-stringify.js,\
-	/aui/widget-child/widget-child.js,\
-	/aui/widget-position-align/widget-position-align.js,\
-	/aui/widget-position-constrain/widget-position-constrain.js,\
-	/aui/widget-position/widget-position.js,\
-	/aui/widget-stack/widget-stack.js,\
-	/aui/widget-stdmod/widget-stdmod.js,\
-	\
-	/aui/aui-aria/aui-aria.js,\
-	/aui/aui-io-plugin-deprecated/aui-io-plugin-deprecated.js,\
-	/aui/aui-io-request/aui-io-request.js,\
-	/aui/aui-loading-mask-deprecated/aui-loading-mask-deprecated.js,\
-	/aui/aui-overlay-base-deprecated/aui-overlay-base-deprecated.js,\
-	/aui/aui-overlay-context-deprecated/aui-overlay-context-deprecated.js,\
-	/aui/aui-overlay-manager-deprecated/aui-overlay-manager-deprecated.js,\
-	/aui/aui-overlay-mask-deprecated/aui-overlay-mask-deprecated.js,\
-	/aui/aui-parse-content/aui-parse-content.js,\
-	\
-	/liferay/layout_exporter.js,\
-	/liferay/session.js,\
-	\
-	/liferay/deprecated.js
 Liferay-JS-Resources-Top-Head:\
 	/jquery/jquery.js,\
 	\
@@ -159,6 +130,34 @@ Liferay-JS-Resources-Top-Head:\
 	/liferay/menu.js,\
 	/liferay/notice.js,\
 	/liferay/poller.js
+Liferay-JS-Resources-Top-Head-Authenticated:\
+	/aui/async-queue/async-queue.js,\
+	/aui/base-build/base-build.js,\
+	/aui/cookie/cookie.js,\
+	/aui/event-touch/event-touch.js,\
+	/aui/overlay/overlay.js,\
+	/aui/querystring-stringify/querystring-stringify.js,\
+	/aui/widget-child/widget-child.js,\
+	/aui/widget-position-align/widget-position-align.js,\
+	/aui/widget-position-constrain/widget-position-constrain.js,\
+	/aui/widget-position/widget-position.js,\
+	/aui/widget-stack/widget-stack.js,\
+	/aui/widget-stdmod/widget-stdmod.js,\
+	\
+	/aui/aui-aria/aui-aria.js,\
+	/aui/aui-io-plugin-deprecated/aui-io-plugin-deprecated.js,\
+	/aui/aui-io-request/aui-io-request.js,\
+	/aui/aui-loading-mask-deprecated/aui-loading-mask-deprecated.js,\
+	/aui/aui-overlay-base-deprecated/aui-overlay-base-deprecated.js,\
+	/aui/aui-overlay-context-deprecated/aui-overlay-context-deprecated.js,\
+	/aui/aui-overlay-manager-deprecated/aui-overlay-manager-deprecated.js,\
+	/aui/aui-overlay-mask-deprecated/aui-overlay-mask-deprecated.js,\
+	/aui/aui-parse-content/aui-parse-content.js,\
+	\
+	/liferay/layout_exporter.js,\
+	/liferay/session.js,\
+	\
+	/liferay/deprecated.js
 Liferay-JS-Submodules-Bridge: frontend-js-web
 Provide-Capability:\
 	osgi.extender;\

@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.portlet.application-type=full-page-application",
 		"com.liferay.portlet.application-type=widget",
 		"com.liferay.portlet.css-class-wrapper=portlet-rss",
-		"com.liferay.portlet.display-category=category.news",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/rss.png",
 		"com.liferay.portlet.instanceable=true",

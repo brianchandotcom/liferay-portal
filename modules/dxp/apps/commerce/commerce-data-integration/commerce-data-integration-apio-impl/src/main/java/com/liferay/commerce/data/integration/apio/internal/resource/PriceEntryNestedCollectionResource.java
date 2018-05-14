@@ -163,8 +163,8 @@ public class PriceEntryNestedCollectionResource
 					commercePriceListId, pagination.getStartPosition(),
 					pagination.getEndPosition());
 
-			if (ListUtil.isEmpty(commercePriceEntries)) {
-				if (_log.isDebugEnabled()) {
+			if (_log.isDebugEnabled()) {
+				if (ListUtil.isEmpty(commercePriceEntries)) {
 					_log.debug(
 						"Unable to find Price Entries in Price List with ID " +
 							commercePriceListId);

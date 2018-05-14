@@ -171,8 +171,8 @@ public class PriceListNestedCollectionResource
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null);
 
-			if (ListUtil.isEmpty(commercePriceLists)) {
-				if (_log.isDebugEnabled()) {
+			if (_log.isDebugEnabled()) {
+				if (ListUtil.isEmpty(commercePriceLists)) {
 					_log.debug(
 						"Unable to find Price Lists on Site with ID " +
 							groupId);

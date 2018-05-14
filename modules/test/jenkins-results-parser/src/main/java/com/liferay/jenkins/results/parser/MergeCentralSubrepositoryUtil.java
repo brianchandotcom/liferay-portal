@@ -17,7 +17,12 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.TimeoutException;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,59 +48,91 @@ public class MergeCentralSubrepositoryUtil {
 			return;
 		}
 
+		List<String> failedGitRepos = new ArrayList<>();
+
 		List<File> gitrepoFiles = JenkinsResultsParserUtil.findFiles(
 			modulesDir, ".gitrepo");
 
 		for (File gitrepoFile : gitrepoFiles) {
-			CentralSubrepository centralSubrepository =
-				new CentralSubrepository(
-					gitrepoFile, centralUpstreamBranchName);
+			try {
+				CentralSubrepository centralSubrepository =
+					new CentralSubrepository(
+						gitrepoFile, centralUpstreamBranchName);
 
-			if (!centralSubrepository.isAutoPullEnabled()) {
-				continue;
-			}
-
-			String mergeBranchName = _getMergeBranchName(
-				centralUpstreamBranchName,
-				centralSubrepository.getSubrepositoryName(),
-				centralSubrepository.getSubrepositoryUpstreamCommit());
-
-			if (centralSubrepository.isCentralPullRequestCandidate()) {
-				GitWorkingDirectory.Remote upstreamRemote =
-					centralGitWorkingDirectory.getRemote("upstream");
-
-				if (!centralGitWorkingDirectory.branchExists(
-						mergeBranchName, upstreamRemote)) {
-
-					GitWorkingDirectory.Branch topLevelBranch =
-						centralGitWorkingDirectory.getBranch(
-							topLevelBranchName, null);
-
-					GitWorkingDirectory.Branch mergeBranch = _createMergeBranch(
-						centralGitWorkingDirectory, mergeBranchName,
-						topLevelBranch);
-
-					_commitCiMergeFile(
-						centralGitWorkingDirectory, centralSubrepository,
-						gitrepoFile);
-
-					_pushMergeBranchToRemote(
-						centralGitWorkingDirectory, mergeBranch,
-						receiverUserName);
+				if (!centralSubrepository.isAutoPullEnabled()) {
+					continue;
 				}
 
-				_createMergePullRequest(
+				String mergeBranchName = _getMergeBranchName(
+					centralUpstreamBranchName,
+					centralSubrepository.getSubrepositoryName(),
+					centralSubrepository.getSubrepositoryUpstreamCommit());
+
+				if (centralSubrepository.isCentralPullRequestCandidate()) {
+					GitWorkingDirectory.Remote upstreamRemote =
+						centralGitWorkingDirectory.getRemote("upstream");
+
+					if (!centralGitWorkingDirectory.branchExists(
+							mergeBranchName, upstreamRemote)) {
+
+						GitWorkingDirectory.Branch topLevelBranch =
+							centralGitWorkingDirectory.getBranch(
+								topLevelBranchName, null);
+
+						GitWorkingDirectory.Branch mergeBranch =
+							_createMergeBranch(
+								centralGitWorkingDirectory, mergeBranchName,
+								topLevelBranch);
+
+						_commitCiMergeFile(
+							centralGitWorkingDirectory, centralSubrepository,
+							gitrepoFile);
+
+						_pushMergeBranchToRemote(
+							centralGitWorkingDirectory, mergeBranch,
+							receiverUserName);
+					}
+
+					_createMergePullRequest(
+						centralGitWorkingDirectory, centralSubrepository,
+						mergeBranchName, receiverUserName);
+				}
+
+				_deleteStalePulls(
 					centralGitWorkingDirectory, centralSubrepository,
 					mergeBranchName, receiverUserName);
+
+				_deleteStaleBranches(
+					centralGitWorkingDirectory, centralSubrepository,
+					mergeBranchName);
+			}
+			catch (Exception e) {
+				failedGitRepos.add(gitrepoFile.getParent());
+
+				e.printStackTrace();
+
+				continue;
+			}
+		}
+
+		if (!failedGitRepos.isEmpty()) {
+			String message = JenkinsResultsParserUtil.combine(
+				"Unable to create a pull to merge these subrepositories:\n",
+				StringUtils.join(failedGitRepos, "\n"));
+
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			try {
+				JenkinsResultsParserUtil.sendEmail(
+					message, "jenkins", "Merge Central Subrepository",
+					buildProperties.getProperty(
+						"email.list[merge-central-subrepository]"));
+			}
+			catch (TimeoutException te) {
 			}
 
-			_deleteStalePulls(
-				centralGitWorkingDirectory, centralSubrepository,
-				mergeBranchName, receiverUserName);
-
-			_deleteStaleBranches(
-				centralGitWorkingDirectory, centralSubrepository,
-				mergeBranchName);
+			throw new RuntimeException(message);
 		}
 	}
 

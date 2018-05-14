@@ -1430,8 +1430,6 @@
 	</command>
 
 	<command name="ViewContentInCustomOrganizationTypeSite" priority="4">
-		<property name="custom.properties" value="organizations.types=organization,location${line.separator}organizations.rootable[location]=true${line.separator}organizations.children.types[organization]=organization,location" />
-
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">

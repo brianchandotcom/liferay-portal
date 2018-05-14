@@ -29,12 +29,12 @@ import java.util.List;
  * @generated
  */
 @ProviderType
-public class CommerceCloudOrderForecastSyncSoap implements Serializable {
-	public static CommerceCloudOrderForecastSyncSoap toSoapModel(
-		CommerceCloudOrderForecastSync model) {
-		CommerceCloudOrderForecastSyncSoap soapModel = new CommerceCloudOrderForecastSyncSoap();
+public class CommerceCloudForecastOrderSoap implements Serializable {
+	public static CommerceCloudForecastOrderSoap toSoapModel(
+		CommerceCloudForecastOrder model) {
+		CommerceCloudForecastOrderSoap soapModel = new CommerceCloudForecastOrderSoap();
 
-		soapModel.setCommerceCloudOrderForecastSyncId(model.getCommerceCloudOrderForecastSyncId());
+		soapModel.setCommerceCloudForecastOrderId(model.getCommerceCloudForecastOrderId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -44,9 +44,9 @@ public class CommerceCloudOrderForecastSyncSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static CommerceCloudOrderForecastSyncSoap[] toSoapModels(
-		CommerceCloudOrderForecastSync[] models) {
-		CommerceCloudOrderForecastSyncSoap[] soapModels = new CommerceCloudOrderForecastSyncSoap[models.length];
+	public static CommerceCloudForecastOrderSoap[] toSoapModels(
+		CommerceCloudForecastOrder[] models) {
+		CommerceCloudForecastOrderSoap[] soapModels = new CommerceCloudForecastOrderSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -55,15 +55,15 @@ public class CommerceCloudOrderForecastSyncSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CommerceCloudOrderForecastSyncSoap[][] toSoapModels(
-		CommerceCloudOrderForecastSync[][] models) {
-		CommerceCloudOrderForecastSyncSoap[][] soapModels = null;
+	public static CommerceCloudForecastOrderSoap[][] toSoapModels(
+		CommerceCloudForecastOrder[][] models) {
+		CommerceCloudForecastOrderSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CommerceCloudOrderForecastSyncSoap[models.length][models[0].length];
+			soapModels = new CommerceCloudForecastOrderSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CommerceCloudOrderForecastSyncSoap[0][0];
+			soapModels = new CommerceCloudForecastOrderSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -73,35 +73,35 @@ public class CommerceCloudOrderForecastSyncSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CommerceCloudOrderForecastSyncSoap[] toSoapModels(
-		List<CommerceCloudOrderForecastSync> models) {
-		List<CommerceCloudOrderForecastSyncSoap> soapModels = new ArrayList<CommerceCloudOrderForecastSyncSoap>(models.size());
+	public static CommerceCloudForecastOrderSoap[] toSoapModels(
+		List<CommerceCloudForecastOrder> models) {
+		List<CommerceCloudForecastOrderSoap> soapModels = new ArrayList<CommerceCloudForecastOrderSoap>(models.size());
 
-		for (CommerceCloudOrderForecastSync model : models) {
+		for (CommerceCloudForecastOrder model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CommerceCloudOrderForecastSyncSoap[soapModels.size()]);
+		return soapModels.toArray(new CommerceCloudForecastOrderSoap[soapModels.size()]);
 	}
 
-	public CommerceCloudOrderForecastSyncSoap() {
+	public CommerceCloudForecastOrderSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _commerceCloudOrderForecastSyncId;
+		return _commerceCloudForecastOrderId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCommerceCloudOrderForecastSyncId(pk);
+		setCommerceCloudForecastOrderId(pk);
 	}
 
-	public long getCommerceCloudOrderForecastSyncId() {
-		return _commerceCloudOrderForecastSyncId;
+	public long getCommerceCloudForecastOrderId() {
+		return _commerceCloudForecastOrderId;
 	}
 
-	public void setCommerceCloudOrderForecastSyncId(
-		long commerceCloudOrderForecastSyncId) {
-		_commerceCloudOrderForecastSyncId = commerceCloudOrderForecastSyncId;
+	public void setCommerceCloudForecastOrderId(
+		long commerceCloudForecastOrderId) {
+		_commerceCloudForecastOrderId = commerceCloudForecastOrderId;
 	}
 
 	public long getGroupId() {
@@ -144,7 +144,7 @@ public class CommerceCloudOrderForecastSyncSoap implements Serializable {
 		_syncDate = syncDate;
 	}
 
-	private long _commerceCloudOrderForecastSyncId;
+	private long _commerceCloudForecastOrderId;
 	private long _groupId;
 	private long _companyId;
 	private Date _createDate;

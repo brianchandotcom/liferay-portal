@@ -22,21 +22,20 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Andrea Di Giorgi
  */
 @ProviderType
-public class NoSuchCloudOrderForecastSyncException
-	extends NoSuchModelException {
+public class NoSuchCloudForecastOrderException extends NoSuchModelException {
 
-	public NoSuchCloudOrderForecastSyncException() {
+	public NoSuchCloudForecastOrderException() {
 	}
 
-	public NoSuchCloudOrderForecastSyncException(String msg) {
+	public NoSuchCloudForecastOrderException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchCloudOrderForecastSyncException(String msg, Throwable cause) {
+	public NoSuchCloudForecastOrderException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchCloudOrderForecastSyncException(Throwable cause) {
+	public NoSuchCloudForecastOrderException(Throwable cause) {
 		super(cause);
 	}
 

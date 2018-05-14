@@ -1,2 +1,2 @@
-create unique index IX_A7096CB4 on CCOrderForecastSync (commerceOrderId);
-create index IX_6FDF6907 on CCOrderForecastSync (syncDate);
+create unique index IX_B066DB7F on CommerceCloudForecastOrder (commerceOrderId);
+create index IX_4A9A389C on CommerceCloudForecastOrder (syncDate);

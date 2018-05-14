@@ -16,7 +16,7 @@ package com.liferay.commerce.cloud.client.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.cloud.client.model.CommerceCloudOrderForecastSync;
+import com.liferay.commerce.cloud.client.model.CommerceCloudForecastOrder;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -30,14 +30,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing CommerceCloudOrderForecastSync in entity cache.
+ * The cache model class for representing CommerceCloudForecastOrder in entity cache.
  *
  * @author Andrea Di Giorgi
- * @see CommerceCloudOrderForecastSync
+ * @see CommerceCloudForecastOrder
  * @generated
  */
 @ProviderType
-public class CommerceCloudOrderForecastSyncCacheModel implements CacheModel<CommerceCloudOrderForecastSync>,
+public class CommerceCloudForecastOrderCacheModel implements CacheModel<CommerceCloudForecastOrder>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -45,14 +45,14 @@ public class CommerceCloudOrderForecastSyncCacheModel implements CacheModel<Comm
 			return true;
 		}
 
-		if (!(obj instanceof CommerceCloudOrderForecastSyncCacheModel)) {
+		if (!(obj instanceof CommerceCloudForecastOrderCacheModel)) {
 			return false;
 		}
 
-		CommerceCloudOrderForecastSyncCacheModel commerceCloudOrderForecastSyncCacheModel =
-			(CommerceCloudOrderForecastSyncCacheModel)obj;
+		CommerceCloudForecastOrderCacheModel commerceCloudForecastOrderCacheModel =
+			(CommerceCloudForecastOrderCacheModel)obj;
 
-		if (commerceCloudOrderForecastSyncId == commerceCloudOrderForecastSyncCacheModel.commerceCloudOrderForecastSyncId) {
+		if (commerceCloudForecastOrderId == commerceCloudForecastOrderCacheModel.commerceCloudForecastOrderId) {
 			return true;
 		}
 
@@ -61,15 +61,15 @@ public class CommerceCloudOrderForecastSyncCacheModel implements CacheModel<Comm
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, commerceCloudOrderForecastSyncId);
+		return HashUtil.hash(0, commerceCloudForecastOrderId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(13);
 
-		sb.append("{commerceCloudOrderForecastSyncId=");
-		sb.append(commerceCloudOrderForecastSyncId);
+		sb.append("{commerceCloudForecastOrderId=");
+		sb.append(commerceCloudForecastOrderId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -86,38 +86,37 @@ public class CommerceCloudOrderForecastSyncCacheModel implements CacheModel<Comm
 	}
 
 	@Override
-	public CommerceCloudOrderForecastSync toEntityModel() {
-		CommerceCloudOrderForecastSyncImpl commerceCloudOrderForecastSyncImpl = new CommerceCloudOrderForecastSyncImpl();
+	public CommerceCloudForecastOrder toEntityModel() {
+		CommerceCloudForecastOrderImpl commerceCloudForecastOrderImpl = new CommerceCloudForecastOrderImpl();
 
-		commerceCloudOrderForecastSyncImpl.setCommerceCloudOrderForecastSyncId(commerceCloudOrderForecastSyncId);
-		commerceCloudOrderForecastSyncImpl.setGroupId(groupId);
-		commerceCloudOrderForecastSyncImpl.setCompanyId(companyId);
+		commerceCloudForecastOrderImpl.setCommerceCloudForecastOrderId(commerceCloudForecastOrderId);
+		commerceCloudForecastOrderImpl.setGroupId(groupId);
+		commerceCloudForecastOrderImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
-			commerceCloudOrderForecastSyncImpl.setCreateDate(null);
+			commerceCloudForecastOrderImpl.setCreateDate(null);
 		}
 		else {
-			commerceCloudOrderForecastSyncImpl.setCreateDate(new Date(
-					createDate));
+			commerceCloudForecastOrderImpl.setCreateDate(new Date(createDate));
 		}
 
-		commerceCloudOrderForecastSyncImpl.setCommerceOrderId(commerceOrderId);
+		commerceCloudForecastOrderImpl.setCommerceOrderId(commerceOrderId);
 
 		if (syncDate == Long.MIN_VALUE) {
-			commerceCloudOrderForecastSyncImpl.setSyncDate(null);
+			commerceCloudForecastOrderImpl.setSyncDate(null);
 		}
 		else {
-			commerceCloudOrderForecastSyncImpl.setSyncDate(new Date(syncDate));
+			commerceCloudForecastOrderImpl.setSyncDate(new Date(syncDate));
 		}
 
-		commerceCloudOrderForecastSyncImpl.resetOriginalValues();
+		commerceCloudForecastOrderImpl.resetOriginalValues();
 
-		return commerceCloudOrderForecastSyncImpl;
+		return commerceCloudForecastOrderImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		commerceCloudOrderForecastSyncId = objectInput.readLong();
+		commerceCloudForecastOrderId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -131,7 +130,7 @@ public class CommerceCloudOrderForecastSyncCacheModel implements CacheModel<Comm
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(commerceCloudOrderForecastSyncId);
+		objectOutput.writeLong(commerceCloudForecastOrderId);
 
 		objectOutput.writeLong(groupId);
 
@@ -142,7 +141,7 @@ public class CommerceCloudOrderForecastSyncCacheModel implements CacheModel<Comm
 		objectOutput.writeLong(syncDate);
 	}
 
-	public long commerceCloudOrderForecastSyncId;
+	public long commerceCloudForecastOrderId;
 	public long groupId;
 	public long companyId;
 	public long createDate;

@@ -330,6 +330,7 @@
 		<check name="TLDElementOrderCheck" />
 		<check name="TLDTypeCheck" />
 		<check name="WhitespaceCheck" />
+		<check name="XMLIndentationCheck" />
 	</source-processor>
 	<source-processor name="TSSourceProcessor">
 		<check name="WhitespaceCheck" />

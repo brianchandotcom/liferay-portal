@@ -38,7 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
+	property = {
+		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES, "path=-",
+		"path=/layout/view"
+	},
 	service = PortletConfigurationIcon.class
 )
 public class EditPublicPagesPortletConfigurationIcon
@@ -88,7 +91,7 @@ public class EditPublicPagesPortletConfigurationIcon
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(liferayPortletRequest, null);
 
-		if (layoutsAdminDisplayContext.isPageTemplates() ||
+		if (!layoutsAdminDisplayContext.isPagesTab() ||
 			layoutsAdminDisplayContext.isPrivatePages() ||
 			!layoutsAdminDisplayContext.isShowPublicPages()) {
 

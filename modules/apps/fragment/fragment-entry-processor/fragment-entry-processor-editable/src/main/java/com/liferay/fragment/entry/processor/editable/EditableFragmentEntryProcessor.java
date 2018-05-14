@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
@@ -199,7 +200,25 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return StringPool.BLANK;
 		}
 
-		return "${" + value + "}";
+		StringBundler sb = new StringBundler(15);
+
+		sb.append("${");
+		sb.append(value);
+		sb.append("???then(");
+		sb.append(value);
+		sb.append("?is_sequence?then(");
+		sb.append(value);
+		sb.append("?join(\", \"), ");
+		sb.append(value);
+		sb.append("?is_date_like?then(");
+		sb.append(value);
+		sb.append("?datetime?string, ");
+		sb.append(value);
+		sb.append("???then(");
+		sb.append(value);
+		sb.append("?string, \"\"))), \"\")}");
+
+		return sb.toString();
 	}
 
 	private void _validateAttribute(Element element, String attribute)

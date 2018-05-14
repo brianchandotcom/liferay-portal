@@ -17,6 +17,8 @@ package com.liferay.frontend.js.loader.modules.extender.internal;
 import aQute.bnd.osgi.Constants;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -297,6 +299,14 @@ public class JSLoaderModule {
 				headers.get("Liferay-Export-JS-Submodules"));
 
 			if (Validator.isNotNull(exportJSSubmodules)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Liferay-Export-JS-Submodules is deprecated as of ",
+							"Liferay Portal 7.1. Please, use ",
+							"Liferay-JS-Submodules-Bridge instead."));
+				}
+
 				_unversionedMapsConfiguration = normalize(
 					generateMapsConfiguration(
 						_unversionedConfiguration,
@@ -314,6 +324,8 @@ public class JSLoaderModule {
 
 		return text.matches(pattern);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(JSLoaderModule.class);
 
 	private final boolean _applyVersioning;
 	private final Bundle _bundle;

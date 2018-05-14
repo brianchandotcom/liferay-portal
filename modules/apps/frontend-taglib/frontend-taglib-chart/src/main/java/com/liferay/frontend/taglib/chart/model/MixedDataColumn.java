@@ -23,11 +23,10 @@ import java.util.List;
 public class MixedDataColumn extends Column {
 
 	/**
-	 * Create a new MixedDataColumn.
+	 * Creates a new MixedDataColumn.
 	 *
-	 * @param id The id {@link String} of the column
-	 * @param values each value can be an instance, array, or {@link Collection} of {@link Number}s
-	 * @review
+	 * @param id the ID of the column
+	 * @param values the values for the column. Each value can be an instance, array, or {@link Collection} of {@link Number}s.
 	 */
 	public MixedDataColumn(String id, Collection<?> values) {
 		super(id);
@@ -36,11 +35,10 @@ public class MixedDataColumn extends Column {
 	}
 
 	/**
-	 * Create a new MixedDataColumn.
+	 * Creates a new MixedDataColumn.
 	 *
-	 * @param id The id {@link String} of the column
-	 * @param values each value can be an instance, array, or {@link Collection} of {@link Number}s
-	 * @review
+	 * @param id the ID of the column
+	 * @param values the values for the column. Each value can be an instance or array of {@link Number}s.
 	 */
 	public MixedDataColumn(String id, Object... values) {
 		super(id);
@@ -49,10 +47,9 @@ public class MixedDataColumn extends Column {
 	}
 
 	/**
-	 * Add a value to this column.
+	 * Adds a value to this column.
 	 *
-	 * @param value can be an instance, array, or {@link Collection} of {@link Number}s
-	 * @review
+	 * @param value an array of {@link Number}s for the column values
 	 */
 	public void addValue(Object value) {
 		List<Object> data = getData();
@@ -76,10 +73,9 @@ public class MixedDataColumn extends Column {
 	}
 
 	/**
-	 * Add one or several values to this column.
+	 * Adds one or several values to this column.
 	 *
-	 * @param values a {@link Collection} of {@link Number}s
-	 * @review
+	 * @param values a {@link Collection} of {@link Number}s for the column values
 	 */
 	public void addValues(Collection<?> values) {
 		for (Object value : values) {
@@ -88,10 +84,9 @@ public class MixedDataColumn extends Column {
 	}
 
 	/**
-	 * Add one or several values to this column.
+	 * Adds one or several values to this column.
 	 *
-	 * @param values an array of {@link Number}s
-	 * @review
+	 * @param values an array of {@link Number}s for the column values
 	 */
 	public void addValues(Object... values) {
 		for (Object value : values) {

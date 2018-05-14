@@ -19,7 +19,6 @@ package com.liferay.message.boards.uad.constants;
  * @generated
  */
 public class MBUADConstants {
-	public static final String APPLICATION_NAME = "MB";
 	public static final String[] USER_ID_FIELD_NAMES_MB_CATEGORY = {
 			"userId", "statusByUserId"
 		};

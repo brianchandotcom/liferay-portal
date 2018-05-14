@@ -59,11 +59,6 @@ public abstract class BaseEntryUADAnonymizer extends DynamicQueryUADAnonymizer<E
 	}
 
 	@Override
-	public String getApplicationName() {
-		return ContactsUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList("fullName", "emailAddress", "comments");
 	}

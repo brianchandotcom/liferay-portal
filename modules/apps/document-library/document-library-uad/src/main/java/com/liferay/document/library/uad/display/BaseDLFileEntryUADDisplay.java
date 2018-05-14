@@ -49,11 +49,6 @@ public abstract class BaseDLFileEntryUADDisplay extends BaseModelUADDisplay<DLFi
 	}
 
 	@Override
-	public String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "fileName", "extension", "title", "description" };
 	}

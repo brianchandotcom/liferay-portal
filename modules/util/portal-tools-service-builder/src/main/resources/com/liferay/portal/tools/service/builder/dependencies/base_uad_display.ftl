@@ -35,11 +35,6 @@ public abstract class Base${entity.name}UADDisplay extends BaseModelUADDisplay<$
 	}
 
 	@Override
-	public String getApplicationName() {
-		return ${entity.UADApplicationName}UADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[]{<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>"${uadNonanonymizableEntityColumn.name}"<#sep>, </#sep></#list>};
 	}

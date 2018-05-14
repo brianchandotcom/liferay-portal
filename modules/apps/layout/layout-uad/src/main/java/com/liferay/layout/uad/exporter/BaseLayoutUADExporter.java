@@ -39,11 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseLayoutUADExporter extends DynamicQueryUADExporter<Layout> {
 	@Override
-	public String getApplicationName() {
-		return LayoutUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public Class<Layout> getTypeClass() {
 		return Layout.class;
 	}

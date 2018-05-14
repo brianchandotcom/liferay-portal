@@ -17,7 +17,6 @@ package com.liferay.document.library.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.uad.constants.DLUADConstants;
 import com.liferay.document.library.uad.test.DLFolderUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,11 +53,6 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 		_dlFolders.add(dlFolder);
 
 		return dlFolder;
-	}
-
-	@Override
-	protected String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

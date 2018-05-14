@@ -59,11 +59,6 @@ public abstract class BaseLayoutUADAnonymizer extends DynamicQueryUADAnonymizer<
 	}
 
 	@Override
-	public String getApplicationName() {
-		return LayoutUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList();
 	}

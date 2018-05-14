@@ -40,11 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseDLFileShortcutUADExporter
 	extends DynamicQueryUADExporter<DLFileShortcut> {
 	@Override
-	public String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public Class<DLFileShortcut> getTypeClass() {
 		return DLFileShortcut.class;
 	}

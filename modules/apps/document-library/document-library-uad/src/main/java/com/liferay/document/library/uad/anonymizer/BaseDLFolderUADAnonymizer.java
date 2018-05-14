@@ -65,11 +65,6 @@ public abstract class BaseDLFolderUADAnonymizer
 	}
 
 	@Override
-	public String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList("name", "description");
 	}

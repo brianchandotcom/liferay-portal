@@ -46,10 +46,6 @@ public abstract class BaseAnnouncementsEntryUADDisplay
 			Long.valueOf(primaryKey.toString()));
 	}
 
-	public String getApplicationName() {
-		return AnnouncementsUADConstants.APPLICATION_NAME;
-	}
-
 	public String[] getDisplayFieldNames() {
 		return new String[] {"title", "content"};
 	}

@@ -49,11 +49,6 @@ public abstract class BaseWikiPageUADDisplay extends BaseModelUADDisplay<WikiPag
 	}
 
 	@Override
-	public String getApplicationName() {
-		return WikiUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "title", "content", "summary" };
 	}

@@ -39,11 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseMBThreadUADExporter extends DynamicQueryUADExporter<MBThread> {
 	@Override
-	public String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public Class<MBThread> getTypeClass() {
 		return MBThread.class;
 	}

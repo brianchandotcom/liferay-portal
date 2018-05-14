@@ -49,11 +49,6 @@ public abstract class BaseMBMessageUADDisplay extends BaseModelUADDisplay<MBMess
 	}
 
 	@Override
-	public String getApplicationName() {
-		return MBUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "subject", "body" };
 	}

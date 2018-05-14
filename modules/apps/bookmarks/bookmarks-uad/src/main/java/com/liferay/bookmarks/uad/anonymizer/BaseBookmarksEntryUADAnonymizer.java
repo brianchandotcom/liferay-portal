@@ -65,11 +65,6 @@ public abstract class BaseBookmarksEntryUADAnonymizer
 	}
 
 	@Override
-	public String getApplicationName() {
-		return BookmarksUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList("description", "name", "url");
 	}

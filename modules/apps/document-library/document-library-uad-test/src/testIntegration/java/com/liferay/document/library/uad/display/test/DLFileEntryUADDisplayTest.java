@@ -17,7 +17,6 @@ package com.liferay.document.library.uad.display.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.uad.constants.DLUADConstants;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,11 +53,6 @@ public class DLFileEntryUADDisplayTest extends BaseUADDisplayTestCase<DLFileEntr
 		_dlFileEntries.add(dlFileEntry);
 
 		return dlFileEntry;
-	}
-
-	@Override
-	protected String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

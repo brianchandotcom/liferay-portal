@@ -49,11 +49,6 @@ public abstract class BaseBlogsEntryUADDisplay extends BaseModelUADDisplay<Blogs
 	}
 
 	@Override
-	public String getApplicationName() {
-		return BlogsUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] {
 			"title", "subtitle", "urlTitle", "description", "content",

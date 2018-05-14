@@ -61,11 +61,6 @@ public abstract class BaseLayoutFriendlyURLUADAnonymizer
 	}
 
 	@Override
-	public String getApplicationName() {
-		return LayoutUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public List<String> getNonanonymizableFieldNames() {
 		return Arrays.asList();
 	}

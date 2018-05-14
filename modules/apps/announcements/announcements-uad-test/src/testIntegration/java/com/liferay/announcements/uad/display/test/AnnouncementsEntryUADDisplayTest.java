@@ -15,7 +15,6 @@
 package com.liferay.announcements.uad.display.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.AnnouncementsEntryUADTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -52,11 +51,6 @@ public class AnnouncementsEntryUADDisplayTest
 		_announcementsEntries.add(announcementsEntry);
 
 		return announcementsEntry;
-	}
-
-	@Override
-	protected String getApplicationName() {
-		return AnnouncementsUADConstants.APPLICATION_NAME;
 	}
 
 	@Override

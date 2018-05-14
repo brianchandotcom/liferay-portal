@@ -40,11 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseDLFileEntryTypeUADExporter
 	extends DynamicQueryUADExporter<DLFileEntryType> {
 	@Override
-	public String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public Class<DLFileEntryType> getTypeClass() {
 		return DLFileEntryType.class;
 	}

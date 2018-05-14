@@ -19,7 +19,6 @@ package com.liferay.wiki.uad.constants;
  * @generated
  */
 public class WikiUADConstants {
-	public static final String APPLICATION_NAME = "Wiki";
 	public static final String[] USER_ID_FIELD_NAMES_WIKI_NODE = {
 			"userId", "statusByUserId"
 		};

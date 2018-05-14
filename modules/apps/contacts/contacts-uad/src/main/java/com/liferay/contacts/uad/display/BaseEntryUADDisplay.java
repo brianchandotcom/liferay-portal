@@ -48,11 +48,6 @@ public abstract class BaseEntryUADDisplay extends BaseModelUADDisplay<Entry> {
 	}
 
 	@Override
-	public String getApplicationName() {
-		return ContactsUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "fullName", "emailAddress", "comments" };
 	}

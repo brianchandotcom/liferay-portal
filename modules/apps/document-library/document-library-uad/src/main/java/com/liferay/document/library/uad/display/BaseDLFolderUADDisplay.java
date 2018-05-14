@@ -49,11 +49,6 @@ public abstract class BaseDLFolderUADDisplay extends BaseModelUADDisplay<DLFolde
 	}
 
 	@Override
-	public String getApplicationName() {
-		return DLUADConstants.APPLICATION_NAME;
-	}
-
-	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] { "name", "description" };
 	}

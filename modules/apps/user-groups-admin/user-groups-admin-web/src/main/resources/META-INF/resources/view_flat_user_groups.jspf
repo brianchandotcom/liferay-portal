@@ -20,7 +20,7 @@
 	searchContainer="<%= userGroupSearchContainer %>"
 >
 	<liferay-ui:user-group-search-container-results
-		searchTerms="<%= searchTerms %>"
+		searchTerms="<%= searchContainer.getSearchTerms() %>"
 		userGroupParams="<%= new LinkedHashMap<String, Object>() %>"
 	/>
 

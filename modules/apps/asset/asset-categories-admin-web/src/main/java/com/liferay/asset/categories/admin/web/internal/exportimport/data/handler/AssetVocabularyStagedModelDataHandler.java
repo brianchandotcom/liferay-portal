@@ -26,8 +26,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -99,6 +102,33 @@ public class AssetVocabularyStagedModelDataHandler
 	@Override
 	public String getDisplayName(AssetVocabulary vocabulary) {
 		return vocabulary.getTitleCurrentValue();
+	}
+
+	@Override
+	public boolean validateReference(
+		PortletDataContext portletDataContext, Element referenceElement) {
+
+		validateMissingGroupReference(portletDataContext, referenceElement);
+
+		String uuid = referenceElement.attributeValue("uuid");
+
+		String displayName = referenceElement.attributeValue("display-name");
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
+		groupId = MapUtil.getLong(groupIds, groupId);
+
+		try {
+			return validateMissingReference(uuid, displayName, groupId);
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	protected ServiceContext createServiceContext(
@@ -243,6 +273,15 @@ public class AssetVocabularyStagedModelDataHandler
 			assetVocabularySettingsExportHelper.getSettingsMetadata());
 	}
 
+	protected AssetVocabulary fetchExistingVocabulary(
+		long groupId, String name) {
+
+		AssetVocabulary vocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(groupId, name);
+
+		return vocabulary;
+	}
+
 	protected String getImportSettings(
 			PortletDataContext portletDataContext, AssetVocabulary vocabulary)
 		throws PortalException {
@@ -321,6 +360,23 @@ public class AssetVocabularyStagedModelDataHandler
 		}
 
 		return titleMap;
+	}
+
+	protected boolean validateMissingReference(
+		String uuid, String displayName, long groupId) {
+
+		AssetVocabulary existingStagedModel = fetchMissingReference(
+			uuid, groupId);
+
+		if (existingStagedModel == null) {
+			existingStagedModel = fetchExistingVocabulary(groupId, displayName);
+		}
+
+		if (existingStagedModel == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _SETTINGS_METADATA = "settings-metadata";

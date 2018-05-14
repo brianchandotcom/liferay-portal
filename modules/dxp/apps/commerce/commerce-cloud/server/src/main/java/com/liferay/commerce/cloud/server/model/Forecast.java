@@ -44,6 +44,10 @@ public class Forecast implements JsonSerializable {
 		return _customerId;
 	}
 
+	public List<ForecastItem> getItems() {
+		return _items;
+	}
+
 	public ForecastPeriod getPeriod() {
 		return _period;
 	}
@@ -60,10 +64,6 @@ public class Forecast implements JsonSerializable {
 		return _time;
 	}
 
-	public List<ForecastTimeSeries> getTimeSeries() {
-		return _timeSeries;
-	}
-
 	public void setAssertivity(String assertivity) {
 		_assertivity = assertivity;
 	}
@@ -74,6 +74,10 @@ public class Forecast implements JsonSerializable {
 
 	public void setCustomerId(long customerId) {
 		_customerId = customerId;
+	}
+
+	public void setItems(List<ForecastItem> items) {
+		_items = items;
 	}
 
 	public void setPeriod(ForecastPeriod period) {
@@ -92,10 +96,6 @@ public class Forecast implements JsonSerializable {
 		_time = time;
 	}
 
-	public void setTimeSeries(List<ForecastTimeSeries> timeSeries) {
-		_timeSeries = timeSeries;
-	}
-
 	@Override
 	public JsonObject toJson() {
 		JsonObject jsonObject = new JsonObject();
@@ -108,10 +108,10 @@ public class Forecast implements JsonSerializable {
 	private String _assertivity;
 	private long _companyId;
 	private long _customerId;
+	private List<ForecastItem> _items;
 	private ForecastPeriod _period;
 	private String _sku;
 	private ForecastTarget _target;
 	private long _time;
-	private List<ForecastTimeSeries> _timeSeries;
 
 }

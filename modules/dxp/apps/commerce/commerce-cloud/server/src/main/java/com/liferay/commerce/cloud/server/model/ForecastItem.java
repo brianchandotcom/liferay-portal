@@ -21,13 +21,13 @@ import io.vertx.core.json.JsonObject;
  * @author Andrea Di Giorgi
  */
 @DataObject(generateConverter = true, publicConverter = false)
-public class ForecastTimeSeries implements JsonSerializable {
+public class ForecastItem implements JsonSerializable {
 
-	public ForecastTimeSeries() {
+	public ForecastItem() {
 	}
 
-	public ForecastTimeSeries(JsonObject jsonObject) {
-		ForecastTimeSeriesConverter.fromJson(jsonObject, this);
+	public ForecastItem(JsonObject jsonObject) {
+		ForecastItemConverter.fromJson(jsonObject, this);
 	}
 
 	public long getTime() {
@@ -50,7 +50,7 @@ public class ForecastTimeSeries implements JsonSerializable {
 	public JsonObject toJson() {
 		JsonObject jsonObject = new JsonObject();
 
-		ForecastTimeSeriesConverter.toJson(this, jsonObject);
+		ForecastItemConverter.toJson(this, jsonObject);
 
 		return jsonObject;
 	}

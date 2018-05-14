@@ -17,9 +17,9 @@ package com.liferay.commerce.cloud.server.eleflow.util;
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastForecasts;
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastTimeseries;
 import com.liferay.commerce.cloud.server.model.Forecast;
+import com.liferay.commerce.cloud.server.model.ForecastItem;
 import com.liferay.commerce.cloud.server.model.ForecastPeriod;
 import com.liferay.commerce.cloud.server.model.ForecastTarget;
-import com.liferay.commerce.cloud.server.model.ForecastTimeSeries;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -50,7 +50,7 @@ public class EleflowForecastForecastsDecoder
 			EleflowUtil.fromEleflow(
 				eleflowForecastForecasts.getTarget(), ForecastTarget.class));
 		forecast.setTime(time);
-		forecast.setTimeSeries(
+		forecast.setItems(
 			EleflowUtil.map(
 				eleflowForecastForecasts.getTimeseries(),
 				_eleflowForecastTimeseriesDecoder));
@@ -58,7 +58,7 @@ public class EleflowForecastForecastsDecoder
 		return forecast;
 	}
 
-	private static final Function<EleflowForecastTimeseries, ForecastTimeSeries>
+	private static final Function<EleflowForecastTimeseries, ForecastItem>
 		_eleflowForecastTimeseriesDecoder =
 			new EleflowForecastTimeseriesDecoder();
 

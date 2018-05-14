@@ -59,7 +59,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 				</aui:select>
 
-				<aui:select name="lowStockActivity">
+				<aui:select label="low-stock-action" name="lowStockActivity">
 
 					<%
 					List<CommerceLowStockActivity> commerceLowStockActivities = cpDefinitionInventoryDisplayContext.getCommerceLowStockActivities();
@@ -76,7 +76,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 				</aui:select>
 
-				<aui:select label="availability-range" name="commerceAvailabilityRangeId" showEmptyOption="<%= true %>">
+				<aui:select label="availability-estimate" name="commerceAvailabilityRangeId" showEmptyOption="<%= true %>">
 
 					<%
 					List<CommerceAvailabilityRange> commerceAvailabilityRanges = cpDefinitionInventoryDisplayContext.getCommerceAvailabilityRanges();

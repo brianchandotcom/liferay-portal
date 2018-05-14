@@ -21,11 +21,11 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= ddmFormAdminDisplayContext.getActionItemsDropdownItemList() %>"
+	actionDropdownItems="<%= ddmFormAdminDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddmFormAdminDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= ddmFormAdminDisplayContext.getCreationMenu() %>"
 	disabled="<%= ddmFormAdminDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= ddmFormAdminDisplayContext.getFilterItemsDropdownItemList() %>"
+	filterDropdownItems="<%= ddmFormAdminDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= ddmFormAdminDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= ddmFormAdminDisplayContext.getSearchActionURL() %>"
@@ -33,7 +33,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 	searchFormName="fm1"
 	sortingOrder="<%= ddmFormAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmFormAdminDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= ddmFormAdminDisplayContext.getViewTypesItemList() %>"
+	viewTypeItems="<%= ddmFormAdminDisplayContext.getViewTypesItems() %>"
 />
 
 <c:choose>

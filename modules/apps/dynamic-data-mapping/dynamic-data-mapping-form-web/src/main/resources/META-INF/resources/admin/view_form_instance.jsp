@@ -27,7 +27,7 @@ PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
 		<aui:input name="deleteFormInstanceIds" type="hidden" />
 
 		<liferay-ui:search-container
-			id="formInstance"
+			id="<%= ddmFormAdminDisplayContext.getSearchContainerId() %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>"
 		>

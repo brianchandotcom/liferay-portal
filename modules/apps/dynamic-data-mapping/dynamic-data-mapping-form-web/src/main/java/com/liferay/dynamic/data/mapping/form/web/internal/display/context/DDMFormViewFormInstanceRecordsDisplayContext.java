@@ -99,7 +99,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		setDDMFormFields();
 	}
 
-	public DropdownItemList getActionItemsDropdownItemList() {
+	public List<DropdownItem> getActionItemsDropdownItems() {
 		return new DropdownItemList() {
 
 			{
@@ -182,7 +182,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return "list";
 	}
 
-	public DropdownItemList getFilterItemsDropdownItemList() {
+	public List<DropdownItem> getFilterItemsDropdownItems() {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 
@@ -199,7 +199,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							getOrderByDropdownItemList());
+							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(request, "order-by"));
 					});
@@ -464,7 +464,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return formFields;
 	}
 
-	protected DropdownItemList getOrderByDropdownItemList() {
+	protected List<DropdownItem> getOrderByDropdownItems() {
 		return new DropdownItemList() {
 			{
 				add(

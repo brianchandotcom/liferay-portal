@@ -78,8 +78,7 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(lang.type=" + TemplateConstants.LANG_TYPE_SOY + ")(type=" + TemplateContextContributor.TYPE_GLOBAL + "))",
-		unbind = "unregisterTemplateContextContributor"
+		target = "(&(lang.type=" + TemplateConstants.LANG_TYPE_SOY + ")(type=" + TemplateContextContributor.TYPE_GLOBAL + "))"
 	)
 	protected void registerTemplateContextContributor(
 		TemplateContextContributor templateContextContributor) {

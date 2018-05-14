@@ -193,7 +193,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(indexer.class.name=*)", unbind = "removeIndexerPostProcessor"
+		target = "(indexer.class.name=*)"
 	)
 	protected void addIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor,

@@ -17,6 +17,7 @@ package com.liferay.commerce.cloud.server.service.impl;
 import com.liferay.commerce.cloud.server.constants.ContentTypes;
 import com.liferay.commerce.cloud.server.model.Forecast;
 import com.liferay.commerce.cloud.server.service.ForecastService;
+import com.liferay.commerce.cloud.server.util.JsonUtil;
 import com.liferay.commerce.cloud.server.util.VertxUtil;
 
 import io.vertx.core.AsyncResult;
@@ -30,6 +31,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.codec.BodyCodec;
+import io.vertx.ext.web.codec.impl.BodyCodecImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +96,32 @@ public class WeDeployForecastServiceImpl
 		);
 	}
 
+	@Override
+	public void getForecasts(
+		String projectId, long time,
+		Handler<AsyncResult<List<Forecast>>> handler) {
+
+		HttpRequest<List<Forecast>> httpRequest = webClient.get(
+			"/forecasts"
+		).as(
+			_forecastsBodyCodec
+		);
+
+		addAuthorization(httpRequest);
+
+		JsonArray filterJsonArray = new JsonArray();
+
+		filterJsonArray.add(
+			JsonUtil.getFilterJsonObject("projectId", projectId));
+		filterJsonArray.add(JsonUtil.getFilterJsonObject("time", ">", time));
+
+		httpRequest.setQueryParam("filter", filterJsonArray.encode());
+
+		httpRequest.send(
+			asyncResult -> VertxUtil.handleServiceHttpResponse(
+				asyncResult, handler));
+	}
+
 	private Future<Void> _addForecasts(JsonArray jsonArray) {
 		Future<Void> future = Future.future();
 
@@ -130,12 +158,18 @@ public class WeDeployForecastServiceImpl
 		sb.append(forecast.getTarget());
 		sb.append('-');
 		sb.append(forecast.getPeriod());
-		sb.append('-');
-		sb.append(forecast.getTime());
 
 		return sb.toString();
 	}
 
 	private static final int _FORECASTS_SIZE = 200;
+
+	private static final BodyCodec<List<Forecast>> _forecastsBodyCodec;
+
+	static {
+		_forecastsBodyCodec = BodyCodec.create(
+			BodyCodecImpl.JSON_ARRAY_DECODER.andThen(
+				jsonArray -> JsonUtil.fromJsonArray(jsonArray, Forecast::new)));
+	}
 
 }

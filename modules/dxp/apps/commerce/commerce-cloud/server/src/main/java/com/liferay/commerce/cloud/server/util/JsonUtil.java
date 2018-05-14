@@ -48,10 +48,20 @@ public class JsonUtil {
 		return values;
 	}
 
-	public static <T> JsonObject getFilterJsonObject(String name, T value) {
+	public static <T> JsonObject getFilterJsonObject(
+		String name, String operator, T value) {
+
 		JsonObject filterValueJsonObject = getJsonObject("value", value);
 
+		if (operator != null) {
+			filterValueJsonObject.put("operator", operator);
+		}
+
 		return getJsonObject(name, filterValueJsonObject);
+	}
+
+	public static <T> JsonObject getFilterJsonObject(String name, T value) {
+		return getFilterJsonObject(name, null, value);
 	}
 
 	public static <T> JsonObject getJsonObject(String key, T value) {

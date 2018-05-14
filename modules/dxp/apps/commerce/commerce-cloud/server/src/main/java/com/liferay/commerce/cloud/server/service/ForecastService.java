@@ -41,4 +41,8 @@ public interface ForecastService {
 		String projectId, List<Forecast> forecasts,
 		Handler<AsyncResult<Void>> handler);
 
+	public void getForecasts(
+		String projectId, long time,
+		Handler<AsyncResult<List<Forecast>>> handler);
+
 }

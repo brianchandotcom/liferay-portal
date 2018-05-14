@@ -600,10 +600,10 @@ public class LayoutPageTemplateEntryServiceSoap {
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(long groupId,
-		long layoutPageTemplateFolder) throws RemoteException {
+		long layoutPageTemplateFolderId) throws RemoteException {
 		try {
 			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
-					layoutPageTemplateFolder);
+					layoutPageTemplateFolderId);
 
 			return returnValue;
 		}
@@ -615,10 +615,10 @@ public class LayoutPageTemplateEntryServiceSoap {
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(long groupId,
-		long layoutPageTemplateFolder, int status) throws RemoteException {
+		long layoutPageTemplateFolderId, int status) throws RemoteException {
 		try {
 			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
-					layoutPageTemplateFolder, status);
+					layoutPageTemplateFolderId, status);
 
 			return returnValue;
 		}
@@ -693,10 +693,10 @@ public class LayoutPageTemplateEntryServiceSoap {
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(long groupId,
-		long layoutPageTemplateFolder, String name) throws RemoteException {
+		long layoutPageTemplateFolderId, String name) throws RemoteException {
 		try {
 			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
-					layoutPageTemplateFolder, name);
+					layoutPageTemplateFolderId, name);
 
 			return returnValue;
 		}
@@ -708,11 +708,11 @@ public class LayoutPageTemplateEntryServiceSoap {
 	}
 
 	public static int getLayoutPageTemplateEntriesCount(long groupId,
-		long layoutPageTemplateFolder, String name, int status)
+		long layoutPageTemplateFolderId, String name, int status)
 		throws RemoteException {
 		try {
 			int returnValue = LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntriesCount(groupId,
-					layoutPageTemplateFolder, name, status);
+					layoutPageTemplateFolderId, name, status);
 
 			return returnValue;
 		}

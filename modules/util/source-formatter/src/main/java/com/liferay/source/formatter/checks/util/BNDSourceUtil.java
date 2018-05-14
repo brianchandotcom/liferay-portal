@@ -109,16 +109,15 @@ public class BNDSourceUtil {
 		"Can-Redefine-Classes", "Can-Retransform-Classes",
 		"Eclipse-PlatformFilter", "Implementation-Version", "JPM-Command",
 		"Liferay-Configuration-Path", "Liferay-Export-JS-Submodules",
-		"Liferay-JS-Config", "Liferay-JS-Submodules-Bridge",
-		"Liferay-JS-Submodules-Export", "Liferay-Modules-Compat-Adapters",
+		"Liferay-JS-Config", "Liferay-JS-Resources-Top-Head-Authenticated",
+		"Liferay-JS-Resources-Top-Head", "Liferay-JS-Submodules-Bridge",
+		"Liferay-JS-Submodules-Export",  "Liferay-Modules-Compat-Adapters",
 		"Liferay-Releng-App-Description",
 		"Liferay-Releng-Module-Group-Description",
 		"Liferay-Releng-Module-Group-Title", "Liferay-Require-SchemaVersion",
 		"Liferay-RTL-Support-Required", "Liferay-Service",
 		"Liferay-Theme-Contributor-Type", "Liferay-Theme-Contributor-Weight",
-		"Liferay-Top-Head-Authenticated-JS-Resources",
-		"Liferay-Top-Head-JS-Resources", "Liferay-Versions", "Main-Class",
-		"Premain-Class", "Web-ContextPath"
+		"Liferay-Versions", "Main-Class", "Premain-Class", "Web-ContextPath"
 	};
 
 	private static final String[] _COMMON_BND_DEFINITION_KEYS = {

@@ -25,6 +25,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 
+<%
+NavigationItem navigationItem = new NavigationItem();
+
+navigationItem.setActive(true);
+navigationItem.setHref(currentURL);
+navigationItem.setLabel(LanguageUtil.get(request, "option-templates"));
+%>
+
+<clay:navigation-bar
+	items="<%= Collections.singletonList(navigationItem) %>"
+/>
+
 <div class="container-fluid-1280" id="<portlet:namespace />CPOptionsEditor">
 
 </div>

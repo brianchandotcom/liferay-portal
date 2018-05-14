@@ -69,8 +69,7 @@ public class CPOptionNavigationItem implements CPNavigationItem {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
 
-		navigationItem.setLabel(
-			LanguageUtil.get(resourceBundle, "option-templates"));
+		navigationItem.setLabel(LanguageUtil.get(resourceBundle, "options"));
 
 		return navigationItem;
 	}

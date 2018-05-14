@@ -5190,8 +5190,8 @@ public class ServiceBuilder {
 	private String _getUADBundleName(String uadApplicationName) {
 		return "Liferay " +
 			TextFormatter.format(
-				TextFormatter.format(uadApplicationName, TextFormatter.H),
-				TextFormatter.G) + " UAD";
+				TextFormatter.format(uadApplicationName, TextFormatter.K),
+				TextFormatter.J) + " UAD";
 	}
 
 	private List<Path> _getUpdateSQLFilePaths() throws IOException {
@@ -5529,6 +5529,10 @@ public class ServiceBuilder {
 		String uadApplicationName = GetterUtil.getString(
 			entityElement.attributeValue("uad-application-name"),
 			_portletShortName);
+
+		uadApplicationName = TextFormatter.format(
+			uadApplicationName, TextFormatter.D);
+
 		boolean uadAutoDelete = GetterUtil.getBoolean(
 			entityElement.attributeValue("uad-auto-delete"));
 		String uadDirPath = GetterUtil.getString(

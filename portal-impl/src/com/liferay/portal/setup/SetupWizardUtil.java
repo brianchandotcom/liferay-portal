@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -187,15 +188,12 @@ public class SetupWizardUtil {
 			String value = entry.getValue();
 
 			if (Validator.isNull(value)) {
-				unicodeProperties.setProperty(
-					entry.getKey(), StringPool.IS_NULL);
+				unicodeProperties.setProperty(entry.getKey(), _NULL_HOLDER);
 			}
 		}
 
-		String encodedPropertiesString = unicodeProperties.toString();
-
-		return encodedPropertiesString.replace(
-			StringPool.IS_NULL, StringPool.BLANK);
+		return StringUtil.replace(
+			unicodeProperties.toString(), _NULL_HOLDER, StringPool.BLANK);
 	}
 
 	private static boolean _isDatabaseConfigured(
@@ -392,6 +390,8 @@ public class SetupWizardUtil {
 
 		return false;
 	}
+
+	private static final String _NULL_HOLDER = "NULL_HOLDER";
 
 	private static final String _PROPERTIES_PREFIX = "properties--";
 

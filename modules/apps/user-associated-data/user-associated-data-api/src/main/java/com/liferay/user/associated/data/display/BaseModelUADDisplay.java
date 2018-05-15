@@ -34,7 +34,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 
 	@Override
 	public long count(long userId) {
-		return doCount(_getDynamicQuery(userId));
+		return doCount(getDynamicQuery(userId));
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 
 	@Override
 	public List<T> getRange(long userId, int start, int end) {
-		return doGetRange(_getDynamicQuery(userId), start, end);
+		return doGetRange(getDynamicQuery(userId), start, end);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public abstract class BaseModelUADDisplay<T extends BaseModel>
 
 	protected abstract String[] doGetUserIdFieldNames();
 
-	private DynamicQuery _getDynamicQuery(long userId) {
+	protected DynamicQuery getDynamicQuery(long userId) {
 		return UADDynamicQueryUtil.addDynamicQueryCriteria(
 			doGetDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}

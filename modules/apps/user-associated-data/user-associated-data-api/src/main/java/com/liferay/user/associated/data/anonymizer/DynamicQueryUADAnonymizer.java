@@ -31,7 +31,7 @@ public abstract class DynamicQueryUADAnonymizer<T extends BaseModel>
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			_getActionableDynamicQuery(userId);
+			getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(T baseModel) -> autoAnonymize(baseModel, userId, anonymousUser));
@@ -41,13 +41,13 @@ public abstract class DynamicQueryUADAnonymizer<T extends BaseModel>
 
 	@Override
 	public long count(long userId) throws PortalException {
-		return _getActionableDynamicQuery(userId).performCount();
+		return getActionableDynamicQuery(userId).performCount();
 	}
 
 	@Override
 	public void deleteAll(long userId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			_getActionableDynamicQuery(userId);
+			getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(T baseModel) -> delete(baseModel));
@@ -59,7 +59,7 @@ public abstract class DynamicQueryUADAnonymizer<T extends BaseModel>
 
 	protected abstract String[] doGetUserIdFieldNames();
 
-	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
+	protected ActionableDynamicQuery getActionableDynamicQuery(long userId) {
 		return UADDynamicQueryUtil.addActionableDynamicQueryCriteria(
 			doGetActionableDynamicQuery(), doGetUserIdFieldNames(), userId);
 	}

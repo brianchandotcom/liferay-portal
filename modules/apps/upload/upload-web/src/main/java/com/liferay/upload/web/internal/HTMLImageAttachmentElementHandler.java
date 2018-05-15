@@ -103,6 +103,6 @@ public class HTMLImageAttachmentElementHandler
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(&(format=html)(html.tag.name=img))"
 	)
-	private AttachmentElementReplacer _attachmentElementReplacer;
+	private volatile AttachmentElementReplacer _attachmentElementReplacer;
 
 }

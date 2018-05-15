@@ -3582,6 +3582,179 @@ public class MBMessageUtil {
 	}
 
 	/**
+	* Returns all the message-boards messages where parentMessageId = &#63; and status = &#63;.
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @return the matching message-boards messages
+	*/
+	public static List<MBMessage> findByP_S(long parentMessageId, int status) {
+		return getPersistence().findByP_S(parentMessageId, status);
+	}
+
+	/**
+	* Returns a range of all the message-boards messages where parentMessageId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @return the range of matching message-boards messages
+	*/
+	public static List<MBMessage> findByP_S(long parentMessageId, int status,
+		int start, int end) {
+		return getPersistence().findByP_S(parentMessageId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the message-boards messages where parentMessageId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message-boards messages
+	*/
+	public static List<MBMessage> findByP_S(long parentMessageId, int status,
+		int start, int end, OrderByComparator<MBMessage> orderByComparator) {
+		return getPersistence()
+				   .findByP_S(parentMessageId, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the message-boards messages where parentMessageId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching message-boards messages
+	*/
+	public static List<MBMessage> findByP_S(long parentMessageId, int status,
+		int start, int end, OrderByComparator<MBMessage> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByP_S(parentMessageId, status, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first message-boards message in the ordered set where parentMessageId = &#63; and status = &#63;.
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message-boards message
+	* @throws NoSuchMessageException if a matching message-boards message could not be found
+	*/
+	public static MBMessage findByP_S_First(long parentMessageId, int status,
+		OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchMessageException {
+		return getPersistence()
+				   .findByP_S_First(parentMessageId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first message-boards message in the ordered set where parentMessageId = &#63; and status = &#63;.
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	*/
+	public static MBMessage fetchByP_S_First(long parentMessageId, int status,
+		OrderByComparator<MBMessage> orderByComparator) {
+		return getPersistence()
+				   .fetchByP_S_First(parentMessageId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last message-boards message in the ordered set where parentMessageId = &#63; and status = &#63;.
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message-boards message
+	* @throws NoSuchMessageException if a matching message-boards message could not be found
+	*/
+	public static MBMessage findByP_S_Last(long parentMessageId, int status,
+		OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchMessageException {
+		return getPersistence()
+				   .findByP_S_Last(parentMessageId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last message-boards message in the ordered set where parentMessageId = &#63; and status = &#63;.
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	*/
+	public static MBMessage fetchByP_S_Last(long parentMessageId, int status,
+		OrderByComparator<MBMessage> orderByComparator) {
+		return getPersistence()
+				   .fetchByP_S_Last(parentMessageId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the message-boards messages before and after the current message-boards message in the ordered set where parentMessageId = &#63; and status = &#63;.
+	*
+	* @param messageId the primary key of the current message-boards message
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message-boards message
+	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
+	*/
+	public static MBMessage[] findByP_S_PrevAndNext(long messageId,
+		long parentMessageId, int status,
+		OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchMessageException {
+		return getPersistence()
+				   .findByP_S_PrevAndNext(messageId, parentMessageId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the message-boards messages where parentMessageId = &#63; and status = &#63; from the database.
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	*/
+	public static void removeByP_S(long parentMessageId, int status) {
+		getPersistence().removeByP_S(parentMessageId, status);
+	}
+
+	/**
+	* Returns the number of message-boards messages where parentMessageId = &#63; and status = &#63;.
+	*
+	* @param parentMessageId the parent message ID
+	* @param status the status
+	* @return the number of matching message-boards messages
+	*/
+	public static int countByP_S(long parentMessageId, int status) {
+		return getPersistence().countByP_S(parentMessageId, status);
+	}
+
+	/**
 	* Returns all the message-boards messages where groupId = &#63; and userId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

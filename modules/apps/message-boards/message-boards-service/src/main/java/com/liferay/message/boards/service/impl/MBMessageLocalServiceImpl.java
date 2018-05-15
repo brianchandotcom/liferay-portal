@@ -1320,7 +1320,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	public List<MBMessage> getRootMessages(
 			String className, long classPK, int status)
-		throws NoSuchMessageException {
+		throws PortalException {
 
 		return getRootMessages(
 			className, classPK, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -1329,7 +1329,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	public List<MBMessage> getRootMessages(
 			String className, long classPK, int status, int start, int end)
-		throws NoSuchMessageException {
+		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 

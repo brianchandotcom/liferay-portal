@@ -48,13 +48,13 @@ String languageId = LanguageUtil.getLanguageId(locale);
 				<aui:col width="<%= 50 %>">
 					<aui:input name="name" />
 
-					<aui:input name="description" />
-
 					<aui:input name="street1" />
 
 					<aui:input name="street2" />
 
 					<aui:input name="street3" />
+
+					<aui:input name="description" />
 				</aui:col>
 
 				<aui:col width="<%= 50 %>">

@@ -49,7 +49,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 		try {
 			_commerceCountryLocalService.importDefaultCountries(serviceContext);
-			_commerceWarehouseLocalService.getDefaultCommerceWarehouse(
+			_commerceWarehouseLocalService.importDefaultCommerceWarehouse(
 				serviceContext);
 		}
 		catch (Exception e) {

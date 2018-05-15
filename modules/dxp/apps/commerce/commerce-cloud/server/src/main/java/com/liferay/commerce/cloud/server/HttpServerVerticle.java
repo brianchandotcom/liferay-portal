@@ -19,6 +19,7 @@ import com.liferay.commerce.cloud.server.eleflow.handler.EleflowForecastCallback
 import com.liferay.commerce.cloud.server.handler.ActiveProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.GetForecastConfigurationHandler;
 import com.liferay.commerce.cloud.server.handler.GetForecastsHandler;
+import com.liferay.commerce.cloud.server.handler.GetProjectHandler;
 import com.liferay.commerce.cloud.server.handler.PostForecastOrdersHandler;
 import com.liferay.commerce.cloud.server.handler.ProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.PutForecastConfigurationHandler;
@@ -116,6 +117,21 @@ public class HttpServerVerticle extends AbstractVerticle {
 		route.produces(ContentTypes.APPLICATION_JSON);
 	}
 
+	private void _addRouteGetProject(
+		Router router, ProjectAuthHandler projectAuthHandler,
+		ActiveProjectAuthHandler activeProjectAuthHandler) {
+
+		Route route = router.get(GetProjectHandler.PATH);
+
+		route.handler(projectAuthHandler);
+
+		route.handler(activeProjectAuthHandler);
+
+		route.handler(new GetProjectHandler());
+
+		route.produces(ContentTypes.APPLICATION_JSON);
+	}
+
 	private void _addRoutePostOrders(
 		Router router, ProjectAuthHandler projectAuthHandler,
 		ActiveProjectAuthHandler activeProjectAuthHandler,
@@ -185,6 +201,8 @@ public class HttpServerVerticle extends AbstractVerticle {
 		_addRouteGetForecasts(
 			router, projectAuthHandler, activeProjectAuthHandler,
 			forecastService);
+		_addRouteGetProject(
+			router, projectAuthHandler, activeProjectAuthHandler);
 		_addRoutePostOrders(
 			router, projectAuthHandler, activeProjectAuthHandler,
 			forecastOrderService);

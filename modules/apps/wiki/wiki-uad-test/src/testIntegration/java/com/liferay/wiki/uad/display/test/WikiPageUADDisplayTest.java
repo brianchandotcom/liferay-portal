@@ -15,35 +15,38 @@
 package com.liferay.wiki.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
-
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.uad.test.WikiPageUADTestHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
 public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase<WikiPage> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		_wikiPageUADTestHelper.cleanUpDependencies(_wikiPages);
+	}
 
 	@Override
 	protected WikiPage addBaseModel(long userId) throws Exception {
@@ -59,15 +62,13 @@ public class WikiPageUADDisplayTest extends BaseUADDisplayTestCase<WikiPage> {
 		return _uadDisplay;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_wikiPageUADTestHelper.cleanUpDependencies(_wikiPages);
-	}
-
-	@DeleteAfterTestRun
-	private final List<WikiPage> _wikiPages = new ArrayList<WikiPage>();
-	@Inject
-	private WikiPageUADTestHelper _wikiPageUADTestHelper;
 	@Inject(filter = "component.name=*.WikiPageUADDisplay")
 	private UADDisplay _uadDisplay;
+
+	@DeleteAfterTestRun
+	private final List<WikiPage> _wikiPages = new ArrayList<>();
+
+	@Inject
+	private WikiPageUADTestHelper _wikiPageUADTestHelper;
+
 }

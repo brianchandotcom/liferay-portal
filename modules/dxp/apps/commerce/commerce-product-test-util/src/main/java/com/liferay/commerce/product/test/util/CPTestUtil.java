@@ -49,6 +49,21 @@ import java.util.Map;
 public class CPTestUtil {
 
 	public static CPDefinition addCPDefinition(
+			long groupId, boolean ignoreSKUCombinations,
+			boolean hasDefaultInstance, int workflowAction)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setWorkflowAction(workflowAction);
+
+		return _addCPDefinition(
+			SimpleCPTypeConstants.NAME, ignoreSKUCombinations,
+			hasDefaultInstance, serviceContext);
+	}
+
+	public static CPDefinition addCPDefinition(
 			long groupId, String productTypeName, boolean ignoreSKUCombinations,
 			boolean hasDefaultInstance)
 		throws Exception {

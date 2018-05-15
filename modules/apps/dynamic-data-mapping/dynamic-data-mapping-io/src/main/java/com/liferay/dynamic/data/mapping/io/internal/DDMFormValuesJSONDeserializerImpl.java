@@ -85,8 +85,7 @@ public class DDMFormValuesJSONDeserializerImpl
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeDDMFormFieldValueJSONDeserializer"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDDMFormFieldValueJSONDeserializer(
 		DDMFormFieldValueJSONDeserializer ddmFormFieldValueJSONDeserializer,

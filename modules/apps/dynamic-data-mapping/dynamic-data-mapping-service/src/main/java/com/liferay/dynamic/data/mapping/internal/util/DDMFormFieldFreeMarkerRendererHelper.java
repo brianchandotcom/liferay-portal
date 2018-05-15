@@ -58,7 +58,7 @@ public class DDMFormFieldFreeMarkerRendererHelper {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "removeEditor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addEditor(Editor editor) {
 		_editors.put(editor.getName(), editor);

@@ -28,10 +28,14 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.media.object.apio.internal.architect.form.MediaObjectCreatorForm;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.io.InputStream;
 
 import java.util.List;
 
@@ -56,6 +60,9 @@ public class MediaObjectNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getPageItems
+		).addCreator(
+			this::_addFileEntry, (credentials, aLong) -> true,
+			MediaObjectCreatorForm::buildForm
 		).build();
 	}
 
@@ -108,6 +115,34 @@ public class MediaObjectNestedCollectionResource
 		).addString(
 			"text", FileEntry::getDescription
 		).build();
+	}
+
+	private FileEntry _addFileEntry(
+			Long folderId, MediaObjectCreatorForm mediaObjectCreatorForm)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
+
+		long repositoryId = mediaObjectCreatorForm.getRepositoryId();
+
+		String sourceFileName = mediaObjectCreatorForm.getSourceFileName();
+
+		String title = mediaObjectCreatorForm.getTitle();
+
+		String mimeType = binaryFile.getMimeType();
+
+		String description = mediaObjectCreatorForm.getDescription();
+
+		String changelog = mediaObjectCreatorForm.getChangelog();
+
+		InputStream inputStream = binaryFile.getInputStream();
+
+		long size = binaryFile.getSize();
+
+		return _dlAppService.addFileEntry(
+			repositoryId, folderId, sourceFileName, mimeType, title,
+			description, changelog, inputStream, size, serviceContext);
 	}
 
 	private BinaryFile _getBinaryFile(FileEntry fileEntry) {

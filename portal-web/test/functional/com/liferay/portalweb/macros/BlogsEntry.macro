@@ -519,7 +519,6 @@
 	</command>
 
 	<command name="removeViewPermissionsPG">
-		<var name="key_assetHeader" value="${entryTitle}" />
 		<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />
 		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 

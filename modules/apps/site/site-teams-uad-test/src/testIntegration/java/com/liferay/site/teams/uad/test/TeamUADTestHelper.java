@@ -31,13 +31,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = TeamUADTestHelper.class)
 public class TeamUADTestHelper {
 
-	/**
-	 * Implement addTeam() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid Teams with a specified user ID in order to execute correctly. Implement addTeam() such that it creates a valid Team with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public Team addTeam(long userId) throws Exception {
 		return _teamLocalService.addTeam(
 			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
@@ -45,13 +38,6 @@ public class TeamUADTestHelper {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<Team> teams) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid Teams with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<Team> teams) such that any additional objects created during the construction of teams are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(List<Team> teams) throws Exception {
 	}
 

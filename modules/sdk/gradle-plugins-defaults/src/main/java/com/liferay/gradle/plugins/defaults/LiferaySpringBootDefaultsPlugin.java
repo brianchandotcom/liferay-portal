@@ -70,6 +70,6 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 		project.setGroup(group);
 	}
 
-	private static final String _GROUP = "com.liferay.plugins";
+	private static final String _GROUP = "com.liferay";
 
 }

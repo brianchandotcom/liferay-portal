@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.string.StringPool;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,17 +21,6 @@ import org.junit.Test;
  * @author Alexander Chow
  */
 public class UnicodePropertiesTest {
-
-	@Test
-	public void testSetBlankProperty() throws Exception {
-		UnicodeProperties props = new UnicodeProperties();
-
-		props.setProperty("key1", StringPool.BLANK);
-		props.setProperty("key2", null);
-		props.setProperty("key3", StringPool.NULL);
-
-		Assert.assertEquals("key1=\nkey3=null\n", props.toString());
-	}
 
 	@Test
 	public void testSetNullProperty() throws Exception {

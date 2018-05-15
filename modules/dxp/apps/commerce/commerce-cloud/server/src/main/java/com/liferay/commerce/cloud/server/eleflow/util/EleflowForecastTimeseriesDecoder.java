@@ -31,8 +31,12 @@ public class EleflowForecastTimeseriesDecoder
 
 		ForecastItem forecastItem = new ForecastItem();
 
+		forecastItem.setLowerValue(
+			EleflowUtil.getString(eleflowForecastTimeseries.getLower()));
 		forecastItem.setTime(
 			EleflowUtil.getTime(eleflowForecastTimeseries.getDate()));
+		forecastItem.setUpperValue(
+			EleflowUtil.getString(eleflowForecastTimeseries.getUpper()));
 		forecastItem.setValue(
 			EleflowUtil.getString(eleflowForecastTimeseries.getValue()));
 

@@ -30,16 +30,32 @@ public class ForecastItem implements JsonSerializable {
 		ForecastItemConverter.fromJson(jsonObject, this);
 	}
 
+	public String getLowerValue() {
+		return _lowerValue;
+	}
+
 	public long getTime() {
 		return _time;
+	}
+
+	public String getUpperValue() {
+		return _upperValue;
 	}
 
 	public String getValue() {
 		return _value;
 	}
 
+	public void setLowerValue(String lowerValue) {
+		_lowerValue = lowerValue;
+	}
+
 	public void setTime(long time) {
 		_time = time;
+	}
+
+	public void setUpperValue(String upperValue) {
+		_upperValue = upperValue;
 	}
 
 	public void setValue(String value) {
@@ -55,7 +71,9 @@ public class ForecastItem implements JsonSerializable {
 		return jsonObject;
 	}
 
+	private String _lowerValue;
 	private long _time;
+	private String _upperValue;
 	private String _value;
 
 }

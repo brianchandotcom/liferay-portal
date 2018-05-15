@@ -168,8 +168,8 @@ public class CPMeasurementUnitLocalServiceImpl
 			"ounces", "oz", 16, false, 1,
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
 		_addCPMeasurementUnit(
-			"pounds", "lb", 1, true, 2,
-			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
+			"pounds", "lb", 1, true, 2, CPMeasurementUnitConstants.TYPE_WEIGHT,
+			serviceContext);
 		_addCPMeasurementUnit(
 			"kilograms", "kg", 0.45359237, false, 3,
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);

@@ -114,13 +114,6 @@ public class CommerceWarehouseServiceWrapper implements CommerceWarehouseService
 			commerceCountryId);
 	}
 
-	@Override
-	public com.liferay.commerce.model.CommerceWarehouse getDefaultCommerceWarehouse(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceWarehouseService.getDefaultCommerceWarehouse(serviceContext);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

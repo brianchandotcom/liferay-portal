@@ -118,12 +118,6 @@ public class CommerceWarehouseServiceUtil {
 				   .getCommerceWarehousesCount(groupId, commerceCountryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceWarehouse getDefaultCommerceWarehouse(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultCommerceWarehouse(serviceContext);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

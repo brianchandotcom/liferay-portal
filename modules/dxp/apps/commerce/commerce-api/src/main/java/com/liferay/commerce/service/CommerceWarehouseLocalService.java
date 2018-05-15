@@ -248,10 +248,6 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	public int getCommerceWarehousesCount(long groupId, long commerceCountryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceWarehouse getDefaultCommerceWarehouse(
-		ServiceContext serviceContext) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -265,6 +261,9 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public CommerceWarehouse importDefaultCommerceWarehouse(
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> search(long groupId, String keywords,

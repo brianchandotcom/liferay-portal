@@ -310,13 +310,6 @@ public class CommerceWarehouseLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.model.CommerceWarehouse getDefaultCommerceWarehouse(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceWarehouseLocalService.getDefaultCommerceWarehouse(serviceContext);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _commerceWarehouseLocalService.getIndexableActionableDynamicQuery();
 	}
@@ -336,6 +329,13 @@ public class CommerceWarehouseLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceWarehouseLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceWarehouse importDefaultCommerceWarehouse(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseLocalService.importDefaultCommerceWarehouse(serviceContext);
 	}
 
 	@Override

@@ -294,12 +294,6 @@ public class CommerceWarehouseLocalServiceUtil {
 				   .getCommerceWarehousesCount(groupId, commerceCountryId);
 	}
 
-	public static com.liferay.commerce.model.CommerceWarehouse getDefaultCommerceWarehouse(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultCommerceWarehouse(serviceContext);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
 	}
@@ -317,6 +311,12 @@ public class CommerceWarehouseLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouse importDefaultCommerceWarehouse(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().importDefaultCommerceWarehouse(serviceContext);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> search(

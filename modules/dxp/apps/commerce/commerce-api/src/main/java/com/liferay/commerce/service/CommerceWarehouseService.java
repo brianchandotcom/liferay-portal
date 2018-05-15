@@ -99,10 +99,6 @@ public interface CommerceWarehouseService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceWarehousesCount(long groupId, long commerceCountryId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceWarehouse getDefaultCommerceWarehouse(
-		ServiceContext serviceContext) throws PortalException;
-
 	/**
 	* Returns the OSGi service identifier.
 	*

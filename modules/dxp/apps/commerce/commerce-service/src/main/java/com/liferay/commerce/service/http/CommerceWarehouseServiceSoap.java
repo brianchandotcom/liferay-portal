@@ -226,21 +226,6 @@ public class CommerceWarehouseServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceWarehouseSoap getDefaultCommerceWarehouse(
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.getDefaultCommerceWarehouse(serviceContext);
-
-			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.model.CommerceWarehouseSoap[] search(
 		long groupId, String keywords, boolean all, long commerceCountryId,
 		int start, int end,

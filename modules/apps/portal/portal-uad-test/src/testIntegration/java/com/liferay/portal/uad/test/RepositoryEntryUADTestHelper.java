@@ -38,13 +38,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = RepositoryEntryUADTestHelper.class)
 public class RepositoryEntryUADTestHelper {
 
-	/**
-	 * Implement addRepositoryEntry() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid RepositoryEntries with a specified user ID in order to execute correctly. Implement addRepositoryEntry() such that it creates a valid RepositoryEntry with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public RepositoryEntry addRepositoryEntry(long userId) throws Exception {
 		long classNameId = _portal.getClassNameId(
 			LiferayRepository.class.getName());
@@ -61,13 +54,6 @@ public class RepositoryEntryUADTestHelper {
 			StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<RepositoryEntry> repositoryEntries) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid RepositoryEntries with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<RepositoryEntry> repositoryEntries) such that any additional objects created during the construction of repositoryEntries are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(List<RepositoryEntry> repositoryEntries)
 		throws Exception {
 

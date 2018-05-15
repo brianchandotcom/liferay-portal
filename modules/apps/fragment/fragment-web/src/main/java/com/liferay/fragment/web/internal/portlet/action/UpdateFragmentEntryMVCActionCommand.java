@@ -69,9 +69,7 @@ public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put(
 				"redirectURL", getRedirectURL(actionResponse, fragmentEntry));
 
-			if (SessionErrors.contains(
-					actionRequest, _portal.getPortletId(actionRequest))) {
-
+			if (SessionErrors.contains(actionRequest, "fragmentNameInvalid")) {
 				addSuccessMessage(actionRequest, actionResponse);
 			}
 
@@ -79,8 +77,7 @@ public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException pe) {
-			SessionErrors.add(
-				actionRequest, _portal.getPortletId(actionRequest));
+			SessionErrors.add(actionRequest, "fragmentNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
 

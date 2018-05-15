@@ -32,7 +32,7 @@ public class CommerceForecastValueLocalServiceImpl
 	@Override
 	public CommerceForecastValue addCommerceForecastValue(
 			long userId, long commerceForecastEntryId, Date date,
-			BigDecimal value)
+			BigDecimal lowerValue, BigDecimal value, BigDecimal upperValue)
 		throws PortalException {
 
 		CommerceForecastValue commerceForecastValue =
@@ -55,7 +55,9 @@ public class CommerceForecastValueLocalServiceImpl
 			commerceForecastValue.setDate(date);
 		}
 
+		commerceForecastValue.setLowerValue(lowerValue);
 		commerceForecastValue.setValue(value);
+		commerceForecastValue.setUpperValue(upperValue);
 
 		return commerceForecastValuePersistence.update(commerceForecastValue);
 	}

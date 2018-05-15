@@ -64,7 +64,9 @@
 
 		<column name="commerceForecastEntryId" type="long" />
 		<column name="date" type="Date" />
+		<column name="lowerValue" type="BigDecimal" />
 		<column name="value" type="BigDecimal" />
+		<column name="upperValue" type="BigDecimal" />
 
 		<!-- Order -->
 

@@ -1,0 +1,407 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="one" name="portal-test-crystal" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<path id="jenkins.classpath">
+		<fileset dir="/opt/dev/projects/github/liferay-jenkins-ee/lib/jenkins" includes="*.jar" />
+	</path>
+	<taskdef classpathref="jenkins.classpath" resource="ise/antelope/tasks/antlib.xml" uri="antlib:ise.antelope.tasks" />
+	<taskdef classpathref="jenkins.classpath" resource="net/sf/antcontrib/antlib.xml" />
+	<taskdef classname="com.liferay.ant.beanshell.BeanShellTask" classpathref="jenkins.classpath" name="beanshell" />
+	<taskdef classname="com.liferay.ant.build.logger.LiferayBuildLoggerInstallerTask" classpathref="jenkins.classpath" name="liferay-build-logger-installer" />
+
+	<target name="approve">
+		<beanshell mapId="job">
+			<![CDATA[
+				try {
+
+
+
+
+				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+				import org.apache.commons.lang.StringUtils;
+
+				import org.json.JSONArray;
+				import org.json.JSONObject;
+
+				JSONArray repositoryInvitationsArray = JenkinsResultsParserUtil.toJSONArray("https://api.github.com/user/repository_invitations");
+
+				for (int i = 0; i < repositoryInvitationsArray.length(); i++) {
+					Object object = repositoryInvitationsArray.get(i);
+
+					if (object.equals(JSONObject.NULL)) {
+						continue;
+					}
+
+					JSONObject repositoryInvitationJSONObject = repositoryInvitationsArray.get(i);
+
+					JSONObject repositoryJSONObject = repositoryInvitationJSONObject.getJSONObject("repository");
+
+					Integer id = repositoryInvitationJSONObject.getInt("id");
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("curl ");
+					sb.append("-X PATCH ");
+					sb.append("-H 'Authorization: token ");
+					sb.append(project.getProperty("env.GITHUB_AUTHORIZATION_KEY"));
+					sb.append("' ");
+					sb.append("https://api.github.com/user/repository_invitations/" + id);
+
+					JenkinsResultsParserUtil.executeBashCommands(new String[] {sb.toString()});
+
+					System.out.println("Approved collaborator for " + repositoryJSONObject.getString("full_name"));
+				}
+
+
+
+
+
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			]]>
+		</beanshell>
+	</target>
+
+	<target name="trigger">
+		<property name="trigger.builds" value="true" />
+		<property name="usernames" value="brianchandotcom" />
+		<property name="repositories" value="liferay-portal,liferay-portal-ee" />
+
+		<beanshell mapId="job">
+			<![CDATA[
+				try {
+
+
+
+
+				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+				import org.apache.commons.lang.StringUtils;
+
+				import org.json.JSONArray;
+				import org.json.JSONObject;
+
+				public String getBranchName(JSONObject pullJSONObject) {
+					JSONObject baseJSONObject = pullJSONObject.getJSONObject("base");
+
+					return baseJSONObject.getString("ref");
+				}
+
+				String repositories = project.getProperty("repositories");
+				String usernames = project.getProperty("usernames");
+
+				for (String username : usernames.split(",")) {
+					for (String repository : repositories.split(",")) {
+						JSONArray pullsJSONArray = JenkinsResultsParserUtil.toJSONArray("https://api.github.com/repos/" + username + "/" + repository + "/pulls");
+
+						for (int i = 0; i < pullsJSONArray.length(); i++) {
+							Object object = pullsJSONArray.get(i);
+
+							if (object.equals(JSONObject.NULL)) {
+								continue;
+							}
+
+							JSONObject pullJSONObject = pullsJSONArray.get(i);
+
+							JSONArray labelsJSONArray = pullJSONObject.getJSONArray("labels");
+
+							boolean found = false;
+
+							for (int j = 0; j < labelsJSONArray.length(); j++) {
+								if (found) {
+									break;
+								}
+
+								Object object = labelsJSONArray.get(j);
+
+								if (object.equals(JSONObject.NULL)) {
+									continue;
+								}
+
+								JSONObject labelJSONObject = labelsJSONArray.get(j);
+
+								String labelName = labelJSONObject.getString("name");
+
+								if (labelName.contains("ci:test:sf")) {
+									found = true;
+
+									break;
+								}
+							}
+
+							String branchName = getBranchName(pullJSONObject);
+
+							if (!found && !branchName.contains("-private")) {
+								StringBuilder sb = new StringBuilder();
+
+								sb.append("http://test-1-1/job/test-portal-source-format/buildWithParameters?token=raen3Aib&");
+								sb.append("PULL_REQUEST_URL=");
+								sb.append(pullJSONObject.getString("html_url"));
+
+								String triggerBuilds = project.getProperty("trigger.builds");
+
+								System.out.println("Running: " + sb.toString());
+
+								if (triggerBuilds != null && triggerBuilds.equals("true")) {
+									JenkinsResultsParserUtil.toString(sb.toString());
+
+									System.out.println("TRIGGERED!");
+								}
+							}
+						}
+					}
+				}
+
+
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			]]>
+		</beanshell>
+	</target>
+
+	<target name="clean-old-legacy-branches">
+		<beanshell mapId="job">
+			<![CDATA[
+				try {
+
+
+
+
+				import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+				import org.apache.commons.lang.StringUtils;
+
+				import org.json.JSONArray;
+				import org.json.JSONObject;
+
+				JSONArray repositoryInvitationsArray = JenkinsResultsParserUtil.toJSONArray("https://api.github.com/user/repository_invitations");
+
+				for (int i = 0; i < repositoryInvitationsArray.length(); i++) {
+					Object object = repositoryInvitationsArray.get(i);
+
+					if (object.equals(JSONObject.NULL)) {
+						continue;
+					}
+
+					JSONObject repositoryInvitationJSONObject = repositoryInvitationsArray.get(i);
+
+					JSONObject repositoryJSONObject = repositoryInvitationJSONObject.getJSONObject("repository");
+
+					Integer id = repositoryInvitationJSONObject.getInt("id");
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("curl ");
+					sb.append("-X PATCH ");
+					sb.append("-H 'Authorization: token ");
+					sb.append(project.getProperty("env.GITHUB_AUTHORIZATION_KEY"));
+					sb.append("' ");
+					sb.append("https://api.github.com/user/repository_invitations/" + id);
+
+					JenkinsResultsParserUtil.executeBashCommands(new String[] {sb.toString()});
+
+					System.out.println("Approved collaborator for " + repositoryJSONObject.getString("full_name"));
+				}
+
+
+
+
+
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			]]>
+		</beanshell>
+	</target>
+
+	<target name="one">
+		<property name="env.TOP_LEVEL_JOB_NAME" value="test-portal-acceptance-pullrequest(master)" />
+		<!-- <property name="env.CI_TEST_SUITE" value="junit" /> -->
+
+		<beanshell mapId="job">
+			<![CDATA[
+				try {
+
+
+
+
+				import com.liferay.jenkins.results.parser.JobFactory;
+				import com.liferay.jenkins.results.parser.PortalRepositoryJob;
+				import com.liferay.jenkins.results.parser.RepositoryJob;
+				import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+				import com.liferay.jenkins.results.parser.test.clazz.group.BaseTestClassGroup.BaseTestClass;
+				import com.liferay.jenkins.results.parser.test.clazz.group.BaseTestClassGroup.BaseTestMethod;
+				import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+				import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalBatchTestClassGroup;
+				import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
+
+				import org.apache.commons.lang.StringUtils;
+
+				RepositoryJob repositoryJob = (RepositoryJob)JobFactory.newJob(project.getProperty("env.TOP_LEVEL_JOB_NAME"), project.getProperty("env.CI_TEST_SUITE"));
+
+				List batchNames = new ArrayList();
+
+				String branchName = repositoryJob.getBranchName();
+
+				StringBuilder sb = new StringBuilder();
+
+				if (repositoryJob instanceof PortalRepositoryJob) {
+					PortalRepositoryJob portalRepositoryJob = (PortalRepositoryJob)repositoryJob;
+
+					for (String batchName : portalRepositoryJob.getBatchNames()) {
+						if (batchName.contains("plugins-gulp-")) {
+							continue;
+						}
+
+						BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(batchName, portalRepositoryJob);
+
+						int axisCount = batchTestClassGroup.getAxisCount();
+
+						/*System.out.println();
+						System.out.println("##");
+						System.out.println("## " + batchName);
+						System.out.println("## " + batchTestClassGroup);
+						System.out.println("## " + axisCount);
+						System.out.println("##");
+						System.out.println();*/
+
+						String propertyName = null;
+						String propertyValue = null;
+
+						if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
+							FunctionalBatchTestClassGroup functionalBatchTestClassGroup = (FunctionalBatchTestClassGroup)batchTestClassGroup;
+
+							String relevantTestBatchRunPropertyQuery = functionalBatchTestClassGroup.getRelevantTestBatchRunPropertyQuery();
+
+							if (relevantTestBatchRunPropertyQuery != null) {
+								batchNames.add(batchName);
+
+								propertyName = "test.batch.run.property.query[" + batchName + "]";
+								propertyValue = relevantTestBatchRunPropertyQuery;
+							}
+						}
+						else if (axisCount > 0) {
+							batchNames.add(batchName);
+
+							propertyName = "test.batch.size[" + batchName + "]";
+							propertyValue = Integer.toString(axisCount);
+
+							for (int i = 0; i < axisCount; i++) {
+								AxisTestClassGroup axisTestClassGroups = batchTestClassGroup.getAxisTestClassGroup(i);
+
+								//System.out.println(axisTestClassGroups);
+
+								for (BaseTestClass baseTestClass : axisTestClassGroups.getTestClasses()) {
+									// System.out.println("\t" + baseTestClass.getTestMethods().size() + " " + baseTestClass.getFile());
+
+									/*for (BaseTestMethod baseTestMethod : baseTestClass.getTestMethods()) {
+										System.out.println("\t\t" + baseTestMethod.getName());
+									}*/
+								}
+							}
+
+							//System.out.println();
+						}
+
+						if (propertyName != null) {
+							project.setProperty(propertyName, propertyValue);
+
+							sb.append(propertyName);
+							sb.append("=");
+							sb.append(propertyValue);
+							sb.append("\n");
+						}
+					}
+				}
+				else {
+					batchNames.addAll(repositoryJob.getBatchNames());
+				}
+
+				project.setProperty("portal.branch.name", branchName);
+				project.setProperty("test.batch.names", StringUtils.join(batchNames, ","));
+				project.setProperty("test.dist.types", StringUtils.join(repositoryJob.getDistTypes(), " "));
+				project.setProperty("test.properties.content", sb.toString());
+
+
+
+
+
+				}
+				catch (Throwable t) {
+					t.printStackTrace();
+				}
+			]]>
+		</beanshell>
+
+		<echo>${test.properties.content}</echo>
+	</target>
+
+	<property name="env.REPOSITORY_BRANCH_SHAS" value="5260fc3a67c91303ac04470aeaf93885b7cd76cf,5dbf691b52b32ce231dc2f769206b7f3e30a3cf8,fbe56dc362c444634a29fbee6ff691fa40606884,d8883ed5090a49b1ca14faa8419ee3e0a221663f" />
+	<property name="env.REPOSITORY_BRANCH_URL" value="https://github.com/liferay/liferay-portal/tree/master" />
+	<!-- <property name="env.FAILED_AXIS_BUILD_URL" value="https://test-1-1.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=18,label_exp=!master/207483/" /> -->
+	<!-- <property name="env.FAILED_AXIS_BUILD_URL" value="https://test-1-6.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/213566/" /> -->
+	<property name="env.FAILED_AXIS_BUILD_URL" value="https://test-1-6.liferay.com/job/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/213580/" />
+	<property name="env.FAILED_TESTS_ONLY" value="true" />
+
+	<target name="two">
+		<!--
+
+
+
+		-->
+
+		<echo>REPOSITORY_BRANCH_SHAS=${env.REPOSITORY_BRANCH_SHAS}</echo>
+		<echo>REPOSITORY_BRANCH_URL=${env.REPOSITORY_BRANCH_URL}</echo>
+		<echo>FAILED_AXIS_BUILD_URL=${env.FAILED_AXIS_BUILD_URL}</echo>
+		<echo>FAILED_TESTS_ONLY=${env.FAILED_TESTS_ONLY}</echo>
+
+
+		<beanshell>
+			<![CDATA[
+				try {
+
+
+
+				String[] repositoryBranchSHAs = project.getProperty("env.REPOSITORY_BRANCH_SHAS").split(",");
+				String repositoryBranchURL = project.getProperty("env.REPOSITORY_BRANCH_URL");
+				String failedAxisBuildURL = project.getProperty("env.FAILED_AXIS_BUILD_URL");
+				Boolean failedTestSuite = Boolean.valueOf(project.getProperty("env.FAILED_TESTS_ONLY"));
+
+				import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+				import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+				import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+				import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
+
+				BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(failedAxisBuildURL);
+
+				int axisCount = batchTestClassGroup.getAxisCount();
+
+				for (int i = 0; i < axisCount; i++) {
+					AxisTestClassGroup axisTestClassGroup = batchTestClassGroup.getAxisTestClassGroup(i);
+
+					System.out.println(axisTestClassGroup + " " + axisTestClassGroup.getTestClassFiles().size());
+
+					List testClassFiles = axisTestClassGroup.getTestClassFiles();
+
+					for (File testClassFile : testClassFiles) {
+						System.out.println("* " + testClassFile);
+					}
+				}
+
+
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			]]>
+		</beanshell>
+	</target>
+</project>

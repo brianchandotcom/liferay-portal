@@ -71,7 +71,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (deletedContentsMap.isEmpty()) {
 			return JSPSourceUtil.addIncludedAndReferencedFileNames(
-				fileNames, new HashSet<String>(), contentsMap, false);
+				fileNames, new HashSet<String>(), contentsMap, true);
 		}
 
 		contentsMap.putAll(deletedContentsMap);

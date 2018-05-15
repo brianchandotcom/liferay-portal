@@ -12,24 +12,30 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.permission;
+package com.liferay.message.boards.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.DynamicInheritancePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
+import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Dictionary;
@@ -42,22 +48,33 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Preston Crary
  */
 @Component(immediate = true)
-public class MBCategoryPermissionRegistrar {
+public class MBMessagePermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("model.class.name", MBCategory.class.getName());
+		properties.put("model.class.name", MBMessage.class.getName());
 
 		_serviceRegistration = bundleContext.registerService(
 			ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
-				MBCategory.class, MBCategory::getCategoryId,
-				_mbCategoryLocalService::getCategory,
+				MBMessage.class, MBMessage::getMessageId,
+				(Long resourcePrimKey) -> {
+					MBThread mbThread = _mbThreadLocalService.fetchThread(
+						resourcePrimKey);
+
+					if (mbThread == null) {
+						return _mbMessageLocalService.getMessage(
+							resourcePrimKey);
+					}
+
+					return _mbMessageLocalService.getMessage(
+						mbThread.getRootMessageId());
+				},
 				_portletResourcePermission,
 				(modelResourcePermission, consumer) -> {
 					consumer.accept(
@@ -74,21 +91,18 @@ public class MBCategoryPermissionRegistrar {
 					consumer.accept(
 						new StagedModelPermissionLogic<>(
 							_stagingPermission, MBPortletKeys.MESSAGE_BOARDS,
-							MBCategory::getCategoryId));
+							MBMessage::getMessageId));
+					consumer.accept(
+						new WorkflowedModelPermissionLogic<>(
+							_workflowPermission, modelResourcePermission,
+							_groupLocalService, MBMessage::getMessageId));
 
 					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 						consumer.accept(
 							new DynamicInheritancePermissionLogic<>(
-								modelResourcePermission,
+								_mbCategoryModelResourcePermission,
 								_getFetchParentFunction(), false));
 					}
-				},
-				actionId -> {
-					if (ActionKeys.ADD_CATEGORY.equals(actionId)) {
-						return ActionKeys.ADD_SUBCATEGORY;
-					}
-
-					return actionId;
 				}),
 			properties);
 	}
@@ -98,17 +112,20 @@ public class MBCategoryPermissionRegistrar {
 		_serviceRegistration.unregister();
 	}
 
-	private UnsafeFunction<MBCategory, MBCategory, PortalException>
+	private UnsafeFunction<MBMessage, MBCategory, PortalException>
 		_getFetchParentFunction() {
 
-		return category -> {
-			long categoryId = category.getParentCategoryId();
+		return message -> {
+			long categoryId = message.getCategoryId();
 
-			if (MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID == categoryId) {
+			if ((MBCategoryConstants.DISCUSSION_CATEGORY_ID == categoryId) ||
+				(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID ==
+					categoryId)) {
+
 				return null;
 			}
 
-			if (category.isInTrash()) {
+			if (message.isInTrash()) {
 				return _mbCategoryLocalService.fetchMBCategory(categoryId);
 			}
 
@@ -117,10 +134,25 @@ public class MBCategoryPermissionRegistrar {
 	}
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private MBBanLocalService _mbBanLocalService;
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_mbCategoryModelResourcePermission;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference(target = "(resource.name=" + MBConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
@@ -129,5 +161,8 @@ public class MBCategoryPermissionRegistrar {
 
 	@Reference
 	private StagingPermission _stagingPermission;
+
+	@Reference
+	private WorkflowPermission _workflowPermission;
 
 }

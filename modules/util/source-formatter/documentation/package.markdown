@@ -61,3 +61,15 @@ If you need some classes or default implementation for an `-api` module create
 another module ending in `-impl`, `-service`, or `-web`. If a class in the
 `-api` module cannot function without the `internal` package move it to a
 different module as well. If needed, replace the class with an interface.
+
+#### Classes extending, implementing or using kernel classes
+
+It's best to mirror the package structure of kernel when possible to make
+classes easier to find.
+
+#### Example
+
+Say there is a interface in kernel with the package
+`com.liferay.portal.kernel.a.b.c` and we're implementing the class in blogs
+service. Then the best place to put the class would be
+`com.liferay.blogs.internal.a.b.c`.

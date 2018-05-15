@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaPackagePathCheck" files="modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/internal/permission/MBCategoryPermissionRegistrar\.java" />
-		<suppress checks="JavaPackagePathCheck" files="modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/internal/permission/MBMessagePermissionRegistrar\.java" />
-		<suppress checks="JavaPackagePathCheck" files="modules/apps/message-boards/message-boards-service/src/main/java/com/liferay/message/boards/internal/permission/MBPortletPermissionRegistrar\.java" />
-	</source-check>
-</suppressions>

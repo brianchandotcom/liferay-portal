@@ -19,6 +19,7 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBBanLocalServiceUtil;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageServiceUtil;
@@ -27,14 +28,20 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -101,8 +108,12 @@ public class MBMessageServiceTest {
 
 		_group = GroupTestUtil.addGroup();
 
+		_users = new User[ServiceTestUtil.THREAD_COUNT];
+
 		for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
-			UserTestUtil.addUser(_group.getGroupId());
+			User user = UserTestUtil.addUser(_group.getGroupId());
+
+			_users[i] = user;
 		}
 
 		ServiceContext serviceContext =
@@ -119,18 +130,17 @@ public class MBMessageServiceTest {
 			inUseSSL, inUserName, inPassword, inReadInterval, outEmailAddress,
 			outCustom, outServerName, outServerPort, outUseSSL, outUserName,
 			outPassword, allowAnonymous, mailingListActive, serviceContext);
-
-		_userIds = UserLocalServiceUtil.getGroupUserIds(_group.getGroupId());
 	}
 
 	@Test
 	public void testAddMessagesConcurrently() throws Exception {
-		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_userIds.length];
+		DoAsUserThread[] doAsUserThreads = new DoAsUserThread[_users.length];
 
 		for (int i = 0; i < doAsUserThreads.length; i++) {
 			String subject = "Test Message " + i;
 
-			doAsUserThreads[i] = new AddMessageThread(_userIds[i], subject);
+			doAsUserThreads[i] = new AddMessageThread(
+				_users[i].getUserId(), subject);
 		}
 
 		try (CaptureAppender captureAppender1 =
@@ -228,9 +238,60 @@ public class MBMessageServiceTest {
 		}
 
 		Assert.assertTrue(
-			"Only " + successCount + " out of " + _userIds.length +
+			"Only " + successCount + " out of " + _users.length +
 				" threads added messages successfully",
-			successCount == _userIds.length);
+			successCount == _users.length);
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testBannedUserCannotAddMessageInCategory() throws Exception {
+		User user = _users[0];
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		MBBanLocalServiceUtil.addBan(
+			TestPropsValues.getUserId(), user.getUserId(), serviceContext);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
+
+			MBMessageServiceUtil.addMessage(
+				_group.getGroupId(), _category.getCategoryId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				MBMessageConstants.DEFAULT_FORMAT, new ArrayList<>(), false,
+				0.0, false, serviceContext);
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testBannedUserCannotAddRootMessage() throws Exception {
+		User user = _users[0];
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		MBBanLocalServiceUtil.addBan(
+			TestPropsValues.getUserId(), user.getUserId(), serviceContext);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
+
+			MBMessageServiceUtil.addMessage(
+				_group.getGroupId(),
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				MBMessageConstants.DEFAULT_FORMAT, new ArrayList<>(), false,
+				0.0, false, serviceContext);
+		}
 	}
 
 	private MBCategory _category;
@@ -238,7 +299,8 @@ public class MBMessageServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private long[] _userIds;
+	@DeleteAfterTestRun
+	private User[] _users;
 
 	private class AddMessageThread extends DoAsUserThread {
 

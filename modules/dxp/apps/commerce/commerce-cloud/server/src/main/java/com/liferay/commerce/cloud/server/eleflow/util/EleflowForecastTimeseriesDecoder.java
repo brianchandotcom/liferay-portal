@@ -15,7 +15,7 @@
 package com.liferay.commerce.cloud.server.eleflow.util;
 
 import com.liferay.commerce.cloud.server.eleflow.model.EleflowForecastTimeseries;
-import com.liferay.commerce.cloud.server.model.ForecastItem;
+import com.liferay.commerce.cloud.server.model.ForecastValue;
 
 import java.util.function.Function;
 
@@ -23,24 +23,24 @@ import java.util.function.Function;
  * @author Andrea Di Giorgi
  */
 public class EleflowForecastTimeseriesDecoder
-	implements Function<EleflowForecastTimeseries, ForecastItem> {
+	implements Function<EleflowForecastTimeseries, ForecastValue> {
 
 	@Override
-	public ForecastItem apply(
+	public ForecastValue apply(
 		EleflowForecastTimeseries eleflowForecastTimeseries) {
 
-		ForecastItem forecastItem = new ForecastItem();
+		ForecastValue forecastValue = new ForecastValue();
 
-		forecastItem.setLowerValue(
+		forecastValue.setLowerValue(
 			EleflowUtil.getString(eleflowForecastTimeseries.getLower()));
-		forecastItem.setTime(
+		forecastValue.setTime(
 			EleflowUtil.getTime(eleflowForecastTimeseries.getDate()));
-		forecastItem.setUpperValue(
+		forecastValue.setUpperValue(
 			EleflowUtil.getString(eleflowForecastTimeseries.getUpper()));
-		forecastItem.setValue(
+		forecastValue.setValue(
 			EleflowUtil.getString(eleflowForecastTimeseries.getValue()));
 
-		return forecastItem;
+		return forecastValue;
 	}
 
 }

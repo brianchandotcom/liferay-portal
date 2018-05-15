@@ -123,12 +123,7 @@ public class AssetVocabularyStagedModelDataHandler
 
 		String displayName = referenceElement.attributeValue("display-name");
 
-		try {
-			return validateMissingReference(uuid, groupId, displayName);
-		}
-		catch (Exception e) {
-			return false;
-		}
+		return validateMissingReference(uuid, groupId, displayName);
 	}
 
 	protected ServiceContext createServiceContext(

@@ -90,7 +90,13 @@
 		<attribute>
 			<description>A URL to the content being shared.</description>
 			<name>url</name>
-			<required>true</required>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A PortletURL to the content being shared.</description>
+			<name>urlImpl</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

@@ -14,13 +14,19 @@
 
 package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarksRegistryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -96,6 +102,10 @@ public class SocialBookmarksTag extends IncludeTag {
 		_url = url;
 	}
 
+	public void setUrlImpl(PortletURL urlImpl) {
+		_urlImpl = urlImpl;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -108,6 +118,7 @@ public class SocialBookmarksTag extends IncludeTag {
 		_title = null;
 		_types = null;
 		_url = null;
+		_urlImpl = null;
 	}
 
 	@Override
@@ -142,6 +153,24 @@ public class SocialBookmarksTag extends IncludeTag {
 
 		request.setAttribute("liferay-social-bookmarks:bookmarks:types", types);
 
+		if ((_url == null) && (_urlImpl == null)) {
+			throw new IllegalArgumentException();
+		}
+
+		if (_url == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			try {
+				_url = PortalUtil.getCanonicalURL(
+					_urlImpl.toString(), themeDisplay,
+					themeDisplay.getLayout());
+			}
+			catch (PortalException pe) {
+				throw new RuntimeException(pe);
+			}
+		}
+
 		request.setAttribute("liferay-social-bookmarks:bookmarks:url", _url);
 	}
 
@@ -155,5 +184,6 @@ public class SocialBookmarksTag extends IncludeTag {
 	private String _title;
 	private String[] _types;
 	private String _url;
+	private PortletURL _urlImpl;
 
 }

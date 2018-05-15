@@ -5,7 +5,7 @@
 	<tlib-version>1.0</tlib-version>
 	<jsp-version>1.1</jsp-version>
 	<short-name>portlet</short-name>
-	<uri>http://xmlns.jcp.org/portlet_3_0</uri>
+	<uri>http://java.sun.com/portlet_2_0</uri>
 	<tag>
 		<name>actionURL</name>
 		<tag-class>com.liferay.taglib.portlet.ActionURLTag</tag-class>
@@ -65,11 +65,6 @@
 		<attribute>
 			<name>name</name>
 			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>type</name>
-			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

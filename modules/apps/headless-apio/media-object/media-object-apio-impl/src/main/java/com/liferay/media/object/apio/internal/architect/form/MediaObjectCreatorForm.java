@@ -38,8 +38,6 @@ public class MediaObjectCreatorForm {
 			"description", MediaObjectCreatorForm::setDescription
 		).addRequiredFile(
 			"binaryFile", MediaObjectCreatorForm::setBinaryFile
-		).addRequiredLong(
-			"repositoryId", MediaObjectCreatorForm::setRepositoryId
 		).addRequiredString(
 			"sourceFileName", MediaObjectCreatorForm::setSourceFileName
 		).addRequiredString(
@@ -57,10 +55,6 @@ public class MediaObjectCreatorForm {
 
 	public String getDescription() {
 		return _description;
-	}
-
-	public long getRepositoryId() {
-		return _repositoryId;
 	}
 
 	public String getSourceFileName() {
@@ -83,10 +77,6 @@ public class MediaObjectCreatorForm {
 		_description = description;
 	}
 
-	public void setRepositoryId(long repositoryId) {
-		_repositoryId = repositoryId;
-	}
-
 	public void setSourceFileName(String sourceFileName) {
 		_sourceFileName = sourceFileName;
 	}
@@ -98,7 +88,6 @@ public class MediaObjectCreatorForm {
 	private BinaryFile _binaryFile;
 	private String _changelog;
 	private String _description;
-	private long _repositoryId;
 	private String _sourceFileName;
 	private String _title;
 

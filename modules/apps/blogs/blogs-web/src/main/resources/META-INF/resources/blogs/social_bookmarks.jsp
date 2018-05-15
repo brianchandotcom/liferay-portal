@@ -20,7 +20,7 @@
 BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
 %>
 
-<portlet:renderURL var="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
+<liferay-portlet:renderURL varImpl="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 
 	<c:choose>
@@ -31,7 +31,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</c:otherwise>
 	</c:choose>
-</portlet:renderURL>
+</liferay-portlet:renderURL>
 
 <liferay-social-bookmarks:bookmarks
 	className="<%= BlogsEntry.class.getName() %>"
@@ -40,5 +40,5 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entr
 	target="_blank"
 	title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
 	types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
-	url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, layout) %>"
+	urlImpl="<%= bookmarkURL %>"
 />

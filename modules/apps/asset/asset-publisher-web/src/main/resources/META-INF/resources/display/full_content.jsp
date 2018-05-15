@@ -149,7 +149,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				target="_blank"
 				title="<%= title %>"
 				types="<%= assetPublisherDisplayContext.getSocialBookmarksTypes() %>"
-				url="<%= PortalUtil.getCanonicalURL(viewFullContentURL.toString(), themeDisplay, layout) %>"
+				urlImpl="<%= viewFullContentURL %>"
 			/>
 		</div>
 

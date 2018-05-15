@@ -113,7 +113,7 @@ if (siteNavigationMenu != null) {
 					>
 						<div id="<portlet:namespace />customDisplayOptions">
 							<aui:row>
-								<aui:col width="<%= 80 %>">
+								<aui:col width="<%= 75 %>">
 									<aui:select id="rootMenuItemType" label="start-with-menu-items-in" name="preferences--rootMenuItemType--" value="<%= rootMenuItemType %>">
 										<aui:option label="level" value="absolute" />
 										<aui:option label="level-relative-to-the-current-menu-item" value="relative" />
@@ -121,7 +121,7 @@ if (siteNavigationMenu != null) {
 									</aui:select>
 								</aui:col>
 
-								<aui:col width="<%= 20 %>">
+								<aui:col width="<%= 25 %>">
 									<div class="mt-4 <%= rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemLevel">
 										<aui:select label="" name="preferences--rootMenuItemLevel--">
 

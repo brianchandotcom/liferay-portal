@@ -119,6 +119,14 @@ public class UADAnonymizerHelper {
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
+		anonymousUser.setComments(
+			StringBundler.concat(
+				"This user is automatically created by the UAD application. ",
+				"Application data anonymized by Personal Data Erasure will be ",
+				"assigned to this user."));
+
+		_userLocalService.updateUser(anonymousUser);
+
 		_userLocalService.updateStatus(
 			anonymousUser.getUserId(), WorkflowConstants.STATUS_INACTIVE,
 			new ServiceContext());

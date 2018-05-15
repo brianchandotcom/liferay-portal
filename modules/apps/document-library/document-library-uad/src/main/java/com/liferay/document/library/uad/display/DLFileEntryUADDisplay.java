@@ -34,6 +34,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFileEntryUADDisplay extends BaseDLFileEntryUADDisplay {
 
 	@Override
+	public String[] getColumnFieldNames() {
+		return new String[] {"fileName", "description"};
+	}
+
+	@Override
 	public String getEditURL(
 			DLFileEntry dlFileEntry,
 			LiferayPortletRequest liferayPortletRequest,

@@ -27,12 +27,12 @@ import io.vertx.ext.web.RoutingContext;
 /**
  * @author Andrea Di Giorgi
  */
-public class PutForecastConfigurationHandler
+public class PostForecastConfigurationHandler
 	implements Handler<RoutingContext> {
 
 	public static final String PATH = GetForecastConfigurationHandler.PATH;
 
-	public PutForecastConfigurationHandler(
+	public PostForecastConfigurationHandler(
 		ForecastConfigurationService forecastSchedulerService) {
 
 		_forecastConfigurationService = forecastSchedulerService;

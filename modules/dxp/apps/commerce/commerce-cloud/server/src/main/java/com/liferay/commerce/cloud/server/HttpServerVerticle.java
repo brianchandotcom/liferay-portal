@@ -20,8 +20,8 @@ import com.liferay.commerce.cloud.server.handler.ActiveProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.GetForecastConfigurationHandler;
 import com.liferay.commerce.cloud.server.handler.GetForecastsHandler;
 import com.liferay.commerce.cloud.server.handler.GetProjectHandler;
+import com.liferay.commerce.cloud.server.handler.PostForecastConfigurationHandler;
 import com.liferay.commerce.cloud.server.handler.ProjectAuthHandler;
-import com.liferay.commerce.cloud.server.handler.PutForecastConfigurationHandler;
 import com.liferay.commerce.cloud.server.handler.PutForecastOrdersHandler;
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
@@ -132,12 +132,12 @@ public class HttpServerVerticle extends AbstractVerticle {
 		route.produces(ContentTypes.APPLICATION_JSON);
 	}
 
-	private void _addRoutePutForecastConfiguration(
+	private void _addRoutePostForecastConfiguration(
 		Router router, ProjectAuthHandler projectAuthHandler,
 		ActiveProjectAuthHandler activeProjectAuthHandler,
 		ForecastConfigurationService forecastConfigurationService) {
 
-		Route route = router.put(PutForecastConfigurationHandler.PATH);
+		Route route = router.post(PostForecastConfigurationHandler.PATH);
 
 		route.handler(BodyHandler.create());
 
@@ -146,7 +146,7 @@ public class HttpServerVerticle extends AbstractVerticle {
 		route.handler(activeProjectAuthHandler);
 
 		route.handler(
-			new PutForecastConfigurationHandler(forecastConfigurationService));
+			new PostForecastConfigurationHandler(forecastConfigurationService));
 
 		route.consumes(ContentTypes.APPLICATION_JSON);
 	}
@@ -203,12 +203,12 @@ public class HttpServerVerticle extends AbstractVerticle {
 			forecastService);
 		_addRouteGetProject(
 			router, projectAuthHandler, activeProjectAuthHandler);
+		_addRoutePostForecastConfiguration(
+			router, projectAuthHandler, activeProjectAuthHandler,
+			forecastConfigurationService);
 		_addRoutePutOrders(
 			router, projectAuthHandler, activeProjectAuthHandler,
 			forecastOrderService);
-		_addRoutePutForecastConfiguration(
-			router, projectAuthHandler, activeProjectAuthHandler,
-			forecastConfigurationService);
 
 		httpServer.requestHandler(router::accept);
 

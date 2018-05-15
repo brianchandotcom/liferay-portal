@@ -105,7 +105,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 			jsonObject.toJSONString(), ContentTypes.APPLICATION_JSON,
 			StringPool.UTF8);
 		options.setLocation(location);
-		options.setPut(true);
+		options.setPost(true);
 
 		executeRequest(options);
 	}

@@ -143,6 +143,13 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			return ProjectDirType.MODULE;
 		}
 
+		Path applicationPropertiesPath = dirPath.resolve(
+			"src/main/resources/application.properties");
+
+		if (Files.exists(applicationPropertiesPath)) {
+			return ProjectDirType.SPRING_BOOT;
+		}
+
 		if (Files.exists(dirPath.resolve("gulpfile.js"))) {
 			return ProjectDirType.THEME;
 		}
@@ -263,7 +270,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 
 	private static enum ProjectDirType {
 
-		ANT_PLUGIN, MODULE, THEME, UNKNOWN
+		ANT_PLUGIN, MODULE, SPRING_BOOT, THEME, UNKNOWN
 
 	}
 

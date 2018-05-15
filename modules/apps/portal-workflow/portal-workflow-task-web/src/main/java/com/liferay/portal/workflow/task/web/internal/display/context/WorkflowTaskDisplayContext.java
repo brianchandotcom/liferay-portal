@@ -226,6 +226,14 @@ public class WorkflowTaskDisplayContext {
 		};
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getCreateDate(WorkflowLog workflowLog) {
 		return _dateFormatDateTime.format(workflowLog.getCreateDate());
 	}
@@ -489,6 +497,50 @@ public class WorkflowTaskDisplayContext {
 		return searchableAssetsWorkflowHandlers;
 	}
 
+	public WorkflowTaskSearch getSearchContainer() throws PortalException {
+		boolean searchByUserRoles = isAssignedToMyRolesTabSelected();
+
+		WorkflowTaskSearch searchContainer = new WorkflowTaskSearch(
+			_liferayPortletRequest, getCurParam(searchByUserRoles),
+			getPortletURL());
+
+		DisplayTerms searchTerms = searchContainer.getDisplayTerms();
+
+		int total = WorkflowTaskManagerUtil.searchCount(
+			_workflowTaskRequestHelper.getCompanyId(),
+			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
+			getAssetType(searchTerms.getKeywords()), getCompleted(),
+			searchByUserRoles);
+
+		searchContainer.setTotal(total);
+
+		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
+			_workflowTaskRequestHelper.getCompanyId(),
+			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
+			getAssetType(searchTerms.getKeywords()), getCompleted(),
+			searchByUserRoles, searchContainer.getStart(),
+			searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+		searchContainer.setResults(results);
+
+		setSearchContainerEmptyResultsMessage(
+			searchContainer, searchByUserRoles, getCompleted());
+
+		return searchContainer;
+	}
+
+	public String getSearchURL() {
+		PortletURL portletURL = getPortletURL();
+
+		ThemeDisplay themeDisplay =
+			_workflowTaskRequestHelper.getThemeDisplay();
+
+		portletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+
+		return portletURL.toString();
+	}
+
 	public String getSortingURL() throws PortletException {
 		String orderByType = ParamUtil.getString(
 			_request, "orderByType", "asc");
@@ -642,22 +694,18 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(workflowTask.getName());
 	}
 
-	public WorkflowTaskSearch getTasksAssignedToMe() throws PortalException {
-		return searchTasks(false);
-	}
-
-	public WorkflowTaskSearch getTasksAssignedToMyRoles()
-		throws PortalException {
-
-		return searchTasks(true);
-	}
-
 	public Object getTaskUpdateMessageArguments(WorkflowLog workflowLog)
 		throws PortalException {
 
 		String actorName = getActorName(workflowLog);
 
 		return HtmlUtil.escape(actorName);
+	}
+
+	public int getTotalItems() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
 	}
 
 	public String getTransitionMessage(String transitionName) {
@@ -1094,38 +1142,6 @@ public class WorkflowTaskDisplayContext {
 		throws PortalException {
 
 		return getWorkflowInstance(workflowTask).getWorkflowContext();
-	}
-
-	protected WorkflowTaskSearch searchTasks(boolean searchByUserRoles)
-		throws PortalException {
-
-		WorkflowTaskSearch searchContainer = new WorkflowTaskSearch(
-			_liferayPortletRequest, getCurParam(searchByUserRoles),
-			getPortletURL());
-
-		DisplayTerms searchTerms = searchContainer.getDisplayTerms();
-
-		int total = WorkflowTaskManagerUtil.searchCount(
-			_workflowTaskRequestHelper.getCompanyId(),
-			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			getAssetType(searchTerms.getKeywords()), getCompleted(),
-			searchByUserRoles);
-
-		searchContainer.setTotal(total);
-
-		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
-			_workflowTaskRequestHelper.getCompanyId(),
-			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			getAssetType(searchTerms.getKeywords()), getCompleted(),
-			searchByUserRoles, searchContainer.getStart(),
-			searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-		searchContainer.setResults(results);
-
-		setSearchContainerEmptyResultsMessage(
-			searchContainer, searchByUserRoles, getCompleted());
-
-		return searchContainer;
 	}
 
 	protected void setSearchContainerEmptyResultsMessage(

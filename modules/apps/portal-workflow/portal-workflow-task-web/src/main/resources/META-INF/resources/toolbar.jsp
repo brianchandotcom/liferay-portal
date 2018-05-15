@@ -26,21 +26,6 @@ portletURL.setParameter("tabs1", tabs1);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="my-workflow-tasks" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-ui:search-form
-				page="/search.jsp"
-				servletContext="<%= application %>"
-			/>
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
-
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="nav-bar-workflow nav-tabs nav-tabs-default">
 		<portlet:renderURL var="viewAssignedToMeURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
@@ -59,8 +44,13 @@ portletURL.setParameter("tabs1", tabs1);
 </aui:nav-bar>
 
 <clay:management-toolbar
+	clearResultsURL="<%= workflowTaskDisplayContext.getClearResultsURL() %>"
 	filterDropdownItems="<%= workflowTaskDisplayContext.getFilterOptions() %>"
+	itemsTotal="<%= workflowTaskDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= workflowTaskDisplayContext.getSearchURL() %>"
+	searchContainerId="workflowTasks"
+	searchFormName="fm1"
 	selectable="<%= false %>"
 	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
 	sortingURL="<%= workflowTaskDisplayContext.getSortingURL() %>"

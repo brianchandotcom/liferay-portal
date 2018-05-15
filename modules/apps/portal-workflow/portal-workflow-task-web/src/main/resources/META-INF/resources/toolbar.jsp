@@ -54,4 +54,5 @@ portletURL.setParameter("tabs1", tabs1);
 	selectable="<%= false %>"
 	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
 	sortingURL="<%= workflowTaskDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= workflowTaskDisplayContext.getViewTypes() %>"
 />

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
@@ -752,6 +753,15 @@ public class WorkflowTaskDisplayContext {
 
 		return workflowHandler.getURLViewDiffs(
 			classPK, _liferayPortletRequest, _liferayPortletResponse);
+	}
+
+	public ViewTypeItemList getViewTypes() {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
+			{
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
 	}
 
 	public WindowState getWindowState() {

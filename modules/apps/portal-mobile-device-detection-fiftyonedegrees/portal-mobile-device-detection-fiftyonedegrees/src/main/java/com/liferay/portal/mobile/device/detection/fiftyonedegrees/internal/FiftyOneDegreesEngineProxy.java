@@ -116,7 +116,7 @@ public class FiftyOneDegreesEngineProxy {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private DataFileProvider _dataFileProvider;
+	private volatile DataFileProvider _dataFileProvider;
 
 	private Dataset _dataset;
 	private volatile FiftyOneDegreesConfiguration _fiftyOneDegreesConfiguration;

@@ -103,7 +103,6 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 			'click',
 			'.add-branch-action',
 			function(event) {
-
 				modalCommands.openSimpleInputModal(
 					{
 						dialogTitle: '<liferay-ui:message key="add-branch" />',

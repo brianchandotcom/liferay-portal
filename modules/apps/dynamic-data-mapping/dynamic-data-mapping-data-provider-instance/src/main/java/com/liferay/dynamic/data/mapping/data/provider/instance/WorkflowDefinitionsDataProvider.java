@@ -130,6 +130,6 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(proxy.bean=false)"
 	)
-	private WorkflowDefinitionManager _workflowDefinitionManager;
+	private volatile WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

@@ -15,34 +15,34 @@
 package com.liferay.user.groups.admin.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.groups.admin.uad.test.UserGroupUADTestHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class UserGroupUADExporterTest extends BaseUADExporterTestCase<UserGroup> {
+public class UserGroupUADExporterTest
+	extends BaseUADExporterTestCase<UserGroup> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -68,10 +68,13 @@ public class UserGroupUADExporterTest extends BaseUADExporterTestCase<UserGroup>
 		return _uadExporter;
 	}
 
-	@DeleteAfterTestRun
-	private final List<UserGroup> _userGroups = new ArrayList<UserGroup>();
-	@Inject
-	private UserGroupUADTestHelper _userGroupUADTestHelper;
 	@Inject(filter = "component.name=*.UserGroupUADExporter")
 	private UADExporter _uadExporter;
+
+	@DeleteAfterTestRun
+	private final List<UserGroup> _userGroups = new ArrayList<>();
+
+	@Inject
+	private UserGroupUADTestHelper _userGroupUADTestHelper;
+
 }

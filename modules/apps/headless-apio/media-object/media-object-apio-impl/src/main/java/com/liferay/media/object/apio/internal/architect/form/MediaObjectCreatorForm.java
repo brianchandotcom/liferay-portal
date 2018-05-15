@@ -39,7 +39,7 @@ public class MediaObjectCreatorForm {
 		).addRequiredFile(
 			"binaryFile", MediaObjectCreatorForm::setBinaryFile
 		).addRequiredString(
-			"sourceFileName", MediaObjectCreatorForm::setSourceFileName
+			"name", MediaObjectCreatorForm::setName
 		).addRequiredString(
 			"title", MediaObjectCreatorForm::setTitle
 		).build();
@@ -57,8 +57,8 @@ public class MediaObjectCreatorForm {
 		return _description;
 	}
 
-	public String getSourceFileName() {
-		return _sourceFileName;
+	public String getName() {
+		return _name;
 	}
 
 	public String getTitle() {
@@ -77,8 +77,8 @@ public class MediaObjectCreatorForm {
 		_description = description;
 	}
 
-	public void setSourceFileName(String sourceFileName) {
-		_sourceFileName = sourceFileName;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public void setTitle(String title) {
@@ -88,7 +88,7 @@ public class MediaObjectCreatorForm {
 	private BinaryFile _binaryFile;
 	private String _changelog;
 	private String _description;
-	private String _sourceFileName;
+	private String _name;
 	private String _title;
 
 }

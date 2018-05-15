@@ -124,7 +124,7 @@ public class MediaObjectNestedCollectionResource
 		ServiceContext serviceContext = new ServiceContext();
 		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
 
-		String sourceFileName = mediaObjectCreatorForm.getSourceFileName();
+		String sourceFileName = mediaObjectCreatorForm.getName();
 
 		String title = mediaObjectCreatorForm.getTitle();
 

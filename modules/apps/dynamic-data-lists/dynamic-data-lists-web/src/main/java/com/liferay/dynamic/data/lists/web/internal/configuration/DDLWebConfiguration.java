@@ -45,8 +45,8 @@ public interface DDLWebConfiguration {
 
 	@Meta.AD(
 		deflt = "list", name = "default-display-view",
-		optionLabels = {"List", "Descriptive"},
-		optionValues = {"list", "descriptive"}, required = false
+		optionLabels = {"%list", "%table"},
+		optionValues = {"descriptive", "list"}, required = false
 	)
 	public String defaultDisplayView();
 

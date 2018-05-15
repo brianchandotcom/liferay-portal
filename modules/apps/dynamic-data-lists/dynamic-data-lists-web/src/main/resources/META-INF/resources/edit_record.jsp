@@ -101,14 +101,12 @@ else {
 </portlet:actionURL>
 
 <c:if test="<%= record != null %>">
-	<liferay-frontend:management-bar>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				icon="info-circle"
-				label="info"
-			/>
-		</liferay-frontend:management-bar-buttons>
-	</liferay-frontend:management-bar>
+	<clay:management-toolbar
+		infoPanelId="infoPanelId"
+		namespace="<%= renderResponse.getNamespace() %>"
+		selectable="false"
+		showSearch="false"
+	/>
 </c:if>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">

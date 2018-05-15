@@ -48,8 +48,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -100,11 +98,8 @@ public class DDLDisplayPortlet extends MVCPortlet {
 
 			setDDLRecordSetRequestAttribute(renderRequest);
 
-			HttpServletRequest request = _portal.getHttpServletRequest(
-				renderRequest);
-
 			DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(
-				request, _ddl, _ddlRecordSetLocalService,
+				renderRequest, renderResponse, _ddl, _ddlRecordSetLocalService,
 				_ddlWebConfigurationActivator.getDDLWebConfiguration(),
 				_ddmDisplayRegistry, _ddmPermissionSupport,
 				_ddmTemplateLocalService, _storageEngine);

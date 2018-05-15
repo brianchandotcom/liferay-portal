@@ -14,6 +14,18 @@
 	display: none;
 }
 
+.lfr-ddl-content {
+	padding: 15px;
+
+	.sheet {
+		padding-bottom: 1.5em;
+
+		.taglib-page-iterator .lfr-pagination-buttons {
+			margin-top: 0.5em;
+		}
+	}
+}
+
 .portlet-dynamic-data-lists, .portlet-dynamic-data-lists-display {
 	.form-group.geolocation-field .button-holder .btn {
 		margin-top: 0;
@@ -54,13 +66,5 @@
 .portlet-dynamic-data-lists-display {
 	.view-records-container {
 		overflow: auto;
-	}
-
-	.icons-container .add-record-button-container {
-		float: left;
-	}
-
-	.icons-container .lfr-icon-actions {
-		float: right;
 	}
 }

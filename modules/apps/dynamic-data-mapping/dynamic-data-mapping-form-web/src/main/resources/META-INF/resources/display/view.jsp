@@ -257,9 +257,9 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 
 <c:if test="<%= ddmFormDisplayContext.isShowConfigurationIcon() %>">
 	<div class="icons-container lfr-meta-actions">
-		<div class="lfr-icon-actions">
+		<div class="btn-group lfr-icon-actions">
 			<liferay-ui:icon
-				cssClass="lfr-icon-action lfr-icon-action-configuration"
+				cssClass="btn btn-link"
 				iconCssClass="icon-cog"
 				label="<%= true %>"
 				message="select-form"

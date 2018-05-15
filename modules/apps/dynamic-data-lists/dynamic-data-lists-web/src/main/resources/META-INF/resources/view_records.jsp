@@ -17,152 +17,57 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String mvcPath = ParamUtil.getString(request, "mvcPath", "/view_record_set.jsp");
-
-String redirect = ParamUtil.getString(request, "redirect", portletDisplay.getURLBack());
-
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 DDLViewRecordsDisplayContext ddlViewRecordsDisplayContext = new DDLViewRecordsDisplayContext(liferayPortletRequest, liferayPortletResponse, formDDMTemplateId);
 
-DDLRecordSet recordSet = ddlViewRecordsDisplayContext.getDDLRecordSet();
-
-DDMStructure ddmStructure = ddlViewRecordsDisplayContext.getDDMStructure();
-
-boolean editable = ParamUtil.getBoolean(request, "editable", true);
-boolean hasDeletePermission = false;
-boolean hasUpdatePermission = false;
-boolean showAddRecordButton = false;
-
-if (editable || ddlDisplayContext.isAdminPortlet()) {
-	hasDeletePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.DELETE);
-	hasUpdatePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
-	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD);
-}
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", mvcPath);
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
-
-List<String> headerNames = new ArrayList<String>();
-
-List<DDMFormField> ddmFormfields = ddlViewRecordsDisplayContext.getDDMFormFields();
-
-for (DDMFormField ddmFormField : ddmFormfields) {
-	LocalizedValue label = ddmFormField.getLabel();
-
-	headerNames.add(label.getString(locale));
-}
-
-if (hasUpdatePermission) {
-	headerNames.add("status");
-	headerNames.add("modified-date");
-	headerNames.add("author");
-}
-
-headerNames.add(StringPool.BLANK);
-
-SearchContainer recordSearchContainer = new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(request, "no-x-records-were-found", HtmlUtil.escape(ddmStructure.getName(locale)), false));
-
-if (!user.isDefaultUser()) {
-	recordSearchContainer.setRowChecker(new EmptyOnClickRowChecker(renderResponse));
-}
-
-OrderByComparator<DDLRecord> orderByComparator = ddlViewRecordsDisplayContext.getDDLRecordOrderByComparator(ddlViewRecordsDisplayContext.getOrderByCol(), ddlViewRecordsDisplayContext.getOrderByType());
-
-recordSearchContainer.setOrderByCol(ddlViewRecordsDisplayContext.getOrderByCol());
-recordSearchContainer.setOrderByComparator(orderByComparator);
-recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType());
+PortletURL portletURL = ddlViewRecordsDisplayContext.getPortletURL();
 %>
 
-<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="addRecordURL">
-	<portlet:param name="mvcPath" value="/edit_record.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-	<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
-</portlet:renderURL>
+<c:if test="<%= ddlViewRecordsDisplayContext.isAdminPortlet() %>">
+	<clay:navigation-bar
+		inverted="<%= true %>"
+		navigationItems="<%= ddlViewRecordsDisplayContext.getNavigationItems() %>"
+	/>
+</c:if>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= !user.isDefaultUser() %>"
-	searchContainerId="ddlRecord"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= ddlViewRecordsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= ddlViewRecordsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "modified-date"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
-				<portlet:param name="mvcPath" value="<%= mvcPath %>" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-			</portlet:renderURL>
-
-			<aui:form action="<%= searchURL.toString() %>" name="fm1">
-				<liferay-ui:input-search
-					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-					markupView="lexicon"
-					name="<%= DisplayTerms.KEYWORDS %>"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<c:if test="<%= hasDeletePermission %>">
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>'
-				icon="trash"
-				label="delete"
-			/>
-		</liferay-frontend:management-bar-action-buttons>
-	</c:if>
-
-	<c:if test="<%= showAddRecordButton && ddlDisplayContext.isAdminPortlet() %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>'
-					url="<%= addRecordURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</liferay-frontend:management-bar-buttons>
-	</c:if>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	actionDropdownItems="<%= ddlViewRecordsDisplayContext.getActionItemsDropdownItems() %>"
+	clearResultsURL="<%= ddlViewRecordsDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= ddlViewRecordsDisplayContext.getCreationMenu() %>"
+	disabled="<%= ddlViewRecordsDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= ddlViewRecordsDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= ddlViewRecordsDisplayContext.getTotalItems() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= ddlViewRecordsDisplayContext.getSearchActionURL() %>"
+	searchContainerId="<%= ddlViewRecordsDisplayContext.getSearchContainerId() %>"
+	searchFormName="fm1"
+	selectable="<%= ddlViewRecordsDisplayContext.isSelectable() %>"
+	sortingOrder="<%= ddlViewRecordsDisplayContext.getOrderByType() %>"
+	sortingURL="<%= ddlViewRecordsDisplayContext.getSortingURL() %>"
+/>
 
 <div class="container-fluid-1280 view-records-container" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:input name="recordIds" type="hidden" />
 
 		<liferay-ui:search-container
-			id="ddlRecord"
-			searchContainer="<%= recordSearchContainer %>"
+			id="<%= ddlViewRecordsDisplayContext.getSearchContainerId() %>"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			searchContainer="<%= ddlViewRecordsDisplayContext.getSearch() %>"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/record_search_results.jspf" %>
-			</liferay-ui:search-container-results>
 
 			<%
+			List results = searchContainer.getResults();
 			List resultRows = searchContainer.getResultRows();
 
 			for (int i = 0; i < results.size(); i++) {
 				DDLRecord record = (DDLRecord)results.get(i);
+				List<DDMFormField> ddmFormfields = ddlViewRecordsDisplayContext.getDDMFormFields();
 
 				DDLRecordVersion recordVersion = record.getRecordVersion();
 
-				if (editable) {
+				if (ddlViewRecordsDisplayContext.isEditable()) {
 					recordVersion = record.getLatestRecordVersion();
 				}
 
@@ -172,10 +77,10 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 
 				row.setCssClass("entry-display-style");
 
-				row.setParameter("editable", String.valueOf(editable));
+				row.setParameter("editable", String.valueOf(ddlViewRecordsDisplayContext.isEditable()));
 				row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
-				row.setParameter("hasDeletePermission", String.valueOf(hasDeletePermission));
-				row.setParameter("hasUpdatePermission", String.valueOf(hasUpdatePermission));
+				row.setParameter("hasDeletePermission", String.valueOf(ddlViewRecordsDisplayContext.hasDeletePermission()));
+				row.setParameter("hasUpdatePermission", String.valueOf(ddlViewRecordsDisplayContext.hasUpdatePermission()));
 
 				PortletURL rowURL = renderResponse.createRenderURL();
 
@@ -183,7 +88,7 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 				rowURL.setParameter("version", recordVersion.getVersion());
-				rowURL.setParameter("editable", String.valueOf(editable));
+				rowURL.setParameter("editable", String.valueOf(ddlViewRecordsDisplayContext.isEditable()));
 				rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 				// Columns
@@ -196,7 +101,7 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 			<%
 				}
 
-				if (hasUpdatePermission) {
+				if (ddlViewRecordsDisplayContext.hasUpdatePermission()) {
 					row.addStatus(recordVersion.getStatus(), recordVersion.getStatusByUserId(), recordVersion.getStatusDate(), rowURL);
 					row.addDate(record.getModifiedDate(), rowURL);
 					row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion)), rowURL);

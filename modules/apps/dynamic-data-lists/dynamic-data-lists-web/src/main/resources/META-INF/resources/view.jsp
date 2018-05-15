@@ -17,18 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = ddlDisplayContext.getPortletURL();
 
-portletURL.setParameter("mvcPath", "/view.jsp");
-
-String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
-
-RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletURL);
+String displayStyle = ddlDisplayContext.getDisplayStyle();
 %>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/management_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -38,18 +34,12 @@ RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletUR
 		<liferay-ui:search-container
 			id="ddlRecordSet"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= recordSetSearch %>"
+			searchContainer="<%= ddlDisplayContext.getSearch() %>"
 		>
 
 			<%
-			RecordSetSearchTerms searchTerms = (RecordSetSearchTerms)searchContainer.getSearchTerms();
-
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 			%>
-
-			<liferay-ui:search-container-results>
-				<%@ include file="/record_set_search_results.jspf" %>
-			</liferay-ui:search-container-results>
 
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"

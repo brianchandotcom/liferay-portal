@@ -26,8 +26,6 @@ if (recordSet != null) {
 }
 %>
 
-<%@ include file="/view_selected_record_set_options.jspf" %>
-
 <c:choose>
 	<c:when test="<%= recordSet == null %>">
 		<div class="alert alert-info">
@@ -51,3 +49,5 @@ if (recordSet != null) {
 		</liferay-util:include>
 	</c:otherwise>
 </c:choose>
+
+<%@ include file="/view_selected_record_set_options.jspf" %>

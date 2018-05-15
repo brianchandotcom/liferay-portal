@@ -112,7 +112,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 								/>
 							</liferay-ui:search-container-row>
 
-							<div class="separator"><!-- --></div>
+							<div class="separator"></div>
 
 							<liferay-ui:search-iterator />
 						</liferay-ui:search-container>

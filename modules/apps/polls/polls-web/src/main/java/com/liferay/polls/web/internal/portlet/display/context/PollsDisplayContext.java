@@ -14,25 +14,40 @@
 
 package com.liferay.polls.web.internal.portlet.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.polls.model.PollsQuestion;
+import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.polls.util.comparator.PollsQuestionCreateDateComparator;
 import com.liferay.polls.util.comparator.PollsQuestionTitleComparator;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.polls.web.internal.portlet.display.context.util.PollsRequestHelper;
+import com.liferay.polls.web.internal.portlet.search.PollsQuestionSearch;
+import com.liferay.polls.web.internal.security.permission.resource.PollsPermission;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.function.Consumer;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Rafael Praxedes
@@ -40,23 +55,72 @@ import javax.portlet.RenderResponse;
 public class PollsDisplayContext {
 
 	public PollsDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_pollsRequestHelper = new PollsRequestHelper(renderRequest);
 	}
 
-	public PortletURL getBasePortletURL() throws PortalException {
-		PortletURL portletURL = _renderResponse.createRenderURL();
+	public String getClearResultsURL() throws PortletException {
+		PortletURL clearResultsURL = PortletURLUtil.clone(
+			getPortletURL(), _renderResponse);
 
-		String keywords = ParamUtil.getString(_renderRequest, "keywords");
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
-		if (Validator.isNotNull(keywords)) {
-			portletURL.setParameter("keywords", keywords);
+		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		if (!isShowAddPollButton()) {
+			return null;
 		}
 
-		return portletURL;
+		return new CreationMenu() {
+			{
+				HttpServletRequest request = _pollsRequestHelper.getRequest();
+
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/polls/edit_question.jsp", "redirect",
+							PortalUtil.getCurrentURL(request));
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "add-poll"));
+					});
+			}
+		};
+	}
+
+	public String getDisplayStyle() {
+		return "list";
+	}
+
+	public List<DropdownItem> getFilterItemsDropdownItems() {
+		HttpServletRequest request = _pollsRequestHelper.getRequest();
+
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public List<NavigationItem> getNavigationItems() {
@@ -85,24 +149,10 @@ public class PollsDisplayContext {
 		return ParamUtil.getString(_renderRequest, "orderByType", "desc");
 	}
 
-	public String[] getOrderColumns() {
-		return _ORDER_COLUMNS;
-	}
-
-	public String getPollsQuestionDisplayStyle() {
-		return _DISPLAY_VIEWS[0];
-	}
-
-	public String[] getPollsQuestionDisplayViews() {
-		return _DISPLAY_VIEWS;
-	}
-
-	public OrderByComparator<PollsQuestion>
-		getPollsQuestionOrderByComparator() {
+	public OrderByComparator<PollsQuestion> getPollsQuestionOrderByComparator(
+		String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
-		String orderByCol = getOrderByCol();
-		String orderByType = getOrderByType();
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
@@ -121,6 +171,169 @@ public class PollsDisplayContext {
 		return orderByComparator;
 	}
 
+	public PortletURL getPortletURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/polls/view.jsp");
+
+		String delta = ParamUtil.getString(_renderRequest, "delta");
+
+		if (Validator.isNotNull(delta)) {
+			portletURL.setParameter("delta", delta);
+		}
+
+		String displayStyle = getDisplayStyle();
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", displayStyle);
+		}
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		return portletURL;
+	}
+
+	public SearchContainer<?> getSearch() {
+		String displayStyle = getDisplayStyle();
+
+		PortletURL portletURL = getPortletURL();
+
+		portletURL.setParameter("displayStyle", displayStyle);
+
+		PollsQuestionSearch pollsQuestionSearch = new PollsQuestionSearch(
+			_renderRequest, portletURL);
+
+		String orderByCol = getOrderByCol();
+		String orderByType = getOrderByType();
+
+		OrderByComparator<PollsQuestion> orderByComparator =
+			getPollsQuestionOrderByComparator(orderByCol, orderByType);
+
+		pollsQuestionSearch.setOrderByCol(orderByCol);
+		pollsQuestionSearch.setOrderByComparator(orderByComparator);
+		pollsQuestionSearch.setOrderByType(orderByType);
+
+		if (pollsQuestionSearch.isSearch()) {
+			pollsQuestionSearch.setEmptyResultsMessage("no-polls-were-found");
+		}
+		else {
+			pollsQuestionSearch.setEmptyResultsMessage("there-are-no-polls");
+		}
+
+		setDDMPollSearchResults(pollsQuestionSearch);
+		setDDMPollSearchTotal(pollsQuestionSearch);
+
+		return pollsQuestionSearch;
+	}
+
+	public String getSearchActionURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/polls/view.jsp");
+
+		return portletURL.toString();
+	}
+
+	public String getSearchContainerId() {
+		return "poll";
+	}
+
+	public String getSortingURL() throws Exception {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			getPortletURL(), _renderResponse);
+
+		String orderByType = ParamUtil.getString(_renderRequest, "orderByType");
+
+		sortingURL.setParameter(
+			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getTotalItems() {
+		SearchContainer<?> searchContainer = getSearch();
+
+		return searchContainer.getTotal();
+	}
+
+	public boolean isDisabledManagementBar() {
+		if (hasResults()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isShowAddPollButton() {
+		return PollsPermission.contains(
+			_pollsRequestHelper.getPermissionChecker(),
+			_pollsRequestHelper.getScopeGroupId(), ActionKeys.ADD_QUESTION);
+	}
+
+	protected List<DropdownItem> getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+
+						dropdownItem.setHref(
+							getPortletURL(), "navigation", "all");
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_pollsRequestHelper.getRequest(), "all"));
+					});
+			}
+
+		};
+	}
+
+	protected String getKeywords() {
+		return ParamUtil.getString(_renderRequest, "keywords");
+	}
+
+	protected Consumer<DropdownItem> getOrderByDropdownItem(String orderByCol) {
+		return dropdownItem -> {
+			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
+			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
+			dropdownItem.setLabel(
+				LanguageUtil.get(_pollsRequestHelper.getRequest(), orderByCol));
+		};
+	}
+
+	protected List<DropdownItem> getOrderByDropdownItems() {
+		return new DropdownItemList() {
+
+			{
+				add(getOrderByDropdownItem("create-date"));
+				add(getOrderByDropdownItem("title"));
+			}
+
+		};
+	}
+
 	protected ThemeDisplay getThemeDisplay() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -128,10 +341,47 @@ public class PollsDisplayContext {
 		return themeDisplay;
 	}
 
+	protected boolean hasResults() {
+		if (getTotalItems() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void setDDMPollSearchResults(
+		PollsQuestionSearch pollsQuestionSearch) {
+
+		List<PollsQuestion> results = PollsQuestionLocalServiceUtil.search(
+			_pollsRequestHelper.getCompanyId(),
+			new long[] {_pollsRequestHelper.getScopeGroupId()}, getKeywords(),
+			pollsQuestionSearch.getStart(), pollsQuestionSearch.getEnd(),
+			pollsQuestionSearch.getOrderByComparator());
+
+		pollsQuestionSearch.setResults(results);
+	}
+
+	protected void setDDMPollSearchTotal(
+		PollsQuestionSearch pollsQuestionSearch) {
+
+		int total = PollsQuestionLocalServiceUtil.searchCount(
+			_pollsRequestHelper.getCompanyId(),
+			new long[] {_pollsRequestHelper.getScopeGroupId()}, getKeywords());
+
+		pollsQuestionSearch.setTotal(total);
+	}
+
 	private static final String[] _DISPLAY_VIEWS = {"list"};
 
-	private static final String[] _ORDER_COLUMNS = {"create-date", "title"};
-
+	private final PollsRequestHelper _pollsRequestHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 

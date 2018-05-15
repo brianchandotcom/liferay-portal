@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%
-total = PollsQuestionLocalServiceUtil.searchCount(company.getCompanyId(), new long[] {scopeGroupId}, searchContainer.getSearchTerms().getKeywords());
+package com.liferay.polls.web.internal.portlet.display.context.util;
 
-searchContainer.setTotal(total);
+import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.util.PortalUtil;
 
-results = PollsQuestionLocalServiceUtil.search(company.getCompanyId(), new long[] {scopeGroupId}, searchContainer.getSearchTerms().getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+import javax.portlet.RenderRequest;
 
-searchContainer.setResults(results);
-%>
+/**
+ * @author Pedro Queiroz
+ */
+public class PollsRequestHelper extends BaseRequestHelper {
+
+	public PollsRequestHelper(RenderRequest renderRequest) {
+		super(PortalUtil.getHttpServletRequest(renderRequest));
+	}
+
+}

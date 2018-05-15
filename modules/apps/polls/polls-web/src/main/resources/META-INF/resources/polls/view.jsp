@@ -16,12 +16,6 @@
 
 <%@ include file="/polls/init.jsp" %>
 
-<%
-PortletURL portletURL = pollsDisplayContext.getBasePortletURL();
-
-portletURL.setParameter("mvcRenderCommandName", "/polls/view");
-%>
-
 <liferay-util:include page="/polls/navigation_bar.jsp" servletContext="<%= application %>" />
 
 <liferay-util:include page="/polls/management_bar.jsp" servletContext="<%= application %>" />
@@ -32,15 +26,10 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 		<liferay-ui:error exception="<%= NoSuchChoiceException.class %>" message="please-select-an-option" />
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-entries-were-found"
-			iteratorURL="<%= portletURL %>"
-			orderByComparator="<%= pollsDisplayContext.getPollsQuestionOrderByComparator() %>"
-			searchTerms="<%= new DisplayTerms(renderRequest) %>"
+			cssClass="table-nowrap"
+			id="<%= pollsDisplayContext.getSearchContainerId() %>"
+			searchContainer="<%= pollsDisplayContext.getSearch() %>"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/polls/question_search_results.jspf" %>
-			</liferay-ui:search-container-results>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.polls.model.PollsQuestion"
 				modelVar="question"

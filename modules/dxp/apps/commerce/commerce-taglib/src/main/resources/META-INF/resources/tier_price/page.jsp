@@ -39,15 +39,15 @@ boolean truncateTable = false;
 					<th class="msrp-column table-cell-expand"><%= LanguageUtil.get(request, "msrp") %> (USD)</th>
 					<th class="discount-column table-cell-expand"><%= LanguageUtil.get(request, "discount") %> (%)</th>
 					<th class="savings-column table-cell-expand"><%= LanguageUtil.get(request, "savings") %> (USD)</th>
-					<th class="total-column table-cell-expand"><%= LanguageUtil.get(request, "total") %> (USD)</th>
+					<th class="table-cell-expand total-column"><%= LanguageUtil.get(request, "total") %> (USD)</th>
 				</thead>
+
 				<tbody>
+
 					<%
 					int index = 1;
 
 					for (CommerceTierPriceEntry commerceTierPriceEntry : commerceTierPriceEntries) {
-						CommerceMoney commerceMoney = commerceTierPriceEntry.getPriceMoney(commerceCurrencyId);
-
 						float msrp = commerceTierPriceEntry.getCommercePriceEntry().getPrice().floatValue();
 						float msrpTotal = msrp * commerceTierPriceEntry.getMinQuantity();
 
@@ -72,13 +72,14 @@ boolean truncateTable = false;
 							<td class="msrp-column table-cell-expand"><%= String.format("%.2f", msrpTotal) %></td>
 							<td class="discount-column table-cell-expand"><%= String.format("%.2f", discountPercent) %>%</td>
 							<td class="savings-column table-cell-expand"><%= String.format("%.2f", savings) %></td>
-							<td class="total-column table-cell-expand"><%= String.format("%.2f", total) %></td>
+							<td class="table-cell-expand total-column"><%= String.format("%.2f", total) %></td>
 						</tr>
 
 					<%
 						index++;
 					}
 					%>
+
 				</tbody>
 			</table>
 		</div>
@@ -86,6 +87,7 @@ boolean truncateTable = false;
 		<%
 		if (truncateTable) {
 		%>
+
 			<div class="commerce-tier-price-footer">
 				<button class="btn btn-link btn-sm commerce-tier-price-toggler" id="<%= tierPriceTogglerId %>">
 					<span class="view-more">
@@ -96,9 +98,11 @@ boolean truncateTable = false;
 					</span>
 				</button>
 			</div>
+
 		<%
 		}
 		%>
+
 	</div>
 
 	<script use="aui-base">
@@ -116,7 +120,7 @@ boolean truncateTable = false;
 
 		document.getElementById('<%= tierPriceTogglerId %>').addEventListener(
 			'click',
-			function (event) {
+			function(event) {
 				var currentTarget = event.currentTarget;
 
 				document.getElementById('<%= tierPriceId %>').classList.toggle('expand');

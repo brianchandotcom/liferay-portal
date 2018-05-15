@@ -924,13 +924,7 @@
 	</command>
 
 	<command name="viewDefaultMySubmissionsCP">
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publications requested by me." />
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publications requested by me." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no publications requested by me." />
 	</command>
 
 	<command name="viewDefaultMyWorkflowTasksCP">
@@ -960,13 +954,7 @@
 	</command>
 
 	<command name="viewDefaultWorkflowSubmissions">
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publication requests." />
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publication requests." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no publication requests." />
 	</command>
 
 	<command name="viewDefinition">

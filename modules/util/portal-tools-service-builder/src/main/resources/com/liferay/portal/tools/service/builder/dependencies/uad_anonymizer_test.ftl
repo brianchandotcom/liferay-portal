@@ -27,7 +27,6 @@ import org.junit.runner.RunWith;
 
 /**
  * @author ${author}
- * @generated
  */
 @RunWith(Arquillian.class)
 public class ${entity.name}UADAnonymizerTest extends BaseUADAnonymizerTestCase<${entity.name}> <#if entity.hasEntityColumn("statusByUserId")>implements WhenHasStatusByUserIdField </#if>{

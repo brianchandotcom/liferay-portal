@@ -43,18 +43,17 @@ public abstract class BaseUADExporterTestCase<T extends BaseModel> {
 
 	@Before
 	public void setUp() throws Exception {
-		_uadExporter = getUADExporter();
-		_user = UserTestUtil.addUser();
+		uadExporter = getUADExporter();
+		user = UserTestUtil.addUser();
 	}
 
 	@Test
 	public void testExport() throws Exception {
-		T baseModel = addBaseModel(_user.getUserId());
+		T baseModel = addBaseModel(user.getUserId());
 
-		Document document = _getExportDocument(baseModel);
+		Document document = getExportDocument(baseModel);
 
-		assertColumnValue(
-			document, "userId", String.valueOf(_user.getUserId()));
+		assertColumnValue(document, "userId", String.valueOf(user.getUserId()));
 		assertColumnValue(
 			document, getPrimaryKeyName(),
 			String.valueOf(baseModel.getPrimaryKeyObj()));
@@ -62,9 +61,9 @@ public abstract class BaseUADExporterTestCase<T extends BaseModel> {
 
 	@Test
 	public void testExportAll() throws Exception {
-		addBaseModel(_user.getUserId());
+		addBaseModel(user.getUserId());
 
-		File file = _uadExporter.exportAll(_user.getUserId());
+		File file = uadExporter.exportAll(user.getUserId());
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
@@ -81,12 +80,12 @@ public abstract class BaseUADExporterTestCase<T extends BaseModel> {
 			(WhenHasStatusByUserIdField)this;
 
 		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
-			TestPropsValues.getUserId(), _user.getUserId());
+			TestPropsValues.getUserId(), user.getUserId());
 
-		Document document = _getExportDocument(baseModel);
+		Document document = getExportDocument(baseModel);
 
 		assertColumnValue(
-			document, "statusByUserId", String.valueOf(_user.getUserId()));
+			document, "statusByUserId", String.valueOf(user.getUserId()));
 		assertColumnValue(
 			document, getPrimaryKeyName(),
 			String.valueOf(baseModel.getPrimaryKeyObj()));
@@ -105,12 +104,8 @@ public abstract class BaseUADExporterTestCase<T extends BaseModel> {
 		Assert.assertEquals(expectedColumnValue, columnNode.getText());
 	}
 
-	protected abstract String getPrimaryKeyName();
-
-	protected abstract UADExporter<T> getUADExporter();
-
-	private Document _getExportDocument(T baseModel) throws Exception {
-		byte[] bytes = _uadExporter.export(baseModel);
+	protected Document getExportDocument(T baseModel) throws Exception {
+		byte[] bytes = uadExporter.export(baseModel);
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			bytes);
@@ -118,9 +113,13 @@ public abstract class BaseUADExporterTestCase<T extends BaseModel> {
 		return SAXReaderUtil.read(byteArrayInputStream);
 	}
 
-	private UADExporter<T> _uadExporter;
+	protected abstract String getPrimaryKeyName();
+
+	protected abstract UADExporter<T> getUADExporter();
+
+	protected UADExporter<T> uadExporter;
 
 	@DeleteAfterTestRun
-	private User _user;
+	protected User user;
 
 }

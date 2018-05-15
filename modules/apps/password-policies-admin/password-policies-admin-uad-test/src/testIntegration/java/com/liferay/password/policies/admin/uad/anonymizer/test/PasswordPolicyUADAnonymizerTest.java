@@ -15,9 +15,7 @@
 package com.liferay.password.policies.admin.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.password.policies.admin.uad.test.PasswordPolicyUADTestHelper;
-
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
@@ -25,28 +23,28 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
-public class PasswordPolicyUADAnonymizerTest extends BaseUADAnonymizerTestCase<PasswordPolicy> {
+public class PasswordPolicyUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<PasswordPolicy> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -54,15 +52,17 @@ public class PasswordPolicyUADAnonymizerTest extends BaseUADAnonymizerTestCase<P
 	}
 
 	@Override
-	protected PasswordPolicy addBaseModel(long userId)
-		throws Exception {
+	protected PasswordPolicy addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected PasswordPolicy addBaseModel(long userId,
-		boolean deleteAfterTestRun) throws Exception {
-		PasswordPolicy passwordPolicy = _passwordPolicyUADTestHelper.addPasswordPolicy(userId);
+	protected PasswordPolicy addBaseModel(
+			long userId, boolean deleteAfterTestRun)
+		throws Exception {
+
+		PasswordPolicy passwordPolicy =
+			_passwordPolicyUADTestHelper.addPasswordPolicy(userId);
 
 		if (deleteAfterTestRun) {
 			_passwordPolicies.add(passwordPolicy);
@@ -74,6 +74,7 @@ public class PasswordPolicyUADAnonymizerTest extends BaseUADAnonymizerTestCase<P
 	@Override
 	protected void deleteBaseModels(List<PasswordPolicy> baseModels)
 		throws Exception {
+
 		_passwordPolicyUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -85,12 +86,15 @@ public class PasswordPolicyUADAnonymizerTest extends BaseUADAnonymizerTestCase<P
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		PasswordPolicy passwordPolicy = _passwordPolicyLocalService.getPasswordPolicy(baseModelPK);
+
+		PasswordPolicy passwordPolicy =
+			_passwordPolicyLocalService.getPasswordPolicy(baseModelPK);
 
 		String userName = passwordPolicy.getUserName();
 
 		if ((passwordPolicy.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -99,7 +103,9 @@ public class PasswordPolicyUADAnonymizerTest extends BaseUADAnonymizerTestCase<P
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_passwordPolicyLocalService.fetchPasswordPolicy(baseModelPK) == null) {
+		if (_passwordPolicyLocalService.fetchPasswordPolicy(baseModelPK) ==
+				null) {
+
 			return true;
 		}
 
@@ -107,11 +113,15 @@ public class PasswordPolicyUADAnonymizerTest extends BaseUADAnonymizerTestCase<P
 	}
 
 	@DeleteAfterTestRun
-	private final List<PasswordPolicy> _passwordPolicies = new ArrayList<PasswordPolicy>();
+	private final List<PasswordPolicy> _passwordPolicies = new ArrayList<>();
+
 	@Inject
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
 	@Inject
 	private PasswordPolicyUADTestHelper _passwordPolicyUADTestHelper;
+
 	@Inject(filter = "component.name=*.PasswordPolicyUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

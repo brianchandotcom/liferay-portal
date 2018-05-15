@@ -152,7 +152,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(type=annotation)"
 	)
-	private RequestScopeCheckerFilter _annotationRequestScopeChecker;
+	private volatile RequestScopeCheckerFilter _annotationRequestScopeChecker;
 
 	private BundleContext _bundleContext;
 
@@ -160,7 +160,7 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
 	)
-	private RequestScopeCheckerFilter _defaultRequestScopeChecker;
+	private volatile RequestScopeCheckerFilter _defaultRequestScopeChecker;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
@@ -175,13 +175,13 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private ScopeChecker _scopeChecker;
+	private volatile ScopeChecker _scopeChecker;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private ScopeContext _scopeContext;
+	private volatile ScopeContext _scopeContext;
 
 	@Reference
 	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;

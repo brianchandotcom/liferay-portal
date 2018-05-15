@@ -155,6 +155,6 @@ public class ThreadLocalScopeContextScopeChecker
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
+	private volatile OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
 
 }

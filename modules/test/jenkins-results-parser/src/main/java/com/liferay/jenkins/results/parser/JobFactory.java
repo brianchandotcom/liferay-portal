@@ -115,10 +115,10 @@ public class JobFactory {
 						moduleDir, "\\.lfrbuild-portal");
 
 				if (lfrBuildPortalFiles.isEmpty()) {
-					File gitRepoFile = new File(moduleDir, ".gitrepo");
+					File gitrepoFile = new File(moduleDir, ".gitrepo");
 
 					Properties properties =
-						JenkinsResultsParserUtil.getProperties(gitRepoFile);
+						JenkinsResultsParserUtil.getProperties(gitrepoFile);
 
 					String subrepositoryRemote = properties.getProperty(
 						"remote");

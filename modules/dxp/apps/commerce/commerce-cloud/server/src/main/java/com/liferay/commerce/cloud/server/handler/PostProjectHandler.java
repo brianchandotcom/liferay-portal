@@ -28,7 +28,7 @@ import io.vertx.ext.web.RoutingContext;
  */
 public class PostProjectHandler implements Handler<RoutingContext> {
 
-	public static final String PATH = "/projects/:projectId/";
+	public static final String PATH = GetProjectHandler.PATH;
 
 	public PostProjectHandler(ProjectService projectService) {
 		_projectService = projectService;

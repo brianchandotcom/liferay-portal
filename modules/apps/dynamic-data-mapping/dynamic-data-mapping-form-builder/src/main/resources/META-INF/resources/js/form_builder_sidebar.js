@@ -246,9 +246,15 @@ AUI.add(
 					_onClickDocument: function(event) {
 						var instance = this;
 
+						var clickedOnProductNav = false;
+
 						var productNavToogle = A.one('.control-menu-nav-item.active');
 
-						if (instance.get('open') && !productNavToogle.contains(event.target) && !instance.hasFocus(event.target)) {
+						if (productNavToogle) {
+							clickedOnProductNav = productNavToogle.contains(event.target);
+						}
+
+						if (instance.get('open') && !clickedOnProductNav && !instance.hasFocus(event.target)) {
 							instance.close();
 						}
 					},

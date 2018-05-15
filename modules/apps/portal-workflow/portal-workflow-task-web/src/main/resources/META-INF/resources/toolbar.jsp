@@ -59,6 +59,9 @@ portletURL.setParameter("tabs1", tabs1);
 </aui:nav-bar>
 
 <clay:management-toolbar
+	filterDropdownItems="<%= workflowTaskDisplayContext.getFilterOptions() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	selectable="<%= false %>"
+	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
+	sortingURL="<%= workflowTaskDisplayContext.getSortingURL() %>"
 />

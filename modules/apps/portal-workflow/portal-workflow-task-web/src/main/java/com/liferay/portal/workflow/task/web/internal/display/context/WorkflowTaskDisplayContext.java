@@ -18,6 +18,8 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
@@ -75,6 +77,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -286,6 +289,56 @@ public class WorkflowTaskDisplayContext {
 			HtmlUtil.escape(workflowTask.getName()));
 	}
 
+	public DropdownItemList getFilterOptions() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getFilterNavigationDropdownItem(
+											"all"));
+
+									add(
+										_getFilterNavigationDropdownItem(
+											"pending"));
+
+									add(
+										_getFilterNavigationDropdownItem(
+											"completed"));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(
+								_workflowTaskRequestHelper.getRequest(),
+								"filter"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getOrderByDropdownItem(
+											"last-activity-date"));
+
+									add(_getOrderByDropdownItem("due-date"));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(
+								_workflowTaskRequestHelper.getRequest(),
+								"order-by"));
+					});
+			}
+		};
+	}
+
 	public String getHeaderTitle(WorkflowTask workflowTask)
 		throws PortalException {
 
@@ -434,6 +487,25 @@ public class WorkflowTaskDisplayContext {
 		}
 
 		return searchableAssetsWorkflowHandlers;
+	}
+
+	public String getSortingURL() throws PortletException {
+		String orderByType = ParamUtil.getString(
+			_request, "orderByType", "asc");
+
+		LiferayPortletResponse response =
+			_workflowTaskRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = response.createRenderURL();
+
+		portletURL.setParameter(
+			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
+
+		portletURL.setParameter("tabs1", getTabs1());
+
+		portletURL.setParameter("orderByCol", getOrderByCol());
+
+		return portletURL.toString();
 	}
 
 	public String getState(WorkflowTask workflowTask) throws PortalException {
@@ -1088,6 +1160,35 @@ public class WorkflowTaskDisplayContext {
 				searchContainer.getEmptyResultsMessage() +
 					"-with-the-specified-search-criteria");
 		}
+	}
+
+	private Consumer<DropdownItem> _getFilterNavigationDropdownItem(
+		String navigation) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(Objects.equals(getNavigation(), navigation));
+
+			dropdownItem.setHref(
+				getPortletURL(), "navigation", navigation, "mvcPath",
+				"/view.jsp", "tabs1", getTabs1());
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_workflowTaskRequestHelper.getRequest(), navigation));
+
+		};
+	}
+
+	private Consumer<DropdownItem> _getOrderByDropdownItem(String orderByCol) {
+		return dropdownItem -> {
+			dropdownItem.setActive(Objects.equals(getOrderByCol(), orderByCol));
+
+			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_workflowTaskRequestHelper.getRequest(), orderByCol));
+		};
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};

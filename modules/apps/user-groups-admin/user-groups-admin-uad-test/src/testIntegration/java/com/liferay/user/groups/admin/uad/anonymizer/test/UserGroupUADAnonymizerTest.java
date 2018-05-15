@@ -15,7 +15,6 @@
 package com.liferay.user.groups.admin.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -23,28 +22,29 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.groups.admin.uad.test.UserGroupUADTestHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class UserGroupUADAnonymizerTest extends BaseUADAnonymizerTestCase<UserGroup> {
+public class UserGroupUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<UserGroup> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -59,6 +59,7 @@ public class UserGroupUADAnonymizerTest extends BaseUADAnonymizerTestCase<UserGr
 	@Override
 	protected UserGroup addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
+
 		UserGroup userGroup = _userGroupUADTestHelper.addUserGroup(userId);
 
 		if (deleteAfterTestRun) {
@@ -71,6 +72,7 @@ public class UserGroupUADAnonymizerTest extends BaseUADAnonymizerTestCase<UserGr
 	@Override
 	protected void deleteBaseModels(List<UserGroup> baseModels)
 		throws Exception {
+
 		_userGroupUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -82,12 +84,14 @@ public class UserGroupUADAnonymizerTest extends BaseUADAnonymizerTestCase<UserGr
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
+
 		UserGroup userGroup = _userGroupLocalService.getUserGroup(baseModelPK);
 
 		String userName = userGroup.getUserName();
 
 		if ((userGroup.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -103,12 +107,16 @@ public class UserGroupUADAnonymizerTest extends BaseUADAnonymizerTestCase<UserGr
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<UserGroup> _userGroups = new ArrayList<UserGroup>();
-	@Inject
-	private UserGroupLocalService _userGroupLocalService;
-	@Inject
-	private UserGroupUADTestHelper _userGroupUADTestHelper;
 	@Inject(filter = "component.name=*.UserGroupUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
+
+	@DeleteAfterTestRun
+	private final List<UserGroup> _userGroups = new ArrayList<>();
+
+	@Inject
+	private UserGroupUADTestHelper _userGroupUADTestHelper;
+
 }

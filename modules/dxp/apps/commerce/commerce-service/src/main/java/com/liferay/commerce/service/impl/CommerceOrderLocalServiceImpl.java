@@ -580,9 +580,9 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.getCommerceCurrencyId(), billingAddressId,
 			shippingAddressId, commerceOrder.getCommercePaymentMethodId(),
 			commerceOrder.getCommerceShippingMethodId(),
-			commerceOrder.getShippingOptionName(),
-			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
+			commerceOrder.getShippingOptionName(),StringPool.BLANK,
+			commerceOrder.getSubtotal(), commerceOrder.getShippingPrice(),
+			commerceOrder.getTotal(),
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);

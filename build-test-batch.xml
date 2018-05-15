@@ -1436,6 +1436,11 @@ app.server.type=@{app.server.type}]]></echo>
 								/>
 							</delete>
 
+							<ant dir="modules" inheritAll="false" target="index-modules-and-app-lpkgs">
+								<property name="app.server.parent.dir" value="${project.dir}/bundles" />
+								<property name="osgi.dir" value="${app.server.parent.dir}/osgi" />
+							</ant>
+
 							<trycatch>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />

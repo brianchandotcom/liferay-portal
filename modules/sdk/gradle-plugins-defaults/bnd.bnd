@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Gradle Plugins Defaults
 Bundle-SymbolicName: com.liferay.gradle.plugins.defaults
-Bundle-Version: 5.3.122
+Bundle-Version: 5.4.0
 Export-Package:\
 	com.liferay.gradle.plugins.defaults,\
 	com.liferay.gradle.plugins.defaults.extensions,\

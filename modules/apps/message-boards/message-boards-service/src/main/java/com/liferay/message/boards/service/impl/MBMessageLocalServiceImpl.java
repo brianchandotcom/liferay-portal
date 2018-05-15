@@ -24,6 +24,7 @@ import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.exception.MessageBodyException;
 import com.liferay.message.boards.exception.MessageSubjectException;
+import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.message.boards.internal.util.MBDiscussionSubcriptionSender;
@@ -50,6 +51,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -959,6 +961,24 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<MBMessage> getChildMessages(long parentMessageId, int status) {
+		return mbMessagePersistence.findByP_S(parentMessageId, status);
+	}
+
+	@Override
+	public List<MBMessage> getChildMessages(
+		long parentMessageId, int status, int start, int end) {
+
+		return mbMessagePersistence.findByP_S(
+			parentMessageId, status, start, end);
+	}
+
+	@Override
+	public int getChildMessagesCount(long parentMessageId, int status) {
+		return mbMessagePersistence.countByP_S(parentMessageId, status);
+	}
+
+	@Override
 	public List<MBMessage> getCompanyMessages(
 		long companyId, int status, int start, int end) {
 
@@ -1295,6 +1315,38 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return mbMessageFinder.countByC_T(
 			message.getCreateDate(), message.getThreadId());
+	}
+
+	@Override
+	public List<MBMessage> getRootMessages(
+			String className, long classPK, int status)
+		throws NoSuchMessageException {
+
+		return getRootMessages(
+			className, classPK, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public List<MBMessage> getRootMessages(
+			String className, long classPK, int status, int start, int end)
+		throws NoSuchMessageException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		MBMessage rootMbMessage = mbMessagePersistence.findByC_C_First(
+			classNameId, classPK, new MessageCreateDateComparator(true));
+
+		return getChildMessages(
+			rootMbMessage.getMessageId(), status, start, end);
+	}
+
+	@Override
+	public int getRootMessagesCount(
+		String className, long classPK, int status) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return mbMessagePersistence.countByC_C_S(classNameId, classPK, status);
 	}
 
 	@Override

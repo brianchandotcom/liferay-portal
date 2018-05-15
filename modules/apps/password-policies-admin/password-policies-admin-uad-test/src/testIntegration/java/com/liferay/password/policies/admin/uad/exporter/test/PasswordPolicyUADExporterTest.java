@@ -15,35 +15,34 @@
 package com.liferay.password.policies.admin.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.password.policies.admin.uad.test.PasswordPolicyUADTestHelper;
-
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class PasswordPolicyUADExporterTest extends BaseUADExporterTestCase<PasswordPolicy> {
+public class PasswordPolicyUADExporterTest
+	extends BaseUADExporterTestCase<PasswordPolicy> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -51,9 +50,9 @@ public class PasswordPolicyUADExporterTest extends BaseUADExporterTestCase<Passw
 	}
 
 	@Override
-	protected PasswordPolicy addBaseModel(long userId)
-		throws Exception {
-		PasswordPolicy passwordPolicy = _passwordPolicyUADTestHelper.addPasswordPolicy(userId);
+	protected PasswordPolicy addBaseModel(long userId) throws Exception {
+		PasswordPolicy passwordPolicy =
+			_passwordPolicyUADTestHelper.addPasswordPolicy(userId);
 
 		_passwordPolicies.add(passwordPolicy);
 
@@ -71,9 +70,12 @@ public class PasswordPolicyUADExporterTest extends BaseUADExporterTestCase<Passw
 	}
 
 	@DeleteAfterTestRun
-	private final List<PasswordPolicy> _passwordPolicies = new ArrayList<PasswordPolicy>();
+	private final List<PasswordPolicy> _passwordPolicies = new ArrayList<>();
+
 	@Inject
 	private PasswordPolicyUADTestHelper _passwordPolicyUADTestHelper;
+
 	@Inject(filter = "component.name=*.PasswordPolicyUADExporter")
 	private UADExporter _uadExporter;
+
 }

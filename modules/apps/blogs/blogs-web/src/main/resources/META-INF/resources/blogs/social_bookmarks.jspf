@@ -14,12 +14,6 @@
  */
 --%>
 
-<%@ include file="/blogs/init.jsp" %>
-
-<%
-BlogsEntry entry = (BlogsEntry)request.getAttribute("view_entry_content.jsp-entry");
-%>
-
 <liferay-portlet:renderURL varImpl="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 

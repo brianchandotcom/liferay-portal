@@ -693,8 +693,9 @@
 		</execute>
 
 		<execute macro="WebContent#viewAvailableLanguagesPGViaWCD">
-			<var name="webContentTranslationLanguage1" value="German (Germany)" />
-			<var name="webContentTranslationLanguage2" value="English (United States)" />
+			<var name="fieldName" value="Título" />
+			<var name="locale1" value="de-DE" />
+			<var name="locale2" value="en-US" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

@@ -2145,6 +2145,7 @@ public class ProjectTemplatesTest {
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
 
+		boolean liferayVersionSet = false;
 		boolean projectTypeSet = false;
 
 		for (String arg : args) {
@@ -2153,11 +2154,19 @@ public class ProjectTemplatesTest {
 			if (arg.startsWith("-DprojectType=")) {
 				projectTypeSet = true;
 			}
+			else if (arg.startsWith("-DliferayVersion=")) {
+				liferayVersionSet = true;
+			}
+			
 		}
 
 		if (!projectTypeSet) {
 			completeArgs.add("-DprojectType=standalone");
 		}
+		if (!liferayVersionSet) {
+			completeArgs.add("-DliferayVersion=7.0");
+		}
+		
 
 		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
 

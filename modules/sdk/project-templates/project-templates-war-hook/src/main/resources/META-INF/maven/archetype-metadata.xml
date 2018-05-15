@@ -33,6 +33,9 @@
 		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>
+		<requiredProperty key="liferayVersion">
+			<defaultValue>7.0</defaultValue>
+		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
 		</requiredProperty>

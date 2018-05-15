@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.user.associated.data.util.UADDynamicQueryUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author William Newbury
@@ -64,31 +61,21 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 		ActionableDynamicQuery actionableDynamicQuery =
 			_getActionableDynamicQuery(userId);
 
-		AtomicReference<ZipWriter> zipWriterAtomicReference =
-			new AtomicReference<>();
+		Class<T> clazz = getTypeClass();
+
+		ZipWriter zipWriter = getZipWriter(userId, clazz.getName());
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(ActionableDynamicQuery.PerformActionMethod<T>)baseModel -> {
-				byte[] data = export(baseModel);
-
+			(T baseModel) -> {
 				try {
-					zipWriterAtomicReference.compareAndSet(
-						null,
-						getZipWriter(userId, baseModel.getModelClassName()));
-
-					ZipWriter zipWriter = zipWriterAtomicReference.get();
-
-					zipWriter.addEntry(
-						baseModel.getPrimaryKeyObj() + ".xml", data);
+					writeToZip(baseModel, zipWriter);
 				}
-				catch (IOException ioe) {
-					throw new PortalException(ioe);
+				catch (Exception e) {
+					throw new PortalException(e);
 				}
 			});
 
 		actionableDynamicQuery.performActions();
-
-		ZipWriter zipWriter = zipWriterAtomicReference.get();
 
 		return zipWriter.getFile();
 	}
@@ -132,6 +119,14 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 
 	protected String toXmlString(T baseModel) {
 		return baseModel.toXmlString();
+	}
+
+	protected void writeToZip(T baseModel, ZipWriter zipWriter)
+		throws Exception {
+
+		byte[] data = export(baseModel);
+
+		zipWriter.addEntry(baseModel.getPrimaryKeyObj() + ".xml", data);
 	}
 
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {

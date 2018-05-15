@@ -594,7 +594,7 @@
 		<execute macro="Alert#closePortalLocalizationWarning" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
+			<var name="category" value="Compilación" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Páginas del sitio web" />
 		</execute>
@@ -619,7 +619,7 @@
 		<execute macro="Alert#closePortalLocalizationWarning" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
+			<var name="category" value="Compilación" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Páginas del sitio web" />
 		</execute>

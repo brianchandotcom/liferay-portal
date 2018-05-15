@@ -124,13 +124,15 @@ portletDisplay.setURLBack(redirect);
 					}
 				%>
 
-					<div class="input-group-default">
+					<div class="form-group poll-choice-group">
 						<aui:input name="<%= EditQuestionMVCActionCommand.CHOICE_NAME_PREFIX + c %>" type="hidden" value="<%= c %>" />
 
-						<aui:input ignoreRequestValue="<%= true %>" label="<%= c + StringPool.PERIOD %>" localized="<%= true %>" name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + c %>" type="text" value="<%= value %>" />
+						<div class="poll-choice-input">
+							<aui:input ignoreRequestValue="<%= true %>" label="<%= c + StringPool.PERIOD %>" localized="<%= true %>" name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + c %>" type="text" value="<%= value %>" />
+						</div>
 
 						<c:if test="<%= (choicesCount > 2) %>">
-							<div class="input-group-addon">
+							<div class="delete-poll-choice">
 								<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
 							</div>
 						</c:if>

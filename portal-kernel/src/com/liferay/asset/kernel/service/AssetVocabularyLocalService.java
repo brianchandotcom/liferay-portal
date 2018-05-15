@@ -221,8 +221,7 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public AssetVocabulary fetchGroupVocabulary(long groupId, String name)
-		throws PortalException;
+	public AssetVocabulary fetchGroupVocabulary(long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

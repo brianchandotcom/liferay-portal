@@ -236,9 +236,7 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	@Override
-	public AssetVocabulary fetchGroupVocabulary(long groupId, String name)
-		throws PortalException {
-
+	public AssetVocabulary fetchGroupVocabulary(long groupId, String name) {
 		return assetVocabularyPersistence.fetchByG_N(groupId, name);
 	}
 

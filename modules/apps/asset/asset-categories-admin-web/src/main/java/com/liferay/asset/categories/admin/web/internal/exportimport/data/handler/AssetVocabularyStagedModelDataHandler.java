@@ -26,8 +26,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -99,6 +102,28 @@ public class AssetVocabularyStagedModelDataHandler
 	@Override
 	public String getDisplayName(AssetVocabulary vocabulary) {
 		return vocabulary.getTitleCurrentValue();
+	}
+
+	@Override
+	public boolean validateReference(
+		PortletDataContext portletDataContext, Element referenceElement) {
+
+		validateMissingGroupReference(portletDataContext, referenceElement);
+
+		String uuid = referenceElement.attributeValue("uuid");
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+
+		groupId = MapUtil.getLong(groupIds, groupId);
+
+		String displayName = referenceElement.attributeValue("display-name");
+
+		return validateMissingReference(uuid, groupId, displayName);
 	}
 
 	protected ServiceContext createServiceContext(
@@ -321,6 +346,25 @@ public class AssetVocabularyStagedModelDataHandler
 		}
 
 		return titleMap;
+	}
+
+	protected boolean validateMissingReference(
+		String uuid, long groupId, String name) {
+
+		AssetVocabulary existingStagedModel = fetchMissingReference(
+			uuid, groupId);
+
+		if (existingStagedModel == null) {
+			existingStagedModel =
+				_assetVocabularyLocalService.fetchGroupVocabulary(
+					groupId, name);
+		}
+
+		if (existingStagedModel == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _SETTINGS_METADATA = "settings-metadata";

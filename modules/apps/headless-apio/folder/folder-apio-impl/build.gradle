@@ -8,6 +8,7 @@ dependencies {
 	compileOnly project(":apps:apio-architect:apio-architect-api")
 	compileOnly project(":apps:document-library:document-library-api")
 	compileOnly project(":apps:headless-apio:folder:folder-apio-api")
+	compileOnly project(":apps:headless-apio:media-object:media-object-apio-api")
 	compileOnly project(":apps:headless-apio:portal:portal-apio-api")
 	compileOnly project(":apps:headless-apio:site:site-apio-api")
 }

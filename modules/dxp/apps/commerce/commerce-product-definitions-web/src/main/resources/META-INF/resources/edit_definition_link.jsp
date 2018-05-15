@@ -40,7 +40,7 @@ relatedProductsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.ge
 relatedProductsURL.setParameter("screenNavigationCategoryKey", screenNavigationCategoryKey);
 relatedProductsURL.setParameter("type", String.valueOf(cpDefinitionLink.getType()));
 
-String title = cpDefinition2.getTitle(languageId);
+String title = cpDefinition2.getName(languageId);
 
 Map<String, Object> data = new HashMap<>();
 

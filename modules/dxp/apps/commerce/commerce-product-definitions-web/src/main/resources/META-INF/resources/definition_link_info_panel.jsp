@@ -42,7 +42,7 @@ if (cpDefinitionLinks == null) {
 				</li>
 			</ul>
 
-			<h4><%= HtmlUtil.escape(cpDefinition2.getTitle(languageId)) %></h4>
+			<h4><%= HtmlUtil.escape(cpDefinition2.getName(languageId)) %></h4>
 		</div>
 
 		<div class="sidebar-body">

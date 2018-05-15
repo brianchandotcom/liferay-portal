@@ -15,39 +15,41 @@
 package com.liferay.users.admin.uad.test;
 
 import com.liferay.portal.kernel.model.UserTracker;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.service.UserTrackerLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = UserTrackerUADTestHelper.class)
 public class UserTrackerUADTestHelper {
-	/**
-	 * Implement addUserTracker() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid UserTrackers with a specified user ID in order to execute correctly. Implement addUserTracker() such that it creates a valid UserTracker with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
-	public UserTracker addUserTracker(long userId) throws Exception {
-		Assume.assumeTrue(false);
 
-		return null;
+	public UserTracker addUserTracker(long userId) throws Exception {
+		UserTracker userTracker = _userTrackerLocalService.createUserTracker(
+			RandomTestUtil.nextLong());
+
+		userTracker.setCompanyId(TestPropsValues.getCompanyId());
+		userTracker.setUserId(userId);
+		userTracker.setModifiedDate(RandomTestUtil.nextDate());
+		userTracker.setSessionId(RandomTestUtil.randomString());
+		userTracker.setRemoteAddr(RandomTestUtil.randomString());
+		userTracker.setRemoteHost(RandomTestUtil.randomString());
+		userTracker.setUserAgent(RandomTestUtil.randomString());
+
+		return _userTrackerLocalService.updateUserTracker(userTracker);
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<UserTracker> userTrackers) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid UserTrackers with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<UserTracker> userTrackers) such that any additional objects created during the construction of userTrackers are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(List<UserTracker> userTrackers)
 		throws Exception {
 	}
+
+	@Reference
+	private UserTrackerLocalService _userTrackerLocalService;
+
 }

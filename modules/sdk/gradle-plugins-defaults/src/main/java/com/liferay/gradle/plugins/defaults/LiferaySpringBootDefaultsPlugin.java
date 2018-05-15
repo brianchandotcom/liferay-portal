@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.plugins.ApplicationPlugin;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -33,8 +34,6 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin;
  */
 public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 
-	public static final String RUN_TASK_NAME = "run";
-
 	@Override
 	public void apply(Project project) {
 		_applyPlugins(project);
@@ -45,7 +44,7 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Task _addTaskRun(Project project) {
-		Task runTask = project.task(RUN_TASK_NAME);
+		Task runTask = project.task(ApplicationPlugin.TASK_RUN_NAME);
 
 		runTask.dependsOn(GradleUtil.getTask(project, "bootRun"));
 		runTask.setDescription("Runs Spring Boot 'bootRun'.");

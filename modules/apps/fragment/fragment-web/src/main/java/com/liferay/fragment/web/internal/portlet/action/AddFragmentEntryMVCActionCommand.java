@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -75,11 +76,20 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put(
 				"redirectURL", getRedirectURL(actionResponse, fragmentEntry));
 
+			if (SessionErrors.contains(
+					actionRequest, _portal.getPortletId(actionRequest))) {
+
+				addSuccessMessage(actionRequest, actionResponse);
+			}
+
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException pe) {
-			hideDefaultSuccessMessage(actionRequest);
+			SessionErrors.add(
+				actionRequest, _portal.getPortletId(actionRequest));
+
+			hideDefaultErrorMessage(actionRequest);
 
 			_fragmentEntryExceptionRequestHandler.handlePortalException(
 				actionRequest, actionResponse, pe);

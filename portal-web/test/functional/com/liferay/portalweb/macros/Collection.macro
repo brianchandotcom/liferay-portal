@@ -6,8 +6,8 @@
 				<execute function="Click" locator1="NavNested#NAV_NESTED_PLUS" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="Button#ANY" value1="Add Collection">
-					<var name="key_text" value="Add Collection" />
+				<execute function="AssertClick" locator1="Button#ANY" value1="New">
+					<var name="key_text" value="New" />
 				</execute>
 			</else>
 		</if>

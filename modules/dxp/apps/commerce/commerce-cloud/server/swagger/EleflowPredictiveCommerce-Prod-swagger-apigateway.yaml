@@ -259,6 +259,14 @@ definitions:
                     type: "string"
                     format: "date"
                     description: "Future date of the forecast point."
+                  upper:
+                    type: "number"
+                    description: "lower and upper form a boundary which the actual\
+                      \ value has a 95% chance of being within it."
+                  lower:
+                    type: "number"
+                    description: "lower and upper form a boundary which the actual\
+                      \ value has a 95% chance of being within it."
                   value:
                     type: "number"
                     description: "forecasted value"

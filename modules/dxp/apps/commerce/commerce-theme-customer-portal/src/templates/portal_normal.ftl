@@ -15,9 +15,6 @@
 		<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 
 		<@liferay_util["include"] page=top_head_include />
-
-		<script src="${javascript_folder}/clay-charts.js" type="text/javascript"></script>
-		<link href="${css_folder}/clay-charts.css" rel="stylesheet" type="text/css" />
 	</head>
 
 	<body class="${css_class}${signed_out_class}">

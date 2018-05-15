@@ -24,6 +24,7 @@ dependencies {
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"
 	compile group: "gradle.plugin.com.github.jk1", name: "gradle-license-report", version: "0.3.11"
 	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", version: "1.1.0"
+	compile group: "org.springframework.boot", name: "spring-boot-gradle-plugin", version: "1.5.7.RELEASE"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 

@@ -73,8 +73,7 @@ public class PortalInstanceLifecycleListenerManagerImpl
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removePortalInstanceLifecycleListener"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addPortalInstanceLifecycleListener(
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener) {

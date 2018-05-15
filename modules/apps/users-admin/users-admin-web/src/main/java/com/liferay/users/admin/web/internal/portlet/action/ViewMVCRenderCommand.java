@@ -59,8 +59,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetUserActionContributor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setUserActionContributor(
 		UserActionContributor userActionContributor) {

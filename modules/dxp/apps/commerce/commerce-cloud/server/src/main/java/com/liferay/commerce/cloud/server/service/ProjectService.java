@@ -46,4 +46,8 @@ public interface ProjectService {
 	public void getProjects(
 		boolean active, Handler<AsyncResult<List<Project>>> handler);
 
+	public void updateCallbackHost(
+		String projectId, String callbackHost,
+		Handler<AsyncResult<Void>> handler);
+
 }

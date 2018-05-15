@@ -23,6 +23,7 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.codec.BodyCodec;
 import io.vertx.ext.web.codec.impl.BodyCodecImpl;
@@ -93,6 +94,29 @@ public class WeDeployProjectServiceImpl
 		httpRequest.setQueryParam("filter", filterJsonArray.encode());
 
 		httpRequest.send(
+			asyncResult -> VertxUtil.handleServiceHttpResponse(
+				asyncResult, handler));
+	}
+
+	@Override
+	public void updateCallbackHost(
+		String projectId, String callbackHost,
+		Handler<AsyncResult<Void>> handler) {
+
+		HttpRequest<Void> httpRequest = webClient.patch(
+			"/projects/" + projectId
+		).as(
+			BodyCodec.none()
+		);
+
+		addAuthorization(httpRequest);
+
+		JsonObject jsonObject = new JsonObject();
+
+		jsonObject.put("callbackHost", callbackHost);
+
+		httpRequest.sendJsonObject(
+			jsonObject,
 			asyncResult -> VertxUtil.handleServiceHttpResponse(
 				asyncResult, handler));
 	}

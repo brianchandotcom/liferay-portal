@@ -15,45 +15,47 @@
 package com.liferay.document.library.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFolderUADTestHelper;
-
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class DLFolderUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFolder>
+public class DLFolderUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<DLFolder>
 	implements WhenHasStatusByUserIdField {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
-	public DLFolder addBaseModelWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		DLFolder dlFolder = _dlFolderUADTestHelper.addDLFolderWithStatusByUserId(userId,
-				statusByUserId);
+	public DLFolder addBaseModelWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
+
+		DLFolder dlFolder =
+			_dlFolderUADTestHelper.addDLFolderWithStatusByUserId(
+				userId, statusByUserId);
 
 		_dlFolders.add(dlFolder);
 
@@ -73,6 +75,7 @@ public class DLFolderUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFolde
 	@Override
 	protected DLFolder addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
+
 		DLFolder dlFolder = _dlFolderUADTestHelper.addDLFolder(userId);
 
 		if (deleteAfterTestRun) {
@@ -85,6 +88,7 @@ public class DLFolderUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFolde
 	@Override
 	protected void deleteBaseModels(List<DLFolder> baseModels)
 		throws Exception {
+
 		_dlFolderUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -96,15 +100,17 @@ public class DLFolderUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFolde
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
+
 		DLFolder dlFolder = _dlFolderLocalService.getDLFolder(baseModelPK);
 
 		String userName = dlFolder.getUserName();
 		String statusByUserName = dlFolder.getStatusByUserName();
 
 		if ((dlFolder.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName()) &&
-				(dlFolder.getStatusByUserId() != user.getUserId()) &&
-				!statusByUserName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName()) &&
+			(dlFolder.getStatusByUserId() != user.getUserId()) &&
+			!statusByUserName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -120,12 +126,16 @@ public class DLFolderUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFolde
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<DLFolder> _dlFolders = new ArrayList<DLFolder>();
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@DeleteAfterTestRun
+	private final List<DLFolder> _dlFolders = new ArrayList<>();
+
 	@Inject
 	private DLFolderUADTestHelper _dlFolderUADTestHelper;
+
 	@Inject(filter = "component.name=*.DLFolderUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

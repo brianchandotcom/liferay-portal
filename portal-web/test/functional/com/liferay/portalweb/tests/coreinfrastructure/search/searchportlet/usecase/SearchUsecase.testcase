@@ -284,7 +284,7 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="entryDate" value="${currentDate}" />
 			<var name="searchAssetSummary" value="This is a blog about Potatoes" />
 			<var name="searchAssetTitle" value="Potato Blog" />
@@ -292,7 +292,7 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="entryDate" value="${currentDate}" />
 			<var name="searchAssetTitle" value="Potato Document" />
 			<var name="searchAssetType" value="Document" />
@@ -312,7 +312,7 @@
 			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="entryDate" value="${currentDate}" />
 			<var name="searchAssetTitle" value="Potato Document" />
 			<var name="searchAssetType" value="Document" />
@@ -830,30 +830,30 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewNotInSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchTerm" value="usersn" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 
 		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewNotInSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchTerm" value="usersn" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 	</command>
 
@@ -913,15 +913,15 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewNotInSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchTerm" value="usersn" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 
 		<!-- LPS-80521 -->
@@ -934,13 +934,13 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
@@ -999,30 +999,30 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewNotInSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchTerm" value="usersn" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 
 		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="userfn1 userln1" />
 			<var name="searchAssetType" value="User" />
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#viewNotInSearchResults">
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
 			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchTerm" value="usersn" />
+			<var name="searchAssetType" value="User" />
 		</execute>
 	</command>
 

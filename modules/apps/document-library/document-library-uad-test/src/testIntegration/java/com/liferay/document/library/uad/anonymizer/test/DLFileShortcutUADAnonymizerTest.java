@@ -41,7 +41,6 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
 public class DLFileShortcutUADAnonymizerTest extends BaseUADAnonymizerTestCase<DLFileShortcut>

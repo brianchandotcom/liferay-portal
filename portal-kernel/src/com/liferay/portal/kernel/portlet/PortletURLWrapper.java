@@ -19,12 +19,14 @@ import java.io.Writer;
 
 import java.util.Map;
 
+import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+import javax.portlet.annotations.PortletSerializable;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,6 +43,18 @@ public class PortletURLWrapper implements PortletURL {
 	}
 
 	@Override
+	public Appendable append(Appendable appendable) throws IOException {
+		return _portletURL.append(appendable);
+	}
+
+	@Override
+	public Appendable append(Appendable appendable, boolean escapeXML)
+		throws IOException {
+
+		return _portletURL.append(appendable, escapeXML);
+	}
+
+	@Override
 	public Map<String, String[]> getParameterMap() {
 		return _portletURL.getParameterMap();
 	}
@@ -51,6 +65,11 @@ public class PortletURLWrapper implements PortletURL {
 	}
 
 	@Override
+	public MutableRenderParameters getRenderParameters() {
+		return _portletURL.getRenderParameters();
+	}
+
+	@Override
 	public WindowState getWindowState() {
 		return _portletURL.getWindowState();
 	}
@@ -58,6 +77,11 @@ public class PortletURLWrapper implements PortletURL {
 	@Override
 	public void removePublicRenderParameter(String name) {
 		_portletURL.removePublicRenderParameter(name);
+	}
+
+	@Override
+	public void setBeanParameter(PortletSerializable portletSerializable) {
+		_portletURL.setBeanParameter(portletSerializable);
 	}
 
 	@Override

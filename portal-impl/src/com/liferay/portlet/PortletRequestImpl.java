@@ -79,6 +79,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 import javax.portlet.filter.PortletRequestWrapper;
 
@@ -499,6 +500,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	@Override
+	public RenderParameters getRenderParameters() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String getRequestedSessionId() {
 		if (_session != null) {
 			return _session.getId();
@@ -541,6 +547,11 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	@Override
 	public int getServerPort() {
 		return _request.getServerPort();
+	}
+
+	@Override
+	public String getUserAgent() {
+		throw new UnsupportedOperationException();
 	}
 
 	public LinkedHashMap<String, String> getUserInfo() {

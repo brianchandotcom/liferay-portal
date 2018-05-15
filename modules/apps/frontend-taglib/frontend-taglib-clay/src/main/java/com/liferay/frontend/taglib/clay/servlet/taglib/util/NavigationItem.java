@@ -33,6 +33,23 @@ public class NavigationItem extends HashMap<String, Object> {
 		put("disabled", disabled);
 	}
 
+	public void setHref(Object href) {
+		if (href != null) {
+			if (href instanceof PortletURL) {
+				setHref((PortletURL)href, null);
+			}
+			else if (href instanceof String) {
+				put("href", href);
+			}
+			else {
+				put("href", href.toString());
+			}
+		}
+		else {
+			put("href", href);
+		}
+	}
+
 	public void setHref(PortletURL portletURL, Object... parameters) {
 		if (parameters != null) {
 			if ((parameters.length % 2) != 0) {
@@ -54,10 +71,6 @@ public class NavigationItem extends HashMap<String, Object> {
 		}
 
 		setHref(portletURL.toString());
-	}
-
-	public void setHref(String href) {
-		put("href", href);
 	}
 
 	public void setLabel(String label) {

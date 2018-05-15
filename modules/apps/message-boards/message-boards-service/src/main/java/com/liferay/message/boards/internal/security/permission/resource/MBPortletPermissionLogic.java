@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.permission;
+package com.liferay.message.boards.internal.security.permission.resource;
 
 import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.model.Group;

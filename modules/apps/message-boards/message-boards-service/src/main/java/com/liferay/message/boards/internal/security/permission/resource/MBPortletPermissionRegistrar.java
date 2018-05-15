@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.permission;
+package com.liferay.message.boards.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.message.boards.constants.MBConstants;

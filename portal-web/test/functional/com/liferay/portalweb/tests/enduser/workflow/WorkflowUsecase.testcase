@@ -1220,7 +1220,14 @@
 			<var name="title" value="Invalid Definition" />
 		</execute>
 
-		<execute function="UploadCommonFile#uploadCommonFileHidden" locator1="WorkflowUpload#FILE_UPLOAD" value1="Document_1.txt" />
+		<if>
+			<condition function="IsElementPresent" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" />
+			<then>
+				<execute macro="KaleoDesigner#viewSourceXMLTab" />
+			</then>
+		</if>
+
+		<execute function="UploadCommonFile#uploadCommonFileHiddenNoMouseOver" locator1="WorkflowUpload#FILE_UPLOAD" value1="Document_1.txt" />
 
 		<execute macro="Button#clickPublish" />
 

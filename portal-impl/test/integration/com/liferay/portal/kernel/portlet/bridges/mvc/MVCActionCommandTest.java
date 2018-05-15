@@ -27,13 +27,26 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
 
+import java.io.IOException;
+
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Map;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderParameters;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
+
+import javax.xml.namespace.QName;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -154,6 +167,21 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
+		public Enumeration<PortletMode> getPortletModes(String mimeType) {
+			return null;
+		}
+
+		@Override
+		public Map<String, QName> getPublicRenderParameterDefinitions() {
+			return null;
+		}
+
+		@Override
+		public Enumeration<WindowState> getWindowStates(String mimeType) {
+			return null;
+		}
+
+		@Override
 		public boolean isCopyRequestParameters() {
 			return false;
 		}
@@ -186,12 +214,22 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
+		public ActionParameters getActionParameters() {
+			return null;
+		}
+
+		@Override
 		public Object getAttribute(String name) {
 			if (name.equals(JavaConstants.JAVAX_PORTLET_CONFIG)) {
 				return new MockLiferayPortletConfig();
 			}
 
 			return super.getAttribute(name);
+		}
+
+		@Override
+		public long getContentLengthLong() {
+			return 0;
 		}
 
 		@Override
@@ -205,6 +243,18 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
+		public Part getPart(String name) throws IOException, PortletException {
+			return null;
+		}
+
+		@Override
+		public Collection<Part> getParts()
+			throws IOException, PortletException {
+
+			return null;
+		}
+
+		@Override
 		public long getPlid() {
 			return 0;
 		}
@@ -215,7 +265,22 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
+		public PortletContext getPortletContext() {
+			return null;
+		}
+
+		@Override
 		public String getPortletName() {
+			return null;
+		}
+
+		@Override
+		public RenderParameters getRenderParameters() {
+			return null;
+		}
+
+		@Override
+		public String getUserAgent() {
 			return null;
 		}
 

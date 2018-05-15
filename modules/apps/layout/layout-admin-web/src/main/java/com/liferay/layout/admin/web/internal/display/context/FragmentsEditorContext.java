@@ -367,7 +367,7 @@ public class FragmentsEditorContext {
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
 
-		addedSoyContext.put("enabled", fragmentEntryLinks.isEmpty());
+		addedSoyContext.put("enabled", !fragmentEntryLinks.isEmpty());
 
 		addedSoyContext.put("id", "added");
 		addedSoyContext.put(

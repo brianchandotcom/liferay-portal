@@ -624,6 +624,8 @@
 	</command>
 
 	<command name="AddWebContentWithCategorySpecificDefinition" priority="4">
+		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#AddWebContentWithCategorySpecificDefinition" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -1032,6 +1034,8 @@
 	</command>
 
 	<command name="UnpublishAndDeleteUploadedDefinition" priority="5">
+		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#UnpublishAndDeleteUploadedDefinition" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -1202,6 +1206,8 @@
 	</command>
 
 	<command name="ViewInvalidDefinitionAlert" priority="4">
+		<property name="test.name.skip.portal.instance" value="WorkflowUsecase#ViewInvalidDefinitionAlert" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />

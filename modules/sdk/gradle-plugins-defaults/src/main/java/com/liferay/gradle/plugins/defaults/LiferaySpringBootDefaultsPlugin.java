@@ -44,13 +44,13 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private Task _addTaskRun(Project project) {
-		Task runTask = project.task(ApplicationPlugin.TASK_RUN_NAME);
+		Task task = project.task(ApplicationPlugin.TASK_RUN_NAME);
 
-		runTask.dependsOn("bootRun");
-		runTask.setDescription("Runs Spring Boot 'bootRun' task.");
-		runTask.setGroup(BasePlugin.BUILD_GROUP);
+		task.dependsOn("bootRun");
+		task.setDescription("Runs Spring Boot 'bootRun' task.");
+		task.setGroup(BasePlugin.BUILD_GROUP);
 
-		return runTask;
+		return task;
 	}
 
 	private void _applyPlugins(Project project) {

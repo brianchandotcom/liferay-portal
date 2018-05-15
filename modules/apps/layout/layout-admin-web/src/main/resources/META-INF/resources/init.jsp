@@ -51,6 +51,7 @@ page import="com.liferay.layout.page.template.constants.LayoutPageTemplateAction
 page import="com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants" %><%@
 page import="com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException" %><%@
 page import="com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException" %><%@
+page import="com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil" %><%@

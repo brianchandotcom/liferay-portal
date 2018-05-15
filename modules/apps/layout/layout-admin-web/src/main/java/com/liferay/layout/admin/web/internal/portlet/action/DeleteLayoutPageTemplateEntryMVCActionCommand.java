@@ -15,10 +15,15 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -59,8 +64,17 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommand
 				actionRequest, "rowIds");
 		}
 
-		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntries(
-			deleteLayoutPageTemplateEntryIds);
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
+			_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntries(
+				deleteLayoutPageTemplateEntryIds);
+
+		if (!layoutPageTemplateEntries.isEmpty()) {
+			SessionErrors.add(
+				actionRequest, RequiredLayoutPageTemplateEntryException.class,
+				new RequiredLayoutPageTemplateEntryException());
+
+			sendRedirect(actionRequest, actionResponse);
+		}
 	}
 
 	@Reference

@@ -314,6 +314,11 @@
 	<td>//li[contains(@class,'control-menu-nav-item')]//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS</td>
+	<td>//*[@data-qa-id='rowItemContent']/div[contains(@class,'dropdown')]/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

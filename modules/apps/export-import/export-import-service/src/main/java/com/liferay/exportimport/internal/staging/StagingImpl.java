@@ -38,6 +38,7 @@ import com.liferay.exportimport.kernel.exception.MissingReferenceException;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -3349,6 +3350,18 @@ public class StagingImpl implements Staging {
 	protected long getRecentLayoutRevisionId(
 			long userId, long layoutSetBranchId, long plid)
 		throws PortalException {
+
+		if (ExportImportThreadLocal.isLayoutStagingInProcess()) {
+			LayoutRevision layoutRevision =
+				_layoutRevisionLocalService.fetchLastLayoutRevision(plid, true);
+
+			if (layoutRevision != null) {
+				return layoutRevision.getLayoutRevisionId();
+			}
+			else {
+				return 0;
+			}
+		}
 
 		RecentLayoutRevision recentLayoutRevision =
 			_recentLayoutRevisionLocalService.fetchRecentLayoutRevision(

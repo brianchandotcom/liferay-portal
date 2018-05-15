@@ -801,30 +801,18 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="userfn1 userln1" />
-			<var name="searchAssetType" value="User" />
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="userfn1 userln1/User,userfn2 userln2/User" />
 			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
-			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchAssetType" value="User" />
 		</execute>
 
 		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute macro="SearchResultPortlet#viewSearchResults">
-			<var name="searchAssetTitle" value="userfn1 userln1" />
-			<var name="searchAssetType" value="User" />
+		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
+			<var name="resultsList" value="userfn1 userln1/User,userfn2 userln2/User" />
 			<var name="searchTerm" value="usersn" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
-			<var name="searchAssetTitle" value="userfn2 userln2" />
-			<var name="searchAssetType" value="User" />
 		</execute>
 	</command>
 

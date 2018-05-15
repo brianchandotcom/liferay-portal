@@ -31,8 +31,8 @@ public class Project implements JsonSerializable {
 		return _apiKey;
 	}
 
-	public String getCallbackUrl() {
-		return _callbackUrl;
+	public String getCallbackHost() {
+		return _callbackHost;
 	}
 
 	public String getId() {
@@ -55,8 +55,8 @@ public class Project implements JsonSerializable {
 		_apiKey = apiKey;
 	}
 
-	public void setCallbackUrl(String callbackUrl) {
-		_callbackUrl = callbackUrl;
+	public void setCallbackHost(String callbackHost) {
+		_callbackHost = callbackHost;
 	}
 
 	public void setId(String id) {
@@ -78,7 +78,7 @@ public class Project implements JsonSerializable {
 
 	private boolean _active;
 	private String _apiKey;
-	private String _callbackUrl;
+	private String _callbackHost;
 	private String _id;
 	private String _name;
 

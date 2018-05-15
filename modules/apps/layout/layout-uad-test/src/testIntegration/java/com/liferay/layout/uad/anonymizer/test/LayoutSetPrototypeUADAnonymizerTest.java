@@ -15,9 +15,7 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.layout.uad.test.LayoutSetPrototypeUADTestHelper;
-
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
@@ -25,45 +23,47 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
 public class LayoutSetPrototypeUADAnonymizerTest
 	extends BaseUADAnonymizerTestCase<LayoutSetPrototype> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
-		_layoutSetPrototypeUADTestHelper.cleanUpDependencies(_layoutSetPrototypes);
+		_layoutSetPrototypeUADTestHelper.cleanUpDependencies(
+			_layoutSetPrototypes);
 	}
 
 	@Override
-	protected LayoutSetPrototype addBaseModel(long userId)
-		throws Exception {
+	protected LayoutSetPrototype addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected LayoutSetPrototype addBaseModel(long userId,
-		boolean deleteAfterTestRun) throws Exception {
-		LayoutSetPrototype layoutSetPrototype = _layoutSetPrototypeUADTestHelper.addLayoutSetPrototype(userId);
+	protected LayoutSetPrototype addBaseModel(
+			long userId, boolean deleteAfterTestRun)
+		throws Exception {
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeUADTestHelper.addLayoutSetPrototype(userId);
 
 		if (deleteAfterTestRun) {
 			_layoutSetPrototypes.add(layoutSetPrototype);
@@ -75,6 +75,7 @@ public class LayoutSetPrototypeUADAnonymizerTest
 	@Override
 	protected void deleteBaseModels(List<LayoutSetPrototype> baseModels)
 		throws Exception {
+
 		_layoutSetPrototypeUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -86,12 +87,15 @@ public class LayoutSetPrototypeUADAnonymizerTest
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		LayoutSetPrototype layoutSetPrototype = _layoutSetPrototypeLocalService.getLayoutSetPrototype(baseModelPK);
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.getLayoutSetPrototype(baseModelPK);
 
 		String userName = layoutSetPrototype.getUserName();
 
 		if ((layoutSetPrototype.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -100,19 +104,26 @@ public class LayoutSetPrototypeUADAnonymizerTest
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(baseModelPK) == null) {
+		if (_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
+				baseModelPK) == null) {
+
 			return true;
 		}
 
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<LayoutSetPrototype> _layoutSetPrototypes = new ArrayList<LayoutSetPrototype>();
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@DeleteAfterTestRun
+	private final List<LayoutSetPrototype> _layoutSetPrototypes =
+		new ArrayList<>();
+
 	@Inject
 	private LayoutSetPrototypeUADTestHelper _layoutSetPrototypeUADTestHelper;
+
 	@Inject(filter = "component.name=*.LayoutSetPrototypeUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

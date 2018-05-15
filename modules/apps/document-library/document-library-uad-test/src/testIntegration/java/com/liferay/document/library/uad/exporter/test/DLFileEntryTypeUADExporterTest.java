@@ -15,36 +15,34 @@
 package com.liferay.document.library.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.uad.test.DLFileEntryTypeUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
-
-import org.junit.After;
-import org.junit.ClassRule;
-import org.junit.Rule;
-
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
+
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryTypeUADExporterTest extends BaseUADExporterTestCase<DLFileEntryType> {
+public class DLFileEntryTypeUADExporterTest
+	extends BaseUADExporterTestCase<DLFileEntryType> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -52,9 +50,9 @@ public class DLFileEntryTypeUADExporterTest extends BaseUADExporterTestCase<DLFi
 	}
 
 	@Override
-	protected DLFileEntryType addBaseModel(long userId)
-		throws Exception {
-		DLFileEntryType dlFileEntryType = _dlFileEntryTypeUADTestHelper.addDLFileEntryType(userId);
+	protected DLFileEntryType addBaseModel(long userId) throws Exception {
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeUADTestHelper.addDLFileEntryType(userId);
 
 		_dlFileEntryTypes.add(dlFileEntryType);
 
@@ -72,9 +70,12 @@ public class DLFileEntryTypeUADExporterTest extends BaseUADExporterTestCase<DLFi
 	}
 
 	@DeleteAfterTestRun
-	private final List<DLFileEntryType> _dlFileEntryTypes = new ArrayList<DLFileEntryType>();
+	private final List<DLFileEntryType> _dlFileEntryTypes = new ArrayList<>();
+
 	@Inject
 	private DLFileEntryTypeUADTestHelper _dlFileEntryTypeUADTestHelper;
+
 	@Inject(filter = "component.name=*.DLFileEntryTypeUADExporter")
 	private UADExporter _uadExporter;
+
 }

@@ -15,35 +15,33 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.layout.uad.test.LayoutUADTestHelper;
-
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
 public class LayoutUADExporterTest extends BaseUADExporterTestCase<Layout> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -70,9 +68,12 @@ public class LayoutUADExporterTest extends BaseUADExporterTestCase<Layout> {
 	}
 
 	@DeleteAfterTestRun
-	private final List<Layout> _layouts = new ArrayList<Layout>();
+	private final List<Layout> _layouts = new ArrayList<>();
+
 	@Inject
 	private LayoutUADTestHelper _layoutUADTestHelper;
+
 	@Inject(filter = "component.name=*.LayoutUADExporter")
 	private UADExporter _uadExporter;
+
 }

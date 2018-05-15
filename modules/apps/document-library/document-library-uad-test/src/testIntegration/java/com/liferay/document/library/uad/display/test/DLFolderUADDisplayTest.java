@@ -15,35 +15,38 @@
 package com.liferay.document.library.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.uad.test.DLFolderUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
 public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		_dlFolderUADTestHelper.cleanUpDependencies(_dlFolders);
+	}
 
 	@Override
 	protected DLFolder addBaseModel(long userId) throws Exception {
@@ -59,15 +62,13 @@ public class DLFolderUADDisplayTest extends BaseUADDisplayTestCase<DLFolder> {
 		return _uadDisplay;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_dlFolderUADTestHelper.cleanUpDependencies(_dlFolders);
-	}
-
 	@DeleteAfterTestRun
-	private final List<DLFolder> _dlFolders = new ArrayList<DLFolder>();
+	private final List<DLFolder> _dlFolders = new ArrayList<>();
+
 	@Inject
 	private DLFolderUADTestHelper _dlFolderUADTestHelper;
+
 	@Inject(filter = "component.name=*.DLFolderUADDisplay")
 	private UADDisplay _uadDisplay;
+
 }

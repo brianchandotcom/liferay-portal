@@ -15,39 +15,44 @@
 package com.liferay.document.library.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class DLFileEntryUADDisplayTest extends BaseUADDisplayTestCase<DLFileEntry> {
+public class DLFileEntryUADDisplayTest
+	extends BaseUADDisplayTestCase<DLFileEntry> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		_dlFileEntryUADTestHelper.cleanUpDependencies(_dlFileEntries);
+	}
 
 	@Override
 	protected DLFileEntry addBaseModel(long userId) throws Exception {
-		DLFileEntry dlFileEntry = _dlFileEntryUADTestHelper.addDLFileEntry(userId);
+		DLFileEntry dlFileEntry = _dlFileEntryUADTestHelper.addDLFileEntry(
+			userId);
 
 		_dlFileEntries.add(dlFileEntry);
 
@@ -59,15 +64,13 @@ public class DLFileEntryUADDisplayTest extends BaseUADDisplayTestCase<DLFileEntr
 		return _uadDisplay;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_dlFileEntryUADTestHelper.cleanUpDependencies(_dlFileEntries);
-	}
-
 	@DeleteAfterTestRun
-	private final List<DLFileEntry> _dlFileEntries = new ArrayList<DLFileEntry>();
+	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();
+
 	@Inject
 	private DLFileEntryUADTestHelper _dlFileEntryUADTestHelper;
+
 	@Inject(filter = "component.name=*.DLFileEntryUADDisplay")
 	private UADDisplay _uadDisplay;
+
 }

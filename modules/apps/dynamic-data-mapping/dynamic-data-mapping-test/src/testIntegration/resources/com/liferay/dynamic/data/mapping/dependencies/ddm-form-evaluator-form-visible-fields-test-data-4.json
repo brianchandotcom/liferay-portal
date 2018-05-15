@@ -8,7 +8,7 @@
 			"indexType": "keyword",
 			"label": {
 				"en_US": "What's you gender?",
-				"pt_BR": "Qual o seu gênero?",
+				"pt_BR": "Qual o seu gênero?"
 			},
 			"localizable": true,
 			"name": "Gender",

@@ -25,7 +25,7 @@
 					"name": "Integer",
 					"predefinedValue": {
 						"en_US": "0",
-						"pt_BR": "0",
+						"pt_BR": "0"
 					},
 					"readOnly": false,
 					"repeatable": true,
@@ -45,7 +45,7 @@
 			],
 			"predefinedValue": {
 				"en_US": "Joe Bloggs",
-				"pt_BR": "Joe Bloggs",
+				"pt_BR": "Joe Bloggs"
 			},
 			"readOnly": false,
 			"repeatable": true,

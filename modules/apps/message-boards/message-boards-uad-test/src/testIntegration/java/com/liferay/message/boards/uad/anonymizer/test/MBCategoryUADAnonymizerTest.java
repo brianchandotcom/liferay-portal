@@ -15,45 +15,47 @@
 package com.liferay.message.boards.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
-
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCategory>
+public class MBCategoryUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<MBCategory>
 	implements WhenHasStatusByUserIdField {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
-	public MBCategory addBaseModelWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(userId,
-				statusByUserId);
+	public MBCategory addBaseModelWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
+
+		MBCategory mbCategory =
+			_mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(
+				userId, statusByUserId);
 
 		_mbCategories.add(mbCategory);
 
@@ -73,6 +75,7 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	@Override
 	protected MBCategory addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
+
 		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategory(userId);
 
 		if (deleteAfterTestRun) {
@@ -85,6 +88,7 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	@Override
 	protected void deleteBaseModels(List<MBCategory> baseModels)
 		throws Exception {
+
 		_mbCategoryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -96,15 +100,18 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		MBCategory mbCategory = _mbCategoryLocalService.getMBCategory(baseModelPK);
+
+		MBCategory mbCategory = _mbCategoryLocalService.getMBCategory(
+			baseModelPK);
 
 		String userName = mbCategory.getUserName();
 		String statusByUserName = mbCategory.getStatusByUserName();
 
 		if ((mbCategory.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName()) &&
-				(mbCategory.getStatusByUserId() != user.getUserId()) &&
-				!statusByUserName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName()) &&
+			(mbCategory.getStatusByUserId() != user.getUserId()) &&
+			!statusByUserName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -121,11 +128,15 @@ public class MBCategoryUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBCat
 	}
 
 	@DeleteAfterTestRun
-	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
+	private final List<MBCategory> _mbCategories = new ArrayList<>();
+
 	@Inject
 	private MBCategoryLocalService _mbCategoryLocalService;
+
 	@Inject
 	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
+
 	@Inject(filter = "component.name=*.MBCategoryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

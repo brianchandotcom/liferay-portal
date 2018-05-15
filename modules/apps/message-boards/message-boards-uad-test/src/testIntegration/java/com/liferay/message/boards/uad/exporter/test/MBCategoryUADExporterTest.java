@@ -15,43 +15,45 @@
 package com.liferay.message.boards.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class MBCategoryUADExporterTest extends BaseUADExporterTestCase<MBCategory>
+public class MBCategoryUADExporterTest
+	extends BaseUADExporterTestCase<MBCategory>
 	implements WhenHasStatusByUserIdField<MBCategory> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
-	public MBCategory addBaseModelWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		MBCategory mbCategory = _mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(userId,
-				statusByUserId);
+	public MBCategory addBaseModelWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
+
+		MBCategory mbCategory =
+			_mbCategoryUADTestHelper.addMBCategoryWithStatusByUserId(
+				userId, statusByUserId);
 
 		_mbCategories.add(mbCategory);
 
@@ -83,9 +85,12 @@ public class MBCategoryUADExporterTest extends BaseUADExporterTestCase<MBCategor
 	}
 
 	@DeleteAfterTestRun
-	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
+	private final List<MBCategory> _mbCategories = new ArrayList<>();
+
 	@Inject
 	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
+
 	@Inject(filter = "component.name=*.MBCategoryUADExporter")
 	private UADExporter _uadExporter;
+
 }

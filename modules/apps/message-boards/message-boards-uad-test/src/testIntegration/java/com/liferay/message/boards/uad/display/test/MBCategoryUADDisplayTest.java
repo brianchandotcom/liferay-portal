@@ -15,35 +15,39 @@
 package com.liferay.message.boards.uad.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.uad.test.MBCategoryUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class MBCategoryUADDisplayTest extends BaseUADDisplayTestCase<MBCategory> {
+public class MBCategoryUADDisplayTest
+	extends BaseUADDisplayTestCase<MBCategory> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@After
+	public void tearDown() throws Exception {
+		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);
+	}
 
 	@Override
 	protected MBCategory addBaseModel(long userId) throws Exception {
@@ -59,15 +63,13 @@ public class MBCategoryUADDisplayTest extends BaseUADDisplayTestCase<MBCategory>
 		return _uadDisplay;
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		_mbCategoryUADTestHelper.cleanUpDependencies(_mbCategories);
-	}
-
 	@DeleteAfterTestRun
-	private final List<MBCategory> _mbCategories = new ArrayList<MBCategory>();
+	private final List<MBCategory> _mbCategories = new ArrayList<>();
+
 	@Inject
 	private MBCategoryUADTestHelper _mbCategoryUADTestHelper;
+
 	@Inject(filter = "component.name=*.MBCategoryUADDisplay")
 	private UADDisplay _uadDisplay;
+
 }

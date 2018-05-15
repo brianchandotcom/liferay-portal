@@ -15,43 +15,45 @@
 package com.liferay.message.boards.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.uad.test.MBThreadUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class MBThreadUADExporterTest extends BaseUADExporterTestCase<MBThread>
+public class MBThreadUADExporterTest
+	extends BaseUADExporterTestCase<MBThread>
 	implements WhenHasStatusByUserIdField<MBThread> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
-	public MBThread addBaseModelWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		MBThread mbThread = _mbThreadUADTestHelper.addMBThreadWithStatusByUserId(userId,
-				statusByUserId);
+	public MBThread addBaseModelWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
+
+		MBThread mbThread =
+			_mbThreadUADTestHelper.addMBThreadWithStatusByUserId(
+				userId, statusByUserId);
 
 		_mbThreads.add(mbThread);
 
@@ -83,9 +85,12 @@ public class MBThreadUADExporterTest extends BaseUADExporterTestCase<MBThread>
 	}
 
 	@DeleteAfterTestRun
-	private final List<MBThread> _mbThreads = new ArrayList<MBThread>();
+	private final List<MBThread> _mbThreads = new ArrayList<>();
+
 	@Inject
 	private MBThreadUADTestHelper _mbThreadUADTestHelper;
+
 	@Inject(filter = "component.name=*.MBThreadUADExporter")
 	private UADExporter _uadExporter;
+
 }

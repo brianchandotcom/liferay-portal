@@ -15,43 +15,45 @@
 package com.liferay.message.boards.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.uad.test.MBMessageUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class MBMessageUADExporterTest extends BaseUADExporterTestCase<MBMessage>
+public class MBMessageUADExporterTest
+	extends BaseUADExporterTestCase<MBMessage>
 	implements WhenHasStatusByUserIdField<MBMessage> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
-	public MBMessage addBaseModelWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		MBMessage mbMessage = _mbMessageUADTestHelper.addMBMessageWithStatusByUserId(userId,
-				statusByUserId);
+	public MBMessage addBaseModelWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageUADTestHelper.addMBMessageWithStatusByUserId(
+				userId, statusByUserId);
 
 		_mbMessages.add(mbMessage);
 
@@ -83,9 +85,12 @@ public class MBMessageUADExporterTest extends BaseUADExporterTestCase<MBMessage>
 	}
 
 	@DeleteAfterTestRun
-	private final List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
+	private final List<MBMessage> _mbMessages = new ArrayList<>();
+
 	@Inject
 	private MBMessageUADTestHelper _mbMessageUADTestHelper;
+
 	@Inject(filter = "component.name=*.MBMessageUADExporter")
 	private UADExporter _uadExporter;
+
 }

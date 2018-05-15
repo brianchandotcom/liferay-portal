@@ -15,45 +15,47 @@
 package com.liferay.message.boards.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.uad.test.MBMessageUADTestHelper;
-
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMessage>
+public class MBMessageUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<MBMessage>
 	implements WhenHasStatusByUserIdField {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
-	public MBMessage addBaseModelWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		MBMessage mbMessage = _mbMessageUADTestHelper.addMBMessageWithStatusByUserId(userId,
-				statusByUserId);
+	public MBMessage addBaseModelWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
+
+		MBMessage mbMessage =
+			_mbMessageUADTestHelper.addMBMessageWithStatusByUserId(
+				userId, statusByUserId);
 
 		_mbMessages.add(mbMessage);
 
@@ -73,6 +75,7 @@ public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMess
 	@Override
 	protected MBMessage addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
+
 		MBMessage mbMessage = _mbMessageUADTestHelper.addMBMessage(userId);
 
 		if (deleteAfterTestRun) {
@@ -85,6 +88,7 @@ public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMess
 	@Override
 	protected void deleteBaseModels(List<MBMessage> baseModels)
 		throws Exception {
+
 		_mbMessageUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -96,15 +100,17 @@ public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMess
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
+
 		MBMessage mbMessage = _mbMessageLocalService.getMBMessage(baseModelPK);
 
 		String userName = mbMessage.getUserName();
 		String statusByUserName = mbMessage.getStatusByUserName();
 
 		if ((mbMessage.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName()) &&
-				(mbMessage.getStatusByUserId() != user.getUserId()) &&
-				!statusByUserName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName()) &&
+			(mbMessage.getStatusByUserId() != user.getUserId()) &&
+			!statusByUserName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -120,12 +126,16 @@ public class MBMessageUADAnonymizerTest extends BaseUADAnonymizerTestCase<MBMess
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	@Inject
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@DeleteAfterTestRun
+	private final List<MBMessage> _mbMessages = new ArrayList<>();
+
 	@Inject
 	private MBMessageUADTestHelper _mbMessageUADTestHelper;
+
 	@Inject(filter = "component.name=*.MBMessageUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

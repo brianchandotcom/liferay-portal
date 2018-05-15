@@ -53,19 +53,13 @@ int index = 0;
 					<li class="default facet-value">
 
 						<%
-						String defaultRangeCssClass = "text-default";
-
-						if (fieldParamSelection.equals("0")) {
-							defaultRangeCssClass = "text-primary";
-						}
-
 						Map<String, Object> data = new HashMap<>();
 
 						data.put("selection", 0);
 						data.put("value", StringPool.BLANK);
 						%>
 
-						<aui:a cssClass="<%= defaultRangeCssClass %>" href="javascript:;">
+						<aui:a cssClass='<%= (Validator.isNull(fieldParamSelection) || fieldParamSelection.equals("0")) ? "facet-term-selected" : "facet-term-unselected" %>' href="javascript:;">
 							<liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" />
 						</aui:a>
 					</li>
@@ -83,10 +77,10 @@ int index = 0;
 						<li class="facet-value">
 
 							<%
-							String rangeCssClass = "text-default";
+							String rangeCssClass = "facet-term-unselected";
 
 							if (fieldParamSelection.equals(String.valueOf(index))) {
-								rangeCssClass = "text-primary";
+								rangeCssClass = "facet-term-selected";
 							}
 
 							data = new HashMap<>();
@@ -118,10 +112,10 @@ int index = 0;
 						String customRangeCssClass = randomNamespace + "custom-range-toggle";
 
 						if (fieldParamSelection.equals(String.valueOf(index + 1))) {
-							customRangeCssClass += " text-primary";
+							customRangeCssClass += " facet-term-selected";
 						}
 						else {
-							customRangeCssClass += " text-default";
+							customRangeCssClass += " facet-term-unselected";
 						}
 
 						TermCollector termCollector = null;

@@ -74,6 +74,10 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 		cpDefinitionSpecificationOptionValuePersistence.update(
 			cpDefinitionSpecificationOptionValue);
 
+		// Commerce product definition
+
+		reindexCPDefinition(cpDefinitionId);
+
 		return cpDefinitionSpecificationOptionValue;
 	}
 

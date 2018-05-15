@@ -31,7 +31,7 @@ import org.junit.Test;
 public class LPKGIndexValidatorLogScannerTest {
 
 	@Test
-	public void scanLogForValidation() throws IOException {
+	public void testScanLogForValidation() throws IOException {
 		String liferayHome = System.getProperty("liferay.home");
 
 		Assert.assertNotNull(

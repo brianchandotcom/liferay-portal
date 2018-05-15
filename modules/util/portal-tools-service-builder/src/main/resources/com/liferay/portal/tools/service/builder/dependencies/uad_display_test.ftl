@@ -22,7 +22,6 @@ import org.junit.runner.RunWith;
 
 /**
  * @author ${author}
- * @generated
  */
 @RunWith(Arquillian.class)
 public class ${entity.name}UADDisplayTest extends BaseUADDisplayTestCase<${entity.name}> {

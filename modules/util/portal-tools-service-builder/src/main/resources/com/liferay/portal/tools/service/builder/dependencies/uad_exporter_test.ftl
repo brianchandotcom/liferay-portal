@@ -25,7 +25,6 @@ import org.junit.runner.RunWith;
 
 /**
  * @author ${author}
- * @generated
  */
 @RunWith(Arquillian.class)
 public class ${entity.name}UADExporterTest extends BaseUADExporterTestCase<${entity.name}> <#if entity.hasEntityColumn("statusByUserId")>implements WhenHasStatusByUserIdField<${entity.name}> </#if>{

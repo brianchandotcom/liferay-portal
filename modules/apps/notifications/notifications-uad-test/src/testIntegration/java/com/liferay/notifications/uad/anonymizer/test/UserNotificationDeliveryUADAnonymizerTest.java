@@ -15,9 +15,7 @@
 package com.liferay.notifications.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.notifications.uad.test.UserNotificationDeliveryUADTestHelper;
-
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
@@ -25,18 +23,16 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,25 +40,33 @@ import java.util.List;
 @RunWith(Arquillian.class)
 public class UserNotificationDeliveryUADAnonymizerTest
 	extends BaseUADAnonymizerTestCase<UserNotificationDelivery> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
-		_userNotificationDeliveryUADTestHelper.cleanUpDependencies(_userNotificationDeliveries);
+		_userNotificationDeliveryUADTestHelper.cleanUpDependencies(
+			_userNotificationDeliveries);
 	}
 
 	@Override
 	protected UserNotificationDelivery addBaseModel(long userId)
 		throws Exception {
+
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected UserNotificationDelivery addBaseModel(long userId,
-		boolean deleteAfterTestRun) throws Exception {
-		UserNotificationDelivery userNotificationDelivery = _userNotificationDeliveryUADTestHelper.addUserNotificationDelivery(userId);
+	protected UserNotificationDelivery addBaseModel(
+			long userId, boolean deleteAfterTestRun)
+		throws Exception {
+
+		UserNotificationDelivery userNotificationDelivery =
+			_userNotificationDeliveryUADTestHelper.addUserNotificationDelivery(
+				userId);
 
 		if (deleteAfterTestRun) {
 			_userNotificationDeliveries.add(userNotificationDelivery);
@@ -74,6 +78,7 @@ public class UserNotificationDeliveryUADAnonymizerTest
 	@Override
 	protected void deleteBaseModels(List<UserNotificationDelivery> baseModels)
 		throws Exception {
+
 		_userNotificationDeliveryUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -85,25 +90,34 @@ public class UserNotificationDeliveryUADAnonymizerTest
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
+
 		return isBaseModelDeleted(baseModelPK);
 	}
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
 		if (_userNotificationDeliveryLocalService.fetchUserNotificationDelivery(
-					baseModelPK) == null) {
+				baseModelPK) == null) {
+
 			return true;
 		}
 
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<UserNotificationDelivery> _userNotificationDeliveries = new ArrayList<UserNotificationDelivery>();
-	@Inject
-	private UserNotificationDeliveryLocalService _userNotificationDeliveryLocalService;
-	@Inject
-	private UserNotificationDeliveryUADTestHelper _userNotificationDeliveryUADTestHelper;
 	@Inject(filter = "component.name=*.UserNotificationDeliveryUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
+	@DeleteAfterTestRun
+	private final List<UserNotificationDelivery> _userNotificationDeliveries =
+		new ArrayList<>();
+
+	@Inject
+	private UserNotificationDeliveryLocalService
+		_userNotificationDeliveryLocalService;
+
+	@Inject
+	private UserNotificationDeliveryUADTestHelper
+		_userNotificationDeliveryUADTestHelper;
+
 }

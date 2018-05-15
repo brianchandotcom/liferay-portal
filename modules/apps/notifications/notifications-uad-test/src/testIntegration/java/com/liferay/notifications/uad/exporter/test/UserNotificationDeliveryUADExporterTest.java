@@ -15,26 +15,22 @@
 package com.liferay.notifications.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.notifications.uad.test.UserNotificationDeliveryUADTestHelper;
-
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,19 +38,25 @@ import java.util.List;
 @RunWith(Arquillian.class)
 public class UserNotificationDeliveryUADExporterTest
 	extends BaseUADExporterTestCase<UserNotificationDelivery> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
-		_userNotificationDeliveryUADTestHelper.cleanUpDependencies(_userNotificationDeliveries);
+		_userNotificationDeliveryUADTestHelper.cleanUpDependencies(
+			_userNotificationDeliveries);
 	}
 
 	@Override
 	protected UserNotificationDelivery addBaseModel(long userId)
 		throws Exception {
-		UserNotificationDelivery userNotificationDelivery = _userNotificationDeliveryUADTestHelper.addUserNotificationDelivery(userId);
+
+		UserNotificationDelivery userNotificationDelivery =
+			_userNotificationDeliveryUADTestHelper.addUserNotificationDelivery(
+				userId);
 
 		_userNotificationDeliveries.add(userNotificationDelivery);
 
@@ -71,10 +73,15 @@ public class UserNotificationDeliveryUADExporterTest
 		return _uadExporter;
 	}
 
-	@DeleteAfterTestRun
-	private final List<UserNotificationDelivery> _userNotificationDeliveries = new ArrayList<UserNotificationDelivery>();
-	@Inject
-	private UserNotificationDeliveryUADTestHelper _userNotificationDeliveryUADTestHelper;
 	@Inject(filter = "component.name=*.UserNotificationDeliveryUADExporter")
 	private UADExporter _uadExporter;
+
+	@DeleteAfterTestRun
+	private final List<UserNotificationDelivery> _userNotificationDeliveries =
+		new ArrayList<>();
+
+	@Inject
+	private UserNotificationDeliveryUADTestHelper
+		_userNotificationDeliveryUADTestHelper;
+
 }

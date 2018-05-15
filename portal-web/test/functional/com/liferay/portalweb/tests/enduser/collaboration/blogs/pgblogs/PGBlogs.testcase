@@ -2122,17 +2122,17 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoPG">
-			<var name="entryTitle" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry2 Content" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="Blogs Entry2 Content" />
-			<var name="entryTitle" value="Blogs Entry2 Title" />
+			<var name="entryContent" value="Blogs Entry1 Content" />
+			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
 
 		<execute macro="User#firstLoginPG" />

@@ -54,7 +54,7 @@
 			<dependency>
 				<artifactId>portlet-api</artifactId>
 				<groupId>javax.portlet</groupId>
-				<version>2.0</version>
+				<version>3.0.0</version>
 			</dependency>
 			<dependency>
 				<artifactId>org.osgi.core</artifactId>

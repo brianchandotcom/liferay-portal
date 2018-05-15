@@ -14,19 +14,26 @@
 
 package com.liferay.portal.uad.test;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEvent;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = SystemEventUADTestHelper.class)
 public class SystemEventUADTestHelper {
+
 	/**
 	 * Implement addSystemEvent() to enable some UAD tests.
 	 *
@@ -35,9 +42,11 @@ public class SystemEventUADTestHelper {
 	 * </p>
 	 */
 	public SystemEvent addSystemEvent(long userId) throws Exception {
-		Assume.assumeTrue(false);
-
-		return null;
+		return _systemEventLocalService.addSystemEvent(
+			userId, TestPropsValues.getGroupId(), Group.class.getName(),
+			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
+			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
+			StringPool.BLANK);
 	}
 
 	/**
@@ -50,4 +59,8 @@ public class SystemEventUADTestHelper {
 	public void cleanUpDependencies(List<SystemEvent> systemEvents)
 		throws Exception {
 	}
+
+	@Reference
+	private SystemEventLocalService _systemEventLocalService;
+
 }

@@ -15,18 +15,21 @@
 package com.liferay.portal.uad.test;
 
 import com.liferay.portal.kernel.model.PortletItem;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.service.PortletItemLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = PortletItemUADTestHelper.class)
 public class PortletItemUADTestHelper {
+
 	/**
 	 * Implement addPortletItem() to enable some UAD tests.
 	 *
@@ -35,9 +38,9 @@ public class PortletItemUADTestHelper {
 	 * </p>
 	 */
 	public PortletItem addPortletItem(long userId) throws Exception {
-		Assume.assumeTrue(false);
-
-		return null;
+		return _portletItemLocalService.addPortletItem(
+			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	/**
@@ -50,4 +53,8 @@ public class PortletItemUADTestHelper {
 	public void cleanUpDependencies(List<PortletItem> portletItems)
 		throws Exception {
 	}
+
+	@Reference
+	private PortletItemLocalService _portletItemLocalService;
+
 }

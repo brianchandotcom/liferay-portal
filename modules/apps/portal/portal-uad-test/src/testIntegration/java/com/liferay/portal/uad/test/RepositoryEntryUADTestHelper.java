@@ -14,19 +14,30 @@
 
 package com.liferay.portal.uad.test;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.RepositoryEntry;
-
-import org.junit.Assume;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = RepositoryEntryUADTestHelper.class)
 public class RepositoryEntryUADTestHelper {
+
 	/**
 	 * Implement addRepositoryEntry() to enable some UAD tests.
 	 *
@@ -34,11 +45,20 @@ public class RepositoryEntryUADTestHelper {
 	 * Several UAD tests depend on creating one or more valid RepositoryEntries with a specified user ID in order to execute correctly. Implement addRepositoryEntry() such that it creates a valid RepositoryEntry with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
 	 * </p>
 	 */
-	public RepositoryEntry addRepositoryEntry(long userId)
-		throws Exception {
-		Assume.assumeTrue(false);
+	public RepositoryEntry addRepositoryEntry(long userId) throws Exception {
+		long classNameId = _portal.getClassNameId(
+			LiferayRepository.class.getName());
 
-		return null;
+		Repository repository = _repositoryLocalService.addRepository(
+			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			classNameId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
+			ServiceContextTestUtil.getServiceContext());
+
+		return _repositoryEntryLocalService.addRepositoryEntry(
+			userId, TestPropsValues.getGroupId(), repository.getRepositoryId(),
+			StringPool.BLANK, ServiceContextTestUtil.getServiceContext());
 	}
 
 	/**
@@ -50,5 +70,20 @@ public class RepositoryEntryUADTestHelper {
 	 */
 	public void cleanUpDependencies(List<RepositoryEntry> repositoryEntries)
 		throws Exception {
+
+		for (RepositoryEntry repositoryEntry : repositoryEntries) {
+			_repositoryLocalService.deleteRepository(
+				repositoryEntry.getRepositoryId());
+		}
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private RepositoryEntryLocalService _repositoryEntryLocalService;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
+
 }

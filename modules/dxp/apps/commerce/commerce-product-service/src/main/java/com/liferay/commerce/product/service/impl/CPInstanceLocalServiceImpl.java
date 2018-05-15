@@ -468,7 +468,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	@Override
 	public String[] getSKUs(long cpDefinitionId) {
 		List<CPInstance> cpInstances = getCPDefinitionInstances(
-			cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		String[] skusArray = new String[cpInstances.size()];
 

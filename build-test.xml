@@ -2385,14 +2385,14 @@ ${tomcat-gc-log}
 		<sequential>
 			<beanshell>
 				<![CDATA[
-					import com.liferay.jenkins.results.parser.AxisTestClassGroup;
 					import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-					import com.liferay.jenkins.results.parser.TestClassGroup;
-					import com.liferay.jenkins.results.parser.TestClassGroupFactory;
+					import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+					import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+					import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
 
 					PortalGitWorkingDirectory portalGitWorkingDirectory = new PortalGitWorkingDirectory(project.getProperty("git.working.branch.name"), project.getProperty("project.dir"));
 
-					TestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), portalGitWorkingDirectory, project.getProperty("env.CI_TEST_SUITE"));
+					BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), portalGitWorkingDirectory, project.getProperty("env.CI_TEST_SUITE"));
 
 					int axisCount = batchTestClassGroup.getAxisCount();
 
@@ -9019,14 +9019,14 @@ if (ppstate.equals("normal")) {
 
 		<beanshell>
 			<![CDATA[
-				import com.liferay.jenkins.results.parser.AxisTestClassGroup;
 				import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-				import com.liferay.jenkins.results.parser.TestClassGroup;
-				import com.liferay.jenkins.results.parser.TestClassGroupFactory;
+				import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
+				import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
+				import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
 
 				PortalGitWorkingDirectory portalGitWorkingDirectory = new PortalGitWorkingDirectory(project.getProperty("git.working.branch.name"), project.getProperty("project.dir"));
 
-				TestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), portalGitWorkingDirectory, project.getProperty("env.CI_TEST_SUITE"));
+				BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), portalGitWorkingDirectory, project.getProperty("env.CI_TEST_SUITE"));
 
 				int axisCount = batchTestClassGroup.getAxisCount();
 

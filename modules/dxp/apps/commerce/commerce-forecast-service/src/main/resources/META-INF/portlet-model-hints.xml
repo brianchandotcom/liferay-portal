@@ -24,6 +24,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceForecastEntryId" type="long" />
 		<field name="date" type="Date" />
+		<field name="lowerValue" type="BigDecimal" />
 		<field name="value" type="BigDecimal" />
+		<field name="upperValue" type="BigDecimal" />
 	</model>
 </model-hints>

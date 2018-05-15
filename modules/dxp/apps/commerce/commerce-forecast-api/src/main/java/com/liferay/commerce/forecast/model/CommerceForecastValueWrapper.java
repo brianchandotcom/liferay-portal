@@ -69,7 +69,9 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceForecastEntryId", getCommerceForecastEntryId());
 		attributes.put("date", getDate());
+		attributes.put("lowerValue", getLowerValue());
 		attributes.put("value", getValue());
+		attributes.put("upperValue", getUpperValue());
 
 		return attributes;
 	}
@@ -126,10 +128,22 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 			setDate(date);
 		}
 
+		BigDecimal lowerValue = (BigDecimal)attributes.get("lowerValue");
+
+		if (lowerValue != null) {
+			setLowerValue(lowerValue);
+		}
+
 		BigDecimal value = (BigDecimal)attributes.get("value");
 
 		if (value != null) {
 			setValue(value);
+		}
+
+		BigDecimal upperValue = (BigDecimal)attributes.get("upperValue");
+
+		if (upperValue != null) {
+			setUpperValue(upperValue);
 		}
 	}
 
@@ -199,6 +213,16 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 	}
 
 	/**
+	* Returns the lower value of this commerce forecast value.
+	*
+	* @return the lower value of this commerce forecast value
+	*/
+	@Override
+	public BigDecimal getLowerValue() {
+		return _commerceForecastValue.getLowerValue();
+	}
+
+	/**
 	* Returns the modified date of this commerce forecast value.
 	*
 	* @return the modified date of this commerce forecast value
@@ -221,6 +245,16 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commerceForecastValue.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the upper value of this commerce forecast value.
+	*
+	* @return the upper value of this commerce forecast value
+	*/
+	@Override
+	public BigDecimal getUpperValue() {
+		return _commerceForecastValue.getUpperValue();
 	}
 
 	/**
@@ -360,6 +394,16 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 	}
 
 	/**
+	* Sets the lower value of this commerce forecast value.
+	*
+	* @param lowerValue the lower value of this commerce forecast value
+	*/
+	@Override
+	public void setLowerValue(BigDecimal lowerValue) {
+		_commerceForecastValue.setLowerValue(lowerValue);
+	}
+
+	/**
 	* Sets the modified date of this commerce forecast value.
 	*
 	* @param modifiedDate the modified date of this commerce forecast value
@@ -387,6 +431,16 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceForecastValue.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the upper value of this commerce forecast value.
+	*
+	* @param upperValue the upper value of this commerce forecast value
+	*/
+	@Override
+	public void setUpperValue(BigDecimal upperValue) {
+		_commerceForecastValue.setUpperValue(upperValue);
 	}
 
 	/**

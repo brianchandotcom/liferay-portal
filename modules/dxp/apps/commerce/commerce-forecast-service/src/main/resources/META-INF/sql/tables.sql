@@ -22,5 +22,7 @@ create table CommerceForecastValue (
 	modifiedDate DATE null,
 	commerceForecastEntryId LONG,
 	date_ DATE null,
-	value DECIMAL(30, 16) null
+	lowerValue DECIMAL(30, 16) null,
+	value DECIMAL(30, 16) null,
+	upperValue DECIMAL(30, 16) null
 );

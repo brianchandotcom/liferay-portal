@@ -44,7 +44,9 @@ public class CommerceForecastValueSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceForecastEntryId(model.getCommerceForecastEntryId());
 		soapModel.setDate(model.getDate());
+		soapModel.setLowerValue(model.getLowerValue());
 		soapModel.setValue(model.getValue());
+		soapModel.setUpperValue(model.getUpperValue());
 
 		return soapModel;
 	}
@@ -164,12 +166,28 @@ public class CommerceForecastValueSoap implements Serializable {
 		_date = date;
 	}
 
+	public BigDecimal getLowerValue() {
+		return _lowerValue;
+	}
+
+	public void setLowerValue(BigDecimal lowerValue) {
+		_lowerValue = lowerValue;
+	}
+
 	public BigDecimal getValue() {
 		return _value;
 	}
 
 	public void setValue(BigDecimal value) {
 		_value = value;
+	}
+
+	public BigDecimal getUpperValue() {
+		return _upperValue;
+	}
+
+	public void setUpperValue(BigDecimal upperValue) {
+		_upperValue = upperValue;
 	}
 
 	private long _commerceForecastValueId;
@@ -180,5 +198,7 @@ public class CommerceForecastValueSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _commerceForecastEntryId;
 	private Date _date;
+	private BigDecimal _lowerValue;
 	private BigDecimal _value;
+	private BigDecimal _upperValue;
 }

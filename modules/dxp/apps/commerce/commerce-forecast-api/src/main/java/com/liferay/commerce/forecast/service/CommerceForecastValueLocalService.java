@@ -75,8 +75,8 @@ public interface CommerceForecastValueLocalService extends BaseLocalService,
 		CommerceForecastValue commerceForecastValue);
 
 	public CommerceForecastValue addCommerceForecastValue(long userId,
-		long commerceForecastEntryId, Date date, BigDecimal value)
-		throws PortalException;
+		long commerceForecastEntryId, Date date, BigDecimal lowerValue,
+		BigDecimal value, BigDecimal upperValue) throws PortalException;
 
 	/**
 	* Creates a new commerce forecast value with the primary key. Does not add the commerce forecast value to the database.

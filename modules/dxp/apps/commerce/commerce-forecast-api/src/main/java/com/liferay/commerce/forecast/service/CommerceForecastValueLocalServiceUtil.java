@@ -56,11 +56,12 @@ public class CommerceForecastValueLocalServiceUtil {
 
 	public static com.liferay.commerce.forecast.model.CommerceForecastValue addCommerceForecastValue(
 		long userId, long commerceForecastEntryId, java.util.Date date,
-		java.math.BigDecimal value)
+		java.math.BigDecimal lowerValue, java.math.BigDecimal value,
+		java.math.BigDecimal upperValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceForecastValue(userId, commerceForecastEntryId,
-			date, value);
+			date, lowerValue, value, upperValue);
 	}
 
 	/**

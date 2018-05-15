@@ -76,7 +76,9 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceForecastEntryId", Types.BIGINT },
 			{ "date_", Types.TIMESTAMP },
-			{ "value", Types.DECIMAL }
+			{ "lowerValue", Types.DECIMAL },
+			{ "value", Types.DECIMAL },
+			{ "upperValue", Types.DECIMAL }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -89,10 +91,12 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceForecastEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("date_", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("lowerValue", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("value", Types.DECIMAL);
+		TABLE_COLUMNS_MAP.put("upperValue", Types.DECIMAL);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceForecastValue (commerceForecastValueId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceForecastEntryId LONG,date_ DATE null,value DECIMAL(30, 16) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceForecastValue (commerceForecastValueId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceForecastEntryId LONG,date_ DATE null,lowerValue DECIMAL(30, 16) null,value DECIMAL(30, 16) null,upperValue DECIMAL(30, 16) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceForecastValue";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceForecastValue.date ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceForecastValue.date_ ASC";
@@ -158,7 +162,9 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceForecastEntryId", getCommerceForecastEntryId());
 		attributes.put("date", getDate());
+		attributes.put("lowerValue", getLowerValue());
 		attributes.put("value", getValue());
+		attributes.put("upperValue", getUpperValue());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -218,10 +224,22 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 			setDate(date);
 		}
 
+		BigDecimal lowerValue = (BigDecimal)attributes.get("lowerValue");
+
+		if (lowerValue != null) {
+			setLowerValue(lowerValue);
+		}
+
 		BigDecimal value = (BigDecimal)attributes.get("value");
 
 		if (value != null) {
 			setValue(value);
+		}
+
+		BigDecimal upperValue = (BigDecimal)attributes.get("upperValue");
+
+		if (upperValue != null) {
+			setUpperValue(upperValue);
 		}
 	}
 
@@ -355,6 +373,16 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 	}
 
 	@Override
+	public BigDecimal getLowerValue() {
+		return _lowerValue;
+	}
+
+	@Override
+	public void setLowerValue(BigDecimal lowerValue) {
+		_lowerValue = lowerValue;
+	}
+
+	@Override
 	public BigDecimal getValue() {
 		return _value;
 	}
@@ -362,6 +390,16 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 	@Override
 	public void setValue(BigDecimal value) {
 		_value = value;
+	}
+
+	@Override
+	public BigDecimal getUpperValue() {
+		return _upperValue;
+	}
+
+	@Override
+	public void setUpperValue(BigDecimal upperValue) {
+		_upperValue = upperValue;
 	}
 
 	public long getColumnBitmask() {
@@ -403,7 +441,9 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		commerceForecastValueImpl.setModifiedDate(getModifiedDate());
 		commerceForecastValueImpl.setCommerceForecastEntryId(getCommerceForecastEntryId());
 		commerceForecastValueImpl.setDate(getDate());
+		commerceForecastValueImpl.setLowerValue(getLowerValue());
 		commerceForecastValueImpl.setValue(getValue());
+		commerceForecastValueImpl.setUpperValue(getUpperValue());
 
 		commerceForecastValueImpl.resetOriginalValues();
 
@@ -522,14 +562,18 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 			commerceForecastValueCacheModel.date = Long.MIN_VALUE;
 		}
 
+		commerceForecastValueCacheModel.lowerValue = getLowerValue();
+
 		commerceForecastValueCacheModel.value = getValue();
+
+		commerceForecastValueCacheModel.upperValue = getUpperValue();
 
 		return commerceForecastValueCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{commerceForecastValueId=");
 		sb.append(getCommerceForecastValueId());
@@ -547,8 +591,12 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		sb.append(getCommerceForecastEntryId());
 		sb.append(", date=");
 		sb.append(getDate());
+		sb.append(", lowerValue=");
+		sb.append(getLowerValue());
 		sb.append(", value=");
 		sb.append(getValue());
+		sb.append(", upperValue=");
+		sb.append(getUpperValue());
 		sb.append("}");
 
 		return sb.toString();
@@ -556,7 +604,7 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.forecast.model.CommerceForecastValue");
@@ -595,8 +643,16 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		sb.append(getDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lowerValue</column-name><column-value><![CDATA[");
+		sb.append(getLowerValue());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>value</column-name><column-value><![CDATA[");
 		sb.append(getValue());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>upperValue</column-name><column-value><![CDATA[");
+		sb.append(getUpperValue());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -620,7 +676,9 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 	private boolean _setOriginalCommerceForecastEntryId;
 	private Date _date;
 	private Date _originalDate;
+	private BigDecimal _lowerValue;
 	private BigDecimal _value;
+	private BigDecimal _upperValue;
 	private long _columnBitmask;
 	private CommerceForecastValue _escapedModel;
 }

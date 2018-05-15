@@ -67,7 +67,7 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{commerceForecastValueId=");
 		sb.append(commerceForecastValueId);
@@ -85,8 +85,12 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 		sb.append(commerceForecastEntryId);
 		sb.append(", date=");
 		sb.append(date);
+		sb.append(", lowerValue=");
+		sb.append(lowerValue);
 		sb.append(", value=");
 		sb.append(value);
+		sb.append(", upperValue=");
+		sb.append(upperValue);
 		sb.append("}");
 
 		return sb.toString();
@@ -130,7 +134,9 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 			commerceForecastValueImpl.setDate(new Date(date));
 		}
 
+		commerceForecastValueImpl.setLowerValue(lowerValue);
 		commerceForecastValueImpl.setValue(value);
+		commerceForecastValueImpl.setUpperValue(upperValue);
 
 		commerceForecastValueImpl.resetOriginalValues();
 
@@ -151,7 +157,9 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 
 		commerceForecastEntryId = objectInput.readLong();
 		date = objectInput.readLong();
+		lowerValue = (BigDecimal)objectInput.readObject();
 		value = (BigDecimal)objectInput.readObject();
+		upperValue = (BigDecimal)objectInput.readObject();
 	}
 
 	@Override
@@ -175,7 +183,9 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 
 		objectOutput.writeLong(commerceForecastEntryId);
 		objectOutput.writeLong(date);
+		objectOutput.writeObject(lowerValue);
 		objectOutput.writeObject(value);
+		objectOutput.writeObject(upperValue);
 	}
 
 	public long commerceForecastValueId;
@@ -186,5 +196,7 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 	public long modifiedDate;
 	public long commerceForecastEntryId;
 	public long date;
+	public BigDecimal lowerValue;
 	public BigDecimal value;
+	public BigDecimal upperValue;
 }

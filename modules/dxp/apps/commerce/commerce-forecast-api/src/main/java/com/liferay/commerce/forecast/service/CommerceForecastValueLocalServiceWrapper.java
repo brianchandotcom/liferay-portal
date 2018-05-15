@@ -49,10 +49,11 @@ public class CommerceForecastValueLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.forecast.model.CommerceForecastValue addCommerceForecastValue(
 		long userId, long commerceForecastEntryId, java.util.Date date,
-		java.math.BigDecimal value)
+		java.math.BigDecimal lowerValue, java.math.BigDecimal value,
+		java.math.BigDecimal upperValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceForecastValueLocalService.addCommerceForecastValue(userId,
-			commerceForecastEntryId, date, value);
+			commerceForecastEntryId, date, lowerValue, value, upperValue);
 	}
 
 	/**

@@ -31,6 +31,8 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commerceForecastEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property column="date_" name="date" type="org.hibernate.type.TimestampType" />
+		<property name="lowerValue" type="org.hibernate.type.BigDecimalType" />
 		<property name="value" type="org.hibernate.type.BigDecimalType" />
+		<property name="upperValue" type="org.hibernate.type.BigDecimalType" />
 	</class>
 </hibernate-mapping>

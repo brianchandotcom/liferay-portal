@@ -207,6 +207,20 @@ public interface CommerceForecastValueModel extends AuditedModel,
 	public void setDate(Date date);
 
 	/**
+	 * Returns the lower value of this commerce forecast value.
+	 *
+	 * @return the lower value of this commerce forecast value
+	 */
+	public BigDecimal getLowerValue();
+
+	/**
+	 * Sets the lower value of this commerce forecast value.
+	 *
+	 * @param lowerValue the lower value of this commerce forecast value
+	 */
+	public void setLowerValue(BigDecimal lowerValue);
+
+	/**
 	 * Returns the value of this commerce forecast value.
 	 *
 	 * @return the value of this commerce forecast value
@@ -219,6 +233,20 @@ public interface CommerceForecastValueModel extends AuditedModel,
 	 * @param value the value of this commerce forecast value
 	 */
 	public void setValue(BigDecimal value);
+
+	/**
+	 * Returns the upper value of this commerce forecast value.
+	 *
+	 * @return the upper value of this commerce forecast value
+	 */
+	public BigDecimal getUpperValue();
+
+	/**
+	 * Sets the upper value of this commerce forecast value.
+	 *
+	 * @param upperValue the upper value of this commerce forecast value
+	 */
+	public void setUpperValue(BigDecimal upperValue);
 
 	@Override
 	public boolean isNew();

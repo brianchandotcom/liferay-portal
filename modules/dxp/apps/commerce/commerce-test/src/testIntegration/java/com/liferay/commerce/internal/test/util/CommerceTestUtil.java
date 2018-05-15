@@ -15,14 +15,19 @@
 package com.liferay.commerce.internal.test.util;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
+import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -66,6 +71,28 @@ public class CommerceTestUtil {
 			commerceOrderId, cpInstanceId, RandomTestUtil.randomInt(),
 			RandomTestUtil.randomInt(), null,
 			new BigDecimal(RandomTestUtil.nextDouble()), null, serviceContext);
+	}
+
+	public static CommerceWarehouse addCommerceWarehouse(long groupId)
+		throws PortalException {
+
+		CommerceCountry commerceCountry =
+			CommerceCountryLocalServiceUtil.fetchCommerceCountry(groupId, 380);
+
+		CommerceRegion commerceRegion =
+			CommerceRegionLocalServiceUtil.getCommerceRegion(
+				commerceCountry.getCommerceCountryId(), "VE");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CommerceWarehouseLocalServiceUtil.addCommerceWarehouse(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), commerceRegion.getCommerceRegionId(),
+			commerceCountry.getCommerceCountryId(), 45.4386111, 12.3266667,
+			serviceContext);
 	}
 
 	public static CommerceWarehouse addCommerceWarehouse(

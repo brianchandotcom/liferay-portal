@@ -1030,25 +1030,19 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-			<var name="key_menuItem" value="Folder" />
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Name Description 1" />
+			<var name="folderName" value="WC Folder Name 1" />
 		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="WC Folder Name 1" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
 
 		<execute macro="WebContent#getAssetId">
 			<return from="assetId" name="webContentFolderId1" />
 			<var name="folderAsset" value="WC Folder Name 1" />
 		</execute>
 
-		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="WC Folder Name 1">
-			<var name="key_webContentTitle" value="WC Folder Name 1" />
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name 1" />
+			<var name="webContentTitle" value="WC Folder Name 1" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1059,12 +1053,8 @@
 			<var name="webContentTitle" value="apple" />
 		</execute>
 
-		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON">
-			<var name="key_webContentTitle" value="apple" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="apple" />
 		</execute>
 
 		<execute macro="WebContent#addWithTagCP">
@@ -1077,25 +1067,19 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
-			<var name="key_menuItem" value="Folder" />
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Name Description 2" />
+			<var name="folderName" value="WC Folder Name 2" />
 		</execute>
-
-		<execute macro="PortletEntry#inputName">
-			<var name="name" value="WC Folder Name 2" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
 
 		<execute macro="WebContent#getAssetId">
 			<return from="assetId" name="webContentFolderId2" />
 			<var name="folderAsset" value="WC Folder Name 2" />
 		</execute>
 
-		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="WC Folder Name 2">
-			<var name="key_webContentTitle" value="WC Folder Name 2" />
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name 2" />
+			<var name="webContentTitle" value="WC Folder Name 2" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />

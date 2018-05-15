@@ -15,35 +15,34 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.layout.uad.test.LayoutPrototypeUADTestHelper;
-
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class LayoutPrototypeUADExporterTest extends BaseUADExporterTestCase<LayoutPrototype> {
+public class LayoutPrototypeUADExporterTest
+	extends BaseUADExporterTestCase<LayoutPrototype> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -51,9 +50,9 @@ public class LayoutPrototypeUADExporterTest extends BaseUADExporterTestCase<Layo
 	}
 
 	@Override
-	protected LayoutPrototype addBaseModel(long userId)
-		throws Exception {
-		LayoutPrototype layoutPrototype = _layoutPrototypeUADTestHelper.addLayoutPrototype(userId);
+	protected LayoutPrototype addBaseModel(long userId) throws Exception {
+		LayoutPrototype layoutPrototype =
+			_layoutPrototypeUADTestHelper.addLayoutPrototype(userId);
 
 		_layoutPrototypes.add(layoutPrototype);
 
@@ -71,9 +70,12 @@ public class LayoutPrototypeUADExporterTest extends BaseUADExporterTestCase<Layo
 	}
 
 	@DeleteAfterTestRun
-	private final List<LayoutPrototype> _layoutPrototypes = new ArrayList<LayoutPrototype>();
+	private final List<LayoutPrototype> _layoutPrototypes = new ArrayList<>();
+
 	@Inject
 	private LayoutPrototypeUADTestHelper _layoutPrototypeUADTestHelper;
+
 	@Inject(filter = "component.name=*.LayoutPrototypeUADExporter")
 	private UADExporter _uadExporter;
+
 }

@@ -15,9 +15,7 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.layout.uad.test.LayoutBranchUADTestHelper;
-
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
@@ -25,27 +23,28 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class LayoutBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<LayoutBranch> {
+public class LayoutBranchUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<LayoutBranch> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -60,7 +59,9 @@ public class LayoutBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<Lay
 	@Override
 	protected LayoutBranch addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
-		LayoutBranch layoutBranch = _layoutBranchUADTestHelper.addLayoutBranch(userId);
+
+		LayoutBranch layoutBranch = _layoutBranchUADTestHelper.addLayoutBranch(
+			userId);
 
 		if (deleteAfterTestRun) {
 			_layoutBranchs.add(layoutBranch);
@@ -72,6 +73,7 @@ public class LayoutBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<Lay
 	@Override
 	protected void deleteBaseModels(List<LayoutBranch> baseModels)
 		throws Exception {
+
 		_layoutBranchUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -83,12 +85,15 @@ public class LayoutBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<Lay
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		LayoutBranch layoutBranch = _layoutBranchLocalService.getLayoutBranch(baseModelPK);
+
+		LayoutBranch layoutBranch = _layoutBranchLocalService.getLayoutBranch(
+			baseModelPK);
 
 		String userName = layoutBranch.getUserName();
 
 		if ((layoutBranch.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -104,12 +109,16 @@ public class LayoutBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<Lay
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<LayoutBranch> _layoutBranchs = new ArrayList<LayoutBranch>();
 	@Inject
 	private LayoutBranchLocalService _layoutBranchLocalService;
+
+	@DeleteAfterTestRun
+	private final List<LayoutBranch> _layoutBranchs = new ArrayList<>();
+
 	@Inject
 	private LayoutBranchUADTestHelper _layoutBranchUADTestHelper;
+
 	@Inject(filter = "component.name=*.LayoutBranchUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

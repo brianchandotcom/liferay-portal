@@ -15,9 +15,7 @@
 package com.liferay.layout.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.layout.uad.test.LayoutSetBranchUADTestHelper;
-
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
@@ -25,27 +23,28 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class LayoutSetBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<LayoutSetBranch> {
+public class LayoutSetBranchUADAnonymizerTest
+	extends BaseUADAnonymizerTestCase<LayoutSetBranch> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -53,15 +52,17 @@ public class LayoutSetBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<
 	}
 
 	@Override
-	protected LayoutSetBranch addBaseModel(long userId)
-		throws Exception {
+	protected LayoutSetBranch addBaseModel(long userId) throws Exception {
 		return addBaseModel(userId, true);
 	}
 
 	@Override
-	protected LayoutSetBranch addBaseModel(long userId,
-		boolean deleteAfterTestRun) throws Exception {
-		LayoutSetBranch layoutSetBranch = _layoutSetBranchUADTestHelper.addLayoutSetBranch(userId);
+	protected LayoutSetBranch addBaseModel(
+			long userId, boolean deleteAfterTestRun)
+		throws Exception {
+
+		LayoutSetBranch layoutSetBranch =
+			_layoutSetBranchUADTestHelper.addLayoutSetBranch(userId);
 
 		if (deleteAfterTestRun) {
 			_layoutSetBranchs.add(layoutSetBranch);
@@ -73,6 +74,7 @@ public class LayoutSetBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<
 	@Override
 	protected void deleteBaseModels(List<LayoutSetBranch> baseModels)
 		throws Exception {
+
 		_layoutSetBranchUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -84,12 +86,15 @@ public class LayoutSetBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
-		LayoutSetBranch layoutSetBranch = _layoutSetBranchLocalService.getLayoutSetBranch(baseModelPK);
+
+		LayoutSetBranch layoutSetBranch =
+			_layoutSetBranchLocalService.getLayoutSetBranch(baseModelPK);
 
 		String userName = layoutSetBranch.getUserName();
 
 		if ((layoutSetBranch.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -98,19 +103,25 @@ public class LayoutSetBranchUADAnonymizerTest extends BaseUADAnonymizerTestCase<
 
 	@Override
 	protected boolean isBaseModelDeleted(long baseModelPK) {
-		if (_layoutSetBranchLocalService.fetchLayoutSetBranch(baseModelPK) == null) {
+		if (_layoutSetBranchLocalService.fetchLayoutSetBranch(baseModelPK) ==
+				null) {
+
 			return true;
 		}
 
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<LayoutSetBranch>();
 	@Inject
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@DeleteAfterTestRun
+	private final List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<>();
+
 	@Inject
 	private LayoutSetBranchUADTestHelper _layoutSetBranchUADTestHelper;
+
 	@Inject(filter = "component.name=*.LayoutSetBranchUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

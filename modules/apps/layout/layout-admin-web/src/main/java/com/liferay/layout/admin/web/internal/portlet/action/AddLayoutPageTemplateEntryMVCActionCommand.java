@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -77,6 +78,12 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 					layoutPageTemplateCollectionId, name, type, null,
 					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
+			if (SessionErrors.contains(
+					actionRequest, "layoutPageTemplateEntryNameInvalid")) {
+
+				addSuccessMessage(actionRequest, actionResponse);
+			}
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put(
@@ -88,7 +95,10 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException pe) {
-			hideDefaultSuccessMessage(actionRequest);
+			SessionErrors.add(
+				actionRequest, "layoutPageTemplateEntryNameInvalid");
+
+			hideDefaultErrorMessage(actionRequest);
 
 			_layoutPageTemplateEntryExceptionRequestHandler.
 				handlePortalException(actionRequest, actionResponse, pe);

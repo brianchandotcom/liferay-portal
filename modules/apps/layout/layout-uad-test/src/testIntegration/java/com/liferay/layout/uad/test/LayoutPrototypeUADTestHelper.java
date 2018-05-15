@@ -31,13 +31,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = LayoutPrototypeUADTestHelper.class)
 public class LayoutPrototypeUADTestHelper {
 
-	/**
-	 * Implement addLayoutPrototype() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid LayoutPrototypes with a specified user ID in order to execute correctly. Implement addLayoutPrototype() such that it creates a valid LayoutPrototype with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public LayoutPrototype addLayoutPrototype(long userId) throws Exception {
 		return _layoutPrototypeLocalService.addLayoutPrototype(
 			userId, TestPropsValues.getCompanyId(),
@@ -46,13 +39,6 @@ public class LayoutPrototypeUADTestHelper {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<LayoutPrototype> layoutPrototypes) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid LayoutPrototypes with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<LayoutPrototype> layoutPrototypes) such that any additional objects created during the construction of layoutPrototypes are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 	}

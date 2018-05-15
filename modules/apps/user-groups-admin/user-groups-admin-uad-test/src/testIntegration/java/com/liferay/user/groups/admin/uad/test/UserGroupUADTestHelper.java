@@ -33,13 +33,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UserGroupUADTestHelper.class)
 public class UserGroupUADTestHelper {
 
-	/**
-	 * Implement addUserGroup() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid UserGroups with a specified user ID in order to execute correctly. Implement addUserGroup() such that it creates a valid UserGroup with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public UserGroup addUserGroup(long userId) throws Exception {
 		String name = RandomTestUtil.randomString(
 			NumericStringRandomizerBumper.INSTANCE,
@@ -51,13 +44,6 @@ public class UserGroupUADTestHelper {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<UserGroup> userGroups) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid UserGroups with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<UserGroup> userGroups) such that any additional objects created during the construction of userGroups are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(List<UserGroup> userGroups)
 		throws Exception {
 	}

@@ -39,13 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = LayoutFriendlyURLUADTestHelper.class)
 public class LayoutFriendlyURLUADTestHelper {
 
-	/**
-	 * Implement addLayoutFriendlyURL() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid LayoutFriendlyURLs with a specified user ID in order to execute correctly. Implement addLayoutFriendlyURL() such that it creates a valid LayoutFriendlyURL with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public LayoutFriendlyURL addLayoutFriendlyURL(long userId)
 		throws Exception {
 
@@ -68,13 +61,6 @@ public class LayoutFriendlyURLUADTestHelper {
 			layout.getPlid(), layout.getDefaultLanguageId());
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<LayoutFriendlyURL> layoutFriendlyURLs) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid LayoutFriendlyURLs with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<LayoutFriendlyURL> layoutFriendlyURLs) such that any additional objects created during the construction of layoutFriendlyURLs are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(List<LayoutFriendlyURL> layoutFriendlyURLs)
 		throws Exception {
 

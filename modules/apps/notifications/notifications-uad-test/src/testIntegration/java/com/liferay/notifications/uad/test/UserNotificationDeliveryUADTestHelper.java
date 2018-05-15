@@ -32,13 +32,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UserNotificationDeliveryUADTestHelper {
 
-	/**
-	 * Implement addUserNotificationDelivery() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid UserNotificationDeliveries with a specified user ID in order to execute correctly. Implement addUserNotificationDelivery() such that it creates a valid UserNotificationDelivery with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public UserNotificationDelivery addUserNotificationDelivery(long userId)
 		throws Exception {
 
@@ -49,13 +42,6 @@ public class UserNotificationDeliveryUADTestHelper {
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<UserNotificationDelivery> userNotificationDeliveries) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid UserNotificationDeliveries with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<UserNotificationDelivery> userNotificationDeliveries) such that any additional objects created during the construction of userNotificationDeliveries are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(
 			List<UserNotificationDelivery> userNotificationDeliveries)
 		throws Exception {

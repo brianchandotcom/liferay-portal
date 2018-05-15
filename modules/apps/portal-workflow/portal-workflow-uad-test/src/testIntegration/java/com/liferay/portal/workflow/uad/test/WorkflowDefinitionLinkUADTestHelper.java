@@ -32,13 +32,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WorkflowDefinitionLinkUADTestHelper {
 
-	/**
-	 * Implement addWorkflowDefinitionLink() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid WorkflowDefinitionLinks with a specified user ID in order to execute correctly. Implement addWorkflowDefinitionLink() such that it creates a valid WorkflowDefinitionLink with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public WorkflowDefinitionLink addWorkflowDefinitionLink(long userId)
 		throws Exception {
 
@@ -48,13 +41,6 @@ public class WorkflowDefinitionLinkUADTestHelper {
 			RandomTestUtil.randomString(), 0);
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<WorkflowDefinitionLink> workflowDefinitionLinks) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid WorkflowDefinitionLinks with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<WorkflowDefinitionLink> workflowDefinitionLinks) such that any additional objects created during the construction of workflowDefinitionLinks are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(
 			List<WorkflowDefinitionLink> workflowDefinitionLinks)
 		throws Exception {

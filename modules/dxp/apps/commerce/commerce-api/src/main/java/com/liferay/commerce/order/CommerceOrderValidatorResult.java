@@ -17,12 +17,10 @@ package com.liferay.commerce.order;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.Serializable;
-
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderValidatorResult implements Serializable {
+public class CommerceOrderValidatorResult {
 
 	public CommerceOrderValidatorResult(boolean valid) {
 		this(0, valid, StringPool.BLANK, StringPool.BLANK);

@@ -27,6 +27,7 @@ import java.util.Collection;
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -150,7 +151,10 @@ public class ThreadLocalScopeContextScopeChecker
 	private final ThreadLocal<Long> _companyIdThreadLocal =
 		ThreadLocal.withInitial(() -> 0L);
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	private OAuth2ScopeGrantLocalService _oAuth2ScopeGrantLocalService;
 
 }

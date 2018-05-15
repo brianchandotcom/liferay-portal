@@ -102,13 +102,13 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private JSONFactory _jsonFactory;
+	private volatile JSONFactory _jsonFactory;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private NPMRegistry _npmRegistry;
+	private volatile NPMRegistry _npmRegistry;
 
 	private ServiceRegistration<NPMResolver> _serviceRegistration;
 

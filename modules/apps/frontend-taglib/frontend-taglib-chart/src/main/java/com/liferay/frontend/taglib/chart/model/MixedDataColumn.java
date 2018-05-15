@@ -23,10 +23,11 @@ import java.util.List;
 public class MixedDataColumn extends Column {
 
 	/**
-	 * Creates a new MixedDataColumn.
+	 * Creates a new mixed data column.
 	 *
-	 * @param id the ID of the column
-	 * @param values the values for the column. Each value can be an instance, array, or {@link Collection} of {@link Number}s.
+	 * @param id the column's ID
+	 * @param values the column's values. Each value can be an instance, array,
+	 *        or {@link Collection} of {@link Number}s.
 	 */
 	public MixedDataColumn(String id, Collection<?> values) {
 		super(id);
@@ -35,10 +36,11 @@ public class MixedDataColumn extends Column {
 	}
 
 	/**
-	 * Creates a new MixedDataColumn.
+	 * Creates a new mixed data column.
 	 *
-	 * @param id the ID of the column
-	 * @param values the values for the column. Each value can be an instance or array of {@link Number}s.
+	 * @param id the column's ID
+	 * @param values the column's values. Each value can be an instance or array
+	 *        of {@link Number}s.
 	 */
 	public MixedDataColumn(String id, Object... values) {
 		super(id);
@@ -47,7 +49,7 @@ public class MixedDataColumn extends Column {
 	}
 
 	/**
-	 * Adds a value to this column.
+	 * Adds a value to the column.
 	 *
 	 * @param value an array of {@link Number}s for the column values
 	 */
@@ -73,9 +75,9 @@ public class MixedDataColumn extends Column {
 	}
 
 	/**
-	 * Adds one or several values to this column.
+	 * Adds one or several values to the column.
 	 *
-	 * @param values a {@link Collection} of {@link Number}s for the column values
+	 * @param values the {@link Number}s for the column values
 	 */
 	public void addValues(Collection<?> values) {
 		for (Object value : values) {
@@ -84,7 +86,7 @@ public class MixedDataColumn extends Column {
 	}
 
 	/**
-	 * Adds one or several values to this column.
+	 * Adds one or several values to the column.
 	 *
 	 * @param values an array of {@link Number}s for the column values
 	 */

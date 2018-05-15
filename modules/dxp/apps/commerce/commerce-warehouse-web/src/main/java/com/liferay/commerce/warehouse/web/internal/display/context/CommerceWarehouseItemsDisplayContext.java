@@ -28,15 +28,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -101,23 +98,8 @@ public class CommerceWarehouseItemsDisplayContext {
 			cpInstance.getCPInstanceId());
 	}
 
-	public List<CommerceWarehouse> getCommerceWarehouses()
-		throws PortalException {
-
-		List<CommerceWarehouse> commerceWarehouses = _getCommerceWarehouses();
-
-		if (!commerceWarehouses.isEmpty()) {
-			return commerceWarehouses;
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			cpRequestHelper.getRenderRequest());
-
-		CommerceWarehouse commerceWarehouse =
-			_commerceWarehouseService.getDefaultCommerceWarehouse(
-				serviceContext);
-
-		return Collections.singletonList(commerceWarehouse);
+	public List<CommerceWarehouse> getCommerceWarehouses() {
+		return _getCommerceWarehouses();
 	}
 
 	public CPInstance getCPInstance() throws PortalException {

@@ -43,57 +43,33 @@ public class CommerceServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		verifyCountries();
-		verifyDefaultWarehouses();
+		verifyGroups();
 	}
 
-	protected void verifyCountries() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Company> companies = _companyLocalService.getCompanies();
+	protected void verifyCountries(Group group, ServiceContext serviceContext)
+		throws Exception {
 
-			for (Company company : companies) {
-				List<Group> groups = _groupLocalService.getGroups(
-					company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
-					true);
-
-				for (Group group : groups) {
-					verifyCountries(group);
-				}
-			}
-		}
-	}
-
-	protected void verifyCountries(Group group) throws Exception {
 		if (_commerceCountryLocalService.getCommerceCountriesCount(
 				group.getGroupId()) == 0) {
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
-			serviceContext.setLanguageId(group.getDefaultLanguageId());
-			serviceContext.setScopeGroupId(group.getGroupId());
-			serviceContext.setUserId(group.getCreatorUserId());
 
 			_commerceCountryLocalService.importDefaultCountries(serviceContext);
 		}
 	}
 
-	protected void verifyDefaultWarehouse(Group group) throws PortalException {
-		ServiceContext serviceContext = new ServiceContext();
+	protected void verifyDefaultWarehouse(ServiceContext serviceContext)
+		throws PortalException {
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setLanguageId(group.getDefaultLanguageId());
-		serviceContext.setScopeGroupId(group.getGroupId());
-		serviceContext.setUserId(group.getCreatorUserId());
-
-		_commerceWarehouseLocalService.getDefaultCommerceWarehouse(
+		_commerceWarehouseLocalService.importDefaultCommerceWarehouse(
 			serviceContext);
 	}
 
-	protected void verifyDefaultWarehouses() throws Exception {
+	protected void verifyGroups() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+
 			List<Company> companies = _companyLocalService.getCompanies();
 
 			for (Company company : companies) {
@@ -102,7 +78,12 @@ public class CommerceServiceVerifyProcess extends VerifyProcess {
 					true);
 
 				for (Group group : groups) {
-					verifyDefaultWarehouse(group);
+					serviceContext.setLanguageId(group.getDefaultLanguageId());
+					serviceContext.setScopeGroupId(group.getGroupId());
+					serviceContext.setUserId(group.getCreatorUserId());
+
+					verifyCountries(group, serviceContext);
+					verifyDefaultWarehouse(serviceContext);
 				}
 			}
 		}

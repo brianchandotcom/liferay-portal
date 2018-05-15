@@ -57,7 +57,8 @@ public class StagingProcessesWebPublishTemplatesToolbarDisplayContext {
 							String.valueOf(stagingGroupId), "layoutSetBranchId",
 							ParamUtil.getString(_request, "layoutSetBranchId"),
 							"layoutSetBranchName",
-							ParamUtil.getString(_request, "layoutSetBranchName"),
+							ParamUtil.getString(
+								_request, "layoutSetBranchName"),
 							"privateLayout", Boolean.FALSE.toString());
 
 						dropdownItem.setLabel(

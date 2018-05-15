@@ -98,8 +98,9 @@ public class StagingProcessesWebToolbarDisplayContext {
 				}
 
 				List<ExportImportConfiguration> exportImportConfigurations =
-					ExportImportConfigurationLocalServiceUtil.getExportImportConfigurations(
-						stagingGroupId, configurationType);
+					ExportImportConfigurationLocalServiceUtil.
+						getExportImportConfigurations(
+							stagingGroupId, configurationType);
 
 				if (hasPermission) {
 					for (ExportImportConfiguration exportImportConfiguration :
@@ -107,10 +108,13 @@ public class StagingProcessesWebToolbarDisplayContext {
 
 						addRestDropdownItem(
 							dropdownItem -> {
-								dropdownItem.setHref(getRenderURL(), "mvcRenderCommandName", "publishLayouts",
-									Constants.CMD, cmd,
+								dropdownItem.setHref(
+									getRenderURL(), "mvcRenderCommandName",
+									"publishLayouts", Constants.CMD, cmd,
 									"exportImportConfigurationId",
-									String.valueOf(exportImportConfiguration.getExportImportConfigurationId()),
+									String.valueOf(
+										exportImportConfiguration.
+											getExportImportConfigurationId()),
 									"groupId", String.valueOf(stagingGroupId));
 								dropdownItem.setLabel(
 									exportImportConfiguration.getName());
@@ -119,8 +123,9 @@ public class StagingProcessesWebToolbarDisplayContext {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {
-							dropdownItem.setHref(getRenderURL(), "mvcRenderCommandName", "publishLayouts",
-								Constants.CMD, cmd, "groupId",
+							dropdownItem.setHref(
+								getRenderURL(), "mvcRenderCommandName",
+								"publishLayouts", Constants.CMD, cmd, "groupId",
 								String.valueOf(stagingGroupId), "privateLayout",
 								Boolean.FALSE.toString());
 							dropdownItem.setLabel(
@@ -160,33 +165,14 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	public String getSortingURL() {
-		PortletURL sortingURL = getRenderURL();
+		PortletURL sortingURL = _getStagingRenderURL();
 
-		sortingURL.setParameter(
-			"groupId", String.valueOf(ParamUtil.getLong(_request, "groupId")));
-		sortingURL.setParameter(
-			"privateLayout",
-			String.valueOf(ParamUtil.getBoolean(_request, "privateLayout")));
-		sortingURL.setParameter(
-			"displayStyle",
-			ParamUtil.getString(_request, "displayStyle", "descriptive"));
-		sortingURL.setParameter(
-			"orderByCol", ParamUtil.getString(_request, "orderByCol"));
-
-		String orderByType = ParamUtil.getString(_request, "orderByType");
-
-		if (orderByType.equals("asc")) {
+		if (getSortingOrder().equals("asc")) {
 			sortingURL.setParameter("orderByType", "desc");
 		}
 		else {
 			sortingURL.setParameter("orderByType", "asc");
 		}
-
-		sortingURL.setParameter(
-			"navigation", ParamUtil.getString(_request, "navigation", "all"));
-		sortingURL.setParameter(
-			"searchContainerId",
-			ParamUtil.getString(_request, "searchContainerId"));
 
 		return sortingURL.toString();
 	}
@@ -213,69 +199,21 @@ public class StagingProcessesWebToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							getRenderURL(), "groupId",
-							String.valueOf(
-								ParamUtil.getLong(_request, "groupId")),
-							"privateLayout",
-							String.valueOf(
-								ParamUtil.getBoolean(
-									_request, "privateLayout")),
-							"displayStyle",
-							ParamUtil.getString(
-								_request, "displayStyle", "descriptive"),
-							"orderByCol",
-							ParamUtil.getString(_request, "orderByCol"),
-							"orderByType",
-							ParamUtil.getString(_request, "orderByType"),
-							"navigation", "all", "searchContainerId",
-							ParamUtil.getString(_request, "searchContainerId"));
+						dropdownItem.setHref(_getNavigationURL("all"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "all"));
 					});
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							getRenderURL(), "groupId",
-							String.valueOf(
-								ParamUtil.getLong(_request, "groupId")),
-							"privateLayout",
-							String.valueOf(
-								ParamUtil.getBoolean(
-									_request, "privateLayout")),
-							"displayStyle",
-							ParamUtil.getString(
-								_request, "displayStyle", "descriptive"),
-							"orderByCol",
-							ParamUtil.getString(_request, "orderByCol"),
-							"orderByType",
-							ParamUtil.getString(_request, "orderByType"),
-							"navigation", "completed", "searchContainerId",
-							ParamUtil.getString(_request, "searchContainerId"));
+						dropdownItem.setHref(_getNavigationURL("completed"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "completed"));
 					});
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							getRenderURL(), "groupId",
-							String.valueOf(
-								ParamUtil.getLong(_request, "groupId")),
-							"privateLayout",
-							String.valueOf(
-								ParamUtil.getBoolean(
-									_request, "privateLayout")),
-							"displayStyle",
-							ParamUtil.getString(
-								_request, "displayStyle", "descriptive"),
-							"orderByCol",
-							ParamUtil.getString(_request, "orderByCol"),
-							"orderByType",
-							ParamUtil.getString(_request, "orderByType"),
-							"navigation", "in-progress", "searchContainerId",
-							ParamUtil.getString(_request, "searchContainerId"));
+						dropdownItem.setHref(_getNavigationURL("in-progress"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "in-progress"));
 					});
@@ -283,51 +221,27 @@ public class StagingProcessesWebToolbarDisplayContext {
 		};
 	}
 
+	private PortletURL _getNavigationURL(String navigation) {
+		PortletURL url = _getStagingRenderURL();
+
+		url.setParameter("navigation", navigation);
+
+		return url;
+	}
+
 	private List<DropdownItem> _getOrderByDropDownItems() {
 		return new DropdownItemList() {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							getRenderURL(), "groupId",
-							String.valueOf(
-								ParamUtil.getLong(_request, "groupId")),
-							"privateLayout",
-							String.valueOf(
-								ParamUtil.getBoolean(
-									_request, "privateLayout")),
-							"displayStyle",
-							ParamUtil.getString(
-								_request, "displayStyle", "descriptive"),
-							"orderByCol", "name", "orderByType",
-							ParamUtil.getString(_request, "orderByType"),
-							"navigation",
-							ParamUtil.getString(_request, "navigation", "all"),
-							"searchContainerId",
-							ParamUtil.getString(_request, "searchContainerId"));
+						dropdownItem.setHref(_getOrderingURL("name"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "name"));
 					});
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							getRenderURL(), "groupId",
-							String.valueOf(
-								ParamUtil.getLong(_request, "groupId")),
-							"privateLayout",
-							String.valueOf(
-								ParamUtil.getBoolean(
-									_request, "privateLayout")),
-							"displayStyle",
-							ParamUtil.getString(
-								_request, "displayStyle", "descriptive"),
-							"orderByCol", "create-date", "orderByType",
-							ParamUtil.getString(_request, "orderByType"),
-							"navigation",
-							ParamUtil.getString(_request, "navigation", "all"),
-							"searchContainerId",
-							ParamUtil.getString(_request, "searchContainerId"));
+						dropdownItem.setHref(_getOrderingURL("create-date"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "create-date"));
 					});
@@ -335,27 +249,44 @@ public class StagingProcessesWebToolbarDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(
-							getRenderURL(), "groupId",
-							String.valueOf(
-								ParamUtil.getLong(_request, "groupId")),
-							"privateLayout",
-							String.valueOf(
-								ParamUtil.getBoolean(
-									_request, "privateLayout")),
-							"displayStyle",
-							ParamUtil.getString(
-								_request, "displayStyle", "descriptive"),
-							"orderByCol", "completion-date", "orderByType",
-							ParamUtil.getString(_request, "orderByType"),
-							"navigation",
-							ParamUtil.getString(_request, "navigation", "all"),
-							"searchContainerId",
-							ParamUtil.getString(_request, "searchContainerId"));
+							_getOrderingURL("completion-date"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "completion-date"));
 					});
 			}
 		};
+	}
+
+	private PortletURL _getOrderingURL(String orderByColumnName) {
+		PortletURL url = _getStagingRenderURL();
+
+		url.setParameter("orderByCol", orderByColumnName);
+
+		return url;
+	}
+
+	private PortletURL _getStagingRenderURL() {
+		PortletURL renderURL = getRenderURL();
+
+		renderURL.setParameter(
+			"groupId", String.valueOf(ParamUtil.getLong(_request, "groupId")));
+		renderURL.setParameter(
+			"privateLayout",
+			String.valueOf(ParamUtil.getBoolean(_request, "privateLayout")));
+		renderURL.setParameter(
+			"displayStyle",
+			ParamUtil.getString(_request, "displayStyle", "descriptive"));
+		renderURL.setParameter(
+			"orderByCol", ParamUtil.getString(_request, "orderByCol"));
+		renderURL.setParameter(
+			"orderByType", ParamUtil.getString(_request, "orderByType", "asc"));
+		renderURL.setParameter(
+			"navigation", ParamUtil.getString(_request, "navigation", "all"));
+		renderURL.setParameter(
+			"searchContainerId",
+			ParamUtil.getString(_request, "searchContainerId"));
+
+		return renderURL;
 	}
 
 	private final PageContext _pageContext;

@@ -998,6 +998,12 @@ public class WorkflowTaskDisplayContext {
 		return false;
 	}
 
+	public boolean isManagementBarDisabled() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return !searchContainer.hasResults();
+	}
+
 	public boolean isNavigationAll() {
 		if (Objects.equals(getNavigation(), "all")) {
 			return true;

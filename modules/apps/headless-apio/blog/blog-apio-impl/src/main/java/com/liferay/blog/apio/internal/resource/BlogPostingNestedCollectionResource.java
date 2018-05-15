@@ -27,6 +27,7 @@ import com.liferay.blog.apio.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.internal.form.BlogPostingForm;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.comment.apio.identifier.CommentIdentifier;
 import com.liferay.media.object.apio.identifier.FileEntryIdentifier;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
@@ -118,6 +119,8 @@ public class BlogPostingNestedCollectionResource
 		).addLinkedModel(
 			"image", FileEntryIdentifier.class,
 			BlogsEntry::getCoverImageFileEntryId
+		).addRelatedCollection(
+			"comments", CommentIdentifier.class
 		).addString(
 			"alternativeHeadline", BlogsEntry::getSubtitle
 		).addString(

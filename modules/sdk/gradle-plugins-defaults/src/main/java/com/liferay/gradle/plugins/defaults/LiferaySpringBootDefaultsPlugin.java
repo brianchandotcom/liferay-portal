@@ -46,7 +46,7 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 	private Task _addTaskRun(Project project) {
 		Task runTask = project.task(ApplicationPlugin.TASK_RUN_NAME);
 
-		runTask.dependsOn(GradleUtil.getTask(project, "bootRun"));
+		runTask.dependsOn("bootRun");
 		runTask.setDescription("Runs Spring Boot 'bootRun'.");
 		runTask.setGroup(BasePlugin.BUILD_GROUP);
 

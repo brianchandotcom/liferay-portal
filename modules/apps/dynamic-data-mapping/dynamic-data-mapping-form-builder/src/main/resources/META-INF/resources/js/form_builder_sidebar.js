@@ -225,9 +225,7 @@ AUI.add(
 
 						var productNavToogle = A.one('.control-menu-nav-item.active');
 
-						var eventTarget = event.target;
-
-						if (instance.get('open') && !instance.hasFocus(eventTarget) && !productNavToogle.contains(eventTarget)) {
+						if (instance.get('open') && !instance.hasFocus(event.target) && !productNavToogle.contains(event.target)) {
 							instance.close();
 						}
 					},

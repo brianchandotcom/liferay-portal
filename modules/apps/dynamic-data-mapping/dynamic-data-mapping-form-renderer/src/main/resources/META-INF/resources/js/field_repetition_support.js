@@ -267,16 +267,22 @@ AUI.add(
 			_updateValueConfiguration: function(config) {
 				var instance = this;
 
+				var predefinedValue = instance.get('predefinedValue');
 				var value = instance.getValue();
 
-				if (Lang.isArray(value)) {
-					value = [];
-				}
-				else if (Lang.isObject(value)) {
-					value = {};
+				if (predefinedValue) {
+					value = predefinedValue;
 				}
 				else {
-					value = '';
+					if (Lang.isArray(value)) {
+						value = [];
+					}
+					else if (Lang.isObject(value)) {
+						value = {};
+					}
+					else {
+						value = '';
+					}
 				}
 
 				config.value = config.context.value = value;

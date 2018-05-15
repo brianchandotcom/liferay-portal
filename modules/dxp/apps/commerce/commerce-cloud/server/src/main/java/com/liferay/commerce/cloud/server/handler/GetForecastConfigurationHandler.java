@@ -28,8 +28,7 @@ import io.vertx.ext.web.RoutingContext;
 public class GetForecastConfigurationHandler
 	implements Handler<RoutingContext> {
 
-	public static final String PATH =
-		"/projects/:projectId/forecast/configuration/";
+	public static final String PATH = "/projects/:projectId/forecast/";
 
 	public GetForecastConfigurationHandler(
 		ForecastConfigurationService forecastSchedulerService) {

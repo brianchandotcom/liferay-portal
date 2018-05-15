@@ -15,7 +15,6 @@
 package com.liferay.roles.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -23,29 +22,28 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.roles.uad.test.RoleUADTestHelper;
-
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
 public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
@@ -60,6 +58,7 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 	@Override
 	protected Role addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
+
 		Role role = _roleUADTestHelper.addRole(userId);
 
 		if (deleteAfterTestRun) {
@@ -70,8 +69,7 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 	}
 
 	@Override
-	protected void deleteBaseModels(List<Role> baseModels)
-		throws Exception {
+	protected void deleteBaseModels(List<Role> baseModels) throws Exception {
 		_roleUADTestHelper.cleanUpDependencies(baseModels);
 	}
 
@@ -83,12 +81,14 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 	@Override
 	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
+
 		Role role = _roleLocalService.getRole(baseModelPK);
 
 		String userName = role.getUserName();
 
 		if ((role.getUserId() != user.getUserId()) &&
-				!userName.equals(user.getFullName())) {
+			!userName.equals(user.getFullName())) {
+
 			return true;
 		}
 
@@ -104,12 +104,16 @@ public class RoleUADAnonymizerTest extends BaseUADAnonymizerTestCase<Role> {
 		return false;
 	}
 
-	@DeleteAfterTestRun
-	private final List<Role> _roles = new ArrayList<Role>();
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@DeleteAfterTestRun
+	private final List<Role> _roles = new ArrayList<>();
+
 	@Inject
 	private RoleUADTestHelper _roleUADTestHelper;
+
 	@Inject(filter = "component.name=*.RoleUADAnonymizer")
 	private UADAnonymizer _uadAnonymizer;
+
 }

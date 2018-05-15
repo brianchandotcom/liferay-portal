@@ -37,13 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = LayoutUADTestHelper.class)
 public class LayoutUADTestHelper {
 
-	/**
-	 * Implement addLayout() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid Layouts with a specified user ID in order to execute correctly. Implement addLayout() such that it creates a valid Layout with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public Layout addLayout(long userId) throws Exception {
 		String name = RandomTestUtil.randomString(
 			FriendlyURLRandomizerBumper.INSTANCE,
@@ -61,13 +54,6 @@ public class LayoutUADTestHelper {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<Layout> layouts) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid Layouts with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<Layout> layouts) such that any additional objects created during the construction of layouts are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(List<Layout> layouts) throws Exception {
 	}
 

@@ -923,7 +923,7 @@
 		</execute> -->
 	</command>
 
-	<command name="SearchTwiceScopeThisSite" priority="5">
+	<command ignore="true" name="SearchTwiceScopeThisSite" priority="5">
 		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
 		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
 

@@ -15,7 +15,6 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -63,10 +62,6 @@ public class UpdateLayoutPageTemplateEntryAssetTypeMVCActionCommand
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, JSONFactoryUtil.createJSONObject());
 	}
-
-	@Reference
-	private LayoutPageTemplateEntryExceptionRequestHandler
-		_layoutPageTemplateEntryExceptionRequestHandler;
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;

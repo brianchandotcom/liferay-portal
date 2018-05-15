@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -60,6 +61,12 @@ public class UpdateLayoutPageTemplateEntryMVCActionCommand
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntryId, name);
 
+			if (SessionErrors.contains(
+					actionRequest, "layoutPageTemplateEntryNameInvalid")) {
+
+				addSuccessMessage(actionRequest, actionResponse);
+			}
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -70,7 +77,10 @@ public class UpdateLayoutPageTemplateEntryMVCActionCommand
 				actionRequest, actionResponse, jsonObject);
 		}
 		catch (PortalException pe) {
-			hideDefaultSuccessMessage(actionRequest);
+			SessionErrors.add(
+				actionRequest, "layoutPageTemplateEntryNameInvalid");
+
+			hideDefaultErrorMessage(actionRequest);
 
 			_layoutPageTemplateEntryExceptionRequestHandler.
 				handlePortalException(actionRequest, actionResponse, pe);

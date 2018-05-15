@@ -41,6 +41,10 @@ public class PortalLDAPUtil {
 		return getInstance().getContext(ldapServerId, companyId);
 	}
 
+	protected void unsetPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = null;
+	}
+
 	public static LdapContext getContext(
 			long companyId, String providerURL, String principal,
 			String credentials)
@@ -273,7 +277,7 @@ public class PortalLDAPUtil {
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setPortalLDAP(PortalLDAP portalLDAP) {
 		_portalLDAP = portalLDAP;

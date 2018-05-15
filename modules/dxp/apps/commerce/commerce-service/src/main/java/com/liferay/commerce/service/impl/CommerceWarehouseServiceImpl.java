@@ -147,19 +147,6 @@ public class CommerceWarehouseServiceImpl
 	}
 
 	@Override
-	public CommerceWarehouse getDefaultCommerceWarehouse(
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommercePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
-
-		return commerceWarehouseLocalService.getDefaultCommerceWarehouse(
-			serviceContext);
-	}
-
-	@Override
 	public List<CommerceWarehouse> search(
 			long groupId, String keywords, boolean all, long commerceCountryId,
 			int start, int end,

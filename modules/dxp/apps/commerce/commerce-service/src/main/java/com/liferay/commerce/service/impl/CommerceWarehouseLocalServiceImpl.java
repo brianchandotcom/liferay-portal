@@ -214,7 +214,7 @@ public class CommerceWarehouseLocalServiceImpl
 	}
 
 	@Override
-	public CommerceWarehouse getDefaultCommerceWarehouse(
+	public CommerceWarehouse importDefaultCommerceWarehouse(
 			ServiceContext serviceContext)
 		throws PortalException {
 

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4719,8 +4721,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	@Override
 	protected CPDefinitionSpecificationOptionValue removeImpl(
 		CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue) {
-		cpDefinitionSpecificationOptionValue = toUnwrappedModel(cpDefinitionSpecificationOptionValue);
-
 		Session session = null;
 
 		try {
@@ -4752,9 +4752,24 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	@Override
 	public CPDefinitionSpecificationOptionValue updateImpl(
 		CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue) {
-		cpDefinitionSpecificationOptionValue = toUnwrappedModel(cpDefinitionSpecificationOptionValue);
-
 		boolean isNew = cpDefinitionSpecificationOptionValue.isNew();
+
+		if (!(cpDefinitionSpecificationOptionValue instanceof CPDefinitionSpecificationOptionValueModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(
+						cpDefinitionSpecificationOptionValue.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinitionSpecificationOptionValue);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinitionSpecificationOptionValue proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinitionSpecificationOptionValue implementation " +
+				cpDefinitionSpecificationOptionValue.getClass());
+		}
 
 		CPDefinitionSpecificationOptionValueModelImpl cpDefinitionSpecificationOptionValueModelImpl =
 			(CPDefinitionSpecificationOptionValueModelImpl)cpDefinitionSpecificationOptionValue;
@@ -5040,36 +5055,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		cpDefinitionSpecificationOptionValue.resetOriginalValues();
 
 		return cpDefinitionSpecificationOptionValue;
-	}
-
-	protected CPDefinitionSpecificationOptionValue toUnwrappedModel(
-		CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue) {
-		if (cpDefinitionSpecificationOptionValue instanceof CPDefinitionSpecificationOptionValueImpl) {
-			return cpDefinitionSpecificationOptionValue;
-		}
-
-		CPDefinitionSpecificationOptionValueImpl cpDefinitionSpecificationOptionValueImpl =
-			new CPDefinitionSpecificationOptionValueImpl();
-
-		cpDefinitionSpecificationOptionValueImpl.setNew(cpDefinitionSpecificationOptionValue.isNew());
-		cpDefinitionSpecificationOptionValueImpl.setPrimaryKey(cpDefinitionSpecificationOptionValue.getPrimaryKey());
-
-		cpDefinitionSpecificationOptionValueImpl.setUuid(cpDefinitionSpecificationOptionValue.getUuid());
-		cpDefinitionSpecificationOptionValueImpl.setCPDefinitionSpecificationOptionValueId(cpDefinitionSpecificationOptionValue.getCPDefinitionSpecificationOptionValueId());
-		cpDefinitionSpecificationOptionValueImpl.setGroupId(cpDefinitionSpecificationOptionValue.getGroupId());
-		cpDefinitionSpecificationOptionValueImpl.setCompanyId(cpDefinitionSpecificationOptionValue.getCompanyId());
-		cpDefinitionSpecificationOptionValueImpl.setUserId(cpDefinitionSpecificationOptionValue.getUserId());
-		cpDefinitionSpecificationOptionValueImpl.setUserName(cpDefinitionSpecificationOptionValue.getUserName());
-		cpDefinitionSpecificationOptionValueImpl.setCreateDate(cpDefinitionSpecificationOptionValue.getCreateDate());
-		cpDefinitionSpecificationOptionValueImpl.setModifiedDate(cpDefinitionSpecificationOptionValue.getModifiedDate());
-		cpDefinitionSpecificationOptionValueImpl.setCPDefinitionId(cpDefinitionSpecificationOptionValue.getCPDefinitionId());
-		cpDefinitionSpecificationOptionValueImpl.setCPSpecificationOptionId(cpDefinitionSpecificationOptionValue.getCPSpecificationOptionId());
-		cpDefinitionSpecificationOptionValueImpl.setCPOptionCategoryId(cpDefinitionSpecificationOptionValue.getCPOptionCategoryId());
-		cpDefinitionSpecificationOptionValueImpl.setValue(cpDefinitionSpecificationOptionValue.getValue());
-		cpDefinitionSpecificationOptionValueImpl.setPriority(cpDefinitionSpecificationOptionValue.getPriority());
-		cpDefinitionSpecificationOptionValueImpl.setLastPublishDate(cpDefinitionSpecificationOptionValue.getLastPublishDate());
-
-		return cpDefinitionSpecificationOptionValueImpl;
 	}
 
 	/**

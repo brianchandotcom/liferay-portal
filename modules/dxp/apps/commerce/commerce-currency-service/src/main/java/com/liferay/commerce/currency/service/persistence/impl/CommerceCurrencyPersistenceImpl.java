@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3903,8 +3905,6 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	@Override
 	protected CommerceCurrency removeImpl(CommerceCurrency commerceCurrency) {
-		commerceCurrency = toUnwrappedModel(commerceCurrency);
-
 		Session session = null;
 
 		try {
@@ -3935,9 +3935,23 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	@Override
 	public CommerceCurrency updateImpl(CommerceCurrency commerceCurrency) {
-		commerceCurrency = toUnwrappedModel(commerceCurrency);
-
 		boolean isNew = commerceCurrency.isNew();
+
+		if (!(commerceCurrency instanceof CommerceCurrencyModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceCurrency.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceCurrency);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceCurrency proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceCurrency implementation " +
+				commerceCurrency.getClass());
+		}
 
 		CommerceCurrencyModelImpl commerceCurrencyModelImpl = (CommerceCurrencyModelImpl)commerceCurrency;
 
@@ -4184,37 +4198,6 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 		commerceCurrency.resetOriginalValues();
 
 		return commerceCurrency;
-	}
-
-	protected CommerceCurrency toUnwrappedModel(
-		CommerceCurrency commerceCurrency) {
-		if (commerceCurrency instanceof CommerceCurrencyImpl) {
-			return commerceCurrency;
-		}
-
-		CommerceCurrencyImpl commerceCurrencyImpl = new CommerceCurrencyImpl();
-
-		commerceCurrencyImpl.setNew(commerceCurrency.isNew());
-		commerceCurrencyImpl.setPrimaryKey(commerceCurrency.getPrimaryKey());
-
-		commerceCurrencyImpl.setUuid(commerceCurrency.getUuid());
-		commerceCurrencyImpl.setCommerceCurrencyId(commerceCurrency.getCommerceCurrencyId());
-		commerceCurrencyImpl.setGroupId(commerceCurrency.getGroupId());
-		commerceCurrencyImpl.setCompanyId(commerceCurrency.getCompanyId());
-		commerceCurrencyImpl.setUserId(commerceCurrency.getUserId());
-		commerceCurrencyImpl.setUserName(commerceCurrency.getUserName());
-		commerceCurrencyImpl.setCreateDate(commerceCurrency.getCreateDate());
-		commerceCurrencyImpl.setModifiedDate(commerceCurrency.getModifiedDate());
-		commerceCurrencyImpl.setCode(commerceCurrency.getCode());
-		commerceCurrencyImpl.setName(commerceCurrency.getName());
-		commerceCurrencyImpl.setRate(commerceCurrency.getRate());
-		commerceCurrencyImpl.setRoundingType(commerceCurrency.getRoundingType());
-		commerceCurrencyImpl.setPrimary(commerceCurrency.isPrimary());
-		commerceCurrencyImpl.setPriority(commerceCurrency.getPriority());
-		commerceCurrencyImpl.setActive(commerceCurrency.isActive());
-		commerceCurrencyImpl.setLastPublishDate(commerceCurrency.getLastPublishDate());
-
-		return commerceCurrencyImpl;
 	}
 
 	/**

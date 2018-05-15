@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -925,7 +926,7 @@ public class CommerceAvailabilityRangeModelImpl extends BaseModelImpl<CommerceAv
 
 	private static final ClassLoader _classLoader = CommerceAvailabilityRange.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CommerceAvailabilityRange.class
+			CommerceAvailabilityRange.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

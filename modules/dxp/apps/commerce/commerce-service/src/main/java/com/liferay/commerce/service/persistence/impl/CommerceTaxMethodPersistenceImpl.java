@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1622,8 +1624,6 @@ public class CommerceTaxMethodPersistenceImpl extends BasePersistenceImpl<Commer
 
 	@Override
 	protected CommerceTaxMethod removeImpl(CommerceTaxMethod commerceTaxMethod) {
-		commerceTaxMethod = toUnwrappedModel(commerceTaxMethod);
-
 		Session session = null;
 
 		try {
@@ -1654,9 +1654,23 @@ public class CommerceTaxMethodPersistenceImpl extends BasePersistenceImpl<Commer
 
 	@Override
 	public CommerceTaxMethod updateImpl(CommerceTaxMethod commerceTaxMethod) {
-		commerceTaxMethod = toUnwrappedModel(commerceTaxMethod);
-
 		boolean isNew = commerceTaxMethod.isNew();
+
+		if (!(commerceTaxMethod instanceof CommerceTaxMethodModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceTaxMethod.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceTaxMethod);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceTaxMethod proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceTaxMethod implementation " +
+				commerceTaxMethod.getClass());
+		}
 
 		CommerceTaxMethodModelImpl commerceTaxMethodModelImpl = (CommerceTaxMethodModelImpl)commerceTaxMethod;
 
@@ -1782,33 +1796,6 @@ public class CommerceTaxMethodPersistenceImpl extends BasePersistenceImpl<Commer
 		commerceTaxMethod.resetOriginalValues();
 
 		return commerceTaxMethod;
-	}
-
-	protected CommerceTaxMethod toUnwrappedModel(
-		CommerceTaxMethod commerceTaxMethod) {
-		if (commerceTaxMethod instanceof CommerceTaxMethodImpl) {
-			return commerceTaxMethod;
-		}
-
-		CommerceTaxMethodImpl commerceTaxMethodImpl = new CommerceTaxMethodImpl();
-
-		commerceTaxMethodImpl.setNew(commerceTaxMethod.isNew());
-		commerceTaxMethodImpl.setPrimaryKey(commerceTaxMethod.getPrimaryKey());
-
-		commerceTaxMethodImpl.setCommerceTaxMethodId(commerceTaxMethod.getCommerceTaxMethodId());
-		commerceTaxMethodImpl.setGroupId(commerceTaxMethod.getGroupId());
-		commerceTaxMethodImpl.setCompanyId(commerceTaxMethod.getCompanyId());
-		commerceTaxMethodImpl.setUserId(commerceTaxMethod.getUserId());
-		commerceTaxMethodImpl.setUserName(commerceTaxMethod.getUserName());
-		commerceTaxMethodImpl.setCreateDate(commerceTaxMethod.getCreateDate());
-		commerceTaxMethodImpl.setModifiedDate(commerceTaxMethod.getModifiedDate());
-		commerceTaxMethodImpl.setName(commerceTaxMethod.getName());
-		commerceTaxMethodImpl.setDescription(commerceTaxMethod.getDescription());
-		commerceTaxMethodImpl.setEngineKey(commerceTaxMethod.getEngineKey());
-		commerceTaxMethodImpl.setPercentage(commerceTaxMethod.isPercentage());
-		commerceTaxMethodImpl.setActive(commerceTaxMethod.isActive());
-
-		return commerceTaxMethodImpl;
 	}
 
 	/**

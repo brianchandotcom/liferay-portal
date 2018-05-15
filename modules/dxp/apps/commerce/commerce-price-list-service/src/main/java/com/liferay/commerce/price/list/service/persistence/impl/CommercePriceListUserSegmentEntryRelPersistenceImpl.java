@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2572,8 +2574,6 @@ public class CommercePriceListUserSegmentEntryRelPersistenceImpl
 	@Override
 	protected CommercePriceListUserSegmentEntryRel removeImpl(
 		CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel) {
-		commercePriceListUserSegmentEntryRel = toUnwrappedModel(commercePriceListUserSegmentEntryRel);
-
 		Session session = null;
 
 		try {
@@ -2605,9 +2605,24 @@ public class CommercePriceListUserSegmentEntryRelPersistenceImpl
 	@Override
 	public CommercePriceListUserSegmentEntryRel updateImpl(
 		CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel) {
-		commercePriceListUserSegmentEntryRel = toUnwrappedModel(commercePriceListUserSegmentEntryRel);
-
 		boolean isNew = commercePriceListUserSegmentEntryRel.isNew();
+
+		if (!(commercePriceListUserSegmentEntryRel instanceof CommercePriceListUserSegmentEntryRelModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(
+						commercePriceListUserSegmentEntryRel.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commercePriceListUserSegmentEntryRel);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commercePriceListUserSegmentEntryRel proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommercePriceListUserSegmentEntryRel implementation " +
+				commercePriceListUserSegmentEntryRel.getClass());
+		}
 
 		CommercePriceListUserSegmentEntryRelModelImpl commercePriceListUserSegmentEntryRelModelImpl =
 			(CommercePriceListUserSegmentEntryRelModelImpl)commercePriceListUserSegmentEntryRel;
@@ -2777,34 +2792,6 @@ public class CommercePriceListUserSegmentEntryRelPersistenceImpl
 		commercePriceListUserSegmentEntryRel.resetOriginalValues();
 
 		return commercePriceListUserSegmentEntryRel;
-	}
-
-	protected CommercePriceListUserSegmentEntryRel toUnwrappedModel(
-		CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel) {
-		if (commercePriceListUserSegmentEntryRel instanceof CommercePriceListUserSegmentEntryRelImpl) {
-			return commercePriceListUserSegmentEntryRel;
-		}
-
-		CommercePriceListUserSegmentEntryRelImpl commercePriceListUserSegmentEntryRelImpl =
-			new CommercePriceListUserSegmentEntryRelImpl();
-
-		commercePriceListUserSegmentEntryRelImpl.setNew(commercePriceListUserSegmentEntryRel.isNew());
-		commercePriceListUserSegmentEntryRelImpl.setPrimaryKey(commercePriceListUserSegmentEntryRel.getPrimaryKey());
-
-		commercePriceListUserSegmentEntryRelImpl.setUuid(commercePriceListUserSegmentEntryRel.getUuid());
-		commercePriceListUserSegmentEntryRelImpl.setCommercePriceListUserSegmentEntryRelId(commercePriceListUserSegmentEntryRel.getCommercePriceListUserSegmentEntryRelId());
-		commercePriceListUserSegmentEntryRelImpl.setGroupId(commercePriceListUserSegmentEntryRel.getGroupId());
-		commercePriceListUserSegmentEntryRelImpl.setCompanyId(commercePriceListUserSegmentEntryRel.getCompanyId());
-		commercePriceListUserSegmentEntryRelImpl.setUserId(commercePriceListUserSegmentEntryRel.getUserId());
-		commercePriceListUserSegmentEntryRelImpl.setUserName(commercePriceListUserSegmentEntryRel.getUserName());
-		commercePriceListUserSegmentEntryRelImpl.setCreateDate(commercePriceListUserSegmentEntryRel.getCreateDate());
-		commercePriceListUserSegmentEntryRelImpl.setModifiedDate(commercePriceListUserSegmentEntryRel.getModifiedDate());
-		commercePriceListUserSegmentEntryRelImpl.setCommercePriceListId(commercePriceListUserSegmentEntryRel.getCommercePriceListId());
-		commercePriceListUserSegmentEntryRelImpl.setCommerceUserSegmentEntryId(commercePriceListUserSegmentEntryRel.getCommerceUserSegmentEntryId());
-		commercePriceListUserSegmentEntryRelImpl.setOrder(commercePriceListUserSegmentEntryRel.getOrder());
-		commercePriceListUserSegmentEntryRelImpl.setLastPublishDate(commercePriceListUserSegmentEntryRel.getLastPublishDate());
-
-		return commercePriceListUserSegmentEntryRelImpl;
 	}
 
 	/**

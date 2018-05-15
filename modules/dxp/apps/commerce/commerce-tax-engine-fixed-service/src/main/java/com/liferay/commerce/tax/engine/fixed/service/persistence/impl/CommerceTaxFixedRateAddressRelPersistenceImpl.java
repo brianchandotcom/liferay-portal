@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1333,8 +1335,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	@Override
 	protected CommerceTaxFixedRateAddressRel removeImpl(
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
-		commerceTaxFixedRateAddressRel = toUnwrappedModel(commerceTaxFixedRateAddressRel);
-
 		Session session = null;
 
 		try {
@@ -1366,9 +1366,24 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	@Override
 	public CommerceTaxFixedRateAddressRel updateImpl(
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
-		commerceTaxFixedRateAddressRel = toUnwrappedModel(commerceTaxFixedRateAddressRel);
-
 		boolean isNew = commerceTaxFixedRateAddressRel.isNew();
+
+		if (!(commerceTaxFixedRateAddressRel instanceof CommerceTaxFixedRateAddressRelModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(
+						commerceTaxFixedRateAddressRel.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceTaxFixedRateAddressRel);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceTaxFixedRateAddressRel proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceTaxFixedRateAddressRel implementation " +
+				commerceTaxFixedRateAddressRel.getClass());
+		}
 
 		CommerceTaxFixedRateAddressRelModelImpl commerceTaxFixedRateAddressRelModelImpl =
 			(CommerceTaxFixedRateAddressRelModelImpl)commerceTaxFixedRateAddressRel;
@@ -1499,34 +1514,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 		commerceTaxFixedRateAddressRel.resetOriginalValues();
 
 		return commerceTaxFixedRateAddressRel;
-	}
-
-	protected CommerceTaxFixedRateAddressRel toUnwrappedModel(
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
-		if (commerceTaxFixedRateAddressRel instanceof CommerceTaxFixedRateAddressRelImpl) {
-			return commerceTaxFixedRateAddressRel;
-		}
-
-		CommerceTaxFixedRateAddressRelImpl commerceTaxFixedRateAddressRelImpl = new CommerceTaxFixedRateAddressRelImpl();
-
-		commerceTaxFixedRateAddressRelImpl.setNew(commerceTaxFixedRateAddressRel.isNew());
-		commerceTaxFixedRateAddressRelImpl.setPrimaryKey(commerceTaxFixedRateAddressRel.getPrimaryKey());
-
-		commerceTaxFixedRateAddressRelImpl.setCommerceTaxFixedRateAddressRelId(commerceTaxFixedRateAddressRel.getCommerceTaxFixedRateAddressRelId());
-		commerceTaxFixedRateAddressRelImpl.setGroupId(commerceTaxFixedRateAddressRel.getGroupId());
-		commerceTaxFixedRateAddressRelImpl.setCompanyId(commerceTaxFixedRateAddressRel.getCompanyId());
-		commerceTaxFixedRateAddressRelImpl.setUserId(commerceTaxFixedRateAddressRel.getUserId());
-		commerceTaxFixedRateAddressRelImpl.setUserName(commerceTaxFixedRateAddressRel.getUserName());
-		commerceTaxFixedRateAddressRelImpl.setCreateDate(commerceTaxFixedRateAddressRel.getCreateDate());
-		commerceTaxFixedRateAddressRelImpl.setModifiedDate(commerceTaxFixedRateAddressRel.getModifiedDate());
-		commerceTaxFixedRateAddressRelImpl.setCommerceTaxMethodId(commerceTaxFixedRateAddressRel.getCommerceTaxMethodId());
-		commerceTaxFixedRateAddressRelImpl.setCPTaxCategoryId(commerceTaxFixedRateAddressRel.getCPTaxCategoryId());
-		commerceTaxFixedRateAddressRelImpl.setCommerceCountryId(commerceTaxFixedRateAddressRel.getCommerceCountryId());
-		commerceTaxFixedRateAddressRelImpl.setCommerceRegionId(commerceTaxFixedRateAddressRel.getCommerceRegionId());
-		commerceTaxFixedRateAddressRelImpl.setZip(commerceTaxFixedRateAddressRel.getZip());
-		commerceTaxFixedRateAddressRelImpl.setRate(commerceTaxFixedRateAddressRel.getRate());
-
-		return commerceTaxFixedRateAddressRelImpl;
 	}
 
 	/**

@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1814,8 +1817,6 @@ public class CommerceWishListItemPersistenceImpl extends BasePersistenceImpl<Com
 	@Override
 	protected CommerceWishListItem removeImpl(
 		CommerceWishListItem commerceWishListItem) {
-		commerceWishListItem = toUnwrappedModel(commerceWishListItem);
-
 		Session session = null;
 
 		try {
@@ -1847,9 +1848,23 @@ public class CommerceWishListItemPersistenceImpl extends BasePersistenceImpl<Com
 	@Override
 	public CommerceWishListItem updateImpl(
 		CommerceWishListItem commerceWishListItem) {
-		commerceWishListItem = toUnwrappedModel(commerceWishListItem);
-
 		boolean isNew = commerceWishListItem.isNew();
+
+		if (!(commerceWishListItem instanceof CommerceWishListItemModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceWishListItem.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceWishListItem);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceWishListItem proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceWishListItem implementation " +
+				commerceWishListItem.getClass());
+		}
 
 		CommerceWishListItemModelImpl commerceWishListItemModelImpl = (CommerceWishListItemModelImpl)commerceWishListItem;
 
@@ -2003,32 +2018,6 @@ public class CommerceWishListItemPersistenceImpl extends BasePersistenceImpl<Com
 		commerceWishListItem.resetOriginalValues();
 
 		return commerceWishListItem;
-	}
-
-	protected CommerceWishListItem toUnwrappedModel(
-		CommerceWishListItem commerceWishListItem) {
-		if (commerceWishListItem instanceof CommerceWishListItemImpl) {
-			return commerceWishListItem;
-		}
-
-		CommerceWishListItemImpl commerceWishListItemImpl = new CommerceWishListItemImpl();
-
-		commerceWishListItemImpl.setNew(commerceWishListItem.isNew());
-		commerceWishListItemImpl.setPrimaryKey(commerceWishListItem.getPrimaryKey());
-
-		commerceWishListItemImpl.setCommerceWishListItemId(commerceWishListItem.getCommerceWishListItemId());
-		commerceWishListItemImpl.setGroupId(commerceWishListItem.getGroupId());
-		commerceWishListItemImpl.setCompanyId(commerceWishListItem.getCompanyId());
-		commerceWishListItemImpl.setUserId(commerceWishListItem.getUserId());
-		commerceWishListItemImpl.setUserName(commerceWishListItem.getUserName());
-		commerceWishListItemImpl.setCreateDate(commerceWishListItem.getCreateDate());
-		commerceWishListItemImpl.setModifiedDate(commerceWishListItem.getModifiedDate());
-		commerceWishListItemImpl.setCommerceWishListId(commerceWishListItem.getCommerceWishListId());
-		commerceWishListItemImpl.setCPDefinitionId(commerceWishListItem.getCPDefinitionId());
-		commerceWishListItemImpl.setCPInstanceId(commerceWishListItem.getCPInstanceId());
-		commerceWishListItemImpl.setJson(commerceWishListItem.getJson());
-
-		return commerceWishListItemImpl;
 	}
 
 	/**

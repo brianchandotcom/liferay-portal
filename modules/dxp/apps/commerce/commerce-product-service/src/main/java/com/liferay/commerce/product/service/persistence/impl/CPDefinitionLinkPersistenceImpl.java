@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4267,8 +4269,6 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 
 	@Override
 	protected CPDefinitionLink removeImpl(CPDefinitionLink cpDefinitionLink) {
-		cpDefinitionLink = toUnwrappedModel(cpDefinitionLink);
-
 		Session session = null;
 
 		try {
@@ -4299,9 +4299,23 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 
 	@Override
 	public CPDefinitionLink updateImpl(CPDefinitionLink cpDefinitionLink) {
-		cpDefinitionLink = toUnwrappedModel(cpDefinitionLink);
-
 		boolean isNew = cpDefinitionLink.isNew();
+
+		if (!(cpDefinitionLink instanceof CPDefinitionLinkModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDefinitionLink.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinitionLink);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinitionLink proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinitionLink implementation " +
+				cpDefinitionLink.getClass());
+		}
 
 		CPDefinitionLinkModelImpl cpDefinitionLinkModelImpl = (CPDefinitionLinkModelImpl)cpDefinitionLink;
 
@@ -4546,33 +4560,6 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 		cpDefinitionLink.resetOriginalValues();
 
 		return cpDefinitionLink;
-	}
-
-	protected CPDefinitionLink toUnwrappedModel(
-		CPDefinitionLink cpDefinitionLink) {
-		if (cpDefinitionLink instanceof CPDefinitionLinkImpl) {
-			return cpDefinitionLink;
-		}
-
-		CPDefinitionLinkImpl cpDefinitionLinkImpl = new CPDefinitionLinkImpl();
-
-		cpDefinitionLinkImpl.setNew(cpDefinitionLink.isNew());
-		cpDefinitionLinkImpl.setPrimaryKey(cpDefinitionLink.getPrimaryKey());
-
-		cpDefinitionLinkImpl.setUuid(cpDefinitionLink.getUuid());
-		cpDefinitionLinkImpl.setCPDefinitionLinkId(cpDefinitionLink.getCPDefinitionLinkId());
-		cpDefinitionLinkImpl.setGroupId(cpDefinitionLink.getGroupId());
-		cpDefinitionLinkImpl.setCompanyId(cpDefinitionLink.getCompanyId());
-		cpDefinitionLinkImpl.setUserId(cpDefinitionLink.getUserId());
-		cpDefinitionLinkImpl.setUserName(cpDefinitionLink.getUserName());
-		cpDefinitionLinkImpl.setCreateDate(cpDefinitionLink.getCreateDate());
-		cpDefinitionLinkImpl.setModifiedDate(cpDefinitionLink.getModifiedDate());
-		cpDefinitionLinkImpl.setCPDefinitionId1(cpDefinitionLink.getCPDefinitionId1());
-		cpDefinitionLinkImpl.setCPDefinitionId2(cpDefinitionLink.getCPDefinitionId2());
-		cpDefinitionLinkImpl.setPriority(cpDefinitionLink.getPriority());
-		cpDefinitionLinkImpl.setType(cpDefinitionLink.getType());
-
-		return cpDefinitionLinkImpl;
 	}
 
 	/**

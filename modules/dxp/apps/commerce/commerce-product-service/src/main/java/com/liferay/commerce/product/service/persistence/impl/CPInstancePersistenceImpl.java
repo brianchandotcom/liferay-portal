@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -6819,8 +6821,6 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 
 	@Override
 	protected CPInstance removeImpl(CPInstance cpInstance) {
-		cpInstance = toUnwrappedModel(cpInstance);
-
 		Session session = null;
 
 		try {
@@ -6851,9 +6851,23 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 
 	@Override
 	public CPInstance updateImpl(CPInstance cpInstance) {
-		cpInstance = toUnwrappedModel(cpInstance);
-
 		boolean isNew = cpInstance.isNew();
+
+		if (!(cpInstance instanceof CPInstanceModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpInstance.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpInstance);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpInstance proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPInstance implementation " +
+				cpInstance.getClass());
+		}
 
 		CPInstanceModelImpl cpInstanceModelImpl = (CPInstanceModelImpl)cpInstance;
 
@@ -7113,50 +7127,6 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 		cpInstance.resetOriginalValues();
 
 		return cpInstance;
-	}
-
-	protected CPInstance toUnwrappedModel(CPInstance cpInstance) {
-		if (cpInstance instanceof CPInstanceImpl) {
-			return cpInstance;
-		}
-
-		CPInstanceImpl cpInstanceImpl = new CPInstanceImpl();
-
-		cpInstanceImpl.setNew(cpInstance.isNew());
-		cpInstanceImpl.setPrimaryKey(cpInstance.getPrimaryKey());
-
-		cpInstanceImpl.setUuid(cpInstance.getUuid());
-		cpInstanceImpl.setCPInstanceId(cpInstance.getCPInstanceId());
-		cpInstanceImpl.setGroupId(cpInstance.getGroupId());
-		cpInstanceImpl.setCompanyId(cpInstance.getCompanyId());
-		cpInstanceImpl.setUserId(cpInstance.getUserId());
-		cpInstanceImpl.setUserName(cpInstance.getUserName());
-		cpInstanceImpl.setCreateDate(cpInstance.getCreateDate());
-		cpInstanceImpl.setModifiedDate(cpInstance.getModifiedDate());
-		cpInstanceImpl.setCPDefinitionId(cpInstance.getCPDefinitionId());
-		cpInstanceImpl.setSku(cpInstance.getSku());
-		cpInstanceImpl.setGtin(cpInstance.getGtin());
-		cpInstanceImpl.setManufacturerPartNumber(cpInstance.getManufacturerPartNumber());
-		cpInstanceImpl.setPurchasable(cpInstance.isPurchasable());
-		cpInstanceImpl.setDDMContent(cpInstance.getDDMContent());
-		cpInstanceImpl.setWidth(cpInstance.getWidth());
-		cpInstanceImpl.setHeight(cpInstance.getHeight());
-		cpInstanceImpl.setDepth(cpInstance.getDepth());
-		cpInstanceImpl.setWeight(cpInstance.getWeight());
-		cpInstanceImpl.setPrice(cpInstance.getPrice());
-		cpInstanceImpl.setPromoPrice(cpInstance.getPromoPrice());
-		cpInstanceImpl.setCost(cpInstance.getCost());
-		cpInstanceImpl.setPublished(cpInstance.isPublished());
-		cpInstanceImpl.setExternalReferenceCode(cpInstance.getExternalReferenceCode());
-		cpInstanceImpl.setDisplayDate(cpInstance.getDisplayDate());
-		cpInstanceImpl.setExpirationDate(cpInstance.getExpirationDate());
-		cpInstanceImpl.setLastPublishDate(cpInstance.getLastPublishDate());
-		cpInstanceImpl.setStatus(cpInstance.getStatus());
-		cpInstanceImpl.setStatusByUserId(cpInstance.getStatusByUserId());
-		cpInstanceImpl.setStatusByUserName(cpInstance.getStatusByUserName());
-		cpInstanceImpl.setStatusDate(cpInstance.getStatusDate());
-
-		return cpInstanceImpl;
 	}
 
 	/**

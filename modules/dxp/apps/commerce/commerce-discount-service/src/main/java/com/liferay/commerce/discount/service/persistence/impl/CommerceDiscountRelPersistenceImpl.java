@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1875,8 +1878,6 @@ public class CommerceDiscountRelPersistenceImpl extends BasePersistenceImpl<Comm
 	@Override
 	protected CommerceDiscountRel removeImpl(
 		CommerceDiscountRel commerceDiscountRel) {
-		commerceDiscountRel = toUnwrappedModel(commerceDiscountRel);
-
 		Session session = null;
 
 		try {
@@ -1908,9 +1909,23 @@ public class CommerceDiscountRelPersistenceImpl extends BasePersistenceImpl<Comm
 	@Override
 	public CommerceDiscountRel updateImpl(
 		CommerceDiscountRel commerceDiscountRel) {
-		commerceDiscountRel = toUnwrappedModel(commerceDiscountRel);
-
 		boolean isNew = commerceDiscountRel.isNew();
+
+		if (!(commerceDiscountRel instanceof CommerceDiscountRelModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceDiscountRel.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceDiscountRel);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceDiscountRel proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceDiscountRel implementation " +
+				commerceDiscountRel.getClass());
+		}
 
 		CommerceDiscountRelModelImpl commerceDiscountRelModelImpl = (CommerceDiscountRelModelImpl)commerceDiscountRel;
 
@@ -2070,31 +2085,6 @@ public class CommerceDiscountRelPersistenceImpl extends BasePersistenceImpl<Comm
 		commerceDiscountRel.resetOriginalValues();
 
 		return commerceDiscountRel;
-	}
-
-	protected CommerceDiscountRel toUnwrappedModel(
-		CommerceDiscountRel commerceDiscountRel) {
-		if (commerceDiscountRel instanceof CommerceDiscountRelImpl) {
-			return commerceDiscountRel;
-		}
-
-		CommerceDiscountRelImpl commerceDiscountRelImpl = new CommerceDiscountRelImpl();
-
-		commerceDiscountRelImpl.setNew(commerceDiscountRel.isNew());
-		commerceDiscountRelImpl.setPrimaryKey(commerceDiscountRel.getPrimaryKey());
-
-		commerceDiscountRelImpl.setCommerceDiscountRelId(commerceDiscountRel.getCommerceDiscountRelId());
-		commerceDiscountRelImpl.setGroupId(commerceDiscountRel.getGroupId());
-		commerceDiscountRelImpl.setCompanyId(commerceDiscountRel.getCompanyId());
-		commerceDiscountRelImpl.setUserId(commerceDiscountRel.getUserId());
-		commerceDiscountRelImpl.setUserName(commerceDiscountRel.getUserName());
-		commerceDiscountRelImpl.setCreateDate(commerceDiscountRel.getCreateDate());
-		commerceDiscountRelImpl.setModifiedDate(commerceDiscountRel.getModifiedDate());
-		commerceDiscountRelImpl.setCommerceDiscountId(commerceDiscountRel.getCommerceDiscountId());
-		commerceDiscountRelImpl.setClassNameId(commerceDiscountRel.getClassNameId());
-		commerceDiscountRelImpl.setClassPK(commerceDiscountRel.getClassPK());
-
-		return commerceDiscountRelImpl;
 	}
 
 	/**

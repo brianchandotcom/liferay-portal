@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1635,8 +1637,6 @@ public class CommerceShippingMethodPersistenceImpl extends BasePersistenceImpl<C
 	@Override
 	protected CommerceShippingMethod removeImpl(
 		CommerceShippingMethod commerceShippingMethod) {
-		commerceShippingMethod = toUnwrappedModel(commerceShippingMethod);
-
 		Session session = null;
 
 		try {
@@ -1668,9 +1668,23 @@ public class CommerceShippingMethodPersistenceImpl extends BasePersistenceImpl<C
 	@Override
 	public CommerceShippingMethod updateImpl(
 		CommerceShippingMethod commerceShippingMethod) {
-		commerceShippingMethod = toUnwrappedModel(commerceShippingMethod);
-
 		boolean isNew = commerceShippingMethod.isNew();
+
+		if (!(commerceShippingMethod instanceof CommerceShippingMethodModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceShippingMethod.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceShippingMethod);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceShippingMethod proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceShippingMethod implementation " +
+				commerceShippingMethod.getClass());
+		}
 
 		CommerceShippingMethodModelImpl commerceShippingMethodModelImpl = (CommerceShippingMethodModelImpl)commerceShippingMethod;
 
@@ -1799,34 +1813,6 @@ public class CommerceShippingMethodPersistenceImpl extends BasePersistenceImpl<C
 		commerceShippingMethod.resetOriginalValues();
 
 		return commerceShippingMethod;
-	}
-
-	protected CommerceShippingMethod toUnwrappedModel(
-		CommerceShippingMethod commerceShippingMethod) {
-		if (commerceShippingMethod instanceof CommerceShippingMethodImpl) {
-			return commerceShippingMethod;
-		}
-
-		CommerceShippingMethodImpl commerceShippingMethodImpl = new CommerceShippingMethodImpl();
-
-		commerceShippingMethodImpl.setNew(commerceShippingMethod.isNew());
-		commerceShippingMethodImpl.setPrimaryKey(commerceShippingMethod.getPrimaryKey());
-
-		commerceShippingMethodImpl.setCommerceShippingMethodId(commerceShippingMethod.getCommerceShippingMethodId());
-		commerceShippingMethodImpl.setGroupId(commerceShippingMethod.getGroupId());
-		commerceShippingMethodImpl.setCompanyId(commerceShippingMethod.getCompanyId());
-		commerceShippingMethodImpl.setUserId(commerceShippingMethod.getUserId());
-		commerceShippingMethodImpl.setUserName(commerceShippingMethod.getUserName());
-		commerceShippingMethodImpl.setCreateDate(commerceShippingMethod.getCreateDate());
-		commerceShippingMethodImpl.setModifiedDate(commerceShippingMethod.getModifiedDate());
-		commerceShippingMethodImpl.setName(commerceShippingMethod.getName());
-		commerceShippingMethodImpl.setDescription(commerceShippingMethod.getDescription());
-		commerceShippingMethodImpl.setImageId(commerceShippingMethod.getImageId());
-		commerceShippingMethodImpl.setEngineKey(commerceShippingMethod.getEngineKey());
-		commerceShippingMethodImpl.setPriority(commerceShippingMethod.getPriority());
-		commerceShippingMethodImpl.setActive(commerceShippingMethod.isActive());
-
-		return commerceShippingMethodImpl;
 	}
 
 	/**

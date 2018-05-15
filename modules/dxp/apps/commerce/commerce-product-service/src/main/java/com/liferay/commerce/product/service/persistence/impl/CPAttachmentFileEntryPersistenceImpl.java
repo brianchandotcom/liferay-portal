@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -4741,8 +4743,6 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 	@Override
 	protected CPAttachmentFileEntry removeImpl(
 		CPAttachmentFileEntry cpAttachmentFileEntry) {
-		cpAttachmentFileEntry = toUnwrappedModel(cpAttachmentFileEntry);
-
 		Session session = null;
 
 		try {
@@ -4774,9 +4774,23 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 	@Override
 	public CPAttachmentFileEntry updateImpl(
 		CPAttachmentFileEntry cpAttachmentFileEntry) {
-		cpAttachmentFileEntry = toUnwrappedModel(cpAttachmentFileEntry);
-
 		boolean isNew = cpAttachmentFileEntry.isNew();
+
+		if (!(cpAttachmentFileEntry instanceof CPAttachmentFileEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpAttachmentFileEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpAttachmentFileEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpAttachmentFileEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPAttachmentFileEntry implementation " +
+				cpAttachmentFileEntry.getClass());
+		}
 
 		CPAttachmentFileEntryModelImpl cpAttachmentFileEntryModelImpl = (CPAttachmentFileEntryModelImpl)cpAttachmentFileEntry;
 
@@ -4976,43 +4990,6 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 		cpAttachmentFileEntry.resetOriginalValues();
 
 		return cpAttachmentFileEntry;
-	}
-
-	protected CPAttachmentFileEntry toUnwrappedModel(
-		CPAttachmentFileEntry cpAttachmentFileEntry) {
-		if (cpAttachmentFileEntry instanceof CPAttachmentFileEntryImpl) {
-			return cpAttachmentFileEntry;
-		}
-
-		CPAttachmentFileEntryImpl cpAttachmentFileEntryImpl = new CPAttachmentFileEntryImpl();
-
-		cpAttachmentFileEntryImpl.setNew(cpAttachmentFileEntry.isNew());
-		cpAttachmentFileEntryImpl.setPrimaryKey(cpAttachmentFileEntry.getPrimaryKey());
-
-		cpAttachmentFileEntryImpl.setUuid(cpAttachmentFileEntry.getUuid());
-		cpAttachmentFileEntryImpl.setCPAttachmentFileEntryId(cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-		cpAttachmentFileEntryImpl.setGroupId(cpAttachmentFileEntry.getGroupId());
-		cpAttachmentFileEntryImpl.setCompanyId(cpAttachmentFileEntry.getCompanyId());
-		cpAttachmentFileEntryImpl.setUserId(cpAttachmentFileEntry.getUserId());
-		cpAttachmentFileEntryImpl.setUserName(cpAttachmentFileEntry.getUserName());
-		cpAttachmentFileEntryImpl.setCreateDate(cpAttachmentFileEntry.getCreateDate());
-		cpAttachmentFileEntryImpl.setModifiedDate(cpAttachmentFileEntry.getModifiedDate());
-		cpAttachmentFileEntryImpl.setClassNameId(cpAttachmentFileEntry.getClassNameId());
-		cpAttachmentFileEntryImpl.setClassPK(cpAttachmentFileEntry.getClassPK());
-		cpAttachmentFileEntryImpl.setFileEntryId(cpAttachmentFileEntry.getFileEntryId());
-		cpAttachmentFileEntryImpl.setDisplayDate(cpAttachmentFileEntry.getDisplayDate());
-		cpAttachmentFileEntryImpl.setExpirationDate(cpAttachmentFileEntry.getExpirationDate());
-		cpAttachmentFileEntryImpl.setTitle(cpAttachmentFileEntry.getTitle());
-		cpAttachmentFileEntryImpl.setJson(cpAttachmentFileEntry.getJson());
-		cpAttachmentFileEntryImpl.setPriority(cpAttachmentFileEntry.getPriority());
-		cpAttachmentFileEntryImpl.setType(cpAttachmentFileEntry.getType());
-		cpAttachmentFileEntryImpl.setLastPublishDate(cpAttachmentFileEntry.getLastPublishDate());
-		cpAttachmentFileEntryImpl.setStatus(cpAttachmentFileEntry.getStatus());
-		cpAttachmentFileEntryImpl.setStatusByUserId(cpAttachmentFileEntry.getStatusByUserId());
-		cpAttachmentFileEntryImpl.setStatusByUserName(cpAttachmentFileEntry.getStatusByUserName());
-		cpAttachmentFileEntryImpl.setStatusDate(cpAttachmentFileEntry.getStatusDate());
-
-		return cpAttachmentFileEntryImpl;
 	}
 
 	/**

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2834,8 +2836,6 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 
 	@Override
 	protected CPOption removeImpl(CPOption cpOption) {
-		cpOption = toUnwrappedModel(cpOption);
-
 		Session session = null;
 
 		try {
@@ -2866,9 +2866,23 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 
 	@Override
 	public CPOption updateImpl(CPOption cpOption) {
-		cpOption = toUnwrappedModel(cpOption);
-
 		boolean isNew = cpOption.isNew();
+
+		if (!(cpOption instanceof CPOptionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpOption.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpOption);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpOption proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPOption implementation " +
+				cpOption.getClass());
+		}
 
 		CPOptionModelImpl cpOptionModelImpl = (CPOptionModelImpl)cpOption;
 
@@ -3018,36 +3032,6 @@ public class CPOptionPersistenceImpl extends BasePersistenceImpl<CPOption>
 		cpOption.resetOriginalValues();
 
 		return cpOption;
-	}
-
-	protected CPOption toUnwrappedModel(CPOption cpOption) {
-		if (cpOption instanceof CPOptionImpl) {
-			return cpOption;
-		}
-
-		CPOptionImpl cpOptionImpl = new CPOptionImpl();
-
-		cpOptionImpl.setNew(cpOption.isNew());
-		cpOptionImpl.setPrimaryKey(cpOption.getPrimaryKey());
-
-		cpOptionImpl.setUuid(cpOption.getUuid());
-		cpOptionImpl.setCPOptionId(cpOption.getCPOptionId());
-		cpOptionImpl.setGroupId(cpOption.getGroupId());
-		cpOptionImpl.setCompanyId(cpOption.getCompanyId());
-		cpOptionImpl.setUserId(cpOption.getUserId());
-		cpOptionImpl.setUserName(cpOption.getUserName());
-		cpOptionImpl.setCreateDate(cpOption.getCreateDate());
-		cpOptionImpl.setModifiedDate(cpOption.getModifiedDate());
-		cpOptionImpl.setName(cpOption.getName());
-		cpOptionImpl.setDescription(cpOption.getDescription());
-		cpOptionImpl.setDDMFormFieldTypeName(cpOption.getDDMFormFieldTypeName());
-		cpOptionImpl.setFacetable(cpOption.isFacetable());
-		cpOptionImpl.setRequired(cpOption.isRequired());
-		cpOptionImpl.setSkuContributor(cpOption.isSkuContributor());
-		cpOptionImpl.setKey(cpOption.getKey());
-		cpOptionImpl.setLastPublishDate(cpOption.getLastPublishDate());
-
-		return cpOptionImpl;
 	}
 
 	/**

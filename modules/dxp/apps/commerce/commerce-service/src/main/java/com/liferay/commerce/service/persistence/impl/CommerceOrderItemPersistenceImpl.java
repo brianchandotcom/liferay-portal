@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1832,8 +1835,6 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 
 	@Override
 	protected CommerceOrderItem removeImpl(CommerceOrderItem commerceOrderItem) {
-		commerceOrderItem = toUnwrappedModel(commerceOrderItem);
-
 		Session session = null;
 
 		try {
@@ -1864,9 +1865,23 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 
 	@Override
 	public CommerceOrderItem updateImpl(CommerceOrderItem commerceOrderItem) {
-		commerceOrderItem = toUnwrappedModel(commerceOrderItem);
-
 		boolean isNew = commerceOrderItem.isNew();
+
+		if (!(commerceOrderItem instanceof CommerceOrderItemModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceOrderItem.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceOrderItem);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceOrderItem proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceOrderItem implementation " +
+				commerceOrderItem.getClass());
+		}
 
 		CommerceOrderItemModelImpl commerceOrderItemModelImpl = (CommerceOrderItemModelImpl)commerceOrderItem;
 
@@ -2018,36 +2033,6 @@ public class CommerceOrderItemPersistenceImpl extends BasePersistenceImpl<Commer
 		commerceOrderItem.resetOriginalValues();
 
 		return commerceOrderItem;
-	}
-
-	protected CommerceOrderItem toUnwrappedModel(
-		CommerceOrderItem commerceOrderItem) {
-		if (commerceOrderItem instanceof CommerceOrderItemImpl) {
-			return commerceOrderItem;
-		}
-
-		CommerceOrderItemImpl commerceOrderItemImpl = new CommerceOrderItemImpl();
-
-		commerceOrderItemImpl.setNew(commerceOrderItem.isNew());
-		commerceOrderItemImpl.setPrimaryKey(commerceOrderItem.getPrimaryKey());
-
-		commerceOrderItemImpl.setCommerceOrderItemId(commerceOrderItem.getCommerceOrderItemId());
-		commerceOrderItemImpl.setGroupId(commerceOrderItem.getGroupId());
-		commerceOrderItemImpl.setCompanyId(commerceOrderItem.getCompanyId());
-		commerceOrderItemImpl.setUserId(commerceOrderItem.getUserId());
-		commerceOrderItemImpl.setUserName(commerceOrderItem.getUserName());
-		commerceOrderItemImpl.setCreateDate(commerceOrderItem.getCreateDate());
-		commerceOrderItemImpl.setModifiedDate(commerceOrderItem.getModifiedDate());
-		commerceOrderItemImpl.setCommerceOrderId(commerceOrderItem.getCommerceOrderId());
-		commerceOrderItemImpl.setCPInstanceId(commerceOrderItem.getCPInstanceId());
-		commerceOrderItemImpl.setQuantity(commerceOrderItem.getQuantity());
-		commerceOrderItemImpl.setShippedQuantity(commerceOrderItem.getShippedQuantity());
-		commerceOrderItemImpl.setJson(commerceOrderItem.getJson());
-		commerceOrderItemImpl.setName(commerceOrderItem.getName());
-		commerceOrderItemImpl.setSku(commerceOrderItem.getSku());
-		commerceOrderItemImpl.setPrice(commerceOrderItem.getPrice());
-
-		return commerceOrderItemImpl;
 	}
 
 	/**

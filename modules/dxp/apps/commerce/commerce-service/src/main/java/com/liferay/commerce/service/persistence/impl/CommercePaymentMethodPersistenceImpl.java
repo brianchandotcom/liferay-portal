@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1633,8 +1635,6 @@ public class CommercePaymentMethodPersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	protected CommercePaymentMethod removeImpl(
 		CommercePaymentMethod commercePaymentMethod) {
-		commercePaymentMethod = toUnwrappedModel(commercePaymentMethod);
-
 		Session session = null;
 
 		try {
@@ -1666,9 +1666,23 @@ public class CommercePaymentMethodPersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	public CommercePaymentMethod updateImpl(
 		CommercePaymentMethod commercePaymentMethod) {
-		commercePaymentMethod = toUnwrappedModel(commercePaymentMethod);
-
 		boolean isNew = commercePaymentMethod.isNew();
+
+		if (!(commercePaymentMethod instanceof CommercePaymentMethodModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commercePaymentMethod.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commercePaymentMethod);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commercePaymentMethod proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommercePaymentMethod implementation " +
+				commercePaymentMethod.getClass());
+		}
 
 		CommercePaymentMethodModelImpl commercePaymentMethodModelImpl = (CommercePaymentMethodModelImpl)commercePaymentMethod;
 
@@ -1796,34 +1810,6 @@ public class CommercePaymentMethodPersistenceImpl extends BasePersistenceImpl<Co
 		commercePaymentMethod.resetOriginalValues();
 
 		return commercePaymentMethod;
-	}
-
-	protected CommercePaymentMethod toUnwrappedModel(
-		CommercePaymentMethod commercePaymentMethod) {
-		if (commercePaymentMethod instanceof CommercePaymentMethodImpl) {
-			return commercePaymentMethod;
-		}
-
-		CommercePaymentMethodImpl commercePaymentMethodImpl = new CommercePaymentMethodImpl();
-
-		commercePaymentMethodImpl.setNew(commercePaymentMethod.isNew());
-		commercePaymentMethodImpl.setPrimaryKey(commercePaymentMethod.getPrimaryKey());
-
-		commercePaymentMethodImpl.setCommercePaymentMethodId(commercePaymentMethod.getCommercePaymentMethodId());
-		commercePaymentMethodImpl.setGroupId(commercePaymentMethod.getGroupId());
-		commercePaymentMethodImpl.setCompanyId(commercePaymentMethod.getCompanyId());
-		commercePaymentMethodImpl.setUserId(commercePaymentMethod.getUserId());
-		commercePaymentMethodImpl.setUserName(commercePaymentMethod.getUserName());
-		commercePaymentMethodImpl.setCreateDate(commercePaymentMethod.getCreateDate());
-		commercePaymentMethodImpl.setModifiedDate(commercePaymentMethod.getModifiedDate());
-		commercePaymentMethodImpl.setName(commercePaymentMethod.getName());
-		commercePaymentMethodImpl.setDescription(commercePaymentMethod.getDescription());
-		commercePaymentMethodImpl.setImageId(commercePaymentMethod.getImageId());
-		commercePaymentMethodImpl.setEngineKey(commercePaymentMethod.getEngineKey());
-		commercePaymentMethodImpl.setPriority(commercePaymentMethod.getPriority());
-		commercePaymentMethodImpl.setActive(commercePaymentMethod.isActive());
-
-		return commercePaymentMethodImpl;
 	}
 
 	/**

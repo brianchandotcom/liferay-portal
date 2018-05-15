@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1959,8 +1961,6 @@ public class CPDefinitionInventoryPersistenceImpl extends BasePersistenceImpl<CP
 	@Override
 	protected CPDefinitionInventory removeImpl(
 		CPDefinitionInventory cpDefinitionInventory) {
-		cpDefinitionInventory = toUnwrappedModel(cpDefinitionInventory);
-
 		Session session = null;
 
 		try {
@@ -1992,9 +1992,23 @@ public class CPDefinitionInventoryPersistenceImpl extends BasePersistenceImpl<CP
 	@Override
 	public CPDefinitionInventory updateImpl(
 		CPDefinitionInventory cpDefinitionInventory) {
-		cpDefinitionInventory = toUnwrappedModel(cpDefinitionInventory);
-
 		boolean isNew = cpDefinitionInventory.isNew();
+
+		if (!(cpDefinitionInventory instanceof CPDefinitionInventoryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDefinitionInventory.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinitionInventory);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinitionInventory proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinitionInventory implementation " +
+				cpDefinitionInventory.getClass());
+		}
 
 		CPDefinitionInventoryModelImpl cpDefinitionInventoryModelImpl = (CPDefinitionInventoryModelImpl)cpDefinitionInventory;
 
@@ -2128,40 +2142,6 @@ public class CPDefinitionInventoryPersistenceImpl extends BasePersistenceImpl<CP
 		cpDefinitionInventory.resetOriginalValues();
 
 		return cpDefinitionInventory;
-	}
-
-	protected CPDefinitionInventory toUnwrappedModel(
-		CPDefinitionInventory cpDefinitionInventory) {
-		if (cpDefinitionInventory instanceof CPDefinitionInventoryImpl) {
-			return cpDefinitionInventory;
-		}
-
-		CPDefinitionInventoryImpl cpDefinitionInventoryImpl = new CPDefinitionInventoryImpl();
-
-		cpDefinitionInventoryImpl.setNew(cpDefinitionInventory.isNew());
-		cpDefinitionInventoryImpl.setPrimaryKey(cpDefinitionInventory.getPrimaryKey());
-
-		cpDefinitionInventoryImpl.setUuid(cpDefinitionInventory.getUuid());
-		cpDefinitionInventoryImpl.setCPDefinitionInventoryId(cpDefinitionInventory.getCPDefinitionInventoryId());
-		cpDefinitionInventoryImpl.setGroupId(cpDefinitionInventory.getGroupId());
-		cpDefinitionInventoryImpl.setCompanyId(cpDefinitionInventory.getCompanyId());
-		cpDefinitionInventoryImpl.setUserId(cpDefinitionInventory.getUserId());
-		cpDefinitionInventoryImpl.setUserName(cpDefinitionInventory.getUserName());
-		cpDefinitionInventoryImpl.setCreateDate(cpDefinitionInventory.getCreateDate());
-		cpDefinitionInventoryImpl.setModifiedDate(cpDefinitionInventory.getModifiedDate());
-		cpDefinitionInventoryImpl.setCPDefinitionId(cpDefinitionInventory.getCPDefinitionId());
-		cpDefinitionInventoryImpl.setCPDefinitionInventoryEngine(cpDefinitionInventory.getCPDefinitionInventoryEngine());
-		cpDefinitionInventoryImpl.setLowStockActivity(cpDefinitionInventory.getLowStockActivity());
-		cpDefinitionInventoryImpl.setDisplayAvailability(cpDefinitionInventory.isDisplayAvailability());
-		cpDefinitionInventoryImpl.setDisplayStockQuantity(cpDefinitionInventory.isDisplayStockQuantity());
-		cpDefinitionInventoryImpl.setMinStockQuantity(cpDefinitionInventory.getMinStockQuantity());
-		cpDefinitionInventoryImpl.setBackOrders(cpDefinitionInventory.isBackOrders());
-		cpDefinitionInventoryImpl.setMinOrderQuantity(cpDefinitionInventory.getMinOrderQuantity());
-		cpDefinitionInventoryImpl.setMaxOrderQuantity(cpDefinitionInventory.getMaxOrderQuantity());
-		cpDefinitionInventoryImpl.setAllowedOrderQuantities(cpDefinitionInventory.getAllowedOrderQuantities());
-		cpDefinitionInventoryImpl.setMultipleOrderQuantity(cpDefinitionInventory.getMultipleOrderQuantity());
-
-		return cpDefinitionInventoryImpl;
 	}
 
 	/**

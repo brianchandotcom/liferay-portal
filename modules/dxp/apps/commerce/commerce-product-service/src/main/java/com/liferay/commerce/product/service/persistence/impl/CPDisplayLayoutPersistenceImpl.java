@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1966,8 +1968,6 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 
 	@Override
 	protected CPDisplayLayout removeImpl(CPDisplayLayout cpDisplayLayout) {
-		cpDisplayLayout = toUnwrappedModel(cpDisplayLayout);
-
 		Session session = null;
 
 		try {
@@ -1998,9 +1998,23 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 
 	@Override
 	public CPDisplayLayout updateImpl(CPDisplayLayout cpDisplayLayout) {
-		cpDisplayLayout = toUnwrappedModel(cpDisplayLayout);
-
 		boolean isNew = cpDisplayLayout.isNew();
+
+		if (!(cpDisplayLayout instanceof CPDisplayLayoutModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDisplayLayout.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDisplayLayout);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDisplayLayout proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDisplayLayout implementation " +
+				cpDisplayLayout.getClass());
+		}
 
 		CPDisplayLayoutModelImpl cpDisplayLayoutModelImpl = (CPDisplayLayoutModelImpl)cpDisplayLayout;
 
@@ -2131,31 +2145,6 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 		cpDisplayLayout.resetOriginalValues();
 
 		return cpDisplayLayout;
-	}
-
-	protected CPDisplayLayout toUnwrappedModel(CPDisplayLayout cpDisplayLayout) {
-		if (cpDisplayLayout instanceof CPDisplayLayoutImpl) {
-			return cpDisplayLayout;
-		}
-
-		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
-
-		cpDisplayLayoutImpl.setNew(cpDisplayLayout.isNew());
-		cpDisplayLayoutImpl.setPrimaryKey(cpDisplayLayout.getPrimaryKey());
-
-		cpDisplayLayoutImpl.setUuid(cpDisplayLayout.getUuid());
-		cpDisplayLayoutImpl.setCPDisplayLayoutId(cpDisplayLayout.getCPDisplayLayoutId());
-		cpDisplayLayoutImpl.setGroupId(cpDisplayLayout.getGroupId());
-		cpDisplayLayoutImpl.setCompanyId(cpDisplayLayout.getCompanyId());
-		cpDisplayLayoutImpl.setUserId(cpDisplayLayout.getUserId());
-		cpDisplayLayoutImpl.setUserName(cpDisplayLayout.getUserName());
-		cpDisplayLayoutImpl.setCreateDate(cpDisplayLayout.getCreateDate());
-		cpDisplayLayoutImpl.setModifiedDate(cpDisplayLayout.getModifiedDate());
-		cpDisplayLayoutImpl.setClassNameId(cpDisplayLayout.getClassNameId());
-		cpDisplayLayoutImpl.setClassPK(cpDisplayLayout.getClassPK());
-		cpDisplayLayoutImpl.setLayoutUuid(cpDisplayLayout.getLayoutUuid());
-
-		return cpDisplayLayoutImpl;
 	}
 
 	/**

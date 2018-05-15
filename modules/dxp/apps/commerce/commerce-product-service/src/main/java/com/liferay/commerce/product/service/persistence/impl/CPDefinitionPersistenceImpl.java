@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -5970,8 +5972,6 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 
 	@Override
 	protected CPDefinition removeImpl(CPDefinition cpDefinition) {
-		cpDefinition = toUnwrappedModel(cpDefinition);
-
 		Session session = null;
 
 		try {
@@ -6002,9 +6002,23 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 
 	@Override
 	public CPDefinition updateImpl(CPDefinition cpDefinition) {
-		cpDefinition = toUnwrappedModel(cpDefinition);
-
 		boolean isNew = cpDefinition.isNew();
+
+		if (!(cpDefinition instanceof CPDefinitionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDefinition.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinition);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinition proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinition implementation " +
+				cpDefinition.getClass());
+		}
 
 		CPDefinitionModelImpl cpDefinitionModelImpl = (CPDefinitionModelImpl)cpDefinition;
 
@@ -6235,53 +6249,6 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 		cpDefinition.resetOriginalValues();
 
 		return cpDefinition;
-	}
-
-	protected CPDefinition toUnwrappedModel(CPDefinition cpDefinition) {
-		if (cpDefinition instanceof CPDefinitionImpl) {
-			return cpDefinition;
-		}
-
-		CPDefinitionImpl cpDefinitionImpl = new CPDefinitionImpl();
-
-		cpDefinitionImpl.setNew(cpDefinition.isNew());
-		cpDefinitionImpl.setPrimaryKey(cpDefinition.getPrimaryKey());
-
-		cpDefinitionImpl.setUuid(cpDefinition.getUuid());
-		cpDefinitionImpl.setCPDefinitionId(cpDefinition.getCPDefinitionId());
-		cpDefinitionImpl.setGroupId(cpDefinition.getGroupId());
-		cpDefinitionImpl.setCompanyId(cpDefinition.getCompanyId());
-		cpDefinitionImpl.setUserId(cpDefinition.getUserId());
-		cpDefinitionImpl.setUserName(cpDefinition.getUserName());
-		cpDefinitionImpl.setCreateDate(cpDefinition.getCreateDate());
-		cpDefinitionImpl.setModifiedDate(cpDefinition.getModifiedDate());
-		cpDefinitionImpl.setProductTypeName(cpDefinition.getProductTypeName());
-		cpDefinitionImpl.setAvailableIndividually(cpDefinition.isAvailableIndividually());
-		cpDefinitionImpl.setIgnoreSKUCombinations(cpDefinition.isIgnoreSKUCombinations());
-		cpDefinitionImpl.setShippable(cpDefinition.isShippable());
-		cpDefinitionImpl.setFreeShipping(cpDefinition.isFreeShipping());
-		cpDefinitionImpl.setShipSeparately(cpDefinition.isShipSeparately());
-		cpDefinitionImpl.setShippingExtraPrice(cpDefinition.getShippingExtraPrice());
-		cpDefinitionImpl.setWidth(cpDefinition.getWidth());
-		cpDefinitionImpl.setHeight(cpDefinition.getHeight());
-		cpDefinitionImpl.setDepth(cpDefinition.getDepth());
-		cpDefinitionImpl.setWeight(cpDefinition.getWeight());
-		cpDefinitionImpl.setCPTaxCategoryId(cpDefinition.getCPTaxCategoryId());
-		cpDefinitionImpl.setTaxExempt(cpDefinition.isTaxExempt());
-		cpDefinitionImpl.setTelcoOrElectronics(cpDefinition.isTelcoOrElectronics());
-		cpDefinitionImpl.setDDMStructureKey(cpDefinition.getDDMStructureKey());
-		cpDefinitionImpl.setPublished(cpDefinition.isPublished());
-		cpDefinitionImpl.setExternalReferenceCode(cpDefinition.getExternalReferenceCode());
-		cpDefinitionImpl.setDisplayDate(cpDefinition.getDisplayDate());
-		cpDefinitionImpl.setExpirationDate(cpDefinition.getExpirationDate());
-		cpDefinitionImpl.setLastPublishDate(cpDefinition.getLastPublishDate());
-		cpDefinitionImpl.setStatus(cpDefinition.getStatus());
-		cpDefinitionImpl.setStatusByUserId(cpDefinition.getStatusByUserId());
-		cpDefinitionImpl.setStatusByUserName(cpDefinition.getStatusByUserName());
-		cpDefinitionImpl.setStatusDate(cpDefinition.getStatusDate());
-		cpDefinitionImpl.setDefaultLanguageId(cpDefinition.getDefaultLanguageId());
-
-		return cpDefinitionImpl;
 	}
 
 	/**

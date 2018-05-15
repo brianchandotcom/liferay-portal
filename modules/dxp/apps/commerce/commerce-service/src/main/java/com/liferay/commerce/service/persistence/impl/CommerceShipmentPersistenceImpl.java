@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -749,8 +752,6 @@ public class CommerceShipmentPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	@Override
 	protected CommerceShipment removeImpl(CommerceShipment commerceShipment) {
-		commerceShipment = toUnwrappedModel(commerceShipment);
-
 		Session session = null;
 
 		try {
@@ -781,9 +782,23 @@ public class CommerceShipmentPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	@Override
 	public CommerceShipment updateImpl(CommerceShipment commerceShipment) {
-		commerceShipment = toUnwrappedModel(commerceShipment);
-
 		boolean isNew = commerceShipment.isNew();
+
+		if (!(commerceShipment instanceof CommerceShipmentModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceShipment.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceShipment);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceShipment proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceShipment implementation " +
+				commerceShipment.getClass());
+		}
 
 		CommerceShipmentModelImpl commerceShipmentModelImpl = (CommerceShipmentModelImpl)commerceShipment;
 
@@ -875,38 +890,6 @@ public class CommerceShipmentPersistenceImpl extends BasePersistenceImpl<Commerc
 		commerceShipment.resetOriginalValues();
 
 		return commerceShipment;
-	}
-
-	protected CommerceShipment toUnwrappedModel(
-		CommerceShipment commerceShipment) {
-		if (commerceShipment instanceof CommerceShipmentImpl) {
-			return commerceShipment;
-		}
-
-		CommerceShipmentImpl commerceShipmentImpl = new CommerceShipmentImpl();
-
-		commerceShipmentImpl.setNew(commerceShipment.isNew());
-		commerceShipmentImpl.setPrimaryKey(commerceShipment.getPrimaryKey());
-
-		commerceShipmentImpl.setCommerceShipmentId(commerceShipment.getCommerceShipmentId());
-		commerceShipmentImpl.setGroupId(commerceShipment.getGroupId());
-		commerceShipmentImpl.setCompanyId(commerceShipment.getCompanyId());
-		commerceShipmentImpl.setUserId(commerceShipment.getUserId());
-		commerceShipmentImpl.setUserName(commerceShipment.getUserName());
-		commerceShipmentImpl.setCreateDate(commerceShipment.getCreateDate());
-		commerceShipmentImpl.setModifiedDate(commerceShipment.getModifiedDate());
-		commerceShipmentImpl.setShipmentUserId(commerceShipment.getShipmentUserId());
-		commerceShipmentImpl.setCommerceAddressId(commerceShipment.getCommerceAddressId());
-		commerceShipmentImpl.setCommerceShippingMethodId(commerceShipment.getCommerceShippingMethodId());
-		commerceShipmentImpl.setCommerceWarehouseId(commerceShipment.getCommerceWarehouseId());
-		commerceShipmentImpl.setCarrier(commerceShipment.getCarrier());
-		commerceShipmentImpl.setTrackingNumber(commerceShipment.getTrackingNumber());
-		commerceShipmentImpl.setExpectedDuration(commerceShipment.getExpectedDuration());
-		commerceShipmentImpl.setStatus(commerceShipment.getStatus());
-		commerceShipmentImpl.setShippingDate(commerceShipment.getShippingDate());
-		commerceShipmentImpl.setExpectedDate(commerceShipment.getExpectedDate());
-
-		return commerceShipmentImpl;
 	}
 
 	/**

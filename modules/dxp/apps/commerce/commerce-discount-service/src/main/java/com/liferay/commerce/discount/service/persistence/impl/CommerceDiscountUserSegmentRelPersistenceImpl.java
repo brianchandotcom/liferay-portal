@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1340,8 +1342,6 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	@Override
 	protected CommerceDiscountUserSegmentRel removeImpl(
 		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel) {
-		commerceDiscountUserSegmentRel = toUnwrappedModel(commerceDiscountUserSegmentRel);
-
 		Session session = null;
 
 		try {
@@ -1373,9 +1373,24 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 	@Override
 	public CommerceDiscountUserSegmentRel updateImpl(
 		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel) {
-		commerceDiscountUserSegmentRel = toUnwrappedModel(commerceDiscountUserSegmentRel);
-
 		boolean isNew = commerceDiscountUserSegmentRel.isNew();
+
+		if (!(commerceDiscountUserSegmentRel instanceof CommerceDiscountUserSegmentRelModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(
+						commerceDiscountUserSegmentRel.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceDiscountUserSegmentRel);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceDiscountUserSegmentRel proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceDiscountUserSegmentRel implementation " +
+				commerceDiscountUserSegmentRel.getClass());
+		}
 
 		CommerceDiscountUserSegmentRelModelImpl commerceDiscountUserSegmentRelModelImpl =
 			(CommerceDiscountUserSegmentRelModelImpl)commerceDiscountUserSegmentRel;
@@ -1507,30 +1522,6 @@ public class CommerceDiscountUserSegmentRelPersistenceImpl
 		commerceDiscountUserSegmentRel.resetOriginalValues();
 
 		return commerceDiscountUserSegmentRel;
-	}
-
-	protected CommerceDiscountUserSegmentRel toUnwrappedModel(
-		CommerceDiscountUserSegmentRel commerceDiscountUserSegmentRel) {
-		if (commerceDiscountUserSegmentRel instanceof CommerceDiscountUserSegmentRelImpl) {
-			return commerceDiscountUserSegmentRel;
-		}
-
-		CommerceDiscountUserSegmentRelImpl commerceDiscountUserSegmentRelImpl = new CommerceDiscountUserSegmentRelImpl();
-
-		commerceDiscountUserSegmentRelImpl.setNew(commerceDiscountUserSegmentRel.isNew());
-		commerceDiscountUserSegmentRelImpl.setPrimaryKey(commerceDiscountUserSegmentRel.getPrimaryKey());
-
-		commerceDiscountUserSegmentRelImpl.setCommerceDiscountUserSegmentRelId(commerceDiscountUserSegmentRel.getCommerceDiscountUserSegmentRelId());
-		commerceDiscountUserSegmentRelImpl.setGroupId(commerceDiscountUserSegmentRel.getGroupId());
-		commerceDiscountUserSegmentRelImpl.setCompanyId(commerceDiscountUserSegmentRel.getCompanyId());
-		commerceDiscountUserSegmentRelImpl.setUserId(commerceDiscountUserSegmentRel.getUserId());
-		commerceDiscountUserSegmentRelImpl.setUserName(commerceDiscountUserSegmentRel.getUserName());
-		commerceDiscountUserSegmentRelImpl.setCreateDate(commerceDiscountUserSegmentRel.getCreateDate());
-		commerceDiscountUserSegmentRelImpl.setModifiedDate(commerceDiscountUserSegmentRel.getModifiedDate());
-		commerceDiscountUserSegmentRelImpl.setCommerceDiscountId(commerceDiscountUserSegmentRel.getCommerceDiscountId());
-		commerceDiscountUserSegmentRelImpl.setCommerceUserSegmentEntryId(commerceDiscountUserSegmentRel.getCommerceUserSegmentEntryId());
-
-		return commerceDiscountUserSegmentRelImpl;
 	}
 
 	/**

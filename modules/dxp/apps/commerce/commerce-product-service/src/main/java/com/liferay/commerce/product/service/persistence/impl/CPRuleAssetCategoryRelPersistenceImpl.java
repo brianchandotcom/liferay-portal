@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1286,8 +1289,6 @@ public class CPRuleAssetCategoryRelPersistenceImpl extends BasePersistenceImpl<C
 	@Override
 	protected CPRuleAssetCategoryRel removeImpl(
 		CPRuleAssetCategoryRel cpRuleAssetCategoryRel) {
-		cpRuleAssetCategoryRel = toUnwrappedModel(cpRuleAssetCategoryRel);
-
 		Session session = null;
 
 		try {
@@ -1319,9 +1320,23 @@ public class CPRuleAssetCategoryRelPersistenceImpl extends BasePersistenceImpl<C
 	@Override
 	public CPRuleAssetCategoryRel updateImpl(
 		CPRuleAssetCategoryRel cpRuleAssetCategoryRel) {
-		cpRuleAssetCategoryRel = toUnwrappedModel(cpRuleAssetCategoryRel);
-
 		boolean isNew = cpRuleAssetCategoryRel.isNew();
+
+		if (!(cpRuleAssetCategoryRel instanceof CPRuleAssetCategoryRelModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpRuleAssetCategoryRel.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpRuleAssetCategoryRel);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpRuleAssetCategoryRel proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPRuleAssetCategoryRel implementation " +
+				cpRuleAssetCategoryRel.getClass());
+		}
 
 		CPRuleAssetCategoryRelModelImpl cpRuleAssetCategoryRelModelImpl = (CPRuleAssetCategoryRelModelImpl)cpRuleAssetCategoryRel;
 
@@ -1448,30 +1463,6 @@ public class CPRuleAssetCategoryRelPersistenceImpl extends BasePersistenceImpl<C
 		cpRuleAssetCategoryRel.resetOriginalValues();
 
 		return cpRuleAssetCategoryRel;
-	}
-
-	protected CPRuleAssetCategoryRel toUnwrappedModel(
-		CPRuleAssetCategoryRel cpRuleAssetCategoryRel) {
-		if (cpRuleAssetCategoryRel instanceof CPRuleAssetCategoryRelImpl) {
-			return cpRuleAssetCategoryRel;
-		}
-
-		CPRuleAssetCategoryRelImpl cpRuleAssetCategoryRelImpl = new CPRuleAssetCategoryRelImpl();
-
-		cpRuleAssetCategoryRelImpl.setNew(cpRuleAssetCategoryRel.isNew());
-		cpRuleAssetCategoryRelImpl.setPrimaryKey(cpRuleAssetCategoryRel.getPrimaryKey());
-
-		cpRuleAssetCategoryRelImpl.setCPRuleAssetCategoryRelId(cpRuleAssetCategoryRel.getCPRuleAssetCategoryRelId());
-		cpRuleAssetCategoryRelImpl.setGroupId(cpRuleAssetCategoryRel.getGroupId());
-		cpRuleAssetCategoryRelImpl.setCompanyId(cpRuleAssetCategoryRel.getCompanyId());
-		cpRuleAssetCategoryRelImpl.setUserId(cpRuleAssetCategoryRel.getUserId());
-		cpRuleAssetCategoryRelImpl.setUserName(cpRuleAssetCategoryRel.getUserName());
-		cpRuleAssetCategoryRelImpl.setCreateDate(cpRuleAssetCategoryRel.getCreateDate());
-		cpRuleAssetCategoryRelImpl.setModifiedDate(cpRuleAssetCategoryRel.getModifiedDate());
-		cpRuleAssetCategoryRelImpl.setCPRuleId(cpRuleAssetCategoryRel.getCPRuleId());
-		cpRuleAssetCategoryRelImpl.setAssetCategoryId(cpRuleAssetCategoryRel.getAssetCategoryId());
-
-		return cpRuleAssetCategoryRelImpl;
 	}
 
 	/**

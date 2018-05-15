@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -4433,8 +4435,6 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	@Override
 	protected CommerceWishList removeImpl(CommerceWishList commerceWishList) {
-		commerceWishList = toUnwrappedModel(commerceWishList);
-
 		Session session = null;
 
 		try {
@@ -4465,9 +4465,23 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	@Override
 	public CommerceWishList updateImpl(CommerceWishList commerceWishList) {
-		commerceWishList = toUnwrappedModel(commerceWishList);
-
 		boolean isNew = commerceWishList.isNew();
+
+		if (!(commerceWishList instanceof CommerceWishListModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceWishList.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceWishList);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceWishList proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceWishList implementation " +
+				commerceWishList.getClass());
+		}
 
 		CommerceWishListModelImpl commerceWishListModelImpl = (CommerceWishListModelImpl)commerceWishList;
 
@@ -4707,31 +4721,6 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 		commerceWishList.resetOriginalValues();
 
 		return commerceWishList;
-	}
-
-	protected CommerceWishList toUnwrappedModel(
-		CommerceWishList commerceWishList) {
-		if (commerceWishList instanceof CommerceWishListImpl) {
-			return commerceWishList;
-		}
-
-		CommerceWishListImpl commerceWishListImpl = new CommerceWishListImpl();
-
-		commerceWishListImpl.setNew(commerceWishList.isNew());
-		commerceWishListImpl.setPrimaryKey(commerceWishList.getPrimaryKey());
-
-		commerceWishListImpl.setUuid(commerceWishList.getUuid());
-		commerceWishListImpl.setCommerceWishListId(commerceWishList.getCommerceWishListId());
-		commerceWishListImpl.setGroupId(commerceWishList.getGroupId());
-		commerceWishListImpl.setCompanyId(commerceWishList.getCompanyId());
-		commerceWishListImpl.setUserId(commerceWishList.getUserId());
-		commerceWishListImpl.setUserName(commerceWishList.getUserName());
-		commerceWishListImpl.setCreateDate(commerceWishList.getCreateDate());
-		commerceWishListImpl.setModifiedDate(commerceWishList.getModifiedDate());
-		commerceWishListImpl.setName(commerceWishList.getName());
-		commerceWishListImpl.setDefaultWishList(commerceWishList.isDefaultWishList());
-
-		return commerceWishListImpl;
 	}
 
 	/**

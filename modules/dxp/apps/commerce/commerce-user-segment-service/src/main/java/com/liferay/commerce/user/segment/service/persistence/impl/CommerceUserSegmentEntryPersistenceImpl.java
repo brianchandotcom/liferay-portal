@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2394,8 +2396,6 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	protected CommerceUserSegmentEntry removeImpl(
 		CommerceUserSegmentEntry commerceUserSegmentEntry) {
-		commerceUserSegmentEntry = toUnwrappedModel(commerceUserSegmentEntry);
-
 		Session session = null;
 
 		try {
@@ -2427,9 +2427,23 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CommerceUserSegmentEntry updateImpl(
 		CommerceUserSegmentEntry commerceUserSegmentEntry) {
-		commerceUserSegmentEntry = toUnwrappedModel(commerceUserSegmentEntry);
-
 		boolean isNew = commerceUserSegmentEntry.isNew();
+
+		if (!(commerceUserSegmentEntry instanceof CommerceUserSegmentEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceUserSegmentEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceUserSegmentEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceUserSegmentEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceUserSegmentEntry implementation " +
+				commerceUserSegmentEntry.getClass());
+		}
 
 		CommerceUserSegmentEntryModelImpl commerceUserSegmentEntryModelImpl = (CommerceUserSegmentEntryModelImpl)commerceUserSegmentEntry;
 
@@ -2560,33 +2574,6 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 		commerceUserSegmentEntry.resetOriginalValues();
 
 		return commerceUserSegmentEntry;
-	}
-
-	protected CommerceUserSegmentEntry toUnwrappedModel(
-		CommerceUserSegmentEntry commerceUserSegmentEntry) {
-		if (commerceUserSegmentEntry instanceof CommerceUserSegmentEntryImpl) {
-			return commerceUserSegmentEntry;
-		}
-
-		CommerceUserSegmentEntryImpl commerceUserSegmentEntryImpl = new CommerceUserSegmentEntryImpl();
-
-		commerceUserSegmentEntryImpl.setNew(commerceUserSegmentEntry.isNew());
-		commerceUserSegmentEntryImpl.setPrimaryKey(commerceUserSegmentEntry.getPrimaryKey());
-
-		commerceUserSegmentEntryImpl.setCommerceUserSegmentEntryId(commerceUserSegmentEntry.getCommerceUserSegmentEntryId());
-		commerceUserSegmentEntryImpl.setGroupId(commerceUserSegmentEntry.getGroupId());
-		commerceUserSegmentEntryImpl.setCompanyId(commerceUserSegmentEntry.getCompanyId());
-		commerceUserSegmentEntryImpl.setUserId(commerceUserSegmentEntry.getUserId());
-		commerceUserSegmentEntryImpl.setUserName(commerceUserSegmentEntry.getUserName());
-		commerceUserSegmentEntryImpl.setCreateDate(commerceUserSegmentEntry.getCreateDate());
-		commerceUserSegmentEntryImpl.setModifiedDate(commerceUserSegmentEntry.getModifiedDate());
-		commerceUserSegmentEntryImpl.setName(commerceUserSegmentEntry.getName());
-		commerceUserSegmentEntryImpl.setKey(commerceUserSegmentEntry.getKey());
-		commerceUserSegmentEntryImpl.setActive(commerceUserSegmentEntry.isActive());
-		commerceUserSegmentEntryImpl.setSystem(commerceUserSegmentEntry.isSystem());
-		commerceUserSegmentEntryImpl.setPriority(commerceUserSegmentEntry.getPriority());
-
-		return commerceUserSegmentEntryImpl;
 	}
 
 	/**

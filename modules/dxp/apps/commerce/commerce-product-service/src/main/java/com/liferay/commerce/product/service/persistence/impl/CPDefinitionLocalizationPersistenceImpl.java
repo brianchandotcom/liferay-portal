@@ -35,10 +35,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -1095,8 +1098,6 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	@Override
 	protected CPDefinitionLocalization removeImpl(
 		CPDefinitionLocalization cpDefinitionLocalization) {
-		cpDefinitionLocalization = toUnwrappedModel(cpDefinitionLocalization);
-
 		Session session = null;
 
 		try {
@@ -1128,9 +1129,23 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CPDefinitionLocalization updateImpl(
 		CPDefinitionLocalization cpDefinitionLocalization) {
-		cpDefinitionLocalization = toUnwrappedModel(cpDefinitionLocalization);
-
 		boolean isNew = cpDefinitionLocalization.isNew();
+
+		if (!(cpDefinitionLocalization instanceof CPDefinitionLocalizationModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDefinitionLocalization.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinitionLocalization);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinitionLocalization proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinitionLocalization implementation " +
+				cpDefinitionLocalization.getClass());
+		}
 
 		CPDefinitionLocalizationModelImpl cpDefinitionLocalizationModelImpl = (CPDefinitionLocalizationModelImpl)cpDefinitionLocalization;
 
@@ -1209,32 +1224,6 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 		cpDefinitionLocalization.resetOriginalValues();
 
 		return cpDefinitionLocalization;
-	}
-
-	protected CPDefinitionLocalization toUnwrappedModel(
-		CPDefinitionLocalization cpDefinitionLocalization) {
-		if (cpDefinitionLocalization instanceof CPDefinitionLocalizationImpl) {
-			return cpDefinitionLocalization;
-		}
-
-		CPDefinitionLocalizationImpl cpDefinitionLocalizationImpl = new CPDefinitionLocalizationImpl();
-
-		cpDefinitionLocalizationImpl.setNew(cpDefinitionLocalization.isNew());
-		cpDefinitionLocalizationImpl.setPrimaryKey(cpDefinitionLocalization.getPrimaryKey());
-
-		cpDefinitionLocalizationImpl.setMvccVersion(cpDefinitionLocalization.getMvccVersion());
-		cpDefinitionLocalizationImpl.setCpDefinitionLocalizationId(cpDefinitionLocalization.getCpDefinitionLocalizationId());
-		cpDefinitionLocalizationImpl.setCompanyId(cpDefinitionLocalization.getCompanyId());
-		cpDefinitionLocalizationImpl.setCPDefinitionId(cpDefinitionLocalization.getCPDefinitionId());
-		cpDefinitionLocalizationImpl.setLanguageId(cpDefinitionLocalization.getLanguageId());
-		cpDefinitionLocalizationImpl.setName(cpDefinitionLocalization.getName());
-		cpDefinitionLocalizationImpl.setShortDescription(cpDefinitionLocalization.getShortDescription());
-		cpDefinitionLocalizationImpl.setDescription(cpDefinitionLocalization.getDescription());
-		cpDefinitionLocalizationImpl.setMetaTitle(cpDefinitionLocalization.getMetaTitle());
-		cpDefinitionLocalizationImpl.setMetaDescription(cpDefinitionLocalization.getMetaDescription());
-		cpDefinitionLocalizationImpl.setMetaKeywords(cpDefinitionLocalization.getMetaKeywords());
-
-		return cpDefinitionLocalizationImpl;
 	}
 
 	/**

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -849,7 +850,7 @@ public class CPDefinitionLinkModelImpl extends BaseModelImpl<CPDefinitionLink>
 
 	private static final ClassLoader _classLoader = CPDefinitionLink.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CPDefinitionLink.class
+			CPDefinitionLink.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

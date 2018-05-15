@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3689,8 +3692,6 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 
 	@Override
 	protected CommerceAddress removeImpl(CommerceAddress commerceAddress) {
-		commerceAddress = toUnwrappedModel(commerceAddress);
-
 		Session session = null;
 
 		try {
@@ -3721,9 +3722,23 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 
 	@Override
 	public CommerceAddress updateImpl(CommerceAddress commerceAddress) {
-		commerceAddress = toUnwrappedModel(commerceAddress);
-
 		boolean isNew = commerceAddress.isNew();
+
+		if (!(commerceAddress instanceof CommerceAddressModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceAddress.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceAddress);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceAddress proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceAddress implementation " +
+				commerceAddress.getClass());
+		}
 
 		CommerceAddressModelImpl commerceAddressModelImpl = (CommerceAddressModelImpl)commerceAddress;
 
@@ -3984,43 +3999,6 @@ public class CommerceAddressPersistenceImpl extends BasePersistenceImpl<Commerce
 		commerceAddress.resetOriginalValues();
 
 		return commerceAddress;
-	}
-
-	protected CommerceAddress toUnwrappedModel(CommerceAddress commerceAddress) {
-		if (commerceAddress instanceof CommerceAddressImpl) {
-			return commerceAddress;
-		}
-
-		CommerceAddressImpl commerceAddressImpl = new CommerceAddressImpl();
-
-		commerceAddressImpl.setNew(commerceAddress.isNew());
-		commerceAddressImpl.setPrimaryKey(commerceAddress.getPrimaryKey());
-
-		commerceAddressImpl.setCommerceAddressId(commerceAddress.getCommerceAddressId());
-		commerceAddressImpl.setGroupId(commerceAddress.getGroupId());
-		commerceAddressImpl.setCompanyId(commerceAddress.getCompanyId());
-		commerceAddressImpl.setUserId(commerceAddress.getUserId());
-		commerceAddressImpl.setUserName(commerceAddress.getUserName());
-		commerceAddressImpl.setCreateDate(commerceAddress.getCreateDate());
-		commerceAddressImpl.setModifiedDate(commerceAddress.getModifiedDate());
-		commerceAddressImpl.setClassNameId(commerceAddress.getClassNameId());
-		commerceAddressImpl.setClassPK(commerceAddress.getClassPK());
-		commerceAddressImpl.setName(commerceAddress.getName());
-		commerceAddressImpl.setDescription(commerceAddress.getDescription());
-		commerceAddressImpl.setStreet1(commerceAddress.getStreet1());
-		commerceAddressImpl.setStreet2(commerceAddress.getStreet2());
-		commerceAddressImpl.setStreet3(commerceAddress.getStreet3());
-		commerceAddressImpl.setCity(commerceAddress.getCity());
-		commerceAddressImpl.setZip(commerceAddress.getZip());
-		commerceAddressImpl.setCommerceRegionId(commerceAddress.getCommerceRegionId());
-		commerceAddressImpl.setCommerceCountryId(commerceAddress.getCommerceCountryId());
-		commerceAddressImpl.setLatitude(commerceAddress.getLatitude());
-		commerceAddressImpl.setLongitude(commerceAddress.getLongitude());
-		commerceAddressImpl.setPhoneNumber(commerceAddress.getPhoneNumber());
-		commerceAddressImpl.setDefaultBilling(commerceAddress.isDefaultBilling());
-		commerceAddressImpl.setDefaultShipping(commerceAddress.isDefaultShipping());
-
-		return commerceAddressImpl;
 	}
 
 	/**

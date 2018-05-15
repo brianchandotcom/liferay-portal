@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1177,8 +1179,6 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	protected CommerceForecastEntry removeImpl(
 		CommerceForecastEntry commerceForecastEntry) {
-		commerceForecastEntry = toUnwrappedModel(commerceForecastEntry);
-
 		Session session = null;
 
 		try {
@@ -1210,9 +1210,23 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	public CommerceForecastEntry updateImpl(
 		CommerceForecastEntry commerceForecastEntry) {
-		commerceForecastEntry = toUnwrappedModel(commerceForecastEntry);
-
 		boolean isNew = commerceForecastEntry.isNew();
+
+		if (!(commerceForecastEntry instanceof CommerceForecastEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceForecastEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceForecastEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceForecastEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceForecastEntry implementation " +
+				commerceForecastEntry.getClass());
+		}
 
 		CommerceForecastEntryModelImpl commerceForecastEntryModelImpl = (CommerceForecastEntryModelImpl)commerceForecastEntry;
 
@@ -1312,33 +1326,6 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 		commerceForecastEntry.resetOriginalValues();
 
 		return commerceForecastEntry;
-	}
-
-	protected CommerceForecastEntry toUnwrappedModel(
-		CommerceForecastEntry commerceForecastEntry) {
-		if (commerceForecastEntry instanceof CommerceForecastEntryImpl) {
-			return commerceForecastEntry;
-		}
-
-		CommerceForecastEntryImpl commerceForecastEntryImpl = new CommerceForecastEntryImpl();
-
-		commerceForecastEntryImpl.setNew(commerceForecastEntry.isNew());
-		commerceForecastEntryImpl.setPrimaryKey(commerceForecastEntry.getPrimaryKey());
-
-		commerceForecastEntryImpl.setCommerceForecastEntryId(commerceForecastEntry.getCommerceForecastEntryId());
-		commerceForecastEntryImpl.setCompanyId(commerceForecastEntry.getCompanyId());
-		commerceForecastEntryImpl.setUserId(commerceForecastEntry.getUserId());
-		commerceForecastEntryImpl.setUserName(commerceForecastEntry.getUserName());
-		commerceForecastEntryImpl.setCreateDate(commerceForecastEntry.getCreateDate());
-		commerceForecastEntryImpl.setModifiedDate(commerceForecastEntry.getModifiedDate());
-		commerceForecastEntryImpl.setDate(commerceForecastEntry.getDate());
-		commerceForecastEntryImpl.setPeriod(commerceForecastEntry.getPeriod());
-		commerceForecastEntryImpl.setTarget(commerceForecastEntry.getTarget());
-		commerceForecastEntryImpl.setCustomerId(commerceForecastEntry.getCustomerId());
-		commerceForecastEntryImpl.setSku(commerceForecastEntry.getSku());
-		commerceForecastEntryImpl.setAssertivity(commerceForecastEntry.getAssertivity());
-
-		return commerceForecastEntryImpl;
 	}
 
 	/**

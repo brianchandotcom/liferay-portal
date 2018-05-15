@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1568,8 +1571,6 @@ public class CommerceWarehouseItemPersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	protected CommerceWarehouseItem removeImpl(
 		CommerceWarehouseItem commerceWarehouseItem) {
-		commerceWarehouseItem = toUnwrappedModel(commerceWarehouseItem);
-
 		Session session = null;
 
 		try {
@@ -1601,9 +1602,23 @@ public class CommerceWarehouseItemPersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	public CommerceWarehouseItem updateImpl(
 		CommerceWarehouseItem commerceWarehouseItem) {
-		commerceWarehouseItem = toUnwrappedModel(commerceWarehouseItem);
-
 		boolean isNew = commerceWarehouseItem.isNew();
+
+		if (!(commerceWarehouseItem instanceof CommerceWarehouseItemModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceWarehouseItem.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceWarehouseItem);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceWarehouseItem proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceWarehouseItem implementation " +
+				commerceWarehouseItem.getClass());
+		}
 
 		CommerceWarehouseItemModelImpl commerceWarehouseItemModelImpl = (CommerceWarehouseItemModelImpl)commerceWarehouseItem;
 
@@ -1731,31 +1746,6 @@ public class CommerceWarehouseItemPersistenceImpl extends BasePersistenceImpl<Co
 		commerceWarehouseItem.resetOriginalValues();
 
 		return commerceWarehouseItem;
-	}
-
-	protected CommerceWarehouseItem toUnwrappedModel(
-		CommerceWarehouseItem commerceWarehouseItem) {
-		if (commerceWarehouseItem instanceof CommerceWarehouseItemImpl) {
-			return commerceWarehouseItem;
-		}
-
-		CommerceWarehouseItemImpl commerceWarehouseItemImpl = new CommerceWarehouseItemImpl();
-
-		commerceWarehouseItemImpl.setNew(commerceWarehouseItem.isNew());
-		commerceWarehouseItemImpl.setPrimaryKey(commerceWarehouseItem.getPrimaryKey());
-
-		commerceWarehouseItemImpl.setCommerceWarehouseItemId(commerceWarehouseItem.getCommerceWarehouseItemId());
-		commerceWarehouseItemImpl.setGroupId(commerceWarehouseItem.getGroupId());
-		commerceWarehouseItemImpl.setCompanyId(commerceWarehouseItem.getCompanyId());
-		commerceWarehouseItemImpl.setUserId(commerceWarehouseItem.getUserId());
-		commerceWarehouseItemImpl.setUserName(commerceWarehouseItem.getUserName());
-		commerceWarehouseItemImpl.setCreateDate(commerceWarehouseItem.getCreateDate());
-		commerceWarehouseItemImpl.setModifiedDate(commerceWarehouseItem.getModifiedDate());
-		commerceWarehouseItemImpl.setCommerceWarehouseId(commerceWarehouseItem.getCommerceWarehouseId());
-		commerceWarehouseItemImpl.setCPInstanceId(commerceWarehouseItem.getCPInstanceId());
-		commerceWarehouseItemImpl.setQuantity(commerceWarehouseItem.getQuantity());
-
-		return commerceWarehouseItemImpl;
 	}
 
 	/**

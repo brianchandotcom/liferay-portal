@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -1102,8 +1104,6 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	protected CommerceForecastValue removeImpl(
 		CommerceForecastValue commerceForecastValue) {
-		commerceForecastValue = toUnwrappedModel(commerceForecastValue);
-
 		Session session = null;
 
 		try {
@@ -1135,9 +1135,23 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	public CommerceForecastValue updateImpl(
 		CommerceForecastValue commerceForecastValue) {
-		commerceForecastValue = toUnwrappedModel(commerceForecastValue);
-
 		boolean isNew = commerceForecastValue.isNew();
+
+		if (!(commerceForecastValue instanceof CommerceForecastValueModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceForecastValue.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceForecastValue);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceForecastValue proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceForecastValue implementation " +
+				commerceForecastValue.getClass());
+		}
 
 		CommerceForecastValueModelImpl commerceForecastValueModelImpl = (CommerceForecastValueModelImpl)commerceForecastValue;
 
@@ -1240,30 +1254,6 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 		commerceForecastValue.resetOriginalValues();
 
 		return commerceForecastValue;
-	}
-
-	protected CommerceForecastValue toUnwrappedModel(
-		CommerceForecastValue commerceForecastValue) {
-		if (commerceForecastValue instanceof CommerceForecastValueImpl) {
-			return commerceForecastValue;
-		}
-
-		CommerceForecastValueImpl commerceForecastValueImpl = new CommerceForecastValueImpl();
-
-		commerceForecastValueImpl.setNew(commerceForecastValue.isNew());
-		commerceForecastValueImpl.setPrimaryKey(commerceForecastValue.getPrimaryKey());
-
-		commerceForecastValueImpl.setCommerceForecastValueId(commerceForecastValue.getCommerceForecastValueId());
-		commerceForecastValueImpl.setCompanyId(commerceForecastValue.getCompanyId());
-		commerceForecastValueImpl.setUserId(commerceForecastValue.getUserId());
-		commerceForecastValueImpl.setUserName(commerceForecastValue.getUserName());
-		commerceForecastValueImpl.setCreateDate(commerceForecastValue.getCreateDate());
-		commerceForecastValueImpl.setModifiedDate(commerceForecastValue.getModifiedDate());
-		commerceForecastValueImpl.setCommerceForecastEntryId(commerceForecastValue.getCommerceForecastEntryId());
-		commerceForecastValueImpl.setDate(commerceForecastValue.getDate());
-		commerceForecastValueImpl.setValue(commerceForecastValue.getValue());
-
-		return commerceForecastValueImpl;
 	}
 
 	/**

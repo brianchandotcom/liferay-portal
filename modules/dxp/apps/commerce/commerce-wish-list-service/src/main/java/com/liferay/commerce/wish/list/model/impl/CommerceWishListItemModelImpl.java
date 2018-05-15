@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -756,7 +757,7 @@ public class CommerceWishListItemModelImpl extends BaseModelImpl<CommerceWishLis
 
 	private static final ClassLoader _classLoader = CommerceWishListItem.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CommerceWishListItem.class
+			CommerceWishListItem.class, ModelWrapper.class
 		};
 	private long _commerceWishListItemId;
 	private long _groupId;

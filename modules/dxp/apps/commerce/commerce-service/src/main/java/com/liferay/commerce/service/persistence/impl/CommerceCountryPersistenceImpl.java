@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4210,8 +4212,6 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 	@Override
 	protected CommerceCountry removeImpl(CommerceCountry commerceCountry) {
-		commerceCountry = toUnwrappedModel(commerceCountry);
-
 		Session session = null;
 
 		try {
@@ -4242,9 +4242,23 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 
 	@Override
 	public CommerceCountry updateImpl(CommerceCountry commerceCountry) {
-		commerceCountry = toUnwrappedModel(commerceCountry);
-
 		boolean isNew = commerceCountry.isNew();
+
+		if (!(commerceCountry instanceof CommerceCountryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceCountry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceCountry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceCountry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceCountry implementation " +
+				commerceCountry.getClass());
+		}
 
 		CommerceCountryModelImpl commerceCountryModelImpl = (CommerceCountryModelImpl)commerceCountry;
 
@@ -4494,38 +4508,6 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 		commerceCountry.resetOriginalValues();
 
 		return commerceCountry;
-	}
-
-	protected CommerceCountry toUnwrappedModel(CommerceCountry commerceCountry) {
-		if (commerceCountry instanceof CommerceCountryImpl) {
-			return commerceCountry;
-		}
-
-		CommerceCountryImpl commerceCountryImpl = new CommerceCountryImpl();
-
-		commerceCountryImpl.setNew(commerceCountry.isNew());
-		commerceCountryImpl.setPrimaryKey(commerceCountry.getPrimaryKey());
-
-		commerceCountryImpl.setUuid(commerceCountry.getUuid());
-		commerceCountryImpl.setCommerceCountryId(commerceCountry.getCommerceCountryId());
-		commerceCountryImpl.setGroupId(commerceCountry.getGroupId());
-		commerceCountryImpl.setCompanyId(commerceCountry.getCompanyId());
-		commerceCountryImpl.setUserId(commerceCountry.getUserId());
-		commerceCountryImpl.setUserName(commerceCountry.getUserName());
-		commerceCountryImpl.setCreateDate(commerceCountry.getCreateDate());
-		commerceCountryImpl.setModifiedDate(commerceCountry.getModifiedDate());
-		commerceCountryImpl.setName(commerceCountry.getName());
-		commerceCountryImpl.setBillingAllowed(commerceCountry.isBillingAllowed());
-		commerceCountryImpl.setShippingAllowed(commerceCountry.isShippingAllowed());
-		commerceCountryImpl.setTwoLettersISOCode(commerceCountry.getTwoLettersISOCode());
-		commerceCountryImpl.setThreeLettersISOCode(commerceCountry.getThreeLettersISOCode());
-		commerceCountryImpl.setNumericISOCode(commerceCountry.getNumericISOCode());
-		commerceCountryImpl.setSubjectToVAT(commerceCountry.isSubjectToVAT());
-		commerceCountryImpl.setPriority(commerceCountry.getPriority());
-		commerceCountryImpl.setActive(commerceCountry.isActive());
-		commerceCountryImpl.setLastPublishDate(commerceCountry.getLastPublishDate());
-
-		return commerceCountryImpl;
 	}
 
 	/**

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2525,8 +2527,6 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 	@Override
 	protected CPDefinitionAvailabilityRange removeImpl(
 		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange) {
-		cpDefinitionAvailabilityRange = toUnwrappedModel(cpDefinitionAvailabilityRange);
-
 		Session session = null;
 
 		try {
@@ -2558,9 +2558,23 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 	@Override
 	public CPDefinitionAvailabilityRange updateImpl(
 		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange) {
-		cpDefinitionAvailabilityRange = toUnwrappedModel(cpDefinitionAvailabilityRange);
-
 		boolean isNew = cpDefinitionAvailabilityRange.isNew();
+
+		if (!(cpDefinitionAvailabilityRange instanceof CPDefinitionAvailabilityRangeModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDefinitionAvailabilityRange.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinitionAvailabilityRange);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinitionAvailabilityRange proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinitionAvailabilityRange implementation " +
+				cpDefinitionAvailabilityRange.getClass());
+		}
 
 		CPDefinitionAvailabilityRangeModelImpl cpDefinitionAvailabilityRangeModelImpl =
 			(CPDefinitionAvailabilityRangeModelImpl)cpDefinitionAvailabilityRange;
@@ -2728,32 +2742,6 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 		cpDefinitionAvailabilityRange.resetOriginalValues();
 
 		return cpDefinitionAvailabilityRange;
-	}
-
-	protected CPDefinitionAvailabilityRange toUnwrappedModel(
-		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange) {
-		if (cpDefinitionAvailabilityRange instanceof CPDefinitionAvailabilityRangeImpl) {
-			return cpDefinitionAvailabilityRange;
-		}
-
-		CPDefinitionAvailabilityRangeImpl cpDefinitionAvailabilityRangeImpl = new CPDefinitionAvailabilityRangeImpl();
-
-		cpDefinitionAvailabilityRangeImpl.setNew(cpDefinitionAvailabilityRange.isNew());
-		cpDefinitionAvailabilityRangeImpl.setPrimaryKey(cpDefinitionAvailabilityRange.getPrimaryKey());
-
-		cpDefinitionAvailabilityRangeImpl.setUuid(cpDefinitionAvailabilityRange.getUuid());
-		cpDefinitionAvailabilityRangeImpl.setCPDefinitionAvailabilityRangeId(cpDefinitionAvailabilityRange.getCPDefinitionAvailabilityRangeId());
-		cpDefinitionAvailabilityRangeImpl.setGroupId(cpDefinitionAvailabilityRange.getGroupId());
-		cpDefinitionAvailabilityRangeImpl.setCompanyId(cpDefinitionAvailabilityRange.getCompanyId());
-		cpDefinitionAvailabilityRangeImpl.setUserId(cpDefinitionAvailabilityRange.getUserId());
-		cpDefinitionAvailabilityRangeImpl.setUserName(cpDefinitionAvailabilityRange.getUserName());
-		cpDefinitionAvailabilityRangeImpl.setCreateDate(cpDefinitionAvailabilityRange.getCreateDate());
-		cpDefinitionAvailabilityRangeImpl.setModifiedDate(cpDefinitionAvailabilityRange.getModifiedDate());
-		cpDefinitionAvailabilityRangeImpl.setCPDefinitionId(cpDefinitionAvailabilityRange.getCPDefinitionId());
-		cpDefinitionAvailabilityRangeImpl.setCommerceAvailabilityRangeId(cpDefinitionAvailabilityRange.getCommerceAvailabilityRangeId());
-		cpDefinitionAvailabilityRangeImpl.setLastPublishDate(cpDefinitionAvailabilityRange.getLastPublishDate());
-
-		return cpDefinitionAvailabilityRangeImpl;
 	}
 
 	/**

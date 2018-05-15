@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -5480,8 +5482,6 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 
 	@Override
 	protected CommerceOrder removeImpl(CommerceOrder commerceOrder) {
-		commerceOrder = toUnwrappedModel(commerceOrder);
-
 		Session session = null;
 
 		try {
@@ -5512,9 +5512,23 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 
 	@Override
 	public CommerceOrder updateImpl(CommerceOrder commerceOrder) {
-		commerceOrder = toUnwrappedModel(commerceOrder);
-
 		boolean isNew = commerceOrder.isNew();
+
+		if (!(commerceOrder instanceof CommerceOrderModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceOrder.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceOrder);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceOrder proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceOrder implementation " +
+				commerceOrder.getClass());
+		}
 
 		CommerceOrderModelImpl commerceOrderModelImpl = (CommerceOrderModelImpl)commerceOrder;
 
@@ -5807,49 +5821,6 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 		commerceOrder.resetOriginalValues();
 
 		return commerceOrder;
-	}
-
-	protected CommerceOrder toUnwrappedModel(CommerceOrder commerceOrder) {
-		if (commerceOrder instanceof CommerceOrderImpl) {
-			return commerceOrder;
-		}
-
-		CommerceOrderImpl commerceOrderImpl = new CommerceOrderImpl();
-
-		commerceOrderImpl.setNew(commerceOrder.isNew());
-		commerceOrderImpl.setPrimaryKey(commerceOrder.getPrimaryKey());
-
-		commerceOrderImpl.setUuid(commerceOrder.getUuid());
-		commerceOrderImpl.setCommerceOrderId(commerceOrder.getCommerceOrderId());
-		commerceOrderImpl.setGroupId(commerceOrder.getGroupId());
-		commerceOrderImpl.setCompanyId(commerceOrder.getCompanyId());
-		commerceOrderImpl.setUserId(commerceOrder.getUserId());
-		commerceOrderImpl.setUserName(commerceOrder.getUserName());
-		commerceOrderImpl.setCreateDate(commerceOrder.getCreateDate());
-		commerceOrderImpl.setModifiedDate(commerceOrder.getModifiedDate());
-		commerceOrderImpl.setSiteGroupId(commerceOrder.getSiteGroupId());
-		commerceOrderImpl.setOrderOrganizationId(commerceOrder.getOrderOrganizationId());
-		commerceOrderImpl.setOrderUserId(commerceOrder.getOrderUserId());
-		commerceOrderImpl.setCommerceCurrencyId(commerceOrder.getCommerceCurrencyId());
-		commerceOrderImpl.setBillingAddressId(commerceOrder.getBillingAddressId());
-		commerceOrderImpl.setShippingAddressId(commerceOrder.getShippingAddressId());
-		commerceOrderImpl.setCommercePaymentMethodId(commerceOrder.getCommercePaymentMethodId());
-		commerceOrderImpl.setCommerceShippingMethodId(commerceOrder.getCommerceShippingMethodId());
-		commerceOrderImpl.setShippingOptionName(commerceOrder.getShippingOptionName());
-		commerceOrderImpl.setPurchaseOrderNumber(commerceOrder.getPurchaseOrderNumber());
-		commerceOrderImpl.setSubtotal(commerceOrder.getSubtotal());
-		commerceOrderImpl.setShippingPrice(commerceOrder.getShippingPrice());
-		commerceOrderImpl.setTotal(commerceOrder.getTotal());
-		commerceOrderImpl.setAdvanceStatus(commerceOrder.getAdvanceStatus());
-		commerceOrderImpl.setPaymentStatus(commerceOrder.getPaymentStatus());
-		commerceOrderImpl.setShippingStatus(commerceOrder.getShippingStatus());
-		commerceOrderImpl.setOrderStatus(commerceOrder.getOrderStatus());
-		commerceOrderImpl.setStatus(commerceOrder.getStatus());
-		commerceOrderImpl.setStatusByUserId(commerceOrder.getStatusByUserId());
-		commerceOrderImpl.setStatusByUserName(commerceOrder.getStatusByUserName());
-		commerceOrderImpl.setStatusDate(commerceOrder.getStatusDate());
-
-		return commerceOrderImpl;
 	}
 
 	/**

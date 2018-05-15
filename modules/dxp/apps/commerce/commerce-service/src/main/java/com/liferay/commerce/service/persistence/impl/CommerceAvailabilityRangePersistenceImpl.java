@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2253,8 +2255,6 @@ public class CommerceAvailabilityRangePersistenceImpl
 	@Override
 	protected CommerceAvailabilityRange removeImpl(
 		CommerceAvailabilityRange commerceAvailabilityRange) {
-		commerceAvailabilityRange = toUnwrappedModel(commerceAvailabilityRange);
-
 		Session session = null;
 
 		try {
@@ -2286,9 +2286,23 @@ public class CommerceAvailabilityRangePersistenceImpl
 	@Override
 	public CommerceAvailabilityRange updateImpl(
 		CommerceAvailabilityRange commerceAvailabilityRange) {
-		commerceAvailabilityRange = toUnwrappedModel(commerceAvailabilityRange);
-
 		boolean isNew = commerceAvailabilityRange.isNew();
+
+		if (!(commerceAvailabilityRange instanceof CommerceAvailabilityRangeModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceAvailabilityRange.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceAvailabilityRange);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceAvailabilityRange proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceAvailabilityRange implementation " +
+				commerceAvailabilityRange.getClass());
+		}
 
 		CommerceAvailabilityRangeModelImpl commerceAvailabilityRangeModelImpl = (CommerceAvailabilityRangeModelImpl)commerceAvailabilityRange;
 
@@ -2448,32 +2462,6 @@ public class CommerceAvailabilityRangePersistenceImpl
 		commerceAvailabilityRange.resetOriginalValues();
 
 		return commerceAvailabilityRange;
-	}
-
-	protected CommerceAvailabilityRange toUnwrappedModel(
-		CommerceAvailabilityRange commerceAvailabilityRange) {
-		if (commerceAvailabilityRange instanceof CommerceAvailabilityRangeImpl) {
-			return commerceAvailabilityRange;
-		}
-
-		CommerceAvailabilityRangeImpl commerceAvailabilityRangeImpl = new CommerceAvailabilityRangeImpl();
-
-		commerceAvailabilityRangeImpl.setNew(commerceAvailabilityRange.isNew());
-		commerceAvailabilityRangeImpl.setPrimaryKey(commerceAvailabilityRange.getPrimaryKey());
-
-		commerceAvailabilityRangeImpl.setUuid(commerceAvailabilityRange.getUuid());
-		commerceAvailabilityRangeImpl.setCommerceAvailabilityRangeId(commerceAvailabilityRange.getCommerceAvailabilityRangeId());
-		commerceAvailabilityRangeImpl.setGroupId(commerceAvailabilityRange.getGroupId());
-		commerceAvailabilityRangeImpl.setCompanyId(commerceAvailabilityRange.getCompanyId());
-		commerceAvailabilityRangeImpl.setUserId(commerceAvailabilityRange.getUserId());
-		commerceAvailabilityRangeImpl.setUserName(commerceAvailabilityRange.getUserName());
-		commerceAvailabilityRangeImpl.setCreateDate(commerceAvailabilityRange.getCreateDate());
-		commerceAvailabilityRangeImpl.setModifiedDate(commerceAvailabilityRange.getModifiedDate());
-		commerceAvailabilityRangeImpl.setTitle(commerceAvailabilityRange.getTitle());
-		commerceAvailabilityRangeImpl.setPriority(commerceAvailabilityRange.getPriority());
-		commerceAvailabilityRangeImpl.setLastPublishDate(commerceAvailabilityRange.getLastPublishDate());
-
-		return commerceAvailabilityRangeImpl;
 	}
 
 	/**

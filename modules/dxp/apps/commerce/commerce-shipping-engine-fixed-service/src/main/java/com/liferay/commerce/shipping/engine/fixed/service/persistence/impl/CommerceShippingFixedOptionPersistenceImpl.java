@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -788,8 +791,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	@Override
 	protected CommerceShippingFixedOption removeImpl(
 		CommerceShippingFixedOption commerceShippingFixedOption) {
-		commerceShippingFixedOption = toUnwrappedModel(commerceShippingFixedOption);
-
 		Session session = null;
 
 		try {
@@ -821,9 +822,23 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	@Override
 	public CommerceShippingFixedOption updateImpl(
 		CommerceShippingFixedOption commerceShippingFixedOption) {
-		commerceShippingFixedOption = toUnwrappedModel(commerceShippingFixedOption);
-
 		boolean isNew = commerceShippingFixedOption.isNew();
+
+		if (!(commerceShippingFixedOption instanceof CommerceShippingFixedOptionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceShippingFixedOption.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceShippingFixedOption);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceShippingFixedOption proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceShippingFixedOption implementation " +
+				commerceShippingFixedOption.getClass());
+		}
 
 		CommerceShippingFixedOptionModelImpl commerceShippingFixedOptionModelImpl =
 			(CommerceShippingFixedOptionModelImpl)commerceShippingFixedOption;
@@ -925,33 +940,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 		commerceShippingFixedOption.resetOriginalValues();
 
 		return commerceShippingFixedOption;
-	}
-
-	protected CommerceShippingFixedOption toUnwrappedModel(
-		CommerceShippingFixedOption commerceShippingFixedOption) {
-		if (commerceShippingFixedOption instanceof CommerceShippingFixedOptionImpl) {
-			return commerceShippingFixedOption;
-		}
-
-		CommerceShippingFixedOptionImpl commerceShippingFixedOptionImpl = new CommerceShippingFixedOptionImpl();
-
-		commerceShippingFixedOptionImpl.setNew(commerceShippingFixedOption.isNew());
-		commerceShippingFixedOptionImpl.setPrimaryKey(commerceShippingFixedOption.getPrimaryKey());
-
-		commerceShippingFixedOptionImpl.setCommerceShippingFixedOptionId(commerceShippingFixedOption.getCommerceShippingFixedOptionId());
-		commerceShippingFixedOptionImpl.setGroupId(commerceShippingFixedOption.getGroupId());
-		commerceShippingFixedOptionImpl.setCompanyId(commerceShippingFixedOption.getCompanyId());
-		commerceShippingFixedOptionImpl.setUserId(commerceShippingFixedOption.getUserId());
-		commerceShippingFixedOptionImpl.setUserName(commerceShippingFixedOption.getUserName());
-		commerceShippingFixedOptionImpl.setCreateDate(commerceShippingFixedOption.getCreateDate());
-		commerceShippingFixedOptionImpl.setModifiedDate(commerceShippingFixedOption.getModifiedDate());
-		commerceShippingFixedOptionImpl.setCommerceShippingMethodId(commerceShippingFixedOption.getCommerceShippingMethodId());
-		commerceShippingFixedOptionImpl.setName(commerceShippingFixedOption.getName());
-		commerceShippingFixedOptionImpl.setDescription(commerceShippingFixedOption.getDescription());
-		commerceShippingFixedOptionImpl.setAmount(commerceShippingFixedOption.getAmount());
-		commerceShippingFixedOptionImpl.setPriority(commerceShippingFixedOption.getPriority());
-
-		return commerceShippingFixedOptionImpl;
 	}
 
 	/**

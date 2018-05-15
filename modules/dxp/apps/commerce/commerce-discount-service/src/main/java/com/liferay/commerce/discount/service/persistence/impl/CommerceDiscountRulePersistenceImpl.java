@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -792,8 +794,6 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	@Override
 	protected CommerceDiscountRule removeImpl(
 		CommerceDiscountRule commerceDiscountRule) {
-		commerceDiscountRule = toUnwrappedModel(commerceDiscountRule);
-
 		Session session = null;
 
 		try {
@@ -825,9 +825,23 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 	@Override
 	public CommerceDiscountRule updateImpl(
 		CommerceDiscountRule commerceDiscountRule) {
-		commerceDiscountRule = toUnwrappedModel(commerceDiscountRule);
-
 		boolean isNew = commerceDiscountRule.isNew();
+
+		if (!(commerceDiscountRule instanceof CommerceDiscountRuleModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceDiscountRule.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceDiscountRule);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceDiscountRule proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceDiscountRule implementation " +
+				commerceDiscountRule.getClass());
+		}
 
 		CommerceDiscountRuleModelImpl commerceDiscountRuleModelImpl = (CommerceDiscountRuleModelImpl)commerceDiscountRule;
 
@@ -927,31 +941,6 @@ public class CommerceDiscountRulePersistenceImpl extends BasePersistenceImpl<Com
 		commerceDiscountRule.resetOriginalValues();
 
 		return commerceDiscountRule;
-	}
-
-	protected CommerceDiscountRule toUnwrappedModel(
-		CommerceDiscountRule commerceDiscountRule) {
-		if (commerceDiscountRule instanceof CommerceDiscountRuleImpl) {
-			return commerceDiscountRule;
-		}
-
-		CommerceDiscountRuleImpl commerceDiscountRuleImpl = new CommerceDiscountRuleImpl();
-
-		commerceDiscountRuleImpl.setNew(commerceDiscountRule.isNew());
-		commerceDiscountRuleImpl.setPrimaryKey(commerceDiscountRule.getPrimaryKey());
-
-		commerceDiscountRuleImpl.setCommerceDiscountRuleId(commerceDiscountRule.getCommerceDiscountRuleId());
-		commerceDiscountRuleImpl.setGroupId(commerceDiscountRule.getGroupId());
-		commerceDiscountRuleImpl.setCompanyId(commerceDiscountRule.getCompanyId());
-		commerceDiscountRuleImpl.setUserId(commerceDiscountRule.getUserId());
-		commerceDiscountRuleImpl.setUserName(commerceDiscountRule.getUserName());
-		commerceDiscountRuleImpl.setCreateDate(commerceDiscountRule.getCreateDate());
-		commerceDiscountRuleImpl.setModifiedDate(commerceDiscountRule.getModifiedDate());
-		commerceDiscountRuleImpl.setCommerceDiscountId(commerceDiscountRule.getCommerceDiscountId());
-		commerceDiscountRuleImpl.setType(commerceDiscountRule.getType());
-		commerceDiscountRuleImpl.setTypeSettings(commerceDiscountRule.getTypeSettings());
-
-		return commerceDiscountRuleImpl;
 	}
 
 	/**

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1142,7 +1143,7 @@ public class CPOptionCategoryModelImpl extends BaseModelImpl<CPOptionCategory>
 
 	private static final ClassLoader _classLoader = CPOptionCategory.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CPOptionCategory.class
+			CPOptionCategory.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

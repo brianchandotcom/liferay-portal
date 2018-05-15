@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3067,8 +3069,6 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 	@Override
 	protected CommerceRegion removeImpl(CommerceRegion commerceRegion) {
-		commerceRegion = toUnwrappedModel(commerceRegion);
-
 		Session session = null;
 
 		try {
@@ -3099,9 +3099,23 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 
 	@Override
 	public CommerceRegion updateImpl(CommerceRegion commerceRegion) {
-		commerceRegion = toUnwrappedModel(commerceRegion);
-
 		boolean isNew = commerceRegion.isNew();
+
+		if (!(commerceRegion instanceof CommerceRegionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceRegion.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceRegion);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceRegion proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceRegion implementation " +
+				commerceRegion.getClass());
+		}
 
 		CommerceRegionModelImpl commerceRegionModelImpl = (CommerceRegionModelImpl)commerceRegion;
 
@@ -3290,34 +3304,6 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 		commerceRegion.resetOriginalValues();
 
 		return commerceRegion;
-	}
-
-	protected CommerceRegion toUnwrappedModel(CommerceRegion commerceRegion) {
-		if (commerceRegion instanceof CommerceRegionImpl) {
-			return commerceRegion;
-		}
-
-		CommerceRegionImpl commerceRegionImpl = new CommerceRegionImpl();
-
-		commerceRegionImpl.setNew(commerceRegion.isNew());
-		commerceRegionImpl.setPrimaryKey(commerceRegion.getPrimaryKey());
-
-		commerceRegionImpl.setUuid(commerceRegion.getUuid());
-		commerceRegionImpl.setCommerceRegionId(commerceRegion.getCommerceRegionId());
-		commerceRegionImpl.setGroupId(commerceRegion.getGroupId());
-		commerceRegionImpl.setCompanyId(commerceRegion.getCompanyId());
-		commerceRegionImpl.setUserId(commerceRegion.getUserId());
-		commerceRegionImpl.setUserName(commerceRegion.getUserName());
-		commerceRegionImpl.setCreateDate(commerceRegion.getCreateDate());
-		commerceRegionImpl.setModifiedDate(commerceRegion.getModifiedDate());
-		commerceRegionImpl.setCommerceCountryId(commerceRegion.getCommerceCountryId());
-		commerceRegionImpl.setName(commerceRegion.getName());
-		commerceRegionImpl.setCode(commerceRegion.getCode());
-		commerceRegionImpl.setPriority(commerceRegion.getPriority());
-		commerceRegionImpl.setActive(commerceRegion.isActive());
-		commerceRegionImpl.setLastPublishDate(commerceRegion.getLastPublishDate());
-
-		return commerceRegionImpl;
 	}
 
 	/**

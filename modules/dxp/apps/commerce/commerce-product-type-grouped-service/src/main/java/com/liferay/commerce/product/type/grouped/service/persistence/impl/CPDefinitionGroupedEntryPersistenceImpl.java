@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -2526,8 +2528,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	protected CPDefinitionGroupedEntry removeImpl(
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-		cpDefinitionGroupedEntry = toUnwrappedModel(cpDefinitionGroupedEntry);
-
 		Session session = null;
 
 		try {
@@ -2559,9 +2559,23 @@ public class CPDefinitionGroupedEntryPersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CPDefinitionGroupedEntry updateImpl(
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-		cpDefinitionGroupedEntry = toUnwrappedModel(cpDefinitionGroupedEntry);
-
 		boolean isNew = cpDefinitionGroupedEntry.isNew();
+
+		if (!(cpDefinitionGroupedEntry instanceof CPDefinitionGroupedEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDefinitionGroupedEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinitionGroupedEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinitionGroupedEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinitionGroupedEntry implementation " +
+				cpDefinitionGroupedEntry.getClass());
+		}
 
 		CPDefinitionGroupedEntryModelImpl cpDefinitionGroupedEntryModelImpl = (CPDefinitionGroupedEntryModelImpl)cpDefinitionGroupedEntry;
 
@@ -2725,33 +2739,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl extends BasePersistenceImpl
 		cpDefinitionGroupedEntry.resetOriginalValues();
 
 		return cpDefinitionGroupedEntry;
-	}
-
-	protected CPDefinitionGroupedEntry toUnwrappedModel(
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-		if (cpDefinitionGroupedEntry instanceof CPDefinitionGroupedEntryImpl) {
-			return cpDefinitionGroupedEntry;
-		}
-
-		CPDefinitionGroupedEntryImpl cpDefinitionGroupedEntryImpl = new CPDefinitionGroupedEntryImpl();
-
-		cpDefinitionGroupedEntryImpl.setNew(cpDefinitionGroupedEntry.isNew());
-		cpDefinitionGroupedEntryImpl.setPrimaryKey(cpDefinitionGroupedEntry.getPrimaryKey());
-
-		cpDefinitionGroupedEntryImpl.setUuid(cpDefinitionGroupedEntry.getUuid());
-		cpDefinitionGroupedEntryImpl.setCPDefinitionGroupedEntryId(cpDefinitionGroupedEntry.getCPDefinitionGroupedEntryId());
-		cpDefinitionGroupedEntryImpl.setGroupId(cpDefinitionGroupedEntry.getGroupId());
-		cpDefinitionGroupedEntryImpl.setCompanyId(cpDefinitionGroupedEntry.getCompanyId());
-		cpDefinitionGroupedEntryImpl.setUserId(cpDefinitionGroupedEntry.getUserId());
-		cpDefinitionGroupedEntryImpl.setUserName(cpDefinitionGroupedEntry.getUserName());
-		cpDefinitionGroupedEntryImpl.setCreateDate(cpDefinitionGroupedEntry.getCreateDate());
-		cpDefinitionGroupedEntryImpl.setModifiedDate(cpDefinitionGroupedEntry.getModifiedDate());
-		cpDefinitionGroupedEntryImpl.setCPDefinitionId(cpDefinitionGroupedEntry.getCPDefinitionId());
-		cpDefinitionGroupedEntryImpl.setEntryCPDefinitionId(cpDefinitionGroupedEntry.getEntryCPDefinitionId());
-		cpDefinitionGroupedEntryImpl.setPriority(cpDefinitionGroupedEntry.getPriority());
-		cpDefinitionGroupedEntryImpl.setQuantity(cpDefinitionGroupedEntry.getQuantity());
-
-		return cpDefinitionGroupedEntryImpl;
 	}
 
 	/**

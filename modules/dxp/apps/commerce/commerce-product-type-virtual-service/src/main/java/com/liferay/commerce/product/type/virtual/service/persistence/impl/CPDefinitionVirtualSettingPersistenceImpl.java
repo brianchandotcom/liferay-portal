@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1981,8 +1983,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	@Override
 	protected CPDefinitionVirtualSetting removeImpl(
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-		cpDefinitionVirtualSetting = toUnwrappedModel(cpDefinitionVirtualSetting);
-
 		Session session = null;
 
 		try {
@@ -2014,9 +2014,23 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	@Override
 	public CPDefinitionVirtualSetting updateImpl(
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-		cpDefinitionVirtualSetting = toUnwrappedModel(cpDefinitionVirtualSetting);
-
 		boolean isNew = cpDefinitionVirtualSetting.isNew();
+
+		if (!(cpDefinitionVirtualSetting instanceof CPDefinitionVirtualSettingModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDefinitionVirtualSetting.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinitionVirtualSetting);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinitionVirtualSetting proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinitionVirtualSetting implementation " +
+				cpDefinitionVirtualSetting.getClass());
+		}
 
 		CPDefinitionVirtualSettingModelImpl cpDefinitionVirtualSettingModelImpl = (CPDefinitionVirtualSettingModelImpl)cpDefinitionVirtualSetting;
 
@@ -2153,42 +2167,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		cpDefinitionVirtualSetting.resetOriginalValues();
 
 		return cpDefinitionVirtualSetting;
-	}
-
-	protected CPDefinitionVirtualSetting toUnwrappedModel(
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-		if (cpDefinitionVirtualSetting instanceof CPDefinitionVirtualSettingImpl) {
-			return cpDefinitionVirtualSetting;
-		}
-
-		CPDefinitionVirtualSettingImpl cpDefinitionVirtualSettingImpl = new CPDefinitionVirtualSettingImpl();
-
-		cpDefinitionVirtualSettingImpl.setNew(cpDefinitionVirtualSetting.isNew());
-		cpDefinitionVirtualSettingImpl.setPrimaryKey(cpDefinitionVirtualSetting.getPrimaryKey());
-
-		cpDefinitionVirtualSettingImpl.setUuid(cpDefinitionVirtualSetting.getUuid());
-		cpDefinitionVirtualSettingImpl.setCPDefinitionVirtualSettingId(cpDefinitionVirtualSetting.getCPDefinitionVirtualSettingId());
-		cpDefinitionVirtualSettingImpl.setGroupId(cpDefinitionVirtualSetting.getGroupId());
-		cpDefinitionVirtualSettingImpl.setCompanyId(cpDefinitionVirtualSetting.getCompanyId());
-		cpDefinitionVirtualSettingImpl.setUserId(cpDefinitionVirtualSetting.getUserId());
-		cpDefinitionVirtualSettingImpl.setUserName(cpDefinitionVirtualSetting.getUserName());
-		cpDefinitionVirtualSettingImpl.setCreateDate(cpDefinitionVirtualSetting.getCreateDate());
-		cpDefinitionVirtualSettingImpl.setModifiedDate(cpDefinitionVirtualSetting.getModifiedDate());
-		cpDefinitionVirtualSettingImpl.setCPDefinitionId(cpDefinitionVirtualSetting.getCPDefinitionId());
-		cpDefinitionVirtualSettingImpl.setFileEntryId(cpDefinitionVirtualSetting.getFileEntryId());
-		cpDefinitionVirtualSettingImpl.setUrl(cpDefinitionVirtualSetting.getUrl());
-		cpDefinitionVirtualSettingImpl.setActivationStatus(cpDefinitionVirtualSetting.getActivationStatus());
-		cpDefinitionVirtualSettingImpl.setDuration(cpDefinitionVirtualSetting.getDuration());
-		cpDefinitionVirtualSettingImpl.setMaxUsages(cpDefinitionVirtualSetting.getMaxUsages());
-		cpDefinitionVirtualSettingImpl.setUseSample(cpDefinitionVirtualSetting.isUseSample());
-		cpDefinitionVirtualSettingImpl.setSampleFileEntryId(cpDefinitionVirtualSetting.getSampleFileEntryId());
-		cpDefinitionVirtualSettingImpl.setSampleUrl(cpDefinitionVirtualSetting.getSampleUrl());
-		cpDefinitionVirtualSettingImpl.setTermsOfUseRequired(cpDefinitionVirtualSetting.isTermsOfUseRequired());
-		cpDefinitionVirtualSettingImpl.setTermsOfUseContent(cpDefinitionVirtualSetting.getTermsOfUseContent());
-		cpDefinitionVirtualSettingImpl.setTermsOfUseJournalArticleResourcePrimKey(cpDefinitionVirtualSetting.getTermsOfUseJournalArticleResourcePrimKey());
-		cpDefinitionVirtualSettingImpl.setLastPublishDate(cpDefinitionVirtualSetting.getLastPublishDate());
-
-		return cpDefinitionVirtualSettingImpl;
 	}
 
 	/**

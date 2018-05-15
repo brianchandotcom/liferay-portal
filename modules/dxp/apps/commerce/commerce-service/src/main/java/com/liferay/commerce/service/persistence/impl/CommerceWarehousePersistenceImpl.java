@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3011,8 +3013,6 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 	@Override
 	protected CommerceWarehouse removeImpl(CommerceWarehouse commerceWarehouse) {
-		commerceWarehouse = toUnwrappedModel(commerceWarehouse);
-
 		Session session = null;
 
 		try {
@@ -3043,9 +3043,23 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 	@Override
 	public CommerceWarehouse updateImpl(CommerceWarehouse commerceWarehouse) {
-		commerceWarehouse = toUnwrappedModel(commerceWarehouse);
-
 		boolean isNew = commerceWarehouse.isNew();
+
+		if (!(commerceWarehouse instanceof CommerceWarehouseModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceWarehouse.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceWarehouse);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceWarehouse proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceWarehouse implementation " +
+				commerceWarehouse.getClass());
+		}
 
 		CommerceWarehouseModelImpl commerceWarehouseModelImpl = (CommerceWarehouseModelImpl)commerceWarehouse;
 
@@ -3261,41 +3275,6 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 		commerceWarehouse.resetOriginalValues();
 
 		return commerceWarehouse;
-	}
-
-	protected CommerceWarehouse toUnwrappedModel(
-		CommerceWarehouse commerceWarehouse) {
-		if (commerceWarehouse instanceof CommerceWarehouseImpl) {
-			return commerceWarehouse;
-		}
-
-		CommerceWarehouseImpl commerceWarehouseImpl = new CommerceWarehouseImpl();
-
-		commerceWarehouseImpl.setNew(commerceWarehouse.isNew());
-		commerceWarehouseImpl.setPrimaryKey(commerceWarehouse.getPrimaryKey());
-
-		commerceWarehouseImpl.setCommerceWarehouseId(commerceWarehouse.getCommerceWarehouseId());
-		commerceWarehouseImpl.setGroupId(commerceWarehouse.getGroupId());
-		commerceWarehouseImpl.setCompanyId(commerceWarehouse.getCompanyId());
-		commerceWarehouseImpl.setUserId(commerceWarehouse.getUserId());
-		commerceWarehouseImpl.setUserName(commerceWarehouse.getUserName());
-		commerceWarehouseImpl.setCreateDate(commerceWarehouse.getCreateDate());
-		commerceWarehouseImpl.setModifiedDate(commerceWarehouse.getModifiedDate());
-		commerceWarehouseImpl.setName(commerceWarehouse.getName());
-		commerceWarehouseImpl.setDescription(commerceWarehouse.getDescription());
-		commerceWarehouseImpl.setActive(commerceWarehouse.isActive());
-		commerceWarehouseImpl.setStreet1(commerceWarehouse.getStreet1());
-		commerceWarehouseImpl.setStreet2(commerceWarehouse.getStreet2());
-		commerceWarehouseImpl.setStreet3(commerceWarehouse.getStreet3());
-		commerceWarehouseImpl.setCity(commerceWarehouse.getCity());
-		commerceWarehouseImpl.setZip(commerceWarehouse.getZip());
-		commerceWarehouseImpl.setCommerceRegionId(commerceWarehouse.getCommerceRegionId());
-		commerceWarehouseImpl.setCommerceCountryId(commerceWarehouse.getCommerceCountryId());
-		commerceWarehouseImpl.setLatitude(commerceWarehouse.getLatitude());
-		commerceWarehouseImpl.setLongitude(commerceWarehouse.getLongitude());
-		commerceWarehouseImpl.setPrimary(commerceWarehouse.isPrimary());
-
-		return commerceWarehouseImpl;
 	}
 
 	/**

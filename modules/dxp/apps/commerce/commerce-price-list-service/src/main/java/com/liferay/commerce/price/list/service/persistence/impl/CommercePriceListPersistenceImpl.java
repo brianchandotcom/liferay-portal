@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -5168,8 +5170,6 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 
 	@Override
 	protected CommercePriceList removeImpl(CommercePriceList commercePriceList) {
-		commercePriceList = toUnwrappedModel(commercePriceList);
-
 		Session session = null;
 
 		try {
@@ -5200,9 +5200,23 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 
 	@Override
 	public CommercePriceList updateImpl(CommercePriceList commercePriceList) {
-		commercePriceList = toUnwrappedModel(commercePriceList);
-
 		boolean isNew = commercePriceList.isNew();
+
+		if (!(commercePriceList instanceof CommercePriceListModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commercePriceList.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commercePriceList);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commercePriceList proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommercePriceList implementation " +
+				commercePriceList.getClass());
+		}
 
 		CommercePriceListModelImpl commercePriceListModelImpl = (CommercePriceListModelImpl)commercePriceList;
 
@@ -5440,40 +5454,6 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 		commercePriceList.resetOriginalValues();
 
 		return commercePriceList;
-	}
-
-	protected CommercePriceList toUnwrappedModel(
-		CommercePriceList commercePriceList) {
-		if (commercePriceList instanceof CommercePriceListImpl) {
-			return commercePriceList;
-		}
-
-		CommercePriceListImpl commercePriceListImpl = new CommercePriceListImpl();
-
-		commercePriceListImpl.setNew(commercePriceList.isNew());
-		commercePriceListImpl.setPrimaryKey(commercePriceList.getPrimaryKey());
-
-		commercePriceListImpl.setUuid(commercePriceList.getUuid());
-		commercePriceListImpl.setCommercePriceListId(commercePriceList.getCommercePriceListId());
-		commercePriceListImpl.setGroupId(commercePriceList.getGroupId());
-		commercePriceListImpl.setCompanyId(commercePriceList.getCompanyId());
-		commercePriceListImpl.setUserId(commercePriceList.getUserId());
-		commercePriceListImpl.setUserName(commercePriceList.getUserName());
-		commercePriceListImpl.setCreateDate(commercePriceList.getCreateDate());
-		commercePriceListImpl.setModifiedDate(commercePriceList.getModifiedDate());
-		commercePriceListImpl.setParentCommercePriceListId(commercePriceList.getParentCommercePriceListId());
-		commercePriceListImpl.setCommerceCurrencyId(commercePriceList.getCommerceCurrencyId());
-		commercePriceListImpl.setName(commercePriceList.getName());
-		commercePriceListImpl.setPriority(commercePriceList.getPriority());
-		commercePriceListImpl.setDisplayDate(commercePriceList.getDisplayDate());
-		commercePriceListImpl.setExpirationDate(commercePriceList.getExpirationDate());
-		commercePriceListImpl.setLastPublishDate(commercePriceList.getLastPublishDate());
-		commercePriceListImpl.setStatus(commercePriceList.getStatus());
-		commercePriceListImpl.setStatusByUserId(commercePriceList.getStatusByUserId());
-		commercePriceListImpl.setStatusByUserName(commercePriceList.getStatusByUserName());
-		commercePriceListImpl.setStatusDate(commercePriceList.getStatusDate());
-
-		return commercePriceListImpl;
 	}
 
 	/**

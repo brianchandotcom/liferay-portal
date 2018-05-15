@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3518,8 +3520,6 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 
 	@Override
 	protected CPOptionValue removeImpl(CPOptionValue cpOptionValue) {
-		cpOptionValue = toUnwrappedModel(cpOptionValue);
-
 		Session session = null;
 
 		try {
@@ -3550,9 +3550,23 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 
 	@Override
 	public CPOptionValue updateImpl(CPOptionValue cpOptionValue) {
-		cpOptionValue = toUnwrappedModel(cpOptionValue);
-
 		boolean isNew = cpOptionValue.isNew();
+
+		if (!(cpOptionValue instanceof CPOptionValueModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpOptionValue.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpOptionValue);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpOptionValue proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPOptionValue implementation " +
+				cpOptionValue.getClass());
+		}
 
 		CPOptionValueModelImpl cpOptionValueModelImpl = (CPOptionValueModelImpl)cpOptionValue;
 
@@ -3752,33 +3766,6 @@ public class CPOptionValuePersistenceImpl extends BasePersistenceImpl<CPOptionVa
 		cpOptionValue.resetOriginalValues();
 
 		return cpOptionValue;
-	}
-
-	protected CPOptionValue toUnwrappedModel(CPOptionValue cpOptionValue) {
-		if (cpOptionValue instanceof CPOptionValueImpl) {
-			return cpOptionValue;
-		}
-
-		CPOptionValueImpl cpOptionValueImpl = new CPOptionValueImpl();
-
-		cpOptionValueImpl.setNew(cpOptionValue.isNew());
-		cpOptionValueImpl.setPrimaryKey(cpOptionValue.getPrimaryKey());
-
-		cpOptionValueImpl.setUuid(cpOptionValue.getUuid());
-		cpOptionValueImpl.setCPOptionValueId(cpOptionValue.getCPOptionValueId());
-		cpOptionValueImpl.setGroupId(cpOptionValue.getGroupId());
-		cpOptionValueImpl.setCompanyId(cpOptionValue.getCompanyId());
-		cpOptionValueImpl.setUserId(cpOptionValue.getUserId());
-		cpOptionValueImpl.setUserName(cpOptionValue.getUserName());
-		cpOptionValueImpl.setCreateDate(cpOptionValue.getCreateDate());
-		cpOptionValueImpl.setModifiedDate(cpOptionValue.getModifiedDate());
-		cpOptionValueImpl.setCPOptionId(cpOptionValue.getCPOptionId());
-		cpOptionValueImpl.setName(cpOptionValue.getName());
-		cpOptionValueImpl.setPriority(cpOptionValue.getPriority());
-		cpOptionValueImpl.setKey(cpOptionValue.getKey());
-		cpOptionValueImpl.setLastPublishDate(cpOptionValue.getLastPublishDate());
-
-		return cpOptionValueImpl;
 	}
 
 	/**

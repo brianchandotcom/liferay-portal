@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3679,8 +3681,6 @@ public class CPMeasurementUnitPersistenceImpl extends BasePersistenceImpl<CPMeas
 
 	@Override
 	protected CPMeasurementUnit removeImpl(CPMeasurementUnit cpMeasurementUnit) {
-		cpMeasurementUnit = toUnwrappedModel(cpMeasurementUnit);
-
 		Session session = null;
 
 		try {
@@ -3711,9 +3711,23 @@ public class CPMeasurementUnitPersistenceImpl extends BasePersistenceImpl<CPMeas
 
 	@Override
 	public CPMeasurementUnit updateImpl(CPMeasurementUnit cpMeasurementUnit) {
-		cpMeasurementUnit = toUnwrappedModel(cpMeasurementUnit);
-
 		boolean isNew = cpMeasurementUnit.isNew();
+
+		if (!(cpMeasurementUnit instanceof CPMeasurementUnitModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpMeasurementUnit.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpMeasurementUnit);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpMeasurementUnit proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPMeasurementUnit implementation " +
+				cpMeasurementUnit.getClass());
+		}
 
 		CPMeasurementUnitModelImpl cpMeasurementUnitModelImpl = (CPMeasurementUnitModelImpl)cpMeasurementUnit;
 
@@ -3931,36 +3945,6 @@ public class CPMeasurementUnitPersistenceImpl extends BasePersistenceImpl<CPMeas
 		cpMeasurementUnit.resetOriginalValues();
 
 		return cpMeasurementUnit;
-	}
-
-	protected CPMeasurementUnit toUnwrappedModel(
-		CPMeasurementUnit cpMeasurementUnit) {
-		if (cpMeasurementUnit instanceof CPMeasurementUnitImpl) {
-			return cpMeasurementUnit;
-		}
-
-		CPMeasurementUnitImpl cpMeasurementUnitImpl = new CPMeasurementUnitImpl();
-
-		cpMeasurementUnitImpl.setNew(cpMeasurementUnit.isNew());
-		cpMeasurementUnitImpl.setPrimaryKey(cpMeasurementUnit.getPrimaryKey());
-
-		cpMeasurementUnitImpl.setUuid(cpMeasurementUnit.getUuid());
-		cpMeasurementUnitImpl.setCPMeasurementUnitId(cpMeasurementUnit.getCPMeasurementUnitId());
-		cpMeasurementUnitImpl.setGroupId(cpMeasurementUnit.getGroupId());
-		cpMeasurementUnitImpl.setCompanyId(cpMeasurementUnit.getCompanyId());
-		cpMeasurementUnitImpl.setUserId(cpMeasurementUnit.getUserId());
-		cpMeasurementUnitImpl.setUserName(cpMeasurementUnit.getUserName());
-		cpMeasurementUnitImpl.setCreateDate(cpMeasurementUnit.getCreateDate());
-		cpMeasurementUnitImpl.setModifiedDate(cpMeasurementUnit.getModifiedDate());
-		cpMeasurementUnitImpl.setName(cpMeasurementUnit.getName());
-		cpMeasurementUnitImpl.setKey(cpMeasurementUnit.getKey());
-		cpMeasurementUnitImpl.setRate(cpMeasurementUnit.getRate());
-		cpMeasurementUnitImpl.setPrimary(cpMeasurementUnit.isPrimary());
-		cpMeasurementUnitImpl.setPriority(cpMeasurementUnit.getPriority());
-		cpMeasurementUnitImpl.setType(cpMeasurementUnit.getType());
-		cpMeasurementUnitImpl.setLastPublishDate(cpMeasurementUnit.getLastPublishDate());
-
-		return cpMeasurementUnitImpl;
 	}
 
 	/**

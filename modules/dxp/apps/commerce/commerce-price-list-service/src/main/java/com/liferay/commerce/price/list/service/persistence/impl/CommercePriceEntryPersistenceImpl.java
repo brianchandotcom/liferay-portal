@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -4048,8 +4050,6 @@ public class CommercePriceEntryPersistenceImpl extends BasePersistenceImpl<Comme
 	@Override
 	protected CommercePriceEntry removeImpl(
 		CommercePriceEntry commercePriceEntry) {
-		commercePriceEntry = toUnwrappedModel(commercePriceEntry);
-
 		Session session = null;
 
 		try {
@@ -4080,9 +4080,23 @@ public class CommercePriceEntryPersistenceImpl extends BasePersistenceImpl<Comme
 
 	@Override
 	public CommercePriceEntry updateImpl(CommercePriceEntry commercePriceEntry) {
-		commercePriceEntry = toUnwrappedModel(commercePriceEntry);
-
 		boolean isNew = commercePriceEntry.isNew();
+
+		if (!(commercePriceEntry instanceof CommercePriceEntryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commercePriceEntry.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commercePriceEntry);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commercePriceEntry proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommercePriceEntry implementation " +
+				commercePriceEntry.getClass());
+		}
 
 		CommercePriceEntryModelImpl commercePriceEntryModelImpl = (CommercePriceEntryModelImpl)commercePriceEntry;
 
@@ -4315,35 +4329,6 @@ public class CommercePriceEntryPersistenceImpl extends BasePersistenceImpl<Comme
 		commercePriceEntry.resetOriginalValues();
 
 		return commercePriceEntry;
-	}
-
-	protected CommercePriceEntry toUnwrappedModel(
-		CommercePriceEntry commercePriceEntry) {
-		if (commercePriceEntry instanceof CommercePriceEntryImpl) {
-			return commercePriceEntry;
-		}
-
-		CommercePriceEntryImpl commercePriceEntryImpl = new CommercePriceEntryImpl();
-
-		commercePriceEntryImpl.setNew(commercePriceEntry.isNew());
-		commercePriceEntryImpl.setPrimaryKey(commercePriceEntry.getPrimaryKey());
-
-		commercePriceEntryImpl.setUuid(commercePriceEntry.getUuid());
-		commercePriceEntryImpl.setCommercePriceEntryId(commercePriceEntry.getCommercePriceEntryId());
-		commercePriceEntryImpl.setGroupId(commercePriceEntry.getGroupId());
-		commercePriceEntryImpl.setCompanyId(commercePriceEntry.getCompanyId());
-		commercePriceEntryImpl.setUserId(commercePriceEntry.getUserId());
-		commercePriceEntryImpl.setUserName(commercePriceEntry.getUserName());
-		commercePriceEntryImpl.setCreateDate(commercePriceEntry.getCreateDate());
-		commercePriceEntryImpl.setModifiedDate(commercePriceEntry.getModifiedDate());
-		commercePriceEntryImpl.setCPInstanceId(commercePriceEntry.getCPInstanceId());
-		commercePriceEntryImpl.setCommercePriceListId(commercePriceEntry.getCommercePriceListId());
-		commercePriceEntryImpl.setPrice(commercePriceEntry.getPrice());
-		commercePriceEntryImpl.setPromoPrice(commercePriceEntry.getPromoPrice());
-		commercePriceEntryImpl.setHasTierPrice(commercePriceEntry.isHasTierPrice());
-		commercePriceEntryImpl.setLastPublishDate(commercePriceEntry.getLastPublishDate());
-
-		return commercePriceEntryImpl;
 	}
 
 	/**

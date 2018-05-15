@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1649,8 +1652,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 	@Override
 	protected CommerceAddressRestriction removeImpl(
 		CommerceAddressRestriction commerceAddressRestriction) {
-		commerceAddressRestriction = toUnwrappedModel(commerceAddressRestriction);
-
 		Session session = null;
 
 		try {
@@ -1682,9 +1683,23 @@ public class CommerceAddressRestrictionPersistenceImpl
 	@Override
 	public CommerceAddressRestriction updateImpl(
 		CommerceAddressRestriction commerceAddressRestriction) {
-		commerceAddressRestriction = toUnwrappedModel(commerceAddressRestriction);
-
 		boolean isNew = commerceAddressRestriction.isNew();
+
+		if (!(commerceAddressRestriction instanceof CommerceAddressRestrictionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceAddressRestriction.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceAddressRestriction);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceAddressRestriction proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceAddressRestriction implementation " +
+				commerceAddressRestriction.getClass());
+		}
 
 		CommerceAddressRestrictionModelImpl commerceAddressRestrictionModelImpl = (CommerceAddressRestrictionModelImpl)commerceAddressRestriction;
 
@@ -1818,31 +1833,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		commerceAddressRestriction.resetOriginalValues();
 
 		return commerceAddressRestriction;
-	}
-
-	protected CommerceAddressRestriction toUnwrappedModel(
-		CommerceAddressRestriction commerceAddressRestriction) {
-		if (commerceAddressRestriction instanceof CommerceAddressRestrictionImpl) {
-			return commerceAddressRestriction;
-		}
-
-		CommerceAddressRestrictionImpl commerceAddressRestrictionImpl = new CommerceAddressRestrictionImpl();
-
-		commerceAddressRestrictionImpl.setNew(commerceAddressRestriction.isNew());
-		commerceAddressRestrictionImpl.setPrimaryKey(commerceAddressRestriction.getPrimaryKey());
-
-		commerceAddressRestrictionImpl.setCommerceAddressRestrictionId(commerceAddressRestriction.getCommerceAddressRestrictionId());
-		commerceAddressRestrictionImpl.setGroupId(commerceAddressRestriction.getGroupId());
-		commerceAddressRestrictionImpl.setCompanyId(commerceAddressRestriction.getCompanyId());
-		commerceAddressRestrictionImpl.setUserId(commerceAddressRestriction.getUserId());
-		commerceAddressRestrictionImpl.setUserName(commerceAddressRestriction.getUserName());
-		commerceAddressRestrictionImpl.setCreateDate(commerceAddressRestriction.getCreateDate());
-		commerceAddressRestrictionImpl.setModifiedDate(commerceAddressRestriction.getModifiedDate());
-		commerceAddressRestrictionImpl.setClassNameId(commerceAddressRestriction.getClassNameId());
-		commerceAddressRestrictionImpl.setClassPK(commerceAddressRestriction.getClassPK());
-		commerceAddressRestrictionImpl.setCommerceCountryId(commerceAddressRestriction.getCommerceCountryId());
-
-		return commerceAddressRestrictionImpl;
 	}
 
 	/**

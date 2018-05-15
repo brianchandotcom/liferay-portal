@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1576,8 +1579,6 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 	@Override
 	protected CommerceTaxFixedRate removeImpl(
 		CommerceTaxFixedRate commerceTaxFixedRate) {
-		commerceTaxFixedRate = toUnwrappedModel(commerceTaxFixedRate);
-
 		Session session = null;
 
 		try {
@@ -1609,9 +1610,23 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 	@Override
 	public CommerceTaxFixedRate updateImpl(
 		CommerceTaxFixedRate commerceTaxFixedRate) {
-		commerceTaxFixedRate = toUnwrappedModel(commerceTaxFixedRate);
-
 		boolean isNew = commerceTaxFixedRate.isNew();
+
+		if (!(commerceTaxFixedRate instanceof CommerceTaxFixedRateModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceTaxFixedRate.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceTaxFixedRate);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceTaxFixedRate proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceTaxFixedRate implementation " +
+				commerceTaxFixedRate.getClass());
+		}
 
 		CommerceTaxFixedRateModelImpl commerceTaxFixedRateModelImpl = (CommerceTaxFixedRateModelImpl)commerceTaxFixedRate;
 
@@ -1743,31 +1758,6 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 		commerceTaxFixedRate.resetOriginalValues();
 
 		return commerceTaxFixedRate;
-	}
-
-	protected CommerceTaxFixedRate toUnwrappedModel(
-		CommerceTaxFixedRate commerceTaxFixedRate) {
-		if (commerceTaxFixedRate instanceof CommerceTaxFixedRateImpl) {
-			return commerceTaxFixedRate;
-		}
-
-		CommerceTaxFixedRateImpl commerceTaxFixedRateImpl = new CommerceTaxFixedRateImpl();
-
-		commerceTaxFixedRateImpl.setNew(commerceTaxFixedRate.isNew());
-		commerceTaxFixedRateImpl.setPrimaryKey(commerceTaxFixedRate.getPrimaryKey());
-
-		commerceTaxFixedRateImpl.setCommerceTaxFixedRateId(commerceTaxFixedRate.getCommerceTaxFixedRateId());
-		commerceTaxFixedRateImpl.setGroupId(commerceTaxFixedRate.getGroupId());
-		commerceTaxFixedRateImpl.setCompanyId(commerceTaxFixedRate.getCompanyId());
-		commerceTaxFixedRateImpl.setUserId(commerceTaxFixedRate.getUserId());
-		commerceTaxFixedRateImpl.setUserName(commerceTaxFixedRate.getUserName());
-		commerceTaxFixedRateImpl.setCreateDate(commerceTaxFixedRate.getCreateDate());
-		commerceTaxFixedRateImpl.setModifiedDate(commerceTaxFixedRate.getModifiedDate());
-		commerceTaxFixedRateImpl.setCPTaxCategoryId(commerceTaxFixedRate.getCPTaxCategoryId());
-		commerceTaxFixedRateImpl.setCommerceTaxMethodId(commerceTaxFixedRate.getCommerceTaxMethodId());
-		commerceTaxFixedRateImpl.setRate(commerceTaxFixedRate.getRate());
-
-		return commerceTaxFixedRateImpl;
 	}
 
 	/**

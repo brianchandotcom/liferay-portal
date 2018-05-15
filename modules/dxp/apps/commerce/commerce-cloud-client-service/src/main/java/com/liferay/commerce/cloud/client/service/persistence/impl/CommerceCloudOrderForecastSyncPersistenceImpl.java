@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -42,6 +43,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -1080,8 +1082,6 @@ public class CommerceCloudOrderForecastSyncPersistenceImpl
 	@Override
 	protected CommerceCloudOrderForecastSync removeImpl(
 		CommerceCloudOrderForecastSync commerceCloudOrderForecastSync) {
-		commerceCloudOrderForecastSync = toUnwrappedModel(commerceCloudOrderForecastSync);
-
 		Session session = null;
 
 		try {
@@ -1113,9 +1113,24 @@ public class CommerceCloudOrderForecastSyncPersistenceImpl
 	@Override
 	public CommerceCloudOrderForecastSync updateImpl(
 		CommerceCloudOrderForecastSync commerceCloudOrderForecastSync) {
-		commerceCloudOrderForecastSync = toUnwrappedModel(commerceCloudOrderForecastSync);
-
 		boolean isNew = commerceCloudOrderForecastSync.isNew();
+
+		if (!(commerceCloudOrderForecastSync instanceof CommerceCloudOrderForecastSyncModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(
+						commerceCloudOrderForecastSync.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceCloudOrderForecastSync);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceCloudOrderForecastSync proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceCloudOrderForecastSync implementation " +
+				commerceCloudOrderForecastSync.getClass());
+		}
 
 		CommerceCloudOrderForecastSyncModelImpl commerceCloudOrderForecastSyncModelImpl =
 			(CommerceCloudOrderForecastSyncModelImpl)commerceCloudOrderForecastSync;
@@ -1193,27 +1208,6 @@ public class CommerceCloudOrderForecastSyncPersistenceImpl
 		commerceCloudOrderForecastSync.resetOriginalValues();
 
 		return commerceCloudOrderForecastSync;
-	}
-
-	protected CommerceCloudOrderForecastSync toUnwrappedModel(
-		CommerceCloudOrderForecastSync commerceCloudOrderForecastSync) {
-		if (commerceCloudOrderForecastSync instanceof CommerceCloudOrderForecastSyncImpl) {
-			return commerceCloudOrderForecastSync;
-		}
-
-		CommerceCloudOrderForecastSyncImpl commerceCloudOrderForecastSyncImpl = new CommerceCloudOrderForecastSyncImpl();
-
-		commerceCloudOrderForecastSyncImpl.setNew(commerceCloudOrderForecastSync.isNew());
-		commerceCloudOrderForecastSyncImpl.setPrimaryKey(commerceCloudOrderForecastSync.getPrimaryKey());
-
-		commerceCloudOrderForecastSyncImpl.setCommerceCloudOrderForecastSyncId(commerceCloudOrderForecastSync.getCommerceCloudOrderForecastSyncId());
-		commerceCloudOrderForecastSyncImpl.setGroupId(commerceCloudOrderForecastSync.getGroupId());
-		commerceCloudOrderForecastSyncImpl.setCompanyId(commerceCloudOrderForecastSync.getCompanyId());
-		commerceCloudOrderForecastSyncImpl.setCreateDate(commerceCloudOrderForecastSync.getCreateDate());
-		commerceCloudOrderForecastSyncImpl.setCommerceOrderId(commerceCloudOrderForecastSync.getCommerceOrderId());
-		commerceCloudOrderForecastSyncImpl.setSyncDate(commerceCloudOrderForecastSync.getSyncDate());
-
-		return commerceCloudOrderForecastSyncImpl;
 	}
 
 	/**

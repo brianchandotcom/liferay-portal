@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -746,8 +749,6 @@ public class CPTaxCategoryPersistenceImpl extends BasePersistenceImpl<CPTaxCateg
 
 	@Override
 	protected CPTaxCategory removeImpl(CPTaxCategory cpTaxCategory) {
-		cpTaxCategory = toUnwrappedModel(cpTaxCategory);
-
 		Session session = null;
 
 		try {
@@ -778,9 +779,23 @@ public class CPTaxCategoryPersistenceImpl extends BasePersistenceImpl<CPTaxCateg
 
 	@Override
 	public CPTaxCategory updateImpl(CPTaxCategory cpTaxCategory) {
-		cpTaxCategory = toUnwrappedModel(cpTaxCategory);
-
 		boolean isNew = cpTaxCategory.isNew();
+
+		if (!(cpTaxCategory instanceof CPTaxCategoryModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpTaxCategory.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpTaxCategory);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpTaxCategory proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPTaxCategory implementation " +
+				cpTaxCategory.getClass());
+		}
 
 		CPTaxCategoryModelImpl cpTaxCategoryModelImpl = (CPTaxCategoryModelImpl)cpTaxCategory;
 
@@ -872,29 +887,6 @@ public class CPTaxCategoryPersistenceImpl extends BasePersistenceImpl<CPTaxCateg
 		cpTaxCategory.resetOriginalValues();
 
 		return cpTaxCategory;
-	}
-
-	protected CPTaxCategory toUnwrappedModel(CPTaxCategory cpTaxCategory) {
-		if (cpTaxCategory instanceof CPTaxCategoryImpl) {
-			return cpTaxCategory;
-		}
-
-		CPTaxCategoryImpl cpTaxCategoryImpl = new CPTaxCategoryImpl();
-
-		cpTaxCategoryImpl.setNew(cpTaxCategory.isNew());
-		cpTaxCategoryImpl.setPrimaryKey(cpTaxCategory.getPrimaryKey());
-
-		cpTaxCategoryImpl.setCPTaxCategoryId(cpTaxCategory.getCPTaxCategoryId());
-		cpTaxCategoryImpl.setGroupId(cpTaxCategory.getGroupId());
-		cpTaxCategoryImpl.setCompanyId(cpTaxCategory.getCompanyId());
-		cpTaxCategoryImpl.setUserId(cpTaxCategory.getUserId());
-		cpTaxCategoryImpl.setUserName(cpTaxCategory.getUserName());
-		cpTaxCategoryImpl.setCreateDate(cpTaxCategory.getCreateDate());
-		cpTaxCategoryImpl.setModifiedDate(cpTaxCategory.getModifiedDate());
-		cpTaxCategoryImpl.setName(cpTaxCategory.getName());
-		cpTaxCategoryImpl.setDescription(cpTaxCategory.getDescription());
-
-		return cpTaxCategoryImpl;
 	}
 
 	/**

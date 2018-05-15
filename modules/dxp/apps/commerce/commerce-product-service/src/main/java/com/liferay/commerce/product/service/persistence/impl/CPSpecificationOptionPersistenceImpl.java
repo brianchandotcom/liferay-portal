@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3423,8 +3425,6 @@ public class CPSpecificationOptionPersistenceImpl extends BasePersistenceImpl<CP
 	@Override
 	protected CPSpecificationOption removeImpl(
 		CPSpecificationOption cpSpecificationOption) {
-		cpSpecificationOption = toUnwrappedModel(cpSpecificationOption);
-
 		Session session = null;
 
 		try {
@@ -3456,9 +3456,23 @@ public class CPSpecificationOptionPersistenceImpl extends BasePersistenceImpl<CP
 	@Override
 	public CPSpecificationOption updateImpl(
 		CPSpecificationOption cpSpecificationOption) {
-		cpSpecificationOption = toUnwrappedModel(cpSpecificationOption);
-
 		boolean isNew = cpSpecificationOption.isNew();
+
+		if (!(cpSpecificationOption instanceof CPSpecificationOptionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpSpecificationOption.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpSpecificationOption);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpSpecificationOption proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPSpecificationOption implementation " +
+				cpSpecificationOption.getClass());
+		}
 
 		CPSpecificationOptionModelImpl cpSpecificationOptionModelImpl = (CPSpecificationOptionModelImpl)cpSpecificationOption;
 
@@ -3645,35 +3659,6 @@ public class CPSpecificationOptionPersistenceImpl extends BasePersistenceImpl<CP
 		cpSpecificationOption.resetOriginalValues();
 
 		return cpSpecificationOption;
-	}
-
-	protected CPSpecificationOption toUnwrappedModel(
-		CPSpecificationOption cpSpecificationOption) {
-		if (cpSpecificationOption instanceof CPSpecificationOptionImpl) {
-			return cpSpecificationOption;
-		}
-
-		CPSpecificationOptionImpl cpSpecificationOptionImpl = new CPSpecificationOptionImpl();
-
-		cpSpecificationOptionImpl.setNew(cpSpecificationOption.isNew());
-		cpSpecificationOptionImpl.setPrimaryKey(cpSpecificationOption.getPrimaryKey());
-
-		cpSpecificationOptionImpl.setUuid(cpSpecificationOption.getUuid());
-		cpSpecificationOptionImpl.setCPSpecificationOptionId(cpSpecificationOption.getCPSpecificationOptionId());
-		cpSpecificationOptionImpl.setGroupId(cpSpecificationOption.getGroupId());
-		cpSpecificationOptionImpl.setCompanyId(cpSpecificationOption.getCompanyId());
-		cpSpecificationOptionImpl.setUserId(cpSpecificationOption.getUserId());
-		cpSpecificationOptionImpl.setUserName(cpSpecificationOption.getUserName());
-		cpSpecificationOptionImpl.setCreateDate(cpSpecificationOption.getCreateDate());
-		cpSpecificationOptionImpl.setModifiedDate(cpSpecificationOption.getModifiedDate());
-		cpSpecificationOptionImpl.setCPOptionCategoryId(cpSpecificationOption.getCPOptionCategoryId());
-		cpSpecificationOptionImpl.setTitle(cpSpecificationOption.getTitle());
-		cpSpecificationOptionImpl.setDescription(cpSpecificationOption.getDescription());
-		cpSpecificationOptionImpl.setFacetable(cpSpecificationOption.isFacetable());
-		cpSpecificationOptionImpl.setKey(cpSpecificationOption.getKey());
-		cpSpecificationOptionImpl.setLastPublishDate(cpSpecificationOption.getLastPublishDate());
-
-		return cpSpecificationOptionImpl;
 	}
 
 	/**

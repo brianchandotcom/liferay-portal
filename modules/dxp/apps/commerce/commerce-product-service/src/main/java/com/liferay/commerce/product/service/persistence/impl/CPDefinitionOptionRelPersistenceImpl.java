@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,6 +47,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -3831,8 +3833,6 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 	@Override
 	protected CPDefinitionOptionRel removeImpl(
 		CPDefinitionOptionRel cpDefinitionOptionRel) {
-		cpDefinitionOptionRel = toUnwrappedModel(cpDefinitionOptionRel);
-
 		Session session = null;
 
 		try {
@@ -3864,9 +3864,23 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 	@Override
 	public CPDefinitionOptionRel updateImpl(
 		CPDefinitionOptionRel cpDefinitionOptionRel) {
-		cpDefinitionOptionRel = toUnwrappedModel(cpDefinitionOptionRel);
-
 		boolean isNew = cpDefinitionOptionRel.isNew();
+
+		if (!(cpDefinitionOptionRel instanceof CPDefinitionOptionRelModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpDefinitionOptionRel.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpDefinitionOptionRel);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpDefinitionOptionRel proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPDefinitionOptionRel implementation " +
+				cpDefinitionOptionRel.getClass());
+		}
 
 		CPDefinitionOptionRelModelImpl cpDefinitionOptionRelModelImpl = (CPDefinitionOptionRelModelImpl)cpDefinitionOptionRel;
 
@@ -4107,38 +4121,6 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 		cpDefinitionOptionRel.resetOriginalValues();
 
 		return cpDefinitionOptionRel;
-	}
-
-	protected CPDefinitionOptionRel toUnwrappedModel(
-		CPDefinitionOptionRel cpDefinitionOptionRel) {
-		if (cpDefinitionOptionRel instanceof CPDefinitionOptionRelImpl) {
-			return cpDefinitionOptionRel;
-		}
-
-		CPDefinitionOptionRelImpl cpDefinitionOptionRelImpl = new CPDefinitionOptionRelImpl();
-
-		cpDefinitionOptionRelImpl.setNew(cpDefinitionOptionRel.isNew());
-		cpDefinitionOptionRelImpl.setPrimaryKey(cpDefinitionOptionRel.getPrimaryKey());
-
-		cpDefinitionOptionRelImpl.setUuid(cpDefinitionOptionRel.getUuid());
-		cpDefinitionOptionRelImpl.setCPDefinitionOptionRelId(cpDefinitionOptionRel.getCPDefinitionOptionRelId());
-		cpDefinitionOptionRelImpl.setGroupId(cpDefinitionOptionRel.getGroupId());
-		cpDefinitionOptionRelImpl.setCompanyId(cpDefinitionOptionRel.getCompanyId());
-		cpDefinitionOptionRelImpl.setUserId(cpDefinitionOptionRel.getUserId());
-		cpDefinitionOptionRelImpl.setUserName(cpDefinitionOptionRel.getUserName());
-		cpDefinitionOptionRelImpl.setCreateDate(cpDefinitionOptionRel.getCreateDate());
-		cpDefinitionOptionRelImpl.setModifiedDate(cpDefinitionOptionRel.getModifiedDate());
-		cpDefinitionOptionRelImpl.setCPDefinitionId(cpDefinitionOptionRel.getCPDefinitionId());
-		cpDefinitionOptionRelImpl.setCPOptionId(cpDefinitionOptionRel.getCPOptionId());
-		cpDefinitionOptionRelImpl.setName(cpDefinitionOptionRel.getName());
-		cpDefinitionOptionRelImpl.setDescription(cpDefinitionOptionRel.getDescription());
-		cpDefinitionOptionRelImpl.setDDMFormFieldTypeName(cpDefinitionOptionRel.getDDMFormFieldTypeName());
-		cpDefinitionOptionRelImpl.setPriority(cpDefinitionOptionRel.getPriority());
-		cpDefinitionOptionRelImpl.setFacetable(cpDefinitionOptionRel.isFacetable());
-		cpDefinitionOptionRelImpl.setRequired(cpDefinitionOptionRel.isRequired());
-		cpDefinitionOptionRelImpl.setSkuContributor(cpDefinitionOptionRel.isSkuContributor());
-
-		return cpDefinitionOptionRelImpl;
 	}
 
 	/**

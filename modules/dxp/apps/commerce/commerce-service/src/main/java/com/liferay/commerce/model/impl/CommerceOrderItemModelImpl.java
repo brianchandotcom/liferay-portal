@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1030,7 +1031,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	private static final ClassLoader _classLoader = CommerceOrderItem.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CommerceOrderItem.class
+			CommerceOrderItem.class, ModelWrapper.class
 		};
 	private long _commerceOrderItemId;
 	private long _groupId;

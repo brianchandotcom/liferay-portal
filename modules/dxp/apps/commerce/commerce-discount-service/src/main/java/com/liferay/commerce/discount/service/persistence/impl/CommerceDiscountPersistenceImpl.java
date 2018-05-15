@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.sql.Timestamp;
 
@@ -3717,8 +3719,6 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	@Override
 	protected CommerceDiscount removeImpl(CommerceDiscount commerceDiscount) {
-		commerceDiscount = toUnwrappedModel(commerceDiscount);
-
 		Session session = null;
 
 		try {
@@ -3749,9 +3749,23 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 
 	@Override
 	public CommerceDiscount updateImpl(CommerceDiscount commerceDiscount) {
-		commerceDiscount = toUnwrappedModel(commerceDiscount);
-
 		boolean isNew = commerceDiscount.isNew();
+
+		if (!(commerceDiscount instanceof CommerceDiscountModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceDiscount.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceDiscount);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceDiscount proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceDiscount implementation " +
+				commerceDiscount.getClass());
+		}
 
 		CommerceDiscountModelImpl commerceDiscountModelImpl = (CommerceDiscountModelImpl)commerceDiscount;
 
@@ -3905,50 +3919,6 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 		commerceDiscount.resetOriginalValues();
 
 		return commerceDiscount;
-	}
-
-	protected CommerceDiscount toUnwrappedModel(
-		CommerceDiscount commerceDiscount) {
-		if (commerceDiscount instanceof CommerceDiscountImpl) {
-			return commerceDiscount;
-		}
-
-		CommerceDiscountImpl commerceDiscountImpl = new CommerceDiscountImpl();
-
-		commerceDiscountImpl.setNew(commerceDiscount.isNew());
-		commerceDiscountImpl.setPrimaryKey(commerceDiscount.getPrimaryKey());
-
-		commerceDiscountImpl.setUuid(commerceDiscount.getUuid());
-		commerceDiscountImpl.setCommerceDiscountId(commerceDiscount.getCommerceDiscountId());
-		commerceDiscountImpl.setGroupId(commerceDiscount.getGroupId());
-		commerceDiscountImpl.setCompanyId(commerceDiscount.getCompanyId());
-		commerceDiscountImpl.setUserId(commerceDiscount.getUserId());
-		commerceDiscountImpl.setUserName(commerceDiscount.getUserName());
-		commerceDiscountImpl.setCreateDate(commerceDiscount.getCreateDate());
-		commerceDiscountImpl.setModifiedDate(commerceDiscount.getModifiedDate());
-		commerceDiscountImpl.setTitle(commerceDiscount.getTitle());
-		commerceDiscountImpl.setTarget(commerceDiscount.getTarget());
-		commerceDiscountImpl.setUseCouponCode(commerceDiscount.isUseCouponCode());
-		commerceDiscountImpl.setCouponCode(commerceDiscount.getCouponCode());
-		commerceDiscountImpl.setUsePercentage(commerceDiscount.isUsePercentage());
-		commerceDiscountImpl.setMaximumDiscountAmount(commerceDiscount.getMaximumDiscountAmount());
-		commerceDiscountImpl.setLevel1(commerceDiscount.getLevel1());
-		commerceDiscountImpl.setLevel2(commerceDiscount.getLevel2());
-		commerceDiscountImpl.setLevel3(commerceDiscount.getLevel3());
-		commerceDiscountImpl.setLimitationType(commerceDiscount.getLimitationType());
-		commerceDiscountImpl.setLimitationTimes(commerceDiscount.getLimitationTimes());
-		commerceDiscountImpl.setNumberOfUse(commerceDiscount.getNumberOfUse());
-		commerceDiscountImpl.setCumulative(commerceDiscount.isCumulative());
-		commerceDiscountImpl.setActive(commerceDiscount.isActive());
-		commerceDiscountImpl.setDisplayDate(commerceDiscount.getDisplayDate());
-		commerceDiscountImpl.setExpirationDate(commerceDiscount.getExpirationDate());
-		commerceDiscountImpl.setLastPublishDate(commerceDiscount.getLastPublishDate());
-		commerceDiscountImpl.setStatus(commerceDiscount.getStatus());
-		commerceDiscountImpl.setStatusByUserId(commerceDiscount.getStatusByUserId());
-		commerceDiscountImpl.setStatusByUserName(commerceDiscount.getStatusByUserName());
-		commerceDiscountImpl.setStatusDate(commerceDiscount.getStatusDate());
-
-		return commerceDiscountImpl;
 	}
 
 	/**

@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1289,8 +1292,6 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	@Override
 	protected CPRuleUserSegmentRel removeImpl(
 		CPRuleUserSegmentRel cpRuleUserSegmentRel) {
-		cpRuleUserSegmentRel = toUnwrappedModel(cpRuleUserSegmentRel);
-
 		Session session = null;
 
 		try {
@@ -1322,9 +1323,23 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 	@Override
 	public CPRuleUserSegmentRel updateImpl(
 		CPRuleUserSegmentRel cpRuleUserSegmentRel) {
-		cpRuleUserSegmentRel = toUnwrappedModel(cpRuleUserSegmentRel);
-
 		boolean isNew = cpRuleUserSegmentRel.isNew();
+
+		if (!(cpRuleUserSegmentRel instanceof CPRuleUserSegmentRelModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(cpRuleUserSegmentRel.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(cpRuleUserSegmentRel);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in cpRuleUserSegmentRel proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CPRuleUserSegmentRel implementation " +
+				cpRuleUserSegmentRel.getClass());
+		}
 
 		CPRuleUserSegmentRelModelImpl cpRuleUserSegmentRelModelImpl = (CPRuleUserSegmentRelModelImpl)cpRuleUserSegmentRel;
 
@@ -1449,30 +1464,6 @@ public class CPRuleUserSegmentRelPersistenceImpl extends BasePersistenceImpl<CPR
 		cpRuleUserSegmentRel.resetOriginalValues();
 
 		return cpRuleUserSegmentRel;
-	}
-
-	protected CPRuleUserSegmentRel toUnwrappedModel(
-		CPRuleUserSegmentRel cpRuleUserSegmentRel) {
-		if (cpRuleUserSegmentRel instanceof CPRuleUserSegmentRelImpl) {
-			return cpRuleUserSegmentRel;
-		}
-
-		CPRuleUserSegmentRelImpl cpRuleUserSegmentRelImpl = new CPRuleUserSegmentRelImpl();
-
-		cpRuleUserSegmentRelImpl.setNew(cpRuleUserSegmentRel.isNew());
-		cpRuleUserSegmentRelImpl.setPrimaryKey(cpRuleUserSegmentRel.getPrimaryKey());
-
-		cpRuleUserSegmentRelImpl.setCPRuleUserSegmentRelId(cpRuleUserSegmentRel.getCPRuleUserSegmentRelId());
-		cpRuleUserSegmentRelImpl.setGroupId(cpRuleUserSegmentRel.getGroupId());
-		cpRuleUserSegmentRelImpl.setCompanyId(cpRuleUserSegmentRel.getCompanyId());
-		cpRuleUserSegmentRelImpl.setUserId(cpRuleUserSegmentRel.getUserId());
-		cpRuleUserSegmentRelImpl.setUserName(cpRuleUserSegmentRel.getUserName());
-		cpRuleUserSegmentRelImpl.setCreateDate(cpRuleUserSegmentRel.getCreateDate());
-		cpRuleUserSegmentRelImpl.setModifiedDate(cpRuleUserSegmentRel.getModifiedDate());
-		cpRuleUserSegmentRelImpl.setCPRuleId(cpRuleUserSegmentRel.getCPRuleId());
-		cpRuleUserSegmentRelImpl.setCommerceUserSegmentEntryId(cpRuleUserSegmentRel.getCommerceUserSegmentEntryId());
-
-		return cpRuleUserSegmentRelImpl;
 	}
 
 	/**

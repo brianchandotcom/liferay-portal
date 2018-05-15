@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -44,6 +45,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -811,8 +813,6 @@ public class CommerceUserSegmentCriterionPersistenceImpl
 	@Override
 	protected CommerceUserSegmentCriterion removeImpl(
 		CommerceUserSegmentCriterion commerceUserSegmentCriterion) {
-		commerceUserSegmentCriterion = toUnwrappedModel(commerceUserSegmentCriterion);
-
 		Session session = null;
 
 		try {
@@ -844,9 +844,23 @@ public class CommerceUserSegmentCriterionPersistenceImpl
 	@Override
 	public CommerceUserSegmentCriterion updateImpl(
 		CommerceUserSegmentCriterion commerceUserSegmentCriterion) {
-		commerceUserSegmentCriterion = toUnwrappedModel(commerceUserSegmentCriterion);
-
 		boolean isNew = commerceUserSegmentCriterion.isNew();
+
+		if (!(commerceUserSegmentCriterion instanceof CommerceUserSegmentCriterionModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceUserSegmentCriterion.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceUserSegmentCriterion);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceUserSegmentCriterion proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceUserSegmentCriterion implementation " +
+				commerceUserSegmentCriterion.getClass());
+		}
 
 		CommerceUserSegmentCriterionModelImpl commerceUserSegmentCriterionModelImpl =
 			(CommerceUserSegmentCriterionModelImpl)commerceUserSegmentCriterion;
@@ -948,32 +962,6 @@ public class CommerceUserSegmentCriterionPersistenceImpl
 		commerceUserSegmentCriterion.resetOriginalValues();
 
 		return commerceUserSegmentCriterion;
-	}
-
-	protected CommerceUserSegmentCriterion toUnwrappedModel(
-		CommerceUserSegmentCriterion commerceUserSegmentCriterion) {
-		if (commerceUserSegmentCriterion instanceof CommerceUserSegmentCriterionImpl) {
-			return commerceUserSegmentCriterion;
-		}
-
-		CommerceUserSegmentCriterionImpl commerceUserSegmentCriterionImpl = new CommerceUserSegmentCriterionImpl();
-
-		commerceUserSegmentCriterionImpl.setNew(commerceUserSegmentCriterion.isNew());
-		commerceUserSegmentCriterionImpl.setPrimaryKey(commerceUserSegmentCriterion.getPrimaryKey());
-
-		commerceUserSegmentCriterionImpl.setCommerceUserSegmentCriterionId(commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId());
-		commerceUserSegmentCriterionImpl.setGroupId(commerceUserSegmentCriterion.getGroupId());
-		commerceUserSegmentCriterionImpl.setCompanyId(commerceUserSegmentCriterion.getCompanyId());
-		commerceUserSegmentCriterionImpl.setUserId(commerceUserSegmentCriterion.getUserId());
-		commerceUserSegmentCriterionImpl.setUserName(commerceUserSegmentCriterion.getUserName());
-		commerceUserSegmentCriterionImpl.setCreateDate(commerceUserSegmentCriterion.getCreateDate());
-		commerceUserSegmentCriterionImpl.setModifiedDate(commerceUserSegmentCriterion.getModifiedDate());
-		commerceUserSegmentCriterionImpl.setCommerceUserSegmentEntryId(commerceUserSegmentCriterion.getCommerceUserSegmentEntryId());
-		commerceUserSegmentCriterionImpl.setType(commerceUserSegmentCriterion.getType());
-		commerceUserSegmentCriterionImpl.setTypeSettings(commerceUserSegmentCriterion.getTypeSettings());
-		commerceUserSegmentCriterionImpl.setPriority(commerceUserSegmentCriterion.getPriority());
-
-		return commerceUserSegmentCriterionImpl;
 	}
 
 	/**

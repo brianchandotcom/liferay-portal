@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -1280,8 +1283,6 @@ public class CommerceShipmentItemPersistenceImpl extends BasePersistenceImpl<Com
 	@Override
 	protected CommerceShipmentItem removeImpl(
 		CommerceShipmentItem commerceShipmentItem) {
-		commerceShipmentItem = toUnwrappedModel(commerceShipmentItem);
-
 		Session session = null;
 
 		try {
@@ -1313,9 +1314,23 @@ public class CommerceShipmentItemPersistenceImpl extends BasePersistenceImpl<Com
 	@Override
 	public CommerceShipmentItem updateImpl(
 		CommerceShipmentItem commerceShipmentItem) {
-		commerceShipmentItem = toUnwrappedModel(commerceShipmentItem);
-
 		boolean isNew = commerceShipmentItem.isNew();
+
+		if (!(commerceShipmentItem instanceof CommerceShipmentItemModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceShipmentItem.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(commerceShipmentItem);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceShipmentItem proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceShipmentItem implementation " +
+				commerceShipmentItem.getClass());
+		}
 
 		CommerceShipmentItemModelImpl commerceShipmentItemModelImpl = (CommerceShipmentItemModelImpl)commerceShipmentItem;
 
@@ -1439,31 +1454,6 @@ public class CommerceShipmentItemPersistenceImpl extends BasePersistenceImpl<Com
 		commerceShipmentItem.resetOriginalValues();
 
 		return commerceShipmentItem;
-	}
-
-	protected CommerceShipmentItem toUnwrappedModel(
-		CommerceShipmentItem commerceShipmentItem) {
-		if (commerceShipmentItem instanceof CommerceShipmentItemImpl) {
-			return commerceShipmentItem;
-		}
-
-		CommerceShipmentItemImpl commerceShipmentItemImpl = new CommerceShipmentItemImpl();
-
-		commerceShipmentItemImpl.setNew(commerceShipmentItem.isNew());
-		commerceShipmentItemImpl.setPrimaryKey(commerceShipmentItem.getPrimaryKey());
-
-		commerceShipmentItemImpl.setCommerceShipmentItemId(commerceShipmentItem.getCommerceShipmentItemId());
-		commerceShipmentItemImpl.setGroupId(commerceShipmentItem.getGroupId());
-		commerceShipmentItemImpl.setCompanyId(commerceShipmentItem.getCompanyId());
-		commerceShipmentItemImpl.setUserId(commerceShipmentItem.getUserId());
-		commerceShipmentItemImpl.setUserName(commerceShipmentItem.getUserName());
-		commerceShipmentItemImpl.setCreateDate(commerceShipmentItem.getCreateDate());
-		commerceShipmentItemImpl.setModifiedDate(commerceShipmentItem.getModifiedDate());
-		commerceShipmentItemImpl.setCommerceShipmentId(commerceShipmentItem.getCommerceShipmentId());
-		commerceShipmentItemImpl.setCommerceOrderItemId(commerceShipmentItem.getCommerceOrderItemId());
-		commerceShipmentItemImpl.setQuantity(commerceShipmentItem.getQuantity());
-
-		return commerceShipmentItemImpl;
 	}
 
 	/**

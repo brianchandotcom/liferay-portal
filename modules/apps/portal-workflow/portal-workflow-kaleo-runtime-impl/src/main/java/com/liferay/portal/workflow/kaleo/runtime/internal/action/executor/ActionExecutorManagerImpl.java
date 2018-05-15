@@ -75,8 +75,7 @@ public class ActionExecutorManagerImpl implements ActionExecutorManager {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterActionExecutor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void registerActionExecutor(
 		ActionExecutor actionExecutor, Map<String, Object> properties) {

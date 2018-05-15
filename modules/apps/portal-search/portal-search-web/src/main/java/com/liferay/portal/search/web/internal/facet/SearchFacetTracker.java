@@ -38,8 +38,7 @@ public class SearchFacetTracker {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeSearchFacet"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addSearchFacet(SearchFacet searchFacet) {
 		_searchFacets.add(searchFacet);

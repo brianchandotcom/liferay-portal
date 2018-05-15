@@ -77,8 +77,7 @@ public class SortFieldBuilderImpl implements SortFieldBuilder {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeSortFieldNameTranslator"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addSortFieldNameTranslator(
 		SortFieldNameTranslator sortFieldNameTranslator,

@@ -273,15 +273,6 @@ public class AssetVocabularyStagedModelDataHandler
 			assetVocabularySettingsExportHelper.getSettingsMetadata());
 	}
 
-	protected AssetVocabulary fetchExistingVocabulary(
-		long groupId, String name) {
-
-		AssetVocabulary vocabulary =
-			_assetVocabularyLocalService.fetchGroupVocabulary(groupId, name);
-
-		return vocabulary;
-	}
-
 	protected String getImportSettings(
 			PortletDataContext portletDataContext, AssetVocabulary vocabulary)
 		throws PortalException {
@@ -363,13 +354,15 @@ public class AssetVocabularyStagedModelDataHandler
 	}
 
 	protected boolean validateMissingReference(
-		String uuid, long groupId, String displayName) {
+		String uuid, long groupId, String name) {
 
 		AssetVocabulary existingStagedModel = fetchMissingReference(
 			uuid, groupId);
 
 		if (existingStagedModel == null) {
-			existingStagedModel = fetchExistingVocabulary(groupId, displayName);
+			existingStagedModel =
+				_assetVocabularyLocalService.fetchGroupVocabulary(
+					groupId, name);
 		}
 
 		if (existingStagedModel == null) {

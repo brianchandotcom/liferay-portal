@@ -15,45 +15,45 @@
 package com.liferay.layout.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.layout.uad.test.LayoutFriendlyURLUADTestHelper;
-
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class LayoutFriendlyURLUADExporterTest extends BaseUADExporterTestCase<LayoutFriendlyURL> {
+public class LayoutFriendlyURLUADExporterTest
+	extends BaseUADExporterTestCase<LayoutFriendlyURL> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@After
 	public void tearDown() throws Exception {
-		_layoutFriendlyURLUADTestHelper.cleanUpDependencies(_layoutFriendlyURLs);
+		_layoutFriendlyURLUADTestHelper.cleanUpDependencies(
+			_layoutFriendlyURLs);
 	}
 
 	@Override
-	protected LayoutFriendlyURL addBaseModel(long userId)
-		throws Exception {
-		LayoutFriendlyURL layoutFriendlyURL = _layoutFriendlyURLUADTestHelper.addLayoutFriendlyURL(userId);
+	protected LayoutFriendlyURL addBaseModel(long userId) throws Exception {
+		LayoutFriendlyURL layoutFriendlyURL =
+			_layoutFriendlyURLUADTestHelper.addLayoutFriendlyURL(userId);
 
 		_layoutFriendlyURLs.add(layoutFriendlyURL);
 
@@ -71,9 +71,13 @@ public class LayoutFriendlyURLUADExporterTest extends BaseUADExporterTestCase<La
 	}
 
 	@DeleteAfterTestRun
-	private final List<LayoutFriendlyURL> _layoutFriendlyURLs = new ArrayList<LayoutFriendlyURL>();
+	private final List<LayoutFriendlyURL> _layoutFriendlyURLs =
+		new ArrayList<>();
+
 	@Inject
 	private LayoutFriendlyURLUADTestHelper _layoutFriendlyURLUADTestHelper;
+
 	@Inject(filter = "component.name=*.LayoutFriendlyURLUADExporter")
 	private UADExporter _uadExporter;
+
 }

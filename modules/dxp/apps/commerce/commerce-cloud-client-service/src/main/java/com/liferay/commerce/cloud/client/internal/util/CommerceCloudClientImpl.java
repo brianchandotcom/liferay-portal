@@ -157,7 +157,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 			StringPool.UTF8);
 
 		options.setLocation(location);
-		options.setPost(true);
+		options.setPut(true);
 
 		executeRequest(options);
 	}

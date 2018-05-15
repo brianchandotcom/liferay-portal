@@ -20,9 +20,9 @@ import com.liferay.commerce.cloud.server.handler.ActiveProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.GetForecastConfigurationHandler;
 import com.liferay.commerce.cloud.server.handler.GetForecastsHandler;
 import com.liferay.commerce.cloud.server.handler.GetProjectHandler;
-import com.liferay.commerce.cloud.server.handler.PostForecastOrdersHandler;
 import com.liferay.commerce.cloud.server.handler.ProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.PutForecastConfigurationHandler;
+import com.liferay.commerce.cloud.server.handler.PutForecastOrdersHandler;
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
 import com.liferay.commerce.cloud.server.service.ForecastOrderService;
 import com.liferay.commerce.cloud.server.service.ForecastProcessorService;
@@ -132,24 +132,6 @@ public class HttpServerVerticle extends AbstractVerticle {
 		route.produces(ContentTypes.APPLICATION_JSON);
 	}
 
-	private void _addRoutePostOrders(
-		Router router, ProjectAuthHandler projectAuthHandler,
-		ActiveProjectAuthHandler activeProjectAuthHandler,
-		ForecastOrderService forecastOrderService) {
-
-		Route route = router.post(PostForecastOrdersHandler.PATH);
-
-		route.handler(BodyHandler.create());
-
-		route.handler(projectAuthHandler);
-
-		route.handler(activeProjectAuthHandler);
-
-		route.handler(new PostForecastOrdersHandler(forecastOrderService));
-
-		route.consumes(ContentTypes.APPLICATION_JSON);
-	}
-
 	private void _addRoutePutForecastConfiguration(
 		Router router, ProjectAuthHandler projectAuthHandler,
 		ActiveProjectAuthHandler activeProjectAuthHandler,
@@ -165,6 +147,24 @@ public class HttpServerVerticle extends AbstractVerticle {
 
 		route.handler(
 			new PutForecastConfigurationHandler(forecastConfigurationService));
+
+		route.consumes(ContentTypes.APPLICATION_JSON);
+	}
+
+	private void _addRoutePutOrders(
+		Router router, ProjectAuthHandler projectAuthHandler,
+		ActiveProjectAuthHandler activeProjectAuthHandler,
+		ForecastOrderService forecastOrderService) {
+
+		Route route = router.put(PutForecastOrdersHandler.PATH);
+
+		route.handler(BodyHandler.create());
+
+		route.handler(projectAuthHandler);
+
+		route.handler(activeProjectAuthHandler);
+
+		route.handler(new PutForecastOrdersHandler(forecastOrderService));
 
 		route.consumes(ContentTypes.APPLICATION_JSON);
 	}
@@ -203,7 +203,7 @@ public class HttpServerVerticle extends AbstractVerticle {
 			forecastService);
 		_addRouteGetProject(
 			router, projectAuthHandler, activeProjectAuthHandler);
-		_addRoutePostOrders(
+		_addRoutePutOrders(
 			router, projectAuthHandler, activeProjectAuthHandler,
 			forecastOrderService);
 		_addRoutePutForecastConfiguration(

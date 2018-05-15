@@ -29,13 +29,11 @@ import java.util.List;
 /**
  * @author Andrea Di Giorgi
  */
-public class PostForecastOrdersHandler implements Handler<RoutingContext> {
+public class PutForecastOrdersHandler implements Handler<RoutingContext> {
 
 	public static final String PATH = "/projects/:projectId/forecast/orders/";
 
-	public PostForecastOrdersHandler(
-		ForecastOrderService forecastOrderService) {
-
+	public PutForecastOrdersHandler(ForecastOrderService forecastOrderService) {
 		_forecastOrderService = forecastOrderService;
 	}
 

@@ -19,17 +19,23 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -47,6 +53,20 @@ public class DLFileEntryUADExporterTest
 	@After
 	public void tearDown() throws Exception {
 		_dlFileEntryUADTestHelper.cleanUpDependencies(_dlFileEntries);
+	}
+
+	@Override
+	@Test
+	public void testExportAll() throws Exception {
+		addBaseModel(user.getUserId());
+
+		File file = _uadExporter.exportAll(user.getUserId());
+
+		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+
+		List<String> entries = zipReader.getEntries();
+
+		Assert.assertEquals(entries.toString(), 2, entries.size());
 	}
 
 	@Override

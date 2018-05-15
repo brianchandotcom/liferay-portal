@@ -265,7 +265,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(osgi.jaxrs.name=Default)", unbind = "-"
+		target = "(osgi.jaxrs.name=Default)"
 	)
 	protected void setDefaultPrefixHandlerFactory(
 		PrefixHandlerFactory defaultPrefixHandlerFactory) {
@@ -277,7 +277,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(osgi.jaxrs.name=Default)", unbind = "-"
+		target = "(osgi.jaxrs.name=Default)"
 	)
 	protected void setDefaultScopeMapper(ScopeMapper defaultScopeMapper) {
 		_defaultScopeMapper = defaultScopeMapper;
@@ -330,6 +330,16 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 		_scopeFinderByNameServiceTrackerMap =
 			scopeFinderByNameServiceTrackerMap;
+	}
+
+	protected void unsetDefaultPrefixHandlerFactory(
+		PrefixHandlerFactory defaultPrefixHandlerFactory) {
+
+		_defaultPrefixHandlerFactory = null;
+	}
+
+	protected void unsetDefaultScopeMapper(ScopeMapper defaultScopeMapper) {
+		_defaultScopeMapper = null;
 	}
 
 	private PrefixHandlerFactory _defaultPrefixHandlerFactory;

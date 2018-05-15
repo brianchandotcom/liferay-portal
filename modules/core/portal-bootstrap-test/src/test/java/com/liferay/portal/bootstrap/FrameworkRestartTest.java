@@ -179,6 +179,33 @@ public class FrameworkRestartTest {
 		}
 		finally {
 			framework.stop();
+
+			Files.walkFileTree(
+				tempDirPath,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult postVisitDirectory(
+							Path dirPath, IOException ioe)
+						throws IOException {
+
+						Files.delete(dirPath);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						Files.delete(filePath);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
 		}
 	}
 

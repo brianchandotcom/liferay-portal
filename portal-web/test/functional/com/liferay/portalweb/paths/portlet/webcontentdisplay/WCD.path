@@ -57,17 +57,17 @@
 <!--WEB_CONTENT-->
 <tr>
 	<td>WEB_CONTENT_CONTENT</td>
-	<td>//div[@class='journal-content-article']</td>
+	<td>//div[contains(@class,'journal-content-article')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WEB_CONTENT_CONTENT_2</td>
-	<td>xPath=(//div[@class='journal-content-article'])[2]</td>
+	<td>xPath=(//div[contains(@class,'journal-content-article')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WEB_CONTENT_CONTENT_3</td>
-	<td>xPath=(//div[@class='journal-content-article'])[3]</td>
+	<td>xPath=(//div[contains(@class,'journal-content-article')])[3]</td>
 	<td></td>
 </tr>
 <tr>

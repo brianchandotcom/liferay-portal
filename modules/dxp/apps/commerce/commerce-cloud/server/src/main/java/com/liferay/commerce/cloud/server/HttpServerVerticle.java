@@ -21,6 +21,7 @@ import com.liferay.commerce.cloud.server.handler.GetForecastConfigurationHandler
 import com.liferay.commerce.cloud.server.handler.GetForecastsHandler;
 import com.liferay.commerce.cloud.server.handler.GetProjectHandler;
 import com.liferay.commerce.cloud.server.handler.PostForecastConfigurationHandler;
+import com.liferay.commerce.cloud.server.handler.PostProjectHandler;
 import com.liferay.commerce.cloud.server.handler.ProjectAuthHandler;
 import com.liferay.commerce.cloud.server.handler.PutForecastOrdersHandler;
 import com.liferay.commerce.cloud.server.service.ForecastConfigurationService;
@@ -151,6 +152,22 @@ public class HttpServerVerticle extends AbstractVerticle {
 		route.consumes(ContentTypes.APPLICATION_JSON);
 	}
 
+	private void _addRoutePostProject(
+		Router router, ProjectAuthHandler projectAuthHandler,
+		ActiveProjectAuthHandler activeProjectAuthHandler,
+		ProjectService projectService) {
+
+		Route route = router.post(PostProjectHandler.PATH);
+
+		route.handler(BodyHandler.create());
+
+		route.handler(projectAuthHandler);
+
+		route.handler(activeProjectAuthHandler);
+
+		route.handler(new PostProjectHandler(projectService));
+	}
+
 	private void _addRoutePutOrders(
 		Router router, ProjectAuthHandler projectAuthHandler,
 		ActiveProjectAuthHandler activeProjectAuthHandler,
@@ -206,6 +223,9 @@ public class HttpServerVerticle extends AbstractVerticle {
 		_addRoutePostForecastConfiguration(
 			router, projectAuthHandler, activeProjectAuthHandler,
 			forecastConfigurationService);
+		_addRoutePostProject(
+			router, projectAuthHandler, activeProjectAuthHandler,
+			projectService);
 		_addRoutePutOrders(
 			router, projectAuthHandler, activeProjectAuthHandler,
 			forecastOrderService);

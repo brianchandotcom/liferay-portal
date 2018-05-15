@@ -31,13 +31,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UserNotificationEventUADTestHelper.class)
 public class UserNotificationEventUADTestHelper {
 
-	/**
-	 * Implement addUserNotificationEvent() to enable some UAD tests.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid UserNotificationEvents with a specified user ID in order to execute correctly. Implement addUserNotificationEvent() such that it creates a valid UserNotificationEvent with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
-	 * </p>
-	 */
 	public UserNotificationEvent addUserNotificationEvent(long userId)
 		throws Exception {
 
@@ -48,13 +41,6 @@ public class UserNotificationEventUADTestHelper {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	/**
-	 * Implement cleanUpDependencies(List<UserNotificationEvent> userNotificationEvents) if tests require additional tear down logic.
-	 *
-	 * <p>
-	 * Several UAD tests depend on creating one or more valid UserNotificationEvents with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<UserNotificationEvent> userNotificationEvents) such that any additional objects created during the construction of userNotificationEvents are safely removed.
-	 * </p>
-	 */
 	public void cleanUpDependencies(
 			List<UserNotificationEvent> userNotificationEvents)
 		throws Exception {

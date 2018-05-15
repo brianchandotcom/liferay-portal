@@ -26,9 +26,11 @@ public class JavaClass extends BaseJavaTerm {
 
 	public JavaClass(
 		String name, String content, String accessModifier, boolean isAbstract,
-		boolean isStatic) {
+		boolean isStatic, boolean anonymous) {
 
 		super(name, content, accessModifier, isAbstract, isStatic);
+
+		_anonymous = anonymous;
 	}
 
 	public void addChildJavaTerm(JavaTerm javaTerm) {
@@ -73,10 +75,15 @@ public class JavaClass extends BaseJavaTerm {
 		return _packageName;
 	}
 
+	public boolean isAnonymous() {
+		return _anonymous;
+	}
+
 	public void setPackageName(String packageName) {
 		_packageName = packageName;
 	}
 
+	private final boolean _anonymous;
 	private final List<JavaTerm> _childJavaTerms = new ArrayList<>();
 	private List<String> _extendedClassNames = new ArrayList<>();
 	private List<String> _implementedClassNames = new ArrayList<>();

@@ -64,7 +64,7 @@ public class JavaClassParser {
 				anonymousClasses.add(
 					_parseJavaClass(
 						StringPool.BLANK, classContent,
-						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false));
+						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false, true));
 
 				break;
 			}
@@ -102,7 +102,7 @@ public class JavaClassParser {
 
 		JavaClass javaClass = _parseJavaClass(
 			className, classContent, JavaTerm.ACCESS_MODIFIER_PUBLIC,
-			isAbstract, false);
+			isAbstract, false, false);
 
 		javaClass.setPackageName(JavaSourceUtil.getPackageName(content));
 
@@ -212,7 +212,7 @@ public class JavaClassParser {
 
 			return _parseJavaClass(
 				_getClassName(startLine), javaTermContent, accessModifier,
-				isAbstract, isStatic);
+				isAbstract, isStatic, false);
 		}
 
 		if (((x > 0) && ((y == -1) || (y > x))) ||
@@ -326,11 +326,12 @@ public class JavaClassParser {
 
 	private static JavaClass _parseJavaClass(
 			String className, String classContent, String accessModifier,
-			boolean isAbstract, boolean isStatic)
+			boolean isAbstract, boolean isStatic, boolean anonymous)
 		throws Exception {
 
 		JavaClass javaClass = new JavaClass(
-			className, classContent, accessModifier, isAbstract, isStatic);
+			className, classContent, accessModifier, isAbstract, isStatic,
+			anonymous);
 
 		String indent = SourceUtil.getIndent(classContent) + StringPool.TAB;
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
@@ -175,6 +176,40 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected String getBaseDirName() {
 		return _baseDirName;
+	}
+
+	protected BNDSettings getBNDSettings(String fileName) throws Exception {
+		for (Map.Entry<String, BNDSettings> entry :
+				_bndSettingsMap.entrySet()) {
+
+			String bndFileLocation = entry.getKey();
+
+			if (fileName.startsWith(bndFileLocation)) {
+				return entry.getValue();
+			}
+		}
+
+		String bndFileLocation = fileName;
+
+		while (true) {
+			int pos = bndFileLocation.lastIndexOf(StringPool.SLASH);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			bndFileLocation = bndFileLocation.substring(0, pos + 1);
+
+			File file = new File(bndFileLocation + "bnd.bnd");
+
+			if (file.exists()) {
+				return new BNDSettings(
+					bndFileLocation + "bnd.bnd", FileUtil.read(file));
+			}
+
+			bndFileLocation = StringUtil.replaceLast(
+				bndFileLocation, CharPool.SLASH, StringPool.BLANK);
+		}
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
@@ -603,6 +638,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _subrepository;
 	}
 
+	protected void putBNDSettings(BNDSettings bndSettings) {
+		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
+	}
+
 	protected String stripQuotes(String s) {
 		return stripQuotes(s, CharPool.APOSTROPHE, CharPool.QUOTE);
 	}
@@ -654,6 +693,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		"run.outside.portal.excludes";
 
 	private String _baseDirName;
+	private final Map<String, BNDSettings> _bndSettingsMap =
+		new ConcurrentHashMap<>();
 	private boolean _enabled = true;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;

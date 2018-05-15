@@ -18,8 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -39,7 +37,7 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 
 	@Override
 	public long count(long userId) throws PortalException {
-		return _getActionableDynamicQuery(userId).performCount();
+		return getActionableDynamicQuery(userId).performCount();
 	}
 
 	@Override
@@ -59,7 +57,7 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 	@Override
 	public File exportAll(long userId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			_getActionableDynamicQuery(userId);
+			getActionableDynamicQuery(userId);
 
 		Class<T> clazz = getTypeClass();
 
@@ -102,6 +100,11 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 		return XMLUtil.formatXML(xml);
 	}
 
+	protected ActionableDynamicQuery getActionableDynamicQuery(long userId) {
+		return UADDynamicQueryUtil.addActionableDynamicQueryCriteria(
+			doGetActionableDynamicQuery(), doGetUserIdFieldNames(), userId);
+	}
+
 	protected ZipWriter getZipWriter(long userId, String modelClassName) {
 		File file = createFolder(userId);
 
@@ -128,13 +131,5 @@ public abstract class DynamicQueryUADExporter<T extends BaseModel>
 
 		zipWriter.addEntry(baseModel.getPrimaryKeyObj() + ".xml", data);
 	}
-
-	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
-		return UADDynamicQueryUtil.addActionableDynamicQueryCriteria(
-			doGetActionableDynamicQuery(), doGetUserIdFieldNames(), userId);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DynamicQueryUADExporter.class);
 
 }

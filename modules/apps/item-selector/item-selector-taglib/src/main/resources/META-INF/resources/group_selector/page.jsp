@@ -35,8 +35,6 @@ iteratorURL.setParameter("showGroupSelector", Boolean.TRUE.toString());
 SearchContainer searchContainer = new GroupSearch(liferayPortletRequest, iteratorURL);
 %>
 
-<liferay-frontend:management-bar />
-
 <div class="container-fluid-1280 lfr-item-viewer">
 	<liferay-ui:search-container
 		searchContainer="<%= searchContainer %>"

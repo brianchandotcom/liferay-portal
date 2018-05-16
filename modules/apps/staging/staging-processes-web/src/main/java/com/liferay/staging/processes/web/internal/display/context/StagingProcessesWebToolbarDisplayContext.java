@@ -234,22 +234,21 @@ public class StagingProcessesWebToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(_getOrderingURL("name"));
+						dropdownItem.setHref(_getOrderByURL("name"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "name"));
 					});
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(_getOrderingURL("create-date"));
+						dropdownItem.setHref(_getOrderByURL("create-date"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "create-date"));
 					});
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							_getOrderingURL("completion-date"));
+						dropdownItem.setHref(_getOrderByURL("completion-date"));
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "completion-date"));
 					});
@@ -257,7 +256,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 		};
 	}
 
-	private PortletURL _getOrderingURL(String orderByColumnName) {
+	private PortletURL _getOrderByURL(String orderByColumnName) {
 		PortletURL url = _getStagingRenderURL();
 
 		url.setParameter("orderByCol", orderByColumnName);

@@ -149,6 +149,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 								</div>
 							</nav>
 						</div>
+
 						<div class="sidebar-header">
 							<div class="autofit-row sidebar-section">
 								<div class="autofit-col autofit-col-expand">
@@ -169,7 +170,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 								type="tabs nav-tabs-default"
 							>
 								<div class="tab-content">
-
 									<c:if test="<%= kaleoDefinitionVersion != null %>">
 										<liferay-ui:section>
 											<div style="margin-top:1.5rem;">
@@ -210,12 +210,11 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 														<liferay-ui:message key="total-modifications" />
 													</dt>
 													<dd class="sidebar-dd">
-															<liferay-ui:message arguments='<%= new String[] {kaleoDesignerDisplayContext.getKaleoDefinitionVersionCount(kaleoDefinitionVersion) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
+														<liferay-ui:message arguments='<%= new String[] {kaleoDesignerDisplayContext.getKaleoDefinitionVersionCount(kaleoDefinitionVersion) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
 													</dd>
 													<dt class="sidebar-dt"></dt>
 													<dd class="sidebar-dd"></dd>
 												</dl>
-
 											</div>
 										</liferay-ui:section>
 									</c:if>
@@ -227,7 +226,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											</liferay-util:include>
 										</liferay-ui:section>
 									</c:if>
-
 								</div>
 							</liferay-ui:tabs>
 						</div>

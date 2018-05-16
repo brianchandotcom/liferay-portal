@@ -21,8 +21,8 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.
 %>
 
 <liferay-ui:search-container
-	id="kaleoDefinitionVersions"
 	cssClass="lfr-sidebar-list-group-workflow sidebar-list-group"
+	id="kaleoDefinitionVersions"
 >
 	<liferay-ui:search-container-results
 		results="<%= kaleoDesignerDisplayContext.getKaleoDefinitionVersions(kaleoDefinitionVersion) %>"

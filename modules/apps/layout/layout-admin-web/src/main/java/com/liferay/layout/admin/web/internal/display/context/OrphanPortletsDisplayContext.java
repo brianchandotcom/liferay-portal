@@ -42,9 +42,7 @@ import com.liferay.portal.kernel.util.comparator.PortletTitleComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -70,11 +68,7 @@ public class OrphanPortletsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "deleteOrphanPortlets");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData("action", "deleteOrphanPortlets");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

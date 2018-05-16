@@ -64,10 +64,8 @@ import com.liferay.site.initializer.GroupInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -102,11 +100,7 @@ public class SiteAdminDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "deleteSites");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData("action", "deleteSites");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

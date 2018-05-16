@@ -45,9 +45,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -241,11 +239,8 @@ public class FragmentDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "exportSelectedFragmentEntries");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData(
+							"action", "exportSelectedFragmentEntries");
 						dropdownItem.setIcon("import-export");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "export"));
@@ -254,11 +249,8 @@ public class FragmentDisplayContext {
 
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "deleteSelectedFragmentEntries");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData(
+							"action", "deleteSelectedFragmentEntries");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

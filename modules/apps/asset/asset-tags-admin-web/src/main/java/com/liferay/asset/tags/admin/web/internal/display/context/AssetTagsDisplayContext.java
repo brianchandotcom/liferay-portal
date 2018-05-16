@@ -51,9 +51,7 @@ import com.liferay.portlet.asset.util.comparator.AssetTagAssetCountComparator;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -82,11 +80,7 @@ public class AssetTagsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "mergeTags");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData("action", "mergeTags");
 						dropdownItem.setIcon("change");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "merge"));
@@ -95,11 +89,7 @@ public class AssetTagsDisplayContext {
 
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "deleteTags");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData("action", "deleteTags");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

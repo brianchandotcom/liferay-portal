@@ -73,10 +73,8 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -112,11 +110,7 @@ public class LayoutsAdminDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "deleteSelectedPages");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData("action", "deleteSelectedPages");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

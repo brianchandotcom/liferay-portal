@@ -36,9 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.web.internal.util.comparator.ArchivedSettingsModifiedDateComparator;
 import com.liferay.portlet.configuration.web.internal.util.comparator.ArchivedSettingsNameComparator;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -66,11 +64,8 @@ public class PortletConfigurationTemplatesDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "deleteArchivedSettings");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData(
+							"action", "deleteArchivedSettings");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

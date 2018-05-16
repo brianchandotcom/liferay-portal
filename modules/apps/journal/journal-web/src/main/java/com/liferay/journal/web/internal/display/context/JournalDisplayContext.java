@@ -155,11 +155,7 @@ public class JournalDisplayContext {
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							Map<String, Object> data = new HashMap<>();
-
-							data.put("action", "deleteEntries");
-
-							dropdownItem.setData(data);
+							dropdownItem.putData("action", "deleteEntries");
 
 							boolean trashEnabled = _trashHelper.isTrashEnabled(
 								themeDisplay.getScopeGroupId());
@@ -181,12 +177,7 @@ public class JournalDisplayContext {
 
 				add(
 					dropdownItem -> {
-						HashMap<String, Object> data = new HashMap<>();
-
-						data.put("action", "expireEntries");
-
-						dropdownItem.setData(data);
-
+						dropdownItem.putData("action", "expireEntries");
 						dropdownItem.setIcon("time");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "expire"));
@@ -195,12 +186,7 @@ public class JournalDisplayContext {
 
 				add(
 					dropdownItem -> {
-						HashMap<String, Object> data = new HashMap<>();
-
-						data.put("action", "moveEntries");
-
-						dropdownItem.setData(data);
-
+						dropdownItem.putData("action", "moveEntries");
 						dropdownItem.setIcon("change");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "move"));
@@ -1611,13 +1597,8 @@ public class JournalDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.setActive(isNavigationStructure());
-
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "openStructuresSelector");
-
-						dropdownItem.setData(data);
-
+						dropdownItem.putData(
+							"action", "openStructuresSelector");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "structures"));
 					});

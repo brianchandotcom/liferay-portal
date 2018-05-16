@@ -43,10 +43,8 @@ import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.internal.search.TeamSearch;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -78,11 +76,7 @@ public class SiteTeamsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						Map<String, Object> data = new HashMap<>();
-
-						data.put("action", "deleteSelectedTeams");
-
-						dropdownItem.setData(data);
+						dropdownItem.putData("action", "deleteSelectedTeams");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

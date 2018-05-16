@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
-import com.liferay.portal.kernel.util.File;
-import com.liferay.portal.util.FileImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +27,6 @@ import java.net.URL;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -71,11 +68,10 @@ public class FrameworkRestartTest {
 
 		Map<String, String> properties = new HashMap<>();
 
-		Path tempDirPath = Files.createTempDirectory(null);
+		Path frameworkStoragePath = Files.createTempDirectory(null);
 
-		String tempDirPathString = tempDirPath.toString();
-
-		properties.put(Constants.FRAMEWORK_STORAGE, tempDirPathString);
+		properties.put(
+			Constants.FRAMEWORK_STORAGE, frameworkStoragePath.toString());
 
 		ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
 			FrameworkFactory.class);
@@ -86,17 +82,17 @@ public class FrameworkRestartTest {
 
 		Framework framework = frameworkFactory.newFramework(properties);
 
-		File file = new FileImpl();
+		Path storagePath = frameworkStoragePath.resolve(_STORAGE_DIR);
 
-		Files.createDirectory(Paths.get(tempDirPathString, _TEMP_DIR));
+		Path frameworkInfoStoragePath = storagePath.resolve("framework.info.1");
+		Path managerStoragePath = storagePath.resolve(".manager");
 
-		String frameworkInfoStoragePath =
-			tempDirPathString + _STORAGE_DIR + "framework.info.1";
-		String frameworkInfoTempPath =
-			tempDirPathString + _TEMP_DIR + "framework.info.1";
-		String managerStoragePath =
-			tempDirPathString + _STORAGE_DIR + ".manager";
-		String managerTempPath = tempDirPathString + _TEMP_DIR + ".manager";
+		Path backupPath = frameworkStoragePath.resolve(_BACKUP_DIR);
+
+		Files.createDirectory(backupPath);
+
+		Path frameworkInfoBackupPath = backupPath.resolve("framework.info.1");
+		Path managerBackupPath = backupPath.resolve(".manager");
 
 		try {
 			framework.start();
@@ -134,8 +130,8 @@ public class FrameworkRestartTest {
 
 			framework.waitForStop(0);
 
-			file.move(frameworkInfoStoragePath, frameworkInfoTempPath);
-			file.move(managerStoragePath, managerTempPath);
+			Files.move(frameworkInfoStoragePath, frameworkInfoBackupPath);
+			Files.move(managerStoragePath, managerBackupPath);
 
 			framework.start();
 
@@ -149,11 +145,14 @@ public class FrameworkRestartTest {
 
 			framework.waitForStop(0);
 
-			file.move(frameworkInfoTempPath, frameworkInfoStoragePath);
-			file.move(managerTempPath, managerStoragePath);
+			_delete(frameworkInfoStoragePath);
+			_delete(managerStoragePath);
+
+			Files.move(frameworkInfoBackupPath, frameworkInfoStoragePath);
+			Files.move(managerBackupPath, managerStoragePath);
 
 			Files.walkFileTree(
-				Paths.get(tempDirPathString, _STORAGE_DIR),
+				storagePath,
 				new SimpleFileVisitor<Path>() {
 
 					@Override
@@ -180,32 +179,7 @@ public class FrameworkRestartTest {
 		finally {
 			framework.stop();
 
-			Files.walkFileTree(
-				tempDirPath,
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult postVisitDirectory(
-							Path dirPath, IOException ioe)
-						throws IOException {
-
-						Files.delete(dirPath);
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath,
-							BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						Files.delete(filePath);
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
+			_delete(frameworkStoragePath);
 		}
 	}
 
@@ -259,9 +233,37 @@ public class FrameworkRestartTest {
 		}
 	}
 
-	private static final String _STORAGE_DIR = "/org.eclipse.osgi/";
+	private static void _delete(Path path) throws IOException {
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
 
-	private static final String _TEMP_DIR = "/temp/";
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path dirPath, IOException ioe)
+					throws IOException {
+
+					Files.delete(dirPath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Files.delete(filePath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	private static final String _BACKUP_DIR = "backup";
+
+	private static final String _STORAGE_DIR = "org.eclipse.osgi";
 
 	private static final String _TEST_EXPORT = "com.test.liferay.export";
 

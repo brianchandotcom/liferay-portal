@@ -101,24 +101,18 @@ public class FrameworkRestartTest {
 
 			List<Bundle> bundles = new ArrayList<>();
 
-			Bundle bundle1 = null;
-
 			try (InputStream inputStream = _createJAR(
 					"com.liferay.test.1", "1.0.0", null, _TEST_EXPORT)) {
 
-				bundle1 = bundleContext.installBundle(
-					"testLocation1", inputStream);
-
-				bundles.add(bundle1);
+				bundles.add(
+					bundleContext.installBundle("testLocation1", inputStream));
 			}
 
 			try (InputStream inputStream = _createJAR(
 					"com.liferay.test.2", "1.0.0", _TEST_EXPORT, null)) {
 
-				Bundle bundle2 = bundleContext.installBundle(
-					"testLocation2", inputStream);
-
-				bundles.add(bundle2);
+				bundles.add(
+					bundleContext.installBundle("testLocation2", inputStream));
 			}
 
 			FrameworkWiring frameworkWiring = framework.adapt(
@@ -138,7 +132,9 @@ public class FrameworkRestartTest {
 			try (InputStream inputStream = _createJAR(
 					"com.liferay.test.2", "2.0.0", _TEST_EXPORT, null)) {
 
-				bundle1.update(inputStream);
+				Bundle bundle = bundles.get(0);
+
+				bundle.update(inputStream);
 			}
 
 			framework.stop();

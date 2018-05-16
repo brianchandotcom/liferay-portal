@@ -117,7 +117,7 @@ public interface CommentManager {
 	 * @review
 	 */
 	public List<Comment> getRootComments(
-		String className, long classPK, int status, int start, int end)
+			String className, long classPK, int status, int start, int end)
 		throws PortalException;
 
 	/**
@@ -132,8 +132,7 @@ public interface CommentManager {
 	 * @return the count of matching comments
 	 * @review
 	 */
-	public int getRootCommentsCount(
-		String className, long classPK, int status);
+	public int getRootCommentsCount(String className, long classPK, int status);
 
 	public boolean hasDiscussion(String className, long classPK)
 		throws PortalException;

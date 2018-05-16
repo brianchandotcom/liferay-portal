@@ -268,7 +268,7 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
 	public List<Comment> getRootComments(
-		String className, long classPK, int status, int start, int end)
+			String className, long classPK, int status, int start, int end)
 		throws PortalException {
 
 		return Stream.of(

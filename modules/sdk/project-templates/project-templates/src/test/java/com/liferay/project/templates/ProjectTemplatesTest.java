@@ -1134,11 +1134,6 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"soy-portlet", "foo", "--package-name", "com.liferay.test");
 
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"javax.portlet\", name: \"portlet-api\", " +
-				"version: \"2.0\"");
-
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
 			gradleProjectDir,
@@ -1168,7 +1163,9 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
+			"apply plugin: \"com.liferay.plugin\"",
+			"compileOnly group: \"javax.portlet\", name: \"portlet-api\", " +
+				"version: \"2.0\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/constants/FooPortletKeys.java",
@@ -1224,11 +1221,6 @@ public class ProjectTemplatesTest {
 			"soy-portlet", "foo", "--package-name", "com.liferay.test",
 			"--liferayVersion", "7.1");
 
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"compileOnly group: \"javax.portlet\", name: \"portlet-api\", " +
-				"version: \"3.0.0\"");
-
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
 			gradleProjectDir,
@@ -1258,7 +1250,9 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
+			"apply plugin: \"com.liferay.plugin\"",
+			"compileOnly group: \"javax.portlet\", name: \"portlet-api\", " +
+				"version: \"3.0.0\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/constants/FooPortletKeys.java",
@@ -3239,15 +3233,17 @@ public class ProjectTemplatesTest {
 				dependencyElementString.contains(versionString)) {
 
 				foundDependency = true;
-			}
 
-			if (foundDependency) {
 				break;
 			}
 		}
 
-		Assert.assertTrue(
-			"Missing dependency in " + pomXmlPath, foundDependency);
+		String dependencyString = groupId + ":" + artifactId + ":" + version;
+
+		String missingDependencyString = String.format(
+			"Missing dependency %s in %s", dependencyString, pomXmlPath);
+
+		Assert.assertTrue(missingDependencyString, foundDependency);
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(

@@ -42,12 +42,14 @@ import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.wiring.FrameworkWiring;
@@ -120,9 +122,7 @@ public class FrameworkRestartTest {
 
 			frameworkWiring.resolveBundles(bundles);
 
-			framework.stop();
-
-			framework.waitForStop(0);
+			_stopFramework(framework);
 
 			Files.move(frameworkInfoStoragePath, frameworkInfoBackupPath);
 			Files.move(managerStoragePath, managerBackupPath);
@@ -137,9 +137,7 @@ public class FrameworkRestartTest {
 				bundle.update(inputStream);
 			}
 
-			framework.stop();
-
-			framework.waitForStop(0);
+			_stopFramework(framework);
 
 			_delete(frameworkInfoStoragePath);
 			_delete(managerStoragePath);
@@ -173,7 +171,7 @@ public class FrameworkRestartTest {
 			frameworkFactory.newFramework(properties);
 		}
 		finally {
-			framework.stop();
+			_stopFramework(framework);
 
 			_delete(frameworkStoragePath);
 		}
@@ -255,6 +253,14 @@ public class FrameworkRestartTest {
 				}
 
 			});
+	}
+
+	private static void _stopFramework(Framework framework) throws Exception {
+		framework.stop();
+
+		FrameworkEvent frameworkEvent = framework.waitForStop(0);
+
+		Assert.assertEquals(FrameworkEvent.STOPPED, frameworkEvent.getType());
 	}
 
 	private static final String _BACKUP_DIR = "backup";

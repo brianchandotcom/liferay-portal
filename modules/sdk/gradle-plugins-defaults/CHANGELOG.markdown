@@ -3570,6 +3570,12 @@ Spring Boot projects according to Liferay defaults.
 ### Changed
 - [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version 3.12.7.
 
+## 5.4.4 - 2018-05-16
+
+### Added
+- [LPS-80944]: The `com.liferay.spring.boot.defaults` plugin now automatically
+adds the local Maven and [Liferay CDN] repositories to the project.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

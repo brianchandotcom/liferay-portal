@@ -172,7 +172,7 @@ public class DLFileEntryTypeFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds.length));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(DLFileEntryType.name)", StringPool.LIKE, false,
+				sql, "LOWER(DLFileEntryType.name)", StringPool.LIKE, false,
 				names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "DLFileEntryType.description", StringPool.LIKE, true,
@@ -249,7 +249,7 @@ public class DLFileEntryTypeFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds.length));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(DLFileEntryType.name)", StringPool.LIKE, false,
+				sql, "LOWER(DLFileEntryType.name)", StringPool.LIKE, false,
 				names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "DLFileEntryType.description", StringPool.LIKE, true,
@@ -302,7 +302,7 @@ public class DLFileEntryTypeFinderImpl
 		sb.append(prefix);
 		sb.append("((DLFileEntryType.companyId = 0) AND ");
 		sb.append("(DLFileEntryType.groupId = 0) AND (");
-		sb.append("(lower(DLFileEntryType.name) LIKE ? ");
+		sb.append("(LOWER(DLFileEntryType.name) LIKE ? ");
 		sb.append("[$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$] ");
 		sb.append("(DLFileEntryType.description LIKE ? ");
 		sb.append("[$AND_OR_NULL_CHECK$]) ))) UNION ALL (");

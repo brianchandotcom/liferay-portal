@@ -232,7 +232,7 @@ public class DDLRecordSetFinderImpl
 			}
 
 			sql = _customSQL.replaceKeywords(
-				sql, "lower(DDLRecordSet.name)", StringPool.LIKE, false, names);
+				sql, "LOWER(DDLRecordSet.name)", StringPool.LIKE, false, names);
 			sql = _customSQL.replaceKeywords(
 				sql, "DDLRecordSet.description", StringPool.LIKE, true,
 				descriptions);
@@ -310,7 +310,7 @@ public class DDLRecordSetFinderImpl
 			}
 
 			sql = _customSQL.replaceKeywords(
-				sql, "lower(DDLRecordSet.name)", StringPool.LIKE, false, names);
+				sql, "LOWER(DDLRecordSet.name)", StringPool.LIKE, false, names);
 			sql = _customSQL.replaceKeywords(
 				sql, "DDLRecordSet.description", StringPool.LIKE, true,
 				descriptions);

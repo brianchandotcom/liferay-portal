@@ -19,7 +19,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jsdoc", version: "2.0.6"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "1.0.3"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.12"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.3"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.4"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.5"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"
 	compile group: "gradle.plugin.com.github.jk1", name: "gradle-license-report", version: "0.3.11"

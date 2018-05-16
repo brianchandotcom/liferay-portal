@@ -655,7 +655,7 @@
 	<command name="viewAuthenticationLDAPCP">
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
-		<for list="ldap--enabled,ldap--required,ldapImportEnabled,ldapExportEnabled,ldap--passwordPolicyEnabled" param="fieldName">
+		<for list="PortalSettingsPortlet_enabled,required,ldapImportEnabled,ldapExportEnabled,passwordPolicyEnabled" param="fieldName">
 			<execute macro="FormFields#viewCheckboxNotChecked">
 				<var name="fieldName" value="${fieldName}" />
 			</execute>

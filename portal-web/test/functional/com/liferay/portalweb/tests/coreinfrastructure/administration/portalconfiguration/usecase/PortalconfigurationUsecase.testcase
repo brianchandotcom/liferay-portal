@@ -507,7 +507,7 @@
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<execute macro="FormFields#viewCheckboxChecked">
-			<var name="fieldName" value="ldap--enabled" />
+			<var name="fieldName" value="PortalSettingsPortlet_enabled" />
 		</execute>
 	</command>
 </definition>

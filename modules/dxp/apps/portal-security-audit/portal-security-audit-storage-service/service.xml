@@ -3,7 +3,7 @@
 
 <service-builder auto-namespace-tables="true" package-path="com.liferay.portal.security.audit.storage">
 	<namespace>Audit</namespace>
-	<entity local-service="true" name="AuditEvent" remote-service="false">
+	<entity local-service="true" name="AuditEvent" remote-service="true">
 
 		<!-- PK fields -->
 

@@ -201,7 +201,7 @@ public class DDMFormInstanceFinderImpl
 			}
 
 			sql = _customSQL.replaceKeywords(
-				sql, "lower(DDMFormInstance.name)", StringPool.LIKE, false,
+				sql, "LOWER(DDMFormInstance.name)", StringPool.LIKE, false,
 				names);
 			sql = _customSQL.replaceKeywords(
 				sql, "DDMFormInstance.description", StringPool.LIKE, true,
@@ -271,7 +271,7 @@ public class DDMFormInstanceFinderImpl
 			}
 
 			sql = _customSQL.replaceKeywords(
-				sql, "lower(DDMFormInstance.name)", StringPool.LIKE, false,
+				sql, "LOWER(DDMFormInstance.name)", StringPool.LIKE, false,
 				names);
 			sql = _customSQL.replaceKeywords(
 				sql, "DDMFormInstance.description", StringPool.LIKE, true,

@@ -384,7 +384,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 		}
 
 		for (int i = 0; i < assetTitles.length; i++) {
-			sb.append("(lower(AssetEntry.title) LIKE lower(?)) ");
+			sb.append("(LOWER(AssetEntry.title) LIKE LOWER(?)) ");
 			sb.append("OR ");
 		}
 
@@ -422,10 +422,10 @@ public class KaleoTaskInstanceTokenFinderImpl
 		}
 
 		for (int i = 0; i < assetTypes.length - 1; i++) {
-			sb.append("(lower(KaleoTaskInstanceToken.className) LIKE ?) OR ");
+			sb.append("(LOWER(KaleoTaskInstanceToken.className) LIKE ?) OR ");
 		}
 
-		sb.append("(lower(KaleoTaskInstanceToken.className) LIKE ?))");
+		sb.append("(LOWER(KaleoTaskInstanceToken.className) LIKE ?))");
 
 		return sb.toString();
 	}
@@ -739,7 +739,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		for (int i = 0; i < taskNames.length; i++) {
 			sb.append(
-				"(lower(KaleoTaskInstanceToken.kaleoTaskName) LIKE lower(?))");
+				"(LOWER(KaleoTaskInstanceToken.kaleoTaskName) LIKE LOWER(?))");
 			sb.append(" OR ");
 		}
 

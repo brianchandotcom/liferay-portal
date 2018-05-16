@@ -139,7 +139,7 @@ public class PollsQuestionFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = _customSQL.replaceKeywords(
-				sql, "lower(PollsQuestion.title)", StringPool.LIKE, false,
+				sql, "LOWER(PollsQuestion.title)", StringPool.LIKE, false,
 				titles);
 			sql = _customSQL.replaceKeywords(
 				sql, "PollsQuestion.description", StringPool.LIKE, true,
@@ -206,7 +206,7 @@ public class PollsQuestionFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = _customSQL.replaceKeywords(
-				sql, "lower(PollsQuestion.title)", StringPool.LIKE, false,
+				sql, "LOWER(PollsQuestion.title)", StringPool.LIKE, false,
 				titles);
 			sql = _customSQL.replaceKeywords(
 				sql, "PollsQuestion.description", StringPool.LIKE, true,

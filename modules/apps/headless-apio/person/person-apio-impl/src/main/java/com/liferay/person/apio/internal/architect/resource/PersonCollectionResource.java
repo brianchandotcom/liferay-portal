@@ -26,12 +26,11 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.person.apio.internal.architect.form.PersonCreatorForm;
 import com.liferay.person.apio.internal.architect.form.PersonUpdaterForm;
-import com.liferay.person.apio.model.UserWrapper;
+import com.liferay.person.apio.internal.wrapper.UserWrapper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.User;
@@ -57,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Provides the information necessary to expose <a
  * href="http://schema.org/Person">Person </a> resources through a web API. The
- * resources are mapped from the internal model {@code User}.
+ * resources are mapped from the internal model {@link UserWrapper}.
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -72,10 +71,10 @@ public class PersonCollectionResource
 		CollectionRoutes.Builder<UserWrapper> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class, ThemeDisplay.class
+			this::_getPageItems, ThemeDisplay.class
 		).addCreator(
-			this::_addUser, Company.class, ThemeDisplay.class,
-			_hasPermission::forAddingUsers, PersonCreatorForm::buildForm
+			this::_addUser, ThemeDisplay.class, _hasPermission::forAddingUsers,
+			PersonCreatorForm::buildForm
 		).build();
 	}
 
@@ -157,12 +156,11 @@ public class PersonCollectionResource
 	}
 
 	private UserWrapper _addUser(
-			PersonCreatorForm personCreatorForm, Company company,
-			ThemeDisplay themeDisplay)
+			PersonCreatorForm personCreatorForm, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		User user = _userLocalService.addUser(
-			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
+			UserConstants.USER_ID_DEFAULT, themeDisplay.getCompanyId(), false,
 			personCreatorForm.getPassword1(), personCreatorForm.getPassword2(),
 			personCreatorForm.hasAlternateName(),
 			personCreatorForm.getAlternateName(), personCreatorForm.getEmail(),
@@ -197,12 +195,12 @@ public class PersonCollectionResource
 	}
 
 	private PageItems<UserWrapper> _getPageItems(
-			Pagination pagination, Company company, ThemeDisplay themeDisplay)
+			Pagination pagination, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<UserWrapper> userWrappers = Stream.of(
 			_userService.getCompanyUsers(
-				company.getCompanyId(), pagination.getStartPosition(),
+				themeDisplay.getCompanyId(), pagination.getStartPosition(),
 				pagination.getEndPosition())
 		).flatMap(
 			List::stream
@@ -212,7 +210,8 @@ public class PersonCollectionResource
 			Collectors.toList()
 		);
 
-		int count = _userService.getCompanyUsersCount(company.getCompanyId());
+		int count = _userService.getCompanyUsersCount(
+			themeDisplay.getCompanyId());
 
 		return new PageItems<>(userWrappers, count);
 	}

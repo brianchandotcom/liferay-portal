@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.person.apio.model;
+package com.liferay.person.apio.internal.wrapper;
 
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.portal.kernel.model.Group;

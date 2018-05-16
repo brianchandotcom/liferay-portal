@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Person Apio API
 Bundle-SymbolicName: com.liferay.person.apio.api
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.person.apio.architect.identifier,\
-	com.liferay.person.apio.model
+Export-Package: com.liferay.person.apio.architect.identifier

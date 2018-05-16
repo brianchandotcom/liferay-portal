@@ -12,20 +12,23 @@
  * details.
  */
 
-package com.liferay.organization.apio.internal.architect.router;
+package com.liferay.person.apio.internal.architect.router;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.organization.apio.architect.identifier.OrganizationIdentifier;
+import com.liferay.person.apio.internal.wrapper.UserWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,37 +37,47 @@ import org.osgi.service.component.annotations.Reference;
  * Provides the information necessary to expose the <a
  * href="http://schema.org/Person">Person</a> resources contained inside an <a
  * href="http://schema.org/Organization">Organization</a> through a web API. The
- * resources are mapped from the internal model {@link User}.
+ * resources are mapped from the internal model {@link UserWrapper}.
  *
  * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class PersonNestedCollectionRouter implements
-	NestedCollectionRouter<User, OrganizationIdentifier, Long,
-		OrganizationIdentifier> {
+public class OrganizationPersonNestedCollectionRouter implements
+	NestedCollectionRouter
+		<UserWrapper, OrganizationIdentifier, Long, OrganizationIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<User, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<User, Long> builder) {
+	public NestedCollectionRoutes<UserWrapper, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems
+			this::_getPageItems, ThemeDisplay.class
 		).build();
 	}
 
-	private PageItems<User> _getPageItems(
-			Pagination pagination, long organizationId)
+	private PageItems<UserWrapper> _getPageItems(
+			Pagination pagination, long organizationId,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<User> users = _userService.getOrganizationUsers(
-			organizationId, WorkflowConstants.STATUS_APPROVED,
-			pagination.getStartPosition(), pagination.getEndPosition(),
-			new UserLastNameComparator(true));
+		List<UserWrapper> userWrappers = Stream.of(
+			_userService.getOrganizationUsers(
+				organizationId, WorkflowConstants.STATUS_APPROVED,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				new UserLastNameComparator(true))
+		).flatMap(
+			List::stream
+		).map(
+			user -> new UserWrapper(user, themeDisplay)
+		).collect(
+			Collectors.toList()
+		);
+
 		int count = _userService.getOrganizationUsersCount(
 			organizationId, WorkflowConstants.STATUS_APPROVED);
 
-		return new PageItems<>(users, count);
+		return new PageItems<>(userWrappers, count);
 	}
 
 	@Reference

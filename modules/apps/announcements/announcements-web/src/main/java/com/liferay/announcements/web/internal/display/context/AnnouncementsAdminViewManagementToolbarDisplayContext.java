@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 import java.util.Map;
@@ -58,12 +57,8 @@ public class AnnouncementsAdminViewManagementToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							StringBundler.concat(
-								"javascript:",
-								_liferayPortletResponse.getNamespace(),
-								"deleteEntries();"));
-						dropdownItem.setIcon("times");
+						dropdownItem.putData("action", "deleteEntries");
+						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 						dropdownItem.setQuickAction(true);

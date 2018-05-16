@@ -104,13 +104,20 @@ portletURL.setParameter("tag", StringPool.BLANK);
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
-		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
+			var form = document.querySelector('#<portlet:namespace />fm');
 
-			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
+			if (form) {
+				form.setAttribute('method', 'post');
 
-			submitForm(form, '<portlet:actionURL name="/bookmarks/edit_entry" />');
+				var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+
+				if (cmd) {
+					cmd.value = '<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>';
+
+					submitForm(form, '<portlet:actionURL name="/bookmarks/edit_entry" />');
+				}
+			}
 		}
 	}
 </aui:script>

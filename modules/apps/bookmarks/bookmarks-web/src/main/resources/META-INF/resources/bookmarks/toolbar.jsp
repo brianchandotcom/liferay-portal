@@ -17,90 +17,24 @@
 <%@ include file="/bookmarks/init.jsp" %>
 
 <%
-String searchContainerId = ParamUtil.getString(request, "searchContainerId");
-
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
-
-if (deltaEntry > 0) {
-	portletURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
-}
-
-portletURL.setParameter("categoryId", StringPool.BLANK);
-portletURL.setParameter("tag", StringPool.BLANK);
+BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContext = new BookmarksManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, bookmarksGroupServiceOverriddenConfiguration, portalPreferences, trashHelper);
 %>
 
-<liferay-frontend:management-bar
-	disabled="<%= BookmarksFolderServiceUtil.getFoldersAndEntriesCount(scopeGroupId, folderId) <= 0 %>"
-	includeCheckBox="<%= true %>"
-	searchContainerId="<%= searchContainerId %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-util:include page="/bookmarks/display_style_buttons.jsp" servletContext="<%= application %>" />
-
-		<c:if test="<%= portletName.equals(BookmarksPortletKeys.BOOKMARKS_ADMIN) %>">
-			<liferay-util:include page="/bookmarks/add_button.jsp" servletContext="<%= application %>" />
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-
-		<%
-		String[] navigationKeys = null;
-
-		if (themeDisplay.isSignedIn()) {
-			navigationKeys = new String[] {"all", "recent", "mine"};
-		}
-		else {
-			navigationKeys = new String[] {"all", "recent"};
-		}
-		%>
-
-		<liferay-frontend:management-bar-navigation
-			navigationKeys="<%= navigationKeys %>"
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>">
-			<li>
-				<liferay-portlet:renderURL varImpl="searchURL">
-					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-				</liferay-portlet:renderURL>
-
-				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<c:if test="<%= !user.isDefaultUser() %>">
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>'
-				icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
-				label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>'
-			/>
-		</c:if>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	actionDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= bookmarksManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= bookmarksManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= bookmarksManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	itemsTotal="<%= bookmarksManagementToolbarDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= String.valueOf(bookmarksManagementToolbarDisplayContext.getSearchActionURL()) %>"
+	searchContainerId="<%= bookmarksManagementToolbarDisplayContext.getSearchContainerId() %>"
+	selectable="<%= bookmarksManagementToolbarDisplayContext.isSelectable() %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= bookmarksManagementToolbarDisplayContext.isShowSearch() %>"
+	viewTypeItems="<%= bookmarksManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

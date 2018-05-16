@@ -3236,12 +3236,11 @@ public class ProjectTemplatesTest {
 
 				break;
 			}
-		}
-
-		String dependencyString = groupId + ":" + artifactId + ":" + version;
+		};
 
 		String missingDependencyString = String.format(
-			"Missing dependency %s in %s", dependencyString, pomXmlPath);
+			"Missing dependency %s:%s:%s in %s", groupId, artifactId, version,
+			pomXmlPath);
 
 		Assert.assertTrue(missingDependencyString, foundDependency);
 	}

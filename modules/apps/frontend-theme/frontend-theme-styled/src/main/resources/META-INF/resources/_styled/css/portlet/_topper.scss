@@ -66,6 +66,11 @@
 	float: right;
 }
 
+.portlet-name-text {
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+
 .portlet-options {
 	display: inline-block;
 }
@@ -96,19 +101,15 @@
 
 	@include display(flex);
 
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 3px 24px;
 	position: relative;
 }
 
 .portlet-topper-toolbar {
 	margin-bottom: 0;
+	margin-left: 8px;
 	margin-top: 0;
 	padding-left: 0;
-
-	&:last-of-type {
-		margin-right: -10px;
-	}
 
 	> a, > span > a, .lfr-icon-menu > a {
 		color: $portlet-topper-link-color;

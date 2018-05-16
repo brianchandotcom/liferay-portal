@@ -69,13 +69,6 @@ body.portlet {
 	.portlet-topper {
 		cursor: move;
 	}
-
-	.portlet-title-default {
-		background: lx-icon(move, $portlet-topper-color) no-repeat 2px center transparent;
-		background-size: 12px;
-		cursor: move;
-		padding-left: 25px;
-	}
 }
 
 .portlet {

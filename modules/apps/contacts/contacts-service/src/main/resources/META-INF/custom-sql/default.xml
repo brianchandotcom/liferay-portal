@@ -10,8 +10,8 @@
 			WHERE
 				(userId = ?) AND
 				(
-					(lower(fullName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(fullName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
 	</sql>
@@ -24,8 +24,8 @@
 			WHERE
 				(userId = ?) AND
 				(
-					(lower(fullName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(fullName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 			ORDER BY
 				fullName ASC

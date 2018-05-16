@@ -14,9 +14,9 @@
 				[$CALENDAR_RESOURCE_ID$]
 				(parentCalendarBookingId = ?) AND
 				(
-					(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(location) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(location) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(
 					(
@@ -69,9 +69,9 @@
 				[$CALENDAR_RESOURCE_ID$]
 				(parentCalendarBookingId = ?) AND
 				(
-					(lower(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(location) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(location) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(
 					(
@@ -111,7 +111,7 @@
 				[$GROUP_ID$]
 				[$CALENDAR_RESOURCE_ID$]
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
@@ -127,7 +127,7 @@
 				[$GROUP_ID$]
 				[$CALENDAR_RESOURCE_ID$]
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 				[$ORDER_BY$]
@@ -144,8 +144,8 @@
 				[$GROUP_ID$]
 				[$CLASS_NAME_ID$]
 				(
-					(lower(code_) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(code_) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(active_ = ?)
@@ -162,8 +162,8 @@
 				[$GROUP_ID$]
 				[$CLASS_NAME_ID$]
 				(
-					(lower(code_) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(code_) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(active_ = ?)

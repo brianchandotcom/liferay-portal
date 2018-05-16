@@ -53,7 +53,7 @@
 				AssetCategory
 			WHERE
 				(AssetCategory.groupId = ?) AND
-				(lower(AssetCategory.name) = ?)
+				(LOWER(AssetCategory.name) = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.findByC_C">
@@ -323,7 +323,7 @@
 			WHERE
 				(AssetVocabulary.groupId = ?) AND
 				(
-					(lower(AssetVocabulary.name) LIKE ?) OR
+					(LOWER(AssetVocabulary.name) LIKE ?) OR
 					(? IS NULL)
 				)
 			ORDER BY

@@ -14,8 +14,16 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 
+import java.lang.reflect.Method;
+
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,20 +38,105 @@ public class RequestDispatcherAttributeNames {
 		return _attributeNames.contains(name);
 	}
 
-	private static final Set<String> _attributeNames = new HashSet<>();
+	private static int _caculateOptimalHashSetSize(
+		int maxSize, String... strings) {
 
-	static {
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_PATH_INFO);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_FORWARD_SERVLET_PATH);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_CONTEXT_PATH);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_PATH_INFO);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_QUERY_STRING);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI);
-		_attributeNames.add(JavaConstants.JAVAX_SERVLET_INCLUDE_SERVLET_PATH);
-		_attributeNames.add(MimeResponse.MARKUP_HEAD_ELEMENT);
+		Method hashMethod = null;
+
+		try {
+			hashMethod = ReflectionUtil.getDeclaredMethod(
+				HashMap.class, "hash", Object.class);
+
+			if (hashMethod.getReturnType() != int.class) {
+				hashMethod = null;
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Current JDK HashMap's hash(Object) method: \"",
+							String.valueOf(hashMethod),
+							"\" is not returning int. Fallback to regular ",
+							"HashSet creation."));
+				}
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Current JDK HashMap does not have hash(Object) method. " +
+						"Fallback to regular HashSet creation.",
+					e);
+			}
+		}
+
+		int size = 16;
+
+		if (hashMethod == null) {
+			return size;
+		}
+
+		try {
+			Set<Integer> hashCodes = new HashSet<>();
+			Set<Integer> positions = new HashSet<>();
+
+			for (String s : strings) {
+				hashCodes.add(s.hashCode());
+			}
+
+			iterate:
+			while (size < maxSize) {
+				for (Integer hashCode : hashCodes) {
+					int pos =
+						(size - 1) & (int)hashMethod.invoke(null, hashCode);
+
+					if (!positions.add(pos)) {
+						if (size > (maxSize / 2)) {
+							break iterate;
+						}
+
+						size *= 2;
+
+						positions.clear();
+
+						continue iterate;
+					}
+				}
+
+				break;
+			}
+		}
+		catch (ReflectiveOperationException roe) {
+			_log.error("Unable to get hashcode", roe);
+		}
+
+		return size;
 	}
+
+	private static Set<String> _createConstantSet(
+		int maxSize, String... strings) {
+
+		Set<String> set = new HashSet<>(
+			_caculateOptimalHashSetSize(maxSize, strings));
+
+		Collections.addAll(set, strings);
+
+		return set;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RequestDispatcherAttributeNames.class);
+
+	private static final Set<String> _attributeNames = _createConstantSet(
+		2048, JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH,
+		JavaConstants.JAVAX_SERVLET_FORWARD_PATH_INFO,
+		JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING,
+		JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI,
+		JavaConstants.JAVAX_SERVLET_FORWARD_SERVLET_PATH,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_CONTEXT_PATH,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_PATH_INFO,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_QUERY_STRING,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_REQUEST_URI,
+		JavaConstants.JAVAX_SERVLET_INCLUDE_SERVLET_PATH,
+		MimeResponse.MARKUP_HEAD_ELEMENT);
 
 }

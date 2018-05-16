@@ -105,7 +105,7 @@ class EditableTextFragmentProcessor {
 		);
 
 		const editorSelectionChangeHandler = nativeEditor.on(
-			'selectionChange',
+			'actionPerformed',
 			this._handleEditorChange
 		);
 

@@ -12,6 +12,27 @@ import templates from './SidebarMapping.soy';
 class SidebarMapping extends Component {
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	disposed() {
+		if (this.highlightMapping) {
+			this.emit('toggleHighlightMapping');
+		}
+	}
+
+	/**
+	 * Callback executed on highlight mapping checkbox click
+	 * @private
+	 * @review
+	 */
+
+	_handleHighlightMappingCheckboxChange() {
+		this.emit('toggleHighlightMapping');
+	}
+
+	/**
 	 * Open asset type selection dialog
 	 * @private
 	 * @review
@@ -31,6 +52,19 @@ class SidebarMapping extends Component {
  */
 
 SidebarMapping.STATE = {
+
+	/**
+	 * If true, editable values should be highlighted.
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	highlightMapping: Config.bool()
+		.value(false),
 
 	/**
 	 * Selected mapping type label

@@ -1,10 +1,11 @@
 import Component from 'metal-component';
-import {Config} from 'metal-state';
-import {isFunction, isObject, object} from 'metal';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+import {addClasses, removeClasses} from 'metal-dom';
+import {isFunction, isObject, object} from 'metal';
 
-import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
 import EditableImageFragmentProcessor from './fragment_processors/EditableImageFragmentProcessor.es';
+import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
 import MappeableFragmentProcessor from './fragment_processors/MappeableFragmentProcessor.es';
 import templates from './FragmentEntryLink.soy';
 
@@ -33,8 +34,8 @@ class FragmentEntryLink extends Component {
 	 */
 
 	created() {
+		this._updateEditableStatus = this._updateEditableStatus.bind(this);
 		this._updateEditableValues = this._updateEditableValues.bind(this);
-		this._updateTranslationStatus = this._updateTranslationStatus.bind(this);
 
 		this._processors = FRAGMENT_PROCESSORS.map(
 			Processor => new Processor(this)
@@ -90,6 +91,15 @@ class FragmentEntryLink extends Component {
 							processor.process();
 						}
 					);
+
+					this._update(
+						this.languageId,
+						this.defaultLanguageId,
+						[
+							this._updateEditableValues,
+							this._updateEditableStatus
+						]
+					);
 				}
 			);
 		}
@@ -101,7 +111,9 @@ class FragmentEntryLink extends Component {
 	 */
 
 	shouldUpdate(changes) {
-		return !!changes.content || !!changes.showMapping;
+		return !!changes.content ||
+				!!changes.showMapping ||
+				!!changes.languageId;
 	}
 
 	/**
@@ -135,43 +147,15 @@ class FragmentEntryLink extends Component {
 
 		editableValues[editableId] = object.mixin({}, editableValue, content);
 
+		this._update(
+			this.languageId,
+			this.defaultLanguageId,
+			[this._updateEditableStatus]
+		);
+
 		return {
 			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: editableValues
 		};
-	}
-
-	/**
-	 * Updates the editable values for a given langaugeId.
-	 * @param {string} languageId The current language id
-	 * @param {string} defaultLanguageId The default language id
-	 * @review
-	 */
-
-	update(languageId, defaultLanguageId) {
-		this._update(
-			languageId,
-			defaultLanguageId,
-			[this._updateEditableValues, this._updateTranslationStatus]
-		);
-	}
-
-	/**
-	 * Updates the editable values translation status for a given languageId.
-	 * This public method is useful when the caller knows the data inside the
-	 * fragment entry link is valid and only wants to see changes in the
-	 * translation status of the editable values, but wants to avoid changes in
-	 * the editables themselves.
-	 * @param {string} languageId The current language id
-	 * @param {string} defaultLanguageId The default language id
-	 * @review
-	 */
-
-	updateTranslationStatus(languageId, defaultLanguageId) {
-		this._update(
-			languageId,
-			defaultLanguageId,
-			[this._updateTranslationStatus.bind(this)]
-		);
 	}
 
 	/**
@@ -252,7 +236,7 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
-	 * Runs a set of udpate functions through the collection of editable values
+	 * Runs a set of update functions through the collection of editable values
 	 * inside this fragment entry link.
 	 * @param {string} languageId The current language id
 	 * @param {string} defaultLanguageId The default language id
@@ -269,10 +253,16 @@ class FragmentEntryLink extends Component {
 				const editableValue = editableValues[editableId];
 
 				const defaultValue = editableValue[defaultLanguageId] || editableValue.defaultValue;
+				const mappedField = editableValue.mappedField || '';
 				const value = editableValue[languageId];
 
 				updateFunctions.forEach(
-					updateFunction => updateFunction(editableId, value, defaultValue)
+					updateFunction => updateFunction(
+						editableId,
+						value,
+						defaultValue,
+						mappedField
+					)
 				);
 			}
 		);
@@ -283,15 +273,30 @@ class FragmentEntryLink extends Component {
 	 * the stored default value for that same editable id.
 	 * @param {string} editableId The editable id
 	 * @param {string} value The value for the editable section
+	 * @param {string} defaultValue
+	 * @param {string} mappedField
 	 * @private
 	 * @review
 	 */
 
-	_updateTranslationStatus(editableId, value) {
+	_updateEditableStatus(editableId, value, defaultValue, mappedField) {
 		const element = this.element.querySelector(`lfr-editable[id="${editableId}"]`);
 
-		element.classList.remove('translated', 'untranslated');
-		element.classList.add(value ? 'translated' : 'untranslated');
+		if (element) {
+			removeClasses(
+				element,
+				'mapped',
+				'translated',
+				'unmapped',
+				'untranslated'
+			);
+
+			const mapped = !!mappedField;
+			const translated = !mappedField && !!value;
+
+			addClasses(element, mapped ? 'mapped' : 'unmapped');
+			addClasses(element, translated ? 'translated' : 'untranslated');
+		}
 	}
 
 	/**
@@ -369,6 +374,17 @@ FragmentEntryLink.STATE = {
 	defaultEditorConfiguration: Config.object().value({}),
 
 	/**
+	 * Default language id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	defaultLanguageId: Config.string().required(),
+
+	/**
 	 * Editable values that should be used instead of the default ones
 	 * inside editable fields.
 	 * @default {}
@@ -401,6 +417,17 @@ FragmentEntryLink.STATE = {
 	 */
 
 	imageSelectorURL: Config.string().required(),
+
+	/**
+	 * Currently selected language id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	languageId: Config.string().required(),
 
 	/**
 	 * Fragment name

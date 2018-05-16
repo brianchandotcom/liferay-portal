@@ -34,10 +34,6 @@ class FragmentsEditor extends Component {
 	 * @review
 	 */
 
-	created() {
-		this.on('languageIdChanged', this._handleLanguageIdChange);
-	}
-
 	rendered(firstRender) {
 		if (firstRender) {
 			this._translationStatus = this._getTranslationStatus(
@@ -496,20 +492,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed when the language id has changed
-	 * @private
-	 * @review
-	 */
-
-	_handleLanguageIdChange() {
-		Object.keys(this.refs).filter(
-			key => key.startsWith('fragmentEntryLink_')
-		).forEach(
-			key => this.refs[key].update(this.languageId, this.defaultLanguageId)
-		);
-	}
-
-	/**
 	 * Callback executed when a mappeable fragment has been clicked
 	 * @param {!{ fragmentEntryLinkId: !string, editableId: !string }} event
 	 * @private
@@ -649,6 +631,16 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Toggle highlightMapping attribute value
+	 * @private
+	 * @review
+	 */
+
+	_handleToggleHighlightMapping() {
+		this._highlightMapping = !this._highlightMapping;
+	}
+
+	/**
 	 * Callback executed when the translation language has changed
 	 * @private
 	 * @param {{languageId: string}} event
@@ -757,12 +749,6 @@ class FragmentsEditor extends Component {
 						Object.keys(this.availableLanguages).filter(languageId => languageId !== '_INJECTED_DATA_'),
 						this._getEditableValues()
 					);
-
-					const fragmentEntryLinkComponent = this.refs[`fragmentEntryLink_${fragmentEntryLink.fragmentEntryLinkId}`];
-
-					if (fragmentEntryLinkComponent) {
-						fragmentEntryLinkComponent.updateTranslationStatus(this.languageId, this.defaultLanguageId);
-					}
 
 					this._dirty = false;
 				}
@@ -1164,6 +1150,20 @@ FragmentsEditor.STATE = {
 	 */
 
 	_dirty: Config.bool()
+		.internal()
+		.value(false),
+
+	/**
+	 * If true, editable values should be highlighted.
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	_highlightMapping: Config.bool()
 		.internal()
 		.value(false),
 

@@ -39,7 +39,9 @@
 	{@param? _handleSelectMappingDialogVisibleChanged: any}
 	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
 	{@param? _handleSidebarTabClick: any}
+	{@param? _handleToggleHighlightMapping: any}
 	{@param? _handleTranslationLanguageChange: any}
+	{@param? _highlightMapping: bool}
 	{@param? _lastSaveDate: string}
 	{@param? _selectMappingDialogEditableId: string}
 	{@param? _selectMappingDialogFragmentEntryLinkId: string}
@@ -96,6 +98,10 @@
 				{if $languageId != $defaultLanguageId}
 					{sp}translating
 				{/if}
+
+				{if $_highlightMapping}
+					{sp}mapping
+				{/if}
 			{/let}
 
 			<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
@@ -105,6 +111,7 @@
 							{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 								{param content: $fragmentEntryLink.content /}
 								{param defaultEditorConfiguration: $defaultEditorConfiguration /}
+								{param defaultLanguageId: $defaultLanguageId /}
 								{param editableValues: $fragmentEntryLink.editableValues /}
 								{param events: [
 									'editableChanged': $_handleEditableChanged,
@@ -112,15 +119,14 @@
 									'move': $_handleFragmentMove,
 									'remove': $_handleFragmentRemove
 								] /}
-								{param defaultLanguageId: $defaultLanguageId /}
-								{param languageId: $languageId /}
 								{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
 								{param imageSelectorURL: $imageSelectorURL /}
-								{param selectedMappingTypes: $selectedMappingTypes /}
-								{param showMapping: $selectedMappingTypes and $selectedMappingTypes.type and $_sidebarSelectedTab == 'mapping' /}
+								{param languageId: $languageId /}
 								{param name: $fragmentEntryLink.name /}
 								{param portletNamespace: $portletNamespace /}
 								{param ref: 'fragmentEntryLink_' + $fragmentEntryLink.fragmentEntryLinkId /}
+								{param selectedMappingTypes: $selectedMappingTypes /}
+								{param showMapping: $selectedMappingTypes and $selectedMappingTypes.type and $_sidebarSelectedTab == 'mapping' /}
 								{param spritemap: $spritemap /}
 							{/call}
 						</div>
@@ -196,7 +202,11 @@
 						{/call}
 					{elseif $_sidebarSelectedTab == 'mapping'}
 						{call com.liferay.layout.admin.web.SidebarMapping.render}
-							{param events: ['selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick] /}
+							{param events: [
+								'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
+								'toggleHighlightMapping': $_handleToggleHighlightMapping
+							] /}
+							{param highlightMapping: $_highlightMapping ?: false /}
 							{param selectedMappingTypes: $selectedMappingTypes /}
 							{param spritemap: $spritemap /}
 						{/call}

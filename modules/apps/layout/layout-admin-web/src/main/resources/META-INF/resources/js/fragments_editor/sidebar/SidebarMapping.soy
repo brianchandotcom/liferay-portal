@@ -4,7 +4,9 @@
  * SidebarMapping
  */
 {template .render}
+	{@param highlightMapping: bool}
 	{@param spritemap: string}
+	{@param? _handleHighlightMappingCheckboxChange: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
 	{@param? selectedMappingTypes: [
 		subtype: [
@@ -22,34 +24,57 @@
 			{msg desc=""}asset-type{/msg}
 		</dt>
 
-		<div class="panel panel-secondary">
-			<div class="panel-body">
-				{if $selectedMappingTypes and $selectedMappingTypes.type}
-					{$selectedMappingTypes.type.label}
+		<div class="form-group">
+			<div class="panel panel-secondary">
+				<div class="panel-body">
+					{if $selectedMappingTypes and $selectedMappingTypes.type}
+						{$selectedMappingTypes.type.label}
 
-					{if $selectedMappingTypes.subtype}
-						<span class="inline-item inline-item-after inline-item-before">
-							<svg class="lexicon-icon">
-								<use xlink:href="{$spritemap}#angle-right"></use>
-							</svg>
-						</span>
+						{if $selectedMappingTypes.subtype}
+							<span class="inline-item inline-item-after inline-item-before">
+								<svg class="lexicon-icon">
+									<use xlink:href="{$spritemap}#angle-right"></use>
+								</svg>
+							</span>
 
-						{$selectedMappingTypes.subtype.label}
+							{$selectedMappingTypes.subtype.label}
+						{/if}
+					{else}
+						{msg desc=""}no-asset-type-selected{/msg}
 					{/if}
-				{else}
-					{msg desc=""}no-asset-type-selected{/msg}
-				{/if}
+				</div>
 			</div>
+
+			{if not $selectedMappingTypes or not $selectedMappingTypes.type}
+				<button
+					class="btn btn-secondary"
+					data-onclick="{$_handleSelectAssetTypeButtonClick}"
+					type="button"
+				>
+					{msg desc=""}select{/msg}
+				</button>
+			{/if}
 		</div>
 
-		{if not $selectedMappingTypes or not $selectedMappingTypes.type}
-			<button
-				class="btn btn-secondary"
-				data-onclick="{$_handleSelectAssetTypeButtonClick}"
-				type="button"
-			>
-				{msg desc=""}select{/msg}
-			</button>
-		{/if}
+		<div class="form-group">
+			{let $highlightCheckboxAttributes kind="attributes"}
+				class="form-check-input"
+				data-onchange="{$_handleHighlightMappingCheckboxChange}"
+				type="checkbox"
+
+				{if $highlightMapping}
+					checked
+				{/if}
+			{/let}
+
+			<div class="form-check">
+				<label class="form-check-label">
+					<input {$highlightCheckboxAttributes}>
+					<span class="form-check-label-text">
+						{msg desc=""}show-editable-areas{/msg}
+					</span>
+				</label>
+			</div>
+		</div>
 	</div>
 {/template}

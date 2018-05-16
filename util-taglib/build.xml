@@ -46,17 +46,11 @@
 			<replacevalue><![CDATA[<short-name>portlet</short-name>]]></replacevalue>
 		</replace>
 
-		<copy
-			file="classes/META-INF/liferay-portlet.tld"
-			preservelastmodified="true"
-			tofile="classes/META-INF/liferay-portlet_2_0.tld"
-		/>
-
 		<replace
 			file="classes/META-INF/liferay-portlet_2_0.tld"
 		>
-			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
-			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
+			<replacetoken><![CDATA[<short-name>portlet_2_0</short-name>]]></replacetoken>
+			<replacevalue><![CDATA[<short-name>portlet</short-name>]]></replacevalue>
 		</replace>
 	</target>
 

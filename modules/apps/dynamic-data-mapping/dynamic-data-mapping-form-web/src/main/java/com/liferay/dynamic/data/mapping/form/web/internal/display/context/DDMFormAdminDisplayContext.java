@@ -48,6 +48,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -131,7 +132,7 @@ public class DDMFormAdminDisplayContext {
 		formAdminRequestHelper = new DDMFormAdminRequestHelper(renderRequest);
 	}
 
-	public DropdownItemList getActionItemsDropdownItemList() {
+	public List<DropdownItem> getActionItemsDropdownItems() {
 		return new DropdownItemList() {
 
 			{
@@ -187,40 +188,31 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		CreationMenu creationMenu = null;
-
-		HttpServletRequest request = formAdminRequestHelper.getRequest();
-
-		if (isShowAddButton()) {
-			creationMenu = new CreationMenu() {
-
-				{
-					ThemeDisplay themeDisplay =
-						(ThemeDisplay)request.getAttribute(
-							WebKeys.THEME_DISPLAY);
-
-					if (isShowAddButton()) {
-						addPrimaryDropdownItem(
-							dropdownItem -> {
-								dropdownItem.setHref(
-									_renderResponse.createRenderURL(),
-									"mvcPath", "/admin/edit_form_instance.jsp",
-									"redirect",
-									PortalUtil.getCurrentURL(request),
-									"groupId",
-									String.valueOf(
-										themeDisplay.getScopeGroupId()));
-
-								dropdownItem.setLabel(
-									LanguageUtil.get(request, "new-form"));
-							});
-					}
-				}
-
-			};
+		if (!isShowAddButton()) {
+			return null;
 		}
 
-		return creationMenu;
+		return new CreationMenu() {
+			{
+				HttpServletRequest request =
+					formAdminRequestHelper.getRequest();
+
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/admin/edit_form_instance.jsp", "redirect",
+							PortalUtil.getCurrentURL(request), "groupId",
+							String.valueOf(themeDisplay.getScopeGroupId()));
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "new-form"));
+					});
+			}
+		};
 	}
 
 	public String getCSVExport() {
@@ -334,7 +326,7 @@ public class DDMFormAdminDisplayContext {
 		return _DISPLAY_VIEWS;
 	}
 
-	public DropdownItemList getFilterItemsDropdownItemList() {
+	public List<DropdownItem> getFilterItemsDropdownItems() {
 		HttpServletRequest request = formAdminRequestHelper.getRequest();
 
 		return new DropdownItemList() {
@@ -350,7 +342,7 @@ public class DDMFormAdminDisplayContext {
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							getOrderByDropdownItemList());
+							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(request, "order-by"));
 					});
@@ -671,7 +663,7 @@ public class DDMFormAdminDisplayContext {
 		return searchContainer.getTotal();
 	}
 
-	public ViewTypeItemList getViewTypesItemList() throws Exception {
+	public List<ViewTypeItem> getViewTypesItems() throws Exception {
 		PortletURL portletURL = PortletURLUtil.clone(
 			getPortletURL(), _renderResponse);
 
@@ -1020,7 +1012,7 @@ public class DDMFormAdminDisplayContext {
 		};
 	}
 
-	protected DropdownItemList getOrderByDropdownItemList() {
+	protected List<DropdownItem> getOrderByDropdownItems() {
 		return new DropdownItemList() {
 			{
 				add(getOrderByDropdownItem("modified-date"));

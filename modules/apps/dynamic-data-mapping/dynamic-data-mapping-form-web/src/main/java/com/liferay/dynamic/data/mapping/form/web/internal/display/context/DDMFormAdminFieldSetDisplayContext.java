@@ -37,6 +37,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureCreateDateCompa
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -98,7 +99,7 @@ public class DDMFormAdminFieldSetDisplayContext
 			storageEngine);
 	}
 
-	public DropdownItemList getActionItemsDropdownItemList() {
+	public List<DropdownItem> getActionItemsDropdownItems() {
 		RenderResponse renderResponse = getRenderResponse();
 
 		return new DropdownItemList() {
@@ -119,28 +120,30 @@ public class DDMFormAdminFieldSetDisplayContext
 	}
 
 	public CreationMenu getCreationMenu() {
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			getRenderRequest());
-		RenderResponse renderResponse = getRenderResponse();
+		if (!isShowAddButton()) {
+			return null;
+		}
 
 		return new CreationMenu() {
 			{
+				HttpServletRequest request = PortalUtil.getHttpServletRequest(
+					getRenderRequest());
+				RenderResponse renderResponse = getRenderResponse();
+
 				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-				if (isShowAddButton()) {
-					addPrimaryDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								renderResponse.createRenderURL(), "mvcPath",
-								"/admin/edit_element_set.jsp", "redirect",
-								PortalUtil.getCurrentURL(request), "groupId",
-								String.valueOf(themeDisplay.getScopeGroupId()));
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							renderResponse.createRenderURL(), "mvcPath",
+							"/admin/edit_element_set.jsp", "redirect",
+							PortalUtil.getCurrentURL(request), "groupId",
+							String.valueOf(themeDisplay.getScopeGroupId()));
 
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, "new-element-set"));
-						});
-				}
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "new-element-set"));
+					});
 			}
 		};
 	}

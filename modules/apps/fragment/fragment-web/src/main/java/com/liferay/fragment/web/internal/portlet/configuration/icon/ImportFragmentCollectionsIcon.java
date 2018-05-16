@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"path=/fragment/view"
-	},
+	property = {"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT, "path=-"},
 	service = PortletConfigurationIcon.class
 )
 public class ImportFragmentCollectionsIcon

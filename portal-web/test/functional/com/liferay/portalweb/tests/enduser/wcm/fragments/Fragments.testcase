@@ -171,14 +171,8 @@
 	<command name="DeleteFragmentCollection" priority="5">
 		<property name="portal.acceptance" value="pending" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
-		</execute>
-
-		<execute macro="LexiconEntry#delete">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Collection#deleteCollection">
+			<var name="collectionName" value="Collection Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -187,8 +181,8 @@
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="LexiconEntry#viewNoEntry">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Collection#viewNotPresent">
+			<var name="collectionName" value="Collection Name" />
 		</execute>
 	</command>
 

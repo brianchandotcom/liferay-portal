@@ -240,11 +240,11 @@
 			<var name="collectionName" value="Collection Name" />
 		</execute>
 
-		<execute macro="LexiconEntry#delete">
-			<var name="rowEntry" value="Collection Name" />
+		<execute macro="Collection#deleteCollection">
+			<var name="collectioNName" value="Collection Name" />
 		</execute>
 
-		<execute macro="LexiconEntry#viewNoEntry">
+		<execute macro="Collection#viewNotPresent">
 			<var name="rowEntry" value="Collection Name" />
 		</execute>
 	</command>
@@ -313,11 +313,11 @@
 
 		<execute macro="Collection#renameCollection">
 			<var name="collectionDescription" value="Collection Description New" />
-			<var name="collectionName" value="Collection Name New" />
-			<var name="rowEntry" value="Collection Name Original" />
+			<var name="collectionName" value="Collection Name Original" />
+			<var name="collectionNameEdit" value="Collection Name New" />
 		</execute>
 
-		<execute macro="LexiconEntry#viewEntryName">
+		<execute macro="Collection#viewPresent">
 			<var name="rowEntry" value="Collection Name New" />
 		</execute>
 	</command>

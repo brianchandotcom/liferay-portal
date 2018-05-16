@@ -395,6 +395,20 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the layout prototype ID of this layout page template entry.
+	 *
+	 * @return the layout prototype ID of this layout page template entry
+	 */
+	public long getLayoutPrototypeId();
+
+	/**
+	 * Sets the layout prototype ID of this layout page template entry.
+	 *
+	 * @param layoutPrototypeId the layout prototype ID of this layout page template entry
+	 */
+	public void setLayoutPrototypeId(long layoutPrototypeId);
+
+	/**
 	 * Returns <code>true</code> if this layout page template entry is approved.
 	 *
 	 * @return <code>true</code> if this layout page template entry is approved; <code>false</code> otherwise

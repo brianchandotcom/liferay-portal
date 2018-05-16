@@ -3546,6 +3546,11 @@ version 2.2.3.
 ### Changed
 - [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version 3.12.3.
 
+## 5.3.121 - 2018-05-15
+
+### Changed
+- [LPS-80920]: Update the [Liferay Gradle Plugins] dependency to version 3.12.4.
+
 ## 5.4.0 - 2018-05-15
 
 ### Added
@@ -3953,6 +3958,7 @@ Spring Boot projects according to Liferay defaults.
 [LPS-80520]: https://issues.liferay.com/browse/LPS-80520
 [LPS-80544]: https://issues.liferay.com/browse/LPS-80544
 [LPS-80840]: https://issues.liferay.com/browse/LPS-80840
+[LPS-80920]: https://issues.liferay.com/browse/LPS-80920
 [LPS-80944]: https://issues.liferay.com/browse/LPS-80944
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

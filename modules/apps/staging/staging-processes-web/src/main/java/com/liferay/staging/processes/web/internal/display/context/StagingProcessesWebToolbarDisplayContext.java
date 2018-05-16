@@ -109,8 +109,9 @@ public class StagingProcessesWebToolbarDisplayContext {
 						addRestDropdownItem(
 							dropdownItem -> {
 								dropdownItem.setHref(
-									getRenderURL(), "mvcRenderCommandName",
-									"publishLayouts", Constants.CMD, cmd,
+									_portletResponse.createRenderURL(),
+									"mvcRenderCommandName", "publishLayouts",
+									Constants.CMD, cmd,
 									"exportImportConfigurationId",
 									String.valueOf(
 										exportImportConfiguration.
@@ -124,8 +125,9 @@ public class StagingProcessesWebToolbarDisplayContext {
 					addPrimaryDropdownItem(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								getRenderURL(), "mvcRenderCommandName",
-								"publishLayouts", Constants.CMD, cmd, "groupId",
+								_portletResponse.createRenderURL(),
+								"mvcRenderCommandName", "publishLayouts",
+								Constants.CMD, cmd, "groupId",
 								String.valueOf(stagingGroupId), "privateLayout",
 								Boolean.FALSE.toString());
 							dropdownItem.setLabel(
@@ -178,7 +180,9 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(getRenderURL(), getDisplayStyle()) {
+		PortletURL portletURL = _portletResponse.createRenderURL();
+
+		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				addListViewTypeItem();
 				addTableViewTypeItem();
@@ -188,10 +192,6 @@ public class StagingProcessesWebToolbarDisplayContext {
 
 	protected String getDisplayStyle() {
 		return ParamUtil.getString(_request, "displayStyle", "list");
-	}
-
-	protected PortletURL getRenderURL() {
-		return _portletResponse.createRenderURL();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -266,7 +266,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 	}
 
 	private PortletURL _getStagingRenderURL() {
-		PortletURL renderURL = getRenderURL();
+		PortletURL renderURL = _portletResponse.createRenderURL();
 
 		renderURL.setParameter(
 			"groupId", String.valueOf(ParamUtil.getLong(_request, "groupId")));

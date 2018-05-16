@@ -219,6 +219,10 @@ public class DLAdminManagementToolbarDisplayContext {
 		List<Menu> menus = dlPortletToolbarContributor.getPortletTitleMenus(
 			_liferayPortletRequest, _liferayPortletResponse);
 
+		if (menus.isEmpty()) {
+			return null;
+		}
+
 		CreationMenu creationMenu = new CreationMenu();
 
 		for (Menu menu : menus) {

@@ -85,6 +85,9 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(BookmarksFolder.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
+				NAMESPACE, "folders", true, false, null,
+				BookmarksFolder.class.getName()),
+			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false, null,
 				BookmarksEntry.class.getName()));
 		setImportControls(getExportControls());
@@ -116,29 +119,29 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Element rootElement = addExportDataRootElement(portletDataContext);
-
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
-			return getExportDataRootElementString(rootElement);
-		}
-
 		portletDataContext.addPortletPermissions(
 			BookmarksConstants.RESOURCE_NAME);
+
+		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ExportActionableDynamicQuery folderActionableDynamicQuery =
-			_bookmarksFolderStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
+			ExportActionableDynamicQuery folderActionableDynamicQuery =
+				_bookmarksFolderStagedModelRepository.
+					getExportActionableDynamicQuery(portletDataContext);
 
-		folderActionableDynamicQuery.performActions();
+			folderActionableDynamicQuery.performActions();
+		}
 
-		ActionableDynamicQuery entryActionableDynamicQuery =
-			_bookmarksEntryStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+			ActionableDynamicQuery entryActionableDynamicQuery =
+				_bookmarksEntryStagedModelRepository.
+					getExportActionableDynamicQuery(portletDataContext);
 
-		entryActionableDynamicQuery.performActions();
+			entryActionableDynamicQuery.performActions();
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -149,34 +152,36 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
-			return null;
-		}
-
 		portletDataContext.importPortletPermissions(
 			BookmarksConstants.RESOURCE_NAME);
 
-		Element foldersElement = portletDataContext.getImportDataGroupElement(
-			BookmarksFolder.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
+			Element foldersElement =
+				portletDataContext.getImportDataGroupElement(
+					BookmarksFolder.class);
 
-		List<Element> folderElements = foldersElement.elements();
+			List<Element> folderElements = foldersElement.elements();
 
-		for (Element folderElement : folderElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folderElement);
+			for (Element folderElement : folderElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, folderElement);
+			}
 		}
 
-		Element entriesElement = portletDataContext.getImportDataGroupElement(
-			BookmarksEntry.class);
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+			Element entriesElement =
+				portletDataContext.getImportDataGroupElement(
+					BookmarksEntry.class);
 
-		List<Element> entryElements = entriesElement.elements();
+			List<Element> entryElements = entriesElement.elements();
 
-		for (Element entryElement : entryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, entryElement);
+			for (Element entryElement : entryElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, entryElement);
+			}
 		}
 
-		return null;
+		return portletPreferences;
 	}
 
 	@Override
@@ -198,37 +203,20 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		folderExportActionableDynamicQuery.performCount();
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
-		unbind = "-"
-	)
-	protected void setBookmarksEntryStagedModelRepository(
-		StagedModelRepository<BookmarksEntry>
-			bookmarksEntryStagedModelRepository) {
-
-		_bookmarksEntryStagedModelRepository =
-			bookmarksEntryStagedModelRepository;
-	}
-
-	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
-		unbind = "-"
-	)
-	protected void setBookmarksFolderStagedModelRepository(
-		StagedModelRepository<BookmarksFolder>
-			bookmarksFolderStagedModelRepository) {
-
-		_bookmarksFolderStagedModelRepository =
-			bookmarksFolderStagedModelRepository;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
+	)
 	private StagedModelRepository<BookmarksEntry>
 		_bookmarksEntryStagedModelRepository;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
 	private StagedModelRepository<BookmarksFolder>
 		_bookmarksFolderStagedModelRepository;
 

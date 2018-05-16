@@ -98,9 +98,8 @@ public class BookmarksFolderStagedModelRepository
 
 	@Override
 	public BookmarksFolder fetchMissingReference(String uuid, long groupId) {
-		return
-			(BookmarksFolder)_stagedModelRepositoryHelper.fetchMissingReference(
-				uuid, groupId, this);
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override
@@ -170,9 +169,7 @@ public class BookmarksFolderStagedModelRepository
 	}
 
 	@Override
-	public BookmarksFolder saveStagedModel(BookmarksFolder bookmarksFolder)
-		throws PortalException {
-
+	public BookmarksFolder saveStagedModel(BookmarksFolder bookmarksFolder) {
 		return _bookmarksFolderLocalService.updateBookmarksFolder(
 			bookmarksFolder);
 	}
@@ -195,16 +192,10 @@ public class BookmarksFolderStagedModelRepository
 			bookmarksFolder.getDescription(), serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
 	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
+	@Reference
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference

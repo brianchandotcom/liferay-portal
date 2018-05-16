@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.model.StagedModel;
  */
 public interface StagedModelRepositoryHelper {
 
-	public StagedModel fetchMissingReference(
+	public <T extends StagedModel> T fetchMissingReference(
 		String uuid, long groupId,
-		StagedModelRepository<?> stagedModelRepository);
+		StagedModelRepository<T> stagedModelRepository);
 
 	public boolean isStagedModelInTrash(StagedModel stagedModel);
 

@@ -15,7 +15,6 @@
 package com.liferay.friendly.url.internal.exportimport.staged.model.repository;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
@@ -61,9 +60,7 @@ public class FriendlyURLEntryStagedModelRepository
 	}
 
 	@Override
-	public void deleteStagedModel(FriendlyURLEntry friendlyURLEntry)
-		throws PortalException {
-
+	public void deleteStagedModel(FriendlyURLEntry friendlyURLEntry) {
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(friendlyURLEntry);
 	}
 
@@ -81,9 +78,7 @@ public class FriendlyURLEntryStagedModelRepository
 	}
 
 	@Override
-	public void deleteStagedModels(PortletDataContext portletDataContext)
-		throws PortalException {
-
+	public void deleteStagedModels(PortletDataContext portletDataContext) {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
@@ -96,8 +91,8 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Override
 	public FriendlyURLEntry fetchMissingReference(String uuid, long groupId) {
-		return (FriendlyURLEntry)_stagedModelRepositoryHelper.
-			fetchMissingReference(uuid, groupId, this);
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override
@@ -135,14 +130,11 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Override
 	public void restoreStagedModel(
-			PortletDataContext portletDataContext, FriendlyURLEntry stagedModel)
-		throws PortletDataException {
+		PortletDataContext portletDataContext, FriendlyURLEntry stagedModel) {
 	}
 
 	@Override
-	public FriendlyURLEntry saveStagedModel(FriendlyURLEntry friendlyURLEntry)
-		throws PortalException {
-
+	public FriendlyURLEntry saveStagedModel(FriendlyURLEntry friendlyURLEntry) {
 		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
 				friendlyURLEntry.getFriendlyURLEntryId());
@@ -167,9 +159,8 @@ public class FriendlyURLEntryStagedModelRepository
 
 	@Override
 	public FriendlyURLEntry updateStagedModel(
-			PortletDataContext portletDataContext,
-			FriendlyURLEntry friendlyURLEntry)
-		throws PortalException {
+		PortletDataContext portletDataContext,
+		FriendlyURLEntry friendlyURLEntry) {
 
 		return saveStagedModel(friendlyURLEntry);
 	}

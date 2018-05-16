@@ -38,13 +38,13 @@ public class StagedModelRepositoryHelperImpl
 	implements StagedModelRepositoryHelper {
 
 	@Override
-	public StagedModel fetchMissingReference(
+	public <T extends StagedModel> T fetchMissingReference(
 		String uuid, long groupId,
-		StagedModelRepository<?> stagedModelRepository) {
+		StagedModelRepository<T> stagedModelRepository) {
 
 		// Try to fetch the existing staged model from the importing group
 
-		StagedModel existingStagedModel =
+		T existingStagedModel =
 			stagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				uuid, groupId);
 
@@ -80,12 +80,11 @@ public class StagedModelRepositoryHelperImpl
 				return existingStagedModel;
 			}
 
-			List<StagedModel> existingStagedModels =
-				(List<StagedModel>)
-					stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
-						uuid, originalGroup.getCompanyId());
+			List<T> existingStagedModels =
+				stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
+					uuid, originalGroup.getCompanyId());
 
-			for (StagedModel stagedModel : existingStagedModels) {
+			for (T stagedModel : existingStagedModels) {
 				try {
 					if (stagedModel instanceof StagedGroupedModel) {
 						StagedGroupedModel stagedGroupedModel =

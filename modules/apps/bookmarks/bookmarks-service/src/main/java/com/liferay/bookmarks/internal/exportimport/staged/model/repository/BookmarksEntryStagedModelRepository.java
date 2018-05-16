@@ -25,8 +25,6 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHel
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -101,9 +99,8 @@ public class BookmarksEntryStagedModelRepository
 
 	@Override
 	public BookmarksEntry fetchMissingReference(String uuid, long groupId) {
-		return
-			(BookmarksEntry)_stagedModelRepositoryHelper.fetchMissingReference(
-				uuid, groupId, this);
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override
@@ -121,7 +118,7 @@ public class BookmarksEntryStagedModelRepository
 		return _bookmarksEntryLocalService.
 			getBookmarksEntriesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<BookmarksEntry>());
+				new StagedModelModifiedDateComparator<>());
 	}
 
 	@Override
@@ -174,9 +171,7 @@ public class BookmarksEntryStagedModelRepository
 	}
 
 	@Override
-	public BookmarksEntry saveStagedModel(BookmarksEntry bookmarksEntry)
-		throws PortalException {
-
+	public BookmarksEntry saveStagedModel(BookmarksEntry bookmarksEntry) {
 		return _bookmarksEntryLocalService.updateBookmarksEntry(bookmarksEntry);
 	}
 
@@ -199,16 +194,7 @@ public class BookmarksEntryStagedModelRepository
 			serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
-
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BookmarksEntryStagedModelRepository.class);
-
+	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	@Reference

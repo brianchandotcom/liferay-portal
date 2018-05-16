@@ -93,8 +93,8 @@ public class FragmentEntryLinkStagedModelRepository
 
 	@Override
 	public FragmentEntryLink fetchMissingReference(String uuid, long groupId) {
-		return (FragmentEntryLink)_stagedModelRepositoryHelper.
-			fetchMissingReference(uuid, groupId, this);
+		return _stagedModelRepositoryHelper.fetchMissingReference(
+			uuid, groupId, this);
 	}
 
 	@Override

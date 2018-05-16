@@ -397,7 +397,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 		sb.append("https://");
 		sb.append(serverHost);
-		sb.append("projects/");
+		sb.append("/projects/");
 		sb.append(projectId);
 		sb.append(path);
 

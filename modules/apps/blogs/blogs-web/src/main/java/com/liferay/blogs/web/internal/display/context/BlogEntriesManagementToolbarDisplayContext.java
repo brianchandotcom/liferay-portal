@@ -109,7 +109,7 @@ public class BlogEntriesManagementToolbarDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
 
-			return new CreationMenu();
+			return null;
 		}
 
 		CreationMenu creationMenu = new CreationMenu();

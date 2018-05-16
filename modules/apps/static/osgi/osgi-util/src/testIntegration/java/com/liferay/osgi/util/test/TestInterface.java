@@ -29,12 +29,12 @@ public class TestInterface {
 		return _trackedTwo;
 	}
 
-	@Reference(unbind = "-")
+	@Reference
 	public void setTrackedOne(InterfaceOne trackedOne) {
 		_trackedOne = trackedOne;
 	}
 
-	@Reference(unbind = "-")
+	@Reference
 	public void setTrackedTwo(InterfaceTwo trackedTwo) {
 		_trackedTwo = trackedTwo;
 	}

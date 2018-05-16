@@ -12,7 +12,7 @@
 		<!-- Other fields -->
 
 		<column name="assetEntryId" type="long" />
-		<column name="layoutId" type="long" />
+		<column name="layoutPageTemplateEntryId" type="long" />
 
 		<!-- Finder methods -->
 

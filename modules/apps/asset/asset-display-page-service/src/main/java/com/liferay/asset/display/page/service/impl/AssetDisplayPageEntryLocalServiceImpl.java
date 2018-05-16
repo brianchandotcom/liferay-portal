@@ -26,7 +26,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 	@Override
 	public AssetDisplayPageEntry addAssetDisplayPageEntry(
-		long assetEntryId, long layoutId) {
+		long assetEntryId, long layoutPageTemplateEntryId) {
 
 		long assetDisplayPageEntryId = counterLocalService.increment();
 
@@ -34,7 +34,8 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			assetDisplayPageEntryPersistence.create(assetDisplayPageEntryId);
 
 		assetDisplayPageEntry.setAssetEntryId(assetEntryId);
-		assetDisplayPageEntry.setLayoutId(layoutId);
+		assetDisplayPageEntry.setLayoutPageTemplateEntryId(
+			layoutPageTemplateEntryId);
 
 		assetDisplayPageEntryPersistence.update(assetDisplayPageEntry);
 

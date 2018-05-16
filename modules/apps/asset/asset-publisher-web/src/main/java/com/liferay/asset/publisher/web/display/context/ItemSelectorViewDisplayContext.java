@@ -43,4 +43,6 @@ public interface ItemSelectorViewDisplayContext {
 
 	public SiteItemSelectorCriterion getSiteItemSelectorCriterion();
 
+	public boolean showSearch();
+
 }

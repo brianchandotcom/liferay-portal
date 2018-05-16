@@ -77,6 +77,11 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		return groupSearch;
 	}
 
+	@Override
+	public boolean showSearch() {
+		return false;
+	}
+
 	private List<Group> _filterLayoutGroups(
 			List<Group> groups, Boolean privateLayout)
 		throws Exception {

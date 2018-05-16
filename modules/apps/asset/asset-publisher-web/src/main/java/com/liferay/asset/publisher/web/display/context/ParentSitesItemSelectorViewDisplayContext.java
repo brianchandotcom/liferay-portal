@@ -65,6 +65,11 @@ public class ParentSitesItemSelectorViewDisplayContext
 		return groupSearch;
 	}
 
+	@Override
+	public boolean showSearch() {
+		return false;
+	}
+
 	private List<Group> _filterParentSitesGroups(List<Group> groups) {
 		List<Group> filteredGroups = new ArrayList();
 

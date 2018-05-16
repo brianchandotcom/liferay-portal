@@ -153,6 +153,11 @@ public abstract class BaseItemSelectorViewDisplayContext
 		return _siteItemSelectorCriterion;
 	}
 
+	@Override
+	public boolean showSearch() {
+		return true;
+	}
+
 	protected final PortletURL portletURL;
 	protected final HttpServletRequest request;
 

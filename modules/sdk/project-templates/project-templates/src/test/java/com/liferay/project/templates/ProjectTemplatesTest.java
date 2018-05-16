@@ -3236,7 +3236,7 @@ public class ProjectTemplatesTest {
 
 				break;
 			}
-		};
+		}
 
 		String missingDependencyString = String.format(
 			"Missing dependency %s:%s:%s in %s", groupId, artifactId, version,

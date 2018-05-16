@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.message.boards.constants.MBPortletKeys;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -56,14 +55,8 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								StringBundler.concat(
-									"javascript:",
-									_liferayPortletResponse.getNamespace(),
-									"unbanUser();"));
-
+							dropdownItem.putData("action", "unbanUser");
 							dropdownItem.setIcon("unlock");
-
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "unban-user"));
 

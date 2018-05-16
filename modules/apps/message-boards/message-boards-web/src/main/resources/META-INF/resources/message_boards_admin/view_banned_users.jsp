@@ -34,6 +34,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 
 <clay:management-toolbar
 	actionDropdownItems="<%= mbBannedUsersManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	componentId="mbBannedUsersManagementToolbar"
 	disabled="<%= totalBannedUsers == 0 %>"
 	itemsTotal="<%= totalBannedUsers %>"
 	searchContainerId="mbBanUsers"
@@ -127,13 +128,32 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextForm
 PortalUtil.setPageSubtitle(LanguageUtil.get(request, "banned-users"), request);
 %>
 
-<aui:script>
-	function <portlet:namespace />unbanUser() {
+<aui:script sandbox="<%= true %>">
+	var unbanUser = function() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
 		form.fm('<%= Constants.CMD %>').val('unban');
 
 		submitForm(form, '<portlet:actionURL name="/message_boards/ban_user" />');
-	}
+	};
+
+	var ACTIONS = {
+		'unbanUser': unbanUser
+	};
+
+	Liferay.componentReady('mbBannedUsersManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

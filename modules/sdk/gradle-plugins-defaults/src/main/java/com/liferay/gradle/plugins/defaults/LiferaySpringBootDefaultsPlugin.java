@@ -15,8 +15,11 @@
 package com.liferay.gradle.plugins.defaults;
 
 import com.liferay.gradle.plugins.SourceFormatterDefaultsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+
+import java.io.File;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -37,6 +40,11 @@ public class LiferaySpringBootDefaultsPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		_applyPlugins(project);
+
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
+		GradlePluginsDefaultsUtil.configureRepositories(project, portalRootDir);
 
 		_configureProject(project);
 

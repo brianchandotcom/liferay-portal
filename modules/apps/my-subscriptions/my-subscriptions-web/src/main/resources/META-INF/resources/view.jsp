@@ -19,34 +19,19 @@
 <portlet:actionURL name="unsubscribe" var="unsubscribeURL" />
 
 <%
-int subscriptionsCount = SubscriptionLocalServiceUtil.getUserSubscriptionsCount(user.getUserId());
+MySubscriptionsManagementToolbarDisplayContext mySubscriptionsManagementToolbarDisplayContext = new MySubscriptionsManagementToolbarDisplayContext(request, liferayPortletResponse, user);
 
-PortletURL displayStyleURL = renderResponse.createRenderURL();
-
-displayStyleURL.setParameter("mvcRenderCommandName", "/mysubscriptions/view");
+int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotalItems();
 %>
 
-<liferay-frontend:management-bar
-	disabled="<%= subscriptionsCount <= 0 %>"
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionDropdownItems="<%= mySubscriptionsManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	disabled="<%= mySubscriptionsManagementToolbarDisplayContext.isDisabled() %>"
+	itemsTotal="<%= subscriptionsCount %>"
 	searchContainerId="subscriptions"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			navigationParam="entriesNavigation"
-			portletURL="<%= displayStyleURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= displayStyleURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	selectable="<%= mySubscriptionsManagementToolbarDisplayContext.isSelectable() %>"
+	showSearch="<%= mySubscriptionsManagementToolbarDisplayContext.isShowSearch() %>"
+/>
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= unsubscribeURL %>" method="get" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "unsubscribe();" %>'>
@@ -122,12 +107,6 @@ displayStyleURL.setParameter("mvcRenderCommandName", "/mysubscriptions/view");
 					markupView="lexicon"
 					resultRowSplitter="<%= new MySubscriptionsResultRowSplitter(locale) %>"
 				/>
-
-				<c:if test="<%= !results.isEmpty() %>">
-					<aui:button-row cssName="unsubscribe-button-row">
-						<aui:button type="submit" value="unsubscribe" />
-					</aui:button-row>
-				</c:if>
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:form>

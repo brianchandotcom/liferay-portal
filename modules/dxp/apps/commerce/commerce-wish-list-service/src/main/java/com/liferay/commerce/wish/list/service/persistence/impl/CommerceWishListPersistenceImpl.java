@@ -3146,7 +3146,7 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_LTC;
 		finderArgs = new Object[] {
-				userId, createDate,
+				userId, _getTime(createDate),
 				
 				start, end, orderByComparator
 			};
@@ -3558,7 +3558,7 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 	public int countByU_LtC(long userId, Date createDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_LTC;
 
-		Object[] finderArgs = new Object[] { userId, createDate };
+		Object[] finderArgs = new Object[] { userId, _getTime(createDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -5133,6 +5133,15 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_COMMERCEWISHLIST = "SELECT commerceWishList FROM CommerceWishList commerceWishList";
 	private static final String _SQL_SELECT_COMMERCEWISHLIST_WHERE_PKS_IN = "SELECT commerceWishList FROM CommerceWishList commerceWishList WHERE commerceWishListId IN (";
 	private static final String _SQL_SELECT_COMMERCEWISHLIST_WHERE = "SELECT commerceWishList FROM CommerceWishList commerceWishList WHERE ";

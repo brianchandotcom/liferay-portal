@@ -4762,7 +4762,7 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_U_LTC_O;
 		finderArgs = new Object[] {
-				userId, createDate, orderStatus,
+				userId, _getTime(createDate), orderStatus,
 				
 				start, end, orderByComparator
 			};
@@ -5197,7 +5197,9 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 	public int countByU_LtC_O(long userId, Date createDate, int orderStatus) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_LTC_O;
 
-		Object[] finderArgs = new Object[] { userId, createDate, orderStatus };
+		Object[] finderArgs = new Object[] {
+				userId, _getTime(createDate), orderStatus
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -6233,6 +6235,15 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_COMMERCEORDER = "SELECT commerceOrder FROM CommerceOrder commerceOrder";
 	private static final String _SQL_SELECT_COMMERCEORDER_WHERE_PKS_IN = "SELECT commerceOrder FROM CommerceOrder commerceOrder WHERE commerceOrderId IN (";
 	private static final String _SQL_SELECT_COMMERCEORDER_WHERE = "SELECT commerceOrder FROM CommerceOrder commerceOrder WHERE ";

@@ -76,15 +76,15 @@
 			WHERE
 				(CommerceWarehouse.groupId = ?) AND
 				(
-					(lower(CommerceWarehouse.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(CommerceWarehouse.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(CommerceWarehouse.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(
-						(lower(CommerceWarehouse.street1) LIKE ? [$AND_OR_NULL_CHECK$]) OR
-						(lower(CommerceWarehouse.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
-						(lower(CommerceWarehouse.street3) LIKE ? [$AND_OR_NULL_CHECK$])
+						(LOWER(CommerceWarehouse.street1) LIKE ? [$AND_OR_NULL_CHECK$]) OR
+						(LOWER(CommerceWarehouse.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
+						(LOWER(CommerceWarehouse.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					(lower(CommerceWarehouse.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(CommerceWarehouse.zip) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(CommerceWarehouse.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(CommerceWarehouse.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(CommerceWarehouse.commerceCountryId = ?) [$ALL$]
 		]]>
@@ -112,15 +112,15 @@
 			WHERE
 				(CommerceWarehouse.groupId = ?) AND
 				(
-					(lower(CommerceWarehouse.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(CommerceWarehouse.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(CommerceWarehouse.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(
-						(lower(CommerceWarehouse.street1) LIKE ? [$AND_OR_NULL_CHECK$]) OR
-						(lower(CommerceWarehouse.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
-						(lower(CommerceWarehouse.street3) LIKE ? [$AND_OR_NULL_CHECK$])
+						(LOWER(CommerceWarehouse.street1) LIKE ? [$AND_OR_NULL_CHECK$]) OR
+						(LOWER(CommerceWarehouse.street2) LIKE ? [$AND_OR_NULL_CHECK$]) OR
+						(LOWER(CommerceWarehouse.street3) LIKE ? [$AND_OR_NULL_CHECK$])
 					) [$AND_OR_CONNECTOR$]
-					(lower(CommerceWarehouse.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(lower(CommerceWarehouse.zip) LIKE ? [$AND_OR_NULL_CHECK$])
+					(LOWER(CommerceWarehouse.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(CommerceWarehouse.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(CommerceWarehouse.commerceCountryId = ?) [$ALL$]
 			ORDER BY

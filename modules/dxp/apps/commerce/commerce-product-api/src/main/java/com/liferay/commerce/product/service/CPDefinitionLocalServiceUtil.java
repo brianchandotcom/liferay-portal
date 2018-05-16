@@ -685,6 +685,33 @@ public class CPDefinitionLocalServiceUtil {
 			ignoreSKUCombinations, serviceContext);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinitionLocalization updateCPDefinitionLocalization(
+		com.liferay.commerce.product.model.CPDefinition cpDefinition,
+		String languageId, String name, String shortDescription,
+		String description, String metaTitle, String metaDescription,
+		String metaKeywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionLocalization(cpDefinition, languageId,
+			name, shortDescription, description, metaTitle, metaDescription,
+			metaKeywords);
+	}
+
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLocalization> updateCPDefinitionLocalizations(
+		com.liferay.commerce.product.model.CPDefinition cpDefinition,
+		java.util.Map<String, String> nameMap,
+		java.util.Map<String, String> shortDescriptionMap,
+		java.util.Map<String, String> descriptionMap,
+		java.util.Map<String, String> metaTitleMap,
+		java.util.Map<String, String> metaDescriptionMap,
+		java.util.Map<String, String> metaKeywordsMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCPDefinitionLocalizations(cpDefinition, nameMap,
+			shortDescriptionMap, descriptionMap, metaTitleMap,
+			metaDescriptionMap, metaKeywordsMap);
+	}
+
 	public static void updateCPDefinitionsByCPTaxCategoryId(
 		long cpTaxCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {

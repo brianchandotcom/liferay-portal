@@ -19,7 +19,6 @@
 				"match": "*_VALUE_ID",
 				"match_mapping_type": "string"
 			}
-
 		},
 		{
 			"template_terms_set_required_matches": {
@@ -30,7 +29,6 @@
 				"match": "*_required_matches",
 				"match_mapping_type": "string"
 			}
-
 		}
 	],
 	"properties": {

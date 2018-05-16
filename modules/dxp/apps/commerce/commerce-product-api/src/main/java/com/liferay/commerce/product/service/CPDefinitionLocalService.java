@@ -516,6 +516,18 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		long cpDefinitionId, boolean ignoreSKUCombinations,
 		ServiceContext serviceContext) throws PortalException;
 
+	public CPDefinitionLocalization updateCPDefinitionLocalization(
+		CPDefinition cpDefinition, String languageId, String name,
+		String shortDescription, String description, String metaTitle,
+		String metaDescription, String metaKeywords) throws PortalException;
+
+	public List<CPDefinitionLocalization> updateCPDefinitionLocalizations(
+		CPDefinition cpDefinition, Map<String, String> nameMap,
+		Map<String, String> shortDescriptionMap,
+		Map<String, String> descriptionMap, Map<String, String> metaTitleMap,
+		Map<String, String> metaDescriptionMap,
+		Map<String, String> metaKeywordsMap) throws PortalException;
+
 	public void updateCPDefinitionsByCPTaxCategoryId(long cpTaxCategoryId)
 		throws PortalException;
 

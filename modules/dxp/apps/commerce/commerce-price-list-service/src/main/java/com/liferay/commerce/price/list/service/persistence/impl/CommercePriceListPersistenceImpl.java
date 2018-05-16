@@ -4437,7 +4437,7 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTD_S;
 		finderArgs = new Object[] {
-				displayDate, status,
+				_getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -4849,7 +4849,7 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 	public int countByLtD_S(Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTD_S;
 
-		Object[] finderArgs = new Object[] { displayDate, status };
+		Object[] finderArgs = new Object[] { _getTime(displayDate), status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -5866,6 +5866,15 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_COMMERCEPRICELIST = "SELECT commercePriceList FROM CommercePriceList commercePriceList";
 	private static final String _SQL_SELECT_COMMERCEPRICELIST_WHERE_PKS_IN = "SELECT commercePriceList FROM CommercePriceList commercePriceList WHERE commercePriceListId IN (";
 	private static final String _SQL_SELECT_COMMERCEPRICELIST_WHERE = "SELECT commercePriceList FROM CommercePriceList commercePriceList WHERE ";

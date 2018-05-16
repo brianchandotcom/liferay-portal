@@ -700,7 +700,9 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	@Override
 	public CommerceForecastValue fetchByC_D(long commerceForecastEntryId,
 		Date date, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { commerceForecastEntryId, date };
+		Object[] finderArgs = new Object[] {
+				commerceForecastEntryId, _getTime(date)
+			};
 
 		Object result = null;
 
@@ -819,7 +821,9 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	public int countByC_D(long commerceForecastEntryId, Date date) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_D;
 
-		Object[] finderArgs = new Object[] { commerceForecastEntryId, date };
+		Object[] finderArgs = new Object[] {
+				commerceForecastEntryId, _getTime(date)
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -996,7 +1000,7 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 		CommerceForecastValueModelImpl commerceForecastValueModelImpl) {
 		Object[] args = new Object[] {
 				commerceForecastValueModelImpl.getCommerceForecastEntryId(),
-				commerceForecastValueModelImpl.getDate()
+				_getTime(commerceForecastValueModelImpl.getDate())
 			};
 
 		finderCache.putResult(FINDER_PATH_COUNT_BY_C_D, args, Long.valueOf(1),
@@ -1011,7 +1015,7 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					commerceForecastValueModelImpl.getCommerceForecastEntryId(),
-					commerceForecastValueModelImpl.getDate()
+					_getTime(commerceForecastValueModelImpl.getDate())
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_D, args);
@@ -1022,7 +1026,7 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 				FINDER_PATH_FETCH_BY_C_D.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					commerceForecastValueModelImpl.getOriginalCommerceForecastEntryId(),
-					commerceForecastValueModelImpl.getOriginalDate()
+					_getTime(commerceForecastValueModelImpl.getOriginalDate())
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_D, args);
@@ -1667,6 +1671,15 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_COMMERCEFORECASTVALUE = "SELECT commerceForecastValue FROM CommerceForecastValue commerceForecastValue";
 	private static final String _SQL_SELECT_COMMERCEFORECASTVALUE_WHERE_PKS_IN = "SELECT commerceForecastValue FROM CommerceForecastValue commerceForecastValue WHERE commerceForecastValueId IN (";
 	private static final String _SQL_SELECT_COMMERCEFORECASTVALUE_WHERE = "SELECT commerceForecastValue FROM CommerceForecastValue commerceForecastValue WHERE ";

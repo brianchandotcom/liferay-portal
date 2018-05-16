@@ -547,40 +547,30 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 		return cpDefinitionLocalizationPersistence.findByCPDefinitionId(CPDefinitionId);
 	}
 
-	protected CPDefinitionLocalization updateCPDefinitionLocalization(
+	@Override
+	public CPDefinitionLocalization updateCPDefinitionLocalization(
 		CPDefinition cpDefinition, String languageId, String name,
 		String shortDescription, String description, String metaTitle,
 		String metaDescription, String metaKeywords) throws PortalException {
+		cpDefinition = cpDefinitionPersistence.findByPrimaryKey(cpDefinition.getPrimaryKey());
+
 		CPDefinitionLocalization cpDefinitionLocalization = cpDefinitionLocalizationPersistence.fetchByCPDefinitionId_LanguageId(cpDefinition.getCPDefinitionId(),
 				languageId);
 
-		if (cpDefinitionLocalization == null) {
-			long cpDefinitionLocalizationId = counterLocalService.increment(CPDefinitionLocalization.class.getName());
-
-			cpDefinitionLocalization = cpDefinitionLocalizationPersistence.create(cpDefinitionLocalizationId);
-
-			cpDefinitionLocalization.setCPDefinitionId(cpDefinition.getCPDefinitionId());
-			cpDefinitionLocalization.setLanguageId(languageId);
-		}
-
-		cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
-
-		cpDefinitionLocalization.setName(name);
-		cpDefinitionLocalization.setShortDescription(shortDescription);
-		cpDefinitionLocalization.setDescription(description);
-		cpDefinitionLocalization.setMetaTitle(metaTitle);
-		cpDefinitionLocalization.setMetaDescription(metaDescription);
-		cpDefinitionLocalization.setMetaKeywords(metaKeywords);
-
-		return cpDefinitionLocalizationPersistence.update(cpDefinitionLocalization);
+		return _updateCPDefinitionLocalization(cpDefinition,
+			cpDefinitionLocalization, languageId, name, shortDescription,
+			description, metaTitle, metaDescription, metaKeywords);
 	}
 
-	protected List<CPDefinitionLocalization> updateCPDefinitionLocalizations(
+	@Override
+	public List<CPDefinitionLocalization> updateCPDefinitionLocalizations(
 		CPDefinition cpDefinition, Map<String, String> nameMap,
 		Map<String, String> shortDescriptionMap,
 		Map<String, String> descriptionMap, Map<String, String> metaTitleMap,
 		Map<String, String> metaDescriptionMap,
 		Map<String, String> metaKeywordsMap) throws PortalException {
+		cpDefinition = cpDefinitionPersistence.findByPrimaryKey(cpDefinition.getPrimaryKey());
+
 		Map<String, String[]> localizedValuesMap = new HashMap<String, String[]>();
 
 		for (Map.Entry<String, String> entry : nameMap.entrySet()) {
@@ -717,6 +707,33 @@ public abstract class CPDefinitionLocalServiceBaseImpl
 		}
 
 		return cpDefinitionLocalizations;
+	}
+
+	private CPDefinitionLocalization _updateCPDefinitionLocalization(
+		CPDefinition cpDefinition,
+		CPDefinitionLocalization cpDefinitionLocalization, String languageId,
+		String name, String shortDescription, String description,
+		String metaTitle, String metaDescription, String metaKeywords)
+		throws PortalException {
+		if (cpDefinitionLocalization == null) {
+			long cpDefinitionLocalizationId = counterLocalService.increment(CPDefinitionLocalization.class.getName());
+
+			cpDefinitionLocalization = cpDefinitionLocalizationPersistence.create(cpDefinitionLocalizationId);
+
+			cpDefinitionLocalization.setCPDefinitionId(cpDefinition.getCPDefinitionId());
+			cpDefinitionLocalization.setLanguageId(languageId);
+		}
+
+		cpDefinitionLocalization.setCompanyId(cpDefinition.getCompanyId());
+
+		cpDefinitionLocalization.setName(name);
+		cpDefinitionLocalization.setShortDescription(shortDescription);
+		cpDefinitionLocalization.setDescription(description);
+		cpDefinitionLocalization.setMetaTitle(metaTitle);
+		cpDefinitionLocalization.setMetaDescription(metaDescription);
+		cpDefinitionLocalization.setMetaKeywords(metaKeywords);
+
+		return cpDefinitionLocalizationPersistence.update(cpDefinitionLocalization);
 	}
 
 	/**

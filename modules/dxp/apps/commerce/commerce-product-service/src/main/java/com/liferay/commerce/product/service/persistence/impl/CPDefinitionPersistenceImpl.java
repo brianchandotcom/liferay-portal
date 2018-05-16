@@ -5281,7 +5281,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTD_S;
 		finderArgs = new Object[] {
-				displayDate, status,
+				_getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -5693,7 +5693,7 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	public int countByLtD_S(Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTD_S;
 
-		Object[] finderArgs = new Object[] { displayDate, status };
+		Object[] finderArgs = new Object[] { _getTime(displayDate), status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -6661,6 +6661,15 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_CPDEFINITION = "SELECT cpDefinition FROM CPDefinition cpDefinition";
 	private static final String _SQL_SELECT_CPDEFINITION_WHERE_PKS_IN = "SELECT cpDefinition FROM CPDefinition cpDefinition WHERE CPDefinitionId IN (";
 	private static final String _SQL_SELECT_CPDEFINITION_WHERE = "SELECT cpDefinition FROM CPDefinition cpDefinition WHERE ";

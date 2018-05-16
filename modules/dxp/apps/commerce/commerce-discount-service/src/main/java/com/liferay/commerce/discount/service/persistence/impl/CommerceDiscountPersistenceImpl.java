@@ -2455,7 +2455,7 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTD_S;
 		finderArgs = new Object[] {
-				displayDate, status,
+				_getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -2867,7 +2867,7 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 	public int countByLtD_S(Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTD_S;
 
-		Object[] finderArgs = new Object[] { displayDate, status };
+		Object[] finderArgs = new Object[] { _getTime(displayDate), status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -3021,7 +3021,7 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTE_S;
 		finderArgs = new Object[] {
-				expirationDate, status,
+				_getTime(expirationDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -3433,7 +3433,7 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 	public int countByLtE_S(Date expirationDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTE_S;
 
-		Object[] finderArgs = new Object[] { expirationDate, status };
+		Object[] finderArgs = new Object[] { _getTime(expirationDate), status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -4331,6 +4331,15 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_COMMERCEDISCOUNT = "SELECT commerceDiscount FROM CommerceDiscount commerceDiscount";
 	private static final String _SQL_SELECT_COMMERCEDISCOUNT_WHERE_PKS_IN = "SELECT commerceDiscount FROM CommerceDiscount commerceDiscount WHERE commerceDiscountId IN (";
 	private static final String _SQL_SELECT_COMMERCEDISCOUNT_WHERE = "SELECT commerceDiscount FROM CommerceDiscount commerceDiscount WHERE ";

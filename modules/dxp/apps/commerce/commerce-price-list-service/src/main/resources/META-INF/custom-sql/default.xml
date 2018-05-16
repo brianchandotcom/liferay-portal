@@ -9,7 +9,7 @@
 				CommercePriceList
 			WHERE
 				(CommercePriceList.expirationDate < ?)  AND
-				(CommercePriceList.expirationDate is not null) AND
+				(CommercePriceList.expirationDate IS NOT NULL) AND
 				([$OWNER_USER_ID$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 		]]>
 	</sql>

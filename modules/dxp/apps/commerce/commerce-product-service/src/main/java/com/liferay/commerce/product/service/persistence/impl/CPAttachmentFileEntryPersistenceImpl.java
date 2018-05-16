@@ -2145,7 +2145,7 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTD_S;
 		finderArgs = new Object[] {
-				displayDate, status,
+				_getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -2558,7 +2558,7 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 	public int countByLtD_S(Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTD_S;
 
-		Object[] finderArgs = new Object[] { displayDate, status };
+		Object[] finderArgs = new Object[] { _getTime(displayDate), status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2728,7 +2728,7 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_LTD_S;
 		finderArgs = new Object[] {
-				classNameId, classPK, displayDate, status,
+				classNameId, classPK, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -3198,7 +3198,7 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_C_LTD_S;
 
 		Object[] finderArgs = new Object[] {
-				classNameId, classPK, displayDate, status
+				classNameId, classPK, _getTime(displayDate), status
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -5403,6 +5403,15 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_CPATTACHMENTFILEENTRY = "SELECT cpAttachmentFileEntry FROM CPAttachmentFileEntry cpAttachmentFileEntry";
 	private static final String _SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE_PKS_IN = "SELECT cpAttachmentFileEntry FROM CPAttachmentFileEntry cpAttachmentFileEntry WHERE CPAttachmentFileEntryId IN (";
 	private static final String _SQL_SELECT_CPATTACHMENTFILEENTRY_WHERE = "SELECT cpAttachmentFileEntry FROM CPAttachmentFileEntry cpAttachmentFileEntry WHERE ";

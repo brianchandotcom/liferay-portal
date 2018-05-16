@@ -5488,7 +5488,7 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTD_S;
 		finderArgs = new Object[] {
-				displayDate, status,
+				_getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -5900,7 +5900,7 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 	public int countByLtD_S(Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTD_S;
 
-		Object[] finderArgs = new Object[] { displayDate, status };
+		Object[] finderArgs = new Object[] { _getTime(displayDate), status };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -6063,7 +6063,7 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTD_S;
 		finderArgs = new Object[] {
-				CPDefinitionId, displayDate, status,
+				CPDefinitionId, _getTime(displayDate), status,
 				
 				start, end, orderByComparator
 			};
@@ -6503,7 +6503,9 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 	public int countByC_LtD_S(long CPDefinitionId, Date displayDate, int status) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTD_S;
 
-		Object[] finderArgs = new Object[] { CPDefinitionId, displayDate, status };
+		Object[] finderArgs = new Object[] {
+				CPDefinitionId, _getTime(displayDate), status
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -7539,6 +7541,15 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_CPINSTANCE = "SELECT cpInstance FROM CPInstance cpInstance";
 	private static final String _SQL_SELECT_CPINSTANCE_WHERE_PKS_IN = "SELECT cpInstance FROM CPInstance cpInstance WHERE CPInstanceId IN (";
 	private static final String _SQL_SELECT_CPINSTANCE_WHERE = "SELECT cpInstance FROM CPInstance cpInstance WHERE ";

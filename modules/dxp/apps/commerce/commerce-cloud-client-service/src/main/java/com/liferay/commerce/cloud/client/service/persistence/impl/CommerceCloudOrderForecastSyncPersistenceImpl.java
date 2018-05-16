@@ -402,11 +402,15 @@ public class CommerceCloudOrderForecastSyncPersistenceImpl
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_SYNCDATE;
-			finderArgs = new Object[] { syncDate };
+			finderArgs = new Object[] { _getTime(syncDate) };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_SYNCDATE;
-			finderArgs = new Object[] { syncDate, start, end, orderByComparator };
+			finderArgs = new Object[] {
+					_getTime(syncDate),
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<CommerceCloudOrderForecastSync> list = null;
@@ -799,7 +803,7 @@ public class CommerceCloudOrderForecastSyncPersistenceImpl
 	public int countBySyncDate(Date syncDate) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SYNCDATE;
 
-		Object[] finderArgs = new Object[] { syncDate };
+		Object[] finderArgs = new Object[] { _getTime(syncDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1627,6 +1631,15 @@ public class CommerceCloudOrderForecastSyncPersistenceImpl
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_COMMERCECLOUDORDERFORECASTSYNC = "SELECT commerceCloudOrderForecastSync FROM CommerceCloudOrderForecastSync commerceCloudOrderForecastSync";
 	private static final String _SQL_SELECT_COMMERCECLOUDORDERFORECASTSYNC_WHERE_PKS_IN =
 		"SELECT commerceCloudOrderForecastSync FROM CommerceCloudOrderForecastSync commerceCloudOrderForecastSync WHERE CCOrderForecastSyncId IN (";

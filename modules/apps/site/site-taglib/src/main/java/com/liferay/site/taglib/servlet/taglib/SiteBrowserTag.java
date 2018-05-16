@@ -67,6 +67,10 @@ public class SiteBrowserTag extends IncludeTag {
 		_selectedGroupIds = selectedGroupIds;
 	}
 
+	public void setShowSearch(boolean showSearch) {
+		_showSearch = showSearch;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -78,6 +82,7 @@ public class SiteBrowserTag extends IncludeTag {
 		_groupsCount = 0;
 		_portletURL = null;
 		_selectedGroupIds = null;
+		_showSearch = false;
 	}
 
 	@Override
@@ -100,6 +105,8 @@ public class SiteBrowserTag extends IncludeTag {
 			"liferay-site:site-browser:portletURL", _portletURL);
 		request.setAttribute(
 			"liferay-site:site-browser:selectedGroupIds", _selectedGroupIds);
+		request.setAttribute(
+			"liferay-site:site-browser:showSearch", _showSearch);
 	}
 
 	private String _getEmptyResultsMessage(HttpServletRequest request) {
@@ -119,5 +126,6 @@ public class SiteBrowserTag extends IncludeTag {
 	private int _groupsCount;
 	private PortletURL _portletURL;
 	private long[] _selectedGroupIds;
+	private boolean _showSearch;
 
 }

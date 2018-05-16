@@ -14,12 +14,16 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<c:if test="<%= !localPublishing || (backgroundTask.getGroupId() != liveGroupId) %>">
+	<portlet:actionURL name="editPublishConfiguration" var="relaunchURL">
+		<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
+		<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
+		<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+	</portlet:actionURL>
 
-<liferay-staging:process-list
-	emptyResultsMessage="no-publication-processes-were-found"
-	localTaskExecutorClassName="<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>"
-	mvcRenderCommandName="publishLayoutsView"
-	remoteTaskExecutorClassName="<%= BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR %>"
-	resultRowSplitter="<%= new PublishResultRowSplitter() %>"
-/>
+	<liferay-ui:icon
+		message="relaunch"
+		url="<%= relaunchURL %>"
+	/>
+</c:if>

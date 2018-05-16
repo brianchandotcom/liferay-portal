@@ -33,6 +33,10 @@ public class ProcessListMenuTag extends IncludeTag {
 		_backgroundTask = backgroundTask;
 	}
 
+	public void setDeleteMenu(boolean deleteMenu) {
+		_deleteMenu = deleteMenu;
+	}
+
 	public void setLocalPublishing(boolean localPublishing) {
 		_localPublishing = localPublishing;
 	}
@@ -44,12 +48,23 @@ public class ProcessListMenuTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setRelaunchMenu(boolean relaunchMenu) {
+		_relaunchMenu = relaunchMenu;
+	}
+
+	public void setSummaryMenu(boolean summaryMenu) {
+		_summaryMenu = summaryMenu;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_backgroundTask = null;
+		_deleteMenu = true;
 		_localPublishing = false;
+		_relaunchMenu = true;
+		_summaryMenu = true;
 	}
 
 	@Override
@@ -63,13 +78,22 @@ public class ProcessListMenuTag extends IncludeTag {
 			"liferay-staging:process-list-menu:backgroundTask",
 			_backgroundTask);
 		request.setAttribute(
+			"liferay-staging:process-list-menu:deleteMenu", _deleteMenu);
+		request.setAttribute(
 			"liferay-staging:process-list-menu:localPublishing",
 			_localPublishing);
+		request.setAttribute(
+			"liferay-staging:process-list-menu:relaunchMenu", _relaunchMenu);
+		request.setAttribute(
+			"liferay-staging:process-list-menu:summaryMenu", _summaryMenu);
 	}
 
 	private static final String _PAGE = "/process_list_menu/page.jsp";
 
 	private BackgroundTask _backgroundTask;
+	private boolean _deleteMenu = true;
 	private boolean _localPublishing;
+	private boolean _relaunchMenu = true;
+	private boolean _summaryMenu = true;
 
 }

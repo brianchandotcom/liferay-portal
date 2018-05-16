@@ -43,17 +43,17 @@
 		<liferay-ui:search-container-results>
 
 			<%
-			int importProcessesCount = 0;
-			List<BackgroundTask> importProcesses = null;
+			int tasksCount = 0;
+			List<BackgroundTask> tasks = null;
 
 			if (navigation.equals("all")) {
-				importProcessesCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, liveGroupId}, taskExecutorClassName);
+				tasksCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, liveGroupId}, taskExecutorClassName);
 
 				if (orderByCol.equals("duration")) {
-					importProcesses = BackgroundTaskManagerUtil.getBackgroundTasksByDuration(new long[] {groupId, liveGroupId}, new String[] {taskExecutorClassName}, searchContainer.getStart(), searchContainer.getEnd(), StringUtil.equalsIgnoreCase("asc", orderByType));
+					tasks = BackgroundTaskManagerUtil.getBackgroundTasksByDuration(new long[] {groupId, liveGroupId}, new String[] {taskExecutorClassName}, searchContainer.getStart(), searchContainer.getEnd(), StringUtil.equalsIgnoreCase("asc", orderByType));
 				}
 				else {
-					importProcesses = BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {groupId, liveGroupId}, taskExecutorClassName, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					tasks = BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {groupId, liveGroupId}, taskExecutorClassName, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 				}
 			}
 			else {
@@ -63,18 +63,18 @@
 					completed = true;
 				}
 
-				importProcessesCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, liveGroupId}, taskExecutorClassName, completed);
+				tasksCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, liveGroupId}, taskExecutorClassName, completed);
 
 				if (orderByCol.equals("duration")) {
-					importProcesses = BackgroundTaskManagerUtil.getBackgroundTasksByDuration(new long[] {groupId, liveGroupId}, new String[] {taskExecutorClassName}, completed, searchContainer.getStart(), searchContainer.getEnd(), StringUtil.equalsIgnoreCase("asc", orderByType));
+					tasks = BackgroundTaskManagerUtil.getBackgroundTasksByDuration(new long[] {groupId, liveGroupId}, new String[] {taskExecutorClassName}, completed, searchContainer.getStart(), searchContainer.getEnd(), StringUtil.equalsIgnoreCase("asc", orderByType));
 				}
 				else {
-					importProcesses = BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {groupId, liveGroupId}, taskExecutorClassName, completed, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					tasks = BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {groupId, liveGroupId}, taskExecutorClassName, completed, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 				}
 			}
 
-			searchContainer.setResults(importProcesses);
-			searchContainer.setTotal(importProcessesCount);
+			searchContainer.setResults(tasks);
+			searchContainer.setTotal(tasksCount);
 			%>
 
 		</liferay-ui:search-container-results>
@@ -160,7 +160,10 @@
 			>
 				<liferay-staging:process-list-menu
 					backgroundTask="<%= backgroundTask %>"
+					deleteMenu="<%= deleteMenu %>"
 					localPublishing="<%= localPublishing %>"
+					relaunchMenu="<%= relaunchMenu %>"
+					summaryMenu="<%= summaryMenu %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

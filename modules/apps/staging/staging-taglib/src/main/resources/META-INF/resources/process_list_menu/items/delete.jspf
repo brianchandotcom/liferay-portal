@@ -14,12 +14,12 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTaskURL">
+	<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
+	<portlet:param name="deleteBackgroundTaskIds" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+</portlet:actionURL>
 
-<liferay-staging:process-list
-	emptyResultsMessage="no-publication-processes-were-found"
-	localTaskExecutorClassName="<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>"
-	mvcRenderCommandName="publishLayoutsView"
-	remoteTaskExecutorClassName="<%= BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR %>"
-	resultRowSplitter="<%= new PublishResultRowSplitter() %>"
+<liferay-ui:icon
+	message="<%= deleteLabel %>"
+	url="<%= deleteBackgroundTaskURL %>"
 />

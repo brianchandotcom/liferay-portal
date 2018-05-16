@@ -23,45 +23,15 @@
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= !localPublishing || (backgroundTask.getGroupId() != liveGroupId) %>">
-		<portlet:actionURL name="editPublishConfiguration" var="relaunchURL">
-			<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
-			<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
-			<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon
-			message="relaunch"
-			url="<%= relaunchURL %>"
-		/>
+	<c:if test="<%= relaunchMenu %>">
+		<%@ include file="/process_list_menu/items/relaunch.jspf" %>
 	</c:if>
 
-	<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTaskURL">
-		<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
-		<portlet:param name="deleteBackgroundTaskIds" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= deleteMenu %>">
+		<%@ include file="/process_list_menu/items/delete.jspf" %>
+	</c:if>
 
-	<liferay-ui:icon
-		message="<%= deleteLabel %>"
-		url="<%= deleteBackgroundTaskURL %>"
-	/>
-
-	<%
-	long exportImportConfigurationId = MapUtil.getLong(backgroundTask.getTaskContextMap(), "exportImportConfigurationId");
-
-	ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
-
-	Map<String, Serializable> settingsMap = exportImportConfiguration.getSettingsMap();
-
-	Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("parameterMap");
-
-	String processCmd = MapUtil.getString(parameterMap, "cmd");
-	%>
-
-	<c:if test="<%= backgroundTask.isCompleted() && Validator.isNotNull(processCmd) %>">
-		<liferay-staging:process-summary-link
-			backgroundTaskId="<%= backgroundTask.getBackgroundTaskId() %>"
-		/>
+	<c:if test="<%= summaryMenu %>">
+		<%@ include file="/process_list_menu/items/summary.jspf" %>
 	</c:if>
 </liferay-ui:icon-menu>

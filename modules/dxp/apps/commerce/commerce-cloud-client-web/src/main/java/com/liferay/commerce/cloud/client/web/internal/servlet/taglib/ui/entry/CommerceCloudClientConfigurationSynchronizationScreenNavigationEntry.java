@@ -25,11 +25,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=30",
+	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )
 public class
-	CommerceCloudClientConfigurationForecastingScreenNavigationEntry
+	CommerceCloudClientConfigurationSynchronizationScreenNavigationEntry
 		extends BaseCommerceCloudClientConfigurationScreenNavigationEntry {
 
 	@Override
@@ -40,8 +40,8 @@ public class
 
 	@Override
 	public String getEntryKey() {
-		return
-			CommerceCloudClientScreenNavigationConstants.ENTRY_KEY_FORECASTING;
+		return CommerceCloudClientScreenNavigationConstants.
+			ENTRY_KEY_SYNCHRONIZATION;
 	}
 
 	@Override
@@ -49,9 +49,7 @@ public class
 		User user,
 		EditConfigurationDisplayContext editConfigurationDisplayContext) {
 
-		if (editConfigurationDisplayContext.
-				getForecastingConfiguration() != null) {
-
+		if (editConfigurationDisplayContext.getProjectConfiguration() != null) {
 			return true;
 		}
 
@@ -60,7 +58,7 @@ public class
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/forecasting.jsp";
+		return "/configuration/synchronization.jsp";
 	}
 
 }

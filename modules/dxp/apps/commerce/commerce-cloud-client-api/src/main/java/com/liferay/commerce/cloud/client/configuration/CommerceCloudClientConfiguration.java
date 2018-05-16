@@ -35,6 +35,9 @@ public interface CommerceCloudClientConfiguration {
 	@Meta.AD(required = false)
 	public boolean forecastingEnabled();
 
+	@Meta.AD(deflt = "60", required = false)
+	public int forecastingEntriesCheckInterval();
+
 	@Meta.AD(deflt = "1", required = false)
 	public int forecastingOrdersCheckInterval();
 
@@ -43,6 +46,9 @@ public interface CommerceCloudClientConfiguration {
 
 	@Meta.AD(required = false)
 	public String projectId();
+
+	@Meta.AD(required = false)
+	public boolean pushSynchronizationEnabled();
 
 	@Meta.AD(required = false)
 	public String serverHost();

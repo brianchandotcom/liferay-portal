@@ -18,6 +18,7 @@ import com.liferay.commerce.cloud.client.configuration.CommerceCloudClientConfig
 import com.liferay.commerce.cloud.client.exception.CommerceCloudClientException;
 import com.liferay.commerce.cloud.client.util.CommerceCloudClient;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -37,6 +38,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +54,8 @@ public class EditConfigurationDisplayContext {
 		ResourceBundleLoader commerceOrderResourceBundleLoader,
 		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
-		Portal portal, RenderResponse renderResponse) {
+		Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		_commerceCloudClient = commerceCloudClient;
 		_commerceCloudClientResourceBundleLoader =
@@ -62,6 +65,7 @@ public class EditConfigurationDisplayContext {
 		_httpServletRequest = httpServletRequest;
 		_jsonFactory = jsonFactory;
 		_portal = portal;
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		addBreadcrumbEntries();
@@ -84,24 +88,14 @@ public class EditConfigurationDisplayContext {
 		return _commerceCloudClientConfiguration;
 	}
 
+	public String getDefaultCallbackHost() {
+		return _portal.getHost(_renderRequest);
+	}
+
 	public JSONObject getForecastingConfiguration() {
 		if (_forecastingConfiguration == null) {
-			JSONObject jsonObject = null;
-
-			try {
-				jsonObject = _commerceCloudClient.getForecastingConfiguration();
-			}
-			catch (CommerceCloudClientException.MustBeConfigured mbc) {
-			}
-			catch (CommerceCloudClientException ccce) {
-				_log.error(ccce, ccce);
-
-				jsonObject = _jsonFactory.createJSONObject();
-
-				jsonObject.putException(ccce);
-			}
-
-			_forecastingConfiguration = Optional.ofNullable(jsonObject);
+			_forecastingConfiguration = getConfiguration(
+				_commerceCloudClient::getForecastingConfiguration);
 		}
 
 		return _forecastingConfiguration.orElse(null);
@@ -138,9 +132,8 @@ public class EditConfigurationDisplayContext {
 	}
 
 	public String getOrderStatusLabel(int orderStatus) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		ResourceBundle resourceBundle =
 			_commerceOrderResourceBundleLoader.loadResourceBundle(
@@ -149,6 +142,15 @@ public class EditConfigurationDisplayContext {
 		return LanguageUtil.get(
 			resourceBundle,
 			CommerceOrderConstants.getOrderStatusLabel(orderStatus));
+	}
+
+	public JSONObject getProjectConfiguration() {
+		if (_projectConfiguration == null) {
+			_projectConfiguration = getConfiguration(
+				_commerceCloudClient::getProjectConfiguration);
+		}
+
+		return _projectConfiguration.orElse(null);
 	}
 
 	public String getViewCategoryURL() {
@@ -185,6 +187,27 @@ public class EditConfigurationDisplayContext {
 			_httpServletRequest, configurationName, null);
 	}
 
+	protected Optional<JSONObject> getConfiguration(
+		UnsafeSupplier<JSONObject, CommerceCloudClientException> supplier) {
+
+		JSONObject jsonObject = null;
+
+		try {
+			jsonObject = supplier.get();
+		}
+		catch (CommerceCloudClientException.MustBeConfigured mbc) {
+		}
+		catch (CommerceCloudClientException ccce) {
+			_log.error(ccce, ccce);
+
+			jsonObject = _jsonFactory.createJSONObject();
+
+			jsonObject.putException(ccce);
+		}
+
+		return Optional.ofNullable(jsonObject);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditConfigurationDisplayContext.class);
 
@@ -197,6 +220,8 @@ public class EditConfigurationDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
 	private final Portal _portal;
+	private Optional<JSONObject> _projectConfiguration;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 
 }

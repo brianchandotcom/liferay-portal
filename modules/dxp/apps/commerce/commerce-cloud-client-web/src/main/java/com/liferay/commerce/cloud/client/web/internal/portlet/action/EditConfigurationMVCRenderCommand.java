@@ -67,7 +67,8 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 					_commerceCloudClient,
 					_commerceCloudClientResourceBundleLoader,
 					_commerceOrderResourceBundleLoader, _configurationProvider,
-					httpServletRequest, _jsonFactory, _portal, renderResponse);
+					httpServletRequest, _jsonFactory, _portal, renderRequest,
+					renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,

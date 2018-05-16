@@ -34,11 +34,17 @@ public interface CommerceCloudClient {
 	public JSONObject getForecastingConfiguration()
 		throws CommerceCloudClientException;
 
+	public JSONObject getProjectConfiguration()
+		throws CommerceCloudClientException;
+
 	public void sync(
 			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws CommerceCloudClientException;
 
 	public void updateForecastingConfiguration(JSONObject jsonObject)
+		throws CommerceCloudClientException;
+
+	public void updateProjectConfiguration(String callbackHost)
 		throws CommerceCloudClientException;
 
 }

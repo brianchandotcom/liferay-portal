@@ -69,6 +69,11 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 
 				updateCommerceCloudClientConfiguration(actionRequest);
 			}
+			else if (cmd.equals("synchronization")) {
+				updateProjectConfiguration(actionRequest);
+
+				updateCommerceCloudClientConfiguration(actionRequest);
+			}
 		}
 		catch (CommerceCloudClientException ccce) {
 			_log.error(ccce, ccce);
@@ -127,12 +132,18 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		int forecastingOrderStatus = ParamUtil.getInteger(
 			actionRequest, "forecastingOrderStatus",
 			commerceCloudClientConfiguration.forecastingOrderStatus());
+		int forecastingEntriesCheckInterval = ParamUtil.getInteger(
+			actionRequest, "forecastingEntriesCheckInterval",
+			commerceCloudClientConfiguration.forecastingEntriesCheckInterval());
 		int forecastingOrdersCheckInterval = ParamUtil.getInteger(
 			actionRequest, "forecastingOrdersCheckInterval",
 			commerceCloudClientConfiguration.forecastingOrdersCheckInterval());
 		String projectId = ParamUtil.getString(
 			actionRequest, "projectId",
 			commerceCloudClientConfiguration.projectId());
+		boolean pushSynchronizationEnabled = ParamUtil.getBoolean(
+			actionRequest, "pushSynchronizationEnabled",
+			commerceCloudClientConfiguration.pushSynchronizationEnabled());
 		String serverHost = ParamUtil.getString(
 			actionRequest, "serverHost",
 			commerceCloudClientConfiguration.serverHost());
@@ -142,8 +153,12 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		properties.put("forecastingEnabled", forecastingEnabled);
 		properties.put("forecastingOrderStatus", forecastingOrderStatus);
 		properties.put(
+			"forecastingEntriesCheckInterval", forecastingEntriesCheckInterval);
+		properties.put(
 			"forecastingOrdersCheckInterval", forecastingOrdersCheckInterval);
 		properties.put("projectId", projectId);
+		properties.put(
+			"pushSynchronizationEnabled", pushSynchronizationEnabled);
 		properties.put("serverHost", serverHost);
 
 		_configurationProvider.saveSystemConfiguration(
@@ -166,6 +181,21 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 		jsonObject.put("timeZoneOffset", timeZoneOffset);
 
 		_commerceCloudClient.updateForecastingConfiguration(jsonObject);
+	}
+
+	protected void updateProjectConfiguration(ActionRequest actionRequest)
+		throws Exception {
+
+		String callbackHost = ParamUtil.getString(
+			actionRequest, "callbackHost");
+		boolean pushSynchronizationEnabled = ParamUtil.getBoolean(
+			actionRequest, "pushSynchronizationEnabled");
+
+		if (!pushSynchronizationEnabled) {
+			callbackHost = null;
+		}
+
+		_commerceCloudClient.updateProjectConfiguration(callbackHost);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -25,6 +25,8 @@ public class CommerceCloudClientScreenNavigationConstants {
 
 	public static final String ENTRY_KEY_FORECASTING = "forecasting";
 
+	public static final String ENTRY_KEY_SYNCHRONIZATION = "synchronization";
+
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_CLOUD_CLIENT_CONFIGURATION =
 			"commerce.cloud.client.configuration.form";

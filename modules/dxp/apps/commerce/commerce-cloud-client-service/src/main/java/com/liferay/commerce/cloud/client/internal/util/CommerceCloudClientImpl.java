@@ -106,6 +106,21 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	@Override
+	public JSONObject getProjectConfiguration()
+		throws CommerceCloudClientException {
+
+		try {
+			return doGetProjectConfiguration();
+		}
+		catch (CommerceCloudClientException ccce) {
+			throw ccce;
+		}
+		catch (Exception e) {
+			throw new CommerceCloudClientException(e);
+		}
+	}
+
+	@Override
 	public void sync(
 			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws CommerceCloudClientException {
@@ -134,6 +149,21 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		options.setBody(
 			jsonObject.toJSONString(), ContentTypes.APPLICATION_JSON,
 			StringPool.UTF8);
+		options.setLocation(location);
+		options.setPost(true);
+
+		executeRequest(options);
+	}
+
+	@Override
+	public void updateProjectConfiguration(String callbackHost)
+		throws CommerceCloudClientException {
+
+		String location = getLocation(StringPool.BLANK);
+
+		Http.Options options = new Http.Options();
+
+		options.addPart("callbackHost", callbackHost);
 		options.setLocation(location);
 		options.setPost(true);
 
@@ -197,6 +227,18 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 	protected JSONObject doGetForecastingConfiguration() throws Exception {
 		String location = getLocation("/forecast");
+
+		Http.Options options = new Http.Options();
+
+		options.setLocation(location);
+
+		String json = executeRequest(options);
+
+		return _jsonFactory.createJSONObject(json);
+	}
+
+	protected JSONObject doGetProjectConfiguration() throws Exception {
+		String location = getLocation(StringPool.BLANK);
 
 		Http.Options options = new Http.Options();
 

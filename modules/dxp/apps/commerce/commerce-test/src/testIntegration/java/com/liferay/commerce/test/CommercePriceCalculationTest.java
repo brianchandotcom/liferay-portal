@@ -85,7 +85,6 @@ public class CommercePriceCalculationTest {
 
 		_buyerUser1 = UserTestUtil.addOrganizationUser(
 			_organization, RoleConstants.ORGANIZATION_USER);
-
 		_buyerUser2 = UserTestUtil.addOrganizationUser(
 			_organization, RoleConstants.ORGANIZATION_USER);
 	}
@@ -172,8 +171,7 @@ public class CommercePriceCalculationTest {
 				null, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency,
-				_buyerUser1);
+			commerceCurrency, _buyerUser1);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -270,16 +268,10 @@ public class CommercePriceCalculationTest {
 				commercePriceList1.getCommercePriceListId(), new BigDecimal(13),
 				null, serviceContext);
 
-		CommercePriceEntry commercePriceEntry2 =
-			_commercePriceEntryLocalService.addCommercePriceEntry(
-				cpInstance.getCPInstanceId(),
-				commercePriceList2.getCommercePriceListId(), new BigDecimal(15),
-				null, serviceContext);
-
-		long[] commerceUserSegmentEntryIDs = {
-			commerceUserSegmentEntry1.getCommerceUserSegmentEntryId(),
-			commerceUserSegmentEntry2.getCommerceUserSegmentEntryId()
-		};
+		_commercePriceEntryLocalService.addCommercePriceEntry(
+			cpInstance.getCPInstanceId(),
+			commercePriceList2.getCommercePriceListId(), new BigDecimal(15),
+			null, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1);
@@ -356,8 +348,7 @@ public class CommercePriceCalculationTest {
 				null, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency,
-				_buyerUser1);
+			commerceCurrency, _buyerUser1);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -450,8 +441,7 @@ public class CommercePriceCalculationTest {
 		}
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			targetCurrency,
-				_buyerUser1);
+			targetCurrency, _buyerUser1);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -537,8 +527,7 @@ public class CommercePriceCalculationTest {
 			null, quantity, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency,
-				_buyerUser1);
+			commerceCurrency, _buyerUser1);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), quantity, false, false,
@@ -600,8 +589,7 @@ public class CommercePriceCalculationTest {
 	private class TestCommerceContext implements CommerceContext {
 
 		public TestCommerceContext(
-				CommerceCurrency commerceCurrency,
-				User contextUser) {
+			CommerceCurrency commerceCurrency, User contextUser) {
 
 			_commerceCurrency = commerceCurrency;
 			_contextUser = contextUser;

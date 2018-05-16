@@ -24,16 +24,21 @@ import com.liferay.comment.apio.identifier.CommentIdentifier;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose {@link Comment}
- * resources through a web API.
+ * Provides the information necessary to expose {@link Comment} resources
+ * through a web API.
  *
  * @author Alejandro Hernández
  */
@@ -47,7 +52,7 @@ public class CommentNestedCollectionResource
 		NestedCollectionRoutes.Builder<Comment, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems
+			this::_getPageItems, PermissionChecker.class
 		).build();
 	}
 
@@ -61,7 +66,7 @@ public class CommentNestedCollectionResource
 		ItemRoutes.Builder<Comment, Long> builder) {
 
 		return builder.addGetter(
-			_commentManager::fetchComment
+			this::_getComment, PermissionChecker.class
 		).build();
 	}
 
@@ -73,18 +78,50 @@ public class CommentNestedCollectionResource
 			"Comment"
 		).identifier(
 			Comment::getCommentId
-		).addBidirectionalModel(
-			"parentItem", "comments", CommentIdentifier.class,
-			this::_getParentId
 		).addLinkedModel(
 			"author", PersonIdentifier.class, Comment::getUserId
+		).addRelatedCollection(
+			"comments", CommentIdentifier.class
 		).addString(
 			"text", Comment::getBody
 		).build();
 	}
 
+	private void _checkViewPermission(
+			Comment comment, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (comment == null) {
+			throw new NotFoundException();
+		}
+
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(permissionChecker);
+
+		discussionPermission.checkViewPermission(
+			permissionChecker.getCompanyId(), comment.getGroupId(),
+			comment.getClassName(), comment.getClassPK());
+	}
+
+	private Comment _getComment(
+			Long commentId, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		Comment comment = _commentManager.fetchComment(commentId);
+
+		_checkViewPermission(comment, permissionChecker);
+
+		return comment;
+	}
+
 	private PageItems<Comment> _getPageItems(
-		Pagination pagination, Long parentCommentId) {
+			Pagination pagination, Long parentCommentId,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		Comment comment = _commentManager.fetchComment(parentCommentId);
+
+		_checkViewPermission(comment, permissionChecker);
 
 		List<Comment> comments = _commentManager.getCommentsByParentComment(
 			parentCommentId, WorkflowConstants.STATUS_APPROVED,
@@ -93,19 +130,6 @@ public class CommentNestedCollectionResource
 			parentCommentId, WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(comments, count);
-	}
-
-	private Long _getParentId(Comment comment) {
-		if (!comment.isRoot()) {
-			Comment parent = _commentManager.fetchComment(
-				comment.getParentCommentId());
-
-			if ((parent != null) && !parent.isRoot()) {
-				return comment.getParentCommentId();
-			}
-		}
-
-		return null;
 	}
 
 	@Reference

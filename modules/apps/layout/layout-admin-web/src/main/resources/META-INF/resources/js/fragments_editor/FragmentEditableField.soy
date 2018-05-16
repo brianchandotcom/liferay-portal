@@ -1,0 +1,57 @@
+{namespace com.liferay.layout.admin.web.FragmentEditableField}
+
+/**
+ * FragmentEditableField
+ */
+{template .render}
+	{@param content: html}
+	{@param id: string}
+	{@param type: string}
+	{@param? _handleEditableClick: any}
+	{@param? _handleEditButtonClick: any}
+	{@param? _handleMapButtonClick: any}
+	{@param? _showTooltip: bool}
+
+	<span>
+		<lfr-editable
+			data-onclick="{$_handleEditableClick}"
+			id="{$id}"
+			ref="editable"
+			type="{$type}"
+		>
+			{$content}
+		</lfr-editable>
+
+		{let $tooltipClasses kind="text"}
+			clay-tooltip-top
+			tooltip
+
+			{if $_showTooltip}
+				show
+			{/if}
+		{/let}
+
+		<div class="{$tooltipClasses}" role="tooltip">
+			<div class="arrow"></div>
+			<div class="tooltip-inner">
+				<div>
+					<button
+						class="btn btn-unstyled"
+						data-onclick="{$_handleEditButtonClick}"
+						type="button"
+					>
+						Edit
+					</button>
+
+					<button
+						class="btn btn-unstyled"
+						data-onclick="{$_handleMapButtonClick}"
+						type="button"
+					>
+						Map
+					</button>
+				</div>
+			</div>
+		</div>
+	</span>
+{/template}

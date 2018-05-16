@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blog.apio.internal.resource;
+package com.liferay.comment.apio.internal.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -20,9 +20,7 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.blog.apio.identifier.BlogPostingIdentifier;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.comment.apio.identifier.CommentIdentifier;
-import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,14 +36,15 @@ import org.osgi.service.component.annotations.Reference;
  * href="http://schema.org/Comment">Comment</a> resources contained inside a <a
  * href="http://schema.org/BlogPosting">BlogPosting</a> through a web API. The
  * resources are mapped from the internal model {@link Comment} and
- * {@link BlogsEntry}.
+ * {@code BlogsEntry}.
  *
  * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class CommentNestedCollectionRouter implements NestedCollectionRouter
-	<Comment, CommentIdentifier, Long, BlogPostingIdentifier> {
+public class BlogPostingCommentNestedCollectionRouter implements
+	NestedCollectionRouter
+		<Comment, CommentIdentifier, Long, BlogPostingIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Comment, Long> collectionRoutes(
@@ -60,23 +59,16 @@ public class CommentNestedCollectionRouter implements NestedCollectionRouter
 			Pagination pagination, Long blogEntryId)
 		throws PortalException {
 
-		BlogsEntry blogsEntry = _blogsEntryLocalService.getEntry(blogEntryId);
-
-		ClassNameClassPK classNameClassPK = ClassNameClassPK.create(blogsEntry);
-
 		List<Comment> comments = _commentManager.getRootComments(
-			classNameClassPK.getClassName(), classNameClassPK.getClassPK(),
+			BlogsEntry.class.getName(), blogEntryId,
 			WorkflowConstants.STATUS_APPROVED, pagination.getStartPosition(),
 			pagination.getEndPosition());
 		int count = _commentManager.getRootCommentsCount(
-			classNameClassPK.getClassName(), classNameClassPK.getClassPK(),
+			BlogsEntry.class.getName(), blogEntryId,
 			WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(comments, count);
 	}
-
-	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
 	private CommentManager _commentManager;

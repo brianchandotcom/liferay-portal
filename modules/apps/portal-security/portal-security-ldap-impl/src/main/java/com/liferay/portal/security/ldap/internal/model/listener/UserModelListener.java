@@ -36,6 +36,7 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -127,14 +128,20 @@ public class UserModelListener extends BaseLDAPExportModelListener<User> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserModelListener.class);
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private LDAPSettings _ldapSettings;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile LDAPSettings _ldapSettings;
 
 	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private UserExporter _userExporter;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile UserExporter _userExporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

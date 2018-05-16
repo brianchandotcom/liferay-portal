@@ -73,8 +73,7 @@ public class IndexerRequestBufferExecutorWatcher {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeIndexerRequestBufferExecutor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addIndexerRequestBufferExecutor(
 		IndexerRequestBufferExecutor indexerRequestBufferExecutor,

@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks.util;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,17 +57,18 @@ public class SourceChecksUtil {
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
 			boolean portalSource, boolean subrepository,
-			boolean includeModuleChecks)
+			boolean includeModuleChecks, String checkName)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = _getSourceChecks(
 			sourceFormatterConfiguration, sourceProcessorName, propertiesMap,
-			portalSource, subrepository, includeModuleChecks);
+			portalSource, subrepository, includeModuleChecks, checkName);
 
 		sourceChecks.addAll(
 			_getSourceChecks(
 				sourceFormatterConfiguration, "all", propertiesMap,
-				includeModuleChecks, subrepository, includeModuleChecks));
+				includeModuleChecks, subrepository, includeModuleChecks,
+				checkName));
 
 		return sourceChecks;
 	}
@@ -198,7 +198,7 @@ public class SourceChecksUtil {
 			SourceFormatterConfiguration sourceFormatterConfiguration,
 			String sourceProcessorName, Map<String, Properties> propertiesMap,
 			boolean portalSource, boolean subrepository,
-			boolean includeModuleChecks)
+			boolean includeModuleChecks, String checkName)
 		throws Exception {
 
 		List<SourceCheck> sourceChecks = new ArrayList<>();
@@ -214,12 +214,15 @@ public class SourceChecksUtil {
 		for (SourceCheckConfiguration sourceCheckConfiguration :
 				sourceCheckConfigurations) {
 
-			String sourceCheckName = sourceCheckConfiguration.getName();
+			String sourceCheckName = SourceFormatterUtil.getSimpleName(
+				sourceCheckConfiguration.getName());
 
-			if (!sourceCheckName.contains(StringPool.PERIOD)) {
-				sourceCheckName =
-					"com.liferay.source.formatter.checks." + sourceCheckName;
+			if ((checkName != null) && !checkName.equals(sourceCheckName)) {
+				continue;
 			}
+
+			sourceCheckName =
+				"com.liferay.source.formatter.checks." + sourceCheckName;
 
 			Class<?> sourceCheckClass = null;
 

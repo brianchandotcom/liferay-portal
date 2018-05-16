@@ -71,6 +71,12 @@ public class CheckstyleUtil {
 				classLoader.getResourceAsStream(configurationFileName)),
 			new PropertiesExpander(System.getProperties()), false);
 
+		String checkName = sourceFormatterArgs.getCheckName();
+
+		if (checkName != null) {
+			configuration = _filterCheck(configuration, checkName);
+		}
+
 		configuration = _addAttribute(
 			configuration, "baseDirName", sourceFormatterArgs.getBaseDirName(),
 			"com.liferay.source.formatter.checkstyle.checks." +
@@ -183,6 +189,38 @@ public class CheckstyleUtil {
 					defaultChildConfiguration.addAttribute(
 						attributeName, value);
 				}
+			}
+		}
+
+		return configuration;
+	}
+
+	private static Configuration _filterCheck(
+		Configuration configuration, String checkName) {
+
+		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
+			configuration, "TreeWalker");
+
+		Configuration[] checkConfigurations =
+			treeWalkerConfiguration.getChildren();
+
+		if (checkConfigurations == null) {
+			return configuration;
+		}
+
+		for (Configuration checkConfiguration : checkConfigurations) {
+			if (!(checkConfiguration instanceof DefaultConfiguration)) {
+				continue;
+			}
+
+			if (!checkName.equals(
+					SourceFormatterUtil.getSimpleName(
+						checkConfiguration.getName()))) {
+
+				DefaultConfiguration defaultChildConfiguration =
+					(DefaultConfiguration)checkConfiguration;
+
+				treeWalkerConfiguration.removeChild(defaultChildConfiguration);
 			}
 		}
 

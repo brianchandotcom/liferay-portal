@@ -26,7 +26,6 @@ import org.eclipse.jgit.lib.ObjectDatabase;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
 
@@ -102,24 +101,27 @@ public class GitRepositoryBuildAdapter extends BuildAdapter {
 
 		long start = System.currentTimeMillis();
 
-		try (Repository repository = RepositoryCache.open(
-				FileKey.exact(_getGitDir(rootDir), FS.DETECTED))) {
+		try {
+			FileKey fileKey = FileKey.exact(_getGitDir(rootDir), FS.DETECTED);
 
-			String branchName = repository.getBranch();
-			String hashHead = _getHashHead(repository);
+			try (Repository repository = fileKey.open(true)) {
+				String branchName = repository.getBranch();
+				String hashHead = _getHashHead(repository);
 
-			gitRepositoryBag = new GitRepositoryBag(branchName, hashHead);
+				gitRepositoryBag = new GitRepositoryBag(branchName, hashHead);
 
-			_gitRepositoryBags.put(rootDir, gitRepositoryBag);
+				_gitRepositoryBags.put(rootDir, gitRepositoryBag);
 
-			if (_logger.isInfoEnabled()) {
-				_logger.info(
-					"Getting data from Git repository in \"{}\" took {} ms.",
-					repository.getDirectory(),
-					System.currentTimeMillis() - start);
+				if (_logger.isInfoEnabled()) {
+					_logger.info(
+						"Getting data from Git repository in \"{}\" took {} " +
+							"ms.",
+						repository.getDirectory(),
+						System.currentTimeMillis() - start);
+				}
+
+				return gitRepositoryBag;
 			}
-
-			return gitRepositoryBag;
 		}
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);

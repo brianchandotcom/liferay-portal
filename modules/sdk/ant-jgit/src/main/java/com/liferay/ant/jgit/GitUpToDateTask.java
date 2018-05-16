@@ -33,7 +33,6 @@ import org.apache.tools.ant.taskdefs.condition.Condition;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.util.FS;
 
@@ -82,9 +81,9 @@ public class GitUpToDateTask extends Task implements Condition {
 				}
 			}
 
-			try (Repository repository = RepositoryCache.open(
-					FileKey.exact(gitDir, FS.DETECTED))) {
+			FileKey fileKey = FileKey.exact(gitDir, FS.DETECTED);
 
+			try (Repository repository = fileKey.open(true)) {
 				if (UpToDateUtil.isClean(new Git(repository), relativePath) &&
 					!UpToDateUtil.hasChangedSince(
 						repository, relativePath, _since,

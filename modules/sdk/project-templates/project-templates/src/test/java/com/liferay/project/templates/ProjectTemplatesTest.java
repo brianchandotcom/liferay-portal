@@ -23,6 +23,7 @@ import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.DirectoryComparator;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
+import com.liferay.project.templates.util.XMLTestUtil;
 
 import difflib.Delta;
 import difflib.DiffUtils;
@@ -60,6 +61,9 @@ import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
 
@@ -78,6 +82,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Lawrence Lee
@@ -1127,6 +1134,11 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"soy-portlet", "foo", "--package-name", "com.liferay.test");
 
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"javax.portlet\", name: \"portlet-api\", " +
+				"version: \"2.0\"");
+
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
 			gradleProjectDir,
@@ -1177,6 +1189,13 @@ public class ProjectTemplatesTest {
 
 		_testExists(mavenProjectDir, "gulpfile.js");
 
+		File pomXmlFile = new File(mavenProjectDir, "pom.xml");
+
+		Path pomXmlPath = pomXmlFile.toPath();
+
+		_testPomXmlContainsDependency(
+			pomXmlPath, "javax.portlet", "portlet-api", "2.0");
+
 		File mavenPackageJsonFile = new File(mavenProjectDir, "package.json");
 
 		Path mavenPackageJsonPath = mavenPackageJsonFile.toPath();
@@ -1204,6 +1223,11 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"soy-portlet", "foo", "--package-name", "com.liferay.test",
 			"--liferayVersion", "7.1");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"compileOnly group: \"javax.portlet\", name: \"portlet-api\", " +
+				"version: \"3.0.0\"");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -1256,6 +1280,13 @@ public class ProjectTemplatesTest {
 			"-Dpackage=com.liferay.test", "-DliferayVersion=7.1");
 
 		_testExists(mavenProjectDir, "gulpfile.js");
+
+		File pomXmlFile = new File(mavenProjectDir, "pom.xml");
+
+		Path pomXmlPath = pomXmlFile.toPath();
+
+		_testPomXmlContainsDependency(
+			pomXmlPath, "javax.portlet", "portlet-api", "3.0.0");
 
 		File mavenPackageJsonFile = new File(mavenProjectDir, "package.json");
 
@@ -2151,22 +2182,21 @@ public class ProjectTemplatesTest {
 		for (String arg : args) {
 			completeArgs.add(arg);
 
-			if (arg.startsWith("-DprojectType=")) {
-				projectTypeSet = true;
-			}
-			else if (arg.startsWith("-DliferayVersion=")) {
+			if (arg.startsWith("-DliferayVersion=")) {
 				liferayVersionSet = true;
 			}
-			
+			else if (arg.startsWith("-DprojectType=")) {
+				projectTypeSet = true;
+			}
+		}
+
+		if (!liferayVersionSet) {
+			completeArgs.add("-DliferayVersion=7.0");
 		}
 
 		if (!projectTypeSet) {
 			completeArgs.add("-DprojectType=standalone");
 		}
-		if (!liferayVersionSet) {
-			completeArgs.add("-DliferayVersion=7.0");
-		}
-		
 
 		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
 
@@ -3160,6 +3190,64 @@ public class ProjectTemplatesTest {
 		_executeGradle(workspaceDir, ":modules:" + name + ":build");
 
 		_testExists(workspaceProjectDir, jarFilePath);
+	}
+
+	private void _testPomXmlContainsDependency(
+			Path pomXmlPath, String groupId, String artifactId, String version)
+		throws Exception {
+
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		Assert.assertTrue("Missing " + pomXmlPath, Files.exists(pomXmlPath));
+
+		Document document = documentBuilder.parse(pomXmlPath.toFile());
+
+		Element projectElement = document.getDocumentElement();
+
+		Element dependenciesElement = XMLTestUtil.getChildElement(
+			projectElement, "dependencies");
+
+		List<Element> dependencyElements;
+
+		if (dependenciesElement != null) {
+			dependencyElements = XMLTestUtil.getChildElements(
+				dependenciesElement);
+		}
+		else {
+			dependencyElements = Collections.emptyList();
+		}
+
+		boolean foundDependency = false;
+
+		for (Element dependencyElement : dependencyElements) {
+			String dependencyElementString = XMLTestUtil.toString(
+				dependencyElement);
+
+			String artifactIdString = String.format(
+				"<artifactId>%s</artifactId>", artifactId);
+			String groupIdString = String.format(
+				"<groupId>%s</groupId>", groupId);
+			String versionString = String.format(
+				"<version>%s</version>", version);
+
+			if (dependencyElementString.contains(artifactIdString) &&
+				dependencyElementString.contains(groupIdString) &&
+				dependencyElementString.contains(versionString)) {
+
+				foundDependency = true;
+			}
+
+			if (foundDependency) {
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			"Missing dependency in " + pomXmlPath, foundDependency);
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -75,6 +76,9 @@ public class DLAdminManagementToolbarDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 		_request = request;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
+
+		_currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
 
 		_dlRequestHelper = new DLRequestHelper(_request);
 
@@ -472,75 +476,82 @@ public class DLAdminManagementToolbarDisplayContext {
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
 		long fileEntryTypeId = ParamUtil.getLong(
 			_request, "fileEntryTypeId", -1);
-		long folderId = _getFolderId();
 		final String navigation = ParamUtil.getString(
 			_request, "navigation", "home");
-		final long rootFolderId = _getRootFolderId();
 
 		return new DropdownItemList() {
 			{
 				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							(navigation.equals("home")) &&
-							(folderId == rootFolderId) &&
-							(fileEntryTypeId == -1));
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								(navigation.equals("home")) &&
+								(fileEntryTypeId == -1));
 
-						PortletURL viewDocumentsHomeURL =
-							_liferayPortletResponse.createRenderURL();
+							PortletURL viewAllDocumentsURL =
+								PortletURLUtil.clone(
+									_currentURLObj, _liferayPortletResponse);
 
-						viewDocumentsHomeURL.setParameter(
-							"mvcRenderCommandName", "/document_library/view");
-						viewDocumentsHomeURL.setParameter(
-							"folderId", String.valueOf(rootFolderId));
+							viewAllDocumentsURL.setParameter(
+								"browseBy", (String)null);
+							viewAllDocumentsURL.setParameter(
+								"fileEntryTypeId", (String)null);
+							viewAllDocumentsURL.setParameter(
+								"mvcRenderCommandName",
+								"/document_library/view");
+							viewAllDocumentsURL.setParameter(
+								"navigation", "home");
 
-						dropdownItem.setHref(viewDocumentsHomeURL);
+							dropdownItem.setHref(viewAllDocumentsURL);
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "all"));
-					});
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "all"));
+						}));
 
 				add(
-					dropdownItem -> {
-						dropdownItem.setActive(navigation.equals("recent"));
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.setActive(navigation.equals("recent"));
 
-						PortletURL viewRecentDocumentsURL =
-							_liferayPortletResponse.createRenderURL();
+							PortletURL viewRecentDocumentsURL =
+								PortletURLUtil.clone(
+									_currentURLObj, _liferayPortletResponse);
 
-						viewRecentDocumentsURL.setParameter(
-							"mvcRenderCommandName", "/document_library/view");
-						viewRecentDocumentsURL.setParameter(
-							"navigation", "recent");
-						viewRecentDocumentsURL.setParameter(
-							"folderId", String.valueOf(rootFolderId));
+							viewRecentDocumentsURL.setParameter(
+								"mvcRenderCommandName",
+								"/document_library/view");
+							viewRecentDocumentsURL.setParameter(
+								"navigation", "recent");
 
-						dropdownItem.setHref(viewRecentDocumentsURL);
+							dropdownItem.setHref(viewRecentDocumentsURL);
 
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "recent"));
-					});
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "recent"));
+						}));
 
 				if (_themeDisplay.isSignedIn()) {
 					add(
-						dropdownItem -> {
-							dropdownItem.setActive(navigation.equals("mine"));
+						SafeConsumer.ignore(
+							dropdownItem -> {
+								dropdownItem.setActive(
+									navigation.equals("mine"));
 
-							PortletURL viewMyDocumentsURL =
-								_liferayPortletResponse.createRenderURL();
+								PortletURL viewMyDocumentsURL =
+									PortletURLUtil.clone(
+										_currentURLObj,
+										_liferayPortletResponse);
 
-							viewMyDocumentsURL.setParameter(
-								"mvcRenderCommandName",
-								"/document_library/view");
-							viewMyDocumentsURL.setParameter(
-								"navigation", "mine");
-							viewMyDocumentsURL.setParameter(
-								"folderId", String.valueOf(rootFolderId));
+								viewMyDocumentsURL.setParameter(
+									"mvcRenderCommandName",
+									"/document_library/view");
+								viewMyDocumentsURL.setParameter(
+									"navigation", "mine");
 
-							dropdownItem.setHref(viewMyDocumentsURL);
+								dropdownItem.setHref(viewMyDocumentsURL);
 
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "mine"));
-						});
+								dropdownItem.setLabel(
+									LanguageUtil.get(_request, "mine"));
+							}));
 				}
 
 				add(
@@ -639,10 +650,6 @@ public class DLAdminManagementToolbarDisplayContext {
 		return _dlAdminDisplayContext.getRepositoryId();
 	}
 
-	private long _getRootFolderId() {
-		return _dlAdminDisplayContext.getRootFolderId();
-	}
-
 	private boolean _isNavigationRecent() {
 		if (Objects.equals(_getNavigation(), "recent")) {
 			return true;
@@ -655,6 +662,7 @@ public class DLAdminManagementToolbarDisplayContext {
 		return _dlAdminDisplayContext.isSearch();
 	}
 
+	private final PortletURL _currentURLObj;
 	private final DLAdminDisplayContext _dlAdminDisplayContext;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;

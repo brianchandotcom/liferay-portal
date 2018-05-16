@@ -56,11 +56,13 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 </aui:script>
 
 <aui:script>
-	<portlet:renderURL var="viewFileEntryTypeURL">
-		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-		<portlet:param name="browseBy" value="file-entry-type" />
-		<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-	</portlet:renderURL>
+
+	<%
+	PortletURL viewFileEntryTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+	viewFileEntryTypeURL.setParameter("browseBy", "file-entry-type");
+	viewFileEntryTypeURL.setParameter("fileEntryTypeId", (String)null);
+	%>
 
 	Liferay.provide(
 		window,

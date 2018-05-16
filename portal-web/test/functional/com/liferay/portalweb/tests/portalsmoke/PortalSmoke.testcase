@@ -37,6 +37,9 @@
 		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />
+
+		<!-- Assert mismatching checksum for release bundles -->
+		<execute function="AssertConsoleTextNotPresent" value1="Running validation because of mismatched checksum" />
 	</command>
 
 	<command name="SmokeWithDeveloperProperties" priority="5">

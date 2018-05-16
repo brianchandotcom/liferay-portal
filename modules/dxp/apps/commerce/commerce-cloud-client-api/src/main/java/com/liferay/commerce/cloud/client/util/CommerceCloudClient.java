@@ -31,6 +31,9 @@ public interface CommerceCloudClient {
 	public void addCommerceForecastEntries(String json)
 		throws CommerceCloudClientException;
 
+	public void checkCommerceForecastEntries()
+		throws CommerceCloudClientException;
+
 	public JSONObject getForecastingConfiguration()
 		throws CommerceCloudClientException;
 

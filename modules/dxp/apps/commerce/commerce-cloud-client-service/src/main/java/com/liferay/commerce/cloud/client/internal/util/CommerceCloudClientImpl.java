@@ -29,10 +29,13 @@ import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,6 +91,39 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		}
 		catch (Exception e) {
 			throw new CommerceCloudClientException(e);
+		}
+	}
+
+	@Override
+	public void checkCommerceForecastEntries()
+		throws CommerceCloudClientException {
+
+		if (_lockManager.isLocked(
+				_LOCK_CLASS_NAME, _CHECK_COMMERCE_FORECAST_ENTRIES_LOCK_KEY)) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Skipping check, another job is still in progress");
+			}
+
+			return;
+		}
+
+		try {
+			_lockManager.lock(
+				_LOCK_CLASS_NAME, _CHECK_COMMERCE_FORECAST_ENTRIES_LOCK_KEY,
+				null);
+
+			doCheckCommerceForecastEntries();
+		}
+		catch (CommerceCloudClientException ccce) {
+			throw ccce;
+		}
+		catch (Exception e) {
+			throw new CommerceCloudClientException(e);
+		}
+		finally {
+			_lockManager.unlock(
+				_LOCK_CLASS_NAME, _CHECK_COMMERCE_FORECAST_ENTRIES_LOCK_KEY);
 		}
 	}
 
@@ -223,6 +260,36 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		_commerceForecastValueLocalService.addCommerceForecastValue(
 			userId, commerceForecastEntry.getCommerceForecastEntryId(), date,
 			lowerValue, value, upperValue);
+	}
+
+	protected void doCheckCommerceForecastEntries() throws Exception {
+		DynamicQuery dynamicQuery =
+			_commerceForecastEntryLocalService.dynamicQuery();
+
+		dynamicQuery.setProjection(ProjectionFactoryUtil.max("date"));
+
+		List<?> results = _commerceForecastEntryLocalService.dynamicQuery(
+			dynamicQuery);
+
+		Date date = null;
+
+		if (ListUtil.isNotEmpty(results)) {
+			date = (Date)results.get(0);
+		}
+
+		long time = Long.MIN_VALUE;
+
+		if (date != null) {
+			time = date.getTime();
+		}
+
+		Http.Options options = new Http.Options();
+
+		options.setLocation(getLocation("/forecasts/" + time));
+
+		String json = executeRequest(options);
+
+		addCommerceForecastEntries(json);
 	}
 
 	protected JSONObject doGetForecastingConfiguration() throws Exception {
@@ -416,6 +483,12 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		return new BigDecimal(value);
 	}
 
+	private static final String _CHECK_COMMERCE_FORECAST_ENTRIES_LOCK_KEY =
+		"checkCommerceForecastEntries";
+
+	private static final String _LOCK_CLASS_NAME =
+		CommerceCloudClientImpl.class.getName();
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceCloudClientImpl.class);
 
@@ -441,6 +514,9 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LockManager _lockManager;
 
 	@Reference
 	private Portal _portal;

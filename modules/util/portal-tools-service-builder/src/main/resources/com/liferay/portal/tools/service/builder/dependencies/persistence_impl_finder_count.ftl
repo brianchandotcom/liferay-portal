@@ -29,7 +29,11 @@ public int countBy${entityFinder.name}(
 
 	Object[] finderArgs = new Object[] {
 		<#list entityColumns as entityColumn>
-			${entityColumn.name}
+			<#if stringUtil.equals(entityColumn.type, "Date")>
+				_getTime(${entityColumn.name})
+			<#else>
+				${entityColumn.name}
+			</#if>
 
 			<#if entityColumn_has_next>
 				,
@@ -127,6 +131,8 @@ public int countBy${entityFinder.name}(
 			<#list entityColumns as entityColumn>
 				<#if entityColumn.hasArrayableOperator()>
 					StringUtil.merge(${entityColumn.names})
+				<#elseif stringUtil.equals(entityColumn.type, "Date")>
+					_getTime(${entityColumn.name})
 				<#else>
 					${entityColumn.name}
 				</#if>

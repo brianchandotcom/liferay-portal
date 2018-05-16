@@ -1187,7 +1187,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_LTCD;
 		finderArgs = new Object[] {
-				groupId, createDate,
+				groupId, _getTime(createDate),
 				
 				start, end, orderByComparator
 			};
@@ -1598,7 +1598,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	public int countByG_LtCD(long groupId, Date createDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_LTCD;
 
-		Object[] finderArgs = new Object[] { groupId, createDate };
+		Object[] finderArgs = new Object[] { groupId, _getTime(createDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -3196,6 +3196,15 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_TRASHENTRY = "SELECT trashEntry FROM TrashEntry trashEntry";
 	private static final String _SQL_SELECT_TRASHENTRY_WHERE_PKS_IN = "SELECT trashEntry FROM TrashEntry trashEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_TRASHENTRY_WHERE = "SELECT trashEntry FROM TrashEntry trashEntry WHERE ";

@@ -344,6 +344,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					<#list entityColumns as entityColumn>
 						<#if stringUtil.equals(entityColumn.type, "boolean")>
 							${entity.varName}ModelImpl.is${entityColumn.methodName}()
+						<#elseif stringUtil.equals(entityColumn.type, "Date")>
+							_getTime(${entity.varName}ModelImpl.get${entityColumn.methodName}())
 						<#else>
 							${entity.varName}ModelImpl.get${entityColumn.methodName}()
 						</#if>
@@ -368,6 +370,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						<#list entityColumns as entityColumn>
 							<#if stringUtil.equals(entityColumn.type, "boolean")>
 								${entity.varName}ModelImpl.is${entityColumn.methodName}()
+							<#elseif stringUtil.equals(entityColumn.type, "Date")>
+								_getTime(${entity.varName}ModelImpl.get${entityColumn.methodName}())
 							<#else>
 								${entity.varName}ModelImpl.get${entityColumn.methodName}()
 							</#if>
@@ -385,7 +389,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				if ((${entity.varName}ModelImpl.getColumnBitmask() & FINDER_PATH_FETCH_BY_${uniqueEntityFinder.name?upper_case}.getColumnBitmask()) != 0) {
 					Object[] args = new Object[] {
 						<#list entityColumns as entityColumn>
-							${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}()
+							<#if stringUtil.equals(entityColumn.type, "Date")>
+								_getTime(${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}())
+							<#else>
+								${entity.varName}ModelImpl.getOriginal${entityColumn.methodName}()
+							</#if>
 
 							<#if entityColumn_has_next>
 								,
@@ -1797,6 +1805,30 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#if entity.isHierarchicalTree()>
 		protected NestedSetsTreeManager<${entity.name}> nestedSetsTreeManager = new PersistenceNestedSetsTreeManager<${entity.name}>(this, "${entity.table}", "${entity.name}", ${entity.name}Impl.class, "${pkEntityColumn.DBName}", "${scopeEntityColumn.DBName}", "left${pkEntityColumn.methodName}", "right${pkEntityColumn.methodName}");
 		protected boolean rebuildTreeEnabled = true;
+	</#if>
+
+	<#assign hasDateFinder = false />
+
+	<#list entity.entityFinders as entityFinder>
+		<#assign entityColumns = entityFinder.entityColumns />
+
+		<#list entityColumns as entityColumn>
+			<#if stringUtil.equals(entityColumn.type, "Date")>
+				<#assign hasDateFinder = true />
+
+				<#break>
+			</#if>
+		</#list>
+	</#list>
+
+	<#if hasDateFinder>
+		private Long _getTime(Date date) {
+			if (date == null) {
+				return null;
+			}
+
+			return date.getTime();
+		}
 	</#if>
 
 	private static final String _SQL_SELECT_${entity.alias?upper_case} = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias}";

@@ -3007,12 +3007,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_CD;
-			finderArgs = new Object[] { companyId, createDate };
+			finderArgs = new Object[] { companyId, _getTime(createDate) };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_CD;
 			finderArgs = new Object[] {
-					companyId, createDate,
+					companyId, _getTime(createDate),
 					
 					start, end, orderByComparator
 				};
@@ -3419,7 +3419,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_CD(long companyId, Date createDate) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_CD;
 
-		Object[] finderArgs = new Object[] { companyId, createDate };
+		Object[] finderArgs = new Object[] { companyId, _getTime(createDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -3578,12 +3578,12 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_MD;
-			finderArgs = new Object[] { companyId, modifiedDate };
+			finderArgs = new Object[] { companyId, _getTime(modifiedDate) };
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_MD;
 			finderArgs = new Object[] {
-					companyId, modifiedDate,
+					companyId, _getTime(modifiedDate),
 					
 					start, end, orderByComparator
 				};
@@ -3990,7 +3990,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_MD(long companyId, Date modifiedDate) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_MD;
 
-		Object[] finderArgs = new Object[] { companyId, modifiedDate };
+		Object[] finderArgs = new Object[] { companyId, _getTime(modifiedDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -6201,12 +6201,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				(orderByComparator == null)) {
 			pagination = false;
 			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_CD_MD;
-			finderArgs = new Object[] { companyId, createDate, modifiedDate };
+			finderArgs = new Object[] {
+					companyId, _getTime(createDate), _getTime(modifiedDate)
+				};
 		}
 		else {
 			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_CD_MD;
 			finderArgs = new Object[] {
-					companyId, createDate, modifiedDate,
+					companyId, _getTime(createDate), _getTime(modifiedDate),
 					
 					start, end, orderByComparator
 				};
@@ -6662,7 +6664,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public int countByC_CD_MD(long companyId, Date createDate, Date modifiedDate) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_CD_MD;
 
-		Object[] finderArgs = new Object[] { companyId, createDate, modifiedDate };
+		Object[] finderArgs = new Object[] {
+				companyId, _getTime(createDate), _getTime(modifiedDate)
+			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -10097,6 +10101,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@BeanReference(type = UserGroupPersistence.class)
 	protected UserGroupPersistence userGroupPersistence;
 	protected TableMapper<User, com.liferay.portal.kernel.model.UserGroup> userToUserGroupTableMapper;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_USER = "SELECT user FROM User user";
 	private static final String _SQL_SELECT_USER_WHERE_PKS_IN = "SELECT user FROM User user WHERE userId IN (";
 	private static final String _SQL_SELECT_USER_WHERE = "SELECT user FROM User user WHERE ";

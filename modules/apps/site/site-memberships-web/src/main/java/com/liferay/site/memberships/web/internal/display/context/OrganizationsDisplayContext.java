@@ -66,9 +66,8 @@ public class OrganizationsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedOrganizations();");
+						dropdownItem.putData(
+							"action", "deleteSelectedOrganizations");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

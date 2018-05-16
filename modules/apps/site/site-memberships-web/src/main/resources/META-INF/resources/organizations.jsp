@@ -101,11 +101,11 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	window.<portlet:namespace />deleteSelectedOrganizations = function() {
+	var deleteSelectedOrganizations = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(document.<portlet:namespace />fm);
 		}
-	}
+	};
 
 	function handleAddClick(event) {
 		event.preventDefault();
@@ -135,9 +135,24 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 		itemSelectorDialog.open();
 	}
 
+	var ACTIONS = {
+		'deleteSelectedOrganizations': deleteSelectedOrganizations
+	};
+
 	Liferay.componentReady('organizationsManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on('creationButtonClicked', handleAddClick);
+
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
 		}
 	);
 </aui:script>

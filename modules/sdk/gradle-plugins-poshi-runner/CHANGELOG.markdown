@@ -29,7 +29,14 @@ Resources plugin by using the abbreviated SHA-1.
 - [LPS-80394]: Avoid out-of-memory errors when running on large Git
 repositories.
 
+## 2.2.4 - 2018-05-16
+
+### Fixed
+- [LPS-80950]: Avoid out-of-memory errors when running on large Git
+repositories.
+
 [LPS-78096]: https://issues.liferay.com/browse/LPS-78096
 [LPS-78266]: https://issues.liferay.com/browse/LPS-78266
 [LPS-78537]: https://issues.liferay.com/browse/LPS-78537
 [LPS-80394]: https://issues.liferay.com/browse/LPS-80394
+[LPS-80950]: https://issues.liferay.com/browse/LPS-80950

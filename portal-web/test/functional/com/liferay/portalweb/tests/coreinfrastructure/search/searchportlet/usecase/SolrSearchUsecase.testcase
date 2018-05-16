@@ -566,7 +566,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords" />
 	</command>
 
-	<command name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
+	<command ignore="true" name="SearchEntriesByPortletsAndModifiedRangeFacet" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -610,14 +610,6 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
-		</execute>
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent1 Title" />
-		</execute>
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -634,10 +626,6 @@
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent2 Title" />
-		</execute>
 
 		<execute macro="Navigator#openURL" />
 

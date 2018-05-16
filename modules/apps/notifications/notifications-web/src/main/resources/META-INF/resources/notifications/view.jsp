@@ -35,7 +35,7 @@ if (actionRequired) {
 
 notificationsSearchContainer.setId(searchContainerId);
 
-NotificationsManagementToolbarDisplayContext notificationsManagementToolbarDisplayContext = new NotificationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
+NotificationsManagementToolbarDisplayContext notificationsManagementToolbarDisplayContext = new NotificationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, currentURLObj);
 
 NotificationsUtil.populateResults(themeDisplay.getUserId(), actionRequired, navigation, notificationsManagementToolbarDisplayContext.getOrderByType(), notificationsSearchContainer);
 

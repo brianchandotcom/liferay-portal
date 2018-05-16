@@ -68,13 +68,13 @@ public class DLAdminManagementToolbarDisplayContext {
 	public DLAdminManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request,
 		DLAdminDisplayContext dlAdminDisplayContext) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_request = request;
 		_dlAdminDisplayContext = dlAdminDisplayContext;
-
-		_request = liferayPortletRequest.getHttpServletRequest();
 
 		_dlRequestHelper = new DLRequestHelper(_request);
 

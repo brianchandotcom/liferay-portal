@@ -43,16 +43,15 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	public KBSuggestionListManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer searchContainer) {
+		HttpServletRequest request, SearchContainer searchContainer) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_request = request;
 		_searchContainer = searchContainer;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);
-
-		_request = liferayPortletRequest.getHttpServletRequest();
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

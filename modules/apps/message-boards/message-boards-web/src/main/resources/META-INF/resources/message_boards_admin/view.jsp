@@ -21,7 +21,7 @@ MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CA
 
 long categoryId = MBUtil.getCategoryId(request, category);
 
-MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContext = new MBEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, trashHelper);
+MBEntriesManagementToolbarDisplayContext mbEntriesManagementToolbarDisplayContext = new MBEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, currentURLObj, trashHelper);
 
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBSubscriptionUtil.getCategorySubscriptionClassPKs(user.getUserId()));

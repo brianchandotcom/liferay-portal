@@ -44,12 +44,12 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 	public ItemSelectorRepositoryEntryManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-
-		_request = _liferayPortletRequest.getHttpServletRequest();
+		_request = request;
 
 		_currentURLObj = PortletURLUtil.getCurrent(
 			_liferayPortletRequest, _liferayPortletResponse);

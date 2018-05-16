@@ -44,7 +44,7 @@ BlogEntriesDisplayContext blogEntriesDisplayContext = new BlogEntriesDisplayCont
 
 blogEntriesDisplayContext.populateResults(entriesSearchContainer);
 
-BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj, trashHelper);
+BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayContext = new BlogEntriesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, currentURLObj, trashHelper);
 
 String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle();
 %>

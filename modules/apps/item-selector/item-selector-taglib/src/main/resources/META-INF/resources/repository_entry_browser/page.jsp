@@ -52,7 +52,7 @@ if (Validator.isNotNull(keywords)) {
 </liferay-util:html-top>
 
 <%
-ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse);
+ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositoryEntryManagementToolbarDisplayContext = new ItemSelectorRepositoryEntryManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 %>
 
 <clay:management-toolbar

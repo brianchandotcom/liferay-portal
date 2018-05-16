@@ -43,12 +43,12 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 
 	public MBBannedUsersManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-
-		_request = _liferayPortletRequest.getHttpServletRequest();
+		_request = request;
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);

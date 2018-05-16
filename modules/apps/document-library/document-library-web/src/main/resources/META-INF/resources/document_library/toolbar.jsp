@@ -21,7 +21,7 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
-DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = new DLAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, dlAdminDisplayContext);
+DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = new DLAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, dlAdminDisplayContext);
 %>
 
 <clay:management-toolbar

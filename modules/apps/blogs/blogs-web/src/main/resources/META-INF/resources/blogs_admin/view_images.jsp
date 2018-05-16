@@ -47,7 +47,7 @@ BlogImagesDisplayContext blogImagesDisplayContext = new BlogImagesDisplayContext
 
 blogImagesDisplayContext.populateResults(blogImagesSearchContainer);
 
-BlogImagesManagementToolbarDisplayContext blogImagesManagementToolbarDisplayContext = new BlogImagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
+BlogImagesManagementToolbarDisplayContext blogImagesManagementToolbarDisplayContext = new BlogImagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, currentURLObj);
 
 String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle();
 %>

@@ -33,7 +33,7 @@
 />
 
 <%
-AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
+AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, currentURLObj);
 %>
 
 <clay:management-toolbar

@@ -17,7 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = new KBTemplatesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, templatePath);
+KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = new KBTemplatesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, templatePath);
 %>
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />

@@ -26,7 +26,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 boolean kbFolderView = (parentResourceClassNameId == kbFolderClassNameId);
 
-KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, portletConfig, renderRequest, renderResponse);
+KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = new KBAdminManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, renderRequest, renderResponse, portletConfig);
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 
 if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

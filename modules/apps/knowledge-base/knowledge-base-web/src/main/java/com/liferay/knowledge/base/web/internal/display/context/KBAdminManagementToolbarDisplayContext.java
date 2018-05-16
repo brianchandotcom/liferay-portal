@@ -68,17 +68,16 @@ public class KBAdminManagementToolbarDisplayContext {
 	public KBAdminManagementToolbarDisplayContext(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+			HttpServletRequest request, RenderRequest renderRequest,
+			RenderResponse renderResponse, PortletConfig portletConfig)
 		throws PortalException, PortletException {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_portletConfig = portletConfig;
+		_request = request;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
-		_request = liferayPortletRequest.getHttpServletRequest();
+		_portletConfig = portletConfig;
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);

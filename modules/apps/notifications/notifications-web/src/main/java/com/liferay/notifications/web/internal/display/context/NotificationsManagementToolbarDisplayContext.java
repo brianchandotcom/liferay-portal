@@ -43,13 +43,12 @@ public class NotificationsManagementToolbarDisplayContext {
 	public NotificationsManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		PortletURL currentURLObj) {
+		HttpServletRequest request, PortletURL currentURLObj) {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+		_request = request;
 		_currentURLObj = currentURLObj;
-
-		_request = _liferayPortletRequest.getHttpServletRequest();
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {

@@ -17,8 +17,8 @@ package com.liferay.comment.apio.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code Comment} identifier. It's
- * identified by the internal {@code Comment#getCommentId()}.
+ * Holds information about a {@code Comment} identifier. It's identified by the
+ * internal {@code Comment#getCommentId()}.
  *
  * @author Alejandro Hernández
  * @review

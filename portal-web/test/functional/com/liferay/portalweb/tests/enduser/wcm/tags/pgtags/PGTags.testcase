@@ -776,6 +776,8 @@
 	</command>
 
 	<command name="SearchMultipleTagsViaBlogs" priority="3">
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
+		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;true&quot;" />
 		<property name="testray.component.names" value="Blogs,Tags" />
 
 		<execute macro="ProductMenu#gotoPortlet">

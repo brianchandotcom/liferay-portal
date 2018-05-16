@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -76,8 +77,8 @@ public class StagingProcessesWebToolbarDisplayContext {
 	public CreationMenu getCreationMenu(boolean hasPermission) {
 		return new CreationMenu() {
 			{
-				int configurationType;
-				String cmd;
+				int configurationType = 0;
+				String cmd = StringPool.BLANK;
 
 				Group stagingGroup = (Group)_pageContext.getAttribute(
 					"stagingGroup");

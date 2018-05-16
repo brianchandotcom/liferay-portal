@@ -34,12 +34,20 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	.facet-checkbox-label {
 		display: block;
 	}
+
+	.facet-term-selected {
+		font-weight: 600;
+	}
+
+	.facet-term-unselected {
+		font-weight: 400;
+	}
 </style>
 
 <%
 ModifiedFacetDisplayContext modifiedFacetDisplayContext = (ModifiedFacetDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 
-ModifiedFacetTermDisplayContext customRangeTermDisplayContext = modifiedFacetDisplayContext.getCustomRangeModifiedFacetTermDisplayContext();
+ModifiedFacetTermDisplayContext customRangeModifiedFacetTermDisplayContext = modifiedFacetDisplayContext.getCustomRangeModifiedFacetTermDisplayContext();
 
 ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifiedFacetDisplayContext.getModifiedFacetCalendarDisplayContext();
 %>
@@ -71,15 +79,14 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 						%>
 
 							<li class="facet-value" name="<%= renderResponse.getNamespace() + "range_" + modifiedFacetTermDisplayContext.getLabel() %>">
-								<a class="<%= modifiedFacetTermDisplayContext.isActive() ? "active" : StringPool.BLANK %>" href="<%= modifiedFacetTermDisplayContext.getRangeURL() %>">
+								<a href="<%= modifiedFacetTermDisplayContext.getRangeURL() %>">
+									<span class="term-name <%= modifiedFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+										<liferay-ui:message key="<%= modifiedFacetTermDisplayContext.getLabel() %>" />
+									</span>
 
-								<span class="term-name">
-									<liferay-ui:message key="<%= modifiedFacetTermDisplayContext.getLabel() %>" />
-								</span>
-
-								<small class="term-count">
-									<span class="badge badge-info frequency"><%= modifiedFacetTermDisplayContext.getFrequency() %></span>
-								</small>
+									<small class="term-count">
+										(<%= modifiedFacetTermDisplayContext.getFrequency() %>)
+									</small>
 								</a>
 							</li>
 
@@ -87,13 +94,13 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 						}
 						%>
 
-						<li class="facet-value nav-item" name="<%= renderResponse.getNamespace() + "range_" + customRangeTermDisplayContext.getLabel() %>">
-							<a class="<%= customRangeTermDisplayContext.isActive() ? "active" : StringPool.BLANK %> nav-link" href="<%= customRangeTermDisplayContext.getRangeURL() %>" id="<portlet:namespace /><%= customRangeTermDisplayContext.getLabel() + "-toggleLink" %>">
-								<span class="term-name"><liferay-ui:message key="<%= customRangeTermDisplayContext.getLabel() %>" />&hellip;</span>
+						<li class="facet-value nav-item" name="<%= renderResponse.getNamespace() + "range_" + customRangeModifiedFacetTermDisplayContext.getLabel() %>">
+							<a class="nav-link" href="<%= customRangeModifiedFacetTermDisplayContext.getRangeURL() %>" id="<portlet:namespace /><%= customRangeModifiedFacetTermDisplayContext.getLabel() + "-toggleLink" %>">
+								<span class="term-name <%= customRangeModifiedFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>"><liferay-ui:message key="<%= customRangeModifiedFacetTermDisplayContext.getLabel() %>" />&hellip;</span>
 
-								<c:if test="<%= customRangeTermDisplayContext.isSelected() %>">
+								<c:if test="<%= customRangeModifiedFacetTermDisplayContext.isSelected() %>">
 									<small class="term-count">
-										<span class="badge badge-info frequency"><%= customRangeTermDisplayContext.getFrequency() %></span>
+										(<%= customRangeModifiedFacetTermDisplayContext.getFrequency() %>)
 									</small>
 								</c:if>
 							</a>

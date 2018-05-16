@@ -50,7 +50,9 @@ public class JournalContentPortletHeaderJSPDynamicInclude
 				JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT);
 
 		try {
-			if (!journalContentDisplayContext.isShowArticle()) {
+			if ((journalContentDisplayContext == null) ||
+				!journalContentDisplayContext.isShowArticle()) {
+
 				return;
 			}
 		}

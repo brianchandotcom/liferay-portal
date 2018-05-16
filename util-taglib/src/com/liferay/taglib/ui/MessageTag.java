@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.DirectTag;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.util.ResourceBundle;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -53,40 +55,40 @@ public class MessageTag extends TagSupport implements DirectTag {
 		}
 
 		if (arguments == null) {
-			if (!localizeKey) {
-				value = key;
-			}
-			else if (escape) {
-				value = HtmlUtil.escape(
-					LanguageUtil.get(
-						TagResourceBundleUtil.getResourceBundle(pageContext),
-						key));
-			}
-			else if (escapeAttribute) {
-				value = HtmlUtil.escapeAttribute(
-					LanguageUtil.get(
-						TagResourceBundleUtil.getResourceBundle(pageContext),
-						key));
-			}
-			else if (unicode) {
-				value = UnicodeLanguageUtil.get(
-					TagResourceBundleUtil.getResourceBundle(pageContext), key);
+			if (localizeKey) {
+				ResourceBundle resourceBundle =
+					TagResourceBundleUtil.getResourceBundle(pageContext);
+
+				if (escape) {
+					value = HtmlUtil.escape(
+						LanguageUtil.get(resourceBundle, key));
+				}
+				else if (escapeAttribute) {
+					value = HtmlUtil.escapeAttribute(
+						LanguageUtil.get(resourceBundle, key));
+				}
+				else if (unicode) {
+					value = UnicodeLanguageUtil.get(resourceBundle, key);
+				}
+				else {
+					value = LanguageUtil.get(resourceBundle, key);
+				}
 			}
 			else {
-				value = LanguageUtil.get(
-					TagResourceBundleUtil.getResourceBundle(pageContext), key);
+				value = key;
 			}
 		}
 		else {
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			if (unicode) {
 				value = UnicodeLanguageUtil.format(
-					TagResourceBundleUtil.getResourceBundle(pageContext), key,
-					arguments, translateArguments);
+					resourceBundle, key, arguments, translateArguments);
 			}
 			else {
 				value = LanguageUtil.format(
-					TagResourceBundleUtil.getResourceBundle(pageContext), key,
-					arguments, translateArguments);
+					resourceBundle, key, arguments, translateArguments);
 			}
 		}
 

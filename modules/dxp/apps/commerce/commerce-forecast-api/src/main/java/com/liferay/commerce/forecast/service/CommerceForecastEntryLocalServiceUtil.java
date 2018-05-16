@@ -55,12 +55,13 @@ public class CommerceForecastEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.forecast.model.CommerceForecastEntry addCommerceForecastEntry(
-		long userId, java.util.Date date, int period, int target,
-		long customerId, String sku, java.math.BigDecimal assertivity)
+		long companyId, long userId, java.util.Date date, int period,
+		int target, long customerId, String sku,
+		java.math.BigDecimal assertivity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceForecastEntry(userId, date, period, target,
-			customerId, sku, assertivity);
+				   .addCommerceForecastEntry(companyId, userId, date, period,
+			target, customerId, sku, assertivity);
 	}
 
 	/**

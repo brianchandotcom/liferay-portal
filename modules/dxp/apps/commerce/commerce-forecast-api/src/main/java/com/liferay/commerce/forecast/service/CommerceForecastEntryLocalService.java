@@ -74,9 +74,9 @@ public interface CommerceForecastEntryLocalService extends BaseLocalService,
 	public CommerceForecastEntry addCommerceForecastEntry(
 		CommerceForecastEntry commerceForecastEntry);
 
-	public CommerceForecastEntry addCommerceForecastEntry(long userId,
-		Date date, int period, int target, long customerId, String sku,
-		BigDecimal assertivity) throws PortalException;
+	public CommerceForecastEntry addCommerceForecastEntry(long companyId,
+		long userId, Date date, int period, int target, long customerId,
+		String sku, BigDecimal assertivity) throws PortalException;
 
 	/**
 	* Creates a new commerce forecast entry with the primary key. Does not add the commerce forecast entry to the database.

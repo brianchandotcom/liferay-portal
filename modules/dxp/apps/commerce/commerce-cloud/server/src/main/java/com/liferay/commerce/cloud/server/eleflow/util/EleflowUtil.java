@@ -82,6 +82,10 @@ public class EleflowUtil {
 	}
 
 	public static String getString(BigDecimal bigDecimal) {
+		if (bigDecimal == null) {
+			return null;
+		}
+
 		return bigDecimal.toPlainString();
 	}
 

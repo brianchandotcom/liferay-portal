@@ -82,9 +82,7 @@
 		<if>
 			<equals arg1="${contentDateRange}" arg2="All" />
 			<then>
-				<execute function="Click" locator1="Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
-
-				<execute function="Check" locator1="Radio#RANGE_ALL" />
+				<execute function="Click" locator1="StagingPublishToLive#CONTENT_ALL" />
 
 				<execute function="Click" locator1="Link#REFRESH_COUNTS" />
 			</then>
@@ -93,7 +91,7 @@
 		<if>
 			<equals arg1="${contentDateRange}" arg2="Date Range" />
 			<then>
-				<execute function="Click" locator1="Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
+				<execute function="Click" locator1="StagingPublishToLive#CONTENT_DATE_RANGE" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
@@ -107,9 +105,7 @@
 		<if>
 			<equals arg1="${contentDateRange}" arg2="Last" />
 			<then>
-				<execute function="Click" locator1="Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
-
-				<execute function="Click" locator1="Radio#RANGE_LAST" />
+				<execute function="Click" locator1="StagingPublishToLive#CONTENT_LAST" />
 
 				<execute function="Click" locator1="Link#REFRESH_COUNTS" />
 			</then>

@@ -837,7 +837,7 @@
 			<var name="contentDateRange" value="Last" />
 		</execute>
 
-		<execute function="AssertChecked" locator1="Checkbox#ANY_CHECKBOX" value1="Web Content">
+		<execute function="AssertChecked#assertCheckedNotVisible" locator1="Checkbox#ANY_CHECKBOX" value1="Web Content">
 			<var name="checkboxName" value="Web Content" />
 		</execute>
 

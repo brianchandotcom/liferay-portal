@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -262,8 +263,9 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(osgi.jaxrs.name=Default)", unbind = "-"
+		target = "(osgi.jaxrs.name=Default)"
 	)
 	protected void setDefaultPrefixHandlerFactory(
 		PrefixHandlerFactory defaultPrefixHandlerFactory) {
@@ -273,8 +275,9 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(osgi.jaxrs.name=Default)", unbind = "-"
+		target = "(osgi.jaxrs.name=Default)"
 	)
 	protected void setDefaultScopeMapper(ScopeMapper defaultScopeMapper) {
 		_defaultScopeMapper = defaultScopeMapper;
@@ -327,6 +330,16 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 		_scopeFinderByNameServiceTrackerMap =
 			scopeFinderByNameServiceTrackerMap;
+	}
+
+	protected void unsetDefaultPrefixHandlerFactory(
+		PrefixHandlerFactory defaultPrefixHandlerFactory) {
+
+		_defaultPrefixHandlerFactory = null;
+	}
+
+	protected void unsetDefaultScopeMapper(ScopeMapper defaultScopeMapper) {
+		_defaultScopeMapper = null;
 	}
 
 	private PrefixHandlerFactory _defaultPrefixHandlerFactory;

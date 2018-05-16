@@ -16,6 +16,9 @@ package com.liferay.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.io.unsync.UnsyncPrintWriter;
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -33,11 +36,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.xml.StAXReaderUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 
 import java.util.Iterator;
@@ -76,7 +77,7 @@ public class HeaderResponseImpl
 	}
 
 	@Override
-	public void flushBuffer() throws IOException {
+	public void flushBuffer() {
 		if (_printWriter != null) {
 			_printWriter.flush();
 		}
@@ -95,7 +96,7 @@ public class HeaderResponseImpl
 	}
 
 	@Override
-	public OutputStream getPortletOutputStream() throws IOException {
+	public OutputStream getPortletOutputStream() {
 		if (_calledGetWriter) {
 			throw new IllegalStateException(
 				"Unable to obtain OutputStream because Writer is already in " +
@@ -120,20 +121,14 @@ public class HeaderResponseImpl
 	}
 
 	@Override
-	public PrintWriter getWriter() throws IOException {
+	public PrintWriter getWriter() {
 		if (_calledGetPortletOutputStream) {
 			throw new IllegalStateException(
 				"Cannot obtain Writer because OutputStream is already in use");
 		}
 
 		if (_printWriter == null) {
-			if (_bufferSize > 0) {
-				_printWriter = new HeaderPrintWriter(
-					new StringWriter(_bufferSize));
-			}
-			else {
-				_printWriter = new HeaderPrintWriter(new StringWriter());
-			}
+			_printWriter = new HeaderPrintWriter(new UnsyncStringWriter());
 		}
 
 		_calledGetWriter = true;
@@ -219,8 +214,7 @@ public class HeaderResponseImpl
 	}
 
 	private void _addMarkupToHead(
-			String name, String scope, String version, String markup)
-		throws IllegalArgumentException {
+		String name, String scope, String version, String markup) {
 
 		markup = StringUtil.trim(markup);
 
@@ -233,7 +227,7 @@ public class HeaderResponseImpl
 		if ((xmlMarkup.startsWith("<link") || xmlMarkup.startsWith("<LINK")) &&
 			!(xmlMarkup.endsWith("</link>") || xmlMarkup.endsWith("</LINK>"))) {
 
-			xmlMarkup += "</link>";
+			xmlMarkup = xmlMarkup.concat("</link>");
 		}
 
 		XMLStreamReader xmlStreamReader = null;
@@ -258,23 +252,25 @@ public class HeaderResponseImpl
 					if (!elementName.equals("script") &&
 						!elementName.equals("link")) {
 
-						throw new IllegalArgumentException(
-							"Invalid markup: " + markup);
+						_log.error("Invalid markup: " + markup);
+
+						return;
 					}
 				}
 			}
 		}
 		catch (XMLStreamException xmlse) {
-			throw new IllegalArgumentException(
-				"Invalid markup: " + markup, xmlse);
+			_log.error("Invalid markup: " + markup, xmlse);
+
+			return;
 		}
 		finally {
 			if (xmlStreamReader != null) {
 				try {
 					xmlStreamReader.close();
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				catch (XMLStreamException xmlse) {
+					_log.error(xmlse, xmlse);
 				}
 			}
 		}
@@ -284,7 +280,7 @@ public class HeaderResponseImpl
 		}
 
 		if (Validator.isNull(version)) {
-			version = StringPool.ASCII_TABLE[48];
+			version = "0";
 		}
 
 		HeaderRequest headerRequest = (HeaderRequest)getPortletRequest();
@@ -309,7 +305,7 @@ public class HeaderResponseImpl
 			String existingKey = iterator.next();
 
 			String[] existingKeyParts = StringUtil.split(
-				existingKey, StringPool.COLON);
+				existingKey, CharPool.COLON);
 
 			if (existingKeyParts.length == 3) {
 				String existingName = existingKeyParts[0];
@@ -354,19 +350,13 @@ public class HeaderResponseImpl
 
 		String version = String.valueOf(portlet.getMvccVersion());
 
-		try {
-			if (_portletOutputStream != null) {
-				_addMarkupToHead(
-					portletName, scope, version,
-					_portletOutputStream.toString());
-			}
-			else if (_printWriter != null) {
-				_addMarkupToHead(
-					portletName, scope, version, _printWriter.toString());
-			}
+		if (_portletOutputStream != null) {
+			_addMarkupToHead(
+				portletName, scope, version, _portletOutputStream.toString());
 		}
-		catch (IllegalArgumentException iae) {
-			_log.error(iae, iae);
+		else if (_printWriter != null) {
+			_addMarkupToHead(
+				portletName, scope, version, _printWriter.toString());
 		}
 	}
 
@@ -384,7 +374,24 @@ public class HeaderResponseImpl
 
 	private static class SemVer implements Comparable<SemVer> {
 
-		public SemVer(String version) {
+		@Override
+		public int compareTo(SemVer semVer) {
+			int result = Integer.compare(_major, semVer._major);
+
+			if (result != 0) {
+				return result;
+			}
+
+			result = Integer.compare(_minor, semVer._minor);
+
+			if (result != 0) {
+				return result;
+			}
+
+			return Integer.compare(_micro, semVer._micro);
+		}
+
+		private SemVer(String version) {
 			String[] parts = StringUtil.split(version, CharPool.PERIOD);
 
 			if (parts.length > 0) {
@@ -409,61 +416,32 @@ public class HeaderResponseImpl
 			}
 		}
 
-		@Override
-		public int compareTo(SemVer semVer) {
-			if (_major < semVer.getMajor()) {
-				return -1;
-			}
-			else if (_major > semVer.getMajor()) {
-				return 1;
-			}
-
-			if (_minor < semVer.getMinor()) {
-				return -1;
-			}
-			else if (_minor > semVer.getMinor()) {
-				return -1;
-			}
-
-			if (_micro < semVer.getMicro()) {
-				return -1;
-			}
-			else if (_micro > semVer.getMicro()) {
-				return 1;
-			}
-
-			return 0;
-		}
-
-		public int getMajor() {
-			return _major;
-		}
-
-		public int getMicro() {
-			return _micro;
-		}
-
-		public int getMinor() {
-			return _minor;
-		}
-
 		private final int _major;
 		private final int _micro;
 		private final int _minor;
 
 	}
 
-	private class HeaderOutputStream extends ByteArrayOutputStream {
+	private class HeaderOutputStream extends UnsyncByteArrayOutputStream {
 
 		@Override
 		public void close() throws IOException {
 			_flush();
+
+			super.close();
 		}
 
 		@Override
-		public synchronized String toString() {
+		public void flush() throws IOException {
+			_flush();
+
+			super.flush();
+		}
+
+		@Override
+		public String toString() {
 			try {
-				return new String(toByteArray(), StringPool.UTF8);
+				return toString(getCharacterEncoding());
 			}
 			catch (UnsupportedEncodingException uee) {
 				_log.error(uee, uee);
@@ -474,25 +452,34 @@ public class HeaderResponseImpl
 
 	}
 
-	private class HeaderPrintWriter extends PrintWriter {
+	private class HeaderPrintWriter extends UnsyncPrintWriter {
 
-		public HeaderPrintWriter(StringWriter stringWriter) {
-			super(stringWriter);
+		@Override
+		public void close() {
+			_flush();
 
-			_stringWriter = stringWriter;
+			super.close();
 		}
 
 		@Override
 		public void flush() {
 			_flush();
+
+			super.flush();
 		}
 
 		@Override
 		public String toString() {
-			return _stringWriter.toString();
+			return _unsyncStringWriter.toString();
 		}
 
-		private final StringWriter _stringWriter;
+		private HeaderPrintWriter(UnsyncStringWriter unsyncStringWriter) {
+			super(unsyncStringWriter);
+
+			_unsyncStringWriter = unsyncStringWriter;
+		}
+
+		private final UnsyncStringWriter _unsyncStringWriter;
 
 	}
 

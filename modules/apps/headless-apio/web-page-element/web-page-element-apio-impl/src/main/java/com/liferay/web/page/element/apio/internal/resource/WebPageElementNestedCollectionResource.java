@@ -24,12 +24,12 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.site.apio.identifier.WebSiteIdentifier;
-import com.liferay.web.page.element.apio.identifier.WebPageElementIdentifier;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
 import com.liferay.web.page.element.apio.internal.form.WebPageElementCreatorForm;
 import com.liferay.web.page.element.apio.internal.form.WebPageElementUpdaterForm;
 

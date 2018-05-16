@@ -33,6 +33,7 @@ import io.vertx.serviceproxy.ServiceException;
  */
 public class VertxUtil {
 
+	@SuppressWarnings("unchecked")
 	public static <T> void handleHttpResponse(
 		AsyncResult<T> asyncResult, RoutingContext routingContext) {
 
@@ -47,15 +48,8 @@ public class VertxUtil {
 		T result = asyncResult.result();
 
 		if (result instanceof Iterable<?>) {
-			JsonArray jsonArray = new JsonArray();
-
-			Iterable<?> iterable = (Iterable<?>)result;
-
-			for (Object object : iterable) {
-				JsonSerializable jsonSerializable = (JsonSerializable)object;
-
-				jsonArray.add(jsonSerializable.toJson());
-			}
+			JsonArray jsonArray = JsonUtil.toJsonArray(
+				(Iterable<JsonSerializable>)result);
 
 			httpServerResponse.end(jsonArray.encodePrettily());
 		}

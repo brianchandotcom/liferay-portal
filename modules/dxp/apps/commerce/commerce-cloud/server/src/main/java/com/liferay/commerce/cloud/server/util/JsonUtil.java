@@ -19,6 +19,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import com.liferay.commerce.cloud.server.model.JsonSerializable;
+
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -81,6 +83,18 @@ public class JsonUtil {
 			SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
 		Json.mapper.registerModule(new JavaTimeModule());
 		Json.mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+	}
+
+	public static <T extends JsonSerializable> JsonArray toJsonArray(
+		Iterable<T> iterable) {
+
+		JsonArray jsonArray = new JsonArray();
+
+		for (JsonSerializable jsonSerializable : iterable) {
+			jsonArray.add(jsonSerializable.toJson());
+		}
+
+		return jsonArray;
 	}
 
 }

@@ -85,16 +85,17 @@ public class ImpersonationAction extends Action {
 			if (impersonatingUser == null) {
 				session.setAttribute(_IMPERSONATING_USER, Boolean.TRUE);
 
-				JSONObject additionalInfo = _jsonFactory.createJSONObject();
+				JSONObject additionalInfoJSONObject =
+					_jsonFactory.createJSONObject();
 
-				additionalInfo.put("userId", user.getUserId());
-				additionalInfo.put("userName", user.getFullName());
+				additionalInfoJSONObject.put("userId", user.getUserId());
+				additionalInfoJSONObject.put("userName", user.getFullName());
 
 				AuditMessage auditMessage = new AuditMessage(
 					EventTypes.IMPERSONATE, themeDisplay.getCompanyId(),
 					realUser.getUserId(), realUser.getFullName(),
 					User.class.getName(), String.valueOf(user.getUserId()),
-					null, additionalInfo);
+					null, additionalInfoJSONObject);
 
 				_auditRouter.route(auditMessage);
 			}

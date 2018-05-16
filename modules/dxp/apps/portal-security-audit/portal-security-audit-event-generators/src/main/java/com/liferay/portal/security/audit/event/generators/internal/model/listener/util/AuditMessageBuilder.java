@@ -53,23 +53,24 @@ public class AuditMessageBuilder {
 		String realUserName = PortalUtil.getUserName(
 			realUserId, StringPool.BLANK);
 
-		JSONObject additionalInfo = JSONFactoryUtil.createJSONObject();
+		JSONObject additionalInfoJSONObject =
+			JSONFactoryUtil.createJSONObject();
 
 		if ((realUserId > 0) && (userId != realUserId)) {
-			additionalInfo.put("doAsUserId", String.valueOf(userId));
-			additionalInfo.put(
+			additionalInfoJSONObject.put("doAsUserId", String.valueOf(userId));
+			additionalInfoJSONObject.put(
 				"doAsUserName",
 				PortalUtil.getUserName(userId, StringPool.BLANK));
 		}
 
 		if (attributes != null) {
-			additionalInfo.put(
+			additionalInfoJSONObject.put(
 				"attributes", _getAttributesJSONArray(attributes));
 		}
 
 		return new AuditMessage(
 			eventType, companyId, realUserId, realUserName, className,
-			String.valueOf(classPK), null, additionalInfo);
+			String.valueOf(classPK), null, additionalInfoJSONObject);
 	}
 
 	private static JSONArray _getAttributesJSONArray(

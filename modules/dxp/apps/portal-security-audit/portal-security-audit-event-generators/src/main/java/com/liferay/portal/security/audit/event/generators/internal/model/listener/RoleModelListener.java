@@ -123,15 +123,16 @@ public class RoleModelListener extends BaseModelListener<Role> {
 					null);
 			}
 
-			JSONObject additionalInfo = auditMessage.getAdditionalInfo();
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
 
 			long roleId = (Long)classPK;
 
-			additionalInfo.put("roleId", roleId);
+			additionalInfoJSONObject.put("roleId", roleId);
 
 			Role role = _roleLocalService.getRole(roleId);
 
-			additionalInfo.put("roleName", role.getName());
+			additionalInfoJSONObject.put("roleName", role.getName());
 
 			_auditRouter.route(auditMessage);
 		}

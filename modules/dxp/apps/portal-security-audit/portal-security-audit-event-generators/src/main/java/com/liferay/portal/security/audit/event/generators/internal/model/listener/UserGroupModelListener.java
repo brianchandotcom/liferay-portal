@@ -128,16 +128,17 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 					null);
 			}
 
-			JSONObject additionalInfo = auditMessage.getAdditionalInfo();
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
 
 			long userGroupId = (Long)classPK;
 
-			additionalInfo.put("userGroupId", userGroupId);
+			additionalInfoJSONObject.put("userGroupId", userGroupId);
 
 			UserGroup userGroup = _userGroupLocalService.getUserGroup(
 				userGroupId);
 
-			additionalInfo.put("userGroupName", userGroup.getName());
+			additionalInfoJSONObject.put("userGroupName", userGroup.getName());
 
 			_auditRouter.route(auditMessage);
 		}

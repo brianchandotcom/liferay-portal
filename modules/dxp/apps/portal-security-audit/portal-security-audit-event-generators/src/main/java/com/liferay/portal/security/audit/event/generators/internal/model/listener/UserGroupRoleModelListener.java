@@ -59,18 +59,20 @@ public class UserGroupRoleModelListener
 				eventType, User.class.getName(), userGroupRole.getUserId(),
 				null);
 
-			JSONObject additionalInfo = auditMessage.getAdditionalInfo();
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
 
-			additionalInfo.put("roleId", userGroupRole.getRoleId());
+			additionalInfoJSONObject.put("roleId", userGroupRole.getRoleId());
 
 			Role role = userGroupRole.getRole();
 
-			additionalInfo.put("roleName", role.getName());
+			additionalInfoJSONObject.put("roleName", role.getName());
 
 			Group group = userGroupRole.getGroup();
 
-			additionalInfo.put("scopeClassName", group.getClassName());
-			additionalInfo.put("scopeClassPK", group.getClassPK());
+			additionalInfoJSONObject.put(
+				"scopeClassName", group.getClassName());
+			additionalInfoJSONObject.put("scopeClassPK", group.getClassPK());
 
 			_auditRouter.route(auditMessage);
 		}

@@ -75,12 +75,14 @@ public class UserModelListener extends BaseModelListener<User> {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
 				eventType, User.class.getName(), user.getUserId(), null);
 
-			JSONObject additionalInfo = auditMessage.getAdditionalInfo();
+			JSONObject additionalInfoJSONObject =
+				auditMessage.getAdditionalInfo();
 
-			additionalInfo.put("emailAddress", user.getEmailAddress());
-			additionalInfo.put("screenName", user.getScreenName());
-			additionalInfo.put("userId", user.getUserId());
-			additionalInfo.put("userName", user.getFullName());
+			additionalInfoJSONObject.put(
+				"emailAddress", user.getEmailAddress());
+			additionalInfoJSONObject.put("screenName", user.getScreenName());
+			additionalInfoJSONObject.put("userId", user.getUserId());
+			additionalInfoJSONObject.put("userName", user.getFullName());
 
 			_auditRouter.route(auditMessage);
 		}

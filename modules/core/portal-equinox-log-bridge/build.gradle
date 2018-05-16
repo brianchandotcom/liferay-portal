@@ -1,21 +1,8 @@
 dependencies {
+	compileOnly group: "com.liferay", name: "org.eclipse.osgi", version: "3.13.0.v20180409-1500-LIFERAY-CACHED"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
-	compileOnly group: "p2", name: "org.eclipse.osgi", version: "3.13.0.v20180409-1500"
 }
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/core")
-}
-
-repositories {
-	ivy {
-		url "http://download.eclipse.org/eclipse/updates/4.8milestones/S-4.8M7-201805092000/plugins/"
-		layout "pattern", {
-			//http://download.eclipse.org/eclipse/updates/4.8milestones/S-4.8M7-201805092000/plugins/org.eclipse.osgi_3.13.0.v20180409-1500.jar
-			artifact "[artifact]_[revision].jar"
-
-			//http://download.eclipse.org/eclipse/updates/4.8milestones/S-4.8M7-201805092000/plugins/org.eclipse.osgi.source_3.13.0.v20180409-1500.jar
-			artifact "[artifact].source_[revision].jar"
-		}
-	}
 }

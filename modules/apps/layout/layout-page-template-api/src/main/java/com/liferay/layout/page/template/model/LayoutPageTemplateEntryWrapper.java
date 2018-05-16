@@ -79,6 +79,7 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("layoutPrototypeId", getLayoutPrototypeId());
 
 		return attributes;
 	}
@@ -193,6 +194,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Long layoutPrototypeId = (Long)attributes.get("layoutPrototypeId");
+
+		if (layoutPrototypeId != null) {
+			setLayoutPrototypeId(layoutPrototypeId);
 		}
 	}
 
@@ -321,6 +328,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public long getLayoutPageTemplateEntryId() {
 		return _layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
+	}
+
+	/**
+	* Returns the layout prototype ID of this layout page template entry.
+	*
+	* @return the layout prototype ID of this layout page template entry
+	*/
+	@Override
+	public long getLayoutPrototypeId() {
+		return _layoutPageTemplateEntry.getLayoutPrototypeId();
 	}
 
 	/**
@@ -678,6 +695,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
 		_layoutPageTemplateEntry.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+	}
+
+	/**
+	* Sets the layout prototype ID of this layout page template entry.
+	*
+	* @param layoutPrototypeId the layout prototype ID of this layout page template entry
+	*/
+	@Override
+	public void setLayoutPrototypeId(long layoutPrototypeId) {
+		_layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 	}
 
 	/**

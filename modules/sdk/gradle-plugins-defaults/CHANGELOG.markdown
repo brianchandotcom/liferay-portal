@@ -3557,6 +3557,9 @@ version 2.2.3.
 - [LPS-80944]: Add the plugin `com.liferay.spring.boot.defaults` to configure
 Spring Boot projects according to Liferay defaults.
 
+### Changed
+- [LPS-80944]: Update the [Liferay Gradle Plugins] dependency to version 3.12.5.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

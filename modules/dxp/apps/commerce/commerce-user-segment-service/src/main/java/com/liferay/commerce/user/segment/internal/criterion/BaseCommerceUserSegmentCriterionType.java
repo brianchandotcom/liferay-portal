@@ -66,6 +66,12 @@ public abstract class BaseCommerceUserSegmentCriterionType
 	}
 
 	@Override
+	public void contributeToDocument(Document document) {
+		document.addKeyword(getIndexerFieldName(), new long[0]);
+		document.addKeyword(getIndexerFieldName() + "_required_matches", 0);
+	}
+
+	@Override
 	public boolean isSatisfied(
 			long commerceUserSegmentCriterionId, ServiceContext serviceContext)
 		throws PortalException {

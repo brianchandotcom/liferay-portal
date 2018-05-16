@@ -183,6 +183,18 @@ public class CommerceUserSegmentEntryIndexer
 		}
 
 		try {
+			List<CommerceUserSegmentCriterionType>
+				commerceUserSegmentCriterionTypes =
+					_commerceUserSegmentCriterionTypeRegistry.
+						getCommerceUserSegmentCriterionTypes();
+
+			for (CommerceUserSegmentCriterionType
+					 commerceUserSegmentCriterionType :
+						commerceUserSegmentCriterionTypes) {
+
+				commerceUserSegmentCriterionType.contributeToDocument(document);
+			}
+
 			List<CommerceUserSegmentCriterion> commerceUserSegmentCriteria =
 				_commerceUserSegmentCriterionLocalService.
 					getCommerceUserSegmentCriteria(

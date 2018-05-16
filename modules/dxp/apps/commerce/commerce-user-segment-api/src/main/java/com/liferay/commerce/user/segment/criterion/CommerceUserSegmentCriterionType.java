@@ -35,6 +35,8 @@ public interface CommerceUserSegmentCriterionType {
 		CommerceUserSegmentCriterion commerceUserSegmentCriterion,
 		Document document);
 
+	public void contributeToDocument(Document document);
+
 	public String getKey();
 
 	public String getLabel(Locale locale);

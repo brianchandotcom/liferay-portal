@@ -11,7 +11,7 @@
 		</div>
 	</nav>
 
-	<div class="nav navbar-user ml-auto">
+	<div class="ml-auto nav navbar-user">
 		<@liferay.user_personal_bar />
 	</div>
 

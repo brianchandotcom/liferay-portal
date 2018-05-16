@@ -19,12 +19,23 @@
 <portlet:actionURL name="unsubscribe" var="unsubscribeURL" />
 
 <%
-int subscriptionsCount = SubscriptionLocalServiceUtil.getUserSubscriptionsCount(user.getUserId());
-
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
 displayStyleURL.setParameter("mvcRenderCommandName", "/mysubscriptions/view");
+
+MySubscriptionsManagementToolbarDisplayContext mySubscriptionsManagementToolbarDisplayContext = new MySubscriptionsManagementToolbarDisplayContext(request, liferayPortletResponse, user);
+
+int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotalItems();
 %>
+
+<clay:management-toolbar
+	actionDropdownItems="<%= mySubscriptionsManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	disabled="<%= mySubscriptionsManagementToolbarDisplayContext.isDisabled() %>"
+	itemsTotal="<%= mySubscriptionsManagementToolbarDisplayContext.getTotalItems() %>"
+	searchContainerId="subscriptions"
+	selectable="<%= mySubscriptionsManagementToolbarDisplayContext.isSelectable() %>"
+	showSearch="<%= mySubscriptionsManagementToolbarDisplayContext.isShowSearch() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= subscriptionsCount <= 0 %>"

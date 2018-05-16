@@ -40,9 +40,15 @@ public class WorkflowDefinitionLinkSearchEntryLabelPredicateFilter
 			return true;
 		}
 
+		String delimiter = StringPool.SPACE;
+
+		if (!StringUtil.contains(_keywords, StringPool.SPACE)) {
+			delimiter = StringPool.BLANK;
+		}
+
 		return StringUtil.containsIgnoreCase(
 			workflowDefinitionLinkSearchEntry.getWorkflowDefinitionLabel(),
-			_keywords, StringPool.SPACE);
+			_keywords, delimiter);
 	}
 
 	private final String _keywords;

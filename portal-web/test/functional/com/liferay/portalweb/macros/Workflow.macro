@@ -2,7 +2,15 @@
 	<command name="_gotoPendingFilter">
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<if>
+			<condition function="IsElementPresent" locator1="Dropdown#FILTER" />
+			<then>
+				<execute function="Click" locator1="Dropdown#FILTER" />
+			</then>
+			<else>
+				<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
+			</else>
+		</if>
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Pending">
 			<var name="key_menuItem" value="Pending" />
@@ -352,7 +360,15 @@
 	<command name="gotoCompletedFilter">
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<if>
+			<condition function="IsElementPresent" locator1="Dropdown#FILTER" />
+			<then>
+				<execute function="Click" locator1="Dropdown#FILTER" />
+			</then>
+			<else>
+				<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
+			</else>
+		</if>
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Completed">
 			<var name="key_menuItem" value="Completed" />
@@ -908,13 +924,7 @@
 	</command>
 
 	<command name="viewDefaultMySubmissionsCP">
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publications requested by me." />
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publications requested by me." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no publications requested by me." />
 	</command>
 
 	<command name="viewDefaultMyWorkflowTasksCP">
@@ -944,13 +954,7 @@
 	</command>
 
 	<command name="viewDefaultWorkflowSubmissions">
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending publication requests." />
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed publication requests." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no publication requests." />
 	</command>
 
 	<command name="viewDefinition">

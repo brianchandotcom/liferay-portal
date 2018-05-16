@@ -34,7 +34,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionLinkDisplayContext" %><%@
 page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkDisplayTerms" %><%@
-page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearch" %><%@
 page import="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearchEntry" %>
 
 <%@ page import="java.util.Map" %>

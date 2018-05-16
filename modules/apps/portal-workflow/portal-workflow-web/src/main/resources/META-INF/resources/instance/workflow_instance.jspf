@@ -15,6 +15,7 @@
 --%>
 
 <liferay-ui:search-container
+	id="workflowInstances"
 	searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>"
 >
 	<liferay-ui:search-container-row

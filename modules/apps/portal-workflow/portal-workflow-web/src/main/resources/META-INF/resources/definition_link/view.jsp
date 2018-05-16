@@ -17,8 +17,6 @@
 <%@ include file="/definition_link/init.jsp" %>
 
 <%
-WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDefinitionLinkDisplayContext.getSearchContainer();
-
 Map<String, String> resourceTooltips = workflowDefinitionLinkDisplayContext.getResourceTooltips();
 
 boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessage(request);
@@ -39,7 +37,7 @@ boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessa
 <div class="container-fluid-1280 workflow-definition-link-container" id="<portlet:namespace />Container">
 	<liferay-ui:search-container
 		id="searchContainer"
-		searchContainer="<%= workflowDefinitionLinkSearchContainer %>"
+		searchContainer="<%= workflowDefinitionLinkDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionLinkSearchEntry"

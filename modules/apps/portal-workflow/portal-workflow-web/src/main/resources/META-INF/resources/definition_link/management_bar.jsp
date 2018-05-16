@@ -16,28 +16,16 @@
 
 <%@ include file="/definition_link/init.jsp" %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= workflowDefinitionLinkDisplayContext.getPortletURL() %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= workflowDefinitionLinkDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= workflowDefinitionLinkDisplayContext.getOrderByCol() %>"
-			orderByType="<%= workflowDefinitionLinkDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"resource", "workflow"} %>'
-			portletURL="<%= workflowDefinitionLinkDisplayContext.getPortletURL() %>"
-		/>
-
-		<liferay-util:include page="/search.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= workflowDefinitionLinkDisplayContext.getClearResultsURL() %>"
+	disabled="<%= workflowDefinitionLinkDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= workflowDefinitionLinkDisplayContext.getFilterOptions(request) %>"
+	itemsTotal="<%= workflowDefinitionLinkDisplayContext.getTotalItems() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= workflowDefinitionLinkDisplayContext.getSearchURL() %>"
+	searchContainerId="workflowDefinitionLinks"
+	searchFormName="fm1"
+	selectable="false"
+	sortingOrder="<%= workflowDefinitionLinkDisplayContext.getOrderByType() %>"
+	sortingURL="<%= workflowDefinitionLinkDisplayContext.getSortingURL() %>"
+/>

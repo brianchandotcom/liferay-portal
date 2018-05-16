@@ -419,6 +419,25 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
+		long parentMessageId, int status) {
+		return _mbMessageLocalService.getChildMessages(parentMessageId, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
+		long parentMessageId, int status, int start, int end) {
+		return _mbMessageLocalService.getChildMessages(parentMessageId, status,
+			start, end);
+	}
+
+	@Override
+	public int getChildMessagesCount(long parentMessageId, int status) {
+		return _mbMessageLocalService.getChildMessagesCount(parentMessageId,
+			status);
+	}
+
+	@Override
 	public java.util.List<com.liferay.message.boards.model.MBMessage> getCompanyMessages(
 		long companyId, int status, int start, int end) {
 		return _mbMessageLocalService.getCompanyMessages(companyId, status,
@@ -696,6 +715,27 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	public int getPositionInThread(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageLocalService.getPositionInThread(messageId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.model.MBMessage> getRootMessages(
+		String className, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getRootMessages(className, classPK, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.message.boards.model.MBMessage> getRootMessages(
+		String className, long classPK, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMessageLocalService.getRootMessages(className, classPK,
+			status, start, end);
+	}
+
+	@Override
+	public int getRootMessagesCount(String className, long classPK, int status) {
+		return _mbMessageLocalService.getRootMessagesCount(className, classPK,
+			status);
 	}
 
 	@Override

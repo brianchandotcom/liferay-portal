@@ -24,12 +24,12 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.site.apio.identifier.WebSiteIdentifier;
-import com.liferay.web.page.element.apio.identifier.WebPageElementIdentifier;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
 import com.liferay.web.page.element.apio.internal.form.WebPageElementCreatorForm;
 import com.liferay.web.page.element.apio.internal.form.WebPageElementUpdaterForm;
 
@@ -119,7 +119,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private JournalArticle _addJournalArticle(
-			Long webSiteId, WebPageElementCreatorForm webPageElementCreatorForm)
+			long webSiteId, WebPageElementCreatorForm webPageElementCreatorForm)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -155,7 +155,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private PageItems<JournalArticle> _getPageItems(
-		Pagination pagination, Long webSiteId) {
+		Pagination pagination, long webSiteId) {
 
 		List<JournalArticle> journalArticles =
 			_journalArticleService.getArticles(
@@ -167,7 +167,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private JournalArticle _updateJournalArticle(
-			Long journalArticleId,
+			long journalArticleId,
 			WebPageElementUpdaterForm webPageElementUpdaterForm)
 		throws PortalException {
 

@@ -349,6 +349,10 @@
 			<finder-column name="threadId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="P_S" return-type="Collection">
+			<finder-column name="parentMessageId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_U_S" return-type="Collection" where="categoryId != -1">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />

@@ -178,6 +178,7 @@ public class IconTag extends IncludeTag {
 		_message = null;
 		_method = null;
 		_onClick = null;
+		_resourceBundle = null;
 		_src = null;
 		_srcHover = null;
 		_target = "_self";
@@ -191,10 +192,7 @@ public class IconTag extends IncludeTag {
 	 */
 	@Deprecated
 	protected Map<String, Object> getData() {
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
-		return _getData(resourceBundle);
+		return _getData();
 	}
 
 	/**
@@ -205,10 +203,7 @@ public class IconTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
-		return _getDetails(themeDisplay, resourceBundle);
+		return _getDetails(themeDisplay);
 	}
 
 	protected String getId() {
@@ -434,18 +429,14 @@ public class IconTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
 		request.setAttribute("liferay-ui:icon:alt", _alt);
 		request.setAttribute("liferay-ui:icon:ariaRole", _ariaRole);
 		request.setAttribute(
 			"liferay-ui:icon:auiImage", String.valueOf(isAUIImage()));
 		request.setAttribute("liferay-ui:icon:cssClass", _cssClass);
-		request.setAttribute("liferay-ui:icon:data", _getData(resourceBundle));
+		request.setAttribute("liferay-ui:icon:data", _getData());
 		request.setAttribute(
-			"liferay-ui:icon:details",
-			_getDetails(themeDisplay, resourceBundle));
+			"liferay-ui:icon:details", _getDetails(themeDisplay));
 		request.setAttribute(
 			"liferay-ui:icon:forcePost", String.valueOf(isForcePost()));
 		request.setAttribute("liferay-ui:icon:icon", _icon);
@@ -486,7 +477,7 @@ public class IconTag extends IncludeTag {
 			"liferay-ui:icon:useDialog", String.valueOf(_useDialog));
 	}
 
-	private Map<String, Object> _getData(ResourceBundle resourceBundle) {
+	private Map<String, Object> _getData() {
 		Map<String, Object> data = null;
 
 		if (_data != null) {
@@ -500,7 +491,7 @@ public class IconTag extends IncludeTag {
 			String message = getProcessedMessage();
 
 			if (_localizeMessage) {
-				message = LanguageUtil.get(resourceBundle, message);
+				message = LanguageUtil.get(_getResourceBundle(), message);
 			}
 
 			data.put("title", HtmlUtil.stripHtml(message));
@@ -509,13 +500,12 @@ public class IconTag extends IncludeTag {
 		return data;
 	}
 
-	private String _getDetails(
-		ThemeDisplay themeDisplay, ResourceBundle resourceBundle) {
-
+	private String _getDetails(ThemeDisplay themeDisplay) {
 		String details = null;
 
 		if (_alt != null) {
-			details = " alt=\"" + LanguageUtil.get(resourceBundle, _alt) + "\"";
+			details =
+				" alt=\"" + LanguageUtil.get(_getResourceBundle(), _alt) + "\"";
 		}
 		else if (isLabel()) {
 			details = " alt=\"\"";
@@ -523,8 +513,14 @@ public class IconTag extends IncludeTag {
 		else {
 			StringBundler sb = new StringBundler(5);
 
-			String localizedProcessedMessage = LanguageUtil.get(
-				resourceBundle, getProcessedMessage());
+			String localizedProcessedMessage = StringPool.BLANK;
+
+			String processedMessage = getProcessedMessage();
+
+			if (processedMessage != null) {
+				localizedProcessedMessage = LanguageUtil.get(
+					_getResourceBundle(), processedMessage);
+			}
 
 			sb.append(" alt=\"");
 			sb.append(localizedProcessedMessage);
@@ -645,6 +641,15 @@ public class IconTag extends IncludeTag {
 		return details;
 	}
 
+	private ResourceBundle _getResourceBundle() {
+		if (_resourceBundle == null) {
+			_resourceBundle = TagResourceBundleUtil.getResourceBundle(
+				pageContext);
+		}
+
+		return _resourceBundle;
+	}
+
 	private String _getSrc(ThemeDisplay themeDisplay) {
 		if (Validator.isNotNull(_src)) {
 			return _src;
@@ -704,6 +709,7 @@ public class IconTag extends IncludeTag {
 	private String _message;
 	private String _method;
 	private String _onClick;
+	private ResourceBundle _resourceBundle;
 	private String _src;
 	private String _srcHover;
 	private String _target = "_self";

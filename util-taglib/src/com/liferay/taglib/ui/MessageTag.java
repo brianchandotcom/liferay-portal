@@ -54,28 +54,34 @@ public class MessageTag extends TagSupport implements DirectTag {
 				request.getAttribute(WebKeys.JAVASCRIPT_CONTEXT));
 		}
 
-		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
-			pageContext);
-
 		if (arguments == null) {
-			if (!localizeKey) {
-				value = key;
-			}
-			else if (escape) {
-				value = HtmlUtil.escape(LanguageUtil.get(resourceBundle, key));
-			}
-			else if (escapeAttribute) {
-				value = HtmlUtil.escapeAttribute(
-					LanguageUtil.get(resourceBundle, key));
-			}
-			else if (unicode) {
-				value = UnicodeLanguageUtil.get(resourceBundle, key);
+			if (localizeKey) {
+				ResourceBundle resourceBundle =
+					TagResourceBundleUtil.getResourceBundle(pageContext);
+
+				if (escape) {
+					value = HtmlUtil.escape(
+						LanguageUtil.get(resourceBundle, key));
+				}
+				else if (escapeAttribute) {
+					value = HtmlUtil.escapeAttribute(
+						LanguageUtil.get(resourceBundle, key));
+				}
+				else if (unicode) {
+					value = UnicodeLanguageUtil.get(resourceBundle, key);
+				}
+				else {
+					value = LanguageUtil.get(resourceBundle, key);
+				}
 			}
 			else {
-				value = LanguageUtil.get(resourceBundle, key);
+				value = key;
 			}
 		}
 		else {
+			ResourceBundle resourceBundle =
+				TagResourceBundleUtil.getResourceBundle(pageContext);
+
 			if (unicode) {
 				value = UnicodeLanguageUtil.format(
 					resourceBundle, key, arguments, translateArguments);

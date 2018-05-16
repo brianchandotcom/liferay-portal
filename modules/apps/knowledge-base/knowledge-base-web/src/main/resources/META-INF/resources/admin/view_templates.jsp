@@ -25,6 +25,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 <clay:management-toolbar
 	actionDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
+	componentId="kbTemplatesManagementToolbar"
 	creationMenu="<%= kbTemplatesManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
@@ -102,7 +103,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 </div>
 
 <aui:script>
-	function <portlet:namespace />deleteKBTemplates() {
+	var deleteKBTemplates = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-templates" />')) {
 			var form = document.querySelector('#<portlet:namespace />fm');
 
@@ -115,4 +116,23 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 			}
 		}
 	}
+
+	var ACTIONS = {
+		'deleteKBTemplates': deleteKBTemplates
+	};
+
+	Liferay.componentReady('kbTemplatesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

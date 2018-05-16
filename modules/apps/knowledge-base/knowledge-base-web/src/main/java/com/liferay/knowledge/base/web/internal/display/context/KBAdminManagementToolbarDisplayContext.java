@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -90,11 +89,7 @@ public class KBAdminManagementToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							StringBundler.concat(
-								"javascript:",
-								_liferayPortletResponse.getNamespace(),
-								"deleteEntries();"));
+						dropdownItem.putData("action", "deleteEntries");
 						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

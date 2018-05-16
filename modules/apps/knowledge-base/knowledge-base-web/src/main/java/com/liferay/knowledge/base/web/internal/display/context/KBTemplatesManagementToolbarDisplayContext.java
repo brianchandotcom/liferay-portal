@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -76,11 +75,7 @@ public class KBTemplatesManagementToolbarDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							StringBundler.concat(
-								"javascript:",
-								_liferayPortletResponse.getNamespace(),
-								"deleteKBTemplates();"));
+						dropdownItem.putData("action", "deleteKBTemplates");
 						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

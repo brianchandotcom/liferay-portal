@@ -16,25 +16,26 @@ package com.liferay.portal.apio.internal.architect.converter;
 
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 
 import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code SecurityException} to its {@link APIError} representation.
+ * Converts a {@code PrincipalException} to its {@link APIError} representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class SecurityExceptionConverter
-	implements ExceptionMapper<SecurityException> {
+public class PrincipalExceptionExceptionMapper
+	implements ExceptionMapper<PrincipalException> {
 
 	@Override
-	public APIError map(SecurityException se) {
+	public APIError map(PrincipalException pe) {
 		return new APIError(
-			se, "Not permitted to access", "forbidden",
-			Status.FORBIDDEN.getStatusCode());
+			pe, "Resource not found", "not-found",
+			Status.NOT_FOUND.getStatusCode());
 	}
 
 }

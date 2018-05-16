@@ -12,31 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.apio.internal.architect.converter;
+package com.liferay.folder.apio.internal.architect.converter;
 
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
 
 import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code NoSuchModelException} to its {@link APIError}
+ * Converts a {@code DuplicateFolderNameException} to its {@link APIError}
  * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class NoSuchModelExceptionConverter
-	implements ExceptionMapper<NoSuchModelException> {
+public class DuplicateFolderNameExceptionMapper
+	implements ExceptionMapper<DuplicateFolderNameException> {
 
 	@Override
-	public APIError map(NoSuchModelException nsme) {
+	public APIError map(DuplicateFolderNameException dfne) {
 		return new APIError(
-			nsme, "Resource not found", "not-found",
-			Status.NOT_FOUND.getStatusCode());
+			dfne, "Duplicate folder", "bad-request",
+			Status.BAD_REQUEST.getStatusCode());
 	}
 
 }

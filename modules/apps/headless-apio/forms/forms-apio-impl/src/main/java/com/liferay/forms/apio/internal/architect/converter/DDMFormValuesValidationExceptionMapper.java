@@ -12,30 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.apio.internal.architect.converter;
+package com.liferay.forms.apio.internal.architect.converter;
 
 import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 
 import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code PrincipalException} to its {@link APIError} representation.
+ * Converts a {@code DDMFormValuesValidationException} to its {@link APIError}
+ * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class PrincipalExceptionExceptionConverter
-	implements ExceptionMapper<PrincipalException> {
+public class DDMFormValuesValidationExceptionMapper
+	implements ExceptionMapper<DDMFormValuesValidationException> {
 
 	@Override
-	public APIError map(PrincipalException pe) {
+	public APIError map(DDMFormValuesValidationException ddmfvve) {
 		return new APIError(
-			pe, "Resource not found", "not-found",
-			Status.NOT_FOUND.getStatusCode());
+			ddmfvve, "Wrong values", ddmfvve.getMessage(), "bad-request",
+			Status.BAD_REQUEST.getStatusCode());
 	}
 
 }

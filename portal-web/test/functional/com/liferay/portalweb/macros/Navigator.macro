@@ -110,6 +110,12 @@
 		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
 	</command>
 
+	<command name="gotoNavItemAddPage">
+		<var name="key_navItem" value="${navItem}" />
+
+		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK_ADD_PAGE" value1="${navItem}" />
+	</command>
+
 	<command name="gotoNavNested">
 		<var name="key_navNested" value="${navNested}" />
 

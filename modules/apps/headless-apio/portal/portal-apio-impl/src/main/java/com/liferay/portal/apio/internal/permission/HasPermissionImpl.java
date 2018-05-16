@@ -69,7 +69,7 @@ public class HasPermissionImpl implements HasPermission {
 
 	@Override
 	public Boolean forAddingRootJournalArticle(
-		Credentials credentials, Long groupId) {
+		Credentials credentials, long groupId) {
 
 		Try<PermissionChecker> permissionCheckerTry = getPermissionCheckerTry(
 			credentials);

@@ -393,6 +393,20 @@ public class MBMessageLocalServiceUtil {
 		return getService().getCategoryMessagesCount(groupId, categoryId, status);
 	}
 
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
+		long parentMessageId, int status) {
+		return getService().getChildMessages(parentMessageId, status);
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getChildMessages(
+		long parentMessageId, int status, int start, int end) {
+		return getService().getChildMessages(parentMessageId, status, start, end);
+	}
+
+	public static int getChildMessagesCount(long parentMessageId, int status) {
+		return getService().getChildMessagesCount(parentMessageId, status);
+	}
+
 	public static java.util.List<com.liferay.message.boards.model.MBMessage> getCompanyMessages(
 		long companyId, int status, int start, int end) {
 		return getService().getCompanyMessages(companyId, status, start, end);
@@ -636,6 +650,24 @@ public class MBMessageLocalServiceUtil {
 	public static int getPositionInThread(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPositionInThread(messageId);
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootMessages(
+		String className, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRootMessages(className, classPK, status);
+	}
+
+	public static java.util.List<com.liferay.message.boards.model.MBMessage> getRootMessages(
+		String className, long classPK, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getRootMessages(className, classPK, status, start, end);
+	}
+
+	public static int getRootMessagesCount(String className, long classPK,
+		int status) {
+		return getService().getRootMessagesCount(className, classPK, status);
 	}
 
 	public static String[] getTempAttachmentNames(long groupId, long userId,

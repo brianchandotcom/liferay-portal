@@ -42,6 +42,7 @@ public class FilterMapping {
 
 		_filterName = filterName;
 		_filter = filter;
+
 		_urlPatterns = urlPatterns.toArray(new String[urlPatterns.size()]);
 
 		String urlRegexPattern = filterConfig.getInitParameter(

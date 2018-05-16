@@ -25,7 +25,6 @@ import org.eclipse.jgit.api.LogCommand;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.lib.RepositoryCache;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -94,7 +93,9 @@ public class GitUtil {
 	public static Repository openRepository(File gitDir) throws Exception {
 		gitDir = _getGitDir(gitDir);
 
-		return RepositoryCache.open(FileKey.exact(gitDir, FS.DETECTED));
+		FileKey fileKey = FileKey.exact(gitDir, FS.DETECTED);
+
+		return fileKey.open(true);
 	}
 
 	private static File _getGitDir(File dir) {

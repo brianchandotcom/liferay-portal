@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -173,7 +175,7 @@ public class NewEnvTestRule implements TestRule {
 
 		arguments.add("-Djava.net.preferIPv4Stack=true");
 
-		if (Boolean.getBoolean("jvm.debug")) {
+		if (_isJPDAEnabled()) {
 			arguments.add(_JPDA_OPTIONS);
 			arguments.add("-Djvm.debug=true");
 		}
@@ -328,6 +330,22 @@ public class NewEnvTestRule implements TestRule {
 
 	protected static final String CLASS_PATH = ClassPathUtil.getJVMClassPath(
 		true);
+
+	private boolean _isJPDAEnabled() {
+		if (Boolean.getBoolean("jvm.debug")) {
+			return true;
+		}
+
+		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+
+		for (String argument : runtimeMXBean.getInputArguments()) {
+			if (argument.startsWith("-agentlib:jdwp=")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	private static final String _JPDA_OPTIONS =
 		"-agentlib:jdwp=transport=dt_socket,address=8001,server=y,suspend=y";

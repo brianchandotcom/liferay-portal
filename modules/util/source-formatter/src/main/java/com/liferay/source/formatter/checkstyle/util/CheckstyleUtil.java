@@ -41,16 +41,6 @@ public class CheckstyleUtil {
 
 	public static final int BATCH_SIZE = 1000;
 
-	public static String getCheckName(String name) {
-		int pos = name.lastIndexOf(CharPool.PERIOD);
-
-		if (pos != -1) {
-			return name.substring(pos + 1);
-		}
-
-		return name;
-	}
-
 	public static List<String> getCheckNames(Configuration configuration) {
 		List<String> checkNames = new ArrayList<>();
 
@@ -80,6 +70,12 @@ public class CheckstyleUtil {
 			new InputSource(
 				classLoader.getResourceAsStream(configurationFileName)),
 			new PropertiesExpander(System.getProperties()), false);
+
+		String checkName = sourceFormatterArgs.getCheckName();
+
+		if (checkName != null) {
+			configuration = _filterCheck(configuration, checkName);
+		}
 
 		configuration = _addAttribute(
 			configuration, "baseDirName", sourceFormatterArgs.getBaseDirName(),
@@ -166,7 +162,8 @@ public class CheckstyleUtil {
 				continue;
 			}
 
-			String checkName = getCheckName(checkConfiguration.getName());
+			String checkName = SourceFormatterUtil.getSimpleName(
+				checkConfiguration.getName());
 
 			List<String> attributeNames = SourceFormatterUtil.getAttributeNames(
 				CheckType.CHECKSTYLE, checkName, propertiesMap);
@@ -192,6 +189,38 @@ public class CheckstyleUtil {
 					defaultChildConfiguration.addAttribute(
 						attributeName, value);
 				}
+			}
+		}
+
+		return configuration;
+	}
+
+	private static Configuration _filterCheck(
+		Configuration configuration, String checkName) {
+
+		DefaultConfiguration treeWalkerConfiguration = _getChildConfiguration(
+			configuration, "TreeWalker");
+
+		Configuration[] checkConfigurations =
+			treeWalkerConfiguration.getChildren();
+
+		if (checkConfigurations == null) {
+			return configuration;
+		}
+
+		for (Configuration checkConfiguration : checkConfigurations) {
+			if (!(checkConfiguration instanceof DefaultConfiguration)) {
+				continue;
+			}
+
+			if (!checkName.equals(
+					SourceFormatterUtil.getSimpleName(
+						checkConfiguration.getName()))) {
+
+				DefaultConfiguration defaultChildConfiguration =
+					(DefaultConfiguration)checkConfiguration;
+
+				treeWalkerConfiguration.removeChild(defaultChildConfiguration);
 			}
 		}
 

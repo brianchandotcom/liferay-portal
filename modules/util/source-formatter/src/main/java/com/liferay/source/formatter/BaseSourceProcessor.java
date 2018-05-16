@@ -100,7 +100,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_sourceFormatterMessagesMap = new HashMap<>();
 
 		_sourceChecks = _getSourceChecks(
-			_sourceFormatterConfiguration, _containsModuleFile(fileNames));
+			_sourceFormatterConfiguration, _containsModuleFile(fileNames),
+			sourceFormatterArgs.getCheckName());
 
 		addProgressStatusUpdate(
 			new ProgressStatusUpdate(
@@ -595,7 +596,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private List<SourceCheck> _getSourceChecks(
 			SourceFormatterConfiguration sourceFormatterConfiguration,
-			boolean includeModuleChecks)
+			boolean includeModuleChecks, String checkName)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -603,7 +604,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<SourceCheck> sourceChecks = SourceChecksUtil.getSourceChecks(
 			sourceFormatterConfiguration, clazz.getSimpleName(),
 			getPropertiesMap(), portalSource, subrepository,
-			includeModuleChecks);
+			includeModuleChecks, checkName);
 
 		for (SourceCheck sourceCheck : sourceChecks) {
 			_initSourceCheck(sourceCheck);

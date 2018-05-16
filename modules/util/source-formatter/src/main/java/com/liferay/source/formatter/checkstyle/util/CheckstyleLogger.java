@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.util.CheckType;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.DefaultLogger;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
@@ -57,7 +58,7 @@ public class CheckstyleLogger extends DefaultLogger {
 	}
 
 	protected void addError(AuditEvent auditEvent, String fileName) {
-		String checkName = CheckstyleUtil.getCheckName(
+		String checkName = SourceFormatterUtil.getSimpleName(
 			auditEvent.getSourceName());
 
 		_sourceFormatterMessages.add(

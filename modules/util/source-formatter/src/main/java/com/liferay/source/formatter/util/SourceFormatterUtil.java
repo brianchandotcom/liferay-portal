@@ -333,6 +333,16 @@ public class SourceFormatterUtil {
 		return getPropertyValue(attributeName, null, checkName, propertiesMap);
 	}
 
+	public static String getSimpleName(String name) {
+		int pos = name.lastIndexOf(CharPool.PERIOD);
+
+		if (pos != -1) {
+			return name.substring(pos + 1);
+		}
+
+		return name;
+	}
+
 	public static List<File> getSuppressionsFiles(
 			String baseDirName, List<String> allFileNames,
 			SourceFormatterExcludes sourceFormatterExcludes,

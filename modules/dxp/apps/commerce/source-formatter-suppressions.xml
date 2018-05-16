@@ -4,4 +4,12 @@
 	<checkstyle>
 		<suppress checks="JSONNamingCheck" files="commerce-cloud/server/.*" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="XMLServiceEntityNameCheck" files="commerce-currency-service/service\.xml" />
+		<suppress checks="XMLServiceEntityNameCheck" files="commerce-discount-service/service\.xml" />
+		<suppress checks="XMLServiceEntityNameCheck" files="commerce-organization-service/service\.xml" />
+		<suppress checks="XMLServiceEntityNameCheck" files="commerce-price-list-service/service\.xml" />
+		<suppress checks="XMLServiceEntityNameCheck" files="commerce-user-service/service\.xml" />
+		<suppress checks="XMLServiceEntityNameCheck" files="commerce-wish-list-service/service\.xml" />
+	</source-check>
 </suppressions>

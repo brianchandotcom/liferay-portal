@@ -48,7 +48,7 @@ public class MergeCentralSubrepositoryUtil {
 			return;
 		}
 
-		List<String> failedGitRepos = new ArrayList<>();
+		List<String> failedGitrepoPaths = new ArrayList<>();
 
 		List<File> gitrepoFiles = JenkinsResultsParserUtil.findFiles(
 			modulesDir, ".gitrepo");
@@ -107,7 +107,7 @@ public class MergeCentralSubrepositoryUtil {
 					mergeBranchName);
 			}
 			catch (Exception e) {
-				failedGitRepos.add(gitrepoFile.getParent());
+				failedGitrepoPaths.add(gitrepoFile.getParent());
 
 				e.printStackTrace();
 
@@ -115,10 +115,10 @@ public class MergeCentralSubrepositoryUtil {
 			}
 		}
 
-		if (!failedGitRepos.isEmpty()) {
+		if (!failedGitrepoPaths.isEmpty()) {
 			String message = JenkinsResultsParserUtil.combine(
 				"Unable to create a pull to merge these subrepositories:\n",
-				StringUtils.join(failedGitRepos, "\n"));
+				StringUtils.join(failedGitrepoPaths, "\n"));
 
 			Properties buildProperties =
 				JenkinsResultsParserUtil.getBuildProperties();

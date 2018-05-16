@@ -107,12 +107,6 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 					markupView="lexicon"
 					resultRowSplitter="<%= new MySubscriptionsResultRowSplitter(locale) %>"
 				/>
-
-				<c:if test="<%= !results.isEmpty() %>">
-					<aui:button-row cssName="unsubscribe-button-row">
-						<aui:button type="submit" value="unsubscribe" />
-					</aui:button-row>
-				</c:if>
 			</liferay-ui:search-container>
 		</aui:fieldset>
 	</aui:form>

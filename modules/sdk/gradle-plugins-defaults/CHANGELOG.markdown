@@ -3570,6 +3570,12 @@ Spring Boot projects according to Liferay defaults.
 ### Changed
 - [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version 3.12.7.
 
+## 5.4.3 - 2018-05-16
+
+### Changed
+- [LPS-80950]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.4.
+
 ## 5.4.4 - 2018-05-16
 
 ### Added

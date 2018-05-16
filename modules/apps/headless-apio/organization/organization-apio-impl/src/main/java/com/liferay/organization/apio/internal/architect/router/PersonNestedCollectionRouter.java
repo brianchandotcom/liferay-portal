@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organization.apio.internal.architect.resource;
+package com.liferay.organization.apio.internal.architect.router;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;

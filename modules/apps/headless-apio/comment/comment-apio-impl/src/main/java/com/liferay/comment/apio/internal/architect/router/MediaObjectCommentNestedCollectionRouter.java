@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.comment.apio.internal.architect.resource;
+package com.liferay.comment.apio.internal.architect.router;
 
 import com.liferay.apio.architect.router.NestedCollectionRouter;
-import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
-import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
-import com.liferay.comment.apio.internal.architect.resource.base.BaseCommentNestedCollectionRouter;
+import com.liferay.comment.apio.internal.architect.router.base.BaseCommentNestedCollectionRouter;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,19 +29,19 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Comment">Comment</a> resources contained inside a <a
- * href="http://schema.org/BlogPosting">BlogPosting</a> through a web API. The
- * resources are mapped from the internal model {@link Comment} and {@code
- * BlogsEntry}.
+ * href="http://schema.org/MediaObject">MediaObject</a> resources contained
+ * inside a <a href="http://schema.org/BlogPosting">BlogPosting</a> through a
+ * web API. The resources are mapped from the internal model {@link Comment} and
+ * {@code FileEntry}.
  *
  * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class BlogPostingCommentNestedCollectionRouter extends
-	BaseCommentNestedCollectionRouter<BlogPostingIdentifier>
+public class MediaObjectCommentNestedCollectionRouter extends
+	BaseCommentNestedCollectionRouter<FileEntryIdentifier>
 	implements NestedCollectionRouter
-		<Comment, CommentIdentifier, Long, BlogPostingIdentifier> {
+		<Comment, CommentIdentifier, Long, FileEntryIdentifier> {
 
 	@Override
 	protected CommentManager getCommentManager() {
@@ -49,16 +49,16 @@ public class BlogPostingCommentNestedCollectionRouter extends
 	}
 
 	@Override
-	protected GroupedModel getGroupedModel(long blogsEntryId)
+	protected GroupedModel getGroupedModel(long fileEntryId)
 		throws PortalException {
 
-		return _blogsEntryLocalService.getBlogsEntry(blogsEntryId);
+		return _dlAppLocalService.getFileEntry(fileEntryId);
 	}
 
 	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
+	private CommentManager _commentManager;
 
 	@Reference
-	private CommentManager _commentManager;
+	private DLAppLocalService _dlAppLocalService;
 
 }

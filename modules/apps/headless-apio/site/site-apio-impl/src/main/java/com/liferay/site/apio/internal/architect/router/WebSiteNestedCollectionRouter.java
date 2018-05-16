@@ -12,18 +12,16 @@
  * details.
  */
 
-package com.liferay.site.apio.internal.architect.resource;
+package com.liferay.site.apio.internal.architect.router;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
@@ -33,40 +31,40 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the <a
- * href="http://schema.org/Person">Person</a> resources contained inside a <a
+ * href="http://schema.org/WebSite">WebSite</a> resources contained inside a <a
  * href="http://schema.org/WebSite">WebSite</a> through a web API. The resources
- * are mapped from the internal model {@link User}.
+ * are mapped from the internal model {@link Group}.
  *
  * @author Eduardo Perez
  * @review
  */
 @Component(immediate = true)
-public class PersonNestedCollectionRouter implements
-	NestedCollectionRouter<User, PersonIdentifier, Long, WebSiteIdentifier> {
+public class WebSiteNestedCollectionRouter implements
+	NestedCollectionRouter<Group, WebSiteIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<User, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<User, Long> builder) {
+	public NestedCollectionRoutes<Group, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems
+			this::_getPageItems, Company.class
 		).build();
 	}
 
-	private PageItems<User> _getPageItems(Pagination pagination, Long groupId)
+	private PageItems<Group> _getPageItems(
+			Pagination pagination, Long parentGroupId, Company company)
 		throws PortalException {
 
-		List<User> users = _userService.getGroupUsers(
-			groupId, WorkflowConstants.STATUS_APPROVED,
-			pagination.getStartPosition(), pagination.getEndPosition(),
-			new UserLastNameComparator(true));
-		int count = _userService.getGroupUsersCount(
-			groupId, WorkflowConstants.STATUS_APPROVED);
+		List<Group> groups = _groupService.getGroups(
+			company.getCompanyId(), parentGroupId, true,
+			pagination.getStartPosition(), pagination.getEndPosition());
+		int count = _groupService.getGroupsCount(
+			company.getCompanyId(), parentGroupId, true);
 
-		return new PageItems<>(users, count);
+		return new PageItems<>(groups, count);
 	}
 
 	@Reference
-	private UserService _userService;
+	private GroupService _groupService;
 
 }

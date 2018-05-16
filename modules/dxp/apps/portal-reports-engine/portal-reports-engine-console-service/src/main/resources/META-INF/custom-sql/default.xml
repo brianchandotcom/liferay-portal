@@ -10,9 +10,9 @@
 			WHERE
 				(Reports_Definition.groupId = ?) AND
 				(Reports_Definition.sourceId = ?) [$AND_OR_CONNECTOR$]
-				(lower(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(lower(CAST_TEXT(Reports_Definition.description)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(lower(Reports_Definition.reportName) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(LOWER(CAST_TEXT(Reports_Definition.description)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(LOWER(Reports_Definition.reportName) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder.findByG_S_N_D_RN">
@@ -24,9 +24,9 @@
 			WHERE
 				(Reports_Definition.groupId = ?) AND
 				(Reports_Definition.sourceId = ?) [$AND_OR_CONNECTOR$]
-				(lower(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(lower(CAST_TEXT(Reports_Definition.description)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(lower(Reports_Definition.reportName) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(LOWER(CAST_TEXT(Reports_Definition.description)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(LOWER(Reports_Definition.reportName) LIKE ? [$AND_OR_NULL_CHECK$])
 			ORDER BY
 				Reports_Definition.definitionId DESC
 		]]>
@@ -47,8 +47,8 @@
 				(Reports_Entry.groupId = ?) AND
 				(Reports_Entry.createDate > ?) AND
 				(Reports_Entry.createDate < ?) AND
-				(lower(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(lower(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(LOWER(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.reports.engine.console.service.persistence.EntryFinder.findByG_CD_N_SN">
@@ -67,8 +67,8 @@
 				(Reports_Entry.groupId = ?) AND
 				(Reports_Entry.createDate > ?) AND
 				(Reports_Entry.createDate < ?) AND
-				(lower(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(lower(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(CAST_TEXT(Reports_Definition.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(LOWER(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$])
 			ORDER BY
 				Reports_Entry.entryId DESC
 		]]>
@@ -81,8 +81,8 @@
 				Reports_Source
 			WHERE
 				(Reports_Source.groupId = ?) AND
-				(lower(CAST_TEXT(Reports_Source.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(lower(Reports_Source.driverUrl) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(CAST_TEXT(Reports_Source.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(LOWER(Reports_Source.driverUrl) LIKE ? [$AND_OR_NULL_CHECK$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.reports.engine.console.service.persistence.SourceFinder.findByG_N_DU">
@@ -93,8 +93,8 @@
 				Reports_Source
 			WHERE
 				(Reports_Source.groupId = ?) AND
-				(lower(CAST_TEXT(Reports_Source.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(lower(Reports_Source.driverUrl) LIKE ? [$AND_OR_NULL_CHECK$])
+				(LOWER(CAST_TEXT(Reports_Source.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(LOWER(Reports_Source.driverUrl) LIKE ? [$AND_OR_NULL_CHECK$])
 			ORDER BY
 				Reports_Source.sourceId DESC
 		]]>

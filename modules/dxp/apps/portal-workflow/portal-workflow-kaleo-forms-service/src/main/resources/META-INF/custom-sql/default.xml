@@ -13,7 +13,7 @@
 			WHERE
 				(KaleoProcess.groupId = ?) AND
 				(
-					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
@@ -30,7 +30,7 @@
 			WHERE
 				(KaleoProcess.groupId = ?) AND
 				(
-					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 			ORDER BY

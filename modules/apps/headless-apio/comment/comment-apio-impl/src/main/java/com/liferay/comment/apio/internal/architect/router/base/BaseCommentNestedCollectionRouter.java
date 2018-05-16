@@ -49,8 +49,22 @@ public abstract class BaseCommentNestedCollectionRouter
 		).build();
 	}
 
+	/**
+	 * Returns the {@code CommentManager} used to retrieve comments.
+	 *
+	 * @return the {@code CommentManager} instance
+	 * @review
+	 */
 	protected abstract CommentManager getCommentManager();
 
+	/**
+	 * Transforms a {@code classPK} into its {@link GroupedModel}.
+	 *
+	 * @param  classPK the class PK
+	 * @return the grouped model
+	 * @throws PortalException if getting the {@code GroupedModel} fails
+	 * @review
+	 */
 	protected abstract GroupedModel getGroupedModel(long classPK)
 		throws PortalException;
 

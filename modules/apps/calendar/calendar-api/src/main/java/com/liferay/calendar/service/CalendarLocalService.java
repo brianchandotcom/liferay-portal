@@ -198,6 +198,10 @@ public interface CalendarLocalService extends BaseLocalService,
 	public Calendar fetchCalendarByUuidAndGroupId(String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Calendar fetchGroupCalendarByName(long companyId, long groupId,
+		String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

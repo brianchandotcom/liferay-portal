@@ -214,6 +214,11 @@ public class CalendarLocalServiceUtil {
 		return getService().fetchCalendarByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.calendar.model.Calendar fetchGroupCalendarByName(
+		long companyId, long groupId, String name) {
+		return getService().fetchGroupCalendarByName(companyId, groupId, name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

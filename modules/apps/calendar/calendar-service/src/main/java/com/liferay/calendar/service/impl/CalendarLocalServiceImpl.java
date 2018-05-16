@@ -22,6 +22,7 @@ import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -160,6 +161,21 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 	@Override
 	public Calendar fetchCalendar(long calendarId) {
 		return calendarPersistence.fetchByPrimaryKey(calendarId);
+	}
+
+	@Override
+	public Calendar fetchGroupCalendarByName(
+		long companyId, long groupId, String name) {
+
+		List<Calendar> calendars = calendarFinder.findByC_G_C_N_D(
+			companyId, new long[] {groupId}, null, name, null, true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		if (!calendars.isEmpty()) {
+			return calendars.get(0);
+		}
+
+		return null;
 	}
 
 	@Override

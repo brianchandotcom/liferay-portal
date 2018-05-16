@@ -380,7 +380,7 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int start, int status, int end,
+		int status, int start, int end,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {

@@ -59,6 +59,7 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.naming.ldap.LdapContext;
 import javax.naming.ldap.PagedResultsControl;
 import javax.naming.ldap.PagedResultsResponseControl;
+import javax.naming.ldap.Rdn;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -201,7 +202,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			sb.append(groupMappings.getProperty("groupName"));
 
 			sb.append(StringPool.EQUAL);
-			sb.append(groupName);
+			sb.append(Rdn.escapeValue(groupName));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if (Validator.isNotNull(groupFilter)) {
@@ -812,7 +813,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(groupMappings.getProperty("user"));
 			sb.append(StringPool.EQUAL);
-			sb.append(userDN);
+			sb.append(StringUtil.replace(userDN, '\\', "\\\\"));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			SearchControls searchControls = new SearchControls(
@@ -868,7 +869,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(userMappings.getProperty(UserConverterKeys.GROUP));
 			sb.append(StringPool.EQUAL);
-			sb.append(groupDN);
+			sb.append(StringUtil.replace(groupDN, '\\', "\\\\"));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			SearchControls searchControls = new SearchControls(

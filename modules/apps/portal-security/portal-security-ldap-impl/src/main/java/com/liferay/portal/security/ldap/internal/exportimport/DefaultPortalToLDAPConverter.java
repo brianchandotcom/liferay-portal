@@ -58,6 +58,7 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.BasicAttribute;
 import javax.naming.directory.BasicAttributes;
 import javax.naming.directory.DirContext;
+import javax.naming.ldap.Rdn;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -102,7 +103,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 				groupMappings.getProperty(GroupConverterKeys.GROUP_NAME),
 				_DEFAULT_DN));
 		sb.append(StringPool.EQUAL);
-		sb.append(userGroup.getName());
+		sb.append(Rdn.escapeValue(userGroup.getName()));
 		sb.append(StringPool.COMMA);
 		sb.append(
 			_portalLDAP.getGroupsDN(ldapServerId, userGroup.getCompanyId()));

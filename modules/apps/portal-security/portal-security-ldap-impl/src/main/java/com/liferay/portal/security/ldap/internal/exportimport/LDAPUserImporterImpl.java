@@ -101,6 +101,7 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapContext;
+import javax.naming.ldap.Rdn;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -651,8 +652,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 	}
 
-	protected String escapeValue(String value) {
-		return StringUtil.replace(value, _UNESCAPED_CHARS, _ESCAPED_CHARS);
+	protected String escapeLDAPName(String ldapName) {
+		return StringUtil.replace(ldapName, '\\', "\\\\");
 	}
 
 	protected LDAPImportContext getLDAPImportContext(
@@ -732,7 +733,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(groupMappings.getProperty("groupName"));
 		sb.append("=");
-		sb.append(escapeValue(userGroup.getName()));
+		sb.append(Rdn.escapeValue(userGroup.getName()));
 		sb.append("))");
 
 		return _portalLDAP.getMultivaluedAttribute(
@@ -982,7 +983,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			String fullUserDN = binding.getNameInNamespace();
 
-			sb.append(escapeValue(fullUserDN));
+			sb.append(escapeLDAPName(fullUserDN));
 
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 			sb.append(StringPool.CLOSE_PARENTHESIS);
@@ -1701,16 +1702,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		"prefixId", "skypeSn", "smsSn", "suffixId", "twitterSn"
 	};
 
-	private static final String[] _ESCAPED_CHARS = {
-		"\\\\,", "\\\\#", "\\\\+", "\\\\<", "\\\\>", "\\\\;", "\\\\=", "\\\\ "
-	};
-
 	private static final String _IMPORT_BY_GROUP = "group";
 
 	private static final String _IMPORT_BY_USER = "user";
-
-	private static final String[] _UNESCAPED_CHARS =
-		{"\\,", "\\#", "\\+", "\\<", "\\>", "\\;", "\\=", "\\ "};
 
 	private static final String _USER_PASSWORD_SCREEN_NAME = "screenName";
 

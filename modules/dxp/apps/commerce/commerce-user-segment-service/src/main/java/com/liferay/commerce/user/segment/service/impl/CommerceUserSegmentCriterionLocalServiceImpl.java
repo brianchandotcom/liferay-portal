@@ -18,10 +18,13 @@ import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionT
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionTypeRegistry;
 import com.liferay.commerce.user.segment.exception.CommerceUserSegmentCriterionTypeException;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentCriterionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -67,6 +70,12 @@ public class CommerceUserSegmentCriterionLocalServiceImpl
 		commerceUserSegmentCriterionPersistence.update(
 			commerceUserSegmentCriterion);
 
+		//Commerce user segment criterion
+
+		reindexCommerceUserSegmentEntry(commerceUserSegmentCriterion);
+
+		//Cache
+
 		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
 			serviceContext.getScopeGroupId());
 
@@ -98,7 +107,11 @@ public class CommerceUserSegmentCriterionLocalServiceImpl
 		expandoRowLocalService.deleteRows(
 			commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId());
 
-		// Cache
+		//Commerce user segment criterion
+
+		reindexCommerceUserSegmentEntry(commerceUserSegmentCriterion);
+
+		//Cache
 
 		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
 			commerceUserSegmentCriterion.getGroupId());
@@ -157,10 +170,29 @@ public class CommerceUserSegmentCriterionLocalServiceImpl
 		commerceUserSegmentCriterionPersistence.update(
 			commerceUserSegmentCriterion);
 
+		//Commerce user segment criterion
+
+		reindexCommerceUserSegmentEntry(commerceUserSegmentCriterion);
+
+		//Cache
+
 		commerceUserSegmentEntryLocalService.cleanUserSegmentsChache(
 			commerceUserSegmentCriterion.getGroupId());
 
 		return commerceUserSegmentCriterion;
+	}
+
+	protected void reindexCommerceUserSegmentEntry(
+			CommerceUserSegmentCriterion commerceUserSegmentCriterion)
+		throws PortalException {
+
+		Indexer<CommerceUserSegmentEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(
+				CommerceUserSegmentEntry.class);
+
+		indexer.reindex(
+			CommerceUserSegmentEntry.class.getName(),
+			commerceUserSegmentCriterion.getCommerceUserSegmentEntryId());
 	}
 
 	protected void validate(String type) throws PortalException {

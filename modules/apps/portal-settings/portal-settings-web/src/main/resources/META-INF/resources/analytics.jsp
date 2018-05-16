@@ -17,15 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String adminAnalyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_KEY);
 String adminAnalyticsTypes = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES);
 %>
 
 <h3><liferay-ui:message key="analytics" /></h3>
-
-<aui:fieldset>
-	<aui:input label="liferay-analytics-key" name='<%= "settings--" + PropsKeys.ADMIN_ANALYTICS_KEY + "--" %>' type="text" value="<%= adminAnalyticsKey %>" />
-</aui:fieldset>
 
 <aui:fieldset>
 	<aui:input label="enter-one-analytics-system-name-per-line" name='<%= "settings--" + PropsKeys.ADMIN_ANALYTICS_TYPES + "--" %>' type="textarea" value="<%= adminAnalyticsTypes %>" />

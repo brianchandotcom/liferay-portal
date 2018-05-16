@@ -19,8 +19,6 @@ package com.liferay.portal.kernel.util;
  */
 public interface PropsKeys {
 
-	public static final String ADMIN_ANALYTICS_KEY = "admin.analytics.key";
-
 	public static final String ADMIN_ANALYTICS_TYPES = "admin.analytics.types";
 
 	public static final String ADMIN_DEFAULT_GROUP_NAMES = "admin.default.group.names";

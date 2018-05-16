@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.analytics.internal.servlet.taglib;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
@@ -23,9 +22,6 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -47,17 +43,10 @@ public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 			String key)
 		throws IOException {
 
-		Map<String, String> values = new HashMap<>();
-
-		values.put("analyticsGatewayUrl", getAnalyticsGatewayUrl());
-
 		ScriptData scriptData = new ScriptData();
 
 		scriptData.append(
-			null,
-			StringUtil.replaceToStringBundler(
-				_TMPL_CONTENT, StringPool.POUND, StringPool.POUND, values),
-			null, ScriptData.ModulesType.AUI);
+			null, _TMPL_CONTENT, null, ScriptData.ModulesType.AUI);
 
 		scriptData.writeTo(response.getWriter());
 	}
@@ -66,21 +55,6 @@ public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"/html/common/themes/top_head.jsp#post");
-	}
-
-	protected String getAnalyticsGatewayUrl() {
-		if ((_ANALYTICS_GATEWAY_PROTOCOL == null) ||
-			(_ANALYTICS_GATEWAY_HOST == null) ||
-			(_ANALYTICS_GATEWAY_PORT == null) ||
-			(_ANALYTICS_GATEWAY_PATH == null)) {
-
-			return "";
-		}
-
-		return String.format(
-			"%s//%s:%s/%s", _ANALYTICS_GATEWAY_PROTOCOL,
-			_ANALYTICS_GATEWAY_HOST, _ANALYTICS_GATEWAY_PORT,
-			_ANALYTICS_GATEWAY_PATH);
 	}
 
 	@Override
@@ -101,18 +75,6 @@ public class DDMFormAnalyticsTopHeadJSPDynamicInclude
 	protected void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _ANALYTICS_GATEWAY_HOST = System.getProperty(
-		"analytics.gateway.host");
-
-	private static final String _ANALYTICS_GATEWAY_PATH = System.getProperty(
-		"analytics.gateway.path");
-
-	private static final String _ANALYTICS_GATEWAY_PORT = System.getProperty(
-		"analytics.gateway.port");
-
-	private static final String _ANALYTICS_GATEWAY_PROTOCOL =
-		System.getProperty("analytics.gateway.protocol");
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		DDMFormAnalyticsTopHeadJSPDynamicInclude.class,

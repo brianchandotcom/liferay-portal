@@ -51,6 +51,9 @@ public class GroupConstants {
 	public static final String TYPE_SETTINGS_KEY_INHERIT_LOCALES =
 		"inheritLocales";
 
+	public static final String TYPE_SETTINGS_KEY_LIFERAY_ANALYTICS_KEY =
+		"liferayAnalyticsKey";
+
 	public static final int TYPE_SITE_OPEN = 1;
 
 	public static final String TYPE_SITE_OPEN_LABEL = "open";

@@ -432,10 +432,12 @@
 <%-- Analytics --%>
 
 <%
-String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_KEY);
+UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+
+String liferayAnalyticsKey = groupTypeSettings.getProperty(GroupConstants.TYPE_SETTINGS_KEY_LIFERAY_ANALYTICS_KEY);
 %>
 
-<c:if test="<%= Validator.isNotNull(analyticsKey) %>">
+<c:if test="<%= Validator.isNotNull(liferayAnalyticsKey) %>">
 	<script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
 		(function(u, c, a, m, o, l) {
 			o = 'script';
@@ -447,7 +449,7 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 			a.onload = c;
 			m.parentNode.insertBefore(a, m);
 		})('https://analytics.liferay.com/analytics-all-min.js', function() {
-			var config = {analyticsKey: '<%= HtmlUtil.escapeJS(analyticsKey) %>'};
+			var config = {analyticsKey: '<%= HtmlUtil.escapeJS(liferayAnalyticsKey) %>'};
 
 			Analytics.create(config);
 
@@ -478,8 +480,6 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 </c:if>
 
 <%
-UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
-
 String[] analyticsTypes = PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES, StringPool.NEW_LINE);
 
 for (String analyticsType : analyticsTypes) {

@@ -23,10 +23,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -104,20 +105,28 @@ public class OrganizationCommerceUserSegmentCriterionTypeImpl
 	}
 
 	protected void organizationPostProcessContextBooleanFilter(
-		BooleanFilter contextBooleanFilter, long organizationId) {
+			BooleanFilter contextBooleanFilter, long organizationId)
+		throws PortalException {
 
-		Filter existFilter = new ExistsFilter(getIndexerFieldName());
+		Organization organization = _organizationLocalService.getOrganization(
+			organizationId);
 
-		Filter organizationFilter = new TermFilter(
-			getIndexerFieldName(), String.valueOf(organizationId));
+		long[] ancestorOrganizationIds =
+			organization.getAncestorOrganizationIds();
 
-		BooleanFilter existBooleanFilter = new BooleanFilter();
+		Filter existFilter = new TermFilter(
+			getIndexerFieldName() + "_required_matches", "0");
 
-		existBooleanFilter.add(existFilter, BooleanClauseOccur.MUST_NOT);
+		TermsFilter organizationFilter = new TermsFilter(getIndexerFieldName());
+
+		organizationFilter.addValues(
+			ArrayUtil.toStringArray(ancestorOrganizationIds));
+
+		organizationFilter.addValue(String.valueOf(organizationId));
 
 		BooleanFilter fieldBooleanFilter = new BooleanFilter();
 
-		fieldBooleanFilter.add(existBooleanFilter, BooleanClauseOccur.SHOULD);
+		fieldBooleanFilter.add(existFilter, BooleanClauseOccur.SHOULD);
 		fieldBooleanFilter.add(organizationFilter, BooleanClauseOccur.SHOULD);
 
 		contextBooleanFilter.add(fieldBooleanFilter, BooleanClauseOccur.MUST);

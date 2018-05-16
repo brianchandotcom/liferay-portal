@@ -33,15 +33,15 @@ public class MediaObjectCreatorForm {
 		).constructor(
 			MediaObjectCreatorForm::new
 		).addOptionalString(
-			"changeLog", MediaObjectCreatorForm::setChangelog
+			"changeLog", MediaObjectCreatorForm::_setChangelog
 		).addOptionalString(
-			"description", MediaObjectCreatorForm::setDescription
+			"description", MediaObjectCreatorForm::_setDescription
 		).addRequiredFile(
-			"binaryFile", MediaObjectCreatorForm::setBinaryFile
+			"binaryFile", MediaObjectCreatorForm::_setBinaryFile
 		).addRequiredString(
-			"name", MediaObjectCreatorForm::setName
+			"name", MediaObjectCreatorForm::_setName
 		).addRequiredString(
-			"title", MediaObjectCreatorForm::setTitle
+			"title", MediaObjectCreatorForm::_setTitle
 		).build();
 	}
 
@@ -65,23 +65,23 @@ public class MediaObjectCreatorForm {
 		return _title;
 	}
 
-	public void setBinaryFile(BinaryFile binaryFile) {
+	private void _setBinaryFile(BinaryFile binaryFile) {
 		_binaryFile = binaryFile;
 	}
 
-	public void setChangelog(String changelog) {
+	private void _setChangelog(String changelog) {
 		_changelog = changelog;
 	}
 
-	public void setDescription(String description) {
+	private void _setDescription(String description) {
 		_description = description;
 	}
 
-	public void setName(String name) {
+	private void _setName(String name) {
 		_name = name;
 	}
 
-	public void setTitle(String title) {
+	private void _setTitle(String title) {
 		_title = title;
 	}
 

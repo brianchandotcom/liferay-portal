@@ -35,5 +35,6 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="layoutPrototypeId" type="long" />
 	</model>
 </model-hints>

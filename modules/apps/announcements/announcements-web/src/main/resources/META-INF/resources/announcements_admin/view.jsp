@@ -151,7 +151,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
-			var form = document.querySelector('#<portlet:namespace />fm);
+			var form = document.querySelector('#<portlet:namespace />fm');
 
 			if (form) {
 				form.setAttribute('method', 'post');

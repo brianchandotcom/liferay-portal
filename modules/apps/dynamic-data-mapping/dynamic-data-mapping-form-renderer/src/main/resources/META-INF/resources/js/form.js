@@ -153,6 +153,12 @@ AUI.add(
 								if (!hasErrors) {
 									var formNode = instance.getFormNode();
 
+									var currentPageInput = formNode.one('#' + instance.get('portletNamespace') + 'currentPage');
+
+									if (currentPageInput) {
+										currentPageInput.set('value', instance.getCurrentPage());
+									}
+
 									instance.showLoadingFeedback();
 
 									Liferay.Util.submitForm(formNode);

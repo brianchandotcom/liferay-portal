@@ -189,6 +189,17 @@ AUI.add(
 						}
 					).render();
 				}
+
+				var context = instance.get('context');
+
+				var currentPage = context.currentPage;
+
+				if (currentPage) {
+					instance.showPage(currentPage);
+
+					instance._syncPaginatedUI(currentPage - 1, currentPage);
+					instance._syncWizardUI(currentPage - 1, currentPage);
+				}
 			},
 
 			_afterPaginationPageChange: function(event) {

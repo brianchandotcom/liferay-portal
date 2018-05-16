@@ -161,6 +161,7 @@
 		showRequiredFieldsWarning: bool,
 		rows: list<[columns: list<[size: int, fields: list<?>]>]>
 	]>}
+	{@param portletNamespace: string}
 	{@param requiredFieldsWarningMessageHTML: html}
 	{@param showSubmitButton: bool}
 	{@param strings: [previous: string, next: string]}
@@ -170,6 +171,8 @@
 		<div class="ddm-user-view-content lfr-ddm-form-content">
 			{if length($pages) > 1}
 					<div class="lfr-ddm-form-wizard">
+						<input class="field form-control" id="{$portletNamespace}currentPage"
+							name="{$portletNamespace}currentPage" type="hidden">
 						<ul class="multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 							{foreach $page in $pages}
 								<li {if isFirst($page)}class="active"{/if}>

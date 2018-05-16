@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -149,6 +150,12 @@ public class DDMFormTemplateContextFactoryImpl
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
 		templateContext.put("pages", pages);
+
+		String currentPage = ParamUtil.getString(
+			ddmFormRenderingContext.getHttpServletRequest(), "currentPage",
+			"1");
+
+		templateContext.put("currentPage", currentPage);
 
 		templateContext.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());

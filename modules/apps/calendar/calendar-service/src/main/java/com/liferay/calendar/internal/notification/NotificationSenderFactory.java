@@ -58,8 +58,7 @@ public class NotificationSenderFactory {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetNotificationSender"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setNotificationSender(
 		NotificationSender notificationSender, Map<String, Object> properties) {

@@ -930,27 +930,11 @@
 	<command name="viewDefaultMyWorkflowTasksCP">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to you." />
 
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to you." />
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
-
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Assigned to My Roles" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to your roles." />
-
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to your roles." />
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
 	</command>
 
 	<command name="viewDefaultWorkflowSubmissions">

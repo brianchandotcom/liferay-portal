@@ -74,7 +74,7 @@
 				<contains string="${pageTemplateName}" substring="{pageTemplateName}" />
 			</not>
 			<then>
-				<execute macro="Navigator#gotoNavItem">
+				<execute macro="Navigator#gotoNavItemAddPage">
 					<var name="navItem" value="Global Templates" />
 				</execute>
 

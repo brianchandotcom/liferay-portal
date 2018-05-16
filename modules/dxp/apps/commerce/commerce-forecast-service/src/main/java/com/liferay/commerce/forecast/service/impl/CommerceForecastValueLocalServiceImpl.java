@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.forecast.service.impl;
 
+import com.liferay.commerce.forecast.model.CommerceForecastEntry;
 import com.liferay.commerce.forecast.model.CommerceForecastValue;
 import com.liferay.commerce.forecast.service.base.CommerceForecastValueLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +41,9 @@ public class CommerceForecastValueLocalServiceImpl
 				commerceForecastEntryId, date);
 
 		if (commerceForecastValue == null) {
+			CommerceForecastEntry commerceForecastEntry =
+				commerceForecastEntryPersistence.findByPrimaryKey(
+					commerceForecastEntryId);
 			User user = userLocalService.getUser(userId);
 
 			long commerceForecastValueId = counterLocalService.increment();
@@ -47,7 +51,8 @@ public class CommerceForecastValueLocalServiceImpl
 			commerceForecastValue = commerceForecastValuePersistence.create(
 				commerceForecastValueId);
 
-			commerceForecastValue.setCompanyId(user.getCompanyId());
+			commerceForecastValue.setCompanyId(
+				commerceForecastEntry.getCompanyId());
 			commerceForecastValue.setUserId(user.getUserId());
 			commerceForecastValue.setUserName(user.getFullName());
 			commerceForecastValue.setCommerceForecastEntryId(

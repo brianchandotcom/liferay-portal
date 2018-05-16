@@ -32,15 +32,15 @@ public class CommerceForecastEntryLocalServiceImpl
 
 	@Override
 	public CommerceForecastEntry addCommerceForecastEntry(
-			long userId, Date date, int period, int target, long customerId,
-			String sku, BigDecimal assertivity)
+			long companyId, long userId, Date date, int period, int target,
+			long customerId, String sku, BigDecimal assertivity)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
 		CommerceForecastEntry commerceForecastEntry =
 			commerceForecastEntryPersistence.fetchByC_P_T_C_S(
-				user.getCompanyId(), period, target, customerId, sku);
+				companyId, period, target, customerId, sku);
 
 		if (commerceForecastEntry == null) {
 			long commerceForecastEntryId = counterLocalService.increment();
@@ -48,7 +48,7 @@ public class CommerceForecastEntryLocalServiceImpl
 			commerceForecastEntry = commerceForecastEntryPersistence.create(
 				commerceForecastEntryId);
 
-			commerceForecastEntry.setCompanyId(user.getCompanyId());
+			commerceForecastEntry.setCompanyId(companyId);
 			commerceForecastEntry.setUserId(user.getUserId());
 			commerceForecastEntry.setUserName(user.getFullName());
 			commerceForecastEntry.setPeriod(period);

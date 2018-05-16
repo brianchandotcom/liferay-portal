@@ -53,8 +53,6 @@ wikiPagesSearchContainer.setRowChecker(new PagesChecker(liferayPortletRequest, l
 
 wikiListPagesDisplayContext.populateResultsAndTotal(wikiPagesSearchContainer);
 
-List<WikiPage> pages = wikiPagesSearchContainer.getResults();
-
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
@@ -78,50 +76,29 @@ else {
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
+
+WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContext = new WikiPagesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiPagesSearchContainer, trashHelper, wikiURLHelper);
 %>
 
 <liferay-util:include page="/wiki_admin/pages_navigation.jsp" servletContext="<%= application %>" />
 
-<liferay-frontend:management-bar
-	disabled="<%= pages.isEmpty() %>"
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getClearResultsURL()) %>"
+	creationMenu="<%= wikiPagesManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= wikiPagesManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	itemsTotal="<%= wikiPagesManagementToolbarDisplayContext.getTotalItems() %>"
+	searchActionURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getSearchActionURL()) %>"
 	searchContainerId="wikiPages"
->
-	<c:if test="<%= Validator.isNull(keywords) %>">
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				cssClass="infoPanelToggler"
-				icon="info-circle"
-				label="info"
-			/>
-
-			<liferay-frontend:management-bar-display-buttons
-				displayViews='<%= new String[] {"descriptive", "list"} %>'
-				portletURL="<%= currentURLObj %>"
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-
-			<liferay-util:include page="/wiki_admin/add_page_button.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:management-bar-buttons>
-	</c:if>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/wiki_admin/view_pages_filters.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deletePages();" %>'
-			iconCssClass='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>'
-			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>'
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	selectable="<%= wikiPagesManagementToolbarDisplayContext.isSelectable() %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= wikiPagesManagementToolbarDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= wikiPagesManagementToolbarDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getSortingURL()) %>"
+	viewTypeItems="<%= wikiPagesManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/page_info_panel" var="sidebarPanelURL">

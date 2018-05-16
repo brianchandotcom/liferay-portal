@@ -17,13 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
-page import="com.liferay.frontend.taglib.servlet.taglib.AddMenuItem" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.search.QueryConfig" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.Menu" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem" %><%@
 page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
 page import="com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.wiki.display.context.WikiListPagesDisplayContext" %><%@
@@ -54,10 +51,8 @@ page import="com.liferay.wiki.web.internal.display.context.util.WikiSocialActivi
 page import="com.liferay.wiki.web.internal.display.context.util.WikiURLHelper" %><%@
 page import="com.liferay.wiki.web.internal.importer.MediaWikiImporter" %><%@
 page import="com.liferay.wiki.web.internal.importer.WikiImporterTracker" %><%@
-page import="com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor" %><%@
 page import="com.liferay.wiki.web.internal.security.permission.resource.WikiNodePermission" %><%@
 page import="com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission" %><%@
-page import="com.liferay.wiki.web.internal.security.permission.resource.WikiResourcePermission" %><%@
 page import="com.liferay.wiki.web.internal.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.wiki.web.internal.util.WikiUtil" %><%@
 page import="com.liferay.wiki.web.internal.util.WikiWebComponentProvider" %>

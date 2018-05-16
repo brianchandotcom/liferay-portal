@@ -19,34 +19,35 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.model.WikiNode;
 
 /**
- * @author Adolfo Pérez
+ * @author Brian Wing Shun Chan
  */
-public class NodeModifiedDateComparator extends OrderByComparator<WikiNode> {
+public class NodeLastPostDateComparator extends OrderByComparator<WikiNode> {
 
-	public static final String ORDER_BY_ASC = "WikiNode.modifiedDate ASC";
+	public static final String ORDER_BY_ASC = "WikiNode.lastPostDate ASC";
 
-	public static final String ORDER_BY_DESC = "WikiNode.modifiedDate DESC";
+	public static final String ORDER_BY_DESC = "WikiNode.lastPostDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
+	public static final String[] ORDER_BY_FIELDS = {"lastPostDate"};
 
-	public NodeModifiedDateComparator() {
+	public NodeLastPostDateComparator() {
 		this(false);
 	}
 
-	public NodeModifiedDateComparator(boolean ascending) {
+	public NodeLastPostDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
-	public int compare(WikiNode node1, WikiNode node2) {
+	public int compare(WikiNode wikiNode1, WikiNode wikiNode2) {
 		int value = DateUtil.compareTo(
-			node1.getModifiedDate(), node2.getModifiedDate());
+			wikiNode1.getLastPostDate(), wikiNode2.getLastPostDate());
 
 		if (_ascending) {
 			return value;
 		}
-
-		return -value;
+		else {
+			return -value;
+		}
 	}
 
 	@Override

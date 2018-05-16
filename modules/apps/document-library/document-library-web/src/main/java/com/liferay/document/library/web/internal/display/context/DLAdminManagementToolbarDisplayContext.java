@@ -303,13 +303,13 @@ public class DLAdminManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() {
-		PortletURL currentSortingURL = _getCurrentSortingURL();
+		PortletURL sortingURL = _getCurrentSortingURL();
 
-		currentSortingURL.setParameter(
+		sortingURL.setParameter(
 			"orderByType",
 			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc");
 
-		return currentSortingURL;
+		return sortingURL;
 	}
 
 	public int getTotalItems() {

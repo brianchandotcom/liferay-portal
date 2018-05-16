@@ -37,12 +37,17 @@ else {
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+if (Validator.isNotNull(orderByCol)) {
 	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", orderByCol);
+}
+else {
+	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", "lastPostDate");
+}
+
+if (Validator.isNotNull(orderByType)) {
 	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", orderByType);
 }
 else {
-	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", "modifiedDate");
 	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", "desc");
 }
 
@@ -71,68 +76,35 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 />
 
 <%
-int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
+SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-wikis");
+
+NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
+
+wikiNodesSearchContainer.setRowChecker(nodesChecker);
+wikiNodesSearchContainer.setOrderByCol(orderByCol);
+wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
+wikiNodesSearchContainer.setOrderByType(orderByType);
+wikiNodesSearchContainer.setTotal(WikiNodeServiceUtil.getNodesCount(scopeGroupId));
+wikiNodesSearchContainer.setResults(WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, wikiNodesSearchContainer.getStart(), wikiNodesSearchContainer.getEnd(), wikiNodesSearchContainer.getOrderByComparator()));
+
+WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContext = new WikiNodesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
 %>
 
-<liferay-frontend:management-bar
-	disabled="<%= nodesCount == 0 %>"
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	creationMenu="<%= wikiNodesManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= wikiNodesManagementToolbarDisplayContext.isDisabled() %>"
+	filterDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	infoPanelId="infoPanelId"
+	itemsTotal="<%= wikiNodesManagementToolbarDisplayContext.getTotalItems() %>"
 	searchContainerId="wikiNodes"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<%
-		boolean showAddNodeButton = WikiResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
-		%>
-
-		<c:if test="<%= showAddNodeButton %>">
-			<portlet:renderURL var="viewNodesURL">
-				<portlet:param name="mvcRenderCommandName" value="/wiki_admin/view" />
-			</portlet:renderURL>
-
-			<portlet:renderURL var="addNodeURL">
-				<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
-				<portlet:param name="redirect" value="<%= viewNodesURL %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-wiki") %>'
-					url="<%= addNodeURL %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/wiki_admin/sort_nodes_button.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button
-			icon="info-circle"
-			label="info"
-		/>
-
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteNodes();" %>'
-			icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>'
-			label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>'
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	selectable="<%= wikiNodesManagementToolbarDisplayContext.isSelectable() %>"
+	showInfoButton="<%= true %>"
+	showSearch="<%= wikiNodesManagementToolbarDisplayContext.isShowSearch() %>"
+	sortingOrder="<%= wikiNodesManagementToolbarDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= String.valueOf(wikiNodesManagementToolbarDisplayContext.getSortingURL()) %>"
+	viewTypeItems="<%= wikiNodesManagementToolbarDisplayContext.getViewTypes() %>"
+/>
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/node_info_panel" var="sidebarPanelURL" />
@@ -172,26 +144,11 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-			<%
-			SearchContainer wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-wikis");
-
-			NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
-
-			wikiNodesSearchContainer.setRowChecker(nodesChecker);
-			wikiNodesSearchContainer.setOrderByCol(orderByCol);
-			wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
-			wikiNodesSearchContainer.setOrderByType(orderByType);
-			%>
-
 			<liferay-ui:search-container
 				id="wikiNodes"
 				searchContainer="<%= wikiNodesSearchContainer %>"
-				total="<%= nodesCount %>"
+				total="<%= wikiNodesSearchContainer.getTotal() %>"
 			>
-				<liferay-ui:search-container-results
-					results="<%= WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-				/>
-
 				<liferay-ui:search-container-row
 					className="com.liferay.wiki.model.WikiNode"
 					keyProperty="nodeId"

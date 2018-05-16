@@ -107,13 +107,13 @@ public class KBSuggestionListManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
-		PortletURL currentSortingURL = _getCurrentSortingURL();
+		PortletURL sortingURL = _getCurrentSortingURL();
 
-		currentSortingURL.setParameter(
+		sortingURL.setParameter(
 			"orderByType",
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
-		return currentSortingURL;
+		return sortingURL;
 	}
 
 	public int getTotal() {

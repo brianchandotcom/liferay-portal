@@ -53,11 +53,9 @@ public class MySubscriptionsManagementToolbarDisplayContext {
 								"javascript:",
 								_liferayPortletResponse.getNamespace(),
 								"unsubscribe();"));
-
 						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "unsubscribe"));
-
 						dropdownItem.setQuickAction(true);
 					});
 			}

@@ -16,6 +16,7 @@ package com.liferay.commerce.user.segment.service.impl;
 
 import com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntryKeyException;
 import com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntrySystemException;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntryConstants;
 import com.liferay.commerce.user.segment.service.base.CommerceUserSegmentEntryLocalServiceBaseImpl;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -222,25 +225,6 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			return commerceUserSegmentEntryIds;
 		}
 
-		if (userId == 0) {
-			CommerceUserSegmentEntry commerceUserSegmentEntry =
-				commerceUserSegmentEntryPersistence.fetchByG_K(
-					groupId, CommerceUserSegmentEntryConstants.KEY_GUEST);
-
-			if (commerceUserSegmentEntry == null) {
-				return commerceUserSegmentEntryIds;
-			}
-
-			commerceUserSegmentEntryIds = new long[] {
-				commerceUserSegmentEntry.getCommerceUserSegmentEntryId()
-			};
-
-			portalCache.put(cacheKey + "_calculated", true);
-			portalCache.put(cacheKey, commerceUserSegmentEntryIds);
-
-			return commerceUserSegmentEntryIds;
-		}
-
 		User user = userLocalService.getUser(userId);
 
 		SearchContext searchContext = buildSearchContext(
@@ -286,9 +270,19 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			serviceContext.getLocale(),
 			CommerceUserSegmentEntryConstants.KEY_GUEST);
 
-		commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
-			nameMap, CommerceUserSegmentEntryConstants.KEY_GUEST, true, true, 0,
-			serviceContext);
+		commerceUserSegmentEntry =
+			commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
+				nameMap, CommerceUserSegmentEntryConstants.KEY_GUEST, true,
+				true, 0, serviceContext);
+
+		Role role = roleLocalService.getRole(
+			serviceContext.getCompanyId(), RoleConstants.GUEST);
+
+		commerceUserSegmentCriterionLocalService.
+			addCommerceUserSegmentCriterion(
+				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+				CommerceUserSegmentCriterionConstants.TYPE_ROLE,
+				String.valueOf(role.getRoleId()), 0, serviceContext);
 	}
 
 	@Override

@@ -18,11 +18,15 @@ import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionT
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RoleLocalService;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -50,7 +54,17 @@ public class RoleCommerceUserSegmentCriterionTypeImpl
 
 	@Override
 	protected long[] getUserClassPKs(User user) throws PortalException {
+		if (user.isDefaultUser()) {
+			Role role = _roleLocalService.getRole(
+				user.getCompanyId(), RoleConstants.GUEST);
+
+			return new long[] {role.getRoleId()};
+		}
+
 		return user.getRoleIds();
 	}
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

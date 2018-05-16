@@ -19,6 +19,8 @@ import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalSe
 import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,10 +50,17 @@ public class CommerceUserSegmentHelperImpl
 			organizationId = organization.getOrganizationId();
 		}
 
+		User user = _portal.getUser(httpServletRequest);
+
+		if (user == null) {
+			user = _userLocalService.getDefaultUser(
+				_portal.getCompanyId(httpServletRequest));
+		}
+
 		return _commerceUserSegmentEntryLocalService.
 			getCommerceUserSegmentEntryIds(
 				_portal.getScopeGroupId(httpServletRequest), organizationId,
-				_portal.getUserId(httpServletRequest));
+				user.getUserId());
 	}
 
 	@Override
@@ -72,5 +81,8 @@ public class CommerceUserSegmentHelperImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

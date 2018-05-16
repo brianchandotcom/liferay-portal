@@ -14,10 +14,6 @@
 
 package com.liferay.comment.apio.internal.resource;
 
-import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
-
-import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -25,14 +21,9 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.comment.apio.identifier.CommentIdentifier;
-import com.liferay.comment.apio.internal.form.CommentUpdaterForm;
 import com.liferay.person.apio.identifier.PersonIdentifier;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -71,12 +62,6 @@ public class CommentNestedCollectionResource
 
 		return builder.addGetter(
 			_commentManager::fetchComment
-		).addRemover(
-			idempotent(_commentManager::deleteComment),
-			(credentials, aLong) -> true
-		).addUpdater(
-			this::_updateComment, Credentials.class,
-			(credentials, aLong) -> true, CommentUpdaterForm::buildForm
 		).build();
 	}
 
@@ -123,45 +108,7 @@ public class CommentNestedCollectionResource
 		return null;
 	}
 
-	private Comment _updateComment(
-		Long commentId, CommentUpdaterForm commentUpdaterForm,
-		Credentials credentials) {
-
-		Try<PermissionChecker> permissionCheckerTry =
-			_hasPermission.getPermissionCheckerTry(credentials);
-
-		return permissionCheckerTry.map(
-			_commentManager::getDiscussionPermission
-		).map(
-			discussionPermission -> {
-				discussionPermission.checkUpdatePermission(commentId);
-
-				Comment comment = _commentManager.fetchComment(commentId);
-
-				return _commentManager.updateComment(
-					comment.getUserId(), comment.getClassName(),
-					comment.getClassPK(), commentId, StringPool.BLANK,
-					commentUpdaterForm.getText(),
-					__ -> {
-						ServiceContext serviceContext = new ServiceContext();
-
-						serviceContext.setWorkflowAction(
-							WorkflowConstants.ACTION_PUBLISH);
-
-						return serviceContext;
-					});
-			}
-		).map(
-			_commentManager::fetchComment
-		).orElse(
-			null
-		);
-	}
-
 	@Reference
 	private CommentManager _commentManager;
-
-	@Reference
-	private HasPermission _hasPermission;
 
 }

@@ -26,6 +26,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 	<liferay-ui:input-localized
 		defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
 		inputAddon="<%= journalDisplayContext.getFriendlyURLBase() %>"
+		maxLength='<%= String.valueOf(ModelHintsUtil.getMaxLength(JournalArticle.class.getName(), "urlTitle")) %>'
 		name="friendlyURL"
 		xml="<%= (article != null) ? HttpUtil.decodeURL(article.getFriendlyURLsXML()) : StringPool.BLANK %>"
 	/>

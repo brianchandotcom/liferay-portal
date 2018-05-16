@@ -66,18 +66,18 @@ public class LayoutSetStagingHandler
 		throws Throwable {
 
 		try {
+			String methodName = method.getName();
+
+			if (methodName.equals("getWrappedModel")) {
+				return _layoutSet;
+			}
+
 			if (_layoutSetBranch == null) {
 				return method.invoke(_layoutSet, arguments);
 			}
 
-			String methodName = method.getName();
-
 			if (methodName.equals("clone")) {
 				return _clone();
-			}
-
-			if (methodName.equals("getWrappedModel")) {
-				return _layoutSet;
 			}
 
 			if (methodName.equals("toEscapedModel")) {

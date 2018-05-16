@@ -64,11 +64,15 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		throws Throwable {
 
 		try {
+			String methodName = method.getName();
+
+			if (methodName.equals("getWrappedModel")) {
+				return _layout;
+			}
+
 			if (_layoutRevision == null) {
 				return method.invoke(_layout, arguments);
 			}
-
-			String methodName = method.getName();
 
 			if (methodName.equals("clone")) {
 				return _clone();
@@ -85,10 +89,6 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 					methodName, HttpServletRequest.class);
 
 				return method.invoke(_layoutRevision, arguments);
-			}
-
-			if (methodName.equals("getWrappedModel")) {
-				return _layout;
 			}
 
 			if (methodName.equals("toEscapedModel")) {

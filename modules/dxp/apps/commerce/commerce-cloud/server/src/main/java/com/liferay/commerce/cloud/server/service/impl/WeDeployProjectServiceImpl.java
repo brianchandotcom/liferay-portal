@@ -113,6 +113,10 @@ public class WeDeployProjectServiceImpl
 
 		JsonObject jsonObject = new JsonObject();
 
+		if (callbackHost == null) {
+			callbackHost = "";
+		}
+
 		jsonObject.put("callbackHost", callbackHost);
 
 		httpRequest.sendJsonObject(

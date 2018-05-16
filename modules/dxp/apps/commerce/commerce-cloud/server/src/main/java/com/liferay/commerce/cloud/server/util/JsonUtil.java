@@ -80,7 +80,7 @@ public class JsonUtil {
 		Json.mapper.configure(
 			SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
 		Json.mapper.registerModule(new JavaTimeModule());
-		Json.mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+		Json.mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 	}
 
 }

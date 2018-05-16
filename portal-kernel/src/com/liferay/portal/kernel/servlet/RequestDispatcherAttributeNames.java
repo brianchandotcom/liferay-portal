@@ -14,9 +14,16 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 
+import java.lang.reflect.Method;
+
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,47 +38,93 @@ public class RequestDispatcherAttributeNames {
 		return _attributeNames.contains(name);
 	}
 
-	private static Set<String> _createConstantSet(
+	private static int _caculateOptimalHashSetSize(
 		int maxSize, String... strings) {
+
+		Method hashMethod = null;
+
+		try {
+			hashMethod = ReflectionUtil.getDeclaredMethod(
+				HashMap.class, "hash", Object.class);
+
+			if (hashMethod.getReturnType() != int.class) {
+				hashMethod = null;
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Current JDK HashMap's hash(Object) method: \"",
+							String.valueOf(hashMethod),
+							"\" is not returning int. Fallback to regular ",
+							"HashSet creation."));
+				}
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Current JDK HashMap does not have hash(Object) method. " +
+						"Fallback to regular HashSet creation.",
+					e);
+			}
+		}
 
 		int size = 16;
 
-		Set<Integer> hashCodes = new HashSet<>();
-		Set<Integer> positions = new HashSet<>();
-
-		for (String s : strings) {
-			hashCodes.add(s.hashCode());
+		if (hashMethod == null) {
+			return size;
 		}
 
-		iterate:
-		while (size < maxSize) {
-			for (Integer hashCode : hashCodes) {
-				int hash = hashCode;
+		try {
+			Set<Integer> hashCodes = new HashSet<>();
+			Set<Integer> positions = new HashSet<>();
 
-				int pos = (size - 1) & (hash ^ hash >>> 16);
-
-				if (!positions.add(pos)) {
-					if (size > (maxSize / 2)) {
-						break iterate;
-					}
-
-					size *= 2;
-
-					positions.clear();
-
-					continue iterate;
-				}
+			for (String s : strings) {
+				hashCodes.add(s.hashCode());
 			}
 
-			break;
+			iterate:
+			while (size < maxSize) {
+				for (Integer hashCode : hashCodes) {
+					int pos =
+						(size - 1) & (int)hashMethod.invoke(null, hashCode);
+
+					if (!positions.add(pos)) {
+						if (size > (maxSize / 2)) {
+							break iterate;
+						}
+
+						size *= 2;
+
+						positions.clear();
+
+						continue iterate;
+					}
+				}
+
+				break;
+			}
+		}
+		catch (ReflectiveOperationException roe) {
+			_log.error("Unable to get hashcode", roe);
 		}
 
-		Set<String> set = new HashSet<>(size);
+		return size;
+	}
+
+	private static Set<String> _createConstantSet(
+		int maxSize, String... strings) {
+
+		Set<String> set = new HashSet<>(
+			_caculateOptimalHashSetSize(maxSize, strings));
 
 		Collections.addAll(set, strings);
 
 		return set;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RequestDispatcherAttributeNames.class);
 
 	private static final Set<String> _attributeNames = _createConstantSet(
 		2048, JavaConstants.JAVAX_SERVLET_FORWARD_CONTEXT_PATH,

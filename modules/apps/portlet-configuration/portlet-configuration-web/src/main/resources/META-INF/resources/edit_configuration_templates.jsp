@@ -149,9 +149,28 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 </div>
 
 <aui:script sandbox="<%= true %>">
-	window.<portlet:namespace />deleteArchivedSettings = function() {
+	var deleteArchivedSettings = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm($(document.<portlet:namespace />fm));
 		}
 	}
+
+	var ACTIONS = {
+		'deleteArchivedSettings': deleteArchivedSettings
+	};
+
+	Liferay.componentReady('archivedSettingsManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+					function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

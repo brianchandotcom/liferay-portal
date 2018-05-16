@@ -139,12 +139,31 @@ if (group != null) {
 	</div>
 </div>
 
-<aui:script>
-	window.<portlet:namespace />deleteSites = function() {
+<aui:script sandbox="<%= true %>">
+	var deleteSites = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			submitForm(AUI.$(document.<portlet:namespace />fm));
 		}
-	}
+	};
+
+	var ACTIONS = {
+		'deleteSites': deleteSites
+	};
+
+	Liferay.componentReady('siteAdminWebManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>
 
 <%!

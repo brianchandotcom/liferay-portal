@@ -66,9 +66,7 @@ public class EditSiteTeamAssignmentsUsersDisplayContext
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + renderResponse.getNamespace() +
-								"deleteUsers();");
+						dropdownItem.putData("action", "deleteUsers");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "delete"));

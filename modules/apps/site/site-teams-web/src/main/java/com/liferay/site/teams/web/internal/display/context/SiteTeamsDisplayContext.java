@@ -76,9 +76,7 @@ public class SiteTeamsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedTeams();");
+						dropdownItem.putData("action", "deleteSelectedTeams");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

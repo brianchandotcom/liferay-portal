@@ -78,9 +78,8 @@ public class DisplayPageDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedDisplayPages();");
+						dropdownItem.putData(
+							"action", "deleteSelectedDisplayPages");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

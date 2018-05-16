@@ -190,9 +190,28 @@
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	window.<portlet:namespace />deleteSelectedLayoutPrototypes = function() {
+	var deleteSelectedLayoutPrototypes = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm($(document.<portlet:namespace />fm));
 		}
 	}
+
+	var ACTIONS = {
+		'deleteSelectedLayoutPrototypes': deleteSelectedLayoutPrototypes
+	};
+
+	Liferay.componentReady('layoutPrototypeManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on(
+				['actionItemClicked', 'filterItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

@@ -40,8 +40,8 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	viewTypeItems="<%= journalDisplayContext.getViewTypeItems() %>"
 />
 
-<aui:script>
-	function <portlet:namespace />deleteEntries() {
+<aui:script sandbox="<%= true %>">
+	var deleteEntries = function() {
 		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
@@ -52,13 +52,31 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		}
 	}
 
+	var expireEntries = function() {
+		Liferay.fire(
+			'<portlet:namespace />editEntry',
+			{
+				action: 'expireEntries'
+			}
+		);
+	};
+
+	var moveEntries = function() {
+		Liferay.fire(
+			'<portlet:namespace />editEntry',
+			{
+				action: 'moveEntries'
+			}
+		);
+	};
+
 	<portlet:renderURL var="viewDDMStructureArticlesURL">
 		<portlet:param name="navigation" value="structure" />
 		<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 		<portlet:param name="showEditActions" value="<%= String.valueOf(journalDisplayContext.isShowEditActions()) %>" />
 	</portlet:renderURL>
 
-	function <portlet:namespace />openStructuresSelector() {
+	var openStructuresSelector = function() {
 		Liferay.Util.openDDMPortlet(
 			{
 				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
@@ -91,7 +109,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		);
 	}
 
-	function <portlet:namespace />openViewMoreStructuresSelector() {
+	var openViewMoreStructuresSelector = function() {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
@@ -111,4 +129,29 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			}
 		);
 	}
+
+	var ACTIONS = {
+		'deleteEntries': deleteEntries,
+		'expireEntries': expireEntries,
+		'moveEntries': moveEntries,
+		'openStructuresSelector': openStructuresSelector,
+		'openViewMoreStructuresSelector': openViewMoreStructuresSelector
+	};
+
+	Liferay.componentReady('journalWebManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				['actionItemClicked', 'filterItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+
+			managementToolbar.on('creationMenuMoreButtonClicked', openViewMoreStructuresSelector);
+		}
+	);
 </aui:script>

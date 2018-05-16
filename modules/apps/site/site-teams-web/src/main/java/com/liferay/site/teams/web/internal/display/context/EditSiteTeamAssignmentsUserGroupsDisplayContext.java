@@ -67,9 +67,7 @@ public class EditSiteTeamAssignmentsUserGroupsDisplayContext
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + renderResponse.getNamespace() +
-								"deleteUserGroups();");
+						dropdownItem.putData("action", "deleteUserGroups");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "delete"));

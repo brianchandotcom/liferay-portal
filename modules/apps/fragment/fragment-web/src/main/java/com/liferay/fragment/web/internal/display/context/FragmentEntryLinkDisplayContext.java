@@ -67,9 +67,7 @@ public class FragmentEntryLinkDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"propagate();");
+						dropdownItem.putData("action", "propagate");
 						dropdownItem.setIcon("upload");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "propagate"));

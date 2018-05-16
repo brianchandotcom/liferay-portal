@@ -68,10 +68,7 @@ public class OrphanPortletsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"deleteOrphanPortlets();");
+						dropdownItem.putData("action", "deleteOrphanPortlets");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

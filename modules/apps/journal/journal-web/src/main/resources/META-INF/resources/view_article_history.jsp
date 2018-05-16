@@ -244,8 +244,10 @@ JournalArticle article = journalDisplayContext.getArticle();
 				}
 			);
 
+			var ACTIONS = {};
+
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-				window.<portlet:namespace />deleteArticles = function() {
+				ACTIONS.deleteArticles = function() {
 					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
 						var form = AUI.$(document.<portlet:namespace />fm);
 
@@ -255,7 +257,7 @@ JournalArticle article = journalDisplayContext.getArticle();
 			</c:if>
 
 			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-				window.<portlet:namespace />expireArticles = function() {
+				ACTIONS.expireArticles = function() {
 					if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
 						var form = AUI.$(document.<portlet:namespace />fm);
 
@@ -263,6 +265,21 @@ JournalArticle article = journalDisplayContext.getArticle();
 					}
 				}
 			</c:if>
+
+			Liferay.componentReady('journalHistoryManagementToolbar').then(
+				function(managementToolbar) {
+					managementToolbar.on(
+						'actionItemClicked',
+						function(event) {
+							var itemData = event.data.item.data;
+
+							if (itemData && itemData.action && ACTIONS[itemData.action]) {
+								ACTIONS[itemData.action]();
+							}
+						}
+					);
+				}
+			);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

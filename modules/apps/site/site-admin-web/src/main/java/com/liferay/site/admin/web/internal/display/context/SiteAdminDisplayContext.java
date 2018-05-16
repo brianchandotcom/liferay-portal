@@ -100,10 +100,7 @@ public class SiteAdminDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"deleteSites();");
+						dropdownItem.putData("action", "deleteSites");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

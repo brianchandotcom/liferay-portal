@@ -205,7 +205,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	window.<portlet:namespace />selectCategory = function() {
+	var selectCategory = function() {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 			{
 				eventName: '<portlet:namespace />selectCategory',
@@ -233,11 +233,31 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 		);
 
 		itemSelectorDialog.open();
-	}
+	};
 
-	window.<portlet:namespace />deleteSelectedCategories = function() {
+	var deleteSelectedCategories = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(document.querySelector('#<portlet:namespace />fm'));
 		}
-	}
+	};
+
+	var ACTIONS = {
+			'deleteSelectedCategories': deleteSelectedCategories,
+			'selectCategories': selectCategory
+	};
+
+	Liferay.componentReady('assetCategoriesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				['actionItemClicked', 'filterItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

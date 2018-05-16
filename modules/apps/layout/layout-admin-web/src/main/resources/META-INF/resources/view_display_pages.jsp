@@ -262,15 +262,30 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 		}
 	);
 
-	window.<portlet:namespace />deleteSelectedDisplayPages = function() {
+	var deleteSelectedDisplayPages = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm($(document.<portlet:namespace />fm));
 		}
 	}
 
+	var ACTIONS = {
+		'deleteSelectedDisplayPages': deleteSelectedDisplayPages
+	};
+
 	Liferay.componentReady('displayPagesManagementToolbar').then(
 		(managementToolbar) => {
 			managementToolbar.on('creationButtonClicked', handleAddDisplayPageMenuItemClick);
+
+			managementToolbar.on(
+				['actionItemClicked', 'filterItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
 		}
 	);
 

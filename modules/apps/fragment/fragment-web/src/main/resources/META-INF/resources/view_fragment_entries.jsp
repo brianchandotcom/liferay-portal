@@ -184,13 +184,33 @@
 </c:if>
 
 <aui:script>
-	window.<portlet:namespace />deleteSelectedFragmentEntries = function() {
+	var deleteSelectedFragmentEntries = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:actionURL name="/fragment/delete_fragment_entries"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
 	}
 
-	window.<portlet:namespace />exportSelectedFragmentEntries = function() {
+	var exportSelectedFragmentEntries = function() {
 		submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_entries" />');
 	}
+
+	var ACTIONS = {
+		'deleteSelectedFragmentEntries': deleteSelectedFragmentEntries,
+		'exportSelectedFragmentEntries': exportSelectedFragmentEntries
+	};
+
+	Liferay.componentReady('fragmentEntriesManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on(
+				'actionItemClicked',
+					function(event) {
+						var itemData = event.data.item.data;
+
+						if (itemData && itemData.action && ACTIONS[itemData.action]) {
+							ACTIONS[itemData.action]();
+						}
+					}
+				);
+		}
+	);
 </aui:script>

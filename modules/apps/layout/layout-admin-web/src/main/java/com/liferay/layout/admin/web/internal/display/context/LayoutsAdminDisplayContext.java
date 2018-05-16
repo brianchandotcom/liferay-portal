@@ -112,10 +112,7 @@ public class LayoutsAdminDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"deleteSelectedPages();");
+						dropdownItem.putData("action", "deleteSelectedPages");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

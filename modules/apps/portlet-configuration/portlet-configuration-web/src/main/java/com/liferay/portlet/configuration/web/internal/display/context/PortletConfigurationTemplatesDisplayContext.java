@@ -64,9 +64,8 @@ public class PortletConfigurationTemplatesDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteArchivedSettings();");
+						dropdownItem.putData(
+							"action", "deleteArchivedSettings");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

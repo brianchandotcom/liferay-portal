@@ -66,9 +66,8 @@ public class LayoutPrototypeDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedLayoutPrototypes();");
+						dropdownItem.putData(
+							"action", "deleteSelectedLayoutPrototypes");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

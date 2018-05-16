@@ -75,9 +75,7 @@ public class JournalHistoryDisplayContext {
 
 					add(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								"javascript:" + _renderResponse.getNamespace() +
-									"deleteArticles();");
+							dropdownItem.putData("action", "deleteArticles");
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "delete"));
@@ -91,9 +89,7 @@ public class JournalHistoryDisplayContext {
 
 					add(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								"javascript:" + _renderResponse.getNamespace() +
-									"expireArticles();");
+							dropdownItem.putData("action", "expireArticles");
 							dropdownItem.setIcon("time");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "expire"));

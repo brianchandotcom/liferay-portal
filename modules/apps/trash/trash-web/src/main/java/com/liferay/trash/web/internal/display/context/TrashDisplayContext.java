@@ -81,10 +81,7 @@ public class TrashDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"deleteSelectedEntries();");
+						dropdownItem.putData("action", "deleteSelectedEntries");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

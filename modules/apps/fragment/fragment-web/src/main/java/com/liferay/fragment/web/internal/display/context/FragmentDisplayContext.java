@@ -239,9 +239,8 @@ public class FragmentDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"exportSelectedFragmentEntries();");
+						dropdownItem.putData(
+							"action", "exportSelectedFragmentEntries");
 						dropdownItem.setIcon("import-export");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "export"));
@@ -250,9 +249,8 @@ public class FragmentDisplayContext {
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedFragmentEntries();");
+						dropdownItem.putData(
+							"action", "deleteSelectedFragmentEntries");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

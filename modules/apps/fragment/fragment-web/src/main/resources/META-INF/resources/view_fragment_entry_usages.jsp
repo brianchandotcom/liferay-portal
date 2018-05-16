@@ -175,7 +175,26 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 </div>
 
 <aui:script>
-	window.<portlet:namespace/>propagate = function() {
+	var propagate = function() {
 		submitForm(document.querySelector('#<portlet:namespace />fm'));
 	};
+
+	var ACTIONS = {
+		'propagate': propagate
+	};
+
+	Liferay.componentReady('fragmentEntryLinksManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

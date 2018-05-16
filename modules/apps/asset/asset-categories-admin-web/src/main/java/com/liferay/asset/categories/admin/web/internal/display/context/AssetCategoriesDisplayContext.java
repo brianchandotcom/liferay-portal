@@ -225,9 +225,8 @@ public class AssetCategoriesDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedCategories();");
+						dropdownItem.putData(
+							"action", "deleteSelectedCategories");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -656,9 +655,8 @@ public class AssetCategoriesDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedVocabularies();");
+						dropdownItem.putData(
+							"action", "deleteSelectedVocabularies");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -1016,9 +1014,7 @@ public class AssetCategoriesDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.setActive(_isNavigationCategory());
-							dropdownItem.setHref(
-								"javascript:" + _renderResponse.getNamespace() +
-									"selectCategory();");
+							dropdownItem.putData("action", "selectCategory");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "category"));
 						});

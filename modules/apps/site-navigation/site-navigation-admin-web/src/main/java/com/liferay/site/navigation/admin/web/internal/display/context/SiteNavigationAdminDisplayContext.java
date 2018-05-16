@@ -78,10 +78,8 @@ public class SiteNavigationAdminDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"deleteSelectedSiteNavigationMenus();");
+						dropdownItem.putData(
+							"action", "deleteSelectedSiteNavigationMenus");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -127,10 +125,7 @@ public class SiteNavigationAdminDisplayContext {
 			{
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"addNavigationMenuMenuItem();");
+						dropdownItem.put("action", "addNavigationMenuMenuItem");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "add-menu"));
 					});

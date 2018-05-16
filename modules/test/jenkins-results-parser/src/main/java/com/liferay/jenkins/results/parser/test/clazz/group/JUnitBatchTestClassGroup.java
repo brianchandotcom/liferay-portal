@@ -188,6 +188,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			if (parentClassName.contains(".") &&
 				parentClassName.matches("[a-z].*")) {
 
+				if (!parentClassName.startsWith("com.liferay")) {
+					return null;
+				}
+
 				return parentClassName;
 			}
 

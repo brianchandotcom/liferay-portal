@@ -1309,8 +1309,8 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="SearchFacetPortlet#checkFacetOption">
-			<var name="facetOption" value="Document" />
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="Document" />
 		</execute>
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />

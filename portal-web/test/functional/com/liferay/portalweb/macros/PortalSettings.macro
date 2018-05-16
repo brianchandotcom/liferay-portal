@@ -656,8 +656,8 @@
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<for list="ldap--enabled,ldap--required,ldapImportEnabled,ldapExportEnabled,ldap--passwordPolicyEnabled" param="fieldName">
-			<execute function="AssertElementPresent" locator1="FormFields#CHECKBOX">
-				<var name="key_fieldName" value="${fieldName}" />
+			<execute macro="FormFields#viewCheckboxNotChecked">
+				<var name="fieldName" value="${fieldName}" />
 			</execute>
 		</for>
 

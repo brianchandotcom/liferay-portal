@@ -390,7 +390,7 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		queryConfig.setScoreEnabled(false);
 
 		Sort sort = SortFactoryUtil.create(
-			Field.PRIORITY + "Number_sortable", true);
+			Field.PRIORITY + "_Number_sortable", true);
 
 		searchContext.setSorts(sort);
 

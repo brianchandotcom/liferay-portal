@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -116,15 +116,12 @@ public abstract class BaseCommerceUserSegmentCriterionType
 
 		termsSetFilterBuilder.setValues(values);
 
-		Filter existFilter = new ExistsFilter(getIndexerFieldName());
-
-		BooleanFilter existBooleanFilter = new BooleanFilter();
-
-		existBooleanFilter.add(existFilter, BooleanClauseOccur.MUST_NOT);
+		Filter existFilter = new TermFilter(
+			getIndexerFieldName() + "_required_matches", "0");
 
 		BooleanFilter fieldBooleanFilter = new BooleanFilter();
 
-		fieldBooleanFilter.add(existBooleanFilter, BooleanClauseOccur.SHOULD);
+		fieldBooleanFilter.add(existFilter, BooleanClauseOccur.SHOULD);
 		fieldBooleanFilter.add(
 			termsSetFilterBuilder.build(), BooleanClauseOccur.SHOULD);
 

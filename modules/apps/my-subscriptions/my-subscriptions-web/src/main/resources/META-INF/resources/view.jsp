@@ -19,10 +19,6 @@
 <portlet:actionURL name="unsubscribe" var="unsubscribeURL" />
 
 <%
-PortletURL displayStyleURL = renderResponse.createRenderURL();
-
-displayStyleURL.setParameter("mvcRenderCommandName", "/mysubscriptions/view");
-
 MySubscriptionsManagementToolbarDisplayContext mySubscriptionsManagementToolbarDisplayContext = new MySubscriptionsManagementToolbarDisplayContext(request, liferayPortletResponse, user);
 
 int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotalItems();
@@ -31,33 +27,11 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 <clay:management-toolbar
 	actionDropdownItems="<%= mySubscriptionsManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	disabled="<%= mySubscriptionsManagementToolbarDisplayContext.isDisabled() %>"
-	itemsTotal="<%= mySubscriptionsManagementToolbarDisplayContext.getTotalItems() %>"
+	itemsTotal="<%= subscriptionsCount %>"
 	searchContainerId="subscriptions"
 	selectable="<%= mySubscriptionsManagementToolbarDisplayContext.isSelectable() %>"
 	showSearch="<%= mySubscriptionsManagementToolbarDisplayContext.isShowSearch() %>"
 />
-
-<liferay-frontend:management-bar
-	disabled="<%= subscriptionsCount <= 0 %>"
-	includeCheckBox="<%= true %>"
-	searchContainerId="subscriptions"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			navigationParam="entriesNavigation"
-			portletURL="<%= displayStyleURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= displayStyleURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= unsubscribeURL %>" method="get" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "unsubscribe();" %>'>

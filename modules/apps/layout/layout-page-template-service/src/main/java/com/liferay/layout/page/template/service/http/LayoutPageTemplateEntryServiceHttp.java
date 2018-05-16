@@ -807,8 +807,8 @@ public class LayoutPageTemplateEntryServiceHttp {
 
 	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		HttpPrincipal httpPrincipal, long groupId,
-		long layoutPageTemplateCollectionId, String name, int start,
-		int status, int end,
+		long layoutPageTemplateCollectionId, String name, int status,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
@@ -816,7 +816,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 					_getLayoutPageTemplateEntriesParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					layoutPageTemplateCollectionId, name, start, status, end,
+					layoutPageTemplateCollectionId, name, status, start, end,
 					orderByComparator);
 
 			Object returnObj = null;

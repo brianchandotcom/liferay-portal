@@ -495,13 +495,13 @@ public class LayoutPageTemplateEntryServiceSoap {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap[] getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int start, int status, int end,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> returnValue =
 				LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(groupId,
-					layoutPageTemplateCollectionId, name, start, status, end,
+					layoutPageTemplateCollectionId, name, status, start, end,
 					orderByComparator);
 
 			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModels(returnValue);

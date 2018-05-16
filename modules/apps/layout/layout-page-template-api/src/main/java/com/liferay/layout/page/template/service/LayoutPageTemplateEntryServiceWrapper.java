@@ -237,10 +237,10 @@ public class LayoutPageTemplateEntryServiceWrapper
 	@Override
 	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int start, int status, int end,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> orderByComparator) {
 		return _layoutPageTemplateEntryService.getLayoutPageTemplateEntries(groupId,
-			layoutPageTemplateCollectionId, name, start, status, end,
+			layoutPageTemplateCollectionId, name, status, start, end,
 			orderByComparator);
 	}
 

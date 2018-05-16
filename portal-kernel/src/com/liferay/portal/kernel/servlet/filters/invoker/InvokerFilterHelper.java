@@ -42,6 +42,7 @@ import com.liferay.registry.util.StringPlus;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,12 +136,8 @@ public class InvokerFilterHelper {
 				newFilterMappings = new FilterMapping[] {filterMapping};
 			}
 			else {
-				newFilterMappings =
-					new FilterMapping[oldFilterMappings.length + 1];
-
-				System.arraycopy(
-					oldFilterMappings, 0, newFilterMappings, 0,
-					oldFilterMappings.length);
+				newFilterMappings = Arrays.copyOf(
+					oldFilterMappings, oldFilterMappings.length + 1);
 
 				newFilterMappings[oldFilterMappings.length] = filterMapping;
 			}

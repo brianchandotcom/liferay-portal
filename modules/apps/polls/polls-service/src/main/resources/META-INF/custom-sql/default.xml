@@ -11,7 +11,7 @@
 				(PollsQuestion.companyId = ?) AND
 				[$GROUP_ID$]
 				(
-					(lower(PollsQuestion.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(LOWER(PollsQuestion.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(PollsQuestion.description LIKE ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
@@ -30,7 +30,7 @@
 						(PollsQuestion.companyId = ?) AND
 						[$GROUP_ID$]
 						(
-							(lower(PollsQuestion.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(LOWER(PollsQuestion.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 							(PollsQuestion.description LIKE ? [$AND_OR_NULL_CHECK$])
 						)
 				)

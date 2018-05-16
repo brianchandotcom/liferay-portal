@@ -53,6 +53,8 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		_checkScalability(fileName, absolutePath, content);
 
 		content = _fixIncorrectAndOr(content);
+		content = _fixLowerCaseKeywords(content);
+		content = _fixMissingCountValue(content);
 		content = _fixMissingLineBreakAfterOpenParenthesis(content);
 		content = _fixMissingLineBreakBeforeOpenParenthesis(content);
 		content = _fixRedundantParenthesesForSingleLineClause(content);
@@ -262,6 +264,39 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			return StringUtil.replaceFirst(
 				content, matcher.group(1), StringPool.SPACE,
 				matcher.start() - 1);
+		}
+
+		return content;
+	}
+
+	private String _fixLowerCaseKeywords(String content) {
+		for (String keyword : _SQL_KEYWORDS) {
+			Pattern pattern = Pattern.compile(
+				"[^\\w.$'\"](" + keyword + ")[^\\w.$'\"]",
+				Pattern.CASE_INSENSITIVE);
+
+			Matcher matcher = pattern.matcher(content);
+
+			while (matcher.find()) {
+				int level = getLevel(
+					content.substring(0, matcher.start()), "<![CDATA[", "]]>");
+
+				if (level != 0) {
+					content = StringUtil.replaceFirst(
+						content, matcher.group(1), keyword, matcher.start());
+				}
+			}
+		}
+
+		return content;
+	}
+
+	private String _fixMissingCountValue(String content) {
+		Matcher matcher = _missingCountValuePattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.insert(
+				content, " AS COUNT_VALUE", matcher.end(1));
 		}
 
 		return content;
@@ -503,10 +538,20 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 	private static final String _CUSTOM_FINDER_SCALABILITY_EXCLUDES =
 		"custom.finder.scalability.excludes";
 
+	private static final String[] _SQL_KEYWORDS = {
+		"ALL", "AND", "AS", "ASC", "BITAND", "BY", "COUNT", "CROSS", "DELETE",
+		"DESC", "DISTINCT", "EXISTS", "FROM", "GROUP", "HAVING", "IN", "INNER",
+		"IS", "JOIN", "LEFT", "LIKE", "LOWER", "MAX", "MOD", "NOT", "NULL",
+		"ON", "OR", "ORDER", "OUTER", "SELECT", "SET", "SUM", "UNION", "UPDATE",
+		"WHERE"
+	};
+
 	private final Pattern _incorrectAndOrpattern = Pattern.compile(
 		"(\n\t*)(AND|OR|\\[\\$AND_OR_CONNECTOR\\$\\])( |\n)");
 	private final Pattern _incorrectLineBreakAfterCommaPattern =
 		Pattern.compile(".(?<! (ASC|DESC)),\n");
+	private final Pattern _missingCountValuePattern = Pattern.compile(
+		"SELECT\\s+COUNT\\([^()\n]+(\\))\\s+FROM");
 	private final Pattern _missingLineBreakAfterKeywordPattern =
 		Pattern.compile("\n\\s*(.*\\s(BY|FROM|HAVING|JOIN|ON|SELECT|WHERE)) ");
 	private final Pattern _missingLineBreakAfterOpenParenthesisPattern =

@@ -181,7 +181,11 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 		Object[] finderArgs = null;
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CREATEDATE;
-		finderArgs = new Object[] { createDate, start, end, orderByComparator };
+		finderArgs = new Object[] {
+				_getTime(createDate),
+				
+				start, end, orderByComparator
+			};
 
 		List<SamlSpAuthRequest> list = null;
 
@@ -568,7 +572,7 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 	public int countByCreateDate(Date createDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_CREATEDATE;
 
-		Object[] finderArgs = new Object[] { createDate };
+		Object[] finderArgs = new Object[] { _getTime(createDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1636,6 +1640,15 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_SAMLSPAUTHREQUEST = "SELECT samlSpAuthRequest FROM SamlSpAuthRequest samlSpAuthRequest";
 	private static final String _SQL_SELECT_SAMLSPAUTHREQUEST_WHERE_PKS_IN = "SELECT samlSpAuthRequest FROM SamlSpAuthRequest samlSpAuthRequest WHERE samlSpAuthnRequestId IN (";
 	private static final String _SQL_SELECT_SAMLSPAUTHREQUEST_WHERE = "SELECT samlSpAuthRequest FROM SamlSpAuthRequest samlSpAuthRequest WHERE ";

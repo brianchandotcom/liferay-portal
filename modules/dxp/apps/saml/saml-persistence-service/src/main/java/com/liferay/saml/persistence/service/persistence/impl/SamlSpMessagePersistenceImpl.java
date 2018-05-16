@@ -182,7 +182,11 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		Object[] finderArgs = null;
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_EXPIRATIONDATE;
-		finderArgs = new Object[] { expirationDate, start, end, orderByComparator };
+		finderArgs = new Object[] {
+				_getTime(expirationDate),
+				
+				start, end, orderByComparator
+			};
 
 		List<SamlSpMessage> list = null;
 
@@ -569,7 +573,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 	public int countByExpirationDate(Date expirationDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_EXPIRATIONDATE;
 
-		Object[] finderArgs = new Object[] { expirationDate };
+		Object[] finderArgs = new Object[] { _getTime(expirationDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1630,6 +1634,15 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_SAMLSPMESSAGE = "SELECT samlSpMessage FROM SamlSpMessage samlSpMessage";
 	private static final String _SQL_SELECT_SAMLSPMESSAGE_WHERE_PKS_IN = "SELECT samlSpMessage FROM SamlSpMessage samlSpMessage WHERE samlSpMessageId IN (";
 	private static final String _SQL_SELECT_SAMLSPMESSAGE_WHERE = "SELECT samlSpMessage FROM SamlSpMessage samlSpMessage WHERE ";

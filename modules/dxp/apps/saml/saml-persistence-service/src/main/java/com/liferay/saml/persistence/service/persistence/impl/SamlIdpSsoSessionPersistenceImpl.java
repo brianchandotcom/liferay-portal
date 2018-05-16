@@ -183,7 +183,11 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 		Object[] finderArgs = null;
 
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CREATEDATE;
-		finderArgs = new Object[] { createDate, start, end, orderByComparator };
+		finderArgs = new Object[] {
+				_getTime(createDate),
+				
+				start, end, orderByComparator
+			};
 
 		List<SamlIdpSsoSession> list = null;
 
@@ -570,7 +574,7 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 	public int countByCreateDate(Date createDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_CREATEDATE;
 
-		Object[] finderArgs = new Object[] { createDate };
+		Object[] finderArgs = new Object[] { _getTime(createDate) };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1606,6 +1610,15 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
+	private Long _getTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return date.getTime();
+	}
+
 	private static final String _SQL_SELECT_SAMLIDPSSOSESSION = "SELECT samlIdpSsoSession FROM SamlIdpSsoSession samlIdpSsoSession";
 	private static final String _SQL_SELECT_SAMLIDPSSOSESSION_WHERE_PKS_IN = "SELECT samlIdpSsoSession FROM SamlIdpSsoSession samlIdpSsoSession WHERE samlIdpSsoSessionId IN (";
 	private static final String _SQL_SELECT_SAMLIDPSSOSESSION_WHERE = "SELECT samlIdpSsoSession FROM SamlIdpSsoSession samlIdpSsoSession WHERE ";

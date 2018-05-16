@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
-import com.liferay.portal.kernel.servlet.TrackedServletRequest;
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory;
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactoryRegistry;
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIncludeUtil;
@@ -44,10 +43,14 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyContent;
@@ -154,7 +157,12 @@ public class IncludeTag extends AttributesTagSupport {
 		HttpServletRequest request = getOriginalServletRequest();
 
 		if (isCleanUpSetAttributes()) {
-			_trackedRequest = new TrackedServletRequest(request);
+			if (_setAttributes == null) {
+				_setAttributes = new HashSet<>();
+			}
+
+			_trackedRequest = new TrackedServletRequest(
+				request, _setAttributes);
 
 			request = _trackedRequest;
 		}
@@ -171,9 +179,11 @@ public class IncludeTag extends AttributesTagSupport {
 
 	protected void cleanUpSetAttributes() {
 		if (isCleanUpSetAttributes() && (_trackedRequest != null)) {
-			for (String name : _trackedRequest.getSetAttributes()) {
+			for (String name : _setAttributes) {
 				_trackedRequest.removeAttribute(name);
 			}
+
+			_setAttributes.clear();
 
 			_trackedRequest = null;
 		}
@@ -507,8 +517,31 @@ public class IncludeTag extends AttributesTagSupport {
 	private static final Log _log = LogFactoryUtil.getLog(IncludeTag.class);
 
 	private String _page;
+	private Set<String> _setAttributes;
 	private boolean _strict;
 	private TrackedServletRequest _trackedRequest;
 	private boolean _useCustomPage = true;
+
+	private static class TrackedServletRequest
+		extends HttpServletRequestWrapper {
+
+		@Override
+		public void setAttribute(String name, Object obj) {
+			_setAttributes.add(name);
+
+			super.setAttribute(name, obj);
+		}
+
+		private TrackedServletRequest(
+			HttpServletRequest request, Set<String> setAttributes) {
+
+			super(request);
+
+			_setAttributes = setAttributes;
+		}
+
+		private final Set<String> _setAttributes;
+
+	}
 
 }

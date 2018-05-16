@@ -17,7 +17,6 @@ package com.liferay.notifications.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -59,11 +58,8 @@ public class NotificationsManagementToolbarDisplayContext {
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
-								dropdownItem.setHref(
-									StringBundler.concat(
-										"javascript:",
-										_liferayPortletResponse.getNamespace(),
-										"markNotificationsAsRead();"));
+								dropdownItem.putData(
+									"action", "markNotificationsAsRead");
 								dropdownItem.setIcon("envelope-open");
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, "mark-as-read"));
@@ -73,11 +69,8 @@ public class NotificationsManagementToolbarDisplayContext {
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
-								dropdownItem.setHref(
-									StringBundler.concat(
-										"javascript:",
-										_liferayPortletResponse.getNamespace(),
-										"markNotificationsAsUnread();"));
+								dropdownItem.putData(
+									"action", "markNotificationsAsUnread");
 								dropdownItem.setIcon("envelope-closed");
 								dropdownItem.setLabel(
 									LanguageUtil.get(
@@ -89,11 +82,8 @@ public class NotificationsManagementToolbarDisplayContext {
 				add(
 					SafeConsumer.ignore(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								StringBundler.concat(
-									"javascript:",
-									_liferayPortletResponse.getNamespace(),
-									"deleteAllNotifications();"));
+							dropdownItem.putData(
+								"action", "deleteAllNotifications");
 							dropdownItem.setIcon("times");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "delete"));

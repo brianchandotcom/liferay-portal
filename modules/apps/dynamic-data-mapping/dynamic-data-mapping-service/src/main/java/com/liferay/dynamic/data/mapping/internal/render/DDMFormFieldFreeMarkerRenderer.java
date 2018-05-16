@@ -120,6 +120,29 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		}
 	}
 
+	protected void addDDMFormFieldOptionHTML(
+			HttpServletRequest request, HttpServletResponse response,
+			DDMFormField ddmFormField, String mode, boolean readOnly,
+			Map<String, Object> freeMarkerContext, StringBundler sb,
+			String label, String value)
+		throws Exception {
+
+		Map<String, Object> fieldStructure = new HashMap<>();
+
+		fieldStructure.put("children", StringPool.BLANK);
+		fieldStructure.put("fieldNamespace", StringUtil.randomId());
+		fieldStructure.put("label", label);
+		fieldStructure.put("name", StringUtil.randomId());
+		fieldStructure.put("value", value);
+
+		freeMarkerContext.put("fieldStructure", fieldStructure);
+
+		sb.append(
+			processFTL(
+				request, response, ddmFormField.getFieldNamespace(), "option",
+				mode, readOnly, freeMarkerContext));
+	}
+
 	protected void addLayoutProperties(
 		DDMFormField ddmFormField, Map<String, Object> fieldContext,
 		Locale locale) {
@@ -192,28 +215,21 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 		StringBundler sb = new StringBundler();
 
+		if (Objects.equals(ddmFormField.getType(), "select")) {
+			addDDMFormFieldOptionHTML(
+				request, response, ddmFormField, mode, readOnly,
+				freeMarkerContext, sb, StringPool.BLANK, StringPool.BLANK);
+		}
+
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
 
 		for (String value : ddmFormFieldOptions.getOptionsValues()) {
-			Map<String, Object> fieldStructure = new HashMap<>();
-
-			fieldStructure.put("children", StringPool.BLANK);
-			fieldStructure.put("fieldNamespace", StringUtil.randomId());
-
 			LocalizedValue label = ddmFormFieldOptions.getOptionLabels(value);
 
-			fieldStructure.put("label", label.getString(locale));
-
-			fieldStructure.put("name", StringUtil.randomId());
-			fieldStructure.put("value", value);
-
-			freeMarkerContext.put("fieldStructure", fieldStructure);
-
-			sb.append(
-				processFTL(
-					request, response, ddmFormField.getFieldNamespace(),
-					"option", mode, readOnly, freeMarkerContext));
+			addDDMFormFieldOptionHTML(
+				request, response, ddmFormField, mode, readOnly,
+				freeMarkerContext, sb, label.getString(locale), value);
 		}
 
 		return sb.toString();

@@ -20,10 +20,13 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.blog.apio.identifier.BlogPostingIdentifier;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.comment.apio.identifier.CommentIdentifier;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -51,24 +54,47 @@ public class BlogPostingCommentNestedCollectionRouter implements
 		NestedCollectionRoutes.Builder<Comment, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems
+			this::_getPageItems, PermissionChecker.class
 		).build();
 	}
 
-	private PageItems<Comment> _getPageItems(
-			Pagination pagination, Long blogEntryId)
+	private void _checkViewPermission(
+			PermissionChecker permissionChecker, long groupId, String className,
+			long classPK)
 		throws PortalException {
 
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(permissionChecker);
+
+		discussionPermission.checkViewPermission(
+			permissionChecker.getCompanyId(), groupId, className, classPK);
+	}
+
+	private PageItems<Comment> _getPageItems(
+			Pagination pagination, Long blogsEntryId,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		BlogsEntry blogsEntry = _blogsEntryLocalService.getBlogsEntry(
+			blogsEntryId);
+
+		_checkViewPermission(
+			permissionChecker, blogsEntry.getGroupId(),
+			BlogsEntry.class.getName(), blogsEntryId);
+
 		List<Comment> comments = _commentManager.getRootComments(
-			BlogsEntry.class.getName(), blogEntryId,
+			BlogsEntry.class.getName(), blogsEntryId,
 			WorkflowConstants.STATUS_APPROVED, pagination.getStartPosition(),
 			pagination.getEndPosition());
 		int count = _commentManager.getRootCommentsCount(
-			BlogsEntry.class.getName(), blogEntryId,
+			BlogsEntry.class.getName(), blogsEntryId,
 			WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(comments, count);
 	}
+
+	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
 	private CommentManager _commentManager;

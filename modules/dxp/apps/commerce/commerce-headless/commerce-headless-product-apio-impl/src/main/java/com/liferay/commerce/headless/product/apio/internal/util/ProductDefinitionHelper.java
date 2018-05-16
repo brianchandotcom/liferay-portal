@@ -220,7 +220,7 @@ public class ProductDefinitionHelper {
 
 		return _cpDefinitionService.updateCPDefinition(
 			cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
-			cpDefinition.getUrlTitleMap(), titleMap,
+			cpDefinition.getUrlTitleMap(), cpDefinition.getMetaTitleMap(),
 			cpDefinition.getMetaDescriptionMap(),
 			cpDefinition.getMetaKeywordsMap(),
 			cpDefinition.getIgnoreSKUCombinations(),

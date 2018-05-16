@@ -26,6 +26,18 @@ import javax.portlet.PortletURL;
  */
 public class NavigationItem extends HashMap<String, Object> {
 
+	public void putData(String key, String value) {
+		Map<String, Object> data = (Map<String, Object>)get("data");
+
+		if (data == null) {
+			data = new HashMap<>();
+
+			put("data", data);
+		}
+
+		data.put(key, value);
+	}
+
 	public void setActive(boolean active) {
 		put("active", active);
 	}

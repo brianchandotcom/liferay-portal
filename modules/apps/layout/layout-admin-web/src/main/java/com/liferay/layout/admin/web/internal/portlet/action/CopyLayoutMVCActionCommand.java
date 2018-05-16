@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -44,6 +45,7 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -85,6 +87,12 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> nameMap = new HashMap<>();
 
 		nameMap.put(themeDisplay.getLocale(), name);
+
+		if (!Objects.equals(
+				themeDisplay.getLocale(), LocaleUtil.getSiteDefault())) {
+
+			nameMap.put(LocaleUtil.getSiteDefault(), name);
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);

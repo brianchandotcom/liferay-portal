@@ -135,7 +135,7 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private BlogsEntry _addBlogsEntry(
-			Long groupId, BlogPostingForm blogPostingForm)
+			long groupId, BlogPostingForm blogPostingForm)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -157,7 +157,7 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private PageItems<BlogsEntry> _getPageItems(
-		Pagination pagination, Long groupId) {
+		Pagination pagination, long groupId) {
 
 		List<BlogsEntry> blogsEntries = _blogsService.getGroupEntries(
 			groupId, WorkflowConstants.STATUS_APPROVED,
@@ -169,7 +169,7 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private BlogsEntry _updateBlogsEntry(
-			Long blogsEntryId, BlogPostingForm blogPostingForm)
+			long blogsEntryId, BlogPostingForm blogPostingForm)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();

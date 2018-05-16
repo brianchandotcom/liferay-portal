@@ -55,7 +55,7 @@ public class ClassNameClassPKIdentifierMapper
 					"\"classNameId:classPK\"");
 		}
 
-		Long classNameId = _getAsLong(components[0]);
+		long classNameId = _getAsLong(components[0]);
 		Long classPK = _getAsLong(components[1]);
 
 		String className = Optional.ofNullable(

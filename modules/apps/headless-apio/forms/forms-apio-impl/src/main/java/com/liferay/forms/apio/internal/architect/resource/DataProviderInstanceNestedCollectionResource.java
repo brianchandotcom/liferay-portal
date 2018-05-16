@@ -98,7 +98,7 @@ public class DataProviderInstanceNestedCollectionResource
 	}
 
 	private PageItems<DDMDataProviderInstance> _getPageItems(
-		Pagination pagination, Long groupId, Company company) {
+		Pagination pagination, long groupId, Company company) {
 
 		List<DDMDataProviderInstance> ddmDataProviderInstance =
 			_ddmDataProviderInstanceService.getDataProviderInstances(

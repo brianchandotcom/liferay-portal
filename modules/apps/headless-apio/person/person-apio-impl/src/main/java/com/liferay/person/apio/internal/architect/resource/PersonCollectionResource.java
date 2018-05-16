@@ -225,7 +225,7 @@ public class PersonCollectionResource
 	}
 
 	private UserWrapper _updateUser(
-			Long userId, PersonUpdaterForm personUpdaterForm,
+			long userId, PersonUpdaterForm personUpdaterForm,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 

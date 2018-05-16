@@ -52,7 +52,7 @@ public class WebSiteNestedCollectionRouter implements
 	}
 
 	private PageItems<Group> _getPageItems(
-			Pagination pagination, Long parentGroupId, Company company)
+			Pagination pagination, long parentGroupId, Company company)
 		throws PortalException {
 
 		List<Group> groups = _groupService.getGroups(

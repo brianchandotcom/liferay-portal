@@ -168,7 +168,7 @@ public class FormInstanceNestedCollectionResource
 	}
 
 	private DDMFormInstance _evaluateContext(
-			Long ddmFormInstanceId, FormContextForm formContextForm,
+			long ddmFormInstanceId, FormContextForm formContextForm,
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
@@ -218,7 +218,7 @@ public class FormInstanceNestedCollectionResource
 	}
 
 	private PageItems<DDMFormInstance> _getPageItems(
-		Pagination pagination, Long groupId, Company company) {
+		Pagination pagination, long groupId, Company company) {
 
 		List<DDMFormInstance> ddmFormInstances =
 			_ddmFormInstanceService.getFormInstances(

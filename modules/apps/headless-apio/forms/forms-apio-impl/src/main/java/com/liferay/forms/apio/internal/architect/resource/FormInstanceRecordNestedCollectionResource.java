@@ -123,7 +123,7 @@ public class FormInstanceRecordNestedCollectionResource
 	}
 
 	private DDMFormInstanceRecord _addFormInstanceRecord(
-			Long ddmFormInstanceId,
+			long ddmFormInstanceId,
 			FormInstanceRecordForm formInstanceRecordForm, Language language,
 			FormInstanceRecordServiceContext formInstanceRecordServiceContext)
 		throws PortalException {
@@ -151,7 +151,7 @@ public class FormInstanceRecordNestedCollectionResource
 	}
 
 	private PageItems<DDMFormInstanceRecord> _getPageItems(
-			Pagination pagination, Long formInstanceId)
+			Pagination pagination, long formInstanceId)
 		throws PortalException {
 
 		List<DDMFormInstanceRecord> ddmFormInstances =
@@ -194,7 +194,7 @@ public class FormInstanceRecordNestedCollectionResource
 	}
 
 	private DDMFormInstanceRecord _updateFormInstanceRecord(
-			Long formInstanceRecordId,
+			long formInstanceRecordId,
 			FormInstanceRecordForm formInstanceRecordForm, Language language,
 			FormInstanceRecordServiceContext formInstanceRecordServiceContext)
 		throws PortalException {

@@ -107,7 +107,7 @@ public class EmbeddedWebPageNestedCollectionResource
 		).build();
 	}
 
-	private PageItems<Layout> _getLayouts(Pagination pagination, Long groupId) {
+	private PageItems<Layout> _getLayouts(Pagination pagination, long groupId) {
 		List<Layout> layouts = _layoutService.getLayouts(
 			groupId, LayoutConstants.TYPE_EMBEDDED,
 			pagination.getStartPosition(), pagination.getEndPosition());

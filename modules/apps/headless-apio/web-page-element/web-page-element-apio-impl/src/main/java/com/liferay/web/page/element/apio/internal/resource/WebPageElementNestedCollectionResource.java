@@ -119,7 +119,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private JournalArticle _addJournalArticle(
-			Long webSiteId, WebPageElementCreatorForm webPageElementCreatorForm)
+			long webSiteId, WebPageElementCreatorForm webPageElementCreatorForm)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -155,7 +155,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private PageItems<JournalArticle> _getPageItems(
-		Pagination pagination, Long webSiteId) {
+		Pagination pagination, long webSiteId) {
 
 		List<JournalArticle> journalArticles =
 			_journalArticleService.getArticles(
@@ -167,7 +167,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private JournalArticle _updateJournalArticle(
-			Long journalArticleId,
+			long journalArticleId,
 			WebPageElementUpdaterForm webPageElementUpdaterForm)
 		throws PortalException {
 

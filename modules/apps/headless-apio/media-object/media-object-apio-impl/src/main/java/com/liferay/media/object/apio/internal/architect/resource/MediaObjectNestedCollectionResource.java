@@ -121,7 +121,7 @@ public class MediaObjectNestedCollectionResource
 	}
 
 	private PageItems<FileEntry> _getPageItems(
-			Pagination pagination, Long folderId)
+			Pagination pagination, long folderId)
 		throws PortalException {
 
 		Folder folder = _dlAppService.getFolder(folderId);

@@ -104,7 +104,7 @@ public class CommentNestedCollectionResource
 	}
 
 	private Comment _getComment(
-			Long commentId, PermissionChecker permissionChecker)
+			long commentId, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		Comment comment = _commentManager.fetchComment(commentId);
@@ -115,7 +115,7 @@ public class CommentNestedCollectionResource
 	}
 
 	private PageItems<Comment> _getPageItems(
-			Pagination pagination, Long parentCommentId,
+			Pagination pagination, long parentCommentId,
 			PermissionChecker permissionChecker)
 		throws PortalException {
 

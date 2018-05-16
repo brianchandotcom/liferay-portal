@@ -111,7 +111,7 @@ public class FolderNestedCollectionResource
 			folderForm.getDescription(), new ServiceContext());
 	}
 
-	private PageItems<Folder> _getPageItems(Pagination pagination, Long groupId)
+	private PageItems<Folder> _getPageItems(Pagination pagination, long groupId)
 		throws PortalException {
 
 		List<Folder> folders = _dlAppService.getFolders(

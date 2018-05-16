@@ -116,7 +116,7 @@ public class LayoutsAdminDisplayContext {
 
 						data.put("action", "deleteSelectedPages");
 
-						dropdownItem.setData(data););
+						dropdownItem.setData(data);
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));

@@ -20,6 +20,7 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -87,6 +88,8 @@ public class WebSiteCollectionResource
 			"author", PersonIdentifier.class, Group::getCreatorUserId
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, Group::getCreatorUserId
+		).addLinkedModel(
+			"folder", RootFolderIdentifier.class, Group::getGroupId
 		).addLocalizedStringByLocale(
 			"description", Group::getDescription
 		).addLocalizedStringByLocale(

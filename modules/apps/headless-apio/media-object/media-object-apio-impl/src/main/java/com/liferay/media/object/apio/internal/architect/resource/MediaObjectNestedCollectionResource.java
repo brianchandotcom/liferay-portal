@@ -26,16 +26,14 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
+import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.media.object.apio.internal.architect.form.MediaObjectCreatorForm;
+import com.liferay.media.object.apio.internal.helper.MediaObjectHelper;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.io.InputStream;
 
 import java.util.List;
 
@@ -52,16 +50,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class MediaObjectNestedCollectionResource
 	implements NestedCollectionResource<FileEntry, Long,
-		FileEntryIdentifier, Long, FolderIdentifier> {
+		FileEntryIdentifier, Long, RootFolderIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<FileEntry, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<FileEntry, Long, Long> builder) {
+	public NestedCollectionRoutes<FileEntry, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<FileEntry, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addFileEntry, (credentials, folderId) -> true,
+			this::_getFileEntry, (credentials, folderId) -> true,
 			MediaObjectCreatorForm::buildForm
 		).build();
 	}
@@ -117,31 +115,6 @@ public class MediaObjectNestedCollectionResource
 		).build();
 	}
 
-	private FileEntry _addFileEntry(
-			Long folderId, MediaObjectCreatorForm mediaObjectCreatorForm)
-		throws PortalException {
-
-		Folder folder = _dlAppService.getFolder(folderId);
-
-		long repositoryId = folder.getRepositoryId();
-
-		String sourceFileName = mediaObjectCreatorForm.getName();
-		BinaryFile binaryFile = mediaObjectCreatorForm.getBinaryFile();
-
-		String mimeType = binaryFile.getMimeType();
-
-		String title = mediaObjectCreatorForm.getTitle();
-		String description = mediaObjectCreatorForm.getDescription();
-		String changelog = mediaObjectCreatorForm.getChangelog();
-
-		InputStream inputStream = binaryFile.getInputStream();
-		long size = binaryFile.getSize();
-
-		return _dlAppService.addFileEntry(
-			repositoryId, folderId, sourceFileName, mimeType, title,
-			description, changelog, inputStream, size, new ServiceContext());
-	}
-
 	private BinaryFile _getBinaryFile(FileEntry fileEntry) {
 		return Try.fromFallible(
 			() -> new BinaryFile(
@@ -152,17 +125,22 @@ public class MediaObjectNestedCollectionResource
 		);
 	}
 
-	private PageItems<FileEntry> _getPageItems(
-			Pagination pagination, long folderId)
+	private FileEntry _getFileEntry(
+			Long groupId, MediaObjectCreatorForm mediaObjectCreatorForm)
 		throws PortalException {
 
-		Folder folder = _dlAppService.getFolder(folderId);
+		return _mediaObjectHelper.addFileEntry(
+			groupId, 0L, mediaObjectCreatorForm);
+	}
+
+	private PageItems<FileEntry> _getPageItems(
+			Pagination pagination, Long groupId)
+		throws PortalException {
 
 		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
-			folder.getGroupId(), folderId, pagination.getStartPosition(),
+			groupId, 0, pagination.getStartPosition(),
 			pagination.getEndPosition(), null);
-		int count = _dlAppService.getFileEntriesCount(
-			folder.getGroupId(), folderId);
+		int count = _dlAppService.getFileEntriesCount(groupId, 0);
 
 		return new PageItems<>(fileEntries, count);
 	}
@@ -174,5 +152,8 @@ public class MediaObjectNestedCollectionResource
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
 	private HasPermission<Long, Long> _hasPermission;
+
+	@Reference
+	private MediaObjectHelper _mediaObjectHelper;
 
 }

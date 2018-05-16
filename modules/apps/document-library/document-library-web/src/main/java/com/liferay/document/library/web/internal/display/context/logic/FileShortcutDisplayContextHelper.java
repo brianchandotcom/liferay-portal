@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 
 /**
  * @author IL (Brian) Kim
@@ -44,6 +45,16 @@ public class FileShortcutDisplayContextHelper {
 		}
 
 		return _hasDeletePermission;
+	}
+
+	public boolean hasExportImportPermission() throws PortalException {
+		if (_hasExportImportPermission == null) {
+			_hasExportImportPermission = GroupPermissionUtil.contains(
+				_permissionChecker, _fileShortcut.getGroupId(),
+				ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+		}
+
+		return _hasExportImportPermission;
 	}
 
 	public boolean hasPermissionsPermission() throws PortalException {
@@ -99,6 +110,7 @@ public class FileShortcutDisplayContextHelper {
 
 	private void _setValuesForNullFileShortcut() {
 		_hasDeletePermission = false;
+		_hasExportImportPermission = false;
 		_hasPermissionsPermission = false;
 		_hasUpdatePermission = false;
 	}
@@ -106,6 +118,7 @@ public class FileShortcutDisplayContextHelper {
 	private Boolean _dlFileShortcut;
 	private final FileShortcut _fileShortcut;
 	private Boolean _hasDeletePermission;
+	private Boolean _hasExportImportPermission;
 	private Boolean _hasPermissionsPermission;
 	private Boolean _hasUpdatePermission;
 	private final PermissionChecker _permissionChecker;

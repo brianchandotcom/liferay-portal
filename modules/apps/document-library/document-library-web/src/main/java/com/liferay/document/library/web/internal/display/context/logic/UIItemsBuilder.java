@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.display.context.logic;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -63,6 +64,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.HashMap;
@@ -783,6 +786,59 @@ public class UIItemsBuilder {
 			LanguageUtil.get(_resourceBundle, "permissions"), sb.toString());
 	}
 
+	public void addPublishMenuItem(List<MenuItem> menuItems)
+		throws PortalException {
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		if (!stagingGroupHelper.isStagingGroup(
+				_themeDisplay.getScopeGroupId()) ||
+			!stagingGroupHelper.isStagedPortlet(
+				_themeDisplay.getScopeGroupId(),
+				DLPortletKeys.DOCUMENT_LIBRARY)) {
+
+			return;
+		}
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+			return;
+		}
+
+		if (((_fileEntry == null) ||
+			 !_fileEntryDisplayContextHelper.hasExportImportPermission()) &&
+			((_fileShortcut == null) ||
+			 _fileShortcutDisplayContextHelper.hasExportImportPermission())) {
+
+			return;
+		}
+
+		PortletURL portletURL = null;
+
+		if (_fileShortcut == null) {
+			portletURL = _getActionURL("/document_library/publish_file_entry");
+
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		}
+		else {
+			portletURL = _getActionURL(
+				"/document_library/publish_file_shortcut");
+
+			portletURL.setParameter(
+				"fileShortcutId",
+				String.valueOf(_fileShortcut.getFileShortcutId()));
+		}
+
+		_addURLUIItem(
+			new URLMenuItem(), menuItems, DLUIItemKeys.PUBLISH, "publish",
+			portletURL.toString());
+	}
+
 	public void addRevertToVersionMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -1039,6 +1095,10 @@ public class UIItemsBuilder {
 		return urlUIItem;
 	}
 
+	private PortletURL _getActionURL(String mvcActionCommandName) {
+		return _getActionURL(mvcActionCommandName, null);
+	}
+
 	private PortletURL _getActionURL(String mvcActionCommandName, String cmd) {
 		return _getActionURL(mvcActionCommandName, cmd, _getCurrentURL());
 	}
@@ -1053,7 +1113,11 @@ public class UIItemsBuilder {
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, mvcActionCommandName);
-		portletURL.setParameter(Constants.CMD, cmd);
+
+		if (Validator.isNotNull(cmd)) {
+			portletURL.setParameter(Constants.CMD, cmd);
+		}
+
 		portletURL.setParameter("redirect", redirect);
 
 		return portletURL;

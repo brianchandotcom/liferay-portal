@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 
 /**
  * @author Iván Zaera
@@ -59,6 +60,16 @@ public class FileEntryDisplayContextHelper {
 		}
 
 		return _hasDeletePermission;
+	}
+
+	public boolean hasExportImportPermission() throws PortalException {
+		if (_hasExportImportPermission == null) {
+			_hasExportImportPermission = GroupPermissionUtil.contains(
+				_permissionChecker, _fileEntry.getGroupId(),
+				ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+		}
+
+		return _hasExportImportPermission;
 	}
 
 	public boolean hasLock() {
@@ -222,6 +233,7 @@ public class FileEntryDisplayContextHelper {
 		_checkedOut = false;
 		_dlFileEntry = true;
 		_hasDeletePermission = false;
+		_hasExportImportPermission = false;
 		_hasLock = false;
 		_hasOverrideCheckoutPermission = false;
 		_hasPermissionsPermission = true;
@@ -234,6 +246,7 @@ public class FileEntryDisplayContextHelper {
 	private Boolean _dlFileEntry;
 	private final FileEntry _fileEntry;
 	private Boolean _hasDeletePermission;
+	private Boolean _hasExportImportPermission;
 	private Boolean _hasLock;
 	private Boolean _hasOverrideCheckoutPermission;
 	private Boolean _hasPermissionsPermission;

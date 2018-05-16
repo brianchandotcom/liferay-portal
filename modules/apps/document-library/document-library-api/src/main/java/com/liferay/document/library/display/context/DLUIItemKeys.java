@@ -54,6 +54,9 @@ public class DLUIItemKeys {
 	public static final String PERMISSIONS =
 		DLUIItemKeys.class.getName() + "#permissions";
 
+	public static final String PUBLISH =
+		DLUIItemKeys.class.getName() + "#publish";
+
 	public static final String REVERT =
 		DLUIItemKeys.class.getName() + "#revert";
 

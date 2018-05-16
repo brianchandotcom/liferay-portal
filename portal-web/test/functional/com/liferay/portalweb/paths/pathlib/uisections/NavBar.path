@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAV_ITEM_LINK_ADD_PAGE</td>
+	<td>//ul[contains(@class,'nav-stacked')]//li[contains(@class,'nav-item')]//a[normalize-space()='${key_navItem}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATIONS</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'navbar-nav')]/li/a[contains(.,'Organizations')]</td>
 	<td></td>

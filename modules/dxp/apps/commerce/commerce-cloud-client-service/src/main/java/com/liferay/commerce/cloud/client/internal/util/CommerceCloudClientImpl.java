@@ -125,7 +125,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	public void updateForecastingConfiguration(JSONObject jsonObject)
 		throws CommerceCloudClientException {
 
-		String location = getLocation("/forecast/");
+		String location = getLocation("/forecast");
 
 		Http.Options options = new Http.Options();
 
@@ -196,7 +196,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	protected JSONObject doGetForecastingConfiguration() throws Exception {
-		String location = getLocation("/forecast/");
+		String location = getLocation("/forecast");
 
 		Http.Options options = new Http.Options();
 
@@ -211,7 +211,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 			List<CommerceCloudForecastOrder> commerceCloudForecastOrders)
 		throws Exception {
 
-		String location = getLocation("/forecast/orders/");
+		String location = getLocation("/forecast/orders");
 
 		Http.Options options = new Http.Options();
 

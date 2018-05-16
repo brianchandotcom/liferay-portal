@@ -32,7 +32,7 @@ import java.util.Set;
  */
 public class GetProjectHandler implements Handler<RoutingContext> {
 
-	public static final String PATH = "/projects/:projectId/";
+	public static final String PATH = "/projects/:projectId";
 
 	@Override
 	public void handle(RoutingContext routingContext) {

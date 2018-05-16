@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
 import java.math.BigDecimal;
 
@@ -74,20 +75,25 @@ public class CommercePriceCalculationTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
 		_organization = OrganizationTestUtil.addOrganization(true);
 
-		_buyerUser = UserTestUtil.addOrganizationUser(
+		_buyerUser1 = UserTestUtil.addOrganizationUser(
+			_organization, RoleConstants.ORGANIZATION_USER);
+
+		_buyerUser2 = UserTestUtil.addOrganizationUser(
 			_organization, RoleConstants.ORGANIZATION_USER);
 	}
 
 	@Test
 	public void testMultiPriceList() throws Exception {
 		frutillaRule.scenario(
-			"Check Price List price functionality"
+			"Check Price List priority functionality"
 		).given(
 			"An organization with a site"
 		).and(
@@ -119,7 +125,7 @@ public class CommercePriceCalculationTest {
 			addCommerceUserSegmentCriterion(
 				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 				CommerceUserSegmentCriterionConstants.TYPE_USER,
-				String.valueOf(_buyerUser.getUserId()), 0, serviceContext);
+				String.valueOf(_buyerUser1.getUserId()), 0, serviceContext);
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyServiceUtil.fetchPrimaryCommerceCurrency(
@@ -166,13 +172,123 @@ public class CommercePriceCalculationTest {
 				null, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, commerceUserSegmentEntry);
+			commerceCurrency,
+				_buyerUser1);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
 
 		Assert.assertEquals(
 			commercePriceEntry2.getPrice(), commerceMoney.getPrice());
+	}
+
+	@Test
+	public void testMultiPriceListWithDifferentUserSegment() throws Exception {
+		frutillaRule.scenario(
+			"Check Price List segmentation functionality"
+		).given(
+			"An organization with a site"
+		).and(
+			"A couple of buyer user in that organization"
+		).when(
+			"I add a couple of user segment"
+		).and(
+			"I add a user criterion for each user segment"
+		).and(
+			"I add 2 price lists, one for each user segment"
+		).and(
+			"I associate a product to these price lists with a price value"
+		).then(
+			"The final price will be the one from the price list with the " +
+				"correct user segment fot that user"
+		);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_organization.getGroupId());
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry1 =
+			_commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
+				Collections.singletonMap(
+					Locale.US, RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(), true, false, 0, serviceContext);
+
+		_commerceUserSegmentCriterionLocalService.
+			addCommerceUserSegmentCriterion(
+				commerceUserSegmentEntry1.getCommerceUserSegmentEntryId(),
+				CommerceUserSegmentCriterionConstants.TYPE_USER,
+				String.valueOf(_buyerUser1.getUserId()), 0, serviceContext);
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry2 =
+			_commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
+				Collections.singletonMap(
+					Locale.US, RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(), true, false, 0, serviceContext);
+
+		_commerceUserSegmentCriterionLocalService.
+			addCommerceUserSegmentCriterion(
+				commerceUserSegmentEntry2.getCommerceUserSegmentEntryId(),
+				CommerceUserSegmentCriterionConstants.TYPE_USER,
+				String.valueOf(_buyerUser2.getUserId()), 0, serviceContext);
+
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyServiceUtil.fetchPrimaryCommerceCurrency(
+				_organization.getGroupId());
+
+		CommercePriceList commercePriceList1 =
+			_commercePriceListLocalService.addCommercePriceList(
+				commerceCurrency.getCommerceCurrencyId(),
+				RandomTestUtil.randomString(), 0, 1, 1, 2018, 3, 4, 1, 1, 2020,
+				3, 4, true, serviceContext);
+
+		CommercePriceList commercePriceList2 =
+			_commercePriceListLocalService.addCommercePriceList(
+				commerceCurrency.getCommerceCurrencyId(),
+				RandomTestUtil.randomString(), 1, 1, 1, 2018, 3, 4, 1, 1, 2020,
+				3, 4, true, serviceContext);
+
+		_commercePriceListUserSegmentEntryRelLocalService.
+			addCommercePriceListUserSegmentEntryRel(
+				commercePriceList1.getCommercePriceListId(),
+				commerceUserSegmentEntry1.getCommerceUserSegmentEntryId(), 0,
+				serviceContext);
+
+		_commercePriceListUserSegmentEntryRelLocalService.
+			addCommercePriceListUserSegmentEntryRel(
+				commercePriceList2.getCommercePriceListId(),
+				commerceUserSegmentEntry2.getCommerceUserSegmentEntryId(), 0,
+				serviceContext);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(
+			_organization.getGroupId());
+
+		cpInstance.setPrice(new BigDecimal(20));
+
+		CommercePriceEntry commercePriceEntry1 =
+			_commercePriceEntryLocalService.addCommercePriceEntry(
+				cpInstance.getCPInstanceId(),
+				commercePriceList1.getCommercePriceListId(), new BigDecimal(13),
+				null, serviceContext);
+
+		CommercePriceEntry commercePriceEntry2 =
+			_commercePriceEntryLocalService.addCommercePriceEntry(
+				cpInstance.getCPInstanceId(),
+				commercePriceList2.getCommercePriceListId(), new BigDecimal(15),
+				null, serviceContext);
+
+		long[] commerceUserSegmentEntryIDs = {
+			commerceUserSegmentEntry1.getCommerceUserSegmentEntryId(),
+			commerceUserSegmentEntry2.getCommerceUserSegmentEntryId()
+		};
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			commerceCurrency, _buyerUser1);
+
+		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
+			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
+
+		Assert.assertEquals(
+			commercePriceEntry1.getPrice(), commerceMoney.getPrice());
 	}
 
 	@Test
@@ -210,7 +326,7 @@ public class CommercePriceCalculationTest {
 			addCommerceUserSegmentCriterion(
 				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 				CommerceUserSegmentCriterionConstants.TYPE_USER,
-				String.valueOf(_buyerUser.getUserId()), 0, serviceContext);
+				String.valueOf(_buyerUser1.getUserId()), 0, serviceContext);
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyServiceUtil.fetchPrimaryCommerceCurrency(
@@ -240,7 +356,8 @@ public class CommercePriceCalculationTest {
 				null, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, commerceUserSegmentEntry);
+			commerceCurrency,
+				_buyerUser1);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -252,7 +369,7 @@ public class CommercePriceCalculationTest {
 	@Test
 	public void testPriceListPriceWithDifferentCurrency() throws Exception {
 		frutillaRule.scenario(
-			"Check Price List price functionality in different currency"
+			"Check Price List price functionality with currency conversion"
 		).given(
 			"An organization with a site"
 		).and(
@@ -284,7 +401,7 @@ public class CommercePriceCalculationTest {
 			addCommerceUserSegmentCriterion(
 				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 				CommerceUserSegmentCriterionConstants.TYPE_USER,
-				String.valueOf(_buyerUser.getUserId()), 0, serviceContext);
+				String.valueOf(_buyerUser1.getUserId()), 0, serviceContext);
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyServiceUtil.fetchPrimaryCommerceCurrency(
@@ -333,7 +450,8 @@ public class CommercePriceCalculationTest {
 		}
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			targetCurrency, commerceUserSegmentEntry);
+			targetCurrency,
+				_buyerUser1);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -389,7 +507,7 @@ public class CommercePriceCalculationTest {
 			addCommerceUserSegmentCriterion(
 				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 				CommerceUserSegmentCriterionConstants.TYPE_USER,
-				String.valueOf(_buyerUser.getUserId()), 0, serviceContext);
+				String.valueOf(_buyerUser1.getUserId()), 0, serviceContext);
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyServiceUtil.fetchPrimaryCommerceCurrency(
@@ -419,7 +537,8 @@ public class CommercePriceCalculationTest {
 			null, quantity, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, commerceUserSegmentEntry);
+			commerceCurrency,
+				_buyerUser1);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), quantity, false, false,
@@ -442,7 +561,10 @@ public class CommercePriceCalculationTest {
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	@DeleteAfterTestRun
-	private User _buyerUser;
+	private User _buyerUser1;
+
+	@DeleteAfterTestRun
+	private User _buyerUser2;
 
 	@Inject
 	private CommerceContextFactory _commerceContextFactory;
@@ -478,11 +600,11 @@ public class CommercePriceCalculationTest {
 	private class TestCommerceContext implements CommerceContext {
 
 		public TestCommerceContext(
-			CommerceCurrency commerceCurrency,
-			CommerceUserSegmentEntry commerceUserSegmentEntry) {
+				CommerceCurrency commerceCurrency,
+				User contextUser) {
 
 			_commerceCurrency = commerceCurrency;
-			_commerceUserSegmentEntry = commerceUserSegmentEntry;
+			_contextUser = contextUser;
 		}
 
 		@Override
@@ -505,9 +627,11 @@ public class CommercePriceCalculationTest {
 
 		@Override
 		public long[] getCommerceUserSegmentEntryIds() throws PortalException {
-			return new long[] {
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId()
-			};
+			return _commerceUserSegmentEntryLocalService.
+				getCommerceUserSegmentEntryIds(
+					_organization.getGroupId(),
+					_organization.getOrganizationId(),
+					_contextUser.getUserId());
 		}
 
 		@Override
@@ -521,7 +645,7 @@ public class CommercePriceCalculationTest {
 		}
 
 		private final CommerceCurrency _commerceCurrency;
-		private final CommerceUserSegmentEntry _commerceUserSegmentEntry;
+		private final User _contextUser;
 
 	}
 

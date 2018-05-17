@@ -75,11 +75,11 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("type", getType());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 		attributes.put("defaultTemplate", isDefaultTemplate());
+		attributes.put("layoutPrototypeId", getLayoutPrototypeId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
-		attributes.put("layoutPrototypeId", getLayoutPrototypeId());
 
 		return attributes;
 	}
@@ -172,6 +172,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 			setDefaultTemplate(defaultTemplate);
 		}
 
+		Long layoutPrototypeId = (Long)attributes.get("layoutPrototypeId");
+
+		if (layoutPrototypeId != null) {
+			setLayoutPrototypeId(layoutPrototypeId);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -194,12 +200,6 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
-		}
-
-		Long layoutPrototypeId = (Long)attributes.get("layoutPrototypeId");
-
-		if (layoutPrototypeId != null) {
-			setLayoutPrototypeId(layoutPrototypeId);
 		}
 	}
 

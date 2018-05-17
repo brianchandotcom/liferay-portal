@@ -95,6 +95,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		sb.append(htmlPreviewEntryId);
 		sb.append(", defaultTemplate=");
 		sb.append(defaultTemplate);
+		sb.append(", layoutPrototypeId=");
+		sb.append(layoutPrototypeId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -103,8 +105,6 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
-		sb.append(", layoutPrototypeId=");
-		sb.append(layoutPrototypeId);
 		sb.append("}");
 
 		return sb.toString();
@@ -154,6 +154,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		layoutPageTemplateEntryImpl.setType(type);
 		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
 		layoutPageTemplateEntryImpl.setDefaultTemplate(defaultTemplate);
+		layoutPageTemplateEntryImpl.setLayoutPrototypeId(layoutPrototypeId);
 		layoutPageTemplateEntryImpl.setStatus(status);
 		layoutPageTemplateEntryImpl.setStatusByUserId(statusByUserId);
 
@@ -170,8 +171,6 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		else {
 			layoutPageTemplateEntryImpl.setStatusDate(new Date(statusDate));
 		}
-
-		layoutPageTemplateEntryImpl.setLayoutPrototypeId(layoutPrototypeId);
 
 		layoutPageTemplateEntryImpl.resetOriginalValues();
 
@@ -204,13 +203,13 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 
 		defaultTemplate = objectInput.readBoolean();
 
+		layoutPrototypeId = objectInput.readLong();
+
 		status = objectInput.readInt();
 
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
-
-		layoutPrototypeId = objectInput.readLong();
 	}
 
 	@Override
@@ -253,6 +252,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 
 		objectOutput.writeBoolean(defaultTemplate);
 
+		objectOutput.writeLong(layoutPrototypeId);
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -265,8 +266,6 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		}
 
 		objectOutput.writeLong(statusDate);
-
-		objectOutput.writeLong(layoutPrototypeId);
 	}
 
 	public long layoutPageTemplateEntryId;
@@ -283,9 +282,9 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 	public int type;
 	public long htmlPreviewEntryId;
 	public boolean defaultTemplate;
+	public long layoutPrototypeId;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-	public long layoutPrototypeId;
 }

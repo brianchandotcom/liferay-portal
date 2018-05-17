@@ -785,6 +785,66 @@ public class CPDefinitionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition upsertCPDefinition(
+		HttpPrincipal httpPrincipal,
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> shortDescriptionMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.util.Map<java.util.Locale, String> urlTitleMap,
+		java.util.Map<java.util.Locale, String> metaTitleMap,
+		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
+		String productTypeName, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, String ddmStructureKey, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, String defaultSKU,
+		String externalReferenceCode,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
+					"upsertCPDefinition", _upsertCPDefinitionParameterTypes24);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
+					shortDescriptionMap, descriptionMap, urlTitleMap,
+					metaTitleMap, metaDescriptionMap, metaKeywordsMap,
+					productTypeName, ignoreSKUCombinations, shippable,
+					freeShipping, shipSeparately, shippingExtraPrice, width,
+					height, depth, weight, cpTaxCategoryId, taxExempt,
+					telcoOrElectronics, ddmStructureKey, published,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, defaultSKU,
+					externalReferenceCode, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPDefinition)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionParameterTypes0 = new Class[] {
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
@@ -870,5 +930,16 @@ public class CPDefinitionServiceHttp {
 		};
 	private static final Class<?>[] _updateTaxCategoryInfoParameterTypes20 = new Class[] {
 			long.class, long.class, boolean.class, boolean.class
+		};
+	private static final Class<?>[] _upsertCPDefinitionParameterTypes24 = new Class[] {
+			java.util.Map.class, java.util.Map.class, java.util.Map.class,
+			java.util.Map.class, java.util.Map.class, java.util.Map.class,
+			java.util.Map.class, String.class, boolean.class, boolean.class,
+			boolean.class, boolean.class, double.class, double.class,
+			double.class, double.class, double.class, long.class, boolean.class,
+			boolean.class, String.class, boolean.class, int.class, int.class,
+			int.class, int.class, int.class, int.class, int.class, int.class,
+			int.class, int.class, boolean.class, String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

@@ -319,6 +319,11 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return getService().fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinition fetchCPDefinition(
 		long CPDefinitionId) {
 		return getService().fetchCPDefinition(CPDefinitionId);
@@ -784,6 +789,39 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .updateTaxCategoryInfo(cpDefinitionId, cpTaxCategoryId,
 			taxExempt, telcoOrElectronics);
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinition upsertCPDefinition(
+		java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> shortDescriptionMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		java.util.Map<java.util.Locale, String> urlTitleMap,
+		java.util.Map<java.util.Locale, String> metaTitleMap,
+		java.util.Map<java.util.Locale, String> metaDescriptionMap,
+		java.util.Map<java.util.Locale, String> metaKeywordsMap,
+		String productTypeName, boolean ignoreSKUCombinations,
+		boolean shippable, boolean freeShipping, boolean shipSeparately,
+		double shippingExtraPrice, double width, double height, double depth,
+		double weight, long cpTaxCategoryId, boolean taxExempt,
+		boolean telcoOrElectronics, String ddmStructureKey, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire, String defaultSKU,
+		String externalReferenceCode,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .upsertCPDefinition(nameMap, shortDescriptionMap,
+			descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap,
+			metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable,
+			freeShipping, shipSeparately, shippingExtraPrice, width, height,
+			depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics,
+			ddmStructureKey, published, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire, defaultSKU,
+			externalReferenceCode, serviceContext);
 	}
 
 	public static CPDefinitionLocalService getService() {

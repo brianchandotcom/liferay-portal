@@ -156,7 +156,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 			if (form) {
 				form.setAttribute('method', 'post');
 
-				var cmd = form.querySelector('#<%= Constants.CMD %>');
+				var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 				if (cmd) {
 					cmd.value = '<%= Constants.DELETE %>';

@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
@@ -336,20 +335,12 @@ public class MBEntriesManagementToolbarDisplayContext {
 		return sortingURL;
 	}
 
-	public ViewTypeItemList getViewTypes() throws PortletException {
+	public ViewTypeItemList getViewTypes() {
 		PortletURL portletURL = getPortletURL();
 
 		return new ViewTypeItemList(portletURL, "descriptive") {
 			{
-				ViewTypeItem cardViewTypeItem = addCardViewTypeItem();
-
-				cardViewTypeItem.setDisabled(true);
-
 				addListViewTypeItem();
-
-				ViewTypeItem tableViewTypeItem = addTableViewTypeItem();
-
-				tableViewTypeItem.setDisabled(true);
 			}
 
 		};

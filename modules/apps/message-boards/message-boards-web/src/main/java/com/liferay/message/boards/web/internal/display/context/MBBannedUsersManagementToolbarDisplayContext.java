@@ -17,7 +17,6 @@ package com.liferay.message.boards.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.string.StringBundler;
@@ -105,15 +104,7 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
-				ViewTypeItem cardViewTypeItem = addCardViewTypeItem();
-
-				cardViewTypeItem.setDisabled(true);
-
 				addListViewTypeItem();
-
-				ViewTypeItem tableViewTypeItem = addTableViewTypeItem();
-
-				tableViewTypeItem.setDisabled(true);
 			}
 		};
 	}

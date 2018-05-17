@@ -120,7 +120,7 @@ public class ServiceTrackerFieldUpdaterCustomizerTest {
 
 		Hashtable<String, Object> hashtable = new Hashtable<>();
 
-		hashtable.put("service.ranking", "2");
+		hashtable.put("service.ranking", 2);
 
 		serviceRegistration1.setProperties(hashtable);
 

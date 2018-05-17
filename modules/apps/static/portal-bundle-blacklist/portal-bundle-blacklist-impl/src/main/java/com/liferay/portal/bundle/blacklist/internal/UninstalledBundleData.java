@@ -23,7 +23,6 @@ public class UninstalledBundleData {
 
 	public UninstalledBundleData(String location, int startLevel) {
 		_location = location;
-
 		_startLevel = startLevel;
 	}
 

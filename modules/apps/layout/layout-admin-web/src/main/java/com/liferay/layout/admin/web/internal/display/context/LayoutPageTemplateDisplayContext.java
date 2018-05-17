@@ -60,7 +60,6 @@ public class LayoutPageTemplateDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-
 		_request = request;
 	}
 

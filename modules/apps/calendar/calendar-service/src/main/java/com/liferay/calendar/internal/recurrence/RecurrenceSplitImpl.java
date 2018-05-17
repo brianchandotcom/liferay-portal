@@ -25,7 +25,6 @@ public class RecurrenceSplitImpl implements RecurrenceSplit {
 		Recurrence firstRecurrence, Recurrence secondRecurrence) {
 
 		_firstRecurrence = firstRecurrence;
-
 		_secondRecurrence = secondRecurrence;
 	}
 

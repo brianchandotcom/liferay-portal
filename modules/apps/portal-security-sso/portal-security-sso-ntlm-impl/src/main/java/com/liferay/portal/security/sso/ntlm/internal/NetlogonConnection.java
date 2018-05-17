@@ -29,7 +29,6 @@ public class NetlogonConnection {
 
 	public NetlogonConnection(byte[] clientCredential, byte[] sessionKey) {
 		_clientCredential = clientCredential;
-
 		_sessionKey = sessionKey;
 	}
 

@@ -61,7 +61,6 @@ public class DDMFormFieldTemplateContextFactory {
 		JSONFactory jsonFactory, boolean pageEnabled) {
 
 		_ddmFormFieldsMap = ddmFormFieldsMap;
-
 		_ddmFormEvaluationResult = ddmFormEvaluationResult;
 		_ddmFormFieldValues = ddmFormFieldValues;
 		_ddmFormRenderingContext = ddmFormRenderingContext;

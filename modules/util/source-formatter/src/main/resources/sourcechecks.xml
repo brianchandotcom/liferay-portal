@@ -97,7 +97,7 @@
 		<check name="JavaCollatorUtilCheck" />
 		<check name="JavaCombineLinesCheck" />
 		<check name="JavaConfigurationAdminCheck" />
-		<check name="JavaConstructorParameterOrderCheck" />
+		<check name="JavaConstructorParametersCheck" />
 		<check name="JavaConstructorSuperCallCheck" />
 		<check name="JavaDeprecatedJavadocCheck" />
 		<check name="JavaDiamondOperatorCheck" />

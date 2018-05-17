@@ -165,7 +165,6 @@ public class RemoteExecutor {
 			RemoteExecutor remoteExecutor, String targetSlave) {
 
 			_remoteExecutor = remoteExecutor;
-
 			_targetSlave = targetSlave;
 		}
 

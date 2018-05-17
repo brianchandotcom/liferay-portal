@@ -35,7 +35,6 @@ public abstract class DoAsUserThread extends Thread {
 
 	public DoAsUserThread(long userId, int retries) {
 		_userId = userId;
-
 		_retries = retries;
 	}
 

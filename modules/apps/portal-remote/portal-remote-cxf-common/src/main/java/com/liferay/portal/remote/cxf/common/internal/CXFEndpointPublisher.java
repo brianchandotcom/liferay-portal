@@ -121,7 +121,6 @@ public class CXFEndpointPublisher {
 			BundleContext bundleContext, Map<String, Object> properties) {
 
 			_bundleContext = bundleContext;
-
 			_properties = properties;
 		}
 

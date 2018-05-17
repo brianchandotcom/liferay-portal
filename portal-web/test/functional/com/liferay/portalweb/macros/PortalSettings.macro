@@ -463,6 +463,20 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="enableOpenIDConnectCP">
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Authentication" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavTab#OPENID_CONNECT" value1="OpenId Connect" />
+
+		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX" />
+	</command>
+
 	<command name="enableOpenIDCP">
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
 

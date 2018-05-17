@@ -908,8 +908,6 @@
 	</command>
 
 	<command name="viewCompletedTasksTaskNotPresentCP">
-		<execute macro="Workflow#gotoCompletedFilter" />
-
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_TASK" />

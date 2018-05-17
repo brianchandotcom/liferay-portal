@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.xuggler.XugglerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,10 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		if (!XugglerUtil.isEnabled()) {
+			return;
+		}
 
 		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
 

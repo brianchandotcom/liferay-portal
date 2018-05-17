@@ -308,7 +308,7 @@ describe('Analytics Client', () => {
 			return Analytics.flush().then(() => {
 				const events = Analytics.events;
 
-				events.should.have.lengthOf(7);
+				events.should.have.lengthOf(5); // 7 for each gateway
 			});
 		});
 	});

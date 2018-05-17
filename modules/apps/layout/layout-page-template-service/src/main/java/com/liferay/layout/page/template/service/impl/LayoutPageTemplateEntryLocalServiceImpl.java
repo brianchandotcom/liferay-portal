@@ -44,8 +44,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long[] fragmentEntryIds, int status,
-			long layoutPrototypeId, ServiceContext serviceContext)
+			String name, int type, long[] fragmentEntryIds,
+			long layoutPrototypeId, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -72,11 +72,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setName(name);
 		layoutPageTemplateEntry.setType(type);
+		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 		layoutPageTemplateEntry.setStatus(status);
 		layoutPageTemplateEntry.setStatusByUserId(userId);
 		layoutPageTemplateEntry.setStatusByUserName(user.getFullName());
 		layoutPageTemplateEntry.setStatusDate(new Date());
-		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
 
@@ -106,7 +106,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			fragmentEntryIds, status, 0, serviceContext);
+			fragmentEntryIds,  0, status, serviceContext);
 	}
 
 	@Override

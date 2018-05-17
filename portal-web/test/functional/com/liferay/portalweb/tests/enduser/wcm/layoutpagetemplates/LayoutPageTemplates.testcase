@@ -228,9 +228,79 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCollection" priority="5">
-		<property name="portal.acceptance" value="true" />
+	<command name="ConfigureNavigationPortlet" priority="4">
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
 
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Navigation_Menu_Portlet.html" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Page Templates" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionName" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Page Template Collection" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewNavigationPortlet">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#gotoPortletConfiguration">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="NavigationMenu#selectAndSaveConfiguration">
+			<var name="displayTemplate" value="Tabs" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="LayoutPageTemplates#viewNavigationPortlet">
+			<var name="displayTemplateClass" value="nav-tabs" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+	</command>
+
+	<command name="DeleteCollection" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />

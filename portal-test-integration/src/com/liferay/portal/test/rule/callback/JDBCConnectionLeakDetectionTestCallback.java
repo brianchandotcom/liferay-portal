@@ -50,7 +50,7 @@ public class JDBCConnectionLeakDetectionTestCallback
 				serviceReference);
 
 			int[] initialConnectionsCount = _connectionPoolMap.get(
-				"class-" + connectionPoolMetrics.getConnectionPoolName());
+				connectionPoolMetrics.getConnectionPoolName());
 
 			Assert.assertEquals(
 				"Active connection count differ before and after test for " +
@@ -73,7 +73,8 @@ public class JDBCConnectionLeakDetectionTestCallback
 			_registry.getServiceReferences(ConnectionPoolMetrics.class, null);
 
 		Assert.assertTrue(
-			"Number of datasources should be 2 or more",
+			"Number of connection pool should be 2 or more: " +
+				serviceReferences,
 			serviceReferences.size() >= 2);
 
 		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
@@ -83,7 +84,7 @@ public class JDBCConnectionLeakDetectionTestCallback
 				serviceReference);
 
 			_connectionPoolMap.put(
-				"class-" + connectionPoolMetrics.getConnectionPoolName(),
+				connectionPoolMetrics.getConnectionPoolName(),
 				new int[] {
 					connectionPoolMetrics.getNumActive(),
 					connectionPoolMetrics.getNumIdle()

@@ -239,8 +239,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LEXICON_DESELECT_ALL_BUTTON</td>
+	<td>//button[@type='button' and contains(.,'Deselect all')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LEXICON_SELECT_ALL_CONTAINER</td>
 	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'custom-checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LEXICON_SELECT_ALL_CHECKED</td>
+	<td>//nav[contains(@class,'management-bar')]//input[@type='checkbox' and @checked=""]</td>
 	<td></td>
 </tr>
 <tr>
@@ -325,7 +335,7 @@
 </tr>
 <tr>
 	<td>SELECT_ALL_CHECKBOX_TICK</td>
-	<td>//div[@class='portlet-body']//div[contains(@class,'secondary-bar-open')]</td>
+	<td>//div[@class='portlet-body']//nav[contains(@class,'navbar-nowrap')]</td>
 	<td></td>
 </tr>
 <tr>

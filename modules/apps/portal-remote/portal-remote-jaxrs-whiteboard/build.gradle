@@ -31,12 +31,12 @@ deployConfigs {
 
 deployDependencies {
 	from (configurations.compileOnly) {
-		include "javax.json-api*.jar"
-		include "org.apache.aries.javax.annotation-api*.jar"
-		include "org.apache.aries.javax.jax.rs-api*.jar"
-		include "org.apache.aries.jax.rs.whiteboard-*.jar"
-		include "org.osgi.service.jaxrs-*.jar"
-		include "org.osgi.util.function-*.jar"
 		include "org.osgi.util.promise-*.jar"
+		include "org.osgi.util.function-*.jar"
+		include "org.osgi.service.jaxrs-*.jar"
+		include "javax.json-api*.jar"
+		include "org.apache.aries.jax.rs.whiteboard-*.jar"
+		include "org.apache.aries.javax.jax.rs-api*.jar"
+		include "org.apache.aries.javax.annotation-api*.jar"
 	}
 }

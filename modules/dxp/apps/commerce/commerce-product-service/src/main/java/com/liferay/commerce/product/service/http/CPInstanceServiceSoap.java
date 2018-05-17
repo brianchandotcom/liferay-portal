@@ -274,5 +274,36 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPInstanceSoap upsertCPInstance(
+		long cpDefinitionId, String sku, String gtin,
+		String manufacturerPartNumber, boolean purchasable, String ddmContent,
+		double width, double height, double depth, double weight,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		java.math.BigDecimal cost, boolean published,
+		String externalReferenceCode, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.upsertCPInstance(cpDefinitionId,
+					sku, gtin, manufacturerPartNumber, purchasable, ddmContent,
+					width, height, depth, weight, price, promoPrice, cost,
+					published, externalReferenceCode, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
+
+			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CPInstanceServiceSoap.class);
 }

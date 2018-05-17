@@ -183,6 +183,29 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPInstance upsertCPInstance(
+		long cpDefinitionId, String sku, String gtin,
+		String manufacturerPartNumber, boolean purchasable, String ddmContent,
+		double width, double height, double depth, double weight,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		java.math.BigDecimal cost, boolean published,
+		String externalReferenceCode, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceService.upsertCPInstance(cpDefinitionId, sku, gtin,
+			manufacturerPartNumber, purchasable, ddmContent, width, height,
+			depth, weight, price, promoPrice, cost, published,
+			externalReferenceCode, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
+
+	@Override
 	public CPInstanceService getWrappedService() {
 		return _cpInstanceService;
 	}

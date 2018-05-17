@@ -138,4 +138,15 @@ public interface CPInstanceService extends BaseService {
 	public CPInstance updateShippingInfo(long cpInstanceId, double width,
 		double height, double depth, double weight,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CPInstance upsertCPInstance(long cpDefinitionId, String sku,
+		String gtin, String manufacturerPartNumber, boolean purchasable,
+		String ddmContent, double width, double height, double depth,
+		double weight, BigDecimal price, BigDecimal promoPrice,
+		BigDecimal cost, boolean published, String externalReferenceCode,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
 }

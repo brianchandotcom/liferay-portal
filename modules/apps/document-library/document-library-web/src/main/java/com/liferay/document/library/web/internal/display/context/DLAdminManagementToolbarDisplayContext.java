@@ -110,28 +110,6 @@ public class DLAdminManagementToolbarDisplayContext {
 									LanguageUtil.get(_request, "download"));
 								dropdownItem.setQuickAction(true);
 							}));
-
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.putData("action", "checkin");
-								dropdownItem.setIcon("unlock");
-								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "checkin"));
-								dropdownItem.setQuickAction(false);
-							}));
-
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.putData("action", "checkout");
-								dropdownItem.setIcon("lock");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										_request, "checkout[document]"));
-								dropdownItem.setQuickAction(false);
-							}));
-
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
@@ -168,6 +146,27 @@ public class DLAdminManagementToolbarDisplayContext {
 								dropdownItem.setQuickAction(true);
 							}));
 				}
+
+				add(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.putData("action", "checkin");
+							dropdownItem.setIcon("unlock");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "checkin"));
+							dropdownItem.setQuickAction(false);
+						}));
+
+				add(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.putData("action", "checkout");
+							dropdownItem.setIcon("lock");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_request, "checkout[document]"));
+							dropdownItem.setQuickAction(false);
+						}));
 			}
 		};
 	}

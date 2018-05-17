@@ -12,7 +12,7 @@
 	{@param? _handleMapButtonClick: any}
 	{@param? _showTooltip: bool}
 
-	<span>
+	<div class="lfr-editable-wrapper">
 		<lfr-editable
 			data-onclick="{$_handleEditableClick}"
 			id="{$editableId}"
@@ -22,36 +22,33 @@
 			{$content}
 		</lfr-editable>
 
-		{let $tooltipClasses kind="text"}
-			clay-tooltip-top
-			tooltip
+		{if $_showTooltip}
+			<div class="clay-tooltip-top tooltip show" role="tooltip">
+				<div class="arrow"></div>
+				<div class="tooltip-inner">
+					<div class="lfr-editable-wrapper__tooltip-btn-group">
+						<button
+							class="btn btn-outline-light"
+							data-onclick="{$_handleMapButtonClick}"
+							type="button"
+						>
+							{msg desc=""}map-to{/msg}...
+						</button>
 
-			{if $_showTooltip}
-				show
-			{/if}
-		{/let}
-
-		<div class="{$tooltipClasses}" role="tooltip">
-			<div class="arrow"></div>
-			<div class="tooltip-inner">
-				<div>
-					<button
-						class="btn btn-unstyled"
-						data-onclick="{$_handleEditButtonClick}"
-						type="button"
-					>
-						Edit
-					</button>
-
-					<button
-						class="btn btn-unstyled"
-						data-onclick="{$_handleMapButtonClick}"
-						type="button"
-					>
-						Map
-					</button>
+						<button
+							class="btn btn-outline-light"
+							data-onclick="{$_handleEditButtonClick}"
+							type="button"
+						>
+							{if $type == 'image'}
+								{msg desc=""}select-image{/msg}
+							{else}
+								{msg desc=""}edit{/msg}
+							{/if}
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
-	</span>
+		{/if}
+	</div>
 {/template}

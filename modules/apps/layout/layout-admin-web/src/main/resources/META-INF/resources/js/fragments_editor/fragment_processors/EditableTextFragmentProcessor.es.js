@@ -117,6 +117,15 @@ function createTextEditor(
 }
 
 /**
+ * Returns the existing editable element or null.
+ * @returns {HTMLElement|null}
+ */
+
+function getActiveEditableElement() {
+	return _editableElement;
+}
+
+/**
  * Destroys, if any, an existing instance of AlloyEditor.
  */
 
@@ -139,5 +148,5 @@ function destroyTextEditor() {
 	}
 }
 
-export {createTextEditor, destroyTextEditor};
+export {createTextEditor, getActiveEditableElement, destroyTextEditor};
 export default createTextEditor;

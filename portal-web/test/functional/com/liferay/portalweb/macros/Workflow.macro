@@ -2,15 +2,7 @@
 	<command name="_gotoPendingFilter">
 		<execute function="Pause" locator1="5000" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="Dropdown#FILTER" />
-			<then>
-				<execute function="Click" locator1="Dropdown#FILTER" />
-			</then>
-			<else>
-				<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
-			</else>
-		</if>
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Pending">
 			<var name="key_menuItem" value="Pending" />
@@ -360,15 +352,7 @@
 	<command name="gotoCompletedFilter">
 		<execute function="Pause" locator1="5000" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="Dropdown#FILTER" />
-			<then>
-				<execute function="Click" locator1="Dropdown#FILTER" />
-			</then>
-			<else>
-				<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
-			</else>
-		</if>
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Completed">
 			<var name="key_menuItem" value="Completed" />

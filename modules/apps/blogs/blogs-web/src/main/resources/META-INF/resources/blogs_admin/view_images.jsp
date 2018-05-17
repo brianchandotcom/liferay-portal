@@ -55,6 +55,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 <clay:management-toolbar
 	actionDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= blogImagesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	componentId="blogImagesManagementToolbar"
 	disabled="<%= blogImagesSearchContainer.getTotal() <= 0 %>"
 	filterDropdownItems="<%= blogImagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= blogImagesSearchContainer.getTotal() %>"
@@ -101,8 +102,8 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 	</aui:form>
 </div>
 
-<aui:script>
-	function <portlet:namespace />deleteImages() {
+<aui:script sandbox="<%= true %>">
+	var deleteImages = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-images" />')) {
 			var form = document.querySelector('#<portlet:namespace />fm');
 
@@ -123,4 +124,23 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 			}
 		}
 	}
+
+	var ACTIONS = {
+		'deleteImages': deleteImages
+	};
+
+	Liferay.componentReady('blogImagesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

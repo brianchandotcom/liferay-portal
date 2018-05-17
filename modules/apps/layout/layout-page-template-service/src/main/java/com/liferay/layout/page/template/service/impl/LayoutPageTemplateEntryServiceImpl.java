@@ -47,7 +47,36 @@ public class LayoutPageTemplateEntryServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long groupId, long layoutPageTemplateCollectionId, String name,
-			int type, int status, long[] fragmentEntryIds,
+			int type, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			getUserId(), groupId, layoutPageTemplateCollectionId, name, type,
+			status, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long groupId, long layoutPageTemplateCollectionId, String name,
+			int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			getUserId(), groupId, layoutPageTemplateCollectionId, name, type,
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long groupId, long layoutPageTemplateCollectionId, String name,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -56,38 +85,8 @@ public class LayoutPageTemplateEntryServiceImpl
 			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
 
 		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			getUserId(), groupId, layoutPageTemplateCollectionId, name, type,
-			status, fragmentEntryIds, serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long groupId, long layoutPageTemplateCollectionId, String name,
-			int type, long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
-
-		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			getUserId(), groupId, layoutPageTemplateCollectionId, name, type,
-			WorkflowConstants.STATUS_DRAFT, fragmentEntryIds, serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long groupId, long layoutPageTemplateCollectionId, String name,
-			long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
-
-		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			getUserId(), groupId, layoutPageTemplateCollectionId, name,
-			fragmentEntryIds, serviceContext);
+			serviceContext);
 	}
 
 	@Override

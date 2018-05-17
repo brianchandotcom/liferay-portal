@@ -91,7 +91,9 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 
 		String exceptionClassName = _getExceptionClassName(parameterDefAST);
 
-		if (exceptionClassName == null) {
+		if ((exceptionClassName == null) ||
+			exceptionClassName.equals("JSONException")) {
+
 			return;
 		}
 

@@ -1,4 +1,6 @@
 import com.liferay.gradle.util.GradleUtil
+import java.util.regex.Pattern
+import java.util.regex.Matcher
 
 buildscript {
 	apply from: file("../modules/build-buildscript.gradle"), to: buildscript
@@ -29,6 +31,33 @@ dependencies {
 	}
 
 	sikuliComplete classifier: "macosx-x86_64", group: "org.bytedeco.javacpp-presets", name: "opencv", version: poshiRunner.openCVVersion
+
+	Properties poshiRunnerExtProperties = new Properties()
+
+	poshiRunnerExtProperties.load(new FileInputStream(project.properties["poshiRunnerExtProperties"]))
+
+	String testBaseDirName = poshiRunnerExtProperties.getProperty("test.base.dir.name")
+
+	if (testBaseDirName != null) {
+
+		Pattern pattern = Pattern.compile(".*\\/(?<portalVersion>\\d+(\\.\\d+)*).*")
+
+		Matcher matcher = pattern.matcher(testBaseDirName)
+
+		if (matcher.find()) {
+			String portalVersion = matcher.group("portalVersion")
+
+			if (portalVersion.startsWith("7.0")) {
+				poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.0.x", version: "20180516094443-ebc78fb"
+			}
+			else if (portalVersion.startsWith("6.1")) {
+				poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.1.x", version: "20180516095228-87f131d"
+			}
+			else if (portalVersion.startsWith("6.2")) {
+				poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.2.x", version: "20180516095205-e9a6238"
+			}
+		}
+	}
 }
 
 poshiRunnerResources {

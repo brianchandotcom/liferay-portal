@@ -15,6 +15,10 @@
 		<execute function="AssertClick" locator1="NavTab#OPENID" value1="OpenID" />
 	</command>
 
+	<command name="gotoAuthenticationOpenIDConnect">
+		<execute function="AssertClick" locator1="NavTab#OPENID_CONNECT" value1="OpenId Connect" />
+	</command>
+
 	<command name="gotoAuthenticationOpenSSO">
 		<execute function="AssertClick" locator1="NavTab#OPENSSO" value1="OpenSSO" />
 	</command>

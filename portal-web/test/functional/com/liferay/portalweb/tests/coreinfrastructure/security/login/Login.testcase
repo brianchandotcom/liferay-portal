@@ -77,6 +77,7 @@
 	</command>
 
 	<command name="FacebookSSOSmoke" priority="4">
+		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#FacebookSSOSmoke" />
 
 		<var method="TestPropsUtil#get('facebook.application.id')" name="facebookApplicationID" />
@@ -125,7 +126,8 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="GoogleSSOSmoke" priority="4">
+	<command name="GoogleSSOSmoke" priority="4">
+		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#GoogleSSOSmoke" />
 
 		<var method="MathUtil#randomNumber('3')" name="googlePropertiesSet" />
@@ -229,7 +231,58 @@
 		</execute>
 	</command>
 
+	<command name="OpenIDConnectSmoke" priority="4">
+		<property name="dummy.socket.proxy.disabled" value="true" />
+		<property name="test.name.skip.portal.instance" value="Login#OpenIDConnectSmoke" />
+
+		<var method="MathUtil#randomNumber('3')" name="googlePropertiesSet" />
+
+		<var method="TestPropsUtil#get('google.client.id.${googlePropertiesSet}')" name="openIDConnectClientID" />
+		<var method="TestPropsUtil#get('google.client.secret.${googlePropertiesSet}')" name="openIDConnectClientSecret" />
+		<var method="TestPropsUtil#get('email.address.1')" name="userEmailAddress" />
+		<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Authentication" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenIDConnect" />
+
+		<execute macro="PortalSettings#enableOpenIDConnectCP" />
+
+		<execute macro="OpenIDConnect#addProviderInSystemSettings" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserWithOpenIDConnectEnabledPG">
+			<var name="siteName" value="${siteName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+
 	<command name="OpenIDSmoke" priority="4">
+		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 
 		<var method="TestPropsUtil#get('openid.password')" name="openIDPassword" />
@@ -270,6 +323,7 @@
 	</command>
 
 	<command ignore="true" name="OpenSSOSmoke" priority="5">
+		<property name="dummy.socket.proxy.disabled" value="true" />
 		<property name="openam.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenSSOSmoke" />
 

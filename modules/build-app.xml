@@ -27,7 +27,7 @@
 		</sequential>
 	</macrodef>
 
-	<target depends="dist-module-artifacts,update-app-marketplace-verson,write-app-change-log" name="build-app">
+	<target depends="dist-module-artifacts,update-app-marketplace-verson,write-app-change-log,zip-app-sources" name="build-app">
 		<delete file="${dist.dir}/ticket.list.tmp" />
 
 		<antcall target="git-finalize" />
@@ -267,7 +267,9 @@
 			<property name="artifact.versions.previous.release" value="${artifact.versions.previous.release}" />
 			<property name="build.repository.private.password" value="${build.repository.private.password}" />
 			<property name="build.repository.private.username" value="${build.repository.private.username}" />
+			<property name="current.branch.private" value="${current.branch.private}" />
 			<property name="dist.dir" value="${dist.dir}" />
+			<property name="download.artifact.sources" value="${download.app.sources}" />
 		</subant>
 	</target>
 
@@ -529,6 +531,18 @@
 
 		<condition else="${modules.dir}/.releng/apps/${app.name}" property="releng.app.dir" value="${modules.dir}/.releng/private/apps/${app.name}">
 			<available file="${modules.dir}/.releng/private/apps/${app.name}" />
+		</condition>
+
+		<condition property="download.app.sources">
+			<or>
+				<and>
+					<available file="${modules.dir}/private/apps/${app.name}" />
+					<available file="${app.dir}/.lfrbuild-release-src" />
+				</and>
+				<not>
+					<available file="${modules.dir}/private/apps/${app.name}" />
+				</not>
+			</or>
 		</condition>
 
 		<property name="dist.dir" value="${releng.app.dir}/dist" />
@@ -821,5 +835,11 @@
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553" />
+	</target>
+
+	<target depends="dist-module-artifacts" name="zip-app-sources">
+		<zip basedir="${dist.dir}/sources" destfile="${dist.dir}/${app.name}-${app.version}-sources.zip" />
+
+		<delete dir="${dist.dir}/sources" />
 	</target>
 </project>

@@ -532,39 +532,39 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ProcessListTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>Whether to show delete menu. Default is true.</description>
+			<description>Whether to show the delete menu. The default value is true.</description>
 			<name>deleteMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The language key of the empty results message.</description>
+			<description>The empty results message's language key.</description>
 			<name>emptyResultsMessage</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The class name of the local backgroundtask executor. See <![CDATA[<code>BackgroundTaskExecutorNames</code>]]>.</description>
+			<description>The local background task executor's class name. See the <![CDATA[<code>com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames</code>]]> class for details.</description>
 			<name>localTaskExecutorClassName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the MVC render command.</description>
+			<description>The MVC render command's name.</description>
 			<name>mvcRenderCommandName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to show relaunch menu. Default is true.</description>
+			<description>Whether to show the relaunch menu. The default value is true.</description>
 			<name>relaunchMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The class name of the remote backgroundtask executor. See <![CDATA[<code>BackgroundTaskExecutorNames</code>]]>.</description>
+			<description>The remote background task executor's class name. See the <![CDATA[<code>com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames</code>]]> class for details.</description>
 			<name>remoteTaskExecutorClassName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -577,7 +577,7 @@
 			<type>com.liferay.portal.kernel.dao.search.ResultRowSplitter</type>
 		</attribute>
 		<attribute>
-			<description>Whether to show summary menu. Default is true.</description>
+			<description>Whether to show the summary menu. The default value is true.</description>
 			<name>summaryMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -597,7 +597,7 @@
 			<type>com.liferay.portal.kernel.backgroundtask.BackgroundTask</type>
 		</attribute>
 		<attribute>
-			<description>Whether to show delete menu. Default is true.</description>
+			<description>Whether to show the delete menu. The default value is true.</description>
 			<name>deleteMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -611,14 +611,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to show relaunch menu. Default is true.</description>
+			<description>Whether to show the relaunch menu. The default value is true.</description>
 			<name>relaunchMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to show summary menu. Default is true.</description>
+			<description>Whether to show the summary menu. The default value is true.</description>
 			<name>summaryMenu</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

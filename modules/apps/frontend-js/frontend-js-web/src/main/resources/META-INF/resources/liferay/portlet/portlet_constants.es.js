@@ -1,7 +1,5 @@
 const PortletConstants = {
 
-	// These are public
-
 	// Portlet mode
 
 	EDIT: 'edit',

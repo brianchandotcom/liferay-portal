@@ -22,7 +22,6 @@ import RenderState from './RenderState.es';
 /**
  * Flag specifying whether history is to be processed
  * (true if browser supports HTML5 session history APIs)
- *
  * @type {boolean}
  * @review
  */
@@ -30,7 +29,7 @@ import RenderState from './RenderState.es';
 const doHistory = (window.history && window.history.pushState);
 
 /**
- *
+ * Regex for portlet-level events
  * @type {string}
  * @review
  */
@@ -39,7 +38,6 @@ const portletRegex = '^portlet[.].*';
 
 /**
  * Determines if blocking action is currently in process.
- *
  * @type {boolean}
  * @review
  */
@@ -48,7 +46,6 @@ let busy = false;
 
 /**
  * An array containing the event listeners.
- *
  * @type {Array.<Object>}
  * @review
  */
@@ -57,7 +54,6 @@ const eventListeners = [];
 
 /**
  * An array containing the event listeners currently queued for being dispatched.
- *
  * @type {Array.<Object>}
  * @review
  */
@@ -66,7 +62,6 @@ const eventListenerQueue = [];
 
 /**
  * A flag indicating if the PortletInit has been initialized
- *
  * @type {boolean}
  * @review
  */
@@ -75,7 +70,6 @@ let initialized = false;
 
 /**
  * The page render state containing the all portlets and public parameters map.
- *
  * @type {Object}
  * @review
  */
@@ -84,7 +78,6 @@ let pageRenderState;
 
 /**
  * The currently registered portlets.
- *
  * @type {Object}
  * @review
  */
@@ -115,9 +108,8 @@ class PortletInit {
 
 	/**
 	 * Performs the actual action.
-	 *
-	 * @param {Object}          parameters  Additional parameters to be set.
-	 * @param {HTMLFormElement} element     Form to be submitted. May be <code>null</code>.
+	 * @param {Object} parameters Additional parameters to be set.
+	 * @param {HTMLFormElement} element Form to be submitted. May be <code>null</code>.
 	 * @protected
 	 * @review
 	 */
@@ -215,10 +207,9 @@ class PortletInit {
 
 	/**
 	 * Returns true if an onStateChange listener is registered for the portlet.
-	 *
 	 * @memberof PortletInit
-	 * @param    {string}  portletId The portlet ID.
-	 * @return   {boolean}           Returns true if a listener is registered.
+	 * @param {string} portletId The portlet ID.
+	 * @return {boolean} Returns true if a listener is registered.
 	 * @protected
 	 * @review
 	 */
@@ -238,10 +229,9 @@ class PortletInit {
 	/**
 	 * Sends an onError event to all registered error event handlers for a given
 	 * portlet.
-	 *
 	 * @memberof PortletInit
-	 * @param    {string} portletId The portlet ID.
-	 * @param    {string} err       The error message.
+	 * @param {string} portletId The portlet ID.
+	 * @param {string} err The error message.
 	 * @protected
 	 * @review
 	 */
@@ -270,11 +260,10 @@ class PortletInit {
 	* pass the page state string to this function.
 	*
 	* The callback should only be called once to conclude a partial action sequence.
-	*
 	* @memberof PortletInit
-	* @param    {string}    portletId    The portlet ID.
-	* @param    {string}    updateString The new page state in string form.
-	* @throws   {TypeError}              Thrown if the parameter is not a string.
+	* @param {string} portletId The portlet ID.
+	* @param {string} updateString The new page state in string form.
+	* @throws {TypeError} Thrown if the parameter is not a string.
 	* @protected
 	* @review
 	*/
@@ -303,10 +292,9 @@ class PortletInit {
 	 * Sets state for the portlet.
 	 * returns array of IDs for portlets that were affected by the change,
 	 * taking into account the public render parameters.
-	 *
 	 * @memberof PortletInit
-	 * @param    {Object}    state   The state to be set.
-	 * @return   {Array}
+	 * @param {Object} state The state to be set.
+	 * @return {Array}
 	 * @protected
 	 * @review
 	 */
@@ -368,17 +356,15 @@ class PortletInit {
 
 		return new Promise((resolve, reject) => {
 
-			// TODO: This is just for the reference implementation example, remove it.
+			let simulateValue = '';
 
-			let simval = '';
 			if (portletId === 'SimulateCommError' && state.parameters.SimulateError !== undefined) {
-				simval = state.parameters.SimulateError[0];
+				simulateValue = state.parameters.SimulateError[0];
 			}
 
-			// TODO: This is just for the reference implementation example, remove it.
 			// Reject promise if an error is to be simulated
 
-			if (simval === 'reject') {
+			if (simulateValue === 'reject') {
 				reject(new Error('Simulated error occured when setting state!'));
 			}
 			else {
@@ -389,13 +375,12 @@ class PortletInit {
 
 	/**
 	 * Sets up for the action.
-	 *
 	 * @memberof PortletInit
-	 * @param    {Object}                 parameters  Additional parameters. May be <code>null</code>.
-	 * @param    {HTMLFormElement}        element     Form to be submitted May be <code>null</code>.
-	 * @throws   {AccessDeniedException}              Thrown if a blocking operation is already in progress.
-	 * @throws   {NotInitializedException}            Thrown if a portlet ID is provided, but no onStateChange
-	 *                                                listener has been registered.
+	 * @param {Object} parameters Additional parameters. May be <code>null</code>.
+	 * @param {HTMLFormElement} element Form to be submitted May be <code>null</code>.
+	 * @throws {AccessDeniedException} Thrown if a blocking operation is already in progress.
+	 * @throws {NotInitializedException} Thrown if a portlet ID is provided, but no onStateChange
+	 * listener has been registered.
 	 * @protected
 	 * @review
 	 */
@@ -442,9 +427,8 @@ class PortletInit {
 	/**
 	 * Called when the page state has been updated to allow
 	 * the browser history to be taken care of.
-	 *
 	 * @memberof PortletInit
-	 * @param    {boolean}    replace  Replace the state rather than pushing.
+	 * @param {boolean} replace Replace the state rather than pushing.
 	 * @protected
 	 * @review
 	 */
@@ -481,7 +465,7 @@ class PortletInit {
 	 * to decouple the layers.
 	 *
 	 * @memberof PortletInit
-	 * @param   {string}     updateString  The updated render state string.
+	 * @param {string} updateString The updated render state string.
 	 * @review
 	 */
 
@@ -504,8 +488,8 @@ class PortletInit {
 	 * to be updated.
 	 *
 	 * @memberof PortletInit
-	 * @param    {string}     updateString The update string.
-	 * @param    {string}     portletId    The portlet ID.
+	 * @param {string} updateString The update string.
+	 * @param {string} portletId The portlet ID.
 	 * @protected
 	 * @review
 	 */
@@ -543,8 +527,8 @@ class PortletInit {
 	 * Updates the state for each portlet present.
 	 *
 	 * @memberof PortletInit
-	 * @param    {Array}             updatedIds  Array of portlet IDs to be updated.
-	 * @return   {Promsise.<string>}
+	 * @param {Array} updatedIds Array of portlet IDs to be updated.
+	 * @return {Promsise.<string>}
 	 * @protected
 	 * @review
 	 */
@@ -608,7 +592,7 @@ class PortletInit {
 	 * portlet client registers an onStateChange listener.
 	 *
 	 * @memberof PortletInit
-	 * @param    {string}    portletId The portlet ID.
+	 * @param {string} portletId The portlet ID.
 	 * @protected
 	 * @review
 	 */
@@ -662,13 +646,12 @@ class PortletInit {
 	 * element arguments.
 	 *
 	 * @memberof PortletInit
-	 * @param {PortletParameters} parameters  Action parameters to be added to the URL
-	 * @param {HTMLFormElement}   element     DOM element of form to be submitted
-	 * @return {Promise}                      A Promise object that is resolved with no argument
-	 *                                        when the action request has completed.
-	 * @throws {TypeError}                    Thrown if the input parameters are invalid
-	 * @throws {AccessDeniedException}        Thrown if a blocking operation is already in progress.
-	 * @throws {NotInitializedException}      Thrown if a portlet ID is provided, but no onStateChange listener has been registered.
+	 * @param {PortletParameters} parameters Action parameters to be added to the URL
+	 * @param {HTMLFormElement} element DOM element of form to be submitted
+	 * @return {Promise} A Promise object that is resolved with no argument when the action request has completed.
+	 * @throws {TypeError} Thrown if the input parameters are invalid
+	 * @throws {AccessDeniedException} Thrown if a blocking operation is already in progress.
+	 * @throws {NotInitializedException} Thrown if a portlet ID is provided, but no onStateChange listener has been registered.
 	 * @review
 	 */
 
@@ -724,10 +707,10 @@ class PortletInit {
 	 * Adds a listener function for specified event type.
 	 *
 	 * @memberof PortletInit
-	 * @param {string} type      The type of listener
+	 * @param {string} type The type of listener
 	 * @param {function} handler Function called when event occurs
-	 * @return {Object}          A handle that can be used to remove the event listener
-	 * @throws {TypeError}       Thrown if the input parameters are invalid
+	 * @return {Object} A handle that can be used to remove the event listener
+	 * @throws {TypeError} Thrown if the input parameters are invalid
 	 * @review
 	 */
 
@@ -773,16 +756,15 @@ class PortletInit {
 	 * Returns a promise for a resource URL with parameters set appropriately
 	 * for the page state according to the resource parameters, cacheability
 	 * option, and resource ID provided.
-	 *
 	 * @memberof PortletInit
-	 * @param    {Object}    parameters   Resource parameters to be added to the URL
-	 * @param    {string}    cache        Cacheability option. The strings defined under
-	 *                                    {@link PortletConstants} should be used to specifiy cacheability.
-	 * @param    {string}    resourceId   Resource ID.
-	 * @return   {Promise}                A Promise object. Returns a string representing the
-	 *                                    resource URL on successful resolution. Returns an Error object containing
-	 *                                    a descriptive message on failure.
-	 * @throws   {TypeError}              Thrown if the input parameters are invalid
+	 * @param {Object} parameters Resource parameters to be added to the URL
+	 * @param {string} cache Cacheability option. The strings defined under
+	 * {@link PortletConstants} should be used to specifiy cacheability.
+	 * @param {string} resourceId Resource ID.
+	 * @return {Promise} A Promise object. Returns a string representing the
+	 * resource URL on successful resolution. Returns an Error object containing
+	 * a descriptive message on failure.
+	 * @throws {TypeError} Thrown if the input parameters are invalid
 	 * @review
 	 */
 
@@ -831,12 +813,11 @@ class PortletInit {
 
 	/**
 	 * Dispatches a client event.
-	 *
 	 * @memberof PortletInit
-	 * @param    {string}  type     The type of listener.
-	 * @param    {any}     payload  The payload to be delivered.
-	 * @return   {number}           The number of events queued for delivery.
-	 * @throws   {TypeError}        Thrown if the type is a system event type.
+	 * @param {string} type The type of listener.
+	 * @param {any} payload The payload to be delivered.
+	 * @return {number} The number of events queued for delivery.
+	 * @throws {TypeError} Thrown if the type is a system event type.
 	 * @review
 	 */
 
@@ -867,9 +848,8 @@ class PortletInit {
 
 	/**
 	 * Tests whether a blocking operation is in progress.
-	 *
 	 * @memberof PortletInit
-	 * @return   {boolean}
+	 * @return {boolean}
 	 * @review
 	 */
 
@@ -879,10 +859,9 @@ class PortletInit {
 
 	/**
 	 * Creates and returns a new PortletParameters object.
-	 *
 	 * @memberof PortletInit
-	 * @param    {?Object} optParameters The optional parameters to be copied.
-	 * @return   {Object}                The new parameters object.
+	 * @param {?Object} optParameters The optional parameters to be copied.
+	 * @return {Object} The new parameters object.
 	 * @review
 	 */
 
@@ -902,10 +881,9 @@ class PortletInit {
 
 	/**
 	 * Creates and returns a new RenderState object.
-	 *
 	 * @memberof PortletInit
-	 * @param    {?RenderState} optState An optional RenderState object to be copied.
-	 * @return   {RenderState}            The new RenderState object.
+	 * @param {?RenderState} optState An optional RenderState object to be copied.
+	 * @return {RenderState} The new RenderState object.
 	 * @review
 	 */
 
@@ -917,12 +895,11 @@ class PortletInit {
 	 * Removes a previously added listener function designated by the handle.
 	 * The handle must be the same object previously returned by the
 	 * addEventListener function.
-	 *
 	 * @memberof PortletInit
-	 * @param    {Object}               handle   The handle of the listener to be removed.
-	 * @throws   {TypeError}                     Thrown if the input parameters are invalid.
-	 * @throws   {AccessDeniedException}         Thrown if the event listener associated
-	 *                                           with this handle was registered by a different portlet.
+	 * @param {Object} handle The handle of the listener to be removed.
+	 * @throws {TypeError} Thrown if the input parameters are invalid.
+	 * @throws {AccessDeniedException} Thrown if the event listener associated
+	 * with this handle was registered by a different portlet.
 	 * @review
 	 */
 
@@ -959,13 +936,12 @@ class PortletInit {
 	/**
 	 * Sets the render state, which consists of the public and private render
 	 * parameters, the portlet mode, and the window state.
-	 *
 	 * @memberof PortletInit
-	 * @param    {RenderState} state        The new state to be set.
-	 * @throws   {TypeError}                Thrown if the input parameters are invalid.
-	 * @throws   {AccessDeniedException}    Thrown if a blocking operation is already in progress.
-	 * @throws   {NotInitializedException}  Thrown if a portlet ID is provided, but no onStateChange
-	 *                                      listener has been registered.
+	 * @param {RenderState} state The new state to be set.
+	 * @throws {TypeError} Thrown if the input parameters are invalid.
+	 * @throws {AccessDeniedException} Thrown if a blocking operation is already in progress.
+	 * @throws {NotInitializedException} Thrown if a portlet ID is provided, but no onStateChange
+	 * listener has been registered.
 	 * @review
 	 */
 
@@ -983,17 +959,16 @@ class PortletInit {
 
 	/**
 	 * Starts partial action processing and returns a {@link PartialActionInit} object to the caller.
-	 *
 	 * @memberof PortletInit
-	 * @param    {PortletParameters} actionParameters  Action parameters to be added to the URL.
-	 * @return   {Promise}                             A Promise. Returns a {@link PortletActionInit} object
-	 *                                                 containing a partial action URL and the _setPageState callback
-	 *                                                 function on successful resolution. Returns an Error object
-	 *                                                 containing a descriptive message on failure.
-	 * @throws   {TypeError}                           Thrown if the input parameters are invalid.
-	 * @throws   {AccessDeniedException}               Thrown if a blocking operation is already in progress.
-	 * @throws   {NotInitializedException}             Thrown if a portlet ID is provided, but
-	 *                                                 no onStateChange listener has been registered.
+	 * @param {PortletParameters} actionParameters Action parameters to be added to the URL.
+	 * @return {Promise} A Promise. Returns a {@link PortletActionInit} object
+	 * containing a partial action URL and the _setPageState callback function
+	 * on successful resolution. Returns an Error object containing a
+	 * descriptive message on failure.
+	 * @throws {TypeError} Thrown if the input parameters are invalid.
+	 * @throws {AccessDeniedException} Thrown if a blocking operation is already in progress.
+	 * @throws {NotInitializedException} Thrown if a portlet ID is provided, but
+	 * no onStateChange listener has been registered.
 	 * @review
 	 */
 

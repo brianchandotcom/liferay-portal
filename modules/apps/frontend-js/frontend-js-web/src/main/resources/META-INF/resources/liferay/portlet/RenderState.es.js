@@ -17,7 +17,6 @@ class RenderState {
 
 	/**
 	 * Clone returns a copy of this RenderState instance.
-	 *
 	 * @memberof RenderState
 	 * @return {RenderState} A RenderState instance with same properties.
 	 * @review
@@ -29,9 +28,8 @@ class RenderState {
 
 	/**
 	 * Returns an instance of RenderState based on a RenderState
-	 *
 	 * @memberof RenderState
-	 * @param {RenderState} renderState
+	 * @return {RenderState} A RenderState instance.
 	 * @review
 	 */
 
@@ -50,7 +48,6 @@ class RenderState {
 
 	/**
 	 * Returns the portletMode for this RenderState.
-	 *
 	 * @memberof RenderState
 	 * @return {String} The portletMode for this render state
 	 * @review
@@ -65,7 +62,6 @@ class RenderState {
 	 * If name designates a multi-valued parameter this function returns
 	 * the first value in the values array. If the parameter is undefined
 	 * this function returns the optional default parameter <code>defaultValue</code>.
-	 *
 	 * @memberof RenderState
 	 * @param {String} name The name of the parameter to retreive.
 	 * @param {?String} defaultValue  The default value of the parameter in case it is undefined.
@@ -95,7 +91,6 @@ class RenderState {
 	 * Gets the string array parameter value for the given <code>name</code>.
 	 * If the parameter for the given name is undefined, this function
 	 * returns the optional default value array <code>def</code>.
-	 *
 	 * @memberof RenderState
 	 * @param {String} name  The name of the parameter to retrieve.
 	 * @param {?Array} defaultValue   The default value for the parameter if it is undefined.
@@ -115,7 +110,6 @@ class RenderState {
 
 	/**
 	 * Returns the windowState for this RenderState.
-	 *
 	 * @memberof RenderState
 	 * @return {String} the window state for this render state
 	 * @review
@@ -127,7 +121,6 @@ class RenderState {
 
 	/**
 	 * Removes the parameter with the given name.
-	 *
 	 * @memberof RenderState
 	 * @param {String} name The name of the parameter to be removed.
 	 * @review
@@ -145,7 +138,6 @@ class RenderState {
 
 	/**
 	 * Sets the portletMode to the specified value.
-	 *
 	 * @memberof RenderState
 	 * @param {String} portletMode The portlet mode to be set.
 	 * @review
@@ -167,7 +159,6 @@ class RenderState {
 	/**
 	 * Sets a parameter with a given name and value.
 	 * The value may be a string or an array.
-	 *
 	 * @memberof RenderState
 	 * @param {String} name	The name of the parameter.
 	 * @param {Array|String} value  The value of the parameter.
@@ -193,7 +184,6 @@ class RenderState {
 	/**
 	 * Sets a parameter with a given name and value.
 	 * The value may be a string or an array.
-	 *
 	 * @memberof RenderState
 	 * @param {String} name	The name of the parameter.
 	 * @param {Array|String} value  The value of the parameter.
@@ -206,7 +196,6 @@ class RenderState {
 
 	/**
 	 * Sets the windowState to the specified value.
-	 *
 	 * @memberof RenderState
 	 * @param {String} windowSstate The window state to be set.
 	 * @return {String}

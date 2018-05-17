@@ -45,5 +45,5 @@
 				failureCallback
 			);
 		};
-	}
+	};
 })(AUI._, Liferay);

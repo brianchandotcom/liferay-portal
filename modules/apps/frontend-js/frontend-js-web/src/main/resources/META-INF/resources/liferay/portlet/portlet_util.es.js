@@ -38,9 +38,8 @@ const WINDOW_STATE = 'p_p_state';
  * The update string is a JSON object containing the entire page state.
  * This decoder returns an object containing the portlet data for portlets whose
  * state has changed as compared to the current page state.
- *
- * @param  {Object} pageRenderState  The page render state.
- * @param  {string} updateString     The update string to decode.
+ * @param {Object} pageRenderState The page render state.
+ * @param {string} updateString The update string to decode.
  * @return {Object}
  * @review
  */
@@ -79,9 +78,8 @@ const decodeUpdateString = function(pageRenderState, updateString) {
 /**
  * Function to extract data from form and encode
  * it as an 'application/x-www-form-urlencoded' string.
- *
- * @param {string}          portletId  The portlet ID.
- * @param {HTMLFormElement} form       Form to be submitted.
+ * @param {string} portletId The portlet ID.
+ * @param {HTMLFormElement} form Form to be submitted.
  * @review
  */
 
@@ -124,15 +122,15 @@ const encodeFormAsString = function(portletId, form) {
 
 /**
  * Helper for encoding a multi valued parameter.
- *
- * @param   {string}         name    The parameter's name.
- * @param   {Array.<string>} values  The parameter's value.
- * @returns {string}
+ * @param {string} name The parameter's name.
+ * @param {Array.<string>} values The parameter's value.
+ * @return {string}
  * @review
  */
 
 const encodeParameter = function(name, values) {
 	let str = '';
+
 	if (Array.isArray(values)) {
 		if (values.length === 0) {
 			str += TOKEN_DELIM + encodeURIComponent(name) + VALUE_DELIM + VALUE_ARRAY_EMPTY;
@@ -154,12 +152,11 @@ const encodeParameter = function(name, values) {
 
 /**
  * Helper for generating parameter strings for the URL
- *
  * @param {Object} pageRenderState The page render state.
- * @param {string} portletId       The portlet ID.
- * @param {string} name            The parameter's name.
- * @param {string} type            The parameter's type.
- * @param {string} group           The parameter's group.
+ * @param {string} portletId The portlet ID.
+ * @param {string} name The parameter's name.
+ * @param {string} type The parameter's type.
+ * @param {string} group The parameter's group.
  * @review
  */
 
@@ -194,10 +191,9 @@ const	generateParameterString = function(pageRenderState, portletId, name, type,
 
 /**
  * Helper for generating portlet mode & window state strings for the URL.
- *
- * @param   {Object} pageRenderState  The page render state.
- * @param   {string} portletId        The portlet ID.
- * @returns {string}
+ * @param {Object} pageRenderState The page render state.
+ * @param {string} portletId The portlet ID.
+ * @return {string}
  * @review
  */
 
@@ -222,11 +218,10 @@ const generatePortletModeAndWindowStateString = function(pageRenderState, portle
  * Gets the updated public parameters for the given portlet ID and new render state.
  * Returns an object whose properties are the group indexes of the
  * updated public parameters. The values are the new public parameter values.
- *
- * @param     {Object}       pageRenderState    The page render state.
- * @param     {string}       portletId          The portlet ID.
- * @param     {RenderState} state               The new render state.
- * @return    {Object}                          Object containing the updated public render parameters.
+ * @param {Object} pageRenderState The page render state.
+ * @param {string} portletId The portlet ID.
+ * @param {RenderState} state The new render state.
+ * @return {Object} Object containing the updated public render parameters.
  * @review
  */
 
@@ -258,14 +253,13 @@ const getUpdatedPublicRenderParameters = function(pageRenderState, portletId, st
 
 /**
  * Returns a URL of the specified type.
- *
- * @param {Object} pageRenderState  The page render state.
- * @param {string} type             The URL type.
- * @param {string} portletId        The portlet ID.
- * @param {Object} parameters       Additional parameters. May be <code>null</code>.
- * @param {string} cache            Cacheability. Must be present if  type = "RESOURCE". May be <code>null</code>.
- * @param {string} resourceId       Resource ID. May be present if type = "RESOURCE". May be <code>null</code>.
- * @returns {Promise}               A promise that resolves the generated URL.
+ * @param {Object} pageRenderState The page render state.
+ * @param {string} type The URL type.
+ * @param {string} portletId The portlet ID.
+ * @param {Object} parameters Additional parameters. May be <code>null</code>.
+ * @param {string} cache Cacheability. Must be present if type = "RESOURCE". May be <code>null</code>.
+ * @param {string} resourceId Resource ID. May be present if type = "RESOURCE". May be <code>null</code>.
+ * @return {Promise} A promise that resolves the generated URL.
  * @review
  */
 
@@ -343,7 +337,6 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 				}
 
 				// Add the public render parameters for all portlets
-				// TODO: move to another function
 
 				if (pageRenderState.prpMap) {
 					const publicRenderParameters = {};
@@ -393,10 +386,10 @@ const getUrl = function(pageRenderState, type, portletId, parameters, cache, res
 };
 
 /**
- * Compares two parameters and returns a boolean indicating
- * if they're equal or not.
- * @param  {?Array.<string>} parameter1  The first parameter to compare.
- * @param  {?Array.<string>} parameter2  The second parameter to compare.
+ * Compares two parameters and returns a boolean indicating if they're equal
+ * or not.
+ * @param {?Array.<string>} parameter1 The first parameter to compare.
+ * @param {?Array.<string>} parameter2 The second parameter to compare.
  * @return {boolean}
  * @review
  */
@@ -430,12 +423,11 @@ const isParameterEqual = function(parameter1, parameter2) {
 /**
  * Compares the values of the named parameter in the new render state
  * with the values of that parameter in the current state.
- *
- * @param  {Object}      pageRenderState  The page render state.
- * @param  {string}      portletId        The portlet ID.
- * @param  {RenderState} state            The new render state.
- * @param  {string}      name             The name of the parameter to check.
- * @return {boolean}                      True if the new parameter's value is different from the current value.
+ * @param {Object} pageRenderState The page render state.
+ * @param {string} portletId The portlet ID.
+ * @param {RenderState} state The new render state.
+ * @param {string} name The name of the parameter to check.
+ * @return {boolean} True if the new parameter's value is different from the current value.
  * @review
  */
 
@@ -459,11 +451,10 @@ const isParameterInStateEqual = function(pageRenderState, portletId, state, name
 
 /**
  * Function for checking if a parameter is public.
- *
- * @param   {Object}  pageRenderState   The page render state.
- * @param   {string}  portletId         The portlet ID.
- * @param   {string}  name              The name of the parameter to check.
- * @returns {boolean}
+ * @param {Object} pageRenderState The page render state.
+ * @param {string} portletId  The portlet ID.
+ * @param {string} name  The name of the parameter to check.
+ * @return {boolean}
  * @review
  */
 
@@ -485,11 +476,10 @@ const isPublicParameter = function(pageRenderState, portletId, name) {
 /**
  * Returns true if input state differs from the current page state.
  * Throws exception if input state is malformed.
- *
- * @param   {Object}      pageRenderState    The (current) page render state.
- * @param   {RenderState} newState           The new state to be set.
- * @param   {string}      portletId          The portlet ID.
- * @returns {boolean}                        True if the two state are different.
+ * @param {Object} pageRenderState The (current) page render state.
+ * @param {RenderState} newState The new state to be set.
+ * @param {string} portletId The portlet ID.
+ * @return {boolean}  True if the two state are different.
  * @review
  */
 
@@ -540,12 +530,11 @@ const stateChanged = function(pageRenderState, newState, portletId) {
 
 /**
  * Validates an HTMLFormElement
- *
- * @param  {?HTMLFormElement} form    The form element to be validated.
- * @throws {TypeError}                Thrown if the form is not an HTMLFormElement.
- * @throws {TypeError}                Thrown if the form's method attribute is not valid.
- * @throws {TypeError}                Thrown if the form's enctype attribute is not valid.
- * @throws {TypeError}                Thrown if the form's enctype attribute is not valid.
+ * @param {?HTMLFormElement} form The form element to be validated.
+ * @throws {TypeError} Thrown if the form is not an HTMLFormElement.
+ * @throws {TypeError} Thrown if the form's method attribute is not valid.
+ * @throws {TypeError} Thrown if the form's enctype attribute is not valid.
+ * @throws {TypeError} Thrown if the form's enctype attribute is not valid.
  * @review
  */
 
@@ -594,7 +583,7 @@ const validateForm = function(form) {
  *
  * To represent a <code>null</code> value, the property value must equal [null].
  *
- * @param  {Object}    parameters The parameters to check.
+ * @param {Object} parameters The parameters to check.
  * @throws {TypeError} Thrown if the parameters are incorrect.
  * @review
  */
@@ -619,10 +608,9 @@ const validateParameters = function(parameters) {
 /**
  * Verifies that the input parameters are in valid format, that the portlet
  * mode and window state values are allowed for the portlet.
- *
- * @param  {RenderState} state        The render state object to check.
- * @param  {Object}      portletData  The porltet render state.
- * @throws {TypeError}                Thrown if any component of the state is incorrect.
+ * @param {RenderState} state The render state object to check.
+ * @param {Object} portletData The porltet render state.
+ * @throws {TypeError} Thrown if any component of the state is incorrect.
  * @review
  */
 

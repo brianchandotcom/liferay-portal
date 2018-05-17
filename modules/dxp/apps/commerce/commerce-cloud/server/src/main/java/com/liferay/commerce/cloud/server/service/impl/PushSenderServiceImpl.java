@@ -52,7 +52,8 @@ public class PushSenderServiceImpl implements PushSenderService {
 		Handler<AsyncResult<Void>> handler) {
 
 		HttpRequest<Void> httpRequest = _webClient.post(
-			project.getCallbackHost(), "/" + project.getId() + "/forecasts"
+			project.getCallbackHost(),
+			"/o/commerce-cloud-client-rest/" + project.getId() + "/forecasts"
 		).as(
 			BodyCodec.none()
 		);

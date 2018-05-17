@@ -40,7 +40,6 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 	showCreationMenu="<%= false %>"
 	showInfoButton="<%= false %>"
 	showSearch="<%= false %>"
-	viewTypeItems="<%= mbBannedUsersManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <div class="container-fluid-1280">

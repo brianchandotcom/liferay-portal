@@ -79,7 +79,6 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	showSearch="<%= false %>"
 	sortingOrder="<%= notificationsManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(notificationsManagementToolbarDisplayContext.getSortingURL()) %>"
-	viewTypeItems="<%= notificationsManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <div class="container-fluid-1280 main-content-body">

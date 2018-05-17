@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.message.boards.model.MBCategory;
@@ -333,17 +332,6 @@ public class MBEntriesManagementToolbarDisplayContext {
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL;
-	}
-
-	public ViewTypeItemList getViewTypes() {
-		PortletURL portletURL = getPortletURL();
-
-		return new ViewTypeItemList(portletURL, "descriptive") {
-			{
-				addListViewTypeItem();
-			}
-
-		};
 	}
 
 	public void populateOrder(SearchContainer searchContainer) {

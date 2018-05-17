@@ -20,8 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -213,14 +211,6 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		SearchContainer searchContainer = getDDMStructuresSearchContainer();
 
 		return searchContainer.getTotal();
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(getPortletURL(), "list") {
-			{
-				addTableViewTypeItem();
-			}
-		};
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

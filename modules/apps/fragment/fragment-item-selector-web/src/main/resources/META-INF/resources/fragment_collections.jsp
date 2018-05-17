@@ -26,7 +26,6 @@
 	selectable="<%= false %>"
 	sortingOrder="<%= fragmentItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentItemSelectorViewDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= fragmentItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
@@ -67,7 +66,7 @@
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= fragmentItemSelectorViewDisplayContext.getDisplayStyle() %>"
+			displayStyle="icon"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

@@ -24,8 +24,6 @@ import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -75,16 +73,6 @@ public class FragmentItemSelectorViewDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
-	}
-
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = ParamUtil.getString(_request, "displayStyle", "icon");
-
-		return _displayStyle;
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {
@@ -288,12 +276,6 @@ public class FragmentItemSelectorViewDisplayContext {
 				"fragmentCollectionId", String.valueOf(fragmentCollectionId));
 		}
 
-		String displayStyle = getDisplayStyle();
-
-		if (Validator.isNotNull(displayStyle)) {
-			portletURL.setParameter("displayStyle", displayStyle);
-		}
-
 		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
@@ -329,16 +311,6 @@ public class FragmentItemSelectorViewDisplayContext {
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL.toString();
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() {
-		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
-
-			{
-				addCardViewTypeItem();
-			}
-
-		};
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

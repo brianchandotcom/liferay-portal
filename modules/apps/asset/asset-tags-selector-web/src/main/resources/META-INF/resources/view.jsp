@@ -54,7 +54,7 @@
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= assetTagsSelectorDisplayContext.getDisplayStyle() %>"
+			displayStyle="list"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

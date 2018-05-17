@@ -52,7 +52,6 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	selectable="<%= false %>"
 	sortingOrder="<%= journalViewMoreMenuItemsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= journalViewMoreMenuItemsDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= journalViewMoreMenuItemsDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="addMenuItemFm">

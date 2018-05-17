@@ -31,7 +31,6 @@
 	showCreationMenu="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) ? true : false %>"
 	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentDisplayContext.getFragmentEntrySortingURL() %>"
-	viewTypeItems="<%= fragmentDisplayContext.getFragmentEntryViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
@@ -119,7 +118,7 @@
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= fragmentDisplayContext.getDisplayStyle() %>"
+			displayStyle="icon"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

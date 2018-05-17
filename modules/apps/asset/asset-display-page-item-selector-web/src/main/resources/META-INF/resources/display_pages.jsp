@@ -30,7 +30,6 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 	selectable="<%= false %>"
 	sortingOrder="<%= assetDisplayPagesItemSelectorViewDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
@@ -105,7 +104,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= assetDisplayPagesItemSelectorViewDisplayContext.getDisplayStyle() %>"
+			displayStyle="icon"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

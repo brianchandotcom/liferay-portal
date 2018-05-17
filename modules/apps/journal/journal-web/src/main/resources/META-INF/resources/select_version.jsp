@@ -76,20 +76,6 @@ List<DropdownItem> dropdownItems = new JSPDropdownItemList(pageContext) {
 	searchContainerId="articleVersions"
 	selectable="<%= false %>"
 	showSearch="<%= false %>"
-	viewTypeItems="<%=
-		new JSPViewTypeItemList(pageContext) {
-			{
-			add(
-				viewTypeItem -> {
-					viewTypeItem.setActive(true);
-					viewTypeItem.setHref(StringPool.BLANK);
-					viewTypeItem.setIcon("table");
-					viewTypeItem.setLabel(LanguageUtil.get(request, "table"));
-				}
-			);
-			}
-		}
-	%>"
 />
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectVersionFm">
@@ -138,6 +124,7 @@ List<DropdownItem> dropdownItems = new JSPDropdownItemList(pageContext) {
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
+			displayStyle="list"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

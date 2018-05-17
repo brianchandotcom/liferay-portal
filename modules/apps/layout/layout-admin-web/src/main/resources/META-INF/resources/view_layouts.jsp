@@ -37,7 +37,6 @@
 	showSearch="<%= false %>"
 	sortingOrder="<%= layoutsAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutsAdminDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= layoutsAdminDisplayContext.getViewTypeItems() %>"
 />
 
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">
@@ -110,7 +109,7 @@
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator
-					displayStyle="<%= layoutsAdminDisplayContext.getDisplayStyle() %>"
+					displayStyle="list"
 					markupView="lexicon"
 				/>
 			</liferay-ui:search-container>

@@ -2788,25 +2788,51 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			</sequential>
 		</for>
 
-		<for list="${app.server.websphere.jdk.zip.names}" param="app.server.websphere.jdk.zip.name">
-			<sequential>
-				<if>
-					<not>
-						<available file="${app.server.parent.dir}/@{app.server.websphere.jdk.zip.name}" />
-					</not>
-					<then>
-						<mkdir dir="${app.server.parent.dir}" />
+		<if>
+			<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
+				<then>
+					<for list="${app.server.websphere.fix.pack.jdk.zip.names}" param="app.server.websphere.fix.pack.jdk.zip.name">
+						<sequential>
+							<if>
+								<not>
+									<available file="${app.server.parent.dir}/@{app.server.websphere.fix.pack.jdk.zip.name}" />
+								</not>
+								<then>
+									<mkdir dir="${app.server.parent.dir}" />
 
-						<fail>
+									<fail>
+.
+
+Please download @{app.server.websphere.fix.pack.jdk.zip.name} from ${app.server.websphere.fix.pack.zip.url}
+and put it in ${app.server.parent.dir}. Then rerun this task.
+									</fail>
+								</then>
+							</if>
+						</sequential>
+					</for>
+				</then>
+			<else>
+				<for list="${app.server.websphere.jdk.zip.names}" param="app.server.websphere.jdk.zip.name">
+					<sequential>
+						<if>
+							<not>
+								<available file="${app.server.parent.dir}/@{app.server.websphere.jdk.zip.name}" />
+							</not>
+							<then>
+								<mkdir dir="${app.server.parent.dir}" />
+
+								<fail>
 .
 
 Please download @{app.server.websphere.jdk.zip.name} from ${app.server.websphere.jdk.zip.url}
 and put it in ${app.server.parent.dir}. Then rerun this task.
-						</fail>
-					</then>
-				</if>
-			</sequential>
-		</for>
+								</fail>
+							</then>
+						</if>
+					</sequential>
+				</for>
+			</else>
+		</if>
 
 		<for list="${app.server.websphere.fix.pack.was.zip.names}" param="app.server.websphere.fix.pack.was.zip.name">
 			<sequential>
@@ -2893,43 +2919,71 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			</sequential>
 		</for>
 
-		<for list="${app.server.websphere.jdk.zip.names}" param="app.server.websphere.jdk.zip.name">
-			<sequential>
-				<unzip
-					dest="${tstamp.value}/was_jdk"
-					src="${app.server.parent.dir}/@{app.server.websphere.jdk.zip.name}"
-				/>
-			</sequential>
-		</for>
+		<if>
+			<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
+			<then>
+				<echoxml file="${tstamp.value}/was/liferay-responseFile.xml">
+					<agent-input clean="true" temporary="false">
+						<install modify="false">
+							<offering
+								id="com.ibm.websphere.DEVELOPERSILAN.v85"
+								profile="IBM Websphere 8.5.5.0"
+							>
+							</offering>
+						</install>
 
-		<echoxml file="${tstamp.value}/was/liferay-responseFile.xml">
-			<agent-input clean="true" temporary="false">
-				<install modify="false">
-					<offering
-						id="com.ibm.websphere.BASE.v90"
-						profile="IBM Websphere 9.0.0.0"
-					>
-					</offering>
+						<profile
+							id="IBM Websphere 8.5.5.0"
+							installLocation="${app.server.websphere.dir}"
+						>
+						</profile>
 
-					<offering
-						id="com.ibm.java.jdk.v8"
-						profile="IBM Websphere 9.0.0.0"
-					>
-					</offering>
-				</install>
+						<server>
+							<repository location="${project.dir}/${tstamp.value}/was/repository.config" />
+						</server>
+					</agent-input>
+				</echoxml>
+			</then>
+			<else>
+				<for list="${app.server.websphere.jdk.zip.names}" param="app.server.websphere.jdk.zip.name">
+					<sequential>
+						<unzip
+							dest="${tstamp.value}/was_jdk"
+							src="${app.server.parent.dir}/@{app.server.websphere.jdk.zip.name}"
+						/>
+					</sequential>
+				</for>
 
-				<profile
-					id="IBM Websphere 9.0.0.0"
-					installLocation="${app.server.websphere.dir}"
-				>
-				</profile>
+				<echoxml file="${tstamp.value}/was/liferay-responseFile.xml">
+					<agent-input clean="true" temporary="false">
+						<install modify="false">
+							<offering
+								id="com.ibm.websphere.BASE.v90"
+								profile="IBM Websphere 9.0.0.0"
+							>
+							</offering>
 
-				<server>
-					<repository location="${project.dir}/${tstamp.value}/was/repository.config" />
-					<repository location="${project.dir}/${tstamp.value}/was_jdk/repository.config" />
-				</server>
-			</agent-input>
-		</echoxml>
+							<offering
+								id="com.ibm.java.jdk.v8"
+								profile="IBM Websphere 9.0.0.0"
+							>
+							</offering>
+						</install>
+
+						<profile
+							id="IBM Websphere 9.0.0.0"
+							installLocation="${app.server.websphere.dir}"
+						>
+						</profile>
+
+						<server>
+							<repository location="${project.dir}/${tstamp.value}/was/repository.config" />
+							<repository location="${project.dir}/${tstamp.value}/was_jdk/repository.config" />
+						</server>
+					</agent-input>
+				</echoxml>
+			</else>
+		</if>
 
 		<if>
 			<os family="unix" />
@@ -3035,27 +3089,71 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			</sequential>
 		</for>
 
-		<echoxml file="${tstamp.value}/was_fixpack/liferay-responseFile.xml">
-			<agent-input clean="true" temporary="false">
-				<install modify="false">
-					<offering
-						id="com.ibm.websphere.BASE.v90"
-						profile="IBM Websphere 9.0.0.0"
-					>
-					</offering>
-				</install>
+		<if>
+			<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
+			<then>
+				<for list="${app.server.websphere.fix.pack.jdk.zip.names}" param="app.server.websphere.fix.pack.jdk.zip.name">
+					<sequential>
+						<unzip
+							dest="${tstamp.value}/was_fixpack_jdk"
+							src="${app.server.parent.dir}/@{app.server.websphere.fix.pack.jdk.zip.name}"
+						/>
+					</sequential>
+				</for>
 
-				<profile
-					id="IBM Websphere 9.0.0.0"
-					installLocation="${app.server.websphere.dir}"
-				>
-				</profile>
+				<echoxml file="${tstamp.value}/was_fixpack/liferay-responseFile.xml">
+					<agent-input clean="true" temporary="false">
+						<install modify="false">
+							<offering
+								id="com.ibm.websphere.DEVELOPERSILAN.v85"
+								profile="IBM Websphere 8.5.5.0"
+							>
+							</offering>
 
-				<server>
-					<repository location="${project.dir}/${tstamp.value}/was_fixpack/repository.config" />
-				</server>
-			</agent-input>
-		</echoxml>
+							<offering
+								id="com.ibm.websphere.IBMJAVA.v80"
+								profile="IBM Websphere 8.5.5.0"
+							>
+							</offering>
+						</install>
+
+						<profile
+							id="IBM Websphere 8.5.5.0"
+							installLocation="${app.server.websphere.dir}"
+						>
+						</profile>
+
+						<server>
+							<repository location="${project.dir}/${tstamp.value}/was_fixpack/repository.config" />
+							<repository location="${project.dir}/${tstamp.value}/was_fixpack_jdk/repository.config" />
+						</server>
+					</agent-input>
+				</echoxml>
+			</then>
+			<else>
+				<echoxml file="${tstamp.value}/was_fixpack/liferay-responseFile.xml">
+					<agent-input clean="true" temporary="false">
+						<install modify="false">
+							<offering
+								id="com.ibm.websphere.BASE.v90"
+								profile="IBM Websphere 9.0.0.0"
+							>
+							</offering>
+						</install>
+
+						<profile
+							id="IBM Websphere 9.0.0.0"
+							installLocation="${app.server.websphere.dir}"
+						>
+						</profile>
+
+						<server>
+							<repository location="${project.dir}/${tstamp.value}/was_fixpack/repository.config" />
+						</server>
+					</agent-input>
+				</echoxml>
+			</else>
+		</if>
 
 		<if>
 			<os family="unix" />
@@ -3069,6 +3167,21 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 					<arg value="-c" />
 					<arg value="./imcl input ${project.dir}/${tstamp.value}/was_fixpack/liferay-responseFile.xml -acceptLicense" />
 				</exec>
+
+				<if>
+					<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
+					<then>
+						<chmod
+							file="${app.server.websphere.dir}/bin/managesdk.sh"
+							perm="a+x"
+						/>
+
+						<exec dir="${app.server.websphere.dir}/bin" executable="sh">
+							<arg value="-c" />
+							<arg value="./managesdk.sh -enableProfileAll -sdkName 1.8_64 -enableServers" />
+						</exec>
+					</then>
+				</if>
 			</then>
 			<elseif>
 				<os family="windows" />
@@ -3077,36 +3190,53 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 						<arg value="/c" />
 						<arg value="imcl input ${project.dir}/${tstamp.value}/was_fixpack/liferay-responseFile.xml -acceptLicense" />
 					</exec>
+
+					<if>
+						<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
+						<then>
+							<exec dir="${app.server.websphere.dir}/bin" executable="cmd.exe">
+								<arg value="/c" />
+								<arg value="managesdk.bat -enableProfileAll -sdkName 1.8_64 -enableServers" />
+							</exec>
+						</then>
+					</if>
 				</then>
 			</elseif>
 		</if>
 
 		<delete dir="${tstamp.value}" />
 
-		<echo>Enabling JDK. This may take a few minutes.</echo>
-
 		<if>
-			<os family="unix" />
+			<not>
+				<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
+			</not>
 			<then>
-				<chmod
-					file="${app.server.websphere.dir}/bin/managesdk.sh"
-					perm="a+x"
-				/>
+				<echo>Enabling JDK. This may take a few minutes.</echo>
 
-				<exec dir="${app.server.websphere.dir}/bin" executable="sh">
-					<arg value="-c" />
-					<arg value="./managesdk.sh -enableProfileAll -sdkName 8.0_64 -enableServers" />
-				</exec>
+				<if>
+					<os family="unix" />
+					<then>
+						<chmod
+							file="${app.server.websphere.dir}/bin/managesdk.sh"
+							perm="a+x"
+						/>
+
+						<exec dir="${app.server.websphere.dir}/bin" executable="sh">
+							<arg value="-c" />
+							<arg value="./managesdk.sh -enableProfileAll -sdkName 8.0_64 -enableServers" />
+						</exec>
+					</then>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${app.server.websphere.dir}/bin" executable="cmd.exe">
+								<arg value="/c" />
+								<arg value="managesdk.bat -enableProfileAll -sdkName 8.0_64 -enableServers" />
+							</exec>
+						</then>
+					</elseif>
+				</if>
 			</then>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<exec dir="${app.server.websphere.dir}/bin" executable="cmd.exe">
-						<arg value="/c" />
-						<arg value="managesdk.bat -enableProfileAll -sdkName 8.0_64 -enableServers" />
-					</exec>
-				</then>
-			</elseif>
 		</if>
 
 		<replace
@@ -3127,9 +3257,17 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 					<try>
 						<mkdir dir="${app.server.parent.dir}" />
 
+						<propertyregex
+							input="${app.server.websphere.version}"
+							override="true"
+							property="app.server.websphere.major.version"
+							regexp="(.*)\.\d+"
+							replace="\1"
+						/>
+
 						<mirrors-get
 							dest="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}"
-							src="http://files.liferay.com/private/apps/ibm/websphere/9.0.0/${app.server.websphere.custom.zip.name}"
+							src="http://files.liferay.com/private/apps/ibm/websphere/${app.server.websphere.major.version}/${app.server.websphere.custom.zip.name}"
 							verbose="true"
 						/>
 					</try>
@@ -3138,7 +3276,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 .
 
 Please download the Websphere custom zip file from
-http://mirrors/files.liferay.com/private/apps/ibm/websphere/9.0.0 and
+http://mirrors/files.liferay.com/private/apps/ibm/websphere/${app.server.websphere.major.version} and
 place it here: ${app.server.parent.dir}/${app.server.websphere.custom.zip.name}. Then rerun
 this task.
 						</fail>

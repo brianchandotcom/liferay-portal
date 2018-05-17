@@ -131,7 +131,7 @@ public class DDMFormAdminDisplayContext {
 		formAdminRequestHelper = new DDMFormAdminRequestHelper(renderRequest);
 	}
 
-	public DropdownItemList getActionItemsDropdownItemList() {
+	public List<DropdownItem> getActionItemsDropdownItemList() {
 		return new DropdownItemList() {
 
 			{
@@ -334,7 +334,7 @@ public class DDMFormAdminDisplayContext {
 		return _DISPLAY_VIEWS;
 	}
 
-	public DropdownItemList getFilterItemsDropdownItemList() {
+	public List<DropdownItem> getFilterItemsDropdownItemList() {
 		HttpServletRequest request = formAdminRequestHelper.getRequest();
 
 		return new DropdownItemList() {

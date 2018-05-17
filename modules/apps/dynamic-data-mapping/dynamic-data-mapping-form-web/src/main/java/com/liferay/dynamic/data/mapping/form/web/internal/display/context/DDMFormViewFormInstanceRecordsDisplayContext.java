@@ -99,7 +99,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		setDDMFormFields();
 	}
 
-	public DropdownItemList getActionItemsDropdownItemList() {
+	public List<DropdownItem> getActionItemsDropdownItemList() {
 		return new DropdownItemList() {
 
 			{
@@ -182,7 +182,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return "list";
 	}
 
-	public DropdownItemList getFilterItemsDropdownItemList() {
+	public List<DropdownItem> getFilterItemsDropdownItemList() {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 

@@ -79,12 +79,17 @@
 				</execute>
 
 				<var name="rowEntry" value="${pageTemplateName}" />
-			</then>
-		</if>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${rowEntry}" />
-		</execute>
+				<execute macro="LexiconEntry#gotoEntry">
+					<var name="rowEntry" value="${rowEntry}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Card#clickSitePagesCardLink">
+					<var name="cardName" value="${rowEntry}" />
+				</execute>
+			</else>
+		</if>
 	</command>
 
 	<command name="addChildPage">

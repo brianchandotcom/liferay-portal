@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVE_NAV_ITEM_STACKED_LINK</td>
+	<td>//ul[contains(@class,'nav-stacked')]//li[contains(@class,'nav-item') ]//a[contains(@class,'active') and normalize-space()='${key_navItem}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD</td>
 	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Add')]</td>
 	<td></td>

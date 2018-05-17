@@ -123,7 +123,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 				submitForm(form);
 			}
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deleteImages': deleteImages

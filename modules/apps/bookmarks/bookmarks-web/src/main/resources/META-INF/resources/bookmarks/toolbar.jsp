@@ -54,7 +54,7 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 				}
 			}
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deleteEntries': deleteEntries

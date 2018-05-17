@@ -64,14 +64,6 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 				long userId = rs.getLong("userId");
 				String nameXML = rs.getString("name");
 
-				Map<Locale, String> nameMap =
-					LocalizationUtil.getLocalizationMap(nameXML);
-
-				Locale defaultLocale = LocaleUtil.fromLanguageId(
-					LocalizationUtil.getDefaultLanguageId(nameXML));
-
-				String name = nameMap.get(defaultLocale);
-
 				Company company = _companyLocalService.getCompany(companyId);
 
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -83,8 +75,14 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 					continue;
 				}
 
+				Map<Locale, String> nameMap =
+					LocalizationUtil.getLocalizationMap(nameXML);
+
+				Locale defaultLocale = LocaleUtil.fromLanguageId(
+					LocalizationUtil.getDefaultLanguageId(nameXML));
+
 				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-					userId, company.getGroupId(), 0, name,
+					userId, company.getGroupId(), 0, nameMap.get(defaultLocale),
 					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
 					layoutPrototypeId, WorkflowConstants.STATUS_APPROVED,
 					new ServiceContext());

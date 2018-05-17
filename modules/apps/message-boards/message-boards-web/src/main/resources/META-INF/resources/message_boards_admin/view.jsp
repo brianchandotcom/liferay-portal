@@ -85,7 +85,6 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 	showInfoButton="<%= false %>"
 	sortingOrder="<%= mbEntriesManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(mbEntriesManagementToolbarDisplayContext.getSortingURL()) %>"
-	viewTypeItems="<%= mbEntriesManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <%

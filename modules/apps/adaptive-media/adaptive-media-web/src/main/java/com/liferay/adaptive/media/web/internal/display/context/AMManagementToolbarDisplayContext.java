@@ -20,7 +20,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -92,15 +91,6 @@ public class AMManagementToolbarDisplayContext {
 			getSelectedConfigurationEntries();
 
 		return selectedConfigurationEntries.size();
-	}
-
-	public ViewTypeItemList getViewTypes() {
-		return new ViewTypeItemList(null, "list") {
-			{
-				addTableViewTypeItem();
-			}
-
-		};
 	}
 
 	public boolean isDisabled() {

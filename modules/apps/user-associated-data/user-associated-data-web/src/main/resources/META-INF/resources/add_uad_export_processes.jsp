@@ -60,6 +60,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 				<clay:management-toolbar
 					disabled="<%= disableManagementBar %>"
+					itemsTotal="<%= uadApplicationExportDisplayList.size() %>"
 					namespace="<%= renderResponse.getNamespace() %>"
 					searchContainerId="uadApplicationExportDisplay"
 					selectable="<%= true %>"

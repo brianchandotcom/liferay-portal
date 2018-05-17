@@ -15,7 +15,6 @@
 package com.liferay.layout.page.template.internal.upgrade;
 
 import com.liferay.layout.page.template.internal.upgrade.v1_0_0.UpgradeLayoutPrototype;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -37,16 +36,11 @@ public class LayoutPageTemplateUpgradeService
 		registry.register(
 			"1.0.0", "1.0.1",
 			new UpgradeLayoutPrototype(
-				_companyLocalService, _layoutPageTemplateCollectionLocalService,
-				_layoutPageTemplateEntryLocalService));
+				_companyLocalService, _layoutPageTemplateEntryLocalService));
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private LayoutPageTemplateCollectionLocalService
-		_layoutPageTemplateCollectionLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

@@ -15,11 +15,8 @@
 package com.liferay.layout.page.template.internal.upgrade.v1_0_0;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
-import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -42,14 +39,10 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 
 	public UpgradeLayoutPrototype(
 		CompanyLocalService companyLocalService,
-		LayoutPageTemplateCollectionLocalService
-			layoutPageTemplateCollectionLocalService,
 		LayoutPageTemplateEntryLocalService
 			layoutPageTemplateEntryLocalService) {
 
 		_companyLocalService = companyLocalService;
-		_layoutPageTemplateCollectionLocalService =
-			layoutPageTemplateCollectionLocalService;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
 	}
@@ -81,46 +74,25 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 
 				Company company = _companyLocalService.getCompany(companyId);
 
-				long layoutPageTemplateCollectionId =
-					_getLayoutPageTemplateCollectionId(
-						company, userId, defaultLocale);
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchFirstLayoutPageTemplateEntry(
+							company.getGroupId(), layoutPrototypeId);
+
+				if (layoutPageTemplateEntry != null) {
+					continue;
+				}
 
 				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-					userId, company.getGroupId(),
-					layoutPageTemplateCollectionId, name,
+					userId, company.getGroupId(), 0, name,
 					LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
-					new long[0], WorkflowConstants.STATUS_APPROVED,
-					layoutPrototypeId, new ServiceContext());
+					layoutPrototypeId, WorkflowConstants.STATUS_APPROVED,
+					new ServiceContext());
 			}
 		}
 	}
 
-	private long _getLayoutPageTemplateCollectionId(
-			Company company, long userId, Locale locale)
-		throws Exception {
-
-		if (_layoutPageTemplateCollection != null) {
-			return _layoutPageTemplateCollection.
-				getLayoutPageTemplateCollectionId();
-		}
-
-		String name = LanguageUtil.format(
-			locale, "x-pages", LanguageUtil.get(locale, "application"));
-
-		_layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.
-				addLayoutPageTemplateCollection(
-					userId, company.getGroupId(), name, StringPool.BLANK, true,
-					new ServiceContext());
-
-		return _layoutPageTemplateCollection.
-			getLayoutPageTemplateCollectionId();
-	}
-
 	private final CompanyLocalService _companyLocalService;
-	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
-	private final LayoutPageTemplateCollectionLocalService
-		_layoutPageTemplateCollectionLocalService;
 	private final LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 

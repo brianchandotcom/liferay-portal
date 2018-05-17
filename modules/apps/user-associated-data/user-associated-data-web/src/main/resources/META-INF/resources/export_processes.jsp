@@ -33,7 +33,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		>
 			<div id="<portlet:namespace />exportStatus">
 				<h5>
-					<liferay-ui:message key="<%= UADLanguageUtil.getApplicationName(backgroundTask.getName(), locale) %>" />
+					<liferay-ui:message key="<%= UADLanguageUtil.getApplicationName(UADExportProcessUtil.getApplicationKey(backgroundTask), locale) %>" />
 				</h5>
 
 				<clay:label

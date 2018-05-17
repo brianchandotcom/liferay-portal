@@ -32,7 +32,6 @@
 	showSearch="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>"
 	sortingOrder="<%= assetTagsSelectorDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetTagsSelectorDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= assetTagsSelectorDisplayContext.getViewTypeItems() %>"
 />
 
 <div class="container-fluid-1280">

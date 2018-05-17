@@ -121,7 +121,6 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					showSearch="<%= false %>"
 					sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
 					sortingURL="<%= fragmentEntryLinkDisplayContext.getSortingURL() %>"
-					viewTypeItems="<%= fragmentEntryLinkDisplayContext.getViewTypeItems() %>"
 				/>
 
 				<portlet:actionURL name="/fragment/propagate_fragment_entry_changes" var="propagateFragmentEntryChangesURL">

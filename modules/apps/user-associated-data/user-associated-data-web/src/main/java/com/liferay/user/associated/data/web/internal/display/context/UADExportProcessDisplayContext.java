@@ -14,7 +14,6 @@
 
 package com.liferay.user.associated.data.web.internal.display.context;
 
-import com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparatorFactoryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -26,13 +25,19 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskManagerUtil;
 
+import java.io.Serializable;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -65,6 +70,37 @@ public class UADExportProcessDisplayContext {
 		}
 
 		return 0;
+	}
+
+	public Comparator<BackgroundTask> getComparator(
+		String orderByCol, String orderByType) {
+
+		Comparator<BackgroundTask> comparator = Comparator.comparing(
+			BackgroundTask::getCreateDate);
+
+		if (orderByCol.equals("name")) {
+			comparator =
+				(BackgroundTask backgroundTask1, BackgroundTask backgroundTask2)
+					-> {
+					Map<String, Serializable> taskContextMap1 =
+						backgroundTask1.getTaskContextMap();
+					Map<String, Serializable> taskContextMap2 =
+						backgroundTask2.getTaskContextMap();
+
+					String applicationKey1 = (String)taskContextMap1.get(
+						"applicationKey");
+					String applicationKey2 = (String)taskContextMap2.get(
+						"applicationKey");
+
+					return applicationKey1.compareTo(applicationKey2);
+				};
+		}
+
+		if (orderByType.equals("desc")) {
+			comparator = comparator.reversed();
+		}
+
+		return comparator;
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
@@ -198,6 +234,8 @@ public class UADExportProcessDisplayContext {
 			"p_u_i_d", String.valueOf(selectedUser.getUserId()));
 
 		portletURL.setParameter("navigation", getNavigation());
+		portletURL.setParameter("orderByCol", getOrderByCol());
+		portletURL.setParameter("orderByType", getOrderByType());
 
 		return portletURL;
 	}
@@ -217,19 +255,14 @@ public class UADExportProcessDisplayContext {
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
 
-		OrderByComparator<BackgroundTask> orderByComparator =
-			BackgroundTaskComparatorFactoryUtil.
-				getBackgroundTaskOrderByComparator(
-					getOrderByCol(), getOrderByType());
-
-		searchContainer.setOrderByComparator(orderByComparator);
-
 		String navigation = getNavigation();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		User selectedUser = PortalUtil.getSelectedUser(_request);
+
+		List<BackgroundTask> results = null;
 
 		if (navigation.equals("failed") || navigation.equals("in-progress") ||
 			navigation.equals("successful")) {
@@ -241,23 +274,34 @@ public class UADExportProcessDisplayContext {
 					themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
 					status));
 
-			searchContainer.setResults(
-				UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
-					themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
-					status, searchContainer.getStart(),
-					searchContainer.getEnd(), orderByComparator));
+			results = UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
+				themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
+				status);
 		}
 		else {
 			searchContainer.setTotal(
 				UADExportBackgroundTaskManagerUtil.getBackgroundTasksCount(
 					themeDisplay.getScopeGroupId(), selectedUser.getUserId()));
 
-			searchContainer.setResults(
-				UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
-					themeDisplay.getScopeGroupId(), selectedUser.getUserId(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					orderByComparator));
+			results = UADExportBackgroundTaskManagerUtil.getBackgroundTasks(
+				themeDisplay.getScopeGroupId(), selectedUser.getUserId());
 		}
+
+		Stream<BackgroundTask> backgroundTaskStream = results.stream();
+
+		results = backgroundTaskStream.sorted(
+			getComparator(
+				searchContainer.getOrderByCol(),
+				searchContainer.getOrderByType())
+		).skip(
+			searchContainer.getStart()
+		).limit(
+			searchContainer.getDelta()
+		).collect(
+			Collectors.toList()
+		);
+
+		searchContainer.setResults(results);
 
 		_searchContainer = searchContainer;
 

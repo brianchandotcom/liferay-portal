@@ -45,7 +45,7 @@ public class JavadocCheck extends BaseCheck {
 		TextBlock javadoc = fileContents.getJavadocBefore(
 			detailAST.getLineNo());
 
-		if (javadoc == null) {
+		if ((javadoc == null) || _containsCopyright(javadoc)) {
 			return;
 		}
 
@@ -85,6 +85,22 @@ public class JavadocCheck extends BaseCheck {
 
 			log(javadoc.getStartLineNo() + lineNumber - 1, message);
 		}
+	}
+
+	private boolean _containsCopyright(TextBlock javadoc) {
+		if (javadoc.getStartLineNo() != 1) {
+			return false;
+		}
+
+		String[] text = javadoc.getText();
+
+		for (String line : text) {
+			if (line.contains("Copyright (c) 2000-present Liferay, Inc.")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _MSG_EMPTY_LINE = "javadoc.empty.line";

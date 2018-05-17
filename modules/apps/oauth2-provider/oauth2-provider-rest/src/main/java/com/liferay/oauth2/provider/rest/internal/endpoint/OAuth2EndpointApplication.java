@@ -56,7 +56,7 @@ public class OAuth2EndpointApplication extends Application {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(" + OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE + "=true)",
-		unbind = "removeJaxrsProvider"
+		unbind = "removeJaxrsObject"
 	)
 	public void addJaxrsResource(Object jaxrsResource) {
 		_jaxrsObjects.add(jaxrsResource);

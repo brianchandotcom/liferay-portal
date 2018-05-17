@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.fragment.entry.processor.portlet.alias=weather",
 		"com.liferay.portlet.css-class-wrapper=weather-portlet",
 		"com.liferay.portlet.display-category=category.news",
 		"com.liferay.portlet.icon=/icons/weather.png",

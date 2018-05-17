@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
+		"com.liferay.fragment.entry.processor.portlet.alias=search-facet-type",
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-type-facet",
 		"com.liferay.portlet.display-category=category.search",

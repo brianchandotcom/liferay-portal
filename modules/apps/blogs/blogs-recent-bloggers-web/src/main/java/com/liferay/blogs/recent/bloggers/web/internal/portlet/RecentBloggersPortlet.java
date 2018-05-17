@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.fragment.entry.processor.portlet.alias=recent-bloggers",
 		"com.liferay.portlet.css-class-wrapper=portlet-recent-bloggers",
 		"com.liferay.portlet.display-category=category.collaboration",
 		"com.liferay.portlet.icon=/icons/recent_bloggers.png",

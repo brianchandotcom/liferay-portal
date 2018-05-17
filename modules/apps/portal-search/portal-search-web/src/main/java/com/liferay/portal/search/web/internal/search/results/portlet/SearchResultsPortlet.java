@@ -73,6 +73,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.fragment.entry.processor.portlet.alias=search-results",
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-search-results",
 		"com.liferay.portlet.display-category=category.search",

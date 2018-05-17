@@ -1,7 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {addClasses, removeClasses, replace} from 'metal-dom';
+import {addClasses, removeClasses} from 'metal-dom';
 import {isFunction, isObject, object} from 'metal';
 
 import FragmentEditableField from './FragmentEditableField.es';
@@ -151,26 +151,18 @@ class FragmentEntryLink extends Component {
 		this._editables = [
 			...this.refs.content.querySelectorAll('lfr-editable')
 		].map(
-			editable => {
-				const content = editable.innerHTML;
-				const id = editable.id;
-				const type = editable.getAttribute('type');
-
-				const component = new FragmentEditableField(
-					{
-						content,
-						events: {
-							mapButtonClicked: this._handleMapButtonClick
-						},
-						id,
-						type
-					}
-				);
-
-				replace(editable, component.element);
-
-				return component;
-			}
+			editable => new FragmentEditableField(
+				{
+					content: editable.innerHTML,
+					editableId: editable.id,
+					element: editable,
+					events: {mapButtonClicked: this._handleMapButtonClick},
+					fragmentEntryLinkId: this.fragmentEntryLinkId,
+					imageSelectorURL: this.imageSelectorURL,
+					portletNamespace: this.portletNamespace,
+					type: editable.getAttribute('type')
+				}
+			)
 		);
 	}
 

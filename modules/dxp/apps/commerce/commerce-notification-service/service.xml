@@ -80,11 +80,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CommerceNotificationTemplateId" return-type="Collection">
-			<finder-column name="commerceNotificationTemplateId" />
-		</finder>
 		<finder name="CommerceUserSegmentEntryId" return-type="Collection">
 			<finder-column name="commerceUserSegmentEntryId" />
+		</finder>
+		<finder name="CommerceNotificationTemplateId" return-type="Collection">
+			<finder-column name="commerceNotificationTemplateId" />
 		</finder>
 		<finder name="C_C" return-type="CommerceNotificationTemplateUserSegmentRel" unique="true">
 			<finder-column name="commerceNotificationTemplateId" />

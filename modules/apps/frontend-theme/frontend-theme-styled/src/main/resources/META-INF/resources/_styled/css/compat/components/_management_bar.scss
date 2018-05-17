@@ -10,6 +10,11 @@
 		min-height: $management-bar-height;
 		position: relative;
 
+		& + .subnav-tbar-primary {
+			margin-bottom: $management-bar-margin-bottom;
+			margin-top: -$management-bar-margin-bottom;
+		}
+
 		.add-menu {
 			z-index: inherit;
 		}

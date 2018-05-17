@@ -14,8 +14,7 @@ class FragmentEditableField extends Component {
 	 */
 
 	created() {
-		this._handleImageSelected = this._handleImageSelected.bind(this);
-		this._handleTextEditorChanged = this._handleTextEditorChanged.bind(this);
+		this._handleEditableChanged = this._handleEditableChanged.bind(this);
 	}
 
 	/**
@@ -43,7 +42,7 @@ class FragmentEditableField extends Component {
 				this.portletNamespace,
 				this.imageSelectorURL,
 				this.fragmentEntryLinkId,
-				this._handleImageSelected
+				this._handleEditableChanged
 			);
 		}
 		else {
@@ -52,21 +51,24 @@ class FragmentEditableField extends Component {
 				this.defaultEditorConfiguration,
 				this.portletNamespace,
 				this.fragmentEntryLinkId,
-				this._handleTextEditorChanged
+				this._handleEditableChanged
 			);
 		}
 	}
 
 	/**
 	 * Handle image editor select event
-	 * @param {string} imageUrl
+	 * @param {string} newValue
 	 * @private
 	 */
 
-	_handleImageSelected(imageUrl) {
+	_handleEditableChanged(newValue) {
 		this.emit(
-			'imageSelected',
-			{imageUrl}
+			'editableChanged',
+			{
+				editableId: this.editableId,
+				value: newValue
+			}
 		);
 	}
 
@@ -79,19 +81,6 @@ class FragmentEditableField extends Component {
 		this.emit(
 			'mapButtonClicked',
 			{editableId: this.editableId}
-		);
-	}
-
-	/**
-	 * Handle text editor change event
-	 * @param {string} newValue
-	 * @private
-	 */
-
-	_handleTextEditorChanged(newValue) {
-		this.emit(
-			'textEditorChanged',
-			{newValue}
 		);
 	}
 }

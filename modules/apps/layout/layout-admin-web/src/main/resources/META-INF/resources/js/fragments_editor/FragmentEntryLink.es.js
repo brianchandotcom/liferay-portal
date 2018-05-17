@@ -26,6 +26,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	created() {
+		this._handleEditableChanged = this._handleEditableChanged.bind(this);
 		this._handleMapButtonClick = this._handleMapButtonClick.bind(this);
 		this._updateEditableStatus = this._updateEditableStatus.bind(this);
 	}
@@ -156,7 +157,12 @@ class FragmentEntryLink extends Component {
 					content: editable.innerHTML,
 					editableId: editable.id,
 					element: editable,
-					events: {mapButtonClicked: this._handleMapButtonClick},
+
+					events: {
+						editableChanged: this._handleEditableChanged,
+						mapButtonClicked: this._handleMapButtonClick
+					},
+
 					fragmentEntryLinkId: this.fragmentEntryLinkId,
 					imageSelectorURL: this.imageSelectorURL,
 					portletNamespace: this.portletNamespace,
@@ -192,6 +198,24 @@ class FragmentEntryLink extends Component {
 			{
 				direction,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
+	}
+
+	/**
+	 * Handle a changed editable event
+	 * @param {{editableId: string, value: string}} event
+	 * @private
+	 * @review
+	 */
+
+	_handleEditableChanged(event) {
+		this.emit(
+			'editableChanged',
+			{
+				editableId: event.editableId,
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				value: event.value
 			}
 		);
 	}

@@ -51,7 +51,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	selectable="<%= false %>"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"
-	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
+	sortingOrder="<%= uadExportProcessDisplayContext.getOrderByType() %>"
 	sortingURL="<%= uadExportProcessDisplayContext.getSortingURL() %>"
 />
 

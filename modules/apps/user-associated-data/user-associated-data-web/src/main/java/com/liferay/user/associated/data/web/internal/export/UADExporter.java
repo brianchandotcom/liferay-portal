@@ -17,7 +17,9 @@ package com.liferay.user.associated.data.web.internal.export;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskExecutor;
 
 import java.io.Serializable;
@@ -36,11 +38,14 @@ public class UADExporter {
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		taskContextMap.put("userId", userId);
+		taskContextMap.put("applicationKey", applicationKey);
+
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			CompanyThreadLocal.getCompanyId());
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
-				userId, groupId, applicationKey,
+				defaultUserId, groupId, String.valueOf(userId),
 				UADExportBackgroundTaskExecutor.class.getName(), taskContextMap,
 				new ServiceContext());
 

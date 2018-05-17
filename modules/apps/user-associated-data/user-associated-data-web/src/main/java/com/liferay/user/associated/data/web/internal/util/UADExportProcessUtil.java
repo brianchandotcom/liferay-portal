@@ -21,12 +21,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Pei-Jung Lan
  */
 public class UADExportProcessUtil {
+
+	public static String getApplicationKey(BackgroundTask backgroundTask) {
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		return (String)taskContextMap.get("applicationKey");
+	}
 
 	public static FileEntry getFileEntry(BackgroundTask backgroundTask)
 		throws PortalException {

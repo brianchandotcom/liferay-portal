@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Pei-Jung Lan
@@ -33,12 +35,10 @@ import java.util.List;
 public class UADExportBackgroundTaskManagerUtil {
 
 	public static BackgroundTask fetchLastBackgroundTask(
-		String name, long groupId, long userId, int status) {
+		String applicationKey, long groupId, long userId, int status) {
 
 		DynamicQuery dynamicQuery = _getDynamicQuery(groupId, userId);
 
-		dynamicQuery = dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("name", name));
 		dynamicQuery = dynamicQuery.add(
 			RestrictionsFactoryUtil.eq("status", status));
 		dynamicQuery = dynamicQuery.addOrder(
@@ -46,7 +46,21 @@ public class UADExportBackgroundTaskManagerUtil {
 
 		List<com.liferay.portal.background.task.model.BackgroundTask>
 			backgroundTaskModels = BackgroundTaskLocalServiceUtil.dynamicQuery(
-				dynamicQuery, 0, 1);
+				dynamicQuery);
+
+		Stream<com.liferay.portal.background.task.model.BackgroundTask>
+			backgroundTaskModelsStream = backgroundTaskModels.stream();
+
+		backgroundTaskModels = backgroundTaskModelsStream.filter(
+			backgroundTaskModel -> {
+				Map taskContextMap = backgroundTaskModel.getTaskContextMap();
+
+				return applicationKey.equals(
+					taskContextMap.get("applicationKey"));
+			}
+		).collect(
+			Collectors.toList()
+		);
 
 		if (ListUtil.isEmpty(backgroundTaskModels)) {
 			return null;
@@ -56,34 +70,28 @@ public class UADExportBackgroundTaskManagerUtil {
 	}
 
 	public static List<BackgroundTask> getBackgroundTasks(
-		long groupId, long userId, int status, int start, int end,
-		OrderByComparator<BackgroundTask> obc) {
+		long groupId, long userId) {
+
+		DynamicQuery dynamicQuery = _getDynamicQuery(groupId, userId);
+
+		List<com.liferay.portal.background.task.model.BackgroundTask>
+			backgroundTaskModels = BackgroundTaskLocalServiceUtil.dynamicQuery(
+				dynamicQuery);
+
+		return _translate(backgroundTaskModels);
+	}
+
+	public static List<BackgroundTask> getBackgroundTasks(
+		long groupId, long userId, int status) {
 
 		DynamicQuery dynamicQuery = _getDynamicQuery(groupId, userId);
 
 		dynamicQuery = dynamicQuery.add(
 			RestrictionsFactoryUtil.eq("status", status));
 
-		OrderFactoryUtil.addOrderByComparator(dynamicQuery, obc);
-
 		List<com.liferay.portal.background.task.model.BackgroundTask>
 			backgroundTaskModels = BackgroundTaskLocalServiceUtil.dynamicQuery(
-				dynamicQuery, start, end);
-
-		return _translate(backgroundTaskModels);
-	}
-
-	public static List<BackgroundTask> getBackgroundTasks(
-		long groupId, long userId, int start, int end,
-		OrderByComparator<BackgroundTask> obc) {
-
-		DynamicQuery dynamicQuery = _getDynamicQuery(groupId, userId);
-
-		OrderFactoryUtil.addOrderByComparator(dynamicQuery, obc);
-
-		List<com.liferay.portal.background.task.model.BackgroundTask>
-			backgroundTaskModels = BackgroundTaskLocalServiceUtil.dynamicQuery(
-				dynamicQuery, start, end);
+				dynamicQuery);
 
 		return _translate(backgroundTaskModels);
 	}
@@ -122,7 +130,7 @@ public class UADExportBackgroundTaskManagerUtil {
 		dynamicQuery = dynamicQuery.add(
 			RestrictionsFactoryUtil.eq("groupId", groupId));
 		dynamicQuery = dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("userId", userId));
+			RestrictionsFactoryUtil.eq("name", String.valueOf(userId)));
 		dynamicQuery = dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
 				"taskExecutorClassName", _BACKGROUND_TASK_EXECUTOR_CLASS_NAME));

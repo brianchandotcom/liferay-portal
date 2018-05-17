@@ -154,9 +154,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				blogsEntry.getGroupId(), folder.getFolderId(), curFileName));
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			blogsEntry.getGroupId(), userId, BlogsEntry.class.getName(),
-			blogsEntry.getEntryId(), BlogsConstants.SERVICE_NAME,
-			folder.getFolderId(), is, uniqueFileName, mimeType, true);
+			blogsEntry.getGroupId(), userId, null, 0,
+			BlogsConstants.SERVICE_NAME, folder.getFolderId(), is,
+			uniqueFileName, mimeType, true);
 	}
 
 	@Override
@@ -531,8 +531,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		FileEntry originalFileEntry =
 			PortletFileRepositoryUtil.addPortletFileEntry(
-				groupId, userId, BlogsEntry.class.getName(), entryId,
-				BlogsConstants.SERVICE_NAME, folder.getFolderId(), imageBytes,
+				groupId, userId, null, 0, BlogsConstants.SERVICE_NAME,
+				folder.getFolderId(), imageBytes,
 				_getUniqueFileName(
 					groupId, imageSelector.getImageTitle(),
 					folder.getFolderId()),

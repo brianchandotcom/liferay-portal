@@ -123,10 +123,10 @@ public class CommentNestedCollectionResource
 
 		_checkViewPermission(comment, permissionChecker);
 
-		List<Comment> comments = _commentManager.getCommentsByParentComment(
+		List<Comment> comments = _commentManager.getChildComments(
 			parentCommentId, WorkflowConstants.STATUS_APPROVED,
 			pagination.getStartPosition(), pagination.getEndPosition());
-		int count = _commentManager.getCommentsCountByParentComment(
+		int count = _commentManager.getChildCommentsCount(
 			parentCommentId, WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(comments, count);

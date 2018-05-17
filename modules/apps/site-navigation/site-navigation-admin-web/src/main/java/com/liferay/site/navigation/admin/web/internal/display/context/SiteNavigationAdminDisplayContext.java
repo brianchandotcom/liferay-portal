@@ -14,7 +14,6 @@
 
 package com.liferay.site.navigation.admin.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -118,19 +117,6 @@ public class SiteNavigationAdminDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
-	}
-
-	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.put("action", "addNavigationMenuMenuItem");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "add-menu"));
-					});
-			}
-		};
 	}
 
 	public String getDisplayStyle() {

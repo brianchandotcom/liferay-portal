@@ -29,12 +29,12 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 	actionDropdownItems="<%= siteNavigationAdminDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= siteNavigationAdminDisplayContext.getClearResultsURL() %>"
 	componentId="siteNavigationMenuWebManagementToolbar"
-	creationMenu="<%= siteNavigationAdminDisplayContext.isShowAddButton() ? siteNavigationAdminDisplayContext.getCreationMenu() : null %>"
 	filterDropdownItems="<%= siteNavigationAdminDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= siteNavigationAdminDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= siteNavigationAdminDisplayContext.getSearchActionURL() %>"
 	searchContainerId="siteNavigationMenus"
 	searchFormName="searchFm"
+	showCreationMenu="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>"
 	sortingOrder="<%= siteNavigationAdminDisplayContext.getOrderByType() %>"
 	sortingURL="<%= siteNavigationAdminDisplayContext.getSortingURL() %>"
 	viewTypeItems="<%= siteNavigationAdminDisplayContext.getViewTypeItems() %>"
@@ -226,8 +226,10 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 	Liferay.componentReady('siteNavigationMenuWebManagementToolbar').then(
 		function(managementToolbar) {
+			managementToolbar.on('creationButtonClicked', addNavigationMenuMenuItem);
+
 			managementToolbar.on(
-				['actionItemClicked', 'creationMenuItemClicked'],
+				'actionItemClicked',
 				function(event) {
 					var itemData = event.data.item.data;
 

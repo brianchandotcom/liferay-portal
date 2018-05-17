@@ -225,7 +225,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="Navigator#gotoNavItemAddPage">
+		<execute macro="Navigator#gotoNavItemStacked">
 			<var name="navItem" value="Global Templates" />
 		</execute>
 
@@ -265,7 +265,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="Navigator#gotoNavItemAddPage">
+		<execute macro="Navigator#gotoNavItemStacked">
 			<var name="navItem" value="Global Templates" />
 		</execute>
 

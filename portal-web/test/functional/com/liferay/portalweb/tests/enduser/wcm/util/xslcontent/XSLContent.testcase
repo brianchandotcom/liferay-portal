@@ -1,4 +1,6 @@
 <definition component-name="portal-xsl">
+	<property name="osgi.module.configuration.file.names" value="com.liferay.xsl.content.web.configuration.XSLContentConfiguration.config" />
+	<property name="osgi.module.configurations" value="com.liferay.portlet.display-category=&quot;category.cms&quot;" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="testray.component.names" value="XSL" />

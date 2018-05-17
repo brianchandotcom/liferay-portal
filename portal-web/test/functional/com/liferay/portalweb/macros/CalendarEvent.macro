@@ -736,7 +736,15 @@
 	</command>
 
 	<command name="addViaDayView">
-		<execute macro="CalendarScheduler#gotoAddViaDayView" />
+		<if>
+			<isset var="eventBlock" />
+			<then>
+				<execute macro="CalendarScheduler#addViaDayViewDragAndDrop" />
+			</then>
+			<else>
+				<execute macro="CalendarScheduler#gotoAddViaDayView" />
+			</else>
+		</if>
 
 		<execute macro="CalendarScheduler#editTitle">
 			<var name="eventTitle" value="${eventTitle}" />
@@ -1369,6 +1377,12 @@
 		<execute function="Click" locator1="Ratings#YOUR_RATING_STAR_4" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="resizeViaEventBlock">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="DragAndDrop#CALENDAR_EVENT" />
+
+		<execute function="SikuliDragAndDrop" locator1="Calendar#SCHEDULER_VIEW_DAY_RESIZER_ICON" value1="0,100" />
 	</command>
 
 	<command name="saveEventUserInvite">

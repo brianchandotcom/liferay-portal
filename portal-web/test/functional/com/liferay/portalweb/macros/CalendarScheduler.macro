@@ -100,6 +100,10 @@
 		<execute macro="Alert#waitForSuccessMessageHide" />
 	</command>
 
+	<command name="addViaDayViewDragAndDrop">
+		<execute function="SikuliDragAndDrop" locator1="Calendar#SCHEDULER_DAY_VIEW_PNG" value1="0,200" />
+	</command>
+
 	<command name="changeCalendar">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />

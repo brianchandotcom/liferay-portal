@@ -108,7 +108,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_LP" return-type="LayoutPageTemplateEntry" unique="true">
+		<finder name="G_LP" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="layoutPrototypeId" />
 		</finder>

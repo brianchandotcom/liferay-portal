@@ -15,6 +15,8 @@
 package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -153,11 +155,7 @@ public class SocialBookmarksTag extends IncludeTag {
 
 		request.setAttribute("liferay-social-bookmarks:bookmarks:types", types);
 
-		if ((_url == null) && (_urlImpl == null)) {
-			throw new IllegalArgumentException();
-		}
-
-		if (_url == null) {
+		if ((_url == null) && (_urlImpl != null)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
@@ -167,14 +165,21 @@ public class SocialBookmarksTag extends IncludeTag {
 					themeDisplay.getLayout());
 			}
 			catch (PortalException pe) {
-				throw new RuntimeException(pe);
+				_log.error("Unable to get canonical url " + _urlImpl, pe);
 			}
+		}
+
+		if (_url == null) {
+			throw new IllegalArgumentException();
 		}
 
 		request.setAttribute("liferay-social-bookmarks:bookmarks:url", _url);
 	}
 
 	private static final String _PAGE = "/bookmarks/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SocialBookmarksTag.class);
 
 	private String _className;
 	private long _classPK;

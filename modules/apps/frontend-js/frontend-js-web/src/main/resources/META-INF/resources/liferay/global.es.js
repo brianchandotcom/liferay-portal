@@ -1,5 +1,3 @@
-'use strict';
+import portlet from './portlet/portlet.es';
 
-import register from './portlet_hub/register.es';
-
-export {register};
+export {portlet};

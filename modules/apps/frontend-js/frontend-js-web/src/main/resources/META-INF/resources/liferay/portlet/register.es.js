@@ -1,20 +1,17 @@
-'use strict';
-
 import Promise from 'metal-promise';
 
 import PortletInit from './PortletInit.es';
 
 /**
  * Registers a portlet client with the portlet hub.
- *
  * @param {string} portletId The unique portlet identifier
- * @returns {Promise} A Promise object. Returns an {@link PortletInit} object
+ * @return {Promise} A Promise object. Returns an {@link PortletInit} object
  * containing functions for use by the portlet client on successful resolution.
  * Returns an Error object containing a descriptive message on failure.
  * @review
  */
 
-function register(portletId) {
+const register = function(portletId) {
 	return new Promise(
 		(resolve, reject) => {
 			if (!portletId) {
@@ -25,7 +22,7 @@ function register(portletId) {
 			}
 		}
 	);
-}
+};
 
 export {register};
 export default register;

@@ -9,7 +9,6 @@ module.exports = {
 		entry: './src/main/resources/META-INF/resources/liferay/global.es.js',
 		output: {
 			filename: 'global.bundle.js',
-			library: 'portlet',
 			libraryTarget: 'window',
 			path: path.resolve('./classes/META-INF/resources/liferay/'),
 			publicPath: PUBLIC_PATH

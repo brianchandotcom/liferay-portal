@@ -1,206 +1,11 @@
-import debounce from 'metal-debounce';
-import {dom} from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {object} from 'metal';
-
-/**
- * Allow having editable text fields inside Fragments
- */
-
-class EditableTextFragmentProcessor {
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-
-	constructor(fragmentEntryLink) {
-		this.fragmentEntryLink = fragmentEntryLink;
-
-		this._eventHandler = new EventHandler();
-
-		this._editableField = null;
-		this._editableId = null;
-		this._editor = null;
-		this._editorEventHandler = new EventHandler();
-
-		this._handleEditableClick = this._handleEditableClick.bind(this);
-
-		this._handleEditorChange = debounce(
-			this._handleEditorChange.bind(this),
-			300
-		);
-
-		Liferay.on(
-			'beforeNavigate',
-			this.dispose.bind(this)
-		);
-	}
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-
-	dispose() {
-		this._eventHandler.removeAllListeners();
-		this._destroyEditor();
-	}
-
-	/**
-	 * Finds an associated editor for a given editable id
-	 * @param {string} editableId The id of editable section
-	 * @return {?AlloyEditor}
-	 * @review
-	 */
-
-	findEditor(editableId) {
-		const setData = data => {
-			const editableField = this.fragmentEntryLink.element.querySelector(
-				`lfr-editable[id="${editableId}"][type="text"]`
-			);
-
-			if (editableField) {
-				this._destroyEditor();
-				editableField.innerHTML = data;
-			}
-		};
-
-		return {setData};
-	}
-
-	/**
-	 * @inheritDoc
-	 * @review
-	 */
-
-	process() {
-		this._destroyEditor();
-		this._eventHandler.removeAllListeners();
-
-		if (!this.fragmentEntryLink.showMapping) {
-			this._eventHandler.add(
-				dom.delegate(
-					this.fragmentEntryLink.refs.content,
-					'click',
-					'lfr-editable[type="text"]',
-					this._handleEditableClick
-				)
-			);
-		}
-	}
-
-	/**
-	 * For a given editableField, creates an AlloyEditor instance
-	 * and returns it
-	 * @param {HTMLElement} editableField
-	 * @return {AlloyEditor}
-	 * @private
-	 * @review
-	 */
-
-	_createEditor(editableField) {
-		this._editableField = editableField;
-		this._editableId = editableField.id;
-
-		const editableContent = editableField.innerHTML;
-		const wrapper = document.createElement('div');
-
-		wrapper.dataset.lfrEditableId = this._editableId;
-		wrapper.innerHTML = editableContent;
-
-		editableField.innerHTML = '';
-		editableField.appendChild(wrapper);
-
-		const editor = AlloyEditor.editable(
-			wrapper,
-			object.mixin(
-				this.fragmentEntryLink.defaultEditorConfiguration.editorConfig,
-				EditableTextFragmentProcessor.EDITOR_CONFIGURATION,
-				{
-					title: [
-						this.fragmentEntryLink.portletNamespace,
-						'_FragmentEntryLinkEditable_',
-						this.fragmentEntryLink.fragmentEntryLinkId
-					].join('')
-				}
-			)
-		);
-
-		const nativeEditor = editor.get('nativeEditor');
-
-		const editorChangeHandler = nativeEditor.on(
-			'change',
-			this._handleEditorChange
-		);
-
-		const editorSelectionChangeHandler = nativeEditor.on(
-			'actionPerformed',
-			this._handleEditorChange
-		);
-
-		this._editor = editor;
-		this._editorEventHandler.add(editorChangeHandler);
-		this._editorEventHandler.add(editorSelectionChangeHandler);
-
-		nativeEditor.on('instanceReady', () => nativeEditor.focus());
-	}
-
-	/**
-	 * Destroy existing editor.
-	 * @private
-	 */
-
-	_destroyEditor() {
-		if (this._editor) {
-			this._editorEventHandler.removeAllListeners();
-
-			const editorData = this._editor.get('nativeEditor').getData();
-
-			this._editableField.innerHTML = editorData;
-
-			this._editor.destroy();
-			this._editor = null;
-		}
-	}
-
-	_handleEditableClick(event) {
-		const editableField = event.delegateTarget;
-
-		if (editableField !== this._editableField) {
-			this._destroyEditor();
-
-			this._createEditor(editableField);
-		}
-	}
-
-	/**
-	 * Handles an AlloyEditor change event and propagates it as
-	 * editableChanged event from the FragmentEntryLink
-	 * @param {Event} event
-	 * @private
-	 */
-
-	_handleEditorChange(event) {
-		const editor = event.editor;
-		const fragmentEntryLinkId = this.fragmentEntryLink.fragmentEntryLinkId;
-
-		this.fragmentEntryLink.emit(
-			'editableChanged',
-			{
-				editableId: editor.element.$.dataset.lfrEditableId,
-				fragmentEntryLinkId,
-				value: editor.getData()
-			}
-		);
-	}
-}
 
 /**
  * Default configuration used for creating AlloyEditor instances.
  */
 
-EditableTextFragmentProcessor.EDITOR_CONFIGURATION = {
+const EDITOR_CONFIGURATION = {
 	enterMode: CKEDITOR.ENTER_BR,
 
 	extraPlugins: [
@@ -232,5 +37,107 @@ EditableTextFragmentProcessor.EDITOR_CONFIGURATION = {
 	].join(',')
 };
 
-export {EditableTextFragmentProcessor};
-export default EditableTextFragmentProcessor;
+let _editableElement;
+let _editor;
+let _editorEventHandler;
+let _navigationEventHandler;
+
+/**
+ * Creates an instance of AlloyEditor and destroys the existing one if any.
+ * @param {HTMLElement} editableElement
+ * @param {Object} defaultEditorConfiguration
+ * @param {string} portletNamespace
+ * @param {string} fragmentEntryLinkId
+ * @param {function} callback
+ */
+
+function createTextEditor(
+	editableElement,
+	defaultEditorConfiguration,
+	portletNamespace,
+	fragmentEntryLinkId,
+	callback
+) {
+	destroyTextEditor();
+
+	const editableContent = editableElement.innerHTML;
+	const wrapper = document.createElement('div');
+
+	wrapper.dataset.lfrEditableId = editableElement.id;
+	wrapper.innerHTML = editableContent;
+
+	editableElement.innerHTML = '';
+	editableElement.appendChild(wrapper);
+
+	_editableElement = editableElement;
+	_editorEventHandler = new EventHandler();
+
+	_navigationEventHandler = Liferay.on(
+		'beforeNavigate',
+		destroyTextEditor
+	);
+
+	_editor = AlloyEditor.editable(
+		wrapper,
+		object.mixin(
+			defaultEditorConfiguration.editorConfig || {},
+			EDITOR_CONFIGURATION,
+			{
+				title: [
+					portletNamespace,
+					'_FragmentEntryLinkEditable_',
+					fragmentEntryLinkId
+				].join('')
+			}
+		)
+	);
+
+	const nativeEditor = _editor.get('nativeEditor');
+
+	_editorEventHandler.add(
+		nativeEditor.on(
+			'change',
+			() => callback(nativeEditor.getData())
+		)
+	);
+
+	_editorEventHandler.add(
+		nativeEditor.on(
+			'actionPerformed',
+			() => callback(nativeEditor.getData())
+		)
+	);
+
+	_editorEventHandler.add(
+		nativeEditor.on(
+			'instanceReady',
+			() => nativeEditor.focus()
+		)
+	);
+}
+
+/**
+ * Destroys, if any, an existing instance of AlloyEditor.
+ */
+
+function destroyTextEditor() {
+	if (_editor) {
+		_editorEventHandler.removeAllListeners();
+		_editorEventHandler.dispose();
+		_navigationEventHandler.detach();
+
+		const editorData = _editor.get('nativeEditor').getData();
+
+		_editableElement.innerHTML = editorData;
+
+		_editor.destroy();
+
+		_editableElement = null;
+		_editor = null;
+		_editorEventHandler = null;
+		_navigationEventHandler = null;
+	}
+}
+
+export {createTextEditor, destroyTextEditor};
+export default createTextEditor;

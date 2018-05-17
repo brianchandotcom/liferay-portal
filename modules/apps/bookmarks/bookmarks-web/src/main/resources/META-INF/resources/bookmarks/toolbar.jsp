@@ -23,6 +23,7 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 <clay:management-toolbar
 	actionDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= bookmarksManagementToolbarDisplayContext.getClearResultsURL() %>"
+	componentId="bookmarksManagementToolbar"
 	creationMenu="<%= bookmarksManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= bookmarksManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= bookmarksManagementToolbarDisplayContext.getFilterDropdownItems() %>"
@@ -37,7 +38,7 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 />
 
 <aui:script>
-	function <portlet:namespace />deleteEntries() {
+	var deleteEntries = function() {
 		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
 			var form = document.querySelector('#<portlet:namespace />fm');
 
@@ -54,4 +55,23 @@ BookmarksManagementToolbarDisplayContext bookmarksManagementToolbarDisplayContex
 			}
 		}
 	}
+
+	var ACTIONS = {
+		'deleteEntries': deleteEntries
+	};
+
+	Liferay.componentReady('bookmarksManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

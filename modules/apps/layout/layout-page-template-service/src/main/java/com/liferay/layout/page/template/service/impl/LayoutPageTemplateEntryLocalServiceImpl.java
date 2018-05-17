@@ -44,20 +44,20 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long[] fragmentEntryIds, int status,
+			String name, int type, int status, long[] fragmentEntryIds,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			fragmentEntryIds, 0, status, serviceContext);
+			0, status, fragmentEntryIds, serviceContext);
 	}
 
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long[] fragmentEntryIds,
-			long layoutPrototypeId, int status, ServiceContext serviceContext)
+			String name, int type, long layoutPrototypeId, int status,
+			long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -120,20 +120,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			fragmentEntryIds, WorkflowConstants.STATUS_DRAFT, serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, long[] fragmentEntryIds, int status,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, fragmentEntryIds,
-			status, serviceContext);
+			WorkflowConstants.STATUS_DRAFT, fragmentEntryIds, serviceContext);
 	}
 
 	@Override
@@ -144,8 +131,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, fragmentEntryIds,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			WorkflowConstants.STATUS_DRAFT, fragmentEntryIds, serviceContext);
 	}
 
 	@Override

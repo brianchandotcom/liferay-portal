@@ -44,7 +44,6 @@ AMManagementToolbarDisplayContext amManagementToolbarDisplayContext = new AMMana
 	itemsTotal="<%= amManagementToolbarDisplayContext.getTotalItems() %>"
 	searchContainerId="imageConfigurationEntries"
 	showSearch="<%= false %>"
-	viewTypeItems="<%= amManagementToolbarDisplayContext.getViewTypes() %>"
 />
 
 <%

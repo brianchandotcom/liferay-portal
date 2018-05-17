@@ -16,7 +16,7 @@ package com.liferay.commerce.headless.product.apio.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -116,7 +116,8 @@ public class ProductDefinitionHelper {
 			long groupId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap,
 			Map<Locale, String> shortDescriptionMap, String productTypeName,
-			long[] assetCategoryIds)
+			long[] assetCategoryIds, String externalReferenceCode,
+			String defaultSku)
 		throws PortalException {
 
 		ServiceContext serviceContext = _productIndexerHelper.getServiceContext(
@@ -154,13 +155,14 @@ public class ProductDefinitionHelper {
 			expirationDateHour += 12;
 		}
 
-		return _cpDefinitionService.addCPDefinition(
+		return _cpDefinitionLocalService.addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, titleMap, null, null,
 			null, productTypeName, false, true, false, false, 0, 10, 10, 10, 10,
 			0, false, false, null, true, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, true, serviceContext);
+			expirationDateHour, expirationDateMinute, true, defaultSku,
+			externalReferenceCode, serviceContext);
 	}
 
 	public CPDefinition updateCPDefinition(
@@ -170,7 +172,7 @@ public class ProductDefinitionHelper {
 			long[] assetCategoryIds)
 		throws PortalException {
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 
 		ServiceContext serviceContext = _productIndexerHelper.getServiceContext(
@@ -218,7 +220,7 @@ public class ProductDefinitionHelper {
 			expirationDateHour += 12;
 		}
 
-		return _cpDefinitionService.updateCPDefinition(
+		return _cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
 			cpDefinition.getUrlTitleMap(), cpDefinition.getMetaTitleMap(),
 			cpDefinition.getMetaDescriptionMap(),
@@ -238,7 +240,7 @@ public class ProductDefinitionHelper {
 	}
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;

@@ -25,6 +25,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.headless.product.apio.identifier.ProductDefinitionIdentifier;
 import com.liferay.commerce.headless.product.apio.internal.form.ProductCreatorForm;
+import com.liferay.commerce.headless.product.apio.internal.form.ProductUpdaterForm;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductDefinitionHelper;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
@@ -98,7 +99,7 @@ public class ProductNestedCollectionResource
 			this::_getCPDefinition
 		).addUpdater(
 			this::_updateCPDefinition, (credentials, s) -> true,
-			ProductCreatorForm::buildForm
+			ProductUpdaterForm::buildForm
 		).addRemover(
 			idempotent(_cpDefinitionService::deleteCPDefinition),
 			_hasPermission.forDeleting(CPDefinition.class)
@@ -142,6 +143,10 @@ public class ProductNestedCollectionResource
 				CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME)
 		).addString(
 			"name", document -> document.get(Field.NAME)
+		).addString(
+			"externalReferenceCode",
+			document -> document.get(
+				CPDefinitionIndexer.FIELD_EXTERNAL_REFERENCE_CODE)
 		).addStringList(
 			"skus",
 			document -> Arrays.asList(
@@ -161,7 +166,9 @@ public class ProductNestedCollectionResource
 					productCreatorForm.getShortDescriptionMap(),
 					productCreatorForm.getProductTypeName(),
 					ArrayUtil.toLongArray(
-						productCreatorForm.getAssetCategoryIds()));
+						productCreatorForm.getAssetCategoryIds()),
+					productCreatorForm.getExternalReferenceCode(),
+					productCreatorForm.getDefaultSku());
 
 			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
 				CPDefinition.class);
@@ -268,12 +275,12 @@ public class ProductNestedCollectionResource
 		try {
 			CPDefinition cpDefinition =
 				_productDefinitionHelper.updateCPDefinition(
-					cpDefinitionId, productCreatorForm.getTitleMap(),
-					productCreatorForm.getDescriptionMap(),
-					productCreatorForm.getShortDescriptionMap(),
-					productCreatorForm.getProductTypeName(),
+					cpDefinitionId, productUpdaterForm.getTitleMap(),
+					productUpdaterForm.getDescriptionMap(),
+					productUpdaterForm.getShortDescriptionMap(),
+					productUpdaterForm.getProductTypeName(),
 					ArrayUtil.toLongArray(
-						productCreatorForm.getAssetCategoryIds()));
+						productUpdaterForm.getAssetCategoryIds()));
 
 			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
 				CPDefinition.class);

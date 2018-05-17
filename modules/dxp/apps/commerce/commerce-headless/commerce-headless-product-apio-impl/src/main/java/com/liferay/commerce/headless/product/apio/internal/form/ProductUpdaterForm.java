@@ -29,7 +29,7 @@ import java.util.Map;
  * @author Zoltán Takács
  * @review
  */
-public class ProductCreatorForm {
+public class ProductUpdaterForm {
 
 	/**
 	 * Builds a {@code Form} that generates {@code ProductCreatorForm} depending
@@ -39,30 +39,25 @@ public class ProductCreatorForm {
 	 * @return a product creator form
 	 * @review
 	 */
-	public static Form<ProductCreatorForm> buildForm(
-		Builder<ProductCreatorForm> formBuilder) {
+	public static Form<ProductUpdaterForm> buildForm(
+		Builder<ProductUpdaterForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The product creator form"
 		).description(
 			__ -> "This form can be used to create a product"
 		).constructor(
-			ProductCreatorForm::new
+			ProductUpdaterForm::new
 		).addOptionalLongList(
-			"assetCategoryIds", ProductCreatorForm::_setAssetCategoryIds
+			"assetCategoryIds", ProductUpdaterForm::_setAssetCategoryIds
 		).addRequiredString(
-			"description", ProductCreatorForm::_setDescription
+			"description", ProductUpdaterForm::_setDescription
 		).addOptionalString(
-			"shortDescription", ProductCreatorForm::_setShortDescription
+			"shortDescription", ProductUpdaterForm::_setShortDescription
 		).addRequiredString(
-			"productTypeName", ProductCreatorForm::_setProductTypeName
+			"productTypeName", ProductUpdaterForm::_setProductTypeName
 		).addRequiredString(
-			"title", ProductCreatorForm::_setTitle
-		).addOptionalString(
-			"externalReferenceCode",
-			ProductCreatorForm::_setExternalReferenceCode
-		).addOptionalString(
-			"defaultSku", ProductCreatorForm::_setDefaultSku
+			"title", ProductUpdaterForm::_setTitle
 		).build();
 	}
 
@@ -74,16 +69,8 @@ public class ProductCreatorForm {
 		return _assetCategoryIds;
 	}
 
-	public String getDefaultSku() {
-		return _defaultSku;
-	}
-
 	public Map<Locale, String> getDescriptionMap() {
 		return Collections.singletonMap(Locale.getDefault(), _description);
-	}
-
-	public String getExternalReferenceCode() {
-		return _externalReferenceCode;
 	}
 
 	public String getProductTypeName() {
@@ -102,16 +89,8 @@ public class ProductCreatorForm {
 		_assetCategoryIds = assetCategoryIds;
 	}
 
-	private void _setDefaultSku(String defaultSku) {
-		_defaultSku = defaultSku;
-	}
-
 	private void _setDescription(String description) {
 		_description = description;
-	}
-
-	private void _setExternalReferenceCode(String externalReferenceCode) {
-		_externalReferenceCode = externalReferenceCode;
 	}
 
 	private void _setProductTypeName(String productTypeName) {
@@ -127,9 +106,7 @@ public class ProductCreatorForm {
 	}
 
 	private List<Long> _assetCategoryIds;
-	private String _defaultSku;
 	private String _description;
-	private String _externalReferenceCode;
 	private String _productTypeName;
 	private String _shortDescritpion;
 	private String _title;

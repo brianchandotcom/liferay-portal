@@ -123,7 +123,9 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 						</div>
 					</div>
 
-					<liferay-util:include page="/view_fragment_entries.jsp" servletContext="<%= application %>" />
+					<div class="sheet-section">
+						<liferay-util:include page="/view_fragment_entries.jsp" servletContext="<%= application %>" />
+					</div>
 				</div>
 			</c:if>
 		</div>

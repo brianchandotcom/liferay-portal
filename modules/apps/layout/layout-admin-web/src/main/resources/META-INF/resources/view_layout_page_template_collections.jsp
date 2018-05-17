@@ -123,7 +123,9 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 						</div>
 					</h3>
 
-					<liferay-util:include page="/view_layout_page_template_entries.jsp" servletContext="<%= application %>" />
+					<div class="sheet-section">
+						<liferay-util:include page="/view_layout_page_template_entries.jsp" servletContext="<%= application %>" />
+					</div>
 				</div>
 			</c:if>
 		</div>

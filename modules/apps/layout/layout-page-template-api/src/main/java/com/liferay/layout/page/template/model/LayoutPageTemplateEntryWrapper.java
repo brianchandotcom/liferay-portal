@@ -75,6 +75,7 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("type", getType());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 		attributes.put("defaultTemplate", isDefaultTemplate());
+		attributes.put("layoutPrototypeId", getLayoutPrototypeId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -169,6 +170,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 
 		if (defaultTemplate != null) {
 			setDefaultTemplate(defaultTemplate);
+		}
+
+		Long layoutPrototypeId = (Long)attributes.get("layoutPrototypeId");
+
+		if (layoutPrototypeId != null) {
+			setLayoutPrototypeId(layoutPrototypeId);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -321,6 +328,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public long getLayoutPageTemplateEntryId() {
 		return _layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
+	}
+
+	/**
+	* Returns the layout prototype ID of this layout page template entry.
+	*
+	* @return the layout prototype ID of this layout page template entry
+	*/
+	@Override
+	public long getLayoutPrototypeId() {
+		return _layoutPageTemplateEntry.getLayoutPrototypeId();
 	}
 
 	/**
@@ -678,6 +695,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
 		_layoutPageTemplateEntry.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+	}
+
+	/**
+	* Sets the layout prototype ID of this layout page template entry.
+	*
+	* @param layoutPrototypeId the layout prototype ID of this layout page template entry
+	*/
+	@Override
+	public void setLayoutPrototypeId(long layoutPrototypeId) {
+		_layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 	}
 
 	/**

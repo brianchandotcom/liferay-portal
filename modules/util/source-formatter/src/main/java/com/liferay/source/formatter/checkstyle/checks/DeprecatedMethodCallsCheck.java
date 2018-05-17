@@ -91,7 +91,7 @@ public class DeprecatedMethodCallsCheck extends BaseCheck {
 
 		String directoryPath = absolutePath.substring(0, x + 1);
 
-		List<String> importNames = _getImportNames(detailAST);
+		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
 		String packageName = _getPackageName(detailAST);
 
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
@@ -300,27 +300,6 @@ public class DeprecatedMethodCallsCheck extends BaseCheck {
 		}
 
 		return null;
-	}
-
-	private List<String> _getImportNames(DetailAST detailAST) {
-		List<String> importASTList = new ArrayList<>();
-
-		DetailAST sibling = detailAST.getPreviousSibling();
-
-		while (true) {
-			if (sibling.getType() == TokenTypes.IMPORT) {
-				FullIdent importIdent = FullIdent.createFullIdentBelow(sibling);
-
-				importASTList.add(importIdent.getText());
-			}
-			else {
-				break;
-			}
-
-			sibling = sibling.getPreviousSibling();
-		}
-
-		return importASTList;
 	}
 
 	private Tuple _getJavaMethodsTuple(

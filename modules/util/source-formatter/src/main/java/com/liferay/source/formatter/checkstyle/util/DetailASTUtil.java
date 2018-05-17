@@ -53,6 +53,41 @@ public class DetailASTUtil {
 		return endLine;
 	}
 
+	public static List<String> getImportNames(DetailAST detailAST) {
+		DetailAST rootAST = detailAST;
+
+		while (true) {
+			if (rootAST.getParent() != null) {
+				rootAST = rootAST.getParent();
+			}
+			else if (rootAST.getPreviousSibling() != null) {
+				rootAST = rootAST.getPreviousSibling();
+			}
+			else {
+				break;
+			}
+		}
+
+		List<String> importNamesList = new ArrayList<>();
+
+		DetailAST sibling = rootAST.getNextSibling();
+
+		while (true) {
+			if (sibling.getType() == TokenTypes.IMPORT) {
+				FullIdent importIdent = FullIdent.createFullIdentBelow(sibling);
+
+				importNamesList.add(importIdent.getText());
+			}
+			else {
+				break;
+			}
+
+			sibling = sibling.getNextSibling();
+		}
+
+		return importNamesList;
+	}
+
 	public static List<DetailAST> getMethodCalls(
 		DetailAST detailAST, String methodName) {
 

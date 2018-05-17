@@ -26,8 +26,13 @@ import java.util.Objects;
 public class AssetDisplayField {
 
 	public AssetDisplayField(String key, String label) {
+		this(key, label, _DEFAULT_TYPE);
+	}
+
+	public AssetDisplayField(String key, String label, String type) {
 		_key = key;
 		_label = label;
+		_type = type;
 	}
 
 	@Override
@@ -43,7 +48,8 @@ public class AssetDisplayField {
 		AssetDisplayField assetDisplayField = (AssetDisplayField)obj;
 
 		if (Objects.equals(_key, assetDisplayField._key) &&
-			Objects.equals(_label, assetDisplayField._label)) {
+			Objects.equals(_label, assetDisplayField._label) &&
+			Objects.equals(_type, assetDisplayField._type)) {
 
 			return true;
 		}
@@ -59,11 +65,17 @@ public class AssetDisplayField {
 		return _label;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _key);
 
-		return HashUtil.hash(hash, _label);
+		hash = HashUtil.hash(hash, _label);
+
+		return HashUtil.hash(hash, _type);
 	}
 
 	public JSONObject toJSONObject() {
@@ -71,11 +83,15 @@ public class AssetDisplayField {
 
 		jsonObject.put("key", getKey());
 		jsonObject.put("label", getLabel());
+		jsonObject.put("type", getType());
 
 		return jsonObject;
 	}
 
+	private static final String _DEFAULT_TYPE = "text";
+
 	private final String _key;
 	private final String _label;
+	private final String _type;
 
 }

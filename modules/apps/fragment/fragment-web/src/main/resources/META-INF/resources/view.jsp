@@ -111,13 +111,15 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 
 			<c:if test="<%= fragmentCollection != null %>">
 				<div class="sheet">
-					<div class="align-items-center autofit-row h3">
-						<div class="autofit-col">
-							<%= HtmlUtil.escape(fragmentCollection.getName()) %>
-						</div>
+					<h3 class="sheet-title">
+						<div class="align-items-center autofit-row">
+							<div class="autofit-col">
+								<%= HtmlUtil.escape(fragmentCollection.getName()) %>
+							</div>
 
-						<div class="autofit-col autofit-col-end inline-item-after">
-							<liferay-util:include page="/fragment_collection_action.jsp" servletContext="<%= application %>" />
+							<div class="autofit-col autofit-col-end inline-item-after">
+								<liferay-util:include page="/fragment_collection_action.jsp" servletContext="<%= application %>" />
+							</div>
 						</div>
 					</div>
 

@@ -19,7 +19,11 @@
 <%
 BackgroundTask backgroundTask = (BackgroundTask)request.getAttribute("liferay-staging:process-info:backgroundTask");
 
-User backgroundTaskUser = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
+User backgroundTaskUser = UserLocalServiceUtil.fetchUser(backgroundTask.getUserId());
 
-String userName = backgroundTaskUser.getFullName();
+String userName = LanguageUtil.get(request, "deleted-user");
+
+if (backgroundTaskUser != null) {
+	userName = backgroundTaskUser.getFullName();
+}
 %>

@@ -76,7 +76,13 @@ if (Validator.isNotNull(backURL)) {
 		>
 
 			<%
-			User backgroundTaskUser = UserLocalServiceUtil.getUser(curBackgroundTask.getUserId());
+			User backgroundTaskUser = UserLocalServiceUtil.fetchUser(backgroundTask.getUserId());
+
+			String backgroundTaskUserName = LanguageUtil.get(request, "deleted-user");
+
+			if (backgroundTaskUser != null) {
+				backgroundTaskUserName = backgroundTaskUser.getFullName();
+			}
 
 			Date createDate = curBackgroundTask.getCreateDate();
 
@@ -84,7 +90,7 @@ if (Validator.isNotNull(backURL)) {
 			%>
 
 			<h6 class="text-default">
-				<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(backgroundTaskUser.getFullName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+				<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(backgroundTaskUserName), modifiedDateDescription} %>" key="x-modified-x-ago" />
 			</h6>
 
 			<h5>

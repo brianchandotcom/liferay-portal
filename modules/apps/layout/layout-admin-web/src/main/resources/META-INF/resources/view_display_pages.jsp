@@ -39,7 +39,6 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	showSearch="<%= displayPageDisplayContext.isShowDisplayPagesSearch() %>"
 	sortingOrder="<%= displayPageDisplayContext.getOrderByType() %>"
 	sortingURL="<%= displayPageDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= displayPageDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteDisplayPageURL">
@@ -207,7 +206,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= displayPageDisplayContext.getDisplayStyle() %>"
+			displayStyle="icon"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

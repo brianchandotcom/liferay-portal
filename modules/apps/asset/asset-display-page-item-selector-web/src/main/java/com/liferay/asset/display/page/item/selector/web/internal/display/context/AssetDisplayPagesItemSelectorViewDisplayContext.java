@@ -24,8 +24,6 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
@@ -167,17 +165,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		return clearResultsURL.toString();
 	}
 
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		_displayStyle = ParamUtil.getString(
-			_portletRequest, "displayStyle", "icon");
-
-		return _displayStyle;
-	}
-
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -273,14 +260,6 @@ public class AssetDisplayPagesItemSelectorViewDisplayContext {
 		}
 
 		return assetDisplayContributor.getLabel(_themeDisplay.getLocale());
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() throws PortletException {
-		return new ViewTypeItemList(_getPortletURL(), getDisplayStyle()) {
-			{
-				addCardViewTypeItem();
-			}
-		};
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

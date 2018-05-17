@@ -34,7 +34,6 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 	showSearch="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>"
 	sortingOrder="<%= layoutPageTemplateDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutPageTemplateDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= layoutPageTemplateDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="/layout/delete_layout_page_template_entry" var="deleteLayoutPageTemplateEntryURL">
@@ -108,7 +107,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>"
+			displayStyle="icon"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

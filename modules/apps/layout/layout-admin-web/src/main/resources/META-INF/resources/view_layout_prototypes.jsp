@@ -34,7 +34,6 @@
 	showSearch="<%= false %>"
 	sortingOrder="<%= layoutPrototypeDisplayContext.getOrderByType() %>"
 	sortingURL="<%= layoutPrototypeDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= layoutPrototypeDisplayContext.getViewTypeItems() %>"
 />
 
 <portlet:actionURL name="/layout_prototype/delete_layout_prototype" var="deleteLayoutPrototypesURL">
@@ -100,7 +99,7 @@
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
-			displayStyle="<%= layoutPrototypeDisplayContext.getDisplayStyle() %>"
+			displayStyle="icon"
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>

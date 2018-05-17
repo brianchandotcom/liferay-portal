@@ -1,0 +1,7 @@
+<definition>
+	<command name="clickSitePagesCardLink">
+		<execute function="AssertClick" locator1="Card#SITE_PAGES_CARD_LINK" value1="${cardName}">
+			<var name="key_cardName" value="${cardName}" />
+		</execute>
+	</command>
+</definition>

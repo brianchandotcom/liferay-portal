@@ -204,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPENID_CONNECT</td>
+	<td>//a[@role='menuitem']/span[contains(.,'OpenId Connect')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRINT</td>
 	<td>//span/a[contains(.,'Print')]</td>
 	<td></td>

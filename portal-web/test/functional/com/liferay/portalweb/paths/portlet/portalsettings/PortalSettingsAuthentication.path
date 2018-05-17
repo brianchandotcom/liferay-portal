@@ -377,6 +377,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--AUTHENTICATION_OPEN_ID_CONNECT-->
+<tr>
+	<td>AUTHENTICATION_OPEN_ID_CONNECT_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@name,'openid_connect_enabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_OPEN_SSO-->
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX</td>

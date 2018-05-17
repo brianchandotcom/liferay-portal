@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPENID_CONNECT</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'OpenId Connect')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPENSSO</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'OpenSSO')]</td>
 	<td></td>

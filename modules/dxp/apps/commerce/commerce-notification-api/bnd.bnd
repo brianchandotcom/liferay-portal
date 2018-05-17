@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Commerce Notification API
+Bundle-SymbolicName: com.liferay.commerce.notification.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.notification.constants,\
+	com.liferay.commerce.notification.exception,\
+	com.liferay.commerce.notification.model,\
+	com.liferay.commerce.notification.service,\
+	com.liferay.commerce.notification.service.persistence,\
+	com.liferay.commerce.notification.type,\
+	com.liferay.commerce.notification.util.comparator

@@ -24,6 +24,7 @@ import com.liferay.apio.architect.resource.CollectionResource;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.commerce.headless.account.apio.identifier.AccountIdentifier;
+import com.liferay.commerce.headless.user.apio.identifier.UserIdentifier;
 import com.liferay.person.apio.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -91,7 +92,7 @@ public class AccountCollectionResource
 		).addLinkedModel(
 			"website", WebSiteIdentifier.class, this::_getSiteId
 		).addRelatedCollection(
-			"members", PersonIdentifier.class
+			"members", UserIdentifier.class
 		).addString(
 			"name", Organization::getName
 		).build();

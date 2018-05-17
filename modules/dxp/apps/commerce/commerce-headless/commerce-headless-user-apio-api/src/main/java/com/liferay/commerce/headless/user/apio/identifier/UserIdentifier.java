@@ -19,5 +19,5 @@ import com.liferay.apio.architect.identifier.Identifier;
 /**
  * @author Rodrigo Guedes de Souza
  */
-public interface RoleIdentifier extends Identifier<Long> {
+public interface UserIdentifier extends Identifier<Long> {
 }

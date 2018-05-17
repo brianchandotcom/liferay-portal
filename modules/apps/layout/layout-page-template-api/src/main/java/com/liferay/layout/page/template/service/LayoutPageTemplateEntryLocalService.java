@@ -79,6 +79,11 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type, long[] fragmentEntryIds, long layoutPrototypeId, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
+		long groupId, long layoutPageTemplateCollectionId, String name,
 		int type, long[] fragmentEntryIds, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -194,6 +199,10 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(long groupId,
+		long layoutPrototypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

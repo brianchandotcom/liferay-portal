@@ -52,7 +52,7 @@ import com.liferay.petra.string.StringPool;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"repeatable", "showLabel", "validation",
+								"showLabel", "repeatable", "validation",
 								"visibilityExpression"
 							}
 						)

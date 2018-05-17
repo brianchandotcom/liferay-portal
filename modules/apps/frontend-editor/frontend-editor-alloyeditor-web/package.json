@@ -25,7 +25,7 @@
 		}
 	},
 	"dependencies": {
-		"alloyeditor": "1.5.1"
+		"alloyeditor": "1.5.3"
 	},
 	"devDependencies": {
 		"babel-core": "^6.26.0",

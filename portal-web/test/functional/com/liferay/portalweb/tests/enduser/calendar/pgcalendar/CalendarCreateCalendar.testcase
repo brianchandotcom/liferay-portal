@@ -149,7 +149,7 @@
 		</execute>
 	</command>
 
-	<command name="ResizeAddedEventsViaEventBlock" priority="4">
+	<command name="ResizeAddedEventsViaEventBlock" priority="5">
 		<description message="This is a use case for LPS-45062." />
 
 		<execute macro="CalendarNavigator#gotoView">

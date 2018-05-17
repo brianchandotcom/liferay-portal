@@ -1,7 +1,5 @@
 import {onReady} from '../utils/events.js';
 
-const applicationId = 'Forms';
-
 /**
  * Returns an identifier for a form element.
  * @param {object} form The form DOM element
@@ -73,7 +71,7 @@ function trackFieldBlurred(analytics) {
 		const perfData = performance.getEntriesByName('focusDuration').pop();
 		const focusDuration = perfData.duration;
 
-		analytics.send('fieldBlurred', applicationId, {
+		analytics.send('fieldBlurred', 'forms', {
 			...payload,
 			focusDuration,
 		});
@@ -102,7 +100,7 @@ function trackFieldFocused(analytics) {
 		const focusMark = `${payload.formId}${payload.fieldName}focused`;
 		performance.mark(focusMark);
 
-		analytics.send('fieldFocused', applicationId, payload);
+		analytics.send('fieldFocused', 'forms', payload);
 	};
 
 	document.addEventListener('focus', onFocus, true);
@@ -119,7 +117,7 @@ function trackFormSubmitted(analytics) {
 	const onSubmit = ({target}) => {
 		if (!isTrackableForm(target)) return;
 
-		analytics.send('formSubmitted', applicationId, getFormPayload(target));
+		analytics.send('formSubmitted', 'forms', getFormPayload(target));
 	};
 
 	document.addEventListener('submit', onSubmit, true);
@@ -144,7 +142,7 @@ function trackFormViewed(analytics) {
 					payload = {title, ...payload};
 				}
 
-				analytics.send('formViewed', applicationId, payload);
+				analytics.send('formViewed', 'forms', payload);
 			});
 	});
 }

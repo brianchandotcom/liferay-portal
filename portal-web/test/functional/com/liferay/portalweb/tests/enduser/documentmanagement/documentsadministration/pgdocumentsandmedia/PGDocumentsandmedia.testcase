@@ -1035,9 +1035,14 @@
 			<var name="navTab" value="Miscellaneous" />
 		</execute>
 
+		<var method="MathUtil#randomNumber('3')" name="googlePropertiesSet" />
+
+		<var method="TestPropsUtil#get('google.api.key.${googlePropertiesSet}')" name="googleAppsAPIKey" />
+		<var method="TestPropsUtil#get('google.client.id.${googlePropertiesSet}')" name="googleClientID" />
+
 		<execute macro="PortalSettings#configureGoogleApps">
-			<var method="TestPropsUtil#get('google.api.key')" name="googleAppsAPIKey" />
-			<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
+			<var name="googleAppsAPIKey" value="${googleAppsAPIKey}" />
+			<var name="googleClientID" value="${googleClientID}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

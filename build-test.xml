@@ -7597,28 +7597,82 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 	<target name="prepare-selenium-google-properties">
 		<if>
-			<isset property="google.api.key" />
+			<isset property="google.api.key.1" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					google.api.key=${google.api.key}
+					google.api.key.1=${google.api.key.1}
 				</echo>
 			</then>
 		</if>
 
 		<if>
-			<isset property="google.client.id" />
+			<isset property="google.api.key.2" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					google.client.id=${google.client.id}
+					google.api.key.2=${google.api.key.2}
 				</echo>
 			</then>
 		</if>
 
 		<if>
-			<isset property="google.client.secret" />
+			<isset property="google.api.key.3" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					google.client.secret=${google.client.secret}
+					google.api.key.3=${google.api.key.3}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.id.1" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.id.1=${google.client.id.1}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.id.2" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.id.2=${google.client.id.2}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.id.3" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.id.3=${google.client.id.3}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.secret.1" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.secret.1=${google.client.secret.1}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.secret.2" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.secret.2=${google.client.secret.2}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="google.client.secret.3" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					google.client.secret.3=${google.client.secret.3}
 				</echo>
 			</then>
 		</if>

@@ -49,14 +49,13 @@ public class JDBCConnectionLeakDetectionTestCallback
 			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
 				serviceReference);
 
-			int[] initialConnectionsCount = _connectionPoolMap.remove(
+			int activeNumber = _connectionPoolActiveNumbers.remove(
 				connectionPoolMetrics.getConnectionPoolName());
 
 			Assert.assertEquals(
 				"Active connection count differ before and after test for " +
 					connectionPoolMetrics.getConnectionPoolName(),
-				initialConnectionsCount[0],
-				connectionPoolMetrics.getNumActive());
+				activeNumber, connectionPoolMetrics.getNumActive());
 
 			_registry.ungetService(serviceReference);
 		}
@@ -83,12 +82,9 @@ public class JDBCConnectionLeakDetectionTestCallback
 			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
 				serviceReference);
 
-			_connectionPoolMap.put(
+			_connectionPoolActiveNumbers.put(
 				connectionPoolMetrics.getConnectionPoolName(),
-				new int[] {
-					connectionPoolMetrics.getNumActive(),
-					connectionPoolMetrics.getNumIdle()
-				});
+				connectionPoolMetrics.getNumActive());
 
 			_registry.ungetService(serviceReference);
 		}
@@ -98,6 +94,7 @@ public class JDBCConnectionLeakDetectionTestCallback
 
 	private static Registry _registry;
 
-	private final Map<String, int[]> _connectionPoolMap = new HashMap<>();
+	private final Map<String, Integer> _connectionPoolActiveNumbers =
+		new HashMap<>();
 
 }

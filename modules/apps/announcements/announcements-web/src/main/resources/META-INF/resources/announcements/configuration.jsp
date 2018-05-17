@@ -284,7 +284,7 @@ if (!roles.isEmpty()) {
 			customizeAnnouncementsDisplayedCheckbox.addEventListener(
 				'change',
 				function() {
-					<portlet:namespace />modified(document.querySelector('#announcementsDisplayedPanel'));
+					<portlet:namespace />modified(document.querySelector('#<portlet:namespace />announcementsDisplayedPanel'));
 
 					var announcementsDisplayed = form.querySelector('#<portlet:namespace />announcementsDisplayed');
 
@@ -319,7 +319,7 @@ if (!roles.isEmpty()) {
 				}
 
 				if (selectedHTML != currSelectedHTML) {
-					var announcementsDisplayedPanel = document.querySelector('#announcementsDisplayedPanel');
+					var announcementsDisplayedPanel = document.querySelector('#<portlet:namespace />announcementsDisplayedPanel');
 
 					if (announcementsDisplayedPanel) {
 						modified(announcementsDisplayedPanel);
@@ -334,7 +334,7 @@ if (!roles.isEmpty()) {
 			pageDeltaInput.on(
 				'change',
 				function(event) {
-					var displaySettingsPanel = document.querySelector('#displaySettingsPanel');
+					var displaySettingsPanel = document.querySelector('#<portlet:namespace />displaySettingsPanel');
 
 					if (displaySettingsPanel) {
 						modified(displaySettingsPanel);

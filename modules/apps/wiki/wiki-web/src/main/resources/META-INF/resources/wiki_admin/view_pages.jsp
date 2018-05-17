@@ -85,6 +85,7 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 <clay:management-toolbar
 	actionDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getClearResultsURL()) %>"
+	componentId="wikiPagesManagementToolbar"
 	creationMenu="<%= wikiPagesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= wikiPagesManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
@@ -282,7 +283,7 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 </div>
 
 <aui:script>
-	function <portlet:namespace />deletePages() {
+	var deletePages = function() {
 		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
@@ -292,4 +293,23 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 			submitForm(form, '<portlet:actionURL name="/wiki/edit_page" />');
 		}
 	}
+
+	var ACTIONS = {
+		'deletePages': deletePages
+	};
+
+	Liferay.componentReady('wikiPagesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

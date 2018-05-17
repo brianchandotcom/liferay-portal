@@ -71,19 +71,22 @@ public interface CommercePriceListService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommercePriceList fetchCommercePriceList(long commercePriceListId);
+	public CommercePriceList fetchCommercePriceList(long commercePriceListId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceLists(long groupId,
-		int start, int end);
+		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceLists(long groupId,
 		int status, int start, int end,
-		OrderByComparator<CommercePriceList> orderByComparator);
+		OrderByComparator<CommercePriceList> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommercePriceListsCount(long groupId, int status);
+	public int getCommercePriceListsCount(long groupId, int status)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

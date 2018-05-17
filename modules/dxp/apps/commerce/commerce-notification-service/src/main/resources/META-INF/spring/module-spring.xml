@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateLocalServiceImpl" id="com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService" />
+	<bean class="com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateServiceImpl" id="com.liferay.commerce.notification.service.CommerceNotificationTemplateService" />
+	<bean class="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationTemplatePersistenceImpl" id="com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplatePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateUserSegmentRelLocalServiceImpl" id="com.liferay.commerce.notification.service.CommerceNotificationTemplateUserSegmentRelLocalService" />
+	<bean class="com.liferay.commerce.notification.service.impl.CommerceNotificationTemplateUserSegmentRelServiceImpl" id="com.liferay.commerce.notification.service.CommerceNotificationTemplateUserSegmentRelService" />
+	<bean class="com.liferay.commerce.notification.service.persistence.impl.CommerceNotificationTemplateUserSegmentRelPersistenceImpl" id="com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateUserSegmentRelPersistence" parent="basePersistence" />
+</beans>

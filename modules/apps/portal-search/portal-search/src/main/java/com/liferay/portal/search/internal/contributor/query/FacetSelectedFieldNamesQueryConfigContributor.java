@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "service.ranking=" + (DefaultSelectedFieldNamesQueryConfigContributor.RANKING - 1),
+	property = "service.ranking:Integer=" + (DefaultSelectedFieldNamesQueryConfigContributor.RANKING - 1),
 	service = QueryConfigContributor.class
 )
 public class FacetSelectedFieldNamesQueryConfigContributor

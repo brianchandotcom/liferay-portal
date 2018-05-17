@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.layout.page.template.exception;
 
 import aQute.bnd.annotation.ProviderType;
@@ -30,7 +31,9 @@ public class RequiredLayoutPageTemplateEntryException extends PortalException {
 		super(msg);
 	}
 
-	public RequiredLayoutPageTemplateEntryException(String msg, Throwable cause) {
+	public RequiredLayoutPageTemplateEntryException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

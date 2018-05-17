@@ -45,7 +45,7 @@
 	<command name="addViaDDLDisplayPG">
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
-		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<execute function="Click" locator1="DDL#TOOLBAR_ADD" />
 	</command>
 
 	<command name="clearFieldDocumentsAndMedia">

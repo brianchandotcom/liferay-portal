@@ -726,9 +726,7 @@
 			<var name="pageName" value="DDL Page" />
 		</execute>
 
-		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlListName" value="Dynamic Data List 2" />
-		</execute>
+		<execute macro="DDLRecord#addViaDDLDisplayPG" />
 
 		<execute macro="DDLRecord#addRepeatableField">
 			<var name="fieldName" value="Text" />

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +41,7 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
@@ -83,7 +85,8 @@ public class LanguageExtension implements Extension {
 		for (BundleCapability bundleCapability : _bundleCapabilities) {
 			ResourceBundleLoader resourceBundleLoader = null;
 
-			Map<String, Object> attributes = bundleCapability.getAttributes();
+			Map<String, Object> attributes = new HashMap<>(
+				bundleCapability.getAttributes());
 
 			Object aggregate = attributes.get("resource.bundle.aggregate");
 
@@ -116,6 +119,14 @@ public class LanguageExtension implements Extension {
 						attributes.getOrDefault(
 							"exclude.portal.resources",
 							Boolean.FALSE.toString())));
+			}
+
+			Object serviceRanking = attributes.get(Constants.SERVICE_RANKING);
+
+			if (Validator.isNotNull(serviceRanking)) {
+				attributes.put(
+					Constants.SERVICE_RANKING,
+					GetterUtil.getInteger(serviceRanking));
 			}
 
 			if (resourceBundleLoader != null) {

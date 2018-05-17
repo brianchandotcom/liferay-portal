@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance",
-		"service.ranking:Integer=" + Integer.MAX_VALUE
+		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)
 	},
 	service = BrowsePortletProvider.class
 )

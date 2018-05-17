@@ -81,10 +81,10 @@ public interface BookmarksGroupServiceConfiguration {
 	@Meta.AD(deflt = "true", name = "enable-related-assets", required = false)
 	public boolean enableRelatedAssets();
 
-	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
-		name = "entries-per-page", required = false
-	)
+	/**
+	 * @deprecated As of 3.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String entriesPerPage();
 
 	@Meta.AD(
@@ -99,10 +99,10 @@ public interface BookmarksGroupServiceConfiguration {
 	)
 	public String[] folderColumns();
 
-	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
-		name = "folders-per-page", required = false
-	)
+	/**
+	 * @deprecated As of 3.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String foldersPerPage();
 
 	@Meta.AD(deflt = "true", name = "show-folders-search", required = false)

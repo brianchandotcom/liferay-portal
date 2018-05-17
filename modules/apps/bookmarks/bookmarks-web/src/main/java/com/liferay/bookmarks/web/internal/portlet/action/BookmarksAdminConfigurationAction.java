@@ -74,13 +74,6 @@ public class BookmarksAdminConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
-	}
-
 	protected void validateRootFolder(ActionRequest actionRequest)
 		throws Exception {
 
@@ -107,6 +100,7 @@ public class BookmarksAdminConfigurationAction
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksAdminConfigurationAction.class);
 
+	@Reference
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

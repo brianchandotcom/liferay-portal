@@ -89,8 +89,6 @@ catch (NoSuchFolderException nsfe) {
 
 						<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.showSubfolders() %>" />
 
-						<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= bookmarksGroupServiceOverriddenConfiguration.foldersPerPage() %>" />
-
 						<aui:field-wrapper label="show-columns">
 
 							<%
@@ -137,8 +135,6 @@ catch (NoSuchFolderException nsfe) {
 						label="bookmarks-listing"
 					>
 						<aui:input label="show-related-assets" name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>" />
-
-						<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="text" value="<%= bookmarksGroupServiceOverriddenConfiguration.entriesPerPage() %>" />
 
 						<aui:field-wrapper label="show-columns">
 

@@ -111,7 +111,10 @@ public class DDMFormAdminFieldSetDisplayContext
 							"javascript:" + renderResponse.getNamespace() +
 								"deleteStructures();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("recycle-bin");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								formAdminRequestHelper.getRequest(),
+								"recycle-bin"));
 						dropdownItem.setQuickAction(true);
 					});
 			}

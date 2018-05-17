@@ -142,7 +142,9 @@ public class DDMFormAdminDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteFormInstances();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								formAdminRequestHelper.getRequest(), "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -866,7 +868,9 @@ public class DDMFormAdminDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "navigation", "all");
 
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								formAdminRequestHelper.getRequest(), "all"));
 					});
 			}
 		};

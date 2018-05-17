@@ -100,6 +100,9 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_renderRequest);
+
 		return new DropdownItemList() {
 
 			{
@@ -109,7 +112,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteRecords();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("delete");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "delete"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -409,6 +413,9 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	protected List<DropdownItem> getFilterNavigationDropdownItems() {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_renderRequest);
+
 		return new DropdownItemList() {
 			{
 				add(
@@ -418,7 +425,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "navigation", "all");
 
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 					});
 			}
 		};

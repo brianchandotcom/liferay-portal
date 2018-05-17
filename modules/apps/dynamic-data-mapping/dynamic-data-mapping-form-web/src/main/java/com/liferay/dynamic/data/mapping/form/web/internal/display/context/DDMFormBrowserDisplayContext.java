@@ -311,7 +311,9 @@ public class DDMFormBrowserDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "navigation", "all");
 
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_formWebRequestHelper.getRequest(), "all"));
 					});
 			}
 		};

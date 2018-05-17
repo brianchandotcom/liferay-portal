@@ -127,7 +127,10 @@ public class DDMDataProviderDisplayContext {
 							"javascript:" + _renderResponse.getNamespace() +
 								"deleteDataProviderInstances();");
 						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel("recycle-bin");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_ddmDataProviderRequestHelper.getRequest(),
+								"recycle-bin"));
 						dropdownItem.setQuickAction(true);
 					});
 			}
@@ -527,7 +530,10 @@ public class DDMDataProviderDisplayContext {
 						dropdownItem.setHref(
 							getPortletURL(), "navigation", "all");
 
-						dropdownItem.setLabel("all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_ddmDataProviderRequestHelper.getRequest(),
+								"all"));
 					});
 			}
 

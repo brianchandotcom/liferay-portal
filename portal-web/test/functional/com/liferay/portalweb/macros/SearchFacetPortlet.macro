@@ -88,6 +88,26 @@
 		</if>
 	</command>
 
+	<command name="configureCustomFacet">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Custom Facet" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<if>
+			<isset var="aggregationField" />
+			<then>
+				<execute function="Type" locator1="SearchResults#CUSTOM_FACET_CONFIG_AGGREGATION_FIELD" value1="${aggregationField}" />
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="generateFacetCheckedURL" returns="updatedSearchURL">
 		<if>
 			<not>

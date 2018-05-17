@@ -70,8 +70,7 @@ public class EleflowForecastCallbackHandler implements Handler<RoutingContext> {
 			forecasts -> {
 				Future<Void> future = Future.future();
 
-				_forecastService.addForecasts(
-					project.getId(), forecasts, future);
+				_forecastService.addForecasts(project, forecasts, future);
 
 				return future;
 			}

@@ -16,7 +16,9 @@ package com.liferay.commerce.cloud.server.service.impl;
 
 import com.liferay.commerce.cloud.server.constants.ContentTypes;
 import com.liferay.commerce.cloud.server.model.Forecast;
+import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.service.ForecastService;
+import com.liferay.commerce.cloud.server.service.PushSenderService;
 import com.liferay.commerce.cloud.server.util.JsonUtil;
 import com.liferay.commerce.cloud.server.util.VertxUtil;
 
@@ -44,12 +46,14 @@ public class WeDeployForecastServiceImpl
 
 	public WeDeployForecastServiceImpl(Vertx vertx, String host, String token) {
 		super(vertx, host, token);
+
+		_pushSenderService = PushSenderService.createProxy(vertx);
 	}
 
 	@Override
 	@SuppressWarnings("rawtypes")
 	public void addForecasts(
-		String projectId, List<Forecast> forecasts,
+		Project project, List<Forecast> forecasts,
 		Handler<AsyncResult<Void>> handler) {
 
 		HttpRequest<Void> httpRequest = webClient.post(
@@ -61,15 +65,17 @@ public class WeDeployForecastServiceImpl
 		addAuthorization(httpRequest);
 
 		List<Future> futures = new ArrayList<>(
-			(int)Math.ceil((double)forecasts.size() / _FORECASTS_SIZE));
+			(int)Math.ceil((double)forecasts.size() / _FORECASTS_SIZE) + 1);
+
+		futures.add(_pushForecasts(project, forecasts));
 
 		JsonArray jsonArray = new JsonArray();
 
 		for (Forecast forecast : forecasts) {
 			JsonObject jsonObject = forecast.toJson();
 
-			jsonObject.put("id", _getId(projectId, forecast));
-			jsonObject.put("projectId", projectId);
+			jsonObject.put("id", _getId(project, forecast));
+			jsonObject.put("projectId", project.getId());
 
 			jsonArray.add(jsonObject);
 
@@ -144,10 +150,10 @@ public class WeDeployForecastServiceImpl
 		return future;
 	}
 
-	private String _getId(String projectId, Forecast forecast) {
+	private String _getId(Project project, Forecast forecast) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(projectId);
+		sb.append(project.getId());
 		sb.append('-');
 		sb.append(forecast.getCompanyId());
 		sb.append('-');
@@ -162,6 +168,16 @@ public class WeDeployForecastServiceImpl
 		return sb.toString();
 	}
 
+	private Future<Void> _pushForecasts(
+		Project project, List<Forecast> forecasts) {
+
+		Future<Void> future = Future.future();
+
+		_pushSenderService.pushForecasts(project, forecasts, future);
+
+		return future;
+	}
+
 	private static final int _FORECASTS_SIZE = 200;
 
 	private static final BodyCodec<List<Forecast>> _forecastsBodyCodec;
@@ -171,5 +187,7 @@ public class WeDeployForecastServiceImpl
 			BodyCodecImpl.JSON_ARRAY_DECODER.andThen(
 				jsonArray -> JsonUtil.fromJsonArray(jsonArray, Forecast::new)));
 	}
+
+	private final PushSenderService _pushSenderService;
 
 }

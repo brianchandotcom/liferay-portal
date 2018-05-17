@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaPackagePathCheck" files="portal-osgi-debug-declarative-service/src/main/java/com/liferay/portal/osgi/debug/declarative/service/internal/SoftCircularDependencyOSGiCommands\.java" />
+		<suppress checks="JavaPackagePathCheck" files="portal-osgi-debug-declarative-service/src/main/java/com/liferay/portal/osgi/debug/declarative/service/internal/UnsatisfiedComponentOSGiCommands\.java" />
+	</source-check>
+</suppressions>

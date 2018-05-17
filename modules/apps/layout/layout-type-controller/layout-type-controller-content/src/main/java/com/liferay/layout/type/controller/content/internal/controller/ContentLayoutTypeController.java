@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -75,9 +77,18 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
 			fragmentEntryLinks);
 
+		String layoutMode = ParamUtil.getString(
+			request, "p_l_mode", Constants.VIEW);
+
+		String page = getViewPage();
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			page = _EDIT_LAYOUT_PAGE;
+		}
+
 		RequestDispatcher requestDispatcher =
 			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
-				servletContext.getRequestDispatcher(getViewPage()));
+				servletContext.getRequestDispatcher(page));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

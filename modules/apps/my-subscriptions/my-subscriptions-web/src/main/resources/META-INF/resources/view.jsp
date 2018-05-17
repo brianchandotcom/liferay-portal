@@ -26,6 +26,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 
 <clay:management-toolbar
 	actionDropdownItems="<%= mySubscriptionsManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	componentId="mySubscriptionsManagementToolbar"
 	disabled="<%= mySubscriptionsManagementToolbarDisplayContext.isDisabled() %>"
 	itemsTotal="<%= subscriptionsCount %>"
 	searchContainerId="subscriptions"
@@ -137,16 +138,32 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 		},
 		['liferay-util-window']
 	);
+</aui:script>
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />unsubscribe',
-		function() {
-			document.<portlet:namespace />fm.method = 'post';
-			document.<portlet:namespace />fm.<portlet:namespace />subscriptionIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+<aui:script sandbox="<%= true %>" use="liferay-util-list-fields">
+	var unsubscribe = function() {
+		document.<portlet:namespace />fm.method = 'post';
+		document.<portlet:namespace />fm.<portlet:namespace />subscriptionIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
+		submitForm(document.<portlet:namespace />fm);
+	};
+
+	var ACTIONS = {
+		'unsubscribe': unsubscribe
+	};
+
+	Liferay.componentReady('mySubscriptionsManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
 	);
 </aui:script>

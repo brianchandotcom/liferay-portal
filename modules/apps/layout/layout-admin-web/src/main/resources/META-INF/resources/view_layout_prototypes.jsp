@@ -55,18 +55,22 @@
 
 			<%
 			Group layoutPrototypeGroup = layoutPrototype.getGroup();
+
+			row.setCssClass("entry-card lfr-asset-item");
 			%>
 
-			<c:choose>
-				<c:when test="<%= layoutPrototypeDisplayContext.isDescriptiveView() %>">
-					<liferay-ui:search-container-column-icon
-						icon="page-template"
-						toggleRowChecker="<%= true %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
+			<liferay-ui:search-container-column-text>
+				<liferay-frontend:icon-vertical-card
+					actionJsp="/layout_prototype_action.jsp"
+					actionJspServletContext="<%= application %>"
+					cssClass="entry-display-style"
+					icon="page-template"
+					resultRow="<%= row %>"
+					rowChecker="<%= searchContainer.getRowChecker() %>"
+					title="<%= layoutPrototype.getName(locale) %>"
+					url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>"
+				>
+					<liferay-frontend:vertical-card-header>
 
 						<%
 						Date createDate = layoutPrototype.getModifiedDate();
@@ -74,112 +78,25 @@
 						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 						%>
 
-						<h6 class="text-default">
-							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="created-x-ago" /></span>
-						</h6>
+						<label class="text-default">
+							<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="created-x-ago" />
+						</label>
+					</liferay-frontend:vertical-card-header>
 
-						<h5>
-							<aui:a href="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>" target="_blank"><%= layoutPrototype.getName(locale) %></aui:a>
-						</h5>
-
-						<h6 class="text-default">
+					<liferay-frontend:vertical-card-footer>
+						<label class="text-default">
 							<c:choose>
 								<c:when test="<%= layoutPrototype.isActive() %>">
-									<span><liferay-ui:message key="active" /></span>
+									<liferay-ui:message key="active" />
 								</c:when>
 								<c:otherwise>
-									<span><liferay-ui:message key="not-active" /></span>
+									<liferay-ui:message key="not-active" />
 								</c:otherwise>
 							</c:choose>
-						</h6>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-jsp
-						path="/layout_prototype_action.jsp"
-					/>
-				</c:when>
-				<c:when test="<%= layoutPrototypeDisplayContext.isIconView() %>">
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							actionJsp="/layout_prototype_action.jsp"
-							actionJspServletContext="<%= application %>"
-							cssClass="entry-display-style"
-							icon="page-template"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= layoutPrototype.getName(locale) %>"
-							url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>"
-						>
-							<liferay-frontend:vertical-card-header>
-
-								<%
-								Date createDate = layoutPrototype.getModifiedDate();
-
-								String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-								%>
-
-								<label class="text-default">
-									<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="created-x-ago" />
-								</label>
-							</liferay-frontend:vertical-card-header>
-
-							<liferay-frontend:vertical-card-footer>
-								<label class="text-default">
-									<c:choose>
-										<c:when test="<%= layoutPrototype.isActive() %>">
-											<liferay-ui:message key="active" />
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message key="not-active" />
-										</c:otherwise>
-									</c:choose>
-								</label>
-							</liferay-frontend:vertical-card-footer>
-						</liferay-frontend:icon-vertical-card>
-					</liferay-ui:search-container-column-text>
-				</c:when>
-				<c:when test="<%= layoutPrototypeDisplayContext.isListView() %>">
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="name"
-					>
-						<aui:a href="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>" target="_blank"><%= layoutPrototype.getName(locale) %></aui:a>
-
-						<%
-						int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
-						%>
-
-						<c:if test="<%= mergeFailCount > PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD %>">
-							<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "page-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
-						</c:if>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						name="description"
-						value="<%= layoutPrototype.getDescription(locale) %>"
-					/>
-
-					<liferay-ui:search-container-column-date
-						name="create-date"
-						property="createDate"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="active"
-						value='<%= LanguageUtil.get(request, layoutPrototype.isActive()? "yes" : "no") %>'
-					/>
-
-					<liferay-ui:search-container-column-jsp
-						path="/layout_prototype_action.jsp"
-					/>
-				</c:when>
-			</c:choose>
+						</label>
+					</liferay-frontend:vertical-card-footer>
+				</liferay-frontend:icon-vertical-card>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

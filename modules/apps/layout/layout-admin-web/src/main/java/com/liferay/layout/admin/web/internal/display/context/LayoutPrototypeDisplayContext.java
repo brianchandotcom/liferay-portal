@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.LayoutPrototypeCreateDateComparator;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.util.comparator.LayoutPrototypeCreateDateCompar
 import java.util.List;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -117,7 +115,7 @@ public class LayoutPrototypeDisplayContext {
 
 		_displayStyle = portalPreferences.getValue(
 			LayoutPrototypePortletKeys.LAYOUT_PROTOTYPE, "display-style",
-			"list");
+			"icon");
 
 		return _displayStyle;
 	}
@@ -245,25 +243,11 @@ public class LayoutPrototypeDisplayContext {
 	public List<ViewTypeItem> getViewTypeItems() {
 		PortletURL portletURL = _renderResponse.createActionURL();
 
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "changeDisplayStyle");
-		portletURL.setParameter("redirect", PortalUtil.getCurrentURL(_request));
-
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				addCardViewTypeItem();
-				addListViewTypeItem();
-				addTableViewTypeItem();
 			}
 		};
-	}
-
-	public boolean isDescriptiveView() {
-		if (Objects.equals(getDisplayStyle(), "descriptive")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isDisabledManagementBar() {
@@ -276,22 +260,6 @@ public class LayoutPrototypeDisplayContext {
 		}
 
 		return true;
-	}
-
-	public boolean isIconView() {
-		if (Objects.equals(getDisplayStyle(), "icon")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean isListView() {
-		if (Objects.equals(getDisplayStyle(), "list")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isShowAddButton() {

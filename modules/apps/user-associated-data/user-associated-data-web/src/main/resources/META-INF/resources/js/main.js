@@ -63,13 +63,17 @@ AUI.add(
 									method: 'GET',
 									on: {
 										success: function(event, id, obj) {
-											exportProcessesNode.plug(A.Plugin.ParseContent);
+											var responseData = this.get('responseData');
 
-											exportProcessesNode.empty();
+											if (responseData) {
+												exportProcessesNode.plug(A.Plugin.ParseContent);
 
-											exportProcessesNode.setContent(this.get('responseData'));
+												exportProcessesNode.empty();
 
-											instance._scheduleRenderProcess();
+												exportProcessesNode.setContent(responseData);
+
+												instance._scheduleRenderProcess();
+											}
 										}
 									}
 								}

@@ -72,8 +72,8 @@ public class AMImageHTMLExportImportContentProcessor
 
 		Document document = _parseDocument(content);
 
-		for (Element element : document.select("[data-fileEntryId]")) {
-			long fileEntryId = Long.valueOf(element.attr("data-fileEntryId"));
+		for (Element element : document.select("[data-fileentryid]")) {
+			long fileEntryId = Long.valueOf(element.attr("data-fileentryid"));
 
 			_dlAppLocalService.getFileEntry(fileEntryId);
 		}
@@ -156,7 +156,7 @@ public class AMImageHTMLExportImportContentProcessor
 				continue;
 			}
 
-			element.attr("data-fileEntryId", String.valueOf(fileEntryId));
+			element.attr("data-fileentryid", String.valueOf(fileEntryId));
 			element.removeAttr(_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH);
 
 			if ("picture".equals(element.tagName())) {
@@ -166,7 +166,7 @@ public class AMImageHTMLExportImportContentProcessor
 
 				imgElement.removeAttr(_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH);
 				imgElement.attr(
-					"data-fileEntryId", String.valueOf(fileEntryId));
+					"data-fileentryid", String.valueOf(fileEntryId));
 
 				Element picture = _parseNode(
 					_amImageHTMLTagFactory.create(
@@ -186,8 +186,8 @@ public class AMImageHTMLExportImportContentProcessor
 
 		Document document = _parseDocument(content);
 
-		for (Element element : document.select("[data-fileEntryId]")) {
-			long fileEntryId = Long.valueOf(element.attr("data-fileEntryId"));
+		for (Element element : document.select("[data-fileentryid]")) {
+			long fileEntryId = Long.valueOf(element.attr("data-fileentryid"));
 
 			try {
 				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
@@ -195,7 +195,7 @@ public class AMImageHTMLExportImportContentProcessor
 
 				amReferenceExporter.exportReference(fileEntry);
 
-				element.removeAttr("data-fileEntryId");
+				element.removeAttr("data-fileentryid");
 				element.attr(
 					_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH,
 					ExportImportPathUtil.getModelPath(fileEntry));

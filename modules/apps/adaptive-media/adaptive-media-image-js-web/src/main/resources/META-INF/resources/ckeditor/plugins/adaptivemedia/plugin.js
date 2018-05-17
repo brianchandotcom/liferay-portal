@@ -5,7 +5,7 @@
 
 	var STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE = 'com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType';
 
-	var TPL_PICTURE_TAG = '<picture data-fileEntryId="{fileEntryId}">{sources}<img src="{defaultSrc}"></picture>';
+	var TPL_PICTURE_TAG = '<picture data-fileentryid="{fileEntryId}">{sources}<img src="{defaultSrc}"></picture>';
 
 	var TPL_SOURCE_TAG = '<source srcset="{srcset}" media="{media}">';
 
@@ -98,7 +98,7 @@
 					var itemValue = JSON.parse(selectedItem.value);
 
 					imgEl.setAttribute('src', itemValue.url);
-					imgEl.setAttribute('data-fileEntryId', itemValue.fileEntryId);
+					imgEl.setAttribute('data-fileentryid', itemValue.fileEntryId);
 				}
 				else {
 					imgEl.setAttribute('src', imageSrc);

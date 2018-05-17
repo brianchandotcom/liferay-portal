@@ -94,7 +94,7 @@ public class HtmlContentTransformerImpl
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"<img [^>]*?\\s*data-fileEntryId=\"(\\d+)\".*?/>",
+		"<img [^>]*?\\s*data-fileentryid=\"(\\d+)\".*?/>",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;

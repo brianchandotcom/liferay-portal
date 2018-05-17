@@ -46,7 +46,7 @@ public class AMHTMLImageAttachmentElementReplacer
 				originalElement, fileEntry));
 
 		imageElement.attr(
-			"data-fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+			"data-fileentryid", String.valueOf(fileEntry.getFileEntryId()));
 
 		return imageElement.toString();
 	}

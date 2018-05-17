@@ -61,7 +61,7 @@ public class AMHTMLImageAttachmentElementHandlerTest extends PowerMockito {
 		String originalImgTag = String.format(
 			"<img src=\"%s\" />", _FILE_ENTRY_IMAGE_URL);
 		String expectedImgTag = String.format(
-			"<img src=\"%s\" data-fileEntryId=\"%s\" />", _FILE_ENTRY_IMAGE_URL,
+			"<img src=\"%s\" data-fileentryid=\"%s\" />", _FILE_ENTRY_IMAGE_URL,
 			_IMAGE_FILE_ENTRY_ID);
 
 		String actualTag = _amHTMLImageAttachmentElementReplacer.replace(
@@ -77,7 +77,7 @@ public class AMHTMLImageAttachmentElementHandlerTest extends PowerMockito {
 		String originalImgTag = String.format(
 			"<img class=\"custom\" src=\"%s\" />", _FILE_ENTRY_IMAGE_URL);
 		String expectedImgTag = String.format(
-			"<img class=\"custom\" src=\"%s\" data-fileEntryId=\"%s\" />",
+			"<img class=\"custom\" src=\"%s\" data-fileentryid=\"%s\" />",
 			_FILE_ENTRY_IMAGE_URL, _IMAGE_FILE_ENTRY_ID);
 
 		String actualTag = _amHTMLImageAttachmentElementReplacer.replace(

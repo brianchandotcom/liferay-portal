@@ -3,7 +3,7 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import {showImageEditing} from './fragment_processors/EditableImageFragmentProcessor.es';
-import {createTextEditor} from './fragment_processors/EditableTextFragmentProcessor.es';
+import {createTextEditor, destroyTextEditor, getActiveEditableElement} from './fragment_processors/EditableTextFragmentProcessor.es';
 import templates from './FragmentEditableField.soy';
 
 class FragmentEditableField extends Component {
@@ -18,6 +18,47 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	rendered() {
+		if (this._showEditor) {
+			if (this.type === 'image') {
+				showImageEditing(
+					this.refs.editable,
+					this.portletNamespace,
+					this.imageSelectorURL,
+					this.fragmentEntryLinkId,
+					this._handleEditableChanged
+				);
+			}
+			else {
+				createTextEditor(
+					this.refs.editable,
+					this.defaultEditorConfiguration,
+					this.portletNamespace,
+					this.fragmentEntryLinkId,
+					this._handleEditableChanged
+				);
+			}
+
+			this._showEditor = false;
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 * @param changes
+	 * @return {boolean}
+	 * @review
+	 */
+
+	shouldUpdate(changes) {
+		return !!changes.content || !!changes._showTooltip;
+	}
+
+	/**
 	 * Handle editable click event
 	 * @param {Event} event
 	 * @private
@@ -27,7 +68,9 @@ class FragmentEditableField extends Component {
 		event.preventDefault();
 		event.stopPropagation();
 
-		this._showTooltip = true;
+		if (getActiveEditableElement() !== this.refs.editable) {
+			this._showTooltip = !this._showTooltip;
+		}
 	}
 
 	/**
@@ -36,24 +79,10 @@ class FragmentEditableField extends Component {
 	 */
 
 	_handleEditButtonClick() {
-		if (this.type === 'image') {
-			showImageEditing(
-				this.refs.editable,
-				this.portletNamespace,
-				this.imageSelectorURL,
-				this.fragmentEntryLinkId,
-				this._handleEditableChanged
-			);
-		}
-		else {
-			createTextEditor(
-				this.refs.editable,
-				this.defaultEditorConfiguration,
-				this.portletNamespace,
-				this.fragmentEntryLinkId,
-				this._handleEditableChanged
-			);
-		}
+		destroyTextEditor();
+
+		this._showTooltip = false;
+		this._showEditor = true;
 	}
 
 	/**
@@ -78,6 +107,8 @@ class FragmentEditableField extends Component {
 	 */
 
 	_handleMapButtonClick() {
+		this._showTooltip = false;
+
 		this.emit(
 			'mapButtonClicked',
 			{editableId: this.editableId}
@@ -172,10 +203,23 @@ FragmentEditableField.STATE = {
 	type: Config.string().required(),
 
 	/**
+	 * Flag indicating if the editable editor should be enabled.
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	_showEditor: Config.internal().bool().value(false),
+
+	/**
 	 * Flag indicating if the click tooltip should be visible.
 	 * @default false
 	 * @instance
 	 * @memberOf FragmentEditableField
+	 * @private
 	 * @review
 	 * @type {boolean}
 	 */

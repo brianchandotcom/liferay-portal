@@ -152,23 +152,33 @@ class FragmentEntryLink extends Component {
 		this._editables = [
 			...this.refs.content.querySelectorAll('lfr-editable')
 		].map(
-			editable => new FragmentEditableField(
-				{
-					content: editable.innerHTML,
-					editableId: editable.id,
-					element: editable,
+			editable => {
+				let editableValues = (
+					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
+					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.id]
+				) ? this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.id] :
+					{defaultValue: editable.innerHTML};
 
-					events: {
-						editableChanged: this._handleEditableChanged,
-						mapButtonClicked: this._handleMapButtonClick
-					},
+				return new FragmentEditableField(
+					{
+						content: editable.innerHTML,
+						editableId: editable.id,
+						editableValues,
+						element: editable,
 
-					fragmentEntryLinkId: this.fragmentEntryLinkId,
-					imageSelectorURL: this.imageSelectorURL,
-					portletNamespace: this.portletNamespace,
-					type: editable.getAttribute('type')
-				}
-			)
+						events: {
+							editableChanged: this._handleEditableChanged,
+							mapButtonClicked: this._handleMapButtonClick
+						},
+
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						imageSelectorURL: this.imageSelectorURL,
+						languageId: this.languageId,
+						portletNamespace: this.portletNamespace,
+						type: editable.getAttribute('type')
+					}
+				);
+			}
 		);
 	}
 

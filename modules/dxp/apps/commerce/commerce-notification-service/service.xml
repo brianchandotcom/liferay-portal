@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.notification">
+	<author>Alessio Antonio Rendina</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceNotificationTemplate" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceNotificationTemplateId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="cc" type="String" />
+		<column name="ccn" type="String" />
+		<column name="type" type="String" />
+		<column name="enabled" type="boolean" />
+		<column localized="true" name="subject" type="String" />
+		<column localized="true" name="body" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+	</entity>
+	<entity local-service="true" name="CommerceNotificationTemplateUserSegmentRel" remote-service="true" table="CNTemplateUserSegmentRel">
+
+		<!-- PK fields -->
+
+		<column db-name="CNTemplateUserSegmentRelId" name="commerceNotificationTemplateUserSegmentRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceNotificationTemplateId" type="long" />
+		<column name="commerceUserSegmentEntryId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceNotificationTemplateId" return-type="Collection">
+			<finder-column name="commerceNotificationTemplateId" />
+		</finder>
+		<finder name="CommerceUserSegmentEntryId" return-type="Collection">
+			<finder-column name="commerceUserSegmentEntryId" />
+		</finder>
+		<finder name="C_C" return-type="CommerceNotificationTemplateUserSegmentRel" unique="true">
+			<finder-column name="commerceNotificationTemplateId" />
+			<finder-column name="commerceUserSegmentEntryId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>CommerceNotificationTemplateName</exception>
+		<exception>CommerceNotificationTemplateType</exception>
+	</exceptions>
+</service-builder>

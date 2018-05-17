@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>HOME</td>
-	<td>//div[contains(@class,'navbar')]//a[contains(.,'Home')]</td>
+	<td>//ul[contains(@class,'breadcrumb')]/li//a[contains(.,'Home')]</td>
 	<td></td>
 </tr>
 <tr>

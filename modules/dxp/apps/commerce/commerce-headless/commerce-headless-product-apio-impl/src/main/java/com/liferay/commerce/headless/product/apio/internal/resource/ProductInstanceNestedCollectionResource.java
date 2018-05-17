@@ -150,7 +150,8 @@ public class ProductInstanceNestedCollectionResource
 		}
 		catch (CPInstanceExpirationDateException cpiede) {
 			throw new BadRequestException(
-				"Expiration Date no defined on Product Instance " + form.getSku(),
+				"Expiration Date no defined on Product Instance " +
+					form.getSku(),
 				cpiede);
 		}
 		catch (PortalException pe) {
@@ -182,7 +183,7 @@ public class ProductInstanceNestedCollectionResource
 			if (hits.getLength() > 1) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"More than one document found for product sku with ID " +
+						"More than one document found for sku with ID " +
 							cpInstanceId);
 				}
 

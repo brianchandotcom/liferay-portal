@@ -31,10 +31,10 @@
 		<field name="type" type="int" />
 		<field name="htmlPreviewEntryId" type="long" />
 		<field name="defaultTemplate" type="boolean" />
+		<field name="layoutPrototypeId" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
-		<field name="layoutPrototypeId" type="long" />
 	</model>
 </model-hints>

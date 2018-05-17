@@ -150,6 +150,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		newLayoutPageTemplateEntry.setDefaultTemplate(RandomTestUtil.randomBoolean());
 
+		newLayoutPageTemplateEntry.setLayoutPrototypeId(RandomTestUtil.nextLong());
+
 		newLayoutPageTemplateEntry.setStatus(RandomTestUtil.nextInt());
 
 		newLayoutPageTemplateEntry.setStatusByUserId(RandomTestUtil.nextLong());
@@ -157,8 +159,6 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		newLayoutPageTemplateEntry.setStatusByUserName(RandomTestUtil.randomString());
 
 		newLayoutPageTemplateEntry.setStatusDate(RandomTestUtil.nextDate());
-
-		newLayoutPageTemplateEntry.setLayoutPrototypeId(RandomTestUtil.nextLong());
 
 		_layoutPageTemplateEntries.add(_persistence.update(
 				newLayoutPageTemplateEntry));
@@ -195,6 +195,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			newLayoutPageTemplateEntry.getHtmlPreviewEntryId());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.isDefaultTemplate(),
 			newLayoutPageTemplateEntry.isDefaultTemplate());
+		Assert.assertEquals(existingLayoutPageTemplateEntry.getLayoutPrototypeId(),
+			newLayoutPageTemplateEntry.getLayoutPrototypeId());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getStatus(),
 			newLayoutPageTemplateEntry.getStatus());
 		Assert.assertEquals(existingLayoutPageTemplateEntry.getStatusByUserId(),
@@ -204,8 +206,6 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutPageTemplateEntry.getStatusDate()),
 			Time.getShortTimestamp(newLayoutPageTemplateEntry.getStatusDate()));
-		Assert.assertEquals(existingLayoutPageTemplateEntry.getLayoutPrototypeId(),
-			newLayoutPageTemplateEntry.getLayoutPrototypeId());
 	}
 
 	@Test
@@ -399,8 +399,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 			"modifiedDate", true, "layoutPageTemplateCollectionId", true,
 			"classNameId", true, "classTypeId", true, "name", true, "type",
 			true, "htmlPreviewEntryId", true, "defaultTemplate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true, "layoutPrototypeId", true);
+			"layoutPrototypeId", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -667,6 +667,8 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		layoutPageTemplateEntry.setDefaultTemplate(RandomTestUtil.randomBoolean());
 
+		layoutPageTemplateEntry.setLayoutPrototypeId(RandomTestUtil.nextLong());
+
 		layoutPageTemplateEntry.setStatus(RandomTestUtil.nextInt());
 
 		layoutPageTemplateEntry.setStatusByUserId(RandomTestUtil.nextLong());
@@ -674,8 +676,6 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		layoutPageTemplateEntry.setStatusByUserName(RandomTestUtil.randomString());
 
 		layoutPageTemplateEntry.setStatusDate(RandomTestUtil.nextDate());
-
-		layoutPageTemplateEntry.setLayoutPrototypeId(RandomTestUtil.nextLong());
 
 		_layoutPageTemplateEntries.add(_persistence.update(
 				layoutPageTemplateEntry));

@@ -25,9 +25,9 @@ create table LayoutPageTemplateEntry (
 	type_ INTEGER,
 	htmlPreviewEntryId LONG,
 	defaultTemplate BOOLEAN,
+	layoutPrototypeId LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	layoutPrototypeId LONG
+	statusDate DATE null
 );

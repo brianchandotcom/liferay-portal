@@ -23,6 +23,7 @@
 		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/ant-bnd/src/main/java/com/liferay/ant/bnd/social/SocialAnalyzerPlugin\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/gradle-plugins-defaults/src/main/java/com/liferay/gradle/plugins/defaults/internal/util/XMLUtil\.java" />
 		<suppress checks="JavaXMLSecurityCheck" files="modules/sdk/gradle-plugins-maven-plugin-builder/src/main/java/com/liferay/gradle/plugins/maven/plugin/builder/internal/util/XMLUtil\.java" />
+		<suppress checks="JSONValidationCheck" files="modules/sdk/project-templates/.*" />
 		<suppress checks="XMLBuildFileCheck" files="modules/sdk/gradle-plugins-workspace/src/gradleTest/distBundleZip/plugins-sdk/layouttpl/qux-layouttpl/build.xml" />
 	</source-check>
 </suppressions>

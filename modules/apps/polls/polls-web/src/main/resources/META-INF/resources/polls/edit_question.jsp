@@ -33,7 +33,7 @@ int choiceName = ParamUtil.getInteger(request, "choiceName");
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
-List choices = new ArrayList();
+List<PollsChoice> choices = new ArrayList<>();
 
 if (question != null) {
 	choices = PollsChoiceLocalServiceUtil.getChoices(questionId);
@@ -49,8 +49,8 @@ if (choicesCount < 2) {
 	choicesCount = 2;
 }
 
-boolean deleteChoice = false;
 boolean addChoice = false;
+boolean deleteChoice = false;
 
 if (StringUtil.equals(choicesAction, PollsWebKeys.ADD_CHOICE_ACTION)) {
 	addChoice = true;

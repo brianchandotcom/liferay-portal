@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.cloud.server.service.impl;
 
+import com.liferay.commerce.cloud.server.constants.ContentTypes;
 import com.liferay.commerce.cloud.server.model.Forecast;
 import com.liferay.commerce.cloud.server.model.Project;
 import com.liferay.commerce.cloud.server.service.PushSenderService;
@@ -24,6 +25,7 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.json.JsonArray;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.client.WebClient;
@@ -59,6 +61,9 @@ public class PushSenderServiceImpl implements PushSenderService {
 		);
 
 		JsonArray jsonArray = JsonUtil.toJsonArray(forecasts);
+
+		httpRequest.putHeader(
+			HttpHeaders.CONTENT_TYPE.toString(), ContentTypes.APPLICATION_JSON);
 
 		httpRequest.sendBuffer(
 			Buffer.buffer(jsonArray.encode()),

@@ -71,7 +71,8 @@ public interface AssetDisplayContributor {
 		for (ClassTypeField classTypeField : classType.getClassTypeFields()) {
 			classTypeFields.add(
 				new AssetDisplayField(
-					classTypeField.getName(), classTypeField.getLabel()));
+					classTypeField.getName(), classTypeField.getLabel(),
+					classTypeField.getType()));
 		}
 
 		return classTypeFields;

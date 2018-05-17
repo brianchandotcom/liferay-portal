@@ -1,5 +1,6 @@
 import {LocalStorageMechanism, Storage} from 'metal-storage';
 
+import AsahClient from './AsahClient/AsahClient';
 import LCSClient from './LCSClient/LCSClient';
 import defaultPlugins from './plugins/defaults';
 import fingerprint from './utils/fingerprint';
@@ -31,11 +32,15 @@ class Analytics {
 			instance = this;
 		}
 
-		const client = new LCSClient(config.uri);
+		const lcsClient = new LCSClient(config.uri);
+		const asahClient = new AsahClient();
 
-		instance.client = client;
+		instance.client = lcsClient;
 
-		instance._sendData = client.send.bind(client, instance);
+		instance._sendData = userId => {
+			asahClient.send(instance, userId);
+			return lcsClient.send(instance, userId);
+		};
 
 		instance.config = config;
 		instance.identityEndpoint = `https://contacts-prod.liferay.com/${

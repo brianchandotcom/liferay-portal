@@ -16,11 +16,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="LayoutPageTemplateEntryId" return-type="Collection">
-			<finder-column name="layoutPageTemplateEntryId" />
-		</finder>
 		<finder name="AssetEntryId" return-type="AssetDisplayPageEntry" unique="true">
 			<finder-column name="assetEntryId" />
+		</finder>
+		<finder name="LayoutPageTemplateEntryId" return-type="Collection">
+			<finder-column name="layoutPageTemplateEntryId" />
 		</finder>
 	</entity>
 </service-builder>

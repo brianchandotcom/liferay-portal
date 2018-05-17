@@ -38,6 +38,14 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
+
+		if (!importNames.contains(
+				"org.osgi.service.component.annotations.Reference")) {
+
+			return;
+		}
+
 		List<DetailAST> annotationASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, true, TokenTypes.ANNOTATION);
 

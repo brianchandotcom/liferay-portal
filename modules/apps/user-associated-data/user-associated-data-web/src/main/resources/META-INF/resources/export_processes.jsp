@@ -50,7 +50,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		<liferay-ui:search-container-column-text
 			cssClass="autofit-col-expand"
 		>
-			<%= LanguageUtil.get(request, "create-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCreateDate()) %>
+			<%= LanguageUtil.get(request, "create-date") + ": " + dateFormat.format(backgroundTask.getCreateDate()) %>
 
 			<c:if test="<%= backgroundTask.isInProgress() %>">
 
@@ -68,7 +68,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 			<liferay-ui:search-container-column-text
 				cssClass="autofit-col-expand"
 			>
-				<%= LanguageUtil.get(request, "completion-date") + StringPool.COLON + dateFormat.format(backgroundTask.getCompletionDate()) %>
+				<%= LanguageUtil.get(request, "completion-date") + ": " + dateFormat.format(backgroundTask.getCompletionDate()) %>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 

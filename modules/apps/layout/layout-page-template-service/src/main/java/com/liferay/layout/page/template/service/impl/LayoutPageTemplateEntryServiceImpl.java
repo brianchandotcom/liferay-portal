@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -106,36 +105,18 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
-		long[] layoutPageTemplateEntryIds) {
-
-		List<LayoutPageTemplateEntry> undeletableLayoutPageTemplateEntries =
-			new ArrayList<>();
+	public void deleteLayoutPageTemplateEntries(
+			long[] layoutPageTemplateEntryIds)
+		throws PortalException {
 
 		for (long layoutPageTemplateEntryId : layoutPageTemplateEntryIds) {
-			try {
-				_layoutPageTemplateEntryModelResourcePermission.check(
-					getPermissionChecker(), layoutPageTemplateEntryId,
-					ActionKeys.DELETE);
+			_layoutPageTemplateEntryModelResourcePermission.check(
+				getPermissionChecker(), layoutPageTemplateEntryId,
+				ActionKeys.DELETE);
 
-				layoutPageTemplateEntryLocalService.
-					deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId);
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-
-				LayoutPageTemplateEntry layoutPageTemplateEntry =
-					layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
-						layoutPageTemplateEntryId);
-
-				undeletableLayoutPageTemplateEntries.add(
-					layoutPageTemplateEntry);
-			}
+			layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
 		}
-
-		return undeletableLayoutPageTemplateEntries;
 	}
 
 	@Override

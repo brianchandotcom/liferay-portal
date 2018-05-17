@@ -136,7 +136,7 @@ String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle
 				submitForm(form, '<portlet:actionURL name="/blogs/edit_entry" />');
 			}
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deleteEntries': deleteEntries

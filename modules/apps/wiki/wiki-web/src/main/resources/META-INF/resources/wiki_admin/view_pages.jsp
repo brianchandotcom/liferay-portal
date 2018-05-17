@@ -292,7 +292,7 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 
 			submitForm(form, '<portlet:actionURL name="/wiki/edit_page" />');
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deletePages': deletePages

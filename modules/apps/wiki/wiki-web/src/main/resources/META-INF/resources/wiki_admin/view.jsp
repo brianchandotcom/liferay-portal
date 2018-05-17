@@ -246,7 +246,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 
 			submitForm(form, '<portlet:actionURL name="/wiki/edit_node" />');
 		}
-	}
+	};
 
 	var ACTIONS = {
 		'deleteNodes': deleteNodes

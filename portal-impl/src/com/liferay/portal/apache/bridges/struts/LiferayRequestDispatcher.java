@@ -115,6 +115,7 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 
 			if (pos != -1) {
 				pathNoQueryString = _path.substring(0, pos);
+
 				queryString = _path.substring(pos + 1);
 
 				servletRequest = DynamicServletRequest.addQueryString(

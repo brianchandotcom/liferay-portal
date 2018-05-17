@@ -109,6 +109,7 @@ public class UserBagImpl implements UserBag {
 
 		_userOrgIds = _toSortedLongArray(userOrgs);
 		_userRoleIds = _toSortedLongArray(userRoles);
+
 		_userUserGroupGroupsIds = userUserGroupGroups;
 
 		Arrays.sort(_userUserGroupGroupsIds);

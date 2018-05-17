@@ -53,6 +53,41 @@ public class DetailASTUtil {
 		return endLine;
 	}
 
+	public static List<String> getImportNames(DetailAST detailAST) {
+		DetailAST rootAST = detailAST;
+
+		while (true) {
+			if (rootAST.getParent() != null) {
+				rootAST = rootAST.getParent();
+			}
+			else if (rootAST.getPreviousSibling() != null) {
+				rootAST = rootAST.getPreviousSibling();
+			}
+			else {
+				break;
+			}
+		}
+
+		List<String> importNamesList = new ArrayList<>();
+
+		DetailAST sibling = rootAST.getNextSibling();
+
+		while (true) {
+			if (sibling.getType() == TokenTypes.IMPORT) {
+				FullIdent importIdent = FullIdent.createFullIdentBelow(sibling);
+
+				importNamesList.add(importIdent.getText());
+			}
+			else {
+				break;
+			}
+
+			sibling = sibling.getNextSibling();
+		}
+
+		return importNamesList;
+	}
+
 	public static List<DetailAST> getMethodCalls(
 		DetailAST detailAST, String methodName) {
 
@@ -146,6 +181,22 @@ public class DetailASTUtil {
 		}
 
 		return parameterNames;
+	}
+
+	public static DetailAST getParentWithTokenType(
+		DetailAST detailAST, int... tokenTypes) {
+
+		DetailAST parentAST = detailAST.getParent();
+
+		while (parentAST != null) {
+			if (ArrayUtil.contains(tokenTypes, parentAST.getType())) {
+				return parentAST;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+
+		return null;
 	}
 
 	public static String getSignature(DetailAST detailAST) {
@@ -384,14 +435,10 @@ public class DetailASTUtil {
 	public static boolean hasParentWithTokenType(
 		DetailAST detailAST, int... tokenTypes) {
 
-		DetailAST parentAST = detailAST.getParent();
+		DetailAST parentAST = getParentWithTokenType(detailAST, tokenTypes);
 
-		while (parentAST != null) {
-			if (ArrayUtil.contains(tokenTypes, parentAST.getType())) {
-				return true;
-			}
-
-			parentAST = parentAST.getParent();
+		if (parentAST != null) {
+			return true;
 		}
 
 		return false;

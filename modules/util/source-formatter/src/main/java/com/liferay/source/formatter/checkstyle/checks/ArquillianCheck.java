@@ -16,15 +16,14 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
-import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +49,7 @@ public class ArquillianCheck extends BaseCheck {
 			return;
 		}
 
-		List<String> importNames = _getImportNames(detailAST);
+		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
 
 		if (!importNames.contains("org.jboss.arquillian.junit.Arquillian") ||
 			importNames.contains(
@@ -66,27 +65,6 @@ public class ArquillianCheck extends BaseCheck {
 		if (!xmlFile.exists()) {
 			log(detailAST.getLineNo(), _MSG_INVALID_IMPORT);
 		}
-	}
-
-	private List<String> _getImportNames(DetailAST detailAST) {
-		List<String> importASTList = new ArrayList<>();
-
-		DetailAST sibling = detailAST.getNextSibling();
-
-		while (true) {
-			if (sibling.getType() == TokenTypes.IMPORT) {
-				FullIdent importIdent = FullIdent.createFullIdentBelow(sibling);
-
-				importASTList.add(importIdent.getText());
-			}
-			else {
-				break;
-			}
-
-			sibling = sibling.getNextSibling();
-		}
-
-		return importASTList;
 	}
 
 	private static final String _MSG_INVALID_IMPORT = "import.invalid";

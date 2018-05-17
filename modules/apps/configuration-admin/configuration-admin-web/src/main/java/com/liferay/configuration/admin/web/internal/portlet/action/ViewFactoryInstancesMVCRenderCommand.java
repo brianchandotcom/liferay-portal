@@ -130,8 +130,7 @@ public class ViewFactoryInstancesMVCRenderCommand implements MVCRenderCommand {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")(mvc.command.name=/view_factory_instances)(configurationPid=*))",
-		unbind = "removeRenderCommand"
+		target = "(&(javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS + ")(mvc.command.name=/view_factory_instances)(configurationPid=*))"
 	)
 	protected void addRenderCommand(
 		MVCRenderCommand mvcRenderCommand, Map<String, Object> properties) {

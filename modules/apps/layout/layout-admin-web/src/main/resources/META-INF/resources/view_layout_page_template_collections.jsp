@@ -111,15 +111,17 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 
 			<c:if test="<%= layoutPageTemplateCollection != null %>">
 				<div class="sheet">
-					<div class="align-items-center autofit-row h3">
-						<div class="autofit-col">
-							<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
-						</div>
+					<h3 class="sheet-title">
+						<div class="align-items-center autofit-row">
+							<div class="autofit-col">
+								<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
+							</div>
 
-						<div class="autofit-col autofit-col-end inline-item-after">
-							<liferay-util:include page="/layout_page_template_collection_action.jsp" servletContext="<%= application %>" />
+							<div class="autofit-col autofit-col-end inline-item-after">
+								<liferay-util:include page="/layout_page_template_collection_action.jsp" servletContext="<%= application %>" />
+							</div>
 						</div>
-					</div>
+					</h3>
 
 					<liferay-util:include page="/view_layout_page_template_entries.jsp" servletContext="<%= application %>" />
 				</div>

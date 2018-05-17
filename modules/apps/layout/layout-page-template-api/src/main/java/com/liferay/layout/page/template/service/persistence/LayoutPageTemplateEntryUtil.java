@@ -942,6 +942,70 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
+	* Returns the layout page template entry where groupId = &#63; and layoutPrototypeId = &#63; or throws a {@link NoSuchPageTemplateEntryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @return the matching layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry findByG_LP(long groupId,
+		long layoutPrototypeId)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence().findByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
+	* Returns the layout page template entry where groupId = &#63; and layoutPrototypeId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry fetchByG_LP(long groupId,
+		long layoutPrototypeId) {
+		return getPersistence().fetchByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
+	* Returns the layout page template entry where groupId = &#63; and layoutPrototypeId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry fetchByG_LP(long groupId,
+		long layoutPrototypeId, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_LP(groupId, layoutPrototypeId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the layout page template entry where groupId = &#63; and layoutPrototypeId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @return the layout page template entry that was removed
+	*/
+	public static LayoutPageTemplateEntry removeByG_LP(long groupId,
+		long layoutPrototypeId)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence().removeByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
+	* Returns the number of layout page template entries where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @return the number of matching layout page template entries
+	*/
+	public static int countByG_LP(long groupId, long layoutPrototypeId) {
+		return getPersistence().countByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
 	* Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID

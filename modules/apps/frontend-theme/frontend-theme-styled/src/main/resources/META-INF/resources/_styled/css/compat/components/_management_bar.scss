@@ -1,9 +1,5 @@
 @if $compat-management_bar {
 	.management-bar {
-		border-color: transparent;
-		border-style: solid;
-		border-width: $management-bar-border-width;
-
 		@include clearfix;
 
 		margin-bottom: $management-bar-margin-bottom;

@@ -942,6 +942,274 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
+	* Returns all the layout page template entries where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @return the matching layout page template entries
+	*/
+	public static List<LayoutPageTemplateEntry> findByG_LP(long groupId,
+		long layoutPrototypeId) {
+		return getPersistence().findByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
+	* Returns a range of all the layout page template entries where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @return the range of matching layout page template entries
+	*/
+	public static List<LayoutPageTemplateEntry> findByG_LP(long groupId,
+		long layoutPrototypeId, int start, int end) {
+		return getPersistence()
+				   .findByG_LP(groupId, layoutPrototypeId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layout page template entries
+	*/
+	public static List<LayoutPageTemplateEntry> findByG_LP(long groupId,
+		long layoutPrototypeId, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return getPersistence()
+				   .findByG_LP(groupId, layoutPrototypeId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching layout page template entries
+	*/
+	public static List<LayoutPageTemplateEntry> findByG_LP(long groupId,
+		long layoutPrototypeId, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_LP(groupId, layoutPrototypeId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry findByG_LP_First(long groupId,
+		long layoutPrototypeId,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence()
+				   .findByG_LP_First(groupId, layoutPrototypeId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry fetchByG_LP_First(long groupId,
+		long layoutPrototypeId,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_LP_First(groupId, layoutPrototypeId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry findByG_LP_Last(long groupId,
+		long layoutPrototypeId,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence()
+				   .findByG_LP_Last(groupId, layoutPrototypeId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	public static LayoutPageTemplateEntry fetchByG_LP_Last(long groupId,
+		long layoutPrototypeId,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_LP_Last(groupId, layoutPrototypeId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	*/
+	public static LayoutPageTemplateEntry[] findByG_LP_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long layoutPrototypeId,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence()
+				   .findByG_LP_PrevAndNext(layoutPageTemplateEntryId, groupId,
+			layoutPrototypeId, orderByComparator);
+	}
+
+	/**
+	* Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @return the matching layout page template entries that the user has permission to view
+	*/
+	public static List<LayoutPageTemplateEntry> filterFindByG_LP(long groupId,
+		long layoutPrototypeId) {
+		return getPersistence().filterFindByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
+	* Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @return the range of matching layout page template entries that the user has permission to view
+	*/
+	public static List<LayoutPageTemplateEntry> filterFindByG_LP(long groupId,
+		long layoutPrototypeId, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_LP(groupId, layoutPrototypeId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutPageTemplateEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layout page template entries that the user has permission to view
+	*/
+	public static List<LayoutPageTemplateEntry> filterFindByG_LP(long groupId,
+		long layoutPrototypeId, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_LP(groupId, layoutPrototypeId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param layoutPageTemplateEntryId the primary key of the current layout page template entry
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout page template entry
+	* @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
+	*/
+	public static LayoutPageTemplateEntry[] filterFindByG_LP_PrevAndNext(
+		long layoutPageTemplateEntryId, long groupId, long layoutPrototypeId,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+		throws com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException {
+		return getPersistence()
+				   .filterFindByG_LP_PrevAndNext(layoutPageTemplateEntryId,
+			groupId, layoutPrototypeId, orderByComparator);
+	}
+
+	/**
+	* Removes all the layout page template entries where groupId = &#63; and layoutPrototypeId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	*/
+	public static void removeByG_LP(long groupId, long layoutPrototypeId) {
+		getPersistence().removeByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
+	* Returns the number of layout page template entries where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @return the number of matching layout page template entries
+	*/
+	public static int countByG_LP(long groupId, long layoutPrototypeId) {
+		return getPersistence().countByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
+	* Returns the number of layout page template entries that the user has permission to view where groupId = &#63; and layoutPrototypeId = &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutPrototypeId the layout prototype ID
+	* @return the number of matching layout page template entries that the user has permission to view
+	*/
+	public static int filterCountByG_LP(long groupId, long layoutPrototypeId) {
+		return getPersistence().filterCountByG_LP(groupId, layoutPrototypeId);
+	}
+
+	/**
 	* Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
 	*
 	* @param groupId the group ID

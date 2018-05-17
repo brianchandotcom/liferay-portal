@@ -15,7 +15,9 @@
 package com.liferay.commerce.user.segment.internal.criterion;
 
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +64,35 @@ public class OrganizationCommerceUserSegmentCriterionTypeImpl
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "organizations");
+	}
+
+	@Override
+	public String getPreview(
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion, int length) {
+
+		if (length <= 0) {
+			return StringPool.BLANK;
+		}
+
+		List<String> organizationNames = new ArrayList<>();
+
+		String[] organizationIds = StringUtil.split(
+			commerceUserSegmentCriterion.getTypeSettings());
+
+		for (String organizationId : organizationIds) {
+			Organization organization =
+				_organizationLocalService.fetchOrganization(
+					GetterUtil.getLong(organizationId));
+
+			if (organization != null) {
+				organizationNames.add(organization.getName());
+			}
+		}
+
+		String preview = StringUtil.merge(
+			organizationNames, StringPool.COMMA_AND_SPACE);
+
+		return StringUtil.shorten(preview, length, StringPool.TRIPLE_PERIOD);
 	}
 
 	@Override

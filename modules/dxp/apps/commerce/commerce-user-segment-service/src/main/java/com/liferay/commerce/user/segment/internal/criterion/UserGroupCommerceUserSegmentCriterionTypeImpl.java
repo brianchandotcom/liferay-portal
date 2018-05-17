@@ -15,14 +15,23 @@
 package com.liferay.commerce.user.segment.internal.criterion;
 
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -49,8 +58,39 @@ public class UserGroupCommerceUserSegmentCriterionTypeImpl
 	}
 
 	@Override
+	public String getPreview(
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion, int length) {
+
+		if (length <= 0) {
+			return StringPool.BLANK;
+		}
+
+		List<String> userGroupNames = new ArrayList<>();
+
+		String[] userGroupIds = StringUtil.split(
+			commerceUserSegmentCriterion.getTypeSettings());
+
+		for (String userGroupId : userGroupIds) {
+			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+				GetterUtil.getLong(userGroupId));
+
+			if (userGroup != null) {
+				userGroupNames.add(userGroup.getName());
+			}
+		}
+
+		String preview = StringUtil.merge(
+			userGroupNames, StringPool.COMMA_AND_SPACE);
+
+		return StringUtil.shorten(preview, length, StringPool.TRIPLE_PERIOD);
+	}
+
+	@Override
 	protected long[] getUserClassPKs(User user) throws PortalException {
 		return user.getUserGroupIds();
 	}
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 }

@@ -41,6 +41,9 @@ public interface CommerceUserSegmentCriterionType {
 
 	public String getLabel(Locale locale);
 
+	public String getPreview(
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion, int length);
+
 	public boolean isSatisfied(
 			long commerceUserSegmentCriterionId, ServiceContext serviceContext)
 		throws PortalException;

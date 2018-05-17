@@ -30,13 +30,13 @@ import org.junit.runner.Description;
 /**
  * @author Tom Wang
  */
-public class ConnectionPoolLeakTestCallback
+public class JDBCConnectionLeakDetectionTestCallback
 	extends BaseTestCallback
 		<Collection<ServiceReference<ConnectionPoolMetrics>>,
 			Collection<ServiceReference<ConnectionPoolMetrics>>> {
 
-	public static final ConnectionPoolLeakTestCallback INSTANCE =
-		new ConnectionPoolLeakTestCallback();
+	public static final JDBCConnectionLeakDetectionTestCallback INSTANCE =
+		new JDBCConnectionLeakDetectionTestCallback();
 
 	@Override
 	public void afterClass(

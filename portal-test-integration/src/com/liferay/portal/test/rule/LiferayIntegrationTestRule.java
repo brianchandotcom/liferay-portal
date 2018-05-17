@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.test.rule.callback.ClearThreadLocalTestCallback;
-import com.liferay.portal.test.rule.callback.ConnectionPoolLeakTestCallback;
 import com.liferay.portal.test.rule.callback.DestinationAwaitTestCallback;
 import com.liferay.portal.test.rule.callback.InjectTestCallback;
+import com.liferay.portal.test.rule.callback.JDBCConnectionLeakDetectionTestCallback;
 import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 import com.liferay.portal.test.rule.callback.MainServletTestCallback;
 import com.liferay.portal.test.rule.callback.SybaseDumpTransactionLogTestCallback;
@@ -89,7 +89,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	private static final TestRule _companyProviderTestRule = new BaseTestRule<>(
 		CompanyProviderTestCallback.INSTANCE);
 	private static final TestRule _connectionPoolLeakTestRule =
-		new BaseTestRule<>(ConnectionPoolLeakTestCallback.INSTANCE);
+		new BaseTestRule<>(JDBCConnectionLeakDetectionTestCallback.INSTANCE);
 	private static final TestRule _deleteAfterTestRunTestRule =
 		new BaseTestRule<>(DeleteAfterTestRunTestCallback.INSTANCE);
 	private static final TestRule _destinationAwaitTestRule =

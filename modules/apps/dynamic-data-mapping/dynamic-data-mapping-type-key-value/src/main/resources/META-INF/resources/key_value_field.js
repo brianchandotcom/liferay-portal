@@ -222,15 +222,7 @@ AUI.add(
 					_updateInputValue: function(inputNode, newValue) {
 						var instance = this;
 
-						var currentValue = inputNode.val();
-
-						var selectionEnd = inputNode.get('selectionEnd');
-						var selectionStart = inputNode.get('selectionStart');
-
 						inputNode.val(newValue);
-
-						inputNode.set('selectionStart', selectionStart);
-						inputNode.set('selectionEnd', selectionEnd - (currentValue.length - newValue.length));
 					},
 
 					_valueGenerationLocked: function() {

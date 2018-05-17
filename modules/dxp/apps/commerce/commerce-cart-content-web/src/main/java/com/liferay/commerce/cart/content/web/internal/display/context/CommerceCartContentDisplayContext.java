@@ -147,8 +147,6 @@ public class CommerceCartContentDisplayContext {
 			return commerceMoney.toString();
 		}
 
-		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
-
 		CommerceMoney commerceMoney =
 			_commercePriceCalculation.getOrderSubtotal(
 				getCommerceOrder(), commerceContext);

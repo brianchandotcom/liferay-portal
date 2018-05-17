@@ -1,8 +1,13 @@
 [
 	{
 		"actions": {
-			"actionIds": [],
-			"resource": "com.liferay.commerce.order"
+			"actionIds": [
+				"ASSIGN_MEMBERS",
+				"ASSIGN_USER_ROLES",
+				"MANAGE_USERS",
+				"VIEW_MEMBERS"
+			],
+			"resource": "com.liferay.portal.kernel.model.Organization"
 		},
 		"name": "Account Manager",
 		"scope": 3,

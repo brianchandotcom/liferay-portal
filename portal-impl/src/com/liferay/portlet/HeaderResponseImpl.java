@@ -24,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -213,6 +212,10 @@ public class HeaderResponseImpl
 		_useDefaultTemplate = useDefaultTemplate;
 	}
 
+	private void _addMarkupToHead(String name, String scope, String markup) {
+		_addMarkupToHead(name, scope, null, markup);
+	}
+
 	private void _addMarkupToHead(
 		String name, String scope, String version, String markup) {
 
@@ -279,8 +282,10 @@ public class HeaderResponseImpl
 			scope = StringPool.BLANK;
 		}
 
-		if (Validator.isNull(version)) {
-			version = "0";
+		SemVer semVer = SemVer._DEFAULT;
+
+		if (Validator.isNotNull(version)) {
+			semVer = new SemVer(version);
 		}
 
 		HeaderRequest headerRequest = (HeaderRequest)getPortletRequest();
@@ -314,9 +319,8 @@ public class HeaderResponseImpl
 
 				if (name.equals(existingName) && scope.equals(existingScope)) {
 					SemVer existingSemVer = new SemVer(existingVersion);
-					SemVer newSemVer = new SemVer(version);
 
-					if (existingSemVer.compareTo(newSemVer) < 0) {
+					if (existingSemVer.compareTo(semVer) < 0) {
 						iterator.remove();
 						outputData.setData(existingKey, WebKeys.PAGE_TOP, null);
 					}
@@ -345,18 +349,13 @@ public class HeaderResponseImpl
 	}
 
 	private void _flush() {
-		String scope = getNamespace();
-		Portlet portlet = getPortlet();
-
-		String version = String.valueOf(portlet.getMvccVersion());
-
 		if (_portletOutputStream != null) {
 			_addMarkupToHead(
-				portletName, scope, version, _portletOutputStream.toString());
+				portletName, getNamespace(), _portletOutputStream.toString());
 		}
 		else if (_printWriter != null) {
 			_addMarkupToHead(
-				portletName, scope, version, _printWriter.toString());
+				portletName, getNamespace(), _printWriter.toString());
 		}
 	}
 
@@ -391,6 +390,12 @@ public class HeaderResponseImpl
 			return Integer.compare(_micro, semVer._micro);
 		}
 
+		private SemVer(int major, int minor, int micro) {
+			_major = major;
+			_minor = minor;
+			_micro = micro;
+		}
+
 		private SemVer(String version) {
 			String[] parts = StringUtil.split(version, CharPool.PERIOD);
 
@@ -415,6 +420,8 @@ public class HeaderResponseImpl
 				_micro = 0;
 			}
 		}
+
+		private static final SemVer _DEFAULT = new SemVer(0, 0, 0);
 
 		private final int _major;
 		private final int _micro;

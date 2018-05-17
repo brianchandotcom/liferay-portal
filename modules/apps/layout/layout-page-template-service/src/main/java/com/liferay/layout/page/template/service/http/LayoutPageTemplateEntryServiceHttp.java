@@ -203,8 +203,9 @@ public class LayoutPageTemplateEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
-		HttpPrincipal httpPrincipal, long[] layoutPageTemplateEntryIds) {
+	public static void deleteLayoutPageTemplateEntries(
+		HttpPrincipal httpPrincipal, long[] layoutPageTemplateEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
 					"deleteLayoutPageTemplateEntries",
@@ -213,16 +214,16 @@ public class LayoutPageTemplateEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					layoutPageTemplateEntryIds);
 
-			Object returnObj = null;
-
 			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
-
-			return (java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

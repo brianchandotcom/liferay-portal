@@ -79,9 +79,10 @@ public class LayoutPageTemplateEntryServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
-		long[] layoutPageTemplateEntryIds) {
-		return _layoutPageTemplateEntryService.deleteLayoutPageTemplateEntries(layoutPageTemplateEntryIds);
+	public void deleteLayoutPageTemplateEntries(
+		long[] layoutPageTemplateEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntries(layoutPageTemplateEntryIds);
 	}
 
 	@Override

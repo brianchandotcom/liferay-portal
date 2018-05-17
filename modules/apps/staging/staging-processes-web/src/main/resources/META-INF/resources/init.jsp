@@ -53,7 +53,6 @@ page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil" %><%@
 page import="com.liferay.portal.kernel.scheduler.StorageType" %><%@
 page import="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse" %><%@
@@ -81,6 +80,8 @@ page import="com.liferay.staging.constants.StagingProcessesPortletKeys" %><%@
 page import="com.liferay.staging.processes.web.internal.dao.search.PublishResultRowSplitter" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.PublishTemplatesDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebDisplayContext" %><%@
+page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebPublishTemplatesToolbarDisplayContext" %><%@
+page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebToolbarDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationDisplayTerms" %><%@
 page import="com.liferay.staging.processes.web.internal.search.PublishConfigurationSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
@@ -119,6 +120,10 @@ int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
 PublishTemplatesDisplayContext publishTemplatesDisplayContext = new PublishTemplatesDisplayContext(renderResponse, request);
 
 StagingProcessesWebDisplayContext stagingProcessesWebDisplayContext = new StagingProcessesWebDisplayContext(renderResponse, request);
+
+StagingProcessesWebToolbarDisplayContext stagingProcessesWebToolbarDisplayContext = new StagingProcessesWebToolbarDisplayContext(request, pageContext, liferayPortletResponse);
+
+StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPublishTemplatesToolbarDisplayContext = new StagingProcessesWebPublishTemplatesToolbarDisplayContext(request, pageContext, liferayPortletResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

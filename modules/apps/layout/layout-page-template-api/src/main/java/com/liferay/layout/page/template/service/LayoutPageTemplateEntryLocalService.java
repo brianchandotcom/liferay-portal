@@ -74,28 +74,21 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, long[] fragmentEntryIds, int status,
+		int type, int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type, long layoutPrototypeId, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, long[] fragmentEntryIds, long layoutPrototypeId, int status,
+		int type, ServiceContext serviceContext) throws PortalException;
+
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
+		long groupId, long layoutPageTemplateCollectionId, String name,
 		ServiceContext serviceContext) throws PortalException;
-
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException;
-
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		long[] fragmentEntryIds, int status, ServiceContext serviceContext)
-		throws PortalException;
-
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Creates a new layout page template entry with the primary key. Does not add the layout page template entry to the database.

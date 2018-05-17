@@ -54,6 +54,10 @@ public interface LayoutTypeController extends Serializable {
 
 	public boolean isParentable();
 
+	public default boolean isPrimaryType() {
+		return false;
+	}
+
 	public boolean isSitemapable();
 
 	public boolean isURLFriendliable();

@@ -22,7 +22,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletURL()));
 
-renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
+renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
@@ -84,7 +84,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
 
 		<div class="col-lg-9">
 			<div class="sheet">
-				<h3>
+				<h3 class="sheet-title">
 					<c:choose>
 						<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
 

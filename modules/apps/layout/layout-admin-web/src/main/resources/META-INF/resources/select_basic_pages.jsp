@@ -20,52 +20,101 @@
 SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
 %>
 
-<liferay-ui:search-container
-	total="<%= selectLayoutPageTemplateEntryDisplayContext.getTypesCount() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= selectLayoutPageTemplateEntryDisplayContext.getTypes() %>"
-	/>
+<div class="lfr-search-container-wrapper">
+	<c:if test="<%= selectLayoutPageTemplateEntryDisplayContext.getPrimaryTypesCount() > 0 %>">
+		<h6 class="sheet-subtitle">
+			<liferay-ui:message key="main-types" />
+		</h6>
 
-	<liferay-ui:search-container-row
-		className="java.lang.String"
-		modelVar="type"
-	>
-
-		<%
-		row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
-		%>
-
-		<liferay-ui:search-container-column-text>
+		<div class="row">
 
 			<%
-			LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
+			for (String primaryType : selectLayoutPageTemplateEntryDisplayContext.getPrimaryTypes()) {
+				LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(primaryType);
 
-			ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
-
-			Map<String, Object> addLayoutData = new HashMap<>();
-
-			addLayoutData.put("type", type);
+				ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
 			%>
 
-			<liferay-frontend:icon-vertical-card
-				actionJspServletContext="<%= application %>"
-				cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
-				data="<%= addLayoutData %>"
-				icon="page"
-				resultRow="<%= row %>"
-				rowChecker="<%= searchContainer.getRowChecker() %>"
-				title='<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %>'
-				url="javascript:;"
-			/>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
+				<div class="col-md-4">
+					<div class="card card-type-asset">
+						<div class="aspect-ratio">
+							<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid layout-type-img">
+								<svg class="lexicon-icon">
+									<use xlink:href="<%= PortalUtil.getPathContext(request) %>/images/<%= primaryType %>.svg#<%= primaryType %>-page" />
+								</svg>
+							</div>
+						</div>
 
-	<liferay-ui:search-iterator
-		displayStyle="icon"
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+						<div class="card-body">
+							<div class="card-row">
+								<div class="autofit-col autofit-col-expand">
+									<section class="autofit-section">
+										<h3 class="card-title">
+											<span class="text-truncate-inline">
+												<a class="add-layout-action-option" data-type="<%= primaryType %>" href="javascript:;"><%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + primaryType) %></a>
+											</span>
+										</h3>
+									</section>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
+		</div>
+	</c:if>
+
+	<c:if test="<%= selectLayoutPageTemplateEntryDisplayContext.getTypesCount() > 0 %>">
+		<h6 class="sheet-subtitle">
+			<liferay-ui:message key="other" />
+		</h6>
+
+		<div class="row">
+
+			<%
+			for (String type : selectLayoutPageTemplateEntryDisplayContext.getTypes()) {
+				LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+				ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
+			%>
+
+				<div class="col-md-4">
+					<div class="card card-horizontal card-type-directory">
+						<div class="card-body">
+							<div class="card-row">
+								<div class="autofit-col">
+									<span class="sticker">
+										<svg aria-hidden="true" class="lexicon-icon lexicon-icon-folder">
+											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#folder" />
+										</svg>
+									</span>
+								</div>
+
+								<div class="autofit-col autofit-col-expand autofit-col-gutters">
+									<section class="autofit-section">
+										<h3 class="card-title" title="ReallySuperInsanelyJustIncrediblyLongAndTotallyNotPossibleWordButWeAreReallyTryingToCoverAllOurBasesHereJustInCaseSomeoneIsNutsAsPerUsual">
+											<span class="text-truncate-inline">
+												<a class="add-layout-action-option text-truncate" data-type="<%= type %>" href="javascript:;"><%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %></a>
+											</span>
+										</h3>
+									</section>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
+		</div>
+	</c:if>
+</div>
 
 <portlet:actionURL name="/layout/add_simple_layout" var="addLayoutURL">
 	<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
@@ -87,7 +136,7 @@ String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavig
 	var addLayoutActionOptionQueryClickHandler = dom.delegate(
 		document.body,
 		'click',
-		'.<portlet:namespace />add-layout-action-option',
+		'.add-layout-action-option',
 		function(event) {
 			var actionElement = event.delegateTarget;
 

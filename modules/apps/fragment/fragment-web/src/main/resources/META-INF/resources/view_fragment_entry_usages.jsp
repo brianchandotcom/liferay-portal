@@ -94,7 +94,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 
 		<div class="col-lg-9">
 			<div class="sheet">
-				<h3>
+				<h3 class="sheet-title">
 					<c:choose>
 						<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") %>'>
 							<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />

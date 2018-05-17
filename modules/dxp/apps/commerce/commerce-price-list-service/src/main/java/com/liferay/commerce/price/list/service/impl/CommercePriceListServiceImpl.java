@@ -77,14 +77,30 @@ public class CommercePriceListServiceImpl
 	}
 
 	@Override
-	public CommercePriceList fetchCommercePriceList(long commercePriceListId) {
-		return commercePriceListLocalService.fetchCommercePriceList(
-			commercePriceListId);
+	public CommercePriceList fetchCommercePriceList(long commercePriceListId)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			commercePriceListLocalService.fetchCommercePriceList(
+				commercePriceListId);
+
+		if (commercePriceList != null) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), commercePriceList.getGroupId(),
+				CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+		}
+
+		return commercePriceList;
 	}
 
 	@Override
 	public List<CommercePriceList> getCommercePriceLists(
-		long groupId, int start, int end) {
+			long groupId, int start, int end)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commercePriceListLocalService.getCommercePriceLists(
 			groupId, start, end);
@@ -92,15 +108,26 @@ public class CommercePriceListServiceImpl
 
 	@Override
 	public List<CommercePriceList> getCommercePriceLists(
-		long groupId, int status, int start, int end,
-		OrderByComparator<CommercePriceList> orderByComparator) {
+			long groupId, int status, int start, int end,
+			OrderByComparator<CommercePriceList> orderByComparator)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commercePriceListLocalService.getCommercePriceLists(
 			groupId, status, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommercePriceListsCount(long groupId, int status) {
+	public int getCommercePriceListsCount(long groupId, int status)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+
 		return commercePriceListLocalService.getCommercePriceListsCount(
 			groupId, status);
 	}

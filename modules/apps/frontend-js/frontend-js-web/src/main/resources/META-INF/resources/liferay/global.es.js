@@ -1,20 +1,3 @@
-'use strict';
+import portlet from './portlet/portlet.es';
 
-import register from './portlet_hub/register.es';
-
-/**
- * Returns the page render state initial data.
- */
-
-const getInitData = function() {
-	return {
-		encodedCurrentURL: '',
-		portlets: {},
-		prpMap: {}
-	};
-};
-
-export {
-	getInitData,
-	register
-};
+export {portlet};

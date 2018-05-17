@@ -1,7 +1,7 @@
-import PortletInit from '../../src/main/resources/META-INF/resources/liferay/portlet_hub/PortletInit.es';
-import RenderState from '../../src/main/resources/META-INF/resources/liferay/portlet_hub/RenderState.es';
-import register from '../../src/main/resources/META-INF/resources/liferay/portlet_hub/register.es';
-import {portlet} from './mock_portlet_data.es';
+import PortletInit from '../../../src/main/resources/META-INF/resources/liferay/portlet/PortletInit.es';
+import RenderState from '../../../src/main/resources/META-INF/resources/liferay/portlet/RenderState.es';
+import register from '../../../src/main/resources/META-INF/resources/liferay/portlet/register.es';
+import {portlet} from './mock/portlet_data.es';
 
 function fetchMock(data) {
 	global.fetch = jest.fn().mockImplementation(

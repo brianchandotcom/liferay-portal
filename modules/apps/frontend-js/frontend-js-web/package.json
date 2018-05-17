@@ -52,7 +52,7 @@
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/node_modules/",
-			"<rootDir>/test/liferay/mock_portlet_data.es.js"
+			"<rootDir>/test/liferay/portlet/mock/portlet_data.es.js"
 		],
 		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
 		"transformIgnorePatterns": [

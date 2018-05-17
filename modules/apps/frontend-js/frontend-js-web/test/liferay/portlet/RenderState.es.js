@@ -1,5 +1,5 @@
-import PortletConstants from '../../src/main/resources/META-INF/resources/liferay/portlet_hub/portlet_constants.es';
-import RenderState from '../../src/main/resources/META-INF/resources/liferay/portlet_hub/RenderState.es';
+import PortletConstants from '../../../src/main/resources/META-INF/resources/liferay/portlet/portlet_constants.es';
+import RenderState from '../../../src/main/resources/META-INF/resources/liferay/portlet/RenderState.es';
 
 describe(
 	'Render State',

@@ -26,10 +26,13 @@ import com.liferay.user.associated.data.web.internal.export.background.task.UADE
 import com.liferay.user.associated.data.web.internal.registry.UADRegistry;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,7 +99,14 @@ public class UADApplicationExportHelper {
 					applicationKey, groupId, userId));
 		}
 
-		return uadApplicationExportDisplays;
+		Stream<UADApplicationExportDisplay> uadApplicationExportDisplayStream =
+			uadApplicationExportDisplays.stream();
+
+		return uadApplicationExportDisplayStream.sorted(
+			Comparator.comparing(UADApplicationExportDisplay::getApplicationKey)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

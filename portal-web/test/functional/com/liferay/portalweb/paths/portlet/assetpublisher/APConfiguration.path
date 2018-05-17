@@ -50,6 +50,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--RULE_BUILDER-->
+<tr>
+	<td>RULE_BUILDER_ADD_CONDITION</td>
+	<td>//button[contains(@class,'form-builder-rule-add-condition')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SOURCE_SCOPE-->
 <tr>
 	<td>SOURCE_DROPDOWN</td>

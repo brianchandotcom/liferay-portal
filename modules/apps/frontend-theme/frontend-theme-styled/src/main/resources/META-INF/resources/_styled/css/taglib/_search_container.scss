@@ -5,6 +5,12 @@
 
 	.lfr-icon-menu > .dropdown-toggle {
 		color: $secondary;
+
+		&:active, &:focus, &:hover {
+			background-color: #F7F8F9;
+			border-radius: 4px;
+			color: $body-color;
+		}
 	}
 
 	.list-group {

@@ -164,19 +164,19 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
+		long groupId, long layoutPrototypeId) {
+
+		return layoutPageTemplateEntryPersistence.fetchByG_LP_First(
+			groupId, layoutPrototypeId, null);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId) {
 
 		return layoutPageTemplateEntryPersistence.fetchByPrimaryKey(
 			layoutPageTemplateEntryId);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
-		long groupId, long layoutPrototypeId) {
-
-		return layoutPageTemplateEntryPersistence.fetchByG_LP(
-			groupId, layoutPrototypeId);
 	}
 
 	@Override

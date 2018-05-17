@@ -19,7 +19,7 @@ import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConst
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionLocalService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
-import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentEntryTestUtil;
+import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentTestUtil;
 import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -92,16 +92,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group2.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group2.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
-				String.valueOf(_organization.getOrganizationId()), 0,
-				serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group2.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
+			String.valueOf(_organization.getOrganizationId()));
 
 		long[] commerceUserSegmentIds =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -137,16 +136,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
-				String.valueOf(_organization.getOrganizationId()), 0,
-				serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
+			String.valueOf(_organization.getOrganizationId()));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -181,16 +179,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_ROLE,
-				String.valueOf(RoleConstants.ORGANIZATION_ADMINISTRATOR), 0,
-				serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_ROLE,
+			String.valueOf(RoleConstants.ORGANIZATION_ADMINISTRATOR));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -225,15 +222,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_USER_GROUP,
-				String.valueOf(_userGroup.getUserGroupId()), 0, serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_USER_GROUP,
+			String.valueOf(_userGroup.getUserGroupId()));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -268,15 +265,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_USER,
-				String.valueOf(_user.getUserId()), 0, serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_USER,
+			String.valueOf(_user.getUserId()));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -315,16 +312,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
-				String.valueOf(_organization.getOrganizationId()), 0,
-				serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
+			String.valueOf(_organization.getOrganizationId()));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -363,16 +359,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_ROLE,
-				String.valueOf(RoleConstants.ORGANIZATION_ADMINISTRATOR), 0,
-				serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_ROLE,
+			String.valueOf(RoleConstants.ORGANIZATION_ADMINISTRATOR));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -411,15 +406,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_USER_GROUP,
-				String.valueOf(_userGroup.getUserGroupId()), 0, serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_USER_GROUP,
+			String.valueOf(_userGroup.getUserGroupId()));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -458,15 +453,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_USER,
-				String.valueOf(_user.getUserId()), 0, serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_USER,
+			String.valueOf(_user.getUserId()));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -501,16 +496,15 @@ public class CommerceUserSegmentHelperTest {
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId());
 
 		_commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
-		_commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
-				String.valueOf(_organization.getOrganizationId()), 0,
-				serviceContext);
+		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
+			_group1.getGroupId(),
+			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			CommerceUserSegmentCriterionConstants.TYPE_ORGANIZATION,
+			String.valueOf(_organization.getOrganizationId()));
 
 		_userLocalService.unsetOrganizationUsers(
 			_organization.getOrganizationId(), new long[] {_user.getUserId()});

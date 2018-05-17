@@ -1,7 +1,7 @@
 import AnalyticsClient from '../../src/analytics';
 import {assert, expect} from 'chai';
 
-const applicationId = 'Forms';
+const applicationId = 'forms';
 
 let Analytics;
 

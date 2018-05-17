@@ -20,7 +20,6 @@ import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEnt
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -44,20 +43,19 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, int status, long[] fragmentEntryIds,
-			ServiceContext serviceContext)
+			String name, int type, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			0, status, fragmentEntryIds, serviceContext);
+			userId, groupId, layoutPageTemplateCollectionId, name, type, 0,
+			status, serviceContext);
 	}
 
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
 			String name, int type, long layoutPrototypeId, int status,
-			long[] fragmentEntryIds, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template entry
@@ -94,15 +92,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
 
-		// Fragment entry instance links
-
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			userId, layoutPageTemplateEntry.getGroupId(),
-			classNameLocalService.getClassNameId(
-				LayoutPageTemplateEntry.class.getName()),
-			layoutPageTemplateEntryId, fragmentEntryIds, StringPool.BLANK,
-			serviceContext);
-
 		// Resources
 
 		resourceLocalService.addModelResources(
@@ -114,25 +103,24 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long[] fragmentEntryIds,
-			ServiceContext serviceContext)
+			String name, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			WorkflowConstants.STATUS_DRAFT, fragmentEntryIds, serviceContext);
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, long[] fragmentEntryIds, ServiceContext serviceContext)
+			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name,
 			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-			WorkflowConstants.STATUS_DRAFT, fragmentEntryIds, serviceContext);
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	@Override

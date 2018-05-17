@@ -114,6 +114,8 @@
 		<var name="key_navItem" value="${navItem}" />
 
 		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK_STACKED" value1="${navItem}" />
+
+		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_STACKED_LINK" />
 	</command>
 
 	<command name="gotoNavNested">

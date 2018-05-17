@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.Iterator;
@@ -45,8 +46,12 @@ public class PortalUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws SQLException {
-		_currentSchemaVersion = PortalUpgradeProcess.getCurrentSchemaVersion(
-			DataAccess.getUpgradeOptimizedConnection());
+		try (Connection connection =
+				DataAccess.getUpgradeOptimizedConnection()) {
+
+			_currentSchemaVersion =
+				PortalUpgradeProcess.getCurrentSchemaVersion(connection);
+		}
 	}
 
 	@Before
@@ -99,9 +104,12 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(
 			PortalUpgradeProcess.getLatestSchemaVersion());
 
-		Assert.assertTrue(
-			PortalUpgradeProcess.isInLatestSchemaVersion(
-				DataAccess.getUpgradeOptimizedConnection()));
+		try (Connection connection =
+				DataAccess.getUpgradeOptimizedConnection()) {
+
+			Assert.assertTrue(
+				PortalUpgradeProcess.isInLatestSchemaVersion(connection));
+		}
 	}
 
 	@Test
@@ -109,9 +117,12 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(
 			PortalUpgradeProcess.getRequiredSchemaVersion());
 
-		Assert.assertTrue(
-			PortalUpgradeProcess.isInRequiredSchemaVersion(
-				DataAccess.getUpgradeOptimizedConnection()));
+		try (Connection connection =
+				DataAccess.getUpgradeOptimizedConnection()) {
+
+			Assert.assertTrue(
+				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
+		}
 	}
 
 	@Test
@@ -119,9 +130,12 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(
 			_ORIGINAL_SCHEMA_VERSION);
 
-		Assert.assertFalse(
-			PortalUpgradeProcess.isInLatestSchemaVersion(
-				DataAccess.getUpgradeOptimizedConnection()));
+		try (Connection connection =
+				DataAccess.getUpgradeOptimizedConnection()) {
+
+			Assert.assertFalse(
+				PortalUpgradeProcess.isInLatestSchemaVersion(connection));
+		}
 	}
 
 	@Test
@@ -129,9 +143,12 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(
 			_ORIGINAL_SCHEMA_VERSION);
 
-		Assert.assertFalse(
-			PortalUpgradeProcess.isInRequiredSchemaVersion(
-				DataAccess.getUpgradeOptimizedConnection()));
+		try (Connection connection =
+				DataAccess.getUpgradeOptimizedConnection()) {
+
+			Assert.assertFalse(
+				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
+		}
 	}
 
 	@Test
@@ -151,9 +168,12 @@ public class PortalUpgradeProcessTest {
 				"No upgrade processes should have been executed", e);
 		}
 
-		Assert.assertTrue(
-			PortalUpgradeProcess.isInLatestSchemaVersion(
-				DataAccess.getUpgradeOptimizedConnection()));
+		try (Connection connection =
+				DataAccess.getUpgradeOptimizedConnection()) {
+
+			Assert.assertTrue(
+				PortalUpgradeProcess.isInLatestSchemaVersion(connection));
+		}
 	}
 
 	@Test
@@ -176,20 +196,27 @@ public class PortalUpgradeProcessTest {
 				e);
 		}
 
-		Assert.assertTrue(
-			PortalUpgradeProcess.isInLatestSchemaVersion(
-				DataAccess.getUpgradeOptimizedConnection()));
+		try (Connection connection =
+				DataAccess.getUpgradeOptimizedConnection()) {
+
+			Assert.assertTrue(
+				PortalUpgradeProcess.isInLatestSchemaVersion(connection));
+		}
 	}
 
 	@Test
 	public void testValidateCoreIsInRequiredSchemaVersion()
 		throws SQLException {
 
-		Assert.assertTrue(
-			"You must first upgrade the portal to the required schema " +
-				"version " + PortalUpgradeProcess.getRequiredSchemaVersion(),
-			PortalUpgradeProcess.isInRequiredSchemaVersion(
-				DataAccess.getUpgradeOptimizedConnection()));
+		try (Connection connection =
+				DataAccess.getUpgradeOptimizedConnection()) {
+
+			Assert.assertTrue(
+				"You must first upgrade the portal to the required schema " +
+					"version " +
+						PortalUpgradeProcess.getRequiredSchemaVersion(),
+				PortalUpgradeProcess.isInRequiredSchemaVersion(connection));
+		}
 	}
 
 	private static final Version _ORIGINAL_SCHEMA_VERSION = new Version(

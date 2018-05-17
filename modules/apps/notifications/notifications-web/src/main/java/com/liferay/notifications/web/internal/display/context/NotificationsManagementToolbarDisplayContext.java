@@ -17,8 +17,6 @@ package com.liferay.notifications.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -144,23 +142,6 @@ public class NotificationsManagementToolbarDisplayContext {
 			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL;
-	}
-
-	public ViewTypeItemList getViewTypes() {
-		return new ViewTypeItemList(null, "descriptive") {
-			{
-				ViewTypeItem cardViewTypeItem = addCardViewTypeItem();
-
-				cardViewTypeItem.setDisabled(true);
-
-				addListViewTypeItem();
-
-				ViewTypeItem tableViewTypeItem = addTableViewTypeItem();
-
-				tableViewTypeItem.setDisabled(true);
-			}
-
-		};
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

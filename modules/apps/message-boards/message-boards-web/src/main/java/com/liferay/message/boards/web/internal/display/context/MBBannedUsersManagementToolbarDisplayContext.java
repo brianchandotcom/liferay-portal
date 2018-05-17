@@ -17,8 +17,6 @@ package com.liferay.message.boards.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.message.boards.constants.MBPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -31,8 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -95,27 +91,6 @@ public class MBBannedUsersManagementToolbarDisplayContext {
 		}
 
 		return displayStyle;
-	}
-
-	public ViewTypeItemList getViewTypes() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/message_boards/view_banned_users");
-
-		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
-			{
-				ViewTypeItem cardViewTypeItem = addCardViewTypeItem();
-
-				cardViewTypeItem.setDisabled(true);
-
-				addListViewTypeItem();
-
-				ViewTypeItem tableViewTypeItem = addTableViewTypeItem();
-
-				tableViewTypeItem.setDisabled(true);
-			}
-		};
 	}
 
 	private final LiferayPortletRequest _liferayPortletRequest;

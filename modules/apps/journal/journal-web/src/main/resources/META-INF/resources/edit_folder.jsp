@@ -181,7 +181,8 @@ renderResponse.setTitle(title);
 
 											<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 												<portlet:param name="mvcPath" value="/select_folder.jsp" />
-												<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+												<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+												<portlet:param name="parentFolderId" value="<%= String.valueOf(parentFolderId) %>" />
 											</portlet:renderURL>
 
 											url: '<%= selectFolderURL.toString() %>'

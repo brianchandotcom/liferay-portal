@@ -66,13 +66,15 @@ public class RoleCommerceUserSegmentCriterionTypeDisplayContext
 		_roleLocalService = roleLocalService;
 	}
 
-	public String getItemSelectorUrl() throws PortalException {
+	public String getItemSelectorUrl(int type) throws PortalException {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
 				commerceUserSegmentRequestHelper.getRequest());
 
 		RoleItemSelectorCriterion roleItemSelectorCriterion =
 			new RoleItemSelectorCriterion();
+
+		roleItemSelectorCriterion.setType(type);
 
 		roleItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.<ItemSelectorReturnType>singletonList(
@@ -82,14 +84,14 @@ public class RoleCommerceUserSegmentCriterionTypeDisplayContext
 			requestBackedPortletURLFactory, "rolesSelectItem",
 			roleItemSelectorCriterion);
 
-		String checkedRoleIds = StringUtil.merge(getCheckedRoleIds());
+		String checkedRoleIds = StringUtil.merge(getCheckedRoleIds(type));
 
 		itemSelectorURL.setParameter("checkedRoleIds", checkedRoleIds);
 
 		return itemSelectorURL.toString();
 	}
 
-	public List<Role> getRoles() throws PortalException {
+	public List<Role> getRoles(int type) throws PortalException {
 		List<Role> roles = new ArrayList<>();
 
 		CommerceUserSegmentCriterion commerceUserSegmentCriterion =
@@ -105,7 +107,7 @@ public class RoleCommerceUserSegmentCriterionTypeDisplayContext
 		for (String roleId : roleIds) {
 			Role role = _roleLocalService.fetchRole(GetterUtil.getLong(roleId));
 
-			if (role != null) {
+			if ((role != null) && (type == role.getType())) {
 				roles.add(role);
 			}
 		}
@@ -113,8 +115,8 @@ public class RoleCommerceUserSegmentCriterionTypeDisplayContext
 		return roles;
 	}
 
-	protected long[] getCheckedRoleIds() throws PortalException {
-		return ListUtil.toLongArray(getRoles(), Role.ROLE_ID_ACCESSOR);
+	protected long[] getCheckedRoleIds(int type) throws PortalException {
+		return ListUtil.toLongArray(getRoles(type), Role.ROLE_ID_ACCESSOR);
 	}
 
 	private final ItemSelector _itemSelector;

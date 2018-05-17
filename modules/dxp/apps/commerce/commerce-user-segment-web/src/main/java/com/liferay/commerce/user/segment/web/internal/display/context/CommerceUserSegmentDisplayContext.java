@@ -153,6 +153,13 @@ public class CommerceUserSegmentDisplayContext {
 		return commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId();
 	}
 
+	public CommerceUserSegmentCriterionType getCommerceUserSegmentCriterionType(
+		String key) {
+
+		return _commerceUserSegmentCriterionTypeRegistry.
+			getCommerceUserSegmentCriterionType(key);
+	}
+
 	public CommerceUserSegmentCriterionTypeJSPContributor
 		getCommerceUserSegmentCriterionTypeJSPContributor(String key) {
 

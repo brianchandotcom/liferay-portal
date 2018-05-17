@@ -81,10 +81,29 @@ portletURL.setParameter("mvcRenderCommandName", "editCommerceUserSegmentEntry");
 			keyProperty="commerceUserSegmentCriterionId"
 			modelVar="commerceUserSegmentCriterion"
 		>
+
+			<%
+			CommerceUserSegmentCriterionType commerceUserSegmentCriterionType = commerceUserSegmentDisplayContext.getCommerceUserSegmentCriterionType(commerceUserSegmentCriterion.getType());
+
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("mvcRenderCommandName", "editCommerceUserSegmentCriterion");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("commerceUserSegmentCriterionId", String.valueOf(commerceUserSegmentCriterion.getCommerceUserSegmentCriterionId()));
+			rowURL.setParameter("commerceUserSegmentEntryId", String.valueOf(commerceUserSegmentCriterion.getCommerceUserSegmentEntryId()));
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="important table-cell-content"
+				href="<%= rowURL %>"
+				name="type"
+				value="<%= HtmlUtil.escape(commerceUserSegmentCriterionType.getLabel(locale)) %>"
+			/>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="type"
-				value="<%= HtmlUtil.escape(LanguageUtil.get(request, commerceUserSegmentCriterion.getType())) %>"
+				name="preview"
+				value="<%= HtmlUtil.escape(commerceUserSegmentCriterionType.getPreview(commerceUserSegmentCriterion, 40)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

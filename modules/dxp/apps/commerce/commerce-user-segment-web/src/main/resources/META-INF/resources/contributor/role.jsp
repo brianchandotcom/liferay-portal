@@ -18,8 +18,6 @@
 
 <%
 RoleCommerceUserSegmentCriterionTypeDisplayContext roleCommerceUserSegmentCriterionTypeDisplayContext = (RoleCommerceUserSegmentCriterionTypeDisplayContext)request.getAttribute("role.jsp-portletDisplayContext");
-
-List<Role> roles = roleCommerceUserSegmentCriterionTypeDisplayContext.getRoles();
 %>
 
 <liferay-util:buffer
@@ -32,133 +30,20 @@ List<Role> roles = roleCommerceUserSegmentCriterionTypeDisplayContext.getRoles()
 	/>
 </liferay-util:buffer>
 
-<liferay-ui:search-container
-	cssClass="lfr-search-container-user-segment-criterion-roles"
-	curParam="commerceUserSegmentCriterionTypeRoleCur"
-	headerNames="null,null"
-	id="commerceUserSegmentCriterionRoleSearchContainer"
-	iteratorURL="<%= currentURLObj %>"
-	total="<%= roles.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= roles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="regular-roles" /></h3>
 
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.Role"
-		keyProperty="roleId"
-		modelVar="role"
-	>
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			value="<%= HtmlUtil.escape(role.getName()) %>"
-		/>
+	<%@ include file="/contributor/regular_roles.jspf" %>
+</div>
 
-		<liferay-ui:search-container-column-text>
-			<a class="float-right modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeCommerceUserSegmentCriterionRoleIcon %></a>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="organization-roles" /></h3>
 
-	<liferay-ui:search-iterator
-		markupView="lexicon"
-	/>
-</liferay-ui:search-container>
+	<%@ include file="/contributor/organization_roles.jspf" %>
+</div>
 
-<aui:button name="selectCommerceUserSegmentCriterionTypeRole" value="select" />
+<div class="sheet-section">
+	<h3 class="sheet-subtitle"><liferay-ui:message key="site-roles" /></h3>
 
-<aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectCommerceUserSegmentCriterionTypeRole').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: 'rolesSelectItem',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItems = event.newVal;
-
-							if (selectedItems) {
-								var A = AUI();
-
-								A.Array.each(
-									selectedItems,
-									function(item, index, selectedItems) {
-										<portlet:namespace />addCommerceUserSegmentCriterionTypeRole(item);
-									}
-								);
-							}
-						}
-					},
-					title: '<liferay-ui:message arguments="role" key="select-x" />',
-					url: '<%= roleCommerceUserSegmentCriterionTypeDisplayContext.getItemSelectorUrl() %>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		}
-	);
-</aui:script>
-
-<aui:script>
-	var <portlet:namespace />addCommerceUserSegmentCriterionTypeRoleIds = [];
-	var <portlet:namespace />deleteCommerceUserSegmentCriterionTypeRoleIds = [];
-
-	function <portlet:namespace />addCommerceUserSegmentCriterionTypeRole(item) {
-		var A = AUI();
-
-		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commerceUserSegmentCriterionRoleSearchContainer');
-
-		var rowColumns = [];
-
-		rowColumns.push(item.name);
-		rowColumns.push('<a class="float-right modify-link" data-rowId="' + item.id + '" href="javascript:;"><%= UnicodeFormatter.toString(removeCommerceUserSegmentCriterionRoleIcon) %></a>');
-
-		A.Array.removeItem(<portlet:namespace />deleteCommerceUserSegmentCriterionTypeRoleIds, item.id);
-
-		<portlet:namespace />addCommerceUserSegmentCriterionTypeRoleIds.push(item.id);
-
-		document.<portlet:namespace />fm.<portlet:namespace />addTypeSettings.value = <portlet:namespace />addCommerceUserSegmentCriterionTypeRoleIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteTypeSettings.value = <portlet:namespace />deleteCommerceUserSegmentCriterionTypeRoleIds.join(',');
-
-		searchContainer.addRow(rowColumns, item.id);
-
-		searchContainer.updateDataStore();
-	}
-
-	function <portlet:namespace />deleteCommerceUserSegmentCriterionTypeRole(roleId) {
-		var A = AUI();
-
-		A.Array.removeItem(<portlet:namespace />addCommerceUserSegmentCriterionTypeRoleIds, roleId);
-
-		<portlet:namespace />deleteCommerceUserSegmentCriterionTypeRoleIds.push(roleId);
-
-		document.<portlet:namespace />fm.<portlet:namespace />addTypeSettings.value = <portlet:namespace />addCommerceUserSegmentCriterionTypeRoleIds.join(',');
-		document.<portlet:namespace />fm.<portlet:namespace />deleteTypeSettings.value = <portlet:namespace />deleteCommerceUserSegmentCriterionTypeRoleIds.join(',');
-	}
-</aui:script>
-
-<aui:script use="liferay-search-container">
-	var Util = Liferay.Util;
-
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commerceUserSegmentCriterionRoleSearchContainer');
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	searchContainerContentBox.delegate(
-		'click',
-		function(event) {
-			var link = event.currentTarget;
-
-			var rowId = link.attr('data-rowId');
-
-			var tr = link.ancestor('tr');
-
-			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-
-			<portlet:namespace />deleteCommerceUserSegmentCriterionTypeRole(rowId);
-		},
-		'.modify-link'
-	);
-</aui:script>
+	<%@ include file="/contributor/site_roles.jspf" %>
+</div>

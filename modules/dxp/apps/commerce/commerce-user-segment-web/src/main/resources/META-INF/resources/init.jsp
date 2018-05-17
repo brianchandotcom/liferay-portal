@@ -46,6 +46,7 @@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Organization" %><%@
 page import="com.liferay.portal.kernel.model.Role" %><%@
+page import="com.liferay.portal.kernel.model.RoleConstants" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserGroup" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

@@ -921,6 +921,10 @@
 
 		<execute macro="Portlet#expandTree" />
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Public Pages" />
+		</execute>
+
 		<execute macro="Portlet#selectTreeNode">
 			<var name="nodeName" value="${pageName}" />
 		</execute>

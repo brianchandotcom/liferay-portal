@@ -862,7 +862,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	private final Pattern _arrayPattern = Pattern.compile(
 		"(\n\t*.* =) ((new \\w*\\[\\] )?\\{)\n(\t*)([^\t\\{].*)\n\t*(\\};?)\n");
 	private final Pattern _catchStatemementPattern = Pattern.compile(
-		"\n((\t*)catch \\((.*[^{|\n])?\n[\\s\\S]*?\\) \\{)\n");
+		"\n((\t*)catch \\((.*[^{|\\s])?\n[\\s\\S]*?\\) \\{)\n");
 	private final Pattern _classOrEnumPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?)\\{)((.*)\\})?" +

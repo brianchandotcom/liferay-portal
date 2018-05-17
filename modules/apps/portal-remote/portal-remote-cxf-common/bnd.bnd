@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Portal Remote CXF Common
 Bundle-SymbolicName: com.liferay.portal.remote.cxf.common
 Bundle-Version: 4.0.0
+
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Remote Service Engines

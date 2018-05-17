@@ -95,7 +95,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				fullClassName);
 
 			if (javaFile == null) {
-				throw new RuntimeException("No matching files found");
+				return null;
 			}
 
 			return getInstance(file, gitWorkingDirectory, javaFile);
@@ -248,6 +248,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 			JunitBatchTestClass parentJunitBatchTestClass = getInstance(
 				parentFullClassName, _gitWorkingDirectory);
+
+			if (parentJunitBatchTestClass == null) {
+				return;
+			}
 
 			for (BaseTestMethod testMethod :
 					parentJunitBatchTestClass.getTestMethods()) {

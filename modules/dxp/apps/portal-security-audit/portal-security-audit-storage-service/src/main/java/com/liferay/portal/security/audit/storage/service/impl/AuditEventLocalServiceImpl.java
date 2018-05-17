@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.audit.storage.comparator.AuditEventCreateDateComparator;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.service.base.AuditEventLocalServiceBaseImpl;
 
@@ -69,12 +70,32 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<AuditEvent> getAuditEvents(long companyId, int start, int end) {
+		return auditEventPersistence.findByCompanyId(
+			companyId, start, end, new AuditEventCreateDateComparator());
+	}
+
+	@Override
 	public List<AuditEvent> getAuditEvents(
 		long companyId, int start, int end,
 		OrderByComparator orderByComparator) {
 
 		return auditEventPersistence.findByCompanyId(
 			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<AuditEvent> getAuditEvents(
+		long companyId, long userId, String userName, Date createDateGT,
+		Date createDateLT, String eventType, String className, String classPK,
+		String clientHost, String clientIP, String serverName, int serverPort,
+		String sessionID, boolean andSearch, int start, int end) {
+
+		return getAuditEvents(
+			companyId, userId, userName, createDateGT, createDateLT, eventType,
+			className, classPK, clientHost, clientIP, serverName, serverPort,
+			sessionID, andSearch, start, end,
+			new AuditEventCreateDateComparator());
 	}
 
 	@Override

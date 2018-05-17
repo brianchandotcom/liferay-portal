@@ -48,7 +48,7 @@
 
 	<command name="deleteCP">
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
@@ -68,7 +68,7 @@
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
@@ -122,7 +122,7 @@
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />

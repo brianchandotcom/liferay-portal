@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
@@ -39,6 +41,10 @@ public class JavaConstructorParameterOrderCheck extends BaseJavaTermCheck {
 
 		if (!parameters.isEmpty()) {
 			_checkConstructorParameterOrder(fileName, javaTerm, parameters);
+		}
+
+		if (parameters.size() > 1) {
+			return _fixIncorrectEmptyLines(javaTerm.getContent(), parameters);
 		}
 
 		return javaTerm.getContent();
@@ -101,6 +107,55 @@ public class JavaConstructorParameterOrderCheck extends BaseJavaTermCheck {
 
 			return;
 		}
+	}
+
+	private String _fixIncorrectEmptyLines(
+		String content, List<JavaParameter> parameters) {
+
+		for (int i = 1; i < parameters.size(); i++) {
+			JavaParameter parameter = parameters.get(i);
+			JavaParameter previousParameter = parameters.get(i - 1);
+
+			String name = parameter.getParameterName();
+			String previousName = previousParameter.getParameterName();
+
+			Pattern pattern = Pattern.compile(
+				StringBundler.concat(
+					"\t_", previousName, " =[ \t\n]+", previousName,
+					";(\n\n)\t+_", name, " =[ \t\n]+", name, ";\n"));
+
+			Matcher matcher = pattern.matcher(content);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			if ((_getOccurenceCount(content, name) == 2) &&
+				(_getOccurenceCount(content, "_" + name) == 1) &&
+				(_getOccurenceCount(content, previousName) == 2) &&
+				(_getOccurenceCount(content, "_" + previousName) == 1)) {
+
+				return StringUtil.replaceFirst(
+					content, StringPool.NEW_LINE, StringPool.BLANK,
+					matcher.start(1));
+			}
+		}
+
+		return content;
+	}
+
+	private int _getOccurenceCount(String content, String name) {
+		int count = 0;
+
+		Pattern pattern = Pattern.compile("\\W" + name + "\\W");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			count++;
+		}
+
+		return count;
 	}
 
 }

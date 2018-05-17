@@ -9,5 +9,6 @@ Liferay-Releng-Marketplace: false
 Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: false
 Liferay-Releng-Restart-Required: false
+Liferay-Releng-Suite:
 Liferay-Releng-Support-Url:
 Liferay-Releng-Supported: false

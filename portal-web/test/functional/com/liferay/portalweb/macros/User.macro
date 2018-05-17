@@ -1821,7 +1821,16 @@
 			</then>
 		</if>
 
-		<execute function="Pause" locator1="5000" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+	</command>
+
+	<command name="loginUserWithOpenIDConnectEnabledPG">
+		<execute macro="OpenIDConnect#accountSignIn">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="OpenIDConnect#acceptConditions" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>

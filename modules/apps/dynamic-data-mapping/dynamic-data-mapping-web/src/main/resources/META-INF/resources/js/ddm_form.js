@@ -2572,7 +2572,7 @@ AUI.add(
 					getDocumentLibrarySelectorURL: function() {
 						var instance = this;
 
-						return instance.getDocumentLibraryURL('com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
+						return instance.getDocumentLibraryURL('com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion');
 					},
 
 					getDocumentLibraryURL: function(criteria) {
@@ -2591,14 +2591,14 @@ AUI.add(
 						portletURL.setParameter('p_p_auth', container.getData('itemSelectorAuthToken'));
 
 						var journalCriterionJSON = {
-							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 							resourcePrimKey: parsedValue.resourcePrimKey
 						};
 
 						portletURL.setParameter('0_json', JSON.stringify(journalCriterionJSON));
 
 						var imageCriterionJSON = {
-							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 						};
 
 						portletURL.setParameter('1_json', JSON.stringify(imageCriterionJSON));

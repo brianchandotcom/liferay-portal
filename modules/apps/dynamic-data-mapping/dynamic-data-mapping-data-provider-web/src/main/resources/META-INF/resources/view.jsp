@@ -41,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 		<aui:input name="deleteDataProviderInstanceIds" type="hidden" />
 
 		<liferay-ui:search-container
-			id="dataProviderInstance"
+			id="<%= ddmDataProviderDisplayContext.getSearchContainerId() %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= ddmDataProviderDisplayContext.getSearch() %>"
 		>

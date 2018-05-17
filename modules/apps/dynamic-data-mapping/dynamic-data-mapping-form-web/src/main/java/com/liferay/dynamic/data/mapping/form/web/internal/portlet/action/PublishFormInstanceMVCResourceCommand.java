@@ -71,7 +71,7 @@ public class PublishFormInstanceMVCResourceCommand
 				resourceRequest, "formInstanceId");
 
 			if (formInstanceId == 0) {
-				return;
+				throw new IllegalStateException();
 			}
 
 			boolean published = ParamUtil.getBoolean(

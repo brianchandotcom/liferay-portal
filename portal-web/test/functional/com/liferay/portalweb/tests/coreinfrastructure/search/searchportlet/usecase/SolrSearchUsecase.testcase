@@ -973,6 +973,121 @@
 		</execute>
 	</command>
 
+	<command name="SearchUsingCustomFacet">
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
+		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.0" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/search" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Custom Facet" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#configureCustomFacet">
+			<var name="aggregationField" value="version" />
+		</execute>
+
+		<execute macro="SearchBarPortlet#searchPG">
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title 1" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC">
+			<var name="key_checkboxName" value="1.0" />
+			<var name="key_facetClass" value="Custom Facet" />
+		</execute>
+
+		<execute function="Check" locator1="SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC">
+			<var name="key_checkboxName" value="1.0" />
+			<var name="key_facetClass" value="Custom Facet" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title 1" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WebContent Title 1" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="WebContent Title 1.1" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WebContent Title 1.1" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#VERSION" value1="1.1" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SearchPortlet#searchPG">
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title 1.1" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC">
+			<var name="key_checkboxName" value="1.1" />
+			<var name="key_facetClass" value="Custom Facet" />
+		</execute>
+
+		<execute function="Check" locator1="SearchResults#FACET_PORTLET_CHECKBOX_SPECIFIC">
+			<var name="key_checkboxName" value="1.1" />
+			<var name="key_facetClass" value="Custom Facet" />
+		</execute>
+
+		<execute macro="SearchResultPortlet#viewSearchResults">
+			<var name="searchAssetTitle" value="WebContent Title 1.1" />
+			<var name="searchAssetType" value="Web Content Article" />
+			<var name="searchTerm" value="WebContent" />
+		</execute>
+	</command>
+
 	<command name="SearchUsingNewSearchPortlets" priority="5">
 		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
 		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />

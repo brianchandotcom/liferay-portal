@@ -1,6 +1,6 @@
 <definition>
 	<command name="deleteEntry">
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="list" />
 		</execute>
 

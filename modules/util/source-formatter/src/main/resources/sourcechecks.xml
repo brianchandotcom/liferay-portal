@@ -223,6 +223,7 @@
 	<source-processor name="JSONSourceProcessor">
 		<check name="JSONIndentationCheck" />
 		<check name="JSONPropertyOrderCheck" />
+		<check name="JSONValidationCheck" />
 		<check name="JSONWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>

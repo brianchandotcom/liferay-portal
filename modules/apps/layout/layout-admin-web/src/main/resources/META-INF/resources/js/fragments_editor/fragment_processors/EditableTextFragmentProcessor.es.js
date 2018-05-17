@@ -1,4 +1,6 @@
 import debounce from 'metal-debounce';
+import {dom} from 'metal-dom';
+import {EventHandler} from 'metal-events';
 import {object} from 'metal';
 
 /**
@@ -15,15 +17,24 @@ class EditableTextFragmentProcessor {
 	constructor(fragmentEntryLink) {
 		this.fragmentEntryLink = fragmentEntryLink;
 
-		this._editors = [];
+		this._eventHandler = new EventHandler();
+
+		this._editableField = null;
+		this._editableId = null;
+		this._editor = null;
+		this._editorEventHandler = new EventHandler();
+
+		this._handleEditableClick = this._handleEditableClick.bind(this);
 
 		this._handleEditorChange = debounce(
 			this._handleEditorChange.bind(this),
 			300
 		);
 
-		this._destroyEditors = this._destroyEditors.bind(this);
-		Liferay.on('beforeNavigate', this._destroyEditors);
+		Liferay.on(
+			'beforeNavigate',
+			this.dispose.bind(this)
+		);
 	}
 
 	/**
@@ -32,7 +43,8 @@ class EditableTextFragmentProcessor {
 	 */
 
 	dispose() {
-		this._destroyEditors();
+		this._eventHandler.removeAllListeners();
+		this._destroyEditor();
 	}
 
 	/**
@@ -43,9 +55,18 @@ class EditableTextFragmentProcessor {
 	 */
 
 	findEditor(editableId) {
-		return this._editors.find(
-			editor => editor.editableId === editableId
-		);
+		const setData = data => {
+			const editableField = this.fragmentEntryLink.element.querySelector(
+				`lfr-editable[id="${editableId}"][type="text"]`
+			);
+
+			if (editableField) {
+				this._destroyEditor();
+				editableField.innerHTML = data;
+			}
+		};
+
+		return {setData};
 	}
 
 	/**
@@ -54,10 +75,18 @@ class EditableTextFragmentProcessor {
 	 */
 
 	process() {
-		this._destroyEditors();
+		this._destroyEditor();
+		this._eventHandler.removeAllListeners();
 
 		if (!this.fragmentEntryLink.showMapping) {
-			this._createEditors();
+			this._eventHandler.add(
+				dom.delegate(
+					this.fragmentEntryLink.refs.content,
+					'click',
+					'lfr-editable[type="text"]',
+					this._handleEditableClick
+				)
+			);
 		}
 	}
 
@@ -71,11 +100,13 @@ class EditableTextFragmentProcessor {
 	 */
 
 	_createEditor(editableField) {
+		this._editableField = editableField;
+		this._editableId = editableField.id;
+
 		const editableContent = editableField.innerHTML;
-		const editableId = editableField.id;
 		const wrapper = document.createElement('div');
 
-		wrapper.dataset.lfrEditableId = editableId;
+		wrapper.dataset.lfrEditableId = this._editableId;
 		wrapper.innerHTML = editableContent;
 
 		editableField.innerHTML = '';
@@ -97,7 +128,6 @@ class EditableTextFragmentProcessor {
 		);
 
 		const nativeEditor = editor.get('nativeEditor');
-		const setData = nativeEditor.setData.bind(nativeEditor);
 
 		const editorChangeHandler = nativeEditor.on(
 			'change',
@@ -109,54 +139,39 @@ class EditableTextFragmentProcessor {
 			this._handleEditorChange
 		);
 
-		return {
-			defaultValue: editableContent,
-			editableField,
-			editableId,
-			editor,
-			eventHandlers: [
-				editorChangeHandler,
-				editorSelectionChangeHandler
-			],
-			setData
-		};
+		this._editor = editor;
+		this._editorEventHandler.add(editorChangeHandler);
+		this._editorEventHandler.add(editorSelectionChangeHandler);
+
+		nativeEditor.on('instanceReady', () => nativeEditor.focus());
 	}
 
 	/**
-	 * Creates a list of editors for every editable field inside Fragment
-	 * and stores them inside _editors attribute.
+	 * Destroy existing editor.
 	 * @private
 	 */
 
-	_createEditors() {
-		const content = this.fragmentEntryLink.refs.content;
+	_destroyEditor() {
+		if (this._editor) {
+			this._editorEventHandler.removeAllListeners();
 
-		this._editors = []
-			.slice
-			.call(content.querySelectorAll('lfr-editable[type="text"]'))
-			.map(editableField => this._createEditor(editableField));
+			const editorData = this._editor.get('nativeEditor').getData();
+
+			this._editableField.innerHTML = editorData;
+
+			this._editor.destroy();
+			this._editor = null;
+		}
 	}
 
-	/**
-	 * Destroy all existing editors and reset _editors array.
-	 * @private
-	 */
+	_handleEditableClick(event) {
+		const editableField = event.delegateTarget;
 
-	_destroyEditors() {
-		this._editors.forEach(
-			({editableField, editor, eventHandlers}) => {
-				eventHandlers.forEach(
-					eventHandler => {
-						eventHandler.removeListener();
-					}
-				);
+		if (editableField !== this._editableField) {
+			this._destroyEditor();
 
-				editor.destroy();
-				editableField.innerHTML = editor.get('nativeEditor').getData();
-			}
-		);
-
-		this._editors = [];
+			this._createEditor(editableField);
+		}
 	}
 
 	/**
@@ -167,12 +182,15 @@ class EditableTextFragmentProcessor {
 	 */
 
 	_handleEditorChange(event) {
+		const editor = event.editor;
+		const fragmentEntryLinkId = this.fragmentEntryLink.fragmentEntryLinkId;
+
 		this.fragmentEntryLink.emit(
 			'editableChanged',
 			{
-				editableId: event.editor.element.$.dataset.lfrEditableId,
-				fragmentEntryLinkId: this.fragmentEntryLink.fragmentEntryLinkId,
-				value: event.editor.getData()
+				editableId: editor.element.$.dataset.lfrEditableId,
+				fragmentEntryLinkId,
+				value: editor.getData()
 			}
 		);
 	}

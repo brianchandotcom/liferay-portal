@@ -2,4 +2,19 @@
 
 import register from './portlet_hub/register.es';
 
-export {register};
+/**
+ * Returns the page render state initial data.
+ */
+
+const getInitData = function() {
+	return {
+		encodedCurrentURL: '',
+		portlets: {},
+		prpMap: {}
+	};
+};
+
+export {
+	getInitData,
+	register
+};

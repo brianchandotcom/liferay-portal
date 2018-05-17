@@ -26,7 +26,7 @@
 		"metal-events": "^2.5.16",
 		"metal-keyboard-focus": "^2.0.1",
 		"metal-position": "^2.1.1",
-		"metal-promise": "^3.0.3",
+		"metal-promise": "^3.0.4",
 		"metal-soy": "^2.16.4",
 		"svg4everybody": "^2.1.8"
 	},
@@ -49,6 +49,10 @@
 		},
 		"testMatch": [
 			"**/test/**/*.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/node_modules/",
+			"<rootDir>/test/liferay/mock_portlet_data.es.js"
 		],
 		"testResultsProcessor": "./node_modules/liferay-jest-junit-reporter",
 		"transformIgnorePatterns": [

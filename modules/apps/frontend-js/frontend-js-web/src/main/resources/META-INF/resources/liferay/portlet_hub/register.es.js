@@ -1,5 +1,3 @@
-'use strict';
-
 import Promise from 'metal-promise';
 
 import PortletInit from './PortletInit.es';
@@ -14,7 +12,7 @@ import PortletInit from './PortletInit.es';
  * @review
  */
 
-function register(portletId) {
+const register = function(portletId) {
 	return new Promise(
 		(resolve, reject) => {
 			if (!portletId) {
@@ -25,7 +23,7 @@ function register(portletId) {
 			}
 		}
 	);
-}
+};
 
 export {register};
 export default register;

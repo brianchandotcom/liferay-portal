@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+import {object} from 'metal';
 import Soy from 'metal-soy';
 
 import {showImageEditing} from './fragment_processors/EditableImageFragmentProcessor.es';
@@ -15,6 +16,39 @@ class FragmentEditableField extends Component {
 
 	created() {
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @param {!object} state
+	 * @returns {object}
+	 */
+
+	prepareStateForRender(state) {
+		const translatedContent = this.editableValues[this.languageId] ||
+			this.editableValues.defaultValue;
+
+		let content = Soy.toIncDom(translatedContent || this.content);
+
+		if (this.type === 'image' && translatedContent) {
+			const tempContent = document.createElement('div');
+
+			tempContent.innerHTML = this.content;
+
+			const tempImage = tempContent.querySelector('img');
+
+			if (tempImage) {
+				tempImage.src = translatedContent;
+			}
+
+			content = Soy.toIncDom(tempContent.innerHTML);
+		}
+
+		return object.mixin(
+			{},
+			state,
+			{content}
+		);
 	}
 
 	/**
@@ -55,7 +89,7 @@ class FragmentEditableField extends Component {
 	 */
 
 	shouldUpdate(changes) {
-		return !!changes.content || !!changes._showTooltip;
+		return !!changes._showTooltip;
 	}
 
 	/**
@@ -134,7 +168,7 @@ FragmentEditableField.STATE = {
 	 * @type {!string}
 	 */
 
-	content: Config.setter(content => Soy.toIncDom(content || '')),
+	content: Config.string().required(),
 
 	/**
 	 * Default configuration for AlloyEditor instances.
@@ -146,6 +180,28 @@ FragmentEditableField.STATE = {
 	 */
 
 	defaultEditorConfiguration: Config.object().value({}),
+
+	/**
+	 * Editable ID
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {!string}
+	 */
+
+	editableId: Config.string().required(),
+
+	/**
+	 * Editable values
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {!object}
+	 */
+
+	editableValues: Config.object().required(),
 
 	/**
 	 * FragmentEntryLink id
@@ -170,15 +226,15 @@ FragmentEditableField.STATE = {
 	imageSelectorURL: Config.string().required(),
 
 	/**
-	 * Editable ID
+	 * Currently selected language id.
 	 * @default undefined
 	 * @instance
-	 * @memberOf FragmentEditableField
+	 * @memberOf FragmentsEditor
 	 * @review
 	 * @type {!string}
 	 */
 
-	editableId: Config.string().required(),
+	languageId: Config.string().required(),
 
 	/**
 	 * Portlet namespace

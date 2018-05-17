@@ -48,7 +48,6 @@ public class CheckCommerceCloudForecastOrderMessageListener
 	extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_commerceCloudClientConfiguration = ConfigurableUtil.createConfigurable(
 			CommerceCloudClientConfiguration.class, properties);
@@ -84,6 +83,13 @@ public class CheckCommerceCloudForecastOrderMessageListener
 	protected void doReceive(Message message) throws Exception {
 		_commerceCloudForecastOrderLocalService.
 			checkCommerceCloudForecastOrders();
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		deactivate();
+
+		activate(properties);
 	}
 
 	private volatile CommerceCloudClientConfiguration

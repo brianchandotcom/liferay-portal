@@ -100,45 +100,51 @@ AUI.add(
 							}
 						).render();
 
+						var boundingBox = overlayMask.get(BOUNDING_BOX);
+
 						var columnDropZone = column.one('.portlet-dropzone');
 
 						if (columnDropZone) {
-							columnDropZone.insertBefore(overlayMask.get(BOUNDING_BOX));
+							columnDropZone.insertBefore(boundingBox);
+
+							columnDropZone.setData('customizationControls', overlayMask);
 						}
 
 						if (customizable) {
-							overlayMask.get(BOUNDING_BOX).addClass('customizable');
+							boundingBox.addClass('customizable');
 						}
 
 						var columnControls = instance._controls.clone();
 
 						var input = columnControls.one('.layout-customizable-checkbox');
+
+						if (input) {
+							var oldName = input.attr('name');
+
+							var newName = oldName.replace('[COLUMN_ID]', columnId);
+
+							input.attr(
+								{
+									checked: customizable,
+									id: newName,
+									name: newName
+								}
+							);
+
+							boundingBox.prepend(columnControls);
+
+							columnControls.show();
+
+							input.setData('customizationControls', overlayMask);
+						}
+
 						var label = columnControls.one('label');
 
-						var oldName = input.attr('name');
-
-						var newName = oldName.replace('[COLUMN_ID]', columnId);
-
-						input.attr(
-							{
-								checked: customizable,
-								id: newName,
-								name: newName
-							}
-						);
-
-						label.attr('for', newName);
-
-						overlayMask.get(BOUNDING_BOX).prepend(columnControls);
-
-						columnControls.show();
-
-						input.setData('customizationControls', overlayMask);
-						column.setData('customizationControls', overlayMask);
-
-						if (columnDropZone) {
-							columnDropZone.setData('customizationControls', overlayMask);
+						if (label) {
+							label.attr('for', newName);
 						}
+
+						column.setData('customizationControls', overlayMask);
 
 						return overlayMask;
 					},
@@ -151,6 +157,7 @@ AUI.add(
 						var overlayMask = checkbox.getData('customizationControls');
 
 						var boundingBox = overlayMask.get(BOUNDING_BOX);
+
 						var column = overlayMask.get('target');
 
 						var columnDropZone = column.one('.portlet-dropzone');

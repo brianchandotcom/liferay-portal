@@ -25,7 +25,6 @@ public class BooleanClauseImpl<T> implements BooleanClause<T> {
 
 	public BooleanClauseImpl(T t, BooleanClauseOccur booleanClauseOccur) {
 		_t = t;
-
 		_booleanClauseOccur = booleanClauseOccur;
 	}
 

@@ -49,7 +49,6 @@ public class SoyCapabilityBundleTrackerCustomizer
 			soyProviderCapabilityBundleRegister) {
 
 		_soyTofuCacheHandler = soyTofuCacheHandler;
-
 		_soyProviderCapabilityBundleRegister =
 			soyProviderCapabilityBundleRegister;
 	}

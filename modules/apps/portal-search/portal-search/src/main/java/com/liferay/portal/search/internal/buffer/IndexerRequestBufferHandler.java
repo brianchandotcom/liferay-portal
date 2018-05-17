@@ -31,7 +31,6 @@ public class IndexerRequestBufferHandler {
 
 		_indexerRequestBufferOverflowHandler =
 			indexerRequestBufferOverflowHandler;
-
 		_indexerRegistryConfiguration = indexerRegistryConfiguration;
 	}
 

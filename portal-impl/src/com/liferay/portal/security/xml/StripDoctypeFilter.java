@@ -154,7 +154,6 @@ public class StripDoctypeFilter {
 
 	protected StripDoctypeFilter(InputStream inputStream, Reader reader) {
 		_inputStream = inputStream;
-
 		_reader = reader;
 	}
 

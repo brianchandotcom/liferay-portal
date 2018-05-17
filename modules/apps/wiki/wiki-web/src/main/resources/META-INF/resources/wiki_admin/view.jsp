@@ -93,6 +93,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 
 <clay:management-toolbar
 	actionDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	componentId="wikiNodesManagementToolbar"
 	creationMenu="<%= wikiNodesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= wikiNodesManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
@@ -235,8 +236,8 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 	</div>
 </div>
 
-<aui:script>
-	function <portlet:namespace />deleteNodes() {
+<aui:script sandbox="<%= true %>">
+	var deleteNodes = function() {
 		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
@@ -246,4 +247,23 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 			submitForm(form, '<portlet:actionURL name="/wiki/edit_node" />');
 		}
 	}
+
+	var ACTIONS = {
+		'deleteNodes': deleteNodes
+	};
+
+	Liferay.componentReady('wikiNodesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

@@ -139,7 +139,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 				kbFolder.getGroupId(), kbFolder.getUrlTitle(), urlTitle);
 
 			if ((kbArticle == null) &&
-				Validator.isNull(previousPreferredKBFolderURLTitle)) {
+				Validator.isNotNull(previousPreferredKBFolderURLTitle)) {
 
 				kbArticle = findClosestMatchingKBArticle(
 					kbFolder.getGroupId(), previousPreferredKBFolderURLTitle,

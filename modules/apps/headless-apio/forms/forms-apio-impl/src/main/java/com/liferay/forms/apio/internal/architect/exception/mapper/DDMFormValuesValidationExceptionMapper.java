@@ -12,30 +12,30 @@
  * details.
  */
 
-package com.liferay.media.object.apio.internal.architect.converter;
+package com.liferay.forms.apio.internal.architect.exception.mapper;
 
-import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.apio.architect.exception.mapper.ExceptionMapper;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 
 import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code DuplicateFileEntryException} to its {@link APIError}
+ * Converts a {@code DDMFormValuesValidationException} to its {@link APIError}
  * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class DuplicateFileEntryExceptionMapper
-	implements ExceptionMapper<DuplicateFileEntryException> {
+public class DDMFormValuesValidationExceptionMapper
+	implements ExceptionMapper<DDMFormValuesValidationException> {
 
 	@Override
-	public APIError map(DuplicateFileEntryException dfee) {
+	public APIError map(DDMFormValuesValidationException ddmfvve) {
 		return new APIError(
-			dfee, "Duplicate entry", "bad-request",
+			ddmfvve, "Wrong values", ddmfvve.getMessage(), "bad-request",
 			Status.BAD_REQUEST.getStatusCode());
 	}
 

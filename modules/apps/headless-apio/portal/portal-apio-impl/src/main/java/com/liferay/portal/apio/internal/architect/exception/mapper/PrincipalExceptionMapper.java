@@ -12,31 +12,30 @@
  * details.
  */
 
-package com.liferay.folder.apio.internal.architect.converter;
+package com.liferay.portal.apio.internal.architect.exception.mapper;
 
-import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
+import com.liferay.apio.architect.exception.mapper.ExceptionMapper;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 
 import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code DuplicateFolderNameException} to its {@link APIError}
- * representation.
+ * Converts a {@code PrincipalException} to its {@link APIError} representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class DuplicateFolderNameExceptionMapper
-	implements ExceptionMapper<DuplicateFolderNameException> {
+public class PrincipalExceptionMapper
+	implements ExceptionMapper<PrincipalException> {
 
 	@Override
-	public APIError map(DuplicateFolderNameException dfne) {
+	public APIError map(PrincipalException pe) {
 		return new APIError(
-			dfne, "Duplicate folder", "bad-request",
-			Status.BAD_REQUEST.getStatusCode());
+			pe, "Resource not found", "not-found",
+			Status.NOT_FOUND.getStatusCode());
 	}
 
 }

@@ -652,7 +652,9 @@
 			<var name="miscellaneousTranslation" value="Varios" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
+		<execute macro="ProductMenu#gotoLocalizedSite">
+			<var name="displayStyle" value="tabla" />
+			<var name="navItem" value="Mis Sitios" />
 			<var name="site" value="Site Name" />
 		</execute>
 

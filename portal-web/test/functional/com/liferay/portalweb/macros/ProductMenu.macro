@@ -93,6 +93,40 @@
 		<execute function="Click" locator1="SitePages#EDIT_SPECIFIC_PAGE" />
 	</command>
 
+	<command name="gotoLocalizedSite" summary="Navigate to Product Menu > Sites > Sites Modal > ${site}">
+		<execute macro="ProductMenuHelper#expandPanel">
+			<var name="panel" value="Site Administration" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#openSitesPopup" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="${navItem}" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="${displayStyle}" />
+		</execute>
+
+		<execute macro="SiteSelector#_searchSite">
+			<var name="site" value="${site}" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${site}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+
+		<execute macro="ProductMenuHelper#expandPanel">
+			<var name="panel" value="Site Administration" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${site}" />
+	</command>
+
 	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}">
 		<execute macro="ProductMenuHelper#expandPanel">
 			<var name="panel" value="Site Administration" />

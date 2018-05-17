@@ -1,0 +1,57 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<aui:input name="enabled" />
+
+<aui:field-wrapper label="subject">
+	<liferay-ui:input-localized
+		name="subject"
+		xml="<%= (commerceNotificationTemplate == null) ? StringPool.BLANK : commerceNotificationTemplate.getSubject() %>"
+	/>
+</aui:field-wrapper>
+
+<aui:field-wrapper label="body">
+	<liferay-ui:input-localized
+		editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.email_notification_settings.jsp") %>'
+		name="body"
+		toolbarSet="email"
+		type="editor"
+		xml="<%= (commerceNotificationTemplate == null) ? StringPool.BLANK : commerceNotificationTemplate.getBody() %>"
+	/>
+</aui:field-wrapper>
+
+<c:if test="<%= (definitionTerms != null) && !definitionTerms.isEmpty() %>">
+	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="definition-of-terms" markupView="lexicon">
+		<dl>
+
+			<%
+			for (Map.Entry<String, String> entry : definitionTerms.entrySet()) {
+			%>
+
+				<dt>
+					<%= entry.getKey() %>
+				</dt>
+				<dd>
+					<%= entry.getValue() %>
+				</dd>
+
+			<%
+			}
+			%>
+
+		</dl>
+	</aui:fieldset>
+</c:if>

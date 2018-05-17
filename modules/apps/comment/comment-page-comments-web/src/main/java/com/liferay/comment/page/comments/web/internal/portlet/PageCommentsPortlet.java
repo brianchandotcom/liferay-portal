@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.fragment.entry.processor.portlet.alias=page-comments",
 		"com.liferay.portlet.css-class-wrapper=portlet-page-comments",
 		"com.liferay.portlet.display-category=category.community",
 		"com.liferay.portlet.icon=/icons/page_comments.png",

@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.fragment.entry.processor.portlet.alias=categories-nav",
 		"com.liferay.portlet.css-class-wrapper=portlet-asset-categories-navigation",
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.icon=/icons/asset_categories_navigation.png",

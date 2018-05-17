@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.fragment.entry.processor.portlet.alias=flash",
 		"com.liferay.portlet.css-class-wrapper=flash-portlet",
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.icon=/icons/flash.png",

@@ -52,6 +52,7 @@ String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle
 <clay:management-toolbar
 	actionDropdownItems="<%= blogEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= blogEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	componentId="blogEntriesManagementToolbar"
 	creationMenu="<%= blogEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= entriesSearchContainer.getTotal() <= 0 %>"
 	filterDropdownItems="<%= blogEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
@@ -112,8 +113,8 @@ String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle
 	</aui:form>
 </div>
 
-<aui:script>
-	function <portlet:namespace />deleteEntries() {
+<aui:script sandbox="<%= true %>">
+	var deleteEntries = function() {
 		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
 			var form = document.querySelector('#<portlet:namespace />fm');
 
@@ -136,4 +137,23 @@ String displayStyle = blogEntriesManagementToolbarDisplayContext.getDisplayStyle
 			}
 		}
 	}
+
+	var ACTIONS = {
+		'deleteEntries': deleteEntries
+	};
+
+	Liferay.componentReady('blogEntriesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

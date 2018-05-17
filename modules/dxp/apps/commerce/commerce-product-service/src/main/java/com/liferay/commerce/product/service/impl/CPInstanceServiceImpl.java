@@ -258,6 +258,44 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			cpInstanceId, width, height, depth, weight, serviceContext);
 	}
 
+	@Override
+	public CPInstance upsertCPInstance(
+			long cpDefinitionId, String sku, String gtin,
+			String manufacturerPartNumber, boolean purchasable,
+			String ddmContent, double width, double height, double depth,
+			double weight, BigDecimal price, BigDecimal promoPrice,
+			BigDecimal cost, boolean published, String externalReferenceCode,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPInstance cpInstance =
+			cpInstanceLocalService.fetchByExternalReferenceCode(
+				externalReferenceCode);
+
+		if (cpInstance == null) {
+			CPDefinitionPermission.check(
+				getPermissionChecker(), cpDefinitionId,
+				CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
+		}
+		else {
+			CPDefinitionPermission.checkCPInstance(
+				getPermissionChecker(), cpInstance.getCPInstanceId(),
+				CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+		}
+
+		return cpInstanceLocalService.upsertCPInstance(
+			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
+			ddmContent, width, height, depth, weight, price, promoPrice, cost,
+			published, externalReferenceCode, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
+	}
 	private static volatile ModelResourcePermission<CPDefinition>
 		_cpDefinitionModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

@@ -392,6 +392,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 	}
 
+	public CPInstance fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		return cpInstancePersistence.fetchByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
 	@Override
 	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId) {
 		return cpInstancePersistence.findByCPDefinitionId(cpDefinitionId);
@@ -740,6 +747,48 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setStatusDate(modifiedDate);
 
 		cpInstancePersistence.update(cpInstance);
+
+		return cpInstance;
+	}
+
+	@Override
+	public CPInstance upsertCPInstance(
+			long cpDefinitionId, String sku, String gtin,
+			String manufacturerPartNumber, boolean purchasable,
+			String ddmContent, double width, double height, double depth,
+			double weight, BigDecimal price, BigDecimal promoPrice,
+			BigDecimal cost, boolean published, String externalReferenceCode,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		CPInstance cpInstance =
+			cpInstancePersistence.fetchByExternalReferenceCode(
+				externalReferenceCode);
+
+		if (Validator.isNull(cpInstance)) {
+			cpInstance = addCPInstance(
+				cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
+				ddmContent, width, height, depth, weight, price, promoPrice,
+				cost, published, externalReferenceCode, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
+		}
+		else {
+			cpInstance = updateCPInstance(
+				cpInstance.getCPInstanceId(), sku, gtin, manufacturerPartNumber,
+				purchasable, width, height, depth, weight, price, promoPrice,
+				cost, published, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
+		}
 
 		return cpInstance;
 	}

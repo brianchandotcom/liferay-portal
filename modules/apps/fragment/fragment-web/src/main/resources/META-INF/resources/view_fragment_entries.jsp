@@ -33,7 +33,7 @@
 	sortingURL="<%= fragmentDisplayContext.getFragmentEntrySortingURL() %>"
 />
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<aui:form name="fm">
 	<liferay-ui:search-container
 		id="fragmentEntries"
 		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"

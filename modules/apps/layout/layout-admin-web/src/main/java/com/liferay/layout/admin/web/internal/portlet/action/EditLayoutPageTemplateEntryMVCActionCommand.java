@@ -64,7 +64,7 @@ public class EditLayoutPageTemplateEntryMVCActionCommand
 
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				serviceContext.getScopeGroupId(),
-				layoutPageTemplateCollectionId, name, null,
+				layoutPageTemplateCollectionId, name,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 		}
 		else {

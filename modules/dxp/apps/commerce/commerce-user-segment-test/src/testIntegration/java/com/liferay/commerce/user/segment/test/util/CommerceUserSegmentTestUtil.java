@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.user.segment.test.util;
 
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionLocalServiceUtil;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -24,7 +26,21 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceUserSegmentEntryTestUtil {
+public class CommerceUserSegmentTestUtil {
+
+	public static CommerceUserSegmentCriterion addCommerceUserSegmentCriterion(
+			long groupId, long commerceUserSegmentEntryId, String type,
+			String typeSettings)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CommerceUserSegmentCriterionLocalServiceUtil.
+			addCommerceUserSegmentCriterion(
+				commerceUserSegmentEntryId, type, typeSettings,
+				RandomTestUtil.randomDouble(), serviceContext);
+	}
 
 	public static CommerceUserSegmentEntry addCommerceUserSegmentEntry(
 			long groupId, boolean system)

@@ -17,7 +17,7 @@ package com.liferay.commerce.user.segment.internal.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
-import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentEntryTestUtil;
+import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -80,7 +80,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				groupId, RandomTestUtil.randomBoolean());
 
 		Hits hits = _search();
@@ -111,7 +111,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				groupId, false);
 
 		_commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(

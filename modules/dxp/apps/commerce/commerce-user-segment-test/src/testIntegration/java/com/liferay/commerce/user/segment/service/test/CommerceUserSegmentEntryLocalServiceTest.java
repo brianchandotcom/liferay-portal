@@ -19,7 +19,7 @@ import com.liferay.commerce.user.segment.exception.CommerceUserSegmentEntrySyste
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntryConstants;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
-import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentEntryTestUtil;
+import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -70,7 +70,7 @@ public class CommerceUserSegmentEntryLocalServiceTest {
 		);
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			CommerceUserSegmentEntryTestUtil.addCommerceUserSegmentEntry(
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
 				_group.getGroupId(), true);
 
 		_commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(

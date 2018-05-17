@@ -29,6 +29,7 @@ public class CopyrightCheck extends BaseFileCheck {
 
 	@Override
 	public void init() throws Exception {
+		_commercialCopyright = _getCommercialCopyright();
 		_copyright = _getCopyright();
 	}
 
@@ -41,26 +42,37 @@ public class CopyrightCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		String copyright = _copyright;
+
+		if (isModulesApp(absolutePath, true)) {
+			copyright = _commercialCopyright;
+
+			if (content.contains(_copyright)) {
+				content = StringUtil.replace(content, _copyright, copyright);
+			}
+		}
+
 		if (!fileName.endsWith(".tpl") && !fileName.endsWith(".vm")) {
-			content = _fixCopyright(fileName, absolutePath, content);
+			content = _fixCopyright(fileName, absolutePath, content, copyright);
 		}
 
 		return content;
 	}
 
 	private String _fixCopyright(
-			String fileName, String absolutePath, String content)
+			String fileName, String absolutePath, String content,
+			String copyright)
 		throws Exception {
 
 		String customCopyright = _getCustomCopyright(absolutePath);
 
-		if (!content.contains(_copyright) &&
+		if (!content.contains(copyright) &&
 			((customCopyright == null) || !content.contains(customCopyright))) {
 
 			addMessage(fileName, "Missing copyright");
 		}
-		else if (!content.startsWith(_copyright) &&
-				 !content.startsWith("<%--\n" + _copyright) &&
+		else if (!content.startsWith(copyright) &&
+				 !content.startsWith("<%--\n" + copyright) &&
 				 ((customCopyright == null) ||
 				  (!content.startsWith(customCopyright) &&
 				   !content.startsWith("<%--\n" + customCopyright)))) {
@@ -72,8 +84,8 @@ public class CopyrightCheck extends BaseFileCheck {
 			fileName.endsWith(".tag")) {
 
 			content = StringUtil.replace(
-				content, "<%\n" + _copyright + "\n%>",
-				"<%--\n" + _copyright + "\n--%>");
+				content, "<%\n" + copyright + "\n%>",
+				"<%--\n" + copyright + "\n--%>");
 
 			content = StringUtil.replace(
 				content, "<%\n" + customCopyright + "\n%>",
@@ -81,6 +93,16 @@ public class CopyrightCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private String _getCommercialCopyright() throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		return StringUtil.read(
+			classLoader.getResourceAsStream(
+				"dependencies/copyright-commercial.txt"));
 	}
 
 	private String _getCopyright() throws Exception {
@@ -120,6 +142,7 @@ public class CopyrightCheck extends BaseFileCheck {
 		return null;
 	}
 
+	private String _commercialCopyright;
 	private String _copyright;
 	private String _copyrightFileName = "copyright.txt";
 

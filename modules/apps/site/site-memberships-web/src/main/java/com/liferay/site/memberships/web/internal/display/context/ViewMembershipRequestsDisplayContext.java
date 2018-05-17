@@ -73,7 +73,7 @@ public class ViewMembershipRequestsDisplayContext {
 		return _displayStyle;
 	}
 
-	public DropdownItemList getFilterDropdownItems() {
+	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
 				addGroup(

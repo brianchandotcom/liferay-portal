@@ -22,7 +22,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletURL()));
 
-renderResponse.setTitle(LanguageUtil.get(request, "add-page"));
+renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">

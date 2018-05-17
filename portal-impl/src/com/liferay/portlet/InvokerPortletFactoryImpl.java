@@ -27,7 +27,7 @@ import javax.portlet.PortletException;
 /**
  * @author Shuyang Zhou
  */
-@OSGiBeanProperties(property = "service.ranking=1")
+@OSGiBeanProperties(property = "service.ranking:Integer=1")
 public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 
 	@Override

@@ -760,10 +760,10 @@
 				combine: COMBINE,
 				modules: {
 					'swfobject': {
-						path: '/swfobject.js'
+						path: 'swfobject.js'
 					},
 					'swfupload': {
-						path: '/swfupload/swfupload.js'
+						path: 'swfupload/swfupload.js'
 					}
 				},
 				root: PATH_JAVASCRIPT + '/misc/'

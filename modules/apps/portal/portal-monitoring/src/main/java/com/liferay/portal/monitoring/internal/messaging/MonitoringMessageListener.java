@@ -125,8 +125,7 @@ public class MonitoringMessageListener
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unregisterDataSampleProcessor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected synchronized void registerDataSampleProcessor(
 		DataSampleProcessor<DataSample> dataSampleProcessor,

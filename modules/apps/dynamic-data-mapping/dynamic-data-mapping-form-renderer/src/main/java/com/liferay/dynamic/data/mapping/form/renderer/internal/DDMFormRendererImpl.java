@@ -107,8 +107,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeDDMFormFieldRenderer"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDDMFormFieldRenderer(
 		DDMFormFieldRenderer ddmFormFieldRenderer) {

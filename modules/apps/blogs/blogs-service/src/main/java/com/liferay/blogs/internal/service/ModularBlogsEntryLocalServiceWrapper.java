@@ -806,7 +806,7 @@ public class ModularBlogsEntryLocalServiceWrapper
 				userId, entryId, status, serviceContext, workflowContext));
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setBlogsEntryLocalService(
 		com.liferay.blogs.service.BlogsEntryLocalService
 			blogsEntryLocalService) {

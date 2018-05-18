@@ -26,6 +26,7 @@ import javax.naming.ldap.LdapContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -270,9 +271,16 @@ public class PortalLDAPUtil {
 		return _portalLDAP;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void setPortalLDAP(PortalLDAP portalLDAP) {
 		_portalLDAP = portalLDAP;
+	}
+
+	protected void unsetPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = null;
 	}
 
 	private static PortalLDAP _portalLDAP;

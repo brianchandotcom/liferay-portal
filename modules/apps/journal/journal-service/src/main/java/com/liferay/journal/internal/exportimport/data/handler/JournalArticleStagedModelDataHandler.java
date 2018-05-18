@@ -81,6 +81,7 @@ import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -1035,9 +1036,9 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.journal.model.JournalArticle)",
-		unbind = "-"
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	protected void setJournalArticleExportImportContentProcessor(
 		ExportImportContentProcessor<String> exportImportContentProcessor) {
@@ -1071,6 +1072,12 @@ public class JournalArticleStagedModelDataHandler
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	protected void unsetJournalArticleExportImportContentProcessor(
+		ExportImportContentProcessor<String> exportImportContentProcessor) {
+
+		_journalArticleExportImportContentProcessor = null;
 	}
 
 	protected void updateArticleVersions(JournalArticle article)

@@ -82,8 +82,7 @@ public class DefaultActionHandlerManagerImpl implements ActionHandlerManager {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeActionHandler"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addActionHandler(ActionHandler actionHandler) {
 		ActionHandler oldActionHandler = _deviceActionHandlers.put(

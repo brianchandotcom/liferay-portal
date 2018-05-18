@@ -110,8 +110,7 @@ public class ScopedConfigurationBeanConfigurationListener
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeConfigurationBeanDeclaration"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addConfigurationBeanDeclaration(
 		ConfigurationBeanDeclaration configurationBeanDeclaration) {

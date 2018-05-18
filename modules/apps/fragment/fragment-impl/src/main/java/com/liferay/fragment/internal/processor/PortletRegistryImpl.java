@@ -48,8 +48,7 @@ public class PortletRegistryImpl implements PortletRegistry {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		target = "(com.liferay.fragment.entry.processor.portlet.alias=*)",
-		unbind = "unsetPortlet"
+		target = "(com.liferay.fragment.entry.processor.portlet.alias=*)"
 	)
 	protected void setPortlet(Portlet portlet, Map<String, Object> properties) {
 		String alias = MapUtil.getString(

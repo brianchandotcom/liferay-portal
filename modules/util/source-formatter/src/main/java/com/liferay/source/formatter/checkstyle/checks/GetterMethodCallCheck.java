@@ -25,10 +25,8 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +73,7 @@ public class GetterMethodCallCheck extends BaseCheck {
 			return;
 		}
 
-		List<String> importNames = _getImportNames(detailAST);
+		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
 
 		for (Map.Entry<DetailAST, String> entry :
 				getterMethodCallMap.entrySet()) {
@@ -181,27 +179,6 @@ public class GetterMethodCallCheck extends BaseCheck {
 		}
 
 		return getterMethodCallMap;
-	}
-
-	private List<String> _getImportNames(DetailAST detailAST) {
-		List<String> importASTList = new ArrayList<>();
-
-		DetailAST sibling = detailAST.getPreviousSibling();
-
-		while (true) {
-			if (sibling.getType() == TokenTypes.IMPORT) {
-				FullIdent importIdent = FullIdent.createFullIdentBelow(sibling);
-
-				importASTList.add(importIdent.getText());
-			}
-			else {
-				break;
-			}
-
-			sibling = sibling.getPreviousSibling();
-		}
-
-		return importASTList;
 	}
 
 	private String _getPackageName(

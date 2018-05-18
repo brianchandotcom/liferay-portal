@@ -95,7 +95,7 @@ public class JournalContentSearchPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setJournalArticleService(
 		JournalArticleService journalArticleService) {
 	}

@@ -32,7 +32,7 @@ public class SubscriptionServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("0.0.1", "1.0.0", new UpgradeClassNames());
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setLockManager(LockManager lockManager) {
 	}
 

@@ -39,7 +39,7 @@ public class HtmlPreviewProcessorTrackerImpl
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "unsetHtmlPreviewProcessor"
+		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void setHtmlPreviewProcessor(
 		HtmlPreviewProcessor htmlPreviewProcessor) {

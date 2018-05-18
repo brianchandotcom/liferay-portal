@@ -24,6 +24,7 @@ import com.liferay.portal.security.exportimport.UserImporter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -57,9 +58,16 @@ public class LDAPPortalInstanceLifecycleListener
 		_ldapSettings = ldapSettings;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void setUserImporter(UserImporter userImporter) {
 		_userImporter = userImporter;
+	}
+
+	protected void unsetUserImporter(UserImporter userImporter) {
+		_userImporter = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

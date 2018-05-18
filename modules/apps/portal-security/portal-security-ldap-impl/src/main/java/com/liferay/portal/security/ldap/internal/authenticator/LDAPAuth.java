@@ -63,6 +63,7 @@ import javax.naming.ldap.LdapContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
@@ -727,7 +728,10 @@ public class LDAPAuth implements Authenticator {
 		_ldapSettings = ldapSettings;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void setLdapUserImporter(LDAPUserImporter ldapUserImporter) {
 		_ldapUserImporter = ldapUserImporter;
 	}
@@ -742,7 +746,10 @@ public class LDAPAuth implements Authenticator {
 		_passwordEncryptor = passwordEncryptor;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY, unbind = "-")
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void setPortalLDAP(PortalLDAP portalLDAP) {
 		_portalLDAP = portalLDAP;
 	}
@@ -766,6 +773,14 @@ public class LDAPAuth implements Authenticator {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	protected void unsetLdapUserImporter(LDAPUserImporter ldapUserImporter) {
+		_ldapUserImporter = null;
+	}
+
+	protected void unsetPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LDAPAuth.class);

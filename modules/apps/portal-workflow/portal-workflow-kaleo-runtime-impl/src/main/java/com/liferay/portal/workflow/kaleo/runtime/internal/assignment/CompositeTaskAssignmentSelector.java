@@ -63,8 +63,7 @@ public class CompositeTaskAssignmentSelector implements TaskAssignmentSelector {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(assignee.class.name=*)",
-		unbind = "removeTaskAssignmentSelector"
+		target = "(assignee.class.name=*)"
 	)
 	protected void addTaskAssignmentSelector(
 		TaskAssignmentSelector taskAssignmentSelector,

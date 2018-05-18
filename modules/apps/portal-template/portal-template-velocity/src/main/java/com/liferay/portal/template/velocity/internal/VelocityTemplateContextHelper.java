@@ -194,8 +194,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + TemplateContextContributor.TYPE_GLOBAL + ")",
-		unbind = "unregisterTemplateContextContributor"
+		target = "(type=" + TemplateContextContributor.TYPE_GLOBAL + ")"
 	)
 	protected synchronized void registerTemplateContextContributor(
 		TemplateContextContributor templateContextContributor) {

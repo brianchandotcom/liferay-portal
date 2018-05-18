@@ -558,8 +558,7 @@ public class AssetPublisherWebUtil {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetAssetEntryQueryProcessor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setAssetEntryQueryProcessor(
 		AssetEntryQueryProcessor assetEntryQueryProcessor) {

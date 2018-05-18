@@ -38,8 +38,7 @@ public class NodeExecutorFactory {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeNodeExporter"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addNodeExporter(
 		NodeExecutor nodeExecutor, Map<String, Object> properties) {

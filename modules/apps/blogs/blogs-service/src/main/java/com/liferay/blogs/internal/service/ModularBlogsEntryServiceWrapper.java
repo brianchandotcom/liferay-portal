@@ -370,7 +370,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 				serviceContext));
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setBlogsEntryLocalService(
 		com.liferay.blogs.service.BlogsEntryService blogsEntryService) {
 

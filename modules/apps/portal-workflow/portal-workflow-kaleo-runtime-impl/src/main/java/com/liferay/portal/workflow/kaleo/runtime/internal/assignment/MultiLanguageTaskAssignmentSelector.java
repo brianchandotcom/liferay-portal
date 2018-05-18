@@ -97,8 +97,7 @@ public class MultiLanguageTaskAssignmentSelector
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(scripting.language=*)",
-		unbind = "removeTaskAssignmentSelector"
+		target = "(scripting.language=*)"
 	)
 	protected void addTaskAssignmentSelector(
 		TaskAssignmentSelector taskAssignmentSelector,

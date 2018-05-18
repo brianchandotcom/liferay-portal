@@ -148,17 +148,19 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 		ThreadLocal.withInitial(() -> Boolean.FALSE);
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(type=annotation)"
 	)
-	private RequestScopeCheckerFilter _annotationRequestScopeChecker;
+	private volatile RequestScopeCheckerFilter _annotationRequestScopeChecker;
 
 	private BundleContext _bundleContext;
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
 	)
-	private RequestScopeCheckerFilter _defaultRequestScopeChecker;
+	private volatile RequestScopeCheckerFilter _defaultRequestScopeChecker;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
@@ -169,11 +171,17 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 	private final FactoryBeanListener _factoryBeanListener =
 		new ScopeFinderFactoryBeanListener();
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private ScopeChecker _scopeChecker;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ScopeChecker _scopeChecker;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private ScopeContext _scopeContext;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile ScopeContext _scopeContext;
 
 	@Reference
 	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;

@@ -104,7 +104,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "removePortalWebResources"
+		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void addPortalWebResources(
 		PortalWebResources portalWebResources) {
@@ -120,7 +120,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC, unbind = "removeTopHeadResources"
+		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void addTopHeadResources(
 		ServiceReference<TopHeadResources> topHeadResourcesServiceReference) {

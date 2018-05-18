@@ -14,10 +14,18 @@
 
 package com.liferay.portal.search.test.util.indexing;
 
+import java.util.Date;
+
 /**
  * @author André de Oliveira
  */
 public class DocumentCreationHelpers {
+
+	public static DocumentCreationHelper singleDate(
+		String fieldName, Date value) {
+
+		return document -> document.addDate(fieldName, value);
+	}
 
 	public static DocumentCreationHelper singleGeoLocation(
 		String fieldName, double latitude, double longitude) {

@@ -27,6 +27,7 @@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
 page import="com.liferay.commerce.admin.web.internal.util.CommerceAdminModuleRegistry" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchModelException" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
@@ -41,3 +42,7 @@ page import="java.util.NavigableMap" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
+%>

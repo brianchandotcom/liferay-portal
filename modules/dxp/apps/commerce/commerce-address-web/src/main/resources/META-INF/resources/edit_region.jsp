@@ -58,8 +58,6 @@ editCountryURL.setParameter("screenNavigationCategoryKey", screenNavigationCateg
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), editCountryURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
-
-renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
 
 <liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">

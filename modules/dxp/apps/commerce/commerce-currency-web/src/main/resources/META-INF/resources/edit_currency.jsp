@@ -42,8 +42,6 @@ data.put("direction-right", StringPool.TRUE);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
-
-renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
 
 <liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">

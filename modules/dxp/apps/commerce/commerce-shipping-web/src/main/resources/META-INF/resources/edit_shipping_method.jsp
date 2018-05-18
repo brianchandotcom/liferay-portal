@@ -36,8 +36,6 @@ String selectedScreenNavigationEntryKey = commerceShippingMethodsDisplayContext.
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, selectedScreenNavigationEntryKey), StringPool.BLANK, data);
-
-renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
 
 <liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">

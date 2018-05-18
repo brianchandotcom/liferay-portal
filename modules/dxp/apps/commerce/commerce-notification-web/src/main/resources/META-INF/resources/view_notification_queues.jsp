@@ -26,8 +26,6 @@ CommerceNotificationQueuesDisplayContext commerceNotificationQueuesDisplayContex
 PortletURL portletURL = commerceNotificationQueuesDisplayContext.getPortletURL();
 
 portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
-
-renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
 
 <liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">

@@ -52,8 +52,6 @@ String screenNavigationEntryKey = commerceTaxFixedRateAddressRelsDisplayContext.
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), taxMethodsURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationEntryKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
-
-renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
 
 <liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">

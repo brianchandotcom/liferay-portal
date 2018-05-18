@@ -3313,6 +3313,10 @@ ${output.content}</echo>
 		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
 
+	<target name="release-functional-smoke-bundle-tomcat-mysql57-jdk8">
+		<antcall target="functional-bundle-tomcat-mysql57-jdk8" />
+	</target>
+
 	<target name="ruby-sass-compiler-jdk8">
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 

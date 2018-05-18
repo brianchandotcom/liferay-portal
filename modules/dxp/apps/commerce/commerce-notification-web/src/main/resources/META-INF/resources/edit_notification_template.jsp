@@ -21,9 +21,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
 
-CommerceNotificationsDisplayContext commerceNotificationsDisplayContext = (CommerceNotificationsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceNotificationTemplatesDisplayContext commerceNotificationTemplatesDisplayContext = (CommerceNotificationTemplatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceNotificationTemplate commerceNotificationTemplate = commerceNotificationsDisplayContext.getCommerceNotificationTemplate();
+CommerceNotificationTemplate commerceNotificationTemplate = commerceNotificationTemplatesDisplayContext.getCommerceNotificationTemplate();
 
 String title = LanguageUtil.get(resourceBundle, "add-notification-template");
 
@@ -79,7 +79,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 			var name = A.one('#<portlet:namespace />name').val();
 			var description = A.one('#<portlet:namespace />description').val();
 			var cc = A.one('#<portlet:namespace />cc').val();
-			var ccn = A.one('#<portlet:namespace />ccn').val();
+			var bcc = A.one('#<portlet:namespace />bcc').val();
 			var type = A.one('#<portlet:namespace />type').val();
 
 			var portletURL = new Liferay.PortletURL.createURL('<%= currentURLObj %>');
@@ -87,7 +87,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 			portletURL.setParameter('name', name);
 			portletURL.setParameter('description', description);
 			portletURL.setParameter('cc', cc);
-			portletURL.setParameter('ccn', ccn);
+			portletURL.setParameter('bcc', bcc);
 			portletURL.setParameter('type', type);
 
 			window.location.replace(portletURL.toString());

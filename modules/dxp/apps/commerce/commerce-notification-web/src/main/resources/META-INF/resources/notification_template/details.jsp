@@ -17,17 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceNotificationsDisplayContext commerceNotificationsDisplayContext = (CommerceNotificationsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceNotificationTemplatesDisplayContext commerceNotificationTemplatesDisplayContext = (CommerceNotificationTemplatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceNotificationTemplate commerceNotificationTemplate = commerceNotificationsDisplayContext.getCommerceNotificationTemplate();
+CommerceNotificationTemplate commerceNotificationTemplate = commerceNotificationTemplatesDisplayContext.getCommerceNotificationTemplate();
 
 String name = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "name");
 String description = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "description");
 String cc = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "cc");
-String ccn = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "ccn");
+String bcc = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "bcc");
 String type = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "type");
 
-CommerceNotificationType commerceNotificationType = commerceNotificationsDisplayContext.getCommerceNotificationType(type);
+CommerceNotificationType commerceNotificationType = commerceNotificationTemplatesDisplayContext.getCommerceNotificationType(type);
 %>
 
 <liferay-ui:error-marker
@@ -49,12 +49,12 @@ CommerceNotificationType commerceNotificationType = commerceNotificationsDisplay
 
 	<aui:input name="cc" value="<%= cc %>" />
 
-	<aui:input name="ccn" value="<%= ccn %>" />
+	<aui:input name="bcc" value="<%= bcc %>" />
 
 	<aui:select name="type" onChange='<%= renderResponse.getNamespace() + "selectType();" %>' showEmptyOption="<%= true %>">
 
 		<%
-		List<CommerceNotificationType> commerceNotificationTypes = commerceNotificationsDisplayContext.getCommerceNotificationTypes();
+		List<CommerceNotificationType> commerceNotificationTypes = commerceNotificationTemplatesDisplayContext.getCommerceNotificationTypes();
 
 		for (CommerceNotificationType curCommerceNotificationType : commerceNotificationTypes) {
 			String commerceNotificationTypeKey = curCommerceNotificationType.getKey();

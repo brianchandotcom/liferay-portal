@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceNotificationsDisplayContext commerceNotificationsDisplayContext = (CommerceNotificationsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceNotificationTemplatesDisplayContext commerceNotificationTemplatesDisplayContext = (CommerceNotificationTemplatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <liferay-ui:error-marker
@@ -25,11 +25,11 @@ CommerceNotificationsDisplayContext commerceNotificationsDisplayContext = (Comme
 	value="custom-fields"
 />
 
-<aui:model-context bean="<%= commerceNotificationsDisplayContext.getCommerceNotificationTemplate() %>" model="<%= CommerceNotificationTemplate.class %>" />
+<aui:model-context bean="<%= commerceNotificationTemplatesDisplayContext.getCommerceNotificationTemplate() %>" model="<%= CommerceNotificationTemplate.class %>" />
 
 <liferay-expando:custom-attribute-list
 	className="<%= CommerceNotificationTemplate.class.getName() %>"
-	classPK="<%= commerceNotificationsDisplayContext.getCommerceNotificationTemplateId() %>"
+	classPK="<%= commerceNotificationTemplatesDisplayContext.getCommerceNotificationTemplateId() %>"
 	editable="<%= true %>"
 	label="<%= true %>"
 />

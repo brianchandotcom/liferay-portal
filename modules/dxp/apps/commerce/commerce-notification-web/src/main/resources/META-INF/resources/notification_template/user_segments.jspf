@@ -15,7 +15,7 @@
 --%>
 
 <%
-List<CommerceNotificationTemplateUserSegmentRel> commerceNotificationTemplateUserSegmentRels = commerceNotificationsDisplayContext.getCommerceNotificationTemplateUserSegmentRels();
+List<CommerceNotificationTemplateUserSegmentRel> commerceNotificationTemplateUserSegmentRels = commerceNotificationTemplatesDisplayContext.getCommerceNotificationTemplateUserSegmentRels();
 %>
 
 <liferay-util:buffer
@@ -49,7 +49,7 @@ List<CommerceNotificationTemplateUserSegmentRel> commerceNotificationTemplateUse
 	>
 
 		<%
-		CommerceUserSegmentEntry commerceUserSegmentEntry = commerceNotificationsDisplayContext.getCommerceUserSegmentEntry(commerceNotificationTemplateUserSegmentRel.getCommerceUserSegmentEntryId());
+		CommerceUserSegmentEntry commerceUserSegmentEntry = commerceNotificationTemplatesDisplayContext.getCommerceUserSegmentEntry(commerceNotificationTemplateUserSegmentRel.getCommerceUserSegmentEntryId());
 		%>
 
 		<liferay-ui:search-container-column-text
@@ -95,7 +95,7 @@ List<CommerceNotificationTemplateUserSegmentRel> commerceNotificationTemplateUse
 						}
 					},
 					title: '<liferay-ui:message arguments="target" key="select-x" />',
-					url: '<%= commerceNotificationsDisplayContext.getItemSelectorUrl() %>'
+					url: '<%= commerceNotificationTemplatesDisplayContext.getItemSelectorUrl() %>'
 				}
 			);
 

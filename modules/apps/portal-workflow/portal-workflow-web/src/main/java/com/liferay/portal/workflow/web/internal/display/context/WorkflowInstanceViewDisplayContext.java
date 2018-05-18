@@ -142,7 +142,7 @@ public class WorkflowInstanceViewDisplayContext
 		return workflowInstance.getEndDate();
 	}
 
-	public DropdownItemList getFilterOptions(HttpServletRequest request) {
+	public List<DropdownItem> getFilterOptions(HttpServletRequest request) {
 		return new DropdownItemList() {
 			{
 				addGroup(

@@ -18,7 +18,6 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql.api", version: "1.0.0-20180412.172333-1"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.search.api", version: "2.0.0-20180327.164433-1"
@@ -33,4 +32,6 @@ dependencies {
 	compileOnly project(":private:apps:commerce:commerce-admin-api")
 	compileOnly project(":private:apps:commerce:commerce-product-api")
 	compileOnly project(":private:apps:commerce:commerce-user-segment-api")
+
+	testCompile group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.0.0"
 }

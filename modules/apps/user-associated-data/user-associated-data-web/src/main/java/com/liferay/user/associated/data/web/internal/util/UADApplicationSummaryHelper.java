@@ -73,25 +73,25 @@ public class UADApplicationSummaryHelper {
 
 		return new DropdownItemList() {
 			{
-				List<DropdownItem> filterByNavigationDropdownItemList =
-					getFilterByNavigationDropdownItemList(
+				List<DropdownItem> filterByNavigationDropdownItems =
+					getFilterByNavigationDropdownItems(
 						renderRequest, renderResponse);
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							filterByNavigationDropdownItemList);
+							filterByNavigationDropdownItems);
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(request, "filter-by-navigation"));
 					});
 
-				List<DropdownItem> orderByNavigationDropdownItemList =
-					getOrderByDropdownItemList(renderRequest, renderResponse);
+				List<DropdownItem> orderByNavigationDropdownItems =
+					getOrderByDropdownItems(renderRequest, renderResponse);
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							orderByNavigationDropdownItemList);
+							orderByNavigationDropdownItems);
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(request, "order-by"));
 					});
@@ -231,7 +231,7 @@ public class UADApplicationSummaryHelper {
 		return typeClass.getName();
 	}
 
-	public List<DropdownItem> getFilterByNavigationDropdownItemList(
+	public List<DropdownItem> getFilterByNavigationDropdownItems(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
@@ -268,7 +268,7 @@ public class UADApplicationSummaryHelper {
 		return ParamUtil.getString(renderRequest, "orderByCol", "name");
 	}
 
-	public List<DropdownItem> getOrderByDropdownItemList(
+	public List<DropdownItem> getOrderByDropdownItems(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 

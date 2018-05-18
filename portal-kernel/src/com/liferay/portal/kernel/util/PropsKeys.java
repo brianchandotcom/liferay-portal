@@ -53,6 +53,8 @@ public interface PropsKeys {
 
 	public static final String ADMIN_EMAIL_VERIFICATION_SUBJECT = "admin.email.verification.subject";
 
+	public static final String ADMIN_LIFERAY_ANALYTICS_KEY = "admin.liferay.analytics.key";
+
 	public static final String ADMIN_MAIL_HOST_NAMES = "admin.mail.host.names";
 
 	public static final String ADMIN_OBFUSCATED_PROPERTIES = "admin.obfuscated.properties";

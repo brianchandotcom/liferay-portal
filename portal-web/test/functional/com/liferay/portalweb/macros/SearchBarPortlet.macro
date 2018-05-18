@@ -51,7 +51,7 @@
 
 		<if>
 			<or>
-				<equals arg1="${searchScope}" arg2="All Sites" />
+				<equals arg1="${searchScope}" arg2="Everything" />
 				<equals arg1="${searchScope}" arg2="Let the User Choose" />
 				<equals arg1="${searchScope}" arg2="This Site" />
 			</or>
@@ -61,7 +61,7 @@
 				<execute function="Select" locator1="Select#SCOPE_CONFIGURATION" value1="${searchScope}" />
 			</then>
 			<else>
-				<fail message="Invalid search scope. Must be (All Sites|Let the User Choose|This Site)." />
+				<fail message="Invalid search scope. Must be (Everything|Let the User Choose|This Site)." />
 			</else>
 		</if>
 
@@ -98,14 +98,14 @@
 	<command name="selectScopeInputPG">
 		<if>
 			<or>
-				<equals arg1="${searchScope}" arg2="All Sites" />
+				<equals arg1="${searchScope}" arg2="Everything" />
 				<equals arg1="${searchScope}" arg2="This Site" />
 			</or>
 			<then>
 				<execute function="Select" locator1="Select#SCOPE" value1="${searchScope}" />
 			</then>
 			<else>
-				<fail message="Invalid search scope. Must be (All Sites|This Site)." />
+				<fail message="Invalid search scope. Must be (Everything|This Site)." />
 			</else>
 		</if>
 	</command>

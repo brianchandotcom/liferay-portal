@@ -78,7 +78,7 @@
 		</execute>
 
 		<execute macro="SearchBarPortlet#selectScopeInputPG">
-			<var name="searchScope" value="All Sites" />
+			<var name="searchScope" value="Everything" />
 		</execute>
 
 		<execute macro="SearchBarPortlet#searchPG">
@@ -811,7 +811,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="SearchBarPortlet#configureScopePG">
-			<var name="searchScope" value="All Sites" />
+			<var name="searchScope" value="Everything" />
 		</execute>
 
 		<execute macro="SearchPortlet#searchPG">
@@ -903,7 +903,7 @@
 		<!-- LPS-80521 -->
 
 		<!-- <execute macro="SearchBarPortlet#selectScopeInputPG">
-			<var name="searchScope" value="All Sites" />
+			<var name="searchScope" value="Everything" />
 		</execute>
 
 		<execute macro="SearchPortlet#searchPG">

@@ -867,6 +867,18 @@ public class JournalDisplayContext {
 		return orderColumns;
 	}
 
+	public long getParentFolderId() {
+		if (_parentFolderId != null) {
+			return _parentFolderId;
+		}
+
+		_parentFolderId = ParamUtil.getLong(
+			_request, "parentFolderId",
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		return _parentFolderId;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -1646,8 +1658,12 @@ public class JournalDisplayContext {
 			jsonObject.put("id", folder.getFolderId());
 			jsonObject.put("name", folder.getName());
 
-			if (folder.getFolderId() == getFolderId()) {
+			if (folder.getFolderId() == getParentFolderId()) {
 				jsonObject.put("selected", true);
+			}
+
+			if (folder.getFolderId() == getFolderId()) {
+				jsonObject.put("disabled", true);
 			}
 
 			jsonArray.put(jsonObject);
@@ -1801,6 +1817,7 @@ public class JournalDisplayContext {
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
+	private Long _parentFolderId;
 	private final PortalPreferences _portalPreferences;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;

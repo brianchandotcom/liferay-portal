@@ -6,6 +6,7 @@
 {template .render}
 	{@param spritemap: string}
 	{@param? _handleSelectPageCheckboxChanged: any}
+	{@param? _handleInfoButtonClicked: any }
 	{@param? _handleDeselectAllClicked: any}
 	{@param? _handleSelectAllClicked: any}
 	{@param? actionItems: list<[
@@ -92,6 +93,7 @@
 		{param elementClasses: $elementClasses /}
 		{param events: [
 			'deselectAllClicked': $_handleDeselectAllClicked,
+			'infoButtonClicked': $_handleInfoButtonClicked,
 			'selectPageCheckboxChanged': $_handleSelectPageCheckboxChanged,
 			'selectAllClicked': $_handleSelectAllClicked
 		 ] /}

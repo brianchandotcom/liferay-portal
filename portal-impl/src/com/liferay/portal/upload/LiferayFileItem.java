@@ -129,7 +129,7 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 
 		Iterator<String> itr = fileItemHeaders.getHeaderNames();
 
-		List<String> headerNames = new ArrayList();
+		List<String> headerNames = new ArrayList<>();
 
 		itr.forEachRemaining(headerNames::add);
 

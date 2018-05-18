@@ -37,7 +37,7 @@ import java.util.Map;
 import javax.portlet.ClientDataRequest;
 import javax.portlet.PortletException;
 
-import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.Part;
 
 import jodd.io.FileUtil;
@@ -108,7 +108,7 @@ public abstract class ClientDataRequestImpl
 		Map<String, FileItem[]> multipartParameterMap =
 			uploadRequest.getMultipartParameterMap();
 
-		List<Part> parts = new ArrayList<>(multipartParameterMap.size());
+		List<Part> parts = new ArrayList<>();
 
 		for (Map.Entry<String, FileItem[]> entry :
 				multipartParameterMap.entrySet()) {
@@ -163,25 +163,23 @@ public abstract class ClientDataRequestImpl
 	}
 
 	private UploadRequest _getUploadRequest(Object request) {
-		if (request instanceof UploadRequest) {
-			return (UploadRequest)request;
-		}
+		while (true) {
+			if (request instanceof UploadRequest) {
+				return (UploadRequest)request;
+			}
 
-		if (request instanceof HttpServletRequestWrapper) {
-			return _getUploadRequest(
-				((HttpServletRequestWrapper)request).getRequest());
+			if (request instanceof ServletRequestWrapper) {
+				request = ((ServletRequestWrapper)request).getRequest();
+			}
+			else {
+				return null;
+			}
 		}
-
-		return null;
 	}
 
 	private boolean _calledGetReader;
 
 	private static final class PartImpl implements Part {
-
-		public PartImpl(FileItem fileItem) {
-			_fileItem = fileItem;
-		}
 
 		@Override
 		public void delete() throws IOException {
@@ -223,6 +221,7 @@ public abstract class ClientDataRequestImpl
 			return _fileItem.getSize();
 		}
 
+		@Override
 		public String getSubmittedFileName() {
 			return _fileItem.getFileName();
 		}
@@ -230,6 +229,10 @@ public abstract class ClientDataRequestImpl
 		@Override
 		public void write(String fileName) throws IOException {
 			FileUtil.copy(_fileItem.getStoreLocation(), new File(fileName));
+		}
+
+		private PartImpl(FileItem fileItem) {
+			_fileItem = fileItem;
 		}
 
 		private final FileItem _fileItem;

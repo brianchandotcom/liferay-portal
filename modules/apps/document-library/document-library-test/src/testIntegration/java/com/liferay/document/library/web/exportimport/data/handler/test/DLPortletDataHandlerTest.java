@@ -16,6 +16,7 @@ package com.liferay.document.library.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -65,11 +66,19 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -98,8 +107,45 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		super.setUp();
 	}
 
+	@After
+	public void tearDown() {
+		if (_serviceRegistrations != null) {
+			_serviceRegistrations.forEach(ServiceRegistration::unregister);
+		}
+	}
+
 	@Test
 	public void testCustomRepositoryEntriesExport() throws Exception {
+		initContext();
+
+		addRepositoryEntries();
+
+		portletDataContext.setEndDate(getEndDate());
+
+		portletDataHandler.exportData(
+			portletDataContext, portletId, new PortletPreferencesImpl());
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
+
+		LongWrapper fileEntryModelAdditionCounter = modelAdditionCounters.get(
+			DLFileEntry.class.getName());
+
+		Assert.assertEquals(0, fileEntryModelAdditionCounter.getValue());
+
+		LongWrapper folderModelAdditionCounter = modelAdditionCounters.get(
+			DLFolder.class.getName());
+
+		Assert.assertEquals(0, folderModelAdditionCounter.getValue());
+	}
+
+	@Test
+	public void testCustomRepositoryEntriesPrepareManifestSummary()
+		throws Exception {
+
 		initContext();
 
 		addRepositoryEntries();
@@ -120,25 +166,6 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		Assert.assertEquals(0, fileEntryModelAdditionCounter.getValue());
 
 		LongWrapper folderModelAdditionCounter = modelAdditionCounters.get(
-			DLFolder.class.getName());
-
-		Assert.assertEquals(0, folderModelAdditionCounter.getValue());
-
-		modelAdditionCounters.clear();
-
-		portletDataHandler.exportData(
-			portletDataContext, portletId, new PortletPreferencesImpl());
-
-		manifestSummary = portletDataContext.getManifestSummary();
-
-		modelAdditionCounters = manifestSummary.getModelAdditionCounters();
-
-		fileEntryModelAdditionCounter = modelAdditionCounters.get(
-			DLFileEntry.class.getName());
-
-		Assert.assertEquals(0, fileEntryModelAdditionCounter.getValue());
-
-		folderModelAdditionCounter = modelAdditionCounters.get(
 			DLFolder.class.getName());
 
 		Assert.assertEquals(0, folderModelAdditionCounter.getValue());
@@ -174,13 +201,109 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		Assert.assertEquals(0, foldersCount);
 	}
 
+	@Test
+	public void testDLExportableRepositoryPublisherIsInvokedWhenExporting()
+		throws Exception {
+
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		_registerService(
+			new CountingDLExportableRepositoryPublisher(atomicInteger));
+
+		initContext();
+
+		portletDataHandler.exportData(
+			portletDataContext, DLPortletKeys.DOCUMENT_LIBRARY, null);
+
+		Assert.assertTrue(atomicInteger.get() >= 1);
+	}
+
+	@Test
+	public void testDLExportableRepositoryPublisherIsInvokedWhenPreparingSummary()
+		throws Exception {
+
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		_registerService(
+			new CountingDLExportableRepositoryPublisher(atomicInteger));
+
+		initContext();
+
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		Assert.assertTrue(atomicInteger.get() >= 1);
+	}
+
+	@Test
+	public void testPublishedCustomRepositoryEntriesExport() throws Exception {
+		long repositoryId = addRepositoryEntries();
+
+		_registerService(
+			new ConstantDLExportableRepositoryPublisher(repositoryId));
+
+		initContext();
+
+		portletDataContext.setEndDate(getEndDate());
+
+		portletDataHandler.exportData(
+			portletDataContext, portletId, new PortletPreferencesImpl());
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
+
+		LongWrapper fileEntryModelAdditionCounter = modelAdditionCounters.get(
+			DLFileEntry.class.getName());
+
+		Assert.assertTrue(fileEntryModelAdditionCounter.getValue() >= 1);
+
+		LongWrapper folderModelAdditionCounter = modelAdditionCounters.get(
+			DLFolder.class.getName());
+
+		Assert.assertTrue(folderModelAdditionCounter.getValue() >= 1);
+	}
+
+	@Test
+	public void testPublishedCustomRepositoryEntriesPrepareManifestSummary()
+		throws Exception {
+
+		long repositoryId = addRepositoryEntries();
+
+		_registerService(
+			new ConstantDLExportableRepositoryPublisher(repositoryId));
+
+		initContext();
+
+		portletDataContext.setEndDate(getEndDate());
+
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
+
+		LongWrapper fileEntryModelAdditionCounter = modelAdditionCounters.get(
+			DLFileEntry.class.getName());
+
+		Assert.assertTrue(fileEntryModelAdditionCounter.getValue() >= 1);
+
+		LongWrapper folderModelAdditionCounter = modelAdditionCounters.get(
+			DLFolder.class.getName());
+
+		Assert.assertTrue(folderModelAdditionCounter.getValue() >= 1);
+	}
+
 	@Override
 	protected void addParameters(Map<String, String[]> parameterMap) {
 		addBooleanParameter(
 			parameterMap, "document_library", "repositories", true);
 	}
 
-	protected void addRepositoryEntries() throws Exception {
+	protected long addRepositoryEntries() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(
 			LiferayRepository.class.getName());
 
@@ -207,6 +330,8 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
+
+		return repository.getRepositoryId();
 	}
 
 	@Override
@@ -379,6 +504,55 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Override
 	protected boolean isGetExportModelCountTested() {
 		return true;
+	}
+
+	private void _registerService(
+		DLExportableRepositoryPublisher dlExportableRepositoryPublisher) {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistrations.add(
+			registry.registerService(
+				DLExportableRepositoryPublisher.class,
+				dlExportableRepositoryPublisher, new HashMap<>()));
+	}
+
+	private final Collection
+		<ServiceRegistration<DLExportableRepositoryPublisher>>
+			_serviceRegistrations = new ArrayList<>();
+
+	private static class ConstantDLExportableRepositoryPublisher
+		implements DLExportableRepositoryPublisher {
+
+		public ConstantDLExportableRepositoryPublisher(long repositoryId) {
+			_repositoryId = repositoryId;
+		}
+
+		@Override
+		public void publish(long groupId, Consumer<Long> repositoryIdConsumer) {
+			repositoryIdConsumer.accept(_repositoryId);
+		}
+
+		private final long _repositoryId;
+
+	}
+
+	private static class CountingDLExportableRepositoryPublisher
+		implements DLExportableRepositoryPublisher {
+
+		public CountingDLExportableRepositoryPublisher(
+			AtomicInteger atomicInteger) {
+
+			_atomicInteger = atomicInteger;
+		}
+
+		@Override
+		public void publish(long groupId, Consumer<Long> repositoryIdConsumer) {
+			_atomicInteger.incrementAndGet();
+		}
+
+		private final AtomicInteger _atomicInteger;
+
 	}
 
 }

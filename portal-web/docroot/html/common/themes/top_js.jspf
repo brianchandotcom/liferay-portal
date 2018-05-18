@@ -434,9 +434,9 @@
 <%
 String liferayAnalyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.ADMIN_LIFERAY_ANALYTICS_KEY);
 
-if (Validator.isNull(liferayAnalyticsKey)) {
-	UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
 
+if (Validator.isNull(liferayAnalyticsKey)) {
 	liferayAnalyticsKey = groupTypeSettings.getProperty(GroupConstants.TYPE_SETTINGS_KEY_LIFERAY_ANALYTICS_KEY);
 }
 %>

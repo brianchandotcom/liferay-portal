@@ -58,26 +58,8 @@ class FragmentEditableField extends Component {
 
 	rendered() {
 		if (this._showEditor) {
-			if (this.type === 'image') {
-				showImageEditing(
-					this.refs.editable,
-					this.portletNamespace,
-					this.imageSelectorURL,
-					this.fragmentEntryLinkId,
-					this._handleEditableChanged
-				);
-			}
-			else {
-				createTextEditor(
-					this.refs.editable,
-					this.defaultEditorConfiguration,
-					this.portletNamespace,
-					this.fragmentEntryLinkId,
-					this._handleEditableChanged
-				);
-			}
-
 			this._showEditor = false;
+			this._enableEditor();
 		}
 	}
 
@@ -93,6 +75,33 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
+	 * Enables the corresponding editor
+	 * @private
+	 * @review
+	 */
+
+	_enableEditor() {
+		if (this.type === 'image') {
+			showImageEditing(
+				this.refs.editable,
+				this.portletNamespace,
+				this.imageSelectorURL,
+				this.fragmentEntryLinkId,
+				this._handleEditableChanged
+			);
+		}
+		else {
+			createTextEditor(
+				this.refs.editable,
+				this.defaultEditorConfiguration,
+				this.portletNamespace,
+				this.fragmentEntryLinkId,
+				this._handleEditableChanged
+			);
+		}
+	}
+
+	/**
 	 * Handle editable click event
 	 * @param {Event} event
 	 * @private
@@ -102,7 +111,11 @@ class FragmentEditableField extends Component {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (getActiveEditableElement() !== this.refs.editable) {
+		if (!this.showMapping) {
+			this._showTooltip = false;
+			this._enableEditor();
+		}
+		else if (getActiveEditableElement() !== this.refs.editable) {
 			this._showTooltip = !this._showTooltip;
 		}
 	}

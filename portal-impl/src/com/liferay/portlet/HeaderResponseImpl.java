@@ -35,12 +35,16 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.xml.StAXReaderUtil;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.HeaderRequest;
@@ -68,7 +72,7 @@ public class HeaderResponseImpl
 
 	@Override
 	public void addDependency(
-		String name, String scope, String version, String markup) {
+		String name, String scope, String version, String xml) {
 
 		// TODO
 
@@ -212,71 +216,18 @@ public class HeaderResponseImpl
 		_useDefaultTemplate = useDefaultTemplate;
 	}
 
-	private void _addMarkupToHead(String name, String scope, String markup) {
-		_addMarkupToHead(name, scope, null, markup);
+	public void writeToHead() {
+		if (_portletOutputStream != null) {
+			_addXMLToHead(
+				portletName, getNamespace(), _portletOutputStream.toString());
+		}
+		else if (_printWriter != null) {
+			_addXMLToHead(portletName, getNamespace(), _printWriter.toString());
+		}
 	}
 
-	private void _addMarkupToHead(
-		String name, String scope, String version, String markup) {
-
-		markup = StringUtil.trim(markup);
-
-		if (Validator.isBlank(markup)) {
-			return;
-		}
-
-		String xmlMarkup = markup;
-
-		if ((xmlMarkup.startsWith("<link") || xmlMarkup.startsWith("<LINK")) &&
-			!(xmlMarkup.endsWith("</link>") || xmlMarkup.endsWith("</LINK>"))) {
-
-			xmlMarkup = xmlMarkup.concat("</link>");
-		}
-
-		XMLStreamReader xmlStreamReader = null;
-
-		try {
-			XMLInputFactory xmlInputFactory =
-				StAXReaderUtil.getXMLInputFactory();
-
-			xmlStreamReader = xmlInputFactory.createXMLStreamReader(
-				new UnsyncStringReader(xmlMarkup));
-
-			while (xmlStreamReader.hasNext()) {
-				int event = xmlStreamReader.next();
-
-				if ((event == XMLStreamConstants.START_ELEMENT) ||
-					(event == XMLStreamConstants.END_ELEMENT)) {
-
-					String elementName = xmlStreamReader.getLocalName();
-
-					elementName = StringUtil.toLowerCase(elementName);
-
-					if (!elementName.equals("script") &&
-						!elementName.equals("link")) {
-
-						_log.error("Invalid markup: " + markup);
-
-						return;
-					}
-				}
-			}
-		}
-		catch (XMLStreamException xmlse) {
-			_log.error("Invalid markup: " + markup, xmlse);
-
-			return;
-		}
-		finally {
-			if (xmlStreamReader != null) {
-				try {
-					xmlStreamReader.close();
-				}
-				catch (XMLStreamException xmlse) {
-					_log.error(xmlse, xmlse);
-				}
-			}
-		}
+	private void _addDependencyToHead(
+		String name, String scope, String version, StringBundler markupSB) {
 
 		if (Validator.isNull(scope)) {
 			scope = StringPool.BLANK;
@@ -341,22 +292,118 @@ public class HeaderResponseImpl
 		String outputKey = sb.toString();
 
 		if (!outputKeys.contains(outputKey)) {
-			outputData.addData(
-				outputKey, WebKeys.PAGE_TOP, new StringBundler(markup));
+			outputData.addData(outputKey, WebKeys.PAGE_TOP, markupSB);
 
 			outputData.addOutputKey(outputKey);
 		}
 	}
 
-	private void _flush() {
-		if (_portletOutputStream != null) {
-			_addMarkupToHead(
-				portletName, getNamespace(), _portletOutputStream.toString());
+	private void _addXMLToHead(String name, String scope, String xml) {
+		xml = StringUtil.trim(xml);
+
+		if (Validator.isBlank(xml)) {
+			return;
 		}
-		else if (_printWriter != null) {
-			_addMarkupToHead(
-				portletName, getNamespace(), _printWriter.toString());
+
+		List<ParsedElement> parsedElements = _parseElements(xml);
+
+		for (ParsedElement parsedElement : parsedElements) {
+			if (parsedElement.isValid()) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(StringPool.LESS_THAN);
+				sb.append(parsedElement.getName());
+
+				Map<String, String> attributes = parsedElement.getAttributes();
+
+				for (Map.Entry<String, String> entry : attributes.entrySet()) {
+					sb.append(StringPool.SPACE);
+					sb.append(entry.getKey());
+					sb.append(StringPool.EQUAL);
+					sb.append(StringPool.QUOTE);
+					sb.append(entry.getValue());
+					sb.append(StringPool.QUOTE);
+				}
+
+				sb.append(StringPool.GREATER_THAN);
+				sb.append(parsedElement.getText());
+				sb.append(StringPool.LESS_THAN);
+				sb.append(StringPool.FORWARD_SLASH);
+				sb.append(parsedElement.getName());
+				sb.append(StringPool.GREATER_THAN);
+
+				_addDependencyToHead(name, scope, null, sb);
+			}
+			else {
+				_log.error("Invalid element: " + parsedElement.getName());
+			}
 		}
+	}
+
+	private List<ParsedElement> _parseElements(String xml) {
+		if (xml == null) {
+			return Collections.emptyList();
+		}
+
+		List<ParsedElement> parsedElements = new ArrayList<>();
+
+		XMLStreamReader xmlStreamReader = null;
+
+		try {
+			XMLInputFactory xmlInputFactory =
+				StAXReaderUtil.getXMLInputFactory();
+
+			xmlStreamReader = xmlInputFactory.createXMLStreamReader(
+				new UnsyncStringReader(xml));
+
+			while (xmlStreamReader.hasNext()) {
+				int event = xmlStreamReader.next();
+
+				if (event == XMLStreamConstants.START_ELEMENT) {
+					String elementName = xmlStreamReader.getLocalName();
+
+					if (elementName.equals("link") ||
+						elementName.equals("script")) {
+
+						Map<String, String> elementAttributes =
+							new LinkedHashMap<>();
+
+						int attributeCount =
+							xmlStreamReader.getAttributeCount();
+
+						for (int i = 0; i < attributeCount; i++) {
+							elementAttributes.put(
+								xmlStreamReader.getAttributeLocalName(i),
+								xmlStreamReader.getAttributeValue(i));
+						}
+
+						parsedElements.add(
+							new ParsedElement(
+								elementName, elementAttributes,
+								xmlStreamReader.getElementText(), true));
+					}
+					else {
+						parsedElements.add(
+							new ParsedElement(elementName, null, null, false));
+					}
+				}
+			}
+		}
+		catch (XMLStreamException xmlse) {
+			_log.error("Invalid markup: " + xml, xmlse);
+		}
+		finally {
+			if (xmlStreamReader != null) {
+				try {
+					xmlStreamReader.close();
+				}
+				catch (XMLStreamException xmlse) {
+					_log.error(xmlse, xmlse);
+				}
+			}
+		}
+
+		return parsedElements;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -370,6 +417,41 @@ public class HeaderResponseImpl
 	private PrintWriter _printWriter;
 	private String _title;
 	private Boolean _useDefaultTemplate;
+
+	private static class ParsedElement {
+
+		public ParsedElement(
+			String name, Map<String, String> attributes, String text,
+			boolean valid) {
+
+			_name = name;
+			_attributes = attributes;
+			_text = text;
+			_valid = valid;
+		}
+
+		public Map<String, String> getAttributes() {
+			return _attributes;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public String getText() {
+			return _text;
+		}
+
+		public boolean isValid() {
+			return _valid;
+		}
+
+		private final Map<String, String> _attributes;
+		private final String _name;
+		private final String _text;
+		private final boolean _valid;
+
+	}
 
 	private static class SemVer implements Comparable<SemVer> {
 
@@ -432,20 +514,6 @@ public class HeaderResponseImpl
 	private class HeaderOutputStream extends UnsyncByteArrayOutputStream {
 
 		@Override
-		public void close() throws IOException {
-			_flush();
-
-			super.close();
-		}
-
-		@Override
-		public void flush() throws IOException {
-			_flush();
-
-			super.flush();
-		}
-
-		@Override
 		public String toString() {
 			try {
 				return toString(getCharacterEncoding());
@@ -460,20 +528,6 @@ public class HeaderResponseImpl
 	}
 
 	private class HeaderPrintWriter extends UnsyncPrintWriter {
-
-		@Override
-		public void close() {
-			_flush();
-
-			super.close();
-		}
-
-		@Override
-		public void flush() {
-			_flush();
-
-			super.flush();
-		}
 
 		@Override
 		public String toString() {

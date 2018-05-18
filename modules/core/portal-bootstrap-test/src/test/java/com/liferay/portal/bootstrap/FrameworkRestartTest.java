@@ -16,13 +16,16 @@ package com.liferay.portal.bootstrap;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.kernel.util.ServiceLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -30,12 +33,13 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -59,9 +63,7 @@ import org.osgi.framework.wiring.FrameworkWiring;
  */
 public class FrameworkRestartTest {
 
-	@NewEnv(type = NewEnv.Type.JVM)
-	@Test
-	public void testFrameworkRestart() throws Exception {
+	public static void doTestFrameworkRestart() throws Exception {
 		URL url = FrameworkRestartTest.class.getResource("security.policy");
 
 		System.setProperty("java.security.policy", url.getFile());
@@ -75,12 +77,11 @@ public class FrameworkRestartTest {
 		properties.put(
 			Constants.FRAMEWORK_STORAGE, frameworkStoragePath.toString());
 
-		ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
+		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
+			FrameworkRestartTest.class.getClassLoader(),
 			FrameworkFactory.class);
 
-		Iterator<FrameworkFactory> iterator = serviceLoader.iterator();
-
-		FrameworkFactory frameworkFactory = iterator.next();
+		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
 
 		Framework framework = frameworkFactory.newFramework(properties);
 
@@ -177,6 +178,21 @@ public class FrameworkRestartTest {
 		}
 	}
 
+	@NewEnv(type = NewEnv.Type.JVM)
+	@Test
+	public void testFrameworkRestart() throws Exception {
+		ClassLoader classLoader = new URLClassLoader(
+			_getURLS(
+				Assert.class, FrameworkFactory.class,
+				FrameworkRestartTest.class, UnsyncByteArrayOutputStream.class),
+			null);
+
+		Class<?> clazz = classLoader.loadClass(
+			FrameworkRestartTest.class.getName());
+
+		ReflectionTestUtil.invoke(clazz, "doTestFrameworkRestart", null, null);
+	}
+
 	@Rule
 	public final NewEnvTestRule newEnvTestRule = NewEnvTestRule.INSTANCE;
 
@@ -261,6 +277,21 @@ public class FrameworkRestartTest {
 		FrameworkEvent frameworkEvent = framework.waitForStop(0);
 
 		Assert.assertEquals(FrameworkEvent.STOPPED, frameworkEvent.getType());
+	}
+
+	private URL[] _getURLS(Class<?>... classes) {
+		URL[] urls = new URL[classes.length];
+
+		for (int i = 0; i < classes.length; i++) {
+			ProtectionDomain protectionDomain =
+				classes[i].getProtectionDomain();
+
+			CodeSource codeSource = protectionDomain.getCodeSource();
+
+			urls[i] = codeSource.getLocation();
+		}
+
+		return urls;
 	}
 
 	private static final String _TEST_EXPORT = "com.test.liferay.export";

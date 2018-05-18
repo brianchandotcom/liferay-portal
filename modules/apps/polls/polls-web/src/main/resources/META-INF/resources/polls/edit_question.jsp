@@ -52,10 +52,10 @@ if (choicesCount < 2) {
 boolean addChoice = false;
 boolean deleteChoice = false;
 
-if (StringUtil.equals(choicesAction, PollsWebKeys.ADD_CHOICE_ACTION)) {
+if (StringUtil.equals(choicesAction, "addChoice")) {
 	addChoice = true;
 }
-else if (StringUtil.equals(choicesAction, PollsWebKeys.DELETE_CHOICE_ACTION)) {
+else if (StringUtil.equals(choicesAction, "deleteChoice")) {
 	deleteChoice = true;
 }
 
@@ -170,7 +170,7 @@ portletDisplay.setURLBack(redirect);
 
 		var neverExpire = form.fm('fmexpirationDate').prop('checked');
 
-		form.fm('choicesAction').val('<%= PollsWebKeys.ADD_CHOICE_ACTION %>');
+		form.fm('choicesAction').val('<%= "addChoice" %>');
 		form.fm('choicesCount').val('<%= choicesCount + 1 %>');
 		form.fm('neverExpire').val(neverExpire);
 
@@ -187,7 +187,7 @@ portletDisplay.setURLBack(redirect);
 
 		var neverExpire = form.fm('fmexpirationDate').prop('checked');
 
-		form.fm('choicesAction').val('<%= PollsWebKeys.DELETE_CHOICE_ACTION %>');
+		form.fm('choicesAction').val('<%= "deleteChoice" %>');
 		form.fm('choicesCount').val('<%= choicesCount - 1 %>');
 		form.fm('choiceName').val(choiceName);
 		form.fm('neverExpire').val(neverExpire);

@@ -19,10 +19,6 @@ package com.liferay.polls.constants;
  */
 public class PollsWebKeys {
 
-	public static final String ADD_CHOICE_ACTION = "addChoice";
-
-	public static final String DELETE_CHOICE_ACTION = "deleteChoice";
-
 	public static final String POLLS_QUESTION = "POLLS_QUESTION";
 
 }

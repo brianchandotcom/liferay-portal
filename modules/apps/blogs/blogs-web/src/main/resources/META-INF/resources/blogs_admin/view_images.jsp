@@ -102,22 +102,22 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 	</aui:form>
 </div>
 
-<aui:script sandbox="<%= true %>">
+<aui:script>
 	var deleteImages = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-images" />')) {
-			var form = document.querySelector('#<portlet:namespace />fm');
+			var form = document.getElementById('<portlet:namespace />fm');
 
 			if (form) {
 				var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 				if (cmd) {
-					cmd.value = '<%= Constants.DELETE %>';
+					cmd.setAttribute('value', '<%= Constants.DELETE %>');
 				}
 
 				var deleteFileEntryIds = form.querySelector('#<portlet:namespace />deleteFileEntryIds');
 
 				if (deleteFileEntryIds) {
-					deleteFileEntryIds.value = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+					deleteFileEntryIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 				}
 
 				submitForm(form);

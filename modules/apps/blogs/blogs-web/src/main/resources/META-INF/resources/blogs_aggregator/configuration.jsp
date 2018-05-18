@@ -62,7 +62,7 @@ if (organizationId > 0) {
 				</div>
 
 				<aui:script>
-					var <portlet:namespace />selectOrganizationButton = document.querySelector('#<portlet:namespace />selectOrganizationButton');
+					var <portlet:namespace />selectOrganizationButton = document.getElementById('<portlet:namespace />selectOrganizationButton');
 
 					if (<portlet:namespace />selectOrganizationButton) {
 						<portlet:namespace />selectOrganizationButton').addEventListener(
@@ -92,19 +92,19 @@ if (organizationId > 0) {
 										uri: '<%= selectOrganizationURL.toString() %>'
 									},
 									function(event) {
-										var form = document.querySelector('#<portlet:namespace />fm');
+										var form = document.getElementById('<portlet:namespace />fm');
 
 										if (form) {
 											var organizationId = form.querySelector('#<portlet:namespace />preferences--organizationId--');
 
 											if (organizationId) {
-												organizationId.value = event.entityid;
+												organizationId.setAttribute('value', event.entityid);
 											}
 
 											var organizationName = form.querySelector('#<portlet:namespace />organizationName');
 
 											if (organizationName) {
-												organizationName.value = event.entityname;
+												organizationName.setAttribute('value' ,event.entityname);
 											}
 										}
 
@@ -119,13 +119,13 @@ if (organizationId > 0) {
 				<aui:script require="metal-dom/src/dom">
 					let dom = metalDomSrcDom.default;
 
-					var <portlet:namespace />selectionMethod = document.querySelector('#<portlet:namespace />selectionMethod');
+					var <portlet:namespace />selectionMethod = document.getElementById('<portlet:namespace />selectionMethod');
 
 					if (<portlet:namespace />selectionMethod) {
 						<portlet:namespace />selectionMethod.addEventListener(
 							'change',
 							function(event) {
-								var usersSelectionOptions = document.querySelector('#<portlet:namespace />usersSelectionOptions');
+								var usersSelectionOptions = document.getElementById('<portlet:namespace />usersSelectionOptions');
 
 								if (usersSelectionOptions) {
 									var showUsersSelectionOptions = !(selectionMethod.val() === 'users');

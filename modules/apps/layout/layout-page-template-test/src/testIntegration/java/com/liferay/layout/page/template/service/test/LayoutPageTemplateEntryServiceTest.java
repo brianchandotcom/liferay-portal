@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -283,7 +284,8 @@ public class LayoutPageTemplateEntryServiceTest {
 				serviceContext);
 
 		AssetDisplayPageEntryLocalServiceUtil.addAssetDisplayPageEntry(
-			0L, layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			RandomTestUtil.randomLong(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		LayoutPageTemplateEntryLocalServiceUtil.deleteLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());

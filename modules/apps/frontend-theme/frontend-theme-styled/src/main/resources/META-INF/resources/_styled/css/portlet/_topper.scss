@@ -6,6 +6,14 @@
 	}
 }
 
+%display-portlet-content-editable {
+	@include media-query(sm) {
+		border-color: $portlet-topper-border;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+}
+
 .portlet {
 	margin-bottom: 10px;
 	position: relative;
@@ -29,8 +37,14 @@
 
 			top: 0;
 		}
+	}
 
-		&.open {
+	&.open {
+		> .portlet-content-editable {
+			@extend %display-portlet-content-editable;
+		}
+
+		> .portlet-topper {
 			@extend %display-portlet-topper;
 		}
 	}
@@ -39,11 +53,7 @@
 .portlet {
 	&:hover, &.focus {
 		> .portlet-content-editable {
-			@include media-query(sm) {
-				border-color: $portlet-topper-border;
-				border-top-left-radius: 0;
-				border-top-right-radius: 0;
-			}
+			@extend %display-portlet-content-editable;
 		}
 
 		> .portlet-topper {

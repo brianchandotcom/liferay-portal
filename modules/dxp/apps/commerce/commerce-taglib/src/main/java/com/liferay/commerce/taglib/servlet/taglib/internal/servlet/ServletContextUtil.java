@@ -16,6 +16,7 @@ package com.liferay.commerce.taglib.servlet.taglib.internal.servlet;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
 import com.liferay.commerce.price.CommercePriceCalculation;
@@ -46,6 +47,10 @@ public class ServletContextUtil {
 
 	public static final CommercePriceCalculation getCommercePriceCalculation() {
 		return _instance._getCommercePriceCalculation();
+	}
+
+	public static final CommercePriceFormatter getCommercePriceFormatter() {
+		return _instance._getCommercePriceFormatter();
 	}
 
 	public static final PanelAppRegistry getPanelAppRegistry() {
@@ -97,6 +102,13 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCommercePriceFormatter(
+		CommercePriceFormatter commercePriceFormatter) {
+
+		_commercePriceFormatter = commercePriceFormatter;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
 		_panelAppRegistry = panelAppRegistry;
 	}
@@ -130,6 +142,10 @@ public class ServletContextUtil {
 		return _commercePriceCalculation;
 	}
 
+	private CommercePriceFormatter _getCommercePriceFormatter() {
+		return _commercePriceFormatter;
+	}
+
 	private PanelAppRegistry _getPanelAppRegistry() {
 		return _panelAppRegistry;
 	}
@@ -148,6 +164,7 @@ public class ServletContextUtil {
 	private ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
 	private CommercePriceCalculation _commercePriceCalculation;
+	private CommercePriceFormatter _commercePriceFormatter;
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
 	private ServletContext _servletContext;

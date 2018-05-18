@@ -17,6 +17,7 @@ package com.liferay.commerce.taglib.servlet.taglib;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -104,6 +105,7 @@ public class TierPriceTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
+		commercePriceFormatter = ServletContextUtil.getCommercePriceFormatter();
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
@@ -132,6 +134,9 @@ public class TierPriceTag extends IncludeTag {
 			"liferay-commerce:tier-price:commerceCurrencyId",
 			_commerceCurrencyId);
 		request.setAttribute(
+			"liferay-commerce:tier-price:commercePriceFormatter",
+			commercePriceFormatter);
+		request.setAttribute(
 			"liferay-commerce:tier-price:commerceTierPriceEntries",
 			_commerceTierPriceEntries);
 		request.setAttribute(
@@ -140,6 +145,8 @@ public class TierPriceTag extends IncludeTag {
 			"liferay-commerce:tier-price:taglibQuantityInputId",
 			_taglibQuantityInputId);
 	}
+
+	protected CommercePriceFormatter commercePriceFormatter;
 
 	private static final String _PAGE = "/tier_price/page.jsp";
 

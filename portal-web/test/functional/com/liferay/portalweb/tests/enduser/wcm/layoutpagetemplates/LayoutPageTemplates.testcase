@@ -428,6 +428,62 @@
 		</execute>
 	</command>
 
+	<command name="PublishDisplayPage" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_1.html" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#viewAutoSaveMessage" />
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="RenameCollection" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

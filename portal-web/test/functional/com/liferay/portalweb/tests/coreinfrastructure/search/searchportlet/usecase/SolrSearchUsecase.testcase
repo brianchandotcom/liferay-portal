@@ -282,6 +282,10 @@
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
+		<execute macro="SearchBarPortlet#selectScopeInputPG">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
 		<execute macro="SearchBarPortlet#searchPG">
 			<var name="searchTerm" value="Potato" />
 		</execute>
@@ -1311,6 +1315,10 @@
 				<var name="portletName" value="${portletName}" />
 			</execute>
 		</for>
+
+		<execute macro="SearchBarPortlet#configureScopePG">
+			<var name="searchScope" value="Everything" />
+		</execute>
 
 		<execute macro="SearchBarPortlet#searchPG">
 			<var name="searchTerm" value="apple" />

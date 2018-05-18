@@ -95,6 +95,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.handler.GroupExceptionRequestHandler;
@@ -872,6 +873,28 @@ public class SiteAdminPortlet extends MVCPortlet {
 				actionRequest, "TypeSettingsProperties--");
 
 		typeSettingsProperties.putAll(formTypeSettingsProperties);
+
+		UnicodeProperties ratingsTypeProperties =
+			PropertiesParamUtil.getProperties(actionRequest, "RatingsType--");
+
+		for (String propertyKey : ratingsTypeProperties.keySet()) {
+			String newRatingsType = ratingsTypeProperties.getProperty(
+				propertyKey);
+
+			String oldRatingsType = typeSettingsProperties.getProperty(
+				propertyKey);
+
+			if (newRatingsType.equals(oldRatingsType)) {
+				continue;
+			}
+
+			if (RatingsType.isValid(newRatingsType)) {
+				typeSettingsProperties.put(propertyKey, newRatingsType);
+			}
+			else {
+				typeSettingsProperties.remove(propertyKey);
+			}
+		}
 
 		// Virtual hosts
 

@@ -14,6 +14,8 @@
 
 package com.liferay.ratings.kernel;
 
+import com.liferay.portal.kernel.util.Validator;
+
 /**
  * @author Sergio Gonzalez
  * @author Roberto Díaz
@@ -21,6 +23,20 @@ package com.liferay.ratings.kernel;
 public enum RatingsType {
 
 	LIKE("like"), STARS("stars"), THUMBS("thumbs");
+
+	public static boolean isValid(String value) {
+		if (Validator.isNull(value)) {
+			return false;
+		}
+
+		if (value.equals(LIKE.getValue()) || value.equals(STARS.getValue()) ||
+			value.equals(THUMBS.getValue())) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	public static RatingsType parse(String value) {
 		if (LIKE.getValue().equals(value)) {

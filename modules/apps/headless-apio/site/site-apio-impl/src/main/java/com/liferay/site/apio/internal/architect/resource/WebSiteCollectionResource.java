@@ -95,6 +95,10 @@ public class WebSiteCollectionResource
 			"members", PersonIdentifier.class
 		).addString(
 			"membershipType", Group::getTypeLabel
+		).addString(
+			"privateUrl", GroupWrapper::getPrivateURL
+		).addString(
+			"publicUrl", GroupWrapper::getPublicURL
 		).build();
 	}
 

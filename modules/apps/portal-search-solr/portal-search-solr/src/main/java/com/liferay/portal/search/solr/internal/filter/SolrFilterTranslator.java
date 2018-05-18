@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.solr.filter.BooleanFilterTranslator;
@@ -87,6 +88,11 @@ public class SolrFilterTranslator
 	@Override
 	public Query visit(BooleanFilter booleanFilter) {
 		return _booleanQueryTranslator.translate(booleanFilter, this);
+	}
+
+	@Override
+	public Query visit(DateRangeFilter dateRangeFilter) {
+		return dateRangeFilterTranslator.translate(dateRangeFilter);
 	}
 
 	@Override
@@ -273,6 +279,9 @@ public class SolrFilterTranslator
 
 		_termsFilterTranslator = termsFilterTranslator;
 	}
+
+	@Reference
+	protected DateRangeFilterTranslator dateRangeFilterTranslator;
 
 	private BooleanFilterTranslator _booleanQueryTranslator;
 	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;

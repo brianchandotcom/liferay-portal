@@ -60,12 +60,17 @@
 
 <aui:script>
 	function <portlet:namespace />saveCurrency() {
-		var form = document.querySelector('#<portlet:namespace />fm');
+		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
-			form.querySelector('#<portlet:namespace />symbols').value = Liferay.Util.listSelect(form.querySelector('#<portlet:namespace />current_actions');
+			var currentActions = form.querySelector('#<portlet:namespace />current_actions');
+			var symbols = form.querySelector('#<portlet:namespace />symbols');
 
-			submitForm(form);
+			if (currentActions && symbols) {
+				symbols.setAttribute('value', Liferay.Util.listSelect(currentActions));
+
+				submitForm(form);
+			}
 		}
 	}
 </aui:script>

@@ -27,7 +27,7 @@
 	<command name="viewAddToolbar">
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<execute function="AssertElementPresent" locator1="DDL#TOOLBAR_ADD" />
 	</command>
 
 	<command name="viewDDLTemplateRecordFieldData">

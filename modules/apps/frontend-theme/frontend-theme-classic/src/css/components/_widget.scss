@@ -94,3 +94,9 @@
 		font-weight: 700;
 	}
 }
+
+.widget-toolbar {
+	.autofit-col:first-of-type > .btn-outline-borderless {
+		margin-left: -0.75rem;
+	}
+}

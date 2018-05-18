@@ -28,7 +28,7 @@ boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessa
 	<div class="container-fluid-1280">
 		<clay:stripe
 			destroyOnHide="true"
-			message='<%= LanguageUtil.get(resourceBundle, "the-assets-from-documents-and-media-and-forms-are-assigned-within-their-respective-portlets") %>'
+			message='<%= LanguageUtil.get(resourceBundle, "the-assets-from-documents-and-media-and-forms-are-assigned-within-their-respective-applications") %>'
 			title="Info"
 		/>
 	</div>

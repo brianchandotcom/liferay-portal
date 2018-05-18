@@ -38,7 +38,7 @@ public interface JournalContentSearchPortletInstanceConfiguration {
 	@Meta.AD(deflt = "true", name = "show-listed", required = false)
 	public boolean showListed();
 
-	@Meta.AD(name = "target-portlet-id", required = false)
+	@Meta.AD(name = "target-widget-id", required = false)
 	public String targetPortletId();
 
 }

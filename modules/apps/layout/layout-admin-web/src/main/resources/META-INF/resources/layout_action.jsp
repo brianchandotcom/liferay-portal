@@ -67,7 +67,7 @@ Layout curLayout = (Layout)row.getObject();
 
 	<c:if test="<%= layoutsAdminDisplayContext.showOrphanPortletsAction(curLayout) %>">
 		<liferay-ui:icon
-			message="orphan-portlets"
+			message="orphan-widgets"
 			url="<%= layoutsAdminDisplayContext.getOrphanPortletsURL(curLayout) %>"
 		/>
 	</c:if>

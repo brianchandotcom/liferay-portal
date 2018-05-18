@@ -32,8 +32,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SearchWebConfiguration {
 
 	@Meta.AD(
-		description = "classic-search-portlet-in-front-page-help",
-		name = "classic-search-portlet-in-front-page", required = false
+		description = "classic-search-widget-in-front-page-help",
+		name = "classic-search-widget-in-front-page", required = false
 	)
 	public boolean classicSearchPortletInFrontPage();
 

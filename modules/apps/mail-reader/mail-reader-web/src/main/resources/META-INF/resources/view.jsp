@@ -65,6 +65,6 @@ MailManager mailManager = MailManager.getInstance(request);
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:message key="please-log-in-to-use-the-mail-portlet" />
+		<liferay-ui:message key="please-log-in-to-use-the-mail-widget" />
 	</c:otherwise>
 </c:choose>

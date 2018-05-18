@@ -42,7 +42,7 @@ if (Validator.isNotNull(backURL)) {
 			<liferay-ui:message key="no-data-found" />
 		</c:when>
 		<c:when test="<%= eiee.getType() == ExportImportEntityException.TYPE_PORTLET_NOT_STAGED %>">
-			<liferay-ui:message key="portlet-not-staged" />
+			<liferay-ui:message key="application-not-staged" />
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:message key="an-unexpected-error-occurred" />

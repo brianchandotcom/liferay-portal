@@ -24,7 +24,7 @@
 			</div>
 
 			<div>
-				<liferay-ui:message key="no-portlet-data-simple-publish" />
+				<liferay-ui:message key="no-application-data-simple-publish" />
 			</div>
 		</div>
 	</c:when>

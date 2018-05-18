@@ -40,7 +40,7 @@ for (OpenSearch openSearchInstance : openSearchInstances) {
 <div class="search-msg">
 	<c:choose>
 		<c:when test="<%= modelResources.isEmpty() %>">
-			<liferay-ui:message key="no-portlets-were-searched" />
+			<liferay-ui:message key="no-widgets-were-searched" />
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:message key="searched" /> <%= StringUtil.merge(modelResources, StringPool.COMMA_AND_SPACE) %>

@@ -131,7 +131,7 @@ else {
 
 	<div class="alert alert-info portlet-configuration">
 		<a href="<%= HtmlUtil.escapeHREF(portletDisplay.getURLConfiguration()) %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
-			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-ranking-criteria" />
+			<liferay-ui:message key="please-configure-this-widget-and-select-at-least-one-ranking-criteria" />
 		</a>
 	</div>
 

@@ -10,7 +10,6 @@ Export-Package:\
 	com.liferay.apio.architect.test.util.representor,\
 	com.liferay.apio.architect.test.util.result,\
 	com.liferay.apio.architect.test.util.writer
-
 Import-Package:\
 	!org.hamcrest.*,\
 	\

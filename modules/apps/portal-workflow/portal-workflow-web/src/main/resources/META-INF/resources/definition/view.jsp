@@ -89,6 +89,7 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-list-title"
 				href="<%= rowURL %>"
 				name="title"
 				value="<%= workflowDefinitionDisplayContext.getTitle(workflowDefinition) %>"

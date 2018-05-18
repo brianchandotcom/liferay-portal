@@ -175,6 +175,7 @@ class FragmentEntryLink extends Component {
 						imageSelectorURL: this.imageSelectorURL,
 						languageId: this.languageId,
 						portletNamespace: this.portletNamespace,
+						showMapping: this.showMapping,
 						type: editable.getAttribute('type')
 					}
 				);

@@ -17,17 +17,15 @@
 <%@ include file="/tier_price/init.jsp" %>
 
 <%
+CommercePriceFormatter commercePriceFormatter = (CommercePriceFormatter)request.getAttribute("liferay-commerce:tier-price:commercePriceFormatter");
 List<CommerceTierPriceEntry> commerceTierPriceEntries = (List<CommerceTierPriceEntry>)request.getAttribute("liferay-commerce:tier-price:commerceTierPriceEntries");
-long commerceCurrencyId = (long)request.getAttribute("liferay-commerce:tier-price:commerceCurrencyId");
-long cpInstanceId = (long)request.getAttribute("liferay-commerce:tier-price:cpInstanceId");
 String taglibQuantityInputId = (String)request.getAttribute("liferay-commerce:tier-price:taglibQuantityInputId");
+
+CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
 
 String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 
-String tableRowCssClass = StringPool.BLANK;
 String tierPriceId = randomNamespace + "tierPrice";
-String tierPriceTogglerId = randomNamespace + "commerceTierPriceToggler";
-boolean truncateTable = false;
 %>
 
 <c:if test="<%= (commerceTierPriceEntries != null) && !commerceTierPriceEntries.isEmpty() %>">
@@ -35,74 +33,45 @@ boolean truncateTable = false;
 		<div class="table-responsive">
 			<table class="table table-autofit table-hover table-nowrap">
 				<thead>
-					<th class="price-point-column"><%= LanguageUtil.get(request, "pp") %></th>
-					<th class="msrp-column table-cell-expand"><%= LanguageUtil.get(request, "msrp") %> (USD)</th>
-					<th class="discount-column table-cell-expand"><%= LanguageUtil.get(request, "discount") %> (%)</th>
-					<th class="savings-column table-cell-expand"><%= LanguageUtil.get(request, "savings") %> (USD)</th>
-					<th class="table-cell-expand total-column"><%= LanguageUtil.get(request, "total") %> (USD)</th>
+					<th class="price-point-column"><%= LanguageUtil.get(request, "quantity") %></th>
+					<th class="price-column table-cell-expand"><%= LanguageUtil.get(request, "price") %></th>
+					<th class="discount-column table-cell-expand"><%= LanguageUtil.get(request, "discount") %></th>
+					<th class="savings-column table-cell-expand"><%= LanguageUtil.get(request, "savings") %></th>
+					<th class="table-cell-expand total-column"><%= LanguageUtil.get(request, "total") %></th>
 				</thead>
 
 				<tbody>
 
 					<%
-					int index = 1;
-
 					for (CommerceTierPriceEntry commerceTierPriceEntry : commerceTierPriceEntries) {
-						float msrp = commerceTierPriceEntry.getCommercePriceEntry().getPrice().floatValue();
-						float msrpTotal = msrp * commerceTierPriceEntry.getMinQuantity();
+						BigDecimal price = commerceTierPriceEntry.getCommercePriceEntry().getPrice();
 
-						float discount = msrp - commerceTierPriceEntry.getPrice().floatValue();
-						float discountPercent = 100 * (discount / msrp);
+						BigDecimal priceTotal = price.multiply(BigDecimal.valueOf(commerceTierPriceEntry.getMinQuantity()));
 
-						float total = commerceTierPriceEntry.getPrice().floatValue() * commerceTierPriceEntry.getMinQuantity();
+						BigDecimal discount = price.subtract(commerceTierPriceEntry.getPrice());
 
-						float savings = msrpTotal - total;
+						BigDecimal discountPercent = (discount.divide(price)).multiply(BigDecimal.valueOf(100));
 
-						if (index == 5) {
-							tableRowCssClass = " table-truncate-threshold";
-							truncateTable = true;
-						}
-						else {
-							tableRowCssClass = StringPool.BLANK;
-						}
+						BigDecimal total = commerceTierPriceEntry.getPrice().multiply(BigDecimal.valueOf(commerceTierPriceEntry.getMinQuantity()));
+
+						BigDecimal savings = priceTotal.subtract(total);
 					%>
 
-						<tr class="multiples-row<%= tableRowCssClass %>" onclick="<%= randomNamespace %>setQuantity('<%= commerceTierPriceEntry.getMinQuantity() %>')">
+						<tr class="multiples-row" onclick="<%= randomNamespace %>setQuantity('<%= commerceTierPriceEntry.getMinQuantity() %>')">
 							<td class="price-point-column"><%= commerceTierPriceEntry.getMinQuantity() %></td>
-							<td class="msrp-column table-cell-expand"><%= String.format("%.2f", msrpTotal) %></td>
-							<td class="discount-column table-cell-expand"><%= String.format("%.2f", discountPercent) %>%</td>
-							<td class="savings-column table-cell-expand"><%= String.format("%.2f", savings) %></td>
-							<td class="table-cell-expand total-column"><%= String.format("%.2f", total) %></td>
+							<td class="msrp-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), priceTotal) %></td>
+							<td class="discount-column table-cell-expand"><%= commercePriceFormatter.format(discountPercent) %> %</td>
+							<td class="savings-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), savings) %></td>
+							<td class="table-cell-expand total-column"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), total) %></td>
 						</tr>
 
 					<%
-						index++;
 					}
 					%>
 
 				</tbody>
 			</table>
 		</div>
-
-		<%
-		if (truncateTable) {
-		%>
-
-			<div class="commerce-tier-price-footer">
-				<button class="btn btn-link btn-sm commerce-tier-price-toggler" id="<%= tierPriceTogglerId %>">
-					<span class="view-more">
-						+ <%= LanguageUtil.get(request, "view-more") %>
-					</span>
-					<span class="view-less">
-						- <%= LanguageUtil.get(request, "view-less") %>
-					</span>
-				</button>
-			</div>
-
-		<%
-		}
-		%>
-
 	</div>
 
 	<script use="aui-base">
@@ -115,15 +84,6 @@ boolean truncateTable = false;
 				if (quantityNode) {
 					quantityNode.value = qt;
 				}
-			}
-		);
-
-		document.getElementById('<%= tierPriceTogglerId %>').addEventListener(
-			'click',
-			function(event) {
-				var currentTarget = event.currentTarget;
-
-				document.getElementById('<%= tierPriceId %>').classList.toggle('expand');
 			}
 		);
 	</script>

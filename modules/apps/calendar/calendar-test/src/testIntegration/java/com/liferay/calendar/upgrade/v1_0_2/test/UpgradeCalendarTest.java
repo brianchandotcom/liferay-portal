@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -61,6 +62,11 @@ public class UpgradeCalendarTest {
 			"com.liferay.calendar.internal.upgrade.v1_0_2.UpgradeCalendar");
 		_upgradeDatabaseTestHelper =
 			CalendarUpgradeTestUtil.getUpgradeDatabaseTestHelper();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_upgradeDatabaseTestHelper.close();
 	}
 
 	@Test

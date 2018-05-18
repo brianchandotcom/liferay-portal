@@ -27,12 +27,12 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
- * Adds basic auth filter to APIO Architect application.
+ * Adds basic auth filter to the Apio Architect application.
  *
  * @author Alejandro Hernández
  * @review
  */
-public class PortalAPIOBundleActivator implements BundleActivator {
+public class PortalApioBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) {

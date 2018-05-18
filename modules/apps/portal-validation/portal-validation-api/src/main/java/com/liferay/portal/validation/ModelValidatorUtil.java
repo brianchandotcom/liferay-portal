@@ -37,6 +37,10 @@ public class ModelValidatorUtil {
 			ModelValidatorRegistryUtil.getModelValidator(
 				model.getModelClassName());
 
+		if (modelValidator == null) {
+			return ModelValidationResults.success();
+		}
+
 		return validate(modelValidator::validateModel, model);
 	}
 

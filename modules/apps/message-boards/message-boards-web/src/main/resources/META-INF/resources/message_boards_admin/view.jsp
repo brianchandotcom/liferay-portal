@@ -75,6 +75,7 @@ String entriesNavigation = ParamUtil.getString(request, "entriesNavigation", "al
 <clay:management-toolbar
 	actionDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= mbEntriesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	componentId="mbEntriesManagementToolbar"
 	creationMenu="<%= mbEntriesManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled='<%= (searchContainer.getTotal() == 0) && (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && entriesNavigation.equals("all") %>'
 	filterDropdownItems="<%= mbEntriesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
@@ -101,7 +102,7 @@ if (category != null) {
 %>
 
 <aui:script>
-	function <portlet:namespace />deleteEntries() {
+	var deleteEntries = function() {
 		if (<%= trashHelper.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, trashHelper.isTrashEnabled(scopeGroupId) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
@@ -110,23 +111,44 @@ if (category != null) {
 
 			submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
 		}
-	}
+	};
 
-	function <portlet:namespace />lockEntries() {
+	var lockEntries = function() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
 		form.fm('<%= Constants.CMD %>').val('<%= Constants.LOCK %>');
 
 		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
-	}
+	};
 
-	function <portlet:namespace />unlockEntries() {
+	var unlockEntries = function() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
 		form.fm('<%= Constants.CMD %>').val('<%= Constants.UNLOCK %>');
 
 		submitForm(form, '<portlet:actionURL name="/message_boards/edit_entry" />');
-	}
+	};
+
+	var ACTIONS = {
+		'deleteEntries': deleteEntries,
+		'lockEntries': lockEntries,
+		'unlockEntries': unlockEntries
+	};
+
+	Liferay.componentReady('mbEntriesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

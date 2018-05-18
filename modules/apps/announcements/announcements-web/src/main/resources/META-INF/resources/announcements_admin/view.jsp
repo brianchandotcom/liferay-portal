@@ -71,6 +71,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 
 <clay:management-toolbar
 	actionDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	componentId="announcementsAdminViewManagementToolbar"
 	creationMenu="<%= announcementsAdminViewManagementToolbarDisplayContext.getCreationMenu() %>"
 	disabled="<%= announcementsAdminViewManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= announcementsAdminViewManagementToolbarDisplayContext.getFilterDropdownItems() %>"
@@ -148,8 +149,8 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	</aui:form>
 </div>
 
-<aui:script>
-	function <portlet:namespace />deleteEntries() {
+<aui:script sandbox="<%= true %>">
+	var deleteEntries = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
 			var form = document.querySelector('#<portlet:namespace />fm');
 
@@ -165,5 +166,24 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 				submitForm(form, '<portlet:actionURL name="/announcements/edit_entry" />');
 			}
 		}
-	}
+	};
+
+	var ACTIONS = {
+		'deleteEntries': deleteEntries
+	};
+
+	Liferay.componentReady('announcementsAdminViewManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

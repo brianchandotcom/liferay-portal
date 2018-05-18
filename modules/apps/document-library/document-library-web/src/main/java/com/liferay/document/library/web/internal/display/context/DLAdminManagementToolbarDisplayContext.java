@@ -31,7 +31,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -45,7 +44,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -106,58 +104,16 @@ public class DLAdminManagementToolbarDisplayContext {
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
-								dropdownItem.setHref(
-									StringBundler.concat(
-										"javascript:Liferay.fire('",
-										_liferayPortletResponse.getNamespace(),
-										"editEntry', {action: 'download'});",
-										"void(0);"));
+								dropdownItem.putData("action", "download");
 								dropdownItem.setIcon("download");
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, "download"));
 								dropdownItem.setQuickAction(true);
 							}));
-
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
-								dropdownItem.setHref(
-									StringBundler.concat(
-										"javascript:Liferay.fire('",
-										_liferayPortletResponse.getNamespace(),
-										"editEntry', {action: '",
-										Constants.CHECKIN, "'}); void(0);"));
-								dropdownItem.setIcon("unlock");
-								dropdownItem.setLabel(
-									LanguageUtil.get(_request, "checkin"));
-								dropdownItem.setQuickAction(false);
-							}));
-
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.setHref(
-									StringBundler.concat(
-										"javascript:Liferay.fire('",
-										_liferayPortletResponse.getNamespace(),
-										"editEntry', {action: '",
-										Constants.CHECKOUT, "'}); void(0);"));
-								dropdownItem.setIcon("lock");
-								dropdownItem.setLabel(
-									LanguageUtil.get(
-										_request, "checkout[document]"));
-								dropdownItem.setQuickAction(false);
-							}));
-
-					add(
-						SafeConsumer.ignore(
-							dropdownItem -> {
-								dropdownItem.setHref(
-									StringBundler.concat(
-										"javascript:Liferay.fire('",
-										_liferayPortletResponse.getNamespace(),
-										"editEntry', {action: '",
-										Constants.MOVE, "'}); void(0);"));
+								dropdownItem.putData("action", "move");
 								dropdownItem.setIcon("change");
 								dropdownItem.setLabel(
 									LanguageUtil.get(_request, "move"));
@@ -169,11 +125,7 @@ public class DLAdminManagementToolbarDisplayContext {
 					add(
 						SafeConsumer.ignore(
 							dropdownItem -> {
-								dropdownItem.setHref(
-									StringBundler.concat(
-										"javascript:",
-										_liferayPortletResponse.getNamespace(),
-										"deleteEntries();"));
+								dropdownItem.putData("action", "deleteEntries");
 
 								if (_dlTrashUtil.isTrashEnabled(
 										scopeGroup.getGroupId(),
@@ -194,6 +146,27 @@ public class DLAdminManagementToolbarDisplayContext {
 								dropdownItem.setQuickAction(true);
 							}));
 				}
+
+				add(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.putData("action", "checkin");
+							dropdownItem.setIcon("unlock");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "checkin"));
+							dropdownItem.setQuickAction(false);
+						}));
+
+				add(
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.putData("action", "checkout");
+							dropdownItem.setIcon("lock");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_request, "checkout[document]"));
+							dropdownItem.setQuickAction(false);
+						}));
 			}
 		};
 	}
@@ -559,10 +532,8 @@ public class DLAdminManagementToolbarDisplayContext {
 						dropdownItem -> {
 							dropdownItem.setActive(fileEntryTypeId != -1);
 
-							dropdownItem.setHref(
-								"javascript:" +
-									_liferayPortletResponse.getNamespace() +
-										"openDocumentTypesSelector();");
+							dropdownItem.putData(
+								"action", "openDocumentTypesSelector");
 
 							String label = LanguageUtil.get(
 								_request, "document-types");

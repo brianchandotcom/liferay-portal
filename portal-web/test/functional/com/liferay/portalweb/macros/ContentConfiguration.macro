@@ -1,9 +1,5 @@
 <definition>
 	<command name="checkContentNameList">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Content" />
-		</execute>
-
 		<for list="${checkContentNameList}" param="contentName">
 			<var name="key_contentName" value="${contentName}" />
 
@@ -133,10 +129,6 @@
 	</command>
 
 	<command name="uncheckContentNameList">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Content" />
-		</execute>
-
 		<for list="${uncheckContentNameList}" param="contentName">
 			<execute function="Uncheck" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX">
 				<var name="key_contentName" value="${contentName}" />

@@ -432,9 +432,13 @@
 <%-- Analytics --%>
 
 <%
-UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+String liferayAnalyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.ADMIN_LIFERAY_ANALYTICS_KEY);
 
-String liferayAnalyticsKey = groupTypeSettings.getProperty(GroupConstants.TYPE_SETTINGS_KEY_LIFERAY_ANALYTICS_KEY);
+if (Validator.isNull(liferayAnalyticsKey)) {
+	UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+
+	liferayAnalyticsKey = groupTypeSettings.getProperty(GroupConstants.TYPE_SETTINGS_KEY_LIFERAY_ANALYTICS_KEY);
+}
 %>
 
 <c:if test="<%= Validator.isNotNull(liferayAnalyticsKey) %>">

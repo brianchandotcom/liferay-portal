@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.notification.web.internal.util;
 
+import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
+import com.liferay.commerce.notification.util.comparator.CommerceNotificationQueueEntryPriorityComparator;
 import com.liferay.commerce.notification.util.comparator.CommerceNotificationTemplateCreateDateComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -22,6 +24,28 @@ import com.liferay.portal.kernel.util.OrderByComparator;
  * @author Alessio Antonio Rendina
  */
 public class CommerceNotificationsUtil {
+
+	public static OrderByComparator<CommerceNotificationQueueEntry>
+		getCommerceNotificationQueueEntryOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator =
+			null;
+
+		if (orderByCol.equals("priority")) {
+			orderByComparator =
+				new CommerceNotificationQueueEntryPriorityComparator(
+					orderByAsc);
+		}
+
+		return orderByComparator;
+	}
 
 	public static OrderByComparator<CommerceNotificationTemplate>
 		getCommerceNotificationTemplateOrderByComparator(

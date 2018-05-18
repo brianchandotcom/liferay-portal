@@ -76,12 +76,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
-@Component(
-	property = {
-		"osgi.jaxrs.application.select=(liferay.apio.architect.application=true)",
-		"osgi.jaxrs.extension=true"
-	}
-)
+@Component(property = "liferay.apio.architect.message.body.writer=true")
 @Provider
 public class SingleModelMessageBodyWriter<T>
 	implements MessageBodyWriter<Try.Success<SingleModel<T>>> {

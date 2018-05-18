@@ -30,6 +30,12 @@ public class WindowStateFactory {
 		return _instance._getWindowState(name);
 	}
 
+	public static WindowState getWindowState(
+		String name, int portletMajorVersion) {
+
+		return _instance._getWindowState(name, portletMajorVersion);
+	}
+
 	private WindowStateFactory() {
 		_windowStates = new HashMap<>();
 
@@ -41,8 +47,17 @@ public class WindowStateFactory {
 	}
 
 	private WindowState _getWindowState(String name) {
+		return _getWindowState(name, 2);
+	}
+
+	private WindowState _getWindowState(String name, int portletMajorVersion) {
 		if (Validator.isNull(name)) {
-			return WindowState.NORMAL;
+			if (portletMajorVersion < 3) {
+				return WindowState.NORMAL;
+			}
+			else {
+				return WindowState.UNDEFINED;
+			}
 		}
 
 		WindowState windowState = _windowStates.get(name);

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.User;
@@ -65,6 +66,7 @@ import com.liferay.portal.kernel.util.comparator.PortletConfigurationIconCompara
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.theme.PortletDisplayFactory;
+import com.liferay.portlet.internal.PortletAppUtil;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
@@ -845,8 +847,23 @@ public class PortletContainerImpl implements PortletContainer {
 		WindowState windowState = (WindowState)request.getAttribute(
 			WebKeys.WINDOW_STATE);
 
+		PortletApp portletApp = portlet.getPortletApp();
+
+		int portletSpecMajorVersion = PortletAppUtil.getSpecMajorVersion(
+			portletApp);
+
+		if (PortletAppUtil.isPortletSpec3(portletApp)) {
+			WindowState requestWindowState = WindowStateFactory.getWindowState(
+				ParamUtil.getString(request, "p_p_state"),
+				portletSpecMajorVersion);
+
+			if (WindowState.UNDEFINED.equals(requestWindowState)) {
+				windowState = requestWindowState;
+			}
+		}
+
 		PortletMode portletMode = PortletModeFactory.getPortletMode(
-			ParamUtil.getString(request, "p_p_mode"));
+			ParamUtil.getString(request, "p_p_mode"), portletSpecMajorVersion);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(

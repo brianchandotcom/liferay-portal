@@ -23,11 +23,18 @@ import javax.portlet.PortletMode;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
 public class PortletModeFactory {
 
 	public static PortletMode getPortletMode(String name) {
 		return _instance._getPortletMode(name);
+	}
+
+	public static PortletMode getPortletMode(
+		String name, int portletMajorVersion) {
+
+		return _instance._getPortletMode(name, portletMajorVersion);
 	}
 
 	private PortletModeFactory() {
@@ -45,8 +52,17 @@ public class PortletModeFactory {
 	}
 
 	private PortletMode _getPortletMode(String name) {
+		return _getPortletMode(name, 2);
+	}
+
+	private PortletMode _getPortletMode(String name, int portletMajorVersion) {
 		if (Validator.isNull(name)) {
-			return PortletMode.VIEW;
+			if (portletMajorVersion < 3) {
+				return PortletMode.VIEW;
+			}
+			else {
+				return PortletMode.UNDEFINED;
+			}
 		}
 
 		PortletMode portletMode = _portletModes.get(name);

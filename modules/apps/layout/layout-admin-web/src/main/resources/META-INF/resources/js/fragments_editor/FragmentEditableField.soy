@@ -6,6 +6,7 @@
 {template .render}
 	{@param content: html}
 	{@param editableId: string}
+	{@param showMapping: bool}
 	{@param type: string}
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditButtonClick: any}
@@ -27,13 +28,15 @@
 				<div class="arrow"></div>
 				<div class="tooltip-inner">
 					<div class="lfr-editable-wrapper__tooltip-btn-group">
-						<button
-							class="btn btn-outline-light"
-							data-onclick="{$_handleMapButtonClick}"
-							type="button"
-						>
-							{msg desc=""}map-to{/msg}...
-						</button>
+						{if $showMapping}
+							<button
+								class="btn btn-outline-light"
+								data-onclick="{$_handleMapButtonClick}"
+								type="button"
+							>
+								{msg desc=""}map-to{/msg}...
+							</button>
+						{/if}
 
 						<button
 							class="btn btn-outline-light"

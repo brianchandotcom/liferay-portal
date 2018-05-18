@@ -46,7 +46,7 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 			refreshCaptcha.addEventListener(
 				'click',
 				function() {
-					var url = Liferay.Util.addParams('t=' + $.now(), '<%= url %>');
+					var url = Liferay.Util.addParams('t=' + Date.now(), '<%= url %>');
 
 					var captcha = document.getElementById('<portlet:namespace />captcha');
 

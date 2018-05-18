@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UADApplicationSummaryHelper.class)
 public class UADApplicationSummaryHelper {
 
-	public DropdownItemList createManagementBarFilterItems(
+	public List<DropdownItem> createManagementBarFilterItems(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
@@ -72,7 +73,7 @@ public class UADApplicationSummaryHelper {
 
 		return new DropdownItemList() {
 			{
-				DropdownItemList filterByNavigationDropdownItemList =
+				List<DropdownItem> filterByNavigationDropdownItemList =
 					getFilterByNavigationDropdownItemList(
 						renderRequest, renderResponse);
 
@@ -84,7 +85,7 @@ public class UADApplicationSummaryHelper {
 							LanguageUtil.get(request, "filter-by-navigation"));
 					});
 
-				DropdownItemList orderByNavigationDropdownItemList =
+				List<DropdownItem> orderByNavigationDropdownItemList =
 					getOrderByDropdownItemList(renderRequest, renderResponse);
 
 				addGroup(
@@ -230,7 +231,7 @@ public class UADApplicationSummaryHelper {
 		return typeClass.getName();
 	}
 
-	public DropdownItemList getFilterByNavigationDropdownItemList(
+	public List<DropdownItem> getFilterByNavigationDropdownItemList(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
@@ -267,7 +268,7 @@ public class UADApplicationSummaryHelper {
 		return ParamUtil.getString(renderRequest, "orderByCol", "name");
 	}
 
-	public DropdownItemList getOrderByDropdownItemList(
+	public List<DropdownItem> getOrderByDropdownItemList(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 

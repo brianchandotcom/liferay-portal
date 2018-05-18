@@ -15,7 +15,6 @@
 package com.liferay.user.associated.data.web.internal.display;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
@@ -51,7 +50,7 @@ public class ViewUADEntitiesDisplay {
 	}
 
 	public void setActionDropdownItems(
-		DropdownItemList getActionDropdownItems) {
+		List<DropdownItem> getActionDropdownItems) {
 
 		_actionDropdownItems = getActionDropdownItems;
 	}

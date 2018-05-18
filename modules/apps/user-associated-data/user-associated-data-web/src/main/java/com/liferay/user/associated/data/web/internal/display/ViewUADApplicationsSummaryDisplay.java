@@ -14,15 +14,17 @@
 
 package com.liferay.user.associated.data.web.internal.display;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+
+import java.util.List;
 
 /**
  * @author Drew Brokke
  */
 public class ViewUADApplicationsSummaryDisplay {
 
-	public DropdownItemList getManagementBarFilterItems() {
+	public List<DropdownItem> getManagementBarFilterItems() {
 		return _managementBarFilterItems;
 	}
 
@@ -39,7 +41,7 @@ public class ViewUADApplicationsSummaryDisplay {
 	}
 
 	public void setManagementBarFilterItems(
-		DropdownItemList managementBarFilterItems) {
+		List<DropdownItem> managementBarFilterItems) {
 
 		_managementBarFilterItems = managementBarFilterItems;
 	}
@@ -58,7 +60,7 @@ public class ViewUADApplicationsSummaryDisplay {
 		_totalCount = totalCount;
 	}
 
-	private DropdownItemList _managementBarFilterItems;
+	private List<DropdownItem> _managementBarFilterItems;
 	private SearchContainer<UADApplicationSummaryDisplay> _searchContainer;
 	private String _sortingURL;
 	private int _totalCount;

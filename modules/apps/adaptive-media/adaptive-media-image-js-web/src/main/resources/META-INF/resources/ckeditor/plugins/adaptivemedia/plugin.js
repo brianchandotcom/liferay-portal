@@ -5,7 +5,7 @@
 
 	var STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE = 'com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType';
 
-	var TPL_PICTURE_TAG = '<picture data-fileentryid="{fileEntryId}">{sources}<img src="{defaultSrc}"></picture>';
+	var TPL_PICTURE_TAG = '<picture {fileEntryAttributeName}="{fileEntryId}">{sources}<img src="{defaultSrc}"></picture>';
 
 	var TPL_SOURCE_TAG = '<source srcset="{srcset}" media="{media}">';
 
@@ -43,7 +43,7 @@
 				);
 			},
 
-			_getPictureElement: function(selectedItem) {
+			_getPictureElement: function(selectedItem, fileEntryAttributeName) {
 				var pictureEl;
 
 				try {
@@ -78,6 +78,7 @@
 						TPL_PICTURE_TAG,
 						{
 							defaultSrc: itemValue.defaultSource,
+							fileEntryAttributeName: fileEntryAttributeName,
 							fileEntryId: itemValue.fileEntryId,
 							sources: sources
 						}
@@ -91,14 +92,14 @@
 				return pictureEl;
 			},
 
-			_getImgElement: function(imageSrc, selectedItem) {
+			_getImgElement: function(imageSrc, selectedItem, fileEntryAttributeName) {
 				var imgEl = CKEDITOR.dom.element.createFromHtml('<img>');
 
 				if (selectedItem.returnType === STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE) {
 					var itemValue = JSON.parse(selectedItem.value);
 
 					imgEl.setAttribute('src', itemValue.url);
-					imgEl.setAttribute('data-fileentryid', itemValue.fileEntryId);
+					imgEl.setAttribute(fileEntryAttributeName, itemValue.fileEntryId);
 				}
 				else {
 					imgEl.setAttribute('src', imageSrc);
@@ -110,12 +111,13 @@
 			_onSelectedImageChange: function(editor, imageSrc, selectedItem) {
 				var el;
 				var instance = this;
+				var fileEntryAttributeName = editor.config.adaptiveMediaFileEntryAttributeName;
 
 				if (selectedItem.returnType === STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE) {
-					el = instance._getPictureElement(selectedItem);
+					el = instance._getPictureElement(selectedItem, fileEntryAttributeName);
 				}
 				else {
-					el = instance._getImgElement(imageSrc, selectedItem);
+					el = instance._getImgElement(imageSrc, selectedItem, fileEntryAttributeName);
 				}
 
 				editor.insertElement(el);

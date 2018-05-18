@@ -74,7 +74,7 @@ public class MavenDefaultsPlugin extends BaseDefaultsPlugin<MavenPlugin> {
 					if (relengDir.exists()) {
 						throw new GradleException(
 							"Please run this task from a master branch " +
-								"instead.");
+								"instead");
 					}
 
 					return;

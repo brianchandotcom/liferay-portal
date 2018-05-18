@@ -30,9 +30,20 @@ public interface RelationshipManager {
 		getInboundRelatedModels(Class<T> modelClass, long primKey);
 
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
+		getInboundRelatedModels(
+			Class<T> modelClass, long primKey, Degree degree);
+
+	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getOutboundRelatedModels(Class<T> modelClass, long primKey);
 
 	public <T extends ClassedModel> Collection<? extends ClassedModel>
+		getOutboundRelatedModels(
+			Class<T> modelClass, long primKey, Degree degree);
+
+	public <T extends ClassedModel> Collection<? extends ClassedModel>
 		getRelatedModels(Class<T> modelClass, long primKey);
+
+	public <T extends ClassedModel> Collection<? extends ClassedModel>
+		getRelatedModels(Class<T> modelClass, long primKey, Degree degree);
 
 }

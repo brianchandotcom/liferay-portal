@@ -20,7 +20,7 @@ import com.liferay.commerce.notification.constants.CommerceNotificationConstants
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateUserSegmentRelService;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
-import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationsDisplayContext;
+import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationTemplatesDisplayContext;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
@@ -54,12 +54,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + NotificationTemplatesCommerceAdminModule.KEY
+	property = "commerce.admin.module.key=" + NotificationsCommerceAdminModule.KEY
 )
-public class NotificationTemplatesCommerceAdminModule
-	implements CommerceAdminModule {
+public class NotificationsCommerceAdminModule implements CommerceAdminModule {
 
-	public static final String KEY = "notification-templates";
+	public static final String KEY = "notifications";
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -104,19 +103,19 @@ public class NotificationTemplatesCommerceAdminModule
 			"/view.jsp");
 	}
 
-	protected CommerceNotificationsDisplayContext
+	protected CommerceNotificationTemplatesDisplayContext
 		setCommerceEmailNotificationsDisplayContext(
 			HttpServletRequest httpServletRequest) {
 
-		CommerceNotificationsDisplayContext
-			commerceNotificationsDisplayContext =
-				(CommerceNotificationsDisplayContext)
+		CommerceNotificationTemplatesDisplayContext
+			commerceNotificationTemplatesDisplayContext =
+				(CommerceNotificationTemplatesDisplayContext)
 					httpServletRequest.getAttribute(
 						WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-		if (commerceNotificationsDisplayContext == null) {
-			commerceNotificationsDisplayContext =
-				new CommerceNotificationsDisplayContext(
+		if (commerceNotificationTemplatesDisplayContext == null) {
+			commerceNotificationTemplatesDisplayContext =
+				new CommerceNotificationTemplatesDisplayContext(
 					_commerceNotificationTemplateService,
 					_commerceNotificationTemplateUserSegmentRelService,
 					_commerceNotificationTypeRegistry,
@@ -125,10 +124,10 @@ public class NotificationTemplatesCommerceAdminModule
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceNotificationsDisplayContext);
+				commerceNotificationTemplatesDisplayContext);
 		}
 
-		return commerceNotificationsDisplayContext;
+		return commerceNotificationTemplatesDisplayContext;
 	}
 
 	@Reference

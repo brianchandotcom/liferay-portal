@@ -23,9 +23,11 @@ import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentTestUtil;
 import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -183,15 +185,20 @@ public class CommerceUserSegmentHelperTest {
 				_group1.getGroupId(), true, false, _user.getUserId(),
 				serviceContext);
 
+		Role role = _roleLocalService.getRole(
+			serviceContext.getCompanyId(),
+			RoleConstants.ORGANIZATION_ADMINISTRATOR);
+
 		CommerceUserSegmentTestUtil.addCommerceUserSegmentCriterion(
 			_group1.getGroupId(),
 			_commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
 			CommerceUserSegmentCriterionConstants.TYPE_ROLE,
-			String.valueOf(RoleConstants.ORGANIZATION_ADMINISTRATOR));
+			String.valueOf(role.getRoleId()));
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
-				_group1.getGroupId(), 0, _user.getUserId());
+				_group1.getGroupId(), _organization.getOrganizationId(),
+				_user.getUserId());
 
 		Assert.assertEquals(
 			true,
@@ -548,6 +555,9 @@ public class CommerceUserSegmentHelperTest {
 
 	@DeleteAfterTestRun
 	private Organization _organization;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -78,7 +79,56 @@ public class ExceptionMessageCheck extends BaseCheck {
 			return s.substring(1, s.length() - 1);
 		}
 
-		return null;
+		StringBundler sb = new StringBundler();
+
+		if (firstChildAST.getType() == TokenTypes.PLUS) {
+			DetailAST childAST = firstChildAST.getFirstChild();
+
+			while (true) {
+				if (childAST.getType() != TokenTypes.STRING_LITERAL) {
+					return null;
+				}
+
+				String s = childAST.getText();
+
+				sb.append(s.substring(1, s.length() - 1));
+
+				childAST = childAST.getNextSibling();
+
+				if (childAST == null) {
+					return sb.toString();
+				}
+			}
+		}
+
+		if (firstChildAST.getType() != TokenTypes.METHOD_CALL) {
+			return null;
+		}
+
+		String methodName = DetailASTUtil.getMethodName(firstChildAST);
+
+		if (!methodName.equals("concat")) {
+			return null;
+		}
+
+		DetailAST elistAST = firstChildAST.findFirstToken(TokenTypes.ELIST);
+
+		List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
+			elistAST, false, TokenTypes.EXPR);
+
+		for (DetailAST curExprAST : exprASTList) {
+			firstChildAST = curExprAST.getFirstChild();
+
+			if (firstChildAST.getType() != TokenTypes.STRING_LITERAL) {
+				return null;
+			}
+
+			String s = firstChildAST.getText();
+
+			sb.append(s.substring(1, s.length() - 1));
+		}
+
+		return sb.toString();
 	}
 
 	private static final String _MSG_INCORRECT_MESSAGE = "message.incorrect";

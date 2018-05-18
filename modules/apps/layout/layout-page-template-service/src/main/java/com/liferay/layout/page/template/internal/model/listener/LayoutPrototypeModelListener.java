@@ -49,13 +49,16 @@ public class LayoutPrototypeModelListener
 		throws ModelListenerException {
 
 		try {
-			if (_getLayoutPageTemplateEntry(layoutPrototype) != null) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_getLayoutPageTemplateEntry(layoutPrototype);
+
+			if (layoutPageTemplateEntry != null) {
 				return;
 			}
 
-			long layoutPrototypeId = layoutPrototype.getLayoutPrototypeId();
-			long companyId = layoutPrototype.getCompanyId();
-			long userId = layoutPrototype.getUserId();
+			Company company = _companyLocalService.getCompany(
+				layoutPrototype.getCompanyId());
+
 			String nameXML = layoutPrototype.getName();
 
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
@@ -64,15 +67,12 @@ public class LayoutPrototypeModelListener
 			Locale defaultLocale = LocaleUtil.fromLanguageId(
 				LocalizationUtil.getDefaultLanguageId(nameXML));
 
-			String name = nameMap.get(defaultLocale);
-
-			Company company = _companyLocalService.getCompany(companyId);
-
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				userId, company.getGroupId(), 0, name,
+				layoutPrototype.getUserId(), company.getGroupId(), 0,
+				nameMap.get(defaultLocale),
 				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
-				layoutPrototypeId, WorkflowConstants.STATUS_APPROVED,
-				new ServiceContext());
+				layoutPrototype.getLayoutPrototypeId(),
+				WorkflowConstants.STATUS_APPROVED, new ServiceContext());
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -109,9 +109,8 @@ public class LayoutPrototypeModelListener
 			LayoutPrototype layoutPrototype)
 		throws PortalException {
 
-		long companyId = layoutPrototype.getCompanyId();
-
-		Company company = _companyLocalService.getCompany(companyId);
+		Company company = _companyLocalService.getCompany(
+			layoutPrototype.getCompanyId());
 
 		return _layoutPageTemplateEntryLocalService.
 			fetchFirstLayoutPageTemplateEntry(

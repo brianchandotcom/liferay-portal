@@ -23,11 +23,12 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.site.apio.identifier.WebSiteIdentifier;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.tag.apio.identifier.TagIdentifier;
 import com.liferay.tag.apio.internal.form.TagForm;
 
@@ -94,7 +95,7 @@ public class TagNestedCollectionResource
 	}
 
 	@Override
-	public Representor<AssetTag, Long> representor(
+	public Representor<AssetTag> representor(
 		Representor.Builder<AssetTag, Long> builder) {
 
 		return builder.types(
@@ -109,9 +110,8 @@ public class TagNestedCollectionResource
 		).addNumber(
 			"usages",
 			assetTag -> {
-				//TODO Compute tag usages
-
-				return null;
+				return _assetEntryLocalService.getAssetTagAssetEntriesCount(
+					assetTag.getTagId());
 			}
 		).build();
 	}
@@ -148,9 +148,11 @@ public class TagNestedCollectionResource
 	}
 
 	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private AssetTagService _assetTagService;
-
 }

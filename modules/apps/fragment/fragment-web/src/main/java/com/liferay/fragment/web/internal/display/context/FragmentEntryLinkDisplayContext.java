@@ -60,7 +60,7 @@ public class FragmentEntryLinkDisplayContext {
 		_request = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
-	public List<DropdownItem> getActionItemsDropdownItemList() {
+	public List<DropdownItem> getActionItemsDropdownItems() {
 		return new DropdownItemList() {
 			{
 				add(

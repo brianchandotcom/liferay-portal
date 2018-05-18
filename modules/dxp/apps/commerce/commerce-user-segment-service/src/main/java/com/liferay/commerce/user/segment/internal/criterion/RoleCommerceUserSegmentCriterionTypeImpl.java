@@ -15,7 +15,9 @@
 package com.liferay.commerce.user.segment.internal.criterion;
 
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 
 import java.util.ArrayList;
@@ -65,6 +68,33 @@ public class RoleCommerceUserSegmentCriterionTypeImpl
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "roles");
+	}
+
+	@Override
+	public String getPreview(
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion, int length) {
+
+		if (length <= 0) {
+			return StringPool.BLANK;
+		}
+
+		List<String> roleNames = new ArrayList<>();
+
+		String[] roleIds = StringUtil.split(
+			commerceUserSegmentCriterion.getTypeSettings());
+
+		for (String roleId : roleIds) {
+			Role role = _roleLocalService.fetchRole(GetterUtil.getLong(roleId));
+
+			if (role != null) {
+				roleNames.add(role.getName());
+			}
+		}
+
+		String preview = StringUtil.merge(
+			roleNames, StringPool.COMMA_AND_SPACE);
+
+		return StringUtil.shorten(preview, length, StringPool.TRIPLE_PERIOD);
 	}
 
 	@Override

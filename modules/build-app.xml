@@ -838,7 +838,10 @@
 	</target>
 
 	<target depends="dist-module-artifacts" name="zip-app-sources">
-		<zip basedir="${dist.dir}/sources" destfile="${dist.dir}/${app.name}-${app.version}-sources.zip" />
+		<zip
+			basedir="${dist.dir}/sources"
+			destfile="${dist.dir}/${app.name}-${app.version}-sources.zip"
+		/>
 
 		<delete dir="${dist.dir}/sources" />
 	</target>

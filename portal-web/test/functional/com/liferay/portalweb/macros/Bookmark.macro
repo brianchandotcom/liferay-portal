@@ -38,6 +38,24 @@
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>
 
+	<command name="addCategoryCP">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${bookmarkName}" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Categorization" />
+		</execute>
+
+		<execute macro="AssetCategorization#addCategory">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="addCP">
 		<var name="bookmarkName" value="${bookmarkName}" />
 		<var name="bookmarkURL" value="${bookmarkURL}" />
@@ -262,6 +280,59 @@
 			<var name="bookmarkName" value="${bookmarkName}" />
 			<var name="bookmarkURL" value="${bookmarkURL}" />
 			<var name="key_bookmarkName" value="${bookmarkName}" />
+		</execute>
+	</command>
+
+	<command name="addWithTagCP">
+		<var name="bookmarkName" value="${bookmarkName}" />
+		<var name="bookmarkURL" value="${bookmarkURL}" />
+		<var name="tagNameList" value="${tagNameList}" />
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Bookmark">
+			<var name="key_menuItem" value="Bookmark" />
+		</execute>
+
+		<if>
+			<isset var="bookmarkName" />
+			<then>
+				<execute macro="PortletEntry#inputName">
+					<var name="name" value="${bookmarkName}" />
+				</execute>
+			</then>
+			<else>
+				<var name="bookmarkName" value="${bookmarkURL}" />
+			</else>
+		</if>
+
+		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURL}" />
+
+		<if>
+			<isset var="bookmarkDescription" />
+			<then>
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${bookmarkDescription}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panel" value="Categorization" />
+		</execute>
+
+		<for list="${tagNameList}" param="tagName">
+			<execute macro="AssetCategorization#addTag">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Bookmark#viewBookmark">
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+			<var name="key_assetName" value="${bookmarkName}" />
 		</execute>
 	</command>
 

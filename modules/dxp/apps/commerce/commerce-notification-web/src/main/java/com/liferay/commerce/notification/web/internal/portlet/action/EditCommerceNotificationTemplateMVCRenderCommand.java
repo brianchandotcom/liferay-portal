@@ -20,7 +20,7 @@ import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateExc
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateUserSegmentRelService;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
-import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationsDisplayContext;
+import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationTemplatesDisplayContext;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -71,9 +71,9 @@ public class EditCommerceNotificationTemplateMVCRenderCommand
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(renderResponse);
 
-			CommerceNotificationsDisplayContext
-				commerceNotificationsDisplayContext =
-					new CommerceNotificationsDisplayContext(
+			CommerceNotificationTemplatesDisplayContext
+				commerceNotificationTemplatesDisplayContext =
+					new CommerceNotificationTemplatesDisplayContext(
 						_commerceNotificationTemplateService,
 						_commerceNotificationTemplateUserSegmentRelService,
 						_commerceNotificationTypeRegistry,
@@ -82,7 +82,7 @@ public class EditCommerceNotificationTemplateMVCRenderCommand
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceNotificationsDisplayContext);
+				commerceNotificationTemplatesDisplayContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

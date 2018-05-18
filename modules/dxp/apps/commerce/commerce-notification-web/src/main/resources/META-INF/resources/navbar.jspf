@@ -1,0 +1,48 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-portlet:renderURL portletName="<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>" varImpl="viewNotificationTemplatesURL">
+	<portlet:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
+	<portlet:param name="notificationNavigationItem" value="view-all-notification-templates" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL portletName="<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>" varImpl="viewNotificationQueuesURL">
+	<portlet:param name="mvcRenderCommandName" value="viewCommerceNotificationQueues" />
+	<portlet:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
+	<portlet:param name="notificationNavigationItem" value="view-all-notification-queues" />
+</liferay-portlet:renderURL>
+
+<%
+List<NavigationItem> notificationNavigationItems = new ArrayList<>();
+
+NavigationItem notificationTemplatesNavigationItem = new NavigationItem();
+NavigationItem notificationQueuesNavigationItem = new NavigationItem();
+
+notificationTemplatesNavigationItem.setActive(notificationNavigationItem.equals("view-all-notification-templates"));
+notificationTemplatesNavigationItem.setHref(viewNotificationTemplatesURL.toString());
+notificationTemplatesNavigationItem.setLabel(LanguageUtil.get(resourceBundle, "notification-templates"));
+
+notificationQueuesNavigationItem.setActive(notificationNavigationItem.equals("view-all-notification-queues"));
+notificationQueuesNavigationItem.setHref(viewNotificationQueuesURL.toString());
+notificationQueuesNavigationItem.setLabel(LanguageUtil.get(resourceBundle, "notification-queues"));
+
+notificationNavigationItems.add(notificationTemplatesNavigationItem);
+notificationNavigationItems.add(notificationQueuesNavigationItem);
+%>
+
+<clay:navigation-bar
+	items="<%= notificationNavigationItems %>"
+/>

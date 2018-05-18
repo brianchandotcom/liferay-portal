@@ -17,8 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceNotificationsDisplayContext commerceNotificationsDisplayContext = (CommerceNotificationsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+String notificationNavigationItem = ParamUtil.getString(request, "notificationNavigationItem", "view-all-notification-templates");
+
+CommerceNotificationTemplatesDisplayContext commerceNotificationTemplatesDisplayContext = (CommerceNotificationTemplatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+PortletURL portletURL = commerceNotificationTemplatesDisplayContext.getPortletURL();
+
+portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
 %>
+
+<%@ include file="/navbar.jspf" %>
 
 <liferay-frontend:management-bar
 	searchContainerId="commerceNotificationTemplates"
@@ -26,25 +34,25 @@ CommerceNotificationsDisplayContext commerceNotificationsDisplayContext = (Comme
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= commerceNotificationsDisplayContext.getPortletURL() %>"
+			portletURL="<%= portletURL %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceNotificationsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceNotificationsDisplayContext.getOrderByType() %>"
+			orderByCol="<%= commerceNotificationTemplatesDisplayContext.getOrderByCol() %>"
+			orderByType="<%= commerceNotificationTemplatesDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"create-date"} %>'
-			portletURL="<%= commerceNotificationsDisplayContext.getPortletURL() %>"
+			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= commerceNotificationsDisplayContext.getPortletURL() %>"
+			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="list"
 		/>
 
-		<c:if test="<%= commerceNotificationsDisplayContext.isShowAddButton() %>">
+		<c:if test="<%= commerceNotificationTemplatesDisplayContext.isShowAddButton() %>">
 			<portlet:renderURL var="addCommerceNotificationTemplateURL">
 				<portlet:param name="mvcRenderCommandName" value="editCommerceNotificationTemplate" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -65,7 +73,7 @@ CommerceNotificationsDisplayContext commerceNotificationsDisplayContext = (Comme
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
 		id="commerceNotificationTemplates"
-		searchContainer="<%= commerceNotificationsDisplayContext.getSearchContainer() %>"
+		searchContainer="<%= commerceNotificationTemplatesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.commerce.notification.model.CommerceNotificationTemplate"

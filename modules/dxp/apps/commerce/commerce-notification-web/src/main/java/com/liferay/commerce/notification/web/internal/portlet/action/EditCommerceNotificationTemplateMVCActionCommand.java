@@ -138,7 +138,7 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String cc = ParamUtil.getString(actionRequest, "cc");
-		String ccn = ParamUtil.getString(actionRequest, "ccn");
+		String bcc = ParamUtil.getString(actionRequest, "bcc");
 		String type = ParamUtil.getString(actionRequest, "type");
 		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
 		Map<Locale, String> subjectMap = LocalizationUtil.getLocalizationMap(
@@ -155,7 +155,7 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 			commerceNotificationTemplate =
 				_commerceNotificationTemplateService.
 					addCommerceNotificationTemplate(
-						name, description, cc, ccn, type, enabled, subjectMap,
+						name, description, cc, bcc, type, enabled, subjectMap,
 						bodyMap, serviceContext);
 		}
 		else {
@@ -163,7 +163,7 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 				_commerceNotificationTemplateService.
 					updateCommerceNotificationTemplate(
 						commerceNotificationTemplateId, name, description, cc,
-						ccn, type, enabled, subjectMap, bodyMap,
+						bcc, type, enabled, subjectMap, bodyMap,
 						serviceContext);
 		}
 

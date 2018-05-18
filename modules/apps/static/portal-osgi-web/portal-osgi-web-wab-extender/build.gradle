@@ -35,12 +35,3 @@ deployDependencies {
 		include "org.eclipse.equinox.http.servlet-*.jar"
 	}
 }
-
-repositories {
-	ivy {
-		url "http://download.eclipse.org/eclipse/updates/4.8milestones/S-4.8M7-201805092000/plugins/"
-		layout "pattern", {
-			artifact "[artifact]_[revision](-[classifier])(.[ext])"
-		}
-	}
-}

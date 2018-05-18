@@ -88,8 +88,8 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 							<div class="card-row">
 								<div class="autofit-col">
 									<span class="sticker">
-										<svg aria-hidden="true" class="lexicon-icon lexicon-icon-folder">
-											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#folder" />
+										<svg aria-hidden="true" class="lexicon-icon lexicon-icon-page">
+											<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#page" />
 										</svg>
 									</span>
 								</div>

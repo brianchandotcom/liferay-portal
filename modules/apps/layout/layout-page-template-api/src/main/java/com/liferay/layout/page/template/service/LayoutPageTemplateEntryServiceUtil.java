@@ -44,46 +44,31 @@ public class LayoutPageTemplateEntryServiceUtil {
 	 */
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, long[] fragmentEntryIds, int status,
+		int type, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPageTemplateEntry(groupId,
-			layoutPageTemplateCollectionId, name, type, fragmentEntryIds,
-			status, serviceContext);
+			layoutPageTemplateCollectionId, name, type, status, serviceContext);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, long[] fragmentEntryIds,
+		int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPageTemplateEntry(groupId,
-			layoutPageTemplateCollectionId, name, type, fragmentEntryIds,
-			serviceContext);
+			layoutPageTemplateCollectionId, name, type, serviceContext);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		long[] fragmentEntryIds, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutPageTemplateEntry(groupId,
-			layoutPageTemplateCollectionId, name, fragmentEntryIds, status,
-			serviceContext);
-	}
-
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		long[] fragmentEntryIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayoutPageTemplateEntry(groupId,
-			layoutPageTemplateCollectionId, name, fragmentEntryIds,
-			serviceContext);
+			layoutPageTemplateCollectionId, name, serviceContext);
 	}
 
 	public static void deleteLayoutPageTemplateEntries(

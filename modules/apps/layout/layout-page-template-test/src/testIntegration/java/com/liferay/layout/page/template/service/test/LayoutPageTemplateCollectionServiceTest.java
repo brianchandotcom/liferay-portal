@@ -185,7 +185,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 		LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 			_group.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			"Layout Page Template Entry", null, serviceContext);
+			"Layout Page Template Entry", serviceContext);
 
 		LayoutPageTemplateCollectionServiceUtil.
 			deleteLayoutPageTemplateCollection(

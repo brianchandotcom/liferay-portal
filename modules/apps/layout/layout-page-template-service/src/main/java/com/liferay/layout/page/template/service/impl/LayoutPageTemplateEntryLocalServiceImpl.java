@@ -22,7 +22,6 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameExc
 import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -46,7 +45,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long[] fragmentEntryIds, int status,
+			String name, int type, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, name, type, 0,
+			status, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			String name, int type, long layoutPrototypeId, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -74,21 +84,15 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setName(name);
 		layoutPageTemplateEntry.setType(type);
+		layoutPageTemplateEntry.setHtmlPreviewEntryId(0);
+		layoutPageTemplateEntry.setDefaultTemplate(false);
+		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 		layoutPageTemplateEntry.setStatus(status);
 		layoutPageTemplateEntry.setStatusByUserId(userId);
 		layoutPageTemplateEntry.setStatusByUserName(user.getFullName());
 		layoutPageTemplateEntry.setStatusDate(new Date());
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
-
-		// Fragment entry instance links
-
-		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
-			userId, layoutPageTemplateEntry.getGroupId(),
-			classNameLocalService.getClassNameId(
-				LayoutPageTemplateEntry.class.getName()),
-			layoutPageTemplateEntryId, fragmentEntryIds, StringPool.BLANK,
-			serviceContext);
 
 		// Resources
 
@@ -101,37 +105,23 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, int type, long[] fragmentEntryIds,
-			ServiceContext serviceContext)
+			String name, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name, type,
-			fragmentEntryIds, WorkflowConstants.STATUS_DRAFT, serviceContext);
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	@Override
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, long[] fragmentEntryIds, int status,
-			ServiceContext serviceContext)
+			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addLayoutPageTemplateEntry(
 			userId, groupId, layoutPageTemplateCollectionId, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, fragmentEntryIds,
-			status, serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			long userId, long groupId, long layoutPageTemplateCollectionId,
-			String name, long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateEntry(
-			userId, groupId, layoutPageTemplateCollectionId, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, fragmentEntryIds,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
@@ -182,6 +172,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			getLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
 		return deleteLayoutPageTemplateEntry(layoutPageTemplateEntry);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
+		long groupId, long layoutPrototypeId) {
+
+		return layoutPageTemplateEntryPersistence.fetchByG_LP_First(
+			groupId, layoutPrototypeId, null);
 	}
 
 	@Override

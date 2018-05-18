@@ -75,7 +75,7 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					serviceContext.getScopeGroupId(),
-					layoutPageTemplateCollectionId, name, type, null,
+					layoutPageTemplateCollectionId, name, type,
 					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			if (SessionErrors.contains(

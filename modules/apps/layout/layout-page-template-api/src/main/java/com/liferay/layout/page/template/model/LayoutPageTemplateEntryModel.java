@@ -314,6 +314,20 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	public void setDefaultTemplate(boolean defaultTemplate);
 
 	/**
+	 * Returns the layout prototype ID of this layout page template entry.
+	 *
+	 * @return the layout prototype ID of this layout page template entry
+	 */
+	public long getLayoutPrototypeId();
+
+	/**
+	 * Sets the layout prototype ID of this layout page template entry.
+	 *
+	 * @param layoutPrototypeId the layout prototype ID of this layout page template entry
+	 */
+	public void setLayoutPrototypeId(long layoutPrototypeId);
+
+	/**
 	 * Returns the status of this layout page template entry.
 	 *
 	 * @return the status of this layout page template entry

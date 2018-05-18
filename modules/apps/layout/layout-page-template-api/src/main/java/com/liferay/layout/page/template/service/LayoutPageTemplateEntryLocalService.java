@@ -74,23 +74,21 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, long[] fragmentEntryIds, int status,
+		int type, int status, ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
+		long groupId, long layoutPageTemplateCollectionId, String name,
+		int type, long layoutPrototypeId, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type, long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException;
+		int type, ServiceContext serviceContext) throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		long[] fragmentEntryIds, int status, ServiceContext serviceContext)
-		throws PortalException;
-
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		long[] fragmentEntryIds, ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new layout page template entry with the primary key. Does not add the layout page template entry to the database.
@@ -190,6 +188,10 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
+		long groupId, long layoutPrototypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(

@@ -753,5 +753,6 @@
 		<exception>TemplateSmallImageContent</exception>
 		<exception>TemplateSmallImageName</exception>
 		<exception>TemplateSmallImageSize</exception>
+		<exception>RequireFormInstance</exception>
 	</exceptions>
 </service-builder>

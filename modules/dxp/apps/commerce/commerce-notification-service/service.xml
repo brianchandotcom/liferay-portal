@@ -4,6 +4,100 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.notification">
 	<author>Alessio Antonio Rendina</author>
 	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceNotificationAttachment" remote-service="false" table="CNotificationAttachment" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="CNotificationAttachmentId" name="commerceNotificationAttachmentId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column db-name="CNotificationQueueEntryId" name="commerceNotificationQueueEntryId" type="long" />
+		<column name="fileEntryId" type="long" />
+		<column name="deleteOnSend" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceNotificationQueueEntryId" return-type="Collection">
+			<finder-column name="commerceNotificationQueueEntryId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
+	</entity>
+	<entity local-service="true" name="CommerceNotificationQueueEntry" remote-service="true" uuid="false">
+
+		<!-- PK fields -->
+
+		<column db-name="CNotificationQueueEntryId" name="commerceNotificationQueueEntryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceNotificationTemplateId" type="long" />
+		<column name="from" type="String" />
+		<column name="fromName" type="String" />
+		<column name="to" type="String" />
+		<column name="toName" type="String" />
+		<column name="cc" type="String" />
+		<column name="bcc" type="String" />
+		<column name="subject" type="String" />
+		<column name="body" type="String" />
+		<column name="priority" type="double" />
+		<column name="sent" type="boolean" />
+		<column name="sentDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CommerceNotificationTemplateId" return-type="Collection">
+			<finder-column name="commerceNotificationTemplateId" />
+		</finder>
+		<finder name="Sent" return-type="Collection">
+			<finder-column name="sent" />
+		</finder>
+		<finder name="LtS" return-type="Collection">
+			<finder-column comparator="&lt;" name="sentDate" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceNotificationTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -26,8 +120,10 @@
 
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="from" type="String" />
+		<column name="fromName" type="String" />
 		<column name="cc" type="String" />
-		<column name="ccn" type="String" />
+		<column name="bcc" type="String" />
 		<column name="type" type="String" />
 		<column name="enabled" type="boolean" />
 		<column localized="true" name="subject" type="String" />
@@ -43,6 +139,11 @@
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_T_E" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
+			<finder-column name="enabled" />
 		</finder>
 
 		<!-- References -->
@@ -70,7 +171,7 @@
 		<!-- Other fields -->
 
 		<column name="commerceNotificationTemplateId" type="long" />
-		<column name="commerceUserSegmentEntryId" type="long" />
+		<column accessor="true" name="commerceUserSegmentEntryId" type="long" />
 
 		<!-- Order -->
 
@@ -92,6 +193,8 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>CommerceNotificationTemplateFrom</exception>
+		<exception>CommerceNotificationTemplateFromName</exception>
 		<exception>CommerceNotificationTemplateName</exception>
 		<exception>CommerceNotificationTemplateType</exception>
 	</exceptions>

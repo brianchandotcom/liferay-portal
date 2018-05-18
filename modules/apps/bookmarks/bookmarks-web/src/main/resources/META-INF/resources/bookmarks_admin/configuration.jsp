@@ -180,7 +180,7 @@ catch (NoSuchFolderException nsfe) {
 				</liferay-frontend:fieldset-group>
 
 				<aui:script>
-					var <portlet:namespace />selectFolderButton = document.querySelector('#<portlet:namespace />selectFolderButton');
+					var <portlet:namespace />selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
 
 					if (<portlet:namespace />selectFolderButton) {
 						<portlet:namespace />selectFolderButton.addEventListener(
@@ -266,7 +266,7 @@ catch (NoSuchFolderException nsfe) {
 	function <portlet:namespace />saveConfiguration() {
 		var Util = Liferay.Util;
 
-		var form = document.querySelector('#<portlet:namespace />fm');
+		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
 			var currentFolderColumns = form.querySelector('#<portlet:namespace />currentFolderColumns');

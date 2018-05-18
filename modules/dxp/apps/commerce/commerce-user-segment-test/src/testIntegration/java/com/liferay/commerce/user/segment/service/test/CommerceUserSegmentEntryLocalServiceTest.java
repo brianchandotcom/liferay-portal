@@ -70,8 +70,8 @@ public class CommerceUserSegmentEntryLocalServiceTest {
 		);
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
-				_group.getGroupId(), true);
+			CommerceUserSegmentTestUtil.addSystemCommerceUserSegmentEntry(
+				_group.getGroupId());
 
 		_commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(
 			commerceUserSegmentEntry.getCommerceUserSegmentEntryId());

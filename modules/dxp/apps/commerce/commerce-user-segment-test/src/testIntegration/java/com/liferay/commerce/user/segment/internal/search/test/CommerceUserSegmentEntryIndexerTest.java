@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -80,8 +79,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
-				groupId, RandomTestUtil.randomBoolean());
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(groupId);
 
 		Hits hits = _search();
 
@@ -111,8 +109,7 @@ public class CommerceUserSegmentEntryIndexerTest {
 		long groupId = _group.getGroupId();
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(
-				groupId, false);
+			CommerceUserSegmentTestUtil.addCommerceUserSegmentEntry(groupId);
 
 		_commerceUserSegmentEntryLocalService.deleteCommerceUserSegmentEntry(
 			commerceUserSegmentEntry.getCommerceUserSegmentEntryId());

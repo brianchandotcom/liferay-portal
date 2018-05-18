@@ -22,12 +22,15 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.site.apio.internal.architect.model.GroupWrapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,14 +45,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class WebSiteCollectionResource
-	implements CollectionResource<Group, Long, WebSiteIdentifier> {
+	implements CollectionResource<GroupWrapper, Long, WebSiteIdentifier> {
 
 	@Override
-	public CollectionRoutes<Group, Long> collectionRoutes(
-		CollectionRoutes.Builder<Group, Long> builder) {
+	public CollectionRoutes<GroupWrapper, Long> collectionRoutes(
+		CollectionRoutes.Builder<GroupWrapper, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class
+			this::_getPageItems, ThemeDisplay.class
 		).build();
 	}
 
@@ -59,17 +62,17 @@ public class WebSiteCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<Group, Long> itemRoutes(
-		ItemRoutes.Builder<Group, Long> builder) {
+	public ItemRoutes<GroupWrapper, Long> itemRoutes(
+		ItemRoutes.Builder<GroupWrapper, Long> builder) {
 
 		return builder.addGetter(
-			_groupService::getGroup
+			this::_getGroupWrapper, ThemeDisplay.class
 		).build();
 	}
 
 	@Override
-	public Representor<Group> representor(
-		Representor.Builder<Group, Long> builder) {
+	public Representor<GroupWrapper> representor(
+		Representor.Builder<GroupWrapper, Long> builder) {
 
 		return builder.types(
 			"WebSite"
@@ -95,17 +98,33 @@ public class WebSiteCollectionResource
 		).build();
 	}
 
-	private PageItems<Group> _getPageItems(
-			Pagination pagination, Company company)
+	private GroupWrapper _getGroupWrapper(
+			Long groupId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<Group> groups = _groupService.getGroups(
-			company.getCompanyId(), 0, true, pagination.getStartPosition(),
-			pagination.getEndPosition());
-		int count = _groupService.getGroupsCount(
-			company.getCompanyId(), 0, true);
+		return new GroupWrapper(_groupService.getGroup(groupId), themeDisplay);
+	}
 
-		return new PageItems<>(groups, count);
+	private PageItems<GroupWrapper> _getPageItems(
+			Pagination pagination, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		List<GroupWrapper> groupWrappers = Stream.of(
+			_groupService.getGroups(
+				themeDisplay.getCompanyId(), 0, true,
+				pagination.getStartPosition(), pagination.getEndPosition())
+		).flatMap(
+			List::stream
+		).map(
+			group ->
+				new GroupWrapper(group, themeDisplay)
+		).collect(
+			Collectors.toList()
+		);
+		int count = _groupService.getGroupsCount(
+			themeDisplay.getCompanyId(), 0, true);
+
+		return new PageItems<>(groupWrappers, count);
 	}
 
 	private Long _getParentGroupId(Group group) {

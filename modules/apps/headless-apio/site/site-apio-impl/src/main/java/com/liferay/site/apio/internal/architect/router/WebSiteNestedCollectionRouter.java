@@ -19,12 +19,15 @@ import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.site.apio.internal.architect.model.GroupWrapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,29 +43,39 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class WebSiteNestedCollectionRouter implements
-	NestedCollectionRouter<Group, Long, WebSiteIdentifier, Long,
-		WebSiteIdentifier> {
+	NestedCollectionRouter
+		<GroupWrapper, Long, WebSiteIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Group, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Group, Long, Long> builder) {
+	public NestedCollectionRoutes<GroupWrapper, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<GroupWrapper, Long, Long> builder) {
 
 		return builder.addGetter(
-			this::_getPageItems, Company.class
+			this::_getPageItems, ThemeDisplay.class
 		).build();
 	}
 
-	private PageItems<Group> _getPageItems(
-			Pagination pagination, long parentGroupId, Company company)
+	private PageItems<GroupWrapper> _getPageItems(
+			Pagination pagination, long parentGroupId,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<Group> groups = _groupService.getGroups(
-			company.getCompanyId(), parentGroupId, true,
-			pagination.getStartPosition(), pagination.getEndPosition());
+		List<GroupWrapper> groupWrappers = Stream.of(
+			_groupService.getGroups(
+				themeDisplay.getCompanyId(), parentGroupId, true,
+				pagination.getStartPosition(), pagination.getEndPosition())
+		).flatMap(
+			List::stream
+		).map(
+			group ->
+				new GroupWrapper(group, themeDisplay)
+		).collect(
+			Collectors.toList()
+		);
 		int count = _groupService.getGroupsCount(
-			company.getCompanyId(), parentGroupId, true);
+			themeDisplay.getCompanyId(), parentGroupId, true);
 
-		return new PageItems<>(groups, count);
+		return new PageItems<>(groupWrappers, count);
 	}
 
 	@Reference

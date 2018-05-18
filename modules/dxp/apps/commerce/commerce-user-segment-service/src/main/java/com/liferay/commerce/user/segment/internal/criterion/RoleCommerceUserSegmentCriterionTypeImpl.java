@@ -129,8 +129,9 @@ public class RoleCommerceUserSegmentCriterionTypeImpl
 			organizationId);
 
 		if (organization != null) {
-			userGroupRoles.addAll(_userGroupRoleLocalService.getUserGroupRoles(
-				user.getUserId(), organization.getGroupId()));
+			userGroupRoles.addAll(
+				_userGroupRoleLocalService.getUserGroupRoles(
+					user.getUserId(), organization.getGroupId()));
 		}
 
 		for (long groupId : groupIds) {

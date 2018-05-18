@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.notifications.ChannelListener;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Edward Han
@@ -30,21 +32,17 @@ import java.util.List;
 public class SynchronousPollerChannelListener implements ChannelListener {
 
 	@Override
-	public synchronized void channelListenerRemoved(long channelId) {
-		_complete = true;
-
-		notify();
+	public void channelListenerRemoved(long channelId) {
+		_countDownLatch.countDown();
 	}
 
-	public synchronized String getNotificationEvents(
+	public String getNotificationEvents(
 			long companyId, long userId,
 			JSONObject pollerResponseHeaderJSONObject, long timeout)
 		throws ChannelException {
 
 		try {
-			if (!_complete) {
-				wait(timeout);
-			}
+			_countDownLatch.await(timeout, TimeUnit.MILLISECONDS);
 		}
 		catch (InterruptedException ie) {
 		}
@@ -65,12 +63,10 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 	}
 
 	@Override
-	public synchronized void notificationEventsAvailable(long channelId) {
-		_complete = true;
-
-		notify();
+	public void notificationEventsAvailable(long channelId) {
+		_countDownLatch.countDown();
 	}
 
-	private boolean _complete;
+	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 
 }

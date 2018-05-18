@@ -93,7 +93,7 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 			return spi;
 		}
 		catch (RemoteException re) {
-			throw new ProcessException("Failed to export SPI as RMI stub.", re);
+			throw new ProcessException("Failed to export SPI as RMI stub", re);
 		}
 		catch (IOException ioe) {
 			throw new ProcessException(ioe);

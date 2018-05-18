@@ -39,7 +39,7 @@ public class NoticeableThreadPoolExecutor
 
 		if (corePoolSize < 1) {
 			throw new IllegalArgumentException(
-				"To ensure FIFO, core pool size must be 1 or greater.");
+				"To ensure FIFO, core pool size must be 1 or greater");
 		}
 
 		AtomicInteger terminationCounter = new AtomicInteger(2);
@@ -202,7 +202,7 @@ public class NoticeableThreadPoolExecutor
 	public void setCorePoolSize(int corePoolSize) {
 		if (corePoolSize < 1) {
 			throw new IllegalArgumentException(
-				"To ensure FIFO, core pool size must be 1 or greater.");
+				"To ensure FIFO, core pool size must be 1 or greater");
 		}
 
 		_workerThreadPoolExecutor.setCorePoolSize(corePoolSize);

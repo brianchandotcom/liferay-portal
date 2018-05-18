@@ -35,7 +35,7 @@ public class PortalExecutorConfig implements Serializable {
 
 		if (corePoolSize < 1) {
 			throw new IllegalArgumentException(
-				"To ensure FIFO, core pool size must be 1 or greater.");
+				"To ensure FIFO, core pool size must be 1 or greater");
 		}
 
 		_name = name;

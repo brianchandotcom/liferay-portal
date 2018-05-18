@@ -301,7 +301,7 @@ public class GitUtil {
 
 			if (errorMessage.contains("Cannot run program")) {
 				throw new GitException(
-					"Add Git to your PATH system variable first.");
+					"Add Git to your PATH system variable first");
 			}
 
 			throw ioe;

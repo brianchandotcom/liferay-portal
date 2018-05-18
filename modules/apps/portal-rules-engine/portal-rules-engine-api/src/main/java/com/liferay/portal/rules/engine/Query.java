@@ -30,11 +30,11 @@ public class Query implements Serializable {
 
 	public static Query createCustomQuery(String identifier, String queryName) {
 		if (Validator.isNull(identifier)) {
-			throw new IllegalArgumentException("Query idenfier is null.");
+			throw new IllegalArgumentException("Query idenfier is null");
 		}
 
 		if (Validator.isNull(queryName)) {
-			throw new IllegalArgumentException("Query string is null.");
+			throw new IllegalArgumentException("Query string is null");
 		}
 
 		return new Query(identifier, QueryType.CUSTOM, queryName);

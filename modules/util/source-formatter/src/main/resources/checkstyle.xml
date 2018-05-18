@@ -129,6 +129,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.EnumConstantOrderCheck">
 			<message key="enum.constant.incorrect.order" value="Enum constant ''{0}'' should come after constant ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ExceptionMessageCheck">
+			<message key="message.incorrect" value="Incorrect exception message" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FilterStringWhitespaceCheck">
 			<message key="whitespace.incorrect" value="The value of ''{0}'' should not have spaces around ''='', see LPS-70526" />
 		</module>

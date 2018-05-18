@@ -73,7 +73,7 @@ public class NoticeableThreadPoolExecutorTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"To ensure FIFO, core pool size must be 1 or greater.",
+				"To ensure FIFO, core pool size must be 1 or greater",
 				iae.getMessage());
 		}
 
@@ -138,7 +138,7 @@ public class NoticeableThreadPoolExecutorTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"To ensure FIFO, core pool size must be 1 or greater.",
+				"To ensure FIFO, core pool size must be 1 or greater",
 				iae.getMessage());
 		}
 

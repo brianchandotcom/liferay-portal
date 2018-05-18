@@ -86,10 +86,10 @@ public class LayoutPageTemplateEntryServiceUtil {
 			serviceContext);
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateEntry> deleteLayoutPageTemplateEntries(
-		long[] layoutPageTemplateEntryIds) {
-		return getService()
-				   .deleteLayoutPageTemplateEntries(layoutPageTemplateEntryIds);
+	public static void deleteLayoutPageTemplateEntries(
+		long[] layoutPageTemplateEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLayoutPageTemplateEntries(layoutPageTemplateEntryIds);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry deleteLayoutPageTemplateEntry(

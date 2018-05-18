@@ -12,12 +12,15 @@
 		<!-- Other fields -->
 
 		<column name="assetEntryId" type="long" />
-		<column name="layoutId" type="long" />
+		<column name="layoutPageTemplateEntryId" type="long" />
 
 		<!-- Finder methods -->
 
 		<finder name="AssetEntryId" return-type="AssetDisplayPageEntry" unique="true">
 			<finder-column name="assetEntryId" />
+		</finder>
+		<finder name="LayoutPageTemplateEntryId" return-type="Collection">
+			<finder-column name="layoutPageTemplateEntryId" />
 		</finder>
 	</entity>
 </service-builder>

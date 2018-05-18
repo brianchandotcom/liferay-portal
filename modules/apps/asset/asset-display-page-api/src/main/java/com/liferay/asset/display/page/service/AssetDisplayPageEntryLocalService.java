@@ -72,7 +72,7 @@ public interface AssetDisplayPageEntryLocalService extends BaseLocalService,
 		AssetDisplayPageEntry assetDisplayPageEntry);
 
 	public AssetDisplayPageEntry addAssetDisplayPageEntry(long assetEntryId,
-		long layoutId);
+		long layoutPageTemplateEntryId);
 
 	/**
 	* Creates a new asset display page entry with the primary key. Does not add the asset display page entry to the database.
@@ -207,6 +207,10 @@ public interface AssetDisplayPageEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetDisplayPageEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+		long layoutPageTemplateEntryId);
 
 	/**
 	* Returns the asset display page entry with the primary key.

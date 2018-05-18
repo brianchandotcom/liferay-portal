@@ -109,7 +109,8 @@ public class EditArticleDisplayPageDisplayContext {
 					assetEntry.getEntryId());
 
 		if (assetDisplayPageEntry != null) {
-			_assetDisplayPageId = assetDisplayPageEntry.getLayoutId();
+			_assetDisplayPageId =
+				assetDisplayPageEntry.getLayoutPageTemplateEntryId();
 		}
 
 		return _assetDisplayPageId;

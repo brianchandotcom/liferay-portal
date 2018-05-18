@@ -75,7 +75,7 @@
 		<column name="layoutPageTemplateCollectionId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classTypeId" type="long" />
-		<column name="name" type="String" />
+		<column accessor="true" name="name" type="String" />
 		<column name="type" type="int" />
 		<column name="htmlPreviewEntryId" type="long" />
 		<column name="defaultTemplate" type="boolean" />
@@ -194,5 +194,6 @@
 		<exception>DuplicateLayoutPageTemplateEntry</exception>
 		<exception>LayoutPageTemplateCollectionName</exception>
 		<exception>LayoutPageTemplateEntryName</exception>
+		<exception>RequiredLayoutPageTemplateEntry</exception>
 	</exceptions>
 </service-builder>

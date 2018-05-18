@@ -63,17 +63,17 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "assetDisplayPageEntryId", Types.BIGINT },
 			{ "assetEntryId", Types.BIGINT },
-			{ "layoutId", Types.BIGINT }
+			{ "layoutPageTemplateEntryId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("assetDisplayPageEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("layoutPageTemplateEntryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetDisplayPageEntry (assetDisplayPageEntryId LONG not null primary key,assetEntryId LONG,layoutId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table AssetDisplayPageEntry (assetDisplayPageEntryId LONG not null primary key,assetEntryId LONG,layoutPageTemplateEntryId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AssetDisplayPageEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetDisplayPageEntry.assetDisplayPageEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetDisplayPageEntry.assetDisplayPageEntryId ASC";
@@ -90,7 +90,8 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 				"value.object.column.bitmask.enabled.com.liferay.asset.display.page.model.AssetDisplayPageEntry"),
 			true);
 	public static final long ASSETENTRYID_COLUMN_BITMASK = 1L;
-	public static final long ASSETDISPLAYPAGEENTRYID_COLUMN_BITMASK = 2L;
+	public static final long LAYOUTPAGETEMPLATEENTRYID_COLUMN_BITMASK = 2L;
+	public static final long ASSETDISPLAYPAGEENTRYID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.asset.display.page.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.asset.display.page.model.AssetDisplayPageEntry"));
 
@@ -133,7 +134,8 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 		attributes.put("assetDisplayPageEntryId", getAssetDisplayPageEntryId());
 		attributes.put("assetEntryId", getAssetEntryId());
-		attributes.put("layoutId", getLayoutId());
+		attributes.put("layoutPageTemplateEntryId",
+			getLayoutPageTemplateEntryId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -156,10 +158,11 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 			setAssetEntryId(assetEntryId);
 		}
 
-		Long layoutId = (Long)attributes.get("layoutId");
+		Long layoutPageTemplateEntryId = (Long)attributes.get(
+				"layoutPageTemplateEntryId");
 
-		if (layoutId != null) {
-			setLayoutId(layoutId);
+		if (layoutPageTemplateEntryId != null) {
+			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 		}
 	}
 
@@ -196,13 +199,25 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 	}
 
 	@Override
-	public long getLayoutId() {
-		return _layoutId;
+	public long getLayoutPageTemplateEntryId() {
+		return _layoutPageTemplateEntryId;
 	}
 
 	@Override
-	public void setLayoutId(long layoutId) {
-		_layoutId = layoutId;
+	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
+		_columnBitmask |= LAYOUTPAGETEMPLATEENTRYID_COLUMN_BITMASK;
+
+		if (!_setOriginalLayoutPageTemplateEntryId) {
+			_setOriginalLayoutPageTemplateEntryId = true;
+
+			_originalLayoutPageTemplateEntryId = _layoutPageTemplateEntryId;
+		}
+
+		_layoutPageTemplateEntryId = layoutPageTemplateEntryId;
+	}
+
+	public long getOriginalLayoutPageTemplateEntryId() {
+		return _originalLayoutPageTemplateEntryId;
 	}
 
 	public long getColumnBitmask() {
@@ -238,7 +253,7 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 		assetDisplayPageEntryImpl.setAssetDisplayPageEntryId(getAssetDisplayPageEntryId());
 		assetDisplayPageEntryImpl.setAssetEntryId(getAssetEntryId());
-		assetDisplayPageEntryImpl.setLayoutId(getLayoutId());
+		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(getLayoutPageTemplateEntryId());
 
 		assetDisplayPageEntryImpl.resetOriginalValues();
 
@@ -305,6 +320,10 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 		assetDisplayPageEntryModelImpl._setOriginalAssetEntryId = false;
 
+		assetDisplayPageEntryModelImpl._originalLayoutPageTemplateEntryId = assetDisplayPageEntryModelImpl._layoutPageTemplateEntryId;
+
+		assetDisplayPageEntryModelImpl._setOriginalLayoutPageTemplateEntryId = false;
+
 		assetDisplayPageEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -316,7 +335,7 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 
 		assetDisplayPageEntryCacheModel.assetEntryId = getAssetEntryId();
 
-		assetDisplayPageEntryCacheModel.layoutId = getLayoutId();
+		assetDisplayPageEntryCacheModel.layoutPageTemplateEntryId = getLayoutPageTemplateEntryId();
 
 		return assetDisplayPageEntryCacheModel;
 	}
@@ -329,8 +348,8 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 		sb.append(getAssetDisplayPageEntryId());
 		sb.append(", assetEntryId=");
 		sb.append(getAssetEntryId());
-		sb.append(", layoutId=");
-		sb.append(getLayoutId());
+		sb.append(", layoutPageTemplateEntryId=");
+		sb.append(getLayoutPageTemplateEntryId());
 		sb.append("}");
 
 		return sb.toString();
@@ -353,8 +372,8 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 		sb.append(getAssetEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>layoutId</column-name><column-value><![CDATA[");
-		sb.append(getLayoutId());
+			"<column><column-name>layoutPageTemplateEntryId</column-name><column-value><![CDATA[");
+		sb.append(getLayoutPageTemplateEntryId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -370,7 +389,9 @@ public class AssetDisplayPageEntryModelImpl extends BaseModelImpl<AssetDisplayPa
 	private long _assetEntryId;
 	private long _originalAssetEntryId;
 	private boolean _setOriginalAssetEntryId;
-	private long _layoutId;
+	private long _layoutPageTemplateEntryId;
+	private long _originalLayoutPageTemplateEntryId;
+	private boolean _setOriginalLayoutPageTemplateEntryId;
 	private long _columnBitmask;
 	private AssetDisplayPageEntry _escapedModel;
 }

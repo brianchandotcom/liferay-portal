@@ -13,6 +13,12 @@
 		</if>
 	</command>
 
+	<command name="_gotoTab">
+		<execute function="AssertClick" locator1="Fragment#FRAGMENT_SIDEBAR_TAB" value1="${tabName}">
+			<var name="key_tabName" value="${tabName}" />
+		</execute>
+	</command>
+
 	<command name="add">
 		<execute macro="LexiconEntry#gotoAddMenuItem">
 			<var name="menuItem" value="Content Page Template" />
@@ -34,6 +40,14 @@
 		</execute>
 
 		<execute macro="Button#clickSave" />
+	</command>
+
+	<command name="assertAssetTypeUnselectable">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Mapping" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Button#SELECT" />
 	</command>
 
 	<command name="editFragmentImage">
@@ -139,6 +153,10 @@
 	</command>
 
 	<command name="selectFragment">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Available" />
+		</execute>
+
 		<execute macro="LayoutPageTemplates#expandFragmentCollection">
 			<var name="collectionName" value="${collectionName}" />
 		</execute>
@@ -150,6 +168,37 @@
 		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
+	</command>
+
+	<command name="selectAssetType">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Mapping" />
+		</execute>
+
+		<execute macro="Button#clickSelect" />
+
+		<if>
+			<contains string="${assetType}" substring="{assetType}" />
+			<then>
+				<var name="${assetType}" value="Web Content Article" />
+				<if>
+					<contains string="${subType}" substring="{subType}" />
+					<then>
+						<var name="${subType}" value="Basic Web Content" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${assetType}">
+			<var name="key_fieldLabel" value="Asset Type" />
+		</execute>
+
+		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${subType}">
+			<var name="key_fieldLabel" value="Subtype" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="viewAutoSaveMessage">

@@ -49,6 +49,16 @@
 	<td>//ul[contains(@class,'nav')]//div[contains(@id,'fragment-collection')]//button[@data-fragment-entry-name='${key_fragmentName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_TAB</td>
+	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_TAB_ACTIVE</td>
+	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')][contains(@class,'active')]</td>
+	<td></td>
+</tr>
 <!--PAGE_TEMPLATE-->
 <tr>
 	<td>PAGE_TEMPLATE_AUTOSAVE_MESSAGE</td>

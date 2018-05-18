@@ -117,15 +117,18 @@ Role role = usersDisplayContext.getRole();
 <aui:script use="liferay-item-selector-dialog">
 	var form = $(document.<portlet:namespace />fm);
 
-	window.<portlet:namespace />deleteSelectedUsers = function() {
+	var deleteSelectedUsers = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 			submitForm(form);
 		}
-	}
+	};
+
+	var removeUserSiteRole,
+		selectSiteRole;
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ASSIGN_USER_ROLES) %>">
 		<c:if test="<%= role != null %>">
-			window.<portlet:namespace />removeUserSiteRole = function() {
+			removeUserSiteRole = function() {
 				if (confirm('<liferay-ui:message arguments="<%= role.getTitle(themeDisplay.getLocale()) %>" key="are-you-sure-you-want-to-remove-x-role-to-selected-users" translateArguments="<%= false %>" />')) {
 					submitForm(form, '<portlet:actionURL name="removeUserSiteRole" />');
 				}
@@ -137,7 +140,7 @@ Role role = usersDisplayContext.getRole();
 			<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 		</portlet:renderURL>
 
-		window.<portlet:namespace />selectSiteRole = function() {
+		selectSiteRole = function() {
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
 					eventName: '<portlet:namespace />selectSiteRole',
@@ -190,12 +193,6 @@ Role role = usersDisplayContext.getRole();
 		itemSelectorDialog.open();
 	}
 
-	Liferay.componentReady('usersManagementToolbar').then(
-		(managementToolbar) => {
-			managementToolbar.on('creationButtonClicked', handleAddClick);
-		}
-	);
-
 	<portlet:renderURL var="viewRoleURL">
 		<portlet:param name="mvcPath" value="/view.jsp" />
 		<portlet:param name="tabs1" value="users" />
@@ -204,7 +201,7 @@ Role role = usersDisplayContext.getRole();
 		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	</portlet:renderURL>
 
-	window.<portlet:namespace />selectRoles = function() {
+	var selectRoles = function() {
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
@@ -224,5 +221,29 @@ Role role = usersDisplayContext.getRole();
 				location.href = uri;
 			}
 		);
-	}
+	};
+
+	var ACTIONS = {
+		'deleteSelectedUsers': deleteSelectedUsers,
+		'removeUserSiteRole': removeUserSiteRole,
+		'selectRoles': selectRoles,
+		'selectSiteRole': selectSiteRole
+	};
+
+	Liferay.componentReady('usersManagementToolbar').then(
+		(managementToolbar) => {
+			managementToolbar.on('creationButtonClicked', handleAddClick);
+
+			managementToolbar.on(
+				['actionItemClicked', 'filterItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

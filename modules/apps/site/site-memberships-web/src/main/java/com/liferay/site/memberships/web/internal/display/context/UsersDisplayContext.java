@@ -74,9 +74,7 @@ public class UsersDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteSelectedUsers();");
+						dropdownItem.putData("action", "deleteSelectedUsers");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
@@ -90,9 +88,7 @@ public class UsersDisplayContext {
 
 					add(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								"javascript:" + _renderResponse.getNamespace() +
-									"selectSiteRole();");
+							dropdownItem.putData("action", "selectSiteRole");
 							dropdownItem.setIcon("add-role");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -109,10 +105,8 @@ public class UsersDisplayContext {
 
 						add(
 							dropdownItem -> {
-								dropdownItem.setHref(
-									"javascript:" +
-										_renderResponse.getNamespace() +
-											"removeUserSiteRole();");
+								dropdownItem.putData(
+									"action", "removeUserSiteRole");
 								dropdownItem.setIcon("remove-role");
 								dropdownItem.setLabel(label);
 								dropdownItem.setQuickAction(true);
@@ -421,9 +415,8 @@ public class UsersDisplayContext {
 					dropdownItem -> {
 						dropdownItem.setActive(
 							Objects.equals(getNavigation(), "roles"));
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"selectRoles();");
+
+						dropdownItem.putData("action", "selectRoles");
 
 						String label = LanguageUtil.get(_request, "roles");
 

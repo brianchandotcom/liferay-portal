@@ -1398,7 +1398,7 @@ public abstract class BaseBuild implements Build {
 			content = Dom4JUtil.format(gitHubMessage, false);
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException("Unable to format github message.", ioe);
+			throw new RuntimeException("Unable to format github message", ioe);
 		}
 
 		for (String contentFlag : _HIGH_PRIORITY_CONTENT_FLAGS) {

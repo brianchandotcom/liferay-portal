@@ -89,7 +89,7 @@ public class StartTestableTomcatTask extends StartAppServerTask {
 
 		if (liferayHome == null) {
 			throw new InvalidUserDataException(
-				"No value has been specified for property 'liferayHome'.");
+				"No value has been specified for property 'liferayHome'");
 		}
 
 		project.delete(

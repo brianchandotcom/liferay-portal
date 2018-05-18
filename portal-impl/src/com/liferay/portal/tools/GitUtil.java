@@ -323,7 +323,7 @@ public class GitUtil {
 		}
 
 		throw new GitException(
-			"Unable to retrieve files because .git directory is missing.");
+			"Unable to retrieve files because .git directory is missing");
 	}
 
 	protected static String getLatestAuthorCommitId() throws Exception {

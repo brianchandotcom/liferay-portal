@@ -1010,7 +1010,7 @@ public class JournalTestUtil {
 
 		if (journalServiceBundle == null) {
 			throw new ExceptionInInitializerError(
-				"Unable to find com.liferay.journal.service bundle.");
+				"Unable to find com.liferay.journal.service bundle");
 		}
 
 		BundleWiring bundleWiring = journalServiceBundle.adapt(

@@ -248,6 +248,17 @@ FragmentEditableField.STATE = {
 	portletNamespace: Config.string().required(),
 
 	/**
+	 * If true, asset mapping is enabled
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {bool}
+	 */
+
+	showMapping: Config.bool().value(false),
+
+	/**
 	 * Editable type
 	 * @default undefined
 	 * @instance

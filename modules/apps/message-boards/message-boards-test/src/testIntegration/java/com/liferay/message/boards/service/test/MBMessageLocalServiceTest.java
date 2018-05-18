@@ -265,6 +265,56 @@ public class MBMessageLocalServiceTest {
 			dateFormat.format(firstReplyMessage.getModifiedDate()));
 	}
 
+	@Test
+	public void testUpdateThreadAndMessageWhenBodyChanges() throws Exception {
+		Date date = new Date();
+
+		MBMessage message = addMessage(null, false, date);
+
+		MBThread mbThread = message.getThread();
+
+		Assert.assertEquals(mbThread.getModifiedDate(), date);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBMessageLocalServiceUtil.updateMessage(
+			message.getUserId(), message.getMessageId(), message.getSubject(),
+			RandomTestUtil.randomString(), Collections.emptyList(), 0, false,
+			serviceContext);
+
+		mbThread = message.getThread();
+
+		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
+	}
+
+	@Test
+	public void testUpdateThreadAndMessageWhenSubjectChanges()
+		throws Exception {
+
+		Date date = new Date();
+
+		MBMessage message = addMessage(null, false, date);
+
+		MBThread mbThread = message.getThread();
+
+		Assert.assertEquals(mbThread.getModifiedDate(), date);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBMessageLocalServiceUtil.updateMessage(
+			message.getUserId(), message.getMessageId(),
+			RandomTestUtil.randomString(), message.getBody(),
+			Collections.emptyList(), 0, false, serviceContext);
+
+		mbThread = message.getThread();
+
+		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
+	}
+
 	protected MBMessage addMessage(
 			MBMessage parentMessage, boolean addAttachments)
 		throws Exception {

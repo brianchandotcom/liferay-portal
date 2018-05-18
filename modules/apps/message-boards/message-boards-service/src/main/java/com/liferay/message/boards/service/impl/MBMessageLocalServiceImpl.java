@@ -2516,9 +2516,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			Date modifiedDate)
 		throws PortalException {
 
-		MBCategory category = null;
-
 		int status = message.getStatus();
+
+		if (status == oldStatus) {
+			return;
+		}
+
+		MBCategory category = null;
 
 		if ((thread.getCategoryId() !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
@@ -2529,18 +2533,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				thread.getCategoryId());
 		}
 
-		if ((thread.getRootMessageId() == message.getMessageId()) &&
-			(oldStatus != status)) {
-
+		if (thread.getRootMessageId() == message.getMessageId()) {
 			thread.setModifiedDate(modifiedDate);
 			thread.setStatus(status);
 			thread.setStatusByUserId(user.getUserId());
 			thread.setStatusByUserName(user.getFullName());
 			thread.setStatusDate(modifiedDate);
-		}
-
-		if (status == oldStatus) {
-			return;
 		}
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
@@ -2759,8 +2757,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			updatePriorities(thread.getThreadId(), priority);
 		}
 
-		if (message.isRoot() && !Objects.equals(subject, oldSubject)) {
-			thread.setTitle(subject);
+		if (message.isRoot()) {
+			if (!Objects.equals(subject, oldSubject)) {
+				thread.setTitle(subject);
+			}
 
 			mbThreadLocalService.updateMBThread(thread);
 		}

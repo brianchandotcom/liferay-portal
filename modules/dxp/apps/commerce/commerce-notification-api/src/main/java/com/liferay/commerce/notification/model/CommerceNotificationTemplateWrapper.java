@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.liferay.commerce.notification.model;
@@ -73,8 +73,10 @@ public class CommerceNotificationTemplateWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("from", getFrom());
+		attributes.put("fromName", getFromName());
 		attributes.put("cc", getCc());
-		attributes.put("ccn", getCcn());
+		attributes.put("bcc", getBcc());
 		attributes.put("type", getType());
 		attributes.put("enabled", isEnabled());
 		attributes.put("subject", getSubject());
@@ -146,16 +148,28 @@ public class CommerceNotificationTemplateWrapper
 			setDescription(description);
 		}
 
+		String from = (String)attributes.get("from");
+
+		if (from != null) {
+			setFrom(from);
+		}
+
+		String fromName = (String)attributes.get("fromName");
+
+		if (fromName != null) {
+			setFromName(fromName);
+		}
+
 		String cc = (String)attributes.get("cc");
 
 		if (cc != null) {
 			setCc(cc);
 		}
 
-		String ccn = (String)attributes.get("ccn");
+		String bcc = (String)attributes.get("bcc");
 
-		if (ccn != null) {
-			setCcn(ccn);
+		if (bcc != null) {
+			setBcc(bcc);
 		}
 
 		String type = (String)attributes.get("type");
@@ -197,6 +211,16 @@ public class CommerceNotificationTemplateWrapper
 	@Override
 	public String[] getAvailableLanguageIds() {
 		return _commerceNotificationTemplate.getAvailableLanguageIds();
+	}
+
+	/**
+	* Returns the bcc of this commerce notification template.
+	*
+	* @return the bcc of this commerce notification template
+	*/
+	@Override
+	public String getBcc() {
+		return _commerceNotificationTemplate.getBcc();
 	}
 
 	/**
@@ -286,16 +310,6 @@ public class CommerceNotificationTemplateWrapper
 	}
 
 	/**
-	* Returns the ccn of this commerce notification template.
-	*
-	* @return the ccn of this commerce notification template
-	*/
-	@Override
-	public String getCcn() {
-		return _commerceNotificationTemplate.getCcn();
-	}
-
-	/**
 	* Returns the commerce notification template ID of this commerce notification template.
 	*
 	* @return the commerce notification template ID of this commerce notification template
@@ -353,6 +367,26 @@ public class CommerceNotificationTemplateWrapper
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceNotificationTemplate.getExpandoBridge();
+	}
+
+	/**
+	* Returns the from of this commerce notification template.
+	*
+	* @return the from of this commerce notification template
+	*/
+	@Override
+	public String getFrom() {
+		return _commerceNotificationTemplate.getFrom();
+	}
+
+	/**
+	* Returns the from name of this commerce notification template.
+	*
+	* @return the from name of this commerce notification template
+	*/
+	@Override
+	public String getFromName() {
+		return _commerceNotificationTemplate.getFromName();
 	}
 
 	/**
@@ -575,6 +609,16 @@ public class CommerceNotificationTemplateWrapper
 	}
 
 	/**
+	* Sets the bcc of this commerce notification template.
+	*
+	* @param bcc the bcc of this commerce notification template
+	*/
+	@Override
+	public void setBcc(String bcc) {
+		_commerceNotificationTemplate.setBcc(bcc);
+	}
+
+	/**
 	* Sets the body of this commerce notification template.
 	*
 	* @param body the body of this commerce notification template
@@ -651,16 +695,6 @@ public class CommerceNotificationTemplateWrapper
 	}
 
 	/**
-	* Sets the ccn of this commerce notification template.
-	*
-	* @param ccn the ccn of this commerce notification template
-	*/
-	@Override
-	public void setCcn(String ccn) {
-		_commerceNotificationTemplate.setCcn(ccn);
-	}
-
-	/**
 	* Sets the commerce notification template ID of this commerce notification template.
 	*
 	* @param commerceNotificationTemplateId the commerce notification template ID of this commerce notification template
@@ -725,6 +759,26 @@ public class CommerceNotificationTemplateWrapper
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_commerceNotificationTemplate.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the from of this commerce notification template.
+	*
+	* @param from the from of this commerce notification template
+	*/
+	@Override
+	public void setFrom(String from) {
+		_commerceNotificationTemplate.setFrom(from);
+	}
+
+	/**
+	* Sets the from name of this commerce notification template.
+	*
+	* @param fromName the from name of this commerce notification template
+	*/
+	@Override
+	public void setFromName(String fromName) {
+		_commerceNotificationTemplate.setFromName(fromName);
 	}
 
 	/**

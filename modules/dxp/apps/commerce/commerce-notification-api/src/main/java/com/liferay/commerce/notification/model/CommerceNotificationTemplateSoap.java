@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.liferay.commerce.notification.model;
@@ -45,8 +45,10 @@ public class CommerceNotificationTemplateSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setFrom(model.getFrom());
+		soapModel.setFromName(model.getFromName());
 		soapModel.setCc(model.getCc());
-		soapModel.setCcn(model.getCcn());
+		soapModel.setBcc(model.getBcc());
 		soapModel.setType(model.getType());
 		soapModel.setEnabled(model.isEnabled());
 		soapModel.setSubject(model.getSubject());
@@ -187,6 +189,22 @@ public class CommerceNotificationTemplateSoap implements Serializable {
 		_description = description;
 	}
 
+	public String getFrom() {
+		return _from;
+	}
+
+	public void setFrom(String from) {
+		_from = from;
+	}
+
+	public String getFromName() {
+		return _fromName;
+	}
+
+	public void setFromName(String fromName) {
+		_fromName = fromName;
+	}
+
 	public String getCc() {
 		return _cc;
 	}
@@ -195,12 +213,12 @@ public class CommerceNotificationTemplateSoap implements Serializable {
 		_cc = cc;
 	}
 
-	public String getCcn() {
-		return _ccn;
+	public String getBcc() {
+		return _bcc;
 	}
 
-	public void setCcn(String ccn) {
-		_ccn = ccn;
+	public void setBcc(String bcc) {
+		_bcc = bcc;
 	}
 
 	public String getType() {
@@ -249,8 +267,10 @@ public class CommerceNotificationTemplateSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
+	private String _from;
+	private String _fromName;
 	private String _cc;
-	private String _ccn;
+	private String _bcc;
 	private String _type;
 	private boolean _enabled;
 	private String _subject;

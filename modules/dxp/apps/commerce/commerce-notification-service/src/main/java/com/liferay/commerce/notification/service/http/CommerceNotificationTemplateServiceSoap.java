@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.liferay.commerce.notification.service.http;
@@ -70,10 +70,10 @@ import java.util.Map;
 @ProviderType
 public class CommerceNotificationTemplateServiceSoap {
 	public static com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap addCommerceNotificationTemplate(
-		String name, String description, String cc, String ccn, String type,
-		boolean enabled, String[] subjectMapLanguageIds,
-		String[] subjectMapValues, String[] bodyMapLanguageIds,
-		String[] bodyMapValues,
+		String name, String description, String from, String fromName,
+		String cc, String bcc, String type, boolean enabled,
+		String[] subjectMapLanguageIds, String[] subjectMapValues,
+		String[] bodyMapLanguageIds, String[] bodyMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -84,8 +84,8 @@ public class CommerceNotificationTemplateServiceSoap {
 
 			com.liferay.commerce.notification.model.CommerceNotificationTemplate returnValue =
 				CommerceNotificationTemplateServiceUtil.addCommerceNotificationTemplate(name,
-					description, cc, ccn, type, enabled, subjectMap, bodyMap,
-					serviceContext);
+					description, from, fromName, cc, bcc, type, enabled,
+					subjectMap, bodyMap, serviceContext);
 
 			return com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap.toSoapModel(returnValue);
 		}
@@ -157,9 +157,10 @@ public class CommerceNotificationTemplateServiceSoap {
 
 	public static com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap updateCommerceNotificationTemplate(
 		long commerceNotificationTemplateId, String name, String description,
-		String cc, String ccn, String type, boolean enabled,
-		String[] subjectMapLanguageIds, String[] subjectMapValues,
-		String[] bodyMapLanguageIds, String[] bodyMapValues,
+		String from, String fromName, String cc, String bcc, String type,
+		boolean enabled, String[] subjectMapLanguageIds,
+		String[] subjectMapValues, String[] bodyMapLanguageIds,
+		String[] bodyMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -170,8 +171,8 @@ public class CommerceNotificationTemplateServiceSoap {
 
 			com.liferay.commerce.notification.model.CommerceNotificationTemplate returnValue =
 				CommerceNotificationTemplateServiceUtil.updateCommerceNotificationTemplate(commerceNotificationTemplateId,
-					name, description, cc, ccn, type, enabled, subjectMap,
-					bodyMap, serviceContext);
+					name, description, from, fromName, cc, bcc, type, enabled,
+					subjectMap, bodyMap, serviceContext);
 
 			return com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap.toSoapModel(returnValue);
 		}

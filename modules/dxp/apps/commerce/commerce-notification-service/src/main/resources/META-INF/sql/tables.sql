@@ -1,23 +1,3 @@
-create table CENTemplate (
-	uuid_ VARCHAR(75) null,
-	CENTemplateId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	name VARCHAR(75) null,
-	description STRING null,
-	cc VARCHAR(75) null,
-	ccn VARCHAR(75) null,
-	type_ VARCHAR(75) null,
-	target VARCHAR(75) null,
-	enabled BOOLEAN,
-	subject STRING null,
-	body STRING null
-);
-
 create table CNTemplateUserSegmentRel (
 	CNTemplateUserSegmentRelId LONG not null primary key,
 	groupId LONG,
@@ -28,6 +8,42 @@ create table CNTemplateUserSegmentRel (
 	modifiedDate DATE null,
 	commerceNotificationTemplateId LONG,
 	commerceUserSegmentEntryId LONG
+);
+
+create table CNotificationAttachment (
+	uuid_ VARCHAR(75) null,
+	CNotificationAttachmentId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	CNotificationQueueEntryId LONG,
+	fileEntryId LONG,
+	deleteOnSend BOOLEAN
+);
+
+create table CommerceNotificationQueueEntry (
+	CNotificationQueueEntryId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceNotificationTemplateId LONG,
+	from_ VARCHAR(75) null,
+	fromName VARCHAR(75) null,
+	to_ VARCHAR(75) null,
+	toName VARCHAR(75) null,
+	cc VARCHAR(255) null,
+	bcc VARCHAR(255) null,
+	subject VARCHAR(255) null,
+	body TEXT null,
+	priority DOUBLE,
+	sent BOOLEAN,
+	sentDate DATE null
 );
 
 create table CommerceNotificationTemplate (
@@ -41,8 +57,10 @@ create table CommerceNotificationTemplate (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	description STRING null,
-	cc VARCHAR(75) null,
-	ccn VARCHAR(75) null,
+	from_ VARCHAR(75) null,
+	fromName VARCHAR(75) null,
+	cc VARCHAR(255) null,
+	bcc VARCHAR(255) null,
 	type_ VARCHAR(75) null,
 	enabled BOOLEAN,
 	subject STRING null,

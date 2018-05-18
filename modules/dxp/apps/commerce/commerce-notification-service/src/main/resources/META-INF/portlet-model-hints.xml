@@ -10,13 +10,12 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceNotificationQueueId" type="long" />
+		<field name="commerceNotificationQueueEntryId" type="long" />
 		<field name="fileEntryId" type="long" />
-		<field name="dropFileAfterSent" type="boolean" />
+		<field name="deleteOnSend" type="boolean" />
 	</model>
-	<model name="com.liferay.commerce.notification.model.CommerceNotificationQueue">
-		<field name="uuid" type="String" />
-		<field name="commerceNotificationQueueId" type="long" />
+	<model name="com.liferay.commerce.notification.model.CommerceNotificationQueueEntry">
+		<field name="commerceNotificationQueueEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -42,6 +41,7 @@
 		</field>
 		<field name="priority" type="double" />
 		<field name="sent" type="boolean" />
+		<field name="sentDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.notification.model.CommerceNotificationTemplate">
 		<field name="uuid" type="String" />

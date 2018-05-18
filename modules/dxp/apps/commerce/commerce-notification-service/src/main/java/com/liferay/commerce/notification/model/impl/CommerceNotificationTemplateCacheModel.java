@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.liferay.commerce.notification.model.impl;
@@ -66,7 +66,7 @@ public class CommerceNotificationTemplateCacheModel implements CacheModel<Commer
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,10 +88,14 @@ public class CommerceNotificationTemplateCacheModel implements CacheModel<Commer
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", from=");
+		sb.append(from);
+		sb.append(", fromName=");
+		sb.append(fromName);
 		sb.append(", cc=");
 		sb.append(cc);
-		sb.append(", ccn=");
-		sb.append(ccn);
+		sb.append(", bcc=");
+		sb.append(bcc);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", enabled=");
@@ -157,6 +161,20 @@ public class CommerceNotificationTemplateCacheModel implements CacheModel<Commer
 			commerceNotificationTemplateImpl.setDescription(description);
 		}
 
+		if (from == null) {
+			commerceNotificationTemplateImpl.setFrom("");
+		}
+		else {
+			commerceNotificationTemplateImpl.setFrom(from);
+		}
+
+		if (fromName == null) {
+			commerceNotificationTemplateImpl.setFromName("");
+		}
+		else {
+			commerceNotificationTemplateImpl.setFromName(fromName);
+		}
+
 		if (cc == null) {
 			commerceNotificationTemplateImpl.setCc("");
 		}
@@ -164,11 +182,11 @@ public class CommerceNotificationTemplateCacheModel implements CacheModel<Commer
 			commerceNotificationTemplateImpl.setCc(cc);
 		}
 
-		if (ccn == null) {
-			commerceNotificationTemplateImpl.setCcn("");
+		if (bcc == null) {
+			commerceNotificationTemplateImpl.setBcc("");
 		}
 		else {
-			commerceNotificationTemplateImpl.setCcn(ccn);
+			commerceNotificationTemplateImpl.setBcc(bcc);
 		}
 
 		if (type == null) {
@@ -215,8 +233,10 @@ public class CommerceNotificationTemplateCacheModel implements CacheModel<Commer
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		from = objectInput.readUTF();
+		fromName = objectInput.readUTF();
 		cc = objectInput.readUTF();
-		ccn = objectInput.readUTF();
+		bcc = objectInput.readUTF();
 		type = objectInput.readUTF();
 
 		enabled = objectInput.readBoolean();
@@ -266,6 +286,20 @@ public class CommerceNotificationTemplateCacheModel implements CacheModel<Commer
 			objectOutput.writeUTF(description);
 		}
 
+		if (from == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(from);
+		}
+
+		if (fromName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(fromName);
+		}
+
 		if (cc == null) {
 			objectOutput.writeUTF("");
 		}
@@ -273,11 +307,11 @@ public class CommerceNotificationTemplateCacheModel implements CacheModel<Commer
 			objectOutput.writeUTF(cc);
 		}
 
-		if (ccn == null) {
+		if (bcc == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(ccn);
+			objectOutput.writeUTF(bcc);
 		}
 
 		if (type == null) {
@@ -314,8 +348,10 @@ public class CommerceNotificationTemplateCacheModel implements CacheModel<Commer
 	public long modifiedDate;
 	public String name;
 	public String description;
+	public String from;
+	public String fromName;
 	public String cc;
-	public String ccn;
+	public String bcc;
 	public String type;
 	public boolean enabled;
 	public String subject;

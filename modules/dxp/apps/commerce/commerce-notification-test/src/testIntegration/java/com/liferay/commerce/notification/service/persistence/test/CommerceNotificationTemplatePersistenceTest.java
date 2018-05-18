@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.liferay.commerce.notification.service.persistence.test;
@@ -142,9 +142,13 @@ public class CommerceNotificationTemplatePersistenceTest {
 
 		newCommerceNotificationTemplate.setDescription(RandomTestUtil.randomString());
 
+		newCommerceNotificationTemplate.setFrom(RandomTestUtil.randomString());
+
+		newCommerceNotificationTemplate.setFromName(RandomTestUtil.randomString());
+
 		newCommerceNotificationTemplate.setCc(RandomTestUtil.randomString());
 
-		newCommerceNotificationTemplate.setCcn(RandomTestUtil.randomString());
+		newCommerceNotificationTemplate.setBcc(RandomTestUtil.randomString());
 
 		newCommerceNotificationTemplate.setType(RandomTestUtil.randomString());
 
@@ -183,10 +187,14 @@ public class CommerceNotificationTemplatePersistenceTest {
 			newCommerceNotificationTemplate.getName());
 		Assert.assertEquals(existingCommerceNotificationTemplate.getDescription(),
 			newCommerceNotificationTemplate.getDescription());
+		Assert.assertEquals(existingCommerceNotificationTemplate.getFrom(),
+			newCommerceNotificationTemplate.getFrom());
+		Assert.assertEquals(existingCommerceNotificationTemplate.getFromName(),
+			newCommerceNotificationTemplate.getFromName());
 		Assert.assertEquals(existingCommerceNotificationTemplate.getCc(),
 			newCommerceNotificationTemplate.getCc());
-		Assert.assertEquals(existingCommerceNotificationTemplate.getCcn(),
-			newCommerceNotificationTemplate.getCcn());
+		Assert.assertEquals(existingCommerceNotificationTemplate.getBcc(),
+			newCommerceNotificationTemplate.getBcc());
 		Assert.assertEquals(existingCommerceNotificationTemplate.getType(),
 			newCommerceNotificationTemplate.getType());
 		Assert.assertEquals(existingCommerceNotificationTemplate.isEnabled(),
@@ -232,6 +240,17 @@ public class CommerceNotificationTemplatePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_T_E() throws Exception {
+		_persistence.countByG_T_E(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_T_E(0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_T_E(0L, (String)null,
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceNotificationTemplate newCommerceNotificationTemplate = addCommerceNotificationTemplate();
 
@@ -265,8 +284,8 @@ public class CommerceNotificationTemplatePersistenceTest {
 			"uuid", true, "commerceNotificationTemplateId", true, "groupId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "name", true,
-			"description", true, "cc", true, "ccn", true, "type", true,
-			"enabled", true, "subject", true);
+			"description", true, "from", true, "fromName", true, "cc", true,
+			"bcc", true, "type", true, "enabled", true, "subject", true);
 	}
 
 	@Test
@@ -523,9 +542,13 @@ public class CommerceNotificationTemplatePersistenceTest {
 
 		commerceNotificationTemplate.setDescription(RandomTestUtil.randomString());
 
+		commerceNotificationTemplate.setFrom(RandomTestUtil.randomString());
+
+		commerceNotificationTemplate.setFromName(RandomTestUtil.randomString());
+
 		commerceNotificationTemplate.setCc(RandomTestUtil.randomString());
 
-		commerceNotificationTemplate.setCcn(RandomTestUtil.randomString());
+		commerceNotificationTemplate.setBcc(RandomTestUtil.randomString());
 
 		commerceNotificationTemplate.setType(RandomTestUtil.randomString());
 

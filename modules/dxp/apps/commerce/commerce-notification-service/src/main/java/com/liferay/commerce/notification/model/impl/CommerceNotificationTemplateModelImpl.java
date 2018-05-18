@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.liferay.commerce.notification.model.impl;
@@ -91,8 +91,10 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
+			{ "from_", Types.VARCHAR },
+			{ "fromName", Types.VARCHAR },
 			{ "cc", Types.VARCHAR },
-			{ "ccn", Types.VARCHAR },
+			{ "bcc", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
 			{ "enabled", Types.BOOLEAN },
 			{ "subject", Types.VARCHAR },
@@ -111,15 +113,17 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("from_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fromName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("cc", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("ccn", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("bcc", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("enabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceNotificationTemplate (uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,cc VARCHAR(75) null,ccn VARCHAR(75) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceNotificationTemplate (uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceNotificationTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceNotificationTemplate.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceNotificationTemplate.createDate DESC";
@@ -136,9 +140,11 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 				"value.object.column.bitmask.enabled.com.liferay.commerce.notification.model.CommerceNotificationTemplate"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static final long ENABLED_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long TYPE_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -164,8 +170,10 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setFrom(soapModel.getFrom());
+		model.setFromName(soapModel.getFromName());
 		model.setCc(soapModel.getCc());
-		model.setCcn(soapModel.getCcn());
+		model.setBcc(soapModel.getBcc());
 		model.setType(soapModel.getType());
 		model.setEnabled(soapModel.isEnabled());
 		model.setSubject(soapModel.getSubject());
@@ -246,8 +254,10 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("from", getFrom());
+		attributes.put("fromName", getFromName());
 		attributes.put("cc", getCc());
-		attributes.put("ccn", getCcn());
+		attributes.put("bcc", getBcc());
 		attributes.put("type", getType());
 		attributes.put("enabled", isEnabled());
 		attributes.put("subject", getSubject());
@@ -322,16 +332,28 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 			setDescription(description);
 		}
 
+		String from = (String)attributes.get("from");
+
+		if (from != null) {
+			setFrom(from);
+		}
+
+		String fromName = (String)attributes.get("fromName");
+
+		if (fromName != null) {
+			setFromName(fromName);
+		}
+
 		String cc = (String)attributes.get("cc");
 
 		if (cc != null) {
 			setCc(cc);
 		}
 
-		String ccn = (String)attributes.get("ccn");
+		String bcc = (String)attributes.get("bcc");
 
-		if (ccn != null) {
-			setCcn(ccn);
+		if (bcc != null) {
+			setBcc(bcc);
 		}
 
 		String type = (String)attributes.get("type");
@@ -548,6 +570,38 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@JSON
 	@Override
+	public String getFrom() {
+		if (_from == null) {
+			return "";
+		}
+		else {
+			return _from;
+		}
+	}
+
+	@Override
+	public void setFrom(String from) {
+		_from = from;
+	}
+
+	@JSON
+	@Override
+	public String getFromName() {
+		if (_fromName == null) {
+			return "";
+		}
+		else {
+			return _fromName;
+		}
+	}
+
+	@Override
+	public void setFromName(String fromName) {
+		_fromName = fromName;
+	}
+
+	@JSON
+	@Override
 	public String getCc() {
 		if (_cc == null) {
 			return "";
@@ -564,18 +618,18 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@JSON
 	@Override
-	public String getCcn() {
-		if (_ccn == null) {
+	public String getBcc() {
+		if (_bcc == null) {
 			return "";
 		}
 		else {
-			return _ccn;
+			return _bcc;
 		}
 	}
 
 	@Override
-	public void setCcn(String ccn) {
-		_ccn = ccn;
+	public void setBcc(String bcc) {
+		_bcc = bcc;
 	}
 
 	@JSON
@@ -591,7 +645,17 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public void setType(String type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	@JSON
@@ -608,7 +672,19 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public void setEnabled(boolean enabled) {
+		_columnBitmask |= ENABLED_COLUMN_BITMASK;
+
+		if (!_setOriginalEnabled) {
+			_setOriginalEnabled = true;
+
+			_originalEnabled = _enabled;
+		}
+
 		_enabled = enabled;
+	}
+
+	public boolean getOriginalEnabled() {
+		return _originalEnabled;
 	}
 
 	@JSON
@@ -938,8 +1014,10 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		commerceNotificationTemplateImpl.setModifiedDate(getModifiedDate());
 		commerceNotificationTemplateImpl.setName(getName());
 		commerceNotificationTemplateImpl.setDescription(getDescription());
+		commerceNotificationTemplateImpl.setFrom(getFrom());
+		commerceNotificationTemplateImpl.setFromName(getFromName());
 		commerceNotificationTemplateImpl.setCc(getCc());
-		commerceNotificationTemplateImpl.setCcn(getCcn());
+		commerceNotificationTemplateImpl.setBcc(getBcc());
 		commerceNotificationTemplateImpl.setType(getType());
 		commerceNotificationTemplateImpl.setEnabled(isEnabled());
 		commerceNotificationTemplateImpl.setSubject(getSubject());
@@ -1021,6 +1099,12 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 		commerceNotificationTemplateModelImpl._setModifiedDate = false;
 
+		commerceNotificationTemplateModelImpl._originalType = commerceNotificationTemplateModelImpl._type;
+
+		commerceNotificationTemplateModelImpl._originalEnabled = commerceNotificationTemplateModelImpl._enabled;
+
+		commerceNotificationTemplateModelImpl._setOriginalEnabled = false;
+
 		commerceNotificationTemplateModelImpl._columnBitmask = 0;
 	}
 
@@ -1087,6 +1171,22 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 			commerceNotificationTemplateCacheModel.description = null;
 		}
 
+		commerceNotificationTemplateCacheModel.from = getFrom();
+
+		String from = commerceNotificationTemplateCacheModel.from;
+
+		if ((from != null) && (from.length() == 0)) {
+			commerceNotificationTemplateCacheModel.from = null;
+		}
+
+		commerceNotificationTemplateCacheModel.fromName = getFromName();
+
+		String fromName = commerceNotificationTemplateCacheModel.fromName;
+
+		if ((fromName != null) && (fromName.length() == 0)) {
+			commerceNotificationTemplateCacheModel.fromName = null;
+		}
+
 		commerceNotificationTemplateCacheModel.cc = getCc();
 
 		String cc = commerceNotificationTemplateCacheModel.cc;
@@ -1095,12 +1195,12 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 			commerceNotificationTemplateCacheModel.cc = null;
 		}
 
-		commerceNotificationTemplateCacheModel.ccn = getCcn();
+		commerceNotificationTemplateCacheModel.bcc = getBcc();
 
-		String ccn = commerceNotificationTemplateCacheModel.ccn;
+		String bcc = commerceNotificationTemplateCacheModel.bcc;
 
-		if ((ccn != null) && (ccn.length() == 0)) {
-			commerceNotificationTemplateCacheModel.ccn = null;
+		if ((bcc != null) && (bcc.length() == 0)) {
+			commerceNotificationTemplateCacheModel.bcc = null;
 		}
 
 		commerceNotificationTemplateCacheModel.type = getType();
@@ -1134,7 +1234,7 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1156,10 +1256,14 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", from=");
+		sb.append(getFrom());
+		sb.append(", fromName=");
+		sb.append(getFromName());
 		sb.append(", cc=");
 		sb.append(getCc());
-		sb.append(", ccn=");
-		sb.append(getCcn());
+		sb.append(", bcc=");
+		sb.append(getBcc());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", enabled=");
@@ -1175,7 +1279,7 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -1223,12 +1327,20 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>from</column-name><column-value><![CDATA[");
+		sb.append(getFrom());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>fromName</column-name><column-value><![CDATA[");
+		sb.append(getFromName());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>cc</column-name><column-value><![CDATA[");
 		sb.append(getCc());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ccn</column-name><column-value><![CDATA[");
-		sb.append(getCcn());
+			"<column><column-name>bcc</column-name><column-value><![CDATA[");
+		sb.append(getBcc());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
@@ -1272,10 +1384,15 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _description;
+	private String _from;
+	private String _fromName;
 	private String _cc;
-	private String _ccn;
+	private String _bcc;
 	private String _type;
+	private String _originalType;
 	private boolean _enabled;
+	private boolean _originalEnabled;
+	private boolean _setOriginalEnabled;
 	private String _subject;
 	private String _subjectCurrentLanguageId;
 	private String _body;

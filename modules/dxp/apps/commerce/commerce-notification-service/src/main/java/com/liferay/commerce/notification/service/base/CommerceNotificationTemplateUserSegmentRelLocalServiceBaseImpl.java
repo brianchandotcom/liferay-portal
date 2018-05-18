@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ *
+ *
  */
 
 package com.liferay.commerce.notification.service.base;
@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.notification.model.CommerceNotificationTemplateUserSegmentRel;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateUserSegmentRelLocalService;
+import com.liferay.commerce.notification.service.persistence.CommerceNotificationAttachmentPersistence;
+import com.liferay.commerce.notification.service.persistence.CommerceNotificationQueueEntryPersistence;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplatePersistence;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplateUserSegmentRelPersistence;
 
@@ -330,6 +332,82 @@ public abstract class CommerceNotificationTemplateUserSegmentRelLocalServiceBase
 	}
 
 	/**
+	 * Returns the commerce notification attachment local service.
+	 *
+	 * @return the commerce notification attachment local service
+	 */
+	public com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalService getCommerceNotificationAttachmentLocalService() {
+		return commerceNotificationAttachmentLocalService;
+	}
+
+	/**
+	 * Sets the commerce notification attachment local service.
+	 *
+	 * @param commerceNotificationAttachmentLocalService the commerce notification attachment local service
+	 */
+	public void setCommerceNotificationAttachmentLocalService(
+		com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalService commerceNotificationAttachmentLocalService) {
+		this.commerceNotificationAttachmentLocalService = commerceNotificationAttachmentLocalService;
+	}
+
+	/**
+	 * Returns the commerce notification attachment persistence.
+	 *
+	 * @return the commerce notification attachment persistence
+	 */
+	public CommerceNotificationAttachmentPersistence getCommerceNotificationAttachmentPersistence() {
+		return commerceNotificationAttachmentPersistence;
+	}
+
+	/**
+	 * Sets the commerce notification attachment persistence.
+	 *
+	 * @param commerceNotificationAttachmentPersistence the commerce notification attachment persistence
+	 */
+	public void setCommerceNotificationAttachmentPersistence(
+		CommerceNotificationAttachmentPersistence commerceNotificationAttachmentPersistence) {
+		this.commerceNotificationAttachmentPersistence = commerceNotificationAttachmentPersistence;
+	}
+
+	/**
+	 * Returns the commerce notification queue entry local service.
+	 *
+	 * @return the commerce notification queue entry local service
+	 */
+	public com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService getCommerceNotificationQueueEntryLocalService() {
+		return commerceNotificationQueueEntryLocalService;
+	}
+
+	/**
+	 * Sets the commerce notification queue entry local service.
+	 *
+	 * @param commerceNotificationQueueEntryLocalService the commerce notification queue entry local service
+	 */
+	public void setCommerceNotificationQueueEntryLocalService(
+		com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService commerceNotificationQueueEntryLocalService) {
+		this.commerceNotificationQueueEntryLocalService = commerceNotificationQueueEntryLocalService;
+	}
+
+	/**
+	 * Returns the commerce notification queue entry persistence.
+	 *
+	 * @return the commerce notification queue entry persistence
+	 */
+	public CommerceNotificationQueueEntryPersistence getCommerceNotificationQueueEntryPersistence() {
+		return commerceNotificationQueueEntryPersistence;
+	}
+
+	/**
+	 * Sets the commerce notification queue entry persistence.
+	 *
+	 * @param commerceNotificationQueueEntryPersistence the commerce notification queue entry persistence
+	 */
+	public void setCommerceNotificationQueueEntryPersistence(
+		CommerceNotificationQueueEntryPersistence commerceNotificationQueueEntryPersistence) {
+		this.commerceNotificationQueueEntryPersistence = commerceNotificationQueueEntryPersistence;
+	}
+
+	/**
 	 * Returns the commerce notification template local service.
 	 *
 	 * @return the commerce notification template local service
@@ -570,6 +648,14 @@ public abstract class CommerceNotificationTemplateUserSegmentRelLocalServiceBase
 		}
 	}
 
+	@BeanReference(type = com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalService.class)
+	protected com.liferay.commerce.notification.service.CommerceNotificationAttachmentLocalService commerceNotificationAttachmentLocalService;
+	@BeanReference(type = CommerceNotificationAttachmentPersistence.class)
+	protected CommerceNotificationAttachmentPersistence commerceNotificationAttachmentPersistence;
+	@BeanReference(type = com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService.class)
+	protected com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService commerceNotificationQueueEntryLocalService;
+	@BeanReference(type = CommerceNotificationQueueEntryPersistence.class)
+	protected CommerceNotificationQueueEntryPersistence commerceNotificationQueueEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService.class)
 	protected com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService commerceNotificationTemplateLocalService;
 	@BeanReference(type = CommerceNotificationTemplatePersistence.class)

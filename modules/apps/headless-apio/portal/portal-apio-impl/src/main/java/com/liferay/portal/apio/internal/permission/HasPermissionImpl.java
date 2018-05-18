@@ -164,7 +164,7 @@ public class HasPermissionImpl implements HasPermission {
 		return Try.success(
 			credentials.get()
 		).map(
-			Long::valueOf
+			Long.class::cast
 		).map(
 			_userService::getUserById
 		).map(

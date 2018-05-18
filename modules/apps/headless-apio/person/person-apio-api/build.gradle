@@ -2,6 +2,6 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
+	compileOnly group: "com.liferay", name: "com.liferay.apio.architect.api", version: "1.0.0-20180517.232708-32"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly project(":apps:apio-architect:apio-architect-api")
 }

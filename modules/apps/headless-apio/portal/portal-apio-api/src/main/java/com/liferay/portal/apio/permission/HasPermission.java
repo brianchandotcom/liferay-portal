@@ -23,7 +23,7 @@ import java.util.function.BiFunction;
 
 /**
  * Instances of this class contains the information necessary to calculate
- * permissions for the models exposed in Liferay Portal APIO APIs.
+ * permissions for the models exposed in Liferay Portal Apio APIs.
  *
  * <p>
  * The different methods that this interface exposes are intended to be used

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * the methods of any of the routes builders.
  *
  * <p>
- * This provider is mandatory for any APIO application.
+ * This provider is mandatory for any Apio application.
  * </p>
  *
  * @author Alejandro Hernández

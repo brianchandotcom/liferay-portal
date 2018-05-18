@@ -22,6 +22,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -277,10 +279,13 @@ public class LayoutPageTemplateEntryServiceTest {
 				_group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Layout Page Template Entry", null, serviceContext);
+				"Layout Page Template Entry",
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				serviceContext);
 
 		AssetDisplayPageEntryLocalServiceUtil.addAssetDisplayPageEntry(
-			0L, layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			RandomTestUtil.randomLong(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		LayoutPageTemplateEntryLocalServiceUtil.deleteLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());

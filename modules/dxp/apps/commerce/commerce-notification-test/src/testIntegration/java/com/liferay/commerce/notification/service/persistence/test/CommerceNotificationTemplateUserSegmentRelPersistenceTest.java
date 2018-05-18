@@ -175,19 +175,19 @@ public class CommerceNotificationTemplateUserSegmentRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCommerceNotificationTemplateId()
-		throws Exception {
-		_persistence.countByCommerceNotificationTemplateId(RandomTestUtil.nextLong());
-
-		_persistence.countByCommerceNotificationTemplateId(0L);
-	}
-
-	@Test
 	public void testCountByCommerceUserSegmentEntryId()
 		throws Exception {
 		_persistence.countByCommerceUserSegmentEntryId(RandomTestUtil.nextLong());
 
 		_persistence.countByCommerceUserSegmentEntryId(0L);
+	}
+
+	@Test
+	public void testCountByCommerceNotificationTemplateId()
+		throws Exception {
+		_persistence.countByCommerceNotificationTemplateId(RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceNotificationTemplateId(0L);
 	}
 
 	@Test

@@ -119,187 +119,6 @@ public class CommerceNotificationTemplateUserSegmentRelUtil {
 	}
 
 	/**
-	* Returns all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @return the matching commerce notification template user segment rels
-	*/
-	public static List<CommerceNotificationTemplateUserSegmentRel> findByCommerceNotificationTemplateId(
-		long commerceNotificationTemplateId) {
-		return getPersistence()
-				   .findByCommerceNotificationTemplateId(commerceNotificationTemplateId);
-	}
-
-	/**
-	* Returns a range of all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateUserSegmentRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @param start the lower bound of the range of commerce notification template user segment rels
-	* @param end the upper bound of the range of commerce notification template user segment rels (not inclusive)
-	* @return the range of matching commerce notification template user segment rels
-	*/
-	public static List<CommerceNotificationTemplateUserSegmentRel> findByCommerceNotificationTemplateId(
-		long commerceNotificationTemplateId, int start, int end) {
-		return getPersistence()
-				   .findByCommerceNotificationTemplateId(commerceNotificationTemplateId,
-			start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateUserSegmentRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @param start the lower bound of the range of commerce notification template user segment rels
-	* @param end the upper bound of the range of commerce notification template user segment rels (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching commerce notification template user segment rels
-	*/
-	public static List<CommerceNotificationTemplateUserSegmentRel> findByCommerceNotificationTemplateId(
-		long commerceNotificationTemplateId, int start, int end,
-		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator) {
-		return getPersistence()
-				   .findByCommerceNotificationTemplateId(commerceNotificationTemplateId,
-			start, end, orderByComparator);
-	}
-
-	/**
-	* Returns an ordered range of all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateUserSegmentRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @param start the lower bound of the range of commerce notification template user segment rels
-	* @param end the upper bound of the range of commerce notification template user segment rels (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching commerce notification template user segment rels
-	*/
-	public static List<CommerceNotificationTemplateUserSegmentRel> findByCommerceNotificationTemplateId(
-		long commerceNotificationTemplateId, int start, int end,
-		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .findByCommerceNotificationTemplateId(commerceNotificationTemplateId,
-			start, end, orderByComparator, retrieveFromCache);
-	}
-
-	/**
-	* Returns the first commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching commerce notification template user segment rel
-	* @throws NoSuchNotificationTemplateUserSegmentRelException if a matching commerce notification template user segment rel could not be found
-	*/
-	public static CommerceNotificationTemplateUserSegmentRel findByCommerceNotificationTemplateId_First(
-		long commerceNotificationTemplateId,
-		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator)
-		throws com.liferay.commerce.notification.exception.NoSuchNotificationTemplateUserSegmentRelException {
-		return getPersistence()
-				   .findByCommerceNotificationTemplateId_First(commerceNotificationTemplateId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching commerce notification template user segment rel, or <code>null</code> if a matching commerce notification template user segment rel could not be found
-	*/
-	public static CommerceNotificationTemplateUserSegmentRel fetchByCommerceNotificationTemplateId_First(
-		long commerceNotificationTemplateId,
-		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator) {
-		return getPersistence()
-				   .fetchByCommerceNotificationTemplateId_First(commerceNotificationTemplateId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching commerce notification template user segment rel
-	* @throws NoSuchNotificationTemplateUserSegmentRelException if a matching commerce notification template user segment rel could not be found
-	*/
-	public static CommerceNotificationTemplateUserSegmentRel findByCommerceNotificationTemplateId_Last(
-		long commerceNotificationTemplateId,
-		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator)
-		throws com.liferay.commerce.notification.exception.NoSuchNotificationTemplateUserSegmentRelException {
-		return getPersistence()
-				   .findByCommerceNotificationTemplateId_Last(commerceNotificationTemplateId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the last commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching commerce notification template user segment rel, or <code>null</code> if a matching commerce notification template user segment rel could not be found
-	*/
-	public static CommerceNotificationTemplateUserSegmentRel fetchByCommerceNotificationTemplateId_Last(
-		long commerceNotificationTemplateId,
-		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator) {
-		return getPersistence()
-				   .fetchByCommerceNotificationTemplateId_Last(commerceNotificationTemplateId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the commerce notification template user segment rels before and after the current commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
-	*
-	* @param commerceNotificationTemplateUserSegmentRelId the primary key of the current commerce notification template user segment rel
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next commerce notification template user segment rel
-	* @throws NoSuchNotificationTemplateUserSegmentRelException if a commerce notification template user segment rel with the primary key could not be found
-	*/
-	public static CommerceNotificationTemplateUserSegmentRel[] findByCommerceNotificationTemplateId_PrevAndNext(
-		long commerceNotificationTemplateUserSegmentRelId,
-		long commerceNotificationTemplateId,
-		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator)
-		throws com.liferay.commerce.notification.exception.NoSuchNotificationTemplateUserSegmentRelException {
-		return getPersistence()
-				   .findByCommerceNotificationTemplateId_PrevAndNext(commerceNotificationTemplateUserSegmentRelId,
-			commerceNotificationTemplateId, orderByComparator);
-	}
-
-	/**
-	* Removes all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63; from the database.
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	*/
-	public static void removeByCommerceNotificationTemplateId(
-		long commerceNotificationTemplateId) {
-		getPersistence()
-			.removeByCommerceNotificationTemplateId(commerceNotificationTemplateId);
-	}
-
-	/**
-	* Returns the number of commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
-	*
-	* @param commerceNotificationTemplateId the commerce notification template ID
-	* @return the number of matching commerce notification template user segment rels
-	*/
-	public static int countByCommerceNotificationTemplateId(
-		long commerceNotificationTemplateId) {
-		return getPersistence()
-				   .countByCommerceNotificationTemplateId(commerceNotificationTemplateId);
-	}
-
-	/**
 	* Returns all the commerce notification template user segment rels where commerceUserSegmentEntryId = &#63;.
 	*
 	* @param commerceUserSegmentEntryId the commerce user segment entry ID
@@ -478,6 +297,187 @@ public class CommerceNotificationTemplateUserSegmentRelUtil {
 		long commerceUserSegmentEntryId) {
 		return getPersistence()
 				   .countByCommerceUserSegmentEntryId(commerceUserSegmentEntryId);
+	}
+
+	/**
+	* Returns all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @return the matching commerce notification template user segment rels
+	*/
+	public static List<CommerceNotificationTemplateUserSegmentRel> findByCommerceNotificationTemplateId(
+		long commerceNotificationTemplateId) {
+		return getPersistence()
+				   .findByCommerceNotificationTemplateId(commerceNotificationTemplateId);
+	}
+
+	/**
+	* Returns a range of all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateUserSegmentRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @param start the lower bound of the range of commerce notification template user segment rels
+	* @param end the upper bound of the range of commerce notification template user segment rels (not inclusive)
+	* @return the range of matching commerce notification template user segment rels
+	*/
+	public static List<CommerceNotificationTemplateUserSegmentRel> findByCommerceNotificationTemplateId(
+		long commerceNotificationTemplateId, int start, int end) {
+		return getPersistence()
+				   .findByCommerceNotificationTemplateId(commerceNotificationTemplateId,
+			start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateUserSegmentRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @param start the lower bound of the range of commerce notification template user segment rels
+	* @param end the upper bound of the range of commerce notification template user segment rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce notification template user segment rels
+	*/
+	public static List<CommerceNotificationTemplateUserSegmentRel> findByCommerceNotificationTemplateId(
+		long commerceNotificationTemplateId, int start, int end,
+		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator) {
+		return getPersistence()
+				   .findByCommerceNotificationTemplateId(commerceNotificationTemplateId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateUserSegmentRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @param start the lower bound of the range of commerce notification template user segment rels
+	* @param end the upper bound of the range of commerce notification template user segment rels (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce notification template user segment rels
+	*/
+	public static List<CommerceNotificationTemplateUserSegmentRel> findByCommerceNotificationTemplateId(
+		long commerceNotificationTemplateId, int start, int end,
+		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCommerceNotificationTemplateId(commerceNotificationTemplateId,
+			start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce notification template user segment rel
+	* @throws NoSuchNotificationTemplateUserSegmentRelException if a matching commerce notification template user segment rel could not be found
+	*/
+	public static CommerceNotificationTemplateUserSegmentRel findByCommerceNotificationTemplateId_First(
+		long commerceNotificationTemplateId,
+		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator)
+		throws com.liferay.commerce.notification.exception.NoSuchNotificationTemplateUserSegmentRelException {
+		return getPersistence()
+				   .findByCommerceNotificationTemplateId_First(commerceNotificationTemplateId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce notification template user segment rel, or <code>null</code> if a matching commerce notification template user segment rel could not be found
+	*/
+	public static CommerceNotificationTemplateUserSegmentRel fetchByCommerceNotificationTemplateId_First(
+		long commerceNotificationTemplateId,
+		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByCommerceNotificationTemplateId_First(commerceNotificationTemplateId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce notification template user segment rel
+	* @throws NoSuchNotificationTemplateUserSegmentRelException if a matching commerce notification template user segment rel could not be found
+	*/
+	public static CommerceNotificationTemplateUserSegmentRel findByCommerceNotificationTemplateId_Last(
+		long commerceNotificationTemplateId,
+		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator)
+		throws com.liferay.commerce.notification.exception.NoSuchNotificationTemplateUserSegmentRelException {
+		return getPersistence()
+				   .findByCommerceNotificationTemplateId_Last(commerceNotificationTemplateId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce notification template user segment rel, or <code>null</code> if a matching commerce notification template user segment rel could not be found
+	*/
+	public static CommerceNotificationTemplateUserSegmentRel fetchByCommerceNotificationTemplateId_Last(
+		long commerceNotificationTemplateId,
+		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator) {
+		return getPersistence()
+				   .fetchByCommerceNotificationTemplateId_Last(commerceNotificationTemplateId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the commerce notification template user segment rels before and after the current commerce notification template user segment rel in the ordered set where commerceNotificationTemplateId = &#63;.
+	*
+	* @param commerceNotificationTemplateUserSegmentRelId the primary key of the current commerce notification template user segment rel
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce notification template user segment rel
+	* @throws NoSuchNotificationTemplateUserSegmentRelException if a commerce notification template user segment rel with the primary key could not be found
+	*/
+	public static CommerceNotificationTemplateUserSegmentRel[] findByCommerceNotificationTemplateId_PrevAndNext(
+		long commerceNotificationTemplateUserSegmentRelId,
+		long commerceNotificationTemplateId,
+		OrderByComparator<CommerceNotificationTemplateUserSegmentRel> orderByComparator)
+		throws com.liferay.commerce.notification.exception.NoSuchNotificationTemplateUserSegmentRelException {
+		return getPersistence()
+				   .findByCommerceNotificationTemplateId_PrevAndNext(commerceNotificationTemplateUserSegmentRelId,
+			commerceNotificationTemplateId, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce notification template user segment rels where commerceNotificationTemplateId = &#63; from the database.
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	*/
+	public static void removeByCommerceNotificationTemplateId(
+		long commerceNotificationTemplateId) {
+		getPersistence()
+			.removeByCommerceNotificationTemplateId(commerceNotificationTemplateId);
+	}
+
+	/**
+	* Returns the number of commerce notification template user segment rels where commerceNotificationTemplateId = &#63;.
+	*
+	* @param commerceNotificationTemplateId the commerce notification template ID
+	* @return the number of matching commerce notification template user segment rels
+	*/
+	public static int countByCommerceNotificationTemplateId(
+		long commerceNotificationTemplateId) {
+		return getPersistence()
+				   .countByCommerceNotificationTemplateId(commerceNotificationTemplateId);
 	}
 
 	/**

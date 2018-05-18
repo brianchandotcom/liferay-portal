@@ -1,4 +1,5 @@
 @import "components/breadcrumb";
+@import "components/group-item";
 @import "components/sidebar";
 @import "components/splitter";
 
@@ -45,57 +46,6 @@ body {
 		&.closed .sidenav-content {
 			margin-right: 0;
 		}
-	}
-}
-
-.list-group-card {
-	background-color: #FFF;
-	border: 1px solid rgba(220, 220, 220, 0.5);
-	display: block;
-	margin-bottom: -1px;
-	padding: 0 10px;
-	position: relative;
-
-	.list-group {
-		flex-direction: row;
-		flex-wrap: wrap;
-	}
-}
-
-.list-group-card-item {
-	display: block;
-	float: left;
-	margin-buttom: 8px;
-	margin-top: 32px;
-	position: relative;
-	text-align: center;
-	width: 100px;
-
-	a {
-		color: #000;
-		display: block;
-		padding: 0.5rem;
-
-		&:hover, &:active {
-			color: $primary;
-			text-decoration: none;
-
-			.list-group-card-item-text {
-				color: $primary;
-			}
-		}
-	}
-
-	.list-group-card-item-text {
-		color: $secondary;
-		display: block;
-		margin-top: 16px;
-	}
-
-	.lexicon-icon {
-		display: inline-block;
-		height: 24px;
-		width: 24px;
 	}
 }
 

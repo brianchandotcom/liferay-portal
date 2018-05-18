@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -33,34 +35,50 @@ public class ExceptionMessageCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST firstChild = detailAST.getFirstChild();
+		DetailAST firstChildAST = detailAST.getFirstChild();
 
-		firstChild = firstChild.getFirstChild();
+		firstChildAST = firstChildAST.getFirstChild();
 
-		if (firstChild.getType() != TokenTypes.LITERAL_NEW) {
+		if (firstChildAST.getType() != TokenTypes.LITERAL_NEW) {
 			return;
 		}
 
-		DetailAST elistAST = firstChild.findFirstToken(TokenTypes.ELIST);
+		DetailAST elistAST = firstChildAST.findFirstToken(TokenTypes.ELIST);
 
 		List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
 			elistAST, false, TokenTypes.EXPR);
 
 		for (DetailAST exprAST : exprASTList) {
-			firstChild = exprAST.getFirstChild();
-
-			if (firstChild.getType() != TokenTypes.STRING_LITERAL) {
-				return;
-			}
-
-			String text = firstChild.getText();
-
-			if (text.matches("\"[A-Z][^.]+\\.\"") ||
-				text.matches("\"[A-Z][^.]+\\. [A-Z][^.]+\"")) {
-
-				log(firstChild.getLineNo(), _MSG_INCORRECT_MESSAGE);
-			}
+			_checkMessage(_getLiteralStringValue(exprAST), exprAST.getLineNo());
 		}
+	}
+
+	private void _checkMessage(String literalStringValue, int lineNo) {
+		if (Validator.isNull(literalStringValue) ||
+			literalStringValue.endsWith(StringPool.TRIPLE_PERIOD)) {
+
+			return;
+		}
+
+		String[] parts = literalStringValue.split("\\S\\. [A-Z0-9]");
+
+		if ((parts.length == 1) ^
+			!literalStringValue.endsWith(StringPool.PERIOD)) {
+
+			log(lineNo, _MSG_INCORRECT_MESSAGE);
+		}
+	}
+
+	private String _getLiteralStringValue(DetailAST exprAST) {
+		DetailAST firstChildAST = exprAST.getFirstChild();
+
+		if (firstChildAST.getType() == TokenTypes.STRING_LITERAL) {
+			String s = firstChildAST.getText();
+
+			return s.substring(1, s.length() - 1);
+		}
+
+		return null;
 	}
 
 	private static final String _MSG_INCORRECT_MESSAGE = "message.incorrect";

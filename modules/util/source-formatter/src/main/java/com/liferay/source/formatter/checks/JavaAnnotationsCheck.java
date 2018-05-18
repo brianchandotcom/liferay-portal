@@ -467,7 +467,11 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		private String _getPropertyName(String property) {
 			int x = property.indexOf(StringPool.EQUAL);
 
-			return property.substring(0, x);
+			if (x != -1) {
+				return property.substring(0, x);
+			}
+
+			return property;
 		}
 
 		private final String _parameterName;

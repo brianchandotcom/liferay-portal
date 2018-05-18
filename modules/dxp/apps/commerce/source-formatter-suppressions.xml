@@ -5,6 +5,7 @@
 		<suppress checks="JSONNamingCheck" files="commerce-cloud/server/.*" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="CopyrightCheck" files=".*" />
 		<suppress checks="XMLServiceEntityNameCheck" files="commerce-currency-service/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="commerce-discount-service/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="commerce-organization-service/service\.xml" />

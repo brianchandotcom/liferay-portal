@@ -289,7 +289,7 @@ if (!roles.isEmpty()) {
 					var announcementsDisplayed = form.querySelector('#<portlet:namespace />announcementsDisplayed');
 
 					if (announcementsDisplayed) {
-						dom.toggleClass(announcementsDisplayed, 'hide');
+						dom.toggleClasses(announcementsDisplayed, 'hide');
 					}
 				}
 			);

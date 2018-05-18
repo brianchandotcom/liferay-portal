@@ -1,4 +1,4 @@
-// $ANTLR 3.0 Creole10.g 2016-12-02 14:22:16
+// $ANTLR 3.0 Creole10.g 2018-05-09 14:24:38
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.

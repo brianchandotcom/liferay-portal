@@ -1,4 +1,4 @@
-// $ANTLR 3.0 Creole10.g 2016-12-02 14:22:14
+// $ANTLR 3.0 Creole10.g 2018-05-09 14:24:35
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -6824,23 +6824,34 @@ public class Creole10Parser extends Parser {
 
 
     // $ANTLR start list_bolditalcontent
-    // Creole10.g:679:1: list_bolditalcontent returns [ASTNode text = null] : (t= text_unformattedelement )+ ;
+    // Creole10.g:679:1: list_bolditalcontent returns [ASTNode text = null] : (tf= text_formattedcontent )+ ;
     public final ASTNode list_bolditalcontent() throws RecognitionException {
         ASTNode text =  null;
 
-        ASTNode t = null;
+        CollectionNode tf = null;
 
 
         try {
-            // Creole10.g:680:4: ( (t= text_unformattedelement )+ )
-            // Creole10.g:680:4: (t= text_unformattedelement )+
+            // Creole10.g:680:4: ( (tf= text_formattedcontent )+ )
+            // Creole10.g:680:4: (tf= text_formattedcontent )+
             {
-            // Creole10.g:680:4: (t= text_unformattedelement )+
+            // Creole10.g:680:4: (tf= text_formattedcontent )+
             int cnt82=0;
             loop82:
             do {
                 int alt82=2;
                 switch ( input.LA(1) ) {
+                case STAR:
+                    {
+                    int LA82_2 = input.LA(2);
+
+                    if ( ( input.LA(2) != STAR ) ) {
+                        alt82=1;
+                    }
+
+
+                    }
+                    break;
                 case FORCED_END_OF_LINE:
                 case HEADING_SECTION:
                 case HORIZONTAL_SECTION:
@@ -6948,14 +6959,14 @@ public class Creole10Parser extends Parser {
 
                 switch (alt82) {
             	case 1 :
-            	    // Creole10.g:680:6: t= text_unformattedelement
+            	    // Creole10.g:680:6: tf= text_formattedcontent
             	    {
-            	    pushFollow(FOLLOW_text_unformattedelement_in_list_bolditalcontent2236);
-            	    t=text_unformattedelement();
+            	    pushFollow(FOLLOW_text_formattedcontent_in_list_bolditalcontent2235);
+            	    tf=text_formattedcontent();
             	    _fsp--;
             	    if (failed) return text;
             	    if ( backtracking==0 ) {
-            	       text = t; 
+            	      text = tf; 
             	    }
 
             	    }
@@ -7027,11 +7038,11 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:690:4: bold_markup c= list_bolditalcontent ( bold_markup )?
                     {
-                    pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2264);
+                    pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2263);
                     bold_markup();
                     _fsp--;
                     if (failed) return contents;
-                    pushFollow(FOLLOW_list_bolditalcontent_in_list_italcontentpart2271);
+                    pushFollow(FOLLOW_list_bolditalcontent_in_list_italcontentpart2270);
                     c=list_bolditalcontent();
                     _fsp--;
                     if (failed) return contents;
@@ -7053,7 +7064,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:690:88: bold_markup
                             {
-                            pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2278);
+                            pushFollow(FOLLOW_bold_markup_in_list_italcontentpart2277);
                             bold_markup();
                             _fsp--;
                             if (failed) return contents;
@@ -7184,7 +7195,7 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:691:6: t= text_unformattedelement
                     	    {
-                    	    pushFollow(FOLLOW_text_unformattedelement_in_list_italcontentpart2292);
+                    	    pushFollow(FOLLOW_text_unformattedelement_in_list_italcontentpart2291);
                     	    t=text_unformattedelement();
                     	    _fsp--;
                     	    if (failed) return contents;
@@ -7254,7 +7265,7 @@ public class Creole10Parser extends Parser {
             	case 1 :
             	    // Creole10.g:696:6: tr= table_row
             	    {
-            	    pushFollow(FOLLOW_table_row_in_table2320);
+            	    pushFollow(FOLLOW_table_row_in_table2319);
             	    tr=table_row();
             	    _fsp--;
             	    if (failed) return table;
@@ -7312,7 +7323,7 @@ public class Creole10Parser extends Parser {
                 if ( (LA87_0==PIPE) ) {
                     int LA87_2 = input.LA(2);
 
-                    if ( ((( input.LA(1) == PIPE && input.LA(2) == PIPE && input.LA(2) == EQUAL )|| input.LA(1) == PIPE && input.LA(2) == PIPE )) ) {
+                    if ( (( input.LA(1) == PIPE && input.LA(2) == PIPE ||( input.LA(1) == PIPE && input.LA(2) == PIPE && input.LA(2) == EQUAL ))) ) {
                         alt87=1;
                     }
                     else if ( (true) ) {
@@ -7331,7 +7342,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return row;}
             	        throw new FailedPredicateException(input, "table_row", " input.LA(1) == PIPE && input.LA(2) == PIPE ");
             	    }
-            	    pushFollow(FOLLOW_table_cell_in_table_row2346);
+            	    pushFollow(FOLLOW_table_cell_in_table_row2345);
             	    table_cell();
             	    _fsp--;
             	    if (failed) return row;
@@ -7349,7 +7360,7 @@ public class Creole10Parser extends Parser {
             	case 2 :
             	    // Creole10.g:706:6: tc= table_cell
             	    {
-            	    pushFollow(FOLLOW_table_cell_in_table_row2359);
+            	    pushFollow(FOLLOW_table_cell_in_table_row2358);
             	    tc=table_cell();
             	    _fsp--;
             	    if (failed) return row;
@@ -7370,7 +7381,7 @@ public class Creole10Parser extends Parser {
                 cnt87++;
             } while (true);
 
-            pushFollow(FOLLOW_table_rowseparator_in_table_row2368);
+            pushFollow(FOLLOW_table_rowseparator_in_table_row2367);
             table_rowseparator();
             _fsp--;
             if (failed) return row;
@@ -7450,7 +7461,7 @@ public class Creole10Parser extends Parser {
                         if (backtracking>0) {failed=true; return cell;}
                         throw new FailedPredicateException(input, "table_cell", " input.LA(2) == EQUAL ");
                     }
-                    pushFollow(FOLLOW_table_headercell_in_table_cell2389);
+                    pushFollow(FOLLOW_table_headercell_in_table_cell2388);
                     th=table_headercell();
                     _fsp--;
                     if (failed) return cell;
@@ -7463,7 +7474,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:711:4: tc= table_normalcell
                     {
-                    pushFollow(FOLLOW_table_normalcell_in_table_cell2400);
+                    pushFollow(FOLLOW_table_normalcell_in_table_cell2399);
                     tc=table_normalcell();
                     _fsp--;
                     if (failed) return cell;
@@ -7499,11 +7510,11 @@ public class Creole10Parser extends Parser {
             // Creole10.g:714:4: ( table_headercell_markup tc= table_cellcontent )
             // Creole10.g:714:4: table_headercell_markup tc= table_cellcontent
             {
-            pushFollow(FOLLOW_table_headercell_markup_in_table_headercell2416);
+            pushFollow(FOLLOW_table_headercell_markup_in_table_headercell2415);
             table_headercell_markup();
             _fsp--;
             if (failed) return header;
-            pushFollow(FOLLOW_table_cellcontent_in_table_headercell2423);
+            pushFollow(FOLLOW_table_cellcontent_in_table_headercell2422);
             tc=table_cellcontent();
             _fsp--;
             if (failed) return header;
@@ -7537,11 +7548,11 @@ public class Creole10Parser extends Parser {
             // Creole10.g:717:4: ( table_cell_markup tc= table_cellcontent )
             // Creole10.g:717:4: table_cell_markup tc= table_cellcontent
             {
-            pushFollow(FOLLOW_table_cell_markup_in_table_normalcell2439);
+            pushFollow(FOLLOW_table_cell_markup_in_table_normalcell2438);
             table_cell_markup();
             _fsp--;
             if (failed) return cell;
-            pushFollow(FOLLOW_table_cellcontent_in_table_normalcell2446);
+            pushFollow(FOLLOW_table_cellcontent_in_table_normalcell2445);
             tc=table_cellcontent();
             _fsp--;
             if (failed) return cell;
@@ -7575,7 +7586,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:720:4: ( onestar (tcp= table_cellcontentpart onestar )* )
             // Creole10.g:720:4: onestar (tcp= table_cellcontentpart onestar )*
             {
-            pushFollow(FOLLOW_onestar_in_table_cellcontent2462);
+            pushFollow(FOLLOW_onestar_in_table_cellcontent2461);
             onestar();
             _fsp--;
             if (failed) return items;
@@ -7594,7 +7605,7 @@ public class Creole10Parser extends Parser {
             	case 1 :
             	    // Creole10.g:720:15: tcp= table_cellcontentpart onestar
             	    {
-            	    pushFollow(FOLLOW_table_cellcontentpart_in_table_cellcontent2471);
+            	    pushFollow(FOLLOW_table_cellcontentpart_in_table_cellcontent2470);
             	    tcp=table_cellcontentpart();
             	    _fsp--;
             	    if (failed) return items;
@@ -7605,7 +7616,7 @@ public class Creole10Parser extends Parser {
             	      			}
             	      		
             	    }
-            	    pushFollow(FOLLOW_onestar_in_table_cellcontent2478);
+            	    pushFollow(FOLLOW_onestar_in_table_cellcontent2477);
             	    onestar();
             	    _fsp--;
             	    if (failed) return items;
@@ -7665,7 +7676,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:728:4: tf= table_formattedelement
                     {
-                    pushFollow(FOLLOW_table_formattedelement_in_table_cellcontentpart2499);
+                    pushFollow(FOLLOW_table_formattedelement_in_table_cellcontentpart2498);
                     tf=table_formattedelement();
                     _fsp--;
                     if (failed) return node;
@@ -7678,7 +7689,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:729:4: tu= table_unformattedelement
                     {
-                    pushFollow(FOLLOW_table_unformattedelement_in_table_cellcontentpart2510);
+                    pushFollow(FOLLOW_table_unformattedelement_in_table_cellcontentpart2509);
                     tu=table_unformattedelement();
                     _fsp--;
                     if (failed) return node;
@@ -7734,7 +7745,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:732:4: ital_markup (tic= table_italcontent )? ( ital_markup )?
                     {
-                    pushFollow(FOLLOW_ital_markup_in_table_formattedelement2526);
+                    pushFollow(FOLLOW_ital_markup_in_table_formattedelement2525);
                     ital_markup();
                     _fsp--;
                     if (failed) return content;
@@ -7858,7 +7869,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:732:20: tic= table_italcontent
                             {
-                            pushFollow(FOLLOW_table_italcontent_in_table_formattedelement2536);
+                            pushFollow(FOLLOW_table_italcontent_in_table_formattedelement2535);
                             tic=table_italcontent();
                             _fsp--;
                             if (failed) return content;
@@ -7882,7 +7893,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:732:96: ital_markup
                             {
-                            pushFollow(FOLLOW_ital_markup_in_table_formattedelement2545);
+                            pushFollow(FOLLOW_ital_markup_in_table_formattedelement2544);
                             ital_markup();
                             _fsp--;
                             if (failed) return content;
@@ -7898,7 +7909,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:733:4: bold_markup (tbc= table_boldcontent )? ( bold_markup )?
                     {
-                    pushFollow(FOLLOW_bold_markup_in_table_formattedelement2553);
+                    pushFollow(FOLLOW_bold_markup_in_table_formattedelement2552);
                     bold_markup();
                     _fsp--;
                     if (failed) return content;
@@ -8031,7 +8042,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:733:18: tbc= table_boldcontent
                             {
-                            pushFollow(FOLLOW_table_boldcontent_in_table_formattedelement2560);
+                            pushFollow(FOLLOW_table_boldcontent_in_table_formattedelement2559);
                             tbc=table_boldcontent();
                             _fsp--;
                             if (failed) return content;
@@ -8059,7 +8070,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:733:90: bold_markup
                             {
-                            pushFollow(FOLLOW_bold_markup_in_table_formattedelement2570);
+                            pushFollow(FOLLOW_bold_markup_in_table_formattedelement2569);
                             bold_markup();
                             _fsp--;
                             if (failed) return content;
@@ -8116,7 +8127,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:736:4: onestar (tb= table_boldcontentpart onestar )+
                     {
-                    pushFollow(FOLLOW_onestar_in_table_boldcontent2587);
+                    pushFollow(FOLLOW_onestar_in_table_boldcontent2586);
                     onestar();
                     _fsp--;
                     if (failed) return items;
@@ -8239,14 +8250,14 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:736:15: tb= table_boldcontentpart onestar
                     	    {
-                    	    pushFollow(FOLLOW_table_boldcontentpart_in_table_boldcontent2596);
+                    	    pushFollow(FOLLOW_table_boldcontentpart_in_table_boldcontent2595);
                     	    tb=table_boldcontentpart();
                     	    _fsp--;
                     	    if (failed) return items;
                     	    if ( backtracking==0 ) {
                     	       items.add(tb); 
                     	    }
-                    	    pushFollow(FOLLOW_onestar_in_table_boldcontent2601);
+                    	    pushFollow(FOLLOW_onestar_in_table_boldcontent2600);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return items;
@@ -8270,7 +8281,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:737:4: EOF
                     {
-                    match(input,EOF,FOLLOW_EOF_in_table_boldcontent2609); if (failed) return items;
+                    match(input,EOF,FOLLOW_EOF_in_table_boldcontent2608); if (failed) return items;
 
                     }
                     break;
@@ -8318,7 +8329,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:740:4: onestar (ti= table_italcontentpart onestar )+
                     {
-                    pushFollow(FOLLOW_onestar_in_table_italcontent2623);
+                    pushFollow(FOLLOW_onestar_in_table_italcontent2622);
                     onestar();
                     _fsp--;
                     if (failed) return items;
@@ -8441,14 +8452,14 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:740:15: ti= table_italcontentpart onestar
                     	    {
-                    	    pushFollow(FOLLOW_table_italcontentpart_in_table_italcontent2632);
+                    	    pushFollow(FOLLOW_table_italcontentpart_in_table_italcontent2631);
                     	    ti=table_italcontentpart();
                     	    _fsp--;
                     	    if (failed) return items;
                     	    if ( backtracking==0 ) {
                     	       items.add(ti); 
                     	    }
-                    	    pushFollow(FOLLOW_onestar_in_table_italcontent2637);
+                    	    pushFollow(FOLLOW_onestar_in_table_italcontent2636);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return items;
@@ -8472,7 +8483,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:741:4: EOF
                     {
-                    match(input,EOF,FOLLOW_EOF_in_table_italcontent2645); if (failed) return items;
+                    match(input,EOF,FOLLOW_EOF_in_table_italcontent2644); if (failed) return items;
 
                     }
                     break;
@@ -8522,7 +8533,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:744:4: tf= table_formattedcontent
                     {
-                    pushFollow(FOLLOW_table_formattedcontent_in_table_boldcontentpart2663);
+                    pushFollow(FOLLOW_table_formattedcontent_in_table_boldcontentpart2662);
                     tf=table_formattedcontent();
                     _fsp--;
                     if (failed) return node;
@@ -8535,11 +8546,11 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:745:4: ital_markup tb= table_bolditalcontent ( ital_markup )?
                     {
-                    pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2670);
+                    pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2669);
                     ital_markup();
                     _fsp--;
                     if (failed) return node;
-                    pushFollow(FOLLOW_table_bolditalcontent_in_table_boldcontentpart2677);
+                    pushFollow(FOLLOW_table_bolditalcontent_in_table_boldcontentpart2676);
                     tb=table_bolditalcontent();
                     _fsp--;
                     if (failed) return node;
@@ -8557,7 +8568,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:745:94: ital_markup
                             {
-                            pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2684);
+                            pushFollow(FOLLOW_ital_markup_in_table_boldcontentpart2683);
                             ital_markup();
                             _fsp--;
                             if (failed) return node;
@@ -8616,11 +8627,11 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:748:4: bold_markup tb= table_bolditalcontent ( bold_markup )?
                     {
-                    pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2701);
+                    pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2700);
                     bold_markup();
                     _fsp--;
                     if (failed) return node;
-                    pushFollow(FOLLOW_table_bolditalcontent_in_table_italcontentpart2708);
+                    pushFollow(FOLLOW_table_bolditalcontent_in_table_italcontentpart2707);
                     tb=table_bolditalcontent();
                     _fsp--;
                     if (failed) return node;
@@ -8642,7 +8653,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:748:90: bold_markup
                             {
-                            pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2715);
+                            pushFollow(FOLLOW_bold_markup_in_table_italcontentpart2714);
                             bold_markup();
                             _fsp--;
                             if (failed) return node;
@@ -8658,7 +8669,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:749:4: tf= table_formattedcontent
                     {
-                    pushFollow(FOLLOW_table_formattedcontent_in_table_italcontentpart2727);
+                    pushFollow(FOLLOW_table_formattedcontent_in_table_italcontentpart2726);
                     tf=table_formattedcontent();
                     _fsp--;
                     if (failed) return node;
@@ -8712,7 +8723,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:752:4: onestar (tfc= table_formattedcontent onestar )?
                     {
-                    pushFollow(FOLLOW_onestar_in_table_bolditalcontent2743);
+                    pushFollow(FOLLOW_onestar_in_table_bolditalcontent2742);
                     onestar();
                     _fsp--;
                     if (failed) return elements;
@@ -8826,14 +8837,14 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:752:15: tfc= table_formattedcontent onestar
                             {
-                            pushFollow(FOLLOW_table_formattedcontent_in_table_bolditalcontent2752);
+                            pushFollow(FOLLOW_table_formattedcontent_in_table_bolditalcontent2751);
                             tfc=table_formattedcontent();
                             _fsp--;
                             if (failed) return elements;
                             if ( backtracking==0 ) {
                                elements = tfc; 
                             }
-                            pushFollow(FOLLOW_onestar_in_table_bolditalcontent2757);
+                            pushFollow(FOLLOW_onestar_in_table_bolditalcontent2756);
                             onestar();
                             _fsp--;
                             if (failed) return elements;
@@ -8849,7 +8860,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:753:4: EOF
                     {
-                    match(input,EOF,FOLLOW_EOF_in_table_bolditalcontent2765); if (failed) return elements;
+                    match(input,EOF,FOLLOW_EOF_in_table_bolditalcontent2764); if (failed) return elements;
 
                     }
                     break;
@@ -8993,7 +9004,7 @@ public class Creole10Parser extends Parser {
             	case 1 :
             	    // Creole10.g:756:6: tu= table_unformattedelement
             	    {
-            	    pushFollow(FOLLOW_table_unformattedelement_in_table_formattedcontent2785);
+            	    pushFollow(FOLLOW_table_unformattedelement_in_table_formattedcontent2784);
             	    tu=table_unformattedelement();
             	    _fsp--;
             	    if (failed) return elements;
@@ -9061,7 +9072,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:759:4: tu= table_unformatted
                     {
-                    pushFollow(FOLLOW_table_unformatted_in_table_unformattedelement2808);
+                    pushFollow(FOLLOW_table_unformatted_in_table_unformattedelement2807);
                     tu=table_unformatted();
                     _fsp--;
                     if (failed) return content;
@@ -9074,7 +9085,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:760:4: ti= table_inlineelement
                     {
-                    pushFollow(FOLLOW_table_inlineelement_in_table_unformattedelement2820);
+                    pushFollow(FOLLOW_table_inlineelement_in_table_unformattedelement2819);
                     ti=table_inlineelement();
                     _fsp--;
                     if (failed) return content;
@@ -9148,7 +9159,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:763:4: l= link
                     {
-                    pushFollow(FOLLOW_link_in_table_inlineelement2840);
+                    pushFollow(FOLLOW_link_in_table_inlineelement2839);
                     l=link();
                     _fsp--;
                     if (failed) return element;
@@ -9161,7 +9172,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:764:4: i= image
                     {
-                    pushFollow(FOLLOW_image_in_table_inlineelement2850);
+                    pushFollow(FOLLOW_image_in_table_inlineelement2849);
                     i=image();
                     _fsp--;
                     if (failed) return element;
@@ -9174,7 +9185,7 @@ public class Creole10Parser extends Parser {
                 case 3 :
                     // Creole10.g:765:4: e= extension
                     {
-                    pushFollow(FOLLOW_extension_in_table_inlineelement2861);
+                    pushFollow(FOLLOW_extension_in_table_inlineelement2860);
                     e=extension();
                     _fsp--;
                     if (failed) return element;
@@ -9187,7 +9198,7 @@ public class Creole10Parser extends Parser {
                 case 4 :
                     // Creole10.g:766:4: nw= nowiki_inline
                     {
-                    pushFollow(FOLLOW_nowiki_inline_in_table_inlineelement2871);
+                    pushFollow(FOLLOW_nowiki_inline_in_table_inlineelement2870);
                     nw=nowiki_inline();
                     _fsp--;
                     if (failed) return element;
@@ -9243,7 +9254,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:769:5: t= table_unformatted_text
                     {
-                    pushFollow(FOLLOW_table_unformatted_text_in_table_unformatted2892);
+                    pushFollow(FOLLOW_table_unformatted_text_in_table_unformatted2891);
                     t=table_unformatted_text();
                     _fsp--;
                     if (failed) return text;
@@ -9275,7 +9286,7 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:770:6: forced_linebreak
                     	    {
-                    	    pushFollow(FOLLOW_forced_linebreak_in_table_unformatted2901);
+                    	    pushFollow(FOLLOW_forced_linebreak_in_table_unformatted2900);
                     	    forced_linebreak();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -9288,7 +9299,7 @@ public class Creole10Parser extends Parser {
                     	case 2 :
                     	    // Creole10.g:771:5: e= escaped
                     	    {
-                    	    pushFollow(FOLLOW_escaped_in_table_unformatted2913);
+                    	    pushFollow(FOLLOW_escaped_in_table_unformatted2912);
                     	    e=escaped();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -9362,7 +9373,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return text;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_table_unformatted_text2939);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_table_unformatted_text2938);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -9409,22 +9420,22 @@ public class Creole10Parser extends Parser {
             // Creole10.g:790:4: ( nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator )
             // Creole10.g:790:4: nowikiblock_open_markup contents= nowiki_block_contents nowikiblock_close_markup paragraph_separator
             {
-            pushFollow(FOLLOW_nowikiblock_open_markup_in_nowiki_block3036);
+            pushFollow(FOLLOW_nowikiblock_open_markup_in_nowiki_block3035);
             nowikiblock_open_markup();
             _fsp--;
             if (failed) return nowikiNode;
-            pushFollow(FOLLOW_nowiki_block_contents_in_nowiki_block3043);
+            pushFollow(FOLLOW_nowiki_block_contents_in_nowiki_block3042);
             contents=nowiki_block_contents();
             _fsp--;
             if (failed) return nowikiNode;
             if ( backtracking==0 ) {
               nowikiNode = new NoWikiSectionNode(input.toString(contents.start,contents.stop).toString());
             }
-            pushFollow(FOLLOW_nowikiblock_close_markup_in_nowiki_block3049);
+            pushFollow(FOLLOW_nowikiblock_close_markup_in_nowiki_block3048);
             nowikiblock_close_markup();
             _fsp--;
             if (failed) return nowikiNode;
-            pushFollow(FOLLOW_paragraph_separator_in_nowiki_block3052);
+            pushFollow(FOLLOW_paragraph_separator_in_nowiki_block3051);
             paragraph_separator();
             _fsp--;
             if (failed) return nowikiNode;
@@ -9450,11 +9461,11 @@ public class Creole10Parser extends Parser {
             // Creole10.g:795:4: ( nowiki_open_markup newline )
             // Creole10.g:795:4: nowiki_open_markup newline
             {
-            pushFollow(FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3063);
+            pushFollow(FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3062);
             nowiki_open_markup();
             _fsp--;
             if (failed) return ;
-            pushFollow(FOLLOW_newline_in_nowikiblock_open_markup3066);
+            pushFollow(FOLLOW_newline_in_nowikiblock_open_markup3065);
             newline();
             _fsp--;
             if (failed) return ;
@@ -9480,7 +9491,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:799:4: ( NOWIKI_BLOCK_CLOSE )
             // Creole10.g:799:4: NOWIKI_BLOCK_CLOSE
             {
-            match(input,NOWIKI_BLOCK_CLOSE,FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3077); if (failed) return ;
+            match(input,NOWIKI_BLOCK_CLOSE,FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3076); if (failed) return ;
 
             }
 
@@ -9508,15 +9519,15 @@ public class Creole10Parser extends Parser {
             // Creole10.g:803:4: ( nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup )
             // Creole10.g:803:4: nowiki_open_markup t= nowiki_inline_contents nowiki_close_markup
             {
-            pushFollow(FOLLOW_nowiki_open_markup_in_nowiki_inline3092);
+            pushFollow(FOLLOW_nowiki_open_markup_in_nowiki_inline3091);
             nowiki_open_markup();
             _fsp--;
             if (failed) return nowiki;
-            pushFollow(FOLLOW_nowiki_inline_contents_in_nowiki_inline3099);
+            pushFollow(FOLLOW_nowiki_inline_contents_in_nowiki_inline3098);
             t=nowiki_inline_contents();
             _fsp--;
             if (failed) return nowiki;
-            pushFollow(FOLLOW_nowiki_close_markup_in_nowiki_inline3103);
+            pushFollow(FOLLOW_nowiki_close_markup_in_nowiki_inline3102);
             nowiki_close_markup();
             _fsp--;
             if (failed) return nowiki;
@@ -9577,7 +9588,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return retval;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_block_contents3121);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_block_contents3120);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -9644,7 +9655,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return text;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_inline_contents3154);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_nowiki_inline_contents3153);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -9683,7 +9694,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:819:4: ( horizontalrule_markup ( blanks )? paragraph_separator )
             // Creole10.g:819:4: horizontalrule_markup ( blanks )? paragraph_separator
             {
-            pushFollow(FOLLOW_horizontalrule_markup_in_horizontalrule3190);
+            pushFollow(FOLLOW_horizontalrule_markup_in_horizontalrule3189);
             horizontalrule_markup();
             _fsp--;
             if (failed) return horizontal;
@@ -9698,7 +9709,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:819:29: blanks
                     {
-                    pushFollow(FOLLOW_blanks_in_horizontalrule3195);
+                    pushFollow(FOLLOW_blanks_in_horizontalrule3194);
                     blanks();
                     _fsp--;
                     if (failed) return horizontal;
@@ -9708,7 +9719,7 @@ public class Creole10Parser extends Parser {
 
             }
 
-            pushFollow(FOLLOW_paragraph_separator_in_horizontalrule3201);
+            pushFollow(FOLLOW_paragraph_separator_in_horizontalrule3200);
             paragraph_separator();
             _fsp--;
             if (failed) return horizontal;
@@ -9744,11 +9755,11 @@ public class Creole10Parser extends Parser {
             // Creole10.g:827:4: ( link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup )
             // Creole10.g:827:4: link_open_markup a= link_address ( link_description_markup d= link_description )? link_close_markup
             {
-            pushFollow(FOLLOW_link_open_markup_in_link3222);
+            pushFollow(FOLLOW_link_open_markup_in_link3221);
             link_open_markup();
             _fsp--;
             if (failed) return link;
-            pushFollow(FOLLOW_link_address_in_link3228);
+            pushFollow(FOLLOW_link_address_in_link3227);
             a=link_address();
             _fsp--;
             if (failed) return link;
@@ -9766,11 +9777,11 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:827:60: link_description_markup d= link_description
                     {
-                    pushFollow(FOLLOW_link_description_markup_in_link3234);
+                    pushFollow(FOLLOW_link_description_markup_in_link3233);
                     link_description_markup();
                     _fsp--;
                     if (failed) return link;
-                    pushFollow(FOLLOW_link_description_in_link3242);
+                    pushFollow(FOLLOW_link_description_in_link3241);
                     d=link_description();
                     _fsp--;
                     if (failed) return link;
@@ -9789,7 +9800,7 @@ public class Creole10Parser extends Parser {
 
             }
 
-            pushFollow(FOLLOW_link_close_markup_in_link3250);
+            pushFollow(FOLLOW_link_close_markup_in_link3249);
             link_close_markup();
             _fsp--;
             if (failed) return link;
@@ -12576,12 +12587,12 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:838:4: li= link_interwiki_uri ':' p= link_interwiki_pagename
                     {
-                    pushFollow(FOLLOW_link_interwiki_uri_in_link_address3269);
+                    pushFollow(FOLLOW_link_interwiki_uri_in_link_address3268);
                     li=link_interwiki_uri();
                     _fsp--;
                     if (failed) return link;
-                    match(input,41,FOLLOW_41_in_link_address3272); if (failed) return link;
-                    pushFollow(FOLLOW_link_interwiki_pagename_in_link_address3279);
+                    match(input,41,FOLLOW_41_in_link_address3271); if (failed) return link;
+                    pushFollow(FOLLOW_link_interwiki_pagename_in_link_address3278);
                     p=link_interwiki_pagename();
                     _fsp--;
                     if (failed) return link;
@@ -12597,7 +12608,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:842:4: lu= link_uri
                     {
-                    pushFollow(FOLLOW_link_uri_in_link_address3290);
+                    pushFollow(FOLLOW_link_uri_in_link_address3289);
                     lu=link_uri();
                     _fsp--;
                     if (failed) return link;
@@ -12796,8 +12807,8 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:845:4: 'C' '2'
                     {
-                    match(input,42,FOLLOW_42_in_link_interwiki_uri3306); if (failed) return interwiki;
-                    match(input,43,FOLLOW_43_in_link_interwiki_uri3308); if (failed) return interwiki;
+                    match(input,42,FOLLOW_42_in_link_interwiki_uri3305); if (failed) return interwiki;
+                    match(input,43,FOLLOW_43_in_link_interwiki_uri3307); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new C2InterwikiLinkNode(); 
                     }
@@ -12807,14 +12818,14 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:846:4: 'D' 'o' 'k' 'u' 'W' 'i' 'k' 'i'
                     {
-                    match(input,44,FOLLOW_44_in_link_interwiki_uri3315); if (failed) return interwiki;
-                    match(input,45,FOLLOW_45_in_link_interwiki_uri3317); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3319); if (failed) return interwiki;
-                    match(input,47,FOLLOW_47_in_link_interwiki_uri3321); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3323); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3325); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3327); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3329); if (failed) return interwiki;
+                    match(input,44,FOLLOW_44_in_link_interwiki_uri3314); if (failed) return interwiki;
+                    match(input,45,FOLLOW_45_in_link_interwiki_uri3316); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3318); if (failed) return interwiki;
+                    match(input,47,FOLLOW_47_in_link_interwiki_uri3320); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3322); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3324); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3326); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3328); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new DokuWikiInterwikiLinkNode(); 
                     }
@@ -12824,12 +12835,12 @@ public class Creole10Parser extends Parser {
                 case 3 :
                     // Creole10.g:847:4: 'F' 'l' 'i' 'c' 'k' 'r'
                     {
-                    match(input,50,FOLLOW_50_in_link_interwiki_uri3336); if (failed) return interwiki;
-                    match(input,51,FOLLOW_51_in_link_interwiki_uri3338); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3340); if (failed) return interwiki;
-                    match(input,52,FOLLOW_52_in_link_interwiki_uri3342); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3344); if (failed) return interwiki;
-                    match(input,53,FOLLOW_53_in_link_interwiki_uri3346); if (failed) return interwiki;
+                    match(input,50,FOLLOW_50_in_link_interwiki_uri3335); if (failed) return interwiki;
+                    match(input,51,FOLLOW_51_in_link_interwiki_uri3337); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3339); if (failed) return interwiki;
+                    match(input,52,FOLLOW_52_in_link_interwiki_uri3341); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3343); if (failed) return interwiki;
+                    match(input,53,FOLLOW_53_in_link_interwiki_uri3345); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new FlickrInterwikiLinkNode(); 
                     }
@@ -12839,12 +12850,12 @@ public class Creole10Parser extends Parser {
                 case 4 :
                     // Creole10.g:848:4: 'G' 'o' 'o' 'g' 'l' 'e'
                     {
-                    match(input,54,FOLLOW_54_in_link_interwiki_uri3354); if (failed) return interwiki;
-                    match(input,45,FOLLOW_45_in_link_interwiki_uri3356); if (failed) return interwiki;
-                    match(input,45,FOLLOW_45_in_link_interwiki_uri3358); if (failed) return interwiki;
-                    match(input,55,FOLLOW_55_in_link_interwiki_uri3360); if (failed) return interwiki;
-                    match(input,51,FOLLOW_51_in_link_interwiki_uri3362); if (failed) return interwiki;
-                    match(input,56,FOLLOW_56_in_link_interwiki_uri3364); if (failed) return interwiki;
+                    match(input,54,FOLLOW_54_in_link_interwiki_uri3353); if (failed) return interwiki;
+                    match(input,45,FOLLOW_45_in_link_interwiki_uri3355); if (failed) return interwiki;
+                    match(input,45,FOLLOW_45_in_link_interwiki_uri3357); if (failed) return interwiki;
+                    match(input,55,FOLLOW_55_in_link_interwiki_uri3359); if (failed) return interwiki;
+                    match(input,51,FOLLOW_51_in_link_interwiki_uri3361); if (failed) return interwiki;
+                    match(input,56,FOLLOW_56_in_link_interwiki_uri3363); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new GoogleInterwikiLinkNode(); 
                     }
@@ -12854,13 +12865,13 @@ public class Creole10Parser extends Parser {
                 case 5 :
                     // Creole10.g:849:4: 'J' 'S' 'P' 'W' 'i' 'k' 'i'
                     {
-                    match(input,57,FOLLOW_57_in_link_interwiki_uri3371); if (failed) return interwiki;
-                    match(input,58,FOLLOW_58_in_link_interwiki_uri3373); if (failed) return interwiki;
-                    match(input,59,FOLLOW_59_in_link_interwiki_uri3375); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3377); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3379); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3381); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3383); if (failed) return interwiki;
+                    match(input,57,FOLLOW_57_in_link_interwiki_uri3370); if (failed) return interwiki;
+                    match(input,58,FOLLOW_58_in_link_interwiki_uri3372); if (failed) return interwiki;
+                    match(input,59,FOLLOW_59_in_link_interwiki_uri3374); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3376); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3378); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3380); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3382); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new JSPWikiInterwikiLinkNode(); 
                     }
@@ -12870,14 +12881,14 @@ public class Creole10Parser extends Parser {
                 case 6 :
                     // Creole10.g:850:4: 'M' 'e' 'a' 't' 'b' 'a' 'l' 'l'
                     {
-                    match(input,60,FOLLOW_60_in_link_interwiki_uri3390); if (failed) return interwiki;
-                    match(input,56,FOLLOW_56_in_link_interwiki_uri3392); if (failed) return interwiki;
-                    match(input,61,FOLLOW_61_in_link_interwiki_uri3394); if (failed) return interwiki;
-                    match(input,62,FOLLOW_62_in_link_interwiki_uri3396); if (failed) return interwiki;
-                    match(input,63,FOLLOW_63_in_link_interwiki_uri3398); if (failed) return interwiki;
-                    match(input,61,FOLLOW_61_in_link_interwiki_uri3400); if (failed) return interwiki;
-                    match(input,51,FOLLOW_51_in_link_interwiki_uri3402); if (failed) return interwiki;
-                    match(input,51,FOLLOW_51_in_link_interwiki_uri3404); if (failed) return interwiki;
+                    match(input,60,FOLLOW_60_in_link_interwiki_uri3389); if (failed) return interwiki;
+                    match(input,56,FOLLOW_56_in_link_interwiki_uri3391); if (failed) return interwiki;
+                    match(input,61,FOLLOW_61_in_link_interwiki_uri3393); if (failed) return interwiki;
+                    match(input,62,FOLLOW_62_in_link_interwiki_uri3395); if (failed) return interwiki;
+                    match(input,63,FOLLOW_63_in_link_interwiki_uri3397); if (failed) return interwiki;
+                    match(input,61,FOLLOW_61_in_link_interwiki_uri3399); if (failed) return interwiki;
+                    match(input,51,FOLLOW_51_in_link_interwiki_uri3401); if (failed) return interwiki;
+                    match(input,51,FOLLOW_51_in_link_interwiki_uri3403); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new MeatballInterwikiLinkNode(); 
                     }
@@ -12887,15 +12898,15 @@ public class Creole10Parser extends Parser {
                 case 7 :
                     // Creole10.g:851:4: 'M' 'e' 'd' 'i' 'a' 'W' 'i' 'k' 'i'
                     {
-                    match(input,60,FOLLOW_60_in_link_interwiki_uri3411); if (failed) return interwiki;
-                    match(input,56,FOLLOW_56_in_link_interwiki_uri3413); if (failed) return interwiki;
-                    match(input,64,FOLLOW_64_in_link_interwiki_uri3415); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3417); if (failed) return interwiki;
-                    match(input,61,FOLLOW_61_in_link_interwiki_uri3419); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3421); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3423); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3425); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3427); if (failed) return interwiki;
+                    match(input,60,FOLLOW_60_in_link_interwiki_uri3410); if (failed) return interwiki;
+                    match(input,56,FOLLOW_56_in_link_interwiki_uri3412); if (failed) return interwiki;
+                    match(input,64,FOLLOW_64_in_link_interwiki_uri3414); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3416); if (failed) return interwiki;
+                    match(input,61,FOLLOW_61_in_link_interwiki_uri3418); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3420); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3422); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3424); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3426); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new MediaWikiInterwikiLinkNode(); 
                     }
@@ -12905,14 +12916,14 @@ public class Creole10Parser extends Parser {
                 case 8 :
                     // Creole10.g:852:4: 'M' 'o' 'i' 'n' 'M' 'o' 'i' 'n'
                     {
-                    match(input,60,FOLLOW_60_in_link_interwiki_uri3434); if (failed) return interwiki;
-                    match(input,45,FOLLOW_45_in_link_interwiki_uri3436); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3438); if (failed) return interwiki;
-                    match(input,65,FOLLOW_65_in_link_interwiki_uri3440); if (failed) return interwiki;
-                    match(input,60,FOLLOW_60_in_link_interwiki_uri3442); if (failed) return interwiki;
-                    match(input,45,FOLLOW_45_in_link_interwiki_uri3444); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3446); if (failed) return interwiki;
-                    match(input,65,FOLLOW_65_in_link_interwiki_uri3448); if (failed) return interwiki;
+                    match(input,60,FOLLOW_60_in_link_interwiki_uri3433); if (failed) return interwiki;
+                    match(input,45,FOLLOW_45_in_link_interwiki_uri3435); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3437); if (failed) return interwiki;
+                    match(input,65,FOLLOW_65_in_link_interwiki_uri3439); if (failed) return interwiki;
+                    match(input,60,FOLLOW_60_in_link_interwiki_uri3441); if (failed) return interwiki;
+                    match(input,45,FOLLOW_45_in_link_interwiki_uri3443); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3445); if (failed) return interwiki;
+                    match(input,65,FOLLOW_65_in_link_interwiki_uri3447); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new MoinMoinInterwikiLinkNode(); 
                     }
@@ -12922,13 +12933,13 @@ public class Creole10Parser extends Parser {
                 case 9 :
                     // Creole10.g:853:4: 'O' 'd' 'd' 'm' 'u' 's' 'e'
                     {
-                    match(input,66,FOLLOW_66_in_link_interwiki_uri3456); if (failed) return interwiki;
-                    match(input,64,FOLLOW_64_in_link_interwiki_uri3458); if (failed) return interwiki;
-                    match(input,64,FOLLOW_64_in_link_interwiki_uri3460); if (failed) return interwiki;
-                    match(input,67,FOLLOW_67_in_link_interwiki_uri3462); if (failed) return interwiki;
-                    match(input,47,FOLLOW_47_in_link_interwiki_uri3464); if (failed) return interwiki;
-                    match(input,68,FOLLOW_68_in_link_interwiki_uri3466); if (failed) return interwiki;
-                    match(input,56,FOLLOW_56_in_link_interwiki_uri3468); if (failed) return interwiki;
+                    match(input,66,FOLLOW_66_in_link_interwiki_uri3455); if (failed) return interwiki;
+                    match(input,64,FOLLOW_64_in_link_interwiki_uri3457); if (failed) return interwiki;
+                    match(input,64,FOLLOW_64_in_link_interwiki_uri3459); if (failed) return interwiki;
+                    match(input,67,FOLLOW_67_in_link_interwiki_uri3461); if (failed) return interwiki;
+                    match(input,47,FOLLOW_47_in_link_interwiki_uri3463); if (failed) return interwiki;
+                    match(input,68,FOLLOW_68_in_link_interwiki_uri3465); if (failed) return interwiki;
+                    match(input,56,FOLLOW_56_in_link_interwiki_uri3467); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new OddmuseInterwikiLinkNode(); 
                     }
@@ -12938,11 +12949,11 @@ public class Creole10Parser extends Parser {
                 case 10 :
                     // Creole10.g:854:4: 'O' 'h' 'a' 'n' 'a'
                     {
-                    match(input,66,FOLLOW_66_in_link_interwiki_uri3476); if (failed) return interwiki;
-                    match(input,69,FOLLOW_69_in_link_interwiki_uri3478); if (failed) return interwiki;
-                    match(input,61,FOLLOW_61_in_link_interwiki_uri3480); if (failed) return interwiki;
-                    match(input,65,FOLLOW_65_in_link_interwiki_uri3482); if (failed) return interwiki;
-                    match(input,61,FOLLOW_61_in_link_interwiki_uri3484); if (failed) return interwiki;
+                    match(input,66,FOLLOW_66_in_link_interwiki_uri3475); if (failed) return interwiki;
+                    match(input,69,FOLLOW_69_in_link_interwiki_uri3477); if (failed) return interwiki;
+                    match(input,61,FOLLOW_61_in_link_interwiki_uri3479); if (failed) return interwiki;
+                    match(input,65,FOLLOW_65_in_link_interwiki_uri3481); if (failed) return interwiki;
+                    match(input,61,FOLLOW_61_in_link_interwiki_uri3483); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new OhanaInterwikiLinkNode(); 
                     }
@@ -12952,12 +12963,12 @@ public class Creole10Parser extends Parser {
                 case 11 :
                     // Creole10.g:855:4: 'P' 'm' 'W' 'i' 'k' 'i'
                     {
-                    match(input,59,FOLLOW_59_in_link_interwiki_uri3491); if (failed) return interwiki;
-                    match(input,67,FOLLOW_67_in_link_interwiki_uri3493); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3495); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3497); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3499); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3501); if (failed) return interwiki;
+                    match(input,59,FOLLOW_59_in_link_interwiki_uri3490); if (failed) return interwiki;
+                    match(input,67,FOLLOW_67_in_link_interwiki_uri3492); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3494); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3496); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3498); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3500); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new PmWikiInterwikiLinkNode(); 
                     }
@@ -12967,14 +12978,14 @@ public class Creole10Parser extends Parser {
                 case 12 :
                     // Creole10.g:856:4: 'P' 'u' 'k' 'i' 'W' 'i' 'k' 'i'
                     {
-                    match(input,59,FOLLOW_59_in_link_interwiki_uri3509); if (failed) return interwiki;
-                    match(input,47,FOLLOW_47_in_link_interwiki_uri3511); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3513); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3515); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3517); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3519); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3521); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3523); if (failed) return interwiki;
+                    match(input,59,FOLLOW_59_in_link_interwiki_uri3508); if (failed) return interwiki;
+                    match(input,47,FOLLOW_47_in_link_interwiki_uri3510); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3512); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3514); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3516); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3518); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3520); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3522); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new PukiWikiInterwikiLinkNode(); 
                     }
@@ -12984,16 +12995,16 @@ public class Creole10Parser extends Parser {
                 case 13 :
                     // Creole10.g:857:4: 'P' 'u' 'r' 'p' 'l' 'e' 'W' 'i' 'k' 'i'
                     {
-                    match(input,59,FOLLOW_59_in_link_interwiki_uri3531); if (failed) return interwiki;
-                    match(input,47,FOLLOW_47_in_link_interwiki_uri3533); if (failed) return interwiki;
-                    match(input,53,FOLLOW_53_in_link_interwiki_uri3535); if (failed) return interwiki;
-                    match(input,70,FOLLOW_70_in_link_interwiki_uri3537); if (failed) return interwiki;
-                    match(input,51,FOLLOW_51_in_link_interwiki_uri3539); if (failed) return interwiki;
-                    match(input,56,FOLLOW_56_in_link_interwiki_uri3541); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3543); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3545); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3547); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3549); if (failed) return interwiki;
+                    match(input,59,FOLLOW_59_in_link_interwiki_uri3530); if (failed) return interwiki;
+                    match(input,47,FOLLOW_47_in_link_interwiki_uri3532); if (failed) return interwiki;
+                    match(input,53,FOLLOW_53_in_link_interwiki_uri3534); if (failed) return interwiki;
+                    match(input,70,FOLLOW_70_in_link_interwiki_uri3536); if (failed) return interwiki;
+                    match(input,51,FOLLOW_51_in_link_interwiki_uri3538); if (failed) return interwiki;
+                    match(input,56,FOLLOW_56_in_link_interwiki_uri3540); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3542); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3544); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3546); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3548); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new PurpleWikiInterwikiLinkNode(); 
                     }
@@ -13003,12 +13014,12 @@ public class Creole10Parser extends Parser {
                 case 14 :
                     // Creole10.g:858:4: 'R' 'a' 'd' 'e' 'o' 'x'
                     {
-                    match(input,71,FOLLOW_71_in_link_interwiki_uri3556); if (failed) return interwiki;
-                    match(input,61,FOLLOW_61_in_link_interwiki_uri3558); if (failed) return interwiki;
-                    match(input,64,FOLLOW_64_in_link_interwiki_uri3560); if (failed) return interwiki;
-                    match(input,56,FOLLOW_56_in_link_interwiki_uri3562); if (failed) return interwiki;
-                    match(input,45,FOLLOW_45_in_link_interwiki_uri3564); if (failed) return interwiki;
-                    match(input,72,FOLLOW_72_in_link_interwiki_uri3566); if (failed) return interwiki;
+                    match(input,71,FOLLOW_71_in_link_interwiki_uri3555); if (failed) return interwiki;
+                    match(input,61,FOLLOW_61_in_link_interwiki_uri3557); if (failed) return interwiki;
+                    match(input,64,FOLLOW_64_in_link_interwiki_uri3559); if (failed) return interwiki;
+                    match(input,56,FOLLOW_56_in_link_interwiki_uri3561); if (failed) return interwiki;
+                    match(input,45,FOLLOW_45_in_link_interwiki_uri3563); if (failed) return interwiki;
+                    match(input,72,FOLLOW_72_in_link_interwiki_uri3565); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new RadeoxInterwikiLinkNode(); 
                     }
@@ -13018,14 +13029,14 @@ public class Creole10Parser extends Parser {
                 case 15 :
                     // Creole10.g:859:4: 'S' 'n' 'i' 'p' 'S' 'n' 'a' 'p'
                     {
-                    match(input,58,FOLLOW_58_in_link_interwiki_uri3573); if (failed) return interwiki;
-                    match(input,65,FOLLOW_65_in_link_interwiki_uri3575); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3577); if (failed) return interwiki;
-                    match(input,70,FOLLOW_70_in_link_interwiki_uri3579); if (failed) return interwiki;
-                    match(input,58,FOLLOW_58_in_link_interwiki_uri3581); if (failed) return interwiki;
-                    match(input,65,FOLLOW_65_in_link_interwiki_uri3583); if (failed) return interwiki;
-                    match(input,61,FOLLOW_61_in_link_interwiki_uri3585); if (failed) return interwiki;
-                    match(input,70,FOLLOW_70_in_link_interwiki_uri3587); if (failed) return interwiki;
+                    match(input,58,FOLLOW_58_in_link_interwiki_uri3572); if (failed) return interwiki;
+                    match(input,65,FOLLOW_65_in_link_interwiki_uri3574); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3576); if (failed) return interwiki;
+                    match(input,70,FOLLOW_70_in_link_interwiki_uri3578); if (failed) return interwiki;
+                    match(input,58,FOLLOW_58_in_link_interwiki_uri3580); if (failed) return interwiki;
+                    match(input,65,FOLLOW_65_in_link_interwiki_uri3582); if (failed) return interwiki;
+                    match(input,61,FOLLOW_61_in_link_interwiki_uri3584); if (failed) return interwiki;
+                    match(input,70,FOLLOW_70_in_link_interwiki_uri3586); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new SnipSnapInterwikiLinkNode(); 
                     }
@@ -13035,16 +13046,16 @@ public class Creole10Parser extends Parser {
                 case 16 :
                     // Creole10.g:860:4: 'T' 'i' 'd' 'd' 'l' 'y' 'W' 'i' 'k' 'i'
                     {
-                    match(input,73,FOLLOW_73_in_link_interwiki_uri3594); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3596); if (failed) return interwiki;
-                    match(input,64,FOLLOW_64_in_link_interwiki_uri3598); if (failed) return interwiki;
-                    match(input,64,FOLLOW_64_in_link_interwiki_uri3600); if (failed) return interwiki;
-                    match(input,51,FOLLOW_51_in_link_interwiki_uri3602); if (failed) return interwiki;
-                    match(input,74,FOLLOW_74_in_link_interwiki_uri3604); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3606); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3608); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3610); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3612); if (failed) return interwiki;
+                    match(input,73,FOLLOW_73_in_link_interwiki_uri3593); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3595); if (failed) return interwiki;
+                    match(input,64,FOLLOW_64_in_link_interwiki_uri3597); if (failed) return interwiki;
+                    match(input,64,FOLLOW_64_in_link_interwiki_uri3599); if (failed) return interwiki;
+                    match(input,51,FOLLOW_51_in_link_interwiki_uri3601); if (failed) return interwiki;
+                    match(input,74,FOLLOW_74_in_link_interwiki_uri3603); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3605); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3607); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3609); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3611); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new TiddlyWikiInterwikiLinkNode(); 
                     }
@@ -13054,11 +13065,11 @@ public class Creole10Parser extends Parser {
                 case 17 :
                     // Creole10.g:861:4: 'T' 'W' 'i' 'k' 'i'
                     {
-                    match(input,73,FOLLOW_73_in_link_interwiki_uri3619); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3621); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3623); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3625); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3627); if (failed) return interwiki;
+                    match(input,73,FOLLOW_73_in_link_interwiki_uri3618); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3620); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3622); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3624); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3626); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new TWikiInterwikiLinkNode(); 
                     }
@@ -13068,12 +13079,12 @@ public class Creole10Parser extends Parser {
                 case 18 :
                     // Creole10.g:862:4: 'U' 's' 'e' 'm' 'o' 'd'
                     {
-                    match(input,75,FOLLOW_75_in_link_interwiki_uri3634); if (failed) return interwiki;
-                    match(input,68,FOLLOW_68_in_link_interwiki_uri3636); if (failed) return interwiki;
-                    match(input,56,FOLLOW_56_in_link_interwiki_uri3638); if (failed) return interwiki;
-                    match(input,67,FOLLOW_67_in_link_interwiki_uri3640); if (failed) return interwiki;
-                    match(input,45,FOLLOW_45_in_link_interwiki_uri3642); if (failed) return interwiki;
-                    match(input,64,FOLLOW_64_in_link_interwiki_uri3644); if (failed) return interwiki;
+                    match(input,75,FOLLOW_75_in_link_interwiki_uri3633); if (failed) return interwiki;
+                    match(input,68,FOLLOW_68_in_link_interwiki_uri3635); if (failed) return interwiki;
+                    match(input,56,FOLLOW_56_in_link_interwiki_uri3637); if (failed) return interwiki;
+                    match(input,67,FOLLOW_67_in_link_interwiki_uri3639); if (failed) return interwiki;
+                    match(input,45,FOLLOW_45_in_link_interwiki_uri3641); if (failed) return interwiki;
+                    match(input,64,FOLLOW_64_in_link_interwiki_uri3643); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new UsemodInterwikiLinkNode(); 
                     }
@@ -13083,15 +13094,15 @@ public class Creole10Parser extends Parser {
                 case 19 :
                     // Creole10.g:863:4: 'W' 'i' 'k' 'i' 'p' 'e' 'd' 'i' 'a'
                     {
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3651); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3653); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3655); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3657); if (failed) return interwiki;
-                    match(input,70,FOLLOW_70_in_link_interwiki_uri3659); if (failed) return interwiki;
-                    match(input,56,FOLLOW_56_in_link_interwiki_uri3661); if (failed) return interwiki;
-                    match(input,64,FOLLOW_64_in_link_interwiki_uri3663); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3665); if (failed) return interwiki;
-                    match(input,61,FOLLOW_61_in_link_interwiki_uri3667); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3650); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3652); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3654); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3656); if (failed) return interwiki;
+                    match(input,70,FOLLOW_70_in_link_interwiki_uri3658); if (failed) return interwiki;
+                    match(input,56,FOLLOW_56_in_link_interwiki_uri3660); if (failed) return interwiki;
+                    match(input,64,FOLLOW_64_in_link_interwiki_uri3662); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3664); if (failed) return interwiki;
+                    match(input,61,FOLLOW_61_in_link_interwiki_uri3666); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new WikipediaInterwikiLinkNode(); 
                     }
@@ -13101,11 +13112,11 @@ public class Creole10Parser extends Parser {
                 case 20 :
                     // Creole10.g:864:4: 'X' 'W' 'i' 'k' 'i'
                     {
-                    match(input,76,FOLLOW_76_in_link_interwiki_uri3674); if (failed) return interwiki;
-                    match(input,48,FOLLOW_48_in_link_interwiki_uri3676); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3678); if (failed) return interwiki;
-                    match(input,46,FOLLOW_46_in_link_interwiki_uri3680); if (failed) return interwiki;
-                    match(input,49,FOLLOW_49_in_link_interwiki_uri3682); if (failed) return interwiki;
+                    match(input,76,FOLLOW_76_in_link_interwiki_uri3673); if (failed) return interwiki;
+                    match(input,48,FOLLOW_48_in_link_interwiki_uri3675); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3677); if (failed) return interwiki;
+                    match(input,46,FOLLOW_46_in_link_interwiki_uri3679); if (failed) return interwiki;
+                    match(input,49,FOLLOW_49_in_link_interwiki_uri3681); if (failed) return interwiki;
                     if ( backtracking==0 ) {
                        interwiki = new XWikiInterwikiLinkNode(); 
                     }
@@ -13162,7 +13173,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return text;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_interwiki_pagename3704);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_interwiki_pagename3703);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -13230,7 +13241,7 @@ public class Creole10Parser extends Parser {
             	case 1 :
             	    // Creole10.g:870:6: l= link_descriptionpart
             	    {
-            	    pushFollow(FOLLOW_link_descriptionpart_in_link_description3747);
+            	    pushFollow(FOLLOW_link_descriptionpart_in_link_description3746);
             	    l=link_descriptionpart();
             	    _fsp--;
             	    if (failed) return node;
@@ -13248,7 +13259,7 @@ public class Creole10Parser extends Parser {
             	case 2 :
             	    // Creole10.g:876:5: i= image
             	    {
-            	    pushFollow(FOLLOW_image_in_link_description3759);
+            	    pushFollow(FOLLOW_image_in_link_description3758);
             	    i=image();
             	    _fsp--;
             	    if (failed) return node;
@@ -13418,11 +13429,11 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:885:4: bold_markup onestar (lb= link_bold_descriptionpart onestar )+ bold_markup
                     {
-                    pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3784);
+                    pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3783);
                     bold_markup();
                     _fsp--;
                     if (failed) return text;
-                    pushFollow(FOLLOW_onestar_in_link_descriptionpart3787);
+                    pushFollow(FOLLOW_onestar_in_link_descriptionpart3786);
                     onestar();
                     _fsp--;
                     if (failed) return text;
@@ -13442,14 +13453,14 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:885:27: lb= link_bold_descriptionpart onestar
                     	    {
-                    	    pushFollow(FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3795);
+                    	    pushFollow(FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3794);
                     	    lb=link_bold_descriptionpart();
                     	    _fsp--;
                     	    if (failed) return text;
                     	    if ( backtracking==0 ) {
                     	      ((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element.add(lb);
                     	    }
-                    	    pushFollow(FOLLOW_onestar_in_link_descriptionpart3800);
+                    	    pushFollow(FOLLOW_onestar_in_link_descriptionpart3799);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -13470,7 +13481,7 @@ public class Creole10Parser extends Parser {
                     if ( backtracking==0 ) {
                       text = new BoldTextNode(((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element);
                     }
-                    pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3810);
+                    pushFollow(FOLLOW_bold_markup_in_link_descriptionpart3809);
                     bold_markup();
                     _fsp--;
                     if (failed) return text;
@@ -13480,11 +13491,11 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:887:4: ital_markup onestar (li= link_ital_descriptionpart onestar )+ ital_markup
                     {
-                    pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3815);
+                    pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3814);
                     ital_markup();
                     _fsp--;
                     if (failed) return text;
-                    pushFollow(FOLLOW_onestar_in_link_descriptionpart3818);
+                    pushFollow(FOLLOW_onestar_in_link_descriptionpart3817);
                     onestar();
                     _fsp--;
                     if (failed) return text;
@@ -13504,14 +13515,14 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:887:28: li= link_ital_descriptionpart onestar
                     	    {
-                    	    pushFollow(FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3827);
+                    	    pushFollow(FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3826);
                     	    li=link_ital_descriptionpart();
                     	    _fsp--;
                     	    if (failed) return text;
                     	    if ( backtracking==0 ) {
                     	      ((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element.add(li);
                     	    }
-                    	    pushFollow(FOLLOW_onestar_in_link_descriptionpart3832);
+                    	    pushFollow(FOLLOW_onestar_in_link_descriptionpart3831);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -13532,7 +13543,7 @@ public class Creole10Parser extends Parser {
                     if ( backtracking==0 ) {
                       text = new ItalicTextNode(((link_descriptionpart_scope)link_descriptionpart_stack.peek()).element);
                     }
-                    pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3841);
+                    pushFollow(FOLLOW_ital_markup_in_link_descriptionpart3840);
                     ital_markup();
                     _fsp--;
                     if (failed) return text;
@@ -13542,7 +13553,7 @@ public class Creole10Parser extends Parser {
                 case 3 :
                     // Creole10.g:889:4: onestar (t= link_descriptiontext onestar )+
                     {
-                    pushFollow(FOLLOW_onestar_in_link_descriptionpart3846);
+                    pushFollow(FOLLOW_onestar_in_link_descriptionpart3845);
                     onestar();
                     _fsp--;
                     if (failed) return text;
@@ -13640,11 +13651,11 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:889:15: t= link_descriptiontext onestar
                     	    {
-                    	    pushFollow(FOLLOW_link_descriptiontext_in_link_descriptionpart3855);
+                    	    pushFollow(FOLLOW_link_descriptiontext_in_link_descriptionpart3854);
                     	    t=link_descriptiontext();
                     	    _fsp--;
                     	    if (failed) return text;
-                    	    pushFollow(FOLLOW_onestar_in_link_descriptionpart3858);
+                    	    pushFollow(FOLLOW_onestar_in_link_descriptionpart3857);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -13718,18 +13729,18 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:892:4: ital_markup t= link_boldital_description ital_markup
                     {
-                    pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3878);
+                    pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3877);
                     ital_markup();
                     _fsp--;
                     if (failed) return text;
-                    pushFollow(FOLLOW_link_boldital_description_in_link_bold_descriptionpart3885);
+                    pushFollow(FOLLOW_link_boldital_description_in_link_bold_descriptionpart3884);
                     t=link_boldital_description();
                     _fsp--;
                     if (failed) return text;
                     if ( backtracking==0 ) {
                       text = new ItalicTextNode(t);
                     }
-                    pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3890);
+                    pushFollow(FOLLOW_ital_markup_in_link_bold_descriptionpart3889);
                     ital_markup();
                     _fsp--;
                     if (failed) return text;
@@ -13739,7 +13750,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:893:4: ld= link_descriptiontext
                     {
-                    pushFollow(FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3899);
+                    pushFollow(FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3898);
                     ld=link_descriptiontext();
                     _fsp--;
                     if (failed) return text;
@@ -13795,15 +13806,15 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:896:4: bold_markup td= link_boldital_description bold_markup
                     {
-                    pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3915);
+                    pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3914);
                     bold_markup();
                     _fsp--;
                     if (failed) return text;
-                    pushFollow(FOLLOW_link_boldital_description_in_link_ital_descriptionpart3922);
+                    pushFollow(FOLLOW_link_boldital_description_in_link_ital_descriptionpart3921);
                     td=link_boldital_description();
                     _fsp--;
                     if (failed) return text;
-                    pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3925);
+                    pushFollow(FOLLOW_bold_markup_in_link_ital_descriptionpart3924);
                     bold_markup();
                     _fsp--;
                     if (failed) return text;
@@ -13816,7 +13827,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:897:4: t= link_descriptiontext
                     {
-                    pushFollow(FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3936);
+                    pushFollow(FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3935);
                     t=link_descriptiontext();
                     _fsp--;
                     if (failed) return text;
@@ -13852,7 +13863,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:900:4: ( onestar (t= link_descriptiontext onestar )+ )
             // Creole10.g:900:4: onestar (t= link_descriptiontext onestar )+
             {
-            pushFollow(FOLLOW_onestar_in_link_boldital_description3952);
+            pushFollow(FOLLOW_onestar_in_link_boldital_description3951);
             onestar();
             _fsp--;
             if (failed) return text;
@@ -13872,11 +13883,11 @@ public class Creole10Parser extends Parser {
             	case 1 :
             	    // Creole10.g:900:15: t= link_descriptiontext onestar
             	    {
-            	    pushFollow(FOLLOW_link_descriptiontext_in_link_boldital_description3961);
+            	    pushFollow(FOLLOW_link_descriptiontext_in_link_boldital_description3960);
             	    t=link_descriptiontext();
             	    _fsp--;
             	    if (failed) return text;
-            	    pushFollow(FOLLOW_onestar_in_link_boldital_description3964);
+            	    pushFollow(FOLLOW_onestar_in_link_boldital_description3963);
             	    onestar();
             	    _fsp--;
             	    if (failed) return text;
@@ -13948,7 +13959,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:907:5: t= link_descriptiontext_simple
                     {
-                    pushFollow(FOLLOW_link_descriptiontext_simple_in_link_descriptiontext3987);
+                    pushFollow(FOLLOW_link_descriptiontext_simple_in_link_descriptiontext3986);
                     t=link_descriptiontext_simple();
                     _fsp--;
                     if (failed) return text;
@@ -13980,7 +13991,7 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:908:7: forced_linebreak
                     	    {
-                    	    pushFollow(FOLLOW_forced_linebreak_in_link_descriptiontext3997);
+                    	    pushFollow(FOLLOW_forced_linebreak_in_link_descriptiontext3996);
                     	    forced_linebreak();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -13993,7 +14004,7 @@ public class Creole10Parser extends Parser {
                     	case 2 :
                     	    // Creole10.g:909:5: e= escaped
                     	    {
-                    	    pushFollow(FOLLOW_escaped_in_link_descriptiontext4009);
+                    	    pushFollow(FOLLOW_escaped_in_link_descriptiontext4008);
                     	    e=escaped();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -14067,7 +14078,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return text;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_descriptiontext_simple4034);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_descriptiontext_simple4033);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -14138,7 +14149,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return text;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_uri4133);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_link_uri4132);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -14187,11 +14198,11 @@ public class Creole10Parser extends Parser {
             // Creole10.g:933:4: ( image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup )
             // Creole10.g:933:4: image_open_markup uri= image_uri (alt= image_alternative )? image_close_markup
             {
-            pushFollow(FOLLOW_image_open_markup_in_image4174);
+            pushFollow(FOLLOW_image_open_markup_in_image4173);
             image_open_markup();
             _fsp--;
             if (failed) return image;
-            pushFollow(FOLLOW_image_uri_in_image4180);
+            pushFollow(FOLLOW_image_uri_in_image4179);
             uri=image_uri();
             _fsp--;
             if (failed) return image;
@@ -14209,7 +14220,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:933:81: alt= image_alternative
                     {
-                    pushFollow(FOLLOW_image_alternative_in_image4190);
+                    pushFollow(FOLLOW_image_alternative_in_image4189);
                     alt=image_alternative();
                     _fsp--;
                     if (failed) return image;
@@ -14222,7 +14233,7 @@ public class Creole10Parser extends Parser {
 
             }
 
-            pushFollow(FOLLOW_image_close_markup_in_image4199);
+            pushFollow(FOLLOW_image_close_markup_in_image4198);
             image_close_markup();
             _fsp--;
             if (failed) return image;
@@ -14277,7 +14288,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return link;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_uri4218);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_uri4217);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -14324,7 +14335,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:940:4: ( image_alternative_markup (p= image_alternativepart )+ )
             // Creole10.g:940:4: image_alternative_markup (p= image_alternativepart )+
             {
-            pushFollow(FOLLOW_image_alternative_markup_in_image_alternative4253);
+            pushFollow(FOLLOW_image_alternative_markup_in_image_alternative4252);
             image_alternative_markup();
             _fsp--;
             if (failed) return alternative;
@@ -14344,7 +14355,7 @@ public class Creole10Parser extends Parser {
             	case 1 :
             	    // Creole10.g:940:32: p= image_alternativepart
             	    {
-            	    pushFollow(FOLLOW_image_alternativepart_in_image_alternative4262);
+            	    pushFollow(FOLLOW_image_alternativepart_in_image_alternative4261);
             	    p=image_alternativepart();
             	    _fsp--;
             	    if (failed) return alternative;
@@ -14514,11 +14525,11 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:949:4: bold_markup onestar (t1= image_bold_alternativepart onestar )+ bold_markup
                     {
-                    pushFollow(FOLLOW_bold_markup_in_image_alternativepart4288);
+                    pushFollow(FOLLOW_bold_markup_in_image_alternativepart4287);
                     bold_markup();
                     _fsp--;
                     if (failed) return item;
-                    pushFollow(FOLLOW_onestar_in_image_alternativepart4291);
+                    pushFollow(FOLLOW_onestar_in_image_alternativepart4290);
                     onestar();
                     _fsp--;
                     if (failed) return item;
@@ -14547,14 +14558,14 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:949:28: t1= image_bold_alternativepart onestar
                     	    {
-                    	    pushFollow(FOLLOW_image_bold_alternativepart_in_image_alternativepart4300);
+                    	    pushFollow(FOLLOW_image_bold_alternativepart_in_image_alternativepart4299);
                     	    t1=image_bold_alternativepart();
                     	    _fsp--;
                     	    if (failed) return item;
                     	    if ( backtracking==0 ) {
                     	      ((image_alternativepart_scope)image_alternativepart_stack.peek()).elements.add(t1);
                     	    }
-                    	    pushFollow(FOLLOW_onestar_in_image_alternativepart4305);
+                    	    pushFollow(FOLLOW_onestar_in_image_alternativepart4304);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return item;
@@ -14572,7 +14583,7 @@ public class Creole10Parser extends Parser {
                         cnt134++;
                     } while (true);
 
-                    pushFollow(FOLLOW_bold_markup_in_image_alternativepart4312);
+                    pushFollow(FOLLOW_bold_markup_in_image_alternativepart4311);
                     bold_markup();
                     _fsp--;
                     if (failed) return item;
@@ -14585,11 +14596,11 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:951:4: ital_markup onestar (t2= image_ital_alternativepart onestar )+ ital_markup
                     {
-                    pushFollow(FOLLOW_ital_markup_in_image_alternativepart4319);
+                    pushFollow(FOLLOW_ital_markup_in_image_alternativepart4318);
                     ital_markup();
                     _fsp--;
                     if (failed) return item;
-                    pushFollow(FOLLOW_onestar_in_image_alternativepart4322);
+                    pushFollow(FOLLOW_onestar_in_image_alternativepart4321);
                     onestar();
                     _fsp--;
                     if (failed) return item;
@@ -14609,14 +14620,14 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:951:29: t2= image_ital_alternativepart onestar
                     	    {
-                    	    pushFollow(FOLLOW_image_ital_alternativepart_in_image_alternativepart4332);
+                    	    pushFollow(FOLLOW_image_ital_alternativepart_in_image_alternativepart4331);
                     	    t2=image_ital_alternativepart();
                     	    _fsp--;
                     	    if (failed) return item;
                     	    if ( backtracking==0 ) {
                     	      ((image_alternativepart_scope)image_alternativepart_stack.peek()).elements.add(t2);
                     	    }
-                    	    pushFollow(FOLLOW_onestar_in_image_alternativepart4337);
+                    	    pushFollow(FOLLOW_onestar_in_image_alternativepart4336);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return item;
@@ -14634,7 +14645,7 @@ public class Creole10Parser extends Parser {
                         cnt135++;
                     } while (true);
 
-                    pushFollow(FOLLOW_ital_markup_in_image_alternativepart4344);
+                    pushFollow(FOLLOW_ital_markup_in_image_alternativepart4343);
                     ital_markup();
                     _fsp--;
                     if (failed) return item;
@@ -14647,7 +14658,7 @@ public class Creole10Parser extends Parser {
                 case 3 :
                     // Creole10.g:953:4: onestar (t3= image_alternativetext onestar )+
                     {
-                    pushFollow(FOLLOW_onestar_in_image_alternativepart4351);
+                    pushFollow(FOLLOW_onestar_in_image_alternativepart4350);
                     onestar();
                     _fsp--;
                     if (failed) return item;
@@ -14670,7 +14681,7 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:953:15: t3= image_alternativetext onestar
                     	    {
-                    	    pushFollow(FOLLOW_image_alternativetext_in_image_alternativepart4358);
+                    	    pushFollow(FOLLOW_image_alternativetext_in_image_alternativepart4357);
                     	    t3=image_alternativetext();
                     	    _fsp--;
                     	    if (failed) return item;
@@ -14681,7 +14692,7 @@ public class Creole10Parser extends Parser {
                     	      					 }
                     	      				              
                     	    }
-                    	    pushFollow(FOLLOW_onestar_in_image_alternativepart4363);
+                    	    pushFollow(FOLLOW_onestar_in_image_alternativepart4362);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return item;
@@ -14761,18 +14772,18 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:966:4: ital_markup t= link_boldital_description ital_markup
                     {
-                    pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4389);
+                    pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4388);
                     ital_markup();
                     _fsp--;
                     if (failed) return text;
-                    pushFollow(FOLLOW_link_boldital_description_in_image_bold_alternativepart4396);
+                    pushFollow(FOLLOW_link_boldital_description_in_image_bold_alternativepart4395);
                     t=link_boldital_description();
                     _fsp--;
                     if (failed) return text;
                     if ( backtracking==0 ) {
                       text = new ItalicTextNode(t); 
                     }
-                    pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4401);
+                    pushFollow(FOLLOW_ital_markup_in_image_bold_alternativepart4400);
                     ital_markup();
                     _fsp--;
                     if (failed) return text;
@@ -14782,7 +14793,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:967:4: onestar (i= image_alternativetext onestar )+
                     {
-                    pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4406);
+                    pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4405);
                     onestar();
                     _fsp--;
                     if (failed) return text;
@@ -14805,11 +14816,11 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:967:15: i= image_alternativetext onestar
                     	    {
-                    	    pushFollow(FOLLOW_image_alternativetext_in_image_bold_alternativepart4415);
+                    	    pushFollow(FOLLOW_image_alternativetext_in_image_bold_alternativepart4414);
                     	    i=image_alternativetext();
                     	    _fsp--;
                     	    if (failed) return text;
-                    	    pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4418);
+                    	    pushFollow(FOLLOW_onestar_in_image_bold_alternativepart4417);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -14910,18 +14921,18 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:981:4: bold_markup t= link_boldital_description bold_markup
                     {
-                    pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4446);
+                    pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4445);
                     bold_markup();
                     _fsp--;
                     if (failed) return text;
-                    pushFollow(FOLLOW_link_boldital_description_in_image_ital_alternativepart4453);
+                    pushFollow(FOLLOW_link_boldital_description_in_image_ital_alternativepart4452);
                     t=link_boldital_description();
                     _fsp--;
                     if (failed) return text;
                     if ( backtracking==0 ) {
                       text = new BoldTextNode(t); 
                     }
-                    pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4458);
+                    pushFollow(FOLLOW_bold_markup_in_image_ital_alternativepart4457);
                     bold_markup();
                     _fsp--;
                     if (failed) return text;
@@ -14931,7 +14942,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:982:4: onestar (i= image_alternativetext onestar )+
                     {
-                    pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4463);
+                    pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4462);
                     onestar();
                     _fsp--;
                     if (failed) return text;
@@ -14954,11 +14965,11 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:982:14: i= image_alternativetext onestar
                     	    {
-                    	    pushFollow(FOLLOW_image_alternativetext_in_image_ital_alternativepart4472);
+                    	    pushFollow(FOLLOW_image_alternativetext_in_image_ital_alternativepart4471);
                     	    i=image_alternativetext();
                     	    _fsp--;
                     	    if (failed) return text;
-                    	    pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4475);
+                    	    pushFollow(FOLLOW_onestar_in_image_ital_alternativepart4474);
                     	    onestar();
                     	    _fsp--;
                     	    if (failed) return text;
@@ -15016,7 +15027,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:989:4: ( onestar (i= image_alternativetext onestar )+ )
             // Creole10.g:989:4: onestar (i= image_alternativetext onestar )+
             {
-            pushFollow(FOLLOW_onestar_in_image_boldital_alternative4496);
+            pushFollow(FOLLOW_onestar_in_image_boldital_alternative4495);
             onestar();
             _fsp--;
             if (failed) return text;
@@ -15036,11 +15047,11 @@ public class Creole10Parser extends Parser {
             	case 1 :
             	    // Creole10.g:989:15: i= image_alternativetext onestar
             	    {
-            	    pushFollow(FOLLOW_image_alternativetext_in_image_boldital_alternative4505);
+            	    pushFollow(FOLLOW_image_alternativetext_in_image_boldital_alternative4504);
             	    i=image_alternativetext();
             	    _fsp--;
             	    if (failed) return text;
-            	    pushFollow(FOLLOW_onestar_in_image_boldital_alternative4508);
+            	    pushFollow(FOLLOW_onestar_in_image_boldital_alternative4507);
             	    onestar();
             	    _fsp--;
             	    if (failed) return text;
@@ -15110,7 +15121,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:996:4: contents= image_alternative_simple_text
                     {
-                    pushFollow(FOLLOW_image_alternative_simple_text_in_image_alternativetext4530);
+                    pushFollow(FOLLOW_image_alternative_simple_text_in_image_alternativetext4529);
                     contents=image_alternative_simple_text();
                     _fsp--;
                     if (failed) return items;
@@ -15139,7 +15150,7 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:997:5: forced_linebreak
                     	    {
-                    	    pushFollow(FOLLOW_forced_linebreak_in_image_alternativetext4538);
+                    	    pushFollow(FOLLOW_forced_linebreak_in_image_alternativetext4537);
                     	    forced_linebreak();
                     	    _fsp--;
                     	    if (failed) return items;
@@ -15213,7 +15224,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return text;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_alternative_simple_text4564);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_image_alternative_simple_text4563);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -15257,23 +15268,23 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1017:4: ( extension_markup extension_handler blanks extension_statement extension_markup )
             // Creole10.g:1017:4: extension_markup extension_handler blanks extension_statement extension_markup
             {
-            pushFollow(FOLLOW_extension_markup_in_extension4656);
+            pushFollow(FOLLOW_extension_markup_in_extension4655);
             extension_markup();
             _fsp--;
             if (failed) return node;
-            pushFollow(FOLLOW_extension_handler_in_extension4659);
+            pushFollow(FOLLOW_extension_handler_in_extension4658);
             extension_handler();
             _fsp--;
             if (failed) return node;
-            pushFollow(FOLLOW_blanks_in_extension4662);
+            pushFollow(FOLLOW_blanks_in_extension4661);
             blanks();
             _fsp--;
             if (failed) return node;
-            pushFollow(FOLLOW_extension_statement_in_extension4665);
+            pushFollow(FOLLOW_extension_statement_in_extension4664);
             extension_statement();
             _fsp--;
             if (failed) return node;
-            pushFollow(FOLLOW_extension_markup_in_extension4669);
+            pushFollow(FOLLOW_extension_markup_in_extension4668);
             extension_markup();
             _fsp--;
             if (failed) return node;
@@ -15326,7 +15337,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return ;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_handler4681);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_handler4680);    throw mse;
             	    }
 
 
@@ -15335,7 +15346,7 @@ public class Creole10Parser extends Parser {
             	case 2 :
             	    // Creole10.g:1022:64: escaped
             	    {
-            	    pushFollow(FOLLOW_escaped_in_extension_handler4714);
+            	    pushFollow(FOLLOW_escaped_in_extension_handler4713);
             	    escaped();
             	    _fsp--;
             	    if (failed) return ;
@@ -15401,7 +15412,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return ;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_statement4729);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_extension_statement4728);    throw mse;
             	    }
 
 
@@ -15410,7 +15421,7 @@ public class Creole10Parser extends Parser {
             	case 2 :
             	    // Creole10.g:1026:41: escaped
             	    {
-            	    pushFollow(FOLLOW_escaped_in_extension_statement4750);
+            	    pushFollow(FOLLOW_escaped_in_extension_statement4749);
             	    escaped();
             	    _fsp--;
             	    if (failed) return ;
@@ -15471,24 +15482,24 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:1035:4: '<<TableOfContents>>'
                     {
-                    match(input,77,FOLLOW_77_in_table_of_contents4778); if (failed) return tableOfContents;
+                    match(input,77,FOLLOW_77_in_table_of_contents4777); if (failed) return tableOfContents;
 
                     }
                     break;
                 case 2 :
                     // Creole10.g:1037:4: '<<TableOfContents title=' '\\\"' t= table_of_contents_title_text '\\\"' '>>'
                     {
-                    match(input,78,FOLLOW_78_in_table_of_contents4788); if (failed) return tableOfContents;
-                    match(input,79,FOLLOW_79_in_table_of_contents4793); if (failed) return tableOfContents;
-                    pushFollow(FOLLOW_table_of_contents_title_text_in_table_of_contents4802);
+                    match(input,78,FOLLOW_78_in_table_of_contents4787); if (failed) return tableOfContents;
+                    match(input,79,FOLLOW_79_in_table_of_contents4792); if (failed) return tableOfContents;
+                    pushFollow(FOLLOW_table_of_contents_title_text_in_table_of_contents4801);
                     t=table_of_contents_title_text();
                     _fsp--;
                     if (failed) return tableOfContents;
                     if ( backtracking==0 ) {
                        tableOfContents.setTitle(t.toString()); 
                     }
-                    match(input,79,FOLLOW_79_in_table_of_contents4809); if (failed) return tableOfContents;
-                    match(input,80,FOLLOW_80_in_table_of_contents4814); if (failed) return tableOfContents;
+                    match(input,79,FOLLOW_79_in_table_of_contents4808); if (failed) return tableOfContents;
+                    match(input,80,FOLLOW_80_in_table_of_contents4813); if (failed) return tableOfContents;
 
                     }
                     break;
@@ -15555,7 +15566,7 @@ public class Creole10Parser extends Parser {
             	        if (backtracking>0) {failed=true; return text;}
             	        MismatchedSetException mse =
             	            new MismatchedSetException(null,input);
-            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_table_of_contents_title_text4840);    throw mse;
+            	        recoverFromMismatchedSet(input,mse,FOLLOW_set_in_table_of_contents_title_text4839);    throw mse;
             	    }
 
             	    if ( backtracking==0 ) {
@@ -15753,8 +15764,8 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_9 = input.LA(2);
 
-                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
-                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
+                if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
+                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {
@@ -15773,8 +15784,8 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_10 = input.LA(2);
 
-                if ( (( input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
-                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE ))) ) {
+                if ( ((( input.LA(2) != STAR && input.LA(2) != DASH && input.LA(2) != POUND &&
+                		input.LA(2) != EQUAL && input.LA(2) != NEWLINE )|| input.LA(2) != STAR )) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {
@@ -15912,7 +15923,7 @@ public class Creole10Parser extends Parser {
                 {
                 int LA151_14 = input.LA(2);
 
-                if ( ((( input.LA(2) != STAR && input.LA(2) == EQUAL )||( input.LA(2) != STAR && input.LA(1) == PIPE && input.LA(2) == PIPE )|| input.LA(2) != STAR ||(( input.LA(2) != STAR && input.LA(1) == PIPE && input.LA(2) == PIPE )&& input.LA(2) == EQUAL ))) ) {
+                if ( ((( input.LA(2) != STAR && input.LA(2) == EQUAL )||(( input.LA(2) != STAR && input.LA(1) == PIPE && input.LA(2) == PIPE )&& input.LA(2) == EQUAL )|| input.LA(2) != STAR ||( input.LA(2) != STAR && input.LA(1) == PIPE && input.LA(2) == PIPE ))) ) {
                     alt151=1;
                 }
                 else if ( (true) ) {
@@ -15995,7 +16006,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:1051:34: STAR
                             {
-                            match(input,STAR,FOLLOW_STAR_in_onestar4895); if (failed) return ;
+                            match(input,STAR,FOLLOW_STAR_in_onestar4894); if (failed) return ;
 
                             }
                             break;
@@ -16038,7 +16049,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1055:4: ( ESCAPE c= . )
             // Creole10.g:1055:4: ESCAPE c= .
             {
-            match(input,ESCAPE,FOLLOW_ESCAPE_in_escaped4916); if (failed) return scaped;
+            match(input,ESCAPE,FOLLOW_ESCAPE_in_escaped4915); if (failed) return scaped;
             c=(Token)input.LT(1);
             matchAny(input); if (failed) return scaped;
             if ( backtracking==0 ) {
@@ -16100,7 +16111,7 @@ public class Creole10Parser extends Parser {
                     	case 1 :
                     	    // Creole10.g:1059:6: newline
                     	    {
-                    	    pushFollow(FOLLOW_newline_in_paragraph_separator4940);
+                    	    pushFollow(FOLLOW_newline_in_paragraph_separator4939);
                     	    newline();
                     	    _fsp--;
                     	    if (failed) return ;
@@ -16124,7 +16135,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:1060:4: EOF
                     {
-                    match(input,EOF,FOLLOW_EOF_in_paragraph_separator4948); if (failed) return ;
+                    match(input,EOF,FOLLOW_EOF_in_paragraph_separator4947); if (failed) return ;
 
                     }
                     break;
@@ -16168,7 +16179,7 @@ public class Creole10Parser extends Parser {
             	case 1 :
             	    // Creole10.g:1063:6: blanks
             	    {
-            	    pushFollow(FOLLOW_blanks_in_whitespaces4960);
+            	    pushFollow(FOLLOW_blanks_in_whitespaces4959);
             	    blanks();
             	    _fsp--;
             	    if (failed) return ;
@@ -16178,7 +16189,7 @@ public class Creole10Parser extends Parser {
             	case 2 :
             	    // Creole10.g:1063:15: newline
             	    {
-            	    pushFollow(FOLLOW_newline_in_whitespaces4964);
+            	    pushFollow(FOLLOW_newline_in_whitespaces4963);
             	    newline();
             	    _fsp--;
             	    if (failed) return ;
@@ -16218,7 +16229,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1066:4: ( BLANKS )
             // Creole10.g:1066:4: BLANKS
             {
-            match(input,BLANKS,FOLLOW_BLANKS_in_blanks4977); if (failed) return ;
+            match(input,BLANKS,FOLLOW_BLANKS_in_blanks4976); if (failed) return ;
 
             }
 
@@ -16259,7 +16270,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:1069:4: newline ( blanks )?
                     {
-                    pushFollow(FOLLOW_newline_in_text_lineseparator4987);
+                    pushFollow(FOLLOW_newline_in_text_lineseparator4986);
                     newline();
                     _fsp--;
                     if (failed) return ;
@@ -16274,7 +16285,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:1069:15: blanks
                             {
-                            pushFollow(FOLLOW_blanks_in_text_lineseparator4992);
+                            pushFollow(FOLLOW_blanks_in_text_lineseparator4991);
                             blanks();
                             _fsp--;
                             if (failed) return ;
@@ -16290,7 +16301,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:1070:4: EOF
                     {
-                    match(input,EOF,FOLLOW_EOF_in_text_lineseparator5000); if (failed) return ;
+                    match(input,EOF,FOLLOW_EOF_in_text_lineseparator4999); if (failed) return ;
 
                     }
                     break;
@@ -16315,7 +16326,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1073:4: ( NEWLINE )
             // Creole10.g:1073:4: NEWLINE
             {
-            match(input,NEWLINE,FOLLOW_NEWLINE_in_newline5010); if (failed) return ;
+            match(input,NEWLINE,FOLLOW_NEWLINE_in_newline5009); if (failed) return ;
 
             }
 
@@ -16338,8 +16349,8 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1076:4: ( STAR STAR )
             // Creole10.g:1076:4: STAR STAR
             {
-            match(input,STAR,FOLLOW_STAR_in_bold_markup5020); if (failed) return ;
-            match(input,STAR,FOLLOW_STAR_in_bold_markup5023); if (failed) return ;
+            match(input,STAR,FOLLOW_STAR_in_bold_markup5019); if (failed) return ;
+            match(input,STAR,FOLLOW_STAR_in_bold_markup5022); if (failed) return ;
 
             }
 
@@ -16362,7 +16373,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1079:4: ( ITAL )
             // Creole10.g:1079:4: ITAL
             {
-            match(input,ITAL,FOLLOW_ITAL_in_ital_markup5033); if (failed) return ;
+            match(input,ITAL,FOLLOW_ITAL_in_ital_markup5032); if (failed) return ;
 
             }
 
@@ -16385,7 +16396,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1082:4: ( EQUAL )
             // Creole10.g:1082:4: EQUAL
             {
-            match(input,EQUAL,FOLLOW_EQUAL_in_heading_markup5043); if (failed) return ;
+            match(input,EQUAL,FOLLOW_EQUAL_in_heading_markup5042); if (failed) return ;
 
             }
 
@@ -16413,7 +16424,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1085:4: ( POUND )
             // Creole10.g:1085:4: POUND
             {
-            match(input,POUND,FOLLOW_POUND_in_list_ordelem_markup5053); if (failed) return retval;
+            match(input,POUND,FOLLOW_POUND_in_list_ordelem_markup5052); if (failed) return retval;
 
             }
 
@@ -16443,7 +16454,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1088:4: ( STAR )
             // Creole10.g:1088:4: STAR
             {
-            match(input,STAR,FOLLOW_STAR_in_list_unordelem_markup5063); if (failed) return retval;
+            match(input,STAR,FOLLOW_STAR_in_list_unordelem_markup5062); if (failed) return retval;
 
             }
 
@@ -16486,7 +16497,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:1091:4: newline ( blanks )?
                     {
-                    pushFollow(FOLLOW_newline_in_list_elemseparator5073);
+                    pushFollow(FOLLOW_newline_in_list_elemseparator5072);
                     newline();
                     _fsp--;
                     if (failed) return ;
@@ -16501,7 +16512,7 @@ public class Creole10Parser extends Parser {
                         case 1 :
                             // Creole10.g:1091:15: blanks
                             {
-                            pushFollow(FOLLOW_blanks_in_list_elemseparator5078);
+                            pushFollow(FOLLOW_blanks_in_list_elemseparator5077);
                             blanks();
                             _fsp--;
                             if (failed) return ;
@@ -16517,7 +16528,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:1092:4: EOF
                     {
-                    match(input,EOF,FOLLOW_EOF_in_list_elemseparator5086); if (failed) return ;
+                    match(input,EOF,FOLLOW_EOF_in_list_elemseparator5085); if (failed) return ;
 
                     }
                     break;
@@ -16560,7 +16571,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:1095:4: newline
                     {
-                    pushFollow(FOLLOW_newline_in_end_of_list5096);
+                    pushFollow(FOLLOW_newline_in_end_of_list5095);
                     newline();
                     _fsp--;
                     if (failed) return ;
@@ -16570,7 +16581,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:1096:4: EOF
                     {
-                    match(input,EOF,FOLLOW_EOF_in_end_of_list5101); if (failed) return ;
+                    match(input,EOF,FOLLOW_EOF_in_end_of_list5100); if (failed) return ;
 
                     }
                     break;
@@ -16595,7 +16606,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1099:4: ( PIPE )
             // Creole10.g:1099:4: PIPE
             {
-            match(input,PIPE,FOLLOW_PIPE_in_table_cell_markup5111); if (failed) return ;
+            match(input,PIPE,FOLLOW_PIPE_in_table_cell_markup5110); if (failed) return ;
 
             }
 
@@ -16618,8 +16629,8 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1102:4: ( PIPE EQUAL )
             // Creole10.g:1102:4: PIPE EQUAL
             {
-            match(input,PIPE,FOLLOW_PIPE_in_table_headercell_markup5121); if (failed) return ;
-            match(input,EQUAL,FOLLOW_EQUAL_in_table_headercell_markup5124); if (failed) return ;
+            match(input,PIPE,FOLLOW_PIPE_in_table_headercell_markup5120); if (failed) return ;
+            match(input,EQUAL,FOLLOW_EQUAL_in_table_headercell_markup5123); if (failed) return ;
 
             }
 
@@ -16660,7 +16671,7 @@ public class Creole10Parser extends Parser {
                 case 1 :
                     // Creole10.g:1105:4: newline
                     {
-                    pushFollow(FOLLOW_newline_in_table_rowseparator5134);
+                    pushFollow(FOLLOW_newline_in_table_rowseparator5133);
                     newline();
                     _fsp--;
                     if (failed) return ;
@@ -16670,7 +16681,7 @@ public class Creole10Parser extends Parser {
                 case 2 :
                     // Creole10.g:1106:4: EOF
                     {
-                    match(input,EOF,FOLLOW_EOF_in_table_rowseparator5139); if (failed) return ;
+                    match(input,EOF,FOLLOW_EOF_in_table_rowseparator5138); if (failed) return ;
 
                     }
                     break;
@@ -16695,7 +16706,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1109:4: ( NOWIKI_OPEN )
             // Creole10.g:1109:4: NOWIKI_OPEN
             {
-            match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5149); if (failed) return ;
+            match(input,NOWIKI_OPEN,FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5148); if (failed) return ;
 
             }
 
@@ -16718,7 +16729,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1112:4: ( NOWIKI_CLOSE )
             // Creole10.g:1112:4: NOWIKI_CLOSE
             {
-            match(input,NOWIKI_CLOSE,FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5159); if (failed) return ;
+            match(input,NOWIKI_CLOSE,FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5158); if (failed) return ;
 
             }
 
@@ -16741,10 +16752,10 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1115:4: ( DASH DASH DASH DASH )
             // Creole10.g:1115:4: DASH DASH DASH DASH
             {
-            match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5169); if (failed) return ;
-            match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5172); if (failed) return ;
-            match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5175); if (failed) return ;
-            match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5178); if (failed) return ;
+            match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5168); if (failed) return ;
+            match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5171); if (failed) return ;
+            match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5174); if (failed) return ;
+            match(input,DASH,FOLLOW_DASH_in_horizontalrule_markup5177); if (failed) return ;
 
             }
 
@@ -16767,7 +16778,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1118:4: ( LINK_OPEN )
             // Creole10.g:1118:4: LINK_OPEN
             {
-            match(input,LINK_OPEN,FOLLOW_LINK_OPEN_in_link_open_markup5188); if (failed) return ;
+            match(input,LINK_OPEN,FOLLOW_LINK_OPEN_in_link_open_markup5187); if (failed) return ;
 
             }
 
@@ -16790,7 +16801,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1121:4: ( LINK_CLOSE )
             // Creole10.g:1121:4: LINK_CLOSE
             {
-            match(input,LINK_CLOSE,FOLLOW_LINK_CLOSE_in_link_close_markup5198); if (failed) return ;
+            match(input,LINK_CLOSE,FOLLOW_LINK_CLOSE_in_link_close_markup5197); if (failed) return ;
 
             }
 
@@ -16813,7 +16824,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1124:4: ( PIPE )
             // Creole10.g:1124:4: PIPE
             {
-            match(input,PIPE,FOLLOW_PIPE_in_link_description_markup5208); if (failed) return ;
+            match(input,PIPE,FOLLOW_PIPE_in_link_description_markup5207); if (failed) return ;
 
             }
 
@@ -16836,7 +16847,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1127:4: ( IMAGE_OPEN )
             // Creole10.g:1127:4: IMAGE_OPEN
             {
-            match(input,IMAGE_OPEN,FOLLOW_IMAGE_OPEN_in_image_open_markup5218); if (failed) return ;
+            match(input,IMAGE_OPEN,FOLLOW_IMAGE_OPEN_in_image_open_markup5217); if (failed) return ;
 
             }
 
@@ -16859,7 +16870,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1130:4: ( IMAGE_CLOSE )
             // Creole10.g:1130:4: IMAGE_CLOSE
             {
-            match(input,IMAGE_CLOSE,FOLLOW_IMAGE_CLOSE_in_image_close_markup5228); if (failed) return ;
+            match(input,IMAGE_CLOSE,FOLLOW_IMAGE_CLOSE_in_image_close_markup5227); if (failed) return ;
 
             }
 
@@ -16882,7 +16893,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1133:4: ( PIPE )
             // Creole10.g:1133:4: PIPE
             {
-            match(input,PIPE,FOLLOW_PIPE_in_image_alternative_markup5238); if (failed) return ;
+            match(input,PIPE,FOLLOW_PIPE_in_image_alternative_markup5237); if (failed) return ;
 
             }
 
@@ -16905,7 +16916,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1136:4: ( EXTENSION )
             // Creole10.g:1136:4: EXTENSION
             {
-            match(input,EXTENSION,FOLLOW_EXTENSION_in_extension_markup5248); if (failed) return ;
+            match(input,EXTENSION,FOLLOW_EXTENSION_in_extension_markup5247); if (failed) return ;
 
             }
 
@@ -16928,7 +16939,7 @@ public class Creole10Parser extends Parser {
             // Creole10.g:1139:4: ( FORCED_LINEBREAK )
             // Creole10.g:1139:4: FORCED_LINEBREAK
             {
-            match(input,FORCED_LINEBREAK,FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5258); if (failed) return ;
+            match(input,FORCED_LINEBREAK,FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5257); if (failed) return ;
 
             }
 
@@ -17133,357 +17144,357 @@ public class Creole10Parser extends Parser {
     public static final BitSet FOLLOW_list_italcontentpart_in_list_formatted_elem2133 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000001FFFFL});
     public static final BitSet FOLLOW_onestar_in_list_formatted_elem2142 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF2L,0x000000000001FFFFL});
     public static final BitSet FOLLOW_ital_markup_in_list_formatted_elem2151 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2177 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2177 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF0L,0x000000000001FFFFL});
     public static final BitSet FOLLOW_list_bolditalcontent_in_list_boldcontentpart2184 = new BitSet(new long[]{0x0000000000100002L});
     public static final BitSet FOLLOW_ital_markup_in_list_boldcontentpart2191 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_text_unformattedelement_in_list_boldcontentpart2205 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_text_unformattedelement_in_list_bolditalcontent2236 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2264 = new BitSet(new long[]{0xFFFFFFFFFFED7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_list_bolditalcontent_in_list_italcontentpart2271 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2278 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_text_unformattedelement_in_list_italcontentpart2292 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_row_in_table2320 = new BitSet(new long[]{0x0000000000080002L});
-    public static final BitSet FOLLOW_table_cell_in_table_row2346 = new BitSet(new long[]{0x0000000000088000L});
-    public static final BitSet FOLLOW_table_cell_in_table_row2359 = new BitSet(new long[]{0x0000000000088000L});
-    public static final BitSet FOLLOW_table_rowseparator_in_table_row2368 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_headercell_in_table_cell2389 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_normalcell_in_table_cell2400 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_headercell_markup_in_table_headercell2416 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_cellcontent_in_table_headercell2423 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_cell_markup_in_table_normalcell2439 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_cellcontent_in_table_normalcell2446 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_table_cellcontent2462 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_cellcontentpart_in_table_cellcontent2471 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_table_cellcontent2478 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_formattedelement_in_table_cellcontentpart2499 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_unformattedelement_in_table_cellcontentpart2510 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2526 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_italcontent_in_table_formattedelement2536 = new BitSet(new long[]{0x0000000000100002L});
-    public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2545 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2553 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_boldcontent_in_table_formattedelement2560 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2570 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_table_boldcontent2587 = new BitSet(new long[]{0xFFFFFFFFFFF57FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_boldcontentpart_in_table_boldcontent2596 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_table_boldcontent2601 = new BitSet(new long[]{0xFFFFFFFFFFF57FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_EOF_in_table_boldcontent2609 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_table_italcontent2623 = new BitSet(new long[]{0xFFFFFFFFFFE77FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_italcontentpart_in_table_italcontent2632 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_table_italcontent2637 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_EOF_in_table_italcontent2645 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_formattedcontent_in_table_boldcontentpart2663 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2670 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_bolditalcontent_in_table_boldcontentpart2677 = new BitSet(new long[]{0x0000000000100002L});
-    public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2684 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2701 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_bolditalcontent_in_table_italcontentpart2708 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2715 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_formattedcontent_in_table_italcontentpart2727 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2743 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_formattedcontent_in_table_bolditalcontent2752 = new BitSet(new long[]{0x0000000000020002L});
-    public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2757 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_EOF_in_table_bolditalcontent2765 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_unformattedelement_in_table_formattedcontent2785 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_table_unformatted_in_table_unformattedelement2808 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_inlineelement_in_table_unformattedelement2820 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_link_in_table_inlineelement2840 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_image_in_table_inlineelement2850 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_extension_in_table_inlineelement2861 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_nowiki_inline_in_table_inlineelement2871 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_table_unformatted_text_in_table_unformatted2892 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_forced_linebreak_in_table_unformatted2901 = new BitSet(new long[]{0x0000000006000002L});
-    public static final BitSet FOLLOW_escaped_in_table_unformatted2913 = new BitSet(new long[]{0x0000000006000002L});
-    public static final BitSet FOLLOW_set_in_table_unformatted_text2939 = new BitSet(new long[]{0xFFFFFFFFF8057FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_nowikiblock_open_markup_in_nowiki_block3036 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_nowiki_block_contents_in_nowiki_block3043 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_nowikiblock_close_markup_in_nowiki_block3049 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_paragraph_separator_in_nowiki_block3052 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3063 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_newline_in_nowikiblock_open_markup3066 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3077 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_nowiki_open_markup_in_nowiki_inline3092 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_nowiki_inline_contents_in_nowiki_inline3099 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_nowiki_close_markup_in_nowiki_inline3103 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_set_in_nowiki_block_contents3121 = new BitSet(new long[]{0xFFFFFFFFF7FFFFF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_set_in_nowiki_inline_contents3154 = new BitSet(new long[]{0xFFFFFFFFEFFF7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_horizontalrule_markup_in_horizontalrule3190 = new BitSet(new long[]{0x0000000080008000L});
-    public static final BitSet FOLLOW_blanks_in_horizontalrule3195 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_paragraph_separator_in_horizontalrule3201 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_link_open_markup_in_link3222 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_address_in_link3228 = new BitSet(new long[]{0x0000000020080000L});
-    public static final BitSet FOLLOW_link_description_markup_in_link3234 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_description_in_link3242 = new BitSet(new long[]{0x0000000020000000L});
-    public static final BitSet FOLLOW_link_close_markup_in_link3250 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_link_interwiki_uri_in_link_address3269 = new BitSet(new long[]{0x0000020000000000L});
-    public static final BitSet FOLLOW_41_in_link_address3272 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_interwiki_pagename_in_link_address3279 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_link_uri_in_link_address3290 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_link_interwiki_uri3306 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_43_in_link_interwiki_uri3308 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_link_interwiki_uri3315 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_link_interwiki_uri3317 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3319 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_link_interwiki_uri3321 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3323 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3325 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3327 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3329 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_50_in_link_interwiki_uri3336 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_51_in_link_interwiki_uri3338 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3340 = new BitSet(new long[]{0x0010000000000000L});
-    public static final BitSet FOLLOW_52_in_link_interwiki_uri3342 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3344 = new BitSet(new long[]{0x0020000000000000L});
-    public static final BitSet FOLLOW_53_in_link_interwiki_uri3346 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_54_in_link_interwiki_uri3354 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_link_interwiki_uri3356 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_link_interwiki_uri3358 = new BitSet(new long[]{0x0080000000000000L});
-    public static final BitSet FOLLOW_55_in_link_interwiki_uri3360 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_51_in_link_interwiki_uri3362 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_56_in_link_interwiki_uri3364 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_57_in_link_interwiki_uri3371 = new BitSet(new long[]{0x0400000000000000L});
-    public static final BitSet FOLLOW_58_in_link_interwiki_uri3373 = new BitSet(new long[]{0x0800000000000000L});
-    public static final BitSet FOLLOW_59_in_link_interwiki_uri3375 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3377 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3379 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3381 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3383 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_60_in_link_interwiki_uri3390 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_56_in_link_interwiki_uri3392 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_link_interwiki_uri3394 = new BitSet(new long[]{0x4000000000000000L});
-    public static final BitSet FOLLOW_62_in_link_interwiki_uri3396 = new BitSet(new long[]{0x8000000000000000L});
-    public static final BitSet FOLLOW_63_in_link_interwiki_uri3398 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_link_interwiki_uri3400 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_51_in_link_interwiki_uri3402 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_51_in_link_interwiki_uri3404 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_60_in_link_interwiki_uri3411 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_56_in_link_interwiki_uri3413 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_link_interwiki_uri3415 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3417 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_link_interwiki_uri3419 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3421 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3423 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3425 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3427 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_60_in_link_interwiki_uri3434 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_link_interwiki_uri3436 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3438 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_link_interwiki_uri3440 = new BitSet(new long[]{0x1000000000000000L});
-    public static final BitSet FOLLOW_60_in_link_interwiki_uri3442 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_link_interwiki_uri3444 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3446 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_link_interwiki_uri3448 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_66_in_link_interwiki_uri3456 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_link_interwiki_uri3458 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_link_interwiki_uri3460 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-    public static final BitSet FOLLOW_67_in_link_interwiki_uri3462 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_link_interwiki_uri3464 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
-    public static final BitSet FOLLOW_68_in_link_interwiki_uri3466 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_56_in_link_interwiki_uri3468 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_66_in_link_interwiki_uri3476 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_69_in_link_interwiki_uri3478 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_link_interwiki_uri3480 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_link_interwiki_uri3482 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_link_interwiki_uri3484 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_59_in_link_interwiki_uri3491 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-    public static final BitSet FOLLOW_67_in_link_interwiki_uri3493 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3495 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3497 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3499 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3501 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_59_in_link_interwiki_uri3509 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_link_interwiki_uri3511 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3513 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3515 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3517 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3519 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3521 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3523 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_59_in_link_interwiki_uri3531 = new BitSet(new long[]{0x0000800000000000L});
-    public static final BitSet FOLLOW_47_in_link_interwiki_uri3533 = new BitSet(new long[]{0x0020000000000000L});
-    public static final BitSet FOLLOW_53_in_link_interwiki_uri3535 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_70_in_link_interwiki_uri3537 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_51_in_link_interwiki_uri3539 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_56_in_link_interwiki_uri3541 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3543 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3545 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3547 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3549 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_71_in_link_interwiki_uri3556 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_link_interwiki_uri3558 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_link_interwiki_uri3560 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_56_in_link_interwiki_uri3562 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_link_interwiki_uri3564 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
-    public static final BitSet FOLLOW_72_in_link_interwiki_uri3566 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_58_in_link_interwiki_uri3573 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_link_interwiki_uri3575 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3577 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_70_in_link_interwiki_uri3579 = new BitSet(new long[]{0x0400000000000000L});
-    public static final BitSet FOLLOW_58_in_link_interwiki_uri3581 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
-    public static final BitSet FOLLOW_65_in_link_interwiki_uri3583 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_link_interwiki_uri3585 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_70_in_link_interwiki_uri3587 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_73_in_link_interwiki_uri3594 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3596 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_link_interwiki_uri3598 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_link_interwiki_uri3600 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_51_in_link_interwiki_uri3602 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
-    public static final BitSet FOLLOW_74_in_link_interwiki_uri3604 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3606 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3608 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3610 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3612 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_73_in_link_interwiki_uri3619 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3621 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3623 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3625 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3627 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_75_in_link_interwiki_uri3634 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
-    public static final BitSet FOLLOW_68_in_link_interwiki_uri3636 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_56_in_link_interwiki_uri3638 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
-    public static final BitSet FOLLOW_67_in_link_interwiki_uri3640 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_link_interwiki_uri3642 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_link_interwiki_uri3644 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3651 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3653 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3655 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3657 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
-    public static final BitSet FOLLOW_70_in_link_interwiki_uri3659 = new BitSet(new long[]{0x0100000000000000L});
-    public static final BitSet FOLLOW_56_in_link_interwiki_uri3661 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
-    public static final BitSet FOLLOW_64_in_link_interwiki_uri3663 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3665 = new BitSet(new long[]{0x2000000000000000L});
-    public static final BitSet FOLLOW_61_in_link_interwiki_uri3667 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_76_in_link_interwiki_uri3674 = new BitSet(new long[]{0x0001000000000000L});
-    public static final BitSet FOLLOW_48_in_link_interwiki_uri3676 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3678 = new BitSet(new long[]{0x0000400000000000L});
-    public static final BitSet FOLLOW_46_in_link_interwiki_uri3680 = new BitSet(new long[]{0x0002000000000000L});
-    public static final BitSet FOLLOW_49_in_link_interwiki_uri3682 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_set_in_link_interwiki_pagename3704 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_descriptionpart_in_link_description3747 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_in_link_description3759 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3784 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3787 = new BitSet(new long[]{0xFFFFFFFFDE1D7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3795 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3800 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3810 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3815 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3818 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3827 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3832 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3841 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3846 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_descriptiontext_in_link_descriptionpart3855 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3858 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3878 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_boldital_description_in_link_bold_descriptionpart3885 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3890 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3899 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3915 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_boldital_description_in_link_ital_descriptionpart3922 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3925 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3936 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_link_boldital_description3952 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_descriptiontext_in_link_boldital_description3961 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_link_boldital_description3964 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_descriptiontext_simple_in_link_descriptiontext3987 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_forced_linebreak_in_link_descriptiontext3997 = new BitSet(new long[]{0x0000000006000002L});
-    public static final BitSet FOLLOW_escaped_in_link_descriptiontext4009 = new BitSet(new long[]{0x0000000006000002L});
-    public static final BitSet FOLLOW_set_in_link_descriptiontext_simple4034 = new BitSet(new long[]{0xFFFFFFFFD80D7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_set_in_link_uri4133 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_open_markup_in_image4174 = new BitSet(new long[]{0xFFFFFFFFBFF77FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_uri_in_image4180 = new BitSet(new long[]{0x0000000040080000L});
-    public static final BitSet FOLLOW_image_alternative_in_image4190 = new BitSet(new long[]{0x0000000040000000L});
-    public static final BitSet FOLLOW_image_close_markup_in_image4199 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_set_in_image_uri4218 = new BitSet(new long[]{0xFFFFFFFFBFF77FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_alternative_markup_in_image_alternative4253 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_alternativepart_in_image_alternative4262 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4288 = new BitSet(new long[]{0x0000000000120000L});
-    public static final BitSet FOLLOW_onestar_in_image_alternativepart4291 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_bold_alternativepart_in_image_alternativepart4300 = new BitSet(new long[]{0x0000000000120000L});
-    public static final BitSet FOLLOW_onestar_in_image_alternativepart4305 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4312 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4319 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_onestar_in_image_alternativepart4322 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_ital_alternativepart_in_image_alternativepart4332 = new BitSet(new long[]{0x0000000000120000L});
-    public static final BitSet FOLLOW_onestar_in_image_alternativepart4337 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4344 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_image_alternativepart4351 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_alternativetext_in_image_alternativepart4358 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_image_alternativepart4363 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4389 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_boldital_description_in_image_bold_alternativepart4396 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4401 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4406 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_alternativetext_in_image_bold_alternativepart4415 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4418 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4446 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_link_boldital_description_in_image_ital_alternativepart4453 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4458 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4463 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_alternativetext_in_image_ital_alternativepart4472 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4475 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4496 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_alternativetext_in_image_boldital_alternative4505 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4508 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_image_alternative_simple_text_in_image_alternativetext4530 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_forced_linebreak_in_image_alternativetext4538 = new BitSet(new long[]{0x0000000002000002L});
-    public static final BitSet FOLLOW_set_in_image_alternative_simple_text4564 = new BitSet(new long[]{0xFFFFFFFFBC0D7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_extension_markup_in_extension4656 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_extension_handler_in_extension4659 = new BitSet(new long[]{0x0000000080000000L});
-    public static final BitSet FOLLOW_blanks_in_extension4662 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_extension_statement_in_extension4665 = new BitSet(new long[]{0x0000000001000000L});
-    public static final BitSet FOLLOW_extension_markup_in_extension4669 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_set_in_extension_handler4681 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_escaped_in_extension_handler4714 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_set_in_extension_statement4729 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_escaped_in_extension_statement4750 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_77_in_table_of_contents4778 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_78_in_table_of_contents4788 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
-    public static final BitSet FOLLOW_79_in_table_of_contents4793 = new BitSet(new long[]{0xFFFFFFFFFB1B7FF0L,0x000000000000FFFFL});
-    public static final BitSet FOLLOW_table_of_contents_title_text_in_table_of_contents4802 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
-    public static final BitSet FOLLOW_79_in_table_of_contents4809 = new BitSet(new long[]{0x0000000000000000L,0x0000000000010000L});
-    public static final BitSet FOLLOW_80_in_table_of_contents4814 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_set_in_table_of_contents_title_text4840 = new BitSet(new long[]{0xFFFFFFFFFB1B7FF2L,0x000000000000FFFFL});
-    public static final BitSet FOLLOW_STAR_in_onestar4895 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ESCAPE_in_escaped4916 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000001FFFFL});
-    public static final BitSet FOLLOW_newline_in_paragraph_separator4940 = new BitSet(new long[]{0x0000000000008002L});
-    public static final BitSet FOLLOW_EOF_in_paragraph_separator4948 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_blanks_in_whitespaces4960 = new BitSet(new long[]{0x0000000080008002L});
-    public static final BitSet FOLLOW_newline_in_whitespaces4964 = new BitSet(new long[]{0x0000000080008002L});
-    public static final BitSet FOLLOW_BLANKS_in_blanks4977 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_newline_in_text_lineseparator4987 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_blanks_in_text_lineseparator4992 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_EOF_in_text_lineseparator5000 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NEWLINE_in_newline5010 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STAR_in_bold_markup5020 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_STAR_in_bold_markup5023 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ITAL_in_ital_markup5033 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_EQUAL_in_heading_markup5043 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_POUND_in_list_ordelem_markup5053 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STAR_in_list_unordelem_markup5063 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_newline_in_list_elemseparator5073 = new BitSet(new long[]{0x0000000080000002L});
-    public static final BitSet FOLLOW_blanks_in_list_elemseparator5078 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_EOF_in_list_elemseparator5086 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_newline_in_end_of_list5096 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_EOF_in_end_of_list5101 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PIPE_in_table_cell_markup5111 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PIPE_in_table_headercell_markup5121 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_EQUAL_in_table_headercell_markup5124 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_newline_in_table_rowseparator5134 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_EOF_in_table_rowseparator5139 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5149 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5159 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5169 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5172 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5175 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5178 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LINK_OPEN_in_link_open_markup5188 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LINK_CLOSE_in_link_close_markup5198 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PIPE_in_link_description_markup5208 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IMAGE_OPEN_in_image_open_markup5218 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IMAGE_CLOSE_in_image_close_markup5228 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PIPE_in_image_alternative_markup5238 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_EXTENSION_in_extension_markup5248 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5258 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_text_formattedcontent_in_list_bolditalcontent2235 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2263 = new BitSet(new long[]{0xFFFFFFFFFFEF7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_list_bolditalcontent_in_list_italcontentpart2270 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_bold_markup_in_list_italcontentpart2277 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_text_unformattedelement_in_list_italcontentpart2291 = new BitSet(new long[]{0xFFFFFFFFFFED7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_row_in_table2319 = new BitSet(new long[]{0x0000000000080002L});
+    public static final BitSet FOLLOW_table_cell_in_table_row2345 = new BitSet(new long[]{0x0000000000088000L});
+    public static final BitSet FOLLOW_table_cell_in_table_row2358 = new BitSet(new long[]{0x0000000000088000L});
+    public static final BitSet FOLLOW_table_rowseparator_in_table_row2367 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_headercell_in_table_cell2388 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_normalcell_in_table_cell2399 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_headercell_markup_in_table_headercell2415 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_cellcontent_in_table_headercell2422 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_cell_markup_in_table_normalcell2438 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_cellcontent_in_table_normalcell2445 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_table_cellcontent2461 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_cellcontentpart_in_table_cellcontent2470 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_table_cellcontent2477 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_formattedelement_in_table_cellcontentpart2498 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_unformattedelement_in_table_cellcontentpart2509 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2525 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_italcontent_in_table_formattedelement2535 = new BitSet(new long[]{0x0000000000100002L});
+    public static final BitSet FOLLOW_ital_markup_in_table_formattedelement2544 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2552 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_boldcontent_in_table_formattedelement2559 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_bold_markup_in_table_formattedelement2569 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_table_boldcontent2586 = new BitSet(new long[]{0xFFFFFFFFFFF57FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_boldcontentpart_in_table_boldcontent2595 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_table_boldcontent2600 = new BitSet(new long[]{0xFFFFFFFFFFF57FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_EOF_in_table_boldcontent2608 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_table_italcontent2622 = new BitSet(new long[]{0xFFFFFFFFFFE77FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_italcontentpart_in_table_italcontent2631 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_table_italcontent2636 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_EOF_in_table_italcontent2644 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_formattedcontent_in_table_boldcontentpart2662 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2669 = new BitSet(new long[]{0xFFFFFFFFFFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_bolditalcontent_in_table_boldcontentpart2676 = new BitSet(new long[]{0x0000000000100002L});
+    public static final BitSet FOLLOW_ital_markup_in_table_boldcontentpart2683 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2700 = new BitSet(new long[]{0xFFFFFFFFFFE77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_bolditalcontent_in_table_italcontentpart2707 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_bold_markup_in_table_italcontentpart2714 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_formattedcontent_in_table_italcontentpart2726 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2742 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_formattedcontent_in_table_bolditalcontent2751 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_onestar_in_table_bolditalcontent2756 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_EOF_in_table_bolditalcontent2764 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_unformattedelement_in_table_formattedcontent2784 = new BitSet(new long[]{0xFFFFFFFFFFE57FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_table_unformatted_in_table_unformattedelement2807 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_inlineelement_in_table_unformattedelement2819 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_link_in_table_inlineelement2839 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_image_in_table_inlineelement2849 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_extension_in_table_inlineelement2860 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_nowiki_inline_in_table_inlineelement2870 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_table_unformatted_text_in_table_unformatted2891 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_forced_linebreak_in_table_unformatted2900 = new BitSet(new long[]{0x0000000006000002L});
+    public static final BitSet FOLLOW_escaped_in_table_unformatted2912 = new BitSet(new long[]{0x0000000006000002L});
+    public static final BitSet FOLLOW_set_in_table_unformatted_text2938 = new BitSet(new long[]{0xFFFFFFFFF8057FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_nowikiblock_open_markup_in_nowiki_block3035 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_nowiki_block_contents_in_nowiki_block3042 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_nowikiblock_close_markup_in_nowiki_block3048 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_paragraph_separator_in_nowiki_block3051 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_nowiki_open_markup_in_nowikiblock_open_markup3062 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_newline_in_nowikiblock_open_markup3065 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NOWIKI_BLOCK_CLOSE_in_nowikiblock_close_markup3076 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_nowiki_open_markup_in_nowiki_inline3091 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_nowiki_inline_contents_in_nowiki_inline3098 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_nowiki_close_markup_in_nowiki_inline3102 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_set_in_nowiki_block_contents3120 = new BitSet(new long[]{0xFFFFFFFFF7FFFFF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_set_in_nowiki_inline_contents3153 = new BitSet(new long[]{0xFFFFFFFFEFFF7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_horizontalrule_markup_in_horizontalrule3189 = new BitSet(new long[]{0x0000000080008000L});
+    public static final BitSet FOLLOW_blanks_in_horizontalrule3194 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_paragraph_separator_in_horizontalrule3200 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_link_open_markup_in_link3221 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_address_in_link3227 = new BitSet(new long[]{0x0000000020080000L});
+    public static final BitSet FOLLOW_link_description_markup_in_link3233 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_description_in_link3241 = new BitSet(new long[]{0x0000000020000000L});
+    public static final BitSet FOLLOW_link_close_markup_in_link3249 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_link_interwiki_uri_in_link_address3268 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_41_in_link_address3271 = new BitSet(new long[]{0xFFFFFFFFDFF77FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_interwiki_pagename_in_link_address3278 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_link_uri_in_link_address3289 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_link_interwiki_uri3305 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_link_interwiki_uri3307 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_link_interwiki_uri3314 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45_in_link_interwiki_uri3316 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3318 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_link_interwiki_uri3320 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3322 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3324 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3326 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3328 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_50_in_link_interwiki_uri3335 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_51_in_link_interwiki_uri3337 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3339 = new BitSet(new long[]{0x0010000000000000L});
+    public static final BitSet FOLLOW_52_in_link_interwiki_uri3341 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3343 = new BitSet(new long[]{0x0020000000000000L});
+    public static final BitSet FOLLOW_53_in_link_interwiki_uri3345 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_54_in_link_interwiki_uri3353 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45_in_link_interwiki_uri3355 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45_in_link_interwiki_uri3357 = new BitSet(new long[]{0x0080000000000000L});
+    public static final BitSet FOLLOW_55_in_link_interwiki_uri3359 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_51_in_link_interwiki_uri3361 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_56_in_link_interwiki_uri3363 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_57_in_link_interwiki_uri3370 = new BitSet(new long[]{0x0400000000000000L});
+    public static final BitSet FOLLOW_58_in_link_interwiki_uri3372 = new BitSet(new long[]{0x0800000000000000L});
+    public static final BitSet FOLLOW_59_in_link_interwiki_uri3374 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3376 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3378 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3380 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3382 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_60_in_link_interwiki_uri3389 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_56_in_link_interwiki_uri3391 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_link_interwiki_uri3393 = new BitSet(new long[]{0x4000000000000000L});
+    public static final BitSet FOLLOW_62_in_link_interwiki_uri3395 = new BitSet(new long[]{0x8000000000000000L});
+    public static final BitSet FOLLOW_63_in_link_interwiki_uri3397 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_link_interwiki_uri3399 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_51_in_link_interwiki_uri3401 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_51_in_link_interwiki_uri3403 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_60_in_link_interwiki_uri3410 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_56_in_link_interwiki_uri3412 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_link_interwiki_uri3414 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3416 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_link_interwiki_uri3418 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3420 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3422 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3424 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3426 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_60_in_link_interwiki_uri3433 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45_in_link_interwiki_uri3435 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3437 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_link_interwiki_uri3439 = new BitSet(new long[]{0x1000000000000000L});
+    public static final BitSet FOLLOW_60_in_link_interwiki_uri3441 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45_in_link_interwiki_uri3443 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3445 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_link_interwiki_uri3447 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_66_in_link_interwiki_uri3455 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_link_interwiki_uri3457 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_link_interwiki_uri3459 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_67_in_link_interwiki_uri3461 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_link_interwiki_uri3463 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+    public static final BitSet FOLLOW_68_in_link_interwiki_uri3465 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_56_in_link_interwiki_uri3467 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_66_in_link_interwiki_uri3475 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_69_in_link_interwiki_uri3477 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_link_interwiki_uri3479 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_link_interwiki_uri3481 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_link_interwiki_uri3483 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_59_in_link_interwiki_uri3490 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_67_in_link_interwiki_uri3492 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3494 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3496 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3498 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3500 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_59_in_link_interwiki_uri3508 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_link_interwiki_uri3510 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3512 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3514 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3516 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3518 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3520 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3522 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_59_in_link_interwiki_uri3530 = new BitSet(new long[]{0x0000800000000000L});
+    public static final BitSet FOLLOW_47_in_link_interwiki_uri3532 = new BitSet(new long[]{0x0020000000000000L});
+    public static final BitSet FOLLOW_53_in_link_interwiki_uri3534 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+    public static final BitSet FOLLOW_70_in_link_interwiki_uri3536 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_51_in_link_interwiki_uri3538 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_56_in_link_interwiki_uri3540 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3542 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3544 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3546 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3548 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_71_in_link_interwiki_uri3555 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_link_interwiki_uri3557 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_link_interwiki_uri3559 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_56_in_link_interwiki_uri3561 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45_in_link_interwiki_uri3563 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000100L});
+    public static final BitSet FOLLOW_72_in_link_interwiki_uri3565 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_58_in_link_interwiki_uri3572 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_link_interwiki_uri3574 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3576 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+    public static final BitSet FOLLOW_70_in_link_interwiki_uri3578 = new BitSet(new long[]{0x0400000000000000L});
+    public static final BitSet FOLLOW_58_in_link_interwiki_uri3580 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000002L});
+    public static final BitSet FOLLOW_65_in_link_interwiki_uri3582 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_link_interwiki_uri3584 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+    public static final BitSet FOLLOW_70_in_link_interwiki_uri3586 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_73_in_link_interwiki_uri3593 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3595 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_link_interwiki_uri3597 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_link_interwiki_uri3599 = new BitSet(new long[]{0x0008000000000000L});
+    public static final BitSet FOLLOW_51_in_link_interwiki_uri3601 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000400L});
+    public static final BitSet FOLLOW_74_in_link_interwiki_uri3603 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3605 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3607 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3609 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3611 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_73_in_link_interwiki_uri3618 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3620 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3622 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3624 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3626 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_75_in_link_interwiki_uri3633 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000010L});
+    public static final BitSet FOLLOW_68_in_link_interwiki_uri3635 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_56_in_link_interwiki_uri3637 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000008L});
+    public static final BitSet FOLLOW_67_in_link_interwiki_uri3639 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45_in_link_interwiki_uri3641 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_link_interwiki_uri3643 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3650 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3652 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3654 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3656 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000040L});
+    public static final BitSet FOLLOW_70_in_link_interwiki_uri3658 = new BitSet(new long[]{0x0100000000000000L});
+    public static final BitSet FOLLOW_56_in_link_interwiki_uri3660 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000001L});
+    public static final BitSet FOLLOW_64_in_link_interwiki_uri3662 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3664 = new BitSet(new long[]{0x2000000000000000L});
+    public static final BitSet FOLLOW_61_in_link_interwiki_uri3666 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_76_in_link_interwiki_uri3673 = new BitSet(new long[]{0x0001000000000000L});
+    public static final BitSet FOLLOW_48_in_link_interwiki_uri3675 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3677 = new BitSet(new long[]{0x0000400000000000L});
+    public static final BitSet FOLLOW_46_in_link_interwiki_uri3679 = new BitSet(new long[]{0x0002000000000000L});
+    public static final BitSet FOLLOW_49_in_link_interwiki_uri3681 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_set_in_link_interwiki_pagename3703 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_descriptionpart_in_link_description3746 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_in_link_description3758 = new BitSet(new long[]{0xFFFFFFFFDE5F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3783 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3786 = new BitSet(new long[]{0xFFFFFFFFDE1D7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_bold_descriptionpart_in_link_descriptionpart3794 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3799 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_bold_markup_in_link_descriptionpart3809 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3814 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3817 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_ital_descriptionpart_in_link_descriptionpart3826 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3831 = new BitSet(new long[]{0xFFFFFFFFDE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_ital_markup_in_link_descriptionpart3840 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3845 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_descriptiontext_in_link_descriptionpart3854 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_link_descriptionpart3857 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3877 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_boldital_description_in_link_bold_descriptionpart3884 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_ital_markup_in_link_bold_descriptionpart3889 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_link_descriptiontext_in_link_bold_descriptionpart3898 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3914 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_boldital_description_in_link_ital_descriptionpart3921 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_bold_markup_in_link_ital_descriptionpart3924 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_link_descriptiontext_in_link_ital_descriptionpart3935 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_link_boldital_description3951 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_descriptiontext_in_link_boldital_description3960 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_link_boldital_description3963 = new BitSet(new long[]{0xFFFFFFFFDE0D7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_descriptiontext_simple_in_link_descriptiontext3986 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_forced_linebreak_in_link_descriptiontext3996 = new BitSet(new long[]{0x0000000006000002L});
+    public static final BitSet FOLLOW_escaped_in_link_descriptiontext4008 = new BitSet(new long[]{0x0000000006000002L});
+    public static final BitSet FOLLOW_set_in_link_descriptiontext_simple4033 = new BitSet(new long[]{0xFFFFFFFFD80D7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_set_in_link_uri4132 = new BitSet(new long[]{0xFFFFFFFFDFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_open_markup_in_image4173 = new BitSet(new long[]{0xFFFFFFFFBFF77FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_uri_in_image4179 = new BitSet(new long[]{0x0000000040080000L});
+    public static final BitSet FOLLOW_image_alternative_in_image4189 = new BitSet(new long[]{0x0000000040000000L});
+    public static final BitSet FOLLOW_image_close_markup_in_image4198 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_set_in_image_uri4217 = new BitSet(new long[]{0xFFFFFFFFBFF77FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_alternative_markup_in_image_alternative4252 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_alternativepart_in_image_alternative4261 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4287 = new BitSet(new long[]{0x0000000000120000L});
+    public static final BitSet FOLLOW_onestar_in_image_alternativepart4290 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_bold_alternativepart_in_image_alternativepart4299 = new BitSet(new long[]{0x0000000000120000L});
+    public static final BitSet FOLLOW_onestar_in_image_alternativepart4304 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_bold_markup_in_image_alternativepart4311 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4318 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_onestar_in_image_alternativepart4321 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_ital_alternativepart_in_image_alternativepart4331 = new BitSet(new long[]{0x0000000000120000L});
+    public static final BitSet FOLLOW_onestar_in_image_alternativepart4336 = new BitSet(new long[]{0xFFFFFFFFBE1F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_ital_markup_in_image_alternativepart4343 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_image_alternativepart4350 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_alternativetext_in_image_alternativepart4357 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_image_alternativepart4362 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4388 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_boldital_description_in_image_bold_alternativepart4395 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_ital_markup_in_image_bold_alternativepart4400 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4405 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_alternativetext_in_image_bold_alternativepart4414 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_image_bold_alternativepart4417 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4445 = new BitSet(new long[]{0xFFFFFFFFDE0F7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_link_boldital_description_in_image_ital_alternativepart4452 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_bold_markup_in_image_ital_alternativepart4457 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4462 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_alternativetext_in_image_ital_alternativepart4471 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_image_ital_alternativepart4474 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4495 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_alternativetext_in_image_boldital_alternative4504 = new BitSet(new long[]{0xFFFFFFFFBE0F7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_onestar_in_image_boldital_alternative4507 = new BitSet(new long[]{0xFFFFFFFFBE0D7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_image_alternative_simple_text_in_image_alternativetext4529 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_forced_linebreak_in_image_alternativetext4537 = new BitSet(new long[]{0x0000000002000002L});
+    public static final BitSet FOLLOW_set_in_image_alternative_simple_text4563 = new BitSet(new long[]{0xFFFFFFFFBC0D7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_extension_markup_in_extension4655 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_extension_handler_in_extension4658 = new BitSet(new long[]{0x0000000080000000L});
+    public static final BitSet FOLLOW_blanks_in_extension4661 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_extension_statement_in_extension4664 = new BitSet(new long[]{0x0000000001000000L});
+    public static final BitSet FOLLOW_extension_markup_in_extension4668 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_set_in_extension_handler4680 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_escaped_in_extension_handler4713 = new BitSet(new long[]{0xFFFFFFFF7EFF7FF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_set_in_extension_statement4728 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_escaped_in_extension_statement4749 = new BitSet(new long[]{0xFFFFFFFFFEFFFFF2L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_77_in_table_of_contents4777 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_78_in_table_of_contents4787 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
+    public static final BitSet FOLLOW_79_in_table_of_contents4792 = new BitSet(new long[]{0xFFFFFFFFFB1B7FF0L,0x000000000000FFFFL});
+    public static final BitSet FOLLOW_table_of_contents_title_text_in_table_of_contents4801 = new BitSet(new long[]{0x0000000000000000L,0x0000000000008000L});
+    public static final BitSet FOLLOW_79_in_table_of_contents4808 = new BitSet(new long[]{0x0000000000000000L,0x0000000000010000L});
+    public static final BitSet FOLLOW_80_in_table_of_contents4813 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_set_in_table_of_contents_title_text4839 = new BitSet(new long[]{0xFFFFFFFFFB1B7FF2L,0x000000000000FFFFL});
+    public static final BitSet FOLLOW_STAR_in_onestar4894 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ESCAPE_in_escaped4915 = new BitSet(new long[]{0xFFFFFFFFFFFFFFF0L,0x000000000001FFFFL});
+    public static final BitSet FOLLOW_newline_in_paragraph_separator4939 = new BitSet(new long[]{0x0000000000008002L});
+    public static final BitSet FOLLOW_EOF_in_paragraph_separator4947 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_blanks_in_whitespaces4959 = new BitSet(new long[]{0x0000000080008002L});
+    public static final BitSet FOLLOW_newline_in_whitespaces4963 = new BitSet(new long[]{0x0000000080008002L});
+    public static final BitSet FOLLOW_BLANKS_in_blanks4976 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_newline_in_text_lineseparator4986 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_blanks_in_text_lineseparator4991 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_EOF_in_text_lineseparator4999 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NEWLINE_in_newline5009 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STAR_in_bold_markup5019 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_STAR_in_bold_markup5022 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ITAL_in_ital_markup5032 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_EQUAL_in_heading_markup5042 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_POUND_in_list_ordelem_markup5052 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STAR_in_list_unordelem_markup5062 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_newline_in_list_elemseparator5072 = new BitSet(new long[]{0x0000000080000002L});
+    public static final BitSet FOLLOW_blanks_in_list_elemseparator5077 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_EOF_in_list_elemseparator5085 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_newline_in_end_of_list5095 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_EOF_in_end_of_list5100 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PIPE_in_table_cell_markup5110 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PIPE_in_table_headercell_markup5120 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_EQUAL_in_table_headercell_markup5123 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_newline_in_table_rowseparator5133 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_EOF_in_table_rowseparator5138 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NOWIKI_OPEN_in_nowiki_open_markup5148 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NOWIKI_CLOSE_in_nowiki_close_markup5158 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5168 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5171 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5174 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_DASH_in_horizontalrule_markup5177 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LINK_OPEN_in_link_open_markup5187 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LINK_CLOSE_in_link_close_markup5197 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PIPE_in_link_description_markup5207 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IMAGE_OPEN_in_image_open_markup5217 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IMAGE_CLOSE_in_image_close_markup5227 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PIPE_in_image_alternative_markup5237 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_EXTENSION_in_extension_markup5247 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_FORCED_LINEBREAK_in_forced_linebreak5257 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_NOWIKI_OPEN_in_synpred1317 = new BitSet(new long[]{0xFFFFFFFFFFFF7FF0L,0x000000000001FFFFL});
     public static final BitSet FOLLOW_set_in_synpred1320 = new BitSet(new long[]{0x0000000000000002L});
 

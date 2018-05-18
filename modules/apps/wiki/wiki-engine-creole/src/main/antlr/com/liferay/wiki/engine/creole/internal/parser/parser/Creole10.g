@@ -677,7 +677,7 @@ scope {
 	;
 
 list_bolditalcontent returns [ASTNode  text = null]
-	:	( t = text_unformattedelement { $text = $t.contents; } )+
+	:	( tf = text_formattedcontent { $text = $tf.items; } )+
 	;
 
 list_italcontentpart returns [ASTNode  contents  = null]

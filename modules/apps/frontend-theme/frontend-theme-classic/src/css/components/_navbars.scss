@@ -34,10 +34,25 @@
 		text-decoration: none;
 	}
 
+	.navbar-nav {
+		.nav-item:not(:last-of-type) {
+			.nav-link {
+				@include lg {
+					padding-right: 16px;
+				}
+			}
+		}
+
+		.nav-link {
+			@include lg {
+				padding-left: 16px;
+			}
+		}
+	}
+
 	.nav-link {
 		color: #6B6C7E;
-		font-size: 0.8rem;
+		font-size: 0.875rem;
 		font-weight: 600;
-		letter-spacing: 0.035rem;
 	}
 }

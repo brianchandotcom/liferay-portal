@@ -68,6 +68,7 @@ public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setCompanyId(group.getCompanyId());
 			serviceContext.setLanguageId(group.getDefaultLanguageId());
 			serviceContext.setScopeGroupId(group.getGroupId());
 			serviceContext.setUserId(group.getCreatorUserId());

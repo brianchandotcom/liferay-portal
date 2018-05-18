@@ -78,6 +78,7 @@ public class CommerceServiceVerifyProcess extends VerifyProcess {
 					true);
 
 				for (Group group : groups) {
+					serviceContext.setCompanyId(group.getCompanyId());
 					serviceContext.setLanguageId(group.getDefaultLanguageId());
 					serviceContext.setScopeGroupId(group.getGroupId());
 					serviceContext.setUserId(group.getCreatorUserId());

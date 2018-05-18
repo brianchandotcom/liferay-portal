@@ -12,14 +12,21 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMERCE_NOTIFICATION_TEMPLATE</action-key>
+				<action-key>DELETE_COMMERCE_NOTIFICATION_QUEUE_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>RESEND_COMMERCE_NOTIFICATION_QUEUE_ENTRY</action-key>
+				<action-key>VIEW_COMMERCE_NOTIFICATION_QUEUE_ENTRIES</action-key>
 				<action-key>VIEW_COMMERCE_NOTIFICATION_TEMPLATES</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_NOTIFICATION_TEMPLATE</action-key>
+				<action-key>DELETE_COMMERCE_NOTIFICATION_QUEUE_ENTRY</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>RESEND_COMMERCE_NOTIFICATION_QUEUE_ENTRY</action-key>
+				<action-key>VIEW_COMMERCE_NOTIFICATION_QUEUE_ENTRIES</action-key>
+				<action-key>VIEW_COMMERCE_NOTIFICATION_TEMPLATES</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

@@ -111,6 +111,16 @@ public class EntityFinder {
 		return false;
 	}
 
+	public boolean hasArrayablePagination() {
+		for (EntityColumn column : _entityColumns) {
+			if (column.hasArrayablePagination()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean hasCustomComparator() {
 		for (EntityColumn column : _entityColumns) {
 			String comparator = column.getComparator();

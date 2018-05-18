@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.notification.service.impl;
 
+import com.liferay.commerce.notification.exception.CommerceNotificationTemplateFromException;
+import com.liferay.commerce.notification.exception.CommerceNotificationTemplateFromNameException;
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateNameException;
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateTypeException;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
@@ -42,9 +44,10 @@ public class CommerceNotificationTemplateLocalServiceImpl
 
 	@Override
 	public CommerceNotificationTemplate addCommerceNotificationTemplate(
-			String name, String description, String cc, String ccn, String type,
-			boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			String name, String description, String from, String fromName,
+			String cc, String bcc, String type, boolean enabled,
+			Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce notification template
@@ -52,7 +55,7 @@ public class CommerceNotificationTemplateLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		validate(name, type);
+		validate(name, from, fromName, type);
 
 		long commerceNotificationTemplateId = counterLocalService.increment();
 
@@ -67,8 +70,10 @@ public class CommerceNotificationTemplateLocalServiceImpl
 		commerceNotificationTemplate.setUserName(user.getFullName());
 		commerceNotificationTemplate.setName(name);
 		commerceNotificationTemplate.setDescription(description);
+		commerceNotificationTemplate.setFrom(from);
+		commerceNotificationTemplate.setFromName(fromName);
 		commerceNotificationTemplate.setCc(cc);
-		commerceNotificationTemplate.setCcn(ccn);
+		commerceNotificationTemplate.setBcc(bcc);
 		commerceNotificationTemplate.setType(type);
 		commerceNotificationTemplate.setEnabled(enabled);
 		commerceNotificationTemplate.setSubjectMap(subjectMap);
@@ -91,6 +96,13 @@ public class CommerceNotificationTemplateLocalServiceImpl
 	public CommerceNotificationTemplate deleteCommerceNotificationTemplate(
 			CommerceNotificationTemplate commerceNotificationTemplate)
 		throws PortalException {
+
+		// Commerce notification queues
+
+		commerceNotificationQueueEntryLocalService.
+			updateCommerceNotificationQueueEntriesTemplateIds(
+				commerceNotificationTemplate.
+					getCommerceNotificationTemplateId());
 
 		// Commerce notification template user segment rels
 
@@ -159,6 +171,14 @@ public class CommerceNotificationTemplateLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceNotificationTemplate> getCommerceNotificationTemplates(
+		long groupId, String type, boolean enabled) {
+
+		return commerceNotificationTemplatePersistence.findByG_T_E(
+			groupId, type, enabled);
+	}
+
+	@Override
 	public int getCommerceNotificationTemplatesCount(long groupId) {
 		return commerceNotificationTemplatePersistence.countByGroupId(groupId);
 	}
@@ -166,21 +186,24 @@ public class CommerceNotificationTemplateLocalServiceImpl
 	@Override
 	public CommerceNotificationTemplate updateCommerceNotificationTemplate(
 			long commerceNotificationTemplateId, String name,
-			String description, String cc, String ccn, String type,
-			boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			String description, String from, String fromName, String cc,
+			String bcc, String type, boolean enabled,
+			Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceNotificationTemplate commerceNotificationTemplate =
 			commerceNotificationTemplatePersistence.findByPrimaryKey(
 				commerceNotificationTemplateId);
 
-		validate(name, type);
+		validate(name, from, fromName, type);
 
 		commerceNotificationTemplate.setName(name);
 		commerceNotificationTemplate.setDescription(description);
+		commerceNotificationTemplate.setFrom(from);
+		commerceNotificationTemplate.setFromName(fromName);
 		commerceNotificationTemplate.setCc(cc);
-		commerceNotificationTemplate.setCcn(ccn);
+		commerceNotificationTemplate.setBcc(bcc);
 		commerceNotificationTemplate.setType(type);
 		commerceNotificationTemplate.setEnabled(enabled);
 		commerceNotificationTemplate.setSubjectMap(subjectMap);
@@ -193,9 +216,20 @@ public class CommerceNotificationTemplateLocalServiceImpl
 		return commerceNotificationTemplate;
 	}
 
-	protected void validate(String name, String type) throws PortalException {
+	protected void validate(
+			String name, String from, String fromName, String type)
+		throws PortalException {
+
 		if (Validator.isNull(name)) {
 			throw new CommerceNotificationTemplateNameException();
+		}
+
+		if (Validator.isNull(from)) {
+			throw new CommerceNotificationTemplateFromException();
+		}
+
+		if (Validator.isNull(fromName)) {
+			throw new CommerceNotificationTemplateFromNameException();
 		}
 
 		CommerceNotificationType commerceNotificationType =

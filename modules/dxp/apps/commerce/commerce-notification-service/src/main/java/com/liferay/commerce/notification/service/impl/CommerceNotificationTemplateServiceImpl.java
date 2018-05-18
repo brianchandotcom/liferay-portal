@@ -39,9 +39,10 @@ public class CommerceNotificationTemplateServiceImpl
 
 	@Override
 	public CommerceNotificationTemplate addCommerceNotificationTemplate(
-			String name, String description, String cc, String ccn, String type,
-			boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			String name, String description, String from, String fromName,
+			String cc, String bcc, String type, boolean enabled,
+			Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -50,8 +51,8 @@ public class CommerceNotificationTemplateServiceImpl
 
 		return commerceNotificationTemplateLocalService.
 			addCommerceNotificationTemplate(
-				name, description, cc, ccn, type, enabled, subjectMap, bodyMap,
-				serviceContext);
+				name, description, from, fromName, cc, bcc, type, enabled,
+				subjectMap, bodyMap, serviceContext);
 	}
 
 	@Override
@@ -112,9 +113,10 @@ public class CommerceNotificationTemplateServiceImpl
 	@Override
 	public CommerceNotificationTemplate updateCommerceNotificationTemplate(
 			long commerceNotificationTemplateId, String name,
-			String description, String cc, String ccn, String type,
-			boolean enabled, Map<Locale, String> subjectMap,
-			Map<Locale, String> bodyMap, ServiceContext serviceContext)
+			String description, String from, String fromName, String cc,
+			String bcc, String type, boolean enabled,
+			Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_commerceNotificationTemplateResourcePermission.check(
@@ -123,8 +125,9 @@ public class CommerceNotificationTemplateServiceImpl
 
 		return commerceNotificationTemplateLocalService.
 			updateCommerceNotificationTemplate(
-				commerceNotificationTemplateId, name, description, cc, ccn,
-				type, enabled, subjectMap, bodyMap, serviceContext);
+				commerceNotificationTemplateId, name, description, from,
+				fromName, cc, bcc, type, enabled, subjectMap, bodyMap,
+				serviceContext);
 	}
 
 	private static volatile

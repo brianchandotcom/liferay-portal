@@ -96,7 +96,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		/>
 	</c:if>
 
-	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
+	<c:if test="<%= group.isActive() && (group.getPublicLayoutsPageCount() > 0) %>">
 		<liferay-ui:icon
 			message="go-to-public-pages"
 			method="get"
@@ -105,7 +105,7 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		/>
 	</c:if>
 
-	<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+	<c:if test="<%= group.isActive() && (group.getPrivateLayoutsPageCount() > 0) %>">
 		<liferay-ui:icon
 			message="go-to-private-pages"
 			method="get"

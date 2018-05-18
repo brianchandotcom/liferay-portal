@@ -89,8 +89,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
 
 		JournalArticle journalArticle =
-			_journalArticleLocalService.getArticleByUrlTitle(
-				groupId, urlTitle);
+			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
 
 		if (!journalArticle.isApproved()) {
 			if (journalArticle.isExpired()) {

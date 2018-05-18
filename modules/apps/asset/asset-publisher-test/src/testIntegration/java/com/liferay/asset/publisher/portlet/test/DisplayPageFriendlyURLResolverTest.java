@@ -135,6 +135,23 @@ public class DisplayPageFriendlyURLResolverTest {
 		Assert.assertNotNull(actualURL);
 	}
 
+	@Test(expected = ExpiredModelException.class)
+	public void testJournalArticleFriendlyURLWithExpiredArticle()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		JournalArticleLocalServiceUtil.expireArticle(
+			_article.getUserId(), _article.getGroupId(),
+			_article.getArticleId(), _article.getUrlTitle(), serviceContext);
+
+		PortalUtil.getActualURL(
+			_group.getGroupId(), false, Portal.PATH_MAIN,
+			"/-/test-journal-article", new HashMap<String, String[]>(),
+			getRequestContext());
+	}
+
 	@Test(expected = NoSuchLayoutException.class)
 	public void testJournalArticleFriendlyURLWithNonExistentArticle()
 		throws Exception {
@@ -145,23 +162,10 @@ public class DisplayPageFriendlyURLResolverTest {
 			new HashMap<String, String[]>(), getRequestContext());
 	}
 
-	@Test(expected = ExpiredModelException.class)
-	public void testJournalArticleFriendlyURLWithExpiredArticle() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		JournalArticleLocalServiceUtil.expireArticle(
-			_article.getUserId(), _article.getGroupId(), _article.getArticleId(),
-			_article.getUrlTitle(), serviceContext);
-
-		PortalUtil.getActualURL(
-			_group.getGroupId(), false, Portal.PATH_MAIN,
-			"/-/test-journal-article", new HashMap<String, String[]>(),
-			getRequestContext());
-	}
-
 	@Test(expected = NoSuchLayoutException.class)
-	public void testJournalArticleFriendlyURLWithTrashedArticle() throws Exception {
+	public void testJournalArticleFriendlyURLWithTrashedArticle()
+		throws Exception {
+
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
 			_article.getUserId(), _article);
 

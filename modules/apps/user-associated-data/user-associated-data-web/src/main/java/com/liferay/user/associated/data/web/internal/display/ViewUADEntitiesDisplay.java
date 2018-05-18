@@ -49,10 +49,8 @@ public class ViewUADEntitiesDisplay {
 		return _uadRegistryKey;
 	}
 
-	public void setActionDropdownItems(
-		List<DropdownItem> getActionDropdownItems) {
-
-		_actionDropdownItems = getActionDropdownItems;
+	public void setActionDropdownItems(List<DropdownItem> actionDropdownItems) {
+		_actionDropdownItems = actionDropdownItems;
 	}
 
 	public void setApplicationKey(String applicationKey) {

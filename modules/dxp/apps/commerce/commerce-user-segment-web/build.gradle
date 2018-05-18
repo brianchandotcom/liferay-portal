@@ -14,7 +14,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.roles.item.selector.api", version: "1.0.0-20171115.184622-1"
 	compileOnly group: "com.liferay", name: "com.liferay.user.groups.admin.item.selector.api", version: "1.0.0-20171115.184817-1"
 	compileOnly group: "com.liferay", name: "com.liferay.users.admin.item.selector.api", version: "1.0.0-20171115.183709-1"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180426.173855-7"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180518.171544-8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.0"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

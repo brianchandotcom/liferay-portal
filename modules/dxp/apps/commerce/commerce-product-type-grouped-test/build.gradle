@@ -1,6 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180426.173855-7"
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180518.171544-8"
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-api")
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-type-grouped-api")

@@ -9,7 +9,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180426.173855-7"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180518.171544-8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.0"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

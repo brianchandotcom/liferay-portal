@@ -1,6 +1,7 @@
 import com.liferay.gradle.util.GradleUtil
-import java.util.regex.Pattern
+
 import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 buildscript {
 	apply from: file("../modules/build-buildscript.gradle"), to: buildscript
@@ -47,14 +48,14 @@ dependencies {
 		if (matcher.find()) {
 			String portalVersion = matcher.group("portalVersion")
 
-			if (portalVersion.startsWith("7.0")) {
-				poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.0.x", version: "20180516094443-ebc78fb"
-			}
-			else if (portalVersion.startsWith("6.1")) {
+			if (portalVersion.startsWith("6.1")) {
 				poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.1.x", version: "20180516095228-87f131d"
 			}
 			else if (portalVersion.startsWith("6.2")) {
 				poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.2.x", version: "20180516095205-e9a6238"
+			}
+			else if (portalVersion.startsWith("7.0")) {
+				poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.0.x", version: "20180516094443-ebc78fb"
 			}
 		}
 	}

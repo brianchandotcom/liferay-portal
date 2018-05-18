@@ -65,8 +65,12 @@ public class TargetPlatformIndexerUtil {
 			Attributes attributes = extraPackagesManifest.getMainAttributes();
 
 			properties.put(
+				Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA,
+				attributes.getValue(Constants.PROVIDE_CAPABILITY));
+
+			properties.put(
 				Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
-				attributes.getValue("Export-Package"));
+				attributes.getValue(Constants.EXPORT_PACKAGE));
 
 			ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
 				FrameworkFactory.class);

@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.apio.architect.sample.internal.activator.APIOSampleBundleActivator
 Bundle-Name: Liferay Apio Architect Sample
 Bundle-SymbolicName: com.liferay.apio.architect.sample
 Bundle-Version: 1.0.0

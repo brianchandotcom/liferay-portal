@@ -19,6 +19,7 @@ import com.liferay.adaptive.media.content.transformer.ContentTransformer;
 import com.liferay.adaptive.media.content.transformer.ContentTransformerContentType;
 import com.liferay.adaptive.media.content.transformer.constants.ContentTransformerContentTypes;
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -52,7 +53,7 @@ public class HtmlContentTransformerImpl
 			return null;
 		}
 
-		if (!html.contains("data-fileentryid")) {
+		if (!html.contains(AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME)) {
 			return html;
 		}
 
@@ -91,7 +92,8 @@ public class HtmlContentTransformerImpl
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"<img [^>]*?\\s*data-fileentryid=\"(\\d+)\".*?/>",
+		"<img [^>]*?\\s*" + AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME +
+			"=\"(\\d+)\".*?/>",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
 	private AMImageHTMLTagFactory _amImageHTMLTagFactory;

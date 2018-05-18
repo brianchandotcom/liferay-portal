@@ -418,6 +418,157 @@ AUI.add(
 			}
 		);
 
+		var JournalArticleCellEditor = A.Component.create(
+			{
+				EXTENDS: A.BaseCellEditor,
+
+				NAME: 'journal-article-cell-editor',
+
+				prototype: {
+					ELEMENT_TEMPLATE: '<input type="hidden" />',
+
+					getElementsValue: function() {
+						var instance = this;
+
+						return instance.get('value');
+					},
+
+					getParsedValue: function(value) {
+						if (Lang.isString(value)) {
+							if (value !== '') {
+								value = JSON.parse(value);
+							}
+							else {
+								value = {};
+							}
+						}
+
+						return value;
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						var parsedValue = instance.getParsedValue(value);
+
+						if (!parsedValue.className && !parsedValue.classPK) {
+							value = '';
+						}
+						else {
+							value = JSON.stringify(parsedValue);
+						}
+
+						instance.set('value', value);
+					},
+
+					_defInitToolbarFn: function() {
+						var instance = this;
+
+						JournalArticleCellEditor.superclass._defInitToolbarFn.apply(instance, arguments);
+
+						instance.toolbar.add(
+							{
+								label: Liferay.Language.get('select'),
+								on: {
+									click: A.bind('_onClickChoose', instance)
+								}
+							},
+							1
+						);
+
+						instance.toolbar.add(
+							{
+								label: Liferay.Language.get('clear'),
+								on: {
+									click: A.bind('_onClickClear', instance)
+								}
+							},
+							2
+						);
+					},
+
+					_getWebContentSelectorURL: function() {
+						var instance = this;
+
+						var url = Liferay.PortletURL.createRenderURL(themeDisplay.getURLControlPanel());
+
+						url.setParameter('eventName', 'selectContent');
+						url.setParameter('groupId', themeDisplay.getScopeGroupId());
+						url.setParameter('p_auth', Liferay.authToken);
+						url.setParameter('selectedGroupIds', themeDisplay.getScopeGroupId());
+						url.setParameter('showNonindexable', true);
+						url.setParameter('showScheduled', true);
+						url.setParameter('typeSelection', 'com.liferay.journal.model.JournalArticle');
+						url.setPortletId('com_liferay_asset_browser_web_portlet_AssetBrowserPortlet');
+						url.setWindowState('pop_up');
+
+						return url;
+					},
+
+					_handleCancelEvent: function(event) {
+						var instance = this;
+
+						instance.get('boundingBox').hide();
+					},
+
+					_handleSaveEvent: function(event) {
+						var instance = this;
+
+						JournalArticleCellEditor.superclass._handleSaveEvent.apply(instance, arguments);
+
+						instance.get('boundingBox').hide();
+					},
+
+					_onClickChoose: function(event) {
+						var instance = this;
+
+						Liferay.Util.selectEntity(
+							{
+								dialog: {
+									constrain: true,
+									destroyOnHide: true,
+									modal: true
+								},
+								eventName: 'selectContent',
+								id: 'selectContent',
+								title: Liferay.Language.get('journal-article'),
+								uri: instance._getWebContentSelectorURL()
+							},
+							function(event) {
+								if (event.details.length > 0) {
+									var selectedWebContent = event.details[0];
+
+									instance.setValue(
+										{
+											className: selectedWebContent.assetclassname,
+											classPK: selectedWebContent.assetclasspk
+										}
+									);
+								}
+							}
+						);
+					},
+
+					_onClickClear: function() {
+						var instance = this;
+
+						instance.set('value', STR_BLANK);
+					},
+
+					_onDocMouseDownExt: function(event) {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+
+						if (!boundingBox.contains(event.target)) {
+							instance._handleCancelEvent(event);
+						}
+					}
+				}
+
+			}
+		);
+
 		var LinkToPageCellEditor = A.Component.create(
 			{
 				EXTENDS: A.DropDownCellEditor,
@@ -568,6 +719,7 @@ AUI.add(
 		var customCellEditors = [
 			ColorCellEditor,
 			DLFileEntryCellEditor,
+			JournalArticleCellEditor,
 			LinkToPageCellEditor
 		];
 
@@ -1714,6 +1866,16 @@ AUI.add(
 							}
 						);
 
+						model.forEach(
+							function(item, index, collection) {
+								var attributeName = item.attributeName;
+
+								if (attributeName === 'predefinedValue') {
+									item.editor = new JournalArticleCellEditor();
+								}
+							}
+						);
+
 						return model;
 					}
 				}
@@ -1784,6 +1946,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-color-picker-popover', 'liferay-item-selector-dialog', 'liferay-portlet-dynamic-data-mapping']
+		requires: ['aui-base', 'aui-color-picker-popover', 'aui-io-request', 'aui-url', 'liferay-item-selector-dialog', 'liferay-portlet-dynamic-data-mapping', 'liferay-portlet-url']
 	}
 );

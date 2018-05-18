@@ -60,7 +60,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
 
 				<aui:field-wrapper label="site-template-settings">
-					<aui:input disabled="<%= true %>" name="active" type="checkbox" value="<%= publicLayoutSetPrototype.isActive() %>" />
+					<aui:input disabled="<%= true %>" label="active" name="site-template-active" type="checkbox" value="<%= publicLayoutSetPrototype.isActive() %>" />
 					<aui:input disabled="<%= true %>" name="site-template-allows-modifications" type="checkbox" value="<%= layoutsUpdateable %>" />
 				</aui:field-wrapper>
 			</c:when>
@@ -83,7 +83,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
 
 				<aui:field-wrapper label="site-template-settings">
-					<aui:input disabled="<%= true %>" name="active" type="checkbox" value="<%= privateLayoutSetPrototype.isActive() %>" />
+					<aui:input disabled="<%= true %>" label="active" name="site-template-active" type="checkbox" value="<%= privateLayoutSetPrototype.isActive() %>" />
 					<aui:input disabled="<%= true %>" name="site-template-allows-modifications" type="checkbox" value="<%= layoutsUpdateable %>" />
 				</aui:field-wrapper>
 			</c:when>

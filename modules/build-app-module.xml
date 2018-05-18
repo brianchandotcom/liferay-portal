@@ -61,6 +61,13 @@
 		<available file=".lfrbuild-deploy-wsdd" />
 	</condition>
 
+	<condition property="replace.artifact.sources.license.text">
+		<and>
+			<istrue value="${current.branch.private}" />
+			<istrue value="${download.artifact.sources}" />
+		</and>
+	</condition>
+
 	<target if="artifact.hotfix" name="copy-hotfix-artifact">
 		<copy
 			todir="${dist.dir}"
@@ -130,13 +137,6 @@
 			<arg value="-Pforced.deploy.dir=${dist.dir}" />
 		</exec>
 	</target>
-
-	<condition property="replace.artifact.sources.license.text">
-		<and>
-			<istrue value="${current.branch.private}" />
-			<istrue value="${download.artifact.sources}" />
-		</and>
-	</condition>
 
 	<target depends="get-artifact-properties" if="${download.artifact.sources}" name="download-artifact-sources" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">

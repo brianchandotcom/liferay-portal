@@ -148,7 +148,7 @@ public class CommerceShipmentDisplayContext
 		return shipmentUserId;
 	}
 
-	public List<User> getUsers() {
+	public List<User> getUsers() throws PortalException {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

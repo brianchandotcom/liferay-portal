@@ -57,6 +57,7 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 					consumer.accept(
 						new WorkflowedModelPermissionLogic<>(
 							_workflowPermission, modelResourcePermission,
+							_groupLocalService,
 							CommerceOrder::getCommerceOrderId));
 
 					consumer.accept(

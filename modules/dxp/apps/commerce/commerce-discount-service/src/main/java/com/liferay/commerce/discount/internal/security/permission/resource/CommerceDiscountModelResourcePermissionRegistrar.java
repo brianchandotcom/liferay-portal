@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
@@ -63,6 +64,7 @@ public class CommerceDiscountModelResourcePermissionRegistrar {
 					consumer.accept(
 						new WorkflowedModelPermissionLogic<>(
 							_workflowPermission, modelResourcePermission,
+							_groupLocalService,
 							CommerceDiscount::getCommerceDiscountId));
 				}),
 			properties);
@@ -75,6 +77,9 @@ public class CommerceDiscountModelResourcePermissionRegistrar {
 
 	@Reference
 	private CommerceDiscountLocalService _commerceDiscountLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(
 		target = "(resource.name=" + CommerceDiscountConstants.RESOURCE_NAME + ")"

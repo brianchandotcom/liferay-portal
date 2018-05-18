@@ -14,7 +14,11 @@
 
 package com.liferay.portal.tools.service.builder.test.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion;
 import com.liferay.portal.tools.service.builder.test.service.base.LVEntryLocalServiceBaseImpl;
+
+import java.util.List;
 
 /**
  * The implementation of the lv entry local service.
@@ -31,9 +35,29 @@ import com.liferay.portal.tools.service.builder.test.service.base.LVEntryLocalSe
  * @see com.liferay.portal.tools.service.builder.test.service.LVEntryLocalServiceUtil
  */
 public class LVEntryLocalServiceImpl extends LVEntryLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.portal.tools.service.builder.test.service.LVEntryLocalServiceUtil} to access the lv entry local service.
-	 */
+
+	@Override
+	public LVEntryLocalizationVersion fetchLVEntryLocalizationVersion(
+		long entryId, String languageId, int version) {
+
+		return lvEntryLocalizationVersionPersistence.
+			fetchByEntryId_LanguageId_Version(entryId, languageId, version);
+	}
+
+	@Override
+	public List<LVEntryLocalizationVersion> getLVEntryLocalizationVersions(
+		long entryId) {
+
+		return lvEntryLocalizationVersionPersistence.findByEntryId(entryId);
+	}
+
+	@Override
+	public List<LVEntryLocalizationVersion> getLVEntryLocalizationVersions(
+			long entryId, String languageId)
+		throws PortalException {
+
+		return lvEntryLocalizationVersionPersistence.findByEntryId_LanguageId(
+			entryId, languageId);
+	}
+
 }

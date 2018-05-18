@@ -58,7 +58,7 @@ public class ProductCreatorForm {
 			"productTypeName", ProductCreatorForm::_setProductTypeName
 		).addRequiredString(
 			"title", ProductCreatorForm::_setTitle
-		).addOptionalString(
+		).addRequiredString(
 			"externalReferenceCode",
 			ProductCreatorForm::_setExternalReferenceCode
 		).addOptionalString(

@@ -25,7 +25,6 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.headless.product.apio.identifier.ProductDefinitionIdentifier;
 import com.liferay.commerce.headless.product.apio.internal.form.ProductCreatorForm;
-import com.liferay.commerce.headless.product.apio.internal.form.ProductUpdaterForm;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductDefinitionHelper;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
@@ -97,9 +96,6 @@ public class ProductNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getCPDefinition
-		).addUpdater(
-			this::_updateCPDefinition, (credentials, s) -> true,
-			ProductUpdaterForm::buildForm
 		).addRemover(
 			idempotent(_cpDefinitionService::deleteCPDefinition),
 			_hasPermission.forDeleting(CPDefinition.class)
@@ -266,35 +262,6 @@ public class ProductNestedCollectionResource
 		}
 
 		return description;
-	}
-
-	private Document _updateCPDefinition(
-			long cpDefinitionId, ProductCreatorForm productCreatorForm)
-		throws PortalException {
-
-		try {
-			CPDefinition cpDefinition =
-				_productDefinitionHelper.updateCPDefinition(
-					cpDefinitionId, productUpdaterForm.getTitleMap(),
-					productUpdaterForm.getDescriptionMap(),
-					productUpdaterForm.getShortDescriptionMap(),
-					productUpdaterForm.getProductTypeName(),
-					ArrayUtil.toLongArray(
-						productUpdaterForm.getAssetCategoryIds()));
-
-			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
-				CPDefinition.class);
-
-			return indexer.getDocument(cpDefinition);
-		}
-		catch (CPDefinitionProductTypeNameException cpdptne) {
-			throw new NotFoundException(
-				"Product type not available: " +
-					productCreatorForm.getProductTypeName(), cpdptne);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

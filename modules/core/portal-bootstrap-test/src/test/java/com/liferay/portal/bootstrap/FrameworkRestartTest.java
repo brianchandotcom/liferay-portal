@@ -190,7 +190,8 @@ public class FrameworkRestartTest {
 		Class<?> clazz = classLoader.loadClass(
 			FrameworkRestartTest.class.getName());
 
-		ReflectionTestUtil.invoke(clazz, "doTestFrameworkRestart", null, null);
+		ReflectionTestUtil.invoke(
+			clazz, "doTestFrameworkRestart", new Class<?>[0]);
 	}
 
 	@Rule

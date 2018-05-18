@@ -32,9 +32,11 @@ import com.liferay.portal.tools.service.builder.test.service.base.LocalizedEntry
  */
 public class LocalizedEntryLocalServiceImpl
 	extends LocalizedEntryLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocalServiceUtil} to access the localized entry local service.
 	 */
+
 }

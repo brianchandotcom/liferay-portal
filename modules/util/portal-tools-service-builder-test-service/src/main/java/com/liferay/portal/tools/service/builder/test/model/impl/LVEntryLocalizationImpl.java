@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LVEntryLocalizationImpl extends LVEntryLocalizationBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a lv entry localization model instance should use the {@link com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization} interface instead.
 	 */
 	public LVEntryLocalizationImpl() {
 	}
+
 }

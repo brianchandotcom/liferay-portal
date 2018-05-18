@@ -27,11 +27,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class LocalizedEntryImpl extends LocalizedEntryBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a localized entry model instance should use the {@link com.liferay.portal.tools.service.builder.test.model.LocalizedEntry} interface instead.
 	 */
 	public LocalizedEntryImpl() {
 	}
+
 }

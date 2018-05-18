@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portal.tools.service.builder.test.exception;
 
 import aQute.bnd.annotation.ProviderType;
@@ -21,7 +22,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchLocalizedEntryLocalizationException extends NoSuchModelException {
+public class NoSuchLocalizedEntryLocalizationException
+	extends NoSuchModelException {
 
 	public NoSuchLocalizedEntryLocalizationException() {
 	}
@@ -30,7 +32,9 @@ public class NoSuchLocalizedEntryLocalizationException extends NoSuchModelExcept
 		super(msg);
 	}
 
-	public NoSuchLocalizedEntryLocalizationException(String msg, Throwable cause) {
+	public NoSuchLocalizedEntryLocalizationException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

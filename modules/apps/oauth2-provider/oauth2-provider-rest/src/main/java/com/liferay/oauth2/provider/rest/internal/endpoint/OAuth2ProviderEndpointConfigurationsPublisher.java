@@ -79,7 +79,21 @@ public class OAuth2ProviderEndpointConfigurationsPublisher {
 
 	private void _createCXFConfiguration(
 			ConfigurationAdmin configurationAdmin, String contextPath)
-		throws IOException {
+		throws InvalidSyntaxException, IOException {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("(&(contextPath=");
+		sb.append(_escape(contextPath));
+		sb.append(")(service.factoryPid=com.liferay.portal.remote.cxf.common.");
+		sb.append("configuration.CXFEndpointPublisherConfiguration))");
+
+		Configuration[] cxfConfigurations =
+			configurationAdmin.listConfigurations(sb.toString());
+
+		if ((cxfConfigurations != null) && (cxfConfigurations.length > 0)) {
+			return;
+		}
 
 		_cxfConfiguration = configurationAdmin.createFactoryConfiguration(
 			"com.liferay.portal.remote.cxf.common.configuration." +

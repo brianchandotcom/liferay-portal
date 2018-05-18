@@ -15,21 +15,30 @@
 package com.liferay.commerce.user.segment.internal.criterion;
 
 import com.liferay.commerce.user.segment.criterion.CommerceUserSegmentCriterionType;
-import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterion;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.filter.TermsSetFilterBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,34 +68,54 @@ public class RoleCommerceUserSegmentCriterionTypeImpl
 	}
 
 	@Override
-	public String getPreview(
-		CommerceUserSegmentCriterion commerceUserSegmentCriterion, int length) {
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws PortalException {
 
-		if (length <= 0) {
-			return StringPool.BLANK;
+		User user = userLocalService.getUser(searchContext.getUserId());
+
+		long organizationId = GetterUtil.getLong(
+			searchContext.getAttribute("organizationId"));
+
+		long[] classPKs = getUserClassPKs(
+			user, organizationId, searchContext.getGroupIds());
+
+		TermsSetFilterBuilder termsSetFilterBuilder =
+			filterBuilders.termsSetFilterBuilder();
+
+		termsSetFilterBuilder.setFieldName(getIndexerFieldName());
+		termsSetFilterBuilder.setMinimumShouldMatchField(
+			getIndexerFieldName() + "_required_matches");
+
+		List<String> values = new ArrayList<>(classPKs.length);
+
+		for (long classPK : classPKs) {
+			values.add(String.valueOf(classPK));
 		}
 
-		List<String> roleNames = new ArrayList<>();
+		termsSetFilterBuilder.setValues(values);
 
-		String[] roleIds = StringUtil.split(
-			commerceUserSegmentCriterion.getTypeSettings());
+		Filter existFilter = new TermFilter(
+			getIndexerFieldName() + "_required_matches", "0");
 
-		for (String roleId : roleIds) {
-			Role role = _roleLocalService.fetchRole(GetterUtil.getLong(roleId));
+		BooleanFilter fieldBooleanFilter = new BooleanFilter();
 
-			if (role != null) {
-				roleNames.add(role.getName());
-			}
-		}
+		fieldBooleanFilter.add(existFilter, BooleanClauseOccur.SHOULD);
+		fieldBooleanFilter.add(
+			termsSetFilterBuilder.build(), BooleanClauseOccur.SHOULD);
 
-		String preview = StringUtil.merge(
-			roleNames, StringPool.COMMA_AND_SPACE);
-
-		return StringUtil.shorten(preview, length, StringPool.TRIPLE_PERIOD);
+		contextBooleanFilter.add(fieldBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	@Override
 	protected long[] getUserClassPKs(User user) throws PortalException {
+		return null;
+	}
+
+	protected long[] getUserClassPKs(
+			User user, long organizationId, long... groupIds)
+		throws PortalException {
+
 		if (user.isDefaultUser()) {
 			Role role = _roleLocalService.getRole(
 				user.getCompanyId(), RoleConstants.GUEST);
@@ -94,10 +123,36 @@ public class RoleCommerceUserSegmentCriterionTypeImpl
 			return new long[] {role.getRoleId()};
 		}
 
-		return user.getRoleIds();
+		List<UserGroupRole> userGroupRoles = new ArrayList<>();
+
+		Organization organization = _organizationLocalService.fetchOrganization(
+			organizationId);
+
+		if (organization != null) {
+			userGroupRoles.addAll(_userGroupRoleLocalService.getUserGroupRoles(
+				user.getUserId(), organization.getGroupId()));
+		}
+
+		for (long groupId : groupIds) {
+			userGroupRoles.addAll(
+				_userGroupRoleLocalService.getUserGroupRoles(
+					user.getUserId(), groupId));
+		}
+
+		Stream<UserGroupRole> stream = userGroupRoles.stream();
+
+		long[] roleIds = stream.mapToLong(UserGroupRole::getRoleId).toArray();
+
+		return ArrayUtil.append(roleIds, user.getRoleIds());
 	}
 
 	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

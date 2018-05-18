@@ -167,18 +167,32 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	var <portlet:namespace />form = document.querySelector('#<portlet:namespace />fm');
+	function <portlet:namespace />saveEntry() {
+		var form = document.getElementById('<portlet:namespace />fm');
 
-	if (<portlet:namespace />form) {
-		function <portlet:namespace />saveEntry() {
-			<portlet:namespace />form.action = '<portlet:actionURL name="/announcements/edit_entry"><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /></portlet:actionURL>';
-			<portlet:namespace />form.target = '';
+		if (form) {
+			form.action = '<portlet:actionURL name="/announcements/edit_entry"><portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" /></portlet:actionURL>';
+			form.target = '';
 
-			<portlet:namespace />form.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
-			<portlet:namespace />form.<portlet:namespace />content.value = window.<portlet:namespace />contentEditor.getHTML();
-			<portlet:namespace />form.<portlet:namespace />title.value = window.<portlet:namespace />titleEditor.getText();
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
-			submitForm(<portlet:namespace />form);
+			if (cmd) {
+				cmd.setAttribute('value', '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>');
+			}
+
+			var content = form.querySelector('#<portlet:namespace />content');
+
+			if (content) {
+				content.setAttribute('value', window.<portlet:namespace />contentEditor.getHTML());
+			}
+
+			var title = form.querySelector('#<portlet:namespace />title');
+
+			if (title) {
+				title.setAttribute('value', window.<portlet:namespace />titleEditor.getText());
+			}
+
+			submitForm(form);
 		}
 	}
 </aui:script>

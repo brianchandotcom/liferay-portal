@@ -265,7 +265,7 @@ if (!roles.isEmpty()) {
 <aui:script require="metal-dom/src/dom">
 	let dom = metalDomSrcDom.default;
 
-	var form = document.querySelector('#<portlet:namespace />fm');
+	var form = document.getElementById('<portlet:namespace />fm');
 
 	if (form) {
 		var <portlet:namespace />modified = function(panel) {
@@ -284,7 +284,7 @@ if (!roles.isEmpty()) {
 			customizeAnnouncementsDisplayedCheckbox.addEventListener(
 				'change',
 				function() {
-					<portlet:namespace />modified(document.querySelector('#<portlet:namespace />announcementsDisplayedPanel'));
+					<portlet:namespace />modified(document.getElementById('<portlet:namespace />announcementsDisplayedPanel'));
 
 					var announcementsDisplayed = form.querySelector('#<portlet:namespace />announcementsDisplayed');
 
@@ -298,7 +298,7 @@ if (!roles.isEmpty()) {
 </aui:script>
 
 <aui:script>
-	var <portlet:namespace />form = document.querySelector('#<portlet:namespace />fm');
+	var <portlet:namespace />form = document.getElementById('<portlet:namespace />fm');
 
 	if (<portlet:namespace />form) {
 		var selected = <portlet:namespace />form.querySelectorAll('.left-selector');
@@ -319,7 +319,7 @@ if (!roles.isEmpty()) {
 				}
 
 				if (selectedHTML != currSelectedHTML) {
-					var announcementsDisplayedPanel = document.querySelector('#<portlet:namespace />announcementsDisplayedPanel');
+					var announcementsDisplayedPanel = document.getElementById('<portlet:namespace />announcementsDisplayedPanel');
 
 					if (announcementsDisplayedPanel) {
 						modified(announcementsDisplayedPanel);
@@ -334,7 +334,7 @@ if (!roles.isEmpty()) {
 			pageDeltaInput.on(
 				'change',
 				function(event) {
-					var displaySettingsPanel = document.querySelector('#<portlet:namespace />displaySettingsPanel');
+					var displaySettingsPanel = document.getElementById('<portlet:namespace />displaySettingsPanel');
 
 					if (displaySettingsPanel) {
 						modified(displaySettingsPanel);
@@ -344,20 +344,32 @@ if (!roles.isEmpty()) {
 		}
 
 		function <portlet:namespace />saveConfigurations() {
-			if (<portlet:namespace />form.<portlet:namespace />selectedScopeGroupIds) {
-				<portlet:namespace />form.<portlet:namespace />selectedScopeGroupIds.value = Liferay.Util.listSelect(<portlet:namespace />form.<portlet:namespace />currentScopeGroupIds);
+			var currentScopeGroupIds = <portlet:namespace />form.querySelector('#<portlet:namespace />currentScopeGroupIds');
+			var selectedScopeGroupIds = <portlet:namespace />form.querySelector('#<portlet:namespace />selectedScopeGroupIds');
+
+			if (currentScopeGroupIds && selectedScopeGroupIds) {
+				selectedScopeGroupIds.setAttribute('value', Liferay.Util.listSelect(currentScopeGroupIds);
 			}
 
-			if (<portlet:namespace />form.<portlet:namespace />selectedScopeOrganizationIds) {
-				<portlet:namespace />form.<portlet:namespace />selectedScopeOrganizationIds.value = Liferay.Util.listSelect(<portlet:namespace />form.<portlet:namespace />currentScopeOrganizationIds);
+			var currentScopeOrganizationIds = <portlet:namespace />form.querySelector('#<portlet:namespace />currentScopeOrganizationIds');
+			var selectedScopeOrganizationIds = <portlet:namespace />form.querySelector('#<portlet:namespace />selectedScopeOrganizationIds');
+
+			if (currentScopeOrganizationIds && selectedScopeOrganizationIds) {
+				selectedScopeOrganizationIds.setAttribute('value', Liferay.Util.listSelect(currentScopeOrganizationIds);
 			}
 
-			if (<portlet:namespace />form.<portlet:namespace />selectedScopeRoleIds) {
-				<portlet:namespace />form.<portlet:namespace />selectedScopeRoleIds.value = Liferay.Util.listSelect(<portlet:namespace />form.<portlet:namespace />currentScopeRoleIds);
+			var currentScopeRoleIds = <portlet:namespace />form.querySelector('#<portlet:namespace />currentScopeRoleIds');
+			var selectedScopeRoleIds = <portlet:namespace />form.querySelector('#<portlet:namespace />selectedScopeRoleIds');
+
+			if (currentScopeRoleIds && selectedScopeRoleIds) {
+				selectedScopeRoleIds.setAttribute('value', Liferay.Util.listSelect(currentScopeRoleIds);
 			}
 
-			if (<portlet:namespace />form.<portlet:namespace />selectedScopeUserGroupIds) {
-				<portlet:namespace />form.<portlet:namespace />selectedScopeUserGroupIds.value = Liferay.Util.listSelect(<portlet:namespace />form.<portlet:namespace />currentScopeUserGroupIds);
+			var currentScopeUserGroupIds = <portlet:namespace />form.querySelector('#<portlet:namespace />selectedScopeUserGroupIds');
+			var selectedScopeUserGroupIds =<portlet:namespace />form.querySelector('#<portlet:namespace />currentScopeUserGroupIds');
+
+			if (currentScopeUserGroupIds && selectedScopeUserGroupIds) {
+				selectedScopeUserGroupIds.setAttribute('value', Liferay.Util.listSelect(currentScopeUserGroupIds);
 			}
 
 			submitForm(<portlet:namespace />form);

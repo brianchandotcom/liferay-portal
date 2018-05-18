@@ -75,6 +75,9 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 					position, serviceContext);
 
 			jsonObject.put(
+				"editableValues", fragmentEntryLink.getEditableValues());
+
+			jsonObject.put(
 				"fragmentEntryLinkId",
 				fragmentEntryLink.getFragmentEntryLinkId());
 		}

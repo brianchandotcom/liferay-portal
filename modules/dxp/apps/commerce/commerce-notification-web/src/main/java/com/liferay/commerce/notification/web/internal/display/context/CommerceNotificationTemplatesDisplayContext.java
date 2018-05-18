@@ -22,7 +22,7 @@ import com.liferay.commerce.notification.service.CommerceNotificationTemplateUse
 import com.liferay.commerce.notification.type.CommerceNotificationType;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
 import com.liferay.commerce.notification.util.comparator.CommerceNotificationTemplateUserSegmentRelCreateDateComparator;
-import com.liferay.commerce.notification.web.internal.admin.NotificationTemplatesCommerceAdminModule;
+import com.liferay.commerce.notification.web.internal.admin.NotificationsCommerceAdminModule;
 import com.liferay.commerce.notification.web.internal.display.context.util.CommerceNotificationsRequestHelper;
 import com.liferay.commerce.notification.web.internal.util.CommerceNotificationsUtil;
 import com.liferay.commerce.user.segment.item.selector.criterion.CommerceUserSegmentEntryItemSelectorCriterion;
@@ -54,9 +54,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceNotificationsDisplayContext {
+public class CommerceNotificationTemplatesDisplayContext {
 
-	public CommerceNotificationsDisplayContext(
+	public CommerceNotificationTemplatesDisplayContext(
 		CommerceNotificationTemplateService commerceNotificationTemplateService,
 		CommerceNotificationTemplateUserSegmentRelService
 			commerceNotificationTemplateUserSegmentRelService,
@@ -185,8 +185,7 @@ public class CommerceNotificationsDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"commerceAdminModuleKey",
-			NotificationTemplatesCommerceAdminModule.KEY);
+			"commerceAdminModuleKey", NotificationsCommerceAdminModule.KEY);
 
 		String delta = ParamUtil.getString(
 			_commerceNotificationsRequestHelper.getRequest(), "delta");

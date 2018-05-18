@@ -121,7 +121,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	getEditableValue(editableId) {
-		return this.getEditableValues()[editableId] || {};
+		return this.getEditableValues()[editableId];
 	}
 
 	/**
@@ -131,7 +131,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	getEditableValues() {
-		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] || {};
+		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 	}
 
 	/**
@@ -246,7 +246,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	_update(languageId, defaultLanguageId, updateFunctions) {
-		const editableValues = this.getEditableValues() || {};
+		const editableValues = this.getEditableValues();
 
 		Object.keys(editableValues).forEach(
 			editableId => {
@@ -387,14 +387,14 @@ FragmentEntryLink.STATE = {
 	/**
 	 * Editable values that should be used instead of the default ones
 	 * inside editable fields.
-	 * @default {}
+	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentEntryLink
 	 * @review
 	 * @type {!Object}
 	 */
 
-	editableValues: {},
+	editableValues: Config.object().required(),
 
 	/**
 	 * FragmentEntryLink id

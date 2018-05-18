@@ -344,7 +344,7 @@ class FragmentsEditor extends Component {
 						{
 							config: {},
 							content: '',
-							editableValues: {},
+							editableValues: JSON.parse(response.editableValues),
 							fragmentEntryId: event.fragmentEntryId,
 							fragmentEntryLinkId: response.fragmentEntryLinkId,
 							name: event.fragmentName,

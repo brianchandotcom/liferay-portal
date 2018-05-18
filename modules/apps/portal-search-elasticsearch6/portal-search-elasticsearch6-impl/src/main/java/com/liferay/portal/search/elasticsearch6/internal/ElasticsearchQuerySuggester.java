@@ -310,7 +310,7 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 
 			if (message.startsWith("no mapping found for field")) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("No dictionary indexed.", ee);
+					_log.warn("No dictionary indexed", ee);
 				}
 
 				return null;

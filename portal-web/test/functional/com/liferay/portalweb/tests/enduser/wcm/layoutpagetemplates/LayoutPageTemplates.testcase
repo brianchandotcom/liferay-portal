@@ -44,6 +44,8 @@
 	</tear-down>
 
 	<command name="AddLayoutPageTemplateRemoveFragment" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
 		</execute>
@@ -225,7 +227,9 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCollection" priority="4">
+	<command name="DeleteCollection" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -241,7 +245,7 @@
 		</execute>
 
 		<execute macro="Collection#deleteCollection">
-			<var name="collectioNName" value="Collection Name" />
+			<var name="collectionName" value="Collection Name" />
 		</execute>
 
 		<execute macro="Collection#viewNotPresent">
@@ -250,6 +254,8 @@
 	</command>
 
 	<command name="DeletePageTemplate" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -370,6 +376,8 @@
 	</command>
 
 	<command name="ReorderFragments" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
 		</execute>

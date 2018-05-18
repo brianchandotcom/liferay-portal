@@ -44,8 +44,6 @@
 	</tear-down>
 
 	<command name="AddCollectionFragmentWithSnippets" priority="5">
-		<property name="portal.acceptance" value="pending" />
-
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
 		</execute>
@@ -129,7 +127,7 @@
 	</command>
 
 	<command name="DeleteFragment" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
@@ -169,7 +167,7 @@
 	</command>
 
 	<command name="DeleteFragmentCollection" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Collection#deleteCollection">
 			<var name="collectionName" value="Collection Name" />

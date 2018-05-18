@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.type.radio.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -63,7 +62,7 @@ public class RadioDDMFormFieldValueRequestParameterRetriever
 			}
 		}
 
-		return StringPool.BLANK;
+		return predefinedValue;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

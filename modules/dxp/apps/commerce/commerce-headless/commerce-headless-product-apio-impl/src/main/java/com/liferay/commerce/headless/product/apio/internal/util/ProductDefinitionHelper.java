@@ -16,7 +16,7 @@ package com.liferay.commerce.headless.product.apio.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -155,7 +155,7 @@ public class ProductDefinitionHelper {
 			expirationDateHour += 12;
 		}
 
-		return _cpDefinitionLocalService.addCPDefinition(
+		return _cpDefinitionService.upsertCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, titleMap, null, null,
 			null, productTypeName, false, true, false, false, 0, 10, 10, 10, 10,
 			0, false, false, null, true, displayDateMonth, displayDateDay,
@@ -240,7 +240,7 @@ public class ProductDefinitionHelper {
 	}
 
 	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;

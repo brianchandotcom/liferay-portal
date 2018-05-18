@@ -150,7 +150,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 				if (propElements.size() != 1) {
 					throw new InvalidRequestException(
 						"There should only be one <prop /> per set or remove " +
-							"instruction.");
+							"instruction");
 				}
 
 				Element propElement = propElements.get(0);

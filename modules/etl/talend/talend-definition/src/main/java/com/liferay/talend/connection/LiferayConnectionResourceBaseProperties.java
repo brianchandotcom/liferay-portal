@@ -58,7 +58,7 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 		if (referencedLiferayConnectionProperties != null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Using a reference connection properties.");
+				_log.debug("Using a reference connection properties");
 				_log.debug(
 					"User ID: " +
 						referencedLiferayConnectionProperties.userId.

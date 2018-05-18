@@ -140,7 +140,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			getFriendlyURLMap(), serviceContext);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Search Page created.");
+			_log.info("Search Page created");
 		}
 	}
 
@@ -166,7 +166,7 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		customize(layout);
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Search Page Template created.");
+			_log.info("Search Page Template created");
 		}
 	}
 

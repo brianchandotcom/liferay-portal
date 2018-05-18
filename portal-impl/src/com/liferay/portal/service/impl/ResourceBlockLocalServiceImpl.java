@@ -901,7 +901,8 @@ public class ResourceBlockLocalServiceImpl
 				catch (SystemException se) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to add a new resource block. Retrying", se);
+							"Unable to add a new resource block. Retrying.",
+							se);
 					}
 
 					// On failure, cancel all pending persistent entities

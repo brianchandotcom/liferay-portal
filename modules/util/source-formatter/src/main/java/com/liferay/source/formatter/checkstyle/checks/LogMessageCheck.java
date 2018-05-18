@@ -24,30 +24,38 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class ExceptionMessageCheck extends MessageCheck {
+public class LogMessageCheck extends MessageCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.LITERAL_THROW};
+		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST firstChildAST = detailAST.getFirstChild();
+		_checkMethod(detailAST, "_log", "debug");
+		_checkMethod(detailAST, "_log", "error");
+		_checkMethod(detailAST, "_log", "info");
+		_checkMethod(detailAST, "_log", "trace");
+		_checkMethod(detailAST, "_log", "warn");
+	}
 
-		firstChildAST = firstChildAST.getFirstChild();
+	private void _checkMethod(
+		DetailAST detailAST, String variableName, String methodName) {
 
-		if (firstChildAST.getType() != TokenTypes.LITERAL_NEW) {
-			return;
-		}
+		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+			detailAST, variableName, methodName);
 
-		DetailAST elistAST = firstChildAST.findFirstToken(TokenTypes.ELIST);
+		for (DetailAST methodCallAST : methodCallASTList) {
+			DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
 
-		List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
-			elistAST, false, TokenTypes.EXPR);
+			List<DetailAST> exprASTList = DetailASTUtil.getAllChildTokens(
+				elistAST, false, TokenTypes.EXPR);
 
-		for (DetailAST exprAST : exprASTList) {
-			checkMessage(getLiteralStringValue(exprAST), exprAST.getLineNo());
+			for (DetailAST exprAST : exprASTList) {
+				checkMessage(
+					getLiteralStringValue(exprAST), exprAST.getLineNo());
+			}
 		}
 	}
 

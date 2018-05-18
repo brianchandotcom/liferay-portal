@@ -53,7 +53,7 @@ public class JCRFactoryImpl implements JCRFactory {
 				_jcrStoreConfiguration.jackrabbitRepositoryHome());
 		}
 		catch (Exception e) {
-			_log.error("Problem initializing Jackrabbit JCR.", e);
+			_log.error("Problem initializing Jackrabbit JCR", e);
 
 			throw e;
 		}

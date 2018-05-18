@@ -57,7 +57,7 @@ public class SystemCheckOSGiCommands {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Running system check. You can run this with command " +
-						"\"system:check\" in gogo shell");
+						"\"system:check\" in gogo shell.");
 			}
 
 			check();

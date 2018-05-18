@@ -69,6 +69,10 @@
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 	</command>
 
+	<command name="clickSelect">
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+	</command>
+
 	<command name="clickSubmitForPublication">
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 	</command>

@@ -12,30 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.apio.internal.architect.converter;
+package com.liferay.media.object.apio.internal.architect.exception.mapper;
 
-import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.apio.architect.exception.mapper.ExceptionMapper;
+import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 
 import javax.ws.rs.core.Response.Status;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts a {@code PrincipalException} to its {@link APIError} representation.
+ * Converts a {@code DuplicateFileEntryException} to its {@link APIError}
+ * representation.
  *
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
-public class PrincipalExceptionExceptionMapper
-	implements ExceptionMapper<PrincipalException> {
+public class DuplicateFileEntryExceptionMapper
+	implements ExceptionMapper<DuplicateFileEntryException> {
 
 	@Override
-	public APIError map(PrincipalException pe) {
+	public APIError map(DuplicateFileEntryException dfee) {
 		return new APIError(
-			pe, "Resource not found", "not-found",
-			Status.NOT_FOUND.getStatusCode());
+			dfee, "Duplicate entry", "bad-request",
+			Status.BAD_REQUEST.getStatusCode());
 	}
 
 }

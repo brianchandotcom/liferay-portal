@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.apio.internal.architect.converter;
+package com.liferay.portal.apio.internal.architect.exception.mapper;
 
-import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
+import com.liferay.apio.architect.exception.mapper.ExceptionMapper;
 
 import javax.ws.rs.core.Response.Status;
 

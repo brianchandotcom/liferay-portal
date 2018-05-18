@@ -14,25 +14,39 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ClientDataRequest;
 import javax.portlet.PortletException;
 
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.Part;
+
+import jodd.io.FileUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
+@ProviderType
 public abstract class ClientDataRequestImpl
 	extends PortletRequestImpl implements ClientDataRequest {
 
@@ -48,7 +62,7 @@ public abstract class ClientDataRequestImpl
 
 	@Override
 	public long getContentLengthLong() {
-		throw new UnsupportedOperationException();
+		return getHttpServletRequest().getContentLengthLong();
 	}
 
 	@Override
@@ -63,12 +77,50 @@ public abstract class ClientDataRequestImpl
 
 	@Override
 	public Part getPart(String name) throws IOException, PortletException {
-		throw new UnsupportedOperationException();
+		UploadRequest uploadRequest = _getUploadRequest(
+			getHttpServletRequest());
+
+		if (uploadRequest == null) {
+			return null;
+		}
+
+		Map<String, FileItem[]> multipartParameterMap =
+			uploadRequest.getMultipartParameterMap();
+
+		FileItem[] fileItems = multipartParameterMap.get(name);
+
+		if ((fileItems == null) || (fileItems.length == 0)) {
+			return null;
+		}
+
+		return new PartImpl(fileItems[0]);
 	}
 
 	@Override
 	public Collection<Part> getParts() throws IOException, PortletException {
-		throw new UnsupportedOperationException();
+		UploadRequest uploadRequest = _getUploadRequest(
+			getHttpServletRequest());
+
+		if (uploadRequest == null) {
+			return Collections.emptySet();
+		}
+
+		Map<String, FileItem[]> multipartParameterMap =
+			uploadRequest.getMultipartParameterMap();
+
+		List<Part> parts = new ArrayList<>(multipartParameterMap.size());
+
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParameterMap.entrySet()) {
+
+			FileItem[] fileItems = entry.getValue();
+
+			for (FileItem fileItem : fileItems) {
+				parts.add(new PartImpl(fileItem));
+			}
+		}
+
+		return parts;
 	}
 
 	@Override
@@ -110,6 +162,78 @@ public abstract class ClientDataRequestImpl
 		}
 	}
 
+	private UploadRequest _getUploadRequest(Object request) {
+		if (request instanceof UploadRequest) {
+			return (UploadRequest)request;
+		}
+
+		if (request instanceof HttpServletRequestWrapper) {
+			return _getUploadRequest(
+				((HttpServletRequestWrapper)request).getRequest());
+		}
+
+		return null;
+	}
+
 	private boolean _calledGetReader;
+
+	private static final class PartImpl implements Part {
+
+		public PartImpl(FileItem fileItem) {
+			_fileItem = fileItem;
+		}
+
+		@Override
+		public void delete() throws IOException {
+			_fileItem.delete();
+		}
+
+		@Override
+		public String getContentType() {
+			return _fileItem.getContentType();
+		}
+
+		@Override
+		public String getHeader(String name) {
+			return _fileItem.getHeader(name);
+		}
+
+		@Override
+		public Collection<String> getHeaderNames() {
+			return _fileItem.getHeaderNames();
+		}
+
+		@Override
+		public Collection<String> getHeaders(String name) {
+			return _fileItem.getHeaders(name);
+		}
+
+		@Override
+		public InputStream getInputStream() throws IOException {
+			return _fileItem.getInputStream();
+		}
+
+		@Override
+		public String getName() {
+			return _fileItem.getFieldName();
+		}
+
+		@Override
+		public long getSize() {
+			return _fileItem.getSize();
+		}
+
+		public String getSubmittedFileName() {
+			return _fileItem.getFileName();
+		}
+
+		@Override
+		public void write(String fileName) throws IOException {
+			FileUtil.copy(_fileItem.getStoreLocation(), new File(fileName));
+		}
+
+		private final FileItem _fileItem;
+
+	}
 
 }

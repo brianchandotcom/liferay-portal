@@ -31,6 +31,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.fileupload.FileItemHeaders;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.output.DeferredFileOutputStream;
 
@@ -38,6 +44,7 @@ import org.apache.commons.io.output.DeferredFileOutputStream;
  * @author Brian Wing Shun Chan
  * @author Zongliang Li
  * @author Harry Mark
+ * @author Neil Griffin
  */
 public class LiferayFileItem extends DiskFileItem implements FileItem {
 
@@ -101,6 +108,45 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 	@Override
 	public String getFullFileName() {
 		return _fileName;
+	}
+
+	@Override
+	public String getHeader(String name) {
+		FileItemHeaders fileItemHeaders = getHeaders();
+
+		Iterator<String> itr = fileItemHeaders.getHeaders(name);
+
+		if (itr.hasNext()) {
+			return itr.next();
+		}
+
+		return null;
+	}
+
+	@Override
+	public Collection<String> getHeaderNames() {
+		FileItemHeaders fileItemHeaders = getHeaders();
+
+		Iterator<String> itr = fileItemHeaders.getHeaderNames();
+
+		List<String> headerNames = new ArrayList();
+
+		itr.forEachRemaining(headerNames::add);
+
+		return headerNames;
+	}
+
+	@Override
+	public Collection<String> getHeaders(String name) {
+		FileItemHeaders fileItemHeaders = getHeaders();
+
+		Iterator<String> itr = fileItemHeaders.getHeaders(name);
+
+		List<String> headers = new ArrayList<>();
+
+		itr.forEachRemaining(headers::add);
+
+		return headers;
 	}
 
 	public long getItemSize() {

@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Raymond Augé
+ * @author Neil Griffin
  */
 @ProviderType
 public interface LiferayPortletResponse extends PortletResponse {
@@ -47,6 +48,9 @@ public interface LiferayPortletResponse extends PortletResponse {
 
 	public LiferayPortletURL createActionURL(String portletName);
 
+	public LiferayPortletURL createActionURL(
+		String portletName, MimeResponse.Copy copy);
+
 	public LiferayPortletURL createLiferayPortletURL(
 		long plid, String portletName, String lifecycle);
 
@@ -54,16 +58,30 @@ public interface LiferayPortletResponse extends PortletResponse {
 		long plid, String portletName, String lifecycle,
 		boolean includeLinkToLayoutUuid);
 
+	public LiferayPortletURL createLiferayPortletURL(
+		long plid, String portletName, String lifecycle,
+		boolean includeLinkToLayoutUuid, MimeResponse.Copy copy);
+
+	public LiferayPortletURL createLiferayPortletURL(
+		long plid, String portletName, String lifecycle,
+		MimeResponse.Copy copy);
+
 	public LiferayPortletURL createLiferayPortletURL(String lifecycle);
 
 	public LiferayPortletURL createLiferayPortletURL(
 		String portletName, String lifecycle);
+
+	public LiferayPortletURL createLiferayPortletURL(
+		String portletName, String lifecycle, MimeResponse.Copy copy);
 
 	public <T extends PortletURL & RenderURL> T createRenderURL();
 
 	public RenderURL createRenderURL(MimeResponse.Copy copy);
 
 	public LiferayPortletURL createRenderURL(String portletName);
+
+	public LiferayPortletURL createRenderURL(
+		String portletName, MimeResponse.Copy copy);
 
 	public ResourceURL createResourceURL();
 

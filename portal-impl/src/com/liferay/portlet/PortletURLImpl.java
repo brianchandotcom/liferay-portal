@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.CharPool;
@@ -69,6 +71,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
+import javax.portlet.MimeResponse;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.MutableResourceParameters;
 import javax.portlet.PortletException;
@@ -91,7 +94,9 @@ import javax.servlet.http.HttpSession;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Connor McKay
+ * @author Neil Griffin
  */
+@ProviderType
 public class PortletURLImpl
 	implements LiferayPortletURL, PortletURL, ResourceURL, Serializable {
 
@@ -99,16 +104,30 @@ public class PortletURLImpl
 		HttpServletRequest request, Portlet portlet, Layout layout,
 		String lifecycle) {
 
-		this(request, portlet, null, layout, lifecycle);
+		this(request, portlet, null, layout, lifecycle, null);
+	}
+
+	public PortletURLImpl(
+		HttpServletRequest request, Portlet portlet, Layout layout,
+		String lifecycle, MimeResponse.Copy copy) {
+
+		this(request, portlet, null, layout, lifecycle, copy);
 	}
 
 	public PortletURLImpl(
 		PortletRequest portletRequest, Portlet portlet, Layout layout,
 		String lifecycle) {
 
+		this(portletRequest, portlet, layout, lifecycle, null);
+	}
+
+	public PortletURLImpl(
+		PortletRequest portletRequest, Portlet portlet, Layout layout,
+		String lifecycle, MimeResponse.Copy copy) {
+
 		this(
 			PortalUtil.getHttpServletRequest(portletRequest), portlet,
-			portletRequest, layout, lifecycle);
+			portletRequest, layout, lifecycle, copy);
 	}
 
 	@Override
@@ -1035,7 +1054,8 @@ public class PortletURLImpl
 
 	private PortletURLImpl(
 		HttpServletRequest request, Portlet portlet,
-		PortletRequest portletRequest, Layout layout, String lifecycle) {
+		PortletRequest portletRequest, Layout layout, String lifecycle,
+		MimeResponse.Copy copy) {
 
 		if (portlet == null) {
 			throw new NullPointerException("Portlet is null");
@@ -1046,6 +1066,7 @@ public class PortletURLImpl
 		_portletRequest = portletRequest;
 		_layout = layout;
 		_lifecycle = lifecycle;
+		_copy = copy; // TODO
 		_parametersIncludedInPath = Collections.emptySet();
 		_params = new LinkedHashMap<>();
 		_removePublicRenderParameters = new LinkedHashSet<>();
@@ -1092,7 +1113,7 @@ public class PortletURLImpl
 			request,
 			PortletLocalServiceUtil.getPortletById(
 				PortalUtil.getCompanyId(request), portletId),
-			portletRequest, layout, lifecycle);
+			portletRequest, layout, lifecycle, null);
 	}
 
 	private void _appendNamespaceAndEncode(StringBundler sb, String name) {
@@ -1213,6 +1234,7 @@ public class PortletURLImpl
 
 	private boolean _anchor = true;
 	private String _cacheability = ResourceURL.PAGE;
+	private MimeResponse.Copy _copy;
 	private boolean _copyCurrentRenderParameters;
 	private long _doAsGroupId;
 	private long _doAsUserId;

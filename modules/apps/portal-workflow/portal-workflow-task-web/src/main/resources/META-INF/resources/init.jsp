@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -34,7 +35,6 @@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
@@ -48,7 +48,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException" %><%@
 page import="com.liferay.portal.workflow.task.web.internal.dao.search.WorkflowTaskResultRowSplitter" %><%@
 page import="com.liferay.portal.workflow.task.web.internal.display.context.WorkflowTaskDisplayContext" %><%@
-page import="com.liferay.portal.workflow.task.web.internal.search.WorkflowTaskSearch" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %>
 
 <%@ page import="java.util.List" %>

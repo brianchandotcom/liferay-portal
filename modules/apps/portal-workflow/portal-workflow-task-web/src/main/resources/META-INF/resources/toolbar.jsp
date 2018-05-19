@@ -26,21 +26,6 @@ portletURL.setParameter("tabs1", tabs1);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="my-workflow-tasks" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-ui:search-form
-				page="/search.jsp"
-				servletContext="<%= application %>"
-			/>
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
-
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="nav-bar-workflow nav-tabs nav-tabs-default">
 		<portlet:renderURL var="viewAssignedToMeURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
@@ -58,30 +43,17 @@ portletURL.setParameter("tabs1", tabs1);
 	</aui:nav>
 </aui:nav-bar>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= false %>"
->
-	<liferay-frontend:management-bar-buttons>
-		<c:if test="<%= !workflowTaskDisplayContext.isSearch() %>">
-			<liferay-frontend:management-bar-display-buttons
-				displayViews="<%= workflowTaskDisplayContext.getDisplayViews() %>"
-				portletURL="<%= workflowTaskDisplayContext.getPortletURL() %>"
-				selectedDisplayStyle="<%= workflowTaskDisplayContext.getDisplayStyle() %>"
-			/>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "pending", "completed"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= workflowTaskDisplayContext.getOrderByCol() %>"
-			orderByType="<%= workflowTaskDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"last-activity-date", "due-date"} %>'
-			portletURL="<%= workflowTaskDisplayContext.getPortletURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= workflowTaskDisplayContext.getClearResultsURL() %>"
+	disabled="<%= workflowTaskDisplayContext.isManagementBarDisabled() %>"
+	filterDropdownItems="<%= workflowTaskDisplayContext.getFilterOptions() %>"
+	itemsTotal="<%= workflowTaskDisplayContext.getTotalItems() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= workflowTaskDisplayContext.getSearchURL() %>"
+	searchContainerId="workflowTasks"
+	searchFormName="fm1"
+	selectable="<%= false %>"
+	sortingOrder='<%= ParamUtil.getString(request, "orderByType", "asc") %>'
+	sortingURL="<%= workflowTaskDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= workflowTaskDisplayContext.getViewTypes() %>"
+/>

@@ -2,15 +2,7 @@
 	<command name="_gotoPendingFilter">
 		<execute function="Pause" locator1="5000" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="Dropdown#FILTER" />
-			<then>
-				<execute function="Click" locator1="Dropdown#FILTER" />
-			</then>
-			<else>
-				<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
-			</else>
-		</if>
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Pending">
 			<var name="key_menuItem" value="Pending" />
@@ -360,15 +352,7 @@
 	<command name="gotoCompletedFilter">
 		<execute function="Pause" locator1="5000" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="Dropdown#FILTER" />
-			<then>
-				<execute function="Click" locator1="Dropdown#FILTER" />
-			</then>
-			<else>
-				<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
-			</else>
-		</if>
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Completed">
 			<var name="key_menuItem" value="Completed" />
@@ -908,8 +892,6 @@
 	</command>
 
 	<command name="viewCompletedTasksTaskNotPresentCP">
-		<execute macro="Workflow#gotoCompletedFilter" />
-
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_TASK" />
@@ -930,27 +912,11 @@
 	<command name="viewDefaultMyWorkflowTasksCP">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to you." />
 
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to you." />
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
-
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Assigned to My Roles" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tasks assigned to your roles." />
-
-		<execute macro="Workflow#_gotoPendingFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no pending tasks assigned to your roles." />
-
-		<execute macro="Workflow#gotoCompletedFilter" />
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no completed tasks." />
 	</command>
 
 	<command name="viewDefaultWorkflowSubmissions">

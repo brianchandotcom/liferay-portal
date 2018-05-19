@@ -18,6 +18,9 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
@@ -75,6 +78,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -223,6 +227,14 @@ public class WorkflowTaskDisplayContext {
 		};
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public String getCreateDate(WorkflowLog workflowLog) {
 		return _dateFormatDateTime.format(workflowLog.getCreateDate());
 	}
@@ -284,6 +296,56 @@ public class WorkflowTaskDisplayContext {
 		return LanguageUtil.get(
 			_workflowTaskRequestHelper.getRequest(),
 			HtmlUtil.escape(workflowTask.getName()));
+	}
+
+	public DropdownItemList getFilterOptions() {
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getFilterNavigationDropdownItem(
+											"all"));
+
+									add(
+										_getFilterNavigationDropdownItem(
+											"pending"));
+
+									add(
+										_getFilterNavigationDropdownItem(
+											"completed"));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(
+								_workflowTaskRequestHelper.getRequest(),
+								"filter"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									add(
+										_getOrderByDropdownItem(
+											"last-activity-date"));
+
+									add(_getOrderByDropdownItem("due-date"));
+								}
+							});
+
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(
+								_workflowTaskRequestHelper.getRequest(),
+								"order-by"));
+					});
+			}
+		};
 	}
 
 	public String getHeaderTitle(WorkflowTask workflowTask)
@@ -436,6 +498,69 @@ public class WorkflowTaskDisplayContext {
 		return searchableAssetsWorkflowHandlers;
 	}
 
+	public WorkflowTaskSearch getSearchContainer() throws PortalException {
+		boolean searchByUserRoles = isAssignedToMyRolesTabSelected();
+
+		WorkflowTaskSearch searchContainer = new WorkflowTaskSearch(
+			_liferayPortletRequest, getCurParam(searchByUserRoles),
+			getPortletURL());
+
+		DisplayTerms searchTerms = searchContainer.getDisplayTerms();
+
+		int total = WorkflowTaskManagerUtil.searchCount(
+			_workflowTaskRequestHelper.getCompanyId(),
+			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
+			getAssetType(searchTerms.getKeywords()), getCompleted(),
+			searchByUserRoles);
+
+		searchContainer.setTotal(total);
+
+		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
+			_workflowTaskRequestHelper.getCompanyId(),
+			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
+			getAssetType(searchTerms.getKeywords()), getCompleted(),
+			searchByUserRoles, searchContainer.getStart(),
+			searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+		searchContainer.setResults(results);
+
+		setSearchContainerEmptyResultsMessage(
+			searchContainer, searchByUserRoles, getCompleted());
+
+		return searchContainer;
+	}
+
+	public String getSearchURL() {
+		PortletURL portletURL = getPortletURL();
+
+		ThemeDisplay themeDisplay =
+			_workflowTaskRequestHelper.getThemeDisplay();
+
+		portletURL.setParameter(
+			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
+
+		return portletURL.toString();
+	}
+
+	public String getSortingURL() throws PortletException {
+		String orderByType = ParamUtil.getString(
+			_request, "orderByType", "asc");
+
+		LiferayPortletResponse response =
+			_workflowTaskRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = response.createRenderURL();
+
+		portletURL.setParameter(
+			"orderByType", Objects.equals(orderByType, "asc") ? "desc" : "asc");
+
+		portletURL.setParameter("tabs1", getTabs1());
+
+		portletURL.setParameter("orderByCol", getOrderByCol());
+
+		return portletURL.toString();
+	}
+
 	public String getState(WorkflowTask workflowTask) throws PortalException {
 		long companyId = getWorkflowCompanyId(workflowTask);
 		long groupId = getWorkflowGroupId(workflowTask);
@@ -570,22 +695,18 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(workflowTask.getName());
 	}
 
-	public WorkflowTaskSearch getTasksAssignedToMe() throws PortalException {
-		return searchTasks(false);
-	}
-
-	public WorkflowTaskSearch getTasksAssignedToMyRoles()
-		throws PortalException {
-
-		return searchTasks(true);
-	}
-
 	public Object getTaskUpdateMessageArguments(WorkflowLog workflowLog)
 		throws PortalException {
 
 		String actorName = getActorName(workflowLog);
 
 		return HtmlUtil.escape(actorName);
+	}
+
+	public int getTotalItems() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
 	}
 
 	public String getTransitionMessage(String transitionName) {
@@ -632,6 +753,15 @@ public class WorkflowTaskDisplayContext {
 
 		return workflowHandler.getURLViewDiffs(
 			classPK, _liferayPortletRequest, _liferayPortletResponse);
+	}
+
+	public ViewTypeItemList getViewTypes() {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
+			{
+				addListViewTypeItem();
+				addTableViewTypeItem();
+			}
+		};
 	}
 
 	public WindowState getWindowState() {
@@ -868,6 +998,12 @@ public class WorkflowTaskDisplayContext {
 		return false;
 	}
 
+	public boolean isManagementBarDisabled() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return !searchContainer.hasResults();
+	}
+
 	public boolean isNavigationAll() {
 		if (Objects.equals(getNavigation(), "all")) {
 			return true;
@@ -1024,38 +1160,6 @@ public class WorkflowTaskDisplayContext {
 		return getWorkflowInstance(workflowTask).getWorkflowContext();
 	}
 
-	protected WorkflowTaskSearch searchTasks(boolean searchByUserRoles)
-		throws PortalException {
-
-		WorkflowTaskSearch searchContainer = new WorkflowTaskSearch(
-			_liferayPortletRequest, getCurParam(searchByUserRoles),
-			getPortletURL());
-
-		DisplayTerms searchTerms = searchContainer.getDisplayTerms();
-
-		int total = WorkflowTaskManagerUtil.searchCount(
-			_workflowTaskRequestHelper.getCompanyId(),
-			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			getAssetType(searchTerms.getKeywords()), getCompleted(),
-			searchByUserRoles);
-
-		searchContainer.setTotal(total);
-
-		List<WorkflowTask> results = WorkflowTaskManagerUtil.search(
-			_workflowTaskRequestHelper.getCompanyId(),
-			_workflowTaskRequestHelper.getUserId(), searchTerms.getKeywords(),
-			getAssetType(searchTerms.getKeywords()), getCompleted(),
-			searchByUserRoles, searchContainer.getStart(),
-			searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-		searchContainer.setResults(results);
-
-		setSearchContainerEmptyResultsMessage(
-			searchContainer, searchByUserRoles, getCompleted());
-
-		return searchContainer;
-	}
-
 	protected void setSearchContainerEmptyResultsMessage(
 		WorkflowTaskSearch searchContainer, boolean searchByUserRoles,
 		Boolean completedTasks) {
@@ -1088,6 +1192,35 @@ public class WorkflowTaskDisplayContext {
 				searchContainer.getEmptyResultsMessage() +
 					"-with-the-specified-search-criteria");
 		}
+	}
+
+	private Consumer<DropdownItem> _getFilterNavigationDropdownItem(
+		String navigation) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(Objects.equals(getNavigation(), navigation));
+
+			dropdownItem.setHref(
+				getPortletURL(), "navigation", navigation, "mvcPath",
+				"/view.jsp", "tabs1", getTabs1());
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_workflowTaskRequestHelper.getRequest(), navigation));
+
+		};
+	}
+
+	private Consumer<DropdownItem> _getOrderByDropdownItem(String orderByCol) {
+		return dropdownItem -> {
+			dropdownItem.setActive(Objects.equals(getOrderByCol(), orderByCol));
+
+			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
+
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_workflowTaskRequestHelper.getRequest(), orderByCol));
+		};
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};

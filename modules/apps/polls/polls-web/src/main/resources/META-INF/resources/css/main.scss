@@ -24,12 +24,28 @@
 }
 
 .portlet-polls {
+	.form-group.poll-choice-group {
+		display: flex;
+
+		.poll-choice-input {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+		}
+
+		.delete-poll-choice {
+			align-self: flex-start;
+			position: relative;
+			top: 25px;
+		}
+	}
+
 	.input-choices-wrapper .btn-delete {
 		margin-top: 0;
 	}
 
 	.input-choices-wrapper .input-group-item {
-		width: 100px;
+		width: 46px;
 	}
 
 	.input-choices-wrapper .input-localized-input {

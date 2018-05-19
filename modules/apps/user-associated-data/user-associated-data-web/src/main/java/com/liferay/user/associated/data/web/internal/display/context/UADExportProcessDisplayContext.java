@@ -15,6 +15,7 @@
 package com.liferay.user.associated.data.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
@@ -121,7 +122,7 @@ public class UADExportProcessDisplayContext {
 		return creationMenu;
 	}
 
-	public DropdownItemList getDropdownItems() throws PortalException {
+	public List<DropdownItem> getDropdownItems() throws PortalException {
 		DropdownItemList dropdownItems = new DropdownItemList();
 
 		PortletURL navigationPortletURL = getPortletURL();
@@ -157,7 +158,9 @@ public class UADExportProcessDisplayContext {
 		return _navigation;
 	}
 
-	public DropdownItemList getNavigationDropdownItems(PortletURL portletURL) {
+	public List<DropdownItem> getNavigationDropdownItems(
+		PortletURL portletURL) {
+
 		DropdownItemList navigationDropdownItems = new DropdownItemList();
 
 		for (String navigation :
@@ -186,7 +189,7 @@ public class UADExportProcessDisplayContext {
 		return _orderByCol;
 	}
 
-	public DropdownItemList getOrderByDropdownItems(PortletURL portletURL) {
+	public List<DropdownItem> getOrderByDropdownItems(PortletURL portletURL) {
 		DropdownItemList orderByDropdownItems = new DropdownItemList();
 
 		for (String orderByCol : new String[] {"create-date", "name"}) {

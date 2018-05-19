@@ -146,7 +146,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 		}
 	}
 
-	public DropdownItemList getFilterOptions(HttpServletRequest request) {
+	public List<DropdownItem> getFilterOptions(HttpServletRequest request) {
 		return new DropdownItemList() {
 			{
 

@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = UADApplicationSummaryHelper.class)
 public class UADApplicationSummaryHelper {
 
-	public DropdownItemList createManagementBarFilterItems(
+	public List<DropdownItem> createManagementBarFilterItems(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
@@ -72,25 +73,25 @@ public class UADApplicationSummaryHelper {
 
 		return new DropdownItemList() {
 			{
-				DropdownItemList filterByNavigationDropdownItemList =
-					getFilterByNavigationDropdownItemList(
+				List<DropdownItem> filterByNavigationDropdownItems =
+					getFilterByNavigationDropdownItems(
 						renderRequest, renderResponse);
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							filterByNavigationDropdownItemList);
+							filterByNavigationDropdownItems);
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(request, "filter-by-navigation"));
 					});
 
-				DropdownItemList orderByNavigationDropdownItemList =
-					getOrderByDropdownItemList(renderRequest, renderResponse);
+				List<DropdownItem> orderByNavigationDropdownItems =
+					getOrderByDropdownItems(renderRequest, renderResponse);
 
 				addGroup(
 					dropdownGroupItem -> {
 						dropdownGroupItem.setDropdownItems(
-							orderByNavigationDropdownItemList);
+							orderByNavigationDropdownItems);
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(request, "order-by"));
 					});
@@ -230,7 +231,7 @@ public class UADApplicationSummaryHelper {
 		return typeClass.getName();
 	}
 
-	public DropdownItemList getFilterByNavigationDropdownItemList(
+	public List<DropdownItem> getFilterByNavigationDropdownItems(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
@@ -267,7 +268,7 @@ public class UADApplicationSummaryHelper {
 		return ParamUtil.getString(renderRequest, "orderByCol", "name");
 	}
 
-	public DropdownItemList getOrderByDropdownItemList(
+	public List<DropdownItem> getOrderByDropdownItems(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 

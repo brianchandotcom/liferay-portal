@@ -112,7 +112,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 				</h3>
 
 				<clay:management-toolbar
-					actionDropdownItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() %>"
+					actionDropdownItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItems() %>"
 					componentId="fragmentEntryLinksManagementToolbar"
 					disabled="<%= fragmentEntry.getUsageCount() <= 0 %>"
 					filterDropdownItems="<%= fragmentEntryLinkDisplayContext.getFilterItemsDropdownItems() %>"

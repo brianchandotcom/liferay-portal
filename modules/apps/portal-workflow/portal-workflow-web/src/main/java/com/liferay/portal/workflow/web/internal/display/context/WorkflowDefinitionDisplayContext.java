@@ -163,7 +163,7 @@ public class WorkflowDefinitionDisplayContext {
 			title, "title", newTitle, defaultLanguageId);
 	}
 
-	public DropdownItemList getFilterOptions(HttpServletRequest request) {
+	public List<DropdownItem> getFilterOptions(HttpServletRequest request) {
 		return new DropdownItemList() {
 			{
 				addGroup(

@@ -40,15 +40,15 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 	</div>
 
 	<aui:script>
-		var refreshCaptcha = document.querySelector('#<portlet:namespace />refreshCaptcha');
+		var refreshCaptcha = document.getElementById('<portlet:namespace />refreshCaptcha');
 
 		if (refreshCaptcha) {
 			refreshCaptcha.addEventListener(
 				'click',
 				function() {
-					var url = Liferay.Util.addParams('t=' + $.now(), '<%= url %>');
+					var url = Liferay.Util.addParams('t=' + Date.now(), '<%= url %>');
 
-					var captcha = document.querySelector('#<portlet:namespace />captcha');
+					var captcha = document.getElementById('<portlet:namespace />captcha');
 
 					if (captcha) {
 						captcha.setAttribute('src', url);

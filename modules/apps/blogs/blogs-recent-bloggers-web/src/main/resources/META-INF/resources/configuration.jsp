@@ -61,7 +61,7 @@ if (organizationId > 0) {
 			</div>
 
 			<aui:script>
-				var <portlet:namespace />selectOrganizationButton = document.querySelector('#<portlet:namespace />selectOrganizationButton');
+				var <portlet:namespace />selectOrganizationButton = document.getElementById('<portlet:namespace />selectOrganizationButton');
 
 				if (<portlet:namespace />selectOrganizationButton) {
 					<portlet:namespace />selectOrganizationButton.addEventListener(
@@ -90,19 +90,19 @@ if (organizationId > 0) {
 									uri: '<%= selectOrganizationURL.toString() %>'
 								},
 								function(event) {
-									var form = document.querySelector('#<portlet:namespace />fm');
+									var form = document.getElementById('<portlet:namespace />fm');
 
 									if (form) {
 										var organizationId = form.querySelector('#<portlet:namespace />preferences--organizationId--');
 
 										if (organizationId) {
-											organizationId.value = event.entityid;
+											organizationId.setAttribute('value', event.entityid);
 										}
 
-										var organizationName = document.querySelector('#<portlet:namespace />organizationName');
+										var organizationName = form.querySelector('#<portlet:namespace />organizationName');
 
 										if (organizationName) {
-											organizationName.value = event.entityname;
+											organizationName.setAttribute('value', event.entityname);
 										}
 
 										Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', false);

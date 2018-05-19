@@ -14,21 +14,19 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet;
 
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.io.IOException;
 
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -90,7 +88,7 @@ public class SearchBarPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, searchBarPortletDisplayContext);
 
-		if (searchBarPortletDisplayContext.isDestinationConfigured()) {
+		if (searchBarPortletDisplayContext.isDestinationUnreachable()) {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
@@ -104,12 +102,13 @@ public class SearchBarPortlet extends MVCPortlet {
 		RenderRequest renderRequest) {
 
 		SearchBarPortletDisplayBuilder searchBarPortletDisplayBuilder =
-			new SearchBarPortletDisplayBuilder();
+			new SearchBarPortletDisplayBuilder(
+				http, layoutLocalService, portal);
 
 		searchBarPortletDisplayBuilder.setDestination(
 			searchBarPortletPreferences.getDestinationString());
 
-		copy(
+		SearchOptionalUtil.copy(
 			portletSharedSearchResponse::getKeywordsOptional,
 			searchBarPortletDisplayBuilder::setKeywords);
 
@@ -122,16 +121,10 @@ public class SearchBarPortlet extends MVCPortlet {
 		searchBarPortletDisplayBuilder.setScopeParameterName(
 			scopeParameterName);
 
-		copy(
+		SearchOptionalUtil.copy(
 			() -> portletSharedSearchResponse.getParameter(
 				scopeParameterName, renderRequest),
 			searchBarPortletDisplayBuilder::setScopeParameterValue);
-
-		boolean searchLayoutAvailable = isSearchLayoutAvailable(
-			renderRequest, searchBarPortletPreferences);
-
-		searchBarPortletDisplayBuilder.setSearchLayoutAvailable(
-			searchLayoutAvailable);
 
 		searchBarPortletDisplayBuilder.setSearchScopePreference(
 			searchBarPortletPreferences.getSearchScopePreference());
@@ -141,41 +134,14 @@ public class SearchBarPortlet extends MVCPortlet {
 		return searchBarPortletDisplayBuilder.build();
 	}
 
-	protected <T> void copy(Supplier<Optional<T>> from, Consumer<T> to) {
-		Optional<T> optional = from.get();
-
-		optional.ifPresent(to);
-	}
-
-	protected long getScopeGroupId(RenderRequest renderRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getScopeGroupId();
-	}
-
-	protected boolean isSearchLayoutAvailable(
-		RenderRequest renderRequest,
-		SearchBarPortletPreferences searchBarPortletPreferences) {
-
-		String destination = searchBarPortletPreferences.getDestinationString();
-
-		if (Validator.isNull(destination)) {
-			return false;
-		}
-
-		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
-			getScopeGroupId(renderRequest), false, destination);
-
-		if (layout != null) {
-			return true;
-		}
-
-		return false;
-	}
+	@Reference
+	protected Http http;
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;
+
+	@Reference
+	protected Portal portal;
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;

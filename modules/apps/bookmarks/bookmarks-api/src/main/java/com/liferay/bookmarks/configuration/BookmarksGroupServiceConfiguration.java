@@ -85,6 +85,10 @@ public interface BookmarksGroupServiceConfiguration {
 	 * @deprecated As of 3.0.0, with no direct replacement
 	 */
 	@Deprecated
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
+		name = "entries-per-page", required = false
+	)
 	public String entriesPerPage();
 
 	@Meta.AD(
@@ -103,6 +107,10 @@ public interface BookmarksGroupServiceConfiguration {
 	 * @deprecated As of 3.0.0, with no direct replacement
 	 */
 	@Deprecated
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/search.container.page.default.delta}",
+		name = "folders-per-page", required = false
+	)
 	public String foldersPerPage();
 
 	@Meta.AD(deflt = "true", name = "show-folders-search", required = false)

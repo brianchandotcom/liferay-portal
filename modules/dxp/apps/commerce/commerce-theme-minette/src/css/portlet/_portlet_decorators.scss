@@ -1,0 +1,186 @@
+// This file is named _portlet_decorators, but stuffing all portlet related
+// things in here because too many partials can get confusing
+
+.portlet-decorate {
+	.portlet {
+		margin-bottom: 24px;
+	}
+
+	.portlet-title-text {
+		color: map-get($theme-colors, secondary);
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: 0.5px;
+		line-height: 1.5;
+	}
+
+	.portlet-content {
+		background-color: $portlet-decorate-bg;
+		border: $portlet-decorate-border;
+		border-radius: 0.5rem;
+		padding: 24px;
+	}
+}
+
+.portlet {
+	margin-bottom: 0;
+}
+
+.portlet-content-editable {
+	border-width: 0;
+	padding: 0;
+}
+
+.portlet-title-text {
+	font-size: 1.875rem;
+	margin-top: 2rem;
+}
+
+.portlet-topper {
+	z-index: 5;
+}
+
+// Removes margins and borders around a portlet
+
+.portlet-flush {
+	.portlet {
+		margin-bottom: 0;
+	}
+
+	.portlet-content-editable {
+		border-width: 0;
+	}
+
+	&.portlet-search, .portlet-search, &.portlet-search-bar, .portlet-search-bar {
+		.form-group, .lfr-ddm-field-group {
+			margin-bottom: 0;
+		}
+	}
+
+	&.dropdown-menu {
+		overflow: visible;
+		padding: 0;
+
+		.portlet-body {
+			padding: 1.5rem;
+		}
+	}
+
+	.portlet-forms {
+		.container-fluid-1280 {
+			max-width: none;
+			padding-left: 0;
+			padding-right: 0;
+		}
+
+		.ddm-form-basic-info .ddm-form-name {
+			padding: 0;
+		}
+
+		.lfr-ddm-form-page {
+			padding: 0;
+
+			> .row {
+				margin-left: 0;
+				margin-right: 0;
+
+				> .col-md-12 {
+					padding-left: 0;
+					padding-right: 0;
+				}
+			}
+		}
+
+		.lfr-ddm-form-container .lfr-ddm-form-pagination-controls {
+			padding-top: 0;
+
+			button {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	.portlet-forms-display .lfr-meta-actions {
+		padding-top: 0;
+	}
+}
+
+// Forces portlet controls to be hidden
+
+.portlet-controls-d-none {
+	.portlet-content-editable {
+		border-width: 0;
+	}
+
+	.portlet-topper {
+		display: none;
+	}
+}
+
+// Portlet User Personal Bar
+
+.nav-item .nav-link.user-personal-bar {
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+.user-personal-bar {
+	.sign-in, .user-avatar-link {
+		a {
+			color: inherit;
+			display: block;
+
+			&:hover {
+				color: inherit;
+				text-decoration: inherit;
+			}
+		}
+	}
+
+	.user-avatar-image, .user-full-name {
+		display: inline-flex;
+		vertical-align: middle;
+	}
+}
+
+// Portlet Search (Different from portlet-search-bar)
+
+.portlet-search-inset {
+	width: 100%;
+
+	.portlet-search {
+		.form-group {
+			display: block;
+		}
+
+		.input-text-wrapper + .field + .lfr-ddm-field-group {
+			margin-top: -1rem;
+			position: absolute;
+			right: 3px;
+			top: 50%;
+
+			.icon-monospaced {
+				align-items: center;
+				display: inline-flex;
+				justify-content: center;
+				line-height: 1;
+
+				> .lfr-icon-item {
+					align-items: center;
+					display: flex;
+					height: 100%;
+					justify-content: center;
+					width: 100%;
+				}
+			}
+		}
+
+		.search-input {
+			padding-right: 35px;
+		}
+
+		.search-input[size] {
+			height: $input-height;
+		}
+	}
+}

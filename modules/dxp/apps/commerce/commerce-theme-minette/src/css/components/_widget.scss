@@ -1,0 +1,96 @@
+.widget-mode-detail {
+	background-color: #FFF;
+
+	.title {
+		color: $dark-color;
+		font-weight: 700;
+	}
+
+	.sub-title {
+		color: #A0A1B0;
+		font-weight: 400;
+	}
+
+	.username {
+		color: $dark-color;
+		font-weight: 700;
+		line-height: 2;
+	}
+
+	.aspect-ratio {
+		padding-bottom: 480px;
+	}
+}
+
+.widget-mode-card {
+	.card {
+		border-radius: 8px;
+	}
+
+	.card-header {
+		border-radius: 8px 8px 0 0;
+	}
+
+	.card-body {
+		padding: 24px;
+	}
+
+	.widget-topbar {
+		.title-link {
+			color: $dark-color;
+
+			.title {
+				font-size: 1.5rem;
+				font-weight: 700;
+				margin-right: 24px;
+			}
+		}
+	}
+
+	.widget-metadata {
+		margin-bottom: 16px;
+
+		.username {
+			color: $dark-color;
+			font-weight: 700;
+		}
+	}
+
+	.widget-resume {
+		font-size: 15px;
+		line-height: 1.6;
+		margin-bottom: 0;
+	}
+
+	.card-footer {
+		background-color: transparent;
+		padding: 0 1rem 1rem;
+	}
+
+	.widget-toolbar {
+		border-top: 1px solid $light-color;
+		padding-top: 8px;
+	}
+}
+
+.widget-mode-simple {
+	.widget-mode-simple-entry:not(:last-child) {
+		border-bottom: 1px solid $light-color;
+		margin-bottom: 24px;
+		padding-bottom: 24px;
+	}
+
+	.widget-topbar .title-link {
+		color: $dark-color;
+
+		.title {
+			font-size: 1.75rem;
+			font-weight: 700;
+		}
+	}
+
+	.widget-metadata .username {
+		color: $dark-color;
+		font-weight: 700;
+	}
+}

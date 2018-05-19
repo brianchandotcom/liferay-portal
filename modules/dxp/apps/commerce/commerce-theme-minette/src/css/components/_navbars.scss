@@ -1,0 +1,31 @@
+.navbar-top {
+	padding-bottom: 0.63rem;
+	padding-top: 0.63rem;
+}
+
+.navbar-classic {
+	background-color: #FFF;
+	border-bottom: 1px solid $light-color;
+
+	.navbar-blank {
+		@include media-query(null, $screen-xs-max) {
+			margin-top: 2rem;
+		}
+	}
+
+	.portlet-navigation {
+		margin-left: auto;
+	}
+
+	.logo:hover {
+		text-decoration: none;
+	}
+
+	.nav-link {
+		font-size: 0.88rem;
+		font-weight: 600;
+		letter-spacing: 0.031rem;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+}

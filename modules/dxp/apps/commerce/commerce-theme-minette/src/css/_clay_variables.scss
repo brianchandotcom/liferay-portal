@@ -1,0 +1,237 @@
+// This file is for overwriting Clay UI Framework Sass Variables used in the
+// file clay.scss and its imports. This file is injected into clay.scss during
+// build time and is also imported into the theme's main.scss file through the
+// _imports.scss file.
+
+$container-max-widths: (
+	sm: 540px,
+	md: 720px,
+	lg: 960px,
+	xl: 1440px
+) !default;
+
+$primary: #389761 !default;
+$secondary: #6B6C7E !default;
+$success: #287D3D !default;
+$info: #2E5AAC !default;
+$warning: #B95000 !default;
+$danger: #DA1414 !default;
+$light: #F8F4F3 !default;
+$dark: #242321 !default;
+
+$font-import-url: 'https://fonts.googleapis.com/css?family=Lato' !default;
+$font-family-sans-serif: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+
+$font-weight-light: 300 !default;
+$font-weight-normal: 400 !default;
+$font-weight-semi-bold: 600 !default;
+$font-weight-bold: 700 !default;
+$font-weight-bolder: 900 !default;
+
+$border-radius: 0.1875rem !default;
+$border-radius-lg: $border-radius !default;
+$border-radius-sm: $border-radius !default;
+
+$body-bg: #FFF !default;
+$body-color: #000 !default;
+
+$link-color: $primary !default;
+
+$component-active-bg: $primary !default;
+
+// Buttons
+
+$btn-font-size: 1rem !default;
+$btn-padding-x: 1.5rem !default;
+$btn-padding-y: 0.6875rem !default;
+
+$btn-padding-x-mobile: 1rem !default;
+
+$btn-padding-x-sm: 1.5rem !default;
+$btn-padding-y-sm: 0.75rem !default;
+
+$btn-font-size-lg: 1.125rem !default;
+$btn-padding-x-lg: 3rem !default;
+$btn-padding-y-lg: 1.09375rem !default;
+
+$btn-monospaced-size: 3rem !default;
+
+$btn-monospaced-size-lg: 4rem !default;
+
+$btn-monospaced-size-sm: 2.5rem !default;
+
+// Button Variants
+
+$btn-primary: (
+	hover-bg: #1E7342,
+	hover-border-color: transparent,
+	focus-box-shadow: 0 0 0 2px rgba(darken($primary, 5.10), 0.5),
+	disabled-bg: $primary,
+	active-bg: darken(#1E7342, 5%),
+	active-border-color: transparent,
+	active-box-shadow: none
+) !default;
+
+$btn-success: (
+	hover-bg: darken($success, 4%),
+	hover-border-color: transparent,
+	focus-box-shadow: 0 0 0 2px rgba(darken($success, 4%), 0.5),
+	disabled-bg: $success,
+	active-bg: darken($success, 8%),
+	active-border-color: transparent,
+	active-box-shadow: none
+) !default;
+
+$btn-info: (
+	hover-bg: darken($info, 4%),
+	hover-border-color: transparent,
+	focus-box-shadow: 0 0 0 2px rgba(darken($info, 4%), 0.5),
+	disabled-bg: $info,
+	active-bg: darken($info, 8%),
+	active-border-color: transparent,
+	active-box-shadow: none
+) !default;
+
+$btn-warning: (
+	hover-bg: darken($warning, 4%),
+	hover-border-color: transparent,
+	focus-box-shadow: 0 0 0 2px rgba(darken($warning, 4%), 0.5),
+	disabled-bg: $warning,
+	active-bg: darken($warning, 8%),
+	active-border-color: transparent,
+	active-box-shadow: none,
+	loading-animation: 'loading-animation-light'
+) !default;
+
+
+$btn-danger: (
+	hover-bg: darken($danger, 4%),
+	hover-border-color: transparent,
+	focus-box-shadow: 0 0 0 2px rgba(darken($danger, 4%), 0.5),
+	disabled-bg: $danger,
+	active-bg: darken($danger, 8%),
+	active-border-color: transparent,
+	active-box-shadow: none
+) !default;
+
+$btn-light: (
+	color: $dark,
+	hover-bg: darken($light, 4%),
+	hover-border-color: transparent,
+	focus-box-shadow: 0 0 0 2px rgba(darken($light, 4%), 0.5),
+	disabled-bg: $light,
+	active-bg: darken($light, 8%),
+	active-border-color: transparent,
+	active-box-shadow: none
+) !default;
+
+$btn-dark: (
+	hover-bg: darken($dark, 4%),
+	hover-border-color: transparent,
+	focus-box-shadow: 0 0 0 2px rgba(darken($dark, 4%), 0.5),
+	disabled-bg: $dark,
+	active-bg: darken($dark, 8%),
+	active-border-color: transparent,
+	active-box-shadow: none
+) !default;
+
+// Button Outline
+
+$btn-outline-primary: (
+	bg: #FFF,
+	hover-bg: #FFF,
+	hover-border-color: #246442,
+	hover-color: #246442,
+	focus-bg: #FFF,
+	focus-box-shadow: 0 0 0 2px rgba($primary, 0.25),
+	focus-color: #246442,
+	disabled-bg: #FFF,
+	disabled-border-color: #246442,
+	disabled-color: #246442,
+	active-bg: #F1F3F2,
+	active-color: #246442,
+	active-box-shadow: none
+) !default;
+
+// Inputs
+
+$input-label-color: #2D2C34 !default;
+$input-label-font-size: 1rem !default;
+$input-label-font-weight: $font-weight-normal !default;
+
+$input-bg: #EDEDED !default;
+$input-border-color: #ECECEC !default;
+$input-height: 3rem !default;
+
+$input-focus-bg: #EAF0EC !default;
+$input-focus-border-color: #DEDEDE !default;
+
+$input-height-lg: 4rem !default;
+
+$input-height-sm: 2.5rem !default;
+
+// Input (Custom)
+
+$custom-control-indicator-border-color: #B2B2B2 !default;
+$custom-control-indicator-border-width: 0.09375rem !default;
+
+$custom-checkbox-indicator-border-radius: $border-radius !default;
+
+// Breadcrumb
+
+$breadcrumb-text-transform: capitalize !default;
+
+// Card
+
+$card-border-color: #D4D4D4 !default;
+$card-border-width: 0.0625rem !default;
+$card-box-shadow: none !default;
+
+// Multi Step Nav
+
+$multi-step-icon-size: 3rem !default;
+
+$multi-step-divider-height: 0.125rem !default;
+
+$multi-step-icon-complete-color: #FFF !default;
+$multi-step-icon-complete-bg: $dark !default;
+$multi-step-icon-complete-bg-image: false !default;
+$multi-step-divider-complete-bg: $multi-step-icon-complete-bg !default;
+
+// Dropdown
+
+$dropdown-border-radius: $border-radius !default;
+$dropdown-box-shadow: 0 0 1.375rem 0 rgba(0, 0, 0, 0.06) !default;
+$dropdown-font-size: 1rem !default;
+
+$dropdown-link-color: #898989 !default;
+
+$dropdown-link-hover-bg: transparent !default;
+$dropdown-link-hover-color: $component-active-bg !default;
+
+$dropdown-link-disabled-color: #B5B5B5 !default;
+
+// Pagination
+
+$pagination-font-size: 1.25rem !default;
+
+$pagination-color: $body-color !default;
+
+$pagination-hover-bg: transparent !default;
+$pagination-hover-color: darken($primary, 15%) !default;
+
+$pagination-active-bg: transparent !default;
+$pagination-active-color: #B3B3B3 !default;
+
+$pagination-disabled-color: #B3B3B3 !default;
+
+$pagination-items-per-page-color: #676767 !default;
+$pagination-items-per-page-hover-color: darken(#676767, 15%) !default;
+
+$pagination-results-color: #676767 !default;
+
+// Table
+
+$table-cell-expand-min-width: 100px !default;
+
+$table-list-border-radius: $border-radius !default;

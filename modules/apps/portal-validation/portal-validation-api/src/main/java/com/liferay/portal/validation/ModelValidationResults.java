@@ -16,6 +16,9 @@ package com.liferay.portal.validation;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +38,50 @@ public class ModelValidationResults {
 
 	public static WarningBuilder warning() {
 		return new WarningBuilder();
+	}
+
+	public Map<String, Throwable> getExceptions() {
+		return _exceptions;
+	}
+
+	public String getExceptionsString() {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("Exceptions: ");
+		sb.append(StringPool.OPEN_CURLY_BRACE);
+
+		for (Map.Entry<String, Throwable> exception : _exceptions.entrySet()) {
+			sb.append("Message: ");
+			sb.append(exception.getKey());
+			sb.append("Exception: ");
+			sb.append(exception.getValue());
+		}
+
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+		return sb.toString();
+	}
+
+	public Map<String, Object> getFields() {
+		return _fields;
+	}
+
+	public String getFieldsString() {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("Fields: ");
+		sb.append(StringPool.OPEN_CURLY_BRACE);
+
+		for (Map.Entry<String, Object> field : _fields.entrySet()) {
+			sb.append("Field: ");
+			sb.append(field.getKey());
+			sb.append("Value: ");
+			sb.append(field.getValue());
+		}
+
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+		return sb.toString();
 	}
 
 	public boolean isFailure() {

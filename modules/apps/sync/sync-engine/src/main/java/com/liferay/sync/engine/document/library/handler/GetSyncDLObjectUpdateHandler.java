@@ -921,6 +921,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseJSONHandler {
 			}
 		}
 		else if (targetSyncFile.isFile() &&
+				 (targetSyncFile.getVersionId() != previousVersionId) &&
 				 FileUtil.isModified(targetSyncFile, filePath)) {
 
 			downloadFile(

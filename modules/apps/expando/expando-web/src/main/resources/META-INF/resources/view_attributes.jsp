@@ -144,16 +144,25 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 </aui:form>
 
 <aui:script>
-	$('#<portlet:namespace />deleteCustomFields').on(
+	var deleteCustomFields = document.getElementById('<portlet:namespace />deleteCustomFields');
+
+	if (deleteCustomFields) {
+		var form = document.getElementById('<portlet:namespace />fm');
+
+		deleteCustomFields.addEventListener(
 		'click',
 		function() {
-			var form = AUI.$(document.<portlet:namespace />fm);
+			if (form) {
+				var columnIds = form.querySelector('#<portlet:namespace />columnIds');
 
-			var columnIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+				if (columnIds) {
+					var checkedIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
-			form.fm('columnIds').val(columnIds);
+					columnIds.setAttribute('value', checkedIds);
 
-			submitForm(form, '<portlet:actionURL name="deleteExpandos" />');
+					submitForm(form, '<portlet:actionURL name="deleteExpandos" />');
+				}
+			}
 		}
 	);
 </aui:script>

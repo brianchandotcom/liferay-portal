@@ -23,11 +23,11 @@ Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
 
 List<Portlet> portlets = orphanPortletsDisplayContext.getOrphanPortlets();
 
-portletDisplay.setDescription(LanguageUtil.get(request, "orphan-portlets-description"));
+portletDisplay.setDescription(LanguageUtil.get(request, "orphan-widgets-description"));
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
 
-renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
+renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 %>
 
 <clay:navigation-bar
@@ -50,10 +50,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 	<div class="text-muted">
 		<c:choose>
 			<c:when test="<%= selLayout.isLayoutPrototypeLinkActive() %>">
-				<liferay-ui:message key="layout-inherits-from-a-prototype-portlets-cannot-be-manipulated" />
+				<liferay-ui:message key="layout-inherits-from-a-prototype-widgets-cannot-be-manipulated" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="warning-preferences-of-selected-portlets-will-be-reset-or-deleted" />
+				<liferay-ui:message key="warning-preferences-of-selected-widgets-will-be-reset-or-deleted" />
 			</c:otherwise>
 		</c:choose>
 	</div>

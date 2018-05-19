@@ -142,7 +142,7 @@
 			var form = AUI.$(document.<portlet:namespace />exportPagesFm);
 
 			if (deletePortletDataBeforeImportingCheckbox.length && deletePortletDataBeforeImportingCheckbox[0].checked) {
-				confirm('<%= UnicodeLanguageUtil.get(request, "delete-portlet-data-before-importing-confirmation") %>') && submitForm(form);
+				confirm('<%= UnicodeLanguageUtil.get(request, "delete-application-data-before-importing-confirmation") %>') && submitForm(form);
 			}
 			else {
 				submitForm(form);

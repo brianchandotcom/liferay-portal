@@ -131,7 +131,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		<liferay-ui:error exception="<%= FeedIdException.class %>" message="please-enter-a-valid-id" />
 		<liferay-ui:error exception="<%= FeedNameException.class %>" message="please-enter-a-valid-name" />
 		<liferay-ui:error exception="<%= FeedTargetLayoutFriendlyUrlException.class %>" message="please-enter-a-valid-target-layout-friendly-url" />
-		<liferay-ui:error exception="<%= FeedTargetPortletIdException.class %>" message="please-enter-a-valid-portlet-id" />
+		<liferay-ui:error exception="<%= FeedTargetPortletIdException.class %>" message="please-enter-a-valid-widget-id" />
 
 		<aui:model-context bean="<%= feed %>" model="<%= JournalFeed.class %>" />
 
@@ -166,7 +166,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 				<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-layout-friendly-url-help" name="targetLayoutFriendlyUrl" />
 
-				<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-portlet-id-help" name="targetPortletId" />
+				<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-widget-id-help" name="targetPortletId" />
 
 				<c:if test="<%= feed != null %>">
 					<aui:input name="url" type="resource" value="<%= feedURL.toString() %>" />

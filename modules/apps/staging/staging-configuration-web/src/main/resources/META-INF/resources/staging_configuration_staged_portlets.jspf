@@ -62,7 +62,7 @@
 
 			<liferay-staging:popover
 				id="stagedportlets"
-				text="staged-portlets-help"
+				text="staged-applications-help"
 				title="staged-content"
 			/>
 		</div>
@@ -78,7 +78,7 @@
 		</div>
 
 		<p class="staging-configuration-help-label">
-			<liferay-ui:message key="staged-portlets-alert" />
+			<liferay-ui:message key="staged-applications-alert" />
 		</p>
 
 		<liferay-util:buffer

@@ -129,7 +129,7 @@ for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < 
 <c:if test="<%= displayActivityCounterNames.length == 0 %>">
 	<div class="alert alert-info portlet-configuration">
 		<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
-			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-activity-counter" />
+			<liferay-ui:message key="please-configure-this-widget-and-select-at-least-one-activity-counter" />
 		</a>
 	</div>
 </c:if>

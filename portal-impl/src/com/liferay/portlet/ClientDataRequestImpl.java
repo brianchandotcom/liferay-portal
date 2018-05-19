@@ -16,11 +16,13 @@ package com.liferay.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,8 +41,6 @@ import javax.portlet.PortletException;
 
 import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.Part;
-
-import jodd.io.FileUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -93,7 +93,9 @@ public abstract class ClientDataRequestImpl
 			return null;
 		}
 
-		return new PartImpl(fileItems[0]);
+		Portlet portlet = getPortlet();
+
+		return new PartImpl(fileItems[0], portlet.getMultipartLocation());
 	}
 
 	@Override
@@ -108,6 +110,8 @@ public abstract class ClientDataRequestImpl
 		Map<String, FileItem[]> multipartParameterMap =
 			uploadRequest.getMultipartParameterMap();
 
+		Portlet portlet = getPortlet();
+
 		List<Part> parts = new ArrayList<>();
 
 		for (Map.Entry<String, FileItem[]> entry :
@@ -116,7 +120,8 @@ public abstract class ClientDataRequestImpl
 			FileItem[] fileItems = entry.getValue();
 
 			for (FileItem fileItem : fileItems) {
-				parts.add(new PartImpl(fileItem));
+				parts.add(
+					new PartImpl(fileItem, portlet.getMultipartLocation()));
 			}
 		}
 
@@ -228,14 +233,37 @@ public abstract class ClientDataRequestImpl
 
 		@Override
 		public void write(String fileName) throws IOException {
-			FileUtil.copy(_fileItem.getStoreLocation(), new File(fileName));
+			if (Validator.isNull(fileName)) {
+				throw new IOException("Invalid file name");
+			}
+
+			try {
+				File file = new File(fileName);
+
+				if (!file.isAbsolute() &&
+					Validator.isNotNull(_multipartLocation)) {
+
+					File multipartLocation = new File(_multipartLocation);
+
+					if (multipartLocation.isDirectory()) {
+						file = new File(multipartLocation, fileName);
+					}
+				}
+
+				_fileItem.write(file);
+			}
+			catch (Exception e) {
+				throw new IOException(e);
+			}
 		}
 
-		private PartImpl(FileItem fileItem) {
+		private PartImpl(FileItem fileItem, String multipartLocation) {
 			_fileItem = fileItem;
+			_multipartLocation = multipartLocation;
 		}
 
 		private final FileItem _fileItem;
+		private final String _multipartLocation;
 
 	}
 

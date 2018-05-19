@@ -450,6 +450,7 @@ public class PortletTracker
 		collectCacheScope(serviceReference, portletModel);
 		collectExpirationCache(serviceReference, portletModel);
 		collectInitParams(serviceReference, portletModel);
+		collectMultipartConfig(serviceReference, portletModel);
 		collectPortletInfo(serviceReference, portletModel);
 		collectPortletModes(serviceReference, portletModel);
 		collectPortletPreferences(serviceReference, portletModel);
@@ -639,6 +640,34 @@ public class PortletTracker
 			GetterUtil.getString(
 				get(serviceReference, "virtual-path"),
 				portletModel.getVirtualPath()));
+	}
+
+	protected void collectMultipartConfig(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.kernel.model.Portlet portletModel) {
+
+		portletModel.setMultipartFileSizeThreshold(
+			GetterUtil.getInteger(
+				serviceReference.getProperty(
+					"javax.portlet.multipart.file-size-threshold")));
+
+		portletModel.setMultipartLocation(
+			GetterUtil.getString(
+				serviceReference.getProperty(
+					"javax.portlet.multipart.location"),
+				portletModel.getMultipartLocation()));
+
+		portletModel.setMultipartMaxFileSize(
+			GetterUtil.getLong(
+				serviceReference.getProperty(
+					"javax.portlet.multipart.max-file-size"),
+				-1L));
+
+		portletModel.setMultipartMaxRequestSize(
+			GetterUtil.getLong(
+				serviceReference.getProperty(
+					"javax.portlet.multipart.max-request-size"),
+				-1L));
 	}
 
 	protected void collectPortletInfo(

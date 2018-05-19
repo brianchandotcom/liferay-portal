@@ -1216,6 +1216,10 @@ public interface Portal {
 	public UploadServletRequest getUploadServletRequest(
 		HttpServletRequest request);
 
+	public UploadServletRequest getUploadServletRequest(
+		HttpServletRequest request, int fileSizeThreshold, String location,
+		long maxRequestSize, long maxFileSize);
+
 	public Date getUptime();
 
 	public String getURLWithSessionId(String url, String sessionId);

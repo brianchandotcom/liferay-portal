@@ -65,4 +65,6 @@ public interface FileItem {
 
 	public void setString(String encode);
 
+	public void write(File file) throws Exception;
+
 }

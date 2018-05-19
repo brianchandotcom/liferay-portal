@@ -525,6 +525,34 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public boolean getMaximizeHelp();
 
 	/**
+	* Returns the maximum size of buffered bytes before storing occurs.
+	*
+	* @return the maximum size of buffered bytes before storing occurs
+	*/
+	public int getMultipartFileSizeThreshold();
+
+	/**
+	* Returns the directory for storing uploaded files.
+	*
+	* @return the directory for storing uploaded files
+	*/
+	public String getMultipartLocation();
+
+	/**
+	* Returns the maximum number of bytes permitted for an uploaded file.
+	*
+	* @return the maximum number of bytes permitted for an uploaded file
+	*/
+	public long getMultipartMaxFileSize();
+
+	/**
+	* Returns the maximum number of bytes permitted for a multipart request.
+	*
+	* @return the maximum number of bytes permitted for a multipart request
+	*/
+	public long getMultipartMaxRequestSize();
+
+	/**
 	* Returns the name of the open search class of the portlet.
 	*
 	* @return the name of the open search class of the portlet
@@ -1825,6 +1853,37 @@ public interface Portlet extends PortletModel, PersistedModel {
 	maximized state when the user goes into the help mode
 	*/
 	public void setMaximizeHelp(boolean maximizeHelp);
+
+	/**
+	* Sets the maximum size of buffered bytes before storing occurs.
+	*
+	* @param multipartFileSizeThreshold the maximum size of buffered bytes
+	before storing occurs
+	*/
+	public void setMultipartFileSizeThreshold(int multipartFileSizeThreshold);
+
+	/**
+	* Sets the directory for storing uploaded files.
+	*
+	* @param multipartLocation the directory for storing uploaded files
+	*/
+	public void setMultipartLocation(String multipartLocation);
+
+	/**
+	* Sets the maximum number of bytes permitted for an uploaded file.
+	*
+	* @param multipartMaxFileSize the maximum number of bytes permitted for an
+	uploaded file
+	*/
+	public void setMultipartMaxFileSize(long multipartMaxFileSize);
+
+	/**
+	* Sets the maximum number of bytes permitted for a multipart request.
+	*
+	* @param multipartMaxRequestSize the maximum number of bytes permitted for
+	a multipart request
+	*/
+	public void setMultipartMaxRequestSize(long multipartMaxRequestSize);
 
 	/**
 	* Sets the name of the open search class of the portlet.

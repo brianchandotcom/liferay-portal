@@ -1944,6 +1944,14 @@ public class PortalUtil {
 		return getPortal().getUploadServletRequest(request);
 	}
 
+	public static UploadServletRequest getUploadServletRequest(
+		HttpServletRequest request, int fileSizeThreshold, String location,
+		long maxRequestSize, long maxFileSize) {
+
+		return getPortal().getUploadServletRequest(
+			request, fileSizeThreshold, location, maxRequestSize, maxFileSize);
+	}
+
 	public static Date getUptime() {
 		return getPortal().getUptime();
 	}

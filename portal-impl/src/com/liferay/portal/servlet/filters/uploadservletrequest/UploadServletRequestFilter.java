@@ -65,6 +65,11 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 
 		String portletId = ParamUtil.getString(request, "p_p_id");
 
+		int fileSizeThreshold = 0;
+		long maxRequestSize = 0;
+		long maxFileSize = 0;
+		String location = null;
+
 		if (Validator.isNotNull(portletId)) {
 			long companyId = PortalUtil.getCompanyId(request);
 
@@ -90,11 +95,18 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 							COPY_MULTIPART_STREAM_TO_FILE,
 						Boolean.FALSE);
 				}
+
+				maxRequestSize = portlet.getMultipartMaxRequestSize();
+				maxFileSize = portlet.getMultipartMaxFileSize();
+				fileSizeThreshold = portlet.getMultipartFileSizeThreshold();
+				location = portlet.getMultipartLocation();
 			}
 		}
 
 		UploadServletRequest uploadServletRequest =
-			PortalUtil.getUploadServletRequest(request);
+			PortalUtil.getUploadServletRequest(
+				request, fileSizeThreshold, location, maxRequestSize,
+				maxFileSize);
 
 		try {
 			processFilter(

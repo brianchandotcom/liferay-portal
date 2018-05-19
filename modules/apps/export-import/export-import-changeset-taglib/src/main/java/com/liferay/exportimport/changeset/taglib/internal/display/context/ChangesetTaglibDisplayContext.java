@@ -14,7 +14,12 @@
 
 package com.liferay.exportimport.changeset.taglib.internal.display.context;
 
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
  * @author Mate Thurzo
@@ -45,6 +50,40 @@ public class ChangesetTaglibDisplayContext {
 			}
 
 			return false;
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
+	public static boolean isShowPublishMenuItem(
+		Group group, String portletId, String className, String uuid) {
+
+		try {
+			StagedModelDataHandler stagedModelDataHandler =
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					className);
+
+			StagedModel stagedModel =
+				stagedModelDataHandler.fetchStagedModelByUuidAndGroupId(
+					uuid, group.getGroupId());
+
+			if (stagedModel == null) {
+				return false;
+			}
+
+			if (stagedModel instanceof WorkflowedModel) {
+				WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
+
+				if (!ArrayUtil.contains(
+						stagedModelDataHandler.getExportableStatuses(),
+						workflowedModel.getStatus())) {
+
+					return false;
+				}
+			}
+
+			return isShowPublishMenuItem(group, portletId);
 		}
 		catch (Exception e) {
 			return false;

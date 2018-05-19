@@ -140,18 +140,18 @@ public class AssetDisplayPageEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByAssetEntryId() throws Exception {
+		_persistence.countByAssetEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countByAssetEntryId(0L);
+	}
+
+	@Test
 	public void testCountByLayoutPageTemplateEntryId()
 		throws Exception {
 		_persistence.countByLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
 		_persistence.countByLayoutPageTemplateEntryId(0L);
-	}
-
-	@Test
-	public void testCountByAssetEntryId() throws Exception {
-		_persistence.countByAssetEntryId(RandomTestUtil.nextLong());
-
-		_persistence.countByAssetEntryId(0L);
 	}
 
 	@Test

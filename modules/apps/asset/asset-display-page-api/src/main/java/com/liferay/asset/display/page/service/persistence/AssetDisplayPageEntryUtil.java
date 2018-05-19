@@ -115,6 +115,62 @@ public class AssetDisplayPageEntryUtil {
 	}
 
 	/**
+	* Returns the asset display page entry where assetEntryId = &#63; or throws a {@link NoSuchDisplayPageEntryException} if it could not be found.
+	*
+	* @param assetEntryId the asset entry ID
+	* @return the matching asset display page entry
+	* @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
+	*/
+	public static AssetDisplayPageEntry findByAssetEntryId(long assetEntryId)
+		throws com.liferay.asset.display.page.exception.NoSuchDisplayPageEntryException {
+		return getPersistence().findByAssetEntryId(assetEntryId);
+	}
+
+	/**
+	* Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param assetEntryId the asset entry ID
+	* @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
+	*/
+	public static AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId) {
+		return getPersistence().fetchByAssetEntryId(assetEntryId);
+	}
+
+	/**
+	* Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param assetEntryId the asset entry ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
+	*/
+	public static AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByAssetEntryId(assetEntryId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the asset display page entry where assetEntryId = &#63; from the database.
+	*
+	* @param assetEntryId the asset entry ID
+	* @return the asset display page entry that was removed
+	*/
+	public static AssetDisplayPageEntry removeByAssetEntryId(long assetEntryId)
+		throws com.liferay.asset.display.page.exception.NoSuchDisplayPageEntryException {
+		return getPersistence().removeByAssetEntryId(assetEntryId);
+	}
+
+	/**
+	* Returns the number of asset display page entries where assetEntryId = &#63;.
+	*
+	* @param assetEntryId the asset entry ID
+	* @return the number of matching asset display page entries
+	*/
+	public static int countByAssetEntryId(long assetEntryId) {
+		return getPersistence().countByAssetEntryId(assetEntryId);
+	}
+
+	/**
 	* Returns all the asset display page entries where layoutPageTemplateEntryId = &#63;.
 	*
 	* @param layoutPageTemplateEntryId the layout page template entry ID
@@ -292,62 +348,6 @@ public class AssetDisplayPageEntryUtil {
 		long layoutPageTemplateEntryId) {
 		return getPersistence()
 				   .countByLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
-	}
-
-	/**
-	* Returns the asset display page entry where assetEntryId = &#63; or throws a {@link NoSuchDisplayPageEntryException} if it could not be found.
-	*
-	* @param assetEntryId the asset entry ID
-	* @return the matching asset display page entry
-	* @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	*/
-	public static AssetDisplayPageEntry findByAssetEntryId(long assetEntryId)
-		throws com.liferay.asset.display.page.exception.NoSuchDisplayPageEntryException {
-		return getPersistence().findByAssetEntryId(assetEntryId);
-	}
-
-	/**
-	* Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param assetEntryId the asset entry ID
-	* @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	*/
-	public static AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId) {
-		return getPersistence().fetchByAssetEntryId(assetEntryId);
-	}
-
-	/**
-	* Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param assetEntryId the asset entry ID
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	*/
-	public static AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByAssetEntryId(assetEntryId, retrieveFromCache);
-	}
-
-	/**
-	* Removes the asset display page entry where assetEntryId = &#63; from the database.
-	*
-	* @param assetEntryId the asset entry ID
-	* @return the asset display page entry that was removed
-	*/
-	public static AssetDisplayPageEntry removeByAssetEntryId(long assetEntryId)
-		throws com.liferay.asset.display.page.exception.NoSuchDisplayPageEntryException {
-		return getPersistence().removeByAssetEntryId(assetEntryId);
-	}
-
-	/**
-	* Returns the number of asset display page entries where assetEntryId = &#63;.
-	*
-	* @param assetEntryId the asset entry ID
-	* @return the number of matching asset display page entries
-	*/
-	public static int countByAssetEntryId(long assetEntryId) {
-		return getPersistence().countByAssetEntryId(assetEntryId);
 	}
 
 	/**

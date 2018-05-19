@@ -85,6 +85,210 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_FETCH_BY_ASSETENTRYID = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
+			AssetDisplayPageEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByAssetEntryId", new String[] { Long.class.getName() },
+			AssetDisplayPageEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETENTRYID = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the asset display page entry where assetEntryId = &#63; or throws a {@link NoSuchDisplayPageEntryException} if it could not be found.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @return the matching asset display page entry
+	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
+	 */
+	@Override
+	public AssetDisplayPageEntry findByAssetEntryId(long assetEntryId)
+		throws NoSuchDisplayPageEntryException {
+		AssetDisplayPageEntry assetDisplayPageEntry = fetchByAssetEntryId(assetEntryId);
+
+		if (assetDisplayPageEntry == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("assetEntryId=");
+			msg.append(assetEntryId);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchDisplayPageEntryException(msg.toString());
+		}
+
+		return assetDisplayPageEntry;
+	}
+
+	/**
+	 * Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
+	 */
+	@Override
+	public AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId) {
+		return fetchByAssetEntryId(assetEntryId, true);
+	}
+
+	/**
+	 * Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
+	 */
+	@Override
+	public AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { assetEntryId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+					finderArgs, this);
+		}
+
+		if (result instanceof AssetDisplayPageEntry) {
+			AssetDisplayPageEntry assetDisplayPageEntry = (AssetDisplayPageEntry)result;
+
+			if ((assetEntryId != assetDisplayPageEntry.getAssetEntryId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetEntryId);
+
+				List<AssetDisplayPageEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+						finderArgs, list);
+				}
+				else {
+					AssetDisplayPageEntry assetDisplayPageEntry = list.get(0);
+
+					result = assetDisplayPageEntry;
+
+					cacheResult(assetDisplayPageEntry);
+
+					if ((assetDisplayPageEntry.getAssetEntryId() != assetEntryId)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+							finderArgs, assetDisplayPageEntry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (AssetDisplayPageEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the asset display page entry where assetEntryId = &#63; from the database.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @return the asset display page entry that was removed
+	 */
+	@Override
+	public AssetDisplayPageEntry removeByAssetEntryId(long assetEntryId)
+		throws NoSuchDisplayPageEntryException {
+		AssetDisplayPageEntry assetDisplayPageEntry = findByAssetEntryId(assetEntryId);
+
+		return remove(assetDisplayPageEntry);
+	}
+
+	/**
+	 * Returns the number of asset display page entries where assetEntryId = &#63;.
+	 *
+	 * @param assetEntryId the asset entry ID
+	 * @return the number of matching asset display page entries
+	 */
+	@Override
+	public int countByAssetEntryId(long assetEntryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ASSETENTRYID;
+
+		Object[] finderArgs = new Object[] { assetEntryId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetEntryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2 = "assetDisplayPageEntry.assetEntryId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_LAYOUTPAGETEMPLATEENTRYID =
 		new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
@@ -618,210 +822,6 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 
 	private static final String _FINDER_COLUMN_LAYOUTPAGETEMPLATEENTRYID_LAYOUTPAGETEMPLATEENTRYID_2 =
 		"assetDisplayPageEntry.layoutPageTemplateEntryId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_ASSETENTRYID = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED,
-			AssetDisplayPageEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByAssetEntryId", new String[] { Long.class.getName() },
-			AssetDisplayPageEntryModelImpl.ASSETENTRYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETENTRYID = new FinderPath(AssetDisplayPageEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetDisplayPageEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
-			new String[] { Long.class.getName() });
-
-	/**
-	 * Returns the asset display page entry where assetEntryId = &#63; or throws a {@link NoSuchDisplayPageEntryException} if it could not be found.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @return the matching asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByAssetEntryId(long assetEntryId)
-		throws NoSuchDisplayPageEntryException {
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByAssetEntryId(assetEntryId);
-
-		if (assetDisplayPageEntry == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("assetEntryId=");
-			msg.append(assetEntryId);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchDisplayPageEntryException(msg.toString());
-		}
-
-		return assetDisplayPageEntry;
-	}
-
-	/**
-	 * Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId) {
-		return fetchByAssetEntryId(assetEntryId, true);
-	}
-
-	/**
-	 * Returns the asset display page entry where assetEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry fetchByAssetEntryId(long assetEntryId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { assetEntryId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
-					finderArgs, this);
-		}
-
-		if (result instanceof AssetDisplayPageEntry) {
-			AssetDisplayPageEntry assetDisplayPageEntry = (AssetDisplayPageEntry)result;
-
-			if ((assetEntryId != assetDisplayPageEntry.getAssetEntryId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(assetEntryId);
-
-				List<AssetDisplayPageEntry> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
-						finderArgs, list);
-				}
-				else {
-					AssetDisplayPageEntry assetDisplayPageEntry = list.get(0);
-
-					result = assetDisplayPageEntry;
-
-					cacheResult(assetDisplayPageEntry);
-
-					if ((assetDisplayPageEntry.getAssetEntryId() != assetEntryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
-							finderArgs, assetDisplayPageEntry);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (AssetDisplayPageEntry)result;
-		}
-	}
-
-	/**
-	 * Removes the asset display page entry where assetEntryId = &#63; from the database.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @return the asset display page entry that was removed
-	 */
-	@Override
-	public AssetDisplayPageEntry removeByAssetEntryId(long assetEntryId)
-		throws NoSuchDisplayPageEntryException {
-		AssetDisplayPageEntry assetDisplayPageEntry = findByAssetEntryId(assetEntryId);
-
-		return remove(assetDisplayPageEntry);
-	}
-
-	/**
-	 * Returns the number of asset display page entries where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @return the number of matching asset display page entries
-	 */
-	@Override
-	public int countByAssetEntryId(long assetEntryId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ASSETENTRYID;
-
-		Object[] finderArgs = new Object[] { assetEntryId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(assetEntryId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2 = "assetDisplayPageEntry.assetEntryId = ?";
 
 	public AssetDisplayPageEntryPersistenceImpl() {
 		setModelClass(AssetDisplayPageEntry.class);

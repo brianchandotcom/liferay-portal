@@ -149,10 +149,10 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 	</aui:form>
 </div>
 
-<aui:script sandbox="<%= true %>">
+<aui:script>
 	var deleteEntries = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
-			var form = document.querySelector('#<portlet:namespace />fm');
+			var form = document.getElementById('<portlet:namespace />fm');
 
 			if (form) {
 				form.setAttribute('method', 'post');
@@ -160,7 +160,7 @@ AnnouncementsAdminViewManagementToolbarDisplayContext announcementsAdminViewMana
 				var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 				if (cmd) {
-					cmd.value = '<%= Constants.DELETE %>';
+					cmd.setAttribute('value', '<%= Constants.DELETE %>');
 				}
 
 				submitForm(form, '<portlet:actionURL name="/announcements/edit_entry" />');

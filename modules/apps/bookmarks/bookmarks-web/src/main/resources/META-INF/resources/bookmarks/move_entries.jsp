@@ -272,20 +272,20 @@ if (portletTitleBasedNavigation) {
 
 <aui:script>
 	function <portlet:namespace />saveEntry() {
-		var form = document.querySelector('#<portlet:namespace />fm');
+		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
 			submitForm(form);
 		}
 	}
 
-	var <portlet:namespace />selectFolderButton = document.querySelector('#<portlet:namespace />selectFolderButton');
+	var <portlet:namespace />selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
 
 	if (<portlet:namespace />selectFolderButton) {
 		<portlet:namespace />selectFolderButton.addEventListener(
 			'click',
 			function(event) {
-				var folderName = document.querySelector('#<portlet:namespace />folderName');
+				var folderName = document.getElementById('<portlet:namespace />folderName');
 
 				if (folderName) {
 					Liferay.Util.selectEntity(

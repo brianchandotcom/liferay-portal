@@ -118,7 +118,7 @@ if (portletTitleBasedNavigation) {
 						<aui:button name="selectFolderButton" value="select" />
 
 						<aui:script>
-							var <portlet:namespace />selectFolderButton = document.querySelector('#<portlet:namespace />selectFolderButton');
+							var <portlet:namespace />selectFolderButton = document.getElementById('<portlet:namespace />selectFolderButton');
 
 							if (<portlet:namespace />selectFolderButton) {
 								<portlet:namespace />selectFolderButton.addEventListener(
@@ -197,13 +197,13 @@ if (portletTitleBasedNavigation) {
 
 <aui:script>
 	function <portlet:namespace />saveFolder() {
-		var form = document.querySelector('#<portlet:namespace />fm');
+		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
 			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
 			if (cmd) {
-				cmd.value = '<%= (folder == null) ? Constants.ADD : Constants.UPDATE %>';
+				cmd.setAttribute('value', '<%= (folder == null) ? Constants.ADD : Constants.UPDATE %>');
 
 				submitForm(form);
 			}

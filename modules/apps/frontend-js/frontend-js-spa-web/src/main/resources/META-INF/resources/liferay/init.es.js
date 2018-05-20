@@ -2,11 +2,11 @@
 
 import ActionURLScreen from './screen/ActionURLScreen.es';
 import App from './app/App.es';
-import async from 'metal/src/async/async';
-import globals from 'senna/src/globals/globals';
+import async from 'metal/lib/async/async';
+import globals from 'senna/lib/globals/globals';
 import RenderURLScreen from './screen/RenderURLScreen.es';
-import Uri from 'metal-uri/src/Uri';
-import utils from 'senna/src/utils/utils';
+import Uri from 'metal-uri/lib/Uri';
+import utils from 'senna/lib/utils/utils';
 import {match} from 'metal-dom';
 
 /**

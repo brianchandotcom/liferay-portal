@@ -88,7 +88,9 @@ public class JavadocCheck extends BaseCheck {
 	}
 
 	private boolean _containsCopyright(TextBlock javadoc) {
-		if (javadoc.getStartLineNo() != 1) {
+		if ((javadoc.getStartLineNo() != 1) &&
+			(javadoc.getStartLineNo() != 2)) {
+
 			return false;
 		}
 

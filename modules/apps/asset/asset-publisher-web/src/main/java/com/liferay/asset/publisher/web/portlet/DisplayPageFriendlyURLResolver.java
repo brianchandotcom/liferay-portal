@@ -97,11 +97,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			return _getDisplayPageURL(assetEntry, mainPath, requestContext);
 		}
 
-		String layoutActualURL = _getBasicLayoutURL(
+		return _getBasicLayoutURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
 			requestContext, urlTitle, journalArticle);
-
-		return layoutActualURL;
 	}
 
 	@Override
@@ -202,13 +200,6 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		}
 
 		return _createAssetDisplayLayout(groupId);
-	}
-
-	private AssetDisplayPageEntry _getAssetDisplayPageEntry(
-		AssetEntry assetEntry) {
-
-		return _assetDisplayPageEntryLocalService.
-			fetchAssetDisplayPageEntryByAssetEntryId(assetEntry.getEntryId());
 	}
 
 	private Layout _getAssetDisplayPageEntryLayout(AssetEntry assetEntry)
@@ -373,22 +364,21 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	}
 
 	private boolean _isShowDisplayPageEntry(AssetEntry assetEntry) {
-		AssetDisplayPageEntry assetDisplayPageEntry = _getAssetDisplayPageEntry(
-			assetEntry);
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			_assetDisplayPageEntryLocalService.
+				fetchAssetDisplayPageEntryByAssetEntryId(
+					assetEntry.getEntryId());
 
-		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry = null;
-
-		if (assetDisplayPageEntry == null) {
-			defaultLayoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.
-					fetchDefaultLayoutPageTemplateEntry(
-						assetEntry.getGroupId(), assetEntry.getClassNameId(),
-						assetEntry.getClassTypeId());
+		if (assetDisplayPageEntry != null) {
+			return true;
 		}
 
-		if ((assetDisplayPageEntry != null) ||
-			(defaultLayoutPageTemplateEntry != null)) {
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.fetchDefaultLayoutPageTemplateEntry(
+				assetEntry.getGroupId(), assetEntry.getClassNameId(),
+				assetEntry.getClassTypeId());
 
+		if (defaultLayoutPageTemplateEntry != null) {
 			return true;
 		}
 

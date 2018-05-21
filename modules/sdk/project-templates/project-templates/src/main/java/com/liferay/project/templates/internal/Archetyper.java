@@ -82,15 +82,6 @@ public class Archetyper {
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
 		throws Exception {
 
-		return generateProject(
-			projectTemplatesArgs, destinationDir, new Properties());
-	}
-
-	public ArchetypeGenerationResult generateProject(
-			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
-			Properties properties)
-		throws Exception {
-
 		List<File> archetypesDirs = projectTemplatesArgs.getArchetypesDirs();
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
@@ -149,6 +140,8 @@ public class Archetyper {
 		if (projectTemplatesArgs.isMaven()) {
 			buildType = "maven";
 		}
+
+		Properties properties = new Properties();
 
 		_setProperty(properties, "author", author);
 		_setProperty(properties, "buildType", buildType);

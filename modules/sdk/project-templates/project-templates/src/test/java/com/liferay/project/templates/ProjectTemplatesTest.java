@@ -2358,7 +2358,6 @@ public class ProjectTemplatesTest {
 		String packageName = name.replace('-', '.');
 		String service = null;
 		String version = "7.0";
-		Properties properties = new Properties();
 
 		for (String arg : args) {
 			int pos = arg.indexOf('=');
@@ -2396,9 +2395,6 @@ public class ProjectTemplatesTest {
 			}
 			else if (key.equals("liferayVersion")) {
 				version = value;
-			}
-			else {
-				properties.put(key, value);
 			}
 		}
 
@@ -2447,7 +2443,7 @@ public class ProjectTemplatesTest {
 		Archetyper archetyper = new Archetyper();
 
 		archetyper.generateProject(
-			projectTemplatesArgs, archetyperDestinationDir, properties);
+			projectTemplatesArgs, archetyperDestinationDir);
 
 		File archetyperProjectDir = new File(archetyperDestinationDir, name);
 

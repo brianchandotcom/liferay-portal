@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
+import dom from 'metal-dom';
 import {object} from 'metal';
 import Soy from 'metal-soy';
 
@@ -16,6 +17,26 @@ class FragmentEditableField extends Component {
 
 	created() {
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
+
+		this._handleDocumentClick = this._handleDocumentClick.bind(this);
+
+		this._documentClickHandler = dom.on(
+			document.body,
+			'click',
+			this._handleDocumentClick
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	disposed() {
+		if (this._documentClickHandler) {
+			this._documentClickHandler.removeListener();
+			this._documentClickHandler = null;
+		}
 	}
 
 	/**
@@ -98,6 +119,17 @@ class FragmentEditableField extends Component {
 				this.fragmentEntryLinkId,
 				this._handleEditableChanged
 			);
+		}
+	}
+
+	/**
+	 * Hide tooltip on document click when it is outside the tooltip
+	 * @param {MouseEvent} event
+	 */
+
+	_handleDocumentClick(event) {
+		if (this.refs.tooltip && !this.refs.tooltip.contains(event.target)) {
+			this._showTooltip = false;
 		}
 	}
 

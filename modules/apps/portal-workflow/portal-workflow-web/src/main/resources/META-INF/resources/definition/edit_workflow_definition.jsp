@@ -324,6 +324,10 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	var content = xmlFormatter.format('<%= HtmlUtil.escapeJS(content) %>');
 
+	if (content) {
+		content = content.trim();
+	}
+
 	contentEditor.set(STR_VALUE, content);
 
 	var uploadFile = $('#<portlet:namespace />upload');

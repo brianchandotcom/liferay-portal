@@ -19,6 +19,8 @@
 <%
 UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportProcessDisplayContext(request, renderResponse);
 
+UADExportProcessManagementToolbarDisplayContext uadExportProcessManagementToolbarDisplayContext = new UADExportProcessManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse);
+
 portletDisplay.setShowBackIcon(true);
 
 LiferayPortletURL usersAdminURL = liferayPortletResponse.createLiferayPortletURL(UsersAdminPortletKeys.USERS_ADMIN, PortletRequest.RENDER_PHASE);
@@ -45,14 +47,13 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 />
 
 <clay:management-toolbar
-	creationMenu="<%= uadExportProcessDisplayContext.getCreationMenu() %>"
-	filterDropdownItems="<%= uadExportProcessDisplayContext.getDropdownItems() %>"
-	namespace="<%= renderResponse.getNamespace() %>"
-	selectable="<%= false %>"
-	showCreationMenu="<%= true %>"
-	showSearch="<%= false %>"
-	sortingOrder="<%= uadExportProcessDisplayContext.getOrderByType() %>"
-	sortingURL="<%= uadExportProcessDisplayContext.getSortingURL() %>"
+	creationMenu="<%= uadExportProcessManagementToolbarDisplayContext.getCreationMenu() %>"
+	filterDropdownItems="<%= uadExportProcessManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	selectable="<%= uadExportProcessManagementToolbarDisplayContext.getSelectable() %>"
+	showCreationMenu="<%= uadExportProcessManagementToolbarDisplayContext.getShowCreationMenu() %>"
+	showSearch="<%= uadExportProcessManagementToolbarDisplayContext.getShowSearch() %>"
+	sortingOrder="<%= uadExportProcessManagementToolbarDisplayContext.getSortingOrder() %>"
+	sortingURL="<%= uadExportProcessManagementToolbarDisplayContext.getSortingURL() %>"
 />
 
 <aui:form cssClass="container-fluid-1280">

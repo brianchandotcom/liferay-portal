@@ -1102,14 +1102,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke(ReinvokeRule reinvokeRule) {
-		String hostName = JenkinsResultsParserUtil.getHostName("");
-
 		Build parentBuild = getParentBuild();
 
 		String parentBuildStatus = parentBuild.getStatus();
 
 		if (!parentBuildStatus.equals("running") ||
-			!hostName.startsWith("cloud-10-0")) {
+			!JenkinsResultsParserUtil.isCINode()) {
 
 			return;
 		}

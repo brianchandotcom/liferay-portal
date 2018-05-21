@@ -46,15 +46,11 @@ ViewUsersManagementToolbarDisplayContext
 
 SearchContainer searchContainer = viewUsersManagementToolbarDisplayContext.getSearchContainer();
 
-UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
-
 if (navigation.equals("active")) {
 	status = WorkflowConstants.STATUS_APPROVED;
-	searchTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
 }
 else if (navigation.equals("inactive")) {
 	status = WorkflowConstants.STATUS_INACTIVE;
-	searchTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
 }
 
 request.setAttribute(UsersAdminWebKeys.STATUS, status);
@@ -104,163 +100,6 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 		<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= currentURLObj.toString() %>" />
 		<aui:input name="deleteUserIds" type="hidden" />
 		<aui:input name="status" type="hidden" value="<%= status %>" />
-
-		<%
-		if ((searchTerms.getOrganizationId() > 0) && !OrganizationPermissionUtil.contains(permissionChecker, searchTerms.getOrganizationId(), ActionKeys.MANAGE_USERS)) {
-			status = WorkflowConstants.STATUS_APPROVED;
-		}
-
-		UserDisplayTerms displayTerms = (UserDisplayTerms)userSearchContainer.getDisplayTerms();
-
-		if (!searchTerms.isAdvancedSearch()) {
-			if (status == WorkflowConstants.STATUS_APPROVED) {
-				displayTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
-				searchTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
-			}
-			else {
-				displayTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
-				searchTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
-			}
-		}
-
-		long userOrganizationId = searchTerms.getOrganizationId();
-		long roleId = searchTerms.getRoleId();
-		long userGroupId = searchTerms.getUserGroupId();
-
-		Organization userOrganization = null;
-
-		if (userOrganizationId > 0) {
-			try {
-				userOrganization = OrganizationLocalServiceUtil.getOrganization(userOrganizationId);
-
-				userSearchContainer.setEmptyResultsMessage("this-organization-does-not-have-any-users");
-			}
-			catch (NoSuchOrganizationException nsoe) {
-			}
-		}
-
-		Role role = null;
-
-		if (roleId > 0) {
-			try {
-				role = RoleLocalServiceUtil.getRole(roleId);
-			}
-			catch (NoSuchRoleException nsre) {
-			}
-		}
-
-		UserGroup userGroup = null;
-
-		if (userGroupId > 0) {
-			try {
-				userGroup = UserGroupLocalServiceUtil.getUserGroup(userGroupId);
-			}
-			catch (NoSuchUserGroupException nsuge) {
-			}
-		}
-
-		if (role != null) {
-			PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), null);
-			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-users"), currentURL);
-		}
-
-		if (userGroup != null) {
-			PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
-			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-users"), currentURL);
-		}
-		%>
-
-		<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) && (role == null) && (userGroup == null) %>">
-
-			<%
-			if (userOrganization != null) {
-				UsersAdminUtil.addPortletBreadcrumbEntries(userOrganization, request, renderResponse);
-
-				PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "all-users"), currentURL);
-			}
-			%>
-
-			<c:if test="<%= layout.isTypeControlPanel() %>">
-				<div id="breadcrumb">
-					<liferay-ui:breadcrumb
-						showCurrentGroup="<%= false %>"
-						showGuestGroup="<%= false %>"
-						showLayout="<%= false %>"
-						showPortletBreadcrumb="<%= true %>"
-					/>
-				</div>
-			</c:if>
-		</c:if>
-
-		<c:if test="<%= userOrganization != null %>">
-			<aui:input name="<%= UserDisplayTerms.ORGANIZATION_ID %>" type="hidden" value="<%= userOrganization.getOrganizationId() %>" />
-
-			<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
-
-				<%
-				portletDisplay.setShowBackIcon(true);
-				portletDisplay.setURLBack(backURL);
-
-				renderResponse.setTitle(userOrganization.getName());
-				%>
-
-			</c:if>
-		</c:if>
-
-		<c:if test="<%= role != null %>">
-			<aui:input name="<%= UserDisplayTerms.ROLE_ID %>" type="hidden" value="<%= role.getRoleId() %>" />
-
-			<%
-			portletDisplay.setShowBackIcon(true);
-			portletDisplay.setURLBack(backURL);
-
-			renderResponse.setTitle(role.getTitle(locale));
-			%>
-
-		</c:if>
-
-		<c:if test="<%= userGroup != null %>">
-			<aui:input name="<%= UserDisplayTerms.USER_GROUP_ID %>" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
-
-			<%
-			portletDisplay.setShowBackIcon(true);
-			portletDisplay.setURLBack(backURL);
-
-			renderResponse.setTitle(userGroup.getName());
-			%>
-
-		</c:if>
-
-		<%
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-		if (userOrganizationId > 0) {
-			userParams.put("usersOrgs", Long.valueOf(userOrganizationId));
-		}
-		else if (usersListView.equals(UserConstants.LIST_VIEW_TREE) && Validator.isNull(searchTerms.getKeywords())) {
-			userParams.put("noOrganizations", Boolean.TRUE);
-			userParams.put("usersOrgsCount", 0);
-		}
-		else {
-			if (filterManageableOrganizations && !UserPermissionUtil.contains(permissionChecker, ResourceConstants.PRIMKEY_DNE, ActionKeys.VIEW)) {
-				long[] organizationIds = user.getOrganizationIds();
-
-				if (ArrayUtil.isEmpty(organizationIds)) {
-					organizationIds = new long[] {0};
-				}
-
-				userParams.put("usersOrgs", ArrayUtil.toLongArray(organizationIds));
-			}
-		}
-
-		if (roleId > 0) {
-			userParams.put("usersRoles", Long.valueOf(roleId));
-		}
-
-		if (userGroupId > 0) {
-			userParams.put("usersUserGroups", Long.valueOf(userGroupId));
-		}
-		%>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"

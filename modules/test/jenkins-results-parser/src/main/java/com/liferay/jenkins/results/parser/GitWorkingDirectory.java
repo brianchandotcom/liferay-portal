@@ -425,46 +425,48 @@ public class GitWorkingDirectory {
 
 		String remoteURL = remote.getRemoteURL();
 
-		if (remoteURL.contains("github-dev.liferay.com")) {
-			executeBashCommands(
-				_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT,
-				"rm -f ~/.ssh/known_hosts");
-		}
+		if (JenkinsResultsParserUtil.isCINode()) {
+			if (remoteURL.contains("github-dev.liferay.com")) {
+				executeBashCommands(
+					_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT,
+					"rm -f ~/.ssh/known_hosts");
+			}
 
-		if (remoteURL.contains("github.com:liferay/")) {
-			remoteURL = remoteURL.replace(
-				"github.com:liferay/", "github-dev.liferay.com:liferay/");
+			if (remoteURL.contains("github.com:liferay/")) {
+				remoteURL = remoteURL.replace(
+					"github.com:liferay/", "github-dev.liferay.com:liferay/");
 
-			Remote gitHubDevRemote = null;
+				Remote gitHubDevRemote = null;
 
-			try {
-				gitHubDevRemote = addRemote(
-					true, "github-dev-remote", remoteURL);
+				try {
+					gitHubDevRemote = addRemote(
+						true, "github-dev-remote", remoteURL);
 
-				Branch localGitRemoteBranch = getBranch(
-					remoteBranch.getName(), gitHubDevRemote);
+					Branch localGitRemoteBranch = getBranch(
+						remoteBranch.getName(), gitHubDevRemote);
 
-				if (localGitRemoteBranch != null) {
-					fetch(localBranch, noTags, localGitRemoteBranch);
+					if (localGitRemoteBranch != null) {
+						fetch(localBranch, noTags, localGitRemoteBranch);
 
-					String upstreamBranchSHA = remoteBranch.getSHA();
+						String upstreamBranchSHA = remoteBranch.getSHA();
 
-					if (localSHAExists(upstreamBranchSHA)) {
-						if (!upstreamBranchSHA.equals(
-								localGitRemoteBranch.getSHA())) {
+						if (localSHAExists(upstreamBranchSHA)) {
+							if (!upstreamBranchSHA.equals(
+									localGitRemoteBranch.getSHA())) {
 
-							createLocalBranch(
-								localBranch.getName(), true,
-								remoteBranch.getSHA());
+								createLocalBranch(
+									localBranch.getName(), true,
+									remoteBranch.getSHA());
+							}
+
+							return;
 						}
-
-						return;
 					}
 				}
-			}
-			finally {
-				if (gitHubDevRemote != null) {
-					removeRemote(gitHubDevRemote);
+				finally {
+					if (gitHubDevRemote != null) {
+						removeRemote(gitHubDevRemote);
+					}
 				}
 			}
 		}

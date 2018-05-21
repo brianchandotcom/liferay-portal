@@ -117,6 +117,11 @@ public class PullRequest {
 		return headJSONObject.getString("ref");
 	}
 
+	public String getSenderRemoteURL() {
+		return JenkinsResultsParserUtil.combine(
+			"git@github.com:", getSenderUsername(), "/", getRepositoryName());
+	}
+
 	public String getSenderSHA() {
 		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
 

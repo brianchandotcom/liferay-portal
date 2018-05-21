@@ -281,6 +281,10 @@
 	<target if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
 
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar">
+			<equals arg1="${lp.version}" arg2="7.0.0" />
+		</condition>
+
 		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${lpkg.title.prefix}${liferay.releng.app.title} - SPI/${Bundle-SymbolicName}-${Bundle-Version}.jar">
 			<matches pattern=".*\.spi" string="${Bundle-SymbolicName}" />
 		</condition>
@@ -366,6 +370,10 @@
 			</filterchain>
 		</loadfile>
 
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${artifact.name}-${artifact.version}.war">
+			<equals arg1="${lp.version}" arg2="7.0.0" />
+		</condition>
+
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${artifact.version}.war" />
 
 		<condition property="artifact.location.src" value="${osgi.dir}/war/${artifact.name}.war">
@@ -381,6 +389,10 @@
 		<property file="${ant.file}/../../release.properties" />
 
 		<property file="docroot/WEB-INF/liferay-plugin-package.properties" />
+
+		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${artifact.name}-${lp.version}.${module-incremental-version}.war">
+			<equals arg1="${lp.version}" arg2="7.0.0" />
+		</condition>
 
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
 		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${lp.version}.${module-incremental-version}.war" />

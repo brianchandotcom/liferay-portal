@@ -180,6 +180,14 @@
 	</target>
 
 	<target name="check-current-branch">
+		<loadproperties srcFile="${modules.dir}/../release.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="lp.version=" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+
 		<condition property="current.branch.private">
 			<or>
 				<istrue value="${ee.override}" />
@@ -306,6 +314,7 @@
 				includes="${app.module.dirs}"
 			/>
 			<property name="liferay.releng.app.title" value="${Liferay-Releng-App-Title}" />
+			<property name="lp.version" value="${lp.version}" />
 			<property name="lpkg.title.prefix" value="${lpkg.title.prefix}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 			<property name="osgi.static.modules" value="${osgi.static.modules}" />

@@ -310,7 +310,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								/>
 							</div>
 
-							<aui:script use="aui-base, liferay-map-base">
+							<aui:script use="liferay-map-base">
 								var inputName = "<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + name + "--" %>";
 
 								var geolocationField = {
@@ -322,24 +322,28 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 											}
 										);
 									},
-
 									onPositionChange: function(event) {
 										var location = event.newVal.location;
 
-										var inputNode = A.one('[name="' + inputName + '"]');
+										var inputNode = document.querySelector('[name="' + inputName + '"]');
 
-										inputNode.val(
-											JSON.stringify(
-												{
-													latitude: location.lat,
-													longitude: location.lng
-												}
-											)
-										);
+										if (inputNode) {
+											inputNode.setAttribute(
+												'value',
+												JSON.stringify(
+													{
+														latitude: location.lat,
+														longitude: location.lng
+													}
+												)
+											);
+										}
 
-										var locationNode = A.one('#' + inputName + 'Location');
+										var locationNode = document.getElementById(inputName + 'Location');
 
-										locationNode.html(event.newVal.address);
+										if (locationNode) {
+											locationNode.innerHTML = event.newVal.address;
+										}
 									}
 								};
 

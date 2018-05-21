@@ -79,7 +79,7 @@ public class LayoutPrototypeModelListener
 				_log.debug(pe, pe);
 			}
 
-			throw new ModelListenerException();
+			throw new ModelListenerException(pe);
 		}
 	}
 
@@ -100,8 +100,6 @@ public class LayoutPrototypeModelListener
 			if (_log.isDebugEnabled()) {
 				_log.debug(pe, pe);
 			}
-
-			throw new ModelListenerException();
 		}
 	}
 

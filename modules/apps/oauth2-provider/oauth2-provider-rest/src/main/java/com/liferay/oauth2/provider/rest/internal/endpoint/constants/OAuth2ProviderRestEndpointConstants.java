@@ -40,10 +40,4 @@ public class OAuth2ProviderRestEndpointConstants {
 
 	public static final String PROPERTY_KEY_COMPANY_ID = "company.id";
 
-	public static final String PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_PROVIDER =
-		"oauth2.endpoint.jaxrs.provider";
-
-	public static final String PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE =
-		"oauth2.endpoint.jaxrs.resource";
-
 }

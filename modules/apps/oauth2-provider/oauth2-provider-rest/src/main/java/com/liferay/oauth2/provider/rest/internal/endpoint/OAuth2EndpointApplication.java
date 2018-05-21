@@ -14,68 +14,31 @@
 
 package com.liferay.oauth2.provider.rest.internal.endpoint;
 
-import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
-
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import org.apache.cxf.rs.security.oauth2.provider.OAuthJSONProvider;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@ApplicationPath("/")
-@Component(immediate = true, service = Application.class)
+@Component(
+	immediate = true,
+	property = {
+		"osgi.jaxrs.application.base=/oauth2",
+		"osgi.jaxrs.name=Liferay.OAuth2.Application"
+	},
+	service = Application.class
+)
 public class OAuth2EndpointApplication extends Application {
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(" + OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true)",
-		unbind = "removeJaxrsObject"
-	)
-	public void addJaxrsProvider(Object jaxrsProvider) {
-		_jaxrsObjects.add(jaxrsProvider);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.AT_LEAST_ONE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(" + OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE + "=true)",
-		unbind = "removeJaxrsObject"
-	)
-	public void addJaxrsResource(Object jaxrsResource) {
-		_jaxrsObjects.add(jaxrsResource);
-	}
 
 	@Override
 	public Set<Class<?>> getClasses() {
 		return Collections.singleton(OAuthJSONProvider.class);
 	}
-
-	@Override
-	public Set<Object> getSingletons() {
-		return new HashSet<>(_jaxrsObjects);
-	}
-
-	public void removeJaxrsObject(Object object) {
-		_jaxrsObjects.remove(object);
-	}
-
-	private final List<Object> _jaxrsObjects = new ArrayList<>();
 
 }

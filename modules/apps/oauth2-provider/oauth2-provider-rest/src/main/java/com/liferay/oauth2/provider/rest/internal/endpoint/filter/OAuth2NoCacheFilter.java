@@ -14,8 +14,6 @@
 
 package com.liferay.oauth2.provider.rest.internal.endpoint.filter;
 
-import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
-
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
@@ -29,8 +27,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = OAuth2ProviderRestEndpointConstants.PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_PROVIDER + "=true",
-	service = Object.class
+	property = {
+		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.OAuth2.Application)",
+		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=OAuth2NoCacheFilter"
+	}
 )
 @Provider
 public class OAuth2NoCacheFilter implements ContainerResponseFilter {

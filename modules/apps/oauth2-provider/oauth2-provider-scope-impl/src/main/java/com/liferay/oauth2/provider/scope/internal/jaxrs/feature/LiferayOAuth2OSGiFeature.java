@@ -14,80 +14,88 @@
 
 package com.liferay.oauth2.provider.scope.internal.jaxrs.feature;
 
-import com.liferay.oauth2.provider.rest.spi.request.scope.checker.filter.RequestScopeCheckerFilter;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.oauth2.provider.scope.internal.jaxrs.filter.AbstractContextContainerRequestFilter;
-import com.liferay.oauth2.provider.scope.internal.jaxrs.filter.ScopeCheckerContainerRequestFilter;
 import com.liferay.oauth2.provider.scope.liferay.ScopeContext;
-import com.liferay.oauth2.provider.scope.liferay.ScopedServiceTrackerMapFactory;
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
 import com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor;
-import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
-import javax.ws.rs.HttpMethod;
+import javax.servlet.Filter;
+
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.Application;
+import javax.ws.rs.core.Configuration;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.ext.Provider;
 
-import org.apache.cxf.Bus;
-import org.apache.cxf.endpoint.Endpoint;
-import org.apache.cxf.endpoint.Server;
-import org.apache.cxf.jaxrs.JAXRSServiceFactoryBean;
-import org.apache.cxf.jaxrs.model.ApplicationInfo;
-import org.apache.cxf.service.factory.AbstractServiceFactoryBean;
-import org.apache.cxf.service.factory.FactoryBeanListener;
-import org.apache.cxf.service.factory.FactoryBeanListenerManager;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.ServiceScope;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, property = "liferay.extension=OAuth2")
+@Component(
+	property = {
+		"liferay.extension=OAuth2",
+		"osgi.jaxrs.application.select=(osgi.jaxrs.extension.select=\\(liferay.extension=OAuth2\\))",
+		"osgi.jaxrs.extension=true", "osgi.jaxrs.name=Liferay.OAuth2"
+	},
+	scope = ServiceScope.PROTOTYPE
+)
 @Provider
 public class LiferayOAuth2OSGiFeature implements Feature {
 
 	@Override
 	public boolean configure(FeatureContext featureContext) {
+		Configuration configuration = featureContext.getConfiguration();
+
+		Map<String, Object> applicationProperties =
+			(Map<String, Object>)configuration.getProperty(
+				"osgi.jaxrs.application.serviceProperties");
+
+		Class<? extends Application> applicationClass = _application.getClass();
+
+		String osgiJAXRSName = MapUtil.getString(
+			applicationProperties, "osgi.jaxrs.name",
+			applicationClass.getName());
+
 		featureContext.register(
 			new AbstractContextContainerRequestFilter() {
 
 				@Override
 				public void filter(ContainerRequestContext requestContext) {
-					_scopeContext.setApplicationName(getApplicationName());
-					_scopeContext.setBundle(getBundle());
+					_scopeContext.setApplicationName(osgiJAXRSName);
+					_scopeContext.setBundle(_bundle);
 					_scopeContext.setCompanyId(getCompanyId());
 				}
 
@@ -95,72 +103,105 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 			Priorities.AUTHORIZATION - 10);
 
 		featureContext.register(
-			new ScopeCheckerContainerRequestFilter(
-				_scopedServiceTrackerMapFactory.create(
-					_bundleContext, RequestScopeCheckerFilter.class,
-					OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
-					() -> _defaultRequestScopeChecker),
-				_scopeChecker),
-			Priorities.AUTHORIZATION - 9);
-
-		featureContext.register(
 			(ContainerResponseFilter)(a, b) -> _scopeContext.clear(),
 			Priorities.AUTHORIZATION - 9);
 
-		_initializedThreadLocal.set(Boolean.TRUE);
+		registerAuthVerifierFilter(
+			MapUtil.getString(
+				applicationProperties,
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+				StringBundler.concat(
+					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
+					"=context.for", osgiJAXRSName, ")")));
+
+		registerDescriptors(osgiJAXRSName);
 
 		return true;
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+	protected void activate(ComponentContext componentContext) {
+		_bundle = componentContext.getUsingBundle();
+
+		_bundleContext = componentContext.getBundleContext();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "restoreBus"
-	)
-	protected void modifyBus(Bus bus) {
-		FactoryBeanListenerManager factoryBeanListenerManager =
-			bus.getExtension(FactoryBeanListenerManager.class);
+	@Deactivate
+	protected void deactivate() {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
 
-		if (factoryBeanListenerManager == null) {
-			return;
+			try {
+				serviceRegistration.unregister();
+			}
+			catch (Exception e) {
+			}
 		}
 
-		factoryBeanListenerManager.addListener(_factoryBeanListener);
-	}
-
-	protected void restoreBus(Bus bus) {
-		FactoryBeanListenerManager factoryBeanListenerManager =
-			bus.getExtension(FactoryBeanListenerManager.class);
-
-		if (factoryBeanListenerManager == null) {
-			return;
+		for (ServiceTracker<?, ?> serviceTracker : _serviceTrackers) {
+			serviceTracker.close();
 		}
-
-		factoryBeanListenerManager.removeListener(_factoryBeanListener);
 	}
 
-	private static final ThreadLocal<Boolean> _initializedThreadLocal =
-		ThreadLocal.withInitial(() -> Boolean.FALSE);
+	protected void registerAuthVerifierFilter(String contextSelect) {
+		Dictionary<String, Object> properties = new Hashtable<>();
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=annotation)"
-	)
-	private volatile RequestScopeCheckerFilter _annotationRequestScopeChecker;
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			contextSelect);
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX +
+				"auth.verifier.OAuth2RestAuthVerifier.urls.includes",
+			"*");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
+			AuthVerifierFilter.class.getName());
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
+			"cxf-servlet");
 
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				Filter.class, new AuthVerifierFilter(), properties));
+	}
+
+	protected void registerDescriptors(String osgiJAXRSName) {
+		String bundleSymbolicName = _bundle.getSymbolicName();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("(&(bundle.symbolic.name=");
+		sb.append(bundleSymbolicName);
+		sb.append(")(objectClass=");
+		sb.append(ResourceBundleLoader.class.getName());
+		sb.append("resource.bundle.base.name=content.Language))");
+
+		ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
+			serviceTracker = ServiceTrackerFactory.open(
+				_bundleContext, sb.toString());
+
+		_serviceTrackers.add(serviceTracker);
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME, osgiJAXRSName);
+
+		_serviceRegistrations.add(
+			_bundleContext.registerService(
+				new String[] {
+					ScopeDescriptor.class.getName(),
+					ApplicationDescriptor.class.getName()
+				},
+				new ApplicationDescriptorsImpl(serviceTracker, osgiJAXRSName),
+				properties));
+	}
+
+	@Context
+	private Application _application;
+
+	private Bundle _bundle;
 	private BundleContext _bundleContext;
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
-	)
-	private volatile RequestScopeCheckerFilter _defaultRequestScopeChecker;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
@@ -168,278 +209,61 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 	)
 	private volatile ScopeDescriptor _defaultScopeDescriptor;
 
-	private final FactoryBeanListener _factoryBeanListener =
-		new ScopeFinderFactoryBeanListener();
-
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile ScopeChecker _scopeChecker;
-
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile ScopeContext _scopeContext;
 
-	@Reference
-	private ScopedServiceTrackerMapFactory _scopedServiceTrackerMapFactory;
+	private final Collection<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
+	private final Collection<ServiceTracker<?, ?>> _serviceTrackers =
+		new ArrayList<>();
 
-	private class ScopeFinderFactoryBeanListener
-		implements FactoryBeanListener {
+	private class ApplicationDescriptorsImpl
+		implements ScopeDescriptor, ApplicationDescriptor {
+
+		public ApplicationDescriptorsImpl(
+			ServiceTracker<?, ResourceBundleLoader> serviceTracker,
+			String osgiJAXRSName) {
+
+			_serviceTracker = serviceTracker;
+			_osgiJAXRSName = osgiJAXRSName;
+		}
 
 		@Override
-		public void handleEvent(
-			Event event, AbstractServiceFactoryBean abstractServiceFactoryBean,
-			Object... args) {
+		public String describeApplication(Locale locale) {
+			ResourceBundleLoader resourceBundleLoader =
+				_serviceTracker.getService();
 
-			if ((abstractServiceFactoryBean instanceof
-					JAXRSServiceFactoryBean) &&
-				event.equals(Event.SERVER_CREATED)) {
+			String key = StringBundler.concat(
+				"oauth2.application.description.", _osgiJAXRSName);
 
-				if (!_initializedThreadLocal.get()) {
-					return;
-				}
-
-				_initializedThreadLocal.remove();
-
-				Server server = (Server)args[0];
-
-				Endpoint endpoint = server.getEndpoint();
-
-				ApplicationInfo applicationInfo = (ApplicationInfo)endpoint.get(
-					Application.class.getName());
-
-				Application application = applicationInfo.getProvider();
-
-				Class<? extends Application> applicationClass =
-					application.getClass();
-
-				Bundle bundle = FrameworkUtil.getBundle(applicationClass);
-
-				if (bundle == null) {
-					return;
-				}
-
-				BundleContext bundleContext = bundle.getBundleContext();
-
-				ServiceReference<?> serviceReference = getServiceReference(
-					bundleContext, application);
-
-				Map<String, Object> properties = new HashMap<>();
-
-				String oAuth2ScopeCheckerType = GetterUtil.getString(
-					serviceReference.getProperty("oauth2.scopechecker.type"),
-					"request.operation");
-
-				properties.put(
-					"oauth2.scopechecker.type", oAuth2ScopeCheckerType);
-
-				applicationInfo.setOverridingProps(properties);
-
-				Dictionary<String, Object> serviceProperties =
-					new HashMapDictionary<>();
-
-				for (String key : serviceReference.getPropertyKeys()) {
-					if (key.startsWith("service.")) {
-						continue;
-					}
-
-					serviceProperties.put(
-						key, serviceReference.getProperty(key));
-				}
-
-				String osgiJAXRSName = GetterUtil.getString(
-					serviceProperties.get(
-						OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME),
-					applicationClass.getName());
-
-				serviceProperties.put(
-					OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
-					osgiJAXRSName);
-
-				if (oAuth2ScopeCheckerType.equals("request.operation")) {
-					processRequestOperation(
-						bundleContext, endpoint, serviceProperties);
-				}
-
-				if (oAuth2ScopeCheckerType.equals("annotations")) {
-					processAnnotation(
-						bundleContext,
-						(JAXRSServiceFactoryBean)abstractServiceFactoryBean,
-						endpoint, serviceProperties);
-				}
-
-				registerDescriptors(endpoint, bundle, osgiJAXRSName);
-			}
+			return GetterUtil.getString(
+				ResourceBundleUtil.getString(
+					resourceBundleLoader.loadResourceBundle(locale), key),
+				key);
 		}
 
-		protected ServiceReference<?> getServiceReference(
-			BundleContext bundleContext, Application application) {
+		@Override
+		public String describeScope(String scope, Locale locale) {
+			ResourceBundleLoader resourceBundleLoader =
+				_serviceTracker.getService();
 
-			ServiceReference<?>[] serviceReferences;
-
-			try {
-				serviceReferences = bundleContext.getAllServiceReferences(
-					Application.class.getName(), null);
-			}
-			catch (InvalidSyntaxException ise) {
-				throw new RuntimeException(ise);
+			if (resourceBundleLoader == null) {
+				return _defaultScopeDescriptor.describeScope(scope, locale);
 			}
 
-			for (ServiceReference<?> serviceReference : serviceReferences) {
-				try {
-					Object service = bundleContext.getService(serviceReference);
+			String key = StringBundler.concat("oauth2.scope.", scope);
 
-					if (Objects.equals(service, application)) {
-						return serviceReference;
-					}
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
-			}
-
-			return null;
+			return GetterUtil.getString(
+				ResourceBundleUtil.getString(
+					resourceBundleLoader.loadResourceBundle(locale), key),
+				_defaultScopeDescriptor.describeScope(scope, locale));
 		}
 
-		protected void processAnnotation(
-			BundleContext bundleContext,
-			JAXRSServiceFactoryBean jaxrsServiceFactoryBean, Endpoint endpoint,
-			Dictionary<String, Object> serviceProperties) {
-
-			Collection<String> scopes = new HashSet<>();
-
-			for (Class<?> resourceClass :
-					jaxrsServiceFactoryBean.getResourceClasses()) {
-
-				scopes.addAll(
-					RequiresScopeAnnotationFinder.find(
-						resourceClass, jaxrsServiceFactoryBean.getBus()));
-			}
-
-			ServiceRegistration<ScopeFinder> scopeFinderRegistration =
-				bundleContext.registerService(
-					ScopeFinder.class, new CollectionScopeFinder(scopes),
-					serviceProperties);
-
-			ServiceRegistration<RequestScopeCheckerFilter>
-				requestScopeCheckerFilterRegistration =
-					bundleContext.registerService(
-						RequestScopeCheckerFilter.class,
-						_annotationRequestScopeChecker, serviceProperties);
-
-			endpoint.addCleanupHook(
-				() -> {
-					scopeFinderRegistration.unregister();
-					requestScopeCheckerFilterRegistration.unregister();
-				});
-		}
-
-		protected void processRequestOperation(
-			BundleContext bundleContext, Endpoint endpoint,
-			Dictionary<String, Object> serviceProperties) {
-
-			ServiceRegistration<ScopeFinder> serviceRegistration =
-				bundleContext.registerService(
-					ScopeFinder.class,
-					new CollectionScopeFinder(
-						Arrays.asList(
-							HttpMethod.DELETE, HttpMethod.GET, HttpMethod.HEAD,
-							HttpMethod.OPTIONS, HttpMethod.POST,
-							HttpMethod.PUT)),
-					serviceProperties);
-
-			endpoint.addCleanupHook(serviceRegistration::unregister);
-		}
-
-		protected void registerDescriptors(
-			Endpoint endpoint, Bundle bundle, String osgiJAXRSName) {
-
-			String bundleSymbolicName = bundle.getSymbolicName();
-
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("(&(bundle.symbolic.name=");
-			sb.append(bundleSymbolicName);
-			sb.append(")(objectClass=");
-			sb.append(ResourceBundleLoader.class.getName());
-			sb.append("resource.bundle.base.name=content.Language))");
-
-			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-				serviceTracker = ServiceTrackerFactory.open(
-					_bundleContext, sb.toString());
-
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put(
-				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME, osgiJAXRSName);
-
-			ServiceRegistration<?> serviceRegistration =
-				_bundleContext.registerService(
-					new String[] {
-						ScopeDescriptor.class.getName(),
-						ApplicationDescriptor.class.getName()
-					},
-					new ApplicationDescriptorsImpl(
-						serviceTracker, osgiJAXRSName),
-					properties);
-
-			endpoint.addCleanupHook(
-				() -> {
-					serviceRegistration.unregister();
-					serviceTracker.close();
-				});
-		}
-
-		private class ApplicationDescriptorsImpl
-			implements ScopeDescriptor, ApplicationDescriptor {
-
-			public ApplicationDescriptorsImpl(
-				ServiceTracker<?, ResourceBundleLoader> serviceTracker,
-				String osgiJAXRSName) {
-
-				_serviceTracker = serviceTracker;
-				_osgiJAXRSName = osgiJAXRSName;
-			}
-
-			@Override
-			public String describeApplication(Locale locale) {
-				ResourceBundleLoader resourceBundleLoader =
-					_serviceTracker.getService();
-
-				String key = StringBundler.concat(
-					"oauth2.application.description.", _osgiJAXRSName);
-
-				return GetterUtil.getString(
-					ResourceBundleUtil.getString(
-						resourceBundleLoader.loadResourceBundle(locale), key),
-					key);
-			}
-
-			@Override
-			public String describeScope(String scope, Locale locale) {
-				ResourceBundleLoader resourceBundleLoader =
-					_serviceTracker.getService();
-
-				if (resourceBundleLoader == null) {
-					return _defaultScopeDescriptor.describeScope(scope, locale);
-				}
-
-				String key = StringBundler.concat("oauth2.scope.", scope);
-
-				return GetterUtil.getString(
-					ResourceBundleUtil.getString(
-						resourceBundleLoader.loadResourceBundle(locale), key),
-					_defaultScopeDescriptor.describeScope(scope, locale));
-			}
-
-			private final String _osgiJAXRSName;
-			private final ServiceTracker<?, ResourceBundleLoader>
-				_serviceTracker;
-
-		}
+		private final String _osgiJAXRSName;
+		private final ServiceTracker<?, ResourceBundleLoader> _serviceTracker;
 
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.authorize;
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
-import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRestEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -69,9 +68,9 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			new HashMapDictionary<>();
 
 		authorizationCodeGrantProperties.put(
-			OAuth2ProviderRestEndpointConstants.
-				PROPERTY_KEY_OAUTH2_ENDPOINT_JAXRS_RESOURCE,
-			true);
+			"osgi.jaxrs.application.select",
+			"(osgi.jaxrs.name=Liferay.OAuth2.Application)");
+		authorizationCodeGrantProperties.put("osgi.jaxrs.resource", true);
 
 		_serviceRegistration = bundleContext.registerService(
 			Object.class, authorizationCodeGrantService,

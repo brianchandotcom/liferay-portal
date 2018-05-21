@@ -12,24 +12,26 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.rest.spi.request.scope.checker.filter;
+package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
-import com.liferay.oauth2.provider.scope.ScopeChecker;
+import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Request;
+import java.util.Collection;
 
 /**
- * Responsible for checking if a given JAX-RS request is allowed.
- * Can use the provided ScopeChecker to check if particular application
- * provided scopes have been granted.
- *
  * @author Carlos Sierra Andrés
- * @review
  */
-public interface RequestScopeCheckerFilter {
+public class CollectionScopeFinder implements ScopeFinder {
 
-	public boolean isAllowed(
-		ScopeChecker scopeChecker, Request request, ResourceInfo resourceInfo);
+	public CollectionScopeFinder(Collection<String> scopes) {
+		_scopes = scopes;
+	}
+
+	@Override
+	public Collection<String> findScopes() {
+		return _scopes;
+	}
+
+	private final Collection<String> _scopes;
 
 }

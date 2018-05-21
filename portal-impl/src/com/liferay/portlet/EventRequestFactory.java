@@ -30,11 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 public class EventRequestFactory {
 
 	public static EventRequestImpl create(
-			HttpServletRequest request, Portlet portlet,
-			InvokerPortlet invokerPortlet, PortletContext portletContext,
-			WindowState windowState, PortletMode portletMode,
-			PortletPreferences preferences, long plid)
-		throws Exception {
+		HttpServletRequest request, Portlet portlet,
+		InvokerPortlet invokerPortlet, PortletContext portletContext,
+		WindowState windowState, PortletMode portletMode,
+		PortletPreferences preferences, long plid) {
 
 		EventRequestImpl eventRequestImpl = new EventRequestImpl();
 

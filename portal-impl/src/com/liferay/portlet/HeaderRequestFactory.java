@@ -33,11 +33,10 @@ import javax.servlet.http.HttpServletRequest;
 public class HeaderRequestFactory {
 
 	public static HeaderRequestImpl create(
-			HttpServletRequest request, Portlet portlet,
-			InvokerPortlet invokerPortlet, PortletContext portletContext,
-			WindowState windowState, PortletMode portletMode,
-			PortletPreferences preferences, long plid)
-		throws Exception {
+		HttpServletRequest request, Portlet portlet,
+		InvokerPortlet invokerPortlet, PortletContext portletContext,
+		WindowState windowState, PortletMode portletMode,
+		PortletPreferences preferences, long plid) {
 
 		HeaderRequestImpl headerRequestImpl = new HeaderRequestImpl();
 

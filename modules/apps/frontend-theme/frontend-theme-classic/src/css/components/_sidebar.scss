@@ -1,0 +1,31 @@
+.sidebar-default {
+	.sidebar-header {
+		.text-default {
+			color: $secondary;
+			font-size: 0.875rem;
+			font-weight: 400;
+		}
+
+		.icon-monospaced {
+			color: $secondary;
+		}
+
+		@include sm {
+			padding-top: 0;
+		}
+	}
+
+	.navbar-collapse {
+		border-bottom: 1px solid #CDCED9;
+	}
+
+	.navigation-bar-light {
+		@include sm {
+			background-color: transparent;
+		}
+	}
+
+	@include sm {
+		background-color: transparent;
+	}
+}

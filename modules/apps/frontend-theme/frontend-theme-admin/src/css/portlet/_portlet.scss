@@ -1,0 +1,219 @@
+/* ---------- Password policies admin ---------- */
+
+.portlet-boundary_com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet_ {
+	.lfr-name-column,
+	.lfr-parent-organization-column,
+	.lfr-screen-name-column {
+		max-width: 150px;
+		min-width: 150px;
+	}
+}
+
+/* ---------- Journal ---------- */
+
+.portlet-boundary_com_liferay_journal_web_portlet_JournalPortlet_ {
+	.lfr-menu-item-name-column {
+		max-width: 600px;
+		min-width: 600px;
+	}
+
+	.lfr-user-column, .lfr-created-column {
+		width: auto;
+	}
+}
+
+/* ---------- Sites ---------- */
+
+.portlet-boundary_com_liferay_site_admin_web_portlet_SiteAdminPortlet_ {
+	.lfr-child-sites-column,
+	.lfr-members-column {
+		white-space: nowrap;
+	}
+
+	.lfr-active-column, .lfr-child-sites-column, .lfr-members-column, .lfr-membership-type-column {
+		width: auto;
+	}
+}
+
+/* ---------- Site templates, page templates ---------- */
+
+.portlet-boundary_com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet_,
+.portlet-boundary_com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet_ {
+	.lfr-description-column {
+		width: 60%;
+	}
+}
+
+/* ---------- Virtual instances ---------- */
+
+.portlet-boundary_com_liferay_portal_instances_web_portlet_PortalInstancesPortlet_ {
+	.lfr-mail-domain-column, .lfr-virtual-host-column, .lfr-web-id-column {
+		max-width: 150px;
+		min-width: 150px;
+	}
+}
+
+/* ---------- Components ---------- */
+
+.portlet-boundary_com_liferay_plugins_admin_web_portlet_PluginsAdminPortlet_ {
+	.lfr-layout-template-column, .lfr-portlet-column, .lfr-themes-column {
+		max-width: 250px;
+		min-width: 250px;
+	}
+
+	.lfr-layout-template-column .plugin-thumbnail {
+		max-width: 50px;
+	}
+
+	.lfr-portlet-column {
+		width: 50%;
+	}
+
+	.lfr-themes-column .plugin-thumbnail {
+		max-width: 100px;
+	}
+
+	.plugin-thumbnail {
+		margin-right: 10px;
+		width: 100%;
+	}
+}
+
+/* ---------- Workflow definition ---------- */
+
+.portlet-boundary_com_liferay_portal_workflow_definition_web_portlet_WorkflowDefinitionPortlet_ {
+	.lfr-active-column, .lfr-version-column {
+		width: auto;
+	}
+}
+
+/* ---------- Service access policy ---------- */
+
+.portlet-boundary_com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet_ {
+	.lfr-name-column {
+		width: 20%;
+	}
+}
+
+/* ---------- Site memberships ---------- */
+
+.portlet-boundary_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_ {
+	.lfr-email-address-column, .lfr-user-column {
+		max-width: 175px;
+		min-width: 175px;
+		width: 10%;
+	}
+
+	.lfr-name-column, .lfr-parent-organization-column {
+		max-width: 150px;
+		min-width: 150px;
+		width: 20%;
+	}
+
+	.lfr-user-comments-column {
+		max-width: 300px;
+		min-width: 300px;
+		width: 50%;
+	}
+}
+
+.portlet-site-memberships-select-users {
+	.lfr-name-column, .lfr-screen-name-column {
+		width: 40%;
+	}
+}
+
+.portlet-site-memberships-assign-site-roles {
+	.lfr-description-column {
+		width: 80%;
+	}
+
+	.lfr-title-column {
+		width: 20%;
+	}
+}
+
+.portlet-site-memberships-user-groups {
+	.lfr-description-column {
+		width: 60%;
+	}
+
+	.lfr-site-roles-column {
+		max-width: 200px;
+		min-width: 200px;
+		width: 20%;
+	}
+}
+
+.portlet-site-memberships-users {
+	.lfr-screen-name-column {
+		width: 20%;
+	}
+
+	.lfr-site-roles-and-teams-column {
+		max-width: 300px;
+		min-width: 300px;
+		width: 50%;
+	}
+}
+
+/* ---------- Site teams ---------- */
+
+.portlet-boundary_com_liferay_site_teams_web_portlet_SiteTeamsPortlet_ {
+	.lfr-description-column {
+		width: 80%;
+	}
+
+	.lfr-name-column {
+		width: 20%;
+	}
+}
+
+.portlet-site-teams-select-users,
+.portlet-site-teams-users {
+	.lfr-name-column, .lfr-screen-name-column {
+		width: 40%;
+	}
+}
+
+/* ---------- Theme color scheme selector ---------- */
+
+.portlet-boundary_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_ {
+	.color-scheme-selector {
+		float: left;
+		margin-bottom: 10px;
+		margin-left: 3.5%;
+
+		@include transition(border-color 0.2s ease-in-out);
+
+		width: 31%;
+
+		@include sm {
+			margin-left: 0;
+			margin-right: 10px;
+			width: 150px;
+		}
+
+		&:nth-child(3n + 1) {
+			margin-left: 0;
+		}
+
+		&.selected {
+			border: 1px map-get($theme-colors, primary) solid;
+		}
+	}
+}
+
+/* ---------- Mobile device rules ---------- */
+
+.portlet-boundary_com_liferay_mobile_device_rules_web_portlet_MDRPortlet_ {
+	.lfr-description-column {
+		width: 60%;
+	}
+
+	.lfr-name-column {
+		max-width: 150px;
+		min-width: 150px;
+		width: 20%;
+	}
+}

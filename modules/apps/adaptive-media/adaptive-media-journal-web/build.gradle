@@ -9,7 +9,9 @@ dependencies {
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:journal:journal-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-string")
 
 	testCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	testCompile project(":core:osgi-service-tracker-collections")

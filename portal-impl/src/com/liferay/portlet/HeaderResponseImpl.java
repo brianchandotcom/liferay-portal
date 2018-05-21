@@ -420,16 +420,6 @@ public class HeaderResponseImpl
 
 	private static class ParsedElement {
 
-		public ParsedElement(
-			String name, Map<String, String> attributes, String text,
-			boolean valid) {
-
-			_name = name;
-			_attributes = attributes;
-			_text = text;
-			_valid = valid;
-		}
-
 		public Map<String, String> getAttributes() {
 			return _attributes;
 		}
@@ -444,6 +434,16 @@ public class HeaderResponseImpl
 
 		public boolean isValid() {
 			return _valid;
+		}
+
+		private ParsedElement(
+			String name, Map<String, String> attributes, String text,
+			boolean valid) {
+
+			_name = name;
+			_attributes = attributes;
+			_text = text;
+			_valid = valid;
 		}
 
 		private final Map<String, String> _attributes;

@@ -17,7 +17,7 @@ package com.liferay.comment.apio.internal.architect.router;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.comment.apio.internal.architect.router.base.BaseCommentNestedCollectionRouter;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -52,13 +52,13 @@ public class MediaObjectCommentNestedCollectionRouter extends
 	protected GroupedModel getGroupedModel(long fileEntryId)
 		throws PortalException {
 
-		return _dlAppLocalService.getFileEntry(fileEntryId);
+		return _dlAppService.getFileEntry(fileEntryId);
 	}
 
 	@Reference
 	private CommentManager _commentManager;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
 
 }

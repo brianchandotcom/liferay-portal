@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -87,6 +88,14 @@ public abstract class BaseCommentNestedCollectionRouter
 
 		GroupedModel groupedModel = getGroupedModel(classPK);
 
+		int count = getCommentManager().getRootCommentsCount(
+			groupedModel.getModelClassName(), classPK,
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (count == 0) {
+			return new PageItems<>(Collections.emptyList(), 0);
+		}
+
 		_checkViewPermission(
 			permissionChecker, groupedModel.getGroupId(),
 			groupedModel.getModelClassName(), classPK);
@@ -95,9 +104,6 @@ public abstract class BaseCommentNestedCollectionRouter
 			groupedModel.getModelClassName(), classPK,
 			WorkflowConstants.STATUS_APPROVED, pagination.getStartPosition(),
 			pagination.getEndPosition());
-		int count = getCommentManager().getRootCommentsCount(
-			groupedModel.getModelClassName(), classPK,
-			WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(comments, count);
 	}

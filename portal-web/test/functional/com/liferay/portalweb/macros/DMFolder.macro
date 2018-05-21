@@ -610,10 +610,22 @@
 			</else>
 		</if>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="displayStyle" value="${displayStyle}" />
-			<var name="rowEntry" value="${dmFolderName}" />
-		</execute>
+		<if>
+			<equals arg1="${specificNameFolder}" arg2="true" />
+			<then>
+				<var name="rowEntry" value="${dmFolderName}" />
+
+				<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${rowEntry}">
+					<var name="key_cardText" value="${rowEntry}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="LexiconEntry#gotoEntry">
+					<var name="displayStyle" value="${displayStyle}" />
+					<var name="rowEntry" value="${dmFolderName}" />
+				</execute>
+			</else>
+		</if>
 
 		<var method="StringUtil#upperCase('${dmFolderName}')" name="dmFolderNameUpperCase" />
 

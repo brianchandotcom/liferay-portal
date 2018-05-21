@@ -108,9 +108,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteRecords();");
+						dropdownItem.putData("action", "deleteRecords");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(request, "delete"));

@@ -138,9 +138,7 @@ public class DDMFormAdminDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteFormInstances();");
+						dropdownItem.putData("action", "deleteFormInstances");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(

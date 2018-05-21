@@ -23,6 +23,7 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 <clay:management-toolbar
 	actionDropdownItems="<%= ddmDataProviderDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddmDataProviderDisplayContext.getClearResultsURL() %>"
+	componentId="ddmDataProviderManagementToolbar"
 	creationMenu="<%= ddmDataProviderDisplayContext.getCreationMenu() %>"
 	disabled="<%= ddmDataProviderDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddmDataProviderDisplayContext.getFilterItemsDropdownItems() %>"
@@ -37,7 +38,7 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 />
 
 <aui:script>
-	function <portlet:namespace />deleteDataProviderInstances() {
+	var deleteDataProviderInstances = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			var form = AUI.$(document.<portlet:namespace />searchContainerForm);
 
@@ -49,4 +50,22 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 			submitForm(form, '<portlet:actionURL name="deleteDataProvider"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
 	}
+	var ACTIONS = {
+		'deleteDataProviderInstances': deleteDataProviderInstances
+	};
+
+	Liferay.componentReady('ddmDataProviderManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				['actionItemClicked'],
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

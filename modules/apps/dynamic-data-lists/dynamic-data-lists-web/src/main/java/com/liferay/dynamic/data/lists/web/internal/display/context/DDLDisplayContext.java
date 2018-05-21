@@ -130,9 +130,7 @@ public class DDLDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteRecordSets();");
+						dropdownItem.putData("action", "deleteRecordSets");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel("delete");
 						dropdownItem.setQuickAction(true);

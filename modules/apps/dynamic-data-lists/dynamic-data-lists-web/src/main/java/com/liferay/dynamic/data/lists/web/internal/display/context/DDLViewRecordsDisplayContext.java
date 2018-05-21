@@ -112,10 +112,7 @@ public class DDLViewRecordsDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" +
-								_liferayPortletResponse.getNamespace() +
-									"deleteRecords();");
+						dropdownItem.putData("action", "deleteRecords");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel("delete");
 						dropdownItem.setQuickAction(true);

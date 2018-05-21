@@ -123,9 +123,8 @@ public class DDMDataProviderDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteDataProviderInstances();");
+						dropdownItem.putData(
+							"action", "deleteDataProviderInstances");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(

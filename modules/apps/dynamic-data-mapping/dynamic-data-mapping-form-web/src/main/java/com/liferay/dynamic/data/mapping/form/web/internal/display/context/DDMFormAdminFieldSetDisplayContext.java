@@ -100,16 +100,12 @@ public class DDMFormAdminFieldSetDisplayContext
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {
-		RenderResponse renderResponse = getRenderResponse();
-
 		return new DropdownItemList() {
 
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + renderResponse.getNamespace() +
-								"deleteStructures();");
+						dropdownItem.putData("action", "deleteStructures");
 						dropdownItem.setIcon("trash");
 						dropdownItem.setLabel(
 							LanguageUtil.get(

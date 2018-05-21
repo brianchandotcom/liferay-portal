@@ -23,6 +23,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 <clay:management-toolbar
 	actionDropdownItems="<%= ddlDisplayContext.getActionItemsDropdownItems() %>"
 	clearResultsURL="<%= ddlDisplayContext.getClearResultsURL() %>"
+	componentId="ddlManagementToolbar"
 	creationMenu="<%= ddlDisplayContext.getCreationMenu() %>"
 	disabled="<%= ddlDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= ddlDisplayContext.getFilterItemsDropdownItems() %>"
@@ -36,8 +37,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	viewTypeItems="<%= ddlDisplayContext.getViewTypesItems() %>"
 />
 
-<aui:script>
-	function <portlet:namespace />deleteRecordSets() {
+<aui:script sandbox="<%= true %>">
+	var deleteRecordSets = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
@@ -48,5 +49,24 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 		submitForm(form, '<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
-	}
+	};
+
+	var ACTIONS = {
+		'deleteRecordSets': deleteRecordSets
+	};
+
+	Liferay.componentReady('ddlManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>

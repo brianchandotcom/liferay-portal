@@ -230,7 +230,8 @@ public class JournalArticleAssetRenderer
 					_article, null, null, LanguageUtil.getLanguageId(locale), 1,
 					portletRequestModel, themeDisplay);
 
-			summary = HtmlUtil.stripHtml(articleDisplay.getContent());
+			summary = HtmlUtil.unescape(
+				HtmlUtil.stripHtml(articleDisplay.getContent()));
 		}
 		catch (Exception e) {
 		}

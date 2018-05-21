@@ -1184,6 +1184,7 @@
 
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
+			<var name="specificNameFolder" value="true" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderCP">
@@ -1192,6 +1193,7 @@
 
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="The Properties of Moon Rocks" />
+			<var name="specificNameFolder" value="true" />
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderCP">
@@ -1218,10 +1220,12 @@
 
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
+			<var name="specificNameFolder" value="true" />
 		</execute>
 
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="The Properties of Moon Rocks" />
+			<var name="specificNameFolder" value="true" />
 		</execute>
 
 		<execute macro="DMFolder#removePermissions">
@@ -1811,6 +1815,7 @@
 
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="DM SubFolder Name" />
+			<var name="specificNameFolder" value="true" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">

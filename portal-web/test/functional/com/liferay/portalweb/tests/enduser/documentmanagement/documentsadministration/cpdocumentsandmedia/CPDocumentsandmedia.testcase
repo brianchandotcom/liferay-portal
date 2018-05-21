@@ -216,6 +216,7 @@
 
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="DM Folder Name Name" />
+			<var name="specificNameFolder" value="true" />
 		</execute>
 	</command>
 

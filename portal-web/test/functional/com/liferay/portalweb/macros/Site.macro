@@ -204,7 +204,7 @@
 	<command name="approveJoinSiteRestrictedViaMySitesPG">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="Click" locator1="Button#INFO" />
+		<execute function="Click" locator1="Icon#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
 		<execute function="AssertElementPresent" locator1="SiteMemberships#REQUEST_MESSAGE" />
@@ -1239,7 +1239,7 @@
 	</command>
 
 	<command name="viewNoSiteMembershipsRequest">
-		<execute function="Click" locator1="Button#INFO" />
+		<execute function="Click" locator1="Icon#INFO" />
 
 		<execute function="AssertElementNotPresent" locator1="SiteMemberships#REQUEST_MESSAGE" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
@@ -1333,7 +1333,7 @@
 	</command>
 
 	<command name="viewSiteMembershipsRequest">
-		<execute function="Click" locator1="Button#INFO" />
+		<execute function="Click" locator1="Icon#INFO" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
 		<execute function="AssertElementPresent" locator1="SiteMemberships#REQUEST_MESSAGE" />

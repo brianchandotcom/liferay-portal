@@ -88,15 +88,15 @@ public class JavadocCheck extends BaseCheck {
 	}
 
 	private boolean _containsCopyright(TextBlock javadoc) {
-		if (javadoc.getStartLineNo() != 1) {
-			return false;
-		}
+		int startLineNo = javadoc.getStartLineNo();
 
-		String[] text = javadoc.getText();
+		if ((startLineNo == 1) || (startLineNo == 2)) {
+			String[] text = javadoc.getText();
 
-		for (String line : text) {
-			if (line.contains("Copyright (c) 2000-present Liferay, Inc.")) {
-				return true;
+			for (String line : text) {
+				if (line.contains("Copyright (c) 2000-present Liferay, Inc.")) {
+					return true;
+				}
 			}
 		}
 

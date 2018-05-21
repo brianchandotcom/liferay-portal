@@ -216,13 +216,12 @@ public class PortletURLFactoryImpl implements PortletURLFactory {
 		if (PortletRequest.RENDER_PHASE.equals(lifecycle)) {
 			return new RenderURLImpl(request, portlet, layout, lifecycle, copy);
 		}
-		else if (PortletRequest.ACTION_PHASE.equals(lifecycle)) {
+
+		if (PortletRequest.ACTION_PHASE.equals(lifecycle)) {
 			return new ActionURLImpl(request, portlet, layout, lifecycle, copy);
 		}
-		else {
-			return new PortletURLImpl(
-				request, portlet, layout, lifecycle, copy);
-		}
+
+		return new PortletURLImpl(request, portlet, layout, lifecycle, copy);
 	}
 
 	private LiferayPortletURL _create(
@@ -233,14 +232,14 @@ public class PortletURLFactoryImpl implements PortletURLFactory {
 			return new RenderURLImpl(
 				portletRequest, portlet, layout, lifecycle, copy);
 		}
-		else if (PortletRequest.ACTION_PHASE.equals(lifecycle)) {
+
+		if (PortletRequest.ACTION_PHASE.equals(lifecycle)) {
 			return new ActionURLImpl(
 				portletRequest, portlet, layout, lifecycle, copy);
 		}
-		else {
-			return new PortletURLImpl(
-				portletRequest, portlet, layout, lifecycle, copy);
-		}
+
+		return new PortletURLImpl(
+			portletRequest, portlet, layout, lifecycle, copy);
 	}
 
 	private LiferayPortletURL _create(

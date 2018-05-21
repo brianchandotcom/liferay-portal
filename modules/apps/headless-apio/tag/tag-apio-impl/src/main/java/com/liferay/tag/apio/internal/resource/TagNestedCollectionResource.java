@@ -155,4 +155,5 @@ public class TagNestedCollectionResource
 
 	@Reference
 	private AssetTagService _assetTagService;
+
 }

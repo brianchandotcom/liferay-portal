@@ -177,8 +177,8 @@ public class ProductInstanceHelper {
 
 		return _cpInstanceService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
-			null, width, height, depth, weight, new BigDecimal(cost),
-			new BigDecimal(price), new BigDecimal(promoPrice), published, null,
+			null, width, height, depth, weight, new BigDecimal(price),
+			new BigDecimal(promoPrice), new BigDecimal(cost), published, null,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
@@ -257,8 +257,8 @@ public class ProductInstanceHelper {
 
 		return _cpInstanceService.updateCPInstance(
 			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable, width,
-			height, depth, weight, new BigDecimal(cost), new BigDecimal(price),
-			new BigDecimal(promoPrice), published, displayDateMonth,
+			height, depth, weight, new BigDecimal(price),
+			new BigDecimal(promoPrice), new BigDecimal(cost), published, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
@@ -273,8 +273,5 @@ public class ProductInstanceHelper {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
-
-	@Reference
-	private ProductIndexerHelper _productIndexerHelper;
 
 }

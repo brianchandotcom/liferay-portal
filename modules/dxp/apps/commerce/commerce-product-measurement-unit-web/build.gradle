@@ -2,7 +2,7 @@ apply plugin: "com.liferay.lang.merger"
 
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20180131.001308-11"
-	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0-20180109.010916-4"
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0-20180521.145402-7"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"

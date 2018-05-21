@@ -67,7 +67,7 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("date", getDate());
+		attributes.put("time", getTime());
 		attributes.put("period", getPeriod());
 		attributes.put("target", getTarget());
 		attributes.put("customerId", getCustomerId());
@@ -116,10 +116,10 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 			setModifiedDate(modifiedDate);
 		}
 
-		Date date = (Date)attributes.get("date");
+		Long time = (Long)attributes.get("time");
 
-		if (date != null) {
-			setDate(date);
+		if (time != null) {
+			setTime(time);
 		}
 
 		Integer period = (Integer)attributes.get("period");
@@ -213,16 +213,6 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 		return _commerceForecastEntry.getCustomerId();
 	}
 
-	/**
-	* Returns the date of this commerce forecast entry.
-	*
-	* @return the date of this commerce forecast entry
-	*/
-	@Override
-	public Date getDate() {
-		return _commerceForecastEntry.getDate();
-	}
-
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceForecastEntry.getExpandoBridge();
@@ -281,6 +271,16 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 	@Override
 	public int getTarget() {
 		return _commerceForecastEntry.getTarget();
+	}
+
+	/**
+	* Returns the time of this commerce forecast entry.
+	*
+	* @return the time of this commerce forecast entry
+	*/
+	@Override
+	public long getTime() {
+		return _commerceForecastEntry.getTime();
 	}
 
 	/**
@@ -393,16 +393,6 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 		_commerceForecastEntry.setCustomerId(customerId);
 	}
 
-	/**
-	* Sets the date of this commerce forecast entry.
-	*
-	* @param date the date of this commerce forecast entry
-	*/
-	@Override
-	public void setDate(Date date) {
-		_commerceForecastEntry.setDate(date);
-	}
-
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
@@ -477,6 +467,16 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 	@Override
 	public void setTarget(int target) {
 		_commerceForecastEntry.setTarget(target);
+	}
+
+	/**
+	* Sets the time of this commerce forecast entry.
+	*
+	* @param time the time of this commerce forecast entry
+	*/
+	@Override
+	public void setTime(long time) {
+		_commerceForecastEntry.setTime(time);
 	}
 
 	/**

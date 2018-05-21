@@ -111,7 +111,7 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] { Long.class.getName() },
 			CommerceForecastEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceForecastEntryModelImpl.DATE_COLUMN_BITMASK);
+			CommerceForecastEntryModelImpl.TIME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(CommerceForecastEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceForecastEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
@@ -953,7 +953,7 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
-			dbColumnNames.put("date", "date_");
+			dbColumnNames.put("time", "time_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -1749,6 +1749,6 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceForecastEntry exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceForecastEntryPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"date"
+				"time"
 			});
 }

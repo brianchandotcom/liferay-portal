@@ -42,7 +42,7 @@ public class CommerceForecastEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setDate(model.getDate());
+		soapModel.setTime(model.getTime());
 		soapModel.setPeriod(model.getPeriod());
 		soapModel.setTarget(model.getTarget());
 		soapModel.setCustomerId(model.getCustomerId());
@@ -151,12 +151,12 @@ public class CommerceForecastEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public Date getDate() {
-		return _date;
+	public long getTime() {
+		return _time;
 	}
 
-	public void setDate(Date date) {
-		_date = date;
+	public void setTime(long time) {
+		_time = time;
 	}
 
 	public int getPeriod() {
@@ -205,7 +205,7 @@ public class CommerceForecastEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private Date _date;
+	private long _time;
 	private int _period;
 	private int _target;
 	private long _customerId;

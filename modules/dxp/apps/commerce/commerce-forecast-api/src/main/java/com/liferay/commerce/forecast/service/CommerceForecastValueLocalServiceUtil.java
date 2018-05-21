@@ -55,13 +55,13 @@ public class CommerceForecastValueLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.forecast.model.CommerceForecastValue addCommerceForecastValue(
-		long userId, long commerceForecastEntryId, java.util.Date date,
+		long userId, long commerceForecastEntryId, long time,
 		java.math.BigDecimal lowerValue, java.math.BigDecimal value,
 		java.math.BigDecimal upperValue)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceForecastValue(userId, commerceForecastEntryId,
-			date, lowerValue, value, upperValue);
+			time, lowerValue, value, upperValue);
 	}
 
 	/**
@@ -227,6 +227,13 @@ public class CommerceForecastValueLocalServiceUtil {
 	public static java.util.List<com.liferay.commerce.forecast.model.CommerceForecastValue> getCommerceForecastValues(
 		int start, int end) {
 		return getService().getCommerceForecastValues(start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.forecast.model.CommerceForecastValue> getCommerceForecastValues(
+		long commerceForecastEntryId, long startTime, long endTime) {
+		return getService()
+				   .getCommerceForecastValues(commerceForecastEntryId,
+			startTime, endTime);
 	}
 
 	/**

@@ -38,7 +38,6 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,7 +74,7 @@ public interface CommerceForecastValueLocalService extends BaseLocalService,
 		CommerceForecastValue commerceForecastValue);
 
 	public CommerceForecastValue addCommerceForecastValue(long userId,
-		long commerceForecastEntryId, Date date, BigDecimal lowerValue,
+		long commerceForecastEntryId, long time, BigDecimal lowerValue,
 		BigDecimal value, BigDecimal upperValue) throws PortalException;
 
 	/**
@@ -209,6 +208,10 @@ public interface CommerceForecastValueLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceForecastValue> getCommerceForecastValues(int start,
 		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceForecastValue> getCommerceForecastValues(
+		long commerceForecastEntryId, long startTime, long endTime);
 
 	/**
 	* Returns the number of commerce forecast values.

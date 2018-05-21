@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.commerce.forecast.model.CommerceForecastEntry;
 import com.liferay.commerce.forecast.service.CommerceForecastEntryLocalService;
 import com.liferay.commerce.forecast.service.persistence.CommerceForecastEntryPersistence;
+import com.liferay.commerce.forecast.service.persistence.CommerceForecastValueFinder;
 import com.liferay.commerce.forecast.service.persistence.CommerceForecastValuePersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -402,6 +403,25 @@ public abstract class CommerceForecastEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce forecast value finder.
+	 *
+	 * @return the commerce forecast value finder
+	 */
+	public CommerceForecastValueFinder getCommerceForecastValueFinder() {
+		return commerceForecastValueFinder;
+	}
+
+	/**
+	 * Sets the commerce forecast value finder.
+	 *
+	 * @param commerceForecastValueFinder the commerce forecast value finder
+	 */
+	public void setCommerceForecastValueFinder(
+		CommerceForecastValueFinder commerceForecastValueFinder) {
+		this.commerceForecastValueFinder = commerceForecastValueFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -574,6 +594,8 @@ public abstract class CommerceForecastEntryLocalServiceBaseImpl
 	protected com.liferay.commerce.forecast.service.CommerceForecastValueLocalService commerceForecastValueLocalService;
 	@BeanReference(type = CommerceForecastValuePersistence.class)
 	protected CommerceForecastValuePersistence commerceForecastValuePersistence;
+	@BeanReference(type = CommerceForecastValueFinder.class)
+	protected CommerceForecastValueFinder commerceForecastValueFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

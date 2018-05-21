@@ -58,7 +58,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -138,7 +137,7 @@ public class CommerceForecastValuePersistenceTest {
 
 		newCommerceForecastValue.setCommerceForecastEntryId(RandomTestUtil.nextLong());
 
-		newCommerceForecastValue.setDate(RandomTestUtil.nextDate());
+		newCommerceForecastValue.setTime(RandomTestUtil.nextLong());
 
 		newCommerceForecastValue.setLowerValue(new BigDecimal(
 				RandomTestUtil.nextDouble()));
@@ -170,9 +169,8 @@ public class CommerceForecastValuePersistenceTest {
 			Time.getShortTimestamp(newCommerceForecastValue.getModifiedDate()));
 		Assert.assertEquals(existingCommerceForecastValue.getCommerceForecastEntryId(),
 			newCommerceForecastValue.getCommerceForecastEntryId());
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingCommerceForecastValue.getDate()),
-			Time.getShortTimestamp(newCommerceForecastValue.getDate()));
+		Assert.assertEquals(existingCommerceForecastValue.getTime(),
+			newCommerceForecastValue.getTime());
 		Assert.assertEquals(existingCommerceForecastValue.getLowerValue(),
 			newCommerceForecastValue.getLowerValue());
 		Assert.assertEquals(existingCommerceForecastValue.getValue(),
@@ -189,11 +187,11 @@ public class CommerceForecastValuePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_D() throws Exception {
-		_persistence.countByC_D(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextDate());
+	public void testCountByC_T() throws Exception {
+		_persistence.countByC_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
 
-		_persistence.countByC_D(0L, RandomTestUtil.nextDate());
+		_persistence.countByC_T(0L, 0L);
 	}
 
 	@Test
@@ -223,7 +221,7 @@ public class CommerceForecastValuePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceForecastValue",
 			"commerceForecastValueId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"commerceForecastEntryId", true, "date", true, "lowerValue", true,
+			"commerceForecastEntryId", true, "time", true, "lowerValue", true,
 			"value", true, "upperValue", true);
 	}
 
@@ -439,10 +437,10 @@ public class CommerceForecastValuePersistenceTest {
 				existingCommerceForecastValue.getCommerceForecastEntryId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceForecastValue,
 				"getOriginalCommerceForecastEntryId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
-				existingCommerceForecastValue.getDate(),
-				ReflectionTestUtil.invoke(existingCommerceForecastValue,
-					"getOriginalDate", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingCommerceForecastValue.getTime()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceForecastValue,
+				"getOriginalTime", new Class<?>[0]));
 	}
 
 	protected CommerceForecastValue addCommerceForecastValue()
@@ -463,7 +461,7 @@ public class CommerceForecastValuePersistenceTest {
 
 		commerceForecastValue.setCommerceForecastEntryId(RandomTestUtil.nextLong());
 
-		commerceForecastValue.setDate(RandomTestUtil.nextDate());
+		commerceForecastValue.setTime(RandomTestUtil.nextLong());
 
 		commerceForecastValue.setLowerValue(new BigDecimal(
 				RandomTestUtil.nextDouble()));

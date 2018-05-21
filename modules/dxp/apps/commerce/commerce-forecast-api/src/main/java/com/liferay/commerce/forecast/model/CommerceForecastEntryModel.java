@@ -179,18 +179,18 @@ public interface CommerceForecastEntryModel extends AuditedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the date of this commerce forecast entry.
+	 * Returns the time of this commerce forecast entry.
 	 *
-	 * @return the date of this commerce forecast entry
+	 * @return the time of this commerce forecast entry
 	 */
-	public Date getDate();
+	public long getTime();
 
 	/**
-	 * Sets the date of this commerce forecast entry.
+	 * Sets the time of this commerce forecast entry.
 	 *
-	 * @param date the date of this commerce forecast entry
+	 * @param time the time of this commerce forecast entry
 	 */
-	public void setDate(Date date);
+	public void setTime(long time);
 
 	/**
 	 * Returns the period of this commerce forecast entry.

@@ -11,4 +11,5 @@
 	<bean class="com.liferay.commerce.forecast.service.persistence.impl.CommerceForecastEntryPersistenceImpl" id="com.liferay.commerce.forecast.service.persistence.CommerceForecastEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.forecast.service.impl.CommerceForecastValueLocalServiceImpl" id="com.liferay.commerce.forecast.service.CommerceForecastValueLocalService" />
 	<bean class="com.liferay.commerce.forecast.service.persistence.impl.CommerceForecastValuePersistenceImpl" id="com.liferay.commerce.forecast.service.persistence.CommerceForecastValuePersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.forecast.service.persistence.impl.CommerceForecastValueFinderImpl" id="com.liferay.commerce.forecast.service.persistence.CommerceForecastValueFinder" parent="basePersistence" />
 </beans>

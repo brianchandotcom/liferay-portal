@@ -47,8 +47,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
-import java.sql.Timestamp;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -56,7 +54,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -115,7 +112,7 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 			"findByCommerceForecastEntryId",
 			new String[] { Long.class.getName() },
 			CommerceForecastValueModelImpl.COMMERCEFORECASTENTRYID_COLUMN_BITMASK |
-			CommerceForecastValueModelImpl.DATE_COLUMN_BITMASK);
+			CommerceForecastValueModelImpl.TIME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_COMMERCEFORECASTENTRYID = new FinderPath(CommerceForecastValueModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceForecastValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -627,31 +624,31 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 
 	private static final String _FINDER_COLUMN_COMMERCEFORECASTENTRYID_COMMERCEFORECASTENTRYID_2 =
 		"commerceForecastValue.commerceForecastEntryId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_D = new FinderPath(CommerceForecastValueModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_T = new FinderPath(CommerceForecastValueModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceForecastValueModelImpl.FINDER_CACHE_ENABLED,
 			CommerceForecastValueImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_D",
-			new String[] { Long.class.getName(), Date.class.getName() },
+			"fetchByC_T",
+			new String[] { Long.class.getName(), Long.class.getName() },
 			CommerceForecastValueModelImpl.COMMERCEFORECASTENTRYID_COLUMN_BITMASK |
-			CommerceForecastValueModelImpl.DATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_D = new FinderPath(CommerceForecastValueModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceForecastValueModelImpl.TIME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_T = new FinderPath(CommerceForecastValueModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceForecastValueModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_D",
-			new String[] { Long.class.getName(), Date.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the commerce forecast value where commerceForecastEntryId = &#63; and date = &#63; or throws a {@link NoSuchForecastValueException} if it could not be found.
+	 * Returns the commerce forecast value where commerceForecastEntryId = &#63; and time = &#63; or throws a {@link NoSuchForecastValueException} if it could not be found.
 	 *
 	 * @param commerceForecastEntryId the commerce forecast entry ID
-	 * @param date the date
+	 * @param time the time
 	 * @return the matching commerce forecast value
 	 * @throws NoSuchForecastValueException if a matching commerce forecast value could not be found
 	 */
 	@Override
-	public CommerceForecastValue findByC_D(long commerceForecastEntryId,
-		Date date) throws NoSuchForecastValueException {
-		CommerceForecastValue commerceForecastValue = fetchByC_D(commerceForecastEntryId,
-				date);
+	public CommerceForecastValue findByC_T(long commerceForecastEntryId,
+		long time) throws NoSuchForecastValueException {
+		CommerceForecastValue commerceForecastValue = fetchByC_T(commerceForecastEntryId,
+				time);
 
 		if (commerceForecastValue == null) {
 			StringBundler msg = new StringBundler(6);
@@ -661,8 +658,8 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 			msg.append("commerceForecastEntryId=");
 			msg.append(commerceForecastEntryId);
 
-			msg.append(", date=");
-			msg.append(date);
+			msg.append(", time=");
+			msg.append(time);
 
 			msg.append("}");
 
@@ -677,37 +674,35 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	}
 
 	/**
-	 * Returns the commerce forecast value where commerceForecastEntryId = &#63; and date = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce forecast value where commerceForecastEntryId = &#63; and time = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param commerceForecastEntryId the commerce forecast entry ID
-	 * @param date the date
+	 * @param time the time
 	 * @return the matching commerce forecast value, or <code>null</code> if a matching commerce forecast value could not be found
 	 */
 	@Override
-	public CommerceForecastValue fetchByC_D(long commerceForecastEntryId,
-		Date date) {
-		return fetchByC_D(commerceForecastEntryId, date, true);
+	public CommerceForecastValue fetchByC_T(long commerceForecastEntryId,
+		long time) {
+		return fetchByC_T(commerceForecastEntryId, time, true);
 	}
 
 	/**
-	 * Returns the commerce forecast value where commerceForecastEntryId = &#63; and date = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce forecast value where commerceForecastEntryId = &#63; and time = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param commerceForecastEntryId the commerce forecast entry ID
-	 * @param date the date
+	 * @param time the time
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching commerce forecast value, or <code>null</code> if a matching commerce forecast value could not be found
 	 */
 	@Override
-	public CommerceForecastValue fetchByC_D(long commerceForecastEntryId,
-		Date date, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] {
-				commerceForecastEntryId, _getTime(date)
-			};
+	public CommerceForecastValue fetchByC_T(long commerceForecastEntryId,
+		long time, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { commerceForecastEntryId, time };
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_D,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_T,
 					finderArgs, this);
 		}
 
@@ -715,7 +710,7 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 			CommerceForecastValue commerceForecastValue = (CommerceForecastValue)result;
 
 			if ((commerceForecastEntryId != commerceForecastValue.getCommerceForecastEntryId()) ||
-					!Objects.equals(date, commerceForecastValue.getDate())) {
+					(time != commerceForecastValue.getTime())) {
 				result = null;
 			}
 		}
@@ -725,18 +720,9 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 
 			query.append(_SQL_SELECT_COMMERCEFORECASTVALUE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_D_COMMERCEFORECASTENTRYID_2);
+			query.append(_FINDER_COLUMN_C_T_COMMERCEFORECASTENTRYID_2);
 
-			boolean bindDate = false;
-
-			if (date == null) {
-				query.append(_FINDER_COLUMN_C_D_DATE_1);
-			}
-			else {
-				bindDate = true;
-
-				query.append(_FINDER_COLUMN_C_D_DATE_2);
-			}
+			query.append(_FINDER_COLUMN_C_T_TIME_2);
 
 			String sql = query.toString();
 
@@ -751,14 +737,12 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 
 				qPos.add(commerceForecastEntryId);
 
-				if (bindDate) {
-					qPos.add(new Timestamp(date.getTime()));
-				}
+				qPos.add(time);
 
 				List<CommerceForecastValue> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_D, finderArgs,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_T, finderArgs,
 						list);
 				}
 				else {
@@ -769,15 +753,14 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 					cacheResult(commerceForecastValue);
 
 					if ((commerceForecastValue.getCommerceForecastEntryId() != commerceForecastEntryId) ||
-							(commerceForecastValue.getDate() == null) ||
-							!commerceForecastValue.getDate().equals(date)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_D,
+							(commerceForecastValue.getTime() != time)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_T,
 							finderArgs, commerceForecastValue);
 					}
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_D, finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_T, finderArgs);
 
 				throw processException(e);
 			}
@@ -795,35 +778,33 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	}
 
 	/**
-	 * Removes the commerce forecast value where commerceForecastEntryId = &#63; and date = &#63; from the database.
+	 * Removes the commerce forecast value where commerceForecastEntryId = &#63; and time = &#63; from the database.
 	 *
 	 * @param commerceForecastEntryId the commerce forecast entry ID
-	 * @param date the date
+	 * @param time the time
 	 * @return the commerce forecast value that was removed
 	 */
 	@Override
-	public CommerceForecastValue removeByC_D(long commerceForecastEntryId,
-		Date date) throws NoSuchForecastValueException {
-		CommerceForecastValue commerceForecastValue = findByC_D(commerceForecastEntryId,
-				date);
+	public CommerceForecastValue removeByC_T(long commerceForecastEntryId,
+		long time) throws NoSuchForecastValueException {
+		CommerceForecastValue commerceForecastValue = findByC_T(commerceForecastEntryId,
+				time);
 
 		return remove(commerceForecastValue);
 	}
 
 	/**
-	 * Returns the number of commerce forecast values where commerceForecastEntryId = &#63; and date = &#63;.
+	 * Returns the number of commerce forecast values where commerceForecastEntryId = &#63; and time = &#63;.
 	 *
 	 * @param commerceForecastEntryId the commerce forecast entry ID
-	 * @param date the date
+	 * @param time the time
 	 * @return the number of matching commerce forecast values
 	 */
 	@Override
-	public int countByC_D(long commerceForecastEntryId, Date date) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_D;
+	public int countByC_T(long commerceForecastEntryId, long time) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_T;
 
-		Object[] finderArgs = new Object[] {
-				commerceForecastEntryId, _getTime(date)
-			};
+		Object[] finderArgs = new Object[] { commerceForecastEntryId, time };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -832,18 +813,9 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 
 			query.append(_SQL_COUNT_COMMERCEFORECASTVALUE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_D_COMMERCEFORECASTENTRYID_2);
+			query.append(_FINDER_COLUMN_C_T_COMMERCEFORECASTENTRYID_2);
 
-			boolean bindDate = false;
-
-			if (date == null) {
-				query.append(_FINDER_COLUMN_C_D_DATE_1);
-			}
-			else {
-				bindDate = true;
-
-				query.append(_FINDER_COLUMN_C_D_DATE_2);
-			}
+			query.append(_FINDER_COLUMN_C_T_TIME_2);
 
 			String sql = query.toString();
 
@@ -858,9 +830,7 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 
 				qPos.add(commerceForecastEntryId);
 
-				if (bindDate) {
-					qPos.add(new Timestamp(date.getTime()));
-				}
+				qPos.add(time);
 
 				count = (Long)q.uniqueResult();
 
@@ -879,9 +849,8 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_D_COMMERCEFORECASTENTRYID_2 = "commerceForecastValue.commerceForecastEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_C_D_DATE_1 = "commerceForecastValue.date IS NULL";
-	private static final String _FINDER_COLUMN_C_D_DATE_2 = "commerceForecastValue.date = ?";
+	private static final String _FINDER_COLUMN_C_T_COMMERCEFORECASTENTRYID_2 = "commerceForecastValue.commerceForecastEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_C_T_TIME_2 = "commerceForecastValue.time = ?";
 
 	public CommerceForecastValuePersistenceImpl() {
 		setModelClass(CommerceForecastValue.class);
@@ -894,7 +863,7 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
-			dbColumnNames.put("date", "date_");
+			dbColumnNames.put("time", "time_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -916,10 +885,10 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 			CommerceForecastValueImpl.class,
 			commerceForecastValue.getPrimaryKey(), commerceForecastValue);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_D,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_T,
 			new Object[] {
 				commerceForecastValue.getCommerceForecastEntryId(),
-				commerceForecastValue.getDate()
+				commerceForecastValue.getTime()
 			}, commerceForecastValue);
 
 		commerceForecastValue.resetOriginalValues();
@@ -1000,12 +969,12 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 		CommerceForecastValueModelImpl commerceForecastValueModelImpl) {
 		Object[] args = new Object[] {
 				commerceForecastValueModelImpl.getCommerceForecastEntryId(),
-				_getTime(commerceForecastValueModelImpl.getDate())
+				commerceForecastValueModelImpl.getTime()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_C_D, args, Long.valueOf(1),
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_T, args, Long.valueOf(1),
 			false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_D, args,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_T, args,
 			commerceForecastValueModelImpl, false);
 	}
 
@@ -1015,22 +984,22 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					commerceForecastValueModelImpl.getCommerceForecastEntryId(),
-					_getTime(commerceForecastValueModelImpl.getDate())
+					commerceForecastValueModelImpl.getTime()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_D, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_D, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_T, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_T, args);
 		}
 
 		if ((commerceForecastValueModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_D.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_C_T.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					commerceForecastValueModelImpl.getOriginalCommerceForecastEntryId(),
-					_getTime(commerceForecastValueModelImpl.getOriginalDate())
+					commerceForecastValueModelImpl.getOriginalTime()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_D, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_D, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_T, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_T, args);
 		}
 	}
 
@@ -1671,15 +1640,6 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-
-	private Long _getTime(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return date.getTime();
-	}
-
 	private static final String _SQL_SELECT_COMMERCEFORECASTVALUE = "SELECT commerceForecastValue FROM CommerceForecastValue commerceForecastValue";
 	private static final String _SQL_SELECT_COMMERCEFORECASTVALUE_WHERE_PKS_IN = "SELECT commerceForecastValue FROM CommerceForecastValue commerceForecastValue WHERE commerceForecastValueId IN (";
 	private static final String _SQL_SELECT_COMMERCEFORECASTVALUE_WHERE = "SELECT commerceForecastValue FROM CommerceForecastValue commerceForecastValue WHERE ";
@@ -1690,6 +1650,6 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceForecastValue exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceForecastValuePersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"date"
+				"time"
 			});
 }

@@ -81,8 +81,8 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", date=");
-		sb.append(date);
+		sb.append(", time=");
+		sb.append(time);
 		sb.append(", period=");
 		sb.append(period);
 		sb.append(", target=");
@@ -127,13 +127,7 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 			commerceForecastEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (date == Long.MIN_VALUE) {
-			commerceForecastEntryImpl.setDate(null);
-		}
-		else {
-			commerceForecastEntryImpl.setDate(new Date(date));
-		}
-
+		commerceForecastEntryImpl.setTime(time);
 		commerceForecastEntryImpl.setPeriod(period);
 		commerceForecastEntryImpl.setTarget(target);
 		commerceForecastEntryImpl.setCustomerId(customerId);
@@ -163,7 +157,8 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		date = objectInput.readLong();
+
+		time = objectInput.readLong();
 
 		period = objectInput.readInt();
 
@@ -192,7 +187,8 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-		objectOutput.writeLong(date);
+
+		objectOutput.writeLong(time);
 
 		objectOutput.writeInt(period);
 
@@ -216,7 +212,7 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long date;
+	public long time;
 	public int period;
 	public int target;
 	public long customerId;

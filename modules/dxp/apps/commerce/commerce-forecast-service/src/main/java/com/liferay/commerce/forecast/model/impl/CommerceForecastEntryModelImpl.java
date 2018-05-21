@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -74,7 +73,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "date_", Types.TIMESTAMP },
+			{ "time_", Types.BIGINT },
 			{ "period", Types.INTEGER },
 			{ "target", Types.INTEGER },
 			{ "customerId", Types.BIGINT },
@@ -90,7 +89,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("date_", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("time_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("period", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("target", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("customerId", Types.BIGINT);
@@ -98,10 +97,10 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		TABLE_COLUMNS_MAP.put("assertivity", Types.DECIMAL);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceForecastEntry (commerceForecastEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,date_ DATE null,period INTEGER,target INTEGER,customerId LONG,sku VARCHAR(75) null,assertivity DECIMAL(30, 16) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceForecastEntry (commerceForecastEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,time_ LONG,period INTEGER,target INTEGER,customerId LONG,sku VARCHAR(75) null,assertivity DECIMAL(30, 16) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceForecastEntry";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceForecastEntry.date ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceForecastEntry.date_ ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceForecastEntry.time ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceForecastEntry.time_ ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -119,7 +118,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 	public static final long PERIOD_COLUMN_BITMASK = 4L;
 	public static final long SKU_COLUMN_BITMASK = 8L;
 	public static final long TARGET_COLUMN_BITMASK = 16L;
-	public static final long DATE_COLUMN_BITMASK = 32L;
+	public static final long TIME_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.commerce.forecast.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.commerce.forecast.model.CommerceForecastEntry"));
 
@@ -166,7 +165,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("date", getDate());
+		attributes.put("time", getTime());
 		attributes.put("period", getPeriod());
 		attributes.put("target", getTarget());
 		attributes.put("customerId", getCustomerId());
@@ -218,10 +217,10 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 			setModifiedDate(modifiedDate);
 		}
 
-		Date date = (Date)attributes.get("date");
+		Long time = (Long)attributes.get("time");
 
-		if (date != null) {
-			setDate(date);
+		if (time != null) {
+			setTime(time);
 		}
 
 		Integer period = (Integer)attributes.get("period");
@@ -355,15 +354,15 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 	}
 
 	@Override
-	public Date getDate() {
-		return _date;
+	public long getTime() {
+		return _time;
 	}
 
 	@Override
-	public void setDate(Date date) {
+	public void setTime(long time) {
 		_columnBitmask = -1L;
 
-		_date = date;
+		_time = time;
 	}
 
 	@Override
@@ -504,7 +503,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		commerceForecastEntryImpl.setUserName(getUserName());
 		commerceForecastEntryImpl.setCreateDate(getCreateDate());
 		commerceForecastEntryImpl.setModifiedDate(getModifiedDate());
-		commerceForecastEntryImpl.setDate(getDate());
+		commerceForecastEntryImpl.setTime(getTime());
 		commerceForecastEntryImpl.setPeriod(getPeriod());
 		commerceForecastEntryImpl.setTarget(getTarget());
 		commerceForecastEntryImpl.setCustomerId(getCustomerId());
@@ -520,7 +519,15 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 	public int compareTo(CommerceForecastEntry commerceForecastEntry) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getDate(), commerceForecastEntry.getDate());
+		if (getTime() < commerceForecastEntry.getTime()) {
+			value = -1;
+		}
+		else if (getTime() > commerceForecastEntry.getTime()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
 
 		if (value != 0) {
 			return value;
@@ -629,14 +636,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 			commerceForecastEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		Date date = getDate();
-
-		if (date != null) {
-			commerceForecastEntryCacheModel.date = date.getTime();
-		}
-		else {
-			commerceForecastEntryCacheModel.date = Long.MIN_VALUE;
-		}
+		commerceForecastEntryCacheModel.time = getTime();
 
 		commerceForecastEntryCacheModel.period = getPeriod();
 
@@ -673,8 +673,8 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", date=");
-		sb.append(getDate());
+		sb.append(", time=");
+		sb.append(getTime());
 		sb.append(", period=");
 		sb.append(getPeriod());
 		sb.append(", target=");
@@ -723,8 +723,8 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>date</column-name><column-value><![CDATA[");
-		sb.append(getDate());
+			"<column><column-name>time</column-name><column-value><![CDATA[");
+		sb.append(getTime());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>period</column-name><column-value><![CDATA[");
@@ -765,7 +765,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private Date _date;
+	private long _time;
 	private int _period;
 	private int _originalPeriod;
 	private boolean _setOriginalPeriod;

@@ -83,8 +83,8 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 		sb.append(modifiedDate);
 		sb.append(", commerceForecastEntryId=");
 		sb.append(commerceForecastEntryId);
-		sb.append(", date=");
-		sb.append(date);
+		sb.append(", time=");
+		sb.append(time);
 		sb.append(", lowerValue=");
 		sb.append(lowerValue);
 		sb.append(", value=");
@@ -126,14 +126,7 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 		}
 
 		commerceForecastValueImpl.setCommerceForecastEntryId(commerceForecastEntryId);
-
-		if (date == Long.MIN_VALUE) {
-			commerceForecastValueImpl.setDate(null);
-		}
-		else {
-			commerceForecastValueImpl.setDate(new Date(date));
-		}
-
+		commerceForecastValueImpl.setTime(time);
 		commerceForecastValueImpl.setLowerValue(lowerValue);
 		commerceForecastValueImpl.setValue(value);
 		commerceForecastValueImpl.setUpperValue(upperValue);
@@ -156,7 +149,8 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 		modifiedDate = objectInput.readLong();
 
 		commerceForecastEntryId = objectInput.readLong();
-		date = objectInput.readLong();
+
+		time = objectInput.readLong();
 		lowerValue = (BigDecimal)objectInput.readObject();
 		value = (BigDecimal)objectInput.readObject();
 		upperValue = (BigDecimal)objectInput.readObject();
@@ -182,7 +176,8 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(commerceForecastEntryId);
-		objectOutput.writeLong(date);
+
+		objectOutput.writeLong(time);
 		objectOutput.writeObject(lowerValue);
 		objectOutput.writeObject(value);
 		objectOutput.writeObject(upperValue);
@@ -195,7 +190,7 @@ public class CommerceForecastValueCacheModel implements CacheModel<CommerceForec
 	public long createDate;
 	public long modifiedDate;
 	public long commerceForecastEntryId;
-	public long date;
+	public long time;
 	public BigDecimal lowerValue;
 	public BigDecimal value;
 	public BigDecimal upperValue;

@@ -8,7 +8,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="date" type="Date" />
+		<field name="time" type="long" />
 		<field name="period" type="int" />
 		<field name="target" type="int" />
 		<field name="customerId" type="long" />
@@ -23,7 +23,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceForecastEntryId" type="long" />
-		<field name="date" type="Date" />
+		<field name="time" type="long" />
 		<field name="lowerValue" type="BigDecimal" />
 		<field name="value" type="BigDecimal" />
 		<field name="upperValue" type="BigDecimal" />

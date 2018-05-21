@@ -27,7 +27,6 @@ import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -295,67 +294,67 @@ public class CommerceForecastValueUtil {
 	}
 
 	/**
-	* Returns the commerce forecast value where commerceForecastEntryId = &#63; and date = &#63; or throws a {@link NoSuchForecastValueException} if it could not be found.
+	* Returns the commerce forecast value where commerceForecastEntryId = &#63; and time = &#63; or throws a {@link NoSuchForecastValueException} if it could not be found.
 	*
 	* @param commerceForecastEntryId the commerce forecast entry ID
-	* @param date the date
+	* @param time the time
 	* @return the matching commerce forecast value
 	* @throws NoSuchForecastValueException if a matching commerce forecast value could not be found
 	*/
-	public static CommerceForecastValue findByC_D(
-		long commerceForecastEntryId, Date date)
+	public static CommerceForecastValue findByC_T(
+		long commerceForecastEntryId, long time)
 		throws com.liferay.commerce.forecast.exception.NoSuchForecastValueException {
-		return getPersistence().findByC_D(commerceForecastEntryId, date);
+		return getPersistence().findByC_T(commerceForecastEntryId, time);
 	}
 
 	/**
-	* Returns the commerce forecast value where commerceForecastEntryId = &#63; and date = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce forecast value where commerceForecastEntryId = &#63; and time = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param commerceForecastEntryId the commerce forecast entry ID
-	* @param date the date
+	* @param time the time
 	* @return the matching commerce forecast value, or <code>null</code> if a matching commerce forecast value could not be found
 	*/
-	public static CommerceForecastValue fetchByC_D(
-		long commerceForecastEntryId, Date date) {
-		return getPersistence().fetchByC_D(commerceForecastEntryId, date);
+	public static CommerceForecastValue fetchByC_T(
+		long commerceForecastEntryId, long time) {
+		return getPersistence().fetchByC_T(commerceForecastEntryId, time);
 	}
 
 	/**
-	* Returns the commerce forecast value where commerceForecastEntryId = &#63; and date = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce forecast value where commerceForecastEntryId = &#63; and time = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param commerceForecastEntryId the commerce forecast entry ID
-	* @param date the date
+	* @param time the time
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce forecast value, or <code>null</code> if a matching commerce forecast value could not be found
 	*/
-	public static CommerceForecastValue fetchByC_D(
-		long commerceForecastEntryId, Date date, boolean retrieveFromCache) {
+	public static CommerceForecastValue fetchByC_T(
+		long commerceForecastEntryId, long time, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_D(commerceForecastEntryId, date, retrieveFromCache);
+				   .fetchByC_T(commerceForecastEntryId, time, retrieveFromCache);
 	}
 
 	/**
-	* Removes the commerce forecast value where commerceForecastEntryId = &#63; and date = &#63; from the database.
+	* Removes the commerce forecast value where commerceForecastEntryId = &#63; and time = &#63; from the database.
 	*
 	* @param commerceForecastEntryId the commerce forecast entry ID
-	* @param date the date
+	* @param time the time
 	* @return the commerce forecast value that was removed
 	*/
-	public static CommerceForecastValue removeByC_D(
-		long commerceForecastEntryId, Date date)
+	public static CommerceForecastValue removeByC_T(
+		long commerceForecastEntryId, long time)
 		throws com.liferay.commerce.forecast.exception.NoSuchForecastValueException {
-		return getPersistence().removeByC_D(commerceForecastEntryId, date);
+		return getPersistence().removeByC_T(commerceForecastEntryId, time);
 	}
 
 	/**
-	* Returns the number of commerce forecast values where commerceForecastEntryId = &#63; and date = &#63;.
+	* Returns the number of commerce forecast values where commerceForecastEntryId = &#63; and time = &#63;.
 	*
 	* @param commerceForecastEntryId the commerce forecast entry ID
-	* @param date the date
+	* @param time the time
 	* @return the number of matching commerce forecast values
 	*/
-	public static int countByC_D(long commerceForecastEntryId, Date date) {
-		return getPersistence().countByC_D(commerceForecastEntryId, date);
+	public static int countByC_T(long commerceForecastEntryId, long time) {
+		return getPersistence().countByC_T(commerceForecastEntryId, time);
 	}
 
 	/**

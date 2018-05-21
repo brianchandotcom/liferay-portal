@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -75,7 +74,7 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceForecastEntryId", Types.BIGINT },
-			{ "date_", Types.TIMESTAMP },
+			{ "time_", Types.BIGINT },
 			{ "lowerValue", Types.DECIMAL },
 			{ "value", Types.DECIMAL },
 			{ "upperValue", Types.DECIMAL }
@@ -90,16 +89,16 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceForecastEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("date_", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("time_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lowerValue", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("value", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("upperValue", Types.DECIMAL);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceForecastValue (commerceForecastValueId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceForecastEntryId LONG,date_ DATE null,lowerValue DECIMAL(30, 16) null,value DECIMAL(30, 16) null,upperValue DECIMAL(30, 16) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceForecastValue (commerceForecastValueId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceForecastEntryId LONG,time_ LONG,lowerValue DECIMAL(30, 16) null,value DECIMAL(30, 16) null,upperValue DECIMAL(30, 16) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceForecastValue";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceForecastValue.date ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceForecastValue.date_ ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceForecastValue.time ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceForecastValue.time_ ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -113,7 +112,7 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 				"value.object.column.bitmask.enabled.com.liferay.commerce.forecast.model.CommerceForecastValue"),
 			true);
 	public static final long COMMERCEFORECASTENTRYID_COLUMN_BITMASK = 1L;
-	public static final long DATE_COLUMN_BITMASK = 2L;
+	public static final long TIME_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.commerce.forecast.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.commerce.forecast.model.CommerceForecastValue"));
 
@@ -161,7 +160,7 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceForecastEntryId", getCommerceForecastEntryId());
-		attributes.put("date", getDate());
+		attributes.put("time", getTime());
 		attributes.put("lowerValue", getLowerValue());
 		attributes.put("value", getValue());
 		attributes.put("upperValue", getUpperValue());
@@ -218,10 +217,10 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 			setCommerceForecastEntryId(commerceForecastEntryId);
 		}
 
-		Date date = (Date)attributes.get("date");
+		Long time = (Long)attributes.get("time");
 
-		if (date != null) {
-			setDate(date);
+		if (time != null) {
+			setTime(time);
 		}
 
 		BigDecimal lowerValue = (BigDecimal)attributes.get("lowerValue");
@@ -353,23 +352,25 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 	}
 
 	@Override
-	public Date getDate() {
-		return _date;
+	public long getTime() {
+		return _time;
 	}
 
 	@Override
-	public void setDate(Date date) {
+	public void setTime(long time) {
 		_columnBitmask = -1L;
 
-		if (_originalDate == null) {
-			_originalDate = _date;
+		if (!_setOriginalTime) {
+			_setOriginalTime = true;
+
+			_originalTime = _time;
 		}
 
-		_date = date;
+		_time = time;
 	}
 
-	public Date getOriginalDate() {
-		return _originalDate;
+	public long getOriginalTime() {
+		return _originalTime;
 	}
 
 	@Override
@@ -440,7 +441,7 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		commerceForecastValueImpl.setCreateDate(getCreateDate());
 		commerceForecastValueImpl.setModifiedDate(getModifiedDate());
 		commerceForecastValueImpl.setCommerceForecastEntryId(getCommerceForecastEntryId());
-		commerceForecastValueImpl.setDate(getDate());
+		commerceForecastValueImpl.setTime(getTime());
 		commerceForecastValueImpl.setLowerValue(getLowerValue());
 		commerceForecastValueImpl.setValue(getValue());
 		commerceForecastValueImpl.setUpperValue(getUpperValue());
@@ -454,7 +455,15 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 	public int compareTo(CommerceForecastValue commerceForecastValue) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getDate(), commerceForecastValue.getDate());
+		if (getTime() < commerceForecastValue.getTime()) {
+			value = -1;
+		}
+		else if (getTime() > commerceForecastValue.getTime()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
 
 		if (value != 0) {
 			return value;
@@ -510,7 +519,9 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 
 		commerceForecastValueModelImpl._setOriginalCommerceForecastEntryId = false;
 
-		commerceForecastValueModelImpl._originalDate = commerceForecastValueModelImpl._date;
+		commerceForecastValueModelImpl._originalTime = commerceForecastValueModelImpl._time;
+
+		commerceForecastValueModelImpl._setOriginalTime = false;
 
 		commerceForecastValueModelImpl._columnBitmask = 0;
 	}
@@ -553,14 +564,7 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 
 		commerceForecastValueCacheModel.commerceForecastEntryId = getCommerceForecastEntryId();
 
-		Date date = getDate();
-
-		if (date != null) {
-			commerceForecastValueCacheModel.date = date.getTime();
-		}
-		else {
-			commerceForecastValueCacheModel.date = Long.MIN_VALUE;
-		}
+		commerceForecastValueCacheModel.time = getTime();
 
 		commerceForecastValueCacheModel.lowerValue = getLowerValue();
 
@@ -589,8 +593,8 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		sb.append(getModifiedDate());
 		sb.append(", commerceForecastEntryId=");
 		sb.append(getCommerceForecastEntryId());
-		sb.append(", date=");
-		sb.append(getDate());
+		sb.append(", time=");
+		sb.append(getTime());
 		sb.append(", lowerValue=");
 		sb.append(getLowerValue());
 		sb.append(", value=");
@@ -639,8 +643,8 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 		sb.append(getCommerceForecastEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>date</column-name><column-value><![CDATA[");
-		sb.append(getDate());
+			"<column><column-name>time</column-name><column-value><![CDATA[");
+		sb.append(getTime());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>lowerValue</column-name><column-value><![CDATA[");
@@ -674,8 +678,9 @@ public class CommerceForecastValueModelImpl extends BaseModelImpl<CommerceForeca
 	private long _commerceForecastEntryId;
 	private long _originalCommerceForecastEntryId;
 	private boolean _setOriginalCommerceForecastEntryId;
-	private Date _date;
-	private Date _originalDate;
+	private long _time;
+	private long _originalTime;
+	private boolean _setOriginalTime;
 	private BigDecimal _lowerValue;
 	private BigDecimal _value;
 	private BigDecimal _upperValue;

@@ -38,7 +38,6 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,7 +74,7 @@ public interface CommerceForecastEntryLocalService extends BaseLocalService,
 		CommerceForecastEntry commerceForecastEntry);
 
 	public CommerceForecastEntry addCommerceForecastEntry(long companyId,
-		long userId, Date date, int period, int target, long customerId,
+		long userId, long time, int period, int target, long customerId,
 		String sku, BigDecimal assertivity) throws PortalException;
 
 	/**
@@ -180,6 +179,10 @@ public interface CommerceForecastEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceForecastEntry fetchCommerceForecastEntry(
 		long commerceForecastEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceForecastEntry fetchCommerceForecastEntry(long companyId,
+		int period, int target, long customerId, String sku);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

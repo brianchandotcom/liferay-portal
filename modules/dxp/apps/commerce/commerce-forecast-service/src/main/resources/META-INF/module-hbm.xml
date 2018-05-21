@@ -13,7 +13,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property column="date_" name="date" type="org.hibernate.type.TimestampType" />
+		<property column="time_" name="time" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="period" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="target" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="customerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -30,7 +30,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="commerceForecastEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property column="date_" name="date" type="org.hibernate.type.TimestampType" />
+		<property column="time_" name="time" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lowerValue" type="org.hibernate.type.BigDecimalType" />
 		<property name="value" type="org.hibernate.type.BigDecimalType" />
 		<property name="upperValue" type="org.hibernate.type.BigDecimalType" />

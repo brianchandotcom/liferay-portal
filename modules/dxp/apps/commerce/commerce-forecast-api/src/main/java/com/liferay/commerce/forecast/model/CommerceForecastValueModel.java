@@ -193,18 +193,18 @@ public interface CommerceForecastValueModel extends AuditedModel,
 	public void setCommerceForecastEntryId(long commerceForecastEntryId);
 
 	/**
-	 * Returns the date of this commerce forecast value.
+	 * Returns the time of this commerce forecast value.
 	 *
-	 * @return the date of this commerce forecast value
+	 * @return the time of this commerce forecast value
 	 */
-	public Date getDate();
+	public long getTime();
 
 	/**
-	 * Sets the date of this commerce forecast value.
+	 * Sets the time of this commerce forecast value.
 	 *
-	 * @param date the date of this commerce forecast value
+	 * @param time the time of this commerce forecast value
 	 */
-	public void setDate(Date date);
+	public void setTime(long time);
 
 	/**
 	 * Returns the lower value of this commerce forecast value.

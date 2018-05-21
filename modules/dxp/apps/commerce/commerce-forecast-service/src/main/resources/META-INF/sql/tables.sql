@@ -5,7 +5,7 @@ create table CommerceForecastEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	date_ DATE null,
+	time_ LONG,
 	period INTEGER,
 	target INTEGER,
 	customerId LONG,
@@ -21,7 +21,7 @@ create table CommerceForecastValue (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceForecastEntryId LONG,
-	date_ DATE null,
+	time_ LONG,
 	lowerValue DECIMAL(30, 16) null,
 	value DECIMAL(30, 16) null,
 	upperValue DECIMAL(30, 16) null

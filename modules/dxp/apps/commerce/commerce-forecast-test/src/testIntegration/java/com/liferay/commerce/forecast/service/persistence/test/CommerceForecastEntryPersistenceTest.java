@@ -136,7 +136,7 @@ public class CommerceForecastEntryPersistenceTest {
 
 		newCommerceForecastEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommerceForecastEntry.setDate(RandomTestUtil.nextDate());
+		newCommerceForecastEntry.setTime(RandomTestUtil.nextLong());
 
 		newCommerceForecastEntry.setPeriod(RandomTestUtil.nextInt());
 
@@ -168,9 +168,8 @@ public class CommerceForecastEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceForecastEntry.getModifiedDate()),
 			Time.getShortTimestamp(newCommerceForecastEntry.getModifiedDate()));
-		Assert.assertEquals(Time.getShortTimestamp(
-				existingCommerceForecastEntry.getDate()),
-			Time.getShortTimestamp(newCommerceForecastEntry.getDate()));
+		Assert.assertEquals(existingCommerceForecastEntry.getTime(),
+			newCommerceForecastEntry.getTime());
 		Assert.assertEquals(existingCommerceForecastEntry.getPeriod(),
 			newCommerceForecastEntry.getPeriod());
 		Assert.assertEquals(existingCommerceForecastEntry.getTarget(),
@@ -227,7 +226,7 @@ public class CommerceForecastEntryPersistenceTest {
 	protected OrderByComparator<CommerceForecastEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CommerceForecastEntry",
 			"commerceForecastEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "date",
+			"userName", true, "createDate", true, "modifiedDate", true, "time",
 			true, "period", true, "target", true, "customerId", true, "sku",
 			true, "assertivity", true);
 	}
@@ -480,7 +479,7 @@ public class CommerceForecastEntryPersistenceTest {
 
 		commerceForecastEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		commerceForecastEntry.setDate(RandomTestUtil.nextDate());
+		commerceForecastEntry.setTime(RandomTestUtil.nextLong());
 
 		commerceForecastEntry.setPeriod(RandomTestUtil.nextInt());
 

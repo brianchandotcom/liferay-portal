@@ -68,7 +68,7 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceForecastEntryId", getCommerceForecastEntryId());
-		attributes.put("date", getDate());
+		attributes.put("time", getTime());
 		attributes.put("lowerValue", getLowerValue());
 		attributes.put("value", getValue());
 		attributes.put("upperValue", getUpperValue());
@@ -122,10 +122,10 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 			setCommerceForecastEntryId(commerceForecastEntryId);
 		}
 
-		Date date = (Date)attributes.get("date");
+		Long time = (Long)attributes.get("time");
 
-		if (date != null) {
-			setDate(date);
+		if (time != null) {
+			setTime(time);
 		}
 
 		BigDecimal lowerValue = (BigDecimal)attributes.get("lowerValue");
@@ -197,16 +197,6 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 		return _commerceForecastValue.getCreateDate();
 	}
 
-	/**
-	* Returns the date of this commerce forecast value.
-	*
-	* @return the date of this commerce forecast value
-	*/
-	@Override
-	public Date getDate() {
-		return _commerceForecastValue.getDate();
-	}
-
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceForecastValue.getExpandoBridge();
@@ -245,6 +235,16 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commerceForecastValue.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the time of this commerce forecast value.
+	*
+	* @return the time of this commerce forecast value
+	*/
+	@Override
+	public long getTime() {
+		return _commerceForecastValue.getTime();
 	}
 
 	/**
@@ -367,16 +367,6 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 		_commerceForecastValue.setCreateDate(createDate);
 	}
 
-	/**
-	* Sets the date of this commerce forecast value.
-	*
-	* @param date the date of this commerce forecast value
-	*/
-	@Override
-	public void setDate(Date date) {
-		_commerceForecastValue.setDate(date);
-	}
-
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
@@ -431,6 +421,16 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceForecastValue.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the time of this commerce forecast value.
+	*
+	* @param time the time of this commerce forecast value
+	*/
+	@Override
+	public void setTime(long time) {
+		_commerceForecastValue.setTime(time);
 	}
 
 	/**

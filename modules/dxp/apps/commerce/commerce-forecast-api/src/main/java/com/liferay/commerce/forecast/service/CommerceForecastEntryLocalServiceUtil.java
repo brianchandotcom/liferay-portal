@@ -55,12 +55,11 @@ public class CommerceForecastEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.forecast.model.CommerceForecastEntry addCommerceForecastEntry(
-		long companyId, long userId, java.util.Date date, int period,
-		int target, long customerId, String sku,
-		java.math.BigDecimal assertivity)
+		long companyId, long userId, long time, int period, int target,
+		long customerId, String sku, java.math.BigDecimal assertivity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceForecastEntry(companyId, userId, date, period,
+				   .addCommerceForecastEntry(companyId, userId, time, period,
 			target, customerId, sku, assertivity);
 	}
 
@@ -193,6 +192,13 @@ public class CommerceForecastEntryLocalServiceUtil {
 	public static com.liferay.commerce.forecast.model.CommerceForecastEntry fetchCommerceForecastEntry(
 		long commerceForecastEntryId) {
 		return getService().fetchCommerceForecastEntry(commerceForecastEntryId);
+	}
+
+	public static com.liferay.commerce.forecast.model.CommerceForecastEntry fetchCommerceForecastEntry(
+		long companyId, int period, int target, long customerId, String sku) {
+		return getService()
+				   .fetchCommerceForecastEntry(companyId, period, target,
+			customerId, sku);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {

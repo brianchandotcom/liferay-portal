@@ -2,7 +2,7 @@ apply plugin: "com.liferay.lang.merger"
 
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.taglib", version: "2.0.0"
-	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20180131.001308-11"
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "3.0.0-20180521.175836-1"
 	compileOnly group: "com.liferay", name: "com.liferay.item.selector.api", version: "3.0.0-20180504.145214-1"
 	compileOnly group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"

@@ -3,7 +3,7 @@ dependencies {
 	compileInclude group: "com.paypal.sdk", name: "rest-api-sdk", version: "1.14.0"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20170731.162128-3"
+	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "3.0.0-20180521.175836-1"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180518.171544-8"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"

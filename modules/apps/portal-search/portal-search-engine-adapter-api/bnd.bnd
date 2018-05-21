@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Portal Search Engine Adapter API
+Bundle-SymbolicName: com.liferay.portal.search.engine.adapter.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.engine.adapter,\
+	com.liferay.portal.search.engine.adapter.cluster,\
+	com.liferay.portal.search.engine.adapter.document,\
+	com.liferay.portal.search.engine.adapter.index,\
+	com.liferay.portal.search.engine.adapter.search
+Import-Package:\
+	com.liferay.portal.kernel.search;version="[7.1.0,8)",\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Search

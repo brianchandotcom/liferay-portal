@@ -32,13 +32,15 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
+
 import headless.account.apio.internal.form.AccountForm;
 import headless.account.apio.internal.security.AccountPermissionChecker;
 import headless.account.apio.internal.util.AccountHelper;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -55,8 +57,7 @@ public class AccountCollectionResource
 			this::_getPageItems, Company.class
 		).addCreator(
 			this::_addAccount, Company.class,
-			_accountPermissionChecker::forAdding,
-			AccountForm::buildForm
+			_accountPermissionChecker::forAdding, AccountForm::buildForm
 		).build();
 	}
 
@@ -76,8 +77,7 @@ public class AccountCollectionResource
 			_accountPermissionChecker.forDeleting()
 		).addUpdater(
 			this::_updateAccount, Company.class,
-			_accountPermissionChecker.forUpdating(),
-			AccountForm::buildForm
+			_accountPermissionChecker.forUpdating(), AccountForm::buildForm
 		).build();
 	}
 
@@ -100,7 +100,7 @@ public class AccountCollectionResource
 
 	private Organization _addAccount(
 			AccountForm accountCreateForm, Company company)
-			throws Exception {
+		throws Exception {
 
 		Organization organization = _accountHelper.createOrganization(
 			accountCreateForm.getName());
@@ -154,12 +154,12 @@ public class AccountCollectionResource
 	private AccountHelper _accountHelper;
 
 	@Reference
+	private AccountPermissionChecker _accountPermissionChecker;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private OrganizationService _organizationService;
-
-	@Reference
-	private AccountPermissionChecker _accountPermissionChecker;
 
 }

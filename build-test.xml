@@ -8068,7 +8068,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 							dir="${app.server.websphere.dir}"
 						>
 							<include name="bin/**/*.sh" />
-							<include name="java*/bin/*" />
+							<include name="java*/**/bin/*" />
 						</fileset>
 					</chmod>
 				</then>

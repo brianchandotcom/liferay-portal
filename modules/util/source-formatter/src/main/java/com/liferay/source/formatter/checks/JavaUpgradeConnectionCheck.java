@@ -50,11 +50,6 @@ import java.util.regex.Pattern;
 public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 	@Override
-	public void init() throws Exception {
-		_upgradeAbsolutePaths.addAll(_getUpgradeAbsolutePaths());
-	}
-
-	@Override
 	public boolean isPortalCheck() {
 		return true;
 	}
@@ -180,7 +175,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 					}
 				}
 
-				for (String s : _upgradeAbsolutePaths) {
+				for (String s : _getUpgradeAbsolutePaths()) {
 					if (s.endsWith(relativePath + ".java")) {
 						upgradeAbsolutePath = s;
 
@@ -200,10 +195,16 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 	}
 
 	private List<String> _getUpgradeAbsolutePaths() throws Exception {
+		if (_upgradeAbsolutePaths != null) {
+			return _upgradeAbsolutePaths;
+		}
+
 		File portalDir = getPortalDir();
 
 		if (portalDir == null) {
-			return Collections.emptyList();
+			_upgradeAbsolutePaths = Collections.emptyList();
+
+			return _upgradeAbsolutePaths;
 		}
 
 		final List<String> upgradeAbsolutePaths = new ArrayList<>();
@@ -243,7 +244,9 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 			});
 
-		return upgradeAbsolutePaths;
+		_upgradeAbsolutePaths = upgradeAbsolutePaths;
+
+		return _upgradeAbsolutePaths;
 	}
 
 	private String _getUpgradeContent(String absolutePath) throws Exception {
@@ -271,7 +274,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 	private static final Pattern _extendedClassPattern = Pattern.compile(
 		"\\sextends\\s+([\\w\\.]+)\\W");
 
-	private final List<String> _upgradeAbsolutePaths = new ArrayList<>();
+	private List<String> _upgradeAbsolutePaths;
 	private final Map<String, String> _upgradeContentsMap = new HashMap<>();
 
 }

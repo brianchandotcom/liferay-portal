@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -88,7 +89,7 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 
 		sb.append(name);
 		sb.append(CharPool.EQUAL);
-		sb.append(_http.encodeURL(value));
+		sb.append(URLCodec.encodeURL(value));
 		sb.append(CharPool.AMPERSAND);
 	}
 

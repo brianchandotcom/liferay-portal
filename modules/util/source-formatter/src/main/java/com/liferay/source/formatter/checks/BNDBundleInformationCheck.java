@@ -63,13 +63,15 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 			String strippedBundleName = StringUtil.removeChars(
 				bundleName, CharPool.DASH, CharPool.SPACE);
 
-			strippedBundleName = strippedBundleName.replaceAll(
-				"Implementation$", "Impl");
-			strippedBundleName = strippedBundleName.replaceAll(
-				"Utilities$", "Util");
+			String expectedBundleName = "liferay" + moduleName;
 
-			String expectedBundleName =
-				"liferay" + StringUtil.removeChars(moduleName, CharPool.DASH);
+			expectedBundleName = expectedBundleName.replaceAll(
+				"-impl$", "implementation");
+			expectedBundleName = expectedBundleName.replaceAll(
+				"-util$", "utilities");
+
+			expectedBundleName = StringUtil.removeChars(
+				expectedBundleName, CharPool.DASH);
 
 			if (!StringUtil.equalsIgnoreCase(
 					strippedBundleName, expectedBundleName)) {

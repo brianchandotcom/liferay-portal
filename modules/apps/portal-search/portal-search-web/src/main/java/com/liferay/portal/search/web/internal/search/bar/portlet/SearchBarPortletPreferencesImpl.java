@@ -82,6 +82,14 @@ public class SearchBarPortletPreferencesImpl
 		return searchScopePreference.getPreferenceString();
 	}
 
+	@Override
+	public boolean isUseAdvancedSearchSyntax() {
+		return _portletPreferencesHelper.getBoolean(
+			SearchBarPortletPreferences.
+				PREFERENCE_KEY_USE_ADVANCED_SEARCH_SYNTAX,
+			false);
+	}
+
 	private final PortletPreferencesHelper _portletPreferencesHelper;
 
 }

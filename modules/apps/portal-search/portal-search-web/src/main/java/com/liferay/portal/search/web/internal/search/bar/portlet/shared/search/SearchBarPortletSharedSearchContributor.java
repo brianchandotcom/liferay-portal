@@ -16,9 +16,11 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.search.web.internal.display.context.Keywords;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
@@ -110,19 +112,48 @@ public class SearchBarPortletSharedSearchContributor
 			searchScope -> getScopeGroupId(portletSharedSearchSettings));
 	}
 
+	protected boolean isLuceneSyntax(
+		SearchBarPortletPreferences searchBarPortletPreferences,
+		Keywords keywords) {
+
+		if (searchBarPortletPreferences.isUseAdvancedSearchSyntax() ||
+			keywords.isLuceneSyntax()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void setKeywords(
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		Optional<String> parameterValueOptional =
-			portletSharedSearchSettings.getParameter(
-				searchBarPortletPreferences.getKeywordsParameterName());
+		Optional<String> optional = portletSharedSearchSettings.getParameter(
+			searchBarPortletPreferences.getKeywordsParameterName());
 
-		parameterValueOptional.ifPresent(
-			portletSharedSearchSettings::setKeywords);
+		optional.ifPresent(
+			value -> {
+				Keywords keywords = new Keywords(value);
+
+				portletSharedSearchSettings.setKeywords(keywords.getKeywords());
+
+				if (isLuceneSyntax(searchBarPortletPreferences, keywords)) {
+					setLuceneSyntax(portletSharedSearchSettings);
+				}
+			});
 
 		portletSharedSearchSettings.setKeywordsParameterName(
 			searchBarPortletPreferences.getKeywordsParameterName());
+	}
+
+	protected void setLuceneSyntax(
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		SearchContext searchContext =
+			portletSharedSearchSettings.getSearchContext();
+
+		searchContext.setAttribute("luceneSyntax", Boolean.TRUE);
 	}
 
 }

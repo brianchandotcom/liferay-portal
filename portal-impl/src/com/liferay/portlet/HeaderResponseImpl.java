@@ -226,7 +226,8 @@ public class HeaderResponseImpl
 	}
 
 	private void _addDependencyToHead(
-		String name, String scope, String version, StringBundler markupSB) {
+		String name, String scope, String version,
+		ParsedElement parsedElement) {
 
 		if (Validator.isNull(scope)) {
 			scope = StringPool.BLANK;
@@ -291,7 +292,8 @@ public class HeaderResponseImpl
 		String outputKey = sb.toString();
 
 		if (!outputKeys.contains(outputKey)) {
-			outputData.addData(outputKey, WebKeys.PAGE_TOP, markupSB);
+			outputData.addData(
+				outputKey, WebKeys.PAGE_TOP, parsedElement.toStringBundler());
 
 			outputData.addOutputKey(outputKey);
 		}
@@ -307,30 +309,7 @@ public class HeaderResponseImpl
 		List<ParsedElement> parsedElements = _parseElements(xml);
 
 		for (ParsedElement parsedElement : parsedElements) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(StringPool.LESS_THAN);
-			sb.append(parsedElement.getName());
-
-			Map<String, String> attributes = parsedElement.getAttributes();
-
-			for (Map.Entry<String, String> entry : attributes.entrySet()) {
-				sb.append(StringPool.SPACE);
-				sb.append(entry.getKey());
-				sb.append(StringPool.EQUAL);
-				sb.append(StringPool.QUOTE);
-				sb.append(entry.getValue());
-				sb.append(StringPool.QUOTE);
-			}
-
-			sb.append(StringPool.GREATER_THAN);
-			sb.append(parsedElement.getText());
-			sb.append(StringPool.LESS_THAN);
-			sb.append(StringPool.FORWARD_SLASH);
-			sb.append(parsedElement.getName());
-			sb.append(StringPool.GREATER_THAN);
-
-			_addDependencyToHead(name, scope, null, sb);
+			_addDependencyToHead(name, scope, null, parsedElement);
 		}
 	}
 
@@ -409,16 +388,29 @@ public class HeaderResponseImpl
 
 	private static class ParsedElement {
 
-		public Map<String, String> getAttributes() {
-			return _attributes;
-		}
+		public StringBundler toStringBundler() {
+			StringBundler sb = new StringBundler();
 
-		public String getName() {
-			return _name;
-		}
+			sb.append(StringPool.LESS_THAN);
+			sb.append(_name);
 
-		public String getText() {
-			return _text;
+			for (Map.Entry<String, String> entry : _attributes.entrySet()) {
+				sb.append(StringPool.SPACE);
+				sb.append(entry.getKey());
+				sb.append(StringPool.EQUAL);
+				sb.append(StringPool.QUOTE);
+				sb.append(entry.getValue());
+				sb.append(StringPool.QUOTE);
+			}
+
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(_text);
+			sb.append(StringPool.LESS_THAN);
+			sb.append(StringPool.FORWARD_SLASH);
+			sb.append(_name);
+			sb.append(StringPool.GREATER_THAN);
+
+			return sb;
 		}
 
 		private ParsedElement(

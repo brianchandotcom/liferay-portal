@@ -114,10 +114,6 @@ public class HeaderResponseImpl
 		return _portletOutputStream;
 	}
 
-	public String getTitle() {
-		return _title;
-	}
-
 	@Override
 	public PrintWriter getWriter() {
 		if (_calledGetPortletOutputStream) {
@@ -195,7 +191,6 @@ public class HeaderResponseImpl
 
 	@Override
 	public void setTitle(String title) {
-		_title = title;
 
 		// See LEP-2188
 
@@ -204,7 +199,7 @@ public class HeaderResponseImpl
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		portletDisplay.setTitle(_title);
+		portletDisplay.setTitle(title);
 	}
 
 	public void writeToHead() {
@@ -371,7 +366,6 @@ public class HeaderResponseImpl
 	private boolean _calledGetWriter;
 	private OutputStream _portletOutputStream;
 	private PrintWriter _printWriter;
-	private String _title;
 
 	private static class ParsedElement {
 

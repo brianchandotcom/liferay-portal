@@ -69,11 +69,10 @@ public class BatchIndexingHelperImplBulkSizesTest {
 		assertBulkSize(10000, entryClassName2);
 	}
 
-	protected void activate(String... batchIndexingBulkSizes) {
+	protected void activate(String... indexingBatchSizes) {
 		_batchIndexingHelperImpl.activate(
 			Collections.singletonMap(
-				"batchIndexingBulkSizes",
-				Arrays.asList(batchIndexingBulkSizes)));
+				"indexingBatchSizes", Arrays.asList(indexingBatchSizes)));
 	}
 
 	protected void activateWithoutConfiguration() {

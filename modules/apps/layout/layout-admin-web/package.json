@@ -20,6 +20,7 @@
 		"metal-debounce": "^2.0.0",
 		"metal-dom": "^2.5.18",
 		"metal-events": "^2.13.2",
+		"metal-position": "^2.1.1",
 		"metal-soy": "^2.13.2",
 		"metal-state": "^2.13.2",
 		"metal-uri": "^3.1.0"

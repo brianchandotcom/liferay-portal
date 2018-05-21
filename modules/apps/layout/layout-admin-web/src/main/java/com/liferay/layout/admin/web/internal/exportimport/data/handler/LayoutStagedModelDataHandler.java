@@ -124,7 +124,7 @@ public class LayoutStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Layout.class.getName()};
 
 	@Override
-	public void deleteStagedModel(Layout layout) {
+	public void deleteStagedModel(Layout layout) throws PortalException {
 		_layoutLocalService.deleteLayout(layout);
 	}
 

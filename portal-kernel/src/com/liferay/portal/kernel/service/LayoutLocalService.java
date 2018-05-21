@@ -203,9 +203,10 @@ public interface LayoutLocalService extends BaseLocalService,
 	*
 	* @param layout the layout
 	* @return the layout that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public Layout deleteLayout(Layout layout);
+	public Layout deleteLayout(Layout layout) throws PortalException;
 
 	/**
 	* Deletes the layout, its child layouts, and its associated resources.

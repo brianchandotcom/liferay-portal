@@ -180,10 +180,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*
 	* @param layout the layout
 	* @return the layout that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.Layout deleteLayout(
-		com.liferay.portal.kernel.model.Layout layout) {
+		com.liferay.portal.kernel.model.Layout layout)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.deleteLayout(layout);
 	}
 

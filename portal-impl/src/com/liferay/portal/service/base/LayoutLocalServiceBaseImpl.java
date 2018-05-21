@@ -152,10 +152,11 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param layout the layout
 	 * @return the layout that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Layout deleteLayout(Layout layout) {
+	public Layout deleteLayout(Layout layout) throws PortalException {
 		return layoutPersistence.remove(layout);
 	}
 

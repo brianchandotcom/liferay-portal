@@ -187,9 +187,11 @@ public class LayoutLocalServiceUtil {
 	*
 	* @param layout the layout
 	* @return the layout that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.portal.kernel.model.Layout deleteLayout(
-		com.liferay.portal.kernel.model.Layout layout) {
+		com.liferay.portal.kernel.model.Layout layout)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteLayout(layout);
 	}
 

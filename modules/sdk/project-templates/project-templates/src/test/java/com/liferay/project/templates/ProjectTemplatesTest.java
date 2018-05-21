@@ -1154,7 +1154,7 @@ public class ProjectTemplatesTest {
 			"foo=Foo");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"social-bookmark", "foo", "com.liferay", "-DclassName=Foo",
+			"social-bookmark", "foo", "com.test", "-DclassName=Foo",
 			"-Dpackage=com.liferay.test", "-DliferayVersion=7.1");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);

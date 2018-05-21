@@ -427,7 +427,7 @@ public class AssetTagsDisplayContext {
 				AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
 				themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG)) {
 
-			return true;
+			return isShowTagsActionMenu();
 		}
 
 		return false;

@@ -49,7 +49,7 @@ request.setAttribute("view.jsp-showSearch", false);
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 
 <%@ include file="/definition_breadcrumb.jspf" %>

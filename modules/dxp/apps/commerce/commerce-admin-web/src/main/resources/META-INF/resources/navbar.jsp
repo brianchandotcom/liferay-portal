@@ -49,5 +49,5 @@ for (Map.Entry<String, CommerceAdminModule> entry : commerceAdminModules.entrySe
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= navigationItems %>"
+	navigationItems="<%= navigationItems %>"
 />

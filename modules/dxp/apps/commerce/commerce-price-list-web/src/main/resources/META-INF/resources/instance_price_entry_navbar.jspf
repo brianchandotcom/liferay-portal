@@ -50,5 +50,5 @@ instancePriceEntryNavigationItems.add(tierPriceEntryNavigationItem);
 
 <clay:navigation-bar
 	inverted="<%= false %>"
-	items="<%= instancePriceEntryNavigationItems %>"
+	navigationItems="<%= instancePriceEntryNavigationItems %>"
 />

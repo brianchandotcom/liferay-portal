@@ -24,7 +24,7 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= commerceOrderListDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= commerceOrderListDisplayContext.getNavigationItems() %>"
 />
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />

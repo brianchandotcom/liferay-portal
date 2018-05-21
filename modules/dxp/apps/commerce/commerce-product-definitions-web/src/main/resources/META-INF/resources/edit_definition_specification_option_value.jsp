@@ -51,7 +51,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 
 <%@ include file="/breadcrumb.jspf" %>

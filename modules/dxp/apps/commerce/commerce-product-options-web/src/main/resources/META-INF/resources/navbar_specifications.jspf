@@ -41,5 +41,5 @@ navigationItems.add(cpSpecificationOptionsNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	navigationItems="<%= navigationItems %>"
 />

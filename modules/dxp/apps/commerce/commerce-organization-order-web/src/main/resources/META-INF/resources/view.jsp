@@ -30,7 +30,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 		<portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
 
 		<clay:navigation-bar
-			items="<%= commerceOrganizationOrderDisplayContext.getNavigationItems() %>"
+			navigationItems="<%= commerceOrganizationOrderDisplayContext.getNavigationItems() %>"
 		/>
 
 		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />

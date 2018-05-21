@@ -22,7 +22,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+	navigationItems="<%= CPNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
 />
 
 <%
@@ -34,7 +34,7 @@ navigationItem.setLabel(LanguageUtil.get(request, "option-templates"));
 %>
 
 <clay:navigation-bar
-	items="<%= Collections.singletonList(navigationItem) %>"
+	navigationItems="<%= Collections.singletonList(navigationItem) %>"
 />
 
 <div class="container-fluid-1280" id="<portlet:namespace />CPOptionsEditor">

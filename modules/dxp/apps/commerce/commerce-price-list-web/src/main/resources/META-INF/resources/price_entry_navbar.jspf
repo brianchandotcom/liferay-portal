@@ -48,5 +48,5 @@ priceEntryNavigationItems.add(tierPriceEntriesNavigationItem);
 
 <clay:navigation-bar
 	inverted="<%= false %>"
-	items="<%= priceEntryNavigationItems %>"
+	navigationItems="<%= priceEntryNavigationItems %>"
 />

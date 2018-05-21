@@ -29,5 +29,5 @@ priceListNavigationItem.setLabel(LanguageUtil.get(request, "price-lists"));
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= Collections.singletonList(priceListNavigationItem) %>"
+	navigationItems="<%= Collections.singletonList(priceListNavigationItem) %>"
 />

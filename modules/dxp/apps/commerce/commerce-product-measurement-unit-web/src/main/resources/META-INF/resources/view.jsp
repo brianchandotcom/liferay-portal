@@ -28,7 +28,7 @@ boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.cont
 
 <clay:navigation-bar
 	inverted="<%= false %>"
-	items="<%= cpMeasurementUnitsDisplayContext.getNavigationItems() %>"
+	navigationItems="<%= cpMeasurementUnitsDisplayContext.getNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

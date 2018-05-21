@@ -42,5 +42,5 @@ catalogNavigationItems.add(cpInstancesCatalogNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= catalogNavigationItems %>"
+	navigationItems="<%= catalogNavigationItems %>"
 />

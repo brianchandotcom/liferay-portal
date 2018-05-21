@@ -87,48 +87,32 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetEntries() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long classNameId = PortalUtil.getClassNameId(
-				"com.liferay.portlet.journal.model.JournalArticle");
+		StringBundler sb = new StringBundler(11);
 
-			StringBundler sb = new StringBundler(10);
+		sb.append("update AssetEntry set listable = ? where classNameId = ? ");
+		sb.append("and classPK in (select JournalArticle.resourcePrimKey as ");
+		sb.append("resourcePrimKey from (select ");
+		sb.append("JournalArticle.resourcePrimKey as primKey, ");
+		sb.append("max(JournalArticle.version) as maxVersion from ");
+		sb.append("JournalArticle group by JournalArticle.resourcePrimKey) ");
+		sb.append("temp_table inner join JournalArticle on ");
+		sb.append("(JournalArticle.indexable = ?) and (JournalArticle.status ");
+		sb.append("= 0) and (JournalArticle.resourcePrimKey = ");
+		sb.append("temp_table.primKey) and (JournalArticle.version = ");
+		sb.append("temp_table.maxVersion))");
 
-			sb.append("select JournalArticle.resourcePrimKey as ");
-			sb.append("resourcePrimKey from (select ");
-			sb.append("JournalArticle.resourcePrimKey as primKey, ");
-			sb.append("max(JournalArticle.version) as maxVersion from ");
-			sb.append("JournalArticle group by ");
-			sb.append("JournalArticle.resourcePrimKey) temp_table inner join ");
-			sb.append("JournalArticle on (JournalArticle.indexable = ?) and ");
-			sb.append("(JournalArticle.status = 0) and ");
-			sb.append("(JournalArticle.resourcePrimKey = temp_table.primKey) ");
-			sb.append("and (JournalArticle.version = temp_table.maxVersion)");
+		long classNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.journal.model.JournalArticle");
 
-			try (PreparedStatement ps1 = connection.prepareStatement(
-					sb.toString())) {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps1 = connection.prepareStatement(
+				sb.toString())) {
 
-				ps1.setBoolean(1, false);
+			ps1.setBoolean(1, false);
+			ps1.setLong(2, classNameId);
+			ps1.setBoolean(3, false);
 
-				try (PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-							connection,
-							"update AssetEntry set listable = ? where " +
-								"classNameId = ? and classPK = ?");
-					ResultSet rs = ps1.executeQuery()) {
-
-					while (rs.next()) {
-						long classPK = rs.getLong("resourcePrimKey");
-
-						ps2.setBoolean(1, false);
-						ps2.setLong(2, classNameId);
-						ps2.setLong(3, classPK);
-
-						ps2.addBatch();
-					}
-
-					ps2.executeBatch();
-				}
-			}
+			ps1.execute();
 		}
 	}
 

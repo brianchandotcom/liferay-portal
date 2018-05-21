@@ -25,17 +25,15 @@ import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.commerce.headless.account.apio.identifier.AccountIdentifier;
 import com.liferay.commerce.headless.user.apio.identifier.UserIdentifier;
-import com.liferay.person.apio.identifier.PersonIdentifier;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
 import headless.account.apio.internal.form.AccountForm;
+import headless.account.apio.internal.security.AccountPermissionChecker;
 import headless.account.apio.internal.util.AccountHelper;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,7 +55,8 @@ public class AccountCollectionResource
 			this::_getPageItems, Company.class
 		).addCreator(
 			this::_addAccount, Company.class,
-			credentials -> true, AccountForm::buildForm
+			_accountPermissionChecker::forAdding,
+			AccountForm::buildForm
 		).build();
 	}
 
@@ -74,10 +73,11 @@ public class AccountCollectionResource
 			_organizationService::getOrganization
 		).addRemover(
 			idempotent(_organizationService::deleteOrganization),
-			_hasPermission.forDeleting(Organization.class)
+			_accountPermissionChecker.forDeleting()
 		).addUpdater(
 			this::_updateAccount, Company.class,
-			(credentials, s) -> true, AccountForm::buildForm
+			_accountPermissionChecker.forUpdating(),
+			AccountForm::buildForm
 		).build();
 	}
 
@@ -100,7 +100,7 @@ public class AccountCollectionResource
 
 	private Organization _addAccount(
 			AccountForm accountCreateForm, Company company)
-		throws PortalException {
+			throws Exception {
 
 		Organization organization = _accountHelper.createOrganization(
 			accountCreateForm.getName());
@@ -157,12 +157,9 @@ public class AccountCollectionResource
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private HasPermission _hasPermission;
-
-	@Reference
 	private OrganizationService _organizationService;
 
 	@Reference
-	private UserLocalService _userLocalService;
+	private AccountPermissionChecker _accountPermissionChecker;
 
 }

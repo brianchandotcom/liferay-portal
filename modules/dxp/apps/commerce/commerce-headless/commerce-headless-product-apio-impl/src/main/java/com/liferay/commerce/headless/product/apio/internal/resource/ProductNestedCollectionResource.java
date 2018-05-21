@@ -80,7 +80,8 @@ public class ProductNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCPDefinition, (credentials, s) -> true,
+			this::_addCPDefinition,
+			_hasPermission.forAddingEntries(CPDefinition.class),
 			ProductCreatorForm::buildForm
 		).build();
 	}

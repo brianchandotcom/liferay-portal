@@ -25,6 +25,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.commerce.headless.user.apio.identifier.RoleIdentifier;
 import com.liferay.commerce.headless.user.apio.identifier.UserIdentifier;
 import com.liferay.commerce.headless.user.apio.internal.form.RoleForm;
+import com.liferay.commerce.headless.user.apio.internal.security.RolePermissionChecker;
 import com.liferay.commerce.headless.user.apio.internal.util.RoleHelper;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,7 +53,8 @@ public class RoleCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addRole, s -> true, RoleForm::buildForm
+			this::_addRole, _rolePermissionChecker::forAdding,
+			RoleForm::buildForm
 		).build();
 	}
 
@@ -69,9 +71,9 @@ public class RoleCollectionResource
 			this::_getRole
 		).addRemover(
 			idempotent(_roleLocalService::deleteRole),
-			_hasPermission.forDeleting(Role.class)
+			_rolePermissionChecker.forDeleting()
 		).addUpdater(
-			this::_updateRole, _hasPermission.forUpdating(Role.class),
+			this::_updateRole, _rolePermissionChecker.forUpdating(),
 			RoleForm::buildForm
 		).build();
 	}
@@ -139,12 +141,15 @@ public class RoleCollectionResource
 	}
 
 	@Reference
-	private HasPermission _hasPermission;
+	private RolePermissionChecker _roRolePermissionChecker;
 
 	@Reference
 	private RoleHelper _roleHelper;
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private RolePermissionChecker _rolePermissionChecker;
 
 }

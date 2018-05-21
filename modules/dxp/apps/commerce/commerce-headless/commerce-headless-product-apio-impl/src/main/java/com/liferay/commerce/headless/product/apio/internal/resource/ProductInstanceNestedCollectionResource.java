@@ -30,6 +30,7 @@ import com.liferay.commerce.headless.product.apio.internal.util.ProductIndexerHe
 import com.liferay.commerce.headless.product.apio.internal.util.ProductInstanceHelper;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -72,7 +73,8 @@ public class ProductInstanceNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCPInstance, (credentials, s) -> true,
+			this::_addCPInstance,
+			_hasPermission.forAddingEntries(CPInstance.class),
 			ProductInstanceCreatorForm::buildForm
 		).build();
 	}
@@ -89,7 +91,8 @@ public class ProductInstanceNestedCollectionResource
 		return builder.addGetter(
 			this::_getCPInstance
 		).addUpdater(
-			this::_updateCPInstance, (credentials, s) -> true,
+			this::_updateCPInstance,
+			_hasPermission.forUpdating(CPInstance.class),
 			ProductInstanceCreatorForm::buildForm
 		).addRemover(
 			idempotent(_cpInstanceService::deleteCPInstance),

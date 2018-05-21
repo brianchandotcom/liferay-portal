@@ -57,6 +57,10 @@ String prompt = (String)SessionMessages.get(renderRequest, "prompt");
 
 <aui:script>
 	function <portlet:namespace />executeCommand() {
-		submitForm(document.<portlet:namespace />fm);
+		var form = document.getElementById('<portlet:namespace />fm');
+
+		if (form) {
+			submitForm(form);
+		}
 	}
 </aui:script>

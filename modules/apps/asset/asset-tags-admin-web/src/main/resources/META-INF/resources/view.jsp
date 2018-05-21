@@ -76,9 +76,11 @@
 						</h6>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/tag_action.jsp"
-					/>
+					<c:if test="<%= assetTagsDisplayContext.isShowTagsActionMenu() %>">
+						<liferay-ui:search-container-column-jsp
+							path="/tag_action.jsp"
+						/>
+					</c:if>
 				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "icon") %>'>
 
@@ -88,7 +90,7 @@
 
 					<liferay-ui:search-container-column-text>
 						<liferay-frontend:icon-vertical-card
-							actionJsp="/tag_action.jsp"
+							actionJsp='<%= assetTagsDisplayContext.isShowTagsActionMenu() ? "/tag_action.jsp" : StringPool.BLANK %>'
 							actionJspServletContext="<%= application %>"
 							icon="tag"
 							resultRow="<%= row %>"
@@ -113,9 +115,11 @@
 						value="<%= String.valueOf(fullTagsCount) %>"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/tag_action.jsp"
-					/>
+					<c:if test="<%= assetTagsDisplayContext.isShowTagsActionMenu() %>">
+						<liferay-ui:search-container-column-jsp
+							path="/tag_action.jsp"
+						/>
+					</c:if>
 				</c:when>
 			</c:choose>
 		</liferay-ui:search-container-row>

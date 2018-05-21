@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.forecast.service.persistence.CommerceForecastValueFinder.findByC_T">
+		<![CDATA[
+			SELECT
+				{CommerceForecastValue.*}
+			FROM
+				CommerceForecastValue
+			WHERE
+				(commerceForecastEntryId =  ?) AND
+				(time >= ?) AND
+				(time <= ?)
+			ORDER BY
+				time ASC
+		]]>
+	</sql>
+</custom-sql>

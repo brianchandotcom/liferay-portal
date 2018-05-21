@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.User;
 
 import java.math.BigDecimal;
 
+import java.util.List;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -69,6 +71,14 @@ public class CommerceForecastValueLocalServiceImpl
 	public void deleteCommerceForecastValues(long commerceForecastEntryId) {
 		commerceForecastValuePersistence.removeByCommerceForecastEntryId(
 			commerceForecastEntryId);
+	}
+
+	@Override
+	public List<CommerceForecastValue> getCommerceForecastValues(
+		long commerceForecastEntryId, long startTime, long endTime) {
+
+		return commerceForecastValueFinder.findByC_T(
+			commerceForecastEntryId, startTime, endTime);
 	}
 
 }

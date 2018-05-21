@@ -25,8 +25,6 @@ String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-v
 
 SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", portletURL);
 
-boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER);
-
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
 rowChecker.setRowIds("rowIdsUser");
@@ -70,95 +68,28 @@ portletURL.setParameter("status", String.valueOf(status));
 
 boolean showDeleteButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE));
 boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive();
+
+ViewUsersManagementToolbarDisplayContext
+	viewUsersManagementToolbarDisplayContext = new ViewUsersManagementToolbarDisplayContext(request, renderResponse, searchContainer, displayStyle, navigation, status, showDeleteButton, showRestoreButton);
 %>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionDropdownItems="<%= viewUsersManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= viewUsersManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= viewUsersManagementToolbarDisplayContext.getCreationMenu() %>"
+	filterDropdownItems="<%= viewUsersManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= 2 %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= portletURL.toString() %>"
 	searchContainerId="users"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"active", "inactive"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= searchContainer.getOrderByCol() %>"
-			orderByType="<%= searchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[] {"first-name", "last-name", "screen-name"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-
-		<li>
-			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<aui:input name="navigation" type="hidden" value='<%= ParamUtil.getString(request, "navigation") %>' />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<c:if test="<%= hasAddUserPermission %>">
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<portlet:renderURL var="viewUsersURL">
-					<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
-					<portlet:param name="usersListView" value="<%= usersListView %>" />
-				</portlet:renderURL>
-
-				<portlet:renderURL var="addUserURL">
-					<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
-					<portlet:param name="redirect" value="<%= viewUsersURL %>" />
-				</portlet:renderURL>
-
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "user") %>'
-					url="<%= addUserURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<c:if test="<%= showRestoreButton %>">
-
-			<%
-			String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "deleteUsers('" + Constants.RESTORE + "');";
-			%>
-
-			<liferay-frontend:management-bar-button
-				href="<%= taglibOnClick %>"
-				iconCssClass="icon-undo"
-				id="restoreUsers"
-				label="restore"
-			/>
-		</c:if>
-
-		<c:if test="<%= showDeleteButton %>">
-
-			<%
-			String taglibOnClick = "javascript:" + renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
-			%>
-
-			<liferay-frontend:management-bar-button
-				href="<%= taglibOnClick %>"
-				icon="trash"
-				id="deleteUsers"
-				label="<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>"
-			/>
-		</c:if>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	selectable="<%= true %>"
+	showCreationMenu="<%= viewUsersManagementToolbarDisplayContext.showCreationMenu() %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewUsersManagementToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= viewUsersManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />

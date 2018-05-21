@@ -184,6 +184,7 @@ page import="com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys" %
 page import="com.liferay.users.admin.web.internal.display.context.InitDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.UserActionDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.UserDisplayContext" %><%@
+page import="com.liferay.users.admin.web.internal.display.context.ViewUsersManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.search.AddUserOrganizationChecker" %><%@
 page import="com.liferay.users.admin.web.internal.search.OrganizationChecker" %><%@
 page import="com.liferay.users.admin.web.internal.search.OrganizationResultRowSplitter" %><%@

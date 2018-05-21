@@ -30,9 +30,11 @@ portletURL.setParameter("searchContainerId", "commerceOrderItems");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
+<portlet:renderURL var="backURL" />
+
 <div class="commerce-orders-container container-fluid-1280" id="<portlet:namespace />orderItemsContainer">
 	<liferay-ui:header
-		backURL="<%= renderResponse.createRenderURL() %>"
+		backURL="<%= backURL %>"
 		title="back"
 	/>
 

@@ -1,3 +1,5 @@
+import {Align} from 'metal-position';
+import debounce from 'metal-debounce';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
 import dom from 'metal-dom';
@@ -16,9 +18,15 @@ class FragmentEditableField extends Component {
 	 */
 
 	created() {
-		this._handleEditableChanged = this._handleEditableChanged.bind(this);
-
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
+		this._handleEditableChanged = this._handleEditableChanged.bind(this);
+		this._handleWindowResize = debounce(this._handleWindowResize.bind(this), 100);
+
+		this._windowResizeHandler = dom.on(
+			window,
+			'resize',
+			this._handleWindowResize
+		);
 
 		this._documentClickHandler = dom.on(
 			document.body,
@@ -36,6 +44,11 @@ class FragmentEditableField extends Component {
 		if (this._documentClickHandler) {
 			this._documentClickHandler.removeListener();
 			this._documentClickHandler = null;
+		}
+
+		if (this._windowResizeHandler) {
+			this._windowResizeHandler.removeListener();
+			this._windowResizeHandler = null;
 		}
 	}
 
@@ -82,6 +95,8 @@ class FragmentEditableField extends Component {
 			this._showEditor = false;
 			this._enableEditor();
 		}
+
+		this._alignTooltip();
 	}
 
 	/**
@@ -93,6 +108,22 @@ class FragmentEditableField extends Component {
 
 	shouldUpdate(changes) {
 		return !!changes._showTooltip;
+	}
+
+	/**
+	 * Align tooltip position acording to editable field
+	 * @private
+	 * @review
+	 */
+
+	_alignTooltip() {
+		if (this.refs.editable && this.refs.tooltip) {
+			Align.align(
+				this.refs.tooltip,
+				this.refs.editable,
+				Align.Top
+			);
+		}
 	}
 
 	/**
@@ -192,6 +223,16 @@ class FragmentEditableField extends Component {
 			'mapButtonClicked',
 			{editableId: this.editableId}
 		);
+	}
+
+	/**
+	 * Handle window resize event
+	 * @private
+	 * @review
+	 */
+
+	_handleWindowResize() {
+		this._alignTooltip();
 	}
 }
 

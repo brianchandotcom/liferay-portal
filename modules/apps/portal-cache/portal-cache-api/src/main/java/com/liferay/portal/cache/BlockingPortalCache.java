@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.concurrent.CompeteLatch;
 
 import java.io.Serializable;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -112,7 +114,18 @@ public class BlockingPortalCache<K extends Serializable, V>
 	@Override
 	public void removeAll() {
 		portalCache.removeAll();
-		_competeLatchMap.clear();
+
+		Collection<CompeteLatch> competeLatches = _competeLatchMap.values();
+
+		Iterator<CompeteLatch> iterator = competeLatches.iterator();
+
+		while (iterator.hasNext()) {
+			CompeteLatch competeLatch = iterator.next();
+
+			iterator.remove();
+
+			competeLatch.done();
+		}
 	}
 
 	private static final ThreadLocal<CompeteLatch> _competeLatch =

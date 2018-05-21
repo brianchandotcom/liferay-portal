@@ -1335,6 +1335,13 @@ public class AlloyMockUtil {
 		}
 
 		@Override
+		public LiferayPortletURL createActionURL(
+			String portletName, MimeResponse.Copy copy) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public Element createElement(String tagName) {
 			throw new UnsupportedOperationException();
 		}
@@ -1355,6 +1362,22 @@ public class AlloyMockUtil {
 		}
 
 		@Override
+		public LiferayPortletURL createLiferayPortletURL(
+			long plid, String portletName, String lifecycle,
+			boolean includeLinkToLayoutUuid, MimeResponse.Copy copy) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public LiferayPortletURL createLiferayPortletURL(
+			long plid, String portletName, String lifecycle,
+			MimeResponse.Copy copy) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public LiferayPortletURL createLiferayPortletURL(String lifecycle) {
 			throw new UnsupportedOperationException();
 		}
@@ -1362,6 +1385,13 @@ public class AlloyMockUtil {
 		@Override
 		public LiferayPortletURL createLiferayPortletURL(
 			String portletName, String lifecycle) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public LiferayPortletURL createLiferayPortletURL(
+			String portletName, String lifecycle, MimeResponse.Copy copy) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -1378,6 +1408,13 @@ public class AlloyMockUtil {
 
 		@Override
 		public LiferayPortletURL createRenderURL(String portletName) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public LiferayPortletURL createRenderURL(
+			String portletName, MimeResponse.Copy copy) {
+
 			throw new UnsupportedOperationException();
 		}
 

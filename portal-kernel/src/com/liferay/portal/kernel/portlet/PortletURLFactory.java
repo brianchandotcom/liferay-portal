@@ -19,12 +19,14 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
 @ProviderType
 public interface PortletURLFactory {
@@ -32,6 +34,10 @@ public interface PortletURLFactory {
 	public LiferayPortletURL create(
 		HttpServletRequest request, Portlet portlet, Layout layout,
 		String lifecycle);
+
+	public LiferayPortletURL create(
+		HttpServletRequest request, Portlet portlet, Layout layout,
+		String lifecycle, MimeResponse.Copy copy);
 
 	public LiferayPortletURL create(
 		HttpServletRequest request, Portlet portlet, String lifecycle);
@@ -56,12 +62,20 @@ public interface PortletURLFactory {
 		String lifecycle);
 
 	public LiferayPortletURL create(
+		PortletRequest portletRequest, Portlet portlet, long plid,
+		String lifecycle, MimeResponse.Copy copy);
+
+	public LiferayPortletURL create(
 		PortletRequest portletRequest, String portletId, Layout layout,
 		String lifecycle);
 
 	public LiferayPortletURL create(
 		PortletRequest portletRequest, String portletId, long plid,
 		String lifecycle);
+
+	public LiferayPortletURL create(
+		PortletRequest portletRequest, String portletId, long plid,
+		String lifecycle, MimeResponse.Copy copy);
 
 	public LiferayPortletURL create(
 		PortletRequest portletRequest, String portletId, String lifecycle);

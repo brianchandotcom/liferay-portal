@@ -110,6 +110,7 @@
 com/sun/ts/tests/portlet/Signature/PORTLETSigTest.java#SignatureTest
 com/sun/ts/tests/portlet/api/javax_portlet/ActionRequest/URLClient.java#GetAuthTypeWithoutProtectionTest
 com/sun/ts/tests/portlet/api/javax_portlet/EventRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest
+com/sun/ts/tests/portlet/api/javax_portlet/PortletURLListener/SpecURLClient.java#IsPortletURLInPortletURLGenerationListenerTest
 com/sun/ts/tests/portlet/api/javax_portlet/ResourceRequest/SpecURLClient.java#GetAuthTypeWithoutProtectionTest</echo>
 
 		<echo append="true" file="tools/tck/bin/build.properties">

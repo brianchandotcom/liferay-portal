@@ -966,12 +966,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 	<c:otherwise>
 
 		<%
-		boolean useDefaultTemplate = portlet.isUseDefaultTemplate();
-		Boolean useDefaultTemplateObj = renderResponseImpl.getUseDefaultTemplate();
-
-		if (useDefaultTemplateObj != null) {
-			useDefaultTemplate = useDefaultTemplateObj.booleanValue();
-		}
+		boolean useDefaultTemplate = renderResponseImpl.getUseDefaultTemplate();
 
 		PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
 

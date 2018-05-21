@@ -163,9 +163,7 @@ Export-Package:\
 	org.apache.ws.commons.schema.internal;version="2.2.3",\
 	org.apache.ws.commons.schema.resolver;version="2.2.3",\
 	org.apache.ws.commons.schema.utils;version="2.2.3"
-
 Fragment-Host: org.apache.aries.jax.rs.whiteboard
-
 Import-Package:\
 	!com.sun.*,\
 	\

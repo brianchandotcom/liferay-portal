@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.category.apio.internal.form;
+package com.liferay.category.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 
@@ -23,23 +23,23 @@ import java.util.Map;
 /**
  * @author Javier Gamarra
  */
-public class AssetVocabularyForm {
+public class AssetCategoryForm {
 
-	public static Form<AssetVocabularyForm> buildForm(
-		Form.Builder<AssetVocabularyForm> builder) {
+	public static Form<AssetCategoryForm> buildForm(
+		Form.Builder<AssetCategoryForm> builder) {
 
 		return builder.title(
 			language -> "Title"
 		).description(
 			language -> "Description"
 		).constructor(
-			AssetVocabularyForm::new
+			AssetCategoryForm::new
+		).addOptionalLong(
+			"vocabularyId", AssetCategoryForm::setVocabularyId
 		).addRequiredString(
-			"description", AssetVocabularyForm::setDescription
+			"description", AssetCategoryForm::setDescription
 		).addRequiredString(
-			"name", AssetVocabularyForm::setName
-		).addRequiredString(
-			"title", AssetVocabularyForm::setTitle
+			"title", AssetCategoryForm::setTitle
 		).build();
 	}
 
@@ -51,32 +51,32 @@ public class AssetVocabularyForm {
 		return Collections.singletonMap(Locale.getDefault(), _description);
 	}
 
-	public String getName() {
-		return _name;
-	}
-
 	public String getTitle() {
 		return _title;
 	}
 
 	public Map<Locale, String> getTitleMap() {
-		return Collections.singletonMap(Locale.getDefault(), _name);
+		return Collections.singletonMap(Locale.getDefault(), _title);
+	}
+
+	public long getVocabularyId() {
+		return _vocabularyId;
 	}
 
 	public void setDescription(String description) {
 		_description = description;
 	}
 
-	public void setName(String name) {
-		_name = name;
-	}
-
 	public void setTitle(String title) {
 		_title = title;
 	}
 
+	public void setVocabularyId(Long vocabularyId) {
+		_vocabularyId = vocabularyId;
+	}
+
 	private String _description;
-	private String _name;
 	private String _title;
+	private Long _vocabularyId;
 
 }

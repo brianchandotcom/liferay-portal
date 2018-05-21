@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.category.apio.internal.resource;
+package com.liferay.category.apio.internal.architect.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -23,16 +23,16 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
-import com.liferay.category.apio.identifier.VocabularyIdentifier;
-import com.liferay.category.apio.internal.form.AssetVocabularyForm;
-import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.category.apio.identifier.architect.VocabularyIdentifier;
+import com.liferay.category.apio.internal.architect.form.AssetVocabularyForm;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.site.apio.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class VocabularyNestedCollectionResource
 	implements NestedCollectionResource<AssetVocabulary, Long,
-		VocabularyIdentifier, Long, WebSiteIdentifier> {
+			VocabularyIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetVocabulary, Long> collectionRoutes(

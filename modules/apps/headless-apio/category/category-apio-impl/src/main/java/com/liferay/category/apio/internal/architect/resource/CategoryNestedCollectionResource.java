@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.category.apio.internal.resource;
+package com.liferay.category.apio.internal.architect.resource;
 
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -26,10 +26,10 @@ import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
-import com.liferay.category.apio.identifier.CategoryIdentifier;
-import com.liferay.category.apio.identifier.VocabularyIdentifier;
-import com.liferay.category.apio.internal.form.AssetCategoryForm;
-import com.liferay.person.apio.identifier.PersonIdentifier;
+import com.liferay.category.apio.identifier.architect.CategoryIdentifier;
+import com.liferay.category.apio.identifier.architect.VocabularyIdentifier;
+import com.liferay.category.apio.internal.architect.form.AssetCategoryForm;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;

@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.ExpiredModelException;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
@@ -1132,9 +1131,6 @@ public class PortalImpl implements Portal {
 						friendlyURL, params, requestContext);
 
 					break;
-				}
-				catch (ExpiredModelException eme) {
-					throw eme;
 				}
 				catch (Exception e) {
 					throw new NoSuchLayoutException(e);

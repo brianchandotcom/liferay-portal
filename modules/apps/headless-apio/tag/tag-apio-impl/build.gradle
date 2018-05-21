@@ -7,6 +7,7 @@ dependencies {
 	compileOnly project(":apps:apio-architect:apio-architect-api")
 	compileOnly project(":apps:blogs:blogs-api")
 	compileOnly project(":apps:headless-apio:blog:blog-apio-api")
+	compileOnly project(":apps:headless-apio:media-object:media-object-apio-api")
 	compileOnly project(":apps:headless-apio:portal:portal-apio-api")
 	compileOnly project(":apps:headless-apio:site:site-apio-api")
 	compileOnly project(":apps:headless-apio:tag:tag-apio-api")

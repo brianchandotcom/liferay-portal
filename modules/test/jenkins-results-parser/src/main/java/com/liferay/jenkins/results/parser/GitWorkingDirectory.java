@@ -1884,7 +1884,7 @@ public class GitWorkingDirectory {
 	private static final long _TIMEOUT = 30 * 1000;
 
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
-		"gitdir\\: (.*\\.git)");
+		"gitdir\\: (.*)\\s*");
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(
 		"(?<sha>[0-9a-f]{40}) (?<message>.*)");
 	private static final Pattern _gitLsRemotePattern = Pattern.compile(

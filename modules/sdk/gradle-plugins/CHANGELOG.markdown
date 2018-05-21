@@ -4539,6 +4539,42 @@ to version 2.3.159.
 - [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
 1.0.632.
 
+## 3.12.9 - 2018-05-17
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.160.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.633.
+
+## 3.12.10 - 2018-05-17
+
+### Changed
+- [LPS-81106]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.161.
+- [LPS-81106]: Update the [Liferay Source Formatter] dependency to version
+1.0.634.
+
+## 3.12.11 - 2018-05-17
+
+### Changed
+- [LPS-80517]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.162.
+- [LPS-80517]: Update the [Liferay Source Formatter] dependency to version
+1.0.635.
+
+## 3.12.12 - 2018-05-19
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.163.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.636.
+- [LPS-80920]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.34.
+- [LPS-80920]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.217.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -4921,4 +4957,5 @@ to version 2.3.159.
 [LPS-80544]: https://issues.liferay.com/browse/LPS-80544
 [LPS-80840]: https://issues.liferay.com/browse/LPS-80840
 [LPS-80920]: https://issues.liferay.com/browse/LPS-80920
+[LPS-81106]: https://issues.liferay.com/browse/LPS-81106
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

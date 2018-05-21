@@ -893,7 +893,7 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Blogs#ENTRY_TABLE_CHECKBOX" />
@@ -1340,7 +1340,7 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />

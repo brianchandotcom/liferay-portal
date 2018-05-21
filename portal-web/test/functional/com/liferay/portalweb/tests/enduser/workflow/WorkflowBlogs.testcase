@@ -128,7 +128,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="Icon" />
+			<var name="displayStyle" value="cards" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">

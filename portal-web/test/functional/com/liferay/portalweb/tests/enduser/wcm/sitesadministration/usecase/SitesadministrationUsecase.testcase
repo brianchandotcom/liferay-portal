@@ -1272,7 +1272,7 @@
 		<execute macro="LAR#exportSuccess" />
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<var method="selenium#getText('//tr/td[7]//span/a')" name="valueName" />
@@ -1284,7 +1284,7 @@
 		<echo message="import file name ${larFileName}" />
 
 		<execute macro="LexiconEntry#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />

@@ -95,6 +95,9 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 				fullClassName);
 
 			if (javaFile == null) {
+				System.out.println(
+					"No matching files found for " + fullClassName);
+
 				return null;
 			}
 

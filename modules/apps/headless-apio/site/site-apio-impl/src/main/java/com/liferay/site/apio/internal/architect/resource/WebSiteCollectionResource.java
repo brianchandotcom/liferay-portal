@@ -45,8 +45,8 @@ public class WebSiteCollectionResource
 	implements CollectionResource<Group, Long, WebSiteIdentifier> {
 
 	@Override
-	public CollectionRoutes<Group> collectionRoutes(
-		CollectionRoutes.Builder<Group> builder) {
+	public CollectionRoutes<Group, Long> collectionRoutes(
+		CollectionRoutes.Builder<Group, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Company.class

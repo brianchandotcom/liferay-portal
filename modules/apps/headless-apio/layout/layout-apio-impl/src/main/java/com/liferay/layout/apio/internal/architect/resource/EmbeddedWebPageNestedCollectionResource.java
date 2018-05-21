@@ -45,8 +45,8 @@ public class EmbeddedWebPageNestedCollectionResource
 		<Layout, Long, EmbeddedWebPageIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Layout, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Layout, Long> builder) {
+	public NestedCollectionRoutes<Layout, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Layout, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getLayouts

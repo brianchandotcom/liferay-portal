@@ -69,8 +69,8 @@ public class FormInstanceNestedCollectionResource
 		FormInstanceIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<DDMFormInstance, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<DDMFormInstance, Long> builder) {
+	public NestedCollectionRoutes<DDMFormInstance, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<DDMFormInstance, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Company.class

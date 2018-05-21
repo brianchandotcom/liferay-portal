@@ -44,12 +44,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class OrganizationPersonNestedCollectionRouter implements
-	NestedCollectionRouter
-		<UserWrapper, OrganizationIdentifier, Long, OrganizationIdentifier> {
+	NestedCollectionRouter<UserWrapper, Long, OrganizationIdentifier, Long,
+		OrganizationIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<UserWrapper, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<UserWrapper, Long> builder) {
+	public NestedCollectionRoutes<UserWrapper, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<UserWrapper, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, ThemeDisplay.class

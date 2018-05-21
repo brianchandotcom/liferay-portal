@@ -57,8 +57,8 @@ public class BlogPostingNestedCollectionResource
 		Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<BlogsEntry, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<BlogsEntry, Long> builder) {
+	public NestedCollectionRoutes<BlogsEntry, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<BlogsEntry, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems

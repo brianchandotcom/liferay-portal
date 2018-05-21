@@ -51,8 +51,8 @@ public class MediaObjectNestedCollectionResource
 		FileEntryIdentifier, Long, FolderIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<FileEntry, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<FileEntry, Long> builder) {
+	public NestedCollectionRoutes<FileEntry, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<FileEntry, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems

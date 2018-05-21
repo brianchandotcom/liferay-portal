@@ -45,9 +45,9 @@ public class DataProviderInstanceNestedCollectionResource
 		DataProviderInstanceIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<DDMDataProviderInstance, Long>
+	public NestedCollectionRoutes<DDMDataProviderInstance, Long, Long>
 		collectionRoutes(
-			NestedCollectionRoutes.Builder<DDMDataProviderInstance, Long>
+			NestedCollectionRoutes.Builder<DDMDataProviderInstance, Long, Long>
 				builder) {
 
 		return builder.addGetter(

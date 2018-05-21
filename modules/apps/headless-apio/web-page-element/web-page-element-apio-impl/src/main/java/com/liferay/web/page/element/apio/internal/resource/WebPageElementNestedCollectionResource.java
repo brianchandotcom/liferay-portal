@@ -53,8 +53,8 @@ public class WebPageElementNestedCollectionResource
 			WebPageElementIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<JournalArticle, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<JournalArticle, Long> builder) {
+	public NestedCollectionRoutes<JournalArticle, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<JournalArticle, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems

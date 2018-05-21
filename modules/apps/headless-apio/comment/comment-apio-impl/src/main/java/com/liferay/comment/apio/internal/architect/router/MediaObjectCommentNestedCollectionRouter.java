@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MediaObjectCommentNestedCollectionRouter extends
 	BaseCommentNestedCollectionRouter<FileEntryIdentifier>
 	implements NestedCollectionRouter
-		<Comment, CommentIdentifier, Long, FileEntryIdentifier> {
+		<Comment, Long, CommentIdentifier, Long, FileEntryIdentifier> {
 
 	@Override
 	protected CommentManager getCommentManager() {

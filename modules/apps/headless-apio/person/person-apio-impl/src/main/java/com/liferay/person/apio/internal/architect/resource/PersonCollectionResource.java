@@ -67,8 +67,8 @@ public class PersonCollectionResource
 	implements CollectionResource<UserWrapper, Long, PersonIdentifier> {
 
 	@Override
-	public CollectionRoutes<UserWrapper> collectionRoutes(
-		CollectionRoutes.Builder<UserWrapper> builder) {
+	public CollectionRoutes<UserWrapper, Long> collectionRoutes(
+		CollectionRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, ThemeDisplay.class

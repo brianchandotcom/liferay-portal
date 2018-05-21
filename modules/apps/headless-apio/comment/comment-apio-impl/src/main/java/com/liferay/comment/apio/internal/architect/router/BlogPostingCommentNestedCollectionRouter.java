@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 public class BlogPostingCommentNestedCollectionRouter extends
 	BaseCommentNestedCollectionRouter<BlogPostingIdentifier>
 	implements NestedCollectionRouter
-		<Comment, CommentIdentifier, Long, BlogPostingIdentifier> {
+		<Comment, Long, CommentIdentifier, Long, BlogPostingIdentifier> {
 
 	@Override
 	protected CommentManager getCommentManager() {

@@ -48,8 +48,8 @@ public class FolderNestedCollectionResource
 		<Folder, Long, FolderIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Folder, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Folder, Long> builder) {
+	public NestedCollectionRoutes<Folder, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Folder, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems

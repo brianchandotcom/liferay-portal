@@ -39,11 +39,11 @@ import java.util.List;
  */
 public abstract class BaseCommentNestedCollectionRouter
 	<T extends Identifier<Long>> implements
-		NestedCollectionRouter<Comment, CommentIdentifier, Long, T> {
+		NestedCollectionRouter<Comment, Long, CommentIdentifier, Long, T> {
 
 	@Override
-	public NestedCollectionRoutes<Comment, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Comment, Long> builder) {
+	public NestedCollectionRoutes<Comment, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Comment, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, PermissionChecker.class

@@ -31,12 +31,12 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 		<aui:a cssClass="btn btn-default" href="javascript:;" id="inviteMembersButton" label="invite-members-to-this-site" />
 
-		<aui:script position="inline" use="aui-base">
-			var inviteMembersButton = A.one('#<portlet:namespace />inviteMembersButton');
+		<aui:script position="inline">
+			var <portlet:namespace />inviteMembersButton = document.getElementById('<portlet:namespace />inviteMembersButton');
 
-			inviteMembersButton.on(
+			<portlet:namespace />inviteMembersButton.addEventListener(
 				'click',
-				function() {
+				function(event) {
 					Liferay.Util.openWindow(
 						{
 							dialog: {
@@ -56,11 +56,13 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<aui:script use="aui-base">
-			var portlet = A.one('#p_p_id<portlet:namespace />');
+		<aui:script require="metal-dom/src/dom">
+			let dom = metalDomSrcDom.default;
+
+			var portlet = document.getElementById('p_p_id<portlet:namespace />');
 
 			if (portlet) {
-				portlet.hide();
+				dom.addClasses(portlet, 'hide');
 			}
 		</aui:script>
 	</c:otherwise>

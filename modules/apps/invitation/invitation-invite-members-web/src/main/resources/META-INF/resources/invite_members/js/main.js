@@ -44,6 +44,7 @@ AUI.add(
 					},
 
 					form: {
+						setter: A.one,
 						validator: Lang.isObject
 					},
 

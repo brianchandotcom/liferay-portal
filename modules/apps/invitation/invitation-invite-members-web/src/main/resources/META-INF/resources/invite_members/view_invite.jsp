@@ -135,7 +135,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 			availableUsersURL: '<portlet:resourceURL id="getAvailableUsers" />',
 			form: {
 				method: 'POST',
-				node: A.one(document.<portlet:namespace />fm)
+				node: '#<portlet:namespace />fm'
 			},
 			namespace: '<portlet:namespace />',
 			rootNode: '#<portlet:namespace />inviteMembersContainer'

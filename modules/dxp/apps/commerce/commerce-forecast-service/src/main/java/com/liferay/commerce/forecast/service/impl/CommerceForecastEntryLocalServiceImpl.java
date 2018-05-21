@@ -109,4 +109,12 @@ public class CommerceForecastEntryLocalServiceImpl
 			commerceForecastEntry);
 	}
 
+	@Override
+	public CommerceForecastEntry fetchCommerceForecastEntry(
+		long companyId, int period, int target, long customerId, String sku) {
+
+		return commerceForecastEntryPersistence.fetchByC_P_T_C_S(
+			companyId, period, target, customerId, sku);
+	}
+
 }

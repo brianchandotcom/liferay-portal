@@ -774,13 +774,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 					result = mbDiscussion;
 
 					cacheResult(mbDiscussion);
-
-					if ((mbDiscussion.getUuid() == null) ||
-							!mbDiscussion.getUuid().equals(uuid) ||
-							(mbDiscussion.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, mbDiscussion);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2094,11 +2087,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 					result = mbDiscussion;
 
 					cacheResult(mbDiscussion);
-
-					if ((mbDiscussion.getThreadId() != threadId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_THREADID,
-							finderArgs, mbDiscussion);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2310,12 +2298,6 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 					result = mbDiscussion;
 
 					cacheResult(mbDiscussion);
-
-					if ((mbDiscussion.getClassNameId() != classNameId) ||
-							(mbDiscussion.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, mbDiscussion);
-					}
 				}
 			}
 			catch (Exception e) {

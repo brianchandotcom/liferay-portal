@@ -1301,13 +1301,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					result = wikiPage;
 
 					cacheResult(wikiPage);
-
-					if ((wikiPage.getUuid() == null) ||
-							!wikiPage.getUuid().equals(uuid) ||
-							(wikiPage.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, wikiPage);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -7117,13 +7110,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					result = wikiPage;
 
 					cacheResult(wikiPage);
-
-					if ((wikiPage.getResourcePrimKey() != resourcePrimKey) ||
-							(wikiPage.getNodeId() != nodeId) ||
-							(wikiPage.getVersion() != version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_R_N_V,
-							finderArgs, wikiPage);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -11086,14 +11072,6 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					result = wikiPage;
 
 					cacheResult(wikiPage);
-
-					if ((wikiPage.getNodeId() != nodeId) ||
-							(wikiPage.getTitle() == null) ||
-							!wikiPage.getTitle().equals(title) ||
-							(wikiPage.getVersion() != version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_N_T_V,
-							finderArgs, wikiPage);
-					}
 				}
 			}
 			catch (Exception e) {

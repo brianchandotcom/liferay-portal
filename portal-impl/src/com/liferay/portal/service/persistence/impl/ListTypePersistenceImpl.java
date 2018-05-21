@@ -793,14 +793,6 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 					result = listType;
 
 					cacheResult(listType);
-
-					if ((listType.getName() == null) ||
-							!listType.getName().equals(name) ||
-							(listType.getType() == null) ||
-							!listType.getType().equals(type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_N_T,
-							finderArgs, listType);
-					}
 				}
 			}
 			catch (Exception e) {

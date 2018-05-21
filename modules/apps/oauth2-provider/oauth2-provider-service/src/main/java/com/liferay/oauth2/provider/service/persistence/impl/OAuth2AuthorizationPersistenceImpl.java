@@ -1272,13 +1272,6 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 					result = oAuth2Authorization;
 
 					cacheResult(oAuth2Authorization);
-
-					if ((oAuth2Authorization.getAccessTokenContent() == null) ||
-							!oAuth2Authorization.getAccessTokenContent()
-													.equals(accessTokenContent)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT,
-							finderArgs, oAuth2Authorization);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1526,13 +1519,6 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 					result = oAuth2Authorization;
 
 					cacheResult(oAuth2Authorization);
-
-					if ((oAuth2Authorization.getRefreshTokenContent() == null) ||
-							!oAuth2Authorization.getRefreshTokenContent()
-													.equals(refreshTokenContent)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT,
-							finderArgs, oAuth2Authorization);
-					}
 				}
 			}
 			catch (Exception e) {

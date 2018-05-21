@@ -782,13 +782,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 					result = dlFileVersion;
 
 					cacheResult(dlFileVersion);
-
-					if ((dlFileVersion.getUuid() == null) ||
-							!dlFileVersion.getUuid().equals(uuid) ||
-							(dlFileVersion.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, dlFileVersion);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3725,13 +3718,6 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 					result = dlFileVersion;
 
 					cacheResult(dlFileVersion);
-
-					if ((dlFileVersion.getFileEntryId() != fileEntryId) ||
-							(dlFileVersion.getVersion() == null) ||
-							!dlFileVersion.getVersion().equals(version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_F_V,
-							finderArgs, dlFileVersion);
-					}
 				}
 			}
 			catch (Exception e) {

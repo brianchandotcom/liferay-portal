@@ -195,11 +195,6 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 					result = status;
 
 					cacheResult(status);
-
-					if ((status.getUserId() != userId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_USERID,
-							finderArgs, status);
-					}
 				}
 			}
 			catch (Exception e) {

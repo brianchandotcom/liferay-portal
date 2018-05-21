@@ -777,13 +777,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					result = group;
 
 					cacheResult(group);
-
-					if ((group.getUuid() == null) ||
-							!group.getUuid().equals(uuid) ||
-							(group.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, group);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2095,11 +2088,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					result = group;
 
 					cacheResult(group);
-
-					if ((group.getLiveGroupId() != liveGroupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
-							finderArgs, group);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3403,13 +3391,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					result = group;
 
 					cacheResult(group);
-
-					if ((group.getCompanyId() != companyId) ||
-							(group.getGroupKey() == null) ||
-							!group.getGroupKey().equals(groupKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_GK,
-							finderArgs, group);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3657,13 +3638,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					result = group;
 
 					cacheResult(group);
-
-					if ((group.getCompanyId() != companyId) ||
-							(group.getFriendlyURL() == null) ||
-							!group.getFriendlyURL().equals(friendlyURL)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_F,
-							finderArgs, group);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -6463,13 +6437,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					result = group;
 
 					cacheResult(group);
-
-					if ((group.getCompanyId() != companyId) ||
-							(group.getClassNameId() != classNameId) ||
-							(group.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C,
-							finderArgs, group);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -7891,14 +7858,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					result = group;
 
 					cacheResult(group);
-
-					if ((group.getCompanyId() != companyId) ||
-							(group.getLiveGroupId() != liveGroupId) ||
-							(group.getGroupKey() == null) ||
-							!group.getGroupKey().equals(groupKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_L_GK,
-							finderArgs, group);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -9238,15 +9197,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					result = group;
 
 					cacheResult(group);
-
-					if ((group.getCompanyId() != companyId) ||
-							(group.getClassNameId() != classNameId) ||
-							(group.getLiveGroupId() != liveGroupId) ||
-							(group.getGroupKey() == null) ||
-							!group.getGroupKey().equals(groupKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_L_GK,
-							finderArgs, group);
-					}
 				}
 			}
 			catch (Exception e) {

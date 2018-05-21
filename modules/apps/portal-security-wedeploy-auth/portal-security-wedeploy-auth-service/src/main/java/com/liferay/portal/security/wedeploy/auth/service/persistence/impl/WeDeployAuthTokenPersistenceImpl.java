@@ -243,13 +243,6 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 					result = weDeployAuthToken;
 
 					cacheResult(weDeployAuthToken);
-
-					if ((weDeployAuthToken.getToken() == null) ||
-							!weDeployAuthToken.getToken().equals(token) ||
-							(weDeployAuthToken.getType() != type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_T_T,
-							finderArgs, weDeployAuthToken);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -543,15 +536,6 @@ public class WeDeployAuthTokenPersistenceImpl extends BasePersistenceImpl<WeDepl
 					result = weDeployAuthToken;
 
 					cacheResult(weDeployAuthToken);
-
-					if ((weDeployAuthToken.getClientId() == null) ||
-							!weDeployAuthToken.getClientId().equals(clientId) ||
-							(weDeployAuthToken.getToken() == null) ||
-							!weDeployAuthToken.getToken().equals(token) ||
-							(weDeployAuthToken.getType() != type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CI_T_T,
-							finderArgs, weDeployAuthToken);
-					}
 				}
 			}
 			catch (Exception e) {

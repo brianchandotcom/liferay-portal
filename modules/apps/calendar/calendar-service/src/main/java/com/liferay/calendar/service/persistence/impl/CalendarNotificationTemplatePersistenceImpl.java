@@ -794,13 +794,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 					result = calendarNotificationTemplate;
 
 					cacheResult(calendarNotificationTemplate);
-
-					if ((calendarNotificationTemplate.getUuid() == null) ||
-							!calendarNotificationTemplate.getUuid().equals(uuid) ||
-							(calendarNotificationTemplate.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, calendarNotificationTemplate);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2224,17 +2217,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 					result = calendarNotificationTemplate;
 
 					cacheResult(calendarNotificationTemplate);
-
-					if ((calendarNotificationTemplate.getCalendarId() != calendarId) ||
-							(calendarNotificationTemplate.getNotificationType() == null) ||
-							!calendarNotificationTemplate.getNotificationType()
-															 .equals(notificationType) ||
-							(calendarNotificationTemplate.getNotificationTemplateType() == null) ||
-							!calendarNotificationTemplate.getNotificationTemplateType()
-															 .equals(notificationTemplateType)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_NT_NTT,
-							finderArgs, calendarNotificationTemplate);
-					}
 				}
 			}
 			catch (Exception e) {

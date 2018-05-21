@@ -1270,12 +1270,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 					result = ddmDataProviderInstanceLink;
 
 					cacheResult(ddmDataProviderInstanceLink);
-
-					if ((ddmDataProviderInstanceLink.getDataProviderInstanceId() != dataProviderInstanceId) ||
-							(ddmDataProviderInstanceLink.getStructureId() != structureId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_D_S,
-							finderArgs, ddmDataProviderInstanceLink);
-					}
 				}
 			}
 			catch (Exception e) {

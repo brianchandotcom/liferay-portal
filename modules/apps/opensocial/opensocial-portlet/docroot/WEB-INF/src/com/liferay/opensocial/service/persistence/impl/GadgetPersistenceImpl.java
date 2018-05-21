@@ -3031,13 +3031,6 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 					result = gadget;
 
 					cacheResult(gadget);
-
-					if ((gadget.getCompanyId() != companyId) ||
-							(gadget.getUrl() == null) ||
-							!gadget.getUrl().equals(url)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_U,
-							finderArgs, gadget);
-					}
 				}
 			}
 			catch (Exception e) {

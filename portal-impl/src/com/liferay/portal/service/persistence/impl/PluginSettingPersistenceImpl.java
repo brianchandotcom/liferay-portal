@@ -770,15 +770,6 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 					result = pluginSetting;
 
 					cacheResult(pluginSetting);
-
-					if ((pluginSetting.getCompanyId() != companyId) ||
-							(pluginSetting.getPluginId() == null) ||
-							!pluginSetting.getPluginId().equals(pluginId) ||
-							(pluginSetting.getPluginType() == null) ||
-							!pluginSetting.getPluginType().equals(pluginType)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_I_T,
-							finderArgs, pluginSetting);
-					}
 				}
 			}
 			catch (Exception e) {

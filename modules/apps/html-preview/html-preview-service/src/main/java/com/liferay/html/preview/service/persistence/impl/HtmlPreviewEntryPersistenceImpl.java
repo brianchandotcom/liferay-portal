@@ -245,13 +245,6 @@ public class HtmlPreviewEntryPersistenceImpl extends BasePersistenceImpl<HtmlPre
 					result = htmlPreviewEntry;
 
 					cacheResult(htmlPreviewEntry);
-
-					if ((htmlPreviewEntry.getGroupId() != groupId) ||
-							(htmlPreviewEntry.getClassNameId() != classNameId) ||
-							(htmlPreviewEntry.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C,
-							finderArgs, htmlPreviewEntry);
-					}
 				}
 			}
 			catch (Exception e) {

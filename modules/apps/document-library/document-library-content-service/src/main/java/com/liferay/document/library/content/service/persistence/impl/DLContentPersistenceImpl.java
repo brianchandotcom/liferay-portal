@@ -2059,16 +2059,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 					result = dlContent;
 
 					cacheResult(dlContent);
-
-					if ((dlContent.getCompanyId() != companyId) ||
-							(dlContent.getRepositoryId() != repositoryId) ||
-							(dlContent.getPath() == null) ||
-							!dlContent.getPath().equals(path) ||
-							(dlContent.getVersion() == null) ||
-							!dlContent.getVersion().equals(version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_R_P_V,
-							finderArgs, dlContent);
-					}
 				}
 			}
 			catch (Exception e) {

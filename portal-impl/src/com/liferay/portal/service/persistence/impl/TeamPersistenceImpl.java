@@ -778,13 +778,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 					result = team;
 
 					cacheResult(team);
-
-					if ((team.getUuid() == null) ||
-							!team.getUuid().equals(uuid) ||
-							(team.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, team);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2463,13 +2456,6 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 					result = team;
 
 					cacheResult(team);
-
-					if ((team.getGroupId() != groupId) ||
-							(team.getName() == null) ||
-							!team.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, team);
-					}
 				}
 			}
 			catch (Exception e) {

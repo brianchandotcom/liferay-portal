@@ -2480,15 +2480,6 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 					result = socialActivitySetting;
 
 					cacheResult(socialActivitySetting);
-
-					if ((socialActivitySetting.getGroupId() != groupId) ||
-							(socialActivitySetting.getClassNameId() != classNameId) ||
-							(socialActivitySetting.getActivityType() != activityType) ||
-							(socialActivitySetting.getName() == null) ||
-							!socialActivitySetting.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_A_N,
-							finderArgs, socialActivitySetting);
-					}
 				}
 			}
 			catch (Exception e) {

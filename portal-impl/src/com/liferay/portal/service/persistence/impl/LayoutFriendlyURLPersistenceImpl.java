@@ -787,13 +787,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 					result = layoutFriendlyURL;
 
 					cacheResult(layoutFriendlyURL);
-
-					if ((layoutFriendlyURL.getUuid() == null) ||
-							!layoutFriendlyURL.getUuid().equals(uuid) ||
-							(layoutFriendlyURL.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, layoutFriendlyURL);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3993,13 +3986,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 					result = layoutFriendlyURL;
 
 					cacheResult(layoutFriendlyURL);
-
-					if ((layoutFriendlyURL.getPlid() != plid) ||
-							(layoutFriendlyURL.getLanguageId() == null) ||
-							!layoutFriendlyURL.getLanguageId().equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_P_L,
-							finderArgs, layoutFriendlyURL);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -5036,17 +5022,6 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 					result = layoutFriendlyURL;
 
 					cacheResult(layoutFriendlyURL);
-
-					if ((layoutFriendlyURL.getGroupId() != groupId) ||
-							(layoutFriendlyURL.isPrivateLayout() != privateLayout) ||
-							(layoutFriendlyURL.getFriendlyURL() == null) ||
-							!layoutFriendlyURL.getFriendlyURL()
-												  .equals(friendlyURL) ||
-							(layoutFriendlyURL.getLanguageId() == null) ||
-							!layoutFriendlyURL.getLanguageId().equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_F_L,
-							finderArgs, layoutFriendlyURL);
-					}
 				}
 			}
 			catch (Exception e) {

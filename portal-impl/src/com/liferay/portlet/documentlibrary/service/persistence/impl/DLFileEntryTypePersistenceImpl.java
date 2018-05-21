@@ -793,13 +793,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 					result = dlFileEntryType;
 
 					cacheResult(dlFileEntryType);
-
-					if ((dlFileEntryType.getUuid() == null) ||
-							!dlFileEntryType.getUuid().equals(uuid) ||
-							(dlFileEntryType.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, dlFileEntryType);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2966,14 +2959,6 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 					result = dlFileEntryType;
 
 					cacheResult(dlFileEntryType);
-
-					if ((dlFileEntryType.getGroupId() != groupId) ||
-							(dlFileEntryType.getFileEntryTypeKey() == null) ||
-							!dlFileEntryType.getFileEntryTypeKey()
-												.equals(fileEntryTypeKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_F,
-							finderArgs, dlFileEntryType);
-					}
 				}
 			}
 			catch (Exception e) {

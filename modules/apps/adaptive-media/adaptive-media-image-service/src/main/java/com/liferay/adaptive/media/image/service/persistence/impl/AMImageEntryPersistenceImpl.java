@@ -771,13 +771,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 					result = amImageEntry;
 
 					cacheResult(amImageEntry);
-
-					if ((amImageEntry.getUuid() == null) ||
-							!amImageEntry.getUuid().equals(uuid) ||
-							(amImageEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, amImageEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4288,14 +4281,6 @@ public class AMImageEntryPersistenceImpl extends BasePersistenceImpl<AMImageEntr
 					result = amImageEntry;
 
 					cacheResult(amImageEntry);
-
-					if ((amImageEntry.getConfigurationUuid() == null) ||
-							!amImageEntry.getConfigurationUuid()
-											 .equals(configurationUuid) ||
-							(amImageEntry.getFileVersionId() != fileVersionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_F,
-							finderArgs, amImageEntry);
-					}
 				}
 			}
 			catch (Exception e) {

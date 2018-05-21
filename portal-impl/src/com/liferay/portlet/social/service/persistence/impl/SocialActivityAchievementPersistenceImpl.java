@@ -2462,14 +2462,6 @@ public class SocialActivityAchievementPersistenceImpl
 					result = socialActivityAchievement;
 
 					cacheResult(socialActivityAchievement);
-
-					if ((socialActivityAchievement.getGroupId() != groupId) ||
-							(socialActivityAchievement.getUserId() != userId) ||
-							(socialActivityAchievement.getName() == null) ||
-							!socialActivityAchievement.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_N,
-							finderArgs, socialActivityAchievement);
-					}
 				}
 			}
 			catch (Exception e) {

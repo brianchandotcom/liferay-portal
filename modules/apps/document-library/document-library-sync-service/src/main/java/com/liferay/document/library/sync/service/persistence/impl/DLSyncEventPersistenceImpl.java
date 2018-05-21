@@ -691,11 +691,6 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 					result = dlSyncEvent;
 
 					cacheResult(dlSyncEvent);
-
-					if ((dlSyncEvent.getTypePK() != typePK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_TYPEPK,
-							finderArgs, dlSyncEvent);
-					}
 				}
 			}
 			catch (Exception e) {

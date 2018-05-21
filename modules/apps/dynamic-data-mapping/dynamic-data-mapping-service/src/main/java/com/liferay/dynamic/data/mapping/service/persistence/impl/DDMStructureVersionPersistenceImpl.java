@@ -744,13 +744,6 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 					result = ddmStructureVersion;
 
 					cacheResult(ddmStructureVersion);
-
-					if ((ddmStructureVersion.getStructureId() != structureId) ||
-							(ddmStructureVersion.getVersion() == null) ||
-							!ddmStructureVersion.getVersion().equals(version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_S_V,
-							finderArgs, ddmStructureVersion);
-					}
 				}
 			}
 			catch (Exception e) {

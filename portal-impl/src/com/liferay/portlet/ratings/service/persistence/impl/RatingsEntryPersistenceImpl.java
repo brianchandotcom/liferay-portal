@@ -2159,13 +2159,6 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 					result = ratingsEntry;
 
 					cacheResult(ratingsEntry);
-
-					if ((ratingsEntry.getUserId() != userId) ||
-							(ratingsEntry.getClassNameId() != classNameId) ||
-							(ratingsEntry.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_C_C,
-							finderArgs, ratingsEntry);
-					}
 				}
 			}
 			catch (Exception e) {

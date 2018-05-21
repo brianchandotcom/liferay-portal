@@ -736,12 +736,6 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 					result = passwordPolicyRel;
 
 					cacheResult(passwordPolicyRel);
-
-					if ((passwordPolicyRel.getClassNameId() != classNameId) ||
-							(passwordPolicyRel.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, passwordPolicyRel);
-					}
 				}
 			}
 			catch (Exception e) {

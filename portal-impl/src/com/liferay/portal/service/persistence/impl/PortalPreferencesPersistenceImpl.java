@@ -222,12 +222,6 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 					result = portalPreferences;
 
 					cacheResult(portalPreferences);
-
-					if ((portalPreferences.getOwnerId() != ownerId) ||
-							(portalPreferences.getOwnerType() != ownerType)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_O_O,
-							finderArgs, portalPreferences);
-					}
 				}
 			}
 			catch (Exception e) {

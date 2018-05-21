@@ -3965,13 +3965,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 					result = userGroup;
 
 					cacheResult(userGroup);
-
-					if ((userGroup.getCompanyId() != companyId) ||
-							(userGroup.getName() == null) ||
-							!userGroup.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
-							finderArgs, userGroup);
-					}
 				}
 			}
 			catch (Exception e) {

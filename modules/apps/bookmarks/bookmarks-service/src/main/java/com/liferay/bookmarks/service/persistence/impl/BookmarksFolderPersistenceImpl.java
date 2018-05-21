@@ -785,13 +785,6 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 					result = bookmarksFolder;
 
 					cacheResult(bookmarksFolder);
-
-					if ((bookmarksFolder.getUuid() == null) ||
-							!bookmarksFolder.getUuid().equals(uuid) ||
-							(bookmarksFolder.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, bookmarksFolder);
-					}
 				}
 			}
 			catch (Exception e) {

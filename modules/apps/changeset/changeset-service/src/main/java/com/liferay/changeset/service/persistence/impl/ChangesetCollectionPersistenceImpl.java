@@ -1794,13 +1794,6 @@ public class ChangesetCollectionPersistenceImpl extends BasePersistenceImpl<Chan
 					result = changesetCollection;
 
 					cacheResult(changesetCollection);
-
-					if ((changesetCollection.getGroupId() != groupId) ||
-							(changesetCollection.getName() == null) ||
-							!changesetCollection.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, changesetCollection);
-					}
 				}
 			}
 			catch (Exception e) {

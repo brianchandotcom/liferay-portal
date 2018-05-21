@@ -4239,13 +4239,6 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 					result = syncDLObject;
 
 					cacheResult(syncDLObject);
-
-					if ((syncDLObject.getType() == null) ||
-							!syncDLObject.getType().equals(type) ||
-							(syncDLObject.getTypePK() != typePK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_T_T,
-							finderArgs, syncDLObject);
-					}
 				}
 			}
 			catch (Exception e) {

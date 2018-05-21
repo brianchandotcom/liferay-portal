@@ -786,13 +786,6 @@ public class DDMFormInstancePersistenceImpl extends BasePersistenceImpl<DDMFormI
 					result = ddmFormInstance;
 
 					cacheResult(ddmFormInstance);
-
-					if ((ddmFormInstance.getUuid() == null) ||
-							!ddmFormInstance.getUuid().equals(uuid) ||
-							(ddmFormInstance.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, ddmFormInstance);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -791,13 +791,6 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 					result = ddmDataProviderInstance;
 
 					cacheResult(ddmDataProviderInstance);
-
-					if ((ddmDataProviderInstance.getUuid() == null) ||
-							!ddmDataProviderInstance.getUuid().equals(uuid) ||
-							(ddmDataProviderInstance.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, ddmDataProviderInstance);
-					}
 				}
 			}
 			catch (Exception e) {

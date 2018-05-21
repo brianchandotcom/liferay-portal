@@ -777,13 +777,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					result = journalFeed;
 
 					cacheResult(journalFeed);
-
-					if ((journalFeed.getUuid() == null) ||
-							!journalFeed.getUuid().equals(uuid) ||
-							(journalFeed.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, journalFeed);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2476,13 +2469,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					result = journalFeed;
 
 					cacheResult(journalFeed);
-
-					if ((journalFeed.getGroupId() != groupId) ||
-							(journalFeed.getFeedId() == null) ||
-							!journalFeed.getFeedId().equals(feedId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_F,
-							finderArgs, journalFeed);
-					}
 				}
 			}
 			catch (Exception e) {

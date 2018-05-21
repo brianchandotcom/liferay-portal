@@ -741,13 +741,6 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 					result = folder;
 
 					cacheResult(folder);
-
-					if ((folder.getAccountId() != accountId) ||
-							(folder.getFullName() == null) ||
-							!folder.getFullName().equals(fullName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_A_F,
-							finderArgs, folder);
-					}
 				}
 			}
 			catch (Exception e) {

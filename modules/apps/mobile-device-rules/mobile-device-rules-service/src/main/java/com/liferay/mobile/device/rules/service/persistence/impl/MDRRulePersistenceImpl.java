@@ -774,13 +774,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 					result = mdrRule;
 
 					cacheResult(mdrRule);
-
-					if ((mdrRule.getUuid() == null) ||
-							!mdrRule.getUuid().equals(uuid) ||
-							(mdrRule.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, mdrRule);
-					}
 				}
 			}
 			catch (Exception e) {

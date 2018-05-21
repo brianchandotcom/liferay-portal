@@ -728,13 +728,6 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 					result = portlet;
 
 					cacheResult(portlet);
-
-					if ((portlet.getCompanyId() != companyId) ||
-							(portlet.getPortletId() == null) ||
-							!portlet.getPortletId().equals(portletId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_P,
-							finderArgs, portlet);
-					}
 				}
 			}
 			catch (Exception e) {

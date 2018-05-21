@@ -255,14 +255,6 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 					result = weDeployAuthApp;
 
 					cacheResult(weDeployAuthApp);
-
-					if ((weDeployAuthApp.getRedirectURI() == null) ||
-							!weDeployAuthApp.getRedirectURI().equals(redirectURI) ||
-							(weDeployAuthApp.getClientId() == null) ||
-							!weDeployAuthApp.getClientId().equals(clientId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_RU_CI,
-							finderArgs, weDeployAuthApp);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -553,15 +545,6 @@ public class WeDeployAuthAppPersistenceImpl extends BasePersistenceImpl<WeDeploy
 					result = weDeployAuthApp;
 
 					cacheResult(weDeployAuthApp);
-
-					if ((weDeployAuthApp.getClientId() == null) ||
-							!weDeployAuthApp.getClientId().equals(clientId) ||
-							(weDeployAuthApp.getClientSecret() == null) ||
-							!weDeployAuthApp.getClientSecret()
-												.equals(clientSecret)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CI_CS,
-							finderArgs, weDeployAuthApp);
-					}
 				}
 			}
 			catch (Exception e) {

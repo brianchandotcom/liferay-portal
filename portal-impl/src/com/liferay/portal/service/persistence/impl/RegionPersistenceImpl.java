@@ -1226,13 +1226,6 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 					result = region;
 
 					cacheResult(region);
-
-					if ((region.getCountryId() != countryId) ||
-							(region.getRegionCode() == null) ||
-							!region.getRegionCode().equals(regionCode)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_R,
-							finderArgs, region);
-					}
 				}
 			}
 			catch (Exception e) {

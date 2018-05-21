@@ -1330,13 +1330,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 					result = ddlRecordVersion;
 
 					cacheResult(ddlRecordVersion);
-
-					if ((ddlRecordVersion.getRecordId() != recordId) ||
-							(ddlRecordVersion.getVersion() == null) ||
-							!ddlRecordVersion.getVersion().equals(version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_R_V,
-							finderArgs, ddlRecordVersion);
-					}
 				}
 			}
 			catch (Exception e) {

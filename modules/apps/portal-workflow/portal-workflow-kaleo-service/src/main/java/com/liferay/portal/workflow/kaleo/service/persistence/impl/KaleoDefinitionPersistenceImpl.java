@@ -752,13 +752,6 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 					result = kaleoDefinition;
 
 					cacheResult(kaleoDefinition);
-
-					if ((kaleoDefinition.getCompanyId() != companyId) ||
-							(kaleoDefinition.getName() == null) ||
-							!kaleoDefinition.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
-							finderArgs, kaleoDefinition);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1581,14 +1574,6 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 					result = kaleoDefinition;
 
 					cacheResult(kaleoDefinition);
-
-					if ((kaleoDefinition.getCompanyId() != companyId) ||
-							(kaleoDefinition.getName() == null) ||
-							!kaleoDefinition.getName().equals(name) ||
-							(kaleoDefinition.getVersion() != version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_V,
-							finderArgs, kaleoDefinition);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1874,14 +1859,6 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 					result = kaleoDefinition;
 
 					cacheResult(kaleoDefinition);
-
-					if ((kaleoDefinition.getCompanyId() != companyId) ||
-							(kaleoDefinition.getName() == null) ||
-							!kaleoDefinition.getName().equals(name) ||
-							(kaleoDefinition.isActive() != active)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_A,
-							finderArgs, kaleoDefinition);
-					}
 				}
 			}
 			catch (Exception e) {

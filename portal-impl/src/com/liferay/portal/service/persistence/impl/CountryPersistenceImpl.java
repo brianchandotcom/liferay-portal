@@ -210,12 +210,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 					result = country;
 
 					cacheResult(country);
-
-					if ((country.getName() == null) ||
-							!country.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_NAME,
-							finderArgs, country);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -441,12 +435,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 					result = country;
 
 					cacheResult(country);
-
-					if ((country.getA2() == null) ||
-							!country.getA2().equals(a2)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_A2,
-							finderArgs, country);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -672,12 +660,6 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 					result = country;
 
 					cacheResult(country);
-
-					if ((country.getA3() == null) ||
-							!country.getA3().equals(a3)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_A3,
-							finderArgs, country);
-					}
 				}
 			}
 			catch (Exception e) {

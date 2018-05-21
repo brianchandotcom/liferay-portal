@@ -217,13 +217,6 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 					result = release;
 
 					cacheResult(release);
-
-					if ((release.getServletContextName() == null) ||
-							!release.getServletContextName()
-										.equals(servletContextName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-							finderArgs, release);
-					}
 				}
 			}
 			catch (Exception e) {

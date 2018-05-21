@@ -2869,13 +2869,6 @@ public class ChangesetEntryPersistenceImpl extends BasePersistenceImpl<Changeset
 					result = changesetEntry;
 
 					cacheResult(changesetEntry);
-
-					if ((changesetEntry.getChangesetCollectionId() != changesetCollectionId) ||
-							(changesetEntry.getClassNameId() != classNameId) ||
-							(changesetEntry.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C,
-							finderArgs, changesetEntry);
-					}
 				}
 			}
 			catch (Exception e) {

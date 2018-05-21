@@ -1222,12 +1222,6 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 					result = assetTagStats;
 
 					cacheResult(assetTagStats);
-
-					if ((assetTagStats.getTagId() != tagId) ||
-							(assetTagStats.getClassNameId() != classNameId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_T_C,
-							finderArgs, assetTagStats);
-					}
 				}
 			}
 			catch (Exception e) {

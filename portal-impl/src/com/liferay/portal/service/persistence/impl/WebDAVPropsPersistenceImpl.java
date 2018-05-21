@@ -213,12 +213,6 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 					result = webDAVProps;
 
 					cacheResult(webDAVProps);
-
-					if ((webDAVProps.getClassNameId() != classNameId) ||
-							(webDAVProps.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, webDAVProps);
-					}
 				}
 			}
 			catch (Exception e) {

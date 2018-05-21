@@ -785,14 +785,6 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 					result = resourceAction;
 
 					cacheResult(resourceAction);
-
-					if ((resourceAction.getName() == null) ||
-							!resourceAction.getName().equals(name) ||
-							(resourceAction.getActionId() == null) ||
-							!resourceAction.getActionId().equals(actionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_N_A,
-							finderArgs, resourceAction);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -951,18 +951,6 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 					result = oAuthToken;
 
 					cacheResult(oAuthToken);
-
-					if ((oAuthToken.getUserId() != userId) ||
-							(oAuthToken.getGadgetKey() == null) ||
-							!oAuthToken.getGadgetKey().equals(gadgetKey) ||
-							(oAuthToken.getServiceName() == null) ||
-							!oAuthToken.getServiceName().equals(serviceName) ||
-							(oAuthToken.getModuleId() != moduleId) ||
-							(oAuthToken.getTokenName() == null) ||
-							!oAuthToken.getTokenName().equals(tokenName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_G_S_M_T,
-							finderArgs, oAuthToken);
-					}
 				}
 			}
 			catch (Exception e) {

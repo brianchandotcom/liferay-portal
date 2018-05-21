@@ -782,13 +782,6 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 					result = readingTimeEntry;
 
 					cacheResult(readingTimeEntry);
-
-					if ((readingTimeEntry.getUuid() == null) ||
-							!readingTimeEntry.getUuid().equals(uuid) ||
-							(readingTimeEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, readingTimeEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1632,13 +1625,6 @@ public class ReadingTimeEntryPersistenceImpl extends BasePersistenceImpl<Reading
 					result = readingTimeEntry;
 
 					cacheResult(readingTimeEntry);
-
-					if ((readingTimeEntry.getGroupId() != groupId) ||
-							(readingTimeEntry.getClassNameId() != classNameId) ||
-							(readingTimeEntry.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C,
-							finderArgs, readingTimeEntry);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -1110,13 +1110,6 @@ public class OAuth2ApplicationPersistenceImpl extends BasePersistenceImpl<OAuth2
 					result = oAuth2Application;
 
 					cacheResult(oAuth2Application);
-
-					if ((oAuth2Application.getCompanyId() != companyId) ||
-							(oAuth2Application.getClientId() == null) ||
-							!oAuth2Application.getClientId().equals(clientId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, oAuth2Application);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -787,14 +787,6 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 					result = expandoTable;
 
 					cacheResult(expandoTable);
-
-					if ((expandoTable.getCompanyId() != companyId) ||
-							(expandoTable.getClassNameId() != classNameId) ||
-							(expandoTable.getName() == null) ||
-							!expandoTable.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_N,
-							finderArgs, expandoTable);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -1349,13 +1349,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 					result = expandoColumn;
 
 					cacheResult(expandoColumn);
-
-					if ((expandoColumn.getTableId() != tableId) ||
-							(expandoColumn.getName() == null) ||
-							!expandoColumn.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_T_N,
-							finderArgs, expandoColumn);
-					}
 				}
 			}
 			catch (Exception e) {

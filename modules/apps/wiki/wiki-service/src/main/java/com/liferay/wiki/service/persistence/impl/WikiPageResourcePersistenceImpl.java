@@ -778,13 +778,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					result = wikiPageResource;
 
 					cacheResult(wikiPageResource);
-
-					if ((wikiPageResource.getUuid() == null) ||
-							!wikiPageResource.getUuid().equals(uuid) ||
-							(wikiPageResource.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, wikiPageResource);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1622,13 +1615,6 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					result = wikiPageResource;
 
 					cacheResult(wikiPageResource);
-
-					if ((wikiPageResource.getNodeId() != nodeId) ||
-							(wikiPageResource.getTitle() == null) ||
-							!wikiPageResource.getTitle().equals(title)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_N_T,
-							finderArgs, wikiPageResource);
-					}
 				}
 			}
 			catch (Exception e) {

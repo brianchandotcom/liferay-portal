@@ -787,13 +787,6 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 					result = calendarResource;
 
 					cacheResult(calendarResource);
-
-					if ((calendarResource.getUuid() == null) ||
-							!calendarResource.getUuid().equals(uuid) ||
-							(calendarResource.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, calendarResource);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -5495,12 +5488,6 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 					result = calendarResource;
 
 					cacheResult(calendarResource);
-
-					if ((calendarResource.getClassNameId() != classNameId) ||
-							(calendarResource.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, calendarResource);
-					}
 				}
 			}
 			catch (Exception e) {

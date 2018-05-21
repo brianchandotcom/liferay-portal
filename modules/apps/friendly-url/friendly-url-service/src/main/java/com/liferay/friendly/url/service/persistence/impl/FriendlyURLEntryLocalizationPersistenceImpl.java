@@ -764,14 +764,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					result = friendlyURLEntryLocalization;
 
 					cacheResult(friendlyURLEntryLocalization);
-
-					if ((friendlyURLEntryLocalization.getFriendlyURLEntryId() != friendlyURLEntryId) ||
-							(friendlyURLEntryLocalization.getLanguageId() == null) ||
-							!friendlyURLEntryLocalization.getLanguageId()
-															 .equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_FRIENDLYURLENTRYID_LANGUAGEID,
-							finderArgs, friendlyURLEntryLocalization);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1051,15 +1043,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					result = friendlyURLEntryLocalization;
 
 					cacheResult(friendlyURLEntryLocalization);
-
-					if ((friendlyURLEntryLocalization.getGroupId() != groupId) ||
-							(friendlyURLEntryLocalization.getClassNameId() != classNameId) ||
-							(friendlyURLEntryLocalization.getUrlTitle() == null) ||
-							!friendlyURLEntryLocalization.getUrlTitle()
-															 .equals(urlTitle)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_U,
-							finderArgs, friendlyURLEntryLocalization);
-					}
 				}
 			}
 			catch (Exception e) {

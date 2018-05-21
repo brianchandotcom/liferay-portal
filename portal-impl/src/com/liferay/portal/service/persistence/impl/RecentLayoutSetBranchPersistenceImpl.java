@@ -1756,12 +1756,6 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 					result = recentLayoutSetBranch;
 
 					cacheResult(recentLayoutSetBranch);
-
-					if ((recentLayoutSetBranch.getUserId() != userId) ||
-							(recentLayoutSetBranch.getLayoutSetId() != layoutSetId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_L,
-							finderArgs, recentLayoutSetBranch);
-					}
 				}
 			}
 			catch (Exception e) {

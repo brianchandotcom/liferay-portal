@@ -2684,14 +2684,6 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 					result = subscription;
 
 					cacheResult(subscription);
-
-					if ((subscription.getCompanyId() != companyId) ||
-							(subscription.getUserId() != userId) ||
-							(subscription.getClassNameId() != classNameId) ||
-							(subscription.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_C_C,
-							finderArgs, subscription);
-					}
 				}
 			}
 			catch (Exception e) {

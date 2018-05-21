@@ -787,13 +787,6 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 					result = bookmarksEntry;
 
 					cacheResult(bookmarksEntry);
-
-					if ((bookmarksEntry.getUuid() == null) ||
-							!bookmarksEntry.getUuid().equals(uuid) ||
-							(bookmarksEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, bookmarksEntry);
-					}
 				}
 			}
 			catch (Exception e) {

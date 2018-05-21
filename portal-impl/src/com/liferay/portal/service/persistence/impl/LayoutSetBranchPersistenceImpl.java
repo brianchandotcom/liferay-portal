@@ -2048,14 +2048,6 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 					result = layoutSetBranch;
 
 					cacheResult(layoutSetBranch);
-
-					if ((layoutSetBranch.getGroupId() != groupId) ||
-							(layoutSetBranch.isPrivateLayout() != privateLayout) ||
-							(layoutSetBranch.getName() == null) ||
-							!layoutSetBranch.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_N,
-							finderArgs, layoutSetBranch);
-					}
 				}
 			}
 			catch (Exception e) {

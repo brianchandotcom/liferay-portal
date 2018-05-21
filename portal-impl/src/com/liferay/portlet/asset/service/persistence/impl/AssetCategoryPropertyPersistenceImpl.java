@@ -1856,13 +1856,6 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 					result = assetCategoryProperty;
 
 					cacheResult(assetCategoryProperty);
-
-					if ((assetCategoryProperty.getCategoryId() != categoryId) ||
-							(assetCategoryProperty.getKey() == null) ||
-							!assetCategoryProperty.getKey().equals(key)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CA_K,
-							finderArgs, assetCategoryProperty);
-					}
 				}
 			}
 			catch (Exception e) {

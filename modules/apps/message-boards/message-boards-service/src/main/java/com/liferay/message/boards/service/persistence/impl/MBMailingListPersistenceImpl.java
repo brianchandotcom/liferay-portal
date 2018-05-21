@@ -777,13 +777,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					result = mbMailingList;
 
 					cacheResult(mbMailingList);
-
-					if ((mbMailingList.getUuid() == null) ||
-							!mbMailingList.getUuid().equals(uuid) ||
-							(mbMailingList.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, mbMailingList);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2108,12 +2101,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 					result = mbMailingList;
 
 					cacheResult(mbMailingList);
-
-					if ((mbMailingList.getGroupId() != groupId) ||
-							(mbMailingList.getCategoryId() != categoryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C,
-							finderArgs, mbMailingList);
-					}
 				}
 			}
 			catch (Exception e) {

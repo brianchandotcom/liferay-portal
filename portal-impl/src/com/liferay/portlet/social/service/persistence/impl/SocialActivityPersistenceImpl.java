@@ -2251,11 +2251,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 					result = socialActivity;
 
 					cacheResult(socialActivity);
-
-					if ((socialActivity.getMirrorActivityId() != mirrorActivityId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_MIRRORACTIVITYID,
-							finderArgs, socialActivity);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -6011,17 +6006,6 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 					result = socialActivity;
 
 					cacheResult(socialActivity);
-
-					if ((socialActivity.getGroupId() != groupId) ||
-							(socialActivity.getUserId() != userId) ||
-							(socialActivity.getCreateDate() != createDate) ||
-							(socialActivity.getClassNameId() != classNameId) ||
-							(socialActivity.getClassPK() != classPK) ||
-							(socialActivity.getType() != type) ||
-							(socialActivity.getReceiverUserId() != receiverUserId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_CD_C_C_T_R,
-							finderArgs, socialActivity);
-					}
 				}
 			}
 			catch (Exception e) {

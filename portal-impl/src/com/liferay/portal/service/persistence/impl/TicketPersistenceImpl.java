@@ -225,12 +225,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 					result = ticket;
 
 					cacheResult(ticket);
-
-					if ((ticket.getKey() == null) ||
-							!ticket.getKey().equals(key)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_KEY,
-							finderArgs, ticket);
-					}
 				}
 			}
 			catch (Exception e) {

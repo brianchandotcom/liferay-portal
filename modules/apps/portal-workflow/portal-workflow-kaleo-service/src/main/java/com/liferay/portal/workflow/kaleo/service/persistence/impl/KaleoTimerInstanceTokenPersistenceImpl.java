@@ -754,12 +754,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 					result = kaleoTimerInstanceToken;
 
 					cacheResult(kaleoTimerInstanceToken);
-
-					if ((kaleoTimerInstanceToken.getKaleoInstanceTokenId() != kaleoInstanceTokenId) ||
-							(kaleoTimerInstanceToken.getKaleoTimerId() != kaleoTimerId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_KITI_KTI,
-							finderArgs, kaleoTimerInstanceToken);
-					}
 				}
 			}
 			catch (Exception e) {

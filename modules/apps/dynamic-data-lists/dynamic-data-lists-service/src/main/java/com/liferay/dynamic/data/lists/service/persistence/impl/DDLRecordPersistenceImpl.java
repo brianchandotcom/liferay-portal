@@ -774,13 +774,6 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 					result = ddlRecord;
 
 					cacheResult(ddlRecord);
-
-					if ((ddlRecord.getUuid() == null) ||
-							!ddlRecord.getUuid().equals(uuid) ||
-							(ddlRecord.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, ddlRecord);
-					}
 				}
 			}
 			catch (Exception e) {

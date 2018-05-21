@@ -736,13 +736,6 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 					result = entry;
 
 					cacheResult(entry);
-
-					if ((entry.getUserId() != userId) ||
-							(entry.getEmailAddress() == null) ||
-							!entry.getEmailAddress().equals(emailAddress)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_EA,
-							finderArgs, entry);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -1226,12 +1226,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 					result = blogsStatsUser;
 
 					cacheResult(blogsStatsUser);
-
-					if ((blogsStatsUser.getGroupId() != groupId) ||
-							(blogsStatsUser.getUserId() != userId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_U,
-							finderArgs, blogsStatsUser);
-					}
 				}
 			}
 			catch (Exception e) {

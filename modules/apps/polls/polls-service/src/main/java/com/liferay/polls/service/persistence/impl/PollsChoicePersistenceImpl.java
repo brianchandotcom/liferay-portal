@@ -776,13 +776,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 					result = pollsChoice;
 
 					cacheResult(pollsChoice);
-
-					if ((pollsChoice.getUuid() == null) ||
-							!pollsChoice.getUuid().equals(uuid) ||
-							(pollsChoice.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, pollsChoice);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2124,13 +2117,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 					result = pollsChoice;
 
 					cacheResult(pollsChoice);
-
-					if ((pollsChoice.getQuestionId() != questionId) ||
-							(pollsChoice.getName() == null) ||
-							!pollsChoice.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_Q_N,
-							finderArgs, pollsChoice);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -2853,13 +2853,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 					result = assetLink;
 
 					cacheResult(assetLink);
-
-					if ((assetLink.getEntryId1() != entryId1) ||
-							(assetLink.getEntryId2() != entryId2) ||
-							(assetLink.getType() != type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_E_E_T,
-							finderArgs, assetLink);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -775,13 +775,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 					result = repository;
 
 					cacheResult(repository);
-
-					if ((repository.getUuid() == null) ||
-							!repository.getUuid().equals(uuid) ||
-							(repository.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, repository);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2147,15 +2140,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 					result = repository;
 
 					cacheResult(repository);
-
-					if ((repository.getGroupId() != groupId) ||
-							(repository.getName() == null) ||
-							!repository.getName().equals(name) ||
-							(repository.getPortletId() == null) ||
-							!repository.getPortletId().equals(portletId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N_P,
-							finderArgs, repository);
-					}
 				}
 			}
 			catch (Exception e) {

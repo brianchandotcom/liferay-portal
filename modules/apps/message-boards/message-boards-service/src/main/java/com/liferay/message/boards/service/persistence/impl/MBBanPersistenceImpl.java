@@ -769,13 +769,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					result = mbBan;
 
 					cacheResult(mbBan);
-
-					if ((mbBan.getUuid() == null) ||
-							!mbBan.getUuid().equals(uuid) ||
-							(mbBan.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, mbBan);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3079,12 +3072,6 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 					result = mbBan;
 
 					cacheResult(mbBan);
-
-					if ((mbBan.getGroupId() != groupId) ||
-							(mbBan.getBanUserId() != banUserId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_B,
-							finderArgs, mbBan);
-					}
 				}
 			}
 			catch (Exception e) {

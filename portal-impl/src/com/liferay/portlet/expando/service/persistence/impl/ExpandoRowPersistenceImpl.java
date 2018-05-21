@@ -1214,12 +1214,6 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 					result = expandoRow;
 
 					cacheResult(expandoRow);
-
-					if ((expandoRow.getTableId() != tableId) ||
-							(expandoRow.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_T_C,
-							finderArgs, expandoRow);
-					}
 				}
 			}
 			catch (Exception e) {

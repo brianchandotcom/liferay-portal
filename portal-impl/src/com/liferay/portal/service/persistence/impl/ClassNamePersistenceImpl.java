@@ -208,12 +208,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 					result = className;
 
 					cacheResult(className);
-
-					if ((className.getValue() == null) ||
-							!className.getValue().equals(value)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_VALUE,
-							finderArgs, className);
-					}
 				}
 			}
 			catch (Exception e) {

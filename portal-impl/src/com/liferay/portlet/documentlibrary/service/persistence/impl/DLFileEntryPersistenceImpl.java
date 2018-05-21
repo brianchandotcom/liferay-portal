@@ -784,13 +784,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					result = dlFileEntry;
 
 					cacheResult(dlFileEntry);
-
-					if ((dlFileEntry.getUuid() == null) ||
-							!dlFileEntry.getUuid().equals(uuid) ||
-							(dlFileEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, dlFileEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -11616,14 +11609,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					result = dlFileEntry;
 
 					cacheResult(dlFileEntry);
-
-					if ((dlFileEntry.getGroupId() != groupId) ||
-							(dlFileEntry.getFolderId() != folderId) ||
-							(dlFileEntry.getName() == null) ||
-							!dlFileEntry.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_F_N,
-							finderArgs, dlFileEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -11897,14 +11882,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					result = dlFileEntry;
 
 					cacheResult(dlFileEntry);
-
-					if ((dlFileEntry.getGroupId() != groupId) ||
-							(dlFileEntry.getFolderId() != folderId) ||
-							(dlFileEntry.getFileName() == null) ||
-							!dlFileEntry.getFileName().equals(fileName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_F_FN,
-							finderArgs, dlFileEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -12177,14 +12154,6 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 					result = dlFileEntry;
 
 					cacheResult(dlFileEntry);
-
-					if ((dlFileEntry.getGroupId() != groupId) ||
-							(dlFileEntry.getFolderId() != folderId) ||
-							(dlFileEntry.getTitle() == null) ||
-							!dlFileEntry.getTitle().equals(title)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_F_T,
-							finderArgs, dlFileEntry);
-					}
 				}
 			}
 			catch (Exception e) {

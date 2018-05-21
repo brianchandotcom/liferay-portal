@@ -742,13 +742,6 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 					result = announcementsFlag;
 
 					cacheResult(announcementsFlag);
-
-					if ((announcementsFlag.getUserId() != userId) ||
-							(announcementsFlag.getEntryId() != entryId) ||
-							(announcementsFlag.getValue() != value)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_E_V,
-							finderArgs, announcementsFlag);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -211,12 +211,6 @@ public class FriendlyURLEntryMappingPersistenceImpl extends BasePersistenceImpl<
 					result = friendlyURLEntryMapping;
 
 					cacheResult(friendlyURLEntryMapping);
-
-					if ((friendlyURLEntryMapping.getClassNameId() != classNameId) ||
-							(friendlyURLEntryMapping.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, friendlyURLEntryMapping);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -1,6 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import Tooltip from 'frontend-js-web/liferay/compat/tooltip/Tooltip.es';
 
 import AceEditor from './AceEditor.es';
 import templates from './SourceEditor.soy';

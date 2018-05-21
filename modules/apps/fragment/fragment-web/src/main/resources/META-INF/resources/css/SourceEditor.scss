@@ -25,4 +25,17 @@
 		top: 0.5em;
 		z-index: 10;
 	}
+
+	.source-editor-fixed-text {
+		background-color: white;
+		padding-left: 0.55rem;
+
+		& + .ace-editor {
+			height: 80%;
+		}
+	}
+
+	.source-editor-fixed-help {
+		margin-right: 0.55rem;
+	}
 }

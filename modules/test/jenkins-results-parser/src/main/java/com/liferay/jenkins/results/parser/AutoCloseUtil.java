@@ -116,7 +116,16 @@ public class AutoCloseUtil {
 				sb.append("<li><a href=\"");
 				sb.append(failureBuildURL);
 				sb.append("\">");
-				sb.append(failedDownstreamBuild.getJobVariant());
+
+				String jobVariant = failedDownstreamBuild.getJobVariant();
+
+				if ((jobVariant != null) && !jobVariant.isEmpty()) {
+					sb.append(jobVariant);
+				}
+				else {
+					sb.append(failedDownstreamBuild.getJobName());
+				}
+
 				sb.append("</a></li>");
 			}
 

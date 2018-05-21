@@ -170,6 +170,8 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 		portletURL.setParameter("displayStyle", _displayStyle);
 		portletURL.setParameter("navigation", _navigation);
+		portletURL.setParameter("orderByCol", getOrderByCol());
+		portletURL.setParameter("orderByType", getOrderByType());
 		portletURL.setParameter("status", String.valueOf(_status));
 
 		return portletURL;
@@ -188,8 +190,11 @@ public class ViewUsersManagementToolbarDisplayContext {
 			return _userSearch;
 		}
 
+		PortletURL portletURL = (PortletURL)_request.getAttribute(
+			"view.jsp-portletURL");
+
 		UserSearch userSearch = new UserSearch(
-			_renderRequest, "cur2", getPortletURL());
+			_renderRequest, "cur2", portletURL);
 
 		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
 

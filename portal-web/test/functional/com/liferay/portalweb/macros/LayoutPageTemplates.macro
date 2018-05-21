@@ -42,14 +42,6 @@
 		<execute macro="Button#clickSave" />
 	</command>
 
-	<command name="assertAssetTypeUnselectable">
-		<execute macro="LayoutPageTemplates#_gotoTab">
-			<var name="tabName" value="Mapping" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="Button#SELECT" />
-	</command>
-
 	<command name="editFragmentImage">
 		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
@@ -104,36 +96,6 @@
 
 	<command name="gotoPortletConfiguration">
 		<execute function="MouseOver" locator1="Fragment#PAGE_TEMPLATE_NAVIGATION_PORTLET">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_PORTLET_CONFIGURE">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-	</command>
-
-	<command name="mapEditableTextToAsset">
-		<execute macro="LayoutPageTemplates#_gotoTab">
-			<var name="tabName" value="Mapping" />
-		</execute>
-
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Fragment#LIST_GROUP_ITEM" value1='${itemName}'>
-			<var name="key_itemName" value="${itemName}" />
-		</execute>
-	</command>
-
-	<command name="moveFragment">
-		<execute function="Refresh" />
-
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
 
@@ -200,37 +162,6 @@
 		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
 			<var name="key_fragmentName" value="${fragmentName}" />
 		</execute>
-	</command>
-
-	<command name="selectAssetType">
-		<execute macro="LayoutPageTemplates#_gotoTab">
-			<var name="tabName" value="Mapping" />
-		</execute>
-
-		<execute macro="Button#clickSelect" />
-
-		<if>
-			<contains string="${assetType}" substring="{assetType}" />
-			<then>
-				<var name="${assetType}" value="Web Content Article" />
-				<if>
-					<contains string="${subType}" substring="{subType}" />
-					<then>
-						<var name="${subType}" value="Basic Web Content" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${assetType}">
-			<var name="key_fieldLabel" value="Asset Type" />
-		</execute>
-
-		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${subType}">
-			<var name="key_fieldLabel" value="Subtype" />
-		</execute>
-
-		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="viewAutoSaveMessage">

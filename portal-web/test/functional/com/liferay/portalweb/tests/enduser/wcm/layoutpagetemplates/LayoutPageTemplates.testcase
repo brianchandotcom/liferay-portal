@@ -520,12 +520,12 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#selectAssetType">
+		<execute macro="DisplayPages#selectAssetType">
 			<var name="assetType" value="Web Content Article" />
 			<var name="subType" value="Basic Web Content" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#mapEditableTextToAsset">
+		<execute macro="DisplayPages#mapEditableTextToAsset">
 			<var name="fragmentName" value="Fragment Name" />
 			<var name="itemName" value="Title" />
 		</execute>

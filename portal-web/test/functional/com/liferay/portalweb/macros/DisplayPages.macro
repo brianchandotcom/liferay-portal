@@ -1,0 +1,86 @@
+<definition>
+	<command name="assertAssetTypeUnselectable">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Mapping" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Button#SELECT" />
+	</command>
+
+	<command name="mapEditableTextToAsset">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Mapping" />
+		</execute>
+
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Fragment#LIST_GROUP_ITEM" value1='${itemName}'>
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+	</command>
+
+	<command name="selectAssetType">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Mapping" />
+		</execute>
+
+		<execute macro="Button#clickSelect" />
+
+		<if>
+			<contains string="${assetType}" substring="{assetType}" />
+			<then>
+				<var name="${assetType}" value="Web Content Article" />
+				<if>
+					<contains string="${subType}" substring="{subType}" />
+					<then>
+						<var name="${subType}" value="Basic Web Content" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${assetType}">
+			<var name="key_fieldLabel" value="Asset Type" />
+		</execute> 
+
+		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${subType}">
+			<var name="key_fieldLabel" value="Subtype" />
+		</execute> 
+
+		<execute macro="Button#clickSave" />
+	</command>
+
+	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${webContentContent}" />
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+
+		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+
+		<for list="${contentList}" param="content">
+			<execute function="AssertElementPresent" locator1="Fragment#LFR_EDITABLE">
+				<var name="key_text" value="${content}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="viewPGViaFriendlyURL">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="${siteName}/~/${friendlyURL}" />
+		</execute>
+
+		<for list="${contentList}" param="content">
+			<execute function="AssertElementPresent" locator1="Fragment#LFR_EDITABLE">
+				<var name="key_text" value="${content}" />
+			</execute>
+		</for>
+	</command>
+</definition>

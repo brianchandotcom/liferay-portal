@@ -27,6 +27,8 @@ public class CommerceForecastEntryConstants {
 
 	public static final int PERIOD_WEEKLY = 2;
 
+	public static final int[] PERIODS = {PERIOD_MONTHLY, PERIOD_WEEKLY};
+
 	public static final String TARGET_LABEL_QUANTITY = "quantity";
 
 	public static final String TARGET_LABEL_REVENUE = "revenue";
@@ -34,6 +36,8 @@ public class CommerceForecastEntryConstants {
 	public static final int TARGET_QUANTITY = 1;
 
 	public static final int TARGET_REVENUE = 2;
+
+	public static final int[] TARGETS = {TARGET_QUANTITY, TARGET_REVENUE};
 
 	public static int getLabelPeriod(String label) {
 		if (label.equals(PERIOD_LABEL_MONTHLY)) {
@@ -53,6 +57,30 @@ public class CommerceForecastEntryConstants {
 		}
 		else if (label.equals(TARGET_LABEL_REVENUE)) {
 			return TARGET_REVENUE;
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public static String getPeriodLabel(int period) {
+		if (period == PERIOD_MONTHLY) {
+			return PERIOD_LABEL_MONTHLY;
+		}
+		else if (period == PERIOD_WEEKLY) {
+			return PERIOD_LABEL_WEEKLY;
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public static String getTargetLabel(int target) {
+		if (target == TARGET_QUANTITY) {
+			return TARGET_LABEL_QUANTITY;
+		}
+		else if (target == TARGET_REVENUE) {
+			return TARGET_LABEL_REVENUE;
 		}
 		else {
 			throw new IllegalArgumentException();

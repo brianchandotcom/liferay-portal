@@ -482,6 +482,11 @@ public class PortletURLImpl
 	}
 
 	@Override
+	public void setParameter(String name, String... values) {
+		setParameter(name, values, PropsValues.PORTLET_URL_APPEND_PARAMETERS);
+	}
+
+	@Override
 	public void setParameter(String name, String value, boolean append) {
 		if (name == null) {
 			throw new IllegalArgumentException();
@@ -494,11 +499,6 @@ public class PortletURLImpl
 		}
 
 		setParameter(name, new String[] {value}, append);
-	}
-
-	@Override
-	public void setParameter(String name, String[] values) {
-		setParameter(name, values, PropsValues.PORTLET_URL_APPEND_PARAMETERS);
 	}
 
 	@Override

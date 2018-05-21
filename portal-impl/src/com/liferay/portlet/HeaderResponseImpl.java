@@ -40,7 +40,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -308,35 +307,30 @@ public class HeaderResponseImpl
 		List<ParsedElement> parsedElements = _parseElements(xml);
 
 		for (ParsedElement parsedElement : parsedElements) {
-			if (parsedElement.isValid()) {
-				StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-				sb.append(StringPool.LESS_THAN);
-				sb.append(parsedElement.getName());
+			sb.append(StringPool.LESS_THAN);
+			sb.append(parsedElement.getName());
 
-				Map<String, String> attributes = parsedElement.getAttributes();
+			Map<String, String> attributes = parsedElement.getAttributes();
 
-				for (Map.Entry<String, String> entry : attributes.entrySet()) {
-					sb.append(StringPool.SPACE);
-					sb.append(entry.getKey());
-					sb.append(StringPool.EQUAL);
-					sb.append(StringPool.QUOTE);
-					sb.append(entry.getValue());
-					sb.append(StringPool.QUOTE);
-				}
-
-				sb.append(StringPool.GREATER_THAN);
-				sb.append(parsedElement.getText());
-				sb.append(StringPool.LESS_THAN);
-				sb.append(StringPool.FORWARD_SLASH);
-				sb.append(parsedElement.getName());
-				sb.append(StringPool.GREATER_THAN);
-
-				_addDependencyToHead(name, scope, null, sb);
+			for (Map.Entry<String, String> entry : attributes.entrySet()) {
+				sb.append(StringPool.SPACE);
+				sb.append(entry.getKey());
+				sb.append(StringPool.EQUAL);
+				sb.append(StringPool.QUOTE);
+				sb.append(entry.getValue());
+				sb.append(StringPool.QUOTE);
 			}
-			else {
-				_log.error("Invalid element: " + parsedElement.getName());
-			}
+
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(parsedElement.getText());
+			sb.append(StringPool.LESS_THAN);
+			sb.append(StringPool.FORWARD_SLASH);
+			sb.append(parsedElement.getName());
+			sb.append(StringPool.GREATER_THAN);
+
+			_addDependencyToHead(name, scope, null, sb);
 		}
 	}
 
@@ -376,11 +370,10 @@ public class HeaderResponseImpl
 						parsedElements.add(
 							new ParsedElement(
 								elementName, elementAttributes,
-								xmlStreamReader.getElementText(), true));
+								xmlStreamReader.getElementText()));
 					}
 					else {
-						parsedElements.add(
-							new ParsedElement(elementName, null, null, false));
+						_log.error("Invalid element: " + elementName);
 					}
 				}
 			}
@@ -428,24 +421,17 @@ public class HeaderResponseImpl
 			return _text;
 		}
 
-		public boolean isValid() {
-			return _valid;
-		}
-
 		private ParsedElement(
-			String name, Map<String, String> attributes, String text,
-			boolean valid) {
+			String name, Map<String, String> attributes, String text) {
 
 			_name = name;
 			_attributes = attributes;
 			_text = text;
-			_valid = valid;
 		}
 
 		private final Map<String, String> _attributes;
 		private final String _name;
 		private final String _text;
-		private final boolean _valid;
 
 	}
 

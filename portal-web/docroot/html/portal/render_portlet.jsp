@@ -837,7 +837,7 @@ if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPort
 boolean portletException = GetterUtil.getBoolean(request.getAttribute(WebKeys.PARALLEL_RENDERING_TIMEOUT_ERROR));
 Boolean portletVisibility = null;
 
-if (portlet.isActive() && portlet.isReady() && supportsMimeType && (invokerPortlet != null)) {
+if (portlet.isActive() && portlet.isReady() && portlet.isInclude() && supportsMimeType && (invokerPortlet != null)) {
 	try {
 		if (!PortalUtil.isSkipPortletContentProcesssing(group, request, layoutTypePortlet, portletDisplay, portletDisplay.getPortletName())) {
 			invokerPortlet.render(renderRequestImpl, renderResponseImpl);
@@ -886,7 +886,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 	PortalUtil.setPageTitle(portletDisplay.getTitle(), request);
 }
 
-Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKeys.RENDER_PORTLET_BOUNDARY), true) && !themeDisplay.isStateExclusive();
+Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKeys.RENDER_PORTLET_BOUNDARY), true) && !themeDisplay.isStateExclusive() && portlet.isInclude();
 %>
 
 <c:if test="<%= renderPortletBoundary %>">
@@ -961,7 +961,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 <c:choose>
 	<c:when test="<%= !supportsMimeType %>">
 	</c:when>
-	<c:when test="<%= !portlet.isActive() && !portlet.isShowPortletInactive() %>">
+	<c:when test="<%= !portlet.isActive() && !portlet.isShowPortletInactive() || !portlet.isInclude() %>">
 	</c:when>
 	<c:otherwise>
 

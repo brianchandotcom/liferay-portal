@@ -597,10 +597,16 @@ public class GitWorkingDirectory {
 			"git branch --contains " + sha);
 
 		if (executionResult.getExitValue() != 0) {
+			String standardError = executionResult.getStandardError();
+
+			if (standardError.contains("no such commit")) {
+				return Collections.emptyList();
+			}
+
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to get branches with SHA ", sha, "\n",
-					executionResult.getStandardError()));
+					standardError));
 		}
 
 		String standardOut = executionResult.getStandardOut();

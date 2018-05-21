@@ -588,12 +588,6 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		List<String> testClassNamesExcludesRelativeGlobs = Arrays.asList(
 			testClassNamesExcludesPropertyValue.split(","));
 
-		if (testRelevantChanges) {
-			testClassNamesExcludesRelativeGlobs =
-				getRelevantTestClassNamesRelativeGlobs(
-					testClassNamesExcludesRelativeGlobs);
-		}
-
 		testClassNamesExcludesPathMatchers.addAll(
 			_getTestClassNamesPathMatchers(
 				testClassNamesExcludesRelativeGlobs));

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
+import com.liferay.portlet.internal.PortletAppUtil;
 
 import java.io.InputStream;
 
@@ -43,7 +46,9 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Brett Randall
+ * @author Neil Griffin
  */
+@ProviderType
 public class PortletContextImpl implements LiferayPortletContext {
 
 	public PortletContextImpl(Portlet portlet, ServletContext servletContext) {
@@ -71,7 +76,7 @@ public class PortletContextImpl implements LiferayPortletContext {
 
 	@Override
 	public ClassLoader getClassLoader() {
-		throw new UnsupportedOperationException();
+		return _servletContext.getClassLoader();
 	}
 
 	@Override
@@ -81,17 +86,17 @@ public class PortletContextImpl implements LiferayPortletContext {
 
 	@Override
 	public String getContextPath() {
-		throw new UnsupportedOperationException();
+		return _servletContext.getContextPath();
 	}
 
 	@Override
 	public int getEffectiveMajorVersion() {
-		throw new UnsupportedOperationException();
+		return PortletAppUtil.getSpecMajorVersion(_portlet.getPortletApp());
 	}
 
 	@Override
 	public int getEffectiveMinorVersion() {
-		throw new UnsupportedOperationException();
+		return PortletAppUtil.getSpecMinorVersion(_portlet.getPortletApp());
 	}
 
 	@Override
@@ -257,7 +262,7 @@ public class PortletContextImpl implements LiferayPortletContext {
 		_servletContext.setAttribute(name, obj);
 	}
 
-	private static final int _MAJOR_VERSION = 2;
+	private static final int _MAJOR_VERSION = 3;
 
 	private static final int _MINOR_VERSION = 0;
 

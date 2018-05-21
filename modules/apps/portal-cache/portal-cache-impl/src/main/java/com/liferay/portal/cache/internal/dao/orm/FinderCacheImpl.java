@@ -265,8 +265,6 @@ public class FinderCacheImpl
 	@Activate
 	@Modified
 	protected void activate() {
-		_valueObjectEntityBlockingCacheEnabled = GetterUtil.getBoolean(
-			_props.get(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE));
 		_valueObjectFinderCacheEnabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED));
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
@@ -330,8 +328,7 @@ public class FinderCacheImpl
 
 		portalCache =
 			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(
-					groupKey, _valueObjectEntityBlockingCacheEnabled);
+				_multiVMPool.getPortalCache(groupKey);
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);
@@ -456,7 +453,6 @@ public class FinderCacheImpl
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches = new ConcurrentHashMap<>();
 	private Props _props;
-	private boolean _valueObjectEntityBlockingCacheEnabled;
 	private boolean _valueObjectFinderCacheEnabled;
 	private int _valueObjectFinderCacheListThreshold;
 

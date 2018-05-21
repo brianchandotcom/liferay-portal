@@ -248,10 +248,12 @@ AUI.add(
 
 						var clickedOnProductNav = false;
 
+						var productMenuSidebar = A.one('.lfr-product-menu-sidebar .sidebar-body');
+
 						var productNavToogle = A.one('.control-menu-nav-item.active');
 
 						if (productNavToogle) {
-							clickedOnProductNav = productNavToogle.contains(event.target);
+							clickedOnProductNav = productMenuSidebar.contains(event.target) || productNavToogle.contains(event.target);
 						}
 
 						if (instance.get('open') && !clickedOnProductNav && !instance.hasFocus(event.target)) {

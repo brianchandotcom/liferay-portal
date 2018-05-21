@@ -397,16 +397,14 @@ public class HeaderResponseImpl
 			for (Map.Entry<String, String> entry : _attributes.entrySet()) {
 				sb.append(StringPool.SPACE);
 				sb.append(entry.getKey());
-				sb.append(StringPool.EQUAL);
-				sb.append(StringPool.QUOTE);
+				sb.append("=\"");
 				sb.append(entry.getValue());
 				sb.append(StringPool.QUOTE);
 			}
 
 			sb.append(StringPool.GREATER_THAN);
 			sb.append(_text);
-			sb.append(StringPool.LESS_THAN);
-			sb.append(StringPool.FORWARD_SLASH);
+			sb.append("</");
 			sb.append(_name);
 			sb.append(StringPool.GREATER_THAN);
 

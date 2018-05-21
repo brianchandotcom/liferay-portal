@@ -29,10 +29,12 @@ public class CommerceMoneyImpl implements CommerceMoney {
 		_commercePriceFormatter = commercePriceFormatter;
 	}
 
+	@Override
 	public CommerceCurrency getCommerceCurrency() {
 		return _commerceCurrency;
 	}
 
+	@Override
 	public BigDecimal getPrice() {
 		return _price;
 	}

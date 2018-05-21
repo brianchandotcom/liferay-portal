@@ -77,11 +77,13 @@ public class CommerceCartContentTotalDisplayContext
 			PortletRequest.RENDER_PHASE);
 	}
 
+	@Override
 	public String getDisplayStyle() {
 		return _commerceCartContentTotalPortletInstanceConfiguration.
 			displayStyle();
 	}
 
+	@Override
 	public long getDisplayStyleGroupId() {
 		if (_displayStyleGroupId > 0) {
 			return _displayStyleGroupId;

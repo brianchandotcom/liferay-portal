@@ -72,11 +72,13 @@ public class CommerceCartContentMiniDisplayContext
 			commerceCartContentRequestHelper.getRequest());
 	}
 
+	@Override
 	public String getDisplayStyle() {
 		return
 			_commerceCartContentMiniPortletInstanceConfiguration.displayStyle();
 	}
 
+	@Override
 	public long getDisplayStyleGroupId() {
 		if (_displayStyleGroupId > 0) {
 			return _displayStyleGroupId;

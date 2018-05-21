@@ -55,6 +55,7 @@ public class AssetCategoryCPRuleTypeImpl implements CPRuleType {
 		return LanguageUtil.get(locale, "categories");
 	}
 
+	@Override
 	public boolean isSatisfied(
 			CPDefinition cpDefinition, CPRuleType cpRuleType,
 			ServiceContext serviceContext)

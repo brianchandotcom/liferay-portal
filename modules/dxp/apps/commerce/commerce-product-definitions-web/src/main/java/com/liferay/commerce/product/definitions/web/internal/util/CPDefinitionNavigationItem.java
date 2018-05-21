@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CPDefinitionNavigationItem implements CPNavigationItem {
 
+	@Override
 	public NavigationItem getNavigationItem(PortletRequest portletRequest)
 		throws PortalException {
 

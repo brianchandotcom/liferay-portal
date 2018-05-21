@@ -341,10 +341,6 @@ public class HeaderResponseImpl
 	}
 
 	private List<ParsedElement> _parseElements(String xml) {
-		if (xml == null) {
-			return Collections.emptyList();
-		}
-
 		List<ParsedElement> parsedElements = new ArrayList<>();
 
 		XMLStreamReader xmlStreamReader = null;

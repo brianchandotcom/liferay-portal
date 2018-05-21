@@ -389,7 +389,7 @@ public class HeaderResponseImpl
 	private static class ParsedElement {
 
 		public StringBundler toStringBundler() {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(_attributes.size() * 5 + 7);
 
 			sb.append(StringPool.LESS_THAN);
 			sb.append(_name);

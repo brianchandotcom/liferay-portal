@@ -98,7 +98,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			adminClient.indices().prepareDelete(_INDEX_NAME);
 
 		deleteIndexRequestBuilder.get();
-		
+
 		_elasticsearchFixture.tearDown();
 	}
 

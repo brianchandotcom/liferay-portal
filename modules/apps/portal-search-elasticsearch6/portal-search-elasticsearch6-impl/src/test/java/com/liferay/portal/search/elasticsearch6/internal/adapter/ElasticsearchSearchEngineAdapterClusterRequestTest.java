@@ -80,7 +80,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 			adminClient.indices().prepareDelete(_INDEX_NAME);
 
 		deleteIndexRequestBuilder.get();
-		
+
 		_elasticsearchFixture.tearDown();
 	}
 
@@ -96,8 +96,8 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 			healthClusterResponse.getClusterHealthStatus();
 
 		Assert.assertTrue(
-			(clusterHealthStatus.equals(ClusterHealthStatus.GREEN) ||
-			(clusterHealthStatus.equals(ClusterHealthStatus.YELLOW))));
+			clusterHealthStatus.equals(ClusterHealthStatus.GREEN) ||
+			clusterHealthStatus.equals(ClusterHealthStatus.YELLOW));
 
 		String healthStatusMessage =
 			healthClusterResponse.getHealthStatusMessage();
@@ -144,8 +144,8 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 			statsClusterResponse.getClusterHealthStatus();
 
 		Assert.assertTrue(
-			(clusterHealthStatus.equals(ClusterHealthStatus.GREEN) ||
-				(clusterHealthStatus.equals(ClusterHealthStatus.YELLOW))));
+			clusterHealthStatus.equals(ClusterHealthStatus.GREEN) ||
+			clusterHealthStatus.equals(ClusterHealthStatus.YELLOW));
 
 		String statusMessage = statsClusterResponse.getStatsMessage();
 

@@ -19,18 +19,18 @@ import com.liferay.portal.search.elasticsearch6.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StateClusterResponse;
 
+import java.io.IOException;
+
 import org.elasticsearch.action.admin.cluster.state.ClusterStateRequestBuilder;
 import org.elasticsearch.action.admin.cluster.state.ClusterStateResponse;
 import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.cluster.ClusterState;
-
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.xpack.watcher.watch.Payload;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.io.IOException;
 
 /**
  * @author Dylan Rebelak

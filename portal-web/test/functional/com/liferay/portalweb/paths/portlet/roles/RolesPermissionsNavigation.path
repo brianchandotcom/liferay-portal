@@ -99,11 +99,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_CONTENT_CATEGORIES</td>
-	<td>//div[contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Categories')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_ADMIN_CONTENT_FORMS</td>
 	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Forms')]</td>
 	<td></td>
@@ -126,6 +121,17 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS</td>
 	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Dynamic Data Lists')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CATEGORIZATION-->
+<tr>
+	<td>SITE_ADMIN_CATEGORIES</td>
+	<td>//div[contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Categories')]</td>
 	<td></td>
 </tr>
 <tr>

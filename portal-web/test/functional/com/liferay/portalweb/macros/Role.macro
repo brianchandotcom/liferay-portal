@@ -590,9 +590,9 @@
 					</then>
 				</elseif>
 				<elseif>
-					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_CATEGORIES" />
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CATEGORIES" />
 					<then>
-						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CATEGORIES" />
 						<var name="permissionNavigationValue" value="Categories" />
 					</then>
 				</elseif>

@@ -14,6 +14,8 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -103,7 +106,8 @@ public class SiteNavigationMenuServiceImpl
 		OrderByComparator orderByComparator) {
 
 		return siteNavigationMenuPersistence.filterFindByG_N(
-			groupId, keywords, start, end, orderByComparator);
+			groupId, _customSQL.keywords(keywords, WildcardMode.SURROUND)[0],
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -114,7 +118,7 @@ public class SiteNavigationMenuServiceImpl
 	@Override
 	public int getSiteNavigationMenusCount(long groupId, String keywords) {
 		return siteNavigationMenuPersistence.filterCountByG_N(
-			groupId, keywords);
+			groupId, _customSQL.keywords(keywords, WildcardMode.SURROUND)[0]);
 	}
 
 	@Override
@@ -155,5 +159,8 @@ public class SiteNavigationMenuServiceImpl
 				SiteNavigationMenuServiceImpl.class,
 				"_siteNavigationMenuModelResourcePermission",
 				SiteNavigationMenu.class);
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

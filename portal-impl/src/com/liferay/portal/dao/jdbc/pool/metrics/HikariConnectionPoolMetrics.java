@@ -14,113 +14,72 @@
 
 package com.liferay.portal.dao.jdbc.pool.metrics;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import com.zaxxer.hikari.HikariPoolMXBean;
 
-import java.lang.management.ManagementFactory;
 import java.lang.reflect.Method;
-
-import javax.management.JMX;
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
 
 /**
  * @author Mladen Cikara
  */
 public class HikariConnectionPoolMetrics extends BaseConnectionPoolMetrics {
 
-	public HikariConnectionPoolMetrics(Object dataSource) {
+	public HikariConnectionPoolMetrics(Object dataSource)
+		throws ReflectiveOperationException {
+
 		_dataSource = dataSource;
+
+		Class<?> clazz = dataSource.getClass();
+
+		_getPoolNameMethod = clazz.getMethod("getPoolName");
+
+		_getHikariPoolMXBeanMethod = clazz.getMethod("getHikariPoolMXBean");
 	}
 
 	@Override
 	public int getNumActive() {
-		if (!_initializationFailed && (_connectionPool == null)) {
-			initializeConnectionPool();
-		}
+		try {
+			HikariPoolMXBean hikariPoolMXBean =
+				(HikariPoolMXBean)_getHikariPoolMXBeanMethod.invoke(
+					_dataSource);
 
-		if (_initializationFailed) {
-			return -1;
+			return hikariPoolMXBean.getActiveConnections();
 		}
-
-		return _connectionPool.getActiveConnections();
+		catch (ReflectiveOperationException roe) {
+			throw new RuntimeException(roe);
+		}
 	}
 
 	@Override
 	public int getNumIdle() {
-		if (!_initializationFailed && (_connectionPool == null)) {
-			initializeConnectionPool();
-		}
+		try {
+			HikariPoolMXBean hikariPoolMXBean =
+				(HikariPoolMXBean)_getHikariPoolMXBeanMethod.invoke(
+					_dataSource);
 
-		if (_initializationFailed) {
-			return -1;
+			return hikariPoolMXBean.getIdleConnections();
 		}
-
-		return _connectionPool.getIdleConnections();
+		catch (ReflectiveOperationException roe) {
+			throw new RuntimeException(roe);
+		}
 	}
 
 	@Override
 	protected Object getDataSource() {
-		if (_initializationFailed) {
-			return null;
-		}
-
 		return _dataSource;
 	}
 
 	@Override
 	protected String getPoolName() {
 		try {
-			Class<?> clazz = _dataSource.getClass();
-
-			Method method = clazz.getMethod("getPoolName");
-
-			return (String)method.invoke(_dataSource);
+			return (String)_getPoolNameMethod.invoke(_dataSource);
 		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage(), e);
-			}
+		catch (ReflectiveOperationException roe) {
+			throw new RuntimeException(roe);
 		}
-
-		return null;
 	}
 
-	@Override
-	protected void initializeConnectionPool() {
-		if (getPoolName() == null) {
-			_initializationFailed = true;
-
-			return;
-		}
-
-		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-
-		try {
-			ObjectName objectName = new ObjectName(
-				"com.zaxxer.hikari:type=Pool (" + getPoolName() + ")");
-
-			_connectionPool = JMX.newMXBeanProxy(
-				mBeanServer, objectName, HikariPoolMXBean.class);
-		}
-		catch (Exception e) {
-			_initializationFailed = true;
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(e.getMessage());
-			}
-		}
-
-		super.initializeConnectionPool();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		HikariConnectionPoolMetrics.class);
-
-	private HikariPoolMXBean _connectionPool;
 	private final Object _dataSource;
-	private boolean _initializationFailed;
+	private final Method _getHikariPoolMXBeanMethod;
+	private final Method _getPoolNameMethod;
 
 }

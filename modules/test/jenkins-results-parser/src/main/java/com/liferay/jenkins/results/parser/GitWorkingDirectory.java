@@ -1170,6 +1170,15 @@ public class GitWorkingDirectory {
 	public void rebase(
 		boolean abortOnFail, Branch sourceBranch, Branch targetBranch) {
 
+		List<String> branchNamesContainingSHA = getBranchNamesContainingSHA(
+			sourceBranch.getSHA());
+
+		if (branchNamesContainingSHA.contains(targetBranch.getName())) {
+			checkoutBranch(targetBranch);
+
+			return;
+		}
+
 		String rebaseCommand = JenkinsResultsParserUtil.combine(
 			"git rebase ", sourceBranch.getName(), " ", targetBranch.getName());
 

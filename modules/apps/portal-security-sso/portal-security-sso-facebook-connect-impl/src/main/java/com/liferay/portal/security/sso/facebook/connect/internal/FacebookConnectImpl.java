@@ -68,14 +68,14 @@ public class FacebookConnectImpl implements FacebookConnect {
 		String facebookConnectRedirectURL =
 			facebookConnectConfiguration.oauthRedirectURL();
 
-		url = _http.addParameter(
-			url, "redirect_uri", facebookConnectRedirectURL);
+		JSONObject stateJSONObject = JSONFactoryUtil.createJSONObject();
 
-		facebookConnectRedirectURL = _http.addParameter(
-			facebookConnectRedirectURL, "redirect", redirect);
+		stateJSONObject.put("redirect", redirect);
 
 		url = _http.addParameter(
 			url, "redirect_uri", facebookConnectRedirectURL);
+
+		url = _http.addParameter(url, "state", stateJSONObject.toString());
 
 		url = _http.addParameter(
 			url, "client_secret", facebookConnectConfiguration.appSecret());

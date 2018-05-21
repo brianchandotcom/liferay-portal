@@ -25,10 +25,13 @@ String facebookAuthRedirectURL = (String)request.getAttribute(FacebookConnectWeb
 String facebookAuthURL = (String)request.getAttribute(FacebookConnectWebKeys.FACEBOOK_AUTH_URL);
 String facebookAppId = (String)request.getAttribute(FacebookConnectWebKeys.FACEBOOK_APP_ID);
 
-facebookAuthRedirectURL = HttpUtil.addParameter(facebookAuthRedirectURL, "redirect", loginRedirectURL);
+JSONObject stateJSONObject = JSONFactoryUtil.createJSONObject();
+
+stateJSONObject.put("redirect", loginRedirectURL);
 
 facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "client_id", facebookAppId);
 facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "redirect_uri", facebookAuthRedirectURL);
+facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "state", stateJSONObject.toString());
 facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "scope", "email");
 
 String taglibOpenFacebookConnectLoginWindow = "javascript:var facebookConnectLoginWindow = window.open('" + URLCodec.encodeURL(facebookAuthURL) + "', 'facebook', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); facebookConnectLoginWindow.focus();";

@@ -16,6 +16,7 @@ package com.liferay.login.authentication.facebook.connect.web.internal.portlet.a
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
@@ -124,7 +125,11 @@ public class FacebookConnectAction extends BaseStrutsAction {
 
 		HttpSession session = request.getSession();
 
-		String redirect = ParamUtil.getString(request, "redirect");
+		String state = ParamUtil.getString(request, "state");
+
+		JSONObject stateJSONObject = JSONFactoryUtil.createJSONObject(state);
+
+		String redirect = stateJSONObject.getString("redirect");
 
 		redirect = _portal.escapeRedirect(redirect);
 

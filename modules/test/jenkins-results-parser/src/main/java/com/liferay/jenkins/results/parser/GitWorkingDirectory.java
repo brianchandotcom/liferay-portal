@@ -841,6 +841,73 @@ public class GitWorkingDirectory {
 		return modifiedFiles;
 	}
 
+	public Branch getRebasedPullRequestBranch(
+		String localRebasedPullRequestBranchName, PullRequest pullRequest) {
+
+		Branch currentBranch = getCurrentBranch();
+
+		String currentBranchName = currentBranch.getName();
+
+		Branch tempBranch = null;
+		Remote remote = null;
+
+		try {
+			if (currentBranchName.equals(localRebasedPullRequestBranchName)) {
+				tempBranch = createLocalBranch(
+					"temp-" + System.currentTimeMillis());
+
+				checkoutBranch(tempBranch);
+			}
+
+			remote = addRemote(
+				true, "sender-temp-" + System.currentTimeMillis(),
+				pullRequest.getSenderRemoteURL());
+
+			Branch remoteBranch = getBranch(
+				pullRequest.getSenderBranchName(), remote);
+
+			fetch(null, remoteBranch);
+
+			Branch localSenderBranch = createLocalBranch(
+				localRebasedPullRequestBranchName, true,
+				pullRequest.getSenderSHA());
+
+			List<String> branchNamesContainingSHA = getBranchNamesContainingSHA(
+				pullRequest.getUpstreamBranchSHA());
+
+			if (branchNamesContainingSHA.isEmpty()) {
+				fetch(
+					null,
+					getBranch(
+						pullRequest.getUpstreamBranchName(),
+						getRemote("upstream")));
+			}
+
+			if (branchNamesContainingSHA.contains(
+					localRebasedPullRequestBranchName)) {
+
+				return localSenderBranch;
+			}
+
+			Branch localUpstreamBranch = createLocalBranch(
+				pullRequest.getUpstreamBranchName(), true,
+				pullRequest.getUpstreamBranchSHA());
+
+			rebase(true, localUpstreamBranch, localSenderBranch);
+
+			return localSenderBranch;
+		}
+		finally {
+			if (tempBranch != null) {
+				deleteBranch(tempBranch);
+			}
+
+			if (remote != null) {
+				removeRemote(remote);
+			}
+		}
+	}
+
 	public Remote getRemote(String name) {
 		if (name.equals("upstream")) {
 			name = "upstream-temp";

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaModuleInternalImportsCheck" files="modules/apps/web-experience/export-import/export-import-changeset-taglib/src/main/java/com/liferay/exportimport/changeset/taglib/servlet/taglib/PublishEntityMenuItemTag\.java" />
+	</source-check>
+</suppressions>

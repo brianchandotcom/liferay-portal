@@ -306,9 +306,7 @@ public class HeaderResponseImpl
 			return;
 		}
 
-		List<ParsedElement> parsedElements = _parseElements(xml);
-
-		for (ParsedElement parsedElement : parsedElements) {
+		for (ParsedElement parsedElement : _parseElements(xml)) {
 			_addDependencyToHead(name, scope, null, parsedElement);
 		}
 	}

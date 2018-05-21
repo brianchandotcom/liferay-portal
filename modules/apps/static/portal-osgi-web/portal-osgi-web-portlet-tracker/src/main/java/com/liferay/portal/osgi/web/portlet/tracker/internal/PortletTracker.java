@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.EventDefinition;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.portlet.PortletDependencyFactory;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
@@ -428,6 +430,44 @@ public class PortletTracker
 		com.liferay.portal.kernel.model.Portlet portletModel) {
 	}
 
+	protected void collectContainerRuntimeOptions(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.kernel.model.Portlet portletModel) {
+
+		PortletApp portletApp = portletModel.getPortletApp();
+
+		Map<String, String[]> containerRuntimeOptionsMap =
+			portletApp.getContainerRuntimeOptions();
+
+		for (String servicePropertyKey : serviceReference.getPropertyKeys()) {
+			if (!servicePropertyKey.startsWith(
+					"javax.portlet.container-runtime-option.")) {
+
+				continue;
+			}
+
+			String name = servicePropertyKey.substring(
+				"javax.portlet.container-runtime-option.".length());
+
+			String portletName = portletModel.getPortletName();
+
+			if (portletName.contains(PortletConstants.WAR_SEPARATOR)) {
+				portletName = portletName.substring(
+					0, portletName.indexOf(PortletConstants.WAR_SEPARATOR));
+			}
+
+			String containerRuntimeOptionPrefix =
+				LiferayPortletConfig.class.getName().concat(portletName);
+
+			List<String> values = StringPlus.asList(
+				serviceReference.getProperty(servicePropertyKey));
+
+			containerRuntimeOptionsMap.put(
+				containerRuntimeOptionPrefix.concat(name),
+				values.toArray(new String[0]));
+		}
+	}
+
 	protected void collectExpirationCache(
 		ServiceReference<Portlet> serviceReference,
 		com.liferay.portal.kernel.model.Portlet portletModel) {
@@ -468,6 +508,7 @@ public class PortletTracker
 		collectApplicationTypes(serviceReference, portletModel);
 		collectAsyncSupported(serviceReference, portletModel);
 		collectCacheScope(serviceReference, portletModel);
+		collectContainerRuntimeOptions(serviceReference, portletModel);
 		collectExpirationCache(serviceReference, portletModel);
 		collectInitParams(serviceReference, portletModel);
 		collectListeners(serviceReference, portletModel);
@@ -918,7 +959,7 @@ public class PortletTracker
 			String qname = null;
 
 			String[] parts = StringUtil.split(
-				supportedProcessingEvent, StringPool.SEMICOLON);
+				supportedProcessingEvent, CharPool.SEMICOLON);
 
 			if (parts.length == 2) {
 				name = parts[0];
@@ -964,7 +1005,7 @@ public class PortletTracker
 			String qname = null;
 
 			String[] parts = StringUtil.split(
-				supportedPublicRenderParameter, StringPool.SEMICOLON);
+				supportedPublicRenderParameter, CharPool.SEMICOLON);
 
 			if (parts.length == 2) {
 				name = parts[0];
@@ -1000,7 +1041,7 @@ public class PortletTracker
 			String qname = null;
 
 			String[] parts = StringUtil.split(
-				supportedPublishingEvent, StringPool.SEMICOLON);
+				supportedPublishingEvent, CharPool.SEMICOLON);
 
 			if (parts.length == 2) {
 				name = parts[0];

@@ -531,14 +531,26 @@ public class AutoCloseUtil {
 			for (Build downstreamBuild : downstreamBuilds) {
 				String jobVariant = downstreamBuild.getJobVariant();
 
-				if ((jobVariant == null) || jobVariant.isEmpty()) {
-					continue;
+				if ((jobVariant != null) && !jobVariant.isEmpty()) {
+					Matcher matcher = rulePattern.matcher(jobVariant);
+
+					if (matcher.matches()) {
+						filteredDownstreamBuilds.add(downstreamBuild);
+
+						continue;
+					}
 				}
 
-				Matcher matcher = rulePattern.matcher(jobVariant);
+				String jobName = downstreamBuild.getJobName();
 
-				if (matcher.matches()) {
-					filteredDownstreamBuilds.add(downstreamBuild);
+				if ((jobName != null) && !jobName.isEmpty()) {
+					Matcher matcher = rulePattern.matcher(jobName);
+
+					if (matcher.matches()) {
+						filteredDownstreamBuilds.add(downstreamBuild);
+
+						continue;
+					}
 				}
 			}
 

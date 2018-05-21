@@ -16,4 +16,5 @@ dependencies {
 	testIntegrationCompile project(":private:apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":private:apps:commerce:commerce-service")
 	testIntegrationCompile project(":private:apps:commerce:commerce-user-segment-api")
+	testIntegrationCompile project(":private:apps:commerce:commerce-user-segment-test-util")
 }

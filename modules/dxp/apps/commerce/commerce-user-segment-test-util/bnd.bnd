@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce User Segment Test Utilities
+Bundle-SymbolicName: com.liferay.commerce.user.segment.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.commerce.user.segment.test.util

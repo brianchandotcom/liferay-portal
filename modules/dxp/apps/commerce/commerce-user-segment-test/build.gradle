@@ -9,4 +9,5 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.search.test.util", version: "2.1.0-20180327.164608-1"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180518.171544-8"
 	testIntegrationCompile project(":private:apps:commerce:commerce-user-segment-api")
+	testIntegrationCompile project(":private:apps:commerce:commerce-user-segment-test-util")
 }

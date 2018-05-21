@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.User;
 
 import java.math.BigDecimal;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,7 +31,7 @@ public class CommerceForecastEntryLocalServiceImpl
 
 	@Override
 	public CommerceForecastEntry addCommerceForecastEntry(
-			long companyId, long userId, Date date, int period, int target,
+			long companyId, long userId, long time, int period, int target,
 			long customerId, String sku, BigDecimal assertivity)
 		throws PortalException {
 
@@ -61,7 +60,7 @@ public class CommerceForecastEntryLocalServiceImpl
 				commerceForecastEntry.getCommerceForecastEntryId());
 		}
 
-		commerceForecastEntry.setDate(date);
+		commerceForecastEntry.setTime(time);
 		commerceForecastEntry.setAssertivity(assertivity);
 
 		return commerceForecastEntryPersistence.update(commerceForecastEntry);

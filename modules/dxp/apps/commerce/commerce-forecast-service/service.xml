@@ -20,7 +20,7 @@
 
 		<!-- Other fields -->
 
-		<column name="date" type="Date" />
+		<column name="time" type="long" />
 		<column name="period" type="int" />
 		<column name="target" type="int" />
 		<column name="customerId" type="long" />
@@ -30,7 +30,7 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="date" />
+			<order-column name="time" />
 		</order>
 
 		<!-- Finder methods -->
@@ -63,7 +63,7 @@
 		<!-- Other fields -->
 
 		<column name="commerceForecastEntryId" type="long" />
-		<column name="date" type="Date" />
+		<column name="time" type="long" />
 		<column name="lowerValue" type="BigDecimal" />
 		<column name="value" type="BigDecimal" />
 		<column name="upperValue" type="BigDecimal" />
@@ -71,7 +71,7 @@
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="date" />
+			<order-column name="time" />
 		</order>
 
 		<!-- Finder methods -->
@@ -79,9 +79,9 @@
 		<finder name="CommerceForecastEntryId" return-type="Collection">
 			<finder-column name="commerceForecastEntryId" />
 		</finder>
-		<finder name="C_D" return-type="CommerceForecastValue" unique="true">
+		<finder name="C_T" return-type="CommerceForecastValue" unique="true">
 			<finder-column name="commerceForecastEntryId" />
-			<finder-column name="date" />
+			<finder-column name="time" />
 		</finder>
 	</entity>
 </service-builder>

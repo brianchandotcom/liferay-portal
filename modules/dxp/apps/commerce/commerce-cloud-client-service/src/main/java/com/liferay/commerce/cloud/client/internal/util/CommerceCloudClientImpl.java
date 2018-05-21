@@ -218,7 +218,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		throws PortalException {
 
 		long companyId = jsonObject.getLong("companyId");
-		Date date = new Date(jsonObject.getLong("time"));
+		long time = jsonObject.getLong("time");
 		String periodString = jsonObject.getString("period");
 		String targetString = jsonObject.getString("target");
 		long customerId = jsonObject.getLong("customerId");
@@ -234,7 +234,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 		CommerceForecastEntry commerceForecastEntry =
 			_commerceForecastEntryLocalService.addCommerceForecastEntry(
-				companyId, userId, date, period, target, customerId, sku,
+				companyId, userId, time, period, target, customerId, sku,
 				assertivity);
 
 		JSONArray valuesJSONArray = jsonObject.getJSONArray("values");
@@ -252,13 +252,13 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 			JSONObject jsonObject)
 		throws PortalException {
 
-		Date date = new Date(jsonObject.getLong("time"));
+		long time = jsonObject.getLong("time");
 		BigDecimal lowerValue = _getBigDecimal(jsonObject, "lowerValue");
 		BigDecimal value = _getBigDecimal(jsonObject, "value");
 		BigDecimal upperValue = _getBigDecimal(jsonObject, "upperValue");
 
 		_commerceForecastValueLocalService.addCommerceForecastValue(
-			userId, commerceForecastEntry.getCommerceForecastEntryId(), date,
+			userId, commerceForecastEntry.getCommerceForecastEntryId(), time,
 			lowerValue, value, upperValue);
 	}
 

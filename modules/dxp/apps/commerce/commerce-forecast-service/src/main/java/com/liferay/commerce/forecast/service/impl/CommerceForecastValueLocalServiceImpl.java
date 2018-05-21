@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.model.User;
 
 import java.math.BigDecimal;
 
-import java.util.Date;
-
 /**
  * @author Andrea Di Giorgi
  */
@@ -32,13 +30,13 @@ public class CommerceForecastValueLocalServiceImpl
 
 	@Override
 	public CommerceForecastValue addCommerceForecastValue(
-			long userId, long commerceForecastEntryId, Date date,
+			long userId, long commerceForecastEntryId, long time,
 			BigDecimal lowerValue, BigDecimal value, BigDecimal upperValue)
 		throws PortalException {
 
 		CommerceForecastValue commerceForecastValue =
-			commerceForecastValuePersistence.fetchByC_D(
-				commerceForecastEntryId, date);
+			commerceForecastValuePersistence.fetchByC_T(
+				commerceForecastEntryId, time);
 
 		if (commerceForecastValue == null) {
 			CommerceForecastEntry commerceForecastEntry =
@@ -57,7 +55,7 @@ public class CommerceForecastValueLocalServiceImpl
 			commerceForecastValue.setUserName(user.getFullName());
 			commerceForecastValue.setCommerceForecastEntryId(
 				commerceForecastEntryId);
-			commerceForecastValue.setDate(date);
+			commerceForecastValue.setTime(time);
 		}
 
 		commerceForecastValue.setLowerValue(lowerValue);

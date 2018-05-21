@@ -67,7 +67,7 @@ public class TagNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "aggregate-ratings";
+		return "tags";
 	}
 
 	@Override

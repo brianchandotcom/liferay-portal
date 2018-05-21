@@ -62,7 +62,7 @@ renderResponse.setTitle(category.getTitle(locale));
 					defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
 					inputAddon="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>"
 					name="urlTitleMapAsXML"
-					xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>"
+					xml="<%= HttpUtil.decodeURL(titleMapAsXML) %>"
 				/>
 			</div>
 

@@ -177,7 +177,7 @@ public class DDMPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			setDDMDisplayContextRequestAttribute(renderRequest);
+			setDDMDisplayContextRequestAttribute(renderRequest, renderResponse);
 
 			setDDMTemplateRequestAttribute(renderRequest);
 
@@ -216,12 +216,12 @@ public class DDMPortlet extends MVCPortlet {
 	}
 
 	protected void setDDMDisplayContextRequestAttribute(
-			RenderRequest renderRequest)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
 		DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
-			renderRequest, _ddmDisplayRegistry, _ddmTemplateHelper,
-			ddmWebConfiguration, _storageAdapterRegistry);
+			renderRequest, renderResponse, _ddmDisplayRegistry,
+			_ddmTemplateHelper, ddmWebConfiguration, _storageAdapterRegistry);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);

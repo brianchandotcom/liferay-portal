@@ -16,11 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String scopedLabel = Validator.isNull(scopeTitle) ? ddmDisplay.getTitle(locale) : scopeTitle;
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems="<%= ddmDisplayContext.getNavigationItem(scopedLabel) %>"
+	navigationItems="<%= ddmDisplayContext.getNavigationItem() %>"
 />

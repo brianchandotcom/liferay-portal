@@ -291,11 +291,9 @@ public class HeaderResponseImpl
 
 		String outputKey = sb.toString();
 
-		if (!outputKeys.contains(outputKey)) {
+		if (outputData.addOutputKey(outputKey)) {
 			outputData.addData(
 				outputKey, WebKeys.PAGE_TOP, parsedElement.toStringBundler());
-
-			outputData.addOutputKey(outputKey);
 		}
 	}
 

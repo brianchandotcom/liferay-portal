@@ -118,10 +118,6 @@ public class HeaderResponseImpl
 		return _title;
 	}
 
-	public Boolean getUseDefaultTemplate() {
-		return _useDefaultTemplate;
-	}
-
 	@Override
 	public PrintWriter getWriter() {
 		if (_calledGetPortletOutputStream) {
@@ -209,10 +205,6 @@ public class HeaderResponseImpl
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		portletDisplay.setTitle(_title);
-	}
-
-	public void setUseDefaultTemplate(Boolean useDefaultTemplate) {
-		_useDefaultTemplate = useDefaultTemplate;
 	}
 
 	public void writeToHead() {
@@ -380,7 +372,6 @@ public class HeaderResponseImpl
 	private OutputStream _portletOutputStream;
 	private PrintWriter _printWriter;
 	private String _title;
-	private Boolean _useDefaultTemplate;
 
 	private static class ParsedElement {
 

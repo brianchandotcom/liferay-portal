@@ -16,6 +16,7 @@ buildscript {
 apply plugin: "application"
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "com.liferay.source.formatter.defaults"
+apply plugin: "eclipse"
 apply plugin: "org.hidetake.swagger.generator"
 
 task generateVertx(type: JavaCompile)

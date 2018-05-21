@@ -1869,7 +1869,7 @@
 			<var name="scopeSelection" value="Blogs Page2" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="list" />
 		</execute>
 
@@ -1976,7 +1976,7 @@
 			<var name="dmFolderName" value="DM Folder 1 Name" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>
 

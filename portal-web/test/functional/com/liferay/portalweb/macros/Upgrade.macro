@@ -475,7 +475,7 @@
 			<var name="entryTitle" value="Blogs Workflow Title" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
+		<execute macro="LexiconEntry#changeDisplayStyle">
 			<var name="displayStyle" value="icon" />
 		</execute>
 

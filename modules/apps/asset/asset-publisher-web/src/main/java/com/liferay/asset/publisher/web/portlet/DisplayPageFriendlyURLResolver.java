@@ -93,7 +93,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			JournalArticle.class.getName(),
 			journalArticle.getResourcePrimKey());
 
-		if (_showDisplayPageEntry(assetEntry)) {
+		if (_isShowDisplayPageEntry(assetEntry)) {
 			return _getDisplayPageURL(assetEntry, mainPath, requestContext);
 		}
 
@@ -214,7 +214,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 	private Layout _getAssetDisplayPageEntryLayout(AssetEntry assetEntry)
 		throws PortalException {
 
-		if (_showDisplayPageEntry(assetEntry)) {
+		if (_isShowDisplayPageEntry(assetEntry)) {
 			return _getAssetDisplayLayout(assetEntry.getGroupId());
 		}
 
@@ -372,7 +372,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		return _portal.getLayoutActualURL(layout, mainPath);
 	}
 
-	private boolean _showDisplayPageEntry(AssetEntry assetEntry) {
+	private boolean _isShowDisplayPageEntry(AssetEntry assetEntry) {
 		AssetDisplayPageEntry assetDisplayPageEntry = _getAssetDisplayPageEntry(
 			assetEntry);
 

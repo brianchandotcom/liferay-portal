@@ -21,20 +21,29 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,24 +54,22 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewUsersManagementToolbarDisplayContext {
 
 	public ViewUsersManagementToolbarDisplayContext(
-		HttpServletRequest request, RenderResponse renderResponse,
-		SearchContainer searchContainer, String displayStyle, String navigation,
-		int status, boolean showDeleteButton, boolean showRestoreButton) {
+		HttpServletRequest request, RenderRequest renderRequest,
+		RenderResponse renderResponse, String displayStyle, String navigation,
+		int status) {
 
 		_request = request;
+		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_searchContainer = searchContainer;
 		_displayStyle = displayStyle;
 		_navigation = navigation;
 		_status = status;
-		_showDeleteButton = showDeleteButton;
-		_showRestoreButton = showRestoreButton;
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return new DropdownItemList() {
 			{
-				if (_showRestoreButton) {
+				if (isShowRestoreButton()) {
 					add(
 						dropdownItem -> {
 							dropdownItem.setHref(
@@ -77,12 +84,11 @@ public class ViewUsersManagementToolbarDisplayContext {
 						});
 				}
 
-				if (_showDeleteButton) {
+				if (isShowDeleteButton()) {
 					add(
 						dropdownItem -> {
 							UserSearchTerms userSearchTerms =
-								(UserSearchTerms)
-									_searchContainer.getSearchTerms();
+								(UserSearchTerms)_userSearch.getSearchTerms();
 
 							String action = Constants.DELETE;
 
@@ -151,11 +157,11 @@ public class ViewUsersManagementToolbarDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		return _searchContainer.getOrderByCol();
+		return _userSearch.getOrderByCol();
 	}
 
 	public String getOrderByType() {
-		return _searchContainer.getOrderByType();
+		return _userSearch.getOrderByType();
 	}
 
 	public PortletURL getPortletURL() {
@@ -177,6 +183,52 @@ public class ViewUsersManagementToolbarDisplayContext {
 		return searchActionURL.toString();
 	}
 
+	public SearchContainer getSearchContainer() {
+		if (_userSearch != null) {
+			return _userSearch;
+		}
+
+		UserSearch userSearch = new UserSearch(
+			_renderRequest, "cur2", getPortletURL());
+
+		RowChecker rowChecker = new EmptyOnClickRowChecker(_renderResponse);
+
+		rowChecker.setRowIds("rowIdsUser");
+
+		userSearch.setRowChecker(rowChecker);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		UserSearchTerms searchTerms =
+			(UserSearchTerms)userSearch.getSearchTerms();
+
+		if (_navigation.equals("active")) {
+			searchTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
+		}
+		else if (_navigation.equals("inactive")) {
+			searchTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
+		}
+
+		int total = UserLocalServiceUtil.searchCount(
+			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			searchTerms.getStatus(), new LinkedHashMap<String, Object>());
+
+		userSearch.setTotal(total);
+
+		List<User> results = UserLocalServiceUtil.search(
+			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			searchTerms.getStatus(), new LinkedHashMap<String, Object>(),
+			userSearch.getStart(), userSearch.getEnd(),
+			userSearch.getOrderByComparator());
+
+		userSearch.setResults(results);
+
+		_userSearch = userSearch;
+
+		return _userSearch;
+	}
+
 	public String getSortingURL() {
 		PortletURL sortingURL = getPortletURL();
 
@@ -195,6 +247,33 @@ public class ViewUsersManagementToolbarDisplayContext {
 				addTableViewTypeItem();
 			}
 		};
+	}
+
+	public boolean isShowDeleteButton() {
+		UserSearchTerms searchTerms =
+			(UserSearchTerms)getSearchContainer().getSearchTerms();
+
+		if ((searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) &&
+			(searchTerms.isActive() ||
+			 (!searchTerms.isActive() && PropsValues.USERS_DELETE))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isShowRestoreButton() {
+		UserSearchTerms searchTerms =
+			(UserSearchTerms)getSearchContainer().getSearchTerms();
+
+		if ((searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) &&
+			!searchTerms.isActive()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean showCreationMenu() throws PortalException {
@@ -260,11 +339,10 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 	private final String _displayStyle;
 	private final String _navigation;
+	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private final SearchContainer _searchContainer;
-	private final boolean _showDeleteButton;
-	private final boolean _showRestoreButton;
 	private final int _status;
+	private UserSearch _userSearch;
 
 }

@@ -23,14 +23,6 @@ int status = GetterUtil.getInteger(request.getAttribute("view.jsp-status"));
 String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
 String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-viewUsersRedirect"));
 
-SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", portletURL);
-
-RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-rowChecker.setRowIds("rowIdsUser");
-
-searchContainer.setRowChecker(rowChecker);
-
 if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	currentURLObj.setParameter("status", String.valueOf(status));
 }
@@ -49,6 +41,11 @@ else {
 String navigation = ParamUtil.getString(request, "navigation", "active");
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-users");
 
+ViewUsersManagementToolbarDisplayContext
+	viewUsersManagementToolbarDisplayContext = new ViewUsersManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, navigation, status);
+
+SearchContainer searchContainer = viewUsersManagementToolbarDisplayContext.getSearchContainer();
+
 UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
 if (navigation.equals("active")) {
@@ -66,11 +63,8 @@ portletURL.setParameter("displayStyle", displayStyle);
 portletURL.setParameter("navigation", navigation);
 portletURL.setParameter("status", String.valueOf(status));
 
-boolean showDeleteButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE));
-boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive();
-
-ViewUsersManagementToolbarDisplayContext
-	viewUsersManagementToolbarDisplayContext = new ViewUsersManagementToolbarDisplayContext(request, renderResponse, searchContainer, displayStyle, navigation, status, showDeleteButton, showRestoreButton);
+boolean showDeleteButton = viewUsersManagementToolbarDisplayContext.isShowDeleteButton();
+boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowRestoreButton();
 %>
 
 <clay:management-toolbar
@@ -78,7 +72,7 @@ ViewUsersManagementToolbarDisplayContext
 	clearResultsURL="<%= viewUsersManagementToolbarDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= viewUsersManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= viewUsersManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	itemsTotal="<%= 2 %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= portletURL.toString() %>"
 	searchContainerId="users"
@@ -267,10 +261,6 @@ ViewUsersManagementToolbarDisplayContext
 			userParams.put("usersUserGroups", Long.valueOf(userGroupId));
 		}
 		%>
-
-		<liferay-ui:user-search-container-results
-			userParams="<%= userParams %>"
-		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"

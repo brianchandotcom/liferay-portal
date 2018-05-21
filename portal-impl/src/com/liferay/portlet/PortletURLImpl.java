@@ -100,6 +100,12 @@ import javax.servlet.http.HttpSession;
 public class PortletURLImpl
 	implements LiferayPortletURL, PortletURL, ResourceURL, Serializable {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #PortletURLImpl(
+	 * 		   HttpServletRequest, Portlet, Layout, String,
+	 * 		   MimeResponse.Copy)}
+	 */
+	@Deprecated
 	public PortletURLImpl(
 		HttpServletRequest request, Portlet portlet, Layout layout,
 		String lifecycle) {
@@ -114,6 +120,11 @@ public class PortletURLImpl
 		this(request, portlet, null, layout, lifecycle, copy);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #PortletURLImpl(
+	 * 		   PortletRequest, Portlet, Layout, String, MimeResponse.Copy)}
+	 */
+	@Deprecated
 	public PortletURLImpl(
 		PortletRequest portletRequest, Portlet portlet, Layout layout,
 		String lifecycle) {

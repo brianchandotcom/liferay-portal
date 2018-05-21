@@ -32,13 +32,6 @@ public class ActionURLImpl extends PortletURLImpl implements ActionURL {
 
 	public ActionURLImpl(
 		HttpServletRequest request, Portlet portlet, Layout layout,
-		String lifecycle) {
-
-		super(request, portlet, layout, lifecycle);
-	}
-
-	public ActionURLImpl(
-		HttpServletRequest request, Portlet portlet, Layout layout,
 		String lifecycle, MimeResponse.Copy copy) {
 
 		super(request, portlet, layout, lifecycle, copy);

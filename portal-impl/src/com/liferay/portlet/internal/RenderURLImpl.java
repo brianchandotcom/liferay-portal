@@ -31,13 +31,6 @@ public class RenderURLImpl extends PortletURLImpl implements RenderURL {
 
 	public RenderURLImpl(
 		HttpServletRequest request, Portlet portlet, Layout layout,
-		String lifecycle) {
-
-		super(request, portlet, layout, lifecycle);
-	}
-
-	public RenderURLImpl(
-		HttpServletRequest request, Portlet portlet, Layout layout,
 		String lifecycle, MimeResponse.Copy copy) {
 
 		super(request, portlet, layout, lifecycle, copy);

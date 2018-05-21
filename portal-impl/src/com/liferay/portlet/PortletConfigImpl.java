@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -49,7 +51,9 @@ import javax.xml.namespace.QName;
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  * @author Shuyang Zhou
+ * @author Neil Griffin
  */
+@ProviderType
 public class PortletConfigImpl implements LiferayPortletConfig {
 
 	public PortletConfigImpl(Portlet portlet, PortletContext portletContext) {
@@ -164,7 +168,17 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 	@Override
 	public Enumeration<PortletMode> getPortletModes(String mimeType) {
-		throw new UnsupportedOperationException();
+		Map<String, Set<String>> portletModeMap = _portlet.getPortletModes();
+
+		Set<String> portletModeNames = portletModeMap.get(mimeType);
+
+		List<PortletMode> portletModes = new ArrayList(portletModeNames.size());
+
+		for (String portletModeName : portletModeNames) {
+			portletModes.add(new PortletMode(portletModeName));
+		}
+
+		return Collections.enumeration(portletModes);
 	}
 
 	@Override
@@ -180,7 +194,26 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 	@Override
 	public Map<String, QName> getPublicRenderParameterDefinitions() {
-		throw new UnsupportedOperationException();
+		Set<PublicRenderParameter> publicRenderParameters =
+			_portlet.getPublicRenderParameters();
+
+		Map<String, QName> publicRenderParameterMap = new HashMap<>(
+			publicRenderParameters.size());
+
+		for (PublicRenderParameter publicRenderParameter :
+				publicRenderParameters) {
+
+			com.liferay.portal.kernel.xml.QName qName =
+				publicRenderParameter.getQName();
+
+			publicRenderParameterMap.put(
+				publicRenderParameter.getIdentifier(),
+				new QName(
+					qName.getNamespaceURI(), qName.getLocalPart(),
+					qName.getNamespacePrefix()));
+		}
+
+		return publicRenderParameterMap;
 	}
 
 	@Override
@@ -268,7 +301,17 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 	@Override
 	public Enumeration<WindowState> getWindowStates(String mimeType) {
-		throw new UnsupportedOperationException();
+		Map<String, Set<String>> windowStateMap = _portlet.getWindowStates();
+
+		Set<String> windowStateNames = windowStateMap.get(mimeType);
+
+		List<WindowState> windowStates = new ArrayList(windowStateNames.size());
+
+		for (String windowStateName : windowStateNames) {
+			windowStates.add(new WindowState(windowStateName));
+		}
+
+		return Collections.enumeration(windowStates);
 	}
 
 	@Override

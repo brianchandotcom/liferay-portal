@@ -220,6 +220,10 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		SearchContainer<UADEntity> searchContainer = new SearchContainer<>(
 			renderRequest, currentURL, null, null);
 
+		searchContainer.setEmptyResultsMessage(
+			"no-entities-remain-of-this-type");
+		searchContainer.setId("UADEntities");
+
 		List<Object> entities = uadDisplay.getRange(
 			selectedUserId, searchContainer.getStart(),
 			searchContainer.getEnd());

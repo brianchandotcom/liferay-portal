@@ -226,9 +226,8 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
-		long groupId, long layoutPrototypeId) {
-		return _layoutPageTemplateEntryLocalService.fetchFirstLayoutPageTemplateEntry(groupId,
-			layoutPrototypeId);
+		long layoutPrototypeId) {
+		return _layoutPageTemplateEntryLocalService.fetchFirstLayoutPageTemplateEntry(layoutPrototypeId);
 	}
 
 	@Override

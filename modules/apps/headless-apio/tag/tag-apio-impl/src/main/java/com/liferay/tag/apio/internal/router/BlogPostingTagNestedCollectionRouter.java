@@ -41,12 +41,12 @@ import java.util.List;
  */
 @Component(immediate = true)
 public class BlogPostingTagNestedCollectionRouter implements
-	NestedCollectionRouter<AssetTag, TagIdentifier, Long, BlogPostingIdentifier>
+	NestedCollectionRouter<AssetTag, Long, TagIdentifier, Long, BlogPostingIdentifier>
 {
 
 	@Override
-	public NestedCollectionRoutes<AssetTag, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<AssetTag, Long> builder) {
+	public NestedCollectionRoutes<AssetTag, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<AssetTag, Long, Long> builder) {
 		return builder.addGetter(
 			this::_getPageItems
 		).build();
@@ -56,9 +56,12 @@ public class BlogPostingTagNestedCollectionRouter implements
 		Pagination pagination, long blogEntryId)
 		throws PortalException {
 
-		List<AssetTag> tags = _assetTagService.getTags(BlogsEntry.class.getName(), blogEntryId);
+		List<AssetTag> tags = _assetTagService.getTags(
+			BlogsEntry.class.getName(), blogEntryId,
+			pagination.getStartPosition(), pagination.getEndPosition());
 
-		int count = tags.size();
+		int count = _assetTagService.getTagsCount(
+			BlogsEntry.class.getName(), blogEntryId);
 
 		return new PageItems<>(tags, count);
 	}

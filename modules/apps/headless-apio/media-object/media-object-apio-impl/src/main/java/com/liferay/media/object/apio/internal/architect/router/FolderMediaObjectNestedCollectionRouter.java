@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Provides the information necessary to expose the <a
  * href="http://schema.org/MediaObject">MediaObject</a> resources contained
- * inside a <a href="http://schema.org/Folder">Folder</a> through a web API.
- * The resources are mapped from the internal model {@link FileEntry}.
+ * inside a <a href="http://schema.org/Folder">Folder</a> through a web API. The
+ * resources are mapped from the internal model {@link FileEntry}.
  *
  * @author Eduardo Perez
  */

@@ -17,8 +17,8 @@ package com.liferay.folder.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a root {@code Folder} identifier. It's identified by the
- * internal {@code Group#getGroupId()}.
+ * Holds information about a root {@code Folder} identifier. It's identified by
+ * the internal {@code Group#getGroupId()}.
  *
  * @author Eduardo Perez
  * @review

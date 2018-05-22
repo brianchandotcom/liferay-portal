@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose <a
- * href="http://schema.org/MediaObject">MediaObject </a> resources through a web
+ * href="http://schema.org/MediaObject">MediaObject</a> resources through a web
  * API. The resources are mapped from the internal model {@code FileEntry}.
  *
  * @author Javier Gamarra

@@ -93,7 +93,7 @@ public class WebPageElementNestedCollectionResource
 		return builder.types(
 			"WebPageElement"
 		).identifier(
-			JournalArticle::getFolderId
+			JournalArticle::getId
 		).addBidirectionalModel(
 			"webSite", "webPageElements", WebSiteIdentifier.class,
 			JournalArticle::getGroupId

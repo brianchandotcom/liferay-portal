@@ -65,7 +65,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -91,6 +91,8 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		sb.append(name);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -159,6 +161,13 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 
 		commercePriceListImpl.setPriority(priority);
 
+		if (externalReferenceCode == null) {
+			commercePriceListImpl.setExternalReferenceCode("");
+		}
+		else {
+			commercePriceListImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		if (displayDate == Long.MIN_VALUE) {
 			commercePriceListImpl.setDisplayDate(null);
 		}
@@ -223,6 +232,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		name = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
+		externalReferenceCode = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -274,6 +284,14 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 		}
 
 		objectOutput.writeDouble(priority);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -304,6 +322,7 @@ public class CommercePriceListCacheModel implements CacheModel<CommercePriceList
 	public long commerceCurrencyId;
 	public String name;
 	public double priority;
+	public String externalReferenceCode;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

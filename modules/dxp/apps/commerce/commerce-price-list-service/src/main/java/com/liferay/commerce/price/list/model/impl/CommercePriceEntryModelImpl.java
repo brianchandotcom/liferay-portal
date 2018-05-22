@@ -89,6 +89,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 			{ "price", Types.DECIMAL },
 			{ "promoPrice", Types.DECIMAL },
 			{ "hasTierPrice", Types.BOOLEAN },
+			{ "externalReferenceCode", Types.VARCHAR },
 			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -107,10 +108,11 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("promoPrice", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("hasTierPrice", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommercePriceEntry (uuid_ VARCHAR(75) null,commercePriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceId LONG,commercePriceListId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,hasTierPrice BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommercePriceEntry (uuid_ VARCHAR(75) null,commercePriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceId LONG,commercePriceListId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,hasTierPrice BOOLEAN,externalReferenceCode VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commercePriceEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommercePriceEntry.createDate DESC";
@@ -159,6 +161,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		model.setPrice(soapModel.getPrice());
 		model.setPromoPrice(soapModel.getPromoPrice());
 		model.setHasTierPrice(soapModel.isHasTierPrice());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
@@ -238,6 +241,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		attributes.put("price", getPrice());
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("hasTierPrice", isHasTierPrice());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -324,6 +328,13 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 		if (hasTierPrice != null) {
 			setHasTierPrice(hasTierPrice);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -574,6 +585,22 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 	@JSON
 	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -633,6 +660,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		commercePriceEntryImpl.setPrice(getPrice());
 		commercePriceEntryImpl.setPromoPrice(getPromoPrice());
 		commercePriceEntryImpl.setHasTierPrice(isHasTierPrice());
+		commercePriceEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		commercePriceEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		commercePriceEntryImpl.resetOriginalValues();
@@ -776,6 +804,15 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 		commercePriceEntryCacheModel.hasTierPrice = isHasTierPrice();
 
+		commercePriceEntryCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = commercePriceEntryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+				(externalReferenceCode.length() == 0)) {
+			commercePriceEntryCacheModel.externalReferenceCode = null;
+		}
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -790,7 +827,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -818,6 +855,8 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		sb.append(getPromoPrice());
 		sb.append(", hasTierPrice=");
 		sb.append(isHasTierPrice());
+		sb.append(", externalReferenceCode=");
+		sb.append(getExternalReferenceCode());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
 		sb.append("}");
@@ -827,7 +866,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.price.list.model.CommercePriceEntry");
@@ -886,6 +925,10 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		sb.append(isHasTierPrice());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>externalReferenceCode</column-name><column-value><![CDATA[");
+		sb.append(getExternalReferenceCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
@@ -922,6 +965,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
 	private boolean _hasTierPrice;
+	private String _externalReferenceCode;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CommercePriceEntry _escapedModel;

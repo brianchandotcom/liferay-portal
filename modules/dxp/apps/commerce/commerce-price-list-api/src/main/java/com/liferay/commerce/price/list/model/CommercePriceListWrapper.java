@@ -73,6 +73,7 @@ public class CommercePriceListWrapper implements CommercePriceList,
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -157,6 +158,13 @@ public class CommercePriceListWrapper implements CommercePriceList,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -281,6 +289,16 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	@Override
 	public Date getExpirationDate() {
 		return _commercePriceList.getExpirationDate();
+	}
+
+	/**
+	* Returns the external reference code of this commerce price list.
+	*
+	* @return the external reference code of this commerce price list
+	*/
+	@Override
+	public String getExternalReferenceCode() {
+		return _commercePriceList.getExternalReferenceCode();
 	}
 
 	/**
@@ -632,6 +650,16 @@ public class CommercePriceListWrapper implements CommercePriceList,
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		_commercePriceList.setExpirationDate(expirationDate);
+	}
+
+	/**
+	* Sets the external reference code of this commerce price list.
+	*
+	* @param externalReferenceCode the external reference code of this commerce price list
+	*/
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_commercePriceList.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

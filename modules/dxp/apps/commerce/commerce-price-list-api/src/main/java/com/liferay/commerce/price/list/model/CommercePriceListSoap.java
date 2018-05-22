@@ -46,6 +46,7 @@ public class CommercePriceListSoap implements Serializable {
 		soapModel.setCommerceCurrencyId(model.getCommerceCurrencyId());
 		soapModel.setName(model.getName());
 		soapModel.setPriority(model.getPriority());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -204,6 +205,14 @@ public class CommercePriceListSoap implements Serializable {
 		_priority = priority;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -272,6 +281,7 @@ public class CommercePriceListSoap implements Serializable {
 	private long _commerceCurrencyId;
 	private String _name;
 	private double _priority;
+	private String _externalReferenceCode;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;

@@ -17,6 +17,7 @@
 		</field>
 		<field name="promoPrice" type="BigDecimal" />
 		<field name="hasTierPrice" type="boolean" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.price.list.model.CommercePriceList">
@@ -36,6 +37,7 @@
 			<validator name="required" />
 		</field>
 		<field name="priority" type="double" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />

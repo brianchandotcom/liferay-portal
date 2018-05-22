@@ -147,6 +147,8 @@ public class CommercePriceListPersistenceTest {
 
 		newCommercePriceList.setPriority(RandomTestUtil.nextDouble());
 
+		newCommercePriceList.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newCommercePriceList.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCommercePriceList.setExpirationDate(RandomTestUtil.nextDate());
@@ -191,6 +193,8 @@ public class CommercePriceListPersistenceTest {
 			newCommercePriceList.getName());
 		AssertUtils.assertEquals(existingCommercePriceList.getPriority(),
 			newCommercePriceList.getPriority());
+		Assert.assertEquals(existingCommercePriceList.getExternalReferenceCode(),
+			newCommercePriceList.getExternalReferenceCode());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommercePriceList.getDisplayDate()),
 			Time.getShortTimestamp(newCommercePriceList.getDisplayDate()));
@@ -319,9 +323,9 @@ public class CommercePriceListPersistenceTest {
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentCommercePriceListId", true,
 			"commerceCurrencyId", true, "name", true, "priority", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"externalReferenceCode", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -566,6 +570,8 @@ public class CommercePriceListPersistenceTest {
 		commercePriceList.setName(RandomTestUtil.randomString());
 
 		commercePriceList.setPriority(RandomTestUtil.nextDouble());
+
+		commercePriceList.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		commercePriceList.setDisplayDate(RandomTestUtil.nextDate());
 

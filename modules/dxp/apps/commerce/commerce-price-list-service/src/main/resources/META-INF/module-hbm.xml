@@ -22,6 +22,7 @@
 		<property name="price" type="org.hibernate.type.BigDecimalType" />
 		<property name="promoPrice" type="org.hibernate.type.BigDecimalType" />
 		<property name="hasTierPrice" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.commerce.price.list.model.impl.CommercePriceListImpl" table="CommercePriceList">
@@ -39,6 +40,7 @@
 		<property name="commerceCurrencyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />

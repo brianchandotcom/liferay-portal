@@ -49,6 +49,7 @@ public class CommercePriceEntrySoap implements Serializable {
 		soapModel.setPrice(model.getPrice());
 		soapModel.setPromoPrice(model.getPromoPrice());
 		soapModel.setHasTierPrice(model.isHasTierPrice());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -213,6 +214,14 @@ public class CommercePriceEntrySoap implements Serializable {
 		_hasTierPrice = hasTierPrice;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -234,5 +243,6 @@ public class CommercePriceEntrySoap implements Serializable {
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
 	private boolean _hasTierPrice;
+	private String _externalReferenceCode;
 	private Date _lastPublishDate;
 }

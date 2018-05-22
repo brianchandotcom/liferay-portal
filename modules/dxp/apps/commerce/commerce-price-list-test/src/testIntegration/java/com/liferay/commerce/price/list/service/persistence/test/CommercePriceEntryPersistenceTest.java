@@ -152,6 +152,8 @@ public class CommercePriceEntryPersistenceTest {
 
 		newCommercePriceEntry.setHasTierPrice(RandomTestUtil.randomBoolean());
 
+		newCommercePriceEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newCommercePriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_commercePriceEntries.add(_persistence.update(newCommercePriceEntry));
@@ -186,6 +188,8 @@ public class CommercePriceEntryPersistenceTest {
 			newCommercePriceEntry.getPromoPrice());
 		Assert.assertEquals(existingCommercePriceEntry.isHasTierPrice(),
 			newCommercePriceEntry.isHasTierPrice());
+		Assert.assertEquals(existingCommercePriceEntry.getExternalReferenceCode(),
+			newCommercePriceEntry.getExternalReferenceCode());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommercePriceEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newCommercePriceEntry.getLastPublishDate()));
@@ -282,7 +286,8 @@ public class CommercePriceEntryPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "CPInstanceId", true,
 			"commercePriceListId", true, "price", true, "promoPrice", true,
-			"hasTierPrice", true, "lastPublishDate", true);
+			"hasTierPrice", true, "externalReferenceCode", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -536,6 +541,8 @@ public class CommercePriceEntryPersistenceTest {
 				RandomTestUtil.nextDouble()));
 
 		commercePriceEntry.setHasTierPrice(RandomTestUtil.randomBoolean());
+
+		commercePriceEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		commercePriceEntry.setLastPublishDate(RandomTestUtil.nextDate());
 

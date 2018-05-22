@@ -87,6 +87,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 			{ "commerceCurrencyId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "priority", Types.DOUBLE },
+			{ "externalReferenceCode", Types.VARCHAR },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "lastPublishDate", Types.TIMESTAMP },
@@ -110,6 +111,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		TABLE_COLUMNS_MAP.put("commerceCurrencyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -119,7 +121,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommercePriceList (uuid_ VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommercePriceListId LONG,commerceCurrencyId LONG,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommercePriceList (uuid_ VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommercePriceListId LONG,commerceCurrencyId LONG,name VARCHAR(75) null,priority DOUBLE,externalReferenceCode VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceList";
 	public static final String ORDER_BY_JPQL = " ORDER BY commercePriceList.displayDate DESC, commercePriceList.createDate DESC, commercePriceList.priority DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommercePriceList.displayDate DESC, CommercePriceList.createDate DESC, CommercePriceList.priority DESC";
@@ -170,6 +172,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
 		model.setName(soapModel.getName());
 		model.setPriority(soapModel.getPriority());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -255,6 +258,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		attributes.put("commerceCurrencyId", getCommerceCurrencyId());
 		attributes.put("name", getName());
 		attributes.put("priority", getPriority());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -342,6 +346,13 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -618,6 +629,22 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 	@JSON
 	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	@JSON
+	@Override
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -865,6 +892,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		commercePriceListImpl.setCommerceCurrencyId(getCommerceCurrencyId());
 		commercePriceListImpl.setName(getName());
 		commercePriceListImpl.setPriority(getPriority());
+		commercePriceListImpl.setExternalReferenceCode(getExternalReferenceCode());
 		commercePriceListImpl.setDisplayDate(getDisplayDate());
 		commercePriceListImpl.setExpirationDate(getExpirationDate());
 		commercePriceListImpl.setLastPublishDate(getLastPublishDate());
@@ -1049,6 +1077,15 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 		commercePriceListCacheModel.priority = getPriority();
 
+		commercePriceListCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = commercePriceListCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+				(externalReferenceCode.length() == 0)) {
+			commercePriceListCacheModel.externalReferenceCode = null;
+		}
+
 		Date displayDate = getDisplayDate();
 
 		if (displayDate != null) {
@@ -1102,7 +1139,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1128,6 +1165,8 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		sb.append(getName());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", externalReferenceCode=");
+		sb.append(getExternalReferenceCode());
 		sb.append(", displayDate=");
 		sb.append(getDisplayDate());
 		sb.append(", expirationDate=");
@@ -1149,7 +1188,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.price.list.model.CommercePriceList");
@@ -1202,6 +1241,10 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>externalReferenceCode</column-name><column-value><![CDATA[");
+		sb.append(getExternalReferenceCode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
@@ -1263,6 +1306,7 @@ public class CommercePriceListModelImpl extends BaseModelImpl<CommercePriceList>
 	private boolean _setOriginalCommerceCurrencyId;
 	private String _name;
 	private double _priority;
+	private String _externalReferenceCode;
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private Date _expirationDate;

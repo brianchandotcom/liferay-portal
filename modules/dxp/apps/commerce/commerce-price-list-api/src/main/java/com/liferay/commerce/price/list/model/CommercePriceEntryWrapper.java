@@ -75,6 +75,7 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 		attributes.put("price", getPrice());
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("hasTierPrice", isHasTierPrice());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -160,6 +161,13 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 			setHasTierPrice(hasTierPrice);
 		}
 
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
+		}
+
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
 
 		if (lastPublishDate != null) {
@@ -242,6 +250,16 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commercePriceEntry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the external reference code of this commerce price entry.
+	*
+	* @return the external reference code of this commerce price entry
+	*/
+	@Override
+	public String getExternalReferenceCode() {
+		return _commercePriceEntry.getExternalReferenceCode();
 	}
 
 	/**
@@ -477,6 +495,16 @@ public class CommercePriceEntryWrapper implements CommercePriceEntry,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the external reference code of this commerce price entry.
+	*
+	* @param externalReferenceCode the external reference code of this commerce price entry
+	*/
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_commercePriceEntry.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

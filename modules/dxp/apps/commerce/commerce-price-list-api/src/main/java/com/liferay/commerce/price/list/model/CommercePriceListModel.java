@@ -268,6 +268,21 @@ public interface CommercePriceListModel extends BaseModel<CommercePriceList>,
 	public void setPriority(double priority);
 
 	/**
+	 * Returns the external reference code of this commerce price list.
+	 *
+	 * @return the external reference code of this commerce price list
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this commerce price list.
+	 *
+	 * @param externalReferenceCode the external reference code of this commerce price list
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the display date of this commerce price list.
 	 *
 	 * @return the display date of this commerce price list

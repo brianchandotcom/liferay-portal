@@ -29,6 +29,7 @@
 		<column name="price" type="BigDecimal" />
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="hasTierPrice" type="boolean" />
+		<column name="externalReferenceCode" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -84,6 +85,7 @@
 		<column name="commerceCurrencyId" type="long" />
 		<column name="name" type="String" />
 		<column name="priority" type="double" />
+		<column name="externalReferenceCode" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />

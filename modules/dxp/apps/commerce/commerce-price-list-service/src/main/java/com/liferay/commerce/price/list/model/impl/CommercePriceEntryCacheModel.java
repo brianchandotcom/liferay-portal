@@ -67,7 +67,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -95,6 +95,8 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		sb.append(promoPrice);
 		sb.append(", hasTierPrice=");
 		sb.append(hasTierPrice);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -145,6 +147,13 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		commercePriceEntryImpl.setPromoPrice(promoPrice);
 		commercePriceEntryImpl.setHasTierPrice(hasTierPrice);
 
+		if (externalReferenceCode == null) {
+			commercePriceEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			commercePriceEntryImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			commercePriceEntryImpl.setLastPublishDate(null);
 		}
@@ -180,6 +189,7 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		promoPrice = (BigDecimal)objectInput.readObject();
 
 		hasTierPrice = objectInput.readBoolean();
+		externalReferenceCode = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -218,6 +228,14 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 		objectOutput.writeObject(promoPrice);
 
 		objectOutput.writeBoolean(hasTierPrice);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -234,5 +252,6 @@ public class CommercePriceEntryCacheModel implements CacheModel<CommercePriceEnt
 	public BigDecimal price;
 	public BigDecimal promoPrice;
 	public boolean hasTierPrice;
+	public String externalReferenceCode;
 	public long lastPublishDate;
 }

@@ -27,6 +27,7 @@ create table CommercePriceEntry (
 	price DECIMAL(30, 16) null,
 	promoPrice DECIMAL(30, 16) null,
 	hasTierPrice BOOLEAN,
+	externalReferenceCode VARCHAR(75) null,
 	lastPublishDate DATE null
 );
 
@@ -43,6 +44,7 @@ create table CommercePriceList (
 	commerceCurrencyId LONG,
 	name VARCHAR(75) null,
 	priority DOUBLE,
+	externalReferenceCode VARCHAR(75) null,
 	displayDate DATE null,
 	expirationDate DATE null,
 	lastPublishDate DATE null,

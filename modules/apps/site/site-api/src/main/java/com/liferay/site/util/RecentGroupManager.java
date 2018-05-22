@@ -14,16 +14,32 @@
 
 package com.liferay.site.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -68,10 +84,26 @@ public class RecentGroupManager {
 	public List<Group> getRecentGroups(HttpServletRequest request) {
 		String value = _getRecentGroupsValue(request);
 
-		return getRecentGroups(value);
+		List<Group> recentGroups = new ArrayList<>();
+
+		try {
+			PortletRequest portletRequest =
+				(PortletRequest)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST);
+
+			recentGroups = getRecentGroups(value, portletRequest);
+		}
+		catch (Exception e) {
+			_log.error("Unable to get recent groups", e);
+		}
+
+		return recentGroups;
 	}
 
-	protected List<Group> getRecentGroups(String value) {
+	protected List<Group> getRecentGroups(
+			String value, PortletRequest portletRequest)
+		throws Exception {
+
 		long[] groupIds = StringUtil.split(value, 0L);
 
 		if (ArrayUtil.isEmpty(groupIds)) {
@@ -80,10 +112,19 @@ public class RecentGroupManager {
 
 		List<Group> groups = new ArrayList<>(groupIds.length);
 
+		User user = _portal.getUser(portletRequest);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
 		for (long groupId : groupIds) {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if (!_groupLocalService.isLiveGroupActive(group)) {
+				continue;
+			}
+
+			if (!_isShowSite(group, portletRequest, permissionChecker)) {
 				continue;
 			}
 
@@ -116,6 +157,29 @@ public class RecentGroupManager {
 		return SessionClicks.get(request, _KEY_RECENT_GROUPS, null);
 	}
 
+	private boolean _isShowSite(
+			Group group, PortletRequest portletRequest,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		Layout layout = _layoutLocalService.fetchFirstLayout(
+			group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (layout != null) {
+			return LayoutPermissionUtil.contains(
+				permissionChecker, layout, true, ActionKeys.VIEW);
+		}
+
+		String groupURL = _groupURLProvider.getGroupURL(group, portletRequest);
+
+		if (Validator.isNull(groupURL)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _setRecentGroupsValue(
 		HttpServletRequest request, String value) {
 
@@ -125,6 +189,18 @@ public class RecentGroupManager {
 	private static final String _KEY_RECENT_GROUPS =
 		"com.liferay.site.util_recentGroups";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		RecentGroupManager.class);
+
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupURLProvider _groupURLProvider;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

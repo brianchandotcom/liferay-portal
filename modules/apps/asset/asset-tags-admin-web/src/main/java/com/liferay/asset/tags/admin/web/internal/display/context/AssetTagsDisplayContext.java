@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -426,7 +427,7 @@ public class AssetTagsDisplayContext {
 				AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
 				themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG)) {
 
-			return true;
+			return isShowTagsActionMenu();
 		}
 
 		return false;
@@ -444,6 +445,29 @@ public class AssetTagsDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isShowTagsActionMenu() {
+		if (_showTagsActionMenu != null) {
+			return _showTagsActionMenu;
+		}
+
+		boolean showTagsActionMenu = true;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isStaged() && !group.isStagingGroup() &&
+			!group.isStagedRemotely()) {
+
+			showTagsActionMenu = false;
+		}
+
+		_showTagsActionMenu = showTagsActionMenu;
+
+		return _showTagsActionMenu;
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {
@@ -493,6 +517,7 @@ public class AssetTagsDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private Boolean _showTagsActionMenu;
 	private AssetTag _tag;
 	private Long _tagId;
 	private SearchContainer _tagsSearchContainer;

@@ -21,7 +21,7 @@ EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigura
 
 CommerceCloudClientConfiguration commerceCloudClientConfiguration = editConfigurationDisplayContext.getCommerceCloudClientConfiguration();
 JSONObject projectConfigurationJSONObject = editConfigurationDisplayContext.getProjectConfiguration();
-String redirect = editConfigurationDisplayContext.getViewCategoryURL();
+String redirect = portletDisplay.getURLBack();
 
 String callbackHost = projectConfigurationJSONObject.getString("callbackHost");
 
@@ -37,7 +37,7 @@ else {
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="synchronization" />
 
-<div class="sheet">
+<aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
 		<c:choose>
 			<c:when test='<%= projectConfigurationJSONObject.has("exception") %>'>
@@ -59,14 +59,14 @@ else {
 				</div>
 			</c:otherwise>
 		</c:choose>
+
+		<aui:button-row>
+			<aui:button type="submit" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
 	</aui:fieldset>
-
-	<aui:button-row>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</div>
+</aui:fieldset-group>
 
 <aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />pushSynchronizationDisabled', '<portlet:namespace />pullSynchronizationOptions', '<portlet:namespace />pushSynchronizationOptions');

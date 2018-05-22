@@ -19,13 +19,11 @@ package com.liferay.commerce.cloud.client.web.internal.constants;
  */
 public class CommerceCloudClientScreenNavigationConstants {
 
-	public static final String CATEGORY_KEY_GENERAL = "general";
+	public static final String CATEGORY_KEY_CONNECTION = "connection";
 
-	public static final String ENTRY_KEY_CONNECTION = "connection";
+	public static final String CATEGORY_KEY_FORECASTING = "forecasting";
 
-	public static final String ENTRY_KEY_FORECASTING = "forecasting";
-
-	public static final String ENTRY_KEY_SYNCHRONIZATION = "synchronization";
+	public static final String CATEGORY_KEY_SYNCHRONIZATION = "synchronization";
 
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_CLOUD_CLIENT_CONFIGURATION =

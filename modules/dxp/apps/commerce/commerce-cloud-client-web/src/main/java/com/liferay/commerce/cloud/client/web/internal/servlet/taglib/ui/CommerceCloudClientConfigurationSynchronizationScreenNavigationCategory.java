@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.commerce.cloud.client.web.internal.servlet.taglib.ui.entry;
+package com.liferay.commerce.cloud.client.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.cloud.client.web.internal.constants.CommerceCloudClientScreenNavigationConstants;
+import com.liferay.commerce.cloud.client.web.internal.display.context.EditConfigurationDisplayContext;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.portal.kernel.model.User;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,27 +26,34 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=10",
-	service = ScreenNavigationEntry.class
+	property = "screen.navigation.category.order:Integer=20",
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CommerceCloudClientConfigurationConnectionScreenNavigationEntry
-	extends BaseCommerceCloudClientConfigurationScreenNavigationEntry {
+public class
+	CommerceCloudClientConfigurationSynchronizationScreenNavigationCategory
+		extends BaseCommerceCloudClientConfigurationScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return
-			CommerceCloudClientScreenNavigationConstants.CATEGORY_KEY_GENERAL;
+		return CommerceCloudClientScreenNavigationConstants.
+			CATEGORY_KEY_SYNCHRONIZATION;
 	}
 
 	@Override
-	public String getEntryKey() {
-		return
-			CommerceCloudClientScreenNavigationConstants.ENTRY_KEY_CONNECTION;
+	public boolean isVisible(
+		User user,
+		EditConfigurationDisplayContext editConfigurationDisplayContext) {
+
+		if (editConfigurationDisplayContext.getProjectConfiguration() != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/connection.jsp";
+		return "/configuration/synchronization.jsp";
 	}
 
 }

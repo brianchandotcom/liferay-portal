@@ -12,24 +12,26 @@
  * details.
  */
 
-package com.liferay.commerce.cloud.client.web.internal.portlet.action;
+package com.liferay.commerce.cloud.client.web.internal.display;
 
 import com.liferay.commerce.cloud.client.constants.CommerceCloudClientConstants;
 import com.liferay.commerce.cloud.client.util.CommerceCloudClient;
 import com.liferay.commerce.cloud.client.web.internal.display.context.EditConfigurationDisplayContext;
-import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import java.io.IOException;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -41,49 +43,52 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(
-	immediate = true,
-	property = {
-		"configurationPid=" + CommerceCloudClientConstants.CONFIGURATION_PID,
-		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
-		"mvc.command.name=/edit_configuration"
-	}
-)
-public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
+@Component(immediate = true)
+public class CommerceCloudClientConfigurationScreen
+	implements ConfigurationScreen {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
+	public String getCategoryKey() {
+		return "commerce";
+	}
 
-		try {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
-			HttpServletResponse httpServletResponse =
-				_portal.getHttpServletResponse(renderResponse);
+	@Override
+	public String getKey() {
+		return CommerceCloudClientConstants.CONFIGURATION_PID;
+	}
 
-			EditConfigurationDisplayContext editConfigurationDisplayContext =
-				new EditConfigurationDisplayContext(
-					_commerceCloudClient,
-					_commerceCloudClientResourceBundleLoader,
-					_commerceOrderResourceBundleLoader, _configurationProvider,
-					httpServletRequest, _jsonFactory, _portal, renderRequest,
-					renderResponse);
+	@Override
+	public String getName(Locale locale) {
+		ResourceBundle resourceBundle =
+			_commerceCloudClientResourceBundleLoader.loadResourceBundle(locale);
 
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				editConfigurationDisplayContext);
+		return LanguageUtil.get(
+			resourceBundle, "commerce-cloud-client-configuration-name");
+	}
 
-			_jspRenderer.renderJSP(
-				_servletContext, httpServletRequest, httpServletResponse,
-				"/edit_configuration.jsp");
+	@Override
+	public String getScope() {
+		return ExtendedObjectClassDefinition.Scope.SYSTEM.getValue();
+	}
 
-			return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
-		}
-		catch (Exception e) {
-			throw new PortletException(
-				"Unable to include edit_configuration.jsp", e);
-		}
+	@Override
+	public void render(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		EditConfigurationDisplayContext editConfigurationDisplayContext =
+			new EditConfigurationDisplayContext(
+				_commerceCloudClient, _commerceOrderResourceBundleLoader,
+				_configurationProvider, httpServletRequest, _jsonFactory,
+				_portal, _portletURLFactory);
+
+		httpServletRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, editConfigurationDisplayContext);
+
+		_jspRenderer.renderJSP(
+			_servletContext, httpServletRequest, httpServletResponse,
+			"/edit_configuration.jsp");
 	}
 
 	@Reference
@@ -108,6 +113,9 @@ public class EditConfigurationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.cloud.client.web)"

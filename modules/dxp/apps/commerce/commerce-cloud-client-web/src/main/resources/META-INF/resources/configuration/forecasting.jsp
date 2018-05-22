@@ -22,12 +22,12 @@ EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigura
 CommerceCloudClientConfiguration commerceCloudClientConfiguration = editConfigurationDisplayContext.getCommerceCloudClientConfiguration();
 JSONObject forecastingConfigurationJSONObject = editConfigurationDisplayContext.getForecastingConfiguration();
 JSONObject projectConfigurationJSONObject = editConfigurationDisplayContext.getProjectConfiguration();
-String redirect = editConfigurationDisplayContext.getViewCategoryURL();
+String redirect = portletDisplay.getURLBack();
 %>
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="forecasting" />
 
-<div class="sheet">
+<aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
 		<c:choose>
 			<c:when test='<%= forecastingConfigurationJSONObject.has("exception") || projectConfigurationJSONObject.has("exception") %>'>
@@ -146,14 +146,14 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 				</div>
 			</c:otherwise>
 		</c:choose>
+
+		<aui:button-row>
+			<aui:button type="submit" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
 	</aui:fieldset>
-
-	<aui:button-row>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</div>
+</aui:fieldset-group>
 
 <aui:script use="aui-base,liferay-auto-fields">
 	new Liferay.AutoFields(

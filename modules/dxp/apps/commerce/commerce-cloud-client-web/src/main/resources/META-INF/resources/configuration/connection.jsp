@@ -20,21 +20,21 @@
 EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceCloudClientConfiguration commerceCloudClientConfiguration = editConfigurationDisplayContext.getCommerceCloudClientConfiguration();
-String redirect = editConfigurationDisplayContext.getViewCategoryURL();
+String redirect = portletDisplay.getURLBack();
 %>
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="connection" />
 
-<div class="sheet">
+<aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
 		<aui:input name="serverHost" value="<%= commerceCloudClientConfiguration.serverHost() %>" />
 
 		<aui:input name="projectId" value="<%= commerceCloudClientConfiguration.projectId() %>" />
+
+		<aui:button-row>
+			<aui:button type="submit" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
 	</aui:fieldset>
-
-	<aui:button-row>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</div>
+</aui:fieldset-group>

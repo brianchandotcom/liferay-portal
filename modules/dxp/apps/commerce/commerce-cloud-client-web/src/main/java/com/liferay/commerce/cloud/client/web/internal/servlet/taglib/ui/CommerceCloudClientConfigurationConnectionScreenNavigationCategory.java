@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.cloud.client.web.internal.servlet.taglib.ui.entry;
+package com.liferay.commerce.cloud.client.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.cloud.client.web.internal.constants.CommerceCloudClientScreenNavigationConstants;
-import com.liferay.commerce.cloud.client.web.internal.display.context.EditConfigurationDisplayContext;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.model.User;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,40 +24,21 @@ import org.osgi.service.component.annotations.Component;
  * @author Andrea Di Giorgi
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=20",
-	service = ScreenNavigationEntry.class
+	property = "screen.navigation.category.order:Integer=10",
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class
-	CommerceCloudClientConfigurationSynchronizationScreenNavigationEntry
-		extends BaseCommerceCloudClientConfigurationScreenNavigationEntry {
+public class CommerceCloudClientConfigurationConnectionScreenNavigationCategory
+	extends BaseCommerceCloudClientConfigurationScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return
-			CommerceCloudClientScreenNavigationConstants.CATEGORY_KEY_GENERAL;
-	}
-
-	@Override
-	public String getEntryKey() {
 		return CommerceCloudClientScreenNavigationConstants.
-			ENTRY_KEY_SYNCHRONIZATION;
-	}
-
-	@Override
-	public boolean isVisible(
-		User user,
-		EditConfigurationDisplayContext editConfigurationDisplayContext) {
-
-		if (editConfigurationDisplayContext.getProjectConfiguration() != null) {
-			return true;
-		}
-
-		return false;
+			CATEGORY_KEY_CONNECTION;
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/configuration/synchronization.jsp";
+		return "/configuration/connection.jsp";
 	}
 
 }

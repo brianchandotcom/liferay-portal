@@ -18,25 +18,7 @@
 
 <%
 EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-String redirect = editConfigurationDisplayContext.getViewCategoryURL();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(editConfigurationDisplayContext.getCategoryName());
 %>
-
-<div class="container-fluid container-fluid-max-xl">
-	<div class="col-12">
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
-		/>
-	</div>
-</div>
 
 <liferay-portlet:actionURL name="editCommerceCloudClientConfiguration" portletName="<%= ConfigurationAdminPortletKeys.SYSTEM_SETTINGS %>" var="editConfigurationActionURL" />
 

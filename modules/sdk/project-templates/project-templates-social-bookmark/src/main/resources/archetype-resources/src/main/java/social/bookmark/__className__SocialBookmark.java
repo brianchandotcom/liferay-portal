@@ -39,7 +39,7 @@ public class ${className}SocialBookmark implements SocialBookmark {
 
 	@Override
 	public String getPostURL(String title, String url) {
-		return String.format("http://www.google.com/search?q=%s", url);
+		return "https://www.google.com/search?q=" + url;
 	}
 
 	@Override

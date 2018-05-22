@@ -144,18 +144,16 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			initThreadLocals(sourceGroupId, privateLayout);
 
-			file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
-				exportImportConfiguration);
-
-			markBackgroundTask(
-				backgroundTask.getBackgroundTaskId(), "exported");
+			LayoutStagingCallable layoutStagingCallable =
+				new LayoutStagingCallable(
+					backgroundTask.getBackgroundTaskId(),
+					exportImportConfiguration, sourceGroupId, targetGroupId,
+					userId);
 
 			missingReferences = TransactionInvokerUtil.invoke(
-				transactionConfig,
-				new LayoutStagingImportCallable(
-					backgroundTask.getBackgroundTaskId(),
-					exportImportConfiguration, file, sourceGroupId,
-					targetGroupId, userId));
+				transactionConfig, layoutStagingCallable);
+
+			file = layoutStagingCallable.getFile();
 
 			ExportImportThreadLocal.setInitialLayoutStagingInProcess(false);
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
@@ -313,17 +311,15 @@ public class LayoutStagingBackgroundTaskExecutor
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagingBackgroundTaskExecutor.class);
 
-	private class LayoutStagingImportCallable
-		implements Callable<MissingReferences> {
+	private class LayoutStagingCallable implements Callable<MissingReferences> {
 
-		public LayoutStagingImportCallable(
+		public LayoutStagingCallable(
 			long backgroundTaskId,
-			ExportImportConfiguration exportImportConfiguration, File file,
+			ExportImportConfiguration exportImportConfiguration,
 			long sourceGroupId, long targetGroupId, long userId) {
 
 			_backgroundTaskId = backgroundTaskId;
 			_exportImportConfiguration = exportImportConfiguration;
-			_file = file;
 			_sourceGroupId = sourceGroupId;
 			_targetGroupId = targetGroupId;
 			_userId = userId;
@@ -331,6 +327,11 @@ public class LayoutStagingBackgroundTaskExecutor
 
 		@Override
 		public MissingReferences call() throws PortalException {
+			_file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
+				_exportImportConfiguration);
+
+			markBackgroundTask(_backgroundTaskId, "exported");
+
 			ExportImportLocalServiceUtil.importLayoutsDataDeletions(
 				_exportImportConfiguration, _file);
 
@@ -348,9 +349,13 @@ public class LayoutStagingBackgroundTaskExecutor
 			return missingReferences;
 		}
 
+		public File getFile() {
+			return _file;
+		}
+
 		private final long _backgroundTaskId;
 		private final ExportImportConfiguration _exportImportConfiguration;
-		private final File _file;
+		private File _file;
 		private final long _sourceGroupId;
 		private final long _targetGroupId;
 		private final long _userId;

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -40,6 +41,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * @author Akos Thurzo
@@ -98,11 +100,6 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
-			file = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
-				exportImportConfiguration);
-
-			String checksum = FileUtil.getMD5Checksum(file);
-
 			Map<String, Serializable> taskContextMap =
 				backgroundTask.getTaskContextMap();
 
@@ -113,17 +110,16 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 
 			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 
-			stagingRequestId = StagingServiceHttp.createStagingRequest(
-				httpPrincipal, targetGroupId, checksum);
+			PortletStagingCallable layoutStagingCallable =
+				new PortletStagingCallable(
+					backgroundTask.getBackgroundTaskId(),
+					exportImportConfiguration, httpPrincipal, targetGroupId);
 
-			StagingUtil.transferFileToRemoteLive(
-				file, stagingRequestId, httpPrincipal);
+			missingReferences = TransactionInvokerUtil.invoke(
+				transactionConfig, layoutStagingCallable);
 
-			markBackgroundTask(
-				backgroundTask.getBackgroundTaskId(), "exported");
-
-			missingReferences = StagingServiceHttp.publishStagingRequest(
-				httpPrincipal, stagingRequestId, exportImportConfiguration);
+			file = layoutStagingCallable.getFile();
+			stagingRequestId = layoutStagingCallable.getStagingRequestId();
 
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 
@@ -184,5 +180,55 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletRemoteStagingBackgroundTaskExecutor.class);
+
+	private class PortletStagingCallable
+		implements Callable<MissingReferences> {
+
+		public PortletStagingCallable(
+			long backgroundTaskId,
+			ExportImportConfiguration exportImportConfiguration,
+			HttpPrincipal httpPrincipal, long targetGroupId) {
+
+			_backgroundTaskId = backgroundTaskId;
+			_exportImportConfiguration = exportImportConfiguration;
+			_httpPrincipal = httpPrincipal;
+			_targetGroupId = targetGroupId;
+		}
+
+		@Override
+		public MissingReferences call() throws Exception {
+			_file = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
+				_exportImportConfiguration);
+
+			String checksum = FileUtil.getMD5Checksum(_file);
+
+			_stagingRequestId = StagingServiceHttp.createStagingRequest(
+				_httpPrincipal, _targetGroupId, checksum);
+
+			StagingUtil.transferFileToRemoteLive(
+				_file, _stagingRequestId, _httpPrincipal);
+
+			markBackgroundTask(_backgroundTaskId, "exported");
+
+			return StagingServiceHttp.publishStagingRequest(
+				_httpPrincipal, _stagingRequestId, _exportImportConfiguration);
+		}
+
+		public File getFile() {
+			return _file;
+		}
+
+		public long getStagingRequestId() {
+			return _stagingRequestId;
+		}
+
+		private final long _backgroundTaskId;
+		private final ExportImportConfiguration _exportImportConfiguration;
+		private File _file;
+		private final HttpPrincipal _httpPrincipal;
+		private long _stagingRequestId;
+		private final long _targetGroupId;
+
+	}
 
 }

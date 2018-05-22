@@ -83,17 +83,15 @@ public class PortletStagingBackgroundTaskExecutor
 					exportImportConfiguration.getExportImportConfigurationId()),
 				exportImportConfiguration);
 
-			file = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
-				exportImportConfiguration);
-
-			markBackgroundTask(
-				backgroundTask.getBackgroundTaskId(), "exported");
-
-			missingReferences = TransactionInvokerUtil.invoke(
-				transactionConfig,
+			PortletStagingCallable portletStagingCallable =
 				new PortletStagingCallable(
 					backgroundTask.getBackgroundTaskId(),
-					exportImportConfiguration, file));
+					exportImportConfiguration);
+
+			missingReferences = TransactionInvokerUtil.invoke(
+				transactionConfig, portletStagingCallable);
+
+			file = portletStagingCallable.getFile();
 
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 
@@ -141,15 +139,19 @@ public class PortletStagingBackgroundTaskExecutor
 
 		public PortletStagingCallable(
 			long backgroundTaskId,
-			ExportImportConfiguration exportImportConfiguration, File file) {
+			ExportImportConfiguration exportImportConfiguration) {
 
 			_backgroundTaskId = backgroundTaskId;
 			_exportImportConfiguration = exportImportConfiguration;
-			_file = file;
 		}
 
 		@Override
 		public MissingReferences call() throws PortalException {
+			_file = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
+				_exportImportConfiguration);
+
+			markBackgroundTask(_backgroundTaskId, "exported");
+
 			ExportImportLocalServiceUtil.importPortletDataDeletions(
 				_exportImportConfiguration, _file);
 
@@ -165,9 +167,13 @@ public class PortletStagingBackgroundTaskExecutor
 			return missingReferences;
 		}
 
+		public File getFile() {
+			return _file;
+		}
+
 		private final long _backgroundTaskId;
 		private final ExportImportConfiguration _exportImportConfiguration;
-		private final File _file;
+		private File _file;
 
 	}
 

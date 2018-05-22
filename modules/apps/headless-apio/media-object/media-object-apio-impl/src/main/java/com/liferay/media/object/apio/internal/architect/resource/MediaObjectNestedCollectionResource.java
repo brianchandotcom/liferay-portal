@@ -26,12 +26,14 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
+import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
+import com.liferay.media.object.apio.internal.architect.form.MediaObjectCreatorForm;
+import com.liferay.media.object.apio.internal.helper.MediaObjectHelper;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.List;
 
@@ -40,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose <a
- * href="http://schema.org/MediaObject">MediaObject </a> resources through a web
+ * href="http://schema.org/MediaObject">MediaObject</a> resources through a web
  * API. The resources are mapped from the internal model {@code FileEntry}.
  *
  * @author Javier Gamarra
@@ -48,14 +50,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class MediaObjectNestedCollectionResource
 	implements NestedCollectionResource<FileEntry, Long,
-		FileEntryIdentifier, Long, FolderIdentifier> {
+		FileEntryIdentifier, Long, RootFolderIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<FileEntry, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<FileEntry, Long> builder) {
+	public NestedCollectionRoutes<FileEntry, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<FileEntry, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
+		).addCreator(
+			this::_getFileEntry,
+			_hasPermission.forAddingIn(RootFolderIdentifier.class)::apply,
+			MediaObjectCreatorForm::buildForm
 		).build();
 	}
 
@@ -72,7 +78,7 @@ public class MediaObjectNestedCollectionResource
 			_dlAppService::getFileEntry
 		).addRemover(
 			idempotent(_dlAppService::deleteFileEntry),
-			_hasPermission.forDeleting(FileEntry.class)
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -85,7 +91,7 @@ public class MediaObjectNestedCollectionResource
 		).identifier(
 			FileEntry::getFileEntryId
 		).addBidirectionalModel(
-			"folder", "mediaObject", FolderIdentifier.class,
+			"folder", "mediaObjects", FolderIdentifier.class,
 			FileEntry::getFolderId
 		).addBinary(
 			"contentStream", this::_getBinaryFile
@@ -120,17 +126,22 @@ public class MediaObjectNestedCollectionResource
 		);
 	}
 
-	private PageItems<FileEntry> _getPageItems(
-			Pagination pagination, long folderId)
+	private FileEntry _getFileEntry(
+			Long groupId, MediaObjectCreatorForm mediaObjectCreatorForm)
 		throws PortalException {
 
-		Folder folder = _dlAppService.getFolder(folderId);
+		return _mediaObjectHelper.addFileEntry(
+			groupId, 0L, mediaObjectCreatorForm);
+	}
+
+	private PageItems<FileEntry> _getPageItems(
+			Pagination pagination, Long groupId)
+		throws PortalException {
 
 		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
-			folder.getGroupId(), folderId, pagination.getStartPosition(),
+			groupId, 0, pagination.getStartPosition(),
 			pagination.getEndPosition(), null);
-		int count = _dlAppService.getFileEntriesCount(
-			folder.getGroupId(), folderId);
+		int count = _dlAppService.getFileEntriesCount(groupId, 0);
 
 		return new PageItems<>(fileEntries, count);
 	}
@@ -138,7 +149,12 @@ public class MediaObjectNestedCollectionResource
 	@Reference
 	private DLAppService _dlAppService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private HasPermission<Long> _hasPermission;
+
 	@Reference
-	private HasPermission _hasPermission;
+	private MediaObjectHelper _mediaObjectHelper;
 
 }

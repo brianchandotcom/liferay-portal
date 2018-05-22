@@ -15,9 +15,10 @@
 package com.liferay.portal.apio.internal.architect.provider;
 
 import com.liferay.apio.architect.credentials.Credentials;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.provider.Provider;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,17 +43,15 @@ public class CredentialsProvider implements Provider<Credentials> {
 
 	@Override
 	public Credentials createContext(HttpServletRequest httpServletRequest) {
-		return () -> {
-			try {
-				User user = _portal.getUser(httpServletRequest);
-
-				return String.valueOf(user.getUserId());
-			}
-			catch (PortalException pe) {
-				throw new ForbiddenException(
-					"Unable to get authenticated user", pe);
-			}
-		};
+		return () -> Try.fromFallible(
+			() -> _portal.getUser(httpServletRequest)
+		).map(
+			PermissionCheckerFactoryUtil::create
+		).recoverWith(
+			__ -> Try.fromFallible(PermissionThreadLocal::getPermissionChecker)
+		).orElseThrow(
+			ForbiddenException::new
+		);
 	}
 
 	@Reference

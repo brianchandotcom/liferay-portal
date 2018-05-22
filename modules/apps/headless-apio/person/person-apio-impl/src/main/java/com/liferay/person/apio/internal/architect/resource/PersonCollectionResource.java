@@ -50,6 +50,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.ws.rs.NotFoundException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -67,13 +69,13 @@ public class PersonCollectionResource
 	implements CollectionResource<UserWrapper, Long, PersonIdentifier> {
 
 	@Override
-	public CollectionRoutes<UserWrapper> collectionRoutes(
-		CollectionRoutes.Builder<UserWrapper> builder) {
+	public CollectionRoutes<UserWrapper, Long> collectionRoutes(
+		CollectionRoutes.Builder<UserWrapper, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, ThemeDisplay.class
 		).addCreator(
-			this::_addUser, ThemeDisplay.class, _hasPermission::forAddingUsers,
+			this::_addUser, ThemeDisplay.class, _hasPermission::forAdding,
 			PersonCreatorForm::buildForm
 		).build();
 	}
@@ -90,11 +92,10 @@ public class PersonCollectionResource
 		return builder.addGetter(
 			this::_getUserWrapper, ThemeDisplay.class
 		).addRemover(
-			idempotent(_userService::deleteUser),
-			_hasPermission.forDeleting(User.class)
+			idempotent(_userService::deleteUser), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateUser, ThemeDisplay.class,
-			_hasPermission.forUpdating(User.class), PersonUpdaterForm::buildForm
+			this::_updateUser, ThemeDisplay.class, _hasPermission::forUpdating,
+			PersonUpdaterForm::buildForm
 		).build();
 	}
 
@@ -219,6 +220,10 @@ public class PersonCollectionResource
 	private UserWrapper _getUserWrapper(long userId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		if (themeDisplay.getDefaultUserId() == userId) {
+			throw new NotFoundException();
+		}
+
 		User user = _userService.getUserById(userId);
 
 		return new UserWrapper(user, themeDisplay);
@@ -243,8 +248,10 @@ public class PersonCollectionResource
 		return new UserWrapper(user, themeDisplay);
 	}
 
-	@Reference
-	private HasPermission _hasPermission;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

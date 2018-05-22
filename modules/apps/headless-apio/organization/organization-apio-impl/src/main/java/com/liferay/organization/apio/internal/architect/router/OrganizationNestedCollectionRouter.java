@@ -40,12 +40,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class OrganizationNestedCollectionRouter implements
-	NestedCollectionRouter<Organization, OrganizationIdentifier, Long,
+	NestedCollectionRouter<Organization, Long, OrganizationIdentifier, Long,
 		OrganizationIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Organization, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Organization, Long> builder) {
+	public NestedCollectionRoutes<Organization, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Organization, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Company.class

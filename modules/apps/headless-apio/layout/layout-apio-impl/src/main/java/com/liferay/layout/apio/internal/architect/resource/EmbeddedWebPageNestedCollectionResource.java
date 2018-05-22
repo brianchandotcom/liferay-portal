@@ -45,8 +45,8 @@ public class EmbeddedWebPageNestedCollectionResource
 		<Layout, Long, EmbeddedWebPageIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Layout, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Layout, Long> builder) {
+	public NestedCollectionRoutes<Layout, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Layout, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getLayouts
@@ -66,7 +66,7 @@ public class EmbeddedWebPageNestedCollectionResource
 			_layoutLocalService::getLayout
 		).addRemover(
 			idempotent(_layoutLocalService::deleteLayout),
-			_hasPermission::forDeletingLayouts
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -118,8 +118,10 @@ public class EmbeddedWebPageNestedCollectionResource
 		return new PageItems<>(layouts, layoutsCount);
 	}
 
-	@Reference
-	private HasPermission _hasPermission;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Layout)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

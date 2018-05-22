@@ -53,8 +53,8 @@ public class OrganizationCollectionResource
 	implements CollectionResource<Organization, Long, OrganizationIdentifier> {
 
 	@Override
-	public CollectionRoutes<Organization> collectionRoutes(
-		CollectionRoutes.Builder<Organization> builder) {
+	public CollectionRoutes<Organization, Long> collectionRoutes(
+		CollectionRoutes.Builder<Organization, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Company.class

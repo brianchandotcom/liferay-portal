@@ -16,7 +16,7 @@ package com.liferay.comment.apio.internal.architect.router;
 
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
-import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.comment.apio.internal.architect.router.base.BaseCommentNestedCollectionRouter;
 import com.liferay.portal.kernel.comment.Comment;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 public class BlogPostingCommentNestedCollectionRouter extends
 	BaseCommentNestedCollectionRouter<BlogPostingIdentifier>
 	implements NestedCollectionRouter
-		<Comment, CommentIdentifier, Long, BlogPostingIdentifier> {
+		<Comment, Long, CommentIdentifier, Long, BlogPostingIdentifier> {
 
 	@Override
 	protected CommentManager getCommentManager() {
@@ -52,11 +52,11 @@ public class BlogPostingCommentNestedCollectionRouter extends
 	protected GroupedModel getGroupedModel(long blogsEntryId)
 		throws PortalException {
 
-		return _blogsEntryLocalService.getBlogsEntry(blogsEntryId);
+		return _blogsEntryService.getEntry(blogsEntryId);
 	}
 
 	@Reference
-	private BlogsEntryLocalService _blogsEntryLocalService;
+	private BlogsEntryService _blogsEntryService;
 
 	@Reference
 	private CommentManager _commentManager;

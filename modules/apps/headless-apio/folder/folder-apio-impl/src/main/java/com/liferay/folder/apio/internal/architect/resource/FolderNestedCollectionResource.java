@@ -24,12 +24,12 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
+import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.folder.apio.internal.architect.form.FolderForm;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
@@ -45,16 +45,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class FolderNestedCollectionResource
 	implements NestedCollectionResource
-		<Folder, Long, FolderIdentifier, Long, WebSiteIdentifier> {
+		<Folder, Long, FolderIdentifier, Long, RootFolderIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Folder, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Folder, Long> builder) {
+	public NestedCollectionRoutes<Folder, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Folder, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addFolder, (credentials, identifier) -> true,
+			this::_addFolder,
+			_hasPermission.forAddingIn(RootFolderIdentifier.class)::apply,
 			FolderForm::buildForm
 		).build();
 	}
@@ -71,10 +72,9 @@ public class FolderNestedCollectionResource
 		return builder.addGetter(
 			_dlAppService::getFolder
 		).addRemover(
-			idempotent(_dlAppService::deleteFolder),
-			_hasPermission.forDeleting(Folder.class)
+			idempotent(_dlAppService::deleteFolder), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateFolder, _hasPermission.forUpdating(Folder.class),
+			this::_updateFolder, _hasPermission::forUpdating,
 			FolderForm::buildForm
 		).build();
 	}
@@ -87,15 +87,14 @@ public class FolderNestedCollectionResource
 			"Folder"
 		).identifier(
 			Folder::getFolderId
-		).addBidirectionalModel(
-			"interactionService", "folder", WebSiteIdentifier.class,
-			Folder::getGroupId
 		).addDate(
 			"dateCreated", Folder::getCreateDate
 		).addDate(
 			"dateModified", Folder::getCreateDate
 		).addDate(
 			"datePublished", Folder::getCreateDate
+		).addRelatedCollection(
+			"folders", FolderIdentifier.class
 		).addString(
 			"name", Folder::getName
 		).build();
@@ -133,7 +132,9 @@ public class FolderNestedCollectionResource
 	@Reference
 	private DLAppService _dlAppService;
 
-	@Reference
-	private HasPermission _hasPermission;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

@@ -57,7 +57,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Document_3.html" />
+			<var name="fileName" value="fragment_button.html" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -116,7 +116,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Document_4.html" />
+			<var name="fileName" value="fragment_image.html" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -126,7 +126,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="cssSnippet" />
-			<var name="fileName" value="Document_4.css" />
+			<var name="fileName" value="fragment_image.css" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -180,7 +180,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Document_1.html" />
+			<var name="fileName" value="fragment_title.html" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -389,7 +389,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Document_1.html" />
+			<var name="fileName" value="fragment_title.html" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -399,7 +399,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="cssSnippet" />
-			<var name="fileName" value="Document_1.css" />
+			<var name="fileName" value="fragment_title.css" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -415,7 +415,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Document_2.html" />
+			<var name="fileName" value="fragment_content.html" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -425,7 +425,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="cssSnippet" />
-			<var name="fileName" value="Document_2.css" />
+			<var name="fileName" value="fragment_content.css" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">

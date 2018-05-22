@@ -70,7 +70,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Document_3.html" />
+			<var name="fileName" value="fragment_button.html" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -80,7 +80,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="cssSnippet" />
-			<var name="fileName" value="Document_3.css" />
+			<var name="fileName" value="fragment_button.css" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -90,7 +90,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="javascriptSnippet" />
-			<var name="fileName" value="Document_3.js" />
+			<var name="fileName" value="fragment_button.js" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">

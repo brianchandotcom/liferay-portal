@@ -735,6 +735,7 @@
 		<exception>InvalidParentStructure</exception>
 		<exception>InvalidStructureVersion</exception>
 		<exception>InvalidTemplateVersion</exception>
+		<exception>RequiredFormInstance</exception>
 		<exception>RequiredStructure</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>Storage</exception>
@@ -753,6 +754,5 @@
 		<exception>TemplateSmallImageContent</exception>
 		<exception>TemplateSmallImageName</exception>
 		<exception>TemplateSmallImageSize</exception>
-		<exception>RequireFormInstance</exception>
 	</exceptions>
 </service-builder>

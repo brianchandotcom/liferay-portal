@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.exception.RequireFormInstanceException;
+import com.liferay.dynamic.data.mapping.exception.RequiredFormInstanceException;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.BaseDDMFormMVCResourceCommand;
@@ -72,7 +72,7 @@ public class PublishFormInstanceMVCResourceCommand
 				resourceRequest, "formInstanceId");
 
 			if (formInstanceId == 0) {
-				throw new RequireFormInstanceException();
+				throw new RequiredFormInstanceException();
 			}
 
 			boolean published = ParamUtil.getBoolean(

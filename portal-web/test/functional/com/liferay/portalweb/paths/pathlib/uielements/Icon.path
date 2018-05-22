@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>MERGE</td>
-	<td>//*[@data-qa-id='mergeButton'] | //a[contains(@id,'merge')]//span[contains(@class,'icon-random')]</td>
+	<td>//a[contains(.,'Merge')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -282,6 +282,11 @@
 <tr>
 	<td>HISTORY_VERTICAL_ELLIPSIS</td>
 	<td>//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGEMENT_BAR_ELLIPSIS</td>
+	<td>//ul[@class='navbar-nav']//li[contains(@class,'nav-item')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

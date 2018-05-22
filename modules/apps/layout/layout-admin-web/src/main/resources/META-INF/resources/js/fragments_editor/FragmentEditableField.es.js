@@ -35,7 +35,7 @@ class FragmentEditableField extends Component {
 			this._handleDocumentClick
 		);
 
-		Liferay.on(
+		this._beforeNavigateHandler = Liferay.on(
 			'beforeNavigate',
 			this._handleBeforeNavigate
 		);
@@ -174,10 +174,10 @@ class FragmentEditableField extends Component {
 	 */
 
 	_handleBeforeNavigate() {
-		Liferay.off(
-			'beforeNavigate',
-			this._handleBeforeNavigate
-		);
+		if (this._beforeNavigateHandler) {
+			this._beforeNavigateHandler.detach();
+			this._beforeNavigateHandler = null;
+		}
 
 		this._destroyProcessors();
 	}

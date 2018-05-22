@@ -103,6 +103,7 @@
 	</entity>
 	<exceptions>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>
+		<exception>SiteNavigationMenuItemName</exception>
 		<exception>SiteNavigationMenuName</exception>
 	</exceptions>
 </service-builder>

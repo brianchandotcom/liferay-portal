@@ -14,13 +14,10 @@
 
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -48,8 +45,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -84,8 +79,6 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 			ViewUADEntitiesDisplay viewUADEntitiesDisplay =
 				new ViewUADEntitiesDisplay();
 
-			viewUADEntitiesDisplay.setActionDropdownItems(
-				_getActionDropdownItems(renderRequest, renderResponse));
 			viewUADEntitiesDisplay.setApplicationKey(applicationKey);
 
 			LiferayPortletResponse liferayPortletResponse =
@@ -145,37 +138,6 @@ public class ViewUADEntitiesMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		return uadEntity;
-	}
-
-	private DropdownItemList _getActionDropdownItems(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			renderRequest);
-
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							StringBundler.concat(
-								"javascript:", renderResponse.getNamespace(),
-								"doAnonymizeMultiple();"));
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "anonymize"));
-					});
-				add(
-					dropdownItem -> {
-						dropdownItem.setHref(
-							StringBundler.concat(
-								"javascript:", renderResponse.getNamespace(),
-								"doDeleteMultiple();"));
-						dropdownItem.setLabel(
-							LanguageUtil.get(request, "delete"));
-					});
-			}
-
-		};
 	}
 
 	private List<NavigationItem> _getNavigationItems(

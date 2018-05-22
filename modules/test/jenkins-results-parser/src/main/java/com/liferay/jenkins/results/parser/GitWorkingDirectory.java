@@ -807,9 +807,7 @@ public class GitWorkingDirectory {
 		return null;
 	}
 
-	public Branch getLocalRebasedPullRequestBranch(
-		String localRebasedPullRequestBranchName, PullRequest pullRequest) {
-
+	public Branch getLocalRebasedPullRequestBranch(PullRequest pullRequest) {
 		Branch currentBranch = getCurrentBranch();
 
 		String currentBranchName = currentBranch.getName();
@@ -818,7 +816,9 @@ public class GitWorkingDirectory {
 		Remote remote = null;
 
 		try {
-			if (currentBranchName.equals(localRebasedPullRequestBranchName)) {
+			if (currentBranchName.equals(
+					pullRequest.getLocalSenderBranchName())) {
+
 				tempBranch = createLocalBranch(
 					"temp-" + System.currentTimeMillis());
 
@@ -835,7 +835,7 @@ public class GitWorkingDirectory {
 			fetch(null, remoteSenderBranch);
 
 			Branch localRebasedPullRequestBranch = createLocalBranch(
-				localRebasedPullRequestBranchName, true,
+				pullRequest.getLocalSenderBranchName(), true,
 				pullRequest.getSenderSHA());
 
 			Remote upstreamRemote = getRemote("upstream");

@@ -99,6 +99,11 @@ public class PullRequest {
 		return StringUtils.replace(labelsURL, "{/name}", "");
 	}
 
+	public String getLocalSenderBranchName() {
+		return JenkinsResultsParserUtil.combine(
+			getSenderUsername(), "-", getNumber(), "-", getSenderBranchName());
+	}
+
 	public String getNumber() {
 		return String.valueOf(_number);
 	}

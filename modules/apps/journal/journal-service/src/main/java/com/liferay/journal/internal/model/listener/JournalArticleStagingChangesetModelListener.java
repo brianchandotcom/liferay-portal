@@ -14,16 +14,37 @@
 
 package com.liferay.journal.internal.model.listener;
 
-import com.liferay.exportimport.kernel.staging.BaseStagingChangesetModelListener;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.staging.model.listener.StagingModelListener;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Akos Thurzo
  */
 @Component(immediate = true, service = ModelListener.class)
 public class JournalArticleStagingChangesetModelListener
-	extends BaseStagingChangesetModelListener<JournalArticle> {
+	extends BaseModelListener<JournalArticle> {
+
+	@Override
+	public void onAfterCreate(JournalArticle journalArticle)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterCreate(journalArticle);
+	}
+
+	@Override
+	public void onAfterUpdate(JournalArticle journalArticle)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterUpdate(journalArticle);
+	}
+
+	@Reference
+	private StagingModelListener<JournalArticle> _stagingModelListener;
+
 }

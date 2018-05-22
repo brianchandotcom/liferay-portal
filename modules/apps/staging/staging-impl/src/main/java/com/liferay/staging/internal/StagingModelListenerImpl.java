@@ -12,25 +12,30 @@
  * details.
  */
 
-package com.liferay.exportimport.kernel.staging;
+package com.liferay.staging.internal;
 
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.staging.model.listener.StagingModelListener;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Akos Thurzo
+ * @author Mate Thurzo
  */
-public class BaseStagingChangesetModelListener<T extends BaseModel<T>>
-	extends BaseModelListener<T> {
+@Component(immediate = true, service = StagingModelListener.class)
+public class StagingModelListenerImpl<T extends BaseModel<T>>
+	implements StagingModelListener<T> {
 
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
 		try {
-			StagingUtil.addEntityToChangesetCollection(model);
+			_staging.addEntityToChangesetCollection(model);
 		}
 		catch (PortalException pe) {
 			_log.error(pe);
@@ -40,7 +45,7 @@ public class BaseStagingChangesetModelListener<T extends BaseModel<T>>
 	@Override
 	public void onAfterUpdate(T model) throws ModelListenerException {
 		try {
-			StagingUtil.addEntityToChangesetCollection(model);
+			_staging.addEntityToChangesetCollection(model);
 		}
 		catch (PortalException pe) {
 			_log.error(pe);
@@ -48,6 +53,9 @@ public class BaseStagingChangesetModelListener<T extends BaseModel<T>>
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseStagingChangesetModelListener.class);
+		StagingModelListenerImpl.class);
+
+	@Reference
+	private Staging _staging;
 
 }

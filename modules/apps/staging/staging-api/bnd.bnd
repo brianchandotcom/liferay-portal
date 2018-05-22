@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.staging.api
 Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.staging,\
-	com.liferay.staging.constants
+	com.liferay.staging.constants,\
+	com.liferay.staging.model.listener

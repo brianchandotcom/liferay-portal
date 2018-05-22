@@ -162,6 +162,7 @@ class FragmentEntryLink extends Component {
 				return new FragmentEditableField(
 					{
 						content: editable.innerHTML,
+						defaultLanguageId: this.defaultLanguageId,
 						editableId: editable.id,
 						editableValues,
 						element: editable,

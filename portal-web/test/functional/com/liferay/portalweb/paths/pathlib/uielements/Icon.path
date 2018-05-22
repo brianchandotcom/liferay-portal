@@ -180,12 +180,12 @@
 </tr>
 <tr>
 	<td>MARK_AS_READ</td>
-	<td>//a[*[name()='svg'][contains(@class,'icon-envelope-open')]]</td>
+	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//button[contains(@aria-label,'envelope-open')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MARK_AS_UNREAD</td>
-	<td>//a[*[name()='svg'][contains(@class,'icon-envelope-closed')]]</td>
+	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//button[contains(@aria-label,'envelope-closed')]</td>
 	<td></td>
 </tr>
 <tr>

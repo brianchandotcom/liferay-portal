@@ -147,7 +147,6 @@ public class SoapExtender {
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
-		serviceDependency.setDefaultImplementation(_soapDescriptorBuilder);
 		serviceDependency.setCallbacks("setSoapDescriptorBuilder", "-");
 		serviceDependency.setRequired(false);
 		serviceDependency.setService(

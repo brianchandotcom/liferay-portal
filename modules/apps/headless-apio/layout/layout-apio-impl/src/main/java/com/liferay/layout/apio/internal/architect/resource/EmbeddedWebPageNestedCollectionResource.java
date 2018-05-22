@@ -66,7 +66,7 @@ public class EmbeddedWebPageNestedCollectionResource
 			_layoutLocalService::getLayout
 		).addRemover(
 			idempotent(_layoutLocalService::deleteLayout),
-			_hasPermission::forDeletingLayouts
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -118,7 +118,9 @@ public class EmbeddedWebPageNestedCollectionResource
 		return new PageItems<>(layouts, layoutsCount);
 	}
 
-	@Reference
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Layout)"
+	)
 	private HasPermission _hasPermission;
 
 	@Reference

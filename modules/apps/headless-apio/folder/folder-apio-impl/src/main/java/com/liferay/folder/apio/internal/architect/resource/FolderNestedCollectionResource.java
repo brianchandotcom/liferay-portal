@@ -54,8 +54,7 @@ public class FolderNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addFolder, (credentials, identifier) -> true,
-			FolderForm::buildForm
+			this::_addFolder, _hasPermission::forAdding, FolderForm::buildForm
 		).build();
 	}
 
@@ -71,10 +70,9 @@ public class FolderNestedCollectionResource
 		return builder.addGetter(
 			_dlAppService::getFolder
 		).addRemover(
-			idempotent(_dlAppService::deleteFolder),
-			_hasPermission.forDeleting(Folder.class)
+			idempotent(_dlAppService::deleteFolder), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateFolder, _hasPermission.forUpdating(Folder.class),
+			this::_updateFolder, _hasPermission::forUpdating,
 			FolderForm::buildForm
 		).build();
 	}
@@ -133,7 +131,9 @@ public class FolderNestedCollectionResource
 	@Reference
 	private DLAppService _dlAppService;
 
-	@Reference
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
 	private HasPermission _hasPermission;
 
 }

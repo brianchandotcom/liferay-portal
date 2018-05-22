@@ -59,8 +59,7 @@ public class WebPageElementNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addJournalArticle,
-			_hasPermission::forAddingRootJournalArticle,
+			this::_addJournalArticle, _hasPermission::forAdding,
 			WebPageElementCreatorForm::buildForm
 		).build();
 	}
@@ -77,11 +76,9 @@ public class WebPageElementNestedCollectionResource
 		return builder.addGetter(
 			_journalArticleService::getArticle
 		).addRemover(
-			idempotent(this::_deleteJournalArticle),
-			_hasPermission.forDeleting(JournalArticle.class)
+			idempotent(this::_deleteJournalArticle), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateJournalArticle,
-			_hasPermission.forUpdating(JournalArticle.class),
+			this::_updateJournalArticle, _hasPermission::forUpdating,
 			WebPageElementUpdaterForm::buildForm
 		).build();
 	}
@@ -187,7 +184,9 @@ public class WebPageElementNestedCollectionResource
 			webPageElementUpdaterForm.getText(), null, serviceContext);
 	}
 
-	@Reference
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
 	private HasPermission _hasPermission;
 
 	@Reference

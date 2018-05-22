@@ -72,7 +72,7 @@ public class MediaObjectNestedCollectionResource
 			_dlAppService::getFileEntry
 		).addRemover(
 			idempotent(_dlAppService::deleteFileEntry),
-			_hasPermission.forDeleting(FileEntry.class)
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -138,7 +138,9 @@ public class MediaObjectNestedCollectionResource
 	@Reference
 	private DLAppService _dlAppService;
 
-	@Reference
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
 	private HasPermission _hasPermission;
 
 }

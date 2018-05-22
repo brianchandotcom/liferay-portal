@@ -63,8 +63,7 @@ public class BlogPostingNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addBlogsEntry,
-			_hasPermission.forAddingEntries(BlogsEntry.class),
+			this::_addBlogsEntry, _hasPermission::forAdding,
 			BlogPostingForm::buildForm
 		).build();
 	}
@@ -81,11 +80,9 @@ public class BlogPostingNestedCollectionResource
 		return builder.addGetter(
 			_blogsService::getEntry
 		).addRemover(
-			idempotent(_blogsService::deleteEntry),
-			_hasPermission.forDeleting(BlogsEntry.class)
+			idempotent(_blogsService::deleteEntry), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateBlogsEntry,
-			_hasPermission.forUpdating(BlogsEntry.class),
+			this::_updateBlogsEntry, _hasPermission::forUpdating,
 			BlogPostingForm::buildForm
 		).build();
 	}
@@ -196,7 +193,7 @@ public class BlogPostingNestedCollectionResource
 	@Reference
 	private BlogsEntryService _blogsService;
 
-	@Reference
+	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private HasPermission _hasPermission;
 
 }

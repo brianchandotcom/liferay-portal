@@ -73,7 +73,7 @@ public class PersonCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, ThemeDisplay.class
 		).addCreator(
-			this::_addUser, ThemeDisplay.class, _hasPermission::forAddingUsers,
+			this::_addUser, ThemeDisplay.class, _hasPermission::forAdding,
 			PersonCreatorForm::buildForm
 		).build();
 	}
@@ -90,11 +90,10 @@ public class PersonCollectionResource
 		return builder.addGetter(
 			this::_getUserWrapper, ThemeDisplay.class
 		).addRemover(
-			idempotent(_userService::deleteUser),
-			_hasPermission.forDeleting(User.class)
+			idempotent(_userService::deleteUser), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateUser, ThemeDisplay.class,
-			_hasPermission.forUpdating(User.class), PersonUpdaterForm::buildForm
+			this::_updateUser, ThemeDisplay.class, _hasPermission::forUpdating,
+			PersonUpdaterForm::buildForm
 		).build();
 	}
 
@@ -243,7 +242,9 @@ public class PersonCollectionResource
 		return new UserWrapper(user, themeDisplay);
 	}
 
-	@Reference
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
 	private HasPermission _hasPermission;
 
 	@Reference

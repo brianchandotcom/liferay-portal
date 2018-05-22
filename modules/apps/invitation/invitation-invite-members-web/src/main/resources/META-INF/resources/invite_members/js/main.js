@@ -44,7 +44,6 @@ AUI.add(
 					},
 
 					form: {
-						setter: A.one,
 						validator: Lang.isObject
 					},
 
@@ -68,7 +67,10 @@ AUI.add(
 							return;
 						}
 
-						instance._form = instance.get('form').node;
+						var form = instance.get('form');
+
+						instance._form = instance.one(form.node);
+
 						instance._invitedMembersList = instance.one('#invitedMembersList');
 						instance._inviteUserSearch = instance.one('#inviteUserSearch');
 						instance._membersList = instance.one('#membersList');

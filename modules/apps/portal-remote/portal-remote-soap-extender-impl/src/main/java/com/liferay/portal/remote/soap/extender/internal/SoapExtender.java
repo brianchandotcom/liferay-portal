@@ -60,7 +60,8 @@ public class SoapExtender {
 
 		_dependencyManager = new DependencyManager(bundleContext);
 
-		_component = _dependencyManager.createComponent();
+		org.apache.felix.dm.Component component =
+			_dependencyManager.createComponent();
 
 		CXFJaxWsServiceRegistrator cxfJaxWsServiceRegistrator =
 			new CXFJaxWsServiceRegistrator();
@@ -68,19 +69,19 @@ public class SoapExtender {
 		cxfJaxWsServiceRegistrator.setSoapDescriptorBuilder(
 			_soapDescriptorBuilder);
 
-		_component.setImplementation(cxfJaxWsServiceRegistrator);
+		component.setImplementation(cxfJaxWsServiceRegistrator);
 
-		addBusDependencies();
-		addJaxWsHandlerServiceDependencies();
-		addJaxWsServiceDependencies();
-		addSoapDescriptorBuilderServiceDependency();
+		addBusDependencies(component);
+		addJaxWsHandlerServiceDependencies(component);
+		addJaxWsServiceDependencies(component);
+		addSoapDescriptorBuilderServiceDependency(component);
 
-		_dependencyManager.add(_component);
+		_dependencyManager.add(component);
 
-		_component.start();
+		component.start();
 	}
 
-	protected void addBusDependencies() {
+	protected void addBusDependencies(org.apache.felix.dm.Component component) {
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
@@ -92,7 +93,7 @@ public class SoapExtender {
 
 		for (String contextPath : contextPaths) {
 			addTCCLServiceDependency(
-				true, Bus.class,
+				component, true, Bus.class,
 				StringBundler.concat(
 					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
 					"=", contextPath, ")"),
@@ -100,7 +101,9 @@ public class SoapExtender {
 		}
 	}
 
-	protected void addJaxWsHandlerServiceDependencies() {
+	protected void addJaxWsHandlerServiceDependencies(
+		org.apache.felix.dm.Component component) {
+
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
@@ -113,12 +116,14 @@ public class SoapExtender {
 
 		for (String jaxWsHandlerFilterString : jaxWsHandlerFilterStrings) {
 			addTCCLServiceDependency(
-				false, Handler.class, jaxWsHandlerFilterString, "addHandler",
-				"removeHandler");
+				component, false, Handler.class, jaxWsHandlerFilterString,
+				"addHandler", "removeHandler");
 		}
 	}
 
-	protected void addJaxWsServiceDependencies() {
+	protected void addJaxWsServiceDependencies(
+		org.apache.felix.dm.Component component) {
+
 		SoapExtenderConfiguration soapExtenderConfiguration =
 			getSoapExtenderConfiguration();
 
@@ -131,12 +136,14 @@ public class SoapExtender {
 
 		for (String jaxWsServiceFilterString : jaxWsServiceFilterStrings) {
 			addTCCLServiceDependency(
-				false, null, jaxWsServiceFilterString, "addService",
+				component, false, null, jaxWsServiceFilterString, "addService",
 				"removeService");
 		}
 	}
 
-	protected void addSoapDescriptorBuilderServiceDependency() {
+	protected void addSoapDescriptorBuilderServiceDependency(
+		org.apache.felix.dm.Component component) {
+
 		ServiceDependency serviceDependency =
 			_dependencyManager.createServiceDependency();
 
@@ -147,11 +154,12 @@ public class SoapExtender {
 			SoapDescriptorBuilder.class,
 			_soapExtenderConfiguration.soapDescriptorBuilderFilter());
 
-		_component.add(serviceDependency);
+		component.add(serviceDependency);
 	}
 
 	protected ServiceDependency addTCCLServiceDependency(
-		boolean required, Class<?> clazz, String filterString, String addName,
+		org.apache.felix.dm.Component component, boolean required,
+		Class<?> clazz, String filterString, String addName,
 		String removeName) {
 
 		ServiceDependency serviceDependency =
@@ -167,7 +175,7 @@ public class SoapExtender {
 			serviceDependency.setService(clazz, filterString);
 		}
 
-		_component.add(serviceDependency);
+		component.add(serviceDependency);
 
 		return serviceDependency;
 	}
@@ -202,7 +210,6 @@ public class SoapExtender {
 		_soapDescriptorBuilder = null;
 	}
 
-	private org.apache.felix.dm.Component _component;
 	private DependencyManager _dependencyManager;
 	private SoapDescriptorBuilder _soapDescriptorBuilder;
 	private SoapExtenderConfiguration _soapExtenderConfiguration;

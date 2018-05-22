@@ -14,13 +14,9 @@
 
 package com.liferay.user.associated.data.web.internal.util;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -39,7 +35,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -52,8 +47,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -62,41 +55,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = UADApplicationSummaryHelper.class)
 public class UADApplicationSummaryHelper {
-
-	public DropdownItemList createManagementBarFilterItems(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			renderRequest);
-
-		return new DropdownItemList() {
-			{
-				DropdownItemList filterByNavigationDropdownItemList =
-					getFilterByNavigationDropdownItemList(
-						renderRequest, renderResponse);
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							filterByNavigationDropdownItemList);
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "filter-by-navigation"));
-					});
-
-				DropdownItemList orderByNavigationDropdownItemList =
-					getOrderByDropdownItemList(renderRequest, renderResponse);
-
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							orderByNavigationDropdownItemList);
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(request, "order-by"));
-					});
-			}
-		};
-	}
 
 	public SearchContainer<UADApplicationSummaryDisplay> createSearchContainer(
 		RenderRequest renderRequest, RenderResponse renderResponse,
@@ -177,27 +135,6 @@ public class UADApplicationSummaryHelper {
 		);
 	}
 
-	public PortletURL getBaseURL(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		PortletURL baseURL = renderResponse.createRenderURL();
-
-		baseURL.setParameter(
-			"mvcRenderCommandName", "/view_uad_applications_summary");
-		baseURL.setParameter("navigation", getNavigation(renderRequest));
-		baseURL.setParameter("orderByCol", getOrderByCol(renderRequest));
-		baseURL.setParameter("orderByType", getOrderByType(renderRequest));
-
-		User user = _selectedUserHelper.getSelectedUser(renderRequest);
-
-		long userId = user.getUserId();
-
-		baseURL.setParameter("p_u_i_d", String.valueOf(userId));
-
-		return baseURL;
-	}
-
 	public Comparator<UADApplicationSummaryDisplay> getComparator(
 		String orderByColumn, String orderByType) {
 
@@ -232,70 +169,12 @@ public class UADApplicationSummaryHelper {
 		return typeClass.getName();
 	}
 
-	public DropdownItemList getFilterByNavigationDropdownItemList(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			renderRequest);
-
-		PortletURL baseURL = getBaseURL(renderRequest, renderResponse);
-
-		return new DropdownItemList() {
-			{
-				for (String navigation :
-						new String[] {"all", "pending", "done"}) {
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setActive(
-								navigation.equals(
-									getNavigation(renderRequest)));
-							dropdownItem.setHref(
-								baseURL, "navigation", navigation);
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, navigation));
-						});
-				}
-			}
-		};
-	}
-
 	public String getNavigation(RenderRequest renderRequest) {
 		return ParamUtil.getString(renderRequest, "navigation", "all");
 	}
 
 	public String getOrderByCol(RenderRequest renderRequest) {
 		return ParamUtil.getString(renderRequest, "orderByCol", "name");
-	}
-
-	public DropdownItemList getOrderByDropdownItemList(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		HttpServletRequest request = _portal.getHttpServletRequest(
-			renderRequest);
-
-		PortletURL baseURL = getBaseURL(renderRequest, renderResponse);
-
-		return new DropdownItemList() {
-			{
-				for (String orderByCol :
-						new String[] {"name", "items", "status"}) {
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setActive(
-								orderByCol.equals(
-									getOrderByCol(renderRequest)));
-							dropdownItem.setHref(
-								baseURL, "orderByCol", orderByCol);
-							dropdownItem.setLabel(
-								LanguageUtil.get(request, orderByCol));
-						});
-				}
-			}
-		};
 	}
 
 	public String getOrderByType(RenderRequest renderRequest) {
@@ -321,26 +200,6 @@ public class UADApplicationSummaryHelper {
 		return uadDisplayStream.mapToInt(
 			uadDisplay -> (int)uadDisplay.count(userId)
 		).sum();
-	}
-
-	public String getSortingURL(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		PortletURL sortingURL = getBaseURL(renderRequest, renderResponse);
-
-		String orderByType;
-
-		if (Objects.equals(getOrderByType(renderRequest), "asc")) {
-			orderByType = "desc";
-		}
-		else {
-			orderByType = "asc";
-		}
-
-		sortingURL.setParameter("orderByType", orderByType);
-
-		return sortingURL.toString();
 	}
 
 	public int getTotalReviewableUADEntitiesCount(long userId) {
@@ -425,9 +284,6 @@ public class UADApplicationSummaryHelper {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SelectedUserHelper _selectedUserHelper;
 
 	@Reference
 	private UADRegistry _uadRegistry;

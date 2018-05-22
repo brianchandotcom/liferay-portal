@@ -41,7 +41,7 @@ public class JournalArticleHasPermissionImpl implements HasPermission<Long> {
 	public <S> BiFunction<Credentials, S, Boolean> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
-		if (identifierClass == WebSiteIdentifier.class) {
+		if (identifierClass.equals(WebSiteIdentifier.class)) {
 			return (credentials, groupId) -> Try.fromFallible(
 				() -> ModelResourcePermissionHelper.contains(
 					_modelResourcePermission,

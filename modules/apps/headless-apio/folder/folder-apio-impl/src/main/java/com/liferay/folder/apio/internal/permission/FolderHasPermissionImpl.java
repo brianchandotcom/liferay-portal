@@ -42,7 +42,7 @@ public class FolderHasPermissionImpl implements HasPermission<Long> {
 	public <S> BiFunction<Credentials, S, Boolean> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
-		if (identifierClass == RootFolderIdentifier.class) {
+		if (identifierClass.equals(RootFolderIdentifier.class)) {
 			return (credentials, groupId) -> Try.fromFallible(
 				() -> ModelResourcePermissionHelper.contains(
 					_modelResourcePermission,
@@ -53,7 +53,7 @@ public class FolderHasPermissionImpl implements HasPermission<Long> {
 			);
 		}
 
-		if (identifierClass == FolderIdentifier.class) {
+		if (identifierClass.equals(FolderIdentifier.class)) {
 			return (credentials, folderId) -> Try.fromFallible(
 				() -> _modelResourcePermission.contains(
 					(PermissionChecker)credentials.get(), (Long)folderId,

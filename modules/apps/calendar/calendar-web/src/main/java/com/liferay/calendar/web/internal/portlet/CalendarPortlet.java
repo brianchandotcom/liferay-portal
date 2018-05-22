@@ -1415,6 +1415,12 @@ public class CalendarPortlet extends MVCPortlet {
 
 		Hits hits = search(themeDisplay, keywords);
 
+		PortletPreferences portletPreferences =
+		resourceRequest.getPreferences();
+
+		boolean showUserEvents = GetterUtil.getBoolean(
+			portletPreferences.getValue("showUserEvents", null), true);
+
 		for (Document document : hits.getDocs()) {
 			long calendarId = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
@@ -1423,30 +1429,34 @@ public class CalendarPortlet extends MVCPortlet {
 
 			CalendarResource calendarResource = calendar.getCalendarResource();
 
-			if (calendarResource.isActive()) {
-				Group group = _groupLocalService.getGroup(
-					calendar.getGroupId());
+			if (showUserEvents || !calendarResource.isUser()) {
+				if (calendarResource.isActive()) {
+					Group group = _groupLocalService.getGroup(
+						calendar.getGroupId());
 
-				long layoutSetPrototypeClassNameId = _portal.getClassNameId(
-					LayoutSetPrototype.class);
+					long layoutSetPrototypeClassNameId = _portal.getClassNameId(
+						LayoutSetPrototype.class);
 
-				if (group.getClassNameId() == layoutSetPrototypeClassNameId) {
-					continue;
-				}
+					if (group.getClassNameId() ==
+							layoutSetPrototypeClassNameId) {
 
-				if (group.hasStagingGroup()) {
-					Group stagingGroup = group.getStagingGroup();
-
-					long stagingGroupId = stagingGroup.getGroupId();
-
-					if (stagingGroupId == themeDisplay.getScopeGroupId()) {
-						calendar =
-							_calendarLocalService.fetchCalendarByUuidAndGroupId(
-								calendar.getUuid(), stagingGroupId);
+						continue;
 					}
-				}
 
-				calendarsSet.add(calendar);
+					if (group.hasStagingGroup()) {
+						Group stagingGroup = group.getStagingGroup();
+
+						long stagingGroupId = stagingGroup.getGroupId();
+
+						if (stagingGroupId == themeDisplay.getScopeGroupId()) {
+							calendar =
+								_calendarLocalService.fetchCalendarByUuidAndGroupId(
+									calendar.getUuid(), stagingGroupId);
+						}
+					}
+
+					calendarsSet.add(calendar);
+				}
 			}
 		}
 
@@ -1469,16 +1479,18 @@ public class CalendarPortlet extends MVCPortlet {
 				group.getGroupId());
 		}
 
-		long userClassNameId = _portal.getClassNameId(User.class);
+		if (showUserEvents) {
+			long userClassNameId = _portal.getClassNameId(User.class);
 
-		List<User> users = _userLocalService.search(
-			themeDisplay.getCompanyId(), keywords, 0, null, 0,
-			SearchContainer.DEFAULT_DELTA, new UserFirstNameComparator());
+			List<User> users = _userLocalService.search(
+				themeDisplay.getCompanyId(), keywords, 0, null, 0,
+				SearchContainer.DEFAULT_DELTA, new UserFirstNameComparator());
 
-		for (User user : users) {
-			addCalendar(
-				resourceRequest, calendarsSet, userClassNameId,
-				user.getUserId());
+			for (User user : users) {
+				addCalendar(
+					resourceRequest, calendarsSet, userClassNameId,
+					user.getUserId());
+			}
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

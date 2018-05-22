@@ -61,7 +61,7 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-web-proxy",
-		"com.liferay.portlet.display-category=category.sample",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",

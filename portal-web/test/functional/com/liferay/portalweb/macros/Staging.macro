@@ -391,7 +391,7 @@
 
 		<execute function="AssertClickNoError#assertPartialTextClickAt" locator1="Button#SUBMIT" value1="Copy from Live" />
 
-		<execute function="Confirm" value1="Are you sure you want to copy from live and update the existing staging portlet information?" />
+		<execute function="Confirm" value1="Are you sure you want to copy from live and update the existing staging widget information?" />
 
 		<execute function="AssertTextEquals" locator1="Staging#STAGING_STATUS_PORTLET" value1="Successful" />
 
@@ -740,7 +740,7 @@
 
 		<execute function="AssertClickNoError" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" value1="Publish to Live" />
 
-		<execute function="Confirm" value1="Are you sure you want to publish to live and update the existing portlet data?" />
+		<execute function="Confirm" value1="Are you sure you want to publish to live and update the existing application data?" />
 
 		<execute function="Pause" locator1="5000" />
 

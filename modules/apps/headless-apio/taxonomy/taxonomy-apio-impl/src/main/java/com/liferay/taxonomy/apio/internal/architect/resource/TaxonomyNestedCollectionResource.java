@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.category.apio.internal.architect.resource;
+package com.liferay.taxonomy.apio.internal.architect.resource;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -21,18 +21,16 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.model.AssetVocabularyModel;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
-import com.liferay.category.apio.identifier.architect.VocabularyIdentifier;
-import com.liferay.category.apio.internal.architect.form.AssetVocabularyForm;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import com.liferay.taxonomy.apio.identifier.architect.TaxonomyIdentifier;
+import com.liferay.taxonomy.apio.internal.architect.form.AssetTaxonomyForm;
 
 import java.util.List;
 
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,9 +38,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  */
 @Component(immediate = true)
-public class VocabularyNestedCollectionResource
+public class TaxonomyNestedCollectionResource
 	implements NestedCollectionResource<AssetVocabulary, Long,
-			VocabularyIdentifier, Long, WebSiteIdentifier> {
+		TaxonomyIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetVocabulary, Long> collectionRoutes(
@@ -52,13 +50,13 @@ public class VocabularyNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addAssetVocabulary, (credentials, assetVocabularyId) -> true,
-			AssetVocabularyForm::buildForm
+			AssetTaxonomyForm::buildForm
 		).build();
 	}
 
 	@Override
 	public String getName() {
-		return "vocabularies";
+		return "taxonomies";
 	}
 
 	@Override
@@ -71,7 +69,7 @@ public class VocabularyNestedCollectionResource
 		).addUpdater(
 			this::_updateAssetVocabulary,
 			(credentials, assetVocabularyId) -> true,
-			AssetVocabularyForm::buildForm
+			AssetTaxonomyForm::buildForm
 		).addRemover(
 			this::_deleteAssetVocabulary,
 			(credentials, assetVocabularyId) -> true
@@ -83,31 +81,33 @@ public class VocabularyNestedCollectionResource
 		Representor.Builder<AssetVocabulary, Long> builder) {
 
 		return builder.types(
-			"Vocabulary"
+			"Taxonomy"
 		).identifier(
 			AssetVocabulary::getVocabularyId
 		).addBidirectionalModel(
-			"interactionService", "vocabularies", WebSiteIdentifier.class,
-			AssetVocabularyModel::getGroupId
+			"interactionService", "taxonomies", WebSiteIdentifier.class,
+			AssetVocabulary::getGroupId
 		).addDate(
 			"dateCreated", AssetVocabulary::getCreateDate
 		).addDate(
 			"dateModified", AssetVocabulary::getModifiedDate
 		).addDate(
 			"datePublished", AssetVocabulary::getLastPublishDate
+		).addLinkedModel(
+			"author", PersonIdentifier.class, AssetVocabulary::getUserId
+		).addLinkedModel(
+			"creator", PersonIdentifier.class, AssetVocabulary::getUserId
 		).addLocalizedStringByLocale(
 			"description", AssetVocabulary::getDescription
 		).addLocalizedStringByLocale(
-			"name", AssetVocabulary::getTitle
-		).addLinkedModel(
-			"creator", PersonIdentifier.class, AssetVocabulary::getUserId
+			"title", AssetVocabulary::getTitle
 		).addString(
 			"name", AssetVocabulary::getName
 		).build();
 	}
 
 	private AssetVocabulary _addAssetVocabulary(
-			Long groupId, AssetVocabularyForm assetVocabularyForm)
+			Long groupId, AssetTaxonomyForm assetVocabularyForm)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -127,16 +127,17 @@ public class VocabularyNestedCollectionResource
 	private PageItems<AssetVocabulary> _getPageItems(
 		Pagination pagination, Long groupId) {
 
-		List<AssetVocabulary> className =
+		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
 				groupId, pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
+		int count = _assetVocabularyService.getGroupVocabulariesCount(groupId);
 
-		return new PageItems<>(className, className.size());
+		return new PageItems<>(assetVocabularies, count);
 	}
 
 	private AssetVocabulary _updateAssetVocabulary(
-			Long vocabularyId, AssetVocabularyForm assetVocabularyForm)
+			Long vocabularyId, AssetTaxonomyForm assetVocabularyForm)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -149,8 +150,5 @@ public class VocabularyNestedCollectionResource
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
-
-	@Reference
-	private HasPermission _hasPermission;
 
 }

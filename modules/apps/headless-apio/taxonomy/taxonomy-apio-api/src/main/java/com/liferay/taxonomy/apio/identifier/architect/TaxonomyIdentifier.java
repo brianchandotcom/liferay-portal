@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.category.apio.identifier.architect;
+package com.liferay.taxonomy.apio.identifier.architect;
 
 import com.liferay.apio.architect.identifier.Identifier;
 
@@ -23,5 +23,5 @@ import com.liferay.apio.architect.identifier.Identifier;
  * @author Javier Gamarra
  * @review
  */
-public interface VocabularyIdentifier extends Identifier<Long> {
+public interface TaxonomyIdentifier extends Identifier<Long> {
 }

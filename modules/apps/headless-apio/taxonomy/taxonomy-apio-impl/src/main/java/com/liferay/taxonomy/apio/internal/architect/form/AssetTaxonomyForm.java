@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.category.apio.internal.architect.form;
+package com.liferay.taxonomy.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 
@@ -23,23 +23,23 @@ import java.util.Map;
 /**
  * @author Javier Gamarra
  */
-public class AssetVocabularyForm {
+public class AssetTaxonomyForm {
 
-	public static Form<AssetVocabularyForm> buildForm(
-		Form.Builder<AssetVocabularyForm> builder) {
+	public static Form<AssetTaxonomyForm> buildForm(
+		Form.Builder<AssetTaxonomyForm> builder) {
 
 		return builder.title(
 			language -> "Title"
 		).description(
 			language -> "Description"
 		).constructor(
-			AssetVocabularyForm::new
+			AssetTaxonomyForm::new
 		).addRequiredString(
-			"description", AssetVocabularyForm::setDescription
+			"description", AssetTaxonomyForm::setDescription
 		).addRequiredString(
-			"name", AssetVocabularyForm::setName
+			"name", AssetTaxonomyForm::setName
 		).addRequiredString(
-			"title", AssetVocabularyForm::setTitle
+			"title", AssetTaxonomyForm::setTitle
 		).build();
 	}
 

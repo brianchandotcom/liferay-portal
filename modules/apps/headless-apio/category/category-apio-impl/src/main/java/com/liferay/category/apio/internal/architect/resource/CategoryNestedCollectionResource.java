@@ -22,17 +22,16 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryModel;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.category.apio.identifier.architect.CategoryIdentifier;
-import com.liferay.category.apio.identifier.architect.VocabularyIdentifier;
 import com.liferay.category.apio.internal.architect.form.AssetCategoryForm;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.taxonomy.apio.identifier.architect.TaxonomyIdentifier;
 
 import java.util.List;
 
@@ -45,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class CategoryNestedCollectionResource
 	implements NestedCollectionResource<AssetCategory, Long, CategoryIdentifier,
-		Long, VocabularyIdentifier> {
+		Long, TaxonomyIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetCategory, Long> collectionRoutes(
@@ -86,27 +85,29 @@ public class CategoryNestedCollectionResource
 		return builder.types(
 			"Category"
 		).identifier(
-			AssetCategoryModel::getCategoryId
+			AssetCategory::getCategoryId
 		).addBidirectionalModel(
 			"category", "categories", CategoryIdentifier.class,
-			AssetCategoryModel::getParentCategoryId
+			AssetCategory::getParentCategoryId
 		).addBidirectionalModel(
-			"vocabulary", "categories", VocabularyIdentifier.class,
-			AssetCategoryModel::getVocabularyId
+			"taxonomy", "categories", TaxonomyIdentifier.class,
+			AssetCategory::getVocabularyId
 		).addDate(
-			"dateCreated", AssetCategoryModel::getCreateDate
+			"dateCreated", AssetCategory::getCreateDate
 		).addDate(
-			"dateModified", AssetCategoryModel::getModifiedDate
+			"dateModified", AssetCategory::getModifiedDate
 		).addDate(
-			"datePublished", AssetCategoryModel::getLastPublishDate
-		).addLocalizedStringByLocale(
-			"description", AssetCategoryModel::getDescription
-		).addLocalizedStringByLocale(
-			"name", AssetCategoryModel::getTitle
+			"datePublished", AssetCategory::getLastPublishDate
 		).addLinkedModel(
-			"creator", PersonIdentifier.class, AssetCategoryModel::getUserId
+			"author", PersonIdentifier.class, AssetCategory::getUserId
+		).addLinkedModel(
+			"creator", PersonIdentifier.class, AssetCategory::getUserId
+		).addLocalizedStringByLocale(
+			"description", AssetCategory::getDescription
+		).addLocalizedStringByLocale(
+			"title", AssetCategory::getTitle
 		).addString(
-			"name", AssetCategoryModel::getName
+			"name", AssetCategory::getName
 		).build();
 	}
 
@@ -138,13 +139,15 @@ public class CategoryNestedCollectionResource
 		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
 			vocabularyId);
 
-		List<AssetCategory> className =
+		List<AssetCategory> assetCategories =
 			_assetCategoryService.getVocabularyRootCategories(
 				vocabulary.getGroupId(), vocabularyId,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
+		int count = _assetCategoryService.getVocabularyRootCategoriesCount(
+			vocabulary.getGroupId(), vocabularyId);
 
-		return new PageItems<>(className, className.size());
+		return new PageItems<>(assetCategories, count);
 	}
 
 	private void _removeAssetCategory(Long assetCategoryId)

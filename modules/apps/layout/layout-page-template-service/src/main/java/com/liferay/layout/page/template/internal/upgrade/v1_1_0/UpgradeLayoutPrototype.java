@@ -64,16 +64,15 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 				long userId = rs.getLong("userId");
 				String nameXML = rs.getString("name");
 
-				Company company = _companyLocalService.getCompany(companyId);
-
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
-						fetchFirstLayoutPageTemplateEntry(
-							company.getGroupId(), layoutPrototypeId);
+						fetchFirstLayoutPageTemplateEntry(layoutPrototypeId);
 
 				if (layoutPageTemplateEntry != null) {
 					continue;
 				}
+
+				Company company = _companyLocalService.getCompany(companyId);
 
 				Map<Locale, String> nameMap =
 					LocalizationUtil.getLocalizationMap(nameXML);

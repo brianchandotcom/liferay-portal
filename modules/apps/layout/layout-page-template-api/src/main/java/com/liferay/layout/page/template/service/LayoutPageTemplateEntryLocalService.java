@@ -191,7 +191,7 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
-		long groupId, long layoutPrototypeId);
+		long layoutPrototypeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(

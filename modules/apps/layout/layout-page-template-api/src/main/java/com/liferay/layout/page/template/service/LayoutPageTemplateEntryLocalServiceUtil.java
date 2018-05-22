@@ -223,9 +223,8 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
-		long groupId, long layoutPrototypeId) {
-		return getService()
-				   .fetchFirstLayoutPageTemplateEntry(groupId, layoutPrototypeId);
+		long layoutPrototypeId) {
+		return getService().fetchFirstLayoutPageTemplateEntry(layoutPrototypeId);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(

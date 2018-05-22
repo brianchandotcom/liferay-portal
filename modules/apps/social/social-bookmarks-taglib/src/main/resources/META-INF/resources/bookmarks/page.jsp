@@ -18,6 +18,7 @@
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE;
+String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu";
 %>
 
 <liferay-util:html-top
@@ -30,6 +31,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("menu") %>'>
 			<clay:dropdown-menu
+				componentId="<%= dropdownMenuComponentId %>"
 				dropdownItems="<%=
 					new JSPDropdownItemList(pageContext) {
 						{
@@ -40,7 +42,12 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 								if (socialBookmark != null) {
 									add(
 										dropdownItem -> {
-											dropdownItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url));
+											dropdownItem.putData("action", "post");
+											dropdownItem.putData("className", className);
+											dropdownItem.putData("classPK", String.valueOf(classPK));
+											dropdownItem.putData("shareURL", socialBookmark.getPostURL(title, url));
+											dropdownItem.putData("type", type);
+											dropdownItem.putData("url", url);
 											dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
 										});
 								}
@@ -84,6 +91,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			%>
 
 				<clay:dropdown-menu
+					componentId="<%= dropdownMenuComponentId %>"
 					dropdownItems="<%=
 						new JSPDropdownItemList(pageContext) {
 							{
@@ -94,7 +102,12 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 									if (socialBookmark != null) {
 										add(
 											dropdownItem -> {
-												dropdownItem.setHref("javascript:" + SocialBookmarksTagUtil.getClickJSCall(className, classPK, type, socialBookmark.getPostURL(title, url), url) + " void(0);");
+												dropdownItem.putData("action", "post");
+												dropdownItem.putData("className", className);
+												dropdownItem.putData("classPK", String.valueOf(classPK));
+												dropdownItem.putData("shareURL", socialBookmark.getPostURL(title, url));
+												dropdownItem.putData("type", type);
+												dropdownItem.putData("url", url);
 												dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
 											});
 									}
@@ -147,4 +160,27 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social
 			}
 		</aui:script>
 	</liferay-util:html-bottom>
+
+	<aui:script sandbox="<%= true %>">
+		Liferay.componentReady('<%= dropdownMenuComponentId %>').then(
+			function(dropdownMenu) {
+				dropdownMenu.on(
+					['itemClicked'],
+					function(event) {
+						event.preventDefault();
+
+						var data = event.data.item.data;
+
+						socialBookmarks_handleItemClick(
+							data.className,
+							data.classPK,
+							data.type,
+							data.shareURL,
+							data.url
+						);
+					}
+				);
+			}
+		);
+	</aui:script>
 </div>

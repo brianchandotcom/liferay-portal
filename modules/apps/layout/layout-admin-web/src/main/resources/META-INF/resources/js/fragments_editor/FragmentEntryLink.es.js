@@ -4,9 +4,7 @@ import {Config} from 'metal-state';
 import {addClasses, removeClasses} from 'metal-dom';
 import {isFunction, isObject, object} from 'metal';
 
-import EditableImageFragmentProcessor from './fragment_processors/EditableImageFragmentProcessor.es';
-import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
-import MappeableFragmentProcessor from './fragment_processors/MappeableFragmentProcessor.es';
+import FragmentEditableField from './FragmentEditableField.es';
 import templates from './FragmentEntryLink.soy';
 
 const ARROW_DOWN_KEYCODE = 40;
@@ -14,12 +12,6 @@ const ARROW_DOWN_KEYCODE = 40;
 const ARROW_UP_KEYCODE = 38;
 
 const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
-
-const FRAGMENT_PROCESSORS = [
-	EditableTextFragmentProcessor,
-	EditableImageFragmentProcessor,
-	MappeableFragmentProcessor
-];
 
 /**
  * FragmentEntryLink
@@ -34,12 +26,9 @@ class FragmentEntryLink extends Component {
 	 */
 
 	created() {
+		this._handleEditableChanged = this._handleEditableChanged.bind(this);
+		this._handleMapButtonClick = this._handleMapButtonClick.bind(this);
 		this._updateEditableStatus = this._updateEditableStatus.bind(this);
-		this._updateEditableValues = this._updateEditableValues.bind(this);
-
-		this._processors = FRAGMENT_PROCESSORS.map(
-			Processor => new Processor(this)
-		);
 	}
 
 	/**
@@ -48,11 +37,7 @@ class FragmentEntryLink extends Component {
 	 */
 
 	disposed() {
-		this._processors.forEach(
-			processor => {
-				processor.dispose();
-			}
-		);
+		this._destroyEditables();
 	}
 
 	/**
@@ -78,6 +63,12 @@ class FragmentEntryLink extends Component {
 	 */
 
 	rendered() {
+		if (this._editables) {
+			this._editables.forEach(
+				editable => editable.dispose()
+			);
+		}
+
 		if (this.refs.content) {
 			AUI().use(
 				'aui-parse-content',
@@ -86,19 +77,12 @@ class FragmentEntryLink extends Component {
 					content.plug(A.Plugin.ParseContent);
 					content.setContent(this.content);
 
-					this._processors.forEach(
-						processor => {
-							processor.process();
-						}
-					);
+					this._createEditables();
 
 					this._update(
 						this.languageId,
 						this.defaultLanguageId,
-						[
-							this._updateEditableValues,
-							this._updateEditableStatus
-						]
+						[this._updateEditableStatus]
 					);
 				}
 			);
@@ -159,6 +143,67 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Create instances of FragmentEditableField for each editable.
+	 */
+
+	_createEditables() {
+		this._destroyEditables();
+
+		this._editables = [
+			...this.refs.content.querySelectorAll('lfr-editable')
+		].map(
+			editable => {
+				let editableValues = (
+					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
+					this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.id]
+				) ? this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.id] :
+					{defaultValue: editable.innerHTML};
+
+				return new FragmentEditableField(
+					{
+						content: editable.innerHTML,
+						defaultLanguageId: this.defaultLanguageId,
+						editableId: editable.id,
+						editableValues,
+						element: editable,
+
+						events: {
+							editableChanged: this._handleEditableChanged,
+							mapButtonClicked: this._handleMapButtonClick
+						},
+
+						fragmentEntryLinkId: this.fragmentEntryLinkId,
+						languageId: this.languageId,
+						portletNamespace: this.portletNamespace,
+
+						processorsOptions: {
+							defaultEditorConfiguration: this.defaultEditorConfiguration,
+							imageSelectorURL: this.imageSelectorURL
+						},
+
+						showMapping: this.showMapping,
+						type: editable.getAttribute('type')
+					}
+				);
+			}
+		);
+	}
+
+	/**
+	 * Destroy existing FragmentEditableField instances.
+	 */
+
+	_destroyEditables() {
+		if (this._editables) {
+			this._editables.forEach(
+				editable => editable.dispose()
+			);
+
+			this._editables = [];
+		}
+	}
+
+	/**
 	 * Emits a move event with the fragmentEntryLinkId and the direction.
 	 * @param {!number} direction
 	 * @private
@@ -170,6 +215,24 @@ class FragmentEntryLink extends Component {
 			{
 				direction,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
+	}
+
+	/**
+	 * Handle a changed editable event
+	 * @param {{editableId: string, value: string}} event
+	 * @private
+	 * @review
+	 */
+
+	_handleEditableChanged(event) {
+		this.emit(
+			'editableChanged',
+			{
+				editableId: event.editableId,
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				value: event.value
 			}
 		);
 	}
@@ -230,6 +293,20 @@ class FragmentEntryLink extends Component {
 		this.emit(
 			'remove',
 			{
+				fragmentEntryLinkId: this.fragmentEntryLinkId
+			}
+		);
+	}
+
+	/**
+	 * Propagates mapButtonClick event.
+	 */
+
+	_handleMapButtonClick(event) {
+		this.emit(
+			'mappeableFieldClicked',
+			{
+				editableId: event.editableId,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
 		);
@@ -297,30 +374,6 @@ class FragmentEntryLink extends Component {
 			addClasses(element, mapped ? 'mapped' : 'unmapped');
 			addClasses(element, translated ? 'translated' : 'untranslated');
 		}
-	}
-
-	/**
-	 * Looks through all available processors for associated editors with a given
-	 * editable section to update them with a new value.
-	 * @param {string} editableId The editable id
-	 * @param {string} value The value for the editable section
-	 * @param {string} defaultValue The default value for the editable section
-	 * @private
-	 * @review
-	 */
-
-	_updateEditableValues(editableId, value, defaultValue) {
-		this._processors.forEach(
-			processor => {
-				const editor = processor.findEditor(editableId);
-
-				if (editor) {
-					editor.setData(
-						value || defaultValue || editor.defaultValue
-					);
-				}
-			}
-		);
 	}
 }
 
@@ -519,22 +572,7 @@ FragmentEntryLink.STATE = {
 	 * @type {!string}
 	 */
 
-	spritemap: Config.string().required(),
-
-	/**
-	 * Array of processors that will be applied to the fragments
-	 * content whenever it is created.
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentEntryLink
-	 * @private
-	 * @review
-	 * @type {Array<object>}
-	 */
-
-	_processors: Config.arrayOf(Config.object())
-		.internal()
-		.value([])
+	spritemap: Config.string().required()
 };
 
 Soy.register(FragmentEntryLink, templates);

@@ -135,11 +135,13 @@ public abstract class CommercePriceListUserSegmentEntryRelLocalServiceBaseImpl
 	 *
 	 * @param commercePriceListUserSegmentEntryRel the commerce price list user segment entry rel
 	 * @return the commerce price list user segment entry rel that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommercePriceListUserSegmentEntryRel deleteCommercePriceListUserSegmentEntryRel(
-		CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel) {
+		CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel)
+		throws PortalException {
 		return commercePriceListUserSegmentEntryRelPersistence.remove(commercePriceListUserSegmentEntryRel);
 	}
 

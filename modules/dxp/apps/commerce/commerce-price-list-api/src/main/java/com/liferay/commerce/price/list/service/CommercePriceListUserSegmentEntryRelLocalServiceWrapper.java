@@ -72,10 +72,12 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceWrapper
 	*
 	* @param commercePriceListUserSegmentEntryRel the commerce price list user segment entry rel
 	* @return the commerce price list user segment entry rel that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel deleteCommercePriceListUserSegmentEntryRel(
-		com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel) {
+		com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePriceListUserSegmentEntryRelLocalService.deleteCommercePriceListUserSegmentEntryRel(commercePriceListUserSegmentEntryRel);
 	}
 

@@ -94,10 +94,12 @@ public interface CommercePriceListUserSegmentEntryRelLocalService
 	*
 	* @param commercePriceListUserSegmentEntryRel the commerce price list user segment entry rel
 	* @return the commerce price list user segment entry rel that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommercePriceListUserSegmentEntryRel deleteCommercePriceListUserSegmentEntryRel(
-		CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel);
+		CommercePriceListUserSegmentEntryRel commercePriceListUserSegmentEntryRel)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce price list user segment entry rel with the primary key from the database. Also notifies the appropriate model listeners.

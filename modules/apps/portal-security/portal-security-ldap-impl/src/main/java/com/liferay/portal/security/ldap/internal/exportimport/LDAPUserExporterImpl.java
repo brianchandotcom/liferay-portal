@@ -392,22 +392,6 @@ public class LDAPUserExporterImpl implements UserExporter {
 		}
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void setPortalToLDAPConverter(
-		PortalToLDAPConverter portalToLDAPConverter) {
-
-		_portalToLDAPConverter = portalToLDAPConverter;
-	}
-
-	public void unsetPortalToLDAPConverter(
-		PortalToLDAPConverter portalToLDAPConverter) {
-
-		_portalToLDAPConverter = null;
-	}
-
 	protected Binding addGroup(
 			long ldapServerId, LdapContext ldapContext, UserGroup userGroup,
 			User user, Properties groupMappings, Properties userMappings)
@@ -469,14 +453,6 @@ public class LDAPUserExporterImpl implements UserExporter {
 		_ldapSettings = ldapSettings;
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setPortalLDAP(PortalLDAP portalLDAP) {
-		_portalLDAP = portalLDAP;
-	}
-
 	@Reference(unbind = "-")
 	protected void setUserGroupLocalService(
 		UserGroupLocalService userGroupLocalService) {
@@ -489,18 +465,25 @@ public class LDAPUserExporterImpl implements UserExporter {
 		_userLocalService = userLocalService;
 	}
 
-	protected void unsetPortalLDAP(PortalLDAP portalLDAP) {
-		_portalLDAP = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserExporterImpl.class);
 
 	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;
 	private LDAPSettings _ldapSettings;
-	private PortalLDAP _portalLDAP;
-	private PortalToLDAPConverter _portalToLDAPConverter;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile PortalLDAP _portalLDAP;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile PortalToLDAPConverter _portalToLDAPConverter;
+
 	private UserGroupLocalService _userGroupLocalService;
 	private UserLocalService _userLocalService;
 

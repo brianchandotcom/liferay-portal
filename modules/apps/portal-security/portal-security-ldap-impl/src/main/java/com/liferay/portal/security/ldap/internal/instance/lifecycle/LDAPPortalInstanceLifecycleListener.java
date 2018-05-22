@@ -58,22 +58,15 @@ public class LDAPPortalInstanceLifecycleListener
 		_ldapSettings = ldapSettings;
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setUserImporter(UserImporter userImporter) {
-		_userImporter = userImporter;
-	}
-
-	protected void unsetUserImporter(UserImporter userImporter) {
-		_userImporter = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPPortalInstanceLifecycleListener.class);
 
 	private LDAPSettings _ldapSettings;
-	private UserImporter _userImporter;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile UserImporter _userImporter;
 
 }

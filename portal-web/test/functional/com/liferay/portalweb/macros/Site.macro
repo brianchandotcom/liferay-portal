@@ -213,8 +213,8 @@
 
 		<execute function="Click" locator1="SiteMemberships#REQUEST_MESSAGE" />
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName}" />
@@ -1340,8 +1340,8 @@
 
 		<execute function="Click" locator1="SiteMemberships#REQUEST_MESSAGE" />
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userFirstName} ${userLastName}" />

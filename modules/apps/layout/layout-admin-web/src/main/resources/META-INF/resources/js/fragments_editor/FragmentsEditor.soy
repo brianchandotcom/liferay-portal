@@ -126,7 +126,7 @@
 								{param portletNamespace: $portletNamespace /}
 								{param ref: 'fragmentEntryLink_' + $fragmentEntryLink.fragmentEntryLinkId /}
 								{param selectedMappingTypes: $selectedMappingTypes /}
-								{param showMapping: $selectedMappingTypes and $selectedMappingTypes.type and $_sidebarSelectedTab == 'mapping' /}
+								{param showMapping: $selectedMappingTypes and $selectedMappingTypes.type ? true : false /}
 								{param spritemap: $spritemap /}
 							{/call}
 						</div>

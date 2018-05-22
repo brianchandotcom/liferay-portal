@@ -50,10 +50,14 @@
 			{param toolbarItems: $cssToolbarItems /}
 		{/call}
 
+		{let $element kind='text'}
+			fragmentElement
+		{/let}
+
 		{call com.liferay.fragment.web.SourceEditor.render}
 			{param codeHeader: 'function(fragmentElement) {' /}
 			{param codeHeaderHelp kind="html"}
-				{msg desc=""}parameter-fragment-element-provides-access-to-the-current-fragment-node-use-it-to-manipulate-fragment-components{/msg}
+				{msg desc=""}parameter-{$element}-provides-access-to-the-current-fragment-node-use-it-to-manipulate-fragment-components{/msg}
 			{/param}
 			{param codeFooter: '}' /}
 			{param events: ['contentChanged': $_handleJSChanged] /}

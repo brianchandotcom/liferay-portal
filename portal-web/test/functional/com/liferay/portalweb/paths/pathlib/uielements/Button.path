@@ -310,7 +310,7 @@
 </tr>
 <tr>
 	<td>DELETE_ENTRY</td>
-	<td>//li[contains(@class,'nav-item')]/a[contains(@href,'deleteEntries')]</td>
+	<td>xpath=(//li[contains(@class,'nav-item navbar-breakpoint')]/button[contains(@type,'button')])[1]</td>
 	<td></td>
 </tr>
 <tr>

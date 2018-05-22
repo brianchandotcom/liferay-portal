@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>INFO_ICON</td>
-	<td>//div[contains(@class,'management-bar-no-collapse')]//div[contains(@class,'container-fluid-1280')]//div[contains(@class,'management-bar-header-right')]/a/span</td>
+	<td>//nav[contains(@class,'management-bar')]//div[contains(@class,'container-fluid')]//button[contains(@class,'nav-link')]</td>
 	<td></td>
 </tr>
 <tr>

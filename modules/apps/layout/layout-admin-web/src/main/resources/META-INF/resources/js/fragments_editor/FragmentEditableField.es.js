@@ -6,8 +6,8 @@ import dom from 'metal-dom';
 import {object} from 'metal';
 import Soy from 'metal-soy';
 
-import EditableImageFragmentProcessor from './fragment_processors/EditableImageFragmentProcessor.es';
-import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
+import FragmentProcessors from './fragment_processors/FragmentProcessors.es';
+import {getActiveEditableElement} from './fragment_processors/EditableTextFragmentProcessor.es';
 import templates from './FragmentEditableField.soy';
 
 class FragmentEditableField extends Component {
@@ -18,6 +18,7 @@ class FragmentEditableField extends Component {
 	 */
 
 	created() {
+		this._handleBeforeNavigate = this._handleBeforeNavigate.bind(this);
 		this._handleDocumentClick = this._handleDocumentClick.bind(this);
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
 		this._handleWindowResize = debounce(this._handleWindowResize.bind(this), 100);
@@ -32,6 +33,11 @@ class FragmentEditableField extends Component {
 			document.body,
 			'click',
 			this._handleDocumentClick
+		);
+
+		Liferay.on(
+			'beforeNavigate',
+			this._handleBeforeNavigate
 		);
 	}
 
@@ -51,8 +57,7 @@ class FragmentEditableField extends Component {
 			this._windowResizeHandler = null;
 		}
 
-		EditableImageFragmentProcessor.destroy();
-		EditableTextFragmentProcessor.destroy();
+		this._destroyProcessors();
 	}
 
 	/**
@@ -130,30 +135,50 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
+	 * Call destroy method on all processors
+	 * @private
+	 * @review
+	 */
+
+	_destroyProcessors() {
+		Object.values(FragmentProcessors).forEach(
+			fragmentProcessor => fragmentProcessor.destroy()
+		);
+	}
+
+	/**
 	 * Enables the corresponding editor
 	 * @private
 	 * @review
 	 */
 
 	_enableEditor() {
-		if (this.type === 'image') {
-			EditableImageFragmentProcessor.init(
-				this.refs.editable,
-				this.portletNamespace,
-				this.fragmentEntryLinkId,
-				{imageSelectorURL: this.imageSelectorURL},
-				this._handleEditableChanged
-			);
-		}
-		else {
-			EditableTextFragmentProcessor.init(
-				this.refs.editable,
-				this.fragmentEntryLinkId,
-				this.portletNamespace,
-				{defaultEditorConfiguration: this.defaultEditorConfiguration},
-				this._handleEditableChanged
-			);
-		}
+		const {getOptions, init} = FragmentProcessors[this.type] ||
+			FragmentProcessors.fallback;
+
+		init(
+			this.refs.editable,
+			this.fragmentEntryLinkId,
+			this.portletNamespace,
+			getOptions(this),
+			this._handleEditableChanged
+		);
+	}
+
+	/**
+	 * Handle beforeNavigate SPA event
+	 * and destroy all existing processors.
+	 * @private
+	 * @review
+	 */
+
+	_handleBeforeNavigate() {
+		Liferay.off(
+			'beforeNavigate',
+			this._handleBeforeNavigate
+		);
+
+		this._destroyProcessors();
 	}
 
 	/**
@@ -181,10 +206,7 @@ class FragmentEditableField extends Component {
 			this._showTooltip = false;
 			this._enableEditor();
 		}
-		else if (
-			EditableTextFragmentProcessor.getActiveEditableElement() !==
-			this.refs.editable
-		) {
+		else if (getActiveEditableElement() !== this.refs.editable) {
 			this._showTooltip = !this._showTooltip;
 		}
 	}

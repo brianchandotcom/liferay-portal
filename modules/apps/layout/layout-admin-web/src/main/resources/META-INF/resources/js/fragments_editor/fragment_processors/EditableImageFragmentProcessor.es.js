@@ -100,4 +100,9 @@ function init(
 	);
 }
 
-export {init, destroy};
+export {destroy, init};
+
+export default {
+	destroy,
+	init
+};

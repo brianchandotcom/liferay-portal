@@ -15,7 +15,6 @@
 package com.liferay.user.associated.data.web.internal.display;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
@@ -25,10 +24,6 @@ import java.util.List;
  * @author Drew Brokke
  */
 public class ViewUADEntitiesDisplay {
-
-	public List<DropdownItem> getActionDropdownItems() {
-		return _actionDropdownItems;
-	}
 
 	public String getApplicationKey() {
 		return _applicationKey;
@@ -48,12 +43,6 @@ public class ViewUADEntitiesDisplay {
 
 	public String getUADRegistryKey() {
 		return _uadRegistryKey;
-	}
-
-	public void setActionDropdownItems(
-		DropdownItemList getActionDropdownItems) {
-
-		_actionDropdownItems = getActionDropdownItems;
 	}
 
 	public void setApplicationKey(String applicationKey) {

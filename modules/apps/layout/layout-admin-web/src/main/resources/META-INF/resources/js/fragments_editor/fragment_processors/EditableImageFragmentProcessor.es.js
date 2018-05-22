@@ -44,25 +44,35 @@ function _handleImageEditorChange(
 }
 
 /**
+ * Do nothing, as LiferayItemSelectorDialog is automatically
+ * destroyed on hide.
+ * @review
+ */
+
+function destroy() {
+}
+
+/**
  * Show the image selector dialog and calls the given callback when an
  * image is selected.
  * @param {HTMLElement} editableElement
- * @param {string} portletNamespace
- * @param {string} imageSelectorURL
  * @param {string} fragmentEntryLinkId
+ * @param {string} portletNamespace
+ * @param {{imageSelectorURL: string}} options
  * @param {function} callback
+ * @review
  */
 
-function showImageEditing(
+function init(
 	editableElement,
-	portletNamespace,
-	imageSelectorURL,
 	fragmentEntryLinkId,
+	portletNamespace,
+	options,
 	callback
 ) {
 	const eventName = `${portletNamespace}selectImage`;
 	const title = Liferay.Language.get('select');
-	const url = imageSelectorURL;
+	const {imageSelectorURL} = options;
 
 	AUI().use(
 		'liferay-item-selector-dialog',
@@ -81,7 +91,7 @@ function showImageEditing(
 						}
 					},
 					title,
-					url
+					url: imageSelectorURL
 				}
 			);
 
@@ -90,5 +100,4 @@ function showImageEditing(
 	);
 }
 
-export {showImageEditing};
-export default showImageEditing;
+export {init, destroy};

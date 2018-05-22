@@ -6,7 +6,7 @@ import dom from 'metal-dom';
 import {object} from 'metal';
 import Soy from 'metal-soy';
 
-import {showImageEditing} from './fragment_processors/EditableImageFragmentProcessor.es';
+import EditableImageFragmentProcessor from './fragment_processors/EditableImageFragmentProcessor.es';
 import {createTextEditor, destroyTextEditor, getActiveEditableElement} from './fragment_processors/EditableTextFragmentProcessor.es';
 import templates from './FragmentEditableField.soy';
 
@@ -50,6 +50,8 @@ class FragmentEditableField extends Component {
 			this._windowResizeHandler.removeListener();
 			this._windowResizeHandler = null;
 		}
+
+		EditableImageFragmentProcessor.destroy();
 	}
 
 	/**
@@ -134,11 +136,11 @@ class FragmentEditableField extends Component {
 
 	_enableEditor() {
 		if (this.type === 'image') {
-			showImageEditing(
+			EditableImageFragmentProcessor.init(
 				this.refs.editable,
 				this.portletNamespace,
-				this.imageSelectorURL,
 				this.fragmentEntryLinkId,
+				{imageSelectorURL: this.imageSelectorURL},
 				this._handleEditableChanged
 			);
 		}

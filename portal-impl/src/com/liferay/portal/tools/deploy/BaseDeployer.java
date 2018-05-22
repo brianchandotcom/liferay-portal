@@ -1187,7 +1187,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			displayName = displayName.substring(1);
 		}
 
-		StringBundler sb = new StringBundler(62);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<display-name>");
 		sb.append(displayName);
@@ -1242,6 +1242,14 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			sb.append("</taglib-uri>");
 			sb.append("<taglib-location>");
 			sb.append("/WEB-INF/tld/liferay-portlet_2_0.tld");
+			sb.append("</taglib-location>");
+			sb.append("</taglib>");
+			sb.append("<taglib>");
+			sb.append("<taglib-uri>");
+			sb.append("http://xmlns.jcp.org/portlet_3_0");
+			sb.append("</taglib-uri>");
+			sb.append("<taglib-location>");
+			sb.append("/WEB-INF/tld/liferay-portlet.tld");
 			sb.append("</taglib-location>");
 			sb.append("</taglib>");
 		}

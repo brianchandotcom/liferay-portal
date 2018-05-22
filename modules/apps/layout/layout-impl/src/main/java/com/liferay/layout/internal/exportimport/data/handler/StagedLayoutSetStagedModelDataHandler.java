@@ -754,9 +754,6 @@ public class StagedLayoutSetStagedModelDataHandler
 		UnicodeProperties importedSettingsProperties =
 			importedLayoutSet.getSettingsProperties();
 
-		boolean showSiteName = GetterUtil.getBoolean(
-			importedSettingsProperties.getProperty(Sites.SHOW_SITE_NAME));
-
 		UnicodeProperties settingsProperties =
 			layoutSet.getSettingsProperties();
 
@@ -764,8 +761,14 @@ public class StagedLayoutSetStagedModelDataHandler
 			Sites.MERGE_FAIL_FRIENDLY_URL_LAYOUTS);
 
 		if (Validator.isNull(mergeFailFriendlyURLLayouts)) {
-			settingsProperties.setProperty(
-				Sites.SHOW_SITE_NAME, String.valueOf(showSiteName));
+			boolean showSiteName = GetterUtil.getBoolean(
+				importedSettingsProperties.getProperty(
+					Sites.SHOW_SITE_NAME, Boolean.TRUE.toString()));
+
+			if (!showSiteName) {
+				settingsProperties.setProperty(
+					Sites.SHOW_SITE_NAME, String.valueOf(showSiteName));
+			}
 
 			_layoutSetLocalService.updateLayoutSet(layoutSet);
 		}

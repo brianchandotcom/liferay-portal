@@ -443,17 +443,6 @@ public class BlogsEntryStagedModelDataHandler
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)"
-	)
-	protected void setExportImportContentProcessor(
-		ExportImportContentProcessor<String> exportImportContentProcessor) {
-
-		_exportImportContentProcessor = exportImportContentProcessor;
-	}
-
 	@Reference(unbind = "-")
 	protected void setFriendlyURLEntryLocalService(
 		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
@@ -464,12 +453,6 @@ public class BlogsEntryStagedModelDataHandler
 	@Reference(unbind = "-")
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 		_imageLocalService = imageLocalService;
-	}
-
-	protected void unsetExportImportContentProcessor(
-		ExportImportContentProcessor<String> exportImportContentProcessor) {
-
-		_exportImportContentProcessor = null;
 	}
 
 	private void _exportFriendlyURLEntries(
@@ -591,7 +574,14 @@ public class BlogsEntryStagedModelDataHandler
 	@Reference
 	private CommentManager _commentManager;
 
-	private ExportImportContentProcessor<String> _exportImportContentProcessor;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)"
+	)
+	private volatile ExportImportContentProcessor<String>
+		_exportImportContentProcessor;
+
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 	private ImageLocalService _imageLocalService;
 

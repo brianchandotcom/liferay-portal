@@ -1035,18 +1035,6 @@ public class JournalArticleStagedModelDataHandler
 		_imageLocalService = imageLocalService;
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
-	)
-	protected void setJournalArticleExportImportContentProcessor(
-		ExportImportContentProcessor<String> exportImportContentProcessor) {
-
-		_journalArticleExportImportContentProcessor =
-			exportImportContentProcessor;
-	}
-
 	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
@@ -1072,12 +1060,6 @@ public class JournalArticleStagedModelDataHandler
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
-	}
-
-	protected void unsetJournalArticleExportImportContentProcessor(
-		ExportImportContentProcessor<String> exportImportContentProcessor) {
-
-		_journalArticleExportImportContentProcessor = null;
 	}
 
 	protected void updateArticleVersions(JournalArticle article)
@@ -1152,8 +1134,15 @@ public class JournalArticleStagedModelDataHandler
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private ImageLocalService _imageLocalService;
-	private ExportImportContentProcessor<String>
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private volatile ExportImportContentProcessor<String>
 		_journalArticleExportImportContentProcessor;
+
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;

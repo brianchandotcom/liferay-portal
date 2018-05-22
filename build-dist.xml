@@ -37,19 +37,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="download-dynamic-jars">
-		<attribute name="app.server.lib.portal.dir" />
-
-		<sequential>
-			<property file="${project.dir}/portal-impl/src/portal.properties" prefix="portal" />
-
-			<mirrors-get
-				dest="@{app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
-				src="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
-			/>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="replace-multilines">
 		<attribute name="file" />
 		<element name="replace-elements" />
@@ -1139,10 +1126,6 @@ release was successful.</echo>
 						src="${app.server.glassfish.deploy.dir}/liferay-portal.war"
 					/>
 
-					<download-dynamic-jars
-						app.server.lib.portal.dir="${app.server.glassfish.deploy.dir}/${tstamp.value}/WEB-INF/lib"
-					/>
-
 					<zip
 						basedir="${app.server.glassfish.deploy.dir}/${tstamp.value}"
 						destfile="${app.server.glassfish.deploy.dir}/liferay-portal.war"
@@ -1150,11 +1133,6 @@ release was successful.</echo>
 
 					<delete dir="${app.server.glassfish.deploy.dir}/${tstamp.value}" />
 				</then>
-				<else>
-					<download-dynamic-jars
-						app.server.lib.portal.dir="${app.server.lib.portal.dir}"
-					/>
-				</else>
 			</if>
 		</sequential>
 	</target>

@@ -17,7 +17,7 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-com.liferay.portal.search.web.internal.facet.display.builder.UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder = new com.liferay.portal.search.web.internal.facet.display.builder.UserSearchFacetDisplayBuilder();
+UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder = new UserSearchFacetDisplayBuilder();
 
 userSearchFacetDisplayBuilder.setFacet(facet);
 userSearchFacetDisplayBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
@@ -26,7 +26,7 @@ userSearchFacetDisplayBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10))
 userSearchFacetDisplayBuilder.setParamName(facet.getFieldId());
 userSearchFacetDisplayBuilder.setParamValue(fieldParam);
 
-com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDisplayBuilder.build();
+UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDisplayBuilder.build();
 %>
 
 <c:choose>
@@ -47,18 +47,18 @@ com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisp
 
 					<ul class="list-unstyled users">
 						<li class="default facet-value">
-							<a class="<%= userSearchFacetDisplayContext.isNothingSelected() ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+							<a class="<%= userSearchFacetDisplayContext.isNothingSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 						</li>
 
 						<%
-						java.util.List<com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts =
+						java.util.List<UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts =
 							userSearchFacetDisplayContext.getTermDisplayContexts();
 
-						for (com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext : userSearchFacetTermDisplayContexts) {
+						for (UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext : userSearchFacetTermDisplayContexts) {
 						%>
 
 							<li class="facet-value">
-								<a class="<%= userSearchFacetTermDisplayContext.isSelected() ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getUserName()) %>" href="javascript:;">
+								<a class="<%= userSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getUserName()) %>" href="javascript:;">
 									<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getUserName()) %>
 
 									<c:if test="<%= userSearchFacetTermDisplayContext.isFrequencyVisible() %>">

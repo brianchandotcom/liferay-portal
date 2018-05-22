@@ -115,10 +115,8 @@ for (long groupId : groupIds) {
 				<%
 				List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
-				long originalGroupId = groupId;
-
 				for (AssetRendererFactory<?> curRendererFactory : assetRendererFactories) {
-					groupId = originalGroupId;
+					long curGroupId = groupId;
 
 					if (!curRendererFactory.isSelectable()) {
 						continue;
@@ -133,11 +131,11 @@ for (long groupId : groupIds) {
 					String portletId = curRendererFactory.getPortletId();
 
 					if (group.isStagingGroup() && !group.isStagedPortlet(portletId)) {
-						groupId = group.getLiveGroupId();
+						curGroupId = group.getLiveGroupId();
 					}
 
-					assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
-					assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
+					assetBrowserURL.setParameter("groupId", String.valueOf(curGroupId));
+					assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(curGroupId));
 					assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 					assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
 					assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
@@ -147,7 +145,7 @@ for (long groupId : groupIds) {
 
 					Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("groupid", String.valueOf(groupId));
+					data.put("groupid", String.valueOf(curGroupId));
 
 					if (!curRendererFactory.isSupportsClassTypes()) {
 						data.put("href", assetBrowserURL.toString());
@@ -162,7 +160,7 @@ for (long groupId : groupIds) {
 						<liferay-ui:icon
 							cssClass="asset-selector"
 							data="<%= data %>"
-							id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
+							id="<%= curGroupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 							message="<%= HtmlUtil.escape(type) %>"
 							url="javascript:;"
 						/>
@@ -172,7 +170,7 @@ for (long groupId : groupIds) {
 					else {
 						ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
 
-						List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
+						List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(curGroupId), locale);
 
 						for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
 							assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
@@ -191,7 +189,7 @@ for (long groupId : groupIds) {
 							<liferay-ui:icon
 								cssClass="asset-selector"
 								data="<%= data %>"
-								id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
+								id="<%= curGroupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 								message="<%= HtmlUtil.escape(type) %>"
 								url="javascript:;"
 							/>

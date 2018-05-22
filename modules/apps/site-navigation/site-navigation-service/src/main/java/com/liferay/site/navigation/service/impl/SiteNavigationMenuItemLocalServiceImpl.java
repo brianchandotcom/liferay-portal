@@ -16,11 +16,17 @@ package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
+import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
+import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuItemLocalServiceBaseImpl;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderComparator;
 
 import java.util.Date;
@@ -39,6 +45,18 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				type);
+
+		if (siteNavigationMenuItemType == null) {
+			throw new InvalidSiteNavigationMenuItemTypeException(type);
+		}
+
+		String name = siteNavigationMenuItemType.getName(typeSettings);
+
+		validateName(name);
+
 		User user = userLocalService.getUser(userId);
 
 		long siteNavigationMenuItemId = counterLocalService.increment();
@@ -55,6 +73,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		siteNavigationMenuItem.setSiteNavigationMenuId(siteNavigationMenuId);
 		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(
 			parentSiteNavigationMenuItemId);
+		siteNavigationMenuItem.setName(name);
 		siteNavigationMenuItem.setType(type);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
 		siteNavigationMenuItem.setOrder(order);
@@ -224,10 +243,24 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				siteNavigationMenuItemId);
 
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
+
+		if (siteNavigationMenuItemType == null) {
+			throw new InvalidSiteNavigationMenuItemTypeException(
+				siteNavigationMenuItem.getType());
+		}
+
+		String name = siteNavigationMenuItemType.getName(typeSettings);
+
+		validateName(name);
+
 		siteNavigationMenuItem.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenuItem.setUserId(userId);
 		siteNavigationMenuItem.setUserName(user.getFullName());
+		siteNavigationMenuItem.setName(name);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
 
 		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
@@ -255,5 +288,23 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 		}
 	}
+
+	protected void validateName(String name) throws PortalException {
+		if (name == null) {
+			return;
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			SiteNavigationMenuItem.class.getName(), "name");
+
+		if (name.length() > maxLength) {
+			throw new SiteNavigationMenuItemNameException(
+				"Maximum length of name exceeded");
+		}
+	}
+
+	@ServiceReference(type = SiteNavigationMenuItemTypeRegistry.class)
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

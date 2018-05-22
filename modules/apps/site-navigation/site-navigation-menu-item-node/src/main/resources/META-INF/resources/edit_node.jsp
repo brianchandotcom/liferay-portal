@@ -30,6 +30,6 @@ if (siteNavigationMenuItem != null) {
 }
 %>
 
-<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name" value="<%= name %>">
+<aui:input label="name" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="TypeSettingsProperties--name--" placeholder="name" value="<%= name %>">
 	<aui:validator name="required" />
 </aui:input>

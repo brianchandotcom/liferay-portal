@@ -40,7 +40,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 					buttonStyle="primary"
 					dropdownItems="<%= siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems() %>"
 					icon="plus"
-					style="secondary"
+					style="primary"
 					triggerCssClasses="nav-btn nav-btn-monospaced"
 				/>
 			</li>
@@ -50,8 +50,12 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 <liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
 
+<liferay-ui:error exception="<%= SiteNavigationMenuItemNameException.class %>">
+	<liferay-ui:message arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' key="please-enter-a-name-with-fewer-than-x-characters" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <div class="container-fluid-1280 contextual-sidebar-content">
-	<div class="site-navigation-menu-container">
+	<div class="lfr-search-container-wrapper site-navigation-menu-container">
 
 		<%
 		List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationAdminDisplayContext.getSiteNavigationMenuId(), 0);
@@ -161,7 +165,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 			function openSidebar(title) {
 				sidebar.body = '<div id="<portlet:namespace />sidebarBody"><div class="loading-animation"></div></div>';
-				sidebar.header = title + '<button class="btn btn-monospaced btn-sm btn-unstyled" id="<portlet:namespace />sidebarHeaderButton" type="button"><aui:icon image="angle-right" markupView="lexicon" /></button>';
+				sidebar.header = '<div class="autofit-row sidebar-section"><div class="autofit-col autofit-col-expand"><h4 class="component-title"><span class="text-truncate-inline"><span class="text-truncate">' + title + '</span></span></h4></div><div class="autofit-col"><span class="icon-monospaced" id="<portlet:namespace />sidebarHeaderButton"><aui:icon image="times" markupView="lexicon" /></span></div></div>'
 				sidebar.visible = true;
 			}
 

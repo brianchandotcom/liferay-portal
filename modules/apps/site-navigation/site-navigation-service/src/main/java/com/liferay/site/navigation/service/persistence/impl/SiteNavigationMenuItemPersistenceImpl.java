@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.site.navigation.exception.NoSuchMenuItemException;
@@ -1721,6 +1722,593 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	private static final String _FINDER_COLUMN_S_P_SITENAVIGATIONMENUID_2 = "siteNavigationMenuItem.siteNavigationMenuId = ? AND ";
 	private static final String _FINDER_COLUMN_S_P_PARENTSITENAVIGATIONMENUITEMID_2 =
 		"siteNavigationMenuItem.parentSiteNavigationMenuItemId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_S_LIKEN = new FinderPath(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED,
+			SiteNavigationMenuItemModelImpl.FINDER_CACHE_ENABLED,
+			SiteNavigationMenuItemImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_LikeN",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_S_LIKEN = new FinderPath(SiteNavigationMenuItemModelImpl.ENTITY_CACHE_ENABLED,
+			SiteNavigationMenuItemModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByS_LikeN",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @return the matching site navigation menu items
+	 */
+	@Override
+	public List<SiteNavigationMenuItem> findByS_LikeN(
+		long siteNavigationMenuId, String name) {
+		return findByS_LikeN(siteNavigationMenuId, name, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SiteNavigationMenuItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @param start the lower bound of the range of site navigation menu items
+	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
+	 * @return the range of matching site navigation menu items
+	 */
+	@Override
+	public List<SiteNavigationMenuItem> findByS_LikeN(
+		long siteNavigationMenuId, String name, int start, int end) {
+		return findByS_LikeN(siteNavigationMenuId, name, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SiteNavigationMenuItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @param start the lower bound of the range of site navigation menu items
+	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching site navigation menu items
+	 */
+	@Override
+	public List<SiteNavigationMenuItem> findByS_LikeN(
+		long siteNavigationMenuId, String name, int start, int end,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
+		return findByS_LikeN(siteNavigationMenuId, name, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SiteNavigationMenuItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @param start the lower bound of the range of site navigation menu items
+	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching site navigation menu items
+	 */
+	@Override
+	public List<SiteNavigationMenuItem> findByS_LikeN(
+		long siteNavigationMenuId, String name, int start, int end,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_S_LIKEN;
+		finderArgs = new Object[] {
+				siteNavigationMenuId, name,
+				
+				start, end, orderByComparator
+			};
+
+		List<SiteNavigationMenuItem> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<SiteNavigationMenuItem>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
+					if ((siteNavigationMenuId != siteNavigationMenuItem.getSiteNavigationMenuId()) ||
+							!StringUtil.wildcardMatches(
+								siteNavigationMenuItem.getName(), name, '_',
+								'%', '\\', false)) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
+
+			query.append(_FINDER_COLUMN_S_LIKEN_SITENAVIGATIONMENUID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_S_LIKEN_NAME_1);
+			}
+			else if (name.equals("")) {
+				query.append(_FINDER_COLUMN_S_LIKEN_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_S_LIKEN_NAME_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(siteNavigationMenuId);
+
+				if (bindName) {
+					qPos.add(StringUtil.toLowerCase(name));
+				}
+
+				if (!pagination) {
+					list = (List<SiteNavigationMenuItem>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<SiteNavigationMenuItem>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching site navigation menu item
+	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
+	 */
+	@Override
+	public SiteNavigationMenuItem findByS_LikeN_First(
+		long siteNavigationMenuId, String name,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator)
+		throws NoSuchMenuItemException {
+		SiteNavigationMenuItem siteNavigationMenuItem = fetchByS_LikeN_First(siteNavigationMenuId,
+				name, orderByComparator);
+
+		if (siteNavigationMenuItem != null) {
+			return siteNavigationMenuItem;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("siteNavigationMenuId=");
+		msg.append(siteNavigationMenuId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append("}");
+
+		throw new NoSuchMenuItemException(msg.toString());
+	}
+
+	/**
+	 * Returns the first site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
+	 */
+	@Override
+	public SiteNavigationMenuItem fetchByS_LikeN_First(
+		long siteNavigationMenuId, String name,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
+		List<SiteNavigationMenuItem> list = findByS_LikeN(siteNavigationMenuId,
+				name, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching site navigation menu item
+	 * @throws NoSuchMenuItemException if a matching site navigation menu item could not be found
+	 */
+	@Override
+	public SiteNavigationMenuItem findByS_LikeN_Last(
+		long siteNavigationMenuId, String name,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator)
+		throws NoSuchMenuItemException {
+		SiteNavigationMenuItem siteNavigationMenuItem = fetchByS_LikeN_Last(siteNavigationMenuId,
+				name, orderByComparator);
+
+		if (siteNavigationMenuItem != null) {
+			return siteNavigationMenuItem;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("siteNavigationMenuId=");
+		msg.append(siteNavigationMenuId);
+
+		msg.append(", name=");
+		msg.append(name);
+
+		msg.append("}");
+
+		throw new NoSuchMenuItemException(msg.toString());
+	}
+
+	/**
+	 * Returns the last site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
+	 */
+	@Override
+	public SiteNavigationMenuItem fetchByS_LikeN_Last(
+		long siteNavigationMenuId, String name,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
+		int count = countByS_LikeN(siteNavigationMenuId, name);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<SiteNavigationMenuItem> list = findByS_LikeN(siteNavigationMenuId,
+				name, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the site navigation menu items before and after the current site navigation menu item in the ordered set where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * @param siteNavigationMenuItemId the primary key of the current site navigation menu item
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next site navigation menu item
+	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
+	 */
+	@Override
+	public SiteNavigationMenuItem[] findByS_LikeN_PrevAndNext(
+		long siteNavigationMenuItemId, long siteNavigationMenuId, String name,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator)
+		throws NoSuchMenuItemException {
+		SiteNavigationMenuItem siteNavigationMenuItem = findByPrimaryKey(siteNavigationMenuItemId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SiteNavigationMenuItem[] array = new SiteNavigationMenuItemImpl[3];
+
+			array[0] = getByS_LikeN_PrevAndNext(session,
+					siteNavigationMenuItem, siteNavigationMenuId, name,
+					orderByComparator, true);
+
+			array[1] = siteNavigationMenuItem;
+
+			array[2] = getByS_LikeN_PrevAndNext(session,
+					siteNavigationMenuItem, siteNavigationMenuId, name,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected SiteNavigationMenuItem getByS_LikeN_PrevAndNext(Session session,
+		SiteNavigationMenuItem siteNavigationMenuItem,
+		long siteNavigationMenuId, String name,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
+
+		query.append(_FINDER_COLUMN_S_LIKEN_SITENAVIGATIONMENUID_2);
+
+		boolean bindName = false;
+
+		if (name == null) {
+			query.append(_FINDER_COLUMN_S_LIKEN_NAME_1);
+		}
+		else if (name.equals("")) {
+			query.append(_FINDER_COLUMN_S_LIKEN_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			query.append(_FINDER_COLUMN_S_LIKEN_NAME_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(siteNavigationMenuId);
+
+		if (bindName) {
+			qPos.add(StringUtil.toLowerCase(name));
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(siteNavigationMenuItem);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<SiteNavigationMenuItem> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63; from the database.
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 */
+	@Override
+	public void removeByS_LikeN(long siteNavigationMenuId, String name) {
+		for (SiteNavigationMenuItem siteNavigationMenuItem : findByS_LikeN(
+				siteNavigationMenuId, name, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(siteNavigationMenuItem);
+		}
+	}
+
+	/**
+	 * Returns the number of site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
+	 *
+	 * @param siteNavigationMenuId the site navigation menu ID
+	 * @param name the name
+	 * @return the number of matching site navigation menu items
+	 */
+	@Override
+	public int countByS_LikeN(long siteNavigationMenuId, String name) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_S_LIKEN;
+
+		Object[] finderArgs = new Object[] { siteNavigationMenuId, name };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
+
+			query.append(_FINDER_COLUMN_S_LIKEN_SITENAVIGATIONMENUID_2);
+
+			boolean bindName = false;
+
+			if (name == null) {
+				query.append(_FINDER_COLUMN_S_LIKEN_NAME_1);
+			}
+			else if (name.equals("")) {
+				query.append(_FINDER_COLUMN_S_LIKEN_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				query.append(_FINDER_COLUMN_S_LIKEN_NAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(siteNavigationMenuId);
+
+				if (bindName) {
+					qPos.add(StringUtil.toLowerCase(name));
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_S_LIKEN_SITENAVIGATIONMENUID_2 = "siteNavigationMenuItem.siteNavigationMenuId = ? AND ";
+	private static final String _FINDER_COLUMN_S_LIKEN_NAME_1 = "siteNavigationMenuItem.name IS NULL";
+	private static final String _FINDER_COLUMN_S_LIKEN_NAME_2 = "lower(siteNavigationMenuItem.name) LIKE ?";
+	private static final String _FINDER_COLUMN_S_LIKEN_NAME_3 = "(siteNavigationMenuItem.name IS NULL OR siteNavigationMenuItem.name LIKE '')";
 
 	public SiteNavigationMenuItemPersistenceImpl() {
 		setModelClass(SiteNavigationMenuItem.class);

@@ -74,6 +74,7 @@
 
 		<column name="siteNavigationMenuId" type="long" />
 		<column name="parentSiteNavigationMenuItemId" type="long" />
+		<column name="name" type="String" />
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />
 		<column name="order" type="int" />
@@ -90,6 +91,10 @@
 			<finder-column name="siteNavigationMenuId" />
 			<finder-column name="parentSiteNavigationMenuItemId" />
 		</finder>
+		<finder name="S_LikeN" return-type="Collection">
+			<finder-column name="siteNavigationMenuId" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+		</finder>
 
 		<!-- References -->
 
@@ -98,6 +103,8 @@
 	</entity>
 	<exceptions>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>
+		<exception>InvalidSiteNavigationMenuItemType</exception>
+		<exception>SiteNavigationMenuItemName</exception>
 		<exception>SiteNavigationMenuName</exception>
 	</exceptions>
 </service-builder>

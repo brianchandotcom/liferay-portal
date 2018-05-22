@@ -26,7 +26,7 @@ long siteNavigationMenuItemId = GetterUtil.getLong(request.getAttribute("edit_si
 </portlet:actionURL>
 
 <liferay-ui:icon
-	icon="trash"
+	icon="times-circle"
 	linkCssClass="icon-monospaced text-default"
 	markupView="lexicon"
 	url="<%= deleteURL %>"

@@ -54,9 +54,8 @@
 			<var name="navNested" value="${collectionName}" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Edit" />
-			<var name="rowEntry" value="${collectionName}" />
 		</execute>
 
 		<execute macro="Collection#editCollection">

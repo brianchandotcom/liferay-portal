@@ -182,32 +182,38 @@
 			<%@ include file="/navigation.jspf" %>
 		</div>
 
-		<aui:script sandbox="<%= true %>">
-			var form = AUI.$(document.<portlet:namespace /><%= formName %>);
+		<aui:script>
+			var <portlet:namespace />form = document.getElementById('<portlet:namespace /><%= formName %>');
 
-			form.on(
-				'submit',
-				function(event) {
-					<c:if test="<%= Validator.isNotNull(redirect) %>">
-						var redirect = form.fm('redirect');
+			if (<portlet:namespace />form) {
+				<portlet:namespace />form.addEventListener(
+					'submit',
+					function(event) {
+						<c:if test="<%= Validator.isNotNull(redirect) %>">
+							var redirect = <portlet:namespace />form.querySelector('#<portlet:namespace />redirect');
 
-						if (redirect) {
-							var redirectVal = redirect.val();
+							if (redirect) {
+								var redirectVal = redirect.getAttribute('value');
 
-							redirect.val(redirectVal + window.location.hash);
+								redirect.setAttribute('value', redirectVal + window.location.hash);
+							}
+						</c:if>
+
+						submitForm(<portlet:namespace />form);
+					}
+				);
+
+				var <portlet:namespace />password = <portlet:namespace />form.querySelector('#<portlet:namespace />password');
+
+				if (<portlet:namespace />password) {
+					<portlet:namespace />password.addEventListener(
+						'keypress',
+						function(event) {
+							Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');
 						}
-					</c:if>
-
-					submitForm(form);
+					);
 				}
-			);
-
-			form.fm('password').on(
-				'keypress',
-				function(event) {
-					Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');
-				}
-			);
+			}
 		</aui:script>
 	</c:otherwise>
 </c:choose>

@@ -74,6 +74,13 @@ public class EleflowForecastProcessorServiceImpl
 
 		httpRequest.setQueryParam("date", EleflowUtil.getDateString(time));
 
+		int historySize = project.getForecastingHistorySize();
+
+		if (historySize > 0) {
+			httpRequest.setQueryParam(
+				"historySize", String.valueOf(historySize));
+		}
+
 		httpRequest.send(
 			asyncResult -> VertxUtil.handleServiceHttpResponse(
 				asyncResult, handler));

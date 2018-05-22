@@ -1,0 +1,26 @@
+{
+	"config": {
+		"imports": {
+			"frontend-js-metal-web": {
+				"metal": "^2.4.7",
+				"metal-ajax": "^2.0.0",
+				"metal-debounce": "^2.0.0",
+				"metal-dom": "^2.0.0",
+				"metal-events": "^2.0.0",
+				"metal-path-parser": "^1.0.0",
+				"metal-promise": "^2.0.0",
+				"metal-structs": "^1.0.0",
+				"metal-uri": "^2.0.2",
+				"metal-useragent": "^2.0.0"
+			}
+		}
+	},
+	"exclude": {
+		"url": true,
+		"path-browserify": true,
+		"punycode": true,
+		"querystring": true,
+		"senna": ["build/**", "src/**", "test/**"]
+	},
+	"output": "classes/META-INF/resources"
+}

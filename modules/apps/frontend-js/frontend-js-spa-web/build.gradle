@@ -1,29 +1,5 @@
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
-
-task buildSenna(type: Copy)
-
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
-
-buildSenna {
-	dependsOn npmInstall
-
-	eachFile new StripPathSegmentsAction(3)
-
-	from {
-		fileTree(dir: "node_modules")
-	}
-
-	include "senna/build/amd/senna/"
-
-	includeEmptyDirs = false
-	into "classes/META-INF/resources"
-}
-
-configJSModules {
-	dependsOn buildSenna
-	include "**/*.js*"
-}
 
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
@@ -33,6 +9,7 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-lang")

@@ -24,7 +24,6 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -49,8 +48,8 @@ public class TagNestedCollectionResource
 		<AssetTag, Long, TagIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<AssetTag, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<AssetTag, Long> builder) {
+	public NestedCollectionRoutes<AssetTag, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<AssetTag, Long, Long> builder) {
 
 		return builder.addCreator(
 			this::_addTag,
@@ -136,7 +135,7 @@ public class TagNestedCollectionResource
 			groupId, pagination.getStartPosition(), pagination.getEndPosition(),
 			null);
 
-		int totalCount = _assetTagLocalService.getGroupTagsCount(groupId);
+		int totalCount = _assetTagService.getGroupTagsCount(groupId);
 
 		return new PageItems<>(tags, totalCount);
 	}
@@ -149,9 +148,6 @@ public class TagNestedCollectionResource
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private AssetTagService _assetTagService;

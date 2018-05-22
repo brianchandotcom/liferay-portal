@@ -40,7 +40,6 @@ const EDITOR_CONFIGURATION = {
 let _editableElement;
 let _editor;
 let _editorEventHandler;
-let _navigationEventHandler;
 
 /**
  * Destroys, if any, an existing instance of AlloyEditor.
@@ -50,7 +49,6 @@ function destroy() {
 	if (_editor) {
 		_editorEventHandler.removeAllListeners();
 		_editorEventHandler.dispose();
-		_navigationEventHandler.detach();
 
 		const editorData = _editor.get('nativeEditor').getData();
 
@@ -61,7 +59,6 @@ function destroy() {
 		_editableElement = null;
 		_editor = null;
 		_editorEventHandler = null;
-		_navigationEventHandler = null;
 	}
 }
 
@@ -145,3 +142,9 @@ function init(
 }
 
 export {destroy, getActiveEditableElement, init};
+
+export default {
+	destroy,
+	getActiveEditableElement,
+	init
+};

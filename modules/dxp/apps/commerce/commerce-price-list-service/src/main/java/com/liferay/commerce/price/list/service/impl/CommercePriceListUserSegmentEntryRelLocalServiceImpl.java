@@ -14,10 +14,13 @@
 
 package com.liferay.commerce.price.list.service.impl;
 
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel;
 import com.liferay.commerce.price.list.service.base.CommercePriceListUserSegmentEntryRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -60,8 +63,55 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 		commercePriceListUserSegmentEntryRel.setExpandoBridgeAttributes(
 			serviceContext);
 
+		//Commerce price list
+
+		reindexCommerceUserSegmentEntry(commercePriceListId);
+
+		//Cache
+
+		commercePriceListLocalService.cleanPriceListCache(groupId);
+
 		return commercePriceListUserSegmentEntryRelPersistence.update(
 			commercePriceListUserSegmentEntryRel);
+	}
+
+	@Override
+	public CommercePriceListUserSegmentEntryRel
+			deleteCommercePriceListUserSegmentEntryRel(
+				CommercePriceListUserSegmentEntryRel
+					commercePriceListUserSegmentEntryRel)
+		throws PortalException {
+
+		commercePriceListUserSegmentEntryRelPersistence.remove(
+			commercePriceListUserSegmentEntryRel);
+
+		//Commerce price list
+
+		reindexCommerceUserSegmentEntry(
+			commercePriceListUserSegmentEntryRel.getCommercePriceListId());
+
+		//Cache
+
+		commercePriceListLocalService.cleanPriceListCache(
+			commercePriceListUserSegmentEntryRel.getGroupId());
+
+		return commercePriceListUserSegmentEntryRel;
+	}
+
+	@Override
+	public CommercePriceListUserSegmentEntryRel
+			deleteCommercePriceListUserSegmentEntryRel(
+				long commercePriceListUserSegmentEntryRelId)
+		throws PortalException {
+
+		CommercePriceListUserSegmentEntryRel
+			commercePriceListUserSegmentEntryRel =
+				commercePriceListUserSegmentEntryRelPersistence.
+					findByPrimaryKey(commercePriceListUserSegmentEntryRelId);
+
+		return commercePriceListUserSegmentEntryRelLocalService.
+			deleteCommercePriceListUserSegmentEntryRel(
+				commercePriceListUserSegmentEntryRel);
 	}
 
 	@Override
@@ -125,8 +175,27 @@ public class CommercePriceListUserSegmentEntryRelLocalServiceImpl
 		commercePriceListUserSegmentEntryRel.setExpandoBridgeAttributes(
 			serviceContext);
 
+		//Commerce price list
+
+		reindexCommerceUserSegmentEntry(
+			commercePriceListUserSegmentEntryRel.getCommercePriceListId());
+
+		//Cache
+
+		commercePriceListLocalService.cleanPriceListCache(
+			serviceContext.getScopeGroupId());
+
 		return commercePriceListUserSegmentEntryRelPersistence.update(
 			commercePriceListUserSegmentEntryRel);
+	}
+
+	protected void reindexCommerceUserSegmentEntry(long commercePriceListId)
+		throws PortalException {
+
+		Indexer<CommercePriceList> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
+
+		indexer.reindex(CommercePriceList.class.getName(), commercePriceListId);
 	}
 
 }

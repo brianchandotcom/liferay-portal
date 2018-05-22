@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.ws.rs.NotFoundException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -111,17 +109,11 @@ public class PriceListHelper {
 			serviceContext);
 	}
 
-	public CommercePriceList getCommercePriceList(Long commercePriceListId) {
-		CommercePriceList commercePriceList =
-			_commercePriceListService.fetchCommercePriceList(
-				commercePriceListId);
+	public CommercePriceList getCommercePriceList(Long commercePriceListId)
+		throws PortalException {
 
-		if (commercePriceList == null) {
-			throw new NotFoundException(
-				"Unable to find price list with ID " + commercePriceListId);
-		}
-
-		return commercePriceList;
+		return _commercePriceListService.fetchCommercePriceList(
+			commercePriceListId);
 	}
 
 	public CommercePriceList updateCommercePriceList(

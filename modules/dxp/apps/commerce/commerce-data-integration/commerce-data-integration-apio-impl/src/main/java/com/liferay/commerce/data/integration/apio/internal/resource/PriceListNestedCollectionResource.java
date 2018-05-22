@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.site.apio.identifier.WebSiteIdentifier;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
@@ -56,8 +56,8 @@ public class PriceListNestedCollectionResource
 			PriceListIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<CommercePriceList, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<CommercePriceList, Long> builder) {
+	public NestedCollectionRoutes<CommercePriceList, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<CommercePriceList, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -88,7 +88,7 @@ public class PriceListNestedCollectionResource
 	}
 
 	@Override
-	public Representor<CommercePriceList, Long> representor(
+	public Representor<CommercePriceList> representor(
 		Representor.Builder<CommercePriceList, Long> builder) {
 
 		return builder.types(
@@ -137,7 +137,8 @@ public class PriceListNestedCollectionResource
 	}
 
 	private PageItems<CommercePriceList> _getPageItems(
-		Pagination pagination, Long groupId) {
+			Pagination pagination, Long groupId)
+		throws PortalException {
 
 		List<CommercePriceList> commercePriceLists =
 			_commercePriceListService.getCommercePriceLists(

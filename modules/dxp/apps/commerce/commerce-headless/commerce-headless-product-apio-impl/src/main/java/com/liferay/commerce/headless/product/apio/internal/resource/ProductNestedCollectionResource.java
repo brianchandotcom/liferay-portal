@@ -103,7 +103,7 @@ public class ProductNestedCollectionResource
 	}
 
 	@Override
-	public Representor<Document, Long> representor(
+	public Representor<Document> representor(
 		Representor.Builder<Document, Long> builder) {
 
 		return builder.types(

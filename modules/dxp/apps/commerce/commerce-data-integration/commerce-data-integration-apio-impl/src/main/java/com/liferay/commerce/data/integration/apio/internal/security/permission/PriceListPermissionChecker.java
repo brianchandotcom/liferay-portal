@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.service.UserService;
 
 import java.util.function.BiFunction;
 
+import javax.ws.rs.NotFoundException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,12 +66,18 @@ public class PriceListPermissionChecker implements CollectionPermissionChecker {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
-			CommercePriceList commercePriceList =
-				_commercePriceListService.fetchCommercePriceList(identifier);
+			Try<CommercePriceList> commercePriceListTry = Try.fromFallible(
+				() -> _commercePriceListService.fetchCommercePriceList(
+					identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
-					permissionChecker, commercePriceList.getGroupId(),
+					permissionChecker,
+					commercePriceListTry.map(
+						CommercePriceList::getGroupId
+					).orElseThrow(
+						() -> new NotFoundException()
+					),
 					CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS)
 			).orElse(
 				false

@@ -57,8 +57,8 @@ public class PriceEntryNestedCollectionResource
 			PriceEntryIdentifier, Long, PriceListIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<CommercePriceEntry, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<CommercePriceEntry, Long> builder) {
+	public NestedCollectionRoutes<CommercePriceEntry, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<CommercePriceEntry, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -91,7 +91,7 @@ public class PriceEntryNestedCollectionResource
 	}
 
 	@Override
-	public Representor<CommercePriceEntry, Long> representor(
+	public Representor<CommercePriceEntry> representor(
 		Representor.Builder<CommercePriceEntry, Long> builder) {
 
 		return builder.types(

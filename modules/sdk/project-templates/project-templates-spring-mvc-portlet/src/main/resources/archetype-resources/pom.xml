@@ -25,14 +25,14 @@
 			<version>2.6.0</version>
 			<scope>provided</scope>
 		</dependency>
-#if (${liferayVersion} == "7.0")
+#if (${liferayVersion.startsWith("7.0")})
 		<dependency>
 			<groupId>javax.portlet</groupId>
 			<artifactId>portlet-api</artifactId>
 			<version>2.0</version>
 			<scope>provided</scope>
 		</dependency>
-#elseif (${liferayVersion} == "7.1")
+#elseif (${liferayVersion.startsWith("7.1")})
 		<dependency>
 			<groupId>javax.portlet</groupId>
 			<artifactId>portlet-api</artifactId>

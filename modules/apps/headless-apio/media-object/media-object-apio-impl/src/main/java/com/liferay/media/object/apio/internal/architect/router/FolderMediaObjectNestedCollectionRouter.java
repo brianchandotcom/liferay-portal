@@ -84,13 +84,13 @@ public class FolderMediaObjectNestedCollectionRouter
 		return new PageItems<>(fileEntries, count);
 	}
 
+	@Reference
+	private DLAppService _dlAppService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
 	private HasPermission<Long> _hasPermission;
-
-	@Reference
-	private DLAppService _dlAppService;
 
 	@Reference
 	private MediaObjectHelper _mediaObjectHelper;

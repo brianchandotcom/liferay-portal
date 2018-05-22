@@ -21,15 +21,14 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
-import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.folder.apio.internal.architect.form.FolderForm;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 
-import com.liferay.portal.kernel.service.ServiceContext;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -86,10 +85,10 @@ public class FolderNestedCollectionRouter
 	}
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
+	private DLAppService _dlAppService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"

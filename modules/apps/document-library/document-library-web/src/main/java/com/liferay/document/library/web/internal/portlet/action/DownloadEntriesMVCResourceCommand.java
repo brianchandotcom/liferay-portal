@@ -122,7 +122,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 				PortletResponseUtil.sendFile(
 					resourceRequest, resourceResponse, fileEntry.getFileName(),
-					fileEntry.getContentStream(), 0, fileEntry.getMimeType(),
+					fileEntry.getContentStream(), (int)fileEntry.getSize(),
+					fileEntry.getMimeType(),
 					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 			}
 			else if ((fileShortcuts.size() == 1) && fileEntries.isEmpty() &&
@@ -135,7 +136,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 				PortletResponseUtil.sendFile(
 					resourceRequest, resourceResponse, fileEntry.getFileName(),
-					fileEntry.getContentStream(), 0, fileEntry.getMimeType(),
+					fileEntry.getContentStream(), (int)fileEntry.getSize(),
+					fileEntry.getMimeType(),
 					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 			}
 			else {
@@ -165,7 +167,8 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				try (InputStream inputStream = new FileInputStream(file)) {
 					PortletResponseUtil.sendFile(
 						resourceRequest, resourceResponse, zipFileName,
-						inputStream, ContentTypes.APPLICATION_ZIP);
+						inputStream, (int)file.length(),
+						ContentTypes.APPLICATION_ZIP);
 				}
 			}
 		}
@@ -200,7 +203,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			try (InputStream inputStream = new FileInputStream(file)) {
 				PortletResponseUtil.sendFile(
 					resourceRequest, resourceResponse, zipFileName, inputStream,
-					ContentTypes.APPLICATION_ZIP);
+					(int)file.length(), ContentTypes.APPLICATION_ZIP);
 			}
 		}
 		finally {

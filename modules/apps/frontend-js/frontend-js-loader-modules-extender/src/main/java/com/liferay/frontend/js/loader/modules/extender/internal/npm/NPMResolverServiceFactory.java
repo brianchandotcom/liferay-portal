@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
@@ -61,7 +62,7 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 		URL url = bundle.getResource("META-INF/resources/package.json");
 
 		if (url == null) {
-			return null;
+			return _NOOP_RESOLVER;
 		}
 
 		try {
@@ -97,6 +98,8 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 		NPMResolver npmResolver) {
 	}
 
+	private static final NPMResolver _NOOP_RESOLVER = new NOOPNPMResolver();
+
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
@@ -110,5 +113,21 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 	private volatile NPMRegistry _npmRegistry;
 
 	private ServiceRegistration<NPMResolver> _serviceRegistration;
+
+	private static class NOOPNPMResolver implements NPMResolver {
+
+		public JSPackage getDependencyJSPackage(String packageName) {
+			return null;
+		}
+
+		public JSPackage getJSPackage() {
+			return null;
+		}
+
+		public String resolveModuleName(String moduleName) {
+			return null;
+		}
+
+	}
 
 }

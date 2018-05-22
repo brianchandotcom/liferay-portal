@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "model.class.name=com.liferay.journal.model.JournalArticle"
 )
-public class JournalArticleHasPermissionImpl implements HasPermission {
+public class JournalArticleHasPermissionImpl
+	implements HasPermission<Long, Long> {
 
 	@Override
 	public Boolean forAdding(Credentials credentials, Long groupId) {

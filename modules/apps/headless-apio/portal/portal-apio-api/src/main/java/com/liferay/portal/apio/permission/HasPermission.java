@@ -29,9 +29,13 @@ import com.liferay.apio.architect.credentials.Credentials;
  *
  * @author Alejandro Hernández
  * @author Javier Gamarra
+ * @param  <T> the type of the model's identifier (e.g., {@code Long}, {@code
+ *          String}, etc.)
+ * @param  <S> the type of the parent model's identifier (e.g., {@code Long}, {@code
+ *         String}, etc.)
  * @review
  */
-public interface HasPermission {
+public interface HasPermission<T, S> {
 
 	/**
 	 * Returns {@code true} if the current {@code User} has permission to
@@ -70,7 +74,7 @@ public interface HasPermission {
 	 *         false} otherwise
 	 * @review
 	 */
-	public default Boolean forAdding(Credentials credentials, Long id) {
+	public default Boolean forAdding(Credentials credentials, S id) {
 		return false;
 	}
 
@@ -90,7 +94,7 @@ public interface HasPermission {
 	 *         false} otherwise
 	 * @review
 	 */
-	public default Boolean forDeleting(Credentials credentials, Long id) {
+	public default Boolean forDeleting(Credentials credentials, T id) {
 		return false;
 	}
 
@@ -110,7 +114,7 @@ public interface HasPermission {
 	 *         false} otherwise
 	 * @review
 	 */
-	public default Boolean forUpdating(Credentials credentials, Long id) {
+	public default Boolean forUpdating(Credentials credentials, T id) {
 		return false;
 	}
 

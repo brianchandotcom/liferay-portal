@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
 )
-public class FileEntryHasPermissionImpl implements HasPermission {
+public class FileEntryHasPermissionImpl implements HasPermission<Long, Long> {
 
 	@Override
 	public Boolean forDeleting(Credentials credentials, Long fileEntryId) {

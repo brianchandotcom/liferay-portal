@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "model.class.name=com.liferay.portal.kernel.repository.model.Folder"
 )
-public class FolderHasPermissionImpl implements HasPermission {
+public class FolderHasPermissionImpl implements HasPermission<Long, Long> {
 
 	@Override
 	public Boolean forAdding(Credentials credentials, Long groupId) {

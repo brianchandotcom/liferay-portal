@@ -245,7 +245,7 @@ public class PersonCollectionResource
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
 	)
-	private HasPermission _hasPermission;
+	private HasPermission<Long, Long> _hasPermission;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

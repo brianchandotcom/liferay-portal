@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  */
 @Component(property = "model.class.name=com.liferay.portal.kernel.model.Layout")
-public class LayoutHasPermissionImpl implements HasPermission {
+public class LayoutHasPermissionImpl implements HasPermission<Long, Long> {
 
 	@Override
 	public Boolean forDeleting(Credentials credentials, Long plid) {

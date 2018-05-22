@@ -187,7 +187,7 @@ public class WebPageElementNestedCollectionResource
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
-	private HasPermission _hasPermission;
+	private HasPermission<Long, Long> _hasPermission;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

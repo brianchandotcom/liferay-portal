@@ -141,6 +141,6 @@ public class MediaObjectNestedCollectionResource
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
-	private HasPermission _hasPermission;
+	private HasPermission<Long, Long> _hasPermission;
 
 }

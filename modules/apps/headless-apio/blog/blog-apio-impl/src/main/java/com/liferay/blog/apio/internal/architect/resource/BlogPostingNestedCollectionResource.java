@@ -194,6 +194,6 @@ public class BlogPostingNestedCollectionResource
 	private BlogsEntryService _blogsService;
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
-	private HasPermission _hasPermission;
+	private HasPermission<Long, Long> _hasPermission;
 
 }

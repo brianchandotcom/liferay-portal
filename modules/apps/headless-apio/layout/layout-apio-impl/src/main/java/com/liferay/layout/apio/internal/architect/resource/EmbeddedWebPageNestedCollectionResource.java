@@ -121,7 +121,7 @@ public class EmbeddedWebPageNestedCollectionResource
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Layout)"
 	)
-	private HasPermission _hasPermission;
+	private HasPermission<Long, Long> _hasPermission;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

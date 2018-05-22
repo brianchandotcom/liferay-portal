@@ -173,9 +173,14 @@ class FragmentEntryLink extends Component {
 						},
 
 						fragmentEntryLinkId: this.fragmentEntryLinkId,
-						imageSelectorURL: this.imageSelectorURL,
 						languageId: this.languageId,
 						portletNamespace: this.portletNamespace,
+
+						processorsOptions: {
+							defaultEditorConfiguration: this.defaultEditorConfiguration,
+							imageSelectorURL: this.imageSelectorURL
+						},
+
 						showMapping: this.showMapping,
 						type: editable.getAttribute('type')
 					}

@@ -154,14 +154,14 @@ class FragmentEditableField extends Component {
 	 */
 
 	_enableEditor() {
-		const {getOptions, init} = FragmentProcessors[this.type] ||
+		const {init} = FragmentProcessors[this.type] ||
 			FragmentProcessors.fallback;
 
 		init(
 			this.refs.editable,
 			this.fragmentEntryLinkId,
 			this.portletNamespace,
-			getOptions(this),
+			this.processorsOptions,
 			this._handleEditableChanged
 		);
 	}
@@ -284,17 +284,6 @@ FragmentEditableField.STATE = {
 	content: Config.string().required(),
 
 	/**
-	 * Default configuration for AlloyEditor instances.
-	 * @default {}
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {object}
-	 */
-
-	defaultEditorConfiguration: Config.object().value({}),
-
-	/**
 	 * Default language id.
 	 * @default undefined
 	 * @instance
@@ -339,17 +328,6 @@ FragmentEditableField.STATE = {
 	fragmentEntryLinkId: Config.string().required(),
 
 	/**
-	 * Image selector url
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentEditableField
-	 * @review
-	 * @type {!string}
-	 */
-
-	imageSelectorURL: Config.string().required(),
-
-	/**
 	 * Currently selected language id.
 	 * @default undefined
 	 * @instance
@@ -372,15 +350,15 @@ FragmentEditableField.STATE = {
 	portletNamespace: Config.string().required(),
 
 	/**
-	 * If true, asset mapping is enabled
-	 * @default false
+	 * Set of options that are sent to the processors.
+	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentEditableField
 	 * @review
-	 * @type {bool}
+	 * @type {!object}
 	 */
 
-	showMapping: Config.bool().value(false),
+	processorsOptions: Config.object().required(),
 
 	/**
 	 * Editable type

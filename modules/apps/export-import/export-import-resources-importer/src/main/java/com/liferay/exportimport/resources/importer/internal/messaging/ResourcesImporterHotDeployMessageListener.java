@@ -101,20 +101,31 @@ public class ResourcesImporterHotDeployMessageListener
 
 			});
 
-		registerDestination();
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+				ResourcesImporterDestinationNames.RESOURCES_IMPORTER);
+
+		_destination = _destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("destination.name", _destination.getName());
+
+		_serviceRegistration = _bundleContext.registerService(
+			Destination.class, _destination, dictionary);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_bundleContext = null;
+		_serviceRegistration.unregister();
 
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-
-			_destination.destroy();
-		}
+		_destination.destroy();
 
 		_serviceTrackerMap.close();
+
+		_bundleContext = null;
 	}
 
 	protected void initialize(Message message) throws Exception {
@@ -164,27 +175,6 @@ public class ResourcesImporterHotDeployMessageListener
 		initialize(message);
 	}
 
-	protected synchronized void registerDestination() {
-		if ((_bundleContext != null) && (_serviceRegistration == null) &&
-			(_destinationFactory != null)) {
-
-			DestinationConfiguration destinationConfiguration =
-				new DestinationConfiguration(
-					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-					ResourcesImporterDestinationNames.RESOURCES_IMPORTER);
-
-			_destination = _destinationFactory.createDestination(
-				destinationConfiguration);
-
-			Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-			dictionary.put("destination.name", _destination.getName());
-
-			_serviceRegistration = _bundleContext.registerService(
-				Destination.class, _destination, dictionary);
-		}
-	}
-
 	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -199,19 +189,6 @@ public class ResourcesImporterHotDeployMessageListener
 	protected void setDestination(Destination destination) {
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setDestinationFactory(
-		DestinationFactory destinationFactory) {
-
-		_destinationFactory = destinationFactory;
-
-		registerDestination();
-	}
-
 	@Reference(unbind = "-")
 	protected void setImporterFactory(ImporterFactory importerFactory) {
 		_importerFactory = importerFactory;
@@ -222,12 +199,6 @@ public class ResourcesImporterHotDeployMessageListener
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
-	}
-
-	protected void unsetDestinationFactory(
-		DestinationFactory destinationFactory) {
-
-		_destinationFactory = null;
 	}
 
 	private void _importResources(
@@ -328,6 +299,7 @@ public class ResourcesImporterHotDeployMessageListener
 	private BundleContext _bundleContext;
 	private CompanyLocalService _companyLocalService;
 	private Destination _destination;
+	@Reference
 	private DestinationFactory _destinationFactory;
 	private ImporterFactory _importerFactory;
 	private ServiceRegistration<Destination> _serviceRegistration;

@@ -34,9 +34,12 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.search.profile.ProfileShardResult;
 import org.elasticsearch.search.profile.query.QueryProfileShardResult;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = CommonSearchResponseAssembler.class)
 public class CommonSearchResponseAssemblerImpl
 	implements CommonSearchResponseAssembler {
 

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(service = SearchSearchRequestAssembler.class)
+@Component(immediate = true, service = SearchSearchRequestAssembler.class)
 public class SearchSearchRequestAssemblerImpl
 	implements SearchSearchRequestAssembler {
 

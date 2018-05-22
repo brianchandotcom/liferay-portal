@@ -23,6 +23,7 @@ import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.media.object.apio.internal.architect.form.MediaObjectCreatorForm;
 import com.liferay.media.object.apio.internal.helper.MediaObjectHelper;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -52,7 +53,8 @@ public class FolderMediaObjectNestedCollectionRouter
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_getFileEntry, (credentials, folderId) -> true,
+			this::_getFileEntry,
+			_hasPermission.forAddingIn(FolderIdentifier.class),
 			MediaObjectCreatorForm::buildForm
 		).build();
 	}
@@ -81,6 +83,11 @@ public class FolderMediaObjectNestedCollectionRouter
 
 		return new PageItems<>(fileEntries, count);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 	@Reference
 	private DLAppService _dlAppService;

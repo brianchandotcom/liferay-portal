@@ -59,7 +59,8 @@ public class MediaObjectNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_getFileEntry, (credentials, folderId) -> true,
+			this::_getFileEntry,
+			_hasPermission.forAddingIn(RootFolderIdentifier.class),
 			MediaObjectCreatorForm::buildForm
 		).build();
 	}
@@ -90,7 +91,7 @@ public class MediaObjectNestedCollectionResource
 		).identifier(
 			FileEntry::getFileEntryId
 		).addBidirectionalModel(
-			"folder", "mediaObject", FolderIdentifier.class,
+			"folder", "mediaObjects", FolderIdentifier.class,
 			FileEntry::getFolderId
 		).addBinary(
 			"contentStream", this::_getBinaryFile

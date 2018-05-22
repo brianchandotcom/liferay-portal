@@ -30,9 +30,9 @@ import com.liferay.apio.architect.credentials.Credentials;
  * @author Alejandro Hernández
  * @author Javier Gamarra
  * @param  <T> the type of the model's identifier (e.g., {@code Long}, {@code
- *          String}, etc.)
- * @param  <S> the type of the parent model's identifier (e.g., {@code Long}, {@code
  *         String}, etc.)
+ * @param  <S> the type of the parent model's identifier (e.g., {@code Long},
+ *         {@code String}, etc.)
  * @review
  */
 public interface HasPermission<T, S> {

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
  * the different absolute URLs.
  *
  * @author Eduardo Perez
+ * @review
  */
 public class GroupWrapper extends com.liferay.portal.kernel.model.GroupWrapper {
 
@@ -32,18 +33,20 @@ public class GroupWrapper extends com.liferay.portal.kernel.model.GroupWrapper {
 	}
 
 	/**
-	 * Returns the private URL of this Group.
+	 * Returns the group's private URL.
 	 *
-	 * @return the private URL of this Group.
+	 * @return the private URL
+	 * @review
 	 */
 	public String getPrivateURL() {
 		return _getDisplayURL(true);
 	}
 
 	/**
-	 * Returns the public URL of this Group.
+	 * Returns the group's public URL.
 	 *
-	 * @return the public URL of this Group.
+	 * @return the public URL
+	 * @review
 	 */
 	public String getPublicURL() {
 		return _getDisplayURL(false);

@@ -175,7 +175,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 
 						socialBookmarks_handleItemClick(
 							data.className,
-							data.classPK,
+							parseInt(data.classPK),
 							data.type,
 							data.postURL,
 							data.url

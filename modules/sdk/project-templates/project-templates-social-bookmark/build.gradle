@@ -1,0 +1,4 @@
+dependencies {
+	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
+	compileOnly project(":sdk:project-templates:project-templates")
+}

@@ -135,13 +135,13 @@ public class Archetyper {
 		archetypeGenerationRequest.setOutputDirectory(destinationDir.getPath());
 		archetypeGenerationRequest.setPackage(packageName);
 
-		Properties properties = new Properties();
-
 		String buildType = "gradle";
 
 		if (projectTemplatesArgs.isMaven()) {
 			buildType = "maven";
 		}
+
+		Properties properties = new Properties();
 
 		_setProperty(properties, "author", author);
 		_setProperty(properties, "buildType", buildType);

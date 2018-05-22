@@ -17,6 +17,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.site.navigation.constants.SiteNavigationWebKeys" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %>

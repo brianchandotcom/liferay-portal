@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.page.element.apio.internal.resource;
+package com.liferay.web.page.element.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
-import com.liferay.web.page.element.apio.internal.form.WebPageElementCreatorForm;
-import com.liferay.web.page.element.apio.internal.form.WebPageElementUpdaterForm;
+import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementCreatorForm;
+import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementUpdaterForm;
 
 import java.util.List;
 

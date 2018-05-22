@@ -68,6 +68,7 @@ class FragmentEditableField extends Component {
 
 	prepareStateForRender(state) {
 		const translatedContent = this.editableValues[this.languageId] ||
+			this.editableValues[this.defaultLanguageId] ||
 			this.editableValues.defaultValue;
 
 		let content = Soy.toIncDom(translatedContent || this.content);
@@ -292,6 +293,17 @@ FragmentEditableField.STATE = {
 	 */
 
 	defaultEditorConfiguration: Config.object().value({}),
+
+	/**
+	 * Default language id.
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {!string}
+	 */
+
+	defaultLanguageId: Config.string().required(),
 
 	/**
 	 * Editable ID

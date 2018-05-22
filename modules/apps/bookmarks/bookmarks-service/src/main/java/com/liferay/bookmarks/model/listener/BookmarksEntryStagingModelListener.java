@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.internal.model.listener;
+package com.liferay.bookmarks.model.listener;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class BookmarksEntryStagingChangesetModelListener
+public class BookmarksEntryStagingModelListener
 	extends BaseModelListener<BookmarksEntry> {
 
 	@Override

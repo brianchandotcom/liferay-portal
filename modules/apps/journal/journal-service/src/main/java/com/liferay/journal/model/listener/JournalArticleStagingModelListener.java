@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.model.listener;
+package com.liferay.journal.model.listener;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class JournalArticleStagingChangesetModelListener
+public class JournalArticleStagingModelListener
 	extends BaseModelListener<JournalArticle> {
 
 	@Override

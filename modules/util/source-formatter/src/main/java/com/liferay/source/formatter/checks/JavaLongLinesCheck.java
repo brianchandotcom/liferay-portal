@@ -108,7 +108,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 		int z = Math.max(x, y);
 
-		if (z != -1) {
+		if ((z != -1) && !ToolsUtil.isInsideQuotes(line, z)) {
 			return z + 3;
 		}
 
@@ -120,19 +120,19 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 		x = line.indexOf("= ");
 
-		if (x != -1) {
+		if ((x != -1) && !ToolsUtil.isInsideQuotes(line, x)) {
 			return x + 1;
 		}
 
 		x = line.indexOf("> ");
 
-		if (x != -1) {
+		if ((x != -1) && !ToolsUtil.isInsideQuotes(line, x)) {
 			return x + 1;
 		}
 
 		x = line.indexOf("< ");
 
-		if (x != -1) {
+		if ((x != -1) && !ToolsUtil.isInsideQuotes(line, x)) {
 			return x + 1;
 		}
 
@@ -141,6 +141,10 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 			if (x == -1) {
 				break;
+			}
+
+			if (ToolsUtil.isInsideQuotes(line, x)) {
+				continue;
 			}
 
 			String linePart = line.substring(0, x);
@@ -157,6 +161,10 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				break;
 			}
 
+			if (ToolsUtil.isInsideQuotes(line, x)) {
+				continue;
+			}
+
 			if (Character.isLetterOrDigit(line.charAt(x - 1)) &&
 				(line.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS)) {
 
@@ -166,7 +174,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 		x = line.indexOf(CharPool.PERIOD);
 
-		if (x != -1) {
+		if ((x != -1) && !ToolsUtil.isInsideQuotes(line, x)) {
 			return x + 1;
 		}
 

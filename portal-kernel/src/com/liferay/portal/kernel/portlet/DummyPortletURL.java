@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
@@ -31,6 +33,7 @@ import javax.portlet.annotations.PortletSerializable;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class DummyPortletURL implements PortletURL {
 
 	public static DummyPortletURL getInstance() {

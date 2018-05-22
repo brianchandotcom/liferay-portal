@@ -14,12 +14,15 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class RenderRequestImpl
 	extends PortletRequestImpl implements RenderRequest {
 

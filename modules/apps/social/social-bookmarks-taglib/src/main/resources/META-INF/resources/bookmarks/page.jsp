@@ -48,6 +48,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 											dropdownItem.putData("postURL", socialBookmark.getPostURL(title, url));
 											dropdownItem.putData("type", type);
 											dropdownItem.putData("url", url);
+											dropdownItem.setHref("#");
 											dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
 										});
 								}
@@ -108,6 +109,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 												dropdownItem.putData("postURL", socialBookmark.getPostURL(title, url));
 												dropdownItem.putData("type", type);
 												dropdownItem.putData("url", url);
+												dropdownItem.setHref("#");
 												dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
 											});
 									}

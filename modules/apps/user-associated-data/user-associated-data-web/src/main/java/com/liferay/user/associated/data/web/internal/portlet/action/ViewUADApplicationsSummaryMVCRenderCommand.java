@@ -57,15 +57,9 @@ public class ViewUADApplicationsSummaryMVCRenderCommand
 				viewUADApplicationsSummaryDisplay =
 					new ViewUADApplicationsSummaryDisplay();
 
-			viewUADApplicationsSummaryDisplay.setManagementBarFilterItems(
-				_uadApplicationSummaryHelper.createManagementBarFilterItems(
-					renderRequest, renderResponse));
 			viewUADApplicationsSummaryDisplay.setSearchContainer(
 				_uadApplicationSummaryHelper.createSearchContainer(
 					renderRequest, renderResponse, selectedUser.getUserId()));
-			viewUADApplicationsSummaryDisplay.setSortingURL(
-				_uadApplicationSummaryHelper.getSortingURL(
-					renderRequest, renderResponse));
 			viewUADApplicationsSummaryDisplay.setTotalCount(
 				_uadApplicationSummaryHelper.getTotalReviewableUADEntitiesCount(
 					selectedUser.getUserId()));

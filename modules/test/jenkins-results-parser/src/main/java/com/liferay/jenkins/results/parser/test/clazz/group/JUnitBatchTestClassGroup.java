@@ -615,6 +615,17 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 					testClassNamesIncludesRelativeGlobs);
 		}
 
+		String testBatchClassNamesIncludesRequiredPropertyValue =
+			getFirstPropertyValue("test.batch.class.names.includes.required");
+
+		if ((testBatchClassNamesIncludesRequiredPropertyValue != null) &&
+			!testBatchClassNamesIncludesRequiredPropertyValue.isEmpty()) {
+			testClassNamesIncludesRelativeGlobs.addAll(
+				Arrays.asList(
+					testBatchClassNamesIncludesRequiredPropertyValue.split(
+						",")));
+		}
+
 		testClassNamesIncludesPathMatchers.addAll(
 			_getTestClassNamesPathMatchers(
 				testClassNamesIncludesRelativeGlobs));

@@ -14,7 +14,6 @@
 
 package com.liferay.site.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -84,20 +83,18 @@ public class RecentGroupManager {
 	public List<Group> getRecentGroups(HttpServletRequest request) {
 		String value = _getRecentGroupsValue(request);
 
-		List<Group> recentGroups = new ArrayList<>();
-
 		try {
 			PortletRequest portletRequest =
 				(PortletRequest)request.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST);
 
-			recentGroups = getRecentGroups(value, portletRequest);
+			return getRecentGroups(value, portletRequest);
 		}
 		catch (Exception e) {
 			_log.error("Unable to get recent groups", e);
 		}
 
-		return recentGroups;
+		return Collections.emptyList();
 	}
 
 	/**
@@ -151,7 +148,21 @@ public class RecentGroupManager {
 				continue;
 			}
 
-			if (!_isShowSite(group, portletRequest, permissionChecker)) {
+			Layout layout = _layoutLocalService.fetchFirstLayout(
+				group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if ((layout == null) ||
+				!LayoutPermissionUtil.contains(
+					permissionChecker, layout, true, ActionKeys.VIEW)) {
+
+				continue;
+			}
+
+			String groupURL = _groupURLProvider.getGroupURL(
+				group, portletRequest);
+
+			if (Validator.isNull(groupURL)) {
 				continue;
 			}
 
@@ -182,29 +193,6 @@ public class RecentGroupManager {
 
 	private String _getRecentGroupsValue(HttpServletRequest request) {
 		return SessionClicks.get(request, _KEY_RECENT_GROUPS, null);
-	}
-
-	private boolean _isShowSite(
-			Group group, PortletRequest portletRequest,
-			PermissionChecker permissionChecker)
-		throws PortalException {
-
-		Layout layout = _layoutLocalService.fetchFirstLayout(
-			group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-		if (layout != null) {
-			return LayoutPermissionUtil.contains(
-				permissionChecker, layout, true, ActionKeys.VIEW);
-		}
-
-		String groupURL = _groupURLProvider.getGroupURL(group, portletRequest);
-
-		if (Validator.isNull(groupURL)) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private void _setRecentGroupsValue(

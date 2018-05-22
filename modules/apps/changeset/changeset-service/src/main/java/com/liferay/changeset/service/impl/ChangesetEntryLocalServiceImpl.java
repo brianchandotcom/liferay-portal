@@ -20,8 +20,6 @@ import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.base.ChangesetEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan
@@ -77,10 +75,12 @@ public class ChangesetEntryLocalServiceImpl
 			return changesetEntry;
 		}
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		ChangesetCollection changesetCollection =
+			changesetCollectionLocalService.getChangesetCollection(
+				changesetCollectionId);
 
-		User user = permissionChecker.getUser();
+		User user = userLocalService.getDefaultUser(
+			changesetCollection.getCompanyId());
 
 		return changesetEntryLocalService.addChangesetEntry(
 			user.getUserId(), changesetCollectionId, classNameId, classPK);

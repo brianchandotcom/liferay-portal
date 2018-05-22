@@ -53,6 +53,9 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 	public static final String FIELD_COMMERCE_PRICE_LIST_ID =
 		"commercePriceListId";
 
+	public static final String FIELD_EXTERNAL_REFERENCE_CODE =
+		"externalReferenceCode";
+
 	public CommercePriceEntryIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
@@ -87,6 +90,8 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+		addSearchTerm(
+			searchQuery, searchContext, FIELD_EXTERNAL_REFERENCE_CODE, false);
 
 		LinkedHashMap<String, Object> params =
 			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
@@ -123,6 +128,9 @@ public class CommercePriceEntryIndexer extends BaseIndexer<CommercePriceEntry> {
 		document.addKeyword(
 			FIELD_COMMERCE_PRICE_LIST_ID,
 			commercePriceEntry.getCommercePriceEntryId());
+		document.addKeyword(
+			FIELD_EXTERNAL_REFERENCE_CODE,
+			commercePriceEntry.getExternalReferenceCode());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

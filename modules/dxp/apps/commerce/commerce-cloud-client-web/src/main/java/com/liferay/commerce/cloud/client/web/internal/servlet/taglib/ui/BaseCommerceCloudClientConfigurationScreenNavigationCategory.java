@@ -15,7 +15,7 @@
 package com.liferay.commerce.cloud.client.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.cloud.client.web.internal.constants.CommerceCloudClientScreenNavigationConstants;
-import com.liferay.commerce.cloud.client.web.internal.display.context.EditConfigurationDisplayContext;
+import com.liferay.commerce.cloud.client.web.internal.display.context.CommerceCloudClientConfigurationDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -41,7 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class
 	BaseCommerceCloudClientConfigurationScreenNavigationCategory implements
 		ScreenNavigationCategory,
-			ScreenNavigationEntry<EditConfigurationDisplayContext> {
+				ScreenNavigationEntry
+			<CommerceCloudClientConfigurationDisplayContext> {
 
 	@Override
 	public String getEntryKey() {

@@ -15,7 +15,7 @@
 package com.liferay.commerce.cloud.client.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.cloud.client.web.internal.constants.CommerceCloudClientScreenNavigationConstants;
-import com.liferay.commerce.cloud.client.web.internal.display.context.EditConfigurationDisplayContext;
+import com.liferay.commerce.cloud.client.web.internal.display.context.CommerceCloudClientConfigurationDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
@@ -42,9 +42,10 @@ public class
 	@Override
 	public boolean isVisible(
 		User user,
-		EditConfigurationDisplayContext editConfigurationDisplayContext) {
+		CommerceCloudClientConfigurationDisplayContext
+			commerceCloudClientConfigurationDisplayContext) {
 
-		if (editConfigurationDisplayContext.
+		if (commerceCloudClientConfigurationDisplayContext.
 				getForecastingConfiguration() != null) {
 
 			return true;

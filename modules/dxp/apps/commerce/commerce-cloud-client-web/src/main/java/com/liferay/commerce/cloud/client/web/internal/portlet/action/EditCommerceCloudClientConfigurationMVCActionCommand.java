@@ -53,7 +53,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
+public class EditCommerceCloudClientConfigurationMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -227,7 +228,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditConfigurationMVCActionCommand.class);
+		EditCommerceCloudClientConfigurationMVCActionCommand.class);
 
 	@Reference
 	private CommerceCloudClient _commerceCloudClient;

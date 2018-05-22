@@ -17,10 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceCloudClientConfigurationDisplayContext commerceCloudClientConfigurationDisplayContext = (CommerceCloudClientConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceCloudClientConfiguration commerceCloudClientConfiguration = editConfigurationDisplayContext.getCommerceCloudClientConfiguration();
-JSONObject projectConfigurationJSONObject = editConfigurationDisplayContext.getProjectConfiguration();
+CommerceCloudClientConfiguration commerceCloudClientConfiguration = commerceCloudClientConfigurationDisplayContext.getCommerceCloudClientConfiguration();
+JSONObject projectConfigurationJSONObject = commerceCloudClientConfigurationDisplayContext.getProjectConfiguration();
 String redirect = portletDisplay.getURLBack();
 
 String callbackHost = projectConfigurationJSONObject.getString("callbackHost");
@@ -31,7 +31,7 @@ if (Validator.isNotNull(callbackHost)) {
 	pushSynchronizationEnabled = true;
 }
 else {
-	callbackHost = editConfigurationDisplayContext.getDefaultCallbackHost();
+	callbackHost = commerceCloudClientConfigurationDisplayContext.getDefaultCallbackHost();
 }
 %>
 

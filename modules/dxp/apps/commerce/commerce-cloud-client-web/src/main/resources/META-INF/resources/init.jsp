@@ -27,7 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.cloud.client.configuration.CommerceCloudClientConfiguration" %><%@
 page import="com.liferay.commerce.cloud.client.constants.CommerceCloudClientConstants" %><%@
 page import="com.liferay.commerce.cloud.client.web.internal.constants.CommerceCloudClientScreenNavigationConstants" %><%@
-page import="com.liferay.commerce.cloud.client.web.internal.display.context.EditConfigurationDisplayContext" %><%@
+page import="com.liferay.commerce.cloud.client.web.internal.display.context.CommerceCloudClientConfigurationDisplayContext" %><%@
 page import="com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@

@@ -46,9 +46,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Andrea Di Giorgi
  */
-public class EditConfigurationDisplayContext {
+public class CommerceCloudClientConfigurationDisplayContext {
 
-	public EditConfigurationDisplayContext(
+	public CommerceCloudClientConfigurationDisplayContext(
 		CommerceCloudClient commerceCloudClient,
 		ResourceBundleLoader commerceOrderResourceBundleLoader,
 		ConfigurationProvider configurationProvider,
@@ -171,7 +171,7 @@ public class EditConfigurationDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditConfigurationDisplayContext.class);
+		CommerceCloudClientConfigurationDisplayContext.class);
 
 	private final CommerceCloudClient _commerceCloudClient;
 	private CommerceCloudClientConfiguration _commerceCloudClientConfiguration;

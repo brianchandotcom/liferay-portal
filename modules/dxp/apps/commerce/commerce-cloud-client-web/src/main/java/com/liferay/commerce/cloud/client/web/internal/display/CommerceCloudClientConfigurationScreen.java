@@ -16,7 +16,7 @@ package com.liferay.commerce.cloud.client.web.internal.display;
 
 import com.liferay.commerce.cloud.client.constants.CommerceCloudClientConstants;
 import com.liferay.commerce.cloud.client.util.CommerceCloudClient;
-import com.liferay.commerce.cloud.client.web.internal.display.context.EditConfigurationDisplayContext;
+import com.liferay.commerce.cloud.client.web.internal.display.context.CommerceCloudClientConfigurationDisplayContext;
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -77,14 +77,16 @@ public class CommerceCloudClientConfigurationScreen
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		EditConfigurationDisplayContext editConfigurationDisplayContext =
-			new EditConfigurationDisplayContext(
-				_commerceCloudClient, _commerceOrderResourceBundleLoader,
-				_configurationProvider, httpServletRequest, _jsonFactory,
-				_portal, _portletURLFactory);
+		CommerceCloudClientConfigurationDisplayContext
+			commerceCloudClientConfigurationDisplayContext =
+				new CommerceCloudClientConfigurationDisplayContext(
+					_commerceCloudClient, _commerceOrderResourceBundleLoader,
+					_configurationProvider, httpServletRequest, _jsonFactory,
+					_portal, _portletURLFactory);
 
 		httpServletRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, editConfigurationDisplayContext);
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			commerceCloudClientConfigurationDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

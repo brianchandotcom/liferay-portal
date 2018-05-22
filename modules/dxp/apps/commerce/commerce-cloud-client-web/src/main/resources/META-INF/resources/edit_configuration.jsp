@@ -17,16 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceCloudClientConfigurationDisplayContext commerceCloudClientConfigurationDisplayContext = (CommerceCloudClientConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<liferay-portlet:actionURL name="editCommerceCloudClientConfiguration" portletName="<%= ConfigurationAdminPortletKeys.SYSTEM_SETTINGS %>" var="editConfigurationActionURL" />
+<liferay-portlet:actionURL name="editCommerceCloudClientConfiguration" portletName="<%= ConfigurationAdminPortletKeys.SYSTEM_SETTINGS %>" var="editCommerceCloudConfigurationActionURL" />
 
-<aui:form action="<%= editConfigurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault();" + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= editCommerceCloudConfigurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault();" + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-frontend:screen-navigation
-		context="<%= editConfigurationDisplayContext %>"
+		context="<%= commerceCloudClientConfigurationDisplayContext %>"
 		key="<%= CommerceCloudClientScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_CLOUD_CLIENT_CONFIGURATION %>"
 		portletURL="<%= currentURLObj %>"
 	/>

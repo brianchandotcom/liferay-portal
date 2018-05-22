@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceCloudClientConfigurationDisplayContext commerceCloudClientConfigurationDisplayContext = (CommerceCloudClientConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceCloudClientConfiguration commerceCloudClientConfiguration = editConfigurationDisplayContext.getCommerceCloudClientConfiguration();
-JSONObject forecastingConfigurationJSONObject = editConfigurationDisplayContext.getForecastingConfiguration();
-JSONObject projectConfigurationJSONObject = editConfigurationDisplayContext.getProjectConfiguration();
+CommerceCloudClientConfiguration commerceCloudClientConfiguration = commerceCloudClientConfigurationDisplayContext.getCommerceCloudClientConfiguration();
+JSONObject forecastingConfigurationJSONObject = commerceCloudClientConfigurationDisplayContext.getForecastingConfiguration();
+JSONObject projectConfigurationJSONObject = commerceCloudClientConfigurationDisplayContext.getProjectConfiguration();
 String redirect = portletDisplay.getURLBack();
 %>
 
@@ -50,7 +50,7 @@ String redirect = portletDisplay.getURLBack();
 						for (int orderStatus : CommerceCloudClientConstants.ORDER_FORECAST_SYNC_STATUSES) {
 						%>
 
-							<aui:option label="<%= editConfigurationDisplayContext.getOrderStatusLabel(orderStatus) %>" selected="<%= orderStatus == commerceCloudClientConfiguration.forecastingOrderStatus() %>" value="<%= orderStatus %>" />
+							<aui:option label="<%= commerceCloudClientConfigurationDisplayContext.getOrderStatusLabel(orderStatus) %>" selected="<%= orderStatus == commerceCloudClientConfiguration.forecastingOrderStatus() %>" value="<%= orderStatus %>" />
 
 						<%
 						}
@@ -84,7 +84,7 @@ String redirect = portletDisplay.getURLBack();
 					<div id="<portlet:namespace />forecastingItems">
 
 						<%
-						JSONArray forecastingItemsConfigurationJSONArray = editConfigurationDisplayContext.getForecastingItemsConfiguration();
+						JSONArray forecastingItemsConfigurationJSONArray = commerceCloudClientConfigurationDisplayContext.getForecastingItemsConfiguration();
 
 						for (int i = 0; i < forecastingItemsConfigurationJSONArray.length(); i++) {
 							JSONObject jsonObject = forecastingItemsConfigurationJSONArray.getJSONObject(i);
@@ -113,7 +113,7 @@ String redirect = portletDisplay.getURLBack();
 											for (String curTarget : CommerceCloudClientConstants.ORDER_FORECAST_TARGETS) {
 											%>
 
-												<aui:option label="<%= editConfigurationDisplayContext.getForecastingConfigurationLabel(curTarget) %>" selected="<%= curTarget.equals(target) %>" value="<%= curTarget %>" />
+												<aui:option label="<%= commerceCloudClientConfigurationDisplayContext.getForecastingConfigurationLabel(curTarget) %>" selected="<%= curTarget.equals(target) %>" value="<%= curTarget %>" />
 
 											<%
 											}
@@ -127,7 +127,7 @@ String redirect = portletDisplay.getURLBack();
 											for (String curLevel : CommerceCloudClientConstants.ORDER_FORECAST_LEVELS) {
 											%>
 
-												<aui:option label="<%= editConfigurationDisplayContext.getForecastingConfigurationLabel(curLevel) %>" selected="<%= curLevel.equals(level) %>" value="<%= curLevel %>" />
+												<aui:option label="<%= commerceCloudClientConfigurationDisplayContext.getForecastingConfigurationLabel(curLevel) %>" selected="<%= curLevel.equals(level) %>" value="<%= curLevel %>" />
 
 											<%
 											}

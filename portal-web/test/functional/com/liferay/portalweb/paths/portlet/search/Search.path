@@ -24,13 +24,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_INFO</td>
-	<td>//span[contains(@class,'text-truncate')]/span</td>
+	<td>SEARCH_BAR_ELLIPSIS_ICON</td>
+	<td>//header[@class='portlet-topper' and contains(.,'Search Bar')][not(ancestor::header[@id='banner'])]//div[contains(@class,'portlet-options')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_SCOPE_SELECT</td>
-	<td>//select[contains(@name,'SearchPortlet_groupId')]</td>
+	<td>SEARCH_BAR_SCOPE_SELECT</td>
+	<td>//div[not(ancestor::header[@id='banner'])]/select[@title='Scope']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_INFO</td>
+	<td>//span[contains(@class,'text-truncate')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,6 +67,16 @@
 <tr>
 	<td>TEMPLATE_SEARCH_BAR</td>
 	<td>//header[@id='banner']//input[@title='Search'] | //input[contains(@id,'templateSearch') and @type='text'] | //input[contains(@data-qa-id,'searchInput')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_SEARCH_BAR_ELLIPSIS_ICON</td>
+	<td>//header[@class='portlet-topper' and contains(.,'Search')][ancestor::header[@id='banner']]//div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_SEARCH_BAR_SCOPE_SELECT</td>
+	<td>//header[@id='banner']//div/select[@title='Scope']</td>
 	<td></td>
 </tr>
 </tbody>

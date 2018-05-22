@@ -56,11 +56,11 @@
 	{@param text: string}
 	{@param? helpMessage: html|string}
 
-	<div class="source-editor-fixed-text">
-		<span>{$text}</span>
+	<div class="source-editor__fixed-text">
+		<code class="source-editor__fixed-text__content">{$text}</code>
 
 		{if $helpMessage}
-			<span class="pull-right source-editor-fixed-help">
+			<span class="pull-right source-editor__fixed-text__help">
 				<svg class="icon-monospaced lexicon-icon">
 					<use xlink:href="{$spritemap}#question-circle-full"></use>
 				</svg>
@@ -69,7 +69,7 @@
 			{call liferay.frontend.Tooltip.render}
 				{param elementClasses: 'fade' /}
 				{param position: 3 /}
-				{param selector: '.source-editor-fixed-help' /}
+				{param selector: '.source-editor__fixed-text__help' /}
 				{param title: $helpMessage /}
 				{param visible: false /}
 			{/call}

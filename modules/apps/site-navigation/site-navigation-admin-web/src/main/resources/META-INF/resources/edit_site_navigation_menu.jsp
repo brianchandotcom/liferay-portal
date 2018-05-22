@@ -40,7 +40,7 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 					buttonStyle="primary"
 					dropdownItems="<%= siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems() %>"
 					icon="plus"
-					style="secondary"
+					style="primary"
 					triggerCssClasses="nav-btn nav-btn-monospaced"
 				/>
 			</li>

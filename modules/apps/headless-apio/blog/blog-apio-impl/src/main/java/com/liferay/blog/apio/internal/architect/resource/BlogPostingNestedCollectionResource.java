@@ -64,7 +64,7 @@ public class BlogPostingNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addBlogsEntry,
-			_hasPermission.forAddingIn(WebSiteIdentifier.class),
+			_hasPermission.forAddingIn(WebSiteIdentifier.class)::apply,
 			BlogPostingForm::buildForm
 		).build();
 	}

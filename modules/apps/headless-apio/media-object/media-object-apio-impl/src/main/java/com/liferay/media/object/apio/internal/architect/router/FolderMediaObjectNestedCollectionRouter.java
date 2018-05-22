@@ -54,7 +54,7 @@ public class FolderMediaObjectNestedCollectionRouter
 			this::_getPageItems
 		).addCreator(
 			this::_getFileEntry,
-			_hasPermission.forAddingIn(FolderIdentifier.class),
+			_hasPermission.forAddingIn(FolderIdentifier.class)::apply,
 			MediaObjectCreatorForm::buildForm
 		).build();
 	}

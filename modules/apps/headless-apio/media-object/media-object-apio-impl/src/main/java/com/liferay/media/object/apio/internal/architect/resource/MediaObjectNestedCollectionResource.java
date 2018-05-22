@@ -60,7 +60,7 @@ public class MediaObjectNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_getFileEntry,
-			_hasPermission.forAddingIn(RootFolderIdentifier.class),
+			_hasPermission.forAddingIn(RootFolderIdentifier.class)::apply,
 			MediaObjectCreatorForm::buildForm
 		).build();
 	}

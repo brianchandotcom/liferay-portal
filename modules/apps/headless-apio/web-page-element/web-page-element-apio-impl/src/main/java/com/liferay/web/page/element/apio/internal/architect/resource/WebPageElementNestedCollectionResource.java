@@ -60,7 +60,7 @@ public class WebPageElementNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addJournalArticle,
-			_hasPermission.forAddingIn(WebSiteIdentifier.class),
+			_hasPermission.forAddingIn(WebSiteIdentifier.class)::apply,
 			WebPageElementCreatorForm::buildForm
 		).build();
 	}

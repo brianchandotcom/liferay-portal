@@ -22,13 +22,13 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 public class SocialBookmarksTagUtil {
 
 	public static String getClickJSCall(
-		String className, long classPK, String type, String shareURL,
+		String className, long classPK, String type, String postURL,
 		String url) {
 
 		return String.format(
 			"socialBookmarks_handleItemClick('%s', %d, '%s', '%s', '%s');",
 			HtmlUtil.escapeJS(className), classPK, HtmlUtil.escapeJS(type),
-			HtmlUtil.escapeJS(shareURL), HtmlUtil.escapeJS(url));
+			HtmlUtil.escapeJS(postURL), HtmlUtil.escapeJS(url));
 	}
 
 }

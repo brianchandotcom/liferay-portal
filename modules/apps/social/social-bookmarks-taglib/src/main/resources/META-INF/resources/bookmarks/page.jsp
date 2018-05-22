@@ -45,7 +45,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 											dropdownItem.putData("action", "post");
 											dropdownItem.putData("className", className);
 											dropdownItem.putData("classPK", String.valueOf(classPK));
-											dropdownItem.putData("shareURL", socialBookmark.getPostURL(title, url));
+											dropdownItem.putData("postURL", socialBookmark.getPostURL(title, url));
 											dropdownItem.putData("type", type);
 											dropdownItem.putData("url", url);
 											dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
@@ -105,7 +105,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 												dropdownItem.putData("action", "post");
 												dropdownItem.putData("className", className);
 												dropdownItem.putData("classPK", String.valueOf(classPK));
-												dropdownItem.putData("shareURL", socialBookmark.getPostURL(title, url));
+												dropdownItem.putData("postURL", socialBookmark.getPostURL(title, url));
 												dropdownItem.putData("type", type);
 												dropdownItem.putData("url", url);
 												dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
@@ -131,7 +131,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 		outputKey="social_bookmarks"
 	>
 		<aui:script>
-			function socialBookmarks_handleItemClick(className, classPK, type, shareURL, url) {
+			function socialBookmarks_handleItemClick(className, classPK, type, postURL, url) {
 				var SHARE_WINDOW_HEIGHT = 436;
 				var SHARE_WINDOW_WIDTH = 626;
 
@@ -144,7 +144,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 					'width=' + SHARE_WINDOW_WIDTH
 				];
 
-				window.open(shareURL, null, shareWindowFeatures.join()).focus();
+				window.open(postURL, null, shareWindowFeatures.join()).focus();
 
 				Liferay.fire(
 					'socialBookmarks:share',
@@ -175,7 +175,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 							data.className,
 							data.classPK,
 							data.type,
-							data.shareURL,
+							data.postURL,
 							data.url
 						);
 					}

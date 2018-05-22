@@ -813,7 +813,7 @@ public class GitWorkingDirectory {
 		String currentBranchName = currentBranch.getName();
 
 		Branch tempBranch = null;
-		Remote remote = null;
+		Remote senderTempRemote = null;
 
 		try {
 			if (currentBranchName.equals(
@@ -825,12 +825,12 @@ public class GitWorkingDirectory {
 				checkoutBranch(tempBranch);
 			}
 
-			remote = addRemote(
+			senderTempRemote = addRemote(
 				true, "sender-temp-" + System.currentTimeMillis(),
 				pullRequest.getSenderRemoteURL());
 
 			Branch remoteSenderBranch = getBranch(
-				pullRequest.getSenderBranchName(), remote);
+				pullRequest.getSenderBranchName(), senderTempRemote);
 
 			fetch(null, remoteSenderBranch);
 
@@ -864,8 +864,8 @@ public class GitWorkingDirectory {
 				deleteBranch(tempBranch);
 			}
 
-			if (remote != null) {
-				removeRemote(remote);
+			if (senderTempRemote != null) {
+				removeRemote(senderTempRemote);
 			}
 		}
 	}

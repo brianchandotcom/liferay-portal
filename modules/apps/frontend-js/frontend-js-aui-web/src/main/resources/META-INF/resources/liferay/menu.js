@@ -15,7 +15,7 @@ AUI.add(
 
 		var CSS_OPEN = 'open';
 
-		var CSS_PORTLET_TOPPER = '.portlet-topper';
+		var CSS_PORTLET = '.portlet';
 
 		var DEFAULT_ALIGN_POINTS = ['tl', 'bl'];
 
@@ -115,10 +115,10 @@ AUI.add(
 					else {
 						trigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 
-						var portletTopper = trigger.ancestor(CSS_PORTLET_TOPPER);
+						var portlet = trigger.ancestor(CSS_PORTLET);
 
-						if (portletTopper) {
-							portletTopper.removeClass(CSS_OPEN);
+						if (portlet) {
+							portlet.removeClass(CSS_OPEN);
 						}
 					}
 				}
@@ -380,10 +380,10 @@ AUI.add(
 					else {
 						trigger.get(PARENT_NODE).addClass(CSS_OPEN);
 
-						var portletTopper = trigger.ancestor(CSS_PORTLET_TOPPER);
+						var portlet = trigger.ancestor(CSS_PORTLET);
 
-						if (portletTopper) {
-							portletTopper.addClass(CSS_OPEN);
+						if (portlet) {
+							portlet.addClass(CSS_OPEN);
 						}
 					}
 				}
@@ -598,10 +598,10 @@ AUI.add(
 
 						activeTrigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 
-						var portletTopper = activeTrigger.ancestor(CSS_PORTLET_TOPPER);
+						var portlet = activeTrigger.ancestor(CSS_PORTLET);
 
-						if (portletTopper) {
-							portletTopper.removeClass(CSS_OPEN);
+						if (portlet) {
+							portlet.removeClass(CSS_OPEN);
 						}
 					}
 					else {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,6 +44,9 @@ import java.util.List;
  */
 public class AssetCategoryFinderImpl
 	extends AssetCategoryFinderBaseImpl implements AssetCategoryFinder {
+
+	public static final String COUNT_BY_CC =
+		AssetCategoryFinder.class.getName() + ".countByC_C";
 
 	public static final String COUNT_BY_G_C_N =
 		AssetCategoryFinder.class.getName() + ".countByG_C_N";
@@ -142,6 +146,37 @@ public class AssetCategoryFinderImpl
 		}
 	}
 
+	/**
+	 * Returns the number of assetCategories related to an AssetEntry with the
+	 * given "classNameId-classPK". This method also checks inline permissions.
+	 *
+	 * @param classNameId the className of the asset
+	 * @param classPK the classPK of the asset
+	 * @return the number of matching assetCategories
+	 */
+	@Override
+	public int filterCountByC_C(long classNameId, long classPK) {
+		return doCountByC_C(classNameId, classPK, true);
+	}
+
+	/**
+	 * Returns a range of assetCategories related to an AssetEntry with the given
+	 * "classNameId-classPK". This method also checks inline permissions.
+	 *
+	 * @param classNameId the className of the asset
+	 * @param classPK the classPK of the asset
+	 * @param start the lower bound of the range of results
+	 * @param end the upper bound of the range of results (not inclusive)
+	 * @return the matching assetCategories
+	 */
+	@Override
+	public List<AssetCategory> filterFindByC_C(
+		long classNameId, long classPK, int start, int end) {
+
+		return doFindByC_C(
+			classNameId, classPK, start, end, true);
+	}
+
 	@Override
 	public AssetCategory findByG_N(long groupId, String name)
 		throws NoSuchCategoryException {
@@ -190,30 +225,8 @@ public class AssetCategoryFinderImpl
 
 	@Override
 	public List<AssetCategory> findByC_C(long classNameId, long classPK) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_C);
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addEntity("AssetCategory", AssetCategoryImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(classNameId);
-			qPos.add(classPK);
-
-			return q.list();
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
+		return doFindByC_C(
+			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
 	}
 
 	@Override
@@ -261,6 +274,89 @@ public class AssetCategoryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected int doCountByC_C(
+		long classNameId, long classPK, boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_CC);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetCategory.class.getName(),
+					"AssetCategory.categoryId");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+			qPos.add(classPK);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<AssetCategory> doFindByC_C(
+		long classNameId, long classPK, int start, int end,
+			boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_C);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetCategory.class.getName(),
+					"AssetCategory.categoryId");
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("AssetCategory", AssetCategoryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+			qPos.add(classPK);
+
+			return  (List<AssetCategory>)QueryUtil.list(
+				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
 	}
 
 	protected String getJoin(String[] categoryProperties) {

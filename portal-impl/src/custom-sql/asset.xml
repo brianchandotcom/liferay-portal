@@ -1,6 +1,23 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.countByC_C">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT AssetCategory.categoryId) AS COUNT_VALUE
+			FROM
+				AssetEntry
+			INNER JOIN
+				AssetEntryAssetCategoryRel ON
+					AssetEntryAssetCategoryRel.assetEntryId = AssetEntry.entryId
+			INNER JOIN
+				AssetCategory ON
+					AssetCategory.categoryId = AssetEntryAssetCategoryRel.assetCategoryId
+			WHERE
+				(AssetEntry.classNameId = ?) AND
+				(AssetEntry.classPK =  ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder.countByG_C_N">
 		<![CDATA[
 			SELECT

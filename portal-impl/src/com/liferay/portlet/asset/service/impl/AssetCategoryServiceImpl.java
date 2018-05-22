@@ -165,6 +165,37 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			assetCategoryLocalService.getCategories(className, classPK));
 	}
 
+	/**
+	 * Returns a range of assetCategories related to an AssetEntry with the given
+	 * "classNameId-classPK".
+	 *
+	 * @param classNameId the className of the asset
+	 * @param classPK the classPK of the asset
+	 * @param start the lower bound of the range of results
+	 * @param end the upper bound of the range of results (not inclusive)
+	 * @return the matching assetCategories
+	 */
+	@Override
+	public List<AssetCategory> getCategories(
+		long classNameId, long classPK, int start, int end) {
+
+		return assetCategoryFinder.filterFindByC_C(
+			classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns the number of assetCategories related to an AssetEntry with the
+	 * given "classNameId-classPK".
+	 *
+	 * @param classNameId the className of the asset
+	 * @param classPK the classPK of the asset
+	 * @return the number of matching assetCategories
+	 */
+	@Override
+	public int getCategoriesCount(long classNameId, long classPK) {
+		return assetCategoryFinder.filterCountByC_C(classNameId, classPK);
+	}
+
 	@Override
 	public AssetCategory getCategory(long categoryId) throws PortalException {
 		AssetCategoryPermission.check(

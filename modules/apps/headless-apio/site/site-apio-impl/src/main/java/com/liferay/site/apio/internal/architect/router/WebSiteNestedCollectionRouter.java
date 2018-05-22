@@ -19,11 +19,10 @@ import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.site.apio.internal.architect.model.GroupWrapper;
+import com.liferay.site.apio.internal.model.GroupWrapper;
 
 import java.util.List;
 import java.util.stream.Collectors;

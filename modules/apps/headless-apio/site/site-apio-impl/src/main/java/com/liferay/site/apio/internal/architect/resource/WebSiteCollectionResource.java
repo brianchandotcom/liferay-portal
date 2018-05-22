@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.site.apio.internal.architect.model.GroupWrapper;
+import com.liferay.site.apio.internal.model.GroupWrapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -120,8 +120,7 @@ public class WebSiteCollectionResource
 		).flatMap(
 			List::stream
 		).map(
-			group ->
-				new GroupWrapper(group, themeDisplay)
+			group -> new GroupWrapper(group, themeDisplay)
 		).collect(
 			Collectors.toList()
 		);

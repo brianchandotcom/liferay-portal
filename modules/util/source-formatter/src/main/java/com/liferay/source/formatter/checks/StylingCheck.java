@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.List;
@@ -62,6 +63,10 @@ public abstract class StylingCheck extends BaseFileCheck {
 		Matcher matcher = _booleanPattern.matcher(content);
 
 		if (!matcher.find()) {
+			return content;
+		}
+
+		if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
 			return content;
 		}
 

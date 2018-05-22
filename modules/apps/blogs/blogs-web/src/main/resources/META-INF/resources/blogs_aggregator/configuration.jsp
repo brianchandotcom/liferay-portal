@@ -65,7 +65,7 @@ if (organizationId > 0) {
 					var <portlet:namespace />selectOrganizationButton = document.getElementById('<portlet:namespace />selectOrganizationButton');
 
 					if (<portlet:namespace />selectOrganizationButton) {
-						<portlet:namespace />selectOrganizationButton').addEventListener(
+						<portlet:namespace />selectOrganizationButton.addEventListener(
 							'click',
 							function(event) {
 								Liferay.Util.selectEntity(

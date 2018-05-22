@@ -102,14 +102,30 @@ String jobTitle = BeanParamUtil.getString(selUser, request, "jobTitle");
 
 <aui:script>
 	function <portlet:namespace />resetUser() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.RESET %>';
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+
+			if (cmd) {
+				cmd.setAttribute('value', '<%= Constants.RESET %>');
+
+				submitForm(form);
+			}
+		}
 	}
 
 	function <portlet:namespace />updateUser() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+
+			if (cmd) {
+				cmd.setAttribute('value', '<%= Constants.UPDATE %>');
+
+				submitForm(form);
+			}
+		}
 	}
 </aui:script>

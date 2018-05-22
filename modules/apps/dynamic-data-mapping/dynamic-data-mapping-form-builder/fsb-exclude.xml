@@ -1,0 +1,19 @@
+<FindBugsFilter>
+	<Match>
+		<Bug pattern="XSS_SERVLET" />
+		<Method name="doGet" />
+		<Or>
+			<Class name="com.liferay.dynamic.data.mapping.form.builder.internal.servlet.DDMDataProviderInstanceParameterSettingsServlet" />
+			<Class name="com.liferay.dynamic.data.mapping.form.builder.internal.servlet.DDMDataProviderInstancesServlet" />
+			<Class name="com.liferay.dynamic.data.mapping.form.builder.internal.servlet.DDMFieldSetDefinitionServlet" />
+			<Class name="com.liferay.dynamic.data.mapping.form.builder.internal.servlet.DDMFieldSettingsDDMFormContextServlet" />
+			<Class name="com.liferay.dynamic.data.mapping.form.builder.internal.servlet.DDMFormFunctionsServlet" />
+			<Class name="com.liferay.dynamic.data.mapping.form.builder.internal.servlet.RolesServlet" />
+		</Or>
+	</Match>
+	<Match>
+		<Bug pattern="XSS_SERVLET" />
+		<Class name="com.liferay.dynamic.data.mapping.form.builder.internal.servlet.taglib.DDMFormBuilderTopHeadDynamicInclude" />
+		<Method name="include" />
+	</Match>
+</FindBugsFilter>

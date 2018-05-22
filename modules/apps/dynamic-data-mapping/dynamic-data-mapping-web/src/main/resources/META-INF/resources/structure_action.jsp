@@ -43,7 +43,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 	</c:if>
 
 	<%
-	String editStructureDefaultValuesURL = ddmDisplay.getEditStructureDefaultValuesURL(liferayPortletRequest, liferayPortletResponse, structure, currentURL);
+	String editStructureDefaultValuesURL = PortalUtil.escapeRedirect(ddmDisplay.getEditStructureDefaultValuesURL(liferayPortletRequest, liferayPortletResponse, structure, currentURL));
 	%>
 
 	<c:if test="<%= Validator.isNotNull(editStructureDefaultValuesURL) && DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
@@ -64,7 +64,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 
 		<liferay-ui:icon
 			localizeMessage="<%= false %>"
-			message='<%= LanguageUtil.format(request, "manage-x", ddmDisplay.getViewTemplatesTitle(null, locale)) %>'
+			message='<%= LanguageUtil.format(request, "manage-x", HtmlUtil.escape(ddmDisplay.getViewTemplatesTitle(null, locale))) %>'
 			url="<%= manageViewURL %>"
 		/>
 	</c:if>

@@ -20,7 +20,7 @@
 	cssClass="form-builder-field geolocation-field"
 	data=data
 	helpMessage=escape(fieldStructure.tip)
-	label=label
+	label=escape(label)
 	required=required
 >
 	<div class="form-group">

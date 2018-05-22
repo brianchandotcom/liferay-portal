@@ -45,9 +45,9 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 				<div class="portlet-forms">
 					<div class="ddm-form-basic-info">
 						<div class="container-fluid-1280">
-							<h1 class="ddm-form-name"><%= GetterUtil.getString(title.getString(displayLocale), title.getString(title.getDefaultLocale())) %></h1>
+							<h1 class="ddm-form-name"><%= HtmlUtil.escape(GetterUtil.getString(title.getString(displayLocale), title.getString(title.getDefaultLocale()))) %></h1>
 
-							<h5 class="ddm-form-description"><%= GetterUtil.getString(body.getString(displayLocale), body.getString(body.getDefaultLocale())) %></h5>
+							<h5 class="ddm-form-description"><%= HtmlUtil.escape(GetterUtil.getString(body.getString(displayLocale), body.getString(body.getDefaultLocale()))) %></h5>
 						</div>
 					</div>
 				</div>
@@ -85,7 +85,7 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 							DDMFormValuesValidationException.MustSetValidValue msvv = (DDMFormValuesValidationException.MustSetValidValue)errorException;
 							%>
 
-							<liferay-ui:message arguments="<%= msvv.getFieldName() %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(msvv.getFieldName()) %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">
@@ -94,7 +94,7 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 							DDMFormValuesValidationException.RequiredValue rv = (DDMFormValuesValidationException.RequiredValue)errorException;
 							%>
 
-							<liferay-ui:message arguments="<%= rv.getFieldName() %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(rv.getFieldName()) %>" key="no-value-is-defined-for-field-x" translateArguments="<%= false %>" />
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= NoSuchFormInstanceException.class %>" message="the-selected-form-no-longer-exists" />
@@ -117,10 +117,10 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 
 						<div class="ddm-form-basic-info">
 							<div class="container-fluid-1280">
-								<h1 class="ddm-form-name"><%= HtmlUtil.extractText(HtmlUtil.unescape(formInstance.getName(displayLocale))) %></h1>
+								<h1 class="ddm-form-name"><%= HtmlUtil.escape(formInstance.getName(displayLocale)) %></h1>
 
 								<%
-								String description = HtmlUtil.extractText(HtmlUtil.unescape(formInstance.getDescription(displayLocale)));
+								String description = HtmlUtil.escape(formInstance.getDescription(displayLocale));
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">

@@ -136,7 +136,7 @@ if (ddmDisplay.getTitle(locale) != null) {
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="storage-type"
-						value="<%= LanguageUtil.get(request, structure.getStorageType()) %>"
+						value="<%= LanguageUtil.get(request, HtmlUtil.escape(structure.getStorageType())) %>"
 					/>
 				</c:if>
 
@@ -144,7 +144,7 @@ if (ddmDisplay.getTitle(locale) != null) {
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="type"
-						value="<%= ResourceActionsUtil.getModelResource(locale, structure.getClassName()) %>"
+						value="<%= HtmlUtil.escape(ResourceActionsUtil.getModelResource(locale, structure.getClassName())) %>"
 					/>
 				</c:if>
 

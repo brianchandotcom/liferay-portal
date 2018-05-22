@@ -1,0 +1,6 @@
+com/liferay/dynamic/data/mapping/render/DDMFormFieldRenderer.render(Lcom/liferay/dynamic/data/mapping/model/DDMFormField;Lcom/liferay/dynamic/data/mapping/render/DDMFormFieldRenderingContext;)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/render/DDMFormRendererUtil.render(Lcom/liferay/dynamic/data/mapping/model/DDMForm;Lcom/liferay/dynamic/data/mapping/render/DDMFormFieldRenderingContext;)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/taglib/internal/util/PortletDisplayTemplateUtil.renderDDMTemplate(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;JLjava/util/List;Ljava/util/Map;)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/util/DDMUtil.getDDMFormJSONString(Lcom/liferay/dynamic/data/mapping/model/DDMForm;)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/util/DDMUtil.getDDMFormValuesJSONString(Lcom/liferay/dynamic/data/mapping/storage/DDMFormValues;)Ljava/lang/String;:SAFE
+javax/servlet/jsp/PageContext.findAttribute("locale"):SAFE@org/apache/jsp/html/start_jsp

@@ -1,0 +1,7 @@
+<FindBugsFilter>
+	<Match>
+		<Bug pattern="INSECURE_COOKIE" />
+		<Class name="com.liferay.polls.web.internal.portlet.util.PollsUtil" />
+		<Method name="saveVote" />
+	</Match>
+</FindBugsFilter>

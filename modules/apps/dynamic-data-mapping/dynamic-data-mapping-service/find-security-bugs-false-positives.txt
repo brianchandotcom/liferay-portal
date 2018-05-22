@@ -2,3 +2,4 @@ com/liferay/dynamic/data/mapping/service/permission/DDMStructurePermission.getSt
 com/liferay/dynamic/data/mapping/service/permission/DDMStructurePermission.getStructureModelResourceName(Ljava/lang/String;)Ljava/lang/String;:SAFE
 com/liferay/dynamic/data/mapping/service/permission/DDMTemplatePermission.getTemplateModelResourceName(J)Ljava/lang/String;:SAFE
 com/liferay/dynamic/data/mapping/service/permission/DDMTemplatePermission.getTemplateModelResourceName(Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/security/permission/InlineSQLHelperUtil.replacePermissionCheck(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[J)Ljava/lang/String;:3

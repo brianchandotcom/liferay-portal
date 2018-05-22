@@ -19,14 +19,17 @@ page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContex
 page import="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.DDMFormValues" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.Fields" %><%@
-page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %>
+page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %>
 
 <%
 DDMForm ddmForm = (DDMForm)request.getAttribute("liferay-ddm:html:ddmForm");
 String ddmFormValuesInputName = (String)request.getAttribute("liferay-ddm:html:ddmFormValuesInputName");
 Fields fields = (Fields)request.getAttribute("liferay-ddm:html:fields");
 String mode = (String)request.getAttribute("liferay-ddm:html:mode");
-String randomNamespace = (String)request.getAttribute("liferay-ddm:html:randomNamespace");
+
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ddm_init-ext");
 
 if (requestedLocale == null) {
 	requestedLocale = locale;

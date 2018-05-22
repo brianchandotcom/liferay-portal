@@ -34,8 +34,8 @@
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>
 
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}PreviewContainer">
-			<a href="${themeDisplay.getPathContext()}${imageData}">
-				<img src="${themeDisplay.getPathContext()}${imageData}" />
+			<a href="${themeDisplay.getPathContext()}${escapeAttribute(htmlUtil.escapeJSLink(imageData))}">
+				<img src="${themeDisplay.getPathContext()}${escapeAttribute(imageData)}" />
 			</a>
 		</div>
 

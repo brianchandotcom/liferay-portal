@@ -40,7 +40,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 	searchActionURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"
-	sortingOrder="<%= ddmFormViewFormInstanceRecordsDisplayContext.getOrderByType() %>"
+	sortingOrder="<%= HtmlUtil.escape(ddmFormViewFormInstanceRecordsDisplayContext.getOrderByType()) %>"
 	sortingURL="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSortingURL() %>"
 />
 
@@ -73,7 +73,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 				%>
 
 					<liferay-ui:search-container-column-text
-						name="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField) %>"
+						name="<%= HtmlUtil.escape(ddmFormViewFormInstanceRecordsDisplayContext.getColumnName(ddmFormField)) %>"
 						truncate="<%= true %>"
 						value="<%= ddmFormViewFormInstanceRecordsDisplayContext.getColumnValue(ddmFormFieldsMap.get(ddmFormField.getName()), ddmFormFieldValuesMap.get(ddmFormField.getName())) %>"
 					/>
@@ -94,7 +94,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "form-entries"));
 
 				<liferay-ui:search-container-column-text
 					name="author"
-					value="<%= PortalUtil.getUserName(formInstanceRecord) %>"
+					value="<%= HtmlUtil.escape(PortalUtil.getUserName(formInstanceRecord)) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

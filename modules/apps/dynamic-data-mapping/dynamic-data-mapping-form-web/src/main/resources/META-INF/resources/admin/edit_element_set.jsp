@@ -76,7 +76,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 				<h1>
 					<liferay-ui:input-editor
 						autoCreate="<%= false %>"
-						contents="<%= HtmlUtil.escape(HtmlUtil.unescape(ddmFormAdminDisplayContext.getFormName())) %>"
+						contents="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormName()) %>"
 						cssClass="ddm-form-name"
 						editorName="alloyeditor"
 						name="nameEditor"
@@ -90,7 +90,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 				<h5>
 					<liferay-ui:input-editor
 						autoCreate="<%= false %>"
-						contents="<%= HtmlUtil.escape(HtmlUtil.unescape(ddmFormAdminDisplayContext.getFormDescription())) %>"
+						contents="<%= HtmlUtil.escape(ddmFormAdminDisplayContext.getFormDescription()) %>"
 						cssClass="ddm-form-description h5"
 						editorName="alloyeditor"
 						name="descriptionEditor"

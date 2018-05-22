@@ -37,21 +37,21 @@
 
 		<%= DDMFormRendererUtil.render(ddmForm, ddmFormFieldRenderingContext) %>
 
-		<aui:input name="<%= ddmFormValuesInputName %>" type="hidden" />
+		<aui:input name="<%= HtmlUtil.getAUICompatibleId(ddmFormValuesInputName) %>" type="hidden" />
 
 		<aui:script use="liferay-ddm-form">
 			var liferayDDMForm = new Liferay.DDM.Form(
 				{
 					container: '#<%= randomNamespace %>',
-					ddmFormValuesInput: '#<portlet:namespace /><%= ddmFormValuesInputName %>',
+					ddmFormValuesInput: '#<portlet:namespace /><%= HtmlUtil.getAUICompatibleId(ddmFormValuesInputName) %>',
 					definition: <%= DDMUtil.getDDMFormJSONString(ddmForm) %>,
 					doAsGroupId: <%= scopeGroupId %>,
-					fieldsNamespace: '<%= fieldsNamespace %>',
-					mode: '<%= mode %>',
+					fieldsNamespace: '<%= HtmlUtil.escapeJS(fieldsNamespace) %>',
+					mode: '<%= HtmlUtil.escapeJS(mode) %>',
 					p_l_id: <%= themeDisplay.getPlid() %>,
 					portletNamespace: '<portlet:namespace />',
 					repeatable: <%= repeatable %>,
-					requestedLocale: '<%= requestedLocale %>'
+					requestedLocale: '<%= requestedLocale == null ? StringPool.BLANK : HtmlUtil.escapeJS(requestedLocale.toString()) %>'
 
 					<c:if test="<%= ddmFormValues != null %>">
 						, values: <%= DDMUtil.getDDMFormValuesJSONString(ddmFormValues) %>

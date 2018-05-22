@@ -85,7 +85,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 			<%
 			portletDisplay.setShowBackIcon(true);
-			portletDisplay.setURLBack(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK));
+			portletDisplay.setURLBack(PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)));
 
 			renderResponse.setTitle(ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale));
 			%>
@@ -93,7 +93,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:header
-				backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
+				backURL="<%= PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)) %>"
 				cssClass="container-fluid-1280"
 				title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
 			/>
@@ -208,7 +208,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="mode"
-						value="<%= LanguageUtil.get(request, template.getMode()) %>"
+						value="<%= LanguageUtil.get(request, HtmlUtil.escape(template.getMode())) %>"
 					/>
 				</c:if>
 
@@ -216,7 +216,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="language"
-						value='<%= LanguageUtil.get(request, template.getLanguage() + "[stands-for]") %>'
+						value='<%= LanguageUtil.get(request, HtmlUtil.escape(template.getLanguage()) + "[stands-for]") %>'
 					/>
 				</c:if>
 

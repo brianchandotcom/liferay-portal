@@ -19,27 +19,27 @@
 <aui:script use="liferay-ddm-form-builder, liferay-ddm-form-builder-fieldset, liferay-ddm-form-builder-rule-builder">
 
 	Liferay.namespace('DDM').Settings = {
-		evaluatorURL: '<%= evaluatorURL %>',
-		fieldSetDefinitionURL: '<%= fieldSetDefinitionURL %>',
-		functionsMetadata: <%= functionsMetadata %>,
-		getDataProviderInstancesURL: '<%= dataProviderInstancesURL %>',
-		getDataProviderParametersSettingsURL: '<%= dataProviderInstanceParameterSettingsURL %>',
-		getFieldTypeSettingFormContextURL: '<%= fieldSettingsDDMFormContextURL %>',
-		getFunctionsURL: '<%= functionsURL %>',
-		getRolesURL: '<%= rolesURL %>',
-		portletNamespace: '<%= refererPortletNamespace %>'
+		evaluatorURL: '<%= HtmlUtil.escapeJS(evaluatorURL) %>',
+		fieldSetDefinitionURL: '<%= HtmlUtil.escapeJS(fieldSetDefinitionURL) %>',
+		functionsMetadata: JSON.parse('<%= HtmlUtil.escapeJS(functionsMetadata) %>'),
+		getDataProviderInstancesURL: '<%= HtmlUtil.escapeJS(dataProviderInstancesURL) %>',
+		getDataProviderParametersSettingsURL: '<%= HtmlUtil.escapeJS(dataProviderInstanceParameterSettingsURL) %>',
+		getFieldTypeSettingFormContextURL: '<%= HtmlUtil.escapeJS(fieldSettingsDDMFormContextURL) %>',
+		getFunctionsURL: '<%= HtmlUtil.escapeJS(functionsURL) %>',
+		getRolesURL: '<%= HtmlUtil.escapeJS(rolesURL) %>',
+		portletNamespace: '<%= HtmlUtil.escapeJS(refererPortletNamespace) %>'
 	};
 
 	Liferay.DDM.FieldSets.register(<%= fieldSets %>);
 
 	Liferay.component(
-		'<%= refererPortletNamespace %>formBuilder',
+		'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder',
 		function() {
 			return new Liferay.DDM.FormBuilder(
 				{
-					context: <%= formBuilderContext %>,
-					defaultLanguageId: '<%= defaultLanguageId %>',
-					editingLanguageId: '<%= editingLanguageId %>',
+					context: JSON.parse('<%= HtmlUtil.escapeJS(formBuilderContext) %>'),
+					defaultLanguageId: '<%= HtmlUtil.escapeJS(defaultLanguageId) %>',
+					editingLanguageId: '<%= HtmlUtil.escapeJS(editingLanguageId) %>',
 					showPagination: <%= showPagination %>
 				}
 			);
@@ -47,12 +47,12 @@
 	);
 
 	Liferay.component(
-		'<%= refererPortletNamespace %>ruleBuilder',
+		'<%= HtmlUtil.escapeJS(refererPortletNamespace) %>ruleBuilder',
 		function() {
 			return new Liferay.DDM.FormBuilderRuleBuilder(
 				{
-					formBuilder: Liferay.component('<%= refererPortletNamespace %>formBuilder'),
-					rules: <%= serializedDDMFormRules %>,
+					formBuilder: Liferay.component('<%= HtmlUtil.escapeJS(refererPortletNamespace) %>formBuilder'),
+					rules: JSON.parse('<%= HtmlUtil.escapeJS(serializedDDMFormRules) %>'),
 					visible: false
 				}
 			);

@@ -1,0 +1,11 @@
+com/liferay/dynamic/data/lists/model/DDLRecordSet.getDescription(Ljava/util/Locale;)Ljava/lang/String;:1
+com/liferay/dynamic/data/lists/model/DDLRecordSet.getName(Ljava/util/Locale;)Ljava/lang/String;:1
+com/liferay/dynamic/data/lists/model/DDLRecordVersion.getVersion()Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/lists/web/internal/template/DDLDisplayTemplateTransformer.transform()Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/storage/DDMFormValues.getDefaultLocale()Ljava/util/Locale;:SAFE
+com/liferay/portal/kernel/model/Portlet.getPortletName()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/LocaleUtil.fromLanguageId(Ljava/lang/String;)Ljava/util/Locale;:0
+com/liferay/portal/kernel/util/LocaleUtil.getSiteDefault()Ljava/util/Locale;:SAFE
+com/liferay/dynamic/data/mapping/storage/DDMFormValues.getAvailableLocales()Ljava/util/Set;:SAFE
+javax/servlet/jsp/PageContext.findAttribute("locale"):SAFE@org/apache/jsp/view_005fspreadsheet_005frecords_jsp
+Lcom/liferay/portal/kernel/json/JSONArray;:SAFE

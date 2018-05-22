@@ -1,0 +1,7 @@
+<FindBugsFilter>
+	<Match>
+		<Bug pattern="XSS_SERVLET" />
+		<Class name="com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.DDMFormRendererTopHeadDynamicInclude" />
+		<Method name="include" />
+	</Match>
+</FindBugsFilter>

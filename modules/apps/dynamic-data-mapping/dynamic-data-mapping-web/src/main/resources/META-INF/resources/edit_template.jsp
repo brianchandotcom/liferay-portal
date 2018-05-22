@@ -115,7 +115,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 				String[] imageExtensions = ddmDisplayContext.smallImageExtensions();
 				%>
 
-				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, StringPool.COMMA) %>.
+				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= HtmlUtil.escape(StringUtil.merge(imageExtensions, StringPool.COMMA)) %>.
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
@@ -145,7 +145,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 						<%
 						portletDisplay.setShowBackIcon(true);
-						portletDisplay.setURLBack(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource));
+						portletDisplay.setURLBack(PortalUtil.escapeRedirect(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource)));
 
 						renderResponse.setTitle(title);
 						%>
@@ -153,7 +153,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:header
-							backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>"
+							backURL="<%= PortalUtil.escapeRedirect(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource)) %>"
 							localizeTitle="<%= false %>"
 							showBackURL="<%= showBackURL %>"
 							title="<%= title %>"

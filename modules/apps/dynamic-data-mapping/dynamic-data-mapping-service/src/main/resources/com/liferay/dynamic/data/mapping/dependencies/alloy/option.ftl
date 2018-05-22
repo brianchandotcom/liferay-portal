@@ -35,9 +35,9 @@
 
 	<@liferay_aui.option
 		cssClass=cssClass
-		label=escapeAttribute(fieldStructure.label)
+		label=escape(fieldStructure.label)
 		selected=selected
-		value=escape(fieldStructure.value)
+		value=escapeAttribute(fieldStructure.value)
 	/>
 <#else>
 	<#assign

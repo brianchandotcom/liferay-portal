@@ -77,8 +77,8 @@ if (Validator.isNotNull(scriptContent)) {
 									collapsible="<%= true %>"
 									cssClass="palette-section"
 									extended="<%= false %>"
-									id="<%= templateVariableGroup.getLabel() %>"
-									title="<%= LanguageUtil.get(request, templateHandlerResourceBundle, templateVariableGroup.getLabel()) %>"
+									id="<%= HtmlUtil.getAUICompatibleId(templateVariableGroup.getLabel()) %>"
+									title="<%= LanguageUtil.get(request, templateHandlerResourceBundle, HtmlUtil.escape(templateVariableGroup.getLabel())) %>"
 								>
 									<ul class="palette-item-content">
 
@@ -615,7 +615,7 @@ private String _getPaletteItemTitle(HttpServletRequest request, ResourceBundle r
 
 	if (Validator.isNotNull(help)) {
 		sb.append("<p>");
-		sb.append(LanguageUtil.get(request, resourceBundle, help));
+		sb.append(HtmlUtil.escape(LanguageUtil.get(request, resourceBundle, help)));
 		sb.append("</p>");
 	}
 
@@ -634,7 +634,7 @@ private String _getPaletteItemTitle(HttpServletRequest request, ResourceBundle r
 		sb.append(LanguageUtil.get(request, "variable"));
 		sb.append(StringPool.COLON);
 		sb.append("&nbsp;");
-		sb.append(templateVariableDefinition.getName());
+		sb.append(HtmlUtil.escape(templateVariableDefinition.getName()));
 	}
 
 	sb.append(_getPaletteItemTitle(request, "class", templateVariableDefinition.getClazz()));

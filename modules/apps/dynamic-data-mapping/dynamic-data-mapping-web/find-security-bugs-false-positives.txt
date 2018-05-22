@@ -1,0 +1,17 @@
+com/liferay/dynamic/data/mapping/model/DDMForm.getAvailableLocales()Ljava/util/Set;:SAFE
+com/liferay/dynamic/data/mapping/model/DDMForm.getDefaultLocale()Ljava/util/Locale;:SAFE
+com/liferay/dynamic/data/mapping/model/DDMStructureVersion.getVersion()Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/model/DDMTemplateVersion.getVersion()Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/render/DDMFormFieldRenderer.render(Lcom/liferay/dynamic/data/mapping/model/DDMFormField;Lcom/liferay/dynamic/data/mapping/render/DDMFormFieldRenderingContext;)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/util/DDMDisplay.getTemplateLanguageTypes()Ljava/util/Set;:SAFE
+com/liferay/dynamic/data/mapping/web/internal/display/context/DDMDisplayContext.getAutocompleteJSON(Ljavax/servlet/http/HttpServletRequest;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/dynamic/data/mapping/web/internal/display/context/DDMDisplayContext.getStorageTypes()Ljava/util/Set;:SAFE
+com/liferay/portal/kernel/exception/LocaleException.getSourceAvailableLocales()Ljava/util/Collection;:SAFE
+com/liferay/portal/kernel/exception/LocaleException.getTargetAvailableLocales()Ljava/util/Collection;:SAFE
+com/liferay/portal/kernel/json/JSONArray.toString()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/json/JSONObject.toString()Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/security/permission/ResourceActionsUtil.getModelResource(Ljava/util/Locale;Ljava/lang/String;)Ljava/lang/String;:SAFE
+com/liferay/portal/kernel/util/LocaleUtil.getSiteDefault()Ljava/util/Locale;:SAFE
+com/liferay/taglib/search/ResultRow.getParameter("rowHREF"):SAFE@org/apache/jsp/template_005fdescription_jsp
+Lcom/liferay/portal/kernel/json/JSONArray;:SAFE
+Lcom/liferay/portal/kernel/json/JSONObject;:SAFE

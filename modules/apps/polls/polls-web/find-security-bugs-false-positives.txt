@@ -1,0 +1,5 @@
+com/liferay/polls/model/PollsQuestion.getDescription(Ljava/util/Locale;)Ljava/lang/String;:1
+com/liferay/polls/model/PollsChoice.getDescription(Ljava/util/Locale;)Ljava/lang/String;:1
+com/liferay/polls/model/PollsChoice.getName()Ljava/lang/String;:0
+com/liferay/portal/kernel/theme/ThemeDisplay.getURLSignIn()Ljava/lang/String;:SAFE
+com/liferay/polls/web/internal/security/permission/resource/PollsQuestionPermission.contains(Lcom/liferay/portal/kernel/security/permission/PermissionChecker;Lcom/liferay/polls/model/PollsQuestion;Ljava/lang/String;)Z:1#1

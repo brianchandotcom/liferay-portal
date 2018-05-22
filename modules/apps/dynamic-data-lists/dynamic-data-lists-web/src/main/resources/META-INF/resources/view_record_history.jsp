@@ -40,7 +40,7 @@ for (DDLRecordVersion recordVersion : recordVersions) {
 
 		<p>
 			<small class="text-muted">
-				<liferay-ui:message key="author" />: <%= recordVersion.getUserName() %>
+				<liferay-ui:message key="author" />: <%= HtmlUtil.escape(recordVersion.getUserName()) %>
 			</small>
 		</p>
 

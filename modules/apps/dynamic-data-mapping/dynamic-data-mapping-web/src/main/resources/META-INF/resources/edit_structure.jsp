@@ -111,7 +111,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
 			%>
 
-			<liferay-ui:message arguments="<%= StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
@@ -122,7 +122,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
 			%>
 
-			<liferay-ui:message arguments="<%= mndfn.getFieldName() %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(mndfn.getFieldName()) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field" />
@@ -133,7 +133,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
 			%>
 
-			<liferay-ui:message arguments="<%= msoff.getFieldName() %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(msoff.getFieldName()) %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
@@ -142,7 +142,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
 			%>
 
-			<liferay-ui:message arguments="<%= msvcffn.getFieldName() %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= LocaleException.class %>">
@@ -180,7 +180,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 					<%
 					portletDisplay.setShowBackIcon(true);
-					portletDisplay.setURLBack(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK));
+					portletDisplay.setURLBack(PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)));
 
 					renderResponse.setTitle(title);
 					%>
@@ -188,7 +188,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:header
-						backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
+						backURL="<%= PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)) %>"
 						localizeTitle="<%= localizeTitle %>"
 						showBackURL="<%= showBackURL %>"
 						title="<%= title %>"
@@ -301,12 +301,12 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 						</aui:row>
 
 						<c:if test="<%= !ddmDisplayContext.autogenerateStructureKey() %>">
-							<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
+							<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", HtmlUtil.escape(ddmDisplay.getStructureName(locale)), false) %>' name="structureKey" />
 						</c:if>
 
 						<aui:input name="description" />
 
-						<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
+						<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", HtmlUtil.escape(ddmDisplay.getStructureName(locale)), false) %>'>
 							<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
 							<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= parentStructureName %>" />
@@ -342,7 +342,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(true);" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
 		</c:if>
 
-		<aui:button href="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>" type="cancel" />
+		<aui:button href="<%= PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)) %>" type="cancel" />
 	</aui:button-row>
 </div>
 

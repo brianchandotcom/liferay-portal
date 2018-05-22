@@ -22,7 +22,7 @@
 	DDMFormLayoutValidationException.MustNotDuplicateFieldName mndfn = (DDMFormLayoutValidationException.MustNotDuplicateFieldName)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= HtmlUtil.escape(StringUtil.merge(mndfn.getDuplicatedFieldNames(), StringPool.COMMA_AND_SPACE)) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= DDMFormValidationException.class %>" message="please-enter-a-valid-form-definition" />
@@ -33,7 +33,7 @@
 	DDMFormValidationException.MustNotDuplicateFieldName mndfn = (DDMFormValidationException.MustNotDuplicateFieldName)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= mndfn.getFieldName() %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= HtmlUtil.escape(mndfn.getFieldName()) %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field" />
@@ -44,7 +44,7 @@
 	DDMFormValidationException.MustSetOptionsForField msoff = (DDMFormValidationException.MustSetOptionsForField)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= msoff.getFieldName() %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= HtmlUtil.escape(msoff.getFieldName()) %>" key="at-least-one-option-should-be-set-for-field-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidCharactersForFieldName.class %>">
@@ -53,7 +53,7 @@
 	DDMFormValidationException.MustSetValidCharactersForFieldName msvcffn = (DDMFormValidationException.MustSetValidCharactersForFieldName)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= msvcffn.getFieldName() %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= HtmlUtil.escape(msvcffn.getFieldName()) %>" key="invalid-characters-were-defined-for-field-name-x" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidValidationExpression.class %>">
@@ -62,7 +62,7 @@
 	DDMFormValidationException.MustSetValidValidationExpression msvve = (DDMFormValidationException.MustSetValidValidationExpression)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= new Object[] {msvve.getValidationExpression(), msvve.getFieldName()} %>" key="the-validation-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(msvve.getValidationExpression()), HtmlUtil.escape(msvve.getFieldName())} %>" key="the-validation-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= DDMFormValidationException.MustSetValidVisibilityExpression.class %>">
@@ -71,7 +71,7 @@
 	DDMFormValidationException.MustSetValidVisibilityExpression msvve = (DDMFormValidationException.MustSetValidVisibilityExpression)errorException;
 	%>
 
-	<liferay-ui:message arguments="<%= new Object[] {msvve.getVisibilityExpression(), msvve.getFieldName()} %>" key="the-visibility-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(msvve.getVisibilityExpression()), HtmlUtil.escape(msvve.getFieldName())} %>" key="the-visibility-expression-x-set-for-field-x-is-invalid" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= FormInstanceFieldSettingsException.MustSetValidValueForProperties.class %>">
@@ -86,7 +86,7 @@
 	for (Entry<String, Set<String>> fieldNameProperties : fieldNamePropertiesMap.entrySet()) {
 		Set<String> value = fieldNameProperties.getValue();
 
-		sb.append(LanguageUtil.format(request, (value.size() == 1 ? "the-setting-x-set-for-field-x-is-invalid" :"the-settings-x-set-for-field-x-are-invalid"), new Object[] {StringUtil.merge(value, StringPool.COMMA_AND_SPACE), fieldNameProperties.getKey()}, false));
+		sb.append(LanguageUtil.format(request, (value.size() == 1 ? "the-setting-x-set-for-field-x-is-invalid" :"the-settings-x-set-for-field-x-are-invalid"), new Object[] {HtmlUtil.escape(StringUtil.merge(value, StringPool.COMMA_AND_SPACE)), HtmlUtil.escape(fieldNameProperties.getKey())}, false));
 
 		sb.append(StringPool.SPACE);
 	}

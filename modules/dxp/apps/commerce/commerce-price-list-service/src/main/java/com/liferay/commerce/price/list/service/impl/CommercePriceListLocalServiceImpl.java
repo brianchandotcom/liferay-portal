@@ -480,7 +480,7 @@ public class CommercePriceListLocalServiceImpl
 		queryConfig.setScoreEnabled(false);
 
 		Sort sort = SortFactoryUtil.create(
-			Field.PRIORITY + "_Number_sortable", false);
+			Field.PRIORITY + "_Number_sortable", true);
 
 		searchContext.setSorts(sort);
 

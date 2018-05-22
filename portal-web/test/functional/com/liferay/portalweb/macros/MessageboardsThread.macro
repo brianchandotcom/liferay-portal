@@ -914,8 +914,9 @@
 			<var name="key_mbAttachmentFile" value="${mbAttachmentFile}" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Restore" />
+			<var name="rowEntry" value="${mbAttachmentFile}" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />

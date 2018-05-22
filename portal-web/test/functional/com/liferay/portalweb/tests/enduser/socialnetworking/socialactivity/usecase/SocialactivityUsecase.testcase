@@ -501,7 +501,7 @@
 
 		<var name="key_portletName" value="Group Statistics" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#BODY" value1="Please configure this portlet and select at least one activity counter." />
+		<execute function="AssertTextEquals" locator1="Portlet#BODY" value1="Please configure this widget and select at least one activity counter." />
 
 		<execute macro="SocialActivity#updateGroupStatisticsConfiguration">
 			<var name="chartType" value="column diagram" />

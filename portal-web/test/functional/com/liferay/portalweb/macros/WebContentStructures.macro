@@ -23,7 +23,7 @@
 	</command>
 
 	<command name="addFavoriteStructure">
-		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="You can add as many as 7 favorites in your quick menu." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#INFO" value1="You can add as many as 7 favorites in your quick menu." />
 
 		<execute function="Click" locator1="Icon#ADD_FAVORITE">
 			<var name="key_rowEntry" value="${structureName}" />
@@ -309,8 +309,8 @@
 			<var name="key_menuItem" value="More" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="Favorite">
-			<var name="key_menuItem" value="Favorite" />
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="FAVORITES">
+			<var name="key_menuItem" value="favorites" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="${structureName}">

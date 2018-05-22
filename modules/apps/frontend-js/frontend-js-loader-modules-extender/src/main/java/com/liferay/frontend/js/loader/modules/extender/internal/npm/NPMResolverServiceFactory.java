@@ -84,8 +84,7 @@ public class NPMResolverServiceFactory implements ServiceFactory<NPMResolver> {
 
 			sb.append(version);
 
-			return new NPMResolverImpl(
-				sb.toString(), _jsonFactory, _npmRegistry);
+			return new NPMResolverImpl(sb.toString(), _npmRegistry);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

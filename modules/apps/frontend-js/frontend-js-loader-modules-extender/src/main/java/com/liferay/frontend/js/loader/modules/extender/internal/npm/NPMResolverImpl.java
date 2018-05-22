@@ -20,7 +20,6 @@ import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
@@ -29,11 +28,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class NPMResolverImpl implements NPMResolver {
 
 	public NPMResolverImpl(
-		String jsPackageIdentifier, JSONFactory jsonFactory,
-		NPMRegistry npmRegistry) {
+		String jsPackageIdentifier, NPMRegistry npmRegistry) {
 
 		_jsPackageIdentifier = jsPackageIdentifier;
-		_jsonFactory = jsonFactory;
 		_npmRegistry = npmRegistry;
 	}
 
@@ -84,7 +81,6 @@ public class NPMResolverImpl implements NPMResolver {
 		return sb.toString();
 	}
 
-	private final JSONFactory _jsonFactory;
 	private final String _jsPackageIdentifier;
 	private final NPMRegistry _npmRegistry;
 

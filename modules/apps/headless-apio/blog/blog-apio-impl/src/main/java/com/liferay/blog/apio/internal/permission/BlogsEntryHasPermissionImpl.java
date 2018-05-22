@@ -17,7 +17,6 @@ package com.liferay.blog.apio.internal.permission;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -67,7 +66,7 @@ public class BlogsEntryHasPermissionImpl implements HasPermission<Long, Long> {
 	}
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
-	private ModelResourcePermission<BlogsEntry> _modelResourcePermission;
+	private ModelResourcePermission _modelResourcePermission;
 
 	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

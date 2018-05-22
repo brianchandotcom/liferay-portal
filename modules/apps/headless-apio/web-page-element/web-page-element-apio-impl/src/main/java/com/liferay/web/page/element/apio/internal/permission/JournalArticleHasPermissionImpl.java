@@ -17,7 +17,6 @@ package com.liferay.web.page.element.apio.internal.permission;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -71,6 +70,6 @@ public class JournalArticleHasPermissionImpl
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
-	private ModelResourcePermission<Folder> _modelResourcePermission;
+	private ModelResourcePermission _modelResourcePermission;
 
 }

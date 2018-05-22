@@ -17,11 +17,10 @@ package com.liferay.person.apio.internal.permission;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.service.permission.UserPermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +44,7 @@ public class UserHasPermissionImpl implements HasPermission<Long, Long> {
 	@Override
 	public Boolean forDeleting(Credentials credentials, Long userId) {
 		return Try.fromFallible(
-			() -> _modelResourcePermission.contains(
+			() -> _userPermission.contains(
 				(PermissionChecker)credentials.get(), userId, ActionKeys.DELETE)
 		).orElse(
 			false
@@ -55,16 +54,14 @@ public class UserHasPermissionImpl implements HasPermission<Long, Long> {
 	@Override
 	public Boolean forUpdating(Credentials credentials, Long userId) {
 		return Try.fromFallible(
-			() -> _modelResourcePermission.contains(
+			() -> _userPermission.contains(
 				(PermissionChecker)credentials.get(), userId, ActionKeys.UPDATE)
 		).orElse(
 			false
 		);
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
-	)
-	private ModelResourcePermission<Folder> _modelResourcePermission;
+	@Reference
+	private UserPermission _userPermission;
 
 }

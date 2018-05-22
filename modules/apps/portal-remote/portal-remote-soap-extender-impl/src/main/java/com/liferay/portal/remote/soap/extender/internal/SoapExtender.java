@@ -60,25 +60,7 @@ public class SoapExtender {
 
 		_dependencyManager = new DependencyManager(bundleContext);
 
-		org.apache.felix.dm.Component component =
-			_dependencyManager.createComponent();
-
-		CXFJaxWsServiceRegistrator cxfJaxWsServiceRegistrator =
-			new CXFJaxWsServiceRegistrator();
-
-		cxfJaxWsServiceRegistrator.setSoapDescriptorBuilder(
-			_soapDescriptorBuilder);
-
-		component.setImplementation(cxfJaxWsServiceRegistrator);
-
-		addBusDependencies(component);
-		addJaxWsHandlerServiceDependencies(component);
-		addJaxWsServiceDependencies(component);
-		addSoapDescriptorBuilderServiceDependency(component);
-
-		_dependencyManager.add(component);
-
-		component.start();
+		_enableComponent();
 	}
 
 	protected void addBusDependencies(org.apache.felix.dm.Component component) {
@@ -201,12 +183,38 @@ public class SoapExtender {
 		SoapDescriptorBuilder soapDescriptorBuilder) {
 
 		_soapDescriptorBuilder = soapDescriptorBuilder;
+
+		if (_dependencyManager != null) {
+			_dependencyManager.clear();
+
+			_enableComponent();
+		}
 	}
 
 	protected void unsetSoapDescriptorBuilder(
 		SoapDescriptorBuilder soapDescriptorBuilder) {
+	}
 
-		_soapDescriptorBuilder = null;
+	private void _enableComponent() {
+		org.apache.felix.dm.Component component =
+			_dependencyManager.createComponent();
+
+		CXFJaxWsServiceRegistrator cxfJaxWsServiceRegistrator =
+			new CXFJaxWsServiceRegistrator();
+
+		cxfJaxWsServiceRegistrator.setSoapDescriptorBuilder(
+			_soapDescriptorBuilder);
+
+		component.setImplementation(cxfJaxWsServiceRegistrator);
+
+		addBusDependencies(component);
+		addJaxWsHandlerServiceDependencies(component);
+		addJaxWsServiceDependencies(component);
+		addSoapDescriptorBuilderServiceDependency(component);
+
+		_dependencyManager.add(component);
+
+		component.start();
 	}
 
 	private DependencyManager _dependencyManager;

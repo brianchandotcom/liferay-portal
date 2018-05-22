@@ -920,7 +920,7 @@
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="This message does not have file attachments in the Recycle Bin." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="This message does not have file attachments in the Recycle Bin." />
 
 		<execute macro="IFrame#closeFrame" />
 

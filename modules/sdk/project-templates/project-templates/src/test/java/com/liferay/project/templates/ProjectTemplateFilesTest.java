@@ -63,8 +63,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import org.xml.sax.SAXException;
-
 /**
  * @author Andrea Di Giorgi
  */
@@ -175,7 +173,7 @@ public class ProjectTemplateFilesTest {
 			boolean requireAuthorProperty, String archetypePostGenerateGroovy,
 			Set<String> archetypeResourceExpressions,
 			DocumentBuilder documentBuilder)
-		throws IOException, SAXException {
+		throws Exception {
 
 		Path archetypeMetadataXmlPath = projectTemplateDirPath.resolve(
 			"src/main/resources/META-INF/maven/archetype-metadata.xml");
@@ -268,9 +266,15 @@ public class ProjectTemplateFilesTest {
 
 			boolean anyMatch = stream.anyMatch(
 				expression -> {
-					return expression.contains(name) ||
+					if (expression.contains(name) ||
 						archetypePostGenerateGroovy.contains(
-							"request.properties.get(\"" + name + "\")");
+							"request.properties.get(\"" + name + "\")")) {
+
+						return true;
+					}
+					else {
+						return false;
+					}
 				});
 
 			String message =
@@ -344,13 +348,9 @@ public class ProjectTemplateFilesTest {
 		List<Element> propertyElements = XMLTestUtil.getChildElements(
 			propertiesElement);
 
-		Stream<Element> stream = propertyElements.stream();
-
-		stream.map(
-			Element::getNodeName
-		).forEach(
-			declaredVariables::add
-		);
+		for (Element element : propertyElements) {
+			declaredVariables.add(element.getNodeName());
+		}
 
 		for (String expression : archetypeResourceExpressions) {
 			Assert.assertTrue(

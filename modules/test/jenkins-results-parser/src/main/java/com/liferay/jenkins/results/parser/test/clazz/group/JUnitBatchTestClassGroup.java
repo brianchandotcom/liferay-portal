@@ -620,10 +620,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 		if ((testBatchClassNamesIncludesRequiredPropertyValue != null) &&
 			!testBatchClassNamesIncludesRequiredPropertyValue.isEmpty()) {
-			testClassNamesIncludesRelativeGlobs.addAll(
-				Arrays.asList(
-					testBatchClassNamesIncludesRequiredPropertyValue.split(
-						",")));
+
+			Collections.addAll(
+				testClassNamesIncludesRelativeGlobs,
+				testBatchClassNamesIncludesRequiredPropertyValue.split(","));
 		}
 
 		testClassNamesIncludesPathMatchers.addAll(

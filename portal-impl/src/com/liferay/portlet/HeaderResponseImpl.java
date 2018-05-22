@@ -118,8 +118,8 @@ public class HeaderResponseImpl
 	public PrintWriter getWriter() {
 		if (_calledGetPortletOutputStream) {
 			throw new IllegalStateException(
-				"Unable to obtain Writer because OutputStream is already " +
-					"in use");
+				"Unable to obtain Writer because OutputStream is already in " +
+					"use");
 		}
 
 		if (_printWriter == null) {

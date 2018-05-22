@@ -26,16 +26,16 @@
 		z-index: 10;
 	}
 
-	.source-editor-fixed-text {
-		background-color: white;
-		padding-left: 0.55rem;
+	&__fixed-text {
+		background-color: #FFF;
+		border-bottom: solid thin #F0F0F0;
+		border-left: 5ch solid #F0F0F0;
+		font-size: 0.85rem;
+		line-height: 1.5rem;
+		padding: 0 0 0 0.5ch;
 
-		& + .ace-editor {
-			height: 80%;
+		&__help {
+			margin-right: 0.55rem;
 		}
-	}
-
-	.source-editor-fixed-help {
-		margin-right: 0.55rem;
 	}
 }

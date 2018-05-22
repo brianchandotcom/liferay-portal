@@ -100,6 +100,33 @@ public class RecentGroupManager {
 		return recentGroups;
 	}
 
+	/**
+	 * @deprecated As of 3.0.0, replaced by
+	 * {@link #getRecentGroups(String, PortletRequest)}
+	 */
+	@Deprecated
+	protected List<Group> getRecentGroups(String value) {
+		long[] groupIds = StringUtil.split(value, 0L);
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return Collections.emptyList();
+		}
+
+		List<Group> groups = new ArrayList<>(groupIds.length);
+
+		for (long groupId : groupIds) {
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (!_groupLocalService.isLiveGroupActive(group)) {
+				continue;
+			}
+
+			groups.add(group);
+		}
+
+		return groups;
+	}
+
 	protected List<Group> getRecentGroups(
 			String value, PortletRequest portletRequest)
 		throws Exception {

@@ -70,7 +70,8 @@ public class CommercePriceListServiceSoap {
 		int displayDateMonth, int displayDateDay, int displayDateYear,
 		int displayDateHour, int displayDateMinute, int expirationDateMonth,
 		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		int expirationDateMinute, String externalReferenceCode,
+		boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -78,8 +79,8 @@ public class CommercePriceListServiceSoap {
 					name, priority, displayDateMonth, displayDateDay,
 					displayDateYear, displayDateHour, displayDateMinute,
 					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+					expirationDateHour, expirationDateMinute,
+					externalReferenceCode, neverExpire, serviceContext);
 
 			return com.liferay.commerce.price.list.model.CommercePriceListSoap.toSoapModel(returnValue);
 		}

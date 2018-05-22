@@ -60,7 +60,8 @@ public class CommercePriceListServiceHttp {
 		double priority, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		int expirationDateHour, int expirationDateMinute,
+		String externalReferenceCode, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -72,7 +73,8 @@ public class CommercePriceListServiceHttp {
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					expirationDateMinute, externalReferenceCode, neverExpire,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -369,7 +371,7 @@ public class CommercePriceListServiceHttp {
 	private static final Class<?>[] _addCommercePriceListParameterTypes0 = new Class[] {
 			long.class, String.class, double.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class,
+			int.class, int.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommercePriceListParameterTypes1 = new Class[] {

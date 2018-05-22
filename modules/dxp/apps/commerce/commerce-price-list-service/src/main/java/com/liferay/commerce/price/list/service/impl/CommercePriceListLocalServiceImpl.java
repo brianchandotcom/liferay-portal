@@ -82,7 +82,8 @@ public class CommercePriceListLocalServiceImpl
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			String externalReferenceCode, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce price list
@@ -123,6 +124,7 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceList.setPriority(priority);
 		commercePriceList.setDisplayDate(displayDate);
 		commercePriceList.setExpirationDate(expirationDate);
+		commercePriceList.setExternalReferenceCode(externalReferenceCode);
 
 		if ((expirationDate == null) || expirationDate.after(now)) {
 			commercePriceList.setStatus(WorkflowConstants.STATUS_DRAFT);

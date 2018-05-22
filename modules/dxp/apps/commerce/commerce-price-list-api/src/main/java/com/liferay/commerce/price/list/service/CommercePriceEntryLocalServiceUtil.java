@@ -56,12 +56,13 @@ public class CommercePriceEntryLocalServiceUtil {
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry addCommercePriceEntry(
 		long cpInstanceId, long commercePriceListId,
-		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		String externalReferenceCode, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommercePriceEntry(cpInstanceId, commercePriceListId,
-			price, promoPrice, serviceContext);
+			externalReferenceCode, price, promoPrice, serviceContext);
 	}
 
 	/**

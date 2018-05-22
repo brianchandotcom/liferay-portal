@@ -85,8 +85,9 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry addCommercePriceEntry(long cpInstanceId,
-		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
-		ServiceContext serviceContext) throws PortalException;
+		long commercePriceListId, String externalReferenceCode,
+		BigDecimal price, BigDecimal promoPrice, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce price entry with the primary key. Does not add the commerce price entry to the database.

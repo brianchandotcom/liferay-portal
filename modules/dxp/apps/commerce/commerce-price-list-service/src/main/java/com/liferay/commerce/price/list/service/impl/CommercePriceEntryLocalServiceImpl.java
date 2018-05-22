@@ -60,7 +60,8 @@ public class CommercePriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceEntry addCommercePriceEntry(
-			long cpInstanceId, long commercePriceListId, BigDecimal price,
+			long cpInstanceId, long commercePriceListId,
+			String externalReferenceCode, BigDecimal price,
 			BigDecimal promoPrice, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -84,6 +85,7 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPromoPrice(promoPrice);
 		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
+		commercePriceEntry.setExternalReferenceCode(externalReferenceCode);
 
 		return commercePriceEntryPersistence.update(commercePriceEntry);
 	}

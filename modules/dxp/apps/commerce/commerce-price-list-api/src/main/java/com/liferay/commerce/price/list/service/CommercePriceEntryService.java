@@ -63,8 +63,9 @@ public interface CommercePriceEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommercePriceEntryServiceUtil} to access the commerce price entry remote service. Add custom service methods to {@link com.liferay.commerce.price.list.service.impl.CommercePriceEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommercePriceEntry addCommercePriceEntry(long cpInstanceId,
-		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
-		ServiceContext serviceContext) throws PortalException;
+		long commercePriceListId, String externalReferenceCode,
+		BigDecimal price, BigDecimal promoPrice, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCommercePriceEntry(long commercePriceEntryId)
 		throws PortalException;

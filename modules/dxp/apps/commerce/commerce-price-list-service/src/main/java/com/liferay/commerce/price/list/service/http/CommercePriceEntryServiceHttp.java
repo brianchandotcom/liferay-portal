@@ -57,8 +57,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommercePriceEntryServiceHttp {
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry addCommercePriceEntry(
 		HttpPrincipal httpPrincipal, long cpInstanceId,
-		long commercePriceListId, java.math.BigDecimal price,
-		java.math.BigDecimal promoPrice,
+		long commercePriceListId, String externalReferenceCode,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -67,8 +67,8 @@ public class CommercePriceEntryServiceHttp {
 					_addCommercePriceEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpInstanceId, commercePriceListId, price, promoPrice,
-					serviceContext);
+					cpInstanceId, commercePriceListId, externalReferenceCode,
+					price, promoPrice, serviceContext);
 
 			Object returnObj = null;
 
@@ -422,7 +422,7 @@ public class CommercePriceEntryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommercePriceEntryServiceHttp.class);
 	private static final Class<?>[] _addCommercePriceEntryParameterTypes0 = new Class[] {
-			long.class, long.class, java.math.BigDecimal.class,
+			long.class, long.class, String.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

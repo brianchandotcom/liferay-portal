@@ -14,7 +14,6 @@
 
 package com.liferay.user.associated.data.web.internal.display;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
 /**
@@ -22,26 +21,12 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
  */
 public class ViewUADApplicationsSummaryDisplay {
 
-	public DropdownItemList getManagementBarFilterItems() {
-		return _managementBarFilterItems;
-	}
-
 	public SearchContainer<UADApplicationSummaryDisplay> getSearchContainer() {
 		return _searchContainer;
 	}
 
-	public String getSortingURL() {
-		return _sortingURL;
-	}
-
 	public int getTotalCount() {
 		return _totalCount;
-	}
-
-	public void setManagementBarFilterItems(
-		DropdownItemList managementBarFilterItems) {
-
-		_managementBarFilterItems = managementBarFilterItems;
 	}
 
 	public void setSearchContainer(
@@ -50,17 +35,11 @@ public class ViewUADApplicationsSummaryDisplay {
 		_searchContainer = searchContainer;
 	}
 
-	public void setSortingURL(String sortingURL) {
-		_sortingURL = sortingURL;
-	}
-
 	public void setTotalCount(int totalCount) {
 		_totalCount = totalCount;
 	}
 
-	private DropdownItemList _managementBarFilterItems;
 	private SearchContainer<UADApplicationSummaryDisplay> _searchContainer;
-	private String _sortingURL;
 	private int _totalCount;
 
 }

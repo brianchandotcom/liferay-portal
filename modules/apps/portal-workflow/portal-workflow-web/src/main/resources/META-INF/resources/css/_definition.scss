@@ -1,3 +1,7 @@
+#wrapper .portlet-layout {
+	margin: 0 !important;
+}
+
 .dialog-iframe-popup,
 .info-bar-container {
 	background: #FFF;
@@ -15,6 +19,10 @@
 	position: absolute;
 }
 
+.info-bar-container .info-bar-default .btn-default.sidenav-transition {
+	pointer-events: none;
+}
+
 .info-content {
 	font-size: 0.875rem;
 	font-weight: 100;
@@ -25,36 +33,50 @@
 	font-weight: 600;
 }
 
-.lfr-portal-workflow-sidenav {
-	height: calc(100vh - 150px);
-	margin-top: -20px;
-	opacity: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-	transform: translateX(100%);
-	transition: all 0.5s ease;
-	visibility: hidden;
-	width: 312px;
+.sidenav-container {
+	padding-bottom: 75px;
 
-	.sidebar {
-		background-color: transparent;
-		border-left-width: none;
-		box-shadow: -1px 1px 3px 0 rgba(0, 0, 0, 0.15);
-		color: #869CAD;
+	.sidenav-menu-slider {
+		z-index: 101;
+	}
 
-		.sidebar-header{
-			color:#708290;
+	.sidebar-body {
+		padding-top: 0;
+	}
+
+	.tbar-visible-xs {
+		display: none;
+	}
+
+	@media (max-width: 767px) {
+		.tbar-visible-xs {
+			display: block !important;
 		}
+	}
+
+	@media (max-width: 576px) {
+		.sidenav-visible-xs {
+			width: 100% !important;
+		}
+	}
+
+	.lfr-nav.nav-tabs {
+		margin-bottom: 0;
 	}
 }
 
-.sidenav-container {
-	&.open {
-		.lfr-portal-workflow-sidenav {
-			opacity: 1;
-			transform: translateX(0);
-			visibility: visible;
+.lfr-sidebar-list-group-workflow {
+	&.sidebar-list-group {
+		margin-top: 0;
+	}
+
+	.list-group-item {
+		border-bottom-width: 1px;
+		border-top-width: 1px;
+		box-shadow: none;
+
+		&:first-child {
+			border-top: 0;
 		}
 	}
 }

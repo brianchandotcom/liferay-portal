@@ -34,7 +34,23 @@ public class RelationshipManagerUtil {
 	}
 
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>
+		getInboundRelatedModels(
+			Class<T> modelClass, long primKey, Degree degree) {
+
+		return _relationshipManager.getInboundRelatedModels(
+			modelClass, primKey, degree);
+	}
+
+	public static <T extends ClassedModel> Collection<? extends ClassedModel>
 		getOutboundRelatedModels(Class<T> modelClass, long primKey) {
+
+		return _relationshipManager.getOutboundRelatedModels(
+			modelClass, primKey);
+	}
+
+	public static <T extends ClassedModel> Collection<? extends ClassedModel>
+		getOutboundRelatedModels(
+			Class<T> modelClass, long primKey, Degree degree) {
 
 		return _relationshipManager.getOutboundRelatedModels(
 			modelClass, primKey);
@@ -44,6 +60,13 @@ public class RelationshipManagerUtil {
 		getRelatedModels(Class<T> modelClass, long primKey) {
 
 		return _relationshipManager.getRelatedModels(modelClass, primKey);
+	}
+
+	public static <T extends ClassedModel> Collection<? extends ClassedModel>
+		getRelatedModels(Class<T> modelClass, long primKey, Degree degree) {
+
+		return _relationshipManager.getRelatedModels(
+			modelClass, primKey, degree);
 	}
 
 	public static void setRelationshipManager(

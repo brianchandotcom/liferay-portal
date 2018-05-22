@@ -18,7 +18,6 @@
 
 <%
 String backURL = GetterUtil.getString(request.getAttribute("view.jsp-backURL"));
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 int status = GetterUtil.getInteger(request.getAttribute("view.jsp-status"));
 String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
 String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-viewUsersRedirect"));
@@ -55,8 +54,8 @@ else if (navigation.equals("inactive")) {
 
 request.setAttribute(UsersAdminWebKeys.STATUS, status);
 
-portletURL.setParameter("displayStyle", displayStyle);
-portletURL.setParameter("navigation", navigation);
+PortletURL portletURL = viewUsersManagementToolbarDisplayContext.getPortletURL();
+
 portletURL.setParameter("status", String.valueOf(status));
 
 boolean showDeleteButton = viewUsersManagementToolbarDisplayContext.isShowDeleteButton();
@@ -69,8 +68,7 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 	creationMenu="<%= viewUsersManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= viewUsersManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
-	namespace="<%= renderResponse.getNamespace() %>"
-	searchActionURL="<%= portletURL.toString() %>"
+	searchActionURL="<%= viewUsersManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
 	selectable="<%= true %>"
@@ -85,6 +83,7 @@ boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowResto
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
+	<aui:input name="usersListView" type="hidden" value="<%= usersListView %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<c:if test="<%= Validator.isNotNull(viewUsersRedirect) %>">

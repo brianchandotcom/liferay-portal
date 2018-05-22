@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -165,10 +167,16 @@ public class ViewUsersManagementToolbarDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = (PortletURL)_request.getAttribute(
-			"view.jsp-portletURL");
+		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("displayStyle", _displayStyle);
+
+		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
+
+		if (ArrayUtil.isNotEmpty(keywords)) {
+			portletURL.setParameter("keywords", keywords[keywords.length - 1]);
+		}
+
 		portletURL.setParameter("navigation", _navigation);
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
@@ -179,8 +187,6 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getPortletURL();
-
-		searchActionURL.setParameter("navigation", _navigation);
 
 		return searchActionURL.toString();
 	}

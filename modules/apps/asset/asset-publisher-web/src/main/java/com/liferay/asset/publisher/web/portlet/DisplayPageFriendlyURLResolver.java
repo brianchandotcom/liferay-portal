@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -87,7 +88,8 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
 
 		JournalArticle journalArticle =
-			_journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
+			_journalArticleLocalService.getLatestArticleByUrlTitle(
+				groupId, urlTitle, WorkflowConstants.STATUS_APPROVED);
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(),

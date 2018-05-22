@@ -16,8 +16,11 @@ package com.liferay.asset.publisher.portlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.journal.exception.NoSuchArticleException;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -37,10 +40,13 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.webdav.methods.Method;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -55,10 +61,11 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * Tests whether the friendly URL resolves for existent and nonexistent web
- * content articles in the Asset Publisher.
+ * Tests whether the friendly URL resolves for existent, nonexistent or expired
+ * web content articles in the Asset Publisher.
  *
  * @author Eduardo Garcia
+ * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
 public class DisplayPageFriendlyURLResolverTest {
@@ -73,10 +80,7 @@ public class DisplayPageFriendlyURLResolverTest {
 		ServiceTestUtil.initPermissions();
 
 		_group = GroupTestUtil.addGroup();
-	}
 
-	@Test
-	public void testJournalArticleFriendlyURL() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -116,42 +120,109 @@ public class DisplayPageFriendlyURLResolverTest {
 
 		contentMap.put(LocaleUtil.US, "This test content is in English.");
 
-		JournalTestUtil.addArticle(
+		_article = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, titleMap, titleMap,
 			contentMap, layout.getUuid(), LocaleUtil.US, null, false, false,
 			serviceContext);
+	}
 
+	@Test
+	public void testJournalArticleFriendlyURL() throws Exception {
 		String actualURL = PortalUtil.getActualURL(
 			_group.getGroupId(), false, Portal.PATH_MAIN,
-			"/-/test-journal-article", new HashMap<String, String[]>(),
-			getRequestContext());
+			"/-/test-journal-article", new HashMap<>(), _getRequestContext());
 
 		Assert.assertNotNull(actualURL);
+	}
+
+	@Test
+	public void testJournalArticleFriendlyURLWithExpiredArticle()
+		throws Exception {
+
+		JournalArticleLocalServiceUtil.expireArticle(
+			_article.getUserId(), _article.getGroupId(),
+			_article.getArticleId(), _article.getUrlTitle(),
+			ServiceContextTestUtil.getServiceContext());
+
+		String urlTitle = "/-/test-journal-article";
 
 		try {
 			PortalUtil.getActualURL(
-				_group.getGroupId(), false, Portal.PATH_MAIN,
-				"/-/nonexistent-test-journal-article",
-				new HashMap<String, String[]>(), getRequestContext());
+				_group.getGroupId(), false, Portal.PATH_MAIN, urlTitle,
+				new HashMap<>(), _getRequestContext());
 
 			Assert.fail();
 		}
 		catch (NoSuchLayoutException nsle) {
+			_assertCause(nsle, urlTitle);
 		}
 	}
 
-	protected Map<String, Object> getRequestContext() {
-		Map<String, Object> requestContext = new HashMap<>();
+	@Test
+	public void testJournalArticleFriendlyURLWithNonExistentArticle()
+		throws Exception {
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest(Method.GET, "/");
+		String urlTitle = "/-/nonexistent-test-journal-article";
 
-		requestContext.put("request", mockHttpServletRequest);
+		try {
+			PortalUtil.getActualURL(
+				_group.getGroupId(), false, Portal.PATH_MAIN, urlTitle,
+				new HashMap<>(), _getRequestContext());
 
-		return requestContext;
+			Assert.fail();
+		}
+		catch (NoSuchLayoutException nsle) {
+			_assertCause(nsle, urlTitle);
+		}
 	}
+
+	@Test
+	public void testJournalArticleFriendlyURLWithTrashedArticle()
+		throws Exception {
+
+		JournalArticleLocalServiceUtil.moveArticleToTrash(
+			_article.getUserId(), _article);
+
+		String urlTitle = "/-/test-journal-article";
+
+		try {
+			PortalUtil.getActualURL(
+				_group.getGroupId(), false, Portal.PATH_MAIN, urlTitle,
+				new HashMap<>(), _getRequestContext());
+
+			Assert.fail();
+		}
+		catch (NoSuchLayoutException nsle) {
+			_assertCause(nsle, urlTitle);
+		}
+	}
+
+	private void _assertCause(NoSuchLayoutException nsle, String urlTitle) {
+		Throwable cause = nsle.getCause();
+
+		Assert.assertTrue(
+			String.valueOf(cause), cause instanceof NoSuchArticleException);
+
+		urlTitle = urlTitle.substring(
+			JournalArticleConstants.CANONICAL_URL_SEPARATOR.length());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"No JournalArticle exists with the key {groupId=",
+				String.valueOf(_group.getGroupId()), ", urlTitle=", urlTitle,
+				", status=", String.valueOf(WorkflowConstants.STATUS_APPROVED),
+				"}"),
+			cause.getMessage());
+	}
+
+	private Map<String, Object> _getRequestContext() {
+		return Collections.singletonMap(
+			"request", new MockHttpServletRequest(Method.GET, "/"));
+	}
+
+	private JournalArticle _article;
 
 	@DeleteAfterTestRun
 	private Group _group;

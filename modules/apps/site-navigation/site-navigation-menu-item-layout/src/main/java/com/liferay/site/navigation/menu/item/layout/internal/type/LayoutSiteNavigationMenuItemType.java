@@ -140,7 +140,7 @@ public class LayoutSiteNavigationMenuItemType
 		typeSettingsProperties.fastLoad(
 			siteNavigationMenuItem.getTypeSettings());
 
-		String label = typeSettingsProperties.getProperty("title");
+		String label = typeSettingsProperties.getProperty("name");
 
 		if (Validator.isNotNull(label)) {
 			return label;

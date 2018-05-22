@@ -53,7 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface Staging {
 
-	public <T extends BaseModel> void addEntityToChangesetCollection(T model)
+	public <T extends BaseModel> void addModelToChangesetCollection(T model)
 		throws PortalException;
 
 	public String buildRemoteURL(

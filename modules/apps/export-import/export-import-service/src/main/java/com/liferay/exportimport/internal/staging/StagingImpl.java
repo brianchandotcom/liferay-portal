@@ -187,7 +187,7 @@ import org.osgi.service.component.annotations.Reference;
 public class StagingImpl implements Staging {
 
 	@Override
-	public <T extends BaseModel> void addEntityToChangesetCollection(T model)
+	public <T extends BaseModel> void addModelToChangesetCollection(T model)
 		throws PortalException {
 
 		if (!(model instanceof StagedGroupedModel) ||

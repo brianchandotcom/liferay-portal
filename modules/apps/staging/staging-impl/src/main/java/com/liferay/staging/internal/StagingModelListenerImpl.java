@@ -35,7 +35,7 @@ public class StagingModelListenerImpl<T extends BaseModel<T>>
 	@Override
 	public void onAfterCreate(T model) throws ModelListenerException {
 		try {
-			_staging.addEntityToChangesetCollection(model);
+			_staging.addModelToChangesetCollection(model);
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to add created model to the changeset", pe);
@@ -45,7 +45,7 @@ public class StagingModelListenerImpl<T extends BaseModel<T>>
 	@Override
 	public void onAfterUpdate(T model) throws ModelListenerException {
 		try {
-			_staging.addEntityToChangesetCollection(model);
+			_staging.addModelToChangesetCollection(model);
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to add updated model to the changeset", pe);

@@ -1042,6 +1042,8 @@
 		</for>
 
 		<execute function="Click" locator1="Icon#EXPIRE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="expireSpecificVersionCP">

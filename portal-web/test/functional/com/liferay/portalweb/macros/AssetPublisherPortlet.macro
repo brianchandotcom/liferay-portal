@@ -317,6 +317,8 @@
 			<var name="panel" value="Filter" />
 		</execute>
 
+		<execute function="Click" locator1="APConfiguration#RULE_BUILDER_ADD_CONDITION" />
+
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Categories" />
 
 		<execute macro="AssetCategorization#addCategory">

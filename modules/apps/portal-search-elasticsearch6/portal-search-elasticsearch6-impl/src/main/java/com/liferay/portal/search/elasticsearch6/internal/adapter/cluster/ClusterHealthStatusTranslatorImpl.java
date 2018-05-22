@@ -16,12 +16,16 @@ package com.liferay.portal.search.elasticsearch6.internal.adapter.cluster;
 
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
-public class ClusterHealthStatusTranslator {
+@Component(immediate = true, service = ClusterHealthStatusTranslator.class)
+public class ClusterHealthStatusTranslatorImpl
+	implements ClusterHealthStatusTranslator {
 
-	public static ClusterHealthStatus translate(
+	public ClusterHealthStatus translate(
 		org.elasticsearch.cluster.health.ClusterHealthStatus
 			clusterHealthStatus) {
 

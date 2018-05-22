@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(service = StatsClusterRequestExecutor.class)
+@Component(immediate = true, service = StatsClusterRequestExecutor.class)
 public class StatsClusterRequestExecutorImpl
 	implements StatsClusterRequestExecutor {
 
@@ -64,7 +64,7 @@ public class StatsClusterRequestExecutorImpl
 
 			StatsClusterResponse statsClusterResponse =
 				new StatsClusterResponse(
-					ClusterHealthStatusTranslator.translate(
+					clusterHealthStatusTranslator.translate(
 						clusterHealthStatus),
 					xContentBuilder.string());
 
@@ -83,6 +83,9 @@ public class StatsClusterRequestExecutorImpl
 
 		return clusterAdminClient.prepareClusterStats();
 	}
+
+	@Reference
+	protected ClusterHealthStatusTranslator clusterHealthStatusTranslator;
 
 	@Reference
 	protected ElasticsearchConnectionManager elasticsearchConnectionManager;

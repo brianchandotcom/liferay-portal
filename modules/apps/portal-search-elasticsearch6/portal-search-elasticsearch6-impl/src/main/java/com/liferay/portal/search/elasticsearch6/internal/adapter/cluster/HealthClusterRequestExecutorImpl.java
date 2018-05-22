@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Dylan Rebelak
  */
-@Component(service = HealthClusterRequestExecutor.class)
+@Component(immediate = true, service = HealthClusterRequestExecutor.class)
 public class HealthClusterRequestExecutorImpl
 	implements HealthClusterRequestExecutor {
 
@@ -47,7 +47,7 @@ public class HealthClusterRequestExecutorImpl
 			clusterHealthResponse.getStatus();
 
 		return new HealthClusterResponse(
-			ClusterHealthStatusTranslator.translate(clusterHealthStatus),
+			clusterHealthStatusTranslator.translate(clusterHealthStatus),
 			clusterHealthResponse.toString());
 	}
 
@@ -60,6 +60,9 @@ public class HealthClusterRequestExecutorImpl
 		return clusterAdminClient.prepareHealth(
 			healthClusterRequest.getIndexName());
 	}
+
+	@Reference
+	protected ClusterHealthStatusTranslator clusterHealthStatusTranslator;
 
 	@Reference
 	protected ElasticsearchConnectionManager elasticsearchConnectionManager;

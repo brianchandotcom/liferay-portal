@@ -34,6 +34,8 @@ public class ClusterRequestExecutorFixture {
 		HealthClusterRequestExecutorImpl healthClusterRequestExecutorImpl =
 			new HealthClusterRequestExecutorImpl();
 
+		healthClusterRequestExecutorImpl.clusterHealthStatusTranslator =
+			new ClusterHealthStatusTranslatorImpl();
 		healthClusterRequestExecutorImpl.elasticsearchConnectionManager =
 			_elasticsearchConnectionManager;
 		clusterRequestExecutor.healthClusterRequestExecutor =
@@ -50,6 +52,8 @@ public class ClusterRequestExecutorFixture {
 		StatsClusterRequestExecutorImpl statsClusterRequestExecutorImpl =
 			new StatsClusterRequestExecutorImpl();
 
+		statsClusterRequestExecutorImpl.clusterHealthStatusTranslator =
+			new ClusterHealthStatusTranslatorImpl();
 		statsClusterRequestExecutorImpl.elasticsearchConnectionManager =
 			_elasticsearchConnectionManager;
 		clusterRequestExecutor.statsClusterRequestExecutor =

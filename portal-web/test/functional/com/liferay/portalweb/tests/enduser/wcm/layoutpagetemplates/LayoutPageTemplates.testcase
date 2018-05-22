@@ -841,6 +841,119 @@
 		</execute>
 	</command>
 
+	<command name="ViewDisplayPageViaAssetPublisher" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="Collection#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="Document_1.html" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#selectFragment">
+			<var name="collectionName" value="Collection Name" />
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="DisplayPages#selectAssetType">
+			<var name="assetType" value="Web Content Article" />
+			<var name="subType" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="DisplayPages#mapEditableTextToAsset">
+			<var name="fragmentName" value="Fragment Name" />
+			<var name="itemName" value="Title" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addArticleCP">
+			<var name="webContentContent" value="Webcontent Content" />
+			<var name="webContentTitle" value="Webcontent Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Webcontent Title" />
+		</execute>
+
+		<execute macro="WebContent#editDisplayPage">
+			<var name="pageName" value="Display Page Name" />
+			<var name="pageType" value="Display Pages" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Site Page Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetLinkBehaviorPG">
+			<var name="assetLinkBehavior" value="View in Context" />
+		</execute>
+
+		<execute macro="DisplayPages#viewPGViaAP">
+			<var name="contentList" value="Webcontent Title" />
+			<var name="webContentContent" value="Webcontent Content" />
+			<var name="webContentTitle" value="Webcontent Title" />
+		</execute>
+	</command>
+
 	<command name="ViewDraftFragmentDoesNotDisplayInSidebar" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

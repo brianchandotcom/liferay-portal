@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,7 +48,13 @@ public class RenderResponseImpl
 		return _title;
 	}
 
-	public Boolean getUseDefaultTemplate() {
+	public boolean getUseDefaultTemplate() {
+		if (_useDefaultTemplate == null) {
+			Portlet portlet = getPortlet();
+
+			return portlet.isUseDefaultTemplate();
+		}
+
 		return _useDefaultTemplate;
 	}
 

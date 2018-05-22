@@ -30,11 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 public class RenderRequestFactory {
 
 	public static RenderRequestImpl create(
-			HttpServletRequest request, Portlet portlet,
-			InvokerPortlet invokerPortlet, PortletContext portletContext,
-			WindowState windowState, PortletMode portletMode,
-			PortletPreferences preferences)
-		throws Exception {
+		HttpServletRequest request, Portlet portlet,
+		InvokerPortlet invokerPortlet, PortletContext portletContext,
+		WindowState windowState, PortletMode portletMode,
+		PortletPreferences preferences) {
 
 		return create(
 			request, portlet, invokerPortlet, portletContext, windowState,
@@ -42,11 +41,10 @@ public class RenderRequestFactory {
 	}
 
 	public static RenderRequestImpl create(
-			HttpServletRequest request, Portlet portlet,
-			InvokerPortlet invokerPortlet, PortletContext portletContext,
-			WindowState windowState, PortletMode portletMode,
-			PortletPreferences preferences, long plid)
-		throws Exception {
+		HttpServletRequest request, Portlet portlet,
+		InvokerPortlet invokerPortlet, PortletContext portletContext,
+		WindowState windowState, PortletMode portletMode,
+		PortletPreferences preferences, long plid) {
 
 		RenderRequestImpl renderRequestImpl = new RenderRequestImpl();
 

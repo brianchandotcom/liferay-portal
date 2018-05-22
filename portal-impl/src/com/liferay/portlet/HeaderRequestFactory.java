@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 
@@ -25,23 +27,24 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
-public class ActionRequestFactory {
+@ProviderType
+public class HeaderRequestFactory {
 
-	public static ActionRequestImpl create(
+	public static HeaderRequestImpl create(
 		HttpServletRequest request, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
 		PortletPreferences preferences, long plid) {
 
-		ActionRequestImpl actionRequestImpl = new ActionRequestImpl();
+		HeaderRequestImpl headerRequestImpl = new HeaderRequestImpl();
 
-		actionRequestImpl.init(
+		headerRequestImpl.init(
 			request, portlet, invokerPortlet, portletContext, windowState,
 			portletMode, preferences, plid);
 
-		return actionRequestImpl;
+		return headerRequestImpl;
 	}
 
 }

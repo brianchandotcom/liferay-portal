@@ -5,7 +5,7 @@
 
 <div id="<portlet:namespace />"></div>
 
-#if (${liferayVersion} == "7.1")
+#if (${liferayVersion.startsWith("7.1")})
 <aui:script require="<%= bootstrapRequire %>">
 	bootstrapRequire.default('<portlet:namespace />');
 #else

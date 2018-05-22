@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.SiteConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -86,7 +88,7 @@ public class GroupExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(
 			LanguageUtil.format(
@@ -108,6 +110,19 @@ public class GroupExceptionRequestHandler {
 				new String[] {
 					SiteConstants.NAME_LABEL,
 					SiteConstants.NAME_INVALID_CHARACTERS
+				}));
+
+		sb.append(StringPool.SPACE);
+
+		int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
+			Group.class.getName(), "groupKey");
+
+		sb.append(
+			LanguageUtil.format(
+				themeDisplay.getRequest(),
+				"the-x-cannot-contain-more-than-x-characters",
+				new String[] {
+					SiteConstants.NAME_LABEL, String.valueOf(groupKeyMaxLength)
 				}));
 
 		return sb.toString();

@@ -73,7 +73,7 @@ public class SAXReaderFactory {
 
 		SAXReader saxReader = getSAXReader(xmlReader, validate, secure);
 
-		if ((xmlSchema == null) || (validate == false)) {
+		if ((xmlSchema == null) || !validate) {
 			return saxReader;
 		}
 

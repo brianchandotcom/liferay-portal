@@ -85,7 +85,7 @@ public class DocumentLibraryDDMFormFieldValueTransformer
 
 		boolean tempFile = jsonObject.getBoolean("tempFile");
 
-		if (tempFile == false) {
+		if (!tempFile) {
 			return null;
 		}
 

@@ -176,7 +176,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			start = true;
 		}
 
-		if (start == false) {
+		if (!start) {
 			return false;
 		}
 

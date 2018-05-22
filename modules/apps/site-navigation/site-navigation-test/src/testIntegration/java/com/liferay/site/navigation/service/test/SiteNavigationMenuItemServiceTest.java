@@ -24,8 +24,12 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
+import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
+import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -91,6 +95,35 @@ public class SiteNavigationMenuItemServiceTest {
 			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 			childSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
 			siteNavigationMenuItem.getOrder());
+	}
+
+	@Test(expected = SiteNavigationMenuItemNameException.class)
+	public void testInvalidSiteNavigationMenuItemName() throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("name", StringUtil.randomString(1000));
+
+		SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+			SiteNavigationMenuItemTypeConstants.LAYOUT,
+			typeSettingsProperties.toString(), serviceContext);
+	}
+
+	@Test(expected = InvalidSiteNavigationMenuItemTypeException.class)
+	public void testInvalidSiteNavigationMenuItemType() throws PortalException {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+			"invalidMenuItemType", StringPool.BLANK, serviceContext);
 	}
 
 	@Test

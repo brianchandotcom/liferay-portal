@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
@@ -45,6 +46,7 @@ page import="com.liferay.site.navigation.admin.web.internal.display.context.Site
 page import="com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationMenuPermission" %><%@
 page import="com.liferay.site.navigation.constants.SiteNavigationConstants" %><%@
 page import="com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException" %><%@
+page import="com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %><%@
 page import="com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil" %><%@

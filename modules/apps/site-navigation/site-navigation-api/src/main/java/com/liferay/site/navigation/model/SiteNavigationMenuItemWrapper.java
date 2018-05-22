@@ -69,6 +69,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
 		attributes.put("parentSiteNavigationMenuItemId",
 			getParentSiteNavigationMenuItemId());
+		attributes.put("name", getName());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("order", getOrder());
@@ -132,6 +133,12 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 
 		if (parentSiteNavigationMenuItemId != null) {
 			setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		String type = (String)attributes.get("type");
@@ -206,6 +213,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	@Override
 	public Date getModifiedDate() {
 		return _siteNavigationMenuItem.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this site navigation menu item.
+	*
+	* @return the name of this site navigation menu item
+	*/
+	@Override
+	public String getName() {
+		return _siteNavigationMenuItem.getName();
 	}
 
 	/**
@@ -397,6 +414,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_siteNavigationMenuItem.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this site navigation menu item.
+	*
+	* @param name the name of this site navigation menu item
+	*/
+	@Override
+	public void setName(String name) {
+		_siteNavigationMenuItem.setName(name);
 	}
 
 	@Override

@@ -68,18 +68,6 @@ public class URLSiteNavigationMenuItemType
 	}
 
 	@Override
-	public String getTitle(
-		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.fastLoad(
-			siteNavigationMenuItem.getTypeSettings());
-
-		return typeSettingsProperties.get("name");
-	}
-
-	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeConstants.URL;
 	}

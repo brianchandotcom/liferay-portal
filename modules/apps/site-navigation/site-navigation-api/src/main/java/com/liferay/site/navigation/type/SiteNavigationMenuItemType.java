@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.io.IOException;
@@ -54,6 +55,14 @@ public interface SiteNavigationMenuItemType {
 		return null;
 	}
 
+	public default String getName(String typeSettings) {
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(typeSettings);
+
+		return typeSettingsProperties.get("name");
+	}
+
 	public default String getRegularURL(
 			HttpServletRequest request,
 			SiteNavigationMenuItem siteNavigationMenuItem)
@@ -84,8 +93,11 @@ public interface SiteNavigationMenuItemType {
 		return StringPool.BLANK;
 	}
 
-	public String getTitle(
-		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale);
+	public default String getTitle(
+		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
+
+		return siteNavigationMenuItem.getName();
+	}
 
 	public default String getType() {
 		return StringPool.BLANK;

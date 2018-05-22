@@ -138,6 +138,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 		newSiteNavigationMenuItem.setParentSiteNavigationMenuItemId(RandomTestUtil.nextLong());
 
+		newSiteNavigationMenuItem.setName(RandomTestUtil.randomString());
+
 		newSiteNavigationMenuItem.setType(RandomTestUtil.randomString());
 
 		newSiteNavigationMenuItem.setTypeSettings(RandomTestUtil.randomString());
@@ -169,6 +171,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 			newSiteNavigationMenuItem.getSiteNavigationMenuId());
 		Assert.assertEquals(existingSiteNavigationMenuItem.getParentSiteNavigationMenuItemId(),
 			newSiteNavigationMenuItem.getParentSiteNavigationMenuItemId());
+		Assert.assertEquals(existingSiteNavigationMenuItem.getName(),
+			newSiteNavigationMenuItem.getName());
 		Assert.assertEquals(existingSiteNavigationMenuItem.getType(),
 			newSiteNavigationMenuItem.getType());
 		Assert.assertEquals(existingSiteNavigationMenuItem.getTypeSettings(),
@@ -201,6 +205,15 @@ public class SiteNavigationMenuItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByS_LikeN() throws Exception {
+		_persistence.countByS_LikeN(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByS_LikeN(0L, "null");
+
+		_persistence.countByS_LikeN(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SiteNavigationMenuItem newSiteNavigationMenuItem = addSiteNavigationMenuItem();
 
@@ -228,7 +241,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 			"siteNavigationMenuItemId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "siteNavigationMenuId", true,
-			"parentSiteNavigationMenuItemId", true, "type", true, "order", true);
+			"parentSiteNavigationMenuItemId", true, "name", true, "type", true,
+			"order", true);
 	}
 
 	@Test
@@ -457,6 +471,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 		siteNavigationMenuItem.setSiteNavigationMenuId(RandomTestUtil.nextLong());
 
 		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(RandomTestUtil.nextLong());
+
+		siteNavigationMenuItem.setName(RandomTestUtil.randomString());
 
 		siteNavigationMenuItem.setType(RandomTestUtil.randomString());
 

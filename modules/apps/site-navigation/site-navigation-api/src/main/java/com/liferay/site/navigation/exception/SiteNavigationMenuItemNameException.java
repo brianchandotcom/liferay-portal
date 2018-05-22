@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,32 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+package com.liferay.site.navigation.exception;
 
-<%@ page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
-page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
-page import="com.liferay.site.navigation.constants.SiteNavigationWebKeys" %><%@
-page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %>
+import aQute.bnd.annotation.ProviderType;
 
-<%@ include file="/init-ext.jsp" %>
+import com.liferay.portal.kernel.exception.PortalException;
+
+/**
+ * @author Brian Wing Shun Chan
+ */
+@ProviderType
+public class SiteNavigationMenuItemNameException extends PortalException {
+
+	public SiteNavigationMenuItemNameException() {
+	}
+
+	public SiteNavigationMenuItemNameException(String msg) {
+		super(msg);
+	}
+
+	public SiteNavigationMenuItemNameException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public SiteNavigationMenuItemNameException(Throwable cause) {
+		super(cause);
+	}
+
+}

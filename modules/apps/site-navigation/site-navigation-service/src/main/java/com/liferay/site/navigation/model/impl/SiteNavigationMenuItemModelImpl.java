@@ -79,6 +79,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "siteNavigationMenuId", Types.BIGINT },
 			{ "parentSiteNavigationMenuItemId", Types.BIGINT },
+			{ "name", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
 			{ "order_", Types.INTEGER }
@@ -95,12 +96,13 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("siteNavigationMenuId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentSiteNavigationMenuItemId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("order_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenuItem (siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,type_ VARCHAR(75) null,typeSettings TEXT null,order_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenuItem (siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,name VARCHAR(255) null,type_ VARCHAR(75) null,typeSettings TEXT null,order_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenuItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY siteNavigationMenuItem.siteNavigationMenuItemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SiteNavigationMenuItem.siteNavigationMenuItemId ASC";
@@ -116,9 +118,10 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.site.navigation.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.site.navigation.model.SiteNavigationMenuItem"),
 			true);
-	public static final long PARENTSITENAVIGATIONMENUITEMID_COLUMN_BITMASK = 1L;
-	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 2L;
-	public static final long SITENAVIGATIONMENUITEMID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 1L;
+	public static final long PARENTSITENAVIGATIONMENUITEMID_COLUMN_BITMASK = 2L;
+	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 4L;
+	public static final long SITENAVIGATIONMENUITEMID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -143,6 +146,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setSiteNavigationMenuId(soapModel.getSiteNavigationMenuId());
 		model.setParentSiteNavigationMenuItemId(soapModel.getParentSiteNavigationMenuItemId());
+		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setOrder(soapModel.getOrder());
@@ -221,6 +225,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
 		attributes.put("parentSiteNavigationMenuItemId",
 			getParentSiteNavigationMenuItemId());
+		attributes.put("name", getName());
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("order", getOrder());
@@ -287,6 +292,12 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 		if (parentSiteNavigationMenuItemId != null) {
 			setParentSiteNavigationMenuItemId(parentSiteNavigationMenuItemId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		String type = (String)attributes.get("type");
@@ -461,6 +472,32 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@JSON
 	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
+		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
+	}
+
+	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return "";
@@ -542,6 +579,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		siteNavigationMenuItemImpl.setModifiedDate(getModifiedDate());
 		siteNavigationMenuItemImpl.setSiteNavigationMenuId(getSiteNavigationMenuId());
 		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(getParentSiteNavigationMenuItemId());
+		siteNavigationMenuItemImpl.setName(getName());
 		siteNavigationMenuItemImpl.setType(getType());
 		siteNavigationMenuItemImpl.setTypeSettings(getTypeSettings());
 		siteNavigationMenuItemImpl.setOrder(getOrder());
@@ -617,6 +655,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 		siteNavigationMenuItemModelImpl._setOriginalParentSiteNavigationMenuItemId = false;
 
+		siteNavigationMenuItemModelImpl._originalName = siteNavigationMenuItemModelImpl._name;
+
 		siteNavigationMenuItemModelImpl._columnBitmask = 0;
 	}
 
@@ -662,6 +702,14 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 		siteNavigationMenuItemCacheModel.parentSiteNavigationMenuItemId = getParentSiteNavigationMenuItemId();
 
+		siteNavigationMenuItemCacheModel.name = getName();
+
+		String name = siteNavigationMenuItemCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			siteNavigationMenuItemCacheModel.name = null;
+		}
+
 		siteNavigationMenuItemCacheModel.type = getType();
 
 		String type = siteNavigationMenuItemCacheModel.type;
@@ -685,7 +733,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{siteNavigationMenuItemId=");
 		sb.append(getSiteNavigationMenuItemId());
@@ -705,6 +753,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		sb.append(getSiteNavigationMenuId());
 		sb.append(", parentSiteNavigationMenuItemId=");
 		sb.append(getParentSiteNavigationMenuItemId());
+		sb.append(", name=");
+		sb.append(getName());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", typeSettings=");
@@ -718,7 +768,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.site.navigation.model.SiteNavigationMenuItem");
@@ -761,6 +811,10 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		sb.append(getParentSiteNavigationMenuItemId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
@@ -796,6 +850,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	private long _parentSiteNavigationMenuItemId;
 	private long _originalParentSiteNavigationMenuItemId;
 	private boolean _setOriginalParentSiteNavigationMenuItemId;
+	private String _name;
+	private String _originalName;
 	private String _type;
 	private String _typeSettings;
 	private int _order;

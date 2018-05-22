@@ -222,6 +222,21 @@ public interface SiteNavigationMenuItemModel extends BaseModel<SiteNavigationMen
 		long parentSiteNavigationMenuItemId);
 
 	/**
+	 * Returns the name of this site navigation menu item.
+	 *
+	 * @return the name of this site navigation menu item
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this site navigation menu item.
+	 *
+	 * @param name the name of this site navigation menu item
+	 */
+	public void setName(String name);
+
+	/**
 	 * Returns the type of this site navigation menu item.
 	 *
 	 * @return the type of this site navigation menu item

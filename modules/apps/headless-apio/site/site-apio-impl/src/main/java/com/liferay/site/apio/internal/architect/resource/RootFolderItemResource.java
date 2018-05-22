@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose the root folder resource through
- * a web API. This resource is mapped from the internal model {@code Folder}.
+ * a web API. This resource is mapped from the internal model {@code Group}.
  *
  * @author Eduardo Perez
  */

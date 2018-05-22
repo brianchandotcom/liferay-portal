@@ -35,6 +35,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = MediaObjectHelper.class)
 public class MediaObjectHelper {
 
+	/**
+	 * Adds a file entry and associated metadata. It is created based on a
+	 * {@link MediaObjectCreatorForm} object.
+	 *
+	 * @param  repositoryId the repository ID in which to add the file entry
+	 * @param  folderId the folder ID in which to add the folder
+	 * @param  mediaObjectCreatorForm the form with the new file entry data
+	 * @return the created file entry
+	 * @throws PortalException if an error occurred while adding the file entry
+	 * @review
+	 */
 	public FileEntry addFileEntry(
 			long repositoryId, long folderId,
 			MediaObjectCreatorForm mediaObjectCreatorForm)

@@ -14,7 +14,11 @@
 
 package com.liferay.social.bookmarks.taglib.internal.util;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.social.bookmarks.SocialBookmark;
+
+import java.util.Locale;
 
 /**
  * @author Alejandro Tardín
@@ -29,6 +33,39 @@ public class SocialBookmarksTagUtil {
 			"socialBookmarks_handleItemClick('%s', %d, '%s', '%s', '%s');",
 			HtmlUtil.escapeJS(className), classPK, HtmlUtil.escapeJS(type),
 			HtmlUtil.escapeJS(postURL), HtmlUtil.escapeJS(url));
+	}
+
+	public static DropdownItemList getDropdownItemList(
+		Locale locale, String[] types, String className, long classPK,
+		String title, String url) {
+
+		return new DropdownItemList() {
+			{
+				for (String type : types) {
+					SocialBookmark socialBookmark =
+						SocialBookmarksRegistryUtil.getSocialBookmark(type);
+
+					if (socialBookmark != null) {
+						add(
+							dropdownItem -> {
+								dropdownItem.putData("action", "post");
+								dropdownItem.putData("className", className);
+								dropdownItem.putData(
+									"classPK", String.valueOf(classPK));
+								dropdownItem.putData(
+									"postURL",
+									socialBookmark.getPostURL(title, url));
+								dropdownItem.putData("type", type);
+								dropdownItem.putData("url", url);
+
+								dropdownItem.setHref("#");
+								dropdownItem.setLabel(
+									socialBookmark.getName(locale));
+							});
+					}
+				}
+			}
+		};
 	}
 
 }

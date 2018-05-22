@@ -32,32 +32,9 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 		<c:when test='<%= displayStyle.equals("menu") %>'>
 			<clay:dropdown-menu
 				componentId="<%= dropdownMenuComponentId %>"
-				dropdownItems="<%=
-					new JSPDropdownItemList(pageContext) {
-						{
-							for (int i = 0; i < types.length; i++) {
-								SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
-								final String type = types[i];
-
-								if (socialBookmark != null) {
-									add(
-										dropdownItem -> {
-											dropdownItem.putData("action", "post");
-											dropdownItem.putData("className", className);
-											dropdownItem.putData("classPK", String.valueOf(classPK));
-											dropdownItem.putData("postURL", socialBookmark.getPostURL(title, url));
-											dropdownItem.putData("type", type);
-											dropdownItem.putData("url", url);
-											dropdownItem.setHref("#");
-											dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
-										});
-								}
-							}
-						}
-					}
-				%>"
-				label="<%= LanguageUtil.get(request, "share") %>"
+				dropdownItems="<%= SocialBookmarksTagUtil.getDropdownItemList(request.getLocale(), types, className, classPK, title, url) %>"
 				icon="share"
+				label='<%= LanguageUtil.get(request, "share") %>'
 				style="secondary"
 				triggerCssClasses="btn-outline-borderless btn-sm"
 			/>
@@ -91,32 +68,13 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 			if (types.length > maxInlineItems) {
 			%>
 
+				<%
+				String[] remainingTypes = ArrayUtil.subset(types, maxInlineItems, types.length);
+				%>
+
 				<clay:dropdown-menu
 					componentId="<%= dropdownMenuComponentId %>"
-					dropdownItems="<%=
-						new JSPDropdownItemList(pageContext) {
-							{
-								for (int i = maxInlineItems; i < types.length; i++) {
-									SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
-									final String type = types[i];
-
-									if (socialBookmark != null) {
-										add(
-											dropdownItem -> {
-												dropdownItem.putData("action", "post");
-												dropdownItem.putData("className", className);
-												dropdownItem.putData("classPK", String.valueOf(classPK));
-												dropdownItem.putData("postURL", socialBookmark.getPostURL(title, url));
-												dropdownItem.putData("type", type);
-												dropdownItem.putData("url", url);
-												dropdownItem.setHref("#");
-												dropdownItem.setLabel(socialBookmark.getName(request.getLocale()));
-											});
-									}
-								}
-							}
-						}
-					%>"
+					dropdownItems="<%= SocialBookmarksTagUtil.getDropdownItemList(request.getLocale(), remainingTypes, className, classPK, title, url) %>"
 					icon="share"
 					style="secondary"
 					triggerCssClasses="btn-outline-borderless btn-sm"

@@ -25,9 +25,11 @@
 	{@param? tooltip: string}
 
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-key-value liferay-ddm-form-field-text" data-fieldname="{$name}">
-		{if $showLabel}
+		{if $showLabel or $required}
 			<label class="control-label" for="{$name}">
-				{$label}{sp}
+				{if $showLabel}
+					{$label}{sp}
+				{/if}
 
 				{if $required}
 					<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">

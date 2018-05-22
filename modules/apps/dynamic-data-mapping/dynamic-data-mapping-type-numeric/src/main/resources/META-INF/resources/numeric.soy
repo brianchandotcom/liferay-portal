@@ -28,17 +28,20 @@
 	{let $displayValue: $value ? $value : $predefinedValue ? $predefinedValue : '' /}
 
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-numeric {$tip ? 'liferay-ddm-form-field-has-tip' : ''}" data-fieldname="{$name}">
-		<label for="{$name}">
-			{if $showLabel}
-				{$label}{sp}
-			{/if}
+		{if $showLabel or $required}
+			<label for="{$name}">
+				{if $showLabel}
+					{$label}{sp}
+				{/if}
 
-			{if $required}
-				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
-					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
-				</svg>
-			{/if}
-		</label>
+				{if $required}
+					<svg aria-hidden="true"
+						 class="lexicon-icon lexicon-icon-asterisk reference-mark">
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
+					</svg>
+				{/if}
+			</label>
+		{/if}
 
 		{if $showLabel}
 			{if $tip}

@@ -37,17 +37,21 @@
 				<span aria-hidden="true" class="toggle-switch-bar">
 					<span class="toggle-switch-handle"></span>
 				</span>
-				<span class="toggle-switch-text toggle-switch-text-right">
-					{if $showLabel}
-						{$label}{sp}
-					{/if}
 
-					{if $required}
-						<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
-							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />
+				{if $showLabel or $required}
+					<span class="toggle-switch-text toggle-switch-text-right">
+						{if $showLabel}
+							{$label}{sp}
+						{/if}
+
+						{if $required}
+							<svg aria-hidden="true"
+								 class="lexicon-icon lexicon-icon-asterisk reference-mark">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
 						</svg>
-					{/if}
-				</span>
+						{/if}
+					</span>
+				{/if}
 			</label>
 
 			{if $showLabel}
@@ -57,7 +61,7 @@
 			{/if}
 		{else}
 			<div class="custom-checkbox custom-control">
-				{if $showLabel}
+				{if $showLabel or $required}
 					<label for="{$name}">
 				{/if}
 
@@ -78,7 +82,7 @@
 					</span>
 				{/if}
 
-				{if $showLabel}
+				{if $showLabel or $required}
 						{if $required}
 							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-asterisk reference-mark">
 								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk" />

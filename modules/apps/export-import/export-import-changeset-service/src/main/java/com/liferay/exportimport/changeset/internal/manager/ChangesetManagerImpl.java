@@ -115,7 +115,7 @@ public class ChangesetManagerImpl implements ChangesetManager {
 		}
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			_exportImportConfigurationParameterMapFactory.buildParameterMap();
 
 		parameterMap.put("changesetUuid", new String[] {changeset.getUuid()});
 
@@ -170,6 +170,10 @@ public class ChangesetManagerImpl implements ChangesetManager {
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportConfigurationParameterMapFactory
+		_exportImportConfigurationParameterMapFactory;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

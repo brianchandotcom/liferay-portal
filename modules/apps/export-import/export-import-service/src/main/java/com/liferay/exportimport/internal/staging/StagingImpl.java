@@ -292,7 +292,7 @@ public class StagingImpl implements Staging {
 			portletRequest, targetGroupId);
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			_exportImportConfigurationParameterMapFactory.buildParameterMap(
 				portletRequest);
 
 		parameterMap.put(
@@ -344,7 +344,7 @@ public class StagingImpl implements Staging {
 		long plid = ParamUtil.getLong(portletRequest, "plid");
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			_exportImportConfigurationParameterMapFactory.buildParameterMap(
 				portletRequest);
 
 		return publishPortlet(
@@ -368,7 +368,7 @@ public class StagingImpl implements Staging {
 			WebKeys.THEME_DISPLAY);
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			_exportImportConfigurationParameterMapFactory.buildParameterMap(
 				portletRequest);
 
 		return publishPortlet(
@@ -1882,7 +1882,8 @@ public class StagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public Map<String, String[]> getStagingParameters() {
-		return ExportImportConfigurationParameterMapFactory.buildParameterMap();
+		return
+			_exportImportConfigurationParameterMapFactory.buildParameterMap();
 	}
 
 	/**
@@ -1895,7 +1896,7 @@ public class StagingImpl implements Staging {
 	public Map<String, String[]> getStagingParameters(
 		PortletRequest portletRequest) {
 
-		return ExportImportConfigurationParameterMapFactory.buildParameterMap(
+		return _exportImportConfigurationParameterMapFactory.buildParameterMap(
 			portletRequest);
 	}
 
@@ -2076,7 +2077,7 @@ public class StagingImpl implements Staging {
 		throws PortalException {
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			_exportImportConfigurationParameterMapFactory.buildParameterMap();
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
@@ -2458,7 +2459,7 @@ public class StagingImpl implements Staging {
 				portletRequest, targetGroupId);
 
 			Map<String, String[]> parameterMap =
-				ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				_exportImportConfigurationParameterMapFactory.buildParameterMap(
 					portletRequest);
 
 			parameterMap.put(
@@ -2510,7 +2511,7 @@ public class StagingImpl implements Staging {
 		long plid = ParamUtil.getLong(portletRequest, "plid");
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			_exportImportConfigurationParameterMapFactory.buildParameterMap(
 				portletRequest);
 
 		return publishPortlet(
@@ -2586,7 +2587,7 @@ public class StagingImpl implements Staging {
 			Map<Long, Boolean> layoutIdMap = _exportImportHelper.getLayoutIdMap(
 				portletRequest);
 			Map<String, String[]> parameterMap =
-				ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				_exportImportConfigurationParameterMapFactory.buildParameterMap(
 					portletRequest);
 			remoteAddress = ParamUtil.getString(
 				portletRequest, "remoteAddress",
@@ -2663,7 +2664,7 @@ public class StagingImpl implements Staging {
 		long[] layoutIds = _exportImportHelper.getLayoutIds(
 			portletRequest, targetGroupId);
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			_exportImportConfigurationParameterMapFactory.buildParameterMap(
 				portletRequest);
 		ScheduleInformation scheduleInformation = getScheduleInformation(
 			portletRequest, targetGroupId, false);
@@ -2718,7 +2719,7 @@ public class StagingImpl implements Staging {
 			layoutIds = _exportImportHelper.getLayoutIds(
 				portletRequest, targetGroupId);
 			parameterMap =
-				ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				_exportImportConfigurationParameterMapFactory.buildParameterMap(
 					portletRequest);
 		}
 
@@ -2787,7 +2788,7 @@ public class StagingImpl implements Staging {
 			privateLayout = getPrivateLayout(portletRequest);
 			layoutIdMap = _exportImportHelper.getLayoutIdMap(portletRequest);
 			parameterMap =
-				ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				_exportImportConfigurationParameterMapFactory.buildParameterMap(
 					portletRequest);
 			remoteAddress = ParamUtil.getString(
 				portletRequest, "remoteAddress",
@@ -3996,6 +3997,10 @@ public class StagingImpl implements Staging {
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportConfigurationParameterMapFactory
+		_exportImportConfigurationParameterMapFactory;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

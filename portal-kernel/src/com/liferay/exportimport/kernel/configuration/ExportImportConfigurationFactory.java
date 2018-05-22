@@ -158,7 +158,7 @@ public class ExportImportConfigurationFactory {
 		PortletRequest portletRequest) {
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
 				portletRequest);
 
 		return addDefaultPublishingParameters(parameterMap);
@@ -234,7 +234,8 @@ public class ExportImportConfigurationFactory {
 
 	protected static Map<String, String[]> getDefaultPublishingParameters() {
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
 
 		return addDefaultPublishingParameters(parameterMap);
 	}

@@ -16,7 +16,7 @@ package com.liferay.exportimport.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
@@ -90,7 +90,8 @@ public class ExportImportLifecycleEventTest {
 		_firedExportImportLifecycleEventsMap = new HashMap<>();
 
 		_parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
 	}
 
 	@Test

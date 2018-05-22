@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -226,7 +226,8 @@ public class StagingImplTest {
 				_group.getGroupId()));
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
 
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
@@ -281,7 +282,8 @@ public class StagingImplTest {
 		Map<String, Serializable> attributes = serviceContext.getAttributes();
 
 		attributes.putAll(
-			ExportImportConfigurationParameterMapFactory.buildParameterMap());
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
 
 		if (branching) {
 			serviceContext.setSignedIn(true);
@@ -361,7 +363,8 @@ public class StagingImplTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		Map<String, String[]> parameters =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
 
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION +

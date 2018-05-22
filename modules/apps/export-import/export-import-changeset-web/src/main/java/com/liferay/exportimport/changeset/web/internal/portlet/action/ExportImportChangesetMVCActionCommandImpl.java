@@ -162,7 +162,7 @@ public class ExportImportChangesetMVCActionCommandImpl
 		}
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			_exportImportConfigurationParameterMapFactory.buildParameterMap();
 
 		parameterMap.put("changesetUuid", new String[] {changesetUuid});
 
@@ -266,6 +266,10 @@ public class ExportImportChangesetMVCActionCommandImpl
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportConfigurationParameterMapFactory
+		_exportImportConfigurationParameterMapFactory;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

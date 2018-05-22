@@ -16,7 +16,7 @@ package com.liferay.exportimport.system.event.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationFactory;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
@@ -93,7 +93,8 @@ public class SystemEventTest {
 		Map<String, Serializable> attributes = serviceContext.getAttributes();
 
 		attributes.putAll(
-			ExportImportConfigurationParameterMapFactory.buildParameterMap());
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
 
 		attributes.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,

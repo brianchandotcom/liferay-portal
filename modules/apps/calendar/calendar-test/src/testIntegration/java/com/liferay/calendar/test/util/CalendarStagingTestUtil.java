@@ -17,7 +17,7 @@ package com.liferay.calendar.test.util;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
@@ -96,7 +96,8 @@ public class CalendarStagingTestUtil {
 		Group stagingGroup = liveGroup.getStagingGroup();
 
 		Map<String, String[]> parameters =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
 
 		addStagingAttribute(parameters, PortletDataHandlerKeys.DELETIONS, true);
 		addStagingAttribute(

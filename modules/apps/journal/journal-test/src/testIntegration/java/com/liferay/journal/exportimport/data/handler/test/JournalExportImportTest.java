@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -255,7 +255,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			content.replaceAll("<\\!\\[CDATA\\[.+?\\]\\]>", newContent));
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
 				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true,
 				false, false, false, false, false, true, true, true, true, true,
 				true, ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, true,
@@ -656,7 +656,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	protected PortletDataContext getPortletDataContext() throws Exception {
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
 
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);

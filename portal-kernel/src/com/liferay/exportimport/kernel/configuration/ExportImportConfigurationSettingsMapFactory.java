@@ -240,7 +240,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Group liveGroup = stagingGroup.getLiveGroup();
 
 		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
 				portletRequest);
 
 		if (liveGroup != null) {

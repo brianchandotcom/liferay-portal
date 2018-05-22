@@ -50,6 +50,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.ws.rs.NotFoundException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -217,6 +219,10 @@ public class PersonCollectionResource
 
 	private UserWrapper _getUserWrapper(long userId, ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		if (themeDisplay.getDefaultUserId() == userId) {
+			throw new NotFoundException();
+		}
 
 		User user = _userService.getUserById(userId);
 

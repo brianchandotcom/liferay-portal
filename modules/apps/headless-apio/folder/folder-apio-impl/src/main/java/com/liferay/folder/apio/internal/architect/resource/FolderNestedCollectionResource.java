@@ -54,7 +54,9 @@ public class FolderNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addFolder, _hasPermission::forAdding, FolderForm::buildForm
+			this::_addFolder,
+			_hasPermission.forAddingIn(RootFolderIdentifier.class),
+			FolderForm::buildForm
 		).build();
 	}
 
@@ -133,6 +135,6 @@ public class FolderNestedCollectionResource
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
 	)
-	private HasPermission<Long, Long> _hasPermission;
+	private HasPermission<Long> _hasPermission;
 
 }

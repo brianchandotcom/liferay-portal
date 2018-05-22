@@ -63,7 +63,8 @@ public class BlogPostingNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addBlogsEntry, _hasPermission::forAdding,
+			this::_addBlogsEntry,
+			_hasPermission.forAddingIn(WebSiteIdentifier.class),
 			BlogPostingForm::buildForm
 		).build();
 	}
@@ -194,6 +195,6 @@ public class BlogPostingNestedCollectionResource
 	private BlogsEntryService _blogsService;
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
-	private HasPermission<Long, Long> _hasPermission;
+	private HasPermission<Long> _hasPermission;
 
 }

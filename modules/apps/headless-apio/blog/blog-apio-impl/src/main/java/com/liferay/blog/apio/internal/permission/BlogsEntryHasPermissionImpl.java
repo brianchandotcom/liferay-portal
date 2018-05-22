@@ -16,12 +16,16 @@ package com.liferay.blog.apio.internal.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+
+import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,17 +34,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  */
 @Component(property = "model.class.name=com.liferay.blogs.model.BlogsEntry")
-public class BlogsEntryHasPermissionImpl implements HasPermission<Long, Long> {
+public class BlogsEntryHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public Boolean forAdding(Credentials credentials, Long groupId) {
-		return Try.fromFallible(
-			() -> _portletResourcePermission.contains(
-				(PermissionChecker)credentials.get(), groupId,
-				ActionKeys.ADD_ENTRY)
-		).orElse(
-			false
-		);
+	public <S> BiFunction<Credentials, S, Boolean> forAddingIn(
+		Class<? extends Identifier<S>> identifierClass) {
+
+		if (identifierClass == WebSiteIdentifier.class) {
+			return (credentials, groupId) -> Try.fromFallible(
+				() -> _portletResourcePermission.contains(
+					(PermissionChecker)credentials.get(), (Long)groupId,
+					ActionKeys.ADD_ENTRY)
+			).orElse(
+				false
+			);
+		}
+
+		return (credentials, s) -> false;
 	}
 
 	@Override

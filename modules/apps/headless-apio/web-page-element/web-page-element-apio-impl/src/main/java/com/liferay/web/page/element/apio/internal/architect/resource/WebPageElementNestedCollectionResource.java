@@ -59,7 +59,8 @@ public class WebPageElementNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addJournalArticle, _hasPermission::forAdding,
+			this::_addJournalArticle,
+			_hasPermission.forAddingIn(WebSiteIdentifier.class),
 			WebPageElementCreatorForm::buildForm
 		).build();
 	}
@@ -187,7 +188,7 @@ public class WebPageElementNestedCollectionResource
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
-	private HasPermission<Long, Long> _hasPermission;
+	private HasPermission<Long> _hasPermission;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

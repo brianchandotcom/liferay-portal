@@ -15,6 +15,9 @@
 package com.liferay.portal.apio.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
+import com.liferay.apio.architect.identifier.Identifier;
+
+import java.util.function.BiFunction;
 
 /**
  * Instances of this class contains the information necessary to calculate
@@ -31,11 +34,9 @@ import com.liferay.apio.architect.credentials.Credentials;
  * @author Javier Gamarra
  * @param  <T> the type of the model's identifier (e.g., {@code Long}, {@code
  *         String}, etc.)
- * @param  <S> the type of the parent model's identifier (e.g., {@code Long},
- *         {@code String}, etc.)
  * @review
  */
-public interface HasPermission<T, S> {
+public interface HasPermission<T> {
 
 	/**
 	 * Returns {@code true} if the current {@code User} has permission to
@@ -68,14 +69,16 @@ public interface HasPermission<T, S> {
 	 * methods.
 	 * </p>
 	 *
-	 * @param  credentials the current request credentials
-	 * @param  id the ID of the parent model
+	 * @param  identifierClass the class of the parent resource's identifier. It
+	 *         must be a subclass of {@code Identifier<S>}.
 	 * @return {@code true} if the current user can perform the action; {@code
 	 *         false} otherwise
 	 * @review
 	 */
-	public default Boolean forAdding(Credentials credentials, S id) {
-		return false;
+	public default <S> BiFunction<Credentials, S, Boolean> forAddingIn(
+		Class<? extends Identifier<S>> identifierClass) {
+
+		return (credentials, s) -> false;
 	}
 
 	/**

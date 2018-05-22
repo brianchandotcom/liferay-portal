@@ -736,6 +736,7 @@
 		<exception>InvalidStructureVersion</exception>
 		<exception>InvalidTemplateVersion</exception>
 		<exception>RequiredStructure</exception>
+		<exception>RequireFormInstance</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>Storage</exception>
 		<exception>StorageFieldName</exception>

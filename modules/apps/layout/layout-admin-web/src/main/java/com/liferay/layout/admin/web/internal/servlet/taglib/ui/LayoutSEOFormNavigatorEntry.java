@@ -14,6 +14,13 @@
 
 package com.liferay.layout.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
@@ -42,6 +49,24 @@ public class LayoutSEOFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 	}
 
 	@Override
+	public boolean isVisible(User user, Layout formModelBean) {
+		try {
+			Group group = _groupService.getGroup(formModelBean.getGroupId());
+
+			if ((group != null) && group.isLayoutPrototype()) {
+				return false;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
+			}
+		}
+
+		return super.isVisible(user, formModelBean);
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
 		unbind = "-"
@@ -54,5 +79,11 @@ public class LayoutSEOFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 	protected String getJspPath() {
 		return "/layout/seo.jsp";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutSEOFormNavigatorEntry.class);
+
+	@Reference
+	private GroupService _groupService;
 
 }

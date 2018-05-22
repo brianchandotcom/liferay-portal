@@ -236,6 +236,10 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 			ResourceBundleLoader resourceBundleLoader =
 				_serviceTracker.getService();
 
+			if (resourceBundleLoader == null) {
+				return _osgiJAXRSName;
+			}
+
 			String key = StringBundler.concat(
 				"oauth2.application.description.", _osgiJAXRSName);
 

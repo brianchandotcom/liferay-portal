@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -120,11 +121,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 				FileEntry fileEntry = fileEntries.get(0);
 
-				PortletResponseUtil.sendFile(
-					resourceRequest, resourceResponse, fileEntry.getFileName(),
-					fileEntry.getContentStream(), (int)fileEntry.getSize(),
-					fileEntry.getMimeType(),
-					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+				_sendFileEntry(resourceRequest, resourceResponse, fileEntry);
 			}
 			else if ((fileShortcuts.size() == 1) && fileEntries.isEmpty() &&
 					 folders.isEmpty()) {
@@ -134,11 +131,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				FileEntry fileEntry = _dlAppService.getFileEntry(
 					fileShortcut.getToFileEntryId());
 
-				PortletResponseUtil.sendFile(
-					resourceRequest, resourceResponse, fileEntry.getFileName(),
-					fileEntry.getContentStream(), (int)fileEntry.getSize(),
-					fileEntry.getMimeType(),
-					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+				_sendFileEntry(resourceRequest, resourceResponse, fileEntry);
 			}
 			else {
 				String zipFileName = getZipFileName(folderId, themeDisplay);
@@ -165,7 +158,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				file = zipWriter.getFile();
 
 				try (InputStream inputStream = new FileInputStream(file)) {
-					PortletResponseUtil.sendFile(
+					_sendDownloadResponse(
 						resourceRequest, resourceResponse, zipFileName,
 						inputStream, (int)file.length(),
 						ContentTypes.APPLICATION_ZIP);
@@ -201,7 +194,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 			file = zipWriter.getFile();
 
 			try (InputStream inputStream = new FileInputStream(file)) {
-				PortletResponseUtil.sendFile(
+				_sendDownloadResponse(
 					resourceRequest, resourceResponse, zipFileName, inputStream,
 					(int)file.length(), ContentTypes.APPLICATION_ZIP);
 			}
@@ -270,6 +263,29 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				zipFileEntry(fileEntry, path, zipWriter);
 			}
 		}
+	}
+
+	private void _sendDownloadResponse(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			String fileName, InputStream inputStream, int contentLength,
+			String contentType)
+		throws IOException {
+
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, fileName, inputStream,
+			contentLength, contentType,
+			HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+	}
+
+	private void _sendFileEntry(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			FileEntry fileEntry)
+		throws IOException, PortalException {
+
+		_sendDownloadResponse(
+			resourceRequest, resourceResponse, fileEntry.getFileName(),
+			fileEntry.getContentStream(), (int)fileEntry.getSize(),
+			fileEntry.getMimeType());
 	}
 
 	private DLAppService _dlAppService;

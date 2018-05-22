@@ -94,8 +94,8 @@ public abstract class MimeResponseImpl
 	public PrintWriter getWriter() throws IllegalStateException, IOException {
 		if (_calledGetPortletOutputStream) {
 			throw new IllegalStateException(
-				"Unable to obtain Writer because OutputStream is already " +
-					"in use");
+				"Unable to obtain Writer because OutputStream is already in " +
+					"use");
 		}
 
 		if (_contentType == null) {

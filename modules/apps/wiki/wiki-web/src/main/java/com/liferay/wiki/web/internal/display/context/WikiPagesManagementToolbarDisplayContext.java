@@ -126,15 +126,19 @@ public class WikiPagesManagementToolbarDisplayContext {
 			return null;
 		}
 
+		WikiPortletToolbarContributor wikiPortletToolbarContributor =
+			(WikiPortletToolbarContributor)_request.getAttribute(
+				WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR);
+
+		List<Menu> menus = wikiPortletToolbarContributor.getPortletTitleMenus(
+			_liferayPortletRequest, _liferayPortletResponse);
+
+		if (menus.isEmpty()) {
+			return null;
+		}
+
 		return new CreationMenu() {
 			{
-				WikiPortletToolbarContributor wikiPortletToolbarContributor =
-					(WikiPortletToolbarContributor)_request.getAttribute(
-						WikiWebKeys.WIKI_PORTLET_TOOLBAR_CONTRIBUTOR);
-
-				List<Menu> menus =
-					wikiPortletToolbarContributor.getPortletTitleMenus(
-						_liferayPortletRequest, _liferayPortletResponse);
 
 				for (Menu menu : menus) {
 					List<URLMenuItem> urlMenuItems =

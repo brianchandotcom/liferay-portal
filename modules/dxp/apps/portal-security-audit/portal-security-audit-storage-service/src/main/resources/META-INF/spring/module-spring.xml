@@ -8,5 +8,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.portal.security.audit.storage.service.impl.AuditEventLocalServiceImpl" id="com.liferay.portal.security.audit.storage.service.AuditEventLocalService" />
+	<bean class="com.liferay.portal.security.audit.storage.service.impl.AuditEventServiceImpl" id="com.liferay.portal.security.audit.storage.service.AuditEventService" />
 	<bean class="com.liferay.portal.security.audit.storage.service.persistence.impl.AuditEventPersistenceImpl" id="com.liferay.portal.security.audit.storage.service.persistence.AuditEventPersistence" parent="basePersistence" />
 </beans>

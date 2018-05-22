@@ -228,10 +228,29 @@ public class AuditEventLocalServiceWrapper implements AuditEventLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		long companyId, int start, int end) {
+		return _auditEventLocalService.getAuditEvents(companyId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _auditEventLocalService.getAuditEvents(companyId, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.security.audit.storage.model.AuditEvent> getAuditEvents(
+		long companyId, long userId, String userName,
+		java.util.Date createDateGT, java.util.Date createDateLT,
+		String eventType, String className, String classPK, String clientHost,
+		String clientIP, String serverName, int serverPort, String sessionID,
+		boolean andSearch, int start, int end) {
+		return _auditEventLocalService.getAuditEvents(companyId, userId,
+			userName, createDateGT, createDateLT, eventType, className,
+			classPK, clientHost, clientIP, serverName, serverPort, sessionID,
+			andSearch, start, end);
 	}
 
 	@Override

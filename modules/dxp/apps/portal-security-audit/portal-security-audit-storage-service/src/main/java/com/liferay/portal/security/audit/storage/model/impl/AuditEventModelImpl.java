@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -33,13 +34,16 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.model.AuditEventModel;
+import com.liferay.portal.security.audit.storage.model.AuditEventSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,6 +59,7 @@ import java.util.Map;
  * @see AuditEventModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	implements AuditEventModel {
@@ -119,6 +124,59 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static AuditEvent toModel(AuditEventSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		AuditEvent model = new AuditEventImpl();
+
+		model.setAuditEventId(soapModel.getAuditEventId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setEventType(soapModel.getEventType());
+		model.setClassName(soapModel.getClassName());
+		model.setClassPK(soapModel.getClassPK());
+		model.setMessage(soapModel.getMessage());
+		model.setClientHost(soapModel.getClientHost());
+		model.setClientIP(soapModel.getClientIP());
+		model.setServerName(soapModel.getServerName());
+		model.setServerPort(soapModel.getServerPort());
+		model.setSessionID(soapModel.getSessionID());
+		model.setAdditionalInfo(soapModel.getAdditionalInfo());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<AuditEvent> toModels(AuditEventSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<AuditEvent> models = new ArrayList<AuditEvent>(soapModels.length);
+
+		for (AuditEventSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.security.audit.storage.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.portal.security.audit.storage.model.AuditEvent"));
 
@@ -274,6 +332,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		}
 	}
 
+	@JSON
 	@Override
 	public long getAuditEventId() {
 		return _auditEventId;
@@ -284,6 +343,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_auditEventId = auditEventId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -306,6 +366,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -332,6 +393,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -347,6 +409,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -359,6 +422,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public String getEventType() {
 		if (_eventType == null) {
@@ -374,6 +438,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_eventType = eventType;
 	}
 
+	@JSON
 	@Override
 	public String getClassName() {
 		if (_className == null) {
@@ -389,6 +454,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_className = className;
 	}
 
+	@JSON
 	@Override
 	public String getClassPK() {
 		if (_classPK == null) {
@@ -404,6 +470,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_classPK = classPK;
 	}
 
+	@JSON
 	@Override
 	public String getMessage() {
 		if (_message == null) {
@@ -419,6 +486,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_message = message;
 	}
 
+	@JSON
 	@Override
 	public String getClientHost() {
 		if (_clientHost == null) {
@@ -434,6 +502,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_clientHost = clientHost;
 	}
 
+	@JSON
 	@Override
 	public String getClientIP() {
 		if (_clientIP == null) {
@@ -449,6 +518,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_clientIP = clientIP;
 	}
 
+	@JSON
 	@Override
 	public String getServerName() {
 		if (_serverName == null) {
@@ -464,6 +534,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_serverName = serverName;
 	}
 
+	@JSON
 	@Override
 	public int getServerPort() {
 		return _serverPort;
@@ -474,6 +545,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_serverPort = serverPort;
 	}
 
+	@JSON
 	@Override
 	public String getSessionID() {
 		if (_sessionID == null) {
@@ -489,6 +561,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 		_sessionID = sessionID;
 	}
 
+	@JSON
 	@Override
 	public String getAdditionalInfo() {
 		if (_additionalInfo == null) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.media.object.apio.internal.resource;
+package com.liferay.media.object.apio.internal.architect.router;
 
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -43,11 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class FolderMediaObjectNestedCollectionRouter
 	implements NestedCollectionRouter
-		<FileEntry, FileEntryIdentifier, Long, FolderIdentifier> {
+		<FileEntry, Long, FileEntryIdentifier, Long, FolderIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<FileEntry, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<FileEntry, Long> builder) {
+	public NestedCollectionRoutes<FileEntry, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<FileEntry, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -59,7 +59,7 @@ public class FolderMediaObjectNestedCollectionRouter
 
 	private FileEntry _getFileEntry(
 			Long folderId, MediaObjectCreatorForm mediaObjectCreatorForm)
-		throws PortalException {
+		throws Exception {
 
 		Folder folder = _dlAppService.getFolder(folderId);
 

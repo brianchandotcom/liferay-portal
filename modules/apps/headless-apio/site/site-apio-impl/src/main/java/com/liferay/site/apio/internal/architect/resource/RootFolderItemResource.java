@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.apio.internal.resource;
+package com.liferay.site.apio.internal.architect.resource;
 
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.ItemResource;

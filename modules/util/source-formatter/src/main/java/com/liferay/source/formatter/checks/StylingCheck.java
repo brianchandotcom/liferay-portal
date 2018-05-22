@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,11 +49,43 @@ public abstract class StylingCheck extends BaseFileCheck {
 		content = _formatToStringMethodCall(content, "Objects");
 		content = _formatToStringMethodCall(content, "Short");
 
+		content = _fixBooleanStatement(content);
+
 		return content;
 	}
 
 	protected boolean isJavaSource(String content, int pos) {
 		return true;
+	}
+
+	private String _fixBooleanStatement(String content) {
+		Matcher matcher = _booleanPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		boolean booleanValue = true;
+
+		if (matcher.group(1) != null) {
+			booleanValue = !booleanValue;
+		}
+
+		if (Objects.equals(matcher.group(3), "!=")) {
+			booleanValue = !booleanValue;
+		}
+
+		if (Objects.equals(matcher.group(4), "false")) {
+			booleanValue = !booleanValue;
+		}
+
+		if (booleanValue) {
+			return StringUtil.replaceFirst(
+				content, matcher.group(), "(" + matcher.group(2) + ")");
+		}
+
+		return StringUtil.replaceFirst(
+			content, matcher.group(), "(!" + matcher.group(2) + ")");
 	}
 
 	private String _formatStyling(
@@ -105,5 +138,8 @@ public abstract class StylingCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private final Pattern _booleanPattern = Pattern.compile(
+		"\\((\\!)?(\\w+)\\s+(==|!=)\\s+(false|true)\\)");
 
 }

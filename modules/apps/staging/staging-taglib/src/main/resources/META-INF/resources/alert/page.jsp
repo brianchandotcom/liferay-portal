@@ -50,7 +50,7 @@
 >
 
 	<%
-	if (dismissible == true) {
+	if (dismissible) {
 	%>
 
 		<button aria-label="Close" class="close" data-dismiss="alert" type="button">

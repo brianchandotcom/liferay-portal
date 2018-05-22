@@ -129,7 +129,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Object result = null;
 
-		if (batchMode == false) {
+		if (!batchMode) {
 			result = list.get(0);
 		}
 		else {

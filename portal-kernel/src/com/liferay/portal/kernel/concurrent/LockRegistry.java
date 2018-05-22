@@ -70,7 +70,7 @@ public class LockRegistry {
 	}
 
 	public static void freeAllLock(boolean unlock) {
-		if (unlock == true) {
+		if (unlock) {
 			for (Map<String, ReentrantLock> lockGroup :
 					_lockGroupMap.values()) {
 
@@ -99,7 +99,7 @@ public class LockRegistry {
 			return null;
 		}
 
-		if (unlock == true) {
+		if (unlock) {
 			for (ReentrantLock lock : lockGroup.values()) {
 				lock.unlock();
 			}

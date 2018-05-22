@@ -7,7 +7,7 @@ import {object} from 'metal';
 import Soy from 'metal-soy';
 
 import EditableImageFragmentProcessor from './fragment_processors/EditableImageFragmentProcessor.es';
-import {createTextEditor, destroyTextEditor, getActiveEditableElement} from './fragment_processors/EditableTextFragmentProcessor.es';
+import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
 import templates from './FragmentEditableField.soy';
 
 class FragmentEditableField extends Component {
@@ -52,6 +52,7 @@ class FragmentEditableField extends Component {
 		}
 
 		EditableImageFragmentProcessor.destroy();
+		EditableTextFragmentProcessor.destroy();
 	}
 
 	/**
@@ -145,11 +146,11 @@ class FragmentEditableField extends Component {
 			);
 		}
 		else {
-			createTextEditor(
+			EditableTextFragmentProcessor.init(
 				this.refs.editable,
-				this.defaultEditorConfiguration,
-				this.portletNamespace,
 				this.fragmentEntryLinkId,
+				this.portletNamespace,
+				{defaultEditorConfiguration: this.defaultEditorConfiguration},
 				this._handleEditableChanged
 			);
 		}
@@ -180,7 +181,10 @@ class FragmentEditableField extends Component {
 			this._showTooltip = false;
 			this._enableEditor();
 		}
-		else if (getActiveEditableElement() !== this.refs.editable) {
+		else if (
+			EditableTextFragmentProcessor.getActiveEditableElement() !==
+			this.refs.editable
+		) {
 			this._showTooltip = !this._showTooltip;
 		}
 	}
@@ -191,8 +195,6 @@ class FragmentEditableField extends Component {
 	 */
 
 	_handleEditButtonClick() {
-		destroyTextEditor();
-
 		this._showTooltip = false;
 		this._showEditor = true;
 	}

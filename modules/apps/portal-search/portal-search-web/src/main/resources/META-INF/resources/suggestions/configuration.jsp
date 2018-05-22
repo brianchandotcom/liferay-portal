@@ -22,6 +22,7 @@ page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUt
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
 <portlet:defineObjects />
@@ -34,12 +35,16 @@ SuggestionsPortletPreferences suggestionsPortletPreferences = new SuggestionsPor
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
 			<aui:input helpMessage="collated-spell-check-result-enabled-help" id="spellCheckSuggestionEnabled" label="display-did-you-mean-if-the-number-of-search-results-does-not-meet-the-threshold" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_SPELL_CHECK_SUGGESTION_ENABLED) %>" type="checkbox" value="<%= suggestionsPortletPreferences.isSpellCheckSuggestionEnabled() %>" />
 
 			<aui:input helpMessage="collated-spell-check-result-display-threshold-help" label="threshold-for-displaying-did-you-mean" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_SPELL_CHECK_SUGGESTION_DISPLAY_THRESHOLD) %>" size="10" type="text" value="<%= suggestionsPortletPreferences.getSpellCheckSuggestionDisplayThreshold() %>" />
@@ -57,10 +62,12 @@ SuggestionsPortletPreferences suggestionsPortletPreferences = new SuggestionsPor
 			<aui:input helpMessage="query-indexing-enabled-help" label="add-new-related-queries-based-on-successful-queries" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_QUERY_INDEXING_ENABLED) %>" type="checkbox" value="<%= suggestionsPortletPreferences.isQueryIndexingEnabled() %>" />
 
 			<aui:input helpMessage="query-indexing-threshold-help" label="query-indexing-threshold" name="<%= PortletPreferencesJspUtil.getInputName(SuggestionsPortletPreferences.PREFERENCE_KEY_QUERY_INDEXING_THRESHOLD) %>" size="10" type="text" value="<%= suggestionsPortletPreferences.getQueryIndexingThreshold() %>" />
-		</div>
-	</div>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

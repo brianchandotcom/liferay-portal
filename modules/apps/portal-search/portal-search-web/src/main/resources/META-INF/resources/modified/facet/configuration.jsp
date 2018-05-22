@@ -39,12 +39,16 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
 			<aui:fieldset id='<%= renderResponse.getNamespace() + "rangesId" %>'>
 
 				<%
@@ -69,14 +73,16 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 				<aui:input name="<%= PortletPreferencesJspUtil.getInputName(ModifiedFacetPortletPreferences.PREFERENCE_KEY_RANGES) %>" type="hidden" value="<%= modifiedFacetPortletPreferences.getRangesString() %>" />
 
 				<aui:input name='<%= "rangesIndexes" %>' type="hidden" value="<%= StringUtil.merge(rangesIndexes) %>" />
-
-				<aui:button-row>
-					<aui:button cssClass="btn-lg" type="submit" />
-				</aui:button-row>
 			</aui:fieldset>
-		</div>
-	</div>
-</aui:form>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(

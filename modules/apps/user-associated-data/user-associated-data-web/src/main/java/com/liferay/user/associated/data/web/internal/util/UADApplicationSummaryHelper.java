@@ -117,6 +117,8 @@ public class UADApplicationSummaryHelper {
 		SearchContainer<UADApplicationSummaryDisplay> searchContainer =
 			new SearchContainer<>(portletRequest, currentURL, null, null);
 
+		searchContainer.setId("uadApplicationSummaryDisplays");
+
 		searchContainer.setOrderByCol(getOrderByCol(renderRequest));
 		searchContainer.setOrderByType(getOrderByType(renderRequest));
 

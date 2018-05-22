@@ -224,6 +224,9 @@ public interface TicketLocalService extends BaseLocalService,
 	public List<Ticket> getTickets(long companyId, String className,
 		long classPK, int type);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Ticket> getTickets(String className, long classPK, int type);
+
 	/**
 	* Returns the number of tickets.
 	*

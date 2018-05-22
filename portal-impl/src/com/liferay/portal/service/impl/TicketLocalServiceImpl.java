@@ -89,6 +89,13 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Ticket> getTickets(String className, long classPK, int type) {
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return ticketPersistence.findByC_C_T(classNameId, classPK, type);
+	}
+
+	@Override
 	public Ticket updateTicket(
 			long ticketId, String className, long classPK, int type,
 			String extraInfo, Date expirationDate)

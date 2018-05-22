@@ -681,10 +681,6 @@ public abstract class BaseBuild implements Build {
 			jobVariant = getParameterValue("JENKINS_JOB_VARIANT");
 		}
 
-		if ((jobVariant == null) || jobVariant.isEmpty()) {
-			jobVariant = getJobName();
-		}
-
 		return jobVariant;
 	}
 

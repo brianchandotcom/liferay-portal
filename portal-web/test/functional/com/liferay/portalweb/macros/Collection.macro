@@ -51,7 +51,7 @@
 
 	<command name="renameCollection">
 		<execute macro="Navigator#gotoNavNested">
-			<var name="key_navNested" value="${collectionName}" />
+			<var name="navNested" value="${collectionName}" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">

@@ -14,18 +14,11 @@
 
 package com.liferay.product.navigation.control.menu.web.internal;
 
-import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.product.navigation.control.menu.web.internal.util.ProductNavigationControlMenuUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -60,40 +53,7 @@ public class AddContentProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest request) throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay.isStateMaximized()) {
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (!layout.isTypePortlet()) {
-			return false;
-		}
-
-		if (_staging.isIncomplete(layout)) {
-			return false;
-		}
-
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
-
-		LayoutTypeController layoutTypeController =
-			layoutTypePortlet.getLayoutTypeController();
-
-		if (layoutTypeController.isFullPageDisplayable()) {
-			return false;
-		}
-
-		if (!hasAddContentOrApplicationPermission(themeDisplay)) {
-			return false;
-		}
-
-		if (!(hasUpdateLayoutPermission(themeDisplay) ||
-			hasCustomizePermission(themeDisplay))) {
-
+		if (!ProductNavigationControlMenuUtil.isEditEnabled(request)) {
 			return false;
 		}
 
@@ -108,55 +68,5 @@ public class AddContentProductNavigationControlMenuEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	protected boolean hasAddContentOrApplicationPermission(
-		ThemeDisplay themeDisplay) {
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.isLayoutPrototypeLinkActive()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected boolean hasCustomizePermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Layout layout = themeDisplay.getLayout();
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
-
-		if (!layout.isTypePortlet() || (layoutTypePortlet == null)) {
-			return false;
-		}
-
-		if (!layoutTypePortlet.isCustomizable() ||
-			!layoutTypePortlet.isCustomizedView()) {
-
-			return false;
-		}
-
-		if (LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.CUSTOMIZE)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-			ActionKeys.UPDATE);
-	}
-
-	@Reference
-	private Staging _staging;
 
 }

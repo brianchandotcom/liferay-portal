@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -166,6 +168,13 @@ public class SimulationProductNavigationControlMenuEntry
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		String layoutMode = ParamUtil.getString(
+			request, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.EDIT)) {
 			return false;
 		}
 

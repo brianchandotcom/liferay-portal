@@ -23,12 +23,16 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -73,9 +77,51 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
 			fragmentEntryLinks);
 
+		String layoutMode = ParamUtil.getString(
+			request, "p_l_mode", Constants.VIEW);
+
+		String page = getViewPage();
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			page = _EDIT_LAYOUT_PAGE;
+		}
+
+		RequestDispatcher requestDispatcher =
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
+				servletContext.getRequestDispatcher(page));
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		ServletResponse servletResponse = createServletResponse(
+			response, unsyncStringWriter);
+
+		String contentType = servletResponse.getContentType();
+
+		String includeServletPath = (String)request.getAttribute(
+			RequestDispatcher.INCLUDE_SERVLET_PATH);
+
+		try {
+			addAttributes(request);
+
+			requestDispatcher.include(request, servletResponse);
+		}
+		finally {
+			removeAttributes(request);
+
+			request.setAttribute(
+				RequestDispatcher.INCLUDE_SERVLET_PATH, includeServletPath);
+		}
+
+		if (contentType != null) {
+			response.setContentType(contentType);
+		}
+
+		request.setAttribute(
+			WebKeys.LAYOUT_CONTENT, unsyncStringWriter.getStringBundler());
+
 		request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 
-		return super.includeLayoutContent(request, response, layout);
+		return false;
 	}
 
 	@Override
@@ -90,7 +136,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public boolean isFullPageDisplayable() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -137,6 +183,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
+
+	private static final String _EDIT_LAYOUT_PAGE =
+		"/layout/edit_layout/content.jsp";
 
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +

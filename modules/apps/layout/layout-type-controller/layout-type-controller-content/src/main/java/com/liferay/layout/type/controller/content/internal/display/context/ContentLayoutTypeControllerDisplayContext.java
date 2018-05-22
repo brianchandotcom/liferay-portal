@@ -44,6 +44,10 @@ public class ContentLayoutTypeControllerDisplayContext {
 			(List<FragmentEntryLink>)_request.getAttribute(
 				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);
 
+		if ((fragmentEntryLinks == null) || fragmentEntryLinks.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
 		StringBundler sb = new StringBundler(fragmentEntryLinks.size());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {

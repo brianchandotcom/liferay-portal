@@ -4583,6 +4583,20 @@ to version 2.3.164.
 - [LPS-79963]: Update the [Liferay Source Formatter] dependency to version
 1.0.637.
 
+## 3.12.14 - 2018-05-21
+
+### Changed
+- [LPS-78986]: Update the default value of the `app.server.websphere.version`
+property to `9.0.0.0`.
+- [LPS-79742]: Update the default value of the `app.server.tcserver.version`
+property to `4.0.0`.
+- [LPS-80347]: Update the default value of the `app.server.weblogic.version`
+property to `12.2.1`.
+- [LPS-81106]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.165.
+- [LPS-81106]: Update the [Liferay Source Formatter] dependency to version
+1.0.638.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -4923,6 +4937,7 @@ to version 2.3.164.
 [LPS-78901]: https://issues.liferay.com/browse/LPS-78901
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
 [LPS-78971]: https://issues.liferay.com/browse/LPS-78971
+[LPS-78986]: https://issues.liferay.com/browse/LPS-78986
 [LPS-79131]: https://issues.liferay.com/browse/LPS-79131
 [LPS-79191]: https://issues.liferay.com/browse/LPS-79191
 [LPS-79192]: https://issues.liferay.com/browse/LPS-79192
@@ -4943,6 +4958,7 @@ to version 2.3.164.
 [LPS-79623]: https://issues.liferay.com/browse/LPS-79623
 [LPS-79665]: https://issues.liferay.com/browse/LPS-79665
 [LPS-79679]: https://issues.liferay.com/browse/LPS-79679
+[LPS-79742]: https://issues.liferay.com/browse/LPS-79742
 [LPS-79755]: https://issues.liferay.com/browse/LPS-79755
 [LPS-79799]: https://issues.liferay.com/browse/LPS-79799
 [LPS-79919]: https://issues.liferay.com/browse/LPS-79919
@@ -4957,6 +4973,7 @@ to version 2.3.164.
 [LPS-80125]: https://issues.liferay.com/browse/LPS-80125
 [LPS-80184]: https://issues.liferay.com/browse/LPS-80184
 [LPS-80332]: https://issues.liferay.com/browse/LPS-80332
+[LPS-80347]: https://issues.liferay.com/browse/LPS-80347
 [LPS-80386]: https://issues.liferay.com/browse/LPS-80386
 [LPS-80466]: https://issues.liferay.com/browse/LPS-80466
 [LPS-80513]: https://issues.liferay.com/browse/LPS-80513

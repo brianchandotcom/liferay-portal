@@ -21,6 +21,7 @@ EditConfigurationDisplayContext editConfigurationDisplayContext = (EditConfigura
 
 CommerceCloudClientConfiguration commerceCloudClientConfiguration = editConfigurationDisplayContext.getCommerceCloudClientConfiguration();
 JSONObject forecastingConfigurationJSONObject = editConfigurationDisplayContext.getForecastingConfiguration();
+JSONObject projectConfigurationJSONObject = editConfigurationDisplayContext.getProjectConfiguration();
 String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 %>
 
@@ -29,7 +30,7 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 <div class="sheet">
 	<aui:fieldset>
 		<c:choose>
-			<c:when test='<%= forecastingConfigurationJSONObject.has("exception") %>'>
+			<c:when test='<%= forecastingConfigurationJSONObject.has("exception") || projectConfigurationJSONObject.has("exception") %>'>
 				<div class="alert alert-danger">
 					<liferay-ui:message key="commerce-cloud-is-temporarily-unavailable-or-not-configured-properly" />
 				</div>
@@ -74,6 +75,11 @@ String redirect = editConfigurationDisplayContext.getViewCategoryURL();
 					</aui:select>
 
 					<aui:input helpMessage="time-zone-offset-help" name="timeZoneOffset" value='<%= forecastingConfigurationJSONObject.getString("timeZoneOffset") %>' />
+
+					<aui:input label="history-size" name="forecastingHistorySize" suffix="weeks-months" value='<%= projectConfigurationJSONObject.getInt("forecastingHistorySize") %>'>
+						<aui:validator name="digits" />
+						<aui:validator name="min">1</aui:validator>
+					</aui:input>
 
 					<div id="<portlet:namespace />forecastingItems">
 

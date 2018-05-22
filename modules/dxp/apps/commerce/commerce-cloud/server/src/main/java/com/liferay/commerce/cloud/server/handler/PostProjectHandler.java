@@ -20,7 +20,7 @@ import com.liferay.commerce.cloud.server.service.ProjectService;
 import com.liferay.commerce.cloud.server.util.VertxUtil;
 
 import io.vertx.core.Handler;
-import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 
 /**
@@ -38,12 +38,14 @@ public class PostProjectHandler implements Handler<RoutingContext> {
 	public void handle(RoutingContext routingContext) {
 		Project project = routingContext.get(WebKeys.PROJECT);
 
-		HttpServerRequest httpServerRequest = routingContext.request();
+		JsonObject jsonObject = routingContext.getBodyAsJson();
 
-		String callbackHost = httpServerRequest.getParam("callbackHost");
+		jsonObject.put("id", project.getId());
 
-		_projectService.updateCallbackHost(
-			project.getId(), callbackHost,
+		project = new Project(jsonObject);
+
+		_projectService.updateProject(
+			project,
 			asyncResult -> VertxUtil.handleHttpResponse(
 				asyncResult, routingContext));
 	}

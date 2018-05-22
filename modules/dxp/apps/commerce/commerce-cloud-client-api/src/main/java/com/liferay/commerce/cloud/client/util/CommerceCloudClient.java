@@ -47,7 +47,7 @@ public interface CommerceCloudClient {
 	public void updateForecastingConfiguration(JSONObject jsonObject)
 		throws CommerceCloudClientException;
 
-	public void updateProjectConfiguration(String callbackHost)
+	public void updateProjectConfiguration(JSONObject jsonObject)
 		throws CommerceCloudClientException;
 
 }

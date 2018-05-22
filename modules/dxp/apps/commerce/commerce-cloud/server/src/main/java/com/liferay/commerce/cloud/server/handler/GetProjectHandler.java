@@ -22,11 +22,6 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RoutingContext;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * @author Andrea Di Giorgi
  */
@@ -38,24 +33,11 @@ public class GetProjectHandler implements Handler<RoutingContext> {
 	public void handle(RoutingContext routingContext) {
 		Project project = routingContext.get(WebKeys.PROJECT);
 
-		JsonObject jsonObject = project.toJson();
-
-		Iterator<Map.Entry<String, Object>> iterator = jsonObject.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, Object> entry = iterator.next();
-
-			if (!_clientPropertyKeys.contains(entry.getKey())) {
-				iterator.remove();
-			}
-		}
+		JsonObject jsonObject = project.toClientJson();
 
 		HttpServerResponse httpServerResponse = routingContext.response();
 
 		httpServerResponse.end(jsonObject.encodePrettily());
 	}
-
-	private static final Set<String> _clientPropertyKeys =
-		Collections.singleton("callbackHost");
 
 }

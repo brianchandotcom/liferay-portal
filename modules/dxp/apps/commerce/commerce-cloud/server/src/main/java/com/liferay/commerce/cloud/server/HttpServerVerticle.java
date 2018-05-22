@@ -166,6 +166,8 @@ public class HttpServerVerticle extends AbstractVerticle {
 		route.handler(activeProjectAuthHandler);
 
 		route.handler(new PostProjectHandler(projectService));
+
+		route.consumes(ContentTypes.APPLICATION_JSON);
 	}
 
 	private void _addRoutePutOrders(

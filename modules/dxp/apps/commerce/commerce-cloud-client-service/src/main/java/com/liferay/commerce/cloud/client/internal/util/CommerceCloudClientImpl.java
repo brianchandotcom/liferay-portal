@@ -193,14 +193,18 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 	}
 
 	@Override
-	public void updateProjectConfiguration(String callbackHost)
+	public void updateProjectConfiguration(JSONObject jsonObject)
 		throws CommerceCloudClientException {
 
 		String location = getLocation(StringPool.BLANK);
 
 		Http.Options options = new Http.Options();
 
-		options.addPart("callbackHost", callbackHost);
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.setBody(
+			jsonObject.toJSONString(), ContentTypes.APPLICATION_JSON,
+			StringPool.UTF8);
 		options.setLocation(location);
 		options.setPost(true);
 

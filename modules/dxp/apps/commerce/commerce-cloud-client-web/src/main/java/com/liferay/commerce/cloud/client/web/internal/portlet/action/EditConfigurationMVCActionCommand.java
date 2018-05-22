@@ -18,6 +18,7 @@ import com.liferay.commerce.cloud.client.configuration.CommerceCloudClientConfig
 import com.liferay.commerce.cloud.client.exception.CommerceCloudClientException;
 import com.liferay.commerce.cloud.client.util.CommerceCloudClient;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.portlet.ActionRequest;
@@ -66,6 +68,7 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (cmd.equals("forecasting")) {
 				updateForecastingConfiguration(actionRequest);
+				updateProjectConfiguration(actionRequest);
 
 				updateCommerceCloudClientConfiguration(actionRequest);
 			}
@@ -186,16 +189,41 @@ public class EditConfigurationMVCActionCommand extends BaseMVCActionCommand {
 	protected void updateProjectConfiguration(ActionRequest actionRequest)
 		throws Exception {
 
-		String callbackHost = ParamUtil.getString(
-			actionRequest, "callbackHost");
-		boolean pushSynchronizationEnabled = ParamUtil.getBoolean(
-			actionRequest, "pushSynchronizationEnabled");
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		if (!pushSynchronizationEnabled) {
-			callbackHost = null;
+		if (_hasParameter(actionRequest, "pushSynchronizationEnabled")) {
+			boolean pushSynchronizationEnabled = ParamUtil.getBoolean(
+				actionRequest, "pushSynchronizationEnabled");
+			String callbackHost = ParamUtil.getString(
+				actionRequest, "callbackHost");
+
+			if (!pushSynchronizationEnabled) {
+				callbackHost = StringPool.BLANK;
+			}
+
+			jsonObject.put("callbackHost", callbackHost);
 		}
 
-		_commerceCloudClient.updateProjectConfiguration(callbackHost);
+		if (_hasParameter(actionRequest, "forecastingHistorySize")) {
+			int forecastingHistorySize = ParamUtil.getInteger(
+				actionRequest, "forecastingHistorySize");
+
+			jsonObject.put("forecastingHistorySize", forecastingHistorySize);
+		}
+
+		_commerceCloudClient.updateProjectConfiguration(jsonObject);
+	}
+
+	private boolean _hasParameter(ActionRequest actionRequest, String name) {
+		Enumeration<String> enumeration = actionRequest.getParameterNames();
+
+		while (enumeration.hasMoreElements()) {
+			if (name.equals(enumeration.nextElement())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

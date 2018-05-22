@@ -23,7 +23,6 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.codec.BodyCodec;
 import io.vertx.ext.web.codec.impl.BodyCodecImpl;
@@ -99,28 +98,19 @@ public class WeDeployProjectServiceImpl
 	}
 
 	@Override
-	public void updateCallbackHost(
-		String projectId, String callbackHost,
-		Handler<AsyncResult<Void>> handler) {
+	public void updateProject(
+		Project project, Handler<AsyncResult<Void>> handler) {
 
 		HttpRequest<Void> httpRequest = webClient.patch(
-			"/projects/" + projectId
+			"/projects/" + project.getId()
 		).as(
 			BodyCodec.none()
 		);
 
 		addAuthorization(httpRequest);
 
-		JsonObject jsonObject = new JsonObject();
-
-		if (callbackHost == null) {
-			callbackHost = "";
-		}
-
-		jsonObject.put("callbackHost", callbackHost);
-
 		httpRequest.sendJsonObject(
-			jsonObject,
+			project.toClientJson(),
 			asyncResult -> VertxUtil.handleServiceHttpResponse(
 				asyncResult, handler));
 	}

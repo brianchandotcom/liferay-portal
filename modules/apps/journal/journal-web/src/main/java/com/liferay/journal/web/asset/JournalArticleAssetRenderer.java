@@ -31,6 +31,8 @@ import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -383,11 +385,22 @@ public class JournalArticleAssetRenderer
 				fetchAssetDisplayPageEntryByAssetEntryId(
 					assetEntry.getEntryId());
 
-		if ((Validator.isNotNull(_article.getLayoutUuid()) ||
-			 (assetDisplayPageEntry != null)) &&
-			Validator.isNull(linkToLayoutUuid)) {
+		Group group = themeDisplay.getScopeGroup();
 
-			Group group = themeDisplay.getScopeGroup();
+		LayoutPageTemplateEntry defaultLayoutPageTemplateEntry = null;
+
+		if (assetDisplayPageEntry == null) {
+			defaultLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryServiceUtil.
+					fetchDefaultLayoutPageTemplateEntry(
+						group.getGroupId(), assetEntry.getClassNameId(),
+						assetEntry.getClassTypeId());
+		}
+
+		if ((Validator.isNotNull(_article.getLayoutUuid()) ||
+			 (assetDisplayPageEntry != null) ||
+			 (defaultLayoutPageTemplateEntry != null)) &&
+			Validator.isNull(linkToLayoutUuid)) {
 
 			if (group.getGroupId() != _article.getGroupId()) {
 				group = GroupLocalServiceUtil.getGroup(_article.getGroupId());

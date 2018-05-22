@@ -325,7 +325,7 @@
 		</execute>
 
 		<execute macro="Collection#viewPresent">
-			<var name="rowEntry" value="Collection Name New" />
+			<var name="collectionName" value="Collection Name New" />
 		</execute>
 	</command>
 

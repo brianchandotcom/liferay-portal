@@ -17,7 +17,6 @@ package com.liferay.site.navigation.menu.item.node.internal.type;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -57,18 +56,6 @@ public class NodeSiteNavigationMenuItemType
 			_resourceBundleLoader.loadResourceBundle(locale);
 
 		return LanguageUtil.get(resourceBundle, "submenu");
-	}
-
-	@Override
-	public String getTitle(
-		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.fastLoad(
-			siteNavigationMenuItem.getTypeSettings());
-
-		return typeSettingsProperties.get("name");
 	}
 
 	@Override

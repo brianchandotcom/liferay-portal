@@ -135,12 +135,7 @@ public class LayoutSiteNavigationMenuItemType
 	public String getTitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.fastLoad(
-			siteNavigationMenuItem.getTypeSettings());
-
-		String label = typeSettingsProperties.getProperty("name");
+		String label = getName(siteNavigationMenuItem.getTypeSettings());
 
 		if (Validator.isNotNull(label)) {
 			return label;

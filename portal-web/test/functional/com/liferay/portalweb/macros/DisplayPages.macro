@@ -22,7 +22,7 @@
 			<var name="key_id" value="${id}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Fragment#LIST_GROUP_ITEM" value1='${itemName}'>
+		<execute function="AssertClick" locator1="Fragment#LIST_GROUP_ITEM" value1="${itemName}">
 			<var name="key_itemName" value="${itemName}" />
 		</execute>
 	</command>
@@ -49,11 +49,11 @@
 
 		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${assetType}">
 			<var name="key_fieldLabel" value="Asset Type" />
-		</execute> 
+		</execute>
 
 		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${subType}">
 			<var name="key_fieldLabel" value="Subtype" />
-		</execute> 
+		</execute>
 
 		<execute macro="Button#clickSave" />
 	</command>

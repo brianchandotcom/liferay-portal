@@ -111,9 +111,9 @@
 
 		<execute function="AssertTextEquals" locator1="Blogs#SUBSCRIBE_LINK" value1="Subscribe" />
 
-		<var name="key_text" value="rss RSS" />
+		<var name="key_text" value="rss-full RSS" />
 
-		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss RSS" />
+		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss-full RSS" />
 	</command>
 
 	<command name="viewDefaultConfiguration">
@@ -154,9 +154,9 @@
 		<execute function="AssertElementNotPresent" locator1="Button#ANY" />
 		<execute function="AssertElementNotPresent" locator1="Blogs#SUBSCRIBE_LINK" />
 
-		<var name="key_text" value="rss RSS" />
+		<var name="key_text" value="rss-full RSS" />
 
-		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss RSS" />
+		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss-full RSS" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Portlet#OPTIONS_ICON" />

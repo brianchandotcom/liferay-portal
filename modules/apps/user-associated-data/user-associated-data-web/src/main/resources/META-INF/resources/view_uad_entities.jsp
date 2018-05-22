@@ -21,6 +21,8 @@ ViewUADEntitiesDisplay viewUADEntitiesDisplay = (ViewUADEntitiesDisplay)request.
 
 SearchContainer<UADEntity> uadEntitySearchContainer = viewUADEntitiesDisplay.getSearchContainer();
 
+ViewUADEntitiesManagementToolbarDisplayContext viewUADEntitiesManagementToolbarDisplayContext = new ViewUADEntitiesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, uadEntitySearchContainer);
+
 portletDisplay.setShowBackIcon(true);
 
 PortletURL backURL = renderResponse.createRenderURL();
@@ -38,15 +40,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= viewUADEntitiesDisplay.getActionDropdownItems() %>"
-	disabled="<%= uadEntitySearchContainer.getTotal() == 0 %>"
-	infoPanelId="infoPanelId"
-	itemsTotal="<%= uadEntitySearchContainer.getTotal() %>"
-	namespace="<%= renderResponse.getNamespace() %>"
-	searchContainerId="UADEntities"
-	selectable="<%= true %>"
-	showInfoButton="<%= true %>"
-	showSearch="<%= false %>"
+	actionDropdownItems="<%= viewUADEntitiesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	disabled="<%= viewUADEntitiesManagementToolbarDisplayContext.getDisabled() %>"
+	infoPanelId="<%= viewUADEntitiesManagementToolbarDisplayContext.getInfoPanelId() %>"
+	itemsTotal="<%= viewUADEntitiesManagementToolbarDisplayContext.getItemsTotal() %>"
+	searchContainerId="<%= viewUADEntitiesManagementToolbarDisplayContext.getSearchContainerId() %>"
+	selectable="<%= viewUADEntitiesManagementToolbarDisplayContext.getSelectable() %>"
+	showInfoButton="<%= viewUADEntitiesManagementToolbarDisplayContext.getShowInfoButton() %>"
+	showSearch="<%= viewUADEntitiesManagementToolbarDisplayContext.getShowSearch() %>"
 />
 
 <aui:form method="post" name="viewUADEntitiesFm">
@@ -67,8 +68,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 		<div class="sidenav-content">
 			<liferay-ui:search-container
-				emptyResultsMessage="no-entities-remain-of-this-type"
-				id="UADEntities"
 				searchContainer="<%= uadEntitySearchContainer %>"
 			>
 				<liferay-ui:search-container-row

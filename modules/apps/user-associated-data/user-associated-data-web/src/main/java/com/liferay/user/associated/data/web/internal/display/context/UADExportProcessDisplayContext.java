@@ -14,13 +14,10 @@
 
 package com.liferay.user.associated.data.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -35,7 +32,6 @@ import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -103,50 +99,6 @@ public class UADExportProcessDisplayContext {
 		return comparator;
 	}
 
-	public CreationMenu getCreationMenu() throws PortalException {
-		CreationMenu creationMenu = new CreationMenu();
-
-		User selectedUser = PortalUtil.getSelectedUser(_request);
-
-		creationMenu.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/add_uad_export_processes", "backURL",
-					PortalUtil.getCurrentURL(_request), "p_u_i_d",
-					String.valueOf(selectedUser.getUserId()));
-				dropdownItem.setLabel("add-export-processes");
-			});
-
-		return creationMenu;
-	}
-
-	public DropdownItemList getDropdownItems() throws PortalException {
-		DropdownItemList dropdownItems = new DropdownItemList();
-
-		PortletURL navigationPortletURL = getPortletURL();
-
-		dropdownItems.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getNavigationDropdownItems(navigationPortletURL));
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_request, "filter-by-navigation"));
-			});
-
-		PortletURL orderByPortletURL = getPortletURL();
-
-		dropdownItems.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getOrderByDropdownItems(orderByPortletURL));
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(_request, "order-by"));
-			});
-
-		return dropdownItems;
-	}
-
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -155,24 +107,6 @@ public class UADExportProcessDisplayContext {
 		_navigation = ParamUtil.getString(_request, "navigation", "all");
 
 		return _navigation;
-	}
-
-	public DropdownItemList getNavigationDropdownItems(PortletURL portletURL) {
-		DropdownItemList navigationDropdownItems = new DropdownItemList();
-
-		for (String navigation :
-				new String[] {"all", "in-progress", "successful", "failed"}) {
-
-			navigationDropdownItems.add(
-				dropdownItem -> {
-					dropdownItem.setActive(navigation.equals(getNavigation()));
-					dropdownItem.setLabel(
-						LanguageUtil.get(_request, navigation));
-					dropdownItem.setHref(portletURL, "navigation", navigation);
-				});
-		}
-
-		return navigationDropdownItems;
 	}
 
 	public String getOrderByCol() {
@@ -184,24 +118,6 @@ public class UADExportProcessDisplayContext {
 			_request, "orderByCol", "create-date");
 
 		return _orderByCol;
-	}
-
-	public DropdownItemList getOrderByDropdownItems(PortletURL portletURL) {
-		DropdownItemList orderByDropdownItems = new DropdownItemList();
-
-		for (String orderByCol : new String[] {"create-date", "name"}) {
-			orderByDropdownItems.add(
-				dropdownItem -> {
-					dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
-					dropdownItem.setLabel(
-						LanguageUtil.get(_request, orderByCol));
-					dropdownItem.setHref(
-						portletURL, "orderByCol", orderByCol, "orderByType",
-						getOrderByType());
-				});
-		}
-
-		return orderByDropdownItems;
 	}
 
 	public String getOrderByType() {
@@ -306,23 +222,6 @@ public class UADExportProcessDisplayContext {
 		_searchContainer = searchContainer;
 
 		return _searchContainer;
-	}
-
-	public String getSortingURL() throws PortalException {
-		PortletURL sortingURL = getPortletURL();
-
-		String orderByType;
-
-		if (Objects.equals(getOrderByType(), "asc")) {
-			orderByType = "desc";
-		}
-		else {
-			orderByType = "asc";
-		}
-
-		sortingURL.setParameter("orderByType", orderByType);
-
-		return sortingURL.toString();
 	}
 
 	private String _navigation;

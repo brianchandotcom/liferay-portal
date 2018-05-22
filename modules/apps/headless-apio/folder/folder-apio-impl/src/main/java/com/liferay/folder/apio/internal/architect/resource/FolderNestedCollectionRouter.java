@@ -18,13 +18,18 @@ import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
+import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
+import com.liferay.folder.apio.internal.architect.form.FolderForm;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.List;
 
+import com.liferay.portal.kernel.service.ServiceContext;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,7 +52,21 @@ public class FolderNestedCollectionRouter
 
 		return builder.addGetter(
 			this::_getPageItems
+		).addCreator(
+			this::_addFolder,
+			_hasPermission.forAddingIn(FolderIdentifier.class),
+			FolderForm::buildForm
 		).build();
+	}
+
+	private Folder _addFolder(Long parentFolderId, FolderForm folderForm)
+		throws PortalException {
+
+		Folder folder = _dlAppLocalService.getFolder(parentFolderId);
+
+		return _dlAppService.addFolder(
+			folder.getGroupId(), parentFolderId, folderForm.getName(),
+			folderForm.getDescription(), new ServiceContext());
 	}
 
 	private PageItems<Folder> _getPageItems(
@@ -68,5 +87,13 @@ public class FolderNestedCollectionRouter
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

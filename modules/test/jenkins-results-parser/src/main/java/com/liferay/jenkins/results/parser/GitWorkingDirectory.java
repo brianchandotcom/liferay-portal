@@ -853,6 +853,10 @@ public class GitWorkingDirectory {
 
 			rebase(true, localUpstreamBranch, localRebasedPullRequestBranch);
 
+			clean();
+
+			reset("--hard");
+
 			return localRebasedPullRequestBranch;
 		}
 		finally {

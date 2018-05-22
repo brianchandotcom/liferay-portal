@@ -51,7 +51,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		var form = $(document.<portlet:namespace />fm);
 
 		function onError() {
-			var message = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
+			var message = '<liferay-ui:message key="your-request-failed-to-complete" />';
 
 			<portlet:namespace />showStatusMessage('danger', message);
 
@@ -71,10 +71,11 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 						var userStatus = responseData.userStatus;
 
 						if (userStatus == 'user_added') {
-							message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account-your-password-was-sent-to-x", HtmlUtil.escape(emailAddress), false) %>';
+
+							message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account-your-password-was-sent-to-x" translateArguments="<%= false %>" />';
 						}
 						else if (userStatus == 'user_pending') {
-							message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", HtmlUtil.escape(emailAddress), false) %>';
+							message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
 						}
 
 						<portlet:namespace />showStatusMessage('success', message);

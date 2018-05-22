@@ -33,6 +33,14 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	.facet-checkbox-label {
 		display: block;
 	}
+
+	.facet-term-selected {
+		font-weight: 600;
+	}
+
+	.facet-term-unselected {
+		font-weight: 400;
+	}
 </style>
 
 <%
@@ -76,7 +84,7 @@ CustomFacetDisplayContext customFacetDisplayContext = (CustomFacetDisplayContext
 									<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
 										<input class="facet-term" data-term-id="<%= customFacetTermDisplayContext.getFieldName() %>" id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= customFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
-										<span class="term-name">
+										<span class="term-name <%= customFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
 											<%= HtmlUtil.escape(customFacetTermDisplayContext.getFieldName()) %>
 										</span>
 

@@ -37,14 +37,6 @@ public class ModifiedFacetTermDisplayContext implements Serializable {
 		return _rangeURL;
 	}
 
-	public boolean isActive() {
-		if (_frequency == 0) {
-			return false;
-		}
-
-		return _selected;
-	}
-
 	public boolean isSelected() {
 		return _selected;
 	}

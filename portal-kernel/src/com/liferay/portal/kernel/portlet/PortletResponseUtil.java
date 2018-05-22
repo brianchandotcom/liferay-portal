@@ -242,6 +242,8 @@ public class PortletResponseUtil {
 			}
 		}
 
+		mimeResponse.flushBuffer();
+
 		StreamUtil.transfer(inputStream, mimeResponse.getPortletOutputStream());
 	}
 

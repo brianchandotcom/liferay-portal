@@ -425,46 +425,48 @@ public class GitWorkingDirectory {
 
 		String remoteURL = remote.getRemoteURL();
 
-		if (remoteURL.contains("github-dev.liferay.com")) {
-			executeBashCommands(
-				_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT,
-				"rm -f ~/.ssh/known_hosts");
-		}
+		if (JenkinsResultsParserUtil.isCINode()) {
+			if (remoteURL.contains("github-dev.liferay.com")) {
+				executeBashCommands(
+					_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT,
+					"rm -f ~/.ssh/known_hosts");
+			}
 
-		if (remoteURL.contains("github.com:liferay/")) {
-			remoteURL = remoteURL.replace(
-				"github.com:liferay/", "github-dev.liferay.com:liferay/");
+			if (remoteURL.contains("github.com:liferay/")) {
+				remoteURL = remoteURL.replace(
+					"github.com:liferay/", "github-dev.liferay.com:liferay/");
 
-			Remote gitHubDevRemote = null;
+				Remote gitHubDevRemote = null;
 
-			try {
-				gitHubDevRemote = addRemote(
-					true, "github-dev-remote", remoteURL);
+				try {
+					gitHubDevRemote = addRemote(
+						true, "github-dev-remote", remoteURL);
 
-				Branch localGitRemoteBranch = getBranch(
-					remoteBranch.getName(), gitHubDevRemote);
+					Branch localGitRemoteBranch = getBranch(
+						remoteBranch.getName(), gitHubDevRemote);
 
-				if (localGitRemoteBranch != null) {
-					fetch(localBranch, noTags, localGitRemoteBranch);
+					if (localGitRemoteBranch != null) {
+						fetch(localBranch, noTags, localGitRemoteBranch);
 
-					String upstreamBranchSHA = remoteBranch.getSHA();
+						String upstreamBranchSHA = remoteBranch.getSHA();
 
-					if (localSHAExists(upstreamBranchSHA)) {
-						if (!upstreamBranchSHA.equals(
-								localGitRemoteBranch.getSHA())) {
+						if (localSHAExists(upstreamBranchSHA)) {
+							if (!upstreamBranchSHA.equals(
+									localGitRemoteBranch.getSHA())) {
 
-							createLocalBranch(
-								localBranch.getName(), true,
-								remoteBranch.getSHA());
+								createLocalBranch(
+									localBranch.getName(), true,
+									remoteBranch.getSHA());
+							}
+
+							return;
 						}
-
-						return;
 					}
 				}
-			}
-			finally {
-				if (gitHubDevRemote != null) {
-					removeRemote(gitHubDevRemote);
+				finally {
+					if (gitHubDevRemote != null) {
+						removeRemote(gitHubDevRemote);
+					}
 				}
 			}
 		}
@@ -595,10 +597,16 @@ public class GitWorkingDirectory {
 			"git branch --contains " + sha);
 
 		if (executionResult.getExitValue() != 0) {
+			String standardError = executionResult.getStandardError();
+
+			if (standardError.contains("no such commit")) {
+				return Collections.emptyList();
+			}
+
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to get branches with SHA ", sha, "\n",
-					executionResult.getStandardError()));
+					standardError));
 		}
 
 		String standardOut = executionResult.getStandardOut();
@@ -797,6 +805,69 @@ public class GitWorkingDirectory {
 		}
 
 		return null;
+	}
+
+	public Branch getLocalRebasedPullRequestBranch(PullRequest pullRequest) {
+		Branch currentBranch = getCurrentBranch();
+
+		String currentBranchName = currentBranch.getName();
+
+		Branch tempBranch = null;
+		Remote senderTempRemote = null;
+
+		try {
+			if (currentBranchName.equals(
+					pullRequest.getLocalSenderBranchName())) {
+
+				tempBranch = createLocalBranch(
+					"temp-" + System.currentTimeMillis());
+
+				checkoutBranch(tempBranch);
+			}
+
+			senderTempRemote = addRemote(
+				true, "sender-temp-" + System.currentTimeMillis(),
+				pullRequest.getSenderRemoteURL());
+
+			Branch remoteSenderBranch = getBranch(
+				pullRequest.getSenderBranchName(), senderTempRemote);
+
+			fetch(null, remoteSenderBranch);
+
+			Branch localRebasedPullRequestBranch = createLocalBranch(
+				pullRequest.getLocalSenderBranchName(), true,
+				pullRequest.getSenderSHA());
+
+			Remote upstreamRemote = getRemote("upstream");
+
+			Branch remoteUpstreamBranch = getBranch(
+				pullRequest.getUpstreamBranchName(), upstreamRemote);
+
+			if (!localSHAExists(remoteUpstreamBranch.getSHA())) {
+				fetch(null, remoteUpstreamBranch);
+			}
+
+			Branch localUpstreamBranch = createLocalBranch(
+				pullRequest.getUpstreamBranchName(), true,
+				remoteUpstreamBranch.getSHA());
+
+			rebase(true, localUpstreamBranch, localRebasedPullRequestBranch);
+
+			clean();
+
+			reset("--hard");
+
+			return localRebasedPullRequestBranch;
+		}
+		finally {
+			if (tempBranch != null) {
+				deleteBranch(tempBranch);
+			}
+
+			if (senderTempRemote != null) {
+				removeRemote(senderTempRemote);
+			}
+		}
 	}
 
 	public List<File> getModifiedFilesList() {
@@ -1094,6 +1165,15 @@ public class GitWorkingDirectory {
 
 	public void rebase(
 		boolean abortOnFail, Branch sourceBranch, Branch targetBranch) {
+
+		List<String> branchNamesContainingSHA = getBranchNamesContainingSHA(
+			sourceBranch.getSHA());
+
+		if (branchNamesContainingSHA.contains(targetBranch.getName())) {
+			checkoutBranch(targetBranch);
+
+			return;
+		}
 
 		String rebaseCommand = JenkinsResultsParserUtil.combine(
 			"git rebase ", sourceBranch.getName(), " ", targetBranch.getName());
@@ -1558,6 +1638,10 @@ public class GitWorkingDirectory {
 		int x = remoteURL.lastIndexOf("/") + 1;
 		int y = remoteURL.indexOf(".git");
 
+		if (y == -1) {
+			y = remoteURL.length();
+		}
+
 		String repositoryName = remoteURL.substring(x, y);
 
 		if (repositoryName.equals("liferay-jenkins-tools-private")) {
@@ -1800,7 +1884,7 @@ public class GitWorkingDirectory {
 	private static final long _TIMEOUT = 30 * 1000;
 
 	private static final Pattern _gitDirectoryPathPattern = Pattern.compile(
-		"gitdir\\: (.*\\.git)");
+		"gitdir\\: (.*)\\s*");
 	private static final Pattern _gitLogEntityPattern = Pattern.compile(
 		"(?<sha>[0-9a-f]{40}) (?<message>.*)");
 	private static final Pattern _gitLsRemotePattern = Pattern.compile(

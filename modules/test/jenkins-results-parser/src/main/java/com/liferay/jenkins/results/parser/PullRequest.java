@@ -99,6 +99,11 @@ public class PullRequest {
 		return StringUtils.replace(labelsURL, "{/name}", "");
 	}
 
+	public String getLocalSenderBranchName() {
+		return JenkinsResultsParserUtil.combine(
+			getSenderUsername(), "-", getNumber(), "-", getSenderBranchName());
+	}
+
 	public String getNumber() {
 		return String.valueOf(_number);
 	}
@@ -115,6 +120,11 @@ public class PullRequest {
 		JSONObject headJSONObject = _jsonObject.getJSONObject("head");
 
 		return headJSONObject.getString("ref");
+	}
+
+	public String getSenderRemoteURL() {
+		return JenkinsResultsParserUtil.combine(
+			"git@github.com:", getSenderUsername(), "/", getRepositoryName());
 	}
 
 	public String getSenderSHA() {

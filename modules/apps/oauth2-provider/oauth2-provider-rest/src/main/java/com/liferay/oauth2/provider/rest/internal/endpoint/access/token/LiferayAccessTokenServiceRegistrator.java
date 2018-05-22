@@ -15,11 +15,11 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.access.token;
 
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -108,7 +108,7 @@ public class LiferayAccessTokenServiceRegistrator {
 		liferayAccessTokenService.setGrantHandlers(_accessTokenGrantHandlers);
 
 		Dictionary<String, Object> liferayAccessTokenServiceProperties =
-			new Hashtable<>();
+			new HashMapDictionary<>();
 
 		liferayAccessTokenServiceProperties.put(
 			"osgi.jaxrs.application.select",

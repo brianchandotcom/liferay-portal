@@ -22,4 +22,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
+
+	soyCompile project(":apps:frontend-js:frontend-js-web")
 }

@@ -21,6 +21,8 @@ ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay = (ViewUADAp
 
 SearchContainer<UADApplicationSummaryDisplay> uadApplicationsSummaryDisplaySearchContainer = viewUADApplicationsSummaryDisplay.getSearchContainer();
 
+UADApplicationsSummaryManagementToolbarDisplayContext uadApplicationsSummaryManagementToolbarDisplayContext = new UADApplicationsSummaryManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, uadApplicationsSummaryDisplaySearchContainer);
+
 portletDisplay.setShowBackIcon(true);
 
 PortletURL backURL = renderResponse.createRenderURL();
@@ -61,17 +63,15 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 			<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
 			<clay:management-toolbar
-				filterDropdownItems="<%= viewUADApplicationsSummaryDisplay.getManagementBarFilterItems() %>"
-				namespace="<%= renderResponse.getNamespace() %>"
-				searchContainerId="uadApplicationSummaryDisplays"
-				selectable="<%= false %>"
-				showSearch="<%= false %>"
-				sortingOrder="<%= uadApplicationsSummaryDisplaySearchContainer.getOrderByType() %>"
-				sortingURL="<%= viewUADApplicationsSummaryDisplay.getSortingURL() %>"
+				filterDropdownItems="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+				searchContainerId="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSearchContainerId() %>"
+				selectable="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSelectable() %>"
+				showSearch="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getShowSearch() %>"
+				sortingOrder="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSortingOrder() %>"
+				sortingURL="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSortingURL() %>"
 			/>
 
 			<liferay-ui:search-container
-				id="uadApplicationSummaryDisplays"
 				searchContainer="<%= uadApplicationsSummaryDisplaySearchContainer %>"
 			>
 				<liferay-ui:search-container-row

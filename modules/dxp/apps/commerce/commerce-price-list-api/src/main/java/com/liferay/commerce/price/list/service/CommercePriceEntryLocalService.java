@@ -199,6 +199,10 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry fetchCommercePriceEntry(long commercePriceEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

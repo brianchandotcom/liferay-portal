@@ -80,6 +80,12 @@ public class CommercePriceListServiceUtil {
 		getService().deleteCommercePriceList(commercePriceListId);
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceList fetchByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
 	public static com.liferay.commerce.price.list.model.CommercePriceList fetchCommercePriceList(
 		long commercePriceListId)
 		throws com.liferay.portal.kernel.exception.PortalException {

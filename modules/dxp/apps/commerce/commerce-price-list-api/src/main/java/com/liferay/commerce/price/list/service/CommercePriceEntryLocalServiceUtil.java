@@ -210,6 +210,11 @@ public class CommercePriceEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return getService().fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceEntryId) {
 		return getService().fetchCommercePriceEntry(commercePriceEntryId);

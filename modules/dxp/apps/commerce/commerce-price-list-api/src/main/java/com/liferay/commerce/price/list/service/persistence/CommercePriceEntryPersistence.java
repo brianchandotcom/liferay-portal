@@ -902,6 +902,52 @@ public interface CommercePriceEntryPersistence extends BasePersistence<CommerceP
 	public int countByCommercePriceListId(long commercePriceListId);
 
 	/**
+	* Returns the commerce price entry where externalReferenceCode = &#63; or throws a {@link NoSuchPriceEntryException} if it could not be found.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching commerce price entry
+	* @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
+	*/
+	public CommercePriceEntry findByExternalReferenceCode(
+		String externalReferenceCode) throws NoSuchPriceEntryException;
+
+	/**
+	* Returns the commerce price entry where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	*/
+	public CommercePriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode);
+
+	/**
+	* Returns the commerce price entry where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	*/
+	public CommercePriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode, boolean retrieveFromCache);
+
+	/**
+	* Removes the commerce price entry where externalReferenceCode = &#63; from the database.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the commerce price entry that was removed
+	*/
+	public CommercePriceEntry removeByExternalReferenceCode(
+		String externalReferenceCode) throws NoSuchPriceEntryException;
+
+	/**
+	* Returns the number of commerce price entries where externalReferenceCode = &#63;.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching commerce price entries
+	*/
+	public int countByExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	* Returns the commerce price entry where CPInstanceId = &#63; and commercePriceListId = &#63; or throws a {@link NoSuchPriceEntryException} if it could not be found.
 	*
 	* @param CPInstanceId the cp instance ID

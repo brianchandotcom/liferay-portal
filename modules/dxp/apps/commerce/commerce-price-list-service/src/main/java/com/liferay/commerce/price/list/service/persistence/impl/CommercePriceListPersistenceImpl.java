@@ -3268,6 +3268,249 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 
 	private static final String _FINDER_COLUMN_COMMERCECURRENCYID_COMMERCECURRENCYID_2 =
 		"commercePriceList.commerceCurrencyId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
+			CommercePriceListModelImpl.FINDER_CACHE_ENABLED,
+			CommercePriceListImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByExternalReferenceCode",
+			new String[] { String.class.getName() },
+			CommercePriceListModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_EXTERNALREFERENCECODE = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
+			CommercePriceListModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByExternalReferenceCode",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns the commerce price list where externalReferenceCode = &#63; or throws a {@link NoSuchPriceListException} if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching commerce price list
+	 * @throws NoSuchPriceListException if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList findByExternalReferenceCode(
+		String externalReferenceCode) throws NoSuchPriceListException {
+		CommercePriceList commercePriceList = fetchByExternalReferenceCode(externalReferenceCode);
+
+		if (commercePriceList == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("externalReferenceCode=");
+			msg.append(externalReferenceCode);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchPriceListException(msg.toString());
+		}
+
+		return commercePriceList;
+	}
+
+	/**
+	 * Returns the commerce price list where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return fetchByExternalReferenceCode(externalReferenceCode, true);
+	}
+
+	/**
+	 * Returns the commerce price list where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching commerce price list, or <code>null</code> if a matching commerce price list could not be found
+	 */
+	@Override
+	public CommercePriceList fetchByExternalReferenceCode(
+		String externalReferenceCode, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { externalReferenceCode };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE,
+					finderArgs, this);
+		}
+
+		if (result instanceof CommercePriceList) {
+			CommercePriceList commercePriceList = (CommercePriceList)result;
+
+			if (!Objects.equals(externalReferenceCode,
+						commercePriceList.getExternalReferenceCode())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_COMMERCEPRICELIST_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode == null) {
+				query.append(_FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_1);
+			}
+			else if (externalReferenceCode.equals("")) {
+				query.append(_FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				query.append(_FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindExternalReferenceCode) {
+					qPos.add(externalReferenceCode);
+				}
+
+				List<CommercePriceList> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE,
+						finderArgs, list);
+				}
+				else {
+					CommercePriceList commercePriceList = list.get(0);
+
+					result = commercePriceList;
+
+					cacheResult(commercePriceList);
+
+					if ((commercePriceList.getExternalReferenceCode() == null) ||
+							!commercePriceList.getExternalReferenceCode()
+												  .equals(externalReferenceCode)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE,
+							finderArgs, commercePriceList);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommercePriceList)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce price list where externalReferenceCode = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @return the commerce price list that was removed
+	 */
+	@Override
+	public CommercePriceList removeByExternalReferenceCode(
+		String externalReferenceCode) throws NoSuchPriceListException {
+		CommercePriceList commercePriceList = findByExternalReferenceCode(externalReferenceCode);
+
+		return remove(commercePriceList);
+	}
+
+	/**
+	 * Returns the number of commerce price lists where externalReferenceCode = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching commerce price lists
+	 */
+	@Override
+	public int countByExternalReferenceCode(String externalReferenceCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_EXTERNALREFERENCECODE;
+
+		Object[] finderArgs = new Object[] { externalReferenceCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_COMMERCEPRICELIST_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode == null) {
+				query.append(_FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_1);
+			}
+			else if (externalReferenceCode.equals("")) {
+				query.append(_FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				query.append(_FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindExternalReferenceCode) {
+					qPos.add(externalReferenceCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_1 =
+		"commercePriceList.externalReferenceCode IS NULL";
+	private static final String _FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_2 =
+		"commercePriceList.externalReferenceCode = ?";
+	private static final String _FINDER_COLUMN_EXTERNALREFERENCECODE_EXTERNALREFERENCECODE_3 =
+		"(commercePriceList.externalReferenceCode IS NULL OR commercePriceList.externalReferenceCode = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S = new FinderPath(CommercePriceListModelImpl.ENTITY_CACHE_ENABLED,
 			CommercePriceListModelImpl.FINDER_CACHE_ENABLED,
 			CommercePriceListImpl.class,
@@ -4951,6 +5194,10 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			new Object[] { commercePriceList.getParentCommercePriceListId() },
 			commercePriceList);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE,
+			new Object[] { commercePriceList.getExternalReferenceCode() },
+			commercePriceList);
+
 		commercePriceList.resetOriginalValues();
 	}
 
@@ -5043,6 +5290,15 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			args, Long.valueOf(1), false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
 			args, commercePriceListModelImpl, false);
+
+		args = new Object[] {
+				commercePriceListModelImpl.getExternalReferenceCode()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_EXTERNALREFERENCECODE, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE, args,
+			commercePriceListModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -5089,6 +5345,29 @@ public class CommercePriceListPersistenceImpl extends BasePersistenceImpl<Commer
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_PARENTCOMMERCEPRICELISTID,
 				args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_PARENTCOMMERCEPRICELISTID,
+				args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					commercePriceListModelImpl.getExternalReferenceCode()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_EXTERNALREFERENCECODE,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE,
+				args);
+		}
+
+		if ((commercePriceListModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					commercePriceListModelImpl.getOriginalExternalReferenceCode()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_EXTERNALREFERENCECODE,
+				args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE,
 				args);
 		}
 	}

@@ -251,6 +251,15 @@ public class CommercePriceEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByExternalReferenceCode() throws Exception {
+		_persistence.countByExternalReferenceCode("");
+
+		_persistence.countByExternalReferenceCode("null");
+
+		_persistence.countByExternalReferenceCode((String)null);
+	}
+
+	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
@@ -500,6 +509,11 @@ public class CommercePriceEntryPersistenceTest {
 				existingCommercePriceEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCommercePriceEntry,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertTrue(Objects.equals(
+				existingCommercePriceEntry.getExternalReferenceCode(),
+				ReflectionTestUtil.invoke(existingCommercePriceEntry,
+					"getOriginalExternalReferenceCode", new Class<?>[0])));
 
 		Assert.assertEquals(Long.valueOf(
 				existingCommercePriceEntry.getCPInstanceId()),

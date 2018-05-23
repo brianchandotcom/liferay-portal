@@ -272,6 +272,15 @@ public class CommercePriceListPersistenceTest {
 	}
 
 	@Test
+	public void testCountByExternalReferenceCode() throws Exception {
+		_persistence.countByExternalReferenceCode("");
+
+		_persistence.countByExternalReferenceCode("null");
+
+		_persistence.countByExternalReferenceCode((String)null);
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
@@ -541,6 +550,11 @@ public class CommercePriceListPersistenceTest {
 				existingCommercePriceList.getParentCommercePriceListId()),
 			ReflectionTestUtil.<Long>invoke(existingCommercePriceList,
 				"getOriginalParentCommercePriceListId", new Class<?>[0]));
+
+		Assert.assertTrue(Objects.equals(
+				existingCommercePriceList.getExternalReferenceCode(),
+				ReflectionTestUtil.invoke(existingCommercePriceList,
+					"getOriginalExternalReferenceCode", new Class<?>[0])));
 	}
 
 	protected CommercePriceList addCommercePriceList()

@@ -63,6 +63,13 @@ public class CommercePriceEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceEntryService.fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
+	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceEntryId) {
 		return _commercePriceEntryService.fetchCommercePriceEntry(commercePriceEntryId);

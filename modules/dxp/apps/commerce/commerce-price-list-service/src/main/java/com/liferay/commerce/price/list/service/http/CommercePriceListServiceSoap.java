@@ -128,6 +128,20 @@ public class CommercePriceListServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceListSoap fetchByExternalReferenceCode(
+		String externalReferenceCode) throws RemoteException {
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceList returnValue = CommercePriceListServiceUtil.fetchByExternalReferenceCode(externalReferenceCode);
+
+			return com.liferay.commerce.price.list.model.CommercePriceListSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.price.list.model.CommercePriceListSoap fetchCommercePriceList(
 		long commercePriceListId) throws RemoteException {
 		try {

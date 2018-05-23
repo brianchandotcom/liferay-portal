@@ -235,6 +235,14 @@ public class CommercePriceListLocalServiceImpl
 	}
 
 	@Override
+	public CommercePriceList fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		return commercePriceListPersistence.fetchByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
 	public Optional<CommercePriceList> getCommercePriceList(
 			long groupId, long[] commerceUserSegmentEntryIds)
 		throws PortalException {

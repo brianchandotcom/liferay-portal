@@ -1169,6 +1169,70 @@ public class CommercePriceEntryUtil {
 	}
 
 	/**
+	* Returns the commerce price entry where externalReferenceCode = &#63; or throws a {@link NoSuchPriceEntryException} if it could not be found.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching commerce price entry
+	* @throws NoSuchPriceEntryException if a matching commerce price entry could not be found
+	*/
+	public static CommercePriceEntry findByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
+		return getPersistence()
+				   .findByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the commerce price entry where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	*/
+	public static CommercePriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return getPersistence()
+				   .fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the commerce price entry where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce price entry, or <code>null</code> if a matching commerce price entry could not be found
+	*/
+	public static CommercePriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByExternalReferenceCode(externalReferenceCode,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce price entry where externalReferenceCode = &#63; from the database.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the commerce price entry that was removed
+	*/
+	public static CommercePriceEntry removeByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.commerce.price.list.exception.NoSuchPriceEntryException {
+		return getPersistence()
+				   .removeByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the number of commerce price entries where externalReferenceCode = &#63;.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching commerce price entries
+	*/
+	public static int countByExternalReferenceCode(String externalReferenceCode) {
+		return getPersistence()
+				   .countByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
 	* Returns the commerce price entry where CPInstanceId = &#63; and commercePriceListId = &#63; or throws a {@link NoSuchPriceEntryException} if it could not be found.
 	*
 	* @param CPInstanceId the cp instance ID

@@ -131,9 +131,10 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 	public static final long CPINSTANCEID_COLUMN_BITMASK = 1L;
 	public static final long COMMERCEPRICELISTID_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -596,7 +597,17 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
+
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
+		}
+
 		_externalReferenceCode = externalReferenceCode;
+	}
+
+	public String getOriginalExternalReferenceCode() {
+		return GetterUtil.getString(_originalExternalReferenceCode);
 	}
 
 	@JSON
@@ -744,6 +755,8 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 		commercePriceEntryModelImpl._originalCommercePriceListId = commercePriceEntryModelImpl._commercePriceListId;
 
 		commercePriceEntryModelImpl._setOriginalCommercePriceListId = false;
+
+		commercePriceEntryModelImpl._originalExternalReferenceCode = commercePriceEntryModelImpl._externalReferenceCode;
 
 		commercePriceEntryModelImpl._columnBitmask = 0;
 	}
@@ -966,6 +979,7 @@ public class CommercePriceEntryModelImpl extends BaseModelImpl<CommercePriceEntr
 	private BigDecimal _promoPrice;
 	private boolean _hasTierPrice;
 	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private CommercePriceEntry _escapedModel;

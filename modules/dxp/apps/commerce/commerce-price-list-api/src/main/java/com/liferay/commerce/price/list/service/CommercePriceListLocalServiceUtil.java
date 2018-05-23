@@ -225,6 +225,11 @@ public class CommercePriceListLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceList fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return getService().fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
 	public static com.liferay.commerce.price.list.model.CommercePriceList fetchCommercePriceList(
 		long commercePriceListId) {
 		return getService().fetchCommercePriceList(commercePriceListId);

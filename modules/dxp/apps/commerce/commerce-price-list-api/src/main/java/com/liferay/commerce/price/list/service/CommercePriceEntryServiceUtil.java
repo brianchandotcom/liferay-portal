@@ -68,6 +68,12 @@ public class CommercePriceEntryServiceUtil {
 		getService().deleteCommercePriceEntry(commercePriceEntryId);
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceEntryId) {
 		return getService().fetchCommercePriceEntry(commercePriceEntryId);

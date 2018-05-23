@@ -52,6 +52,9 @@
 		<finder name="CommercePriceListId" return-type="Collection">
 			<finder-column name="commercePriceListId" />
 		</finder>
+		<finder name="ExternalReferenceCode" return-type="CommercePriceEntry" unique="true">
+			<finder-column name="externalReferenceCode" />
+		</finder>
 		<finder name="C_C" return-type="CommercePriceEntry" unique="true">
 			<finder-column name="CPInstanceId" />
 			<finder-column name="commercePriceListId" />
@@ -115,6 +118,9 @@
 		</finder>
 		<finder name="CommerceCurrencyId" return-type="Collection">
 			<finder-column name="commerceCurrencyId" />
+		</finder>
+		<finder name="ExternalReferenceCode" return-type="CommercePriceList" unique="true">
+			<finder-column name="externalReferenceCode" />
 		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />

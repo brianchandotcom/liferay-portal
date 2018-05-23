@@ -85,6 +85,24 @@ public class CommercePriceEntryServiceImpl
 	}
 
 	@Override
+	public CommercePriceEntry fetchByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceList =
+			commercePriceEntryLocalService.fetchByExternalReferenceCode(
+				externalReferenceCode);
+
+		if (commercePriceList != null) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), commercePriceList.getGroupId(),
+				CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+		}
+
+		return commercePriceList;
+	}
+
+	@Override
 	public CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceEntryId) {
 

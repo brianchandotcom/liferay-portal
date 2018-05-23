@@ -9,7 +9,7 @@
 		<execute macro="CommerceEntry#addProductsEntry">
 			<var name="productFullDescription" value="${productFullDescription}" />
 			<var name="productShortDescription" value="${productShortDescription}" />
-			<var name="productTitle" value="${productTitle}" />
+			<var name="productName" value="${productName}" />
 		</execute>
 	</command>
 
@@ -21,7 +21,7 @@
 
 	<command name="moveCatalogEntryToRecycleBinViaCheckbox">
 		<execute function="Click" locator1="CommerceNavigation#SINGLE_ENTRY_CHECKBOX">
-			<var name="key_entryTitle" value="${productTitle}" />
+			<var name="key_entryName" value="${productName}" />
 		</execute>
 
 		<execute function="Click" locator1="Button#RECYCLE_BIN" />

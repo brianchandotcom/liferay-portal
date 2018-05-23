@@ -220,13 +220,7 @@ public class JournalDisplayContext {
 			}
 		}
 
-		addMenuFavItems = ArrayUtil.toStringArray(addMenuFavItemsList);
-
-		portalPreferences.setValues(
-			JournalPortletKeys.JOURNAL, key,
-			ArrayUtil.toStringArray(addMenuFavItems));
-
-		_addMenuFavItems = addMenuFavItems;
+		_addMenuFavItems = ArrayUtil.toStringArray(addMenuFavItemsList);
 
 		return _addMenuFavItems;
 	}

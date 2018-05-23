@@ -15,43 +15,45 @@
 package com.liferay.bookmarks.uad.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.uad.test.BookmarksFolderUADTestHelper;
-
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 import com.liferay.user.associated.data.test.util.WhenHasStatusByUserIdField;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
-
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @RunWith(Arquillian.class)
-public class BookmarksFolderUADExporterTest extends BaseUADExporterTestCase<BookmarksFolder>
+public class BookmarksFolderUADExporterTest
+	extends BaseUADExporterTestCase<BookmarksFolder>
 	implements WhenHasStatusByUserIdField<BookmarksFolder> {
+
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule = new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Override
-	public BookmarksFolder addBaseModelWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
-		BookmarksFolder bookmarksFolder = _bookmarksFolderUADTestHelper.addBookmarksFolderWithStatusByUserId(userId,
-				statusByUserId);
+	public BookmarksFolder addBaseModelWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
+
+		BookmarksFolder bookmarksFolder =
+			_bookmarksFolderUADTestHelper.addBookmarksFolderWithStatusByUserId(
+				userId, statusByUserId);
 
 		_bookmarksFolders.add(bookmarksFolder);
 
@@ -64,9 +66,9 @@ public class BookmarksFolderUADExporterTest extends BaseUADExporterTestCase<Book
 	}
 
 	@Override
-	protected BookmarksFolder addBaseModel(long userId)
-		throws Exception {
-		BookmarksFolder bookmarksFolder = _bookmarksFolderUADTestHelper.addBookmarksFolder(userId);
+	protected BookmarksFolder addBaseModel(long userId) throws Exception {
+		BookmarksFolder bookmarksFolder =
+			_bookmarksFolderUADTestHelper.addBookmarksFolder(userId);
 
 		_bookmarksFolders.add(bookmarksFolder);
 
@@ -84,9 +86,12 @@ public class BookmarksFolderUADExporterTest extends BaseUADExporterTestCase<Book
 	}
 
 	@DeleteAfterTestRun
-	private final List<BookmarksFolder> _bookmarksFolders = new ArrayList<BookmarksFolder>();
+	private final List<BookmarksFolder> _bookmarksFolders = new ArrayList<>();
+
 	@Inject
 	private BookmarksFolderUADTestHelper _bookmarksFolderUADTestHelper;
+
 	@Inject(filter = "component.name=*.BookmarksFolderUADExporter")
 	private UADExporter _uadExporter;
+
 }

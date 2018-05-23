@@ -16,17 +16,18 @@ package com.liferay.bookmarks.uad.test;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 
+import java.util.List;
+
 import org.junit.Assume;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = BookmarksFolderUADTestHelper.class)
 public class BookmarksFolderUADTestHelper {
+
 	/**
 	 * Implement addBookmarksFolder() to enable some UAD tests.
 	 *
@@ -34,8 +35,7 @@ public class BookmarksFolderUADTestHelper {
 	 * Several UAD tests depend on creating one or more valid BookmarksFolders with a specified user ID in order to execute correctly. Implement addBookmarksFolder() such that it creates a valid BookmarksFolder with the specified user ID value and returns it in order to enable the UAD tests that depend on it.
 	 * </p>
 	 */
-	public BookmarksFolder addBookmarksFolder(long userId)
-		throws Exception {
+	public BookmarksFolder addBookmarksFolder(long userId) throws Exception {
 		Assume.assumeTrue(false);
 
 		return null;
@@ -48,8 +48,10 @@ public class BookmarksFolderUADTestHelper {
 	 * Several UAD tests depend on creating one or more valid BookmarksFolders with specified user ID and status by user ID in order to execute correctly. Implement addBookmarksFolderWithStatusByUserId() such that it creates a valid BookmarksFolder with the specified user ID and status by user ID values and returns it in order to enable the UAD tests that depend on it.
 	 * </p>
 	 */
-	public BookmarksFolder addBookmarksFolderWithStatusByUserId(long userId,
-		long statusByUserId) throws Exception {
+	public BookmarksFolder addBookmarksFolderWithStatusByUserId(
+			long userId, long statusByUserId)
+		throws Exception {
+
 		Assume.assumeTrue(false);
 
 		return null;
@@ -65,4 +67,5 @@ public class BookmarksFolderUADTestHelper {
 	public void cleanUpDependencies(List<BookmarksFolder> bookmarksFolders)
 		throws Exception {
 	}
+
 }

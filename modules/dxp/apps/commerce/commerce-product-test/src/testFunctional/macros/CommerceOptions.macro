@@ -2,7 +2,7 @@
 	<command name="addEntry">
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="AssertElementPresent" locator1="CommerceEntry#TITLE_FIELD" />
+		<execute function="AssertElementPresent" locator1="CommerceEntry#NAME_FIELD" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Button#DELETE" />
@@ -14,7 +14,7 @@
 		<execute macro="CommerceEntry#addOptionsEntry">
 			<var name="optionDescription" value="${optionDescription}" />
 			<var name="optionFieldType" value="${optionFieldType}" />
-			<var name="optionTitle" value="${optionTitle}" />
+			<var name="optionName" value="${optionName}" />
 		</execute>
 	</command>
 
@@ -28,7 +28,7 @@
 
 		<execute macro="CommerceEntry#addOptionValue">
 			<var name="valuePriority" value="${optionValuePriority}" />
-			<var name="valueTitle" value="${optionValueTitle}" />
+			<var name="valueName" value="${optionValueName}" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />

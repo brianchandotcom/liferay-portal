@@ -322,6 +322,14 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	public AssetCategory fetchCategoryByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return assetCategoryPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
 	public List<AssetCategory> getCategories() {
 		return assetCategoryPersistence.findAll();
 	}
@@ -668,6 +676,39 @@ public class AssetCategoryLocalServiceImpl
 		assetCategoryPersistence.update(category);
 
 		return category;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AssetCategory upsertCategory(
+			long userId, long groupId, long parentCategoryId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			long vocabularyId, String[] categoryProperties,
+			String externalReferenceCode, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		AssetCategory assetCategory = assetCategoryPersistence.fetchByC_ERC(
+			user.getCompanyId(), externalReferenceCode);
+
+		if (Validator.isNull(assetCategory)) {
+			assetCategory = addCategory(
+				userId, groupId, parentCategoryId, titleMap, descriptionMap,
+				vocabularyId, categoryProperties, serviceContext);
+
+			assetCategory.setExternalReferenceCode(externalReferenceCode);
+
+			assetCategory = assetCategoryPersistence.update(assetCategory);
+		}
+		else {
+			assetCategory = updateCategory(
+				userId, assetCategory.getCategoryId(), parentCategoryId,
+				titleMap, descriptionMap, vocabularyId, categoryProperties,
+				serviceContext);
+		}
+
+		return assetCategory;
 	}
 
 	protected SearchContext buildSearchContext(

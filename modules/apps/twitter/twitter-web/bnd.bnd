@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Twitter Web
-Bundle-SymbolicName: com.liferay.twitter.web
-Bundle-Version: 2.0.0
-Web-ContextPath: /twitter-web

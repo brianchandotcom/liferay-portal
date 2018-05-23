@@ -1,6 +1,0 @@
-dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile project(":apps:twitter:twitter-api")
-	testIntegrationCompile project(":apps:twitter:twitter-service")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

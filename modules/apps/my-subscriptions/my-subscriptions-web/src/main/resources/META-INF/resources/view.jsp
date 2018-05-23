@@ -118,7 +118,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 		window,
 		'<portlet:namespace />displayPopup',
 		function(url, title) {
-			var dialog = Liferay.Util.Window.getWindow(
+			Liferay.Util.Window.getWindow(
 				{
 					dialog: {
 						align: {
@@ -134,18 +134,27 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 					title: title,
 					uri: url
 				}
-			)
+			);
 		},
 		['liferay-util-window']
 	);
 </aui:script>
 
-<aui:script sandbox="<%= true %>" use="liferay-util-list-fields">
+<aui:script sandbox="<%= true %>">
 	var unsubscribe = function() {
-		document.<portlet:namespace />fm.method = 'post';
-		document.<portlet:namespace />fm.<portlet:namespace />subscriptionIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			form.setAttribute('method', 'post');
+
+			var subscriptionIds = form.querySelector('#<portlet:namespace />subscriptionIds');
+
+			if (subscriptionIds) {
+				subscriptionIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+				submitForm(form);
+			}
+		}
 	};
 
 	var ACTIONS = {

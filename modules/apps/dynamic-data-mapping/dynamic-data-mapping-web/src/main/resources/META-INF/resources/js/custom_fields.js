@@ -563,6 +563,36 @@ AUI.add(
 						if (!boundingBox.contains(event.target)) {
 							instance._handleCancelEvent(event);
 						}
+					},
+
+					_syncJournalArticleLabel: function(title) {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var linkNode = contentBox.one('span');
+
+						if (!linkNode) {
+							linkNode = A.Node.create('<span></span>');
+
+							contentBox.prepend(linkNode);
+						}
+
+						linkNode.setContent(LString.escapeHTML(title));
+					},
+
+					_uiSetValue: function(val) {
+						var instance = this;
+
+						if (val) {
+							val = JSON.parse(val);
+							var title = Liferay.Language.get('journal-article') + ': ' + val.classPK;
+
+							instance._syncJournalArticleLabel(title);
+						}
+						else {
+							instance._syncJournalArticleLabel(STR_BLANK);
+						}
 					}
 				}
 
@@ -1872,6 +1902,20 @@ AUI.add(
 
 								if (attributeName === 'predefinedValue') {
 									item.editor = new JournalArticleCellEditor();
+
+									item.formatter = function(obj) {
+										var data = obj.data;
+
+										var label = STR_BLANK;
+
+										var value = data.value;
+
+										if (value !== STR_BLANK) {
+											label = '(' + Liferay.Language.get('journal-article') + ')';
+										}
+
+										return label;
+									};
 								}
 							}
 						);

@@ -8498,7 +8498,11 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						</if>
 					</then>
 					<elseif>
-						<equals arg1="${database.type}" arg2="hypersonic" />
+						<and>
+							<available file="sql/${database.name}.properties" />
+							<available file="sql/${database.name}.script" />
+							<equals arg1="${database.type}" arg2="hypersonic" />
+						</and>
 						<then>
 							<delete dir="${liferay.home}/data" includeemptydirs="true" />
 

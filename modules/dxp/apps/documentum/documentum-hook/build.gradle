@@ -1,8 +1,0 @@
-copyIvyDependencies {
-	rename(/com\.documentum\.dctm-.+\.jar/, "dctm.jar")
-	rename(/com\.documentum\.dfc-.+\.jar/, "dfc.jar")
-	rename(/com\.documentum\.services\.config\.api-.+\.jar/, "configservice-api.jar")
-	rename(/com\.documentum\.services\.config\.impl-.+\.jar/, "configservice-impl.jar")
-	rename(/com\.rsa\.certj-.+\.jar/, "certjFIPS.jar")
-	rename(/com\.rsa\.jsafe-.+\.jar/, "jsafeFIPS.jar")
-}

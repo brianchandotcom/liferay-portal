@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>OPTION_VALUES_LINK</td>
-	<td>//td[contains(.,'${key_optionEntryTitle}')]/../td/button[@type='button' and contains(.,'Values')]</td>
+	<td>//td[contains(.,'${key_optionEntryName}')]/../td/button[@type='button' and contains(.,'Values')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TITLE</td>
-	<td>//div[@class='searchcontainer-content']//a[contains(.,'${key_entryTitle}')]</td>
+	<td>ENTRY_NAME</td>
+	<td>//div[@class='searchcontainer-content']//a[contains(.,'${key_entryName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_ENTRY_TITLE</td>
-	<td>//div[@class='form-container']//td[contains(.,'${key_OptionEntryTitle}')]</td>
+	<td>OPTIONS_ENTRY_NAME</td>
+	<td>//div[@class='form-container']//td[contains(.,'${key_OptionEntryName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>SINGLE_ENTRY_CHECKBOX</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_entryName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

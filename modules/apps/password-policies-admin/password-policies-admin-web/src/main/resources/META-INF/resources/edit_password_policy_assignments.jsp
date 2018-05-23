@@ -219,12 +219,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var Util = Liferay.Util;
-
-	var $ = AUI.$;
-
-	var form = $(document.<portlet:namespace />fm);
-
 	<portlet:renderURL var="selectMembersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/select_members.jsp" />
 		<portlet:param name="tabs1" value="<%= tabs1 %>" />
@@ -232,52 +226,86 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 		<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicyId) %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />addAssignees').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+	var addAssignees = document.getElementById('<portlet:namespace />addAssignees');
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectMember',
-					on: {
-						selectedItemChange: function(event) {
-							var result = event.newVal;
+	if (addAssignees) {
+		addAssignees.addEventListener(
+			'click',
+			function(event) {
+				event.preventDefault();
 
-							if (result && result.item) {
-								if (result.memberType == 'users') {
-									form.fm('addUserIds').val(result.item);
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: '<portlet:namespace />selectMember',
+						on: {
+							selectedItemChange: function(event) {
+								var result = event.newVal;
+
+								if (result && result.item) {
+									var form = document.getElementById('<portlet:namespace />fm');
+
+									if (form) {
+										if (result.memberType == 'users') {
+											var addUserIds = form.querySelector('#<portlet:namespace />addUserIds');
+
+											if (addUserIds) {
+												addUserIds.setAttribute('value', result.item);
+											}
+										}
+										else if (result.memberType == 'organizations') {
+											var addOrganizationIds = form.querySelector('#<portlet:namespace />addOrganizationIds');
+
+											if (addOrganizationIds) {
+												addOrganizationIds.setAttribute('value', result.item);
+											}
+										}
+
+										submitForm(form);
+									}
 								}
-								else if (result.memberType == 'organizations') {
-									form.fm('addOrganizationIds').val(result.item);
-								}
-
-								submitForm(form);
 							}
-						}
-					},
-					title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(passwordPolicy.getName()) %>" key="add-assignees-to-x" />',
-					url: '<%= selectMembersURL %>'
-				}
-			);
+						},
+						title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(passwordPolicy.getName()) %>" key="add-assignees-to-x" />',
+						url: '<%= selectMembersURL %>'
+					}
+				);
 
-			itemSelectorDialog.open();
-		}
-	);
+				itemSelectorDialog.open();
+			}
+		);
+	}
+</aui:script>
 
-	window.<portlet:namespace />deleteOrganizations = function() {
+<aui:script>
+	function <portlet:namespace />deleteOrganizations() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			form.fm('removeOrganizationIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			var form = document.getElementById('<portlet:namespace />fm');
 
-			submitForm(form);
+			if (form) {
+				var removeOrganizationIds = form.querySelector('#<portlet:namespace />removeOrganizationIds');
+
+				if (removeOrganizationIds) {
+					removeOrganizationIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+					submitForm(form);
+				}
+			}
 		}
 	};
 
-	window.<portlet:namespace />deleteUsers = function() {
+	function <portlet:namespace />deleteUsers() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			form.fm('removeUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			var form = document.getElementById('<portlet:namespace />fm');
 
-			submitForm(form);
+			if (form) {
+				var removeUserIds = form.querySelector('#<portlet:namespace />removeUserIds');
+
+				if (removeUserIds) {
+					removeUserIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+					submitForm(form);
+				}
+			}
 		}
 	};
 </aui:script>

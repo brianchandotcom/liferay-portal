@@ -187,21 +187,34 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 </aui:form>
 
 <aui:script>
-	$('#<portlet:namespace />deletePasswordPolicies').on(
-		'click',
-		function() {
-			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-				var form = AUI.$(document.<portlet:namespace />fm);
+	var <portlet:namespace />deletePasswordPolicies = document.getElementById('<portlet:namespace />deletePasswordPolicies');
 
-				var passwordPolicyIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+	if (<portlet:namespace />deletePasswordPolicies) {
+		<portlet:namespace />deletePasswordPolicies.addEventListener(
+			'click',
+			function(event) {
+				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+					var form = document.getElementById('<portlet:namespace />fm');
 
-				form.attr('method', 'post');
-				form.fm('passwordPolicyIds').val(passwordPolicyIds);
+					if (form) {
+						form.setAttribute('method', 'post');
 
-				document.<portlet:namespace />fm.p_p_lifecycle.value = '1';
+						var passwordPolicyIds = form.querySelector('#<portlet:namespace />passwordPolicyIds');
 
-				submitForm(form, '<portlet:actionURL name="deletePasswordPolicies" />');
+						if (passwordPolicyIds) {
+							passwordPolicyIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+						}
+
+						var lifecycle = form.querySelctor('#p_p_lifecycle');
+
+						if (lifecycle) {
+							lifecycle.setAttribute('value', '1');
+						}
+
+						submitForm(form, '<portlet:actionURL name="deletePasswordPolicies" />');
+					}
+				}
 			}
-		}
-	);
+		);
+	}
 </aui:script>

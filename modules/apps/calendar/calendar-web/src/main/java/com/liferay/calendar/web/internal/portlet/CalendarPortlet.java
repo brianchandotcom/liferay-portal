@@ -1416,7 +1416,7 @@ public class CalendarPortlet extends MVCPortlet {
 		Hits hits = search(themeDisplay, keywords);
 
 		PortletPreferences portletPreferences =
-		resourceRequest.getPreferences();
+			resourceRequest.getPreferences();
 
 		boolean showUserEvents = GetterUtil.getBoolean(
 			portletPreferences.getValue("showUserEvents", null), true);
@@ -1450,8 +1450,9 @@ public class CalendarPortlet extends MVCPortlet {
 
 						if (stagingGroupId == themeDisplay.getScopeGroupId()) {
 							calendar =
-								_calendarLocalService.fetchCalendarByUuidAndGroupId(
-									calendar.getUuid(), stagingGroupId);
+								_calendarLocalService.
+									fetchCalendarByUuidAndGroupId(
+										calendar.getUuid(), stagingGroupId);
 						}
 					}
 

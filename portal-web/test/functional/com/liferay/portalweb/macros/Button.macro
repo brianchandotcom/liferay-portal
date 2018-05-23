@@ -33,8 +33,25 @@
 		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 	</command>
 
+	<command name="clickEditIfPresent">
+		<if>
+			<condition function="IsElementPresent" locator1="Button#EDIT" />
+			<then>
+				<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
+			</then>
+		</if>
+	</command>
+
 	<command name="clickInstall">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Install" />
+	</command>
+
+	<command name="clickMapTo">
+		<execute function="Click" locator1="Button#MAP_TO" />
+	</command>
+
+	<command name="clickModalSubmit">
+		<execute function="Click" locator1="Button#MODAL_CONTENT_SUBMIT" />
 	</command>
 
 	<command name="clickNext">

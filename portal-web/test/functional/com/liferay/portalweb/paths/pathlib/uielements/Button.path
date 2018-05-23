@@ -464,6 +464,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MAP_TO</td>
+	<td>//button[contains(.,'Map to')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE</td>
 	<td>//button[contains(.,'Merge')]</td>
 	<td></td>

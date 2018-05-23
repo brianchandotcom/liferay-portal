@@ -22,6 +22,8 @@
 			<var name="key_id" value="${id}" />
 		</execute>
 
+		<execute macro="Button#clickMapTo" />
+
 		<execute function="AssertClick" locator1="Fragment#LIST_GROUP_ITEM" value1="${itemName}">
 			<var name="key_itemName" value="${itemName}" />
 		</execute>

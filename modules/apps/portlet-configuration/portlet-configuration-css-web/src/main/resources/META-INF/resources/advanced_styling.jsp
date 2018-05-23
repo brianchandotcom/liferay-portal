@@ -40,68 +40,85 @@
 	<aui:button cssClass="btn btn-link" id="addClass" value="add-a-css-rule-for-all-portlets-like-this-one" />
 </div>
 
-<aui:script use="aui-base">
-	A.one('#<portlet:namespace />addId').on(
-		'click',
-		function() {
-			<portlet:namespace />insertCustomCSSValue('#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>');
-		}
-	);
-
-	A.one('#<portlet:namespace />addClass').on(
-		'click',
-		function() {
-			<portlet:namespace />insertCustomCSSValue(portletClasses);
-		}
-	);
-
+<aui:script>
 	function <portlet:namespace />insertCustomCSSValue(value) {
-		var textarea = A.one('#<portlet:namespace />customCSS');
+		var customCSS = document.getElementById('<portlet:namespace />customCSS');
 
-		var currentVal = textarea.val().trim();
+		if (customCSS) {
+			var customCSSVal = customCSS.value.trim();
 
-		if (currentVal.length) {
-			currentVal += '\n\n';
-		}
+			if (customCSSVal.length) {
+				customCSSVal += '\n\n';
+			}
 
-		var newVal = currentVal + value + ' {\n\t\n}\n';
+			var newVal = customCSSVal + value + ' {\n\t\n}\n';
 
-		textarea.val(newVal);
+			customCSS.value  = newVal;
 
-		Liferay.Util.setCursorPosition(textarea, newVal.length - 3);
-	}
-
-	var opener = Liferay.Util.getOpener();
-
-	var portlet = A.one(opener['portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>']);
-	var portletContent = portlet.one('.portlet-content');
-
-	var portletClasses;
-
-	if (portlet && portlet != portletContent) {
-		portletClasses = portlet.attr('class').replace(/(?:^|\s)portlet(?=\s|$)/g, '');
-
-		portletClasses = portletClasses.replace(/\s+/g, '.').trim();
-
-		if (portletClasses) {
-			portletClasses = ' .' + portletClasses;
+			Liferay.Util.setCursorPosition(customCSS, newVal.length - 3);
 		}
 	}
 
-	var boundaryClasses = [];
+	var <portlet:namespace />addId = document.getElementById('<portlet:namespace />addId');
 
-	portletContent.attr('class').replace(
-		/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g,
-		function(match, subMatch1, subMatch2) {
-			var regexIgnoredClasses = /boundary|draggable/;
+	if (<portlet:namespace />addId) {
+		<portlet:namespace />addId.addEventListener(
+			'click',
+			function() {
+				<portlet:namespace />insertCustomCSSValue('#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>');
+			}
+		);
+	}
 
-			if (!regexIgnoredClasses.test(subMatch2)) {
-				boundaryClasses.push(match);
+	var <portlet:namespace />addClass = document.getElementById('<portlet:namespace />addClass');
+
+	if (<portlet:namespace />addClass) {
+		<portlet:namespace />addClass.addEventListener(
+			'click',
+			function() {
+				<portlet:namespace />insertCustomCSSValue(portletClasses);
+			}
+		);
+	}
+
+	var portlet = Liferay.Util.getOpener()['portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>'];
+
+	if (portlet) {
+		var portletContent = portlet.querySelector('.portlet-content');
+
+		if (portletContent) {
+			var portletClasses;
+
+			if (portlet != portletContent) {
+				portletClasses = portlet.getAttribute('class').replace(/(?:^|\s)portlet(?=\s|$)/g, '');
+
+				portletClasses = portletClasses.replace(/\s+/g, '.').trim();
+
+				if (portletClasses) {
+					portletClasses = ' .' + portletClasses;
+				}
+			}
+
+			var boundaryClasses = [];
+
+			portletContent.getAttribute('class').replace(
+				/(?:([\w\d-]+)-)?portlet(?:-?([\w\d-]+-?))?/g,
+				function(match, subMatch1, subMatch2) {
+					var regexIgnoredClasses = /boundary|draggable/;
+
+					if (!regexIgnoredClasses.test(subMatch2)) {
+						boundaryClasses.push(match);
+					}
+				}
+			);
+
+			portletClasses = '.' + boundaryClasses.join('.') + portletClasses;
+
+			var portletClassesNode = document.getElementById('<portlet:namespace />portletClasses');
+
+			if (portletClassesNode) {
+				portletClassesNode.innerHTML = portletClasses;
 			}
 		}
-	);
-
-	portletClasses = '.' + boundaryClasses.join('.') + portletClasses;
-
-	A.one('#<portlet:namespace />portletClasses').html(portletClasses);
+	}
 </aui:script>

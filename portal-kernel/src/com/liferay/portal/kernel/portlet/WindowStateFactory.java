@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,29 +54,24 @@ public class WindowStateFactory {
 		return windowState;
 	}
 
-	private static final String _EXCLUSIVE =
-		LiferayWindowState.EXCLUSIVE.toString();
-
-	private static final String _MAXIMIZED = WindowState.MAXIMIZED.toString();
-
-	private static final String _MINIMIZED = WindowState.MINIMIZED.toString();
-
-	private static final String _NORMAL = WindowState.NORMAL.toString();
-
-	private static final String _POP_UP = LiferayWindowState.POP_UP.toString();
-
-	private static final String _UNDEFINED = WindowState.UNDEFINED.toString();
-
 	private static final Map<String, WindowState> _windowStates =
 		new HashMap<>();
 
 	static {
-		_windowStates.put(_NORMAL, LiferayWindowState.NORMAL);
-		_windowStates.put(_MAXIMIZED, LiferayWindowState.MAXIMIZED);
-		_windowStates.put(_MINIMIZED, LiferayWindowState.MINIMIZED);
-		_windowStates.put(_EXCLUSIVE, LiferayWindowState.EXCLUSIVE);
-		_windowStates.put(_POP_UP, LiferayWindowState.POP_UP);
-		_windowStates.put(_UNDEFINED, LiferayWindowState.UNDEFINED);
+		try {
+			for (Field field : LiferayWindowState.class.getFields()) {
+				if (Modifier.isStatic(field.getModifiers()) &&
+					(field.getType() == WindowState.class)) {
+
+					WindowState windowState = (WindowState)field.get(null);
+
+					_windowStates.put(windowState.toString(), windowState);
+				}
+			}
+		}
+		catch (IllegalAccessException iae) {
+			throw new ExceptionInInitializerError(iae);
+		}
 	}
 
 }

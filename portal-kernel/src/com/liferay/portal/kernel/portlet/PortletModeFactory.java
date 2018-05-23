@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,43 +55,24 @@ public class PortletModeFactory {
 		return portletMode;
 	}
 
-	private static final String _ABOUT = LiferayPortletMode.ABOUT.toString();
-
-	private static final String _CONFIG = LiferayPortletMode.CONFIG.toString();
-
-	private static final String _EDIT = PortletMode.EDIT.toString();
-
-	private static final String _EDIT_DEFAULTS =
-		LiferayPortletMode.EDIT_DEFAULTS.toString();
-
-	private static final String _EDIT_GUEST =
-		LiferayPortletMode.EDIT_GUEST.toString();
-
-	private static final String _HELP = PortletMode.HELP.toString();
-
-	private static final String _PREVIEW =
-		LiferayPortletMode.PREVIEW.toString();
-
-	private static final String _PRINT = LiferayPortletMode.PRINT.toString();
-
-	private static final String _UNDEFINED = PortletMode.UNDEFINED.toString();
-
-	private static final String _VIEW = PortletMode.VIEW.toString();
-
 	private static final Map<String, PortletMode> _portletModes =
 		new HashMap<>();
 
 	static {
-		_portletModes.put(_EDIT, LiferayPortletMode.EDIT);
-		_portletModes.put(_HELP, LiferayPortletMode.HELP);
-		_portletModes.put(_VIEW, LiferayPortletMode.VIEW);
-		_portletModes.put(_ABOUT, LiferayPortletMode.ABOUT);
-		_portletModes.put(_CONFIG, LiferayPortletMode.CONFIG);
-		_portletModes.put(_EDIT_DEFAULTS, LiferayPortletMode.EDIT_DEFAULTS);
-		_portletModes.put(_EDIT_GUEST, LiferayPortletMode.EDIT_GUEST);
-		_portletModes.put(_PREVIEW, LiferayPortletMode.PREVIEW);
-		_portletModes.put(_PRINT, LiferayPortletMode.PRINT);
-		_portletModes.put(_UNDEFINED, LiferayPortletMode.UNDEFINED);
+		try {
+			for (Field field : LiferayPortletMode.class.getFields()) {
+				if (Modifier.isStatic(field.getModifiers()) &&
+					(field.getType() == PortletMode.class)) {
+
+					PortletMode portletMode = (PortletMode)field.get(null);
+
+					_portletModes.put(portletMode.toString(), portletMode);
+				}
+			}
+		}
+		catch (IllegalAccessException iae) {
+			throw new ExceptionInInitializerError(iae);
+		}
 	}
 
 }

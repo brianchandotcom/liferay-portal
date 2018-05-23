@@ -20,13 +20,6 @@
 		</execute>
 	</set-up>
 
-	<command name="ViewDMArchive6012" priority="5">
-		<property name="data.archive.type" value="data-archive-documents-and-media" />
-		<property name="portal.version" value="6.0.12" />
-
-		<execute macro="Upgrade#viewDocument" />
-	</command>
-
 	<command name="ViewDMArchive6130" priority="5">
 		<property name="data.archive.type" value="data-archive-documents-and-media" />
 		<property name="portal.version" value="6.1.30" />

@@ -20,13 +20,6 @@
 		</execute>
 	</set-up>
 
-	<command name="ViewWorkflowArchive6012" priority="5">
-		<property name="data.archive.type" value="data-archive-workflow" />
-		<property name="portal.version" value="6.0.12" />
-
-		<execute macro="Upgrade#approveWorkflow" />
-	</command>
-
 	<command name="ViewWorkflowArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-workflow" />
 		<property name="portal.version" value="6.1.2" />

@@ -21,13 +21,6 @@
 		</execute>
 	</set-up>
 
-	<command name="PublishStagingArchiveAfterUpgrade6012" priority="5">
-		<property name="data.archive.type" value="data-archive-staging-unpublished" />
-		<property name="portal.version" value="6.0.12" />
-
-		<execute macro="Upgrade#publishStagedSite" />
-	</command>
-
 	<command name="PublishStagingArchiveAfterUpgrade612" priority="5">
 		<property name="data.archive.type" value="data-archive-staging-unpublished" />
 		<property name="portal.version" value="6.1.2" />

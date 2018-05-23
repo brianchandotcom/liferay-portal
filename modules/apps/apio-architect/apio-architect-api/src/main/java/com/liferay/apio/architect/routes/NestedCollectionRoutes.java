@@ -41,7 +41,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
@@ -145,7 +144,7 @@ public class NestedCollectionRoutes<T, S, U> {
 		 */
 		public <R> Builder<T, S, U> addCreator(
 			ThrowableBiFunction<U, R, T> throwableBiFunction,
-			BiFunction<Credentials, U, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, U, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_nestedCollectionPermissionFunction = permissionBiFunction;
@@ -184,7 +183,7 @@ public class NestedCollectionRoutes<T, S, U> {
 		public <A, B, C, D, R> Builder<T, S, U> addCreator(
 			ThrowableHexaFunction<U, R, A, B, C, D, T> throwableHexaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
-			BiFunction<Credentials, U, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, U, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -229,7 +228,7 @@ public class NestedCollectionRoutes<T, S, U> {
 		public <A, B, C, R> Builder<T, S, U> addCreator(
 			ThrowablePentaFunction<U, R, A, B, C, T> throwablePentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
-			BiFunction<Credentials, U, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, U, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -272,7 +271,7 @@ public class NestedCollectionRoutes<T, S, U> {
 		public <A, B, R> Builder<T, S, U> addCreator(
 			ThrowableTetraFunction<U, R, A, B, T> throwableTetraFunction,
 			Class<A> aClass, Class<B> bClass,
-			BiFunction<Credentials, U, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, U, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -312,7 +311,7 @@ public class NestedCollectionRoutes<T, S, U> {
 		public <A, R> Builder<T, S, U> addCreator(
 			ThrowableTriFunction<U, R, A, T> throwableTriFunction,
 			Class<A> aClass,
-			BiFunction<Credentials, U, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, U, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -510,8 +509,12 @@ public class NestedCollectionRoutes<T, S, U> {
 			return Optional.ofNullable(
 				_form
 			).filter(
-				__ -> _nestedCollectionPermissionFunction.apply(
-					credentials, identifier)
+				__ -> Try.fromFallible(
+					() -> _nestedCollectionPermissionFunction.apply(
+						credentials, identifier)
+				).orElse(
+					false
+				)
 			).map(
 				form -> new Operation(
 					form, POST, join("/", _name, _nestedName, "create"))
@@ -525,7 +528,7 @@ public class NestedCollectionRoutes<T, S, U> {
 		private Form _form;
 		private final String _name;
 		private final Consumer<String> _neededProviderConsumer;
-		private BiFunction<Credentials, U, Boolean>
+		private ThrowableBiFunction<Credentials, U, Boolean>
 			_nestedCollectionPermissionFunction;
 		private NestedCreateItemFunction<T, U> _nestedCreateItemFunction;
 		private NestedGetPageFunction<T, U> _nestedGetPageFunction;

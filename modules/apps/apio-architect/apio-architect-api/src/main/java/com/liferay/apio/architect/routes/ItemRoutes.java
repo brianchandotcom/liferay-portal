@@ -37,6 +37,7 @@ import com.liferay.apio.architect.function.throwable.ThrowableHexaFunction;
 import com.liferay.apio.architect.function.throwable.ThrowablePentaFunction;
 import com.liferay.apio.architect.function.throwable.ThrowableTetraFunction;
 import com.liferay.apio.architect.function.throwable.ThrowableTriFunction;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.single.model.SingleModel;
 
@@ -44,7 +45,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
@@ -288,7 +288,7 @@ public class ItemRoutes<T, S> {
 		 */
 		public <A> Builder<T, S> addRemover(
 			ThrowableBiConsumer<S, A> biConsumer, Class<A> aClass,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction) {
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
 
@@ -310,7 +310,7 @@ public class ItemRoutes<T, S> {
 		 */
 		public Builder<T, S> addRemover(
 			ThrowableConsumer<S> consumer,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction) {
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction) {
 
 			_deleteItemPermissionFunction = permissionBiFunction;
 
@@ -337,7 +337,7 @@ public class ItemRoutes<T, S> {
 		public <A, B, C, D> Builder<T, S> addRemover(
 			ThrowablePentaConsumer<S, A, B, C, D> pentaConsumer,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction) {
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
 			_neededProviderConsumer.accept(bClass.getName());
@@ -370,7 +370,7 @@ public class ItemRoutes<T, S> {
 		public <A, B, C> Builder<T, S> addRemover(
 			ThrowableTetraConsumer<S, A, B, C> tetraConsumer, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction) {
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
 			_neededProviderConsumer.accept(bClass.getName());
@@ -399,7 +399,7 @@ public class ItemRoutes<T, S> {
 		public <A, B> Builder<T, S> addRemover(
 			ThrowableTriConsumer<S, A, B> triConsumer, Class<A> aClass,
 			Class<B> bClass,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction) {
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
 			_neededProviderConsumer.accept(bClass.getName());
@@ -424,7 +424,7 @@ public class ItemRoutes<T, S> {
 		 */
 		public <R> Builder<T, S> addUpdater(
 			ThrowableBiFunction<S, R, T> throwableBiFunction,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_updateItemPermissionFunction = permissionBiFunction;
@@ -462,7 +462,7 @@ public class ItemRoutes<T, S> {
 		public <A, B, C, D, R> Builder<T, S> addUpdater(
 			ThrowableHexaFunction<S, R, A, B, C, D, T> throwableHexaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -506,7 +506,7 @@ public class ItemRoutes<T, S> {
 		public <A, B, C, R> Builder<T, S> addUpdater(
 			ThrowablePentaFunction<S, R, A, B, C, T> throwablePentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -547,7 +547,7 @@ public class ItemRoutes<T, S> {
 		public <A, B, R> Builder<T, S> addUpdater(
 			ThrowableTetraFunction<S, R, A, B, T> throwableTetraFunction,
 			Class<A> aClass, Class<B> bClass,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -587,7 +587,7 @@ public class ItemRoutes<T, S> {
 		public <A, R> Builder<T, S> addUpdater(
 			ThrowableTriFunction<S, R, A, T> throwableTriFunction,
 			Class<A> aClass,
-			BiFunction<Credentials, S, Boolean> permissionBiFunction,
+			ThrowableBiFunction<Credentials, S, Boolean> permissionBiFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -630,7 +630,11 @@ public class ItemRoutes<T, S> {
 			Optional.ofNullable(
 				_deleteItemPermissionFunction
 			).filter(
-				function -> function.apply(credentials, identifier)
+				function -> Try.fromFallible(
+					() -> function.apply(credentials, identifier)
+				).orElse(
+					false
+				)
 			).ifPresent(
 				__ -> operations.add(new Operation(DELETE, _name + "/delete"))
 			);
@@ -638,7 +642,11 @@ public class ItemRoutes<T, S> {
 			Optional.ofNullable(
 				_updateItemPermissionFunction
 			).filter(
-				function -> function.apply(credentials, identifier)
+				function -> Try.fromFallible(
+					() -> function.apply(credentials, identifier)
+				).orElse(
+					false
+				)
 			).ifPresent(
 				__ -> operations.add(
 					new Operation(_form, PUT, _name + "/update"))
@@ -648,7 +656,7 @@ public class ItemRoutes<T, S> {
 		}
 
 		private DeleteItemConsumer<S> _deleteItemConsumer;
-		private BiFunction<Credentials, S, Boolean>
+		private ThrowableBiFunction<Credentials, S, Boolean>
 			_deleteItemPermissionFunction;
 		private Form _form;
 		private final String _name;
@@ -656,7 +664,7 @@ public class ItemRoutes<T, S> {
 		private final ProvideFunction _provideFunction;
 		private GetItemFunction<T, S> _singleModelFunction;
 		private UpdateItemFunction<T, S> _updateItemFunction;
-		private BiFunction<Credentials, S, Boolean>
+		private ThrowableBiFunction<Credentials, S, Boolean>
 			_updateItemPermissionFunction;
 
 	}

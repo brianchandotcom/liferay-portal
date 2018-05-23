@@ -316,9 +316,8 @@ public class FileEntryStagedModelDataHandler
 
 	@Override
 	protected void doImportMissingReference(
-			PortletDataContext portletDataContext, String uuid, long groupId,
-			long fileEntryId)
-		throws Exception {
+		PortletDataContext portletDataContext, String uuid, long groupId,
+		long fileEntryId) {
 
 		FileEntry existingFileEntry = fetchMissingReference(uuid, groupId);
 

@@ -389,6 +389,19 @@ AUI.add(
 								);
 							}
 						}
+
+						editor.after(
+							'render',
+							function() {
+								editor.set('visible', true);
+
+								var boundingBox = editor.get('boundingBox');
+
+								if (boundingBox) {
+									boundingBox.show();
+								}
+							}
+						);
 					},
 
 					_deserializeField: function(fieldJSON, availableLanguageIds) {

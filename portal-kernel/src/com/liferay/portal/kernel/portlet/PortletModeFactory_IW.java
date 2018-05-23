@@ -26,6 +26,11 @@ public class PortletModeFactory_IW {
 		return PortletModeFactory.getPortletMode(name);
 	}
 
+	public javax.portlet.PortletMode getPortletMode(java.lang.String name,
+		int portletMajorVersion) {
+		return PortletModeFactory.getPortletMode(name, portletMajorVersion);
+	}
+
 	private PortletModeFactory_IW() {
 	}
 

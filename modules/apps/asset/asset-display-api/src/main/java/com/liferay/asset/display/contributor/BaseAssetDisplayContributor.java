@@ -49,11 +49,14 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		// Default fields for asset entry
 
-		for (String assetEntryModelField : _ASSET_ENTRY_MODEL_FIELDS) {
+		for (Map.Entry<String, String>
+				assetEntryModelField : _assetEntryModelFieldsMap.entrySet()) {
+
 			assetDisplayFields.add(
 				new AssetDisplayField(
-					assetEntryModelField,
-					LanguageUtil.get(resourceBundle, assetEntryModelField)));
+					assetEntryModelField.getKey(),
+					LanguageUtil.get(
+						resourceBundle, assetEntryModelField.getValue())));
 		}
 
 		// Fields for the specific asset type
@@ -155,9 +158,16 @@ public abstract class BaseAssetDisplayContributor<T>
 		return parameterMap;
 	}
 
-	private static final String[] _ASSET_ENTRY_MODEL_FIELDS = {
-		"categoryIds", "description", "publishDate", "summary", "tagNames",
-		"title"
-	};
+	private static final Map<String, String> _assetEntryModelFieldsMap =
+		new HashMap<>();
+
+	static {
+		_assetEntryModelFieldsMap.put("categoryIds", "categories");
+		_assetEntryModelFieldsMap.put("description", "description");
+		_assetEntryModelFieldsMap.put("publishDate", "publish-date");
+		_assetEntryModelFieldsMap.put("summary", "summary");
+		_assetEntryModelFieldsMap.put("tagNames", "tags");
+		_assetEntryModelFieldsMap.put("title", "title");
+	}
 
 }

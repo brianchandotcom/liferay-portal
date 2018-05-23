@@ -112,6 +112,8 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 
 		if (commercePriceList != null) {
 			portletURL.setParameter(
+				"mvcRenderCommandName", "editCommercePriceList");
+			portletURL.setParameter(
 				"commercePriceListId",
 				String.valueOf(getCommercePriceListId()));
 		}

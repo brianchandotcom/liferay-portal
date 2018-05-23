@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.web.internal.portlet.action.CPDefinitionVirtualSettingActionHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -71,6 +73,14 @@ public class CPDefinitionVirtualSettingDisplayContext
 		_cpDefinitionVirtualSettingActionHelper =
 			cpDefinitionVirtualSettingActionHelper;
 		_itemSelector = itemSelector;
+	}
+
+	public int[] getActivationStatuses() {
+		return VirtualCPTypeConstants.ACTIVATION_STATUSES;
+	}
+
+	public String getActivationStatusLabel(int status) {
+		return CommerceOrderConstants.getOrderStatusLabel(status);
 	}
 
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting()

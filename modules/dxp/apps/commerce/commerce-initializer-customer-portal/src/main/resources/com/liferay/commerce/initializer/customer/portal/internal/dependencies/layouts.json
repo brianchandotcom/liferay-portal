@@ -67,6 +67,17 @@
 		]
 	},
 	{
+		"layoutTemplateId": "1_column",
+		"name": "My Downloads",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet"
+			}
+		]
+	},
+	{
 		"hidden": true,
 		"layoutTemplateId": "1_column",
 		"name": "Checkout",

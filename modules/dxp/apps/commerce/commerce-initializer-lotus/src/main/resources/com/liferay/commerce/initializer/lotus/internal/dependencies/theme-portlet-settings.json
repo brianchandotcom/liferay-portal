@@ -91,5 +91,21 @@
 			"rootLayoutType": "relative",
 			"rootLayoutUuid": ""
 		}
+	},
+	{
+		"instanceId": "my_downloads_navigation_menu",
+		"layoutFriendlyURL": "/my-downloads",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyle": "ddmTemplate_NAV-TABS-JUSTIFIED-FTL",
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"portletSetupCss": "{\"textData\":{\"fontFamily\":\"\",\"color\":\"\",\"textAlign\":\"\",\"wordSpacing\":\"\",\"letterSpacing\":\"\",\"fontSize\":\"\",\"lineHeight\":\"\",\"textDecoration\":\"\",\"fontStyle\":\"\",\"fontWeight\":\"\"},\"spacingData\":{\"padding\":{\"top\":{\"unit\":\"%\",\"value\":\"\"},\"left\":{\"unit\":\"%\",\"value\":\"\"},\"bottom\":{\"unit\":\"%\",\"value\":\"\"},\"right\":{\"unit\":\"%\",\"value\":\"\"},\"sameForAll\":false},\"margin\":{\"top\":{\"unit\":\"%\",\"value\":\"\"},\"left\":{\"unit\":\"%\",\"value\":\"\"},\"bottom\":{\"unit\":\"%\",\"value\":\"\"},\"right\":{\"unit\":\"%\",\"value\":\"\"},\"sameForAll\":false}},\"borderData\":{\"borderColor\":{\"top\":\"\",\"left\":\"\",\"bottom\":\"\",\"right\":\"\",\"sameForAll\":false},\"borderWidth\":{\"top\":{\"unit\":\"%\",\"value\":\"\"},\"left\":{\"unit\":\"%\",\"value\":\"\"},\"bottom\":{\"unit\":\"%\",\"value\":\"\"},\"right\":{\"unit\":\"%\",\"value\":\"\"},\"sameForAll\":false},\"borderStyle\":{\"top\":\"\",\"left\":\"\",\"bottom\":\"\",\"right\":\"\",\"sameForAll\":false}},\"bgData\":{\"backgroundColor\":\"\",\"useBgImage\":false,\"backgroundImage\":\"\",\"backgroundPosition\":{\"top\":{\"unit\":\"\",\"value\":\"\"},\"left\":{\"unit\":\"\",\"value\":\"\"}},\"backgroundRepeat\":\"\"},\"advancedData\":{\"customCSSClassName\":\"commerce-account-navigation-menu\",\"customCSS\":\"\"}}",
+			"portletSetupUseCustomTitle": "false",
+			"rootLayoutLevel": "0",
+			"rootLayoutType": "relative",
+			"rootLayoutUuid": ""
+		}
 	}
 ]

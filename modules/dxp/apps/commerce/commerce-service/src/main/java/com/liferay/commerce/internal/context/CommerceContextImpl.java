@@ -115,10 +115,15 @@ public class CommerceContextImpl implements CommerceContext {
 	}
 
 	@Override
-	public List<CPRule> getCPRules() {
+	public List<CPRule> getCPRules() throws PortalException {
 		if (_cpRules != null) {
 			return _cpRules;
 		}
+
+		long groupId = _portal.getScopeGroupId(_httpServletRequest);
+
+		_cpRules = _cpRuleLocalService.getCPRules(
+			groupId, getCommerceUserSegmentEntryIds());
 
 		return null;
 	}

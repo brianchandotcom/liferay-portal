@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-bookmarks",
-		"com.liferay.portlet.display-category=category.community",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/bookmarks/css/main.css",
 		"com.liferay.portlet.icon=/bookmarks/icons/bookmarks.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

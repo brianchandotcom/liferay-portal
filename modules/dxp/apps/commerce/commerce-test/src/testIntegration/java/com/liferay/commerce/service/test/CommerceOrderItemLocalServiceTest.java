@@ -237,6 +237,7 @@ public class CommerceOrderItemLocalServiceTest {
 			0, null, new BigDecimal(3), commerceContext, serviceContext);
 	}
 
+	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	@Inject

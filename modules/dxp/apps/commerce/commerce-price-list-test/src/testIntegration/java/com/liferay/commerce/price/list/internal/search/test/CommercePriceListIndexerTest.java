@@ -108,6 +108,7 @@ public class CommercePriceListIndexerTest {
 			document.get(Field.ENTRY_CLASS_PK));
 	}
 
+	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	private static Indexer<CommercePriceList> _indexer;

@@ -208,6 +208,7 @@ public class SpecificationOptionFacetsTest {
 		Assert.assertEquals(true, termCollector.isEmpty());
 	}
 
+	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	@Inject

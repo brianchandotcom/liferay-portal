@@ -547,6 +547,7 @@ public class CommercePriceCalculationTest {
 			expectedPrice.doubleValue(), actualPrice.doubleValue(), 0.0000001);
 	}
 
+	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	@DeleteAfterTestRun

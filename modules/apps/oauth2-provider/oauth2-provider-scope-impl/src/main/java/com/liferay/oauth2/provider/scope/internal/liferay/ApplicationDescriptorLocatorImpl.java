@@ -39,7 +39,7 @@ public class ApplicationDescriptorLocatorImpl
 		String applicationName) {
 
 		ApplicationDescriptor applicationDescriptor =
-			_applicationDescriptorServiceTrackerMap.getService(applicationName);
+			_serviceTrackerMap.getService(applicationName);
 
 		if (applicationDescriptor == null) {
 			return _defaultApplicationDescriptor;
@@ -50,23 +50,21 @@ public class ApplicationDescriptorLocatorImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_applicationDescriptorServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ApplicationDescriptor.class,
-				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, ApplicationDescriptor.class,
+			OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_applicationDescriptorServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
-
-	private ServiceTrackerMap<String, ApplicationDescriptor>
-		_applicationDescriptorServiceTrackerMap;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL, target = "(default=true)"
 	)
 	private ApplicationDescriptor _defaultApplicationDescriptor;
+
+	private ServiceTrackerMap<String, ApplicationDescriptor> _serviceTrackerMap;
 
 }

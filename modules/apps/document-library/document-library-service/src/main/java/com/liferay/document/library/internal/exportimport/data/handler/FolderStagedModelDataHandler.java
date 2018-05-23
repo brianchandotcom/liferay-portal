@@ -158,9 +158,6 @@ public class FolderStagedModelDataHandler
 				portletDataContext, folder, repository,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 
-			portletDataContext.addClassedModel(
-				folderElement, folderPath, folder);
-
 			boolean rootFolder = false;
 
 			if (folder.getFolderId() == repository.getDlFolderId()) {

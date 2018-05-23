@@ -235,9 +235,6 @@ public class FileEntryStagedModelDataHandler
 				portletDataContext, fileEntry, repository,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 
-			portletDataContext.addClassedModel(
-				fileEntryElement, fileEntryPath, fileEntry);
-
 			long portletRepositoryClassNameId = _portal.getClassNameId(
 				PortletRepository.class.getName());
 

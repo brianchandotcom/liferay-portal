@@ -12,6 +12,20 @@ const KEYS = {
 	SPACEBAR: ' '
 };
 
+const MENU_CONTAINER_CLASSNAME = 'site-navigation-menu-container';
+
+const MENU_ITEM_CLASSNAME = 'site-navigation-menu-item';
+
+const MENU_ITEM_CONTENT_CLASSNAME = `${MENU_ITEM_CLASSNAME}__content`;
+
+const MENU_ITEM_DRAGGING_CLASSNAME = `${MENU_ITEM_CLASSNAME}--dragging`;
+
+const MENU_ITEM_DRAG_ICON_CLASSNAME = `${MENU_ITEM_CLASSNAME}__drag-icon`;
+
+const MENU_ITEM_NESTED_CLASSNAME = `${MENU_ITEM_CLASSNAME}--nested`;
+
+const MENU_ITEM_SELECTED_CLASSNAME = `${MENU_ITEM_CLASSNAME}--selected`;
+
 /**
  *	Site navigation menu editor component.
  */
@@ -30,9 +44,9 @@ class SiteNavigationMenuEditor extends State {
 		this._dragDrop = new DragDrop(
 			{
 				dragPlaceholder: Drag.Placeholder.CLONE,
-				handles: '.drag-icon',
-				sources: this.dragAndDropMenuItemSelector,
-				targets: `${this.menuContainerSelector} ${this.dragAndDropMenuItemSelector}`
+				handles: `.${MENU_ITEM_DRAG_ICON_CLASSNAME}`,
+				sources: `.${MENU_ITEM_CLASSNAME}`,
+				targets: `.${MENU_ITEM_CONTENT_CLASSNAME}`
 			});
 
 		this._dragDrop.on(
@@ -43,13 +57,13 @@ class SiteNavigationMenuEditor extends State {
 		this._dragDrop.on(DragDrop.Events.END, this._handleDropItem.bind(this));
 
 		dom.on(
-			this.menuItemSelector,
+			`.${MENU_ITEM_CONTENT_CLASSNAME}`,
 			'click',
 			this._handleItemClick.bind(this)
 		);
 
 		dom.on(
-			`${this.menuContainerSelector} ${this.menuItemContainerSelector}`,
+			`.${MENU_ITEM_CONTENT_CLASSNAME}`,
 			'keyup',
 			this._handleItemKeyUp.bind(this)
 		);
@@ -74,7 +88,7 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_getMenuItemContainer(menuItem) {
-		return closest(menuItem, this.menuItemContainerSelector) || menuItem;
+		return closest(menuItem, `.${MENU_ITEM_CLASSNAME}`) || menuItem;
 	}
 
 	/**
@@ -89,8 +103,8 @@ class SiteNavigationMenuEditor extends State {
 		const itemContainer = this._getMenuItemContainer(menuItem);
 		const itemContainerParent = itemContainer.parentNode;
 
-		return match(itemContainerParent, this.menuContainerSelector) ?
-			itemContainerParent : itemContainerParent.querySelector(this.menuItemSelector);
+		return match(itemContainerParent, `.${MENU_ITEM_CLASSNAME}`) ?
+			itemContainerParent : itemContainerParent.querySelector(`.${MENU_ITEM_CONTENT_CLASSNAME}`);
 	}
 
 	/**
@@ -104,8 +118,8 @@ class SiteNavigationMenuEditor extends State {
 	_getMenuItemSiblings(menuItem) {
 		return Array.prototype
 			.slice.call(this._getMenuItemContainer(this._getMenuItemParent(menuItem)).children)
-			.filter(itemContainer => match(itemContainer, this.menuItemContainerSelector))
-			.map(itemContainer => itemContainer.querySelector(this.menuItemSelector));
+			.filter(itemContainer => match(itemContainer, `.${MENU_ITEM_CLASSNAME}`))
+			.map(itemContainer => itemContainer.querySelector(`.${MENU_ITEM_CONTENT_CLASSNAME}`));
 	}
 
 	/**
@@ -131,7 +145,7 @@ class SiteNavigationMenuEditor extends State {
 
 			const nested = placeholderRegion.right - targetRegion.right > placeholderRegion.width / 3;
 
-			removeClasses(source.parentNode, 'container-item--nested');
+			removeClasses(source.parentNode, MENU_ITEM_NESTED_CLASSNAME);
 
 			let newParentId = target.dataset.parentSiteNavigationMenuItemId;
 
@@ -152,14 +166,14 @@ class SiteNavigationMenuEditor extends State {
 
 				newParentId = target.dataset.siteNavigationMenuItemId;
 
-				addClasses(source.parentNode, 'container-item--nested');
+				addClasses(source.parentNode, MENU_ITEM_NESTED_CLASSNAME);
 			}
 
 			source.dataset.parentId = newParentId;
 
 			const parent = document.querySelector(`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
 
-			const children = Array.prototype.slice.call(parent.querySelectorAll(this.menuItemContainerSelector))
+			const children = Array.prototype.slice.call(parent.querySelectorAll(`.${MENU_ITEM_CLASSNAME}`))
 				.filter(
 					(node) =>
 						(node === source.parentNode) ||
@@ -188,7 +202,7 @@ class SiteNavigationMenuEditor extends State {
 	_handleDragStart(data, event) {
 		const item = event.target.getActiveDrag();
 
-		addClasses(item.parentNode, 'item-dragging');
+		addClasses(item.parentNode, MENU_ITEM_DRAGGING_CLASSNAME);
 	}
 
 	/**
@@ -206,7 +220,7 @@ class SiteNavigationMenuEditor extends State {
 			this._updateParentAndOrder(data.source.dataset);
 		}
 
-		removeClasses(data.source.parentNode, 'item-dragging');
+		removeClasses(data.source.parentNode, MENU_ITEM_DRAGGING_CLASSNAME);
 	}
 
 	/**
@@ -217,9 +231,9 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemClick(event) {
-		removeClasses(document.querySelectorAll(this.menuItemSelector), 'selected');
+		removeClasses(document.querySelectorAll(`.${MENU_ITEM_CONTENT_CLASSNAME}`), MENU_ITEM_SELECTED_CLASSNAME);
 
-		addClasses(event.delegateTarget, 'selected');
+		addClasses(event.delegateTarget, MENU_ITEM_SELECTED_CLASSNAME);
 
 		event.delegateTarget.parentNode.focus();
 	}
@@ -232,12 +246,12 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemKeyUp(event) {
-		const container = document.querySelector(this.menuContainerSelector);
-		const menuItem = event.delegateTarget.querySelector(this.menuItemSelector);
+		const container = document.querySelector(`.${MENU_CONTAINER_CLASSNAME}`);
+		const menuItem = event.delegateTarget.querySelector(`.${MENU_ITEM_CLASSNAME}`);
 		const menuItemContainer = this._getMenuItemContainer(menuItem);
 		const menuItemSiblings = this._getMenuItemSiblings(menuItem);
 
-		const menuItemSelected = hasClass(menuItem, 'selected');
+		const menuItemSelected = hasClass(menuItem, MENU_ITEM_SELECTED_CLASSNAME);
 
 		const menuItemIndex = menuItemSiblings.indexOf(menuItem);
 
@@ -262,7 +276,7 @@ class SiteNavigationMenuEditor extends State {
 
 			grandParentItemContainer.insertBefore(
 				menuItemContainer,
-				next(parentItemContainer, this.menuItemContainerSelector)
+				next(parentItemContainer, `.${MENU_ITEM_CLASSNAME}`)
 			);
 
 			menuItem.dataset.parentSiteNavigationMenuItemId = grandParentItemId.toString();
@@ -270,7 +284,7 @@ class SiteNavigationMenuEditor extends State {
 			if (grandParentItemId === 0) {
 				removeClasses(
 					menuItemContainer,
-					'container-item--nested'
+					MENU_ITEM_NESTED_CLASSNAME
 				);
 			}
 
@@ -314,7 +328,7 @@ class SiteNavigationMenuEditor extends State {
 			const menuItemSiblingContainer = this._getMenuItemContainer(menuItemSibling);
 
 			menuItemSiblingContainer.appendChild(menuItemContainer);
-			addClasses(menuItemContainer, 'container-item--nested');
+			addClasses(menuItemContainer, MENU_ITEM_NESTED_CLASSNAME);
 
 			menuItem.dataset.parentSiteNavigationMenuItemId = menuItemSibling.dataset.siteNavigationMenuItemId;
 
@@ -339,7 +353,7 @@ class SiteNavigationMenuEditor extends State {
 
 				menuItemSiblingParentContainer.insertBefore(
 					menuItemContainer,
-					next(menuItemSiblingContainer, this.menuItemContainerSelector)
+					next(menuItemSiblingContainer, `.${MENU_ITEM_CLASSNAME}`)
 				);
 			}
 			else {
@@ -419,17 +433,6 @@ class SiteNavigationMenuEditor extends State {
 SiteNavigationMenuEditor.STATE = {
 
 	/**
-	 * Selector that handles the drag and drop item.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @type {!string}
-	 */
-
-	dragAndDropMenuItemSelector: Config.string().required(),
-
-	/**
 	 * URL for edit site navigation menu item parent action.
 	 *
 	 * @default undefined
@@ -439,39 +442,6 @@ SiteNavigationMenuEditor.STATE = {
 	 */
 
 	editSiteNavigationMenuItemParentURL: Config.string().required(),
-
-	/**
-	 * Selector to get site navigation menu container.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @type {!string}
-	 */
-
-	menuContainerSelector: Config.string().required(),
-
-	/**
-	 * Selector to get all site navigation menu item containers.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @type {!string}
-	 */
-
-	menuItemContainerSelector: Config.string().required(),
-
-	/**
-	 * Selector to get all site navigation menu items.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf SiteNavigationMenuEditor
-	 * @type {!string}
-	 */
-
-	menuItemSelector: Config.string().required(),
 
 	/**
 	 * Portlet namespace to use in edit action.

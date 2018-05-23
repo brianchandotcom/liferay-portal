@@ -29,23 +29,21 @@ String title = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, local
 
 Map<String, Object> data = new HashMap<String, Object>();
 
-data.put("order", siteNavigationMenuItem.getOrder());
-data.put("parent-site-navigation-menu-item-id", siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
 data.put("site-navigation-menu-item-id", siteNavigationMenuItemId);
 data.put("title", HtmlUtil.escape(title));
 
 request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());
 %>
 
-<div class="container-item <%= (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() > 0) ? "container-item--nested" : StringPool.BLANK %>" tabindex="0">
-	<div class="site-navigation-menu-item <%= (selectedSiteNavigationMenuItemId == siteNavigationMenuItemId) ? "selected" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+<div class="site-navigation-menu-item <%= (siteNavigationMenuItem.getParentSiteNavigationMenuItemId() > 0) ? "site-navigation-menu-item--nested" : StringPool.BLANK %> <%= (selectedSiteNavigationMenuItemId == siteNavigationMenuItemId) ? "site-navigation-menu-item--selected" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>" tabindex="0">
+	<div class="site-navigation-menu-item__content">
 		<liferay-frontend:horizontal-card
 			actionJsp="/site_navigation_menu_item_action.jsp"
 			actionJspServletContext="<%= application %>"
 			text="<%= title %>"
 			url="javascript:;"
 		>
-			<div class="drag-icon">
+			<div class="site-navigation-menu-item__drag-icon">
 				<liferay-ui:icon
 					icon="drag"
 					markupView="lexicon"

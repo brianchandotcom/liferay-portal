@@ -27,30 +27,12 @@ import javax.portlet.WindowState;
 public class WindowStateFactory {
 
 	public static WindowState getWindowState(String name) {
-		return _instance._getWindowState(name);
+		return getWindowState(name, 2);
 	}
 
 	public static WindowState getWindowState(
 		String name, int portletMajorVersion) {
 
-		return _instance._getWindowState(name, portletMajorVersion);
-	}
-
-	private WindowStateFactory() {
-		_windowStates = new HashMap<>();
-
-		_windowStates.put(_NORMAL, LiferayWindowState.NORMAL);
-		_windowStates.put(_MAXIMIZED, LiferayWindowState.MAXIMIZED);
-		_windowStates.put(_MINIMIZED, LiferayWindowState.MINIMIZED);
-		_windowStates.put(_EXCLUSIVE, LiferayWindowState.EXCLUSIVE);
-		_windowStates.put(_POP_UP, LiferayWindowState.POP_UP);
-	}
-
-	private WindowState _getWindowState(String name) {
-		return _getWindowState(name, 2);
-	}
-
-	private WindowState _getWindowState(String name, int portletMajorVersion) {
 		if (Validator.isNull(name)) {
 			if (portletMajorVersion < 3) {
 				return WindowState.NORMAL;
@@ -80,9 +62,15 @@ public class WindowStateFactory {
 
 	private static final String _POP_UP = LiferayWindowState.POP_UP.toString();
 
-	private static final WindowStateFactory _instance =
-		new WindowStateFactory();
+	private static final Map<String, WindowState> _windowStates =
+		new HashMap<>();
 
-	private final Map<String, WindowState> _windowStates;
+	static {
+		_windowStates.put(_NORMAL, LiferayWindowState.NORMAL);
+		_windowStates.put(_MAXIMIZED, LiferayWindowState.MAXIMIZED);
+		_windowStates.put(_MINIMIZED, LiferayWindowState.MINIMIZED);
+		_windowStates.put(_EXCLUSIVE, LiferayWindowState.EXCLUSIVE);
+		_windowStates.put(_POP_UP, LiferayWindowState.POP_UP);
+	}
 
 }

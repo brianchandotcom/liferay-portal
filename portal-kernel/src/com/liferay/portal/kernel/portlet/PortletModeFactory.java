@@ -28,34 +28,12 @@ import javax.portlet.PortletMode;
 public class PortletModeFactory {
 
 	public static PortletMode getPortletMode(String name) {
-		return _instance._getPortletMode(name);
+		return getPortletMode(name, 2);
 	}
 
 	public static PortletMode getPortletMode(
 		String name, int portletMajorVersion) {
 
-		return _instance._getPortletMode(name, portletMajorVersion);
-	}
-
-	private PortletModeFactory() {
-		_portletModes = new HashMap<>();
-
-		_portletModes.put(_EDIT, LiferayPortletMode.EDIT);
-		_portletModes.put(_HELP, LiferayPortletMode.HELP);
-		_portletModes.put(_VIEW, LiferayPortletMode.VIEW);
-		_portletModes.put(_ABOUT, LiferayPortletMode.ABOUT);
-		_portletModes.put(_CONFIG, LiferayPortletMode.CONFIG);
-		_portletModes.put(_EDIT_DEFAULTS, LiferayPortletMode.EDIT_DEFAULTS);
-		_portletModes.put(_EDIT_GUEST, LiferayPortletMode.EDIT_GUEST);
-		_portletModes.put(_PREVIEW, LiferayPortletMode.PREVIEW);
-		_portletModes.put(_PRINT, LiferayPortletMode.PRINT);
-	}
-
-	private PortletMode _getPortletMode(String name) {
-		return _getPortletMode(name, 2);
-	}
-
-	private PortletMode _getPortletMode(String name, int portletMajorVersion) {
 		if (Validator.isNull(name)) {
 			if (portletMajorVersion < 3) {
 				return PortletMode.VIEW;
@@ -95,9 +73,19 @@ public class PortletModeFactory {
 
 	private static final String _VIEW = PortletMode.VIEW.toString();
 
-	private static final PortletModeFactory _instance =
-		new PortletModeFactory();
+	private static final Map<String, PortletMode> _portletModes =
+		new HashMap<>();
 
-	private final Map<String, PortletMode> _portletModes;
+	static {
+		_portletModes.put(_EDIT, LiferayPortletMode.EDIT);
+		_portletModes.put(_HELP, LiferayPortletMode.HELP);
+		_portletModes.put(_VIEW, LiferayPortletMode.VIEW);
+		_portletModes.put(_ABOUT, LiferayPortletMode.ABOUT);
+		_portletModes.put(_CONFIG, LiferayPortletMode.CONFIG);
+		_portletModes.put(_EDIT_DEFAULTS, LiferayPortletMode.EDIT_DEFAULTS);
+		_portletModes.put(_EDIT_GUEST, LiferayPortletMode.EDIT_GUEST);
+		_portletModes.put(_PREVIEW, LiferayPortletMode.PREVIEW);
+		_portletModes.put(_PRINT, LiferayPortletMode.PRINT);
+	}
 
 }

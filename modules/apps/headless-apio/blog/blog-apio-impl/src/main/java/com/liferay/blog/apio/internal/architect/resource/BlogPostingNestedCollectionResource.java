@@ -27,6 +27,7 @@ import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.internal.architect.form.BlogPostingForm;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.category.apio.identifier.architect.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
@@ -119,6 +120,8 @@ public class BlogPostingNestedCollectionResource
 			BlogsEntry::getCoverImageFileEntryId
 		).addRelatedCollection(
 			"comments", CommentIdentifier.class
+		).addRelatedCollection(
+			"categories", CategoryIdentifier.class
 		).addString(
 			"alternativeHeadline", BlogsEntry::getSubtitle
 		).addString(

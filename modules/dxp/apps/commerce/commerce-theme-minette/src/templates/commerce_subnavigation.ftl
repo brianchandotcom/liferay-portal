@@ -3,6 +3,7 @@
 		<a class="navbar-brand navbar-breakpoint-d-none" href="tel:+1-888-888-8888">
 			<span class="inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-phone" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#phone" /></svg></span><span class="navbar-text-truncate">1.888.888.8888</span>
 		</a>
+
 		<a aria-controls="commerceSubnavigation" aria-expanded="false" aria-label="Toggle Subnavigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#commerceSubnavigation" role="button">
 			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-bars" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#bars" /></svg>
 		</a>

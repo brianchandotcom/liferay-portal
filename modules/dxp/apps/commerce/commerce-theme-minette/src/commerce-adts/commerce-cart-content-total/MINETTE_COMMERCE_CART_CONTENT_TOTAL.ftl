@@ -29,6 +29,7 @@
 	<div class="panel-header">
 		<span class="panel-title">Summary</span>
 	</div>
+
 	<div class="panel-body">
 		<ul class="commerce-cart-content-total-list list-unstyled">
 			<li class="autofit-float autofit-row autofit-row-center commerce-cart-content-total-item">
@@ -37,6 +38,7 @@
 						<span class="commerce-cart-content-total-label subtotal-label">Subtotal (${orderTotalItems})</span>
 					</div>
 				</div>
+
 				<div class="autofit-col">
 					<div class="autofit-section">
 						<span class="commerce-cart-content-total-value subtotal-value">${subTotal}</span>
@@ -49,6 +51,7 @@
 						<span class="commerce-cart-content-total-label shipping-label">Delivery</span>
 					</div>
 				</div>
+
 				<div class="autofit-col">
 					<div class="autofit-section">
 						<span class="commerce-cart-content-total-value shipping-value">${shippingPrice}</span>
@@ -61,6 +64,7 @@
 						<span class="commerce-cart-content-total-label tax-label">Tax</span>
 					</div>
 				</div>
+
 				<div class="autofit-col">
 					<div class="autofit-section">
 						<span class="commerce-cart-content-total-value tax-value">${tax}</span>
@@ -78,6 +82,7 @@
 						<span class="commerce-cart-content-total-label order-label">Order #</span>
 					</div>
 				</div>
+
 				<div class="autofit-col">
 					<div class="autofit-section">
 						<span class="commerce-cart-content-total-value order-value">${orderId}</span>
@@ -100,6 +105,7 @@
 						<span class="commerce-cart-content-total-label total-label">Total</span>
 					</div>
 				</div>
+
 				<div class="autofit-col">
 					<div class="autofit-section">
 						<span class="commerce-cart-content-total-value total-value">${total}</span>
@@ -116,9 +122,10 @@
 			<a class="btn btn-primary commerce-btn-cta" href="${commerceCartContentTotalDisplayContext.getCheckoutPortletURL()}" role="button">Checkout</a>
 		</div>
 	</div>
+
 	<div class="autofit-col">
 		<div class="autofit-section">
-			<a class="btn btn-outline-primary btn-outline-borderless" href="#1" role="button">
+			<a class="btn btn-outline-borderless btn-outline-primary" href="#1" role="button">
 				Quick Checkout<span class="inline-item inline-item-after"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle" focusable="false"><use xlink:href="${themeDisplay.getPathThemeImages()}/lexicon/icons.svg#info-circle" /></svg></span>
 			</a>
 		</div>

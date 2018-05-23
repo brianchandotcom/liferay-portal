@@ -1,4 +1,4 @@
-<div class="commerce-catalog commerce-1-2-1-columns commerce-layouttpl" id="main-content" role="main">
+<div class="commerce-1-2-1-columns commerce-catalog commerce-layouttpl" id="main-content" role="main">
 	<div class="portlet-layout row">
 		<div class="portlet-column portlet-column-only" id="column-1">
 			${processor.processColumn("column-1", "portlet-column-content portlet-column-content-only")}

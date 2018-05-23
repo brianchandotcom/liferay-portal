@@ -9,7 +9,8 @@
 
 			<li class="breadcrumb-item${cssClass}">
 				<#if entry?has_next>
-					<a class="breadcrumb-link"
+					<a
+						class="breadcrumb-link"
 
 					<#if entry.isBrowsable()>
 						href="${entry.getURL()!""}"

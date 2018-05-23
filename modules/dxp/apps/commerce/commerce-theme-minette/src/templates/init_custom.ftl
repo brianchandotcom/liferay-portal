@@ -1,6 +1,5 @@
-<#assign show_header_search = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-header-search")) />
-
 <#assign
+	show_header_search = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-header-search"))
 	orderItemsQuantity = commerceOrderHttpHelper.getCommerceOrderItemsQuantity(request)
 	cartUrl = commerceOrderHttpHelper.getCommerceCartPortletURL(request)
 	currentOrganization = (commerceOrganizationHelper.getCurrentOrganization(request))!""

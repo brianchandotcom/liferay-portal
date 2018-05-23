@@ -6,6 +6,7 @@
 			portletName="com_liferay_journal_content_web_portlet_JournalContentPortlet"
 		/>
 	</div>
+
 	<div class="container-fluid container-fluid-max-xl">
 		<div class="autofit-float autofit-padded autofit-row footer-main-section">
 			<div class="autofit-col autofit-col-expand footer-newsletter footer-section-column portlet-flush">
@@ -19,6 +20,7 @@
 			<div class="autofit-col autofit-col-expand footer-section-column">
 				<h3 class="footer-list-title">Title One</h3>
 				<!-- Use @liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") and set it up. This is just a placeholder. -->
+
 				<ul class="footer-list list-unstyled">
 					<li><a class="footer-link" href="#placeholder">Link One</a></li>
 					<li><a class="footer-link" href="#placeholder">Link Two</a></li>
@@ -34,6 +36,7 @@
 			<div class="autofit-col autofit-col-expand footer-section-column">
 				<h3 class="footer-list-title">Title Two</h3>
 				<!-- Use @liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") and set it up. This is just a placeholder. -->
+
 				<ul class="footer-list list-unstyled">
 					<li><a class="footer-link" href="#placeholder">Link One</a></li>
 					<li><a class="footer-link" href="#placeholder">Link Two</a></li>
@@ -49,6 +52,7 @@
 			<div class="autofit-col autofit-col-expand footer-section-column">
 				<h3 class="footer-list-title">Title Three</h3>
 				<!-- Use @liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") and set it up. This is just a placeholder. -->
+
 				<ul class="footer-list list-unstyled">
 					<li><a class="footer-link" href="#placeholder">Link One</a></li>
 					<li><a class="footer-link" href="#placeholder">Link Two</a></li>
@@ -63,6 +67,7 @@
 
 			<div class="autofit-col footer-section-column">
 				<!-- Use @liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") and set it up. This is just a placeholder. -->
+
 				<ul class="nav nav-stacked">
 					<li class="nav-item">
 						<a href="#1">
@@ -100,7 +105,6 @@
 					</li>
 				</ul>
 			</div>
-
 		</div>
 
 		<div class="autofit-float autofit-row autofit-row-center footer-secondary-section">

@@ -11,9 +11,11 @@
 				</#if>
 			</a>
 		</div>
+
 		<a aria-controls="commerceSiteNavigation" aria-expanded="false" aria-label="Toggle Commerce Site Navigation" class="collapsed navbar-toggler navbar-toggler-link" data-toggle="collapse" href="#commerceSiteNavigation" role="button">
 			<svg aria-hidden="true" class="lexicon-icon lexicon-icon-bars" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#bars" /></svg>
 		</a>
+
 		<div class="collapse navbar-collapse" id="commerceSiteNavigation">
 			<div class="container-fluid container-fluid-max-xl">
 				<nav class="commerce-site-search-navigation navbar navbar-expand-md navigation-bar">
@@ -32,7 +34,7 @@
 							</div>
 						</li>
 						<li class="nav-item nav-item-expand">
-							<div class="portlet-flush portlet-search-inset nav-link">
+							<div class="nav-link portlet-flush portlet-search-inset">
 								<#assign
 									preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone"})
 								/>
@@ -51,6 +53,7 @@
 								<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="javascript:;" role="button">
 									<span class="commerce-navigation-icon inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-user" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#user" /></svg></span><span class="navbar-text-truncate"><@liferay.language key="my-account" /></span>
 								</a>
+
 								<div class="dropdown-menu dropdown-menu-right portlet-flush">
 									<@commerce_search_organization default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 								</div>
@@ -61,6 +64,7 @@
 							<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="javascript:;" role="button">
 								<span class="commerce-navigation-icon inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-suitcase" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#suitcase" /></svg></span><span class="rounded-circle sticker sticker-dark sticker-lg sticker-success">${orderItemsQuantity}</span>
 							</a>
+
 							<div class="dropdown-menu dropdown-menu-right portlet-flush">
 								<@commerce_cart_mini default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 							</div>
@@ -75,6 +79,7 @@
 								<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link nav-link-primary" data-toggle="dropdown" href="javascript:;" role="button">
 									<@liferay.language key="explore-products" /><span class="commerce-dropdown-caret inline-item inline-item-after"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-angle-down" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#angle-down" /></svg></span>
 								</a>
+
 								<div aria-labelledby="" class="dropdown-menu portlet-flush">
 									<@commerce_category_navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") />
 								</div>

@@ -1,16 +1,16 @@
 {
 	"devDependencies": {
 		"gulp": "3.9.1",
-		"liferay-theme-tasks": "8.0.0-alpha.3",
-		"liferay-theme-deps-7.1": "8.0.0-alpha.3"
+		"liferay-theme-deps-7.1": "8.0.0-alpha.3",
+		"liferay-theme-tasks": "8.0.0-alpha.3"
 	},
 	"keywords": [
 		"liferay-theme"
 	],
 	"liferayTheme": {
 		"baseTheme": "styled",
-		"screenshot": "",
 		"rubySass": false,
+		"screenshot": "",
 		"templateLanguage": "ftl",
 		"version": "7.1"
 	},

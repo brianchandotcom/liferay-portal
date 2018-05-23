@@ -1,104 +1,104 @@
 {
-    "availableLanguageIds": [
-        "en_US"
-    ],
-    "defaultLanguageId": "en_US",
-    "fields": [
-        {
-            "label": {
-                "en_US": "CAROUSEL IMAGE"
-            },
-            "predefinedValue": {
-                "en_US": ""
-            },
-            "style": {
-                "en_US": ""
-            },
-            "tip": {
-                "en_US": ""
-            },
-            "dataType": "image",
-            "fieldNamespace": "ddm",
-            "indexType": "text",
-            "localizable": true,
-            "name": "CAROUSELIMAGE",
-            "readOnly": false,
-            "repeatable": true,
-            "required": false,
-            "showLabel": true,
-            "type": "ddm-image",
-            "nestedFields": [
-                {
-                    "label": {
-                        "en_US": "CAROUSEL IMAGE COLUMN CSS CLASSES"
-                    },
-                    "predefinedValue": {
-                        "en_US": ""
-                    },
-                    "style": {
-                        "en_US": ""
-                    },
-                    "tip": {
-                        "en_US": ""
-                    },
-                    "dataType": "string",
-                    "indexType": "keyword",
-                    "localizable": true,
-                    "name": "CAROUSELIMAGECOLUMNCSSCLASSES",
-                    "readOnly": false,
-                    "repeatable": false,
-                    "required": false,
-                    "showLabel": true,
-                    "type": "text"
-                },
-                {
-                    "label": {
-                        "en_US": "TEXT COLUMN CSS CLASSES"
-                    },
-                    "predefinedValue": {
-                        "en_US": ""
-                    },
-                    "style": {
-                        "en_US": ""
-                    },
-                    "tip": {
-                        "en_US": ""
-                    },
-                    "dataType": "string",
-                    "indexType": "keyword",
-                    "localizable": true,
-                    "name": "TEXTCOLUMNCSSCLASSES",
-                    "readOnly": false,
-                    "repeatable": false,
-                    "required": false,
-                    "showLabel": true,
-                    "type": "text"
-                },
-                {
-                    "label": {
-                        "en_US": "TEXT COLUMN HTML CONTENT"
-                    },
-                    "predefinedValue": {
-                        "en_US": ""
-                    },
-                    "style": {
-                        "en_US": ""
-                    },
-                    "tip": {
-                        "en_US": ""
-                    },
-                    "dataType": "html",
-                    "fieldNamespace": "ddm",
-                    "indexType": "text",
-                    "localizable": true,
-                    "name": "TEXTCOLUMNHTMLCONTENT",
-                    "readOnly": false,
-                    "repeatable": false,
-                    "required": false,
-                    "showLabel": true,
-                    "type": "ddm-text-html"
-                }
-            ]
-        }
-    ]
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "image",
+			"fieldNamespace": "ddm",
+			"indexType": "text",
+			"label": {
+				"en_US": "CAROUSEL IMAGE"
+			},
+			"localizable": true,
+			"name": "CAROUSELIMAGE",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "CAROUSEL IMAGE COLUMN CSS CLASSES"
+					},
+					"localizable": true,
+					"name": "CAROUSELIMAGECOLUMNCSSCLASSES",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"en_US": ""
+					},
+					"tip": {
+						"en_US": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "TEXT COLUMN CSS CLASSES"
+					},
+					"localizable": true,
+					"name": "TEXTCOLUMNCSSCLASSES",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"en_US": ""
+					},
+					"tip": {
+						"en_US": ""
+					},
+					"type": "text"
+				},
+				{
+					"dataType": "html",
+					"fieldNamespace": "ddm",
+					"indexType": "text",
+					"label": {
+						"en_US": "TEXT COLUMN HTML CONTENT"
+					},
+					"localizable": true,
+					"name": "TEXTCOLUMNHTMLCONTENT",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"style": {
+						"en_US": ""
+					},
+					"tip": {
+						"en_US": ""
+					},
+					"type": "ddm-text-html"
+				}
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"en_US": ""
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-image"
+		}
+	]
 }

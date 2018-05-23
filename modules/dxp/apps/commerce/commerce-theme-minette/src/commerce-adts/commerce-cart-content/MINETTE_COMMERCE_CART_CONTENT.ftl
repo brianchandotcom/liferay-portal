@@ -20,6 +20,7 @@
 						<th class="subtotal-column table-cell-expand">${languageUtil.get(request, "subtotal")}</th>
 					</tr>
 				</thead>
+
 				<tbody>
 					<#list entries as curCommerceOrderItem>
 						<#assign
@@ -52,6 +53,7 @@
 								<div class="table-title">
 									<a href="${productURL}">${title}</a>
 								</div>
+
 								<div class="table-text">${languageUtil.get(request, "sku")} ${curCommerceOrderItem.getSku()}</div>
 							</td>
 							<td class="quantity-column table-cell-expand">

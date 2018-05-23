@@ -25,7 +25,7 @@
 				<#list entries as curAssetCategory>
 					<#assign nextAssetCategories = cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(curAssetCategory.getCategoryId()) />
 
-					<ul class="nav nav-stacked d-none" id="category_${curAssetCategory.getCategoryId()}_subcategories" style="border-left:1px solid #DDD;">
+					<ul class="d-none nav nav-stacked" id="category_${curAssetCategory.getCategoryId()}_subcategories" style="border-left:1px solid #DDD;">
 						<li class="nav-item"><a href="${cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(curAssetCategory.getCategoryId(), themeDisplay)}">${curAssetCategory.getName()}</a></li>
 
 						<#list nextAssetCategories as curAssetCategory>
@@ -54,7 +54,7 @@
 					<#list nextAssetCategories as curAssetCategory>
 						<#assign nextButOneAssetCategories = cpAssetCategoriesNavigationDisplayContext.getChildAssetCategories(curAssetCategory.getCategoryId()) />
 
-						<ul class="nav nav-stacked d-none" id="category_${curAssetCategory.getCategoryId()}_subcategories">
+						<ul class="d-none nav nav-stacked" id="category_${curAssetCategory.getCategoryId()}_subcategories">
 							<li class="nav-item"><a href="${cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(curAssetCategory.getCategoryId(), themeDisplay)}">${curAssetCategory.getName()}</a></li>
 
 							<#list nextButOneAssetCategories as curAssetCategory>

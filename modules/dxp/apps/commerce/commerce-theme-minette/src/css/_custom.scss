@@ -653,8 +653,8 @@
 			word-wrap: break-word;
 
 			@include media-breakpoint-up(sm) {
-				min-width: 12.5rem;
 				max-width: 20%;
+				min-width: 12.5rem;
 			}
 
 			@include media-breakpoint-up(lg) {
@@ -885,7 +885,6 @@
 		@include media-breakpoint-up(lg) {
 			font-size: 1.5rem;
 			margin-top: 9.3125rem;
-
 		}
 	}
 }
@@ -968,8 +967,8 @@
 		}
 
 		.product-image {
-			max-width: none;
 			max-height: 70%;
+			max-width: none;
 
 			@include media-breakpoint-up(lg) {
 				max-height: 50%;
@@ -2112,8 +2111,8 @@
 					border-radius: $rounded-circle-border-radius;
 					color: #FFF;
 					display: flex;
-					justify-content: center;
 					height: 1rem;
+					justify-content: center;
 					width: 1rem;
 
 					.lexicon-icon {

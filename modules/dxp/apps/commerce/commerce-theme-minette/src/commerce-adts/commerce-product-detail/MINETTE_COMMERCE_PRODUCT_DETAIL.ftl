@@ -23,7 +23,7 @@
 />
 <#if isIgnoreSKUCombinations>
 	<#if simpleCPTypeDisplayContext.getDefaultCPInstance()??>
-		<#assign cpInstance =  simpleCPTypeDisplayContext.getDefaultCPInstance() />
+		<#assign cpInstance = simpleCPTypeDisplayContext.getDefaultCPInstance() />
 
 		<#if cpInstance??>
 			<#assign
@@ -119,6 +119,7 @@
 
 				<div class="product-detail-social-navigation">
 					<!-- Use @liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") and set it up. The nav below is just a placeholder. -->
+
 					<ul class="nav">
 						<li class="nav-item">
 							<a href="#1">
@@ -213,6 +214,7 @@
 								useSelect=false
 							/>
 						</div>
+
 						<div class="autofit-col">
 							<@liferay_commerce_cart["add-to-cart"]
 								CPDefinitionId=cpDefinitionId
@@ -222,6 +224,7 @@
 								taglibQuantityInputId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
 							/>
 						</div>
+
 						<div class="autofit-col autofit-col-expand">
 							<div class="autofit-section">
 								8% Discount<br>
@@ -249,7 +252,7 @@
 			<ul class="nav nav-underline product-detail-description-tabs" role="tablist">
 				<#if cpDefinition.getDescription(themeDisplay.getLanguageId())?has_content>
 					<li class="nav-item" role="presentation">
-						<a aria-controls="<@portlet.namespace />description" aria-expanded="true" data-toggle="tab" class="nav-link active" href="#<@portlet.namespace />description"  role="tab">
+						<a aria-controls="<@portlet.namespace />description" aria-expanded="true" class="active nav-link" data-toggle="tab" href="#<@portlet.namespace />description" role="tab">
 							${languageUtil.get(request, "description")}
 						</a>
 					</li>
@@ -257,7 +260,7 @@
 
 				<#if simpleCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues()>
 					<li class="nav-item" role="presentation">
-						<a aria-controls="<@portlet.namespace />specification" aria-expanded="false" data-toggle="tab" class="nav-link" href="#<@portlet.namespace />specification"  role="tab">
+						<a aria-controls="<@portlet.namespace />specification" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<@portlet.namespace />specification" role="tab">
 							${languageUtil.get(request, "specifications")}
 						</a>
 					</li>
@@ -265,7 +268,7 @@
 
 				<#if cpAttachmentFileEntries?has_content>
 					<li class="nav-item" role="presentation">
-						<a aria-controls="<@portlet.namespace />attachments" aria-expanded="false" data-toggle="tab" class="nav-link" href="#<@portlet.namespace />attachments"  role="tab">
+						<a aria-controls="<@portlet.namespace />attachments" aria-expanded="false" class="nav-link" data-toggle="tab" href="#<@portlet.namespace />attachments" role="tab">
 							${languageUtil.get(request, "attachments")}
 						</a>
 					</li>
@@ -274,7 +277,7 @@
 
 			<div class="tab-content">
 				<#if cpDefinition.getDescription(themeDisplay.getLanguageId())?has_content>
-					<div class="fade tab-pane active show" id="<@portlet.namespace />description">
+					<div class="active fade show tab-pane" id="<@portlet.namespace />description">
 						<p>${cpDefinition.getDescription(themeDisplay.getLanguageId())}</p>
 					</div>
 				</#if>

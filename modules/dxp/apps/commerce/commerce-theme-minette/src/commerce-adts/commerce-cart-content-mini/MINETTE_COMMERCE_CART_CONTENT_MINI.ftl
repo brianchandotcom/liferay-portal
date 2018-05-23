@@ -14,6 +14,7 @@
 			</div>
 		</li>
 	</ul>
+
 	<div class="commerce-order-items-body" id="<@portlet.namespace />entriesContainer">
 		${commerceCartContentMiniDisplayContext}
 	</div>

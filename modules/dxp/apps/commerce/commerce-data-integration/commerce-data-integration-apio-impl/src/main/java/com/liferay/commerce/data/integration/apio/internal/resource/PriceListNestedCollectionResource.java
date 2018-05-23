@@ -65,7 +65,8 @@ public class PriceListNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommercePriceList,
-			_priceListPermissionChecker.forAdding(), PriceListForm::buildForm
+			_priceListPermissionChecker.forAdding()::apply,
+			PriceListForm::buildForm
 		).build();
 	}
 
@@ -82,10 +83,11 @@ public class PriceListNestedCollectionResource
 			_priceListHelper::getCommercePriceList
 		).addUpdater(
 			this::_updateCommercePriceList,
-			_priceListPermissionChecker.forUpdating(), PriceListForm::buildForm
+			_priceListPermissionChecker.forUpdating()::apply,
+			PriceListForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceListService::deleteCommercePriceList),
-			_priceListPermissionChecker.forDeleting()
+			_priceListPermissionChecker.forDeleting()::apply
 		).build();
 	}
 

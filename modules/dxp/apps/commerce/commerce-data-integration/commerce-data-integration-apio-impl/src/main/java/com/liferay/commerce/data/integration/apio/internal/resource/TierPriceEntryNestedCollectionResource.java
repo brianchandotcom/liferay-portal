@@ -65,7 +65,7 @@ public class TierPriceEntryNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommerceTierPriceEntry,
-			_tierPriceEntryPermissionChecker.forAdding(),
+			_tierPriceEntryPermissionChecker.forAdding()::apply,
 			TierPriceEntryForm::buildForm
 		).build();
 	}
@@ -83,12 +83,12 @@ public class TierPriceEntryNestedCollectionResource
 			_tierPriceEntryHelper::getCommerceTierPriceEntry
 		).addUpdater(
 			this::_updateCommercePriceEntry,
-			_tierPriceEntryPermissionChecker.forUpdating(),
+			_tierPriceEntryPermissionChecker.forUpdating()::apply,
 			TierPriceEntryForm::buildForm
 		).addRemover(
 			idempotent(
 				_commerceTierPriceEntryService::deleteCommerceTierPriceEntry),
-			_tierPriceEntryPermissionChecker.forDeleting()
+			_tierPriceEntryPermissionChecker.forDeleting()::apply
 		).build();
 	}
 

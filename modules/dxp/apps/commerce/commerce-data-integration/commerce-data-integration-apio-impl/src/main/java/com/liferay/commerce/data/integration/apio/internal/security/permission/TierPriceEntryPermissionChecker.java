@@ -98,6 +98,8 @@ public class TierPriceEntryPermissionChecker
 		return Try.success(
 			credentials.get()
 		).map(
+			Object::toString
+		).map(
 			Long::valueOf
 		).map(
 			_userService::getUserById

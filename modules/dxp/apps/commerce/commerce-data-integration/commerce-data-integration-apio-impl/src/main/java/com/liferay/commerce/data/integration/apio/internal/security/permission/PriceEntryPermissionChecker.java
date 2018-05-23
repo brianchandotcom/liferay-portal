@@ -97,6 +97,8 @@ public class PriceEntryPermissionChecker
 		return Try.success(
 			credentials.get()
 		).map(
+			Object::toString
+		).map(
 			Long::valueOf
 		).map(
 			_userService::getUserById

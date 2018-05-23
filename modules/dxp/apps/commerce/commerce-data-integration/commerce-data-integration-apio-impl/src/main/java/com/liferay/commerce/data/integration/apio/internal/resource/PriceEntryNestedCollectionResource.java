@@ -66,7 +66,7 @@ public class PriceEntryNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommercePriceEntry,
-			_priceEntryPermissionChecker.forAdding(),
+			_priceEntryPermissionChecker.forAdding()::apply,
 			PriceEntryCreatorForm::buildForm
 		).build();
 	}
@@ -84,11 +84,11 @@ public class PriceEntryNestedCollectionResource
 			_priceEntryHelper::getCommercePriceEntry
 		).addUpdater(
 			this::_updateCommercePriceEntry,
-			_priceEntryPermissionChecker.forUpdating(),
+			_priceEntryPermissionChecker.forUpdating()::apply,
 			PriceEntryUpdaterForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceEntryService::deleteCommercePriceEntry),
-			_priceEntryPermissionChecker.forDeleting()
+			_priceEntryPermissionChecker.forDeleting()::apply
 		).build();
 	}
 

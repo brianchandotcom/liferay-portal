@@ -15,9 +15,8 @@
 package com.liferay.portal.apio.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
+import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
 import com.liferay.apio.architect.identifier.Identifier;
-
-import java.util.function.BiFunction;
 
 /**
  * Instances of this class contains the information necessary to calculate
@@ -36,6 +35,7 @@ import java.util.function.BiFunction;
  *         String}, etc.)
  * @review
  */
+@SuppressWarnings("RedundantThrows")
 public interface HasPermission<T> {
 
 	/**
@@ -54,7 +54,7 @@ public interface HasPermission<T> {
 	 *         false} otherwise
 	 * @review
 	 */
-	public default Boolean forAdding(Credentials credentials) {
+	public default Boolean forAdding(Credentials credentials) throws Exception {
 		return false;
 	}
 
@@ -75,7 +75,7 @@ public interface HasPermission<T> {
 	 *         false} otherwise
 	 * @review
 	 */
-	public default <S> BiFunction<Credentials, S, Boolean> forAddingIn(
+	public default <S> ThrowableBiFunction<Credentials, S, Boolean> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		return (credentials, s) -> false;
@@ -97,7 +97,9 @@ public interface HasPermission<T> {
 	 *         false} otherwise
 	 * @review
 	 */
-	public default Boolean forDeleting(Credentials credentials, T id) {
+	public default Boolean forDeleting(Credentials credentials, T id)
+		throws Exception {
+
 		return false;
 	}
 
@@ -117,7 +119,9 @@ public interface HasPermission<T> {
 	 *         false} otherwise
 	 * @review
 	 */
-	public default Boolean forUpdating(Credentials credentials, T id) {
+	public default Boolean forUpdating(Credentials credentials, T id)
+		throws Exception {
+
 		return false;
 	}
 

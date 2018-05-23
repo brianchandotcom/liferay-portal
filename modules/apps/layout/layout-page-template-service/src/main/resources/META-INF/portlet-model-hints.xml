@@ -29,7 +29,7 @@
 		<field name="classTypeId" type="long" />
 		<field name="name" type="String" />
 		<field name="type" type="int" />
-		<field name="htmlPreviewEntryId" type="long" />
+		<field name="previewFileEntryId" type="long" />
 		<field name="defaultTemplate" type="boolean" />
 		<field name="layoutPrototypeId" type="long" />
 		<field name="status" type="int" />

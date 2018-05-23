@@ -73,7 +73,7 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("classTypeId", getClassTypeId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
-		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
+		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("defaultTemplate", isDefaultTemplate());
 		attributes.put("layoutPrototypeId", getLayoutPrototypeId());
 		attributes.put("status", getStatus());
@@ -160,10 +160,10 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 			setType(type);
 		}
 
-		Long htmlPreviewEntryId = (Long)attributes.get("htmlPreviewEntryId");
+		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
 
-		if (htmlPreviewEntryId != null) {
-			setHtmlPreviewEntryId(htmlPreviewEntryId);
+		if (previewFileEntryId != null) {
+			setPreviewFileEntryId(previewFileEntryId);
 		}
 
 		Boolean defaultTemplate = (Boolean)attributes.get("defaultTemplate");
@@ -294,16 +294,6 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		return _layoutPageTemplateEntry.getGroupId();
 	}
 
-	/**
-	* Returns the html preview entry ID of this layout page template entry.
-	*
-	* @return the html preview entry ID of this layout page template entry
-	*/
-	@Override
-	public long getHtmlPreviewEntryId() {
-		return _layoutPageTemplateEntry.getHtmlPreviewEntryId();
-	}
-
 	@Override
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
@@ -358,6 +348,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public String getName() {
 		return _layoutPageTemplateEntry.getName();
+	}
+
+	/**
+	* Returns the preview file entry ID of this layout page template entry.
+	*
+	* @return the preview file entry ID of this layout page template entry
+	*/
+	@Override
+	public long getPreviewFileEntryId() {
+		return _layoutPageTemplateEntry.getPreviewFileEntryId();
 	}
 
 	/**
@@ -667,16 +667,6 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	}
 
 	/**
-	* Sets the html preview entry ID of this layout page template entry.
-	*
-	* @param htmlPreviewEntryId the html preview entry ID of this layout page template entry
-	*/
-	@Override
-	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
-		_layoutPageTemplateEntry.setHtmlPreviewEntryId(htmlPreviewEntryId);
-	}
-
-	/**
 	* Sets the layout page template collection ID of this layout page template entry.
 	*
 	* @param layoutPageTemplateCollectionId the layout page template collection ID of this layout page template entry
@@ -730,6 +720,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public void setNew(boolean n) {
 		_layoutPageTemplateEntry.setNew(n);
+	}
+
+	/**
+	* Sets the preview file entry ID of this layout page template entry.
+	*
+	* @param previewFileEntryId the preview file entry ID of this layout page template entry
+	*/
+	@Override
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		_layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
 	}
 
 	/**

@@ -93,8 +93,8 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		sb.append(html);
 		sb.append(", js=");
 		sb.append(js);
-		sb.append(", htmlPreviewEntryId=");
-		sb.append(htmlPreviewEntryId);
+		sb.append(", previewFileEntryId=");
+		sb.append(previewFileEntryId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -175,7 +175,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 			fragmentEntryImpl.setJs(js);
 		}
 
-		fragmentEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
+		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntryImpl.setStatus(status);
 		fragmentEntryImpl.setStatusByUserId(statusByUserId);
 
@@ -218,7 +218,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		html = objectInput.readUTF();
 		js = objectInput.readUTF();
 
-		htmlPreviewEntryId = objectInput.readLong();
+		previewFileEntryId = objectInput.readLong();
 
 		status = objectInput.readInt();
 
@@ -285,7 +285,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 			objectOutput.writeUTF(js);
 		}
 
-		objectOutput.writeLong(htmlPreviewEntryId);
+		objectOutput.writeLong(previewFileEntryId);
 
 		objectOutput.writeInt(status);
 
@@ -314,7 +314,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 	public String css;
 	public String html;
 	public String js;
-	public long htmlPreviewEntryId;
+	public long previewFileEntryId;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

@@ -84,7 +84,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			{ "css", Types.VARCHAR },
 			{ "html", Types.VARCHAR },
 			{ "js", Types.VARCHAR },
-			{ "htmlPreviewEntryId", Types.BIGINT },
+			{ "previewFileEntryId", Types.BIGINT },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
@@ -106,14 +106,14 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		TABLE_COLUMNS_MAP.put("css", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("html", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("htmlPreviewEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,htmlPreviewEntryId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,previewFileEntryId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntry.name ASC";
@@ -161,7 +161,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		model.setCss(soapModel.getCss());
 		model.setHtml(soapModel.getHtml());
 		model.setJs(soapModel.getJs());
-		model.setHtmlPreviewEntryId(soapModel.getHtmlPreviewEntryId());
+		model.setPreviewFileEntryId(soapModel.getPreviewFileEntryId());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -243,7 +243,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
-		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
+		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -335,10 +335,10 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			setJs(js);
 		}
 
-		Long htmlPreviewEntryId = (Long)attributes.get("htmlPreviewEntryId");
+		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
 
-		if (htmlPreviewEntryId != null) {
-			setHtmlPreviewEntryId(htmlPreviewEntryId);
+		if (previewFileEntryId != null) {
+			setPreviewFileEntryId(previewFileEntryId);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -607,13 +607,13 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@JSON
 	@Override
-	public long getHtmlPreviewEntryId() {
-		return _htmlPreviewEntryId;
+	public long getPreviewFileEntryId() {
+		return _previewFileEntryId;
 	}
 
 	@Override
-	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
-		_htmlPreviewEntryId = htmlPreviewEntryId;
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		_previewFileEntryId = previewFileEntryId;
 	}
 
 	@JSON
@@ -817,7 +817,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		fragmentEntryImpl.setCss(getCss());
 		fragmentEntryImpl.setHtml(getHtml());
 		fragmentEntryImpl.setJs(getJs());
-		fragmentEntryImpl.setHtmlPreviewEntryId(getHtmlPreviewEntryId());
+		fragmentEntryImpl.setPreviewFileEntryId(getPreviewFileEntryId());
 		fragmentEntryImpl.setStatus(getStatus());
 		fragmentEntryImpl.setStatusByUserId(getStatusByUserId());
 		fragmentEntryImpl.setStatusByUserName(getStatusByUserName());
@@ -983,7 +983,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			fragmentEntryCacheModel.js = null;
 		}
 
-		fragmentEntryCacheModel.htmlPreviewEntryId = getHtmlPreviewEntryId();
+		fragmentEntryCacheModel.previewFileEntryId = getPreviewFileEntryId();
 
 		fragmentEntryCacheModel.status = getStatus();
 
@@ -1039,8 +1039,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		sb.append(getHtml());
 		sb.append(", js=");
 		sb.append(getJs());
-		sb.append(", htmlPreviewEntryId=");
-		sb.append(getHtmlPreviewEntryId());
+		sb.append(", previewFileEntryId=");
+		sb.append(getPreviewFileEntryId());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1115,8 +1115,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		sb.append(getJs());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>htmlPreviewEntryId</column-name><column-value><![CDATA[");
-		sb.append(getHtmlPreviewEntryId());
+			"<column><column-name>previewFileEntryId</column-name><column-value><![CDATA[");
+		sb.append(getPreviewFileEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
@@ -1164,7 +1164,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	private String _css;
 	private String _html;
 	private String _js;
-	private long _htmlPreviewEntryId;
+	private long _previewFileEntryId;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

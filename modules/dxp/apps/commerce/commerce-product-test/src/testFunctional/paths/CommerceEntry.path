@@ -169,13 +169,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE_FIELD</td>
-	<td>//div/input[contains(@id,'title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MODAL_TITLE_FIELD</td>
-	<td>//div/input[contains(@id,'Title')]</td>
+	<td>MODAL_NAME_FIELD</td>
+	<td>//div/input[contains(@id,'Name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,7 +185,7 @@
 </tr>
 <tr>
 	<td>SEO_FRIENDLYURL</td>
-	<td>//div/span/input[@value='${key_productTitle}']</td>
+	<td>//div/span/input[@value='${key_productName}']</td>
 	<td></td>
 </tr>
 <tr>

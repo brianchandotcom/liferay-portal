@@ -43,8 +43,8 @@ public class TaxonomyNestedCollectionResource
 		TaxonomyIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<AssetVocabulary, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<AssetVocabulary, Long> builder) {
+	public NestedCollectionRoutes<AssetVocabulary, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<AssetVocabulary, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems

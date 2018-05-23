@@ -47,8 +47,8 @@ public class CategoryNestedCollectionResource
 		Long, TaxonomyIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<AssetCategory, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<AssetCategory, Long> builder) {
+	public NestedCollectionRoutes<AssetCategory, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<AssetCategory, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems

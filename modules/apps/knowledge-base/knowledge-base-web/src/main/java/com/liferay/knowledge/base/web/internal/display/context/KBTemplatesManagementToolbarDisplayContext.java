@@ -86,30 +86,32 @@ public class KBTemplatesManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
+		if (Validator.isNotNull(_getKeywords()) ||
+			!AdminPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroupId(),
+				KBActionKeys.ADD_KB_TEMPLATE)) {
+
+			return null;
+		}
+
 		return new CreationMenu() {
 			{
-				if (Validator.isNull(_getKeywords()) &&
-					AdminPermission.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroupId(),
-						KBActionKeys.ADD_KB_TEMPLATE)) {
+				addDropdownItem(
+					dropdownItem -> {
+						PortletURL addKBTemplateURL =
+							_liferayPortletResponse.createRenderURL();
 
-					addDropdownItem(
-						dropdownItem -> {
-							PortletURL addKBTemplateURL =
-								_liferayPortletResponse.createRenderURL();
+						addKBTemplateURL.setParameter(
+							"mvcPath", _templatePath + "edit_template.jsp");
+						addKBTemplateURL.setParameter(
+							"redirect", PortalUtil.getCurrentURL(_request));
 
-							addKBTemplateURL.setParameter(
-								"mvcPath", _templatePath + "edit_template.jsp");
-							addKBTemplateURL.setParameter(
-								"redirect", PortalUtil.getCurrentURL(_request));
+						dropdownItem.setHref(addKBTemplateURL);
 
-							dropdownItem.setHref(addKBTemplateURL);
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(_request, "add-template"));
-						});
-				}
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "add-template"));
+					});
 			}
 		};
 	}

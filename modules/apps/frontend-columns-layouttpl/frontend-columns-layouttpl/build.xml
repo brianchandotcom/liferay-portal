@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE project>
-
-<project basedir="." default="deploy" name="frontend-columns-layouttpl">
-	<property name="plugin.version" value="1" />
-
-	<import file="../../../../tools/sdk/layouttpl/build-common-layouttpl.xml" />
-</project>

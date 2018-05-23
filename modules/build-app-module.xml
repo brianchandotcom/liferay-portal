@@ -40,6 +40,7 @@
 			<available file="hotfix" />
 			<available file=".lfrbuild-app-server-lib" />
 			<available file=".lfrbuild-portal-pre" />
+			<available file=".lfrbuild-releng-ignore" />
 			<contains string="${basedir}" substring="modules-compat-data" />
 			<contains string="${basedir}" substring="required-dependencies" />
 		</or>

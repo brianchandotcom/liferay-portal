@@ -14,10 +14,18 @@
 
 package com.liferay.commerce.product.type.virtual.constants;
 
+import com.liferay.commerce.constants.CommerceOrderConstants;
+
 /**
  * @author Andrea Di Giorgi
  */
 public class VirtualCPTypeConstants {
+
+	public static final int[] ACTIVATION_STATUSES = {
+		CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+		CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT,
+		CommerceOrderConstants.ORDER_STATUS_TRANSMITTED
+	};
 
 	public static final String NAME = "virtual";
 

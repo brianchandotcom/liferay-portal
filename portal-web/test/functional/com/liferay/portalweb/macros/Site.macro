@@ -998,6 +998,7 @@
 				<execute function="AssertElementNotPresent" locator1="SitesSelectSite#SITES_TABLE_NAME">
 					<var name="key_parentSiteName" value="${parentSiteName}" />
 				</execute>
+
 				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No sites were found." />
 			</then>
 		</if>

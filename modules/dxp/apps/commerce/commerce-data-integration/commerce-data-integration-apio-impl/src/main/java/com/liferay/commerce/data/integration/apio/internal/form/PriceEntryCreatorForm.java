@@ -46,9 +46,17 @@ public class PriceEntryCreatorForm {
 			"price", PriceEntryCreatorForm::_setPrice
 		).addRequiredDouble(
 			"promoPrice", PriceEntryCreatorForm::_setPromoPrice
-		).addRequiredLong(
-			"skuID", PriceEntryCreatorForm::_setSkuID
-		).build();
+		).addOptionalLong(
+			"skuId", PriceEntryCreatorForm::_setSkuId
+		).addOptionalString(
+			"externalReferenceCode",
+			PriceEntryCreatorForm::_setExternalReferenceCode
+		)
+		.addOptionalString(
+			"skuExternalReferenceCode",
+			PriceEntryCreatorForm::_setSkuExternalReferenceCode
+		)
+		.build();
 	}
 
 	public String getExternalReferenceCode() {
@@ -63,8 +71,8 @@ public class PriceEntryCreatorForm {
 		return _promoPrice;
 	}
 
-	public Long getSkuID() {
-		return _skuID;
+	public Long getSkuId() {
+		return _skuId;
 	}
 
 	private void _setExternalReferenceCode(String externalReferenceCode) {
@@ -79,13 +87,23 @@ public class PriceEntryCreatorForm {
 		_promoPrice = promoPrice;
 	}
 
-	private void _setSkuID(Long skuID) {
-		_skuID = skuID;
+	private void _setSkuId(Long skuId) {
+		_skuId = skuId;
 	}
 
 	private String _externalReferenceCode;
+
+	public String getSkuExternalReferenceCode() {
+		return _skuExternalReferenceCode;
+	}
+
+	private void _setSkuExternalReferenceCode(String skuExternalReferenceCode) {
+		this._skuExternalReferenceCode = skuExternalReferenceCode;
+	}
+
+	private String _skuExternalReferenceCode;
 	private Double _price;
 	private Double _promoPrice;
-	private Long _skuID;
+	private Long _skuId;
 
 }

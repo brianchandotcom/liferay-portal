@@ -120,6 +120,13 @@ public class PriceEntryNestedCollectionResource
 			"promoPrice", CommercePriceEntry::getPromoPrice
 		).addString(
 			"sku", PriceEntryHelper::getSKU
+		).addString(
+			"skuExternalReferenceCode",
+			PriceEntryHelper::getSKUExternalReferenceCode
+		)
+		.addString(
+			"externalReferenceCode",
+			CommercePriceEntry::getExternalReferenceCode
 		).build();
 	}
 
@@ -130,7 +137,7 @@ public class PriceEntryNestedCollectionResource
 
 		try {
 			return _priceEntryHelper.upsertCommercePriceEntry(
-				priceEntryCreatorForm.getSkuID(), commercePriceListId,
+				priceEntryCreatorForm.getSkuId(), commercePriceListId,
 				priceEntryCreatorForm.getExternalReferenceCode(),
 				priceEntryCreatorForm.getPrice(),
 				priceEntryCreatorForm.getPromoPrice());
@@ -140,7 +147,7 @@ public class PriceEntryNestedCollectionResource
 
 			throw new ConflictException(
 				"Duplicate Product Instance with ID " +
-					priceEntryCreatorForm.getSkuID(),
+					priceEntryCreatorForm.getSkuId(),
 				status.getStatusCode(), dcpee);
 		}
 	}

@@ -47,6 +47,18 @@ public class PriceEntryHelper {
 		);
 	}
 
+	public static String getSKUExternalReferenceCode(
+		CommercePriceEntry commercePriceEntry) {
+
+		CPInstance cpInstance = _getCPInstance(commercePriceEntry);
+
+		return Try.fromFallible(
+			cpInstance::getExternalReferenceCode
+		).orElse(
+			null
+		);
+	}
+
 	public CommercePriceEntry getCommercePriceEntry(Long commercePriceEntryId) {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.fetchCommercePriceEntry(
@@ -76,7 +88,7 @@ public class PriceEntryHelper {
 	}
 
 	public CommercePriceEntry upsertCommercePriceEntry(
-			Long skuID, Long commercePriceListId, String externalReferenceCode,
+			Long skuId, Long commercePriceListId, String externalReferenceCode,
 			Double price, Double promoPrice)
 		throws PortalException {
 
@@ -86,11 +98,11 @@ public class PriceEntryHelper {
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());
 
-		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(skuID);
+		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(skuId);
 
 		if (cpInstance == null) {
 			throw new NotFoundException(
-				"Unable to find Product Instance with ID: " + skuID);
+				"Unable to find Product Instance with ID: " + skuId);
 		}
 
 		CommercePriceEntry commercePriceEntry =
@@ -105,7 +117,7 @@ public class PriceEntryHelper {
 		}
 
 		return _commercePriceEntryService.addCommercePriceEntry(
-			skuID, commercePriceListId, externalReferenceCode,
+			skuId, commercePriceListId, externalReferenceCode,
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
 			serviceContext);
 	}

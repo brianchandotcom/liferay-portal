@@ -20,7 +20,7 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
-import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.media.object.apio.internal.architect.form.MediaObjectCreatorForm;
 import com.liferay.media.object.apio.internal.helper.MediaObjectHelper;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class FolderMediaObjectNestedCollectionRouter
 	implements NestedCollectionRouter
-		<FileEntry, Long, FileEntryIdentifier, Long, FolderIdentifier> {
+		<FileEntry, Long, MediaObjectIdentifier, Long, FolderIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<FileEntry, Long, Long> collectionRoutes(

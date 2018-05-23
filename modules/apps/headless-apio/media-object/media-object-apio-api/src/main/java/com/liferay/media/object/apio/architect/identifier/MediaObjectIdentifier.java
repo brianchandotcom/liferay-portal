@@ -17,11 +17,11 @@ package com.liferay.media.object.apio.architect.identifier;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code FileEntry} identifier. It's identified by
+ * Holds information about a {@code MediaObject} identifier. It's identified by
  * the internal {@code FileEntry#getFileEntryId()}.
  *
  * @author Javier Gamarra
  * @review
  */
-public interface FileEntryIdentifier extends Identifier<Long> {
+public interface MediaObjectIdentifier extends Identifier<Long> {
 }

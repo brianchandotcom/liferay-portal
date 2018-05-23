@@ -28,7 +28,7 @@ import com.liferay.blog.apio.internal.architect.form.BlogPostingForm;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
-import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -115,7 +115,7 @@ public class BlogPostingNestedCollectionResource
 		).addLinkedModel(
 			"creator", PersonIdentifier.class, BlogsEntry::getUserId
 		).addLinkedModel(
-			"image", FileEntryIdentifier.class,
+			"image", MediaObjectIdentifier.class,
 			BlogsEntry::getCoverImageFileEntryId
 		).addRelatedCollection(
 			"comments", CommentIdentifier.class

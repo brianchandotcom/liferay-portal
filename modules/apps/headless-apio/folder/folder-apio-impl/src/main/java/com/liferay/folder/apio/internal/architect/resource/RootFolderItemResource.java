@@ -19,7 +19,7 @@ import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
-import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 
@@ -61,7 +61,7 @@ public class RootFolderItemResource
 		).addRelatedCollection(
 			"folders", FolderIdentifier.class
 		).addRelatedCollection(
-			"mediaObjects", FileEntryIdentifier.class
+			"mediaObjects", MediaObjectIdentifier.class
 		).build();
 	}
 

@@ -139,7 +139,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 						${entity.varName}Impl.set${entityColumn.methodName}(new Date(${entityColumn.name}));
 					}
 				<#else>
-					<#if stringUtil.equals(entityColumn.type, "String")>
+					<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 						if (${entityColumn.name} == null) {
 							${entity.varName}Impl.set${entityColumn.methodName}("");
 						}

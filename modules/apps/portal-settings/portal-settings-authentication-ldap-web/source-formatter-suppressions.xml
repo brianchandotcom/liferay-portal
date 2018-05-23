@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="ReferenceAnnotationCheck" files="src/main/java/com/liferay/portal/settings/authentication/ldap/web/internal/util/PortalLDAPUtil\.java" />
+	</checkstyle>
+</suppressions>

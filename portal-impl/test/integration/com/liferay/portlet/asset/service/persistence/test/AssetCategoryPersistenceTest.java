@@ -236,6 +236,14 @@ public class AssetCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P() throws Exception {
+		_persistence.countByG_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByG_P(0L, 0L);
+	}
+
+	@Test
 	public void testCountByG_V() throws Exception {
 		_persistence.countByG_V(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());

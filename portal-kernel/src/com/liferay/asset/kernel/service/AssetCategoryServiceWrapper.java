@@ -87,11 +87,41 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 		return _assetCategoryService.fetchCategory(categoryId);
 	}
 
+	/**
+	* Returns a range of assetCategories related to an AssetEntry with the given
+	* "classNameId-classPK".
+	*
+	* @param classNameId the className of the asset
+	* @param classPK the classPK of the asset
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the matching assetCategories
+	*/
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories(
+		long classNameId, long classPK, int start, int end) {
+		return _assetCategoryService.getCategories(classNameId, classPK, start,
+			end);
+	}
+
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories(
 		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryService.getCategories(className, classPK);
+	}
+
+	/**
+	* Returns the number of assetCategories related to an AssetEntry with the
+	* given "classNameId-classPK".
+	*
+	* @param classNameId the className of the asset
+	* @param classPK the classPK of the asset
+	* @return the number of matching assetCategories
+	*/
+	@Override
+	public int getCategoriesCount(long classNameId, long classPK) {
+		return _assetCategoryService.getCategoriesCount(classNameId, classPK);
 	}
 
 	@Override
@@ -114,6 +144,16 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 		return _assetCategoryService.getChildCategories(parentCategoryId);
 	}
 
+	/**
+	* eturns a range of child assetCategories.
+	*
+	* @param parentCategoryId the parent category id
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param obc the comparator
+	* @return the matching categories
+	* @throws PortalException
+	*/
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getChildCategories(
 		long parentCategoryId, int start, int end,
@@ -121,6 +161,19 @@ public class AssetCategoryServiceWrapper implements AssetCategoryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategoryService.getChildCategories(parentCategoryId,
 			start, end, obc);
+	}
+
+	/**
+	* Returns the number of child categories
+	*
+	* @param parentCategoryId the parent category id
+	* @return the number of child categories
+	* @throws PortalException
+	*/
+	@Override
+	public int getChildCategoriesCount(long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryService.getChildCategoriesCount(parentCategoryId);
 	}
 
 	/**

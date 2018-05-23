@@ -87,10 +87,37 @@ public class AssetCategoryServiceUtil {
 		return getService().fetchCategory(categoryId);
 	}
 
+	/**
+	* Returns a range of assetCategories related to an AssetEntry with the given
+	* "classNameId-classPK".
+	*
+	* @param classNameId the className of the asset
+	* @param classPK the classPK of the asset
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the matching assetCategories
+	*/
+	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories(
+		long classNameId, long classPK, int start, int end) {
+		return getService().getCategories(classNameId, classPK, start, end);
+	}
+
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories(
 		String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCategories(className, classPK);
+	}
+
+	/**
+	* Returns the number of assetCategories related to an AssetEntry with the
+	* given "classNameId-classPK".
+	*
+	* @param classNameId the className of the asset
+	* @param classPK the classPK of the asset
+	* @return the number of matching assetCategories
+	*/
+	public static int getCategoriesCount(long classNameId, long classPK) {
+		return getService().getCategoriesCount(classNameId, classPK);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategory getCategory(
@@ -110,11 +137,33 @@ public class AssetCategoryServiceUtil {
 		return getService().getChildCategories(parentCategoryId);
 	}
 
+	/**
+	* eturns a range of child assetCategories.
+	*
+	* @param parentCategoryId the parent category id
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param obc the comparator
+	* @return the matching categories
+	* @throws PortalException
+	*/
 	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> getChildCategories(
 		long parentCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getChildCategories(parentCategoryId, start, end, obc);
+	}
+
+	/**
+	* Returns the number of child categories
+	*
+	* @param parentCategoryId the parent category id
+	* @return the number of child categories
+	* @throws PortalException
+	*/
+	public static int getChildCategoriesCount(long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getChildCategoriesCount(parentCategoryId);
 	}
 
 	/**

@@ -3,9 +3,10 @@ import {dom} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import position from 'metal-position';
 
+import SiteNavigationMenu from './SiteNavigationMenu.es';
+
 import {
 	MENU_ITEM_CLASSNAME,
-	MENU_ITEM_CONTENT_CLASSNAME,
 	MENU_ITEM_DRAG_ICON_CLASSNAME,
 	SiteNavigationMenuItem
 } from './SiteNavigationMenuItem.es';
@@ -39,7 +40,7 @@ class SiteNavigationMenuEditor extends State {
 				dragPlaceholder: Drag.Placeholder.CLONE,
 				handles: `.${MENU_ITEM_DRAG_ICON_CLASSNAME}`,
 				sources: `.${MENU_ITEM_CLASSNAME}`,
-				targets: `.${MENU_ITEM_CONTENT_CLASSNAME}`
+				targets: `.${MENU_ITEM_CLASSNAME}`
 			});
 
 		this._dragDrop.on(
@@ -84,42 +85,40 @@ class SiteNavigationMenuEditor extends State {
 		const placeholder = data.placeholder;
 		const sourceMenuItem = data.source;
 		const targetMenuItem = data.target;
-		const targetMenuItemId = SiteNavigationMenuItem.getId(targetMenuItem);
 
 		if (
-			targetMenuItem &&
-			SiteNavigationMenuItem.isMenuItem(targetMenuItem) &&
-			sourceMenuItem &&
-			SiteNavigationMenuItem.isMenuItem(sourceMenuItem) &&
-			targetMenuItem !== sourceMenuItem &&
-			targetMenuItemId !== 0
+			(sourceMenuItem && SiteNavigationMenuItem.isMenuItem(sourceMenuItem)) &&
+			(targetMenuItem && SiteNavigationMenuItem.isMenuItem(targetMenuItem)) &&
+			(!SiteNavigationMenuItem.isChildOf(targetMenuItem, sourceMenuItem)) &&
+			(sourceMenuItem !== targetMenuItem)
 		) {
 			const placeholderRegion = position.getRegion(placeholder);
-			const targetRegion = position.getRegion(targetMenuItem);
+			const targetMenuItemParent = SiteNavigationMenuItem.getParent(targetMenuItem);
+			const targetMenuItemRegion = position.getRegion(targetMenuItem);
 
-			const nested = placeholderRegion.right - targetRegion.right > placeholderRegion.width / 3;
+			const targetMenuItemIndex = SiteNavigationMenuItem
+				.getSiblings(targetMenuItem)
+				.indexOf(targetMenuItem);
 
-			SiteNavigationMenuItem.setNested(sourceMenuItem, false);
+			SiteNavigationMenuItem.setNested(
+				sourceMenuItem,
+				(placeholderRegion.left - targetMenuItemRegion.left) >
+				(placeholderRegion.width / 3)
+			);
 
-			if (placeholderRegion.top < targetRegion.top) {
-				targetMenuItem.parentNode.insertBefore(
+			if (placeholderRegion.top < targetMenuItemRegion.top) {
+				SiteNavigationMenu.insertAtPosition(
+					targetMenuItemParent,
 					sourceMenuItem,
-					targetMenuItem
+					targetMenuItemIndex
 				);
 			}
-			else if (!nested && (placeholderRegion.bottom > targetRegion.bottom)) {
-				targetMenuItem.parentNode.insertBefore(
+			else if (placeholderRegion.bottom > targetMenuItemRegion.bottom) {
+				SiteNavigationMenu.insertAtPosition(
+					targetMenuItemParent,
 					sourceMenuItem,
-					targetMenuItem.nextSibling
+					targetMenuItemIndex + 1
 				);
-			}
-			else if (nested && placeholderRegion.bottom > targetRegion.bottom) {
-				targetMenuItem.parentNode.insertBefore(
-					sourceMenuItem,
-					targetMenuItem.nextSibling
-				);
-
-				SiteNavigationMenuItem.setNested(sourceMenuItem, true);
 			}
 		}
 	}
@@ -147,14 +146,26 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleDropItem(data, event) {
+		event.preventDefault();
+
 		const menuItem = data.source;
 		const menuItemId = SiteNavigationMenuItem.getId(menuItem);
 
-		event.preventDefault();
+		const menuItemIndex = SiteNavigationMenuItem
+			.getSiblings(menuItem)
+			.indexOf(menuItem);
 
-		if (menuItemId) {
-			this._updateParentAndOrder(menuItem.dataset);
-		}
+		const menuItemParentId = SiteNavigationMenuItem.getId(
+			SiteNavigationMenuItem.getParent(menuItem)
+		);
+
+		this._updateParentAndOrder(
+			{
+				dragOrder: menuItemIndex,
+				parentId: menuItemParentId,
+				siteNavigationMenuItemId: menuItemId
+			}
+		);
 
 		SiteNavigationMenuItem.setDragging(menuItem, false);
 	}
@@ -167,6 +178,8 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemClick(event) {
+		event.stopPropagation();
+
 		const menuItem = event.delegateTarget;
 
 		SiteNavigationMenuItem.setSelected(menuItem, true);

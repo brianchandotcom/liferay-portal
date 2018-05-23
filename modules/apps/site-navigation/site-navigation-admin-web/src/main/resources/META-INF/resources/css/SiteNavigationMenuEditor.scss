@@ -13,7 +13,7 @@
 		padding-left: 10ch;
 	}
 
-	&--selected .card {
+	&--selected > &__content .card {
 		background-color: #F0F5FF;
 	}
 
@@ -32,7 +32,7 @@
 		z-index: 1;
 	}
 
-	&:focus &__drag-icon,
+	&:focus > &__content &__drag-icon,
 	&__content:hover &__drag-icon {
 		visibility: visible;
 	}

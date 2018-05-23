@@ -33,6 +33,7 @@ page import="com.liferay.commerce.price.list.constants.CommercePriceListWebKeys"
 page import="com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException" %><%@
 page import="com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException" %><%@
+page import="com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException" %><%@
 page import="com.liferay.commerce.price.list.exception.NoSuchPriceEntryException" %><%@
 page import="com.liferay.commerce.price.list.exception.NoSuchPriceListException" %><%@
 page import="com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException" %><%@

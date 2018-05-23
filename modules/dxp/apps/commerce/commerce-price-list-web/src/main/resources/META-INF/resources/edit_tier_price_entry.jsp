@@ -84,10 +84,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= tierPriceEntriesURL.toString() %>" />
 	<aui:input name="commercePriceEntryId" type="hidden" value="<%= commercePriceEntryId %>" />
+	<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceListId %>" />
 	<aui:input name="commerceTierPriceEntryId" type="hidden" value="<%= commerceTierPriceEntryId %>" />
 
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
+
+		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>

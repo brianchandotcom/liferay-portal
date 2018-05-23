@@ -68,9 +68,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 	<aui:input name="redirect" type="hidden" value="<%= instanceTierPriceEntriesURL.toString() %>" />
 	<aui:input name="commercePriceEntryId" type="hidden" value="<%= commercePriceEntryId %>" />
 	<aui:input name="commerceTierPriceEntryId" type="hidden" value="<%= commerceTierPriceEntryId %>" />
+	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinition.getCPDefinitionId() %>" />
+	<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
 
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
+
+		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
 		<aui:fieldset-group>
 			<aui:fieldset>

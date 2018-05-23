@@ -2960,7 +2960,9 @@ public class ProjectTemplatesTest {
 			"src/main/java/" + packagePath + "/constants/" + className +
 				"WebKeys.java");
 
-		_updateExecuteNpmTask(gradleProjectDir);
+		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			_updateExecuteNpmTask(gradleProjectDir);
+		}
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}

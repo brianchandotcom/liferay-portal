@@ -11,7 +11,10 @@ AUI.add(
 					instance._targetURI = options;
 				}
 				else if (A.Lang.isObject(options)) {
-					instance._targetFrame = options.targetFrame;
+					var targetFrame = options.targetFrame;
+
+					instance._targetFrame = A.one(targetFrame);
+
 					instance._targetURI = options.targetURI;
 				}
 

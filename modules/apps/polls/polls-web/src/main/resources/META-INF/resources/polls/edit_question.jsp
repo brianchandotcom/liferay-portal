@@ -166,49 +166,94 @@ portletDisplay.setURLBack(redirect);
 
 <aui:script>
 	function <portlet:namespace />addPollChoice() {
-		var form = AUI.$(<portlet:namespace />fm);
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		var neverExpire = form.fm('fmexpirationDate').prop('checked');
+		if (form) {
+			var choicesAction = form.querySelector('#<portlet:namespace />choicesAction');
 
-		form.fm('choicesAction').val('<%= "addChoice" %>');
-		form.fm('choicesCount').val('<%= choicesCount + 1 %>');
-		form.fm('neverExpire').val(neverExpire);
+			if (choicesAction) {
+				choicesAction.setAttribute('value', '<%= "addChoice" %>');
+			}
 
-		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="addPollChoiceURL">
-			<liferay-portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
-			<liferay-portlet:param name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount + 1) %>" value="" />
-		</liferay-portlet:renderURL>
+			var choicesCount = form.querySelector('#<portlet:namespace />choicesCount');
 
-		submitForm(form, '<%= addPollChoiceURL %>');
+			if (choicesCount) {
+				choicesCount.setAttribute('value', '<%= choicesCount + 1 %>');
+			}
+
+			var expirationDate = form.querySelector('#<portlet:namespace />fmexpirationDate');
+			var neverExpire = form.querySelector('#<portlet:namespace />neverExpire');
+
+			if (expirationDate && neverExpire) {
+				neverExpire.setAttribute('value', expirationDate.checked);
+			}
+
+			<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="addPollChoiceURL">
+				<liferay-portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
+				<liferay-portlet:param name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount + 1) %>" value="" />
+			</liferay-portlet:renderURL>
+
+			submitForm(form, '<%= addPollChoiceURL %>');
+		}
 	}
 
-	function <portlet:namespace />deletePollChoice(choiceName) {
-		var form = AUI.$(<portlet:namespace />fm);
+	function <portlet:namespace />deletePollChoice(pollName) {
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		var neverExpire = form.fm('fmexpirationDate').prop('checked');
+		if (form) {
+			var choicesAction = form.querySelector('#<portlet:namespace />choicesAction');
 
-		form.fm('choicesAction').val('<%= "deleteChoice" %>');
-		form.fm('choicesCount').val('<%= choicesCount - 1 %>');
-		form.fm('choiceName').val(choiceName);
-		form.fm('neverExpire').val(neverExpire);
+			if (choicesAction) {
+				choicesAction.setAttribute('value', '<%= "deleteChoice" %>');
+			}
 
-		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="deletePollChoiceURL">
-			<liferay-portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
-			<liferay-portlet:param name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount - 1) %>" value="" />
-		</liferay-portlet:renderURL>
+			var choicesCount = form.querySelector('#<portlet:namespace />choicesCount');
 
-		submitForm(form, '<%= deletePollChoiceURL %>');
+			if (choicesCount) {
+				choicesCount.setAttribute('value', '<%= choicesCount - 1 %>');
+			}
+
+			var choiceName = form.querySelector('#<portlet:namespace />choiceName');
+
+			if (choiceName) {
+				choiceName.setAttribute('value', pollName);
+			}
+
+			var expirationDate = form.querySelector('#<portlet:namespace />fmexpirationDate');
+			var neverExpire = form.querySelector('#<portlet:namespace />neverExpire');
+
+			if (expirationDate && neverExpire) {
+				neverExpire.setAttribute('value', expirationDate.checked);
+			}
+
+			<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="deletePollChoiceURL">
+				<liferay-portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
+				<liferay-portlet:param name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount - 1) %>" value="" />
+			</liferay-portlet:renderURL>
+
+			submitForm(form, '<%= deletePollChoiceURL %>');
+		}
 	}
 
 	function <portlet:namespace />saveQuestion() {
-		var form = AUI.$(<portlet:namespace />fm);
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		var neverExpire = form.fm('fmexpirationDate').prop('checked');
+		if (form) {
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
 
-		form.fm('<%= Constants.CMD %>').val('<%= (question == null) ? Constants.ADD : Constants.UPDATE %>');
-		form.fm('neverExpire').val(neverExpire);
+			if (cmd) {
+				cmd.setAttribute('value', '<%= (question == null) ? Constants.ADD : Constants.UPDATE %>');
+			}
 
-		submitForm(form);
+			var expirationDate = form.querySelector('#<portlet:namespace />fmexpirationDate');
+			var neverExpire = form.querySelector('#<portlet:namespace />neverExpire');
+
+			if (expirationDate && neverExpire) {
+				neverExpire.setAttribute('value', expirationDate.checked);
+			}
+
+			submitForm(form);
+		}
 	}
 </aui:script>
 

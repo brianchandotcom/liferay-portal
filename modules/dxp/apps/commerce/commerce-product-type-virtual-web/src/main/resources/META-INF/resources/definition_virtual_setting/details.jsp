@@ -47,36 +47,38 @@ if (fileEntryId > 0) {
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingFileEntryIdException.class %>" message="please-select-an-existing-file" />
 <liferay-ui:error exception="<%= CPDefinitionVirtualSettingUrlException.class %>" message="please-enter-a-valid-url" />
 
-<div class="col-md-3">
-	<h4 class="text-default"><liferay-ui:message key="insert-the-url-or-select-a-file-of-your-virtual-product" /></h4>
-</div>
+<div class="row">
+	<div class="col-md-3">
+		<h4 class="text-default"><liferay-ui:message key="insert-the-url-or-select-a-file-of-your-virtual-product" /></h4>
+	</div>
 
-<div class="col-md-9">
-	<aui:fieldset>
-		<aui:input disabled="<%= useFileEntry %>" name="url" />
+	<div class="col-md-9">
+		<aui:fieldset>
+			<aui:input disabled="<%= useFileEntry %>" name="url" />
 
-		<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-button-row-message"><liferay-ui:message key="or" /></h4>
+			<h4 class="<%= textCssClass %>" id="lfr-definition-virtual-button-row-message"><liferay-ui:message key="or" /></h4>
 
-		<p class="text-default">
-			<span class="<%= (fileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntryRemove" role="button">
-				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-			</span>
-			<span id="<portlet:namespace />fileEntryNameInput">
-				<c:choose>
-					<c:when test="<%= (fileEntry != null) %>">
-						<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadFileEntryURL() %>">
-							<%= fileEntry.getFileName() %>
-						</a>
-					</c:when>
-					<c:otherwise>
-						<span class="text-muted"><liferay-ui:message key="none" /></span>
-					</c:otherwise>
-				</c:choose>
-			</span>
-		</p>
-	</aui:fieldset>
+			<p class="text-default">
+				<span class="<%= (fileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntryRemove" role="button">
+					<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+				</span>
+				<span id="<portlet:namespace />fileEntryNameInput">
+					<c:choose>
+						<c:when test="<%= (fileEntry != null) %>">
+							<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadFileEntryURL() %>">
+								<%= fileEntry.getFileName() %>
+							</a>
+						</c:when>
+						<c:otherwise>
+							<span class="text-muted"><liferay-ui:message key="none" /></span>
+						</c:otherwise>
+					</c:choose>
+				</span>
+			</p>
+		</aui:fieldset>
 
-	<aui:button name="selectFile" value="select" />
+		<aui:button name="selectFile" value="select" />
+	</div>
 </div>
 
 <aui:script use="liferay-item-selector-dialog">

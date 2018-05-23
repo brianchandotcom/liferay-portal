@@ -36,7 +36,19 @@ if ((cpDefinitionVirtualSetting != null) && (cpDefinitionVirtualSetting.getDurat
 <aui:model-context bean="<%= cpDefinitionVirtualSetting %>" model="<%= CPDefinitionVirtualSetting.class %>" />
 
 <aui:fieldset>
-	<aui:input name="activationStatus" />
+	<aui:select name="activationStatus">
+
+		<%
+		for (int activationStatus : cpDefinitionVirtualSettingDisplayContext.getActivationStatuses()) {
+		%>
+
+			<aui:option label="<%= cpDefinitionVirtualSettingDisplayContext.getActivationStatusLabel(activationStatus) %>" selected="<%= (cpDefinitionVirtualSetting != null) && (activationStatus == cpDefinitionVirtualSetting.getActivationStatus()) %>" value="<%= activationStatus %>" />
+
+		<%
+		}
+		%>
+
+	</aui:select>
 
 	<aui:input helpMessage="duration-help" label="duration" name="durationDays" suffix="days" type="long" value="<%= durationDays %>">
 		<aui:validator name="number" />

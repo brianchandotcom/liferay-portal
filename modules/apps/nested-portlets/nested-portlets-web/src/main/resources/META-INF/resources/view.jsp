@@ -21,13 +21,22 @@
 		<liferay-ui:message key="drag-applications-below-to-nest-them" />
 	</div>
 
-	<aui:script sandbox="<%= true %>">
-		var portletWrapper = $('#p_p_id_<%= portletDisplay.getId() %>_');
+	<aui:script require="metal-dom/src/dom">
+		let dom = metalDomSrcDom.default;
 
-		var nestedPortlet = portletWrapper.find('.portlet-boundary, .portlet-borderless-container');
+		var portletWrapper = document.getElementById('p_p_id_<%= portletDisplay.getId() %>_');
 
-		if (!nestedPortlet.length) {
-			portletWrapper.find('#<portlet:namespace />nested-portlets-msg').first().removeClass('hide');
+		var portletBoundary = portletWrapper.querySelectorAll('.portlet-boundary');
+		var portletBorderlessContainer = portletWrapper.querySelectorAll('.portlet-borderless-container');
+
+		if (!portletBoundary.length && !portletBorderlessContainer.length) {
+			var nestedPortletsMsg = portletWrapper.querySelector('#<portlet:namespace />nested-portlets-msg');
+
+			if (nestedPortletsMsg) {
+				dom.addClasses(nestedPortletsMsg, 'show');
+
+				dom.removeClasses(nestedPortletsMsg, 'hide');
+			}
 		}
 	</aui:script>
 </c:if>

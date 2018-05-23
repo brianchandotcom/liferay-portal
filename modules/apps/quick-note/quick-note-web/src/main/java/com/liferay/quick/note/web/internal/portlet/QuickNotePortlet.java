@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-quick-note",
-		"com.liferay.portlet.display-category=category.tools",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/quick_note.png",
 		"com.liferay.portlet.instanceable=true",

@@ -14,13 +14,14 @@
 	</condition>
 
 	<macrodef name="checkout-private-apps">
+		<attribute name="checkout.private.apps.branch" />
 		<attribute name="checkout.private.apps.dirs" />
 		<attribute name="checkout.private.apps.sha" />
 
 		<sequential>
 			<fetch-portal
 				fetch.portal.local.branch.name="git-branch-portal-private-apps"
-				fetch.portal.remote.branch.name="@{checkout.private.apps.sha}"
+				fetch.portal.remote.branch.name="@{checkout.private.apps.branch}"
 				fetch.portal.repository.name="liferay-portal-ee"
 			/>
 
@@ -30,7 +31,7 @@
 				<arg value="tag" />
 				<arg value="--force" />
 				<arg value="git-tag-portal-private-apps" />
-				<arg value="git-branch-portal-private-apps" />
+				<arg value="@{checkout.private.apps.sha}" />
 			</exec>
 
 			<exec executable="git">
@@ -482,6 +483,7 @@
 				for (i = 0; i < projectNames.length; i++) {
 					var task = project.createTask("checkout-private-apps");
 
+					task.setDynamicAttribute("checkout.private.apps.branch", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".branch"));
 					task.setDynamicAttribute("checkout.private.apps.dirs", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".dirs"));
 					task.setDynamicAttribute("checkout.private.apps.sha", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".sha"));
 

@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -50,11 +51,14 @@ public class CommerceTierPriceEntryDisplayContext
 	extends BaseCommercePriceListDisplayContext<CommerceTierPriceEntry> {
 
 	public CommerceTierPriceEntryDisplayContext(
+		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceTierPriceEntryService commerceTierPriceEntryService,
 		HttpServletRequest httpServletRequest) {
 
-		super(commercePriceListActionHelper, httpServletRequest);
+		super(
+			commercePriceFormatter, commercePriceListActionHelper,
+			httpServletRequest);
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
@@ -127,27 +131,6 @@ public class CommerceTierPriceEntryDisplayContext
 			commercePriceList.getCommerceCurrencyId());
 
 		return priceCommerceMoney.toString();
-	}
-
-	public String getCommerceTierPriceEntryPromoPrice(
-			CommerceTierPriceEntry commerceTierPriceEntry)
-		throws PortalException {
-
-		if (commerceTierPriceEntry == null) {
-			CommerceCurrency commerceCurrency = getCommercePriceListCurrency();
-
-			CommerceMoney zeroCommerceMoney = commerceCurrency.getZero();
-
-			return zeroCommerceMoney.toString();
-		}
-
-		CommercePriceList commercePriceList = getCommercePriceList();
-
-		CommerceMoney promoPriceCommerceMoney =
-			commerceTierPriceEntry.getPromoPriceMoney(
-				commercePriceList.getCommerceCurrencyId());
-
-		return promoPriceCommerceMoney.toString();
 	}
 
 	public String getContextTitle() throws PortalException {

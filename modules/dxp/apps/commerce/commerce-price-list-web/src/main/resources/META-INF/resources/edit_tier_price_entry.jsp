@@ -20,12 +20,17 @@
 CommerceTierPriceEntryDisplayContext commerceTierPriceEntryDisplayContext = (CommerceTierPriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceTierPriceEntry commerceTierPriceEntry = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntry();
-
 CommercePriceList commercePriceList = commerceTierPriceEntryDisplayContext.getCommercePriceList();
-
 CommercePriceEntry commercePriceEntry = commerceTierPriceEntryDisplayContext.getCommercePriceEntry();
-
 CommerceCurrency commerceCurrency = commerceTierPriceEntryDisplayContext.getCommercePriceListCurrency();
+
+BigDecimal price = BigDecimal.ZERO;
+BigDecimal promoPrice = BigDecimal.ZERO;
+
+if (commerceTierPriceEntry != null) {
+	price = commerceTierPriceEntry.getPrice();
+	promoPrice = commerceTierPriceEntry.getPromoPrice();
+}
 
 CPInstance cpInstance = commercePriceEntry.getCPInstance();
 CPDefinition cpDefinition = cpInstance.getCPDefinition();
@@ -86,9 +91,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryPrice(commerceTierPriceEntry) %>" />
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceTierPriceEntryDisplayContext.format(price) %>" />
 
-				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryPromoPrice(commerceTierPriceEntry) %>" />
+				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceTierPriceEntryDisplayContext.format(promoPrice) %>" />
 
 				<aui:input name="minQuantity" />
 			</aui:fieldset>

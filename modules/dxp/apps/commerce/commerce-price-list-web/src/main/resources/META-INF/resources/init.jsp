@@ -28,7 +28,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
-page import="com.liferay.commerce.currency.model.CommerceMoney" %><%@
 page import="com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys" %><%@
 page import="com.liferay.commerce.price.list.constants.CommercePriceListWebKeys" %><%@
 page import="com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException" %><%@

@@ -16,6 +16,7 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListUserSegmentEntryRel;
@@ -59,6 +60,7 @@ public class CommercePriceListDisplayContext
 	extends BaseCommercePriceListDisplayContext<CommercePriceList> {
 
 	public CommercePriceListDisplayContext(
+		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceCurrencyService commerceCurrencyService,
 		CommerceUserSegmentEntryService commerceUserSegmentEntryService,
@@ -67,7 +69,9 @@ public class CommercePriceListDisplayContext
 		CommercePriceListService commercePriceListService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
-		super(commercePriceListActionHelper, httpServletRequest);
+		super(
+			commercePriceFormatter, commercePriceListActionHelper,
+			httpServletRequest);
 
 		_commerceCurrencyService = commerceCurrencyService;
 		_commerceUserSegmentEntryService = commerceUserSegmentEntryService;

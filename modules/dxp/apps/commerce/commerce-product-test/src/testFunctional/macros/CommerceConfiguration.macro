@@ -36,8 +36,6 @@
 			<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 			<then>
 				<execute macro="CommerceProducts#moveCatalogEntriesToRecycleBin" />
-
-				<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 			</then>
 		</if>
 

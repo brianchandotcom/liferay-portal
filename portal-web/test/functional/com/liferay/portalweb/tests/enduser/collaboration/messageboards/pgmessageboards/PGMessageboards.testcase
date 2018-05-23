@@ -537,9 +537,7 @@
 			<var name="panel" value="Attachments" />
 		</execute>
 
-		<var name="mbThreadDocuments" value="Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4" />
-
-		<for list="${mbThreadDocuments}" param="mbThreadAttachment">
+		<for list="Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4" param="mbThreadAttachment">
 			<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
 
 			<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${mbThreadAttachment}" />
@@ -551,7 +549,7 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<for list="${mbThreadDocuments}" param="mbThreadAttachment">
+		<for list="Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4" param="mbThreadAttachment">
 			<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE" value1="${mbThreadAttachment}">
 				<var name="key_mbThreadAttachment" value="${mbThreadAttachment}" />
 			</execute>
@@ -562,7 +560,7 @@
 			<var name="threadSubjectEdit" value="MB Thread Message Subject Edit" />
 		</execute>
 
-		<for list="${mbThreadDocuments}" param="mbThreadAttachment">
+		<for list="Document_1.doc,Document_1.jpg,Document_1.pdf,Document_1.png,Document_1.pptx,Document_1.mp4" param="mbThreadAttachment">
 			<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_ATTACHMENT_IMAGE" value1="${mbThreadAttachment}">
 				<var name="key_mbThreadAttachment" value="${mbThreadAttachment}" />
 			</execute>

@@ -289,9 +289,7 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<var name="dmDocumentCounterList" value="1,2" />
-
-		<for list="${dmDocumentCounterList}" param="entryCount">
+		<for list="1,2" param="entryCount">
 			<execute macro="DMDocument#addCP">
 				<var name="dmDocumentDescription" value="DM Document Description" />
 				<var name="dmDocumentFile" value="Document_${entryCount}.jpg" />
@@ -2608,9 +2606,7 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<var name="orgNameList" value="Organization1 Name,Organization2 Name,Organization3 Name" />
-
-		<for list="${orgNameList}" param="orgName">
+		<for list="Organization1 Name,Organization2 Name,Organization3 Name" param="orgName">
 			<execute macro="Organization#addCP">
 				<var name="orgName" value="${orgName}" />
 				<var name="orgType" value="Organization" />

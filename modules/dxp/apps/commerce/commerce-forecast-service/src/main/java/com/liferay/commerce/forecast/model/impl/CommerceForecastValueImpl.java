@@ -25,4 +25,13 @@ public class CommerceForecastValueImpl extends CommerceForecastValueBaseImpl {
 	public CommerceForecastValueImpl() {
 	}
 
+	@Override
+	public boolean isForecast() {
+		if ((getLowerValue() != null) && (getUpperValue() != null)) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

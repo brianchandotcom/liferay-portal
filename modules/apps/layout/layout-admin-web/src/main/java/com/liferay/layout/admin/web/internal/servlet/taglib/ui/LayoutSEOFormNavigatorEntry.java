@@ -49,9 +49,9 @@ public class LayoutSEOFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 	}
 
 	@Override
-	public boolean isVisible(User user, Layout formModelBean) {
+	public boolean isVisible(User user, Layout layout) {
 		try {
-			Group group = _groupService.getGroup(formModelBean.getGroupId());
+			Group group = _groupService.getGroup(layout.getGroupId());
 
 			if ((group != null) && group.isLayoutPrototype()) {
 				return false;
@@ -63,7 +63,7 @@ public class LayoutSEOFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 			}
 		}
 
-		return super.isVisible(user, formModelBean);
+		return super.isVisible(user, layout);
 	}
 
 	@Override

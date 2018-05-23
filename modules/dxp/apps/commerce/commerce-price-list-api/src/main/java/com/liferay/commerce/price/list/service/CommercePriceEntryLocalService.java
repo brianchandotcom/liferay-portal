@@ -83,6 +83,10 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 	public CommercePriceEntry addCommercePriceEntry(
 		CommercePriceEntry commercePriceEntry);
 
+	public CommercePriceEntry addCommercePriceEntry(long cpInstanceId,
+		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry addCommercePriceEntry(long cpInstanceId,
 		long commercePriceListId, String externalReferenceCode,

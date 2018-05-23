@@ -67,6 +67,25 @@ import java.rmi.RemoteException;
 public class CommercePriceEntryServiceSoap {
 	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap addCommercePriceEntry(
 		long cpInstanceId, long commercePriceListId,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceEntry returnValue =
+				CommercePriceEntryServiceUtil.addCommercePriceEntry(cpInstanceId,
+					commercePriceListId, price, promoPrice, serviceContext);
+
+			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap addCommercePriceEntry(
+		long cpInstanceId, long commercePriceListId,
 		String externalReferenceCode, java.math.BigDecimal price,
 		java.math.BigDecimal promoPrice,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

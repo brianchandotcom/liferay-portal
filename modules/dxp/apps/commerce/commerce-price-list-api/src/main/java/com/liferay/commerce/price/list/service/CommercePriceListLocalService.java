@@ -83,6 +83,13 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	public CommercePriceList addCommercePriceList(
 		CommercePriceList commercePriceList);
 
+	public CommercePriceList addCommercePriceList(long commerceCurrencyId,
+		String name, double priority, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceList addCommercePriceList(long commerceCurrencyId,
 		String name, double priority, int displayDateMonth, int displayDateDay,

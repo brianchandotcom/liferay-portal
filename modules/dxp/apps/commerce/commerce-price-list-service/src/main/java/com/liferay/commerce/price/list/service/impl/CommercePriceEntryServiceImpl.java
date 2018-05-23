@@ -41,6 +41,17 @@ public class CommercePriceEntryServiceImpl
 
 	@Override
 	public CommercePriceEntry addCommercePriceEntry(
+			long cpInstanceId, long commercePriceListId, BigDecimal price,
+			BigDecimal promoPrice, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCommercePriceEntry(
+			cpInstanceId, commercePriceListId, null, price, promoPrice,
+			serviceContext);
+	}
+
+	@Override
+	public CommercePriceEntry addCommercePriceEntry(
 			long cpInstanceId, long commercePriceListId,
 			String externalReferenceCode, BigDecimal price,
 			BigDecimal promoPrice, ServiceContext serviceContext)

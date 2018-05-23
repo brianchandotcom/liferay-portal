@@ -57,6 +57,17 @@ import java.util.Map;
 public class CommercePriceEntryLocalServiceImpl
 	extends CommercePriceEntryLocalServiceBaseImpl {
 
+	@Override
+	public CommercePriceEntry addCommercePriceEntry(
+			long cpInstanceId, long commercePriceListId, BigDecimal price,
+			BigDecimal promoPrice, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCommercePriceEntry(
+			cpInstanceId, commercePriceListId, null, price, promoPrice,
+			serviceContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceEntry addCommercePriceEntry(

@@ -26,9 +26,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the document library file shortcut UAD anonymizer.
  *
@@ -62,11 +59,6 @@ public abstract class BaseDLFileShortcutUADAnonymizer
 	@Override
 	public void delete(DLFileShortcut dlFileShortcut) throws PortalException {
 		dlFileShortcutLocalService.deleteFileShortcut(dlFileShortcut);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

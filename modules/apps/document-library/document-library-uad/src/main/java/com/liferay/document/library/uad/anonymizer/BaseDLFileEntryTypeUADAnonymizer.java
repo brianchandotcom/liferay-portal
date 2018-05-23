@@ -26,9 +26,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the document library file entry type UAD anonymizer.
  *
@@ -58,11 +55,6 @@ public abstract class BaseDLFileEntryTypeUADAnonymizer
 	public void delete(DLFileEntryType dlFileEntryType)
 		throws PortalException {
 		dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

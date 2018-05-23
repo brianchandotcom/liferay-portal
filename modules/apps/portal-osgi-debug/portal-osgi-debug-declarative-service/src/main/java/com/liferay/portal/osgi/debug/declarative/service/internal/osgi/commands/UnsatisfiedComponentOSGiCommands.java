@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.osgi.debug.declarative.service.internal;
+package com.liferay.portal.osgi.debug.declarative.service.internal.osgi.commands;
+
+import com.liferay.portal.osgi.debug.declarative.service.internal.UnsatisfiedComponentUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

@@ -48,13 +48,33 @@
 			<template-path>/layouttpl/custom/1_2_columns_ii.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/1_2_columns_ii.png</thumbnail-path>
 		</layout-template>
-		<layout-template id="1_2_1_columns">
-			<template-path>/layouttpl/custom/1_2_1_columns.ftl</template-path>
-			<thumbnail-path>/layouttpl/custom/1_2_1_columns.png</thumbnail-path>
+		<layout-template id="1_2_1_columns_i">
+			<template-path>/layouttpl/custom/1_2_1_columns_i.ftl</template-path>
+			<thumbnail-path>/layouttpl/custom/1_2_1_columns_i.png</thumbnail-path>
+		</layout-template>
+		<layout-template id="1_2_1_columns_ii">
+			<template-path>/layouttpl/custom/1_2_1_columns_ii.ftl</template-path>
+			<thumbnail-path>/layouttpl/custom/1_2_1_columns_ii.png</thumbnail-path>
+		</layout-template>
+		<layout-template id="1_3_1_columns">
+			<template-path>/layouttpl/custom/1_3_1_columns.ftl</template-path>
+			<thumbnail-path>/layouttpl/custom/1_3_1_columns.png</thumbnail-path>
+		</layout-template>
+		<layout-template id="1_3_2_columns">
+			<template-path>/layouttpl/custom/1_3_2_columns.ftl</template-path>
+			<thumbnail-path>/layouttpl/custom/1_3_2_columns.png</thumbnail-path>
+		</layout-template>
+		<layout-template id="2_1_2_columns">
+			<template-path>/layouttpl/custom/2_1_2_columns.ftl</template-path>
+			<thumbnail-path>/layouttpl/custom/2_1_2_columns.png</thumbnail-path>
 		</layout-template>
 		<layout-template id="2_2_columns">
 			<template-path>/layouttpl/custom/2_2_columns.ftl</template-path>
 			<thumbnail-path>/layouttpl/custom/2_2_columns.png</thumbnail-path>
+		</layout-template>
+		<layout-template id="3_2_3_columns">
+			<template-path>/layouttpl/custom/3_2_3_columns.ftl</template-path>
+			<thumbnail-path>/layouttpl/custom/3_2_3_columns.png</thumbnail-path>
 		</layout-template>
 	</custom>
 </layout-templates>

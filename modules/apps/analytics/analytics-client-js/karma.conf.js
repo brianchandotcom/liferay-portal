@@ -46,7 +46,7 @@ module.exports = function(config) {
 			reports: ['html', 'lcovonly', 'text-summary']
 		},
 
-		webpack: webpack,
+		webpack,
 
 		singleRun: true
 	});

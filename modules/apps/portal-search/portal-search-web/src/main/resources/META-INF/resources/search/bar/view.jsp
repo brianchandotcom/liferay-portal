@@ -14,7 +14,9 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletDisplayContext" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -22,6 +24,7 @@ page import="com.liferay.portal.search.web.internal.search.bar.portlet.SearchBar
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
@@ -41,36 +44,48 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 	</c:when>
 	<c:otherwise>
 		<aui:form action="<%= searchBarPortletDisplayContext.getSearchURL() %>" method="get" name="fm">
-			<aui:fieldset id="searchContainer">
-				<div class="input-group search-bar">
-					<aui:field-wrapper inlineField="<%= true %>">
-						<aui:input autoFocus="<%= true %>" cssClass="search-bar-keywords-input search-input" data-qa-id="searchInput" label="" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder="search-..." title="search" type="text" useNamespace="<%= false %>" value="<%= searchBarPortletDisplayContext.getKeywords() %>" />
-					</aui:field-wrapper>
-
+			<aui:fieldset>
+				<div class="input-group search-bar <%= searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope() ? "search-bar-scope" : "search-bar-simple" %>">
 					<c:choose>
 						<c:when test="<%= searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope() %>">
-							<aui:field-wrapper inlineField="<%= true %>">
-								<aui:select cssClass="search-bar-scope-select search-select" label="" name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" title="scope" useNamespace="<%= false %>">
-									<c:if test="<%= searchBarPortletDisplayContext.isAvailableEverythingSearchScope() %>">
-										<aui:option label="all-sites" selected="<%= searchBarPortletDisplayContext.isSelectedEverythingSearchScope() %>" value="<%= searchBarPortletDisplayContext.getEverythingSearchScopeParameterString() %>" />
-									</c:if>
+							<aui:input autoFocus="<%= true %>" cssClass="search-bar-keywords-input" data-qa-id="searchInput" label="" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder='<%= LanguageUtil.get(request, "search-...") %>' title="search" type="text" useNamespace="<%= false %>" value="<%= searchBarPortletDisplayContext.getKeywords() %>" wrapperCssClass="input-group-item input-group-prepend search-bar-keywords-input-wrapper" />
 
-									<aui:option label="this-site" selected="<%= searchBarPortletDisplayContext.isSelectedCurrentSiteSearchScope() %>" value="<%= searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString() %>" />
-								</aui:select>
-							</aui:field-wrapper>
+							<aui:select cssClass="search-bar-scope-select" label="" name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" title="scope" useNamespace="<%= false %>" wrapperCssClass="input-group-item input-group-item-shrink input-group-prepend search-bar-search-select-wrapper">
+								<c:if test="<%= searchBarPortletDisplayContext.isAvailableEverythingSearchScope() %>">
+									<aui:option label="all-sites" selected="<%= searchBarPortletDisplayContext.isSelectedEverythingSearchScope() %>" value="<%= searchBarPortletDisplayContext.getEverythingSearchScopeParameterString() %>" />
+								</c:if>
+
+								<aui:option label="this-site" selected="<%= searchBarPortletDisplayContext.isSelectedCurrentSiteSearchScope() %>" value="<%= searchBarPortletDisplayContext.getCurrentSiteSearchScopeParameterString() %>" />
+							</aui:select>
+
+							<div class="input-group-append input-group-item input-group-item-shrink search-bar-search-button-wrapper">
+								<clay:button
+									ariaLabel='<%= LanguageUtil.get(request, "submit") %>'
+									elementClasses="search-bar-search-button"
+									icon="search"
+									style="secondary"
+									type="submit"
+								/>
+							</div>
 						</c:when>
 						<c:otherwise>
-							<aui:input name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" type="hidden" value="<%= searchBarPortletDisplayContext.getScopeParameterValue() %>" />
+							<div class="input-group-item search-bar-keywords-input-wrapper">
+								<input class="form-control input-group-inset input-group-inset-after search-bar-keywords-input" data-qa-id="searchInput" id="<portlet:namespace /><%= StringUtil.randomId() %>" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder="<%= LanguageUtil.get(request, "search-...") %>" title="<%= LanguageUtil.get(request, "search") %>" type="text" value="<%= searchBarPortletDisplayContext.getKeywords() %>" />
+
+								<aui:input name="<%= searchBarPortletDisplayContext.getScopeParameterName() %>" type="hidden" value="<%= searchBarPortletDisplayContext.getScopeParameterValue() %>" />
+
+								<div class="input-group-inset-item input-group-inset-item-after search-bar-search-button-wrapper">
+									<clay:button
+										ariaLabel='<%= LanguageUtil.get(request, "submit") %>'
+										elementClasses="search-bar-search-button"
+										icon="search"
+										style="unstyled"
+										type="submit"
+									/>
+								</div>
+							</div>
 						</c:otherwise>
 					</c:choose>
-
-					<aui:field-wrapper cssClass="input-group-btn search-field" inlineField="<%= true %>">
-						<liferay-ui:icon
-							cssClass="icon-monospaced search-bar-search-button"
-							icon="search"
-							markupView="lexicon"
-						/>
-					</aui:field-wrapper>
 				</div>
 			</aui:fieldset>
 		</aui:form>

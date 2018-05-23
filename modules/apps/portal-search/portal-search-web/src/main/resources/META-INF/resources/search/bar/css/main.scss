@@ -1,12 +1,13 @@
 .search-bar {
-	.field-wrapper {
-		position: relative;
-		right: 0;
-		top: 0;
-
-		&.input-group-btn {
-			position: absolute;
-			top: 4px;
-		}
+	.form-group.input-group-item {
+		margin-bottom: 0;
 	}
+}
+
+.search-bar-keywords-input-wrapper {
+	min-width: 6.25rem;
+}
+
+.search-bar-search-select-wrapper {
+	max-width: 9.375rem;
 }

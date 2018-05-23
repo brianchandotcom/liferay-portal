@@ -14,9 +14,11 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.web.internal.util.CommercePriceListPortletUtil;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
@@ -92,6 +94,19 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		}
 
 		return commercePriceEntryId;
+	}
+
+	public String getCommercePriceEntryPrice(
+			CommercePriceEntry commercePriceEntry)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			commercePriceEntry.getCommercePriceList();
+
+		CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
+			commercePriceList.getCommerceCurrencyId());
+
+		return priceCommerceMoney.toString();
 	}
 
 	public CPInstance getCPInstance() throws PortalException {

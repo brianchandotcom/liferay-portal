@@ -921,6 +921,10 @@
 
 		<execute macro="Portlet#expandTree" />
 
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Public Pages" />
+		</execute>
+
 		<execute macro="Portlet#selectTreeNode">
 			<var name="nodeName" value="${pageName}" />
 		</execute>
@@ -1502,14 +1506,16 @@
 	</command>
 
 	<command name="viewAvailableLanguagesPGViaWCD">
-		<execute function="Click" locator1="Translation#ADD" />
-
-		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="${webContentTranslationLanguage1}">
-			<var name="key_menuItem" value="${webContentTranslationLanguage1}" />
+		<execute function="Click" locator1="Button#LOCALIZATION">
+			<var name="key_fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${webContentTranslationLanguage2}">
-			<var name="key_menuItem" value="${webContentTranslationLanguage2}" />
+		<execute function="AssertElementPresent" locator1="Translation#LOCALIZATION_NAME">
+			<var method="StringUtil#replace('${locale1}', '-', '_')" name="key_locale" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Translation#LOCALIZATION_NAME">
+			<var method="StringUtil#replace('${locale2}', '-', '_')" name="key_locale" />
 		</execute>
 	</command>
 

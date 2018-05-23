@@ -84,8 +84,16 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 
 <aui:script>
 	function <portlet:namespace />saveCompany() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (selCompany == null) ? Constants.ADD : Constants.UPDATE %>';
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+
+			if (cmd) {
+				cmd.setAttribute('value', '<%= (selCompany == null) ? Constants.ADD : Constants.UPDATE %>');
+			}
+
+			submitForm(form);
+		}
 	}
 </aui:script>

@@ -186,8 +186,11 @@ public class ScopeLocatorImpl implements ScopeLocator {
 				bundleContext, PrefixHandlerFactory.class,
 				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 				() -> {
-					if (_defaultPrefixHandlerFactory != null) {
-						return _defaultPrefixHandlerFactory;
+					PrefixHandlerFactory prefixHandlerFactory =
+						_defaultPrefixHandlerFactory;
+
+					if (prefixHandlerFactory != null) {
+						return prefixHandlerFactory;
 					}
 					else {
 						return propertyAccessor ->
@@ -203,8 +206,10 @@ public class ScopeLocatorImpl implements ScopeLocator {
 				bundleContext, ScopeMapper.class,
 				OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME,
 				() -> {
-					if (_defaultScopeMapper != null) {
-						return _defaultScopeMapper;
+					ScopeMapper scopeMapper = _defaultScopeMapper;
+
+					if (scopeMapper != null) {
+						return scopeMapper;
 					}
 					else {
 						return ScopeMapper.PASSTHROUGH_SCOPEMAPPER;

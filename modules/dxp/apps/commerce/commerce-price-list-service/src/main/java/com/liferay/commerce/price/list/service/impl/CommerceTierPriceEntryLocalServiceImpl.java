@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.service.impl;
 
+import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.base.CommerceTierPriceEntryLocalServiceBaseImpl;
@@ -68,6 +69,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validate(commercePriceEntryId, minQuantity);
 
 		long commerceTierPriceEntryId = counterLocalService.increment();
 
@@ -236,6 +239,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			commerceTierPriceEntryPersistence.findByPrimaryKey(
 				commerceTierPriceEntryId);
 
+		validate(commerceTierPriceEntry.getCommercePriceEntryId(), minQuantity);
+
 		commerceTierPriceEntry.setPrice(price);
 		commerceTierPriceEntry.setPromoPrice(promoPrice);
 		commerceTierPriceEntry.setMinQuantity(minQuantity);
@@ -341,6 +346,18 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	protected void validate(long commercePriceEntryId, int minQuantity)
+		throws PortalException {
+
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			commerceTierPriceEntryPersistence.fetchByC_M(
+				commercePriceEntryId, minQuantity);
+
+		if (commerceTierPriceEntry != null) {
+			throw new DuplicateCommerceTierPriceEntryException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES =

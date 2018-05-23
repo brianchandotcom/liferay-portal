@@ -207,8 +207,20 @@ public class JournalDisplayContext {
 		String key = JournalPortletUtil.getAddMenuFavItemKey(
 			_liferayPortletRequest, _liferayPortletResponse);
 
-		_addMenuFavItems = portalPreferences.getValues(
+		List<String> addMenuFavItemsList = new ArrayList<>();
+
+		String[] addMenuFavItems = portalPreferences.getValues(
 			JournalPortletKeys.JOURNAL, key, new String[0]);
+
+		for (DDMStructure ddmStructure : getDDMStructures()) {
+			if (ArrayUtil.contains(
+					addMenuFavItems, ddmStructure.getStructureKey())) {
+
+				addMenuFavItemsList.add(ddmStructure.getStructureKey());
+			}
+		}
+
+		_addMenuFavItems = ArrayUtil.toStringArray(addMenuFavItemsList);
 
 		return _addMenuFavItems;
 	}

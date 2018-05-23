@@ -164,27 +164,40 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 	</aui:button-row>
 </div>
 
-<aui:script sandbox="<%= true %>">
-	var form = $(document.<portlet:namespace />fm);
+<aui:script require="metal-dom/src/all/dom as dom">
+	var form = document.getElementById('<portlet:namespace />fm');
 
-	$('#<portlet:namespace />fm').on(
+	var preSelectedHandler = dom.delegate(
+		form,
 		'mouseover',
 		'.lfr-checkbox-preselected',
 		function(event) {
-			var currentTarget = $(event.currentTarget);
+			var target = event.target;
 
-			Liferay.Portal.ToolTip.show(currentTarget, currentTarget.data('message'));
+			var message = target.getAttribute('data-message');
+
+			Liferay.Portal.ToolTip.show(target, currentTarget.data('message'));
 		}
 	);
+</aui:script>
 
-	$('#<portlet:namespace />saveButton').on(
-		'click',
-		function(event) {
-			event.preventDefault();
+<aui:script>
+	var <portlet:namespace />saveButton = document.getElementById('<portlet:namespace />saveButton');
 
-			if (<%= portletConfigurationPermissionsDisplayContext.getRoleSearchContainer().getTotal() != 0 %>) {
-				submitForm(form);
+	if (<portlet:namespace />saveButton) {
+		<portlet:namespace />saveButton.addEventListener(
+			'click',
+			function(event) {
+				event.preventDefault();
+
+				if (<%= portletConfigurationPermissionsDisplayContext.getRoleSearchContainer().getTotal() != 0 %>) {
+					var form = document.getElementById('<portlet:namespace />fm');
+
+					if (form) {
+						submitForm(form);
+					}
+				}
 			}
-		}
-	);
+		);
+	}
 </aui:script>

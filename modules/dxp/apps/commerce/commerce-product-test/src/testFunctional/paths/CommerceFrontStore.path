@@ -19,8 +19,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FS_PRODUCT_TITLE</td>
-	<td>//div[@class='product-detail-header']//..//div/h1[contains (.,'${key_FSProductTitle}')]</td>
+	<td>FS_PRODUCT_NAME</td>
+	<td>//div[@class='product-detail-header']//..//div/h1[contains (.,'${key_FSProductName}')]</td>
 	<td></td>
 </tr>
 <tr>

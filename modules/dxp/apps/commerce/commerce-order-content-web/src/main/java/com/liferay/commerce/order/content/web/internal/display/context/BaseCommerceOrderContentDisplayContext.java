@@ -42,8 +42,7 @@ public abstract class BaseCommerceOrderContentDisplayContext<T> {
 		this.httpServletRequest = httpServletRequest;
 		this.commerceOrderLocalService = commerceOrderLocalService;
 
-		CPRequestHelper cpRequestHelper = new CPRequestHelper(
-			httpServletRequest);
+		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
@@ -81,6 +80,7 @@ public abstract class BaseCommerceOrderContentDisplayContext<T> {
 		throws PortalException;
 
 	protected final CommerceOrderLocalService commerceOrderLocalService;
+	protected final CPRequestHelper cpRequestHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;

@@ -16,14 +16,18 @@ package com.liferay.commerce.order.content.web.internal.display.context;
 
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,6 +46,24 @@ public class CommerceOrderContentDisplayContext
 		super(httpServletRequest, commerceOrderLocalService);
 
 		_commercePriceFormatter = commercePriceFormatter;
+
+		PortletDisplay portletDisplay = cpRequestHelper.getPortletDisplay();
+
+		_commerceOrderContentPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				CommerceOrderContentPortletInstanceConfiguration.class);
+	}
+
+	public String getCommerceOrderItemsDetailURL(long commerceOrderId) {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCommerceOrderItems");
+		portletURL.setParameter("redirect", cpRequestHelper.getCurrentURL());
+		portletURL.setParameter(
+			"commerceOrderId", String.valueOf(commerceOrderId));
+
+		return portletURL.toString();
 	}
 
 	public String getCommerceOrderTotal(long commerceOrderId)
@@ -52,6 +74,26 @@ public class CommerceOrderContentDisplayContext
 
 		return _commercePriceFormatter.format(
 			commerceOrder.getCommerceCurrency(), commerceOrder.getTotal());
+	}
+
+	public String getDisplayStyle() {
+		return _commerceOrderContentPortletInstanceConfiguration.displayStyle();
+	}
+
+	public long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId > 0) {
+			return _displayStyleGroupId;
+		}
+
+		_displayStyleGroupId =
+			_commerceOrderContentPortletInstanceConfiguration.
+				displayStyleGroupId();
+
+		if (_displayStyleGroupId <= 0) {
+			_displayStyleGroupId = cpRequestHelper.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
 	}
 
 	@Override
@@ -86,7 +128,10 @@ public class CommerceOrderContentDisplayContext
 		return _searchContainer;
 	}
 
+	private final CommerceOrderContentPortletInstanceConfiguration
+		_commerceOrderContentPortletInstanceConfiguration;
 	private final CommercePriceFormatter _commercePriceFormatter;
+	private long _displayStyleGroupId;
 	private SearchContainer<CommerceOrder> _searchContainer;
 
 }

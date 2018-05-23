@@ -15,6 +15,7 @@
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.price.list.service.CommercePriceListUserSegmentEntryRelService;
@@ -58,8 +59,8 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 
 		CommercePriceListDisplayContext commercePriceListDisplayContext =
 			new CommercePriceListDisplayContext(
-				_commercePriceListActionHelper, _commerceCurrencyService,
-				_commerceUserSegmentEntryService,
+				_commercePriceFormatter, _commercePriceListActionHelper,
+				_commerceCurrencyService, _commerceUserSegmentEntryService,
 				_commercePriceListUserSegmentEntryRelService,
 				_commercePriceListService, httpServletRequest, _itemSelector);
 
@@ -71,6 +72,9 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;

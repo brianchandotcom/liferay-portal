@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.web.internal.display.context.CommercePriceEntryDisplayContext;
@@ -56,8 +57,8 @@ public class EditCommercePriceEntryMVCRenderCommand
 
 		CommercePriceEntryDisplayContext commercePriceEntryDisplayContext =
 			new CommercePriceEntryDisplayContext(
-				_commercePriceListActionHelper, _commercePriceEntryService,
-				_itemSelector, httpServletRequest);
+				_commercePriceFormatter, _commercePriceListActionHelper,
+				_commercePriceEntryService, _itemSelector, httpServletRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commercePriceEntryDisplayContext);
@@ -67,6 +68,9 @@ public class EditCommercePriceEntryMVCRenderCommand
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;

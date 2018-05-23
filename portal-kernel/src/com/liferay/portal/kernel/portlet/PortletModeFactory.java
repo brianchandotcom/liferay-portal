@@ -71,6 +71,8 @@ public class PortletModeFactory {
 
 	private static final String _PRINT = LiferayPortletMode.PRINT.toString();
 
+	private static final String _UNDEFINED = PortletMode.UNDEFINED.toString();
+
 	private static final String _VIEW = PortletMode.VIEW.toString();
 
 	private static final Map<String, PortletMode> _portletModes =
@@ -86,6 +88,7 @@ public class PortletModeFactory {
 		_portletModes.put(_EDIT_GUEST, LiferayPortletMode.EDIT_GUEST);
 		_portletModes.put(_PREVIEW, LiferayPortletMode.PREVIEW);
 		_portletModes.put(_PRINT, LiferayPortletMode.PRINT);
+		_portletModes.put(_UNDEFINED, LiferayPortletMode.UNDEFINED);
 	}
 
 }

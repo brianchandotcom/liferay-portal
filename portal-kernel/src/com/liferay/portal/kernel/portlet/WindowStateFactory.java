@@ -62,6 +62,8 @@ public class WindowStateFactory {
 
 	private static final String _POP_UP = LiferayWindowState.POP_UP.toString();
 
+	private static final String _UNDEFINED = WindowState.UNDEFINED.toString();
+
 	private static final Map<String, WindowState> _windowStates =
 		new HashMap<>();
 
@@ -71,6 +73,7 @@ public class WindowStateFactory {
 		_windowStates.put(_MINIMIZED, LiferayWindowState.MINIMIZED);
 		_windowStates.put(_EXCLUSIVE, LiferayWindowState.EXCLUSIVE);
 		_windowStates.put(_POP_UP, LiferayWindowState.POP_UP);
+		_windowStates.put(_UNDEFINED, LiferayWindowState.UNDEFINED);
 	}
 
 }

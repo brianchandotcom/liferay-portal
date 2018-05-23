@@ -93,7 +93,7 @@ public class AssetDisplayLayoutTypeController
 
 	@Override
 	public boolean isFirstPageable() {
-		return false;
+		return true;
 	}
 
 	@Override

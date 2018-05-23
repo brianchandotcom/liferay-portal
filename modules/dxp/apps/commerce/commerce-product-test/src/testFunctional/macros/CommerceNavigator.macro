@@ -7,13 +7,13 @@
 
 	<command name="gotoEntry">
 		<if>
-			<condition function="IsElementPresent" locator1="CommerceNavigation#ENTRY_TITLE">
-				<var name="key_entryTitle" value="${entryTitle}" />
+			<condition function="IsElementPresent" locator1="CommerceNavigation#ENTRY_NAME">
+				<var name="key_entryName" value="${entryName}" />
 			</condition>
 
 			<then>
-				<execute function="AssertClick" locator1="CommerceNavigation#ENTRY_TITLE" value1="${entryTitle}">
-					<var name="key_entryTitle" value="${entryTitle}" />
+				<execute function="AssertClick" locator1="CommerceNavigation#ENTRY_NAME" value1="${entryName}">
+					<var name="key_entryName" value="${entryName}" />
 				</execute>
 			</then>
 			<else>
@@ -36,22 +36,22 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=${productTitle} - Product - Liferay DXP" />
+		<execute function="SelectWindow" locator1="title=${productName} - Product - ${siteName}" />
 	</command>
 
 	<command name="gotoOptionValues">
-		<execute function="Click" locator1="CommerceNavigation#OPTION_VALUES_LINK" value1="${optionEntryTitle}">
-			<var name="key_optionEntryTitle" value="${optionEntryTitle}" />
+		<execute function="Click" locator1="CommerceNavigation#OPTION_VALUES_LINK" value1="${optionEntryName}">
+			<var name="key_optionEntryName" value="${optionEntryName}" />
 		</execute>
 
 		<execute function="WaitForSPARefresh" />
 
-		<execute function="AssertElementPresent" locator1="CommerceEntry#TITLE_FIELD" />
+		<execute function="AssertElementPresent" locator1="CommerceEntry#NAME_FIELD" />
 	</command>
 
 	<command name="searchEntry">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${entryTitle}">
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${entryName}">
+			<var name="entryName" value="${entryName}" />
 		</execute>
 
 		<execute function="Click" locator1="CommerceNavigation#SEARCH" />

@@ -5,7 +5,7 @@
 		<execute function="WaitForSPARefresh" />
 
 		<execute macro="CommerceItemSelector#selectEntry">
-			<var name="entryTitle" value="${optionTitle}" />
+			<var name="entryName" value="${optionName}" />
 		</execute>
 	</command>
 </definition>

@@ -21,37 +21,39 @@
 <@liferay.control_menu />
 
 <div class="pt-0" id="wrapper">
-	<header id="banner">
-		<div class="navbar navbar-classic navbar-top">
-			<div class="container user-personal-bar">
-				<#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search"}) />
+	<#if show_header>
+		<header id="banner">
+			<div class="navbar navbar-classic navbar-top">
+				<div class="container user-personal-bar">
+					<#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search"}) />
 
-				<#if show_header_search>
-					<div class="ml-auto mr-4 navbar-form" role="search">
-						<@liferay.search_bar default_preferences="${preferences}" />
-					</div>
-				</#if>
-
-				<@liferay.user_personal_bar />
-			</div>
-		</div>
-
-		<div class="mb-4 navbar navbar-classic navbar-expand-md navbar-light py-4">
-			<div class="container">
-				<a class="${logo_css_class} align-items-center d-inline-flex" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
-					<img alt="${logo_description}" class="mr-3" height="48" src="${site_logo}" />
-
-					<#if show_site_name>
-						<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+					<#if show_header_search>
+						<div class="ml-auto mr-4 navbar-form" role="search">
+							<@liferay.search_bar default_preferences="${preferences}" />
+						</div>
 					</#if>
-				</a>
 
-				<#include "${full_templates_path}/navigation.ftl" />
+					<@liferay.user_personal_bar />
+				</div>
 			</div>
-		</div>
-	</header>
 
-	<section class="container" id="content">
+			<div class="mb-4 navbar navbar-classic navbar-expand-md navbar-light py-4">
+				<div class="container">
+					<a class="${logo_css_class} align-items-center d-inline-flex" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
+						<img alt="${logo_description}" class="mr-3" height="48" src="${site_logo}" />
+
+						<#if show_site_name>
+							<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+						</#if>
+					</a>
+
+					<#include "${full_templates_path}/navigation.ftl" />
+				</div>
+			</div>
+		</header>
+	</#if>
+
+	<section class="${wrap_content_class}" id="content">
 		<h1 class="sr-only">${the_title}</h1>
 
 		<#if selectable>
@@ -67,17 +69,19 @@
 		</#if>
 	</section>
 
-	<footer id="footer" role="contentinfo">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 text-center text-md-left">
-					<@liferay.language key="powered-by" />
+	<#if show_header>
+		<footer id="footer" role="contentinfo">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center text-md-left">
+						<@liferay.language key="powered-by" />
 
-					<a class="text-white" href="http://www.liferay.com" rel="external">Liferay</a>
+						<a class="text-white" href="http://www.liferay.com" rel="external">Liferay</a>
+					</div>
 				</div>
 			</div>
-		</div>
-	</footer>
+		</footer>
+	</#if>
 </div>
 
 <@liferay_util["include"] page=body_bottom_include />

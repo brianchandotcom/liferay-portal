@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Frontend JS Metal Web
 Bundle-SymbolicName: com.liferay.frontend.js.metal.web
 Bundle-Version: 2.0.0
-Liferay-Export-JS-Submodules:\
+Liferay-JS-Submodules-Export:\
 	html2incdom,\
 	incremental-dom*,\
 	metal*

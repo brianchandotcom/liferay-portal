@@ -26,6 +26,12 @@
 	}
 }
 
+.lfr-spreadsheet-add-rows-buttons {
+	.form-group.form-group-inline.input-select-wrapper {
+		margin-bottom: 0;
+	}
+}
+
 .portlet-dynamic-data-lists, .portlet-dynamic-data-lists-display {
 	.form-group.geolocation-field .button-holder .btn {
 		margin-top: 0;
@@ -48,7 +54,7 @@
 		margin-right: 20px;
 	}
 
-	.lfr-ddm-container{
+	.lfr-ddm-container {
 		background-color: #FFF;
 	}
 }

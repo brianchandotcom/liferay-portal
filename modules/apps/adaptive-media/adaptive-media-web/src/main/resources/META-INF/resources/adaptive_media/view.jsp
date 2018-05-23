@@ -225,14 +225,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 </div>
 
 <aui:script>
-	function <portlet:namespace />deleteImageConfigurationEntries() {
-		var form = document.querySelector('#<portlet:namespace />fm');
-
-		if (form && confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />')) {
-			submitForm(form);
-		}
-	}
-
 	function <portlet:namespace />adaptRemaining(uuid, backgroundTaskUrl) {
 		var component = Liferay.component('<portlet:namespace />AdaptRemaining' + uuid);
 

@@ -88,10 +88,13 @@
 										</div>
 
 										<div class="autofit-col autofit-col-expand">
+											<#assign quantityInputId = renderResponse.getNamespace() + cpDefinitionId + "Quantity" />
+
 											<@liferay_commerce_cart["add-to-cart"]
 												CPDefinitionId=cpDefinitionId
 												CPInstanceId=cpInstanceId
 												elementClasses="btn-block btn-primary text-truncate"
+												taglibQuantityInputId=quantityInputId
 											/>
 										</div>
 									</div>

@@ -2309,14 +2309,6 @@ public class ProjectTemplatesTest {
 			arguments.add("-Dhttp.proxyPort=" + httpProxyPort);
 		}
 
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			arguments.add(
-				"-Dnodejs.npm.ci.registry=" + _NODEJS_NPM_CI_REGISTRY);
-			arguments.add(
-				"-Dnodejs.npm.ci.sass.binary.site=" +
-					_NODEJS_NPM_CI_SASS_BINARY_SITE);
-		}
-
 		for (String taskPath : taskPaths) {
 			arguments.add(taskPath);
 		}
@@ -2343,19 +2335,11 @@ public class ProjectTemplatesTest {
 	private static void _executeMaven(File projectDir, String... args)
 		throws Exception {
 
-		String[] completeArgs = new String[args.length + 3];
+		String[] completeArgs = new String[args.length + 1];
 
 		completeArgs[0] = "--update-snapshots";
 
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			completeArgs[1] =
-				"-Dnodejs.npm.ci.registry=" + _NODEJS_NPM_CI_REGISTRY;
-			completeArgs[2] =
-				"-Dnodejs.npm.ci.sass.binary.site=" +
-					_NODEJS_NPM_CI_SASS_BINARY_SITE;
-		}
-
-		System.arraycopy(args, 0, completeArgs, 3, args.length);
+		System.arraycopy(args, 0, completeArgs, 1, args.length);
 
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
@@ -2795,16 +2779,14 @@ public class ProjectTemplatesTest {
 
 		Path buildFilePath = buildFile.toPath();
 
-		String executeNpmTaskImport =
-			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask";
 		String executeNpmTaskScript =
-			"tasks.withType(ExecuteNpmTask) {registry = '" +
-				_NODEJS_NPM_CI_REGISTRY + "'}";
+			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask" +
+				System.lineSeparator() +
+					"tasks.withType(ExecuteNpmTask) {registry = '" +
+						_NODEJS_NPM_CI_REGISTRY + "'}" + System.lineSeparator();
 
 		Files.write(
-			buildFilePath,
-			(System.lineSeparator() + executeNpmTaskImport +
-				System.lineSeparator() + executeNpmTaskScript).getBytes(),
+			buildFilePath, executeNpmTaskScript.getBytes(),
 			StandardOpenOption.APPEND);
 	}
 
@@ -3357,9 +3339,6 @@ public class ProjectTemplatesTest {
 
 	private static final String _NODEJS_NPM_CI_REGISTRY = System.getProperty(
 		"nodejs.npm.ci.registry");
-
-	private static final String _NODEJS_NPM_CI_SASS_BINARY_SITE =
-		System.getProperty("nodejs.npm.ci.sass.binary.site");
 
 	private static final String _OUTPUT_FILENAME_GLOB_REGEX = "*.{jar,war}";
 

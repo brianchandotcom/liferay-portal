@@ -234,6 +234,12 @@ public class CPRuleLocalServiceUtil {
 		return getService().getCPRules(groupId, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPRule> getCPRules(
+		long groupId, long[] commerceUserSegmentEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPRules(groupId, commerceUserSegmentEntryIds);
+	}
+
 	/**
 	* Returns the number of cp rules.
 	*

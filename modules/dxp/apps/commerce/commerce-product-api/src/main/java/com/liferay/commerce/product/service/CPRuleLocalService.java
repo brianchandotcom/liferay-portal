@@ -212,6 +212,10 @@ public interface CPRuleLocalService extends BaseLocalService,
 	public List<CPRule> getCPRules(long groupId, int start, int end,
 		OrderByComparator<CPRule> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPRule> getCPRules(long groupId,
+		long[] commerceUserSegmentEntryIds) throws PortalException;
+
 	/**
 	* Returns the number of cp rules.
 	*

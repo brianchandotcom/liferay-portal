@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IGNORE_SKU_COTRIBUTIONS_TOGGLE_SWITCHER</td>
-	<td>//div/label/input[@type='checkbox']/../span[@class='toggle-switch-bar']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>APPLY_BUTTON</td>
 	<td>//span[normalize-space()='${key_text}']</td>
 	<td></td>

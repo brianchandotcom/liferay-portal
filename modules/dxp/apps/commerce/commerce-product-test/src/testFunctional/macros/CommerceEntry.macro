@@ -4,7 +4,7 @@
 	</command>
 
 	<command name="addOptionsEntry">
-		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${optionTitle}" />
+		<execute function="Type" locator1="CommerceEntry#NAME_FIELD" value1="${optionName}" />
 
 		<execute function="Type" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
 
@@ -18,7 +18,7 @@
 	</command>
 
 	<command name="addOptionValue">
-		<execute function="Type" locator1="CommerceEntry#MODAL_TITLE_FIELD" value1="${valueTitle}" />
+		<execute function="Type" locator1="CommerceEntry#MODAL_NAME_FIELD" value1="${valueName}" />
 
 		<execute function="Type" locator1="CommerceEntry#PRIORITY_FIELD" value1="${valuePriority}" />
 	</command>
@@ -28,7 +28,7 @@
 	</command>
 
 	<command name="addProductsEntry">
-		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${productTitle}" />
+		<execute function="Type" locator1="CommerceEntry#NAME_FIELD" value1="${productName}" />
 
 		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
 
@@ -55,8 +55,8 @@
 		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${newEntryShortDescription}" />
 	</command>
 
-	<command name="editEntryTitle">
-		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${newEntryTitle}" />
+	<command name="editEntryName">
+		<execute function="Type" locator1="CommerceEntry#NAME_FIELD" value1="${newEntryName}" />
 	</command>
 
 	<command name="gotoBreadcrumb">
@@ -180,19 +180,19 @@
 	</command>
 
 	<command name="viewCatalogEntry">
-		<execute function="AssertTextEquals" locator1="CommerceEntry#TITLE_FIELD" value1="${productTitle}" />
+		<execute function="AssertTextEquals" locator1="CommerceEntry#NAME_FIELD" value1="${productName}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#FULL_DESCRIPTION_FIELD" value1="${productFullDescription}" />
 
-		<execute function="AssertTextEquals" locator1="CommerceEntry#SEO_FRIENDLYURL" value1="${productTitle}">
-			<var name="key_productTitle" value="${productTitle}" />
+		<execute function="AssertTextEquals" locator1="CommerceEntry#SEO_FRIENDLYURL" value1="${productName}">
+			<var name="key_productName" value="${productName}" />
 		</execute>
 	</command>
 
 	<command name="viewOptionsEntry">
-		<execute function="AssertTextEquals" locator1="CommerceEntry#TITLE_FIELD" value1="${optionTitle}" />
+		<execute function="AssertTextEquals" locator1="CommerceEntry#NAME_FIELD" value1="${optionName}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
 	</command>

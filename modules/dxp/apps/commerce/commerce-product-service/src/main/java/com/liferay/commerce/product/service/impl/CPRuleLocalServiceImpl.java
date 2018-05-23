@@ -19,7 +19,11 @@ import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
 import com.liferay.commerce.product.exception.CPRuleTypeException;
 import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.service.base.CPRuleLocalServiceBaseImpl;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -35,11 +39,14 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -149,6 +156,58 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<CPRule> getCPRules(
+			long groupId, long[] commerceUserSegmentEntryIds)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		String cacheKey = StringUtil.merge(commerceUserSegmentEntryIds);
+
+		PortalCache<String, Serializable> portalCache =
+			MultiVMPoolUtil.getPortalCache("CP_RULES_" + groupId);
+
+		boolean cpRulesCalculated = GetterUtil.getBoolean(
+			portalCache.get(cacheKey + "_calculated"));
+
+		ArrayList<CPRule> cpRules = (ArrayList<CPRule>)portalCache.get(
+			cacheKey);
+
+		if (cpRulesCalculated) {
+			return cpRules;
+		}
+
+		cpRules = new ArrayList<>();
+
+		SearchContext searchContext = buildSearchContext(
+			group.getCompanyId(), groupId, commerceUserSegmentEntryIds);
+
+		Indexer<CPRule> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPRule.class);
+
+		Hits hits = indexer.search(searchContext, Field.ENTRY_CLASS_PK);
+
+		List<Document> documents = hits.toList();
+
+		for (Document document : documents) {
+			long cpRuleId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CPRule cpRule = cpRuleLocalService.fetchCPRule(cpRuleId);
+
+			if (cpRule != null) {
+				cpRules.add(cpRule);
+			}
+		}
+
+		portalCache.put(cacheKey, cpRules);
+
+		portalCache.put(cacheKey + "_calculated", true);
+
+		return cpRules;
+	}
+
+	@Override
 	public int getCPRulesCount(long groupId) {
 		return cpRulePersistence.countByGroupId(groupId);
 	}
@@ -204,6 +263,37 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 		cpRule.setExpandoBridgeAttributes(serviceContext);
 
 		return cpRulePersistence.update(cpRule);
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long groupId, long[] commerceUserSegmentEntryIds) {
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put(
+			"commerceUserSegmentEntryIds", commerceUserSegmentEntryIds);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setStart(QueryUtil.ALL_POS);
+		searchContext.setEnd(QueryUtil.ALL_POS);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		Sort sort = SortFactoryUtil.create(
+			Field.PRIORITY + "_Number_sortable", false);
+
+		searchContext.setSorts(sort);
+
+		return searchContext;
 	}
 
 	protected SearchContext buildSearchContext(

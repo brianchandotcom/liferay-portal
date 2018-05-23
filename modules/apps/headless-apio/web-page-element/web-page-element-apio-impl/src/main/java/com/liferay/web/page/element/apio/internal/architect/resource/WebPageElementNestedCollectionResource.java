@@ -141,7 +141,7 @@ public class WebPageElementNestedCollectionResource
 			true, 0, 0, 0, 0, 0, true, true, null, serviceContext);
 	}
 
-	private void _deleteJournalArticle(Long journalArticleId)
+	private void _deleteJournalArticle(long journalArticleId)
 		throws PortalException {
 
 		JournalArticle article = _journalArticleService.getArticle(

@@ -127,7 +127,7 @@ public class MediaObjectNestedCollectionResource
 	}
 
 	private FileEntry _getFileEntry(
-			Long groupId, MediaObjectCreatorForm mediaObjectCreatorForm)
+			long groupId, MediaObjectCreatorForm mediaObjectCreatorForm)
 		throws PortalException {
 
 		return _mediaObjectHelper.addFileEntry(
@@ -135,7 +135,7 @@ public class MediaObjectNestedCollectionResource
 	}
 
 	private PageItems<FileEntry> _getPageItems(
-			Pagination pagination, Long groupId)
+			Pagination pagination, long groupId)
 		throws PortalException {
 
 		List<FileEntry> fileEntries = _dlAppService.getFileEntries(

@@ -60,7 +60,7 @@ public class FolderMediaObjectNestedCollectionRouter
 	}
 
 	private FileEntry _getFileEntry(
-			Long folderId, MediaObjectCreatorForm mediaObjectCreatorForm)
+			long folderId, MediaObjectCreatorForm mediaObjectCreatorForm)
 		throws Exception {
 
 		Folder folder = _dlAppService.getFolder(folderId);
@@ -70,7 +70,7 @@ public class FolderMediaObjectNestedCollectionRouter
 	}
 
 	private PageItems<FileEntry> _getPageItems(
-			Pagination pagination, Long folderId)
+			Pagination pagination, long folderId)
 		throws PortalException {
 
 		Folder folder = _dlAppService.getFolder(folderId);

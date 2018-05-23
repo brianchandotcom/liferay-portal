@@ -100,7 +100,7 @@ public class FolderNestedCollectionResource
 		).build();
 	}
 
-	private Folder _addFolder(Long groupId, FolderForm folderForm)
+	private Folder _addFolder(long groupId, FolderForm folderForm)
 		throws PortalException {
 
 		long parentFolderId = 0;
@@ -121,7 +121,7 @@ public class FolderNestedCollectionResource
 		return new PageItems<>(folders, count);
 	}
 
-	private Folder _updateFolder(Long folderId, FolderForm folderForm)
+	private Folder _updateFolder(long folderId, FolderForm folderForm)
 		throws PortalException {
 
 		return _dlAppService.updateFolder(

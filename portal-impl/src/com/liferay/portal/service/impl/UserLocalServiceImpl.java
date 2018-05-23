@@ -24,6 +24,7 @@ import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
@@ -80,6 +81,8 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -2050,6 +2053,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		emailAddress = getLogin(emailAddress);
 
 		return userPersistence.fetchByC_EA(companyId, emailAddress);
+	}
+
+	/**
+	 * Returns the user with the same externalReferenceCode.
+	 *
+	 * @param  companyId the primary key of the user's company
+	 * @param  externalReferenceCode the user's external reference code
+	 * @return the user with the externalReferenceCode, or <code>null</code> if
+	 *         no user could be found
+	 */
+	@Override
+	public User fetchUserByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return userPersistence.fetchByC_ERC(companyId, externalReferenceCode);
 	}
 
 	/**
@@ -5646,6 +5664,104 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			smsSn, facebookSn, jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupRoles, userGroupIds,
 			serviceContext);
+	}
+
+	/**
+	 * Add or update an user.
+	 *
+	 * @param  creatorUserId the primary key of the creator
+	 * @param  companyId the primary key of the user's company
+	 * @param  autoPassword whether a password should be automatically generated
+	 *         for the user
+	 * @param  password1 the user's password
+	 * @param  password2 the user's password confirmation
+	 * @param  autoScreenName whether a screen name should be automatically
+	 *         generated for the user
+	 * @param  screenName the user's screen name
+	 * @param  emailAddress the user's email address
+	 * @param  locale the user's locale
+	 * @param  firstName the user's first name
+	 * @param  middleName the user's middle name
+	 * @param  lastName the user's last name
+	 * @param  prefixId the user's name prefix ID
+	 * @param  suffixId the user's name suffix ID
+	 * @param  male whether the user is male
+	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
+	 *         January)
+	 * @param  birthdayDay the user's birthday day
+	 * @param  birthdayYear the user's birthday year
+	 * @param  jobTitle the user's job title
+	 * @param  groupIds the primary keys of the user's groups
+	 * @param  organizationIds the primary keys of the user's organizations
+	 * @param  roleIds the primary keys of the user's roles
+	 * @param  userGroupRoles the user user's group roles
+	 * @param  userGroupIds the primary keys of the user's user groups
+	 * @param  sendEmail whether to send the user an email notification about
+	 *         their new account
+	 * @param  externalReferenceCode the user's external reference code
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user.
+	 *
+	 * @return the user
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public User upsertUser(
+			long creatorUserId, long companyId, boolean autoPassword,
+			String password1, String password2, boolean autoScreenName,
+			String screenName, String emailAddress, Locale locale,
+			String firstName, String middleName, String lastName, long prefixId,
+			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			int birthdayYear, String jobTitle, long[] groupIds,
+			long[] organizationIds, long[] roleIds,
+			List<UserGroupRole> userGroupRoles, long[] userGroupIds,
+			boolean sendEmail, String externalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+
+		if (Validator.isNull(user)) {
+			user = addUser(
+				creatorUserId, companyId, autoPassword, password1, password2,
+				autoScreenName, screenName, emailAddress, 0, null, locale,
+				firstName, middleName, lastName, prefixId, suffixId, male,
+				birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+				organizationIds, roleIds, userGroupIds, sendEmail,
+				serviceContext);
+
+			user.setExternalReferenceCode(externalReferenceCode);
+
+			user = userPersistence.update(user);
+		}
+		else {
+			Contact contact = user.getContact();
+
+			long imageId = BeanPropertiesUtil .getLong(user, "portraitId");
+
+			boolean hasPortrait = false;
+
+			if (imageId > 0) {
+				hasPortrait = true;
+			}
+
+			user = updateUser(
+				user.getUserId(), null, password1, password2, false,
+				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
+				screenName, emailAddress, user.getFacebookId(),
+				user.getOpenId(), hasPortrait, null, user.getLanguageId(),
+				user.getTimeZoneId(), user.getGreeting(), user.getComments(),
+				firstName, middleName, lastName, prefixId, suffixId, male,
+				birthdayMonth, birthdayDay, birthdayYear, contact.getSmsSn(),
+				contact.getFacebookSn(), contact.getJabberSn(),
+				contact.getSkypeSn(), contact.getTwitterSn(), jobTitle,
+				groupIds, organizationIds, roleIds, userGroupRoles,
+				userGroupIds, serviceContext);
+		}
+
+		return user;
 	}
 
 	/**

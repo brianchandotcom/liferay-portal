@@ -85,6 +85,10 @@ public class CPDefinitionInventoryEngineImpl
 		CommerceAvailabilityRange commerceAvailabilityRange =
 			cpDefinitionAvailabilityRange.getCommerceAvailabilityRange();
 
+		if (commerceAvailabilityRange == null) {
+			return StringPool.BLANK;
+		}
+
 		return commerceAvailabilityRange.getTitle(locale);
 	}
 

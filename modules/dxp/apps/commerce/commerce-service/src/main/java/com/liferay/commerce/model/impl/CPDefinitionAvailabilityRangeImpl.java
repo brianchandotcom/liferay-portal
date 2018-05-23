@@ -34,8 +34,12 @@ public class CPDefinitionAvailabilityRangeImpl
 	public CommerceAvailabilityRange getCommerceAvailabilityRange()
 		throws PortalException {
 
-		return CommerceAvailabilityRangeLocalServiceUtil.
-			getCommerceAvailabilityRange(getCommerceAvailabilityRangeId());
+		if (getCommerceAvailabilityRangeId() > 0) {
+			return CommerceAvailabilityRangeLocalServiceUtil.
+				getCommerceAvailabilityRange(getCommerceAvailabilityRangeId());
+		}
+
+		return null;
 	}
 
 }

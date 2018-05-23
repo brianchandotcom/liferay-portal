@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -270,21 +271,15 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		DynamicQuery dynamicQuery =
 			_commerceForecastEntryLocalService.dynamicQuery();
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.max("date"));
+		dynamicQuery.setProjection(ProjectionFactoryUtil.max("time"));
 
 		List<?> results = _commerceForecastEntryLocalService.dynamicQuery(
 			dynamicQuery);
 
-		Date date = null;
-
-		if (ListUtil.isNotEmpty(results)) {
-			date = (Date)results.get(0);
-		}
-
 		long time = Long.MIN_VALUE;
 
-		if (date != null) {
-			time = date.getTime();
+		if (ListUtil.isNotEmpty(results)) {
+			time = GetterUtil.getLong(results.get(0), time);
 		}
 
 		Http.Options options = new Http.Options();

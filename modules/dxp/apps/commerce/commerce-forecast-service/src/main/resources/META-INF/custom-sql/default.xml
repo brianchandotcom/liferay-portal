@@ -9,10 +9,10 @@
 				CommerceForecastValue
 			WHERE
 				(commerceForecastEntryId =  ?) AND
-				(time >= ?) AND
-				(time <= ?)
+				(time_ >= ?) AND
+				(time_ <= ?)
 			ORDER BY
-				time ASC
+				time_ ASC
 		]]>
 	</sql>
 </custom-sql>

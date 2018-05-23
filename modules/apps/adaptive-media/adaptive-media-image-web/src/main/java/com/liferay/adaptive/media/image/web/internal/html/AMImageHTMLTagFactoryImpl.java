@@ -49,7 +49,7 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 			return originalImgTag;
 		}
 
-		StringBundler sb = new StringBundler(3 + sourceElements.size());
+		StringBundler sb = new StringBundler(5 + sourceElements.size());
 
 		sb.append("<picture ");
 		sb.append(AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);

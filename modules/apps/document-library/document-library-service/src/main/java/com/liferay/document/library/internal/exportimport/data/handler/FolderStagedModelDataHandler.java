@@ -104,7 +104,7 @@ public class FolderStagedModelDataHandler
 		List<DLFolder> dlFolders =
 			_dlFolderLocalService.getDLFoldersByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<DLFolder>());
+				new StagedModelModifiedDateComparator<>());
 
 		List<Folder> folders = new ArrayList<>();
 

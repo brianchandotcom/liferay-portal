@@ -26,9 +26,6 @@ import com.liferay.wiki.uad.constants.WikiUADConstants;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the wiki page UAD anonymizer.
  *
@@ -62,11 +59,6 @@ public abstract class BaseWikiPageUADAnonymizer
 	@Override
 	public void delete(WikiPage wikiPage) throws PortalException {
 		wikiPageLocalService.deletePage(wikiPage);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("title", "content", "summary");
 	}
 
 	@Override

@@ -21,6 +21,7 @@ WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAt
 %>
 
 <liferay-ui:search-container
+	cssClass="lfr-sidebar-list-group-workflow sidebar-list-group"
 	id="workflowDefinitions"
 >
 	<liferay-ui:search-container-results
@@ -32,7 +33,7 @@ WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAt
 		modelVar="workflowDefinition"
 	>
 		<liferay-ui:search-container-column-jsp
-			cssClass="lfr-version-column"
+			cssClass="autofit-col-expand"
 			path="/definition/workflow_definition_version_info.jsp"
 		/>
 
@@ -42,7 +43,7 @@ WorkflowDefinition currentWorkflowDefinition = (WorkflowDefinition)request.getAt
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="list"
+		displayStyle="descriptive"
 		markupView="lexicon"
 	/>
 </liferay-ui:search-container>

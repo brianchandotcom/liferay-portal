@@ -137,7 +137,7 @@
 	</command>
 
 	<command name="uncheckLogo">
-		<execute function="Uncheck" locator1="PagesConfiguration#PAGES_LOGO_CHECKBOX" />
+		<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="PagesConfiguration#PAGES_LOGO_CHECKBOX" />
 	</command>
 
 	<command name="uncheckSitePagesSettings">

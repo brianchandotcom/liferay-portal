@@ -116,9 +116,9 @@ public class ClusterLinkPortalCacheClusterChannel
 
 	@Override
 	public void sendEvent(PortalCacheClusterEvent portalCacheClusterEvent) {
-		if (_started == false) {
+		if (!_started) {
 			synchronized (this) {
-				if (_started == false) {
+				if (!_started) {
 					_dispatchThread.start();
 
 					_started = true;

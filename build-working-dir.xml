@@ -338,6 +338,7 @@
 		</condition>
 
 		<fetch-portal
+			fetch.portal.local.branch.name="${public.branch.name}"
 			fetch.portal.remote.branch.name="${public.branch.name}"
 			fetch.portal.repository.name="liferay-portal"
 			unless:set="portal.git.commit.available"
@@ -425,6 +426,7 @@
 		</condition>
 
 		<fetch-portal
+			fetch.portal.local.branch.name="${private.branch.name}"
 			fetch.portal.remote.branch.name="${private.branch.name}"
 			fetch.portal.repository.name="liferay-portal-ee"
 			unless:set="portal.private.git.commit.available"

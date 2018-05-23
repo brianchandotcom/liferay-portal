@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.User;
@@ -847,10 +846,8 @@ public class PortletContainerImpl implements PortletContainer {
 		WindowState windowState = (WindowState)request.getAttribute(
 			WebKeys.WINDOW_STATE);
 
-		PortletApp portletApp = portlet.getPortletApp();
-
 		int portletSpecMajorVersion = PortletAppUtil.getSpecMajorVersion(
-			portletApp);
+			portlet.getPortletApp());
 
 		if (portletSpecMajorVersion == 3) {
 			WindowState requestWindowState = WindowStateFactory.getWindowState(

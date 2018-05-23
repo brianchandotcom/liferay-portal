@@ -2,6 +2,10 @@
 	margin: 0 !important;
 }
 
+#wrapper .main-content-card {
+	margin: 0 !important;
+}
+
 .dialog-iframe-popup,
 .info-bar-container {
 	background: #FFF;
@@ -36,6 +40,9 @@
 .sidenav-container {
 	padding-bottom: 75px;
 
+	.sidenav-content{
+		padding-top: 20px;
+	}
 	.sidenav-menu-slider {
 		z-index: 101;
 	}

@@ -12,31 +12,32 @@
  * details.
  */
 
-package com.liferay.reading.time.web.internal.editor.configuration;
+package com.liferay.blogs.editor.configuration.internal;
 
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.reading.time.web.internal.constants.ReadingTimePortletKeys;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Tardín
+ * @author Sergio González
  */
 @Component(
-	property = "editor.config.key=reading-time-editor-config-key",
+	property = {
+		"editor.config.key=contentEditor",
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN
+	},
 	service = EditorConfigContributor.class
 )
-public class ReadingTimeEditorConfigContributor
+public class BlogsReadingTimeConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -45,20 +46,12 @@ public class ReadingTimeEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletURL calculateReadingTimeURL =
-			requestBackedPortletURLFactory.createResourceURL(
-				ReadingTimePortletKeys.READING_TIME);
-
-		LiferayPortletURL liferayPortletURL =
-			(LiferayPortletURL)calculateReadingTimeURL;
-
-		liferayPortletURL.setResourceID("/reading_time/calculate");
-
-		JSONObject readingTimeJSONObject = JSONFactoryUtil.createJSONObject();
-
-		readingTimeJSONObject.put("url", calculateReadingTimeURL.toString());
-
-		jsonObject.put("readingTime", readingTimeJSONObject);
+		_readingTimeConfigContributor.populateConfigJSONObject(
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			requestBackedPortletURLFactory);
 	}
+
+	@Reference(target = "(editor.config.key=reading-time-editor-config-key)")
+	private EditorConfigContributor _readingTimeConfigContributor;
 
 }

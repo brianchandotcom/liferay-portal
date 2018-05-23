@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_TO_FAVORITES</td>
-	<td>//table[contains(@class,'table-heading')]//th[contains(@id,'add-to-favorites') and contains(.,'Add to Favorites')]</td>
+	<td>//table[contains(@class,'table-list')]//th[contains(@id,'add-to-favorites') and contains(.,'Add to Favorites')]</td>
 	<td></td>
 </tr>
 <tr>

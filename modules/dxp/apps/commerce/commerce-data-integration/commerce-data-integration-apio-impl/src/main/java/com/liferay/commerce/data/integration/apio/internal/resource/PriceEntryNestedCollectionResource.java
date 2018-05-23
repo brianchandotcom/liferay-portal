@@ -103,6 +103,8 @@ public class PriceEntryNestedCollectionResource
 		).addBidirectionalModel(
 			"priceList", "priceEntries", PriceListIdentifier.class,
 			CommercePriceEntry::getCommercePriceListId
+		).addBoolean(
+			"hasTierPrice", CommercePriceEntry::isHasTierPrice
 		).addDate(
 			"dateCreated", CommercePriceEntry::getCreateDate
 		).addDate(

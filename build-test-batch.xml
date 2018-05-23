@@ -2393,6 +2393,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
 
+	<target name="functional-smoke-bundle-tomcat-mysql57-jdk8">
+		<antcall target="functional-bundle-tomcat-mysql57-jdk8" />
+	</target>
+
 	<target name="functional-smoke-jboss70-mysql56-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" test.portal.log.assert="true" />
 	</target>

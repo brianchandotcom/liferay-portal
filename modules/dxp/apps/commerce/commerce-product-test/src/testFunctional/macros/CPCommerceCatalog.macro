@@ -3,7 +3,7 @@
 		<var name="optionValuesList" value="${optionValuesList}" />
 
 		<execute macro="CommerceNavigator#gotoOptionValues">
-			<var name="optionEntryTitle" value="${optionEntryTitle}" />
+			<var name="optionEntryName" value="${optionEntryName}" />
 		</execute>
 
 		<for list="${optionValuesList}" param="optionValues">
@@ -17,7 +17,7 @@
 
 			<execute macro="CommerceEntry#addOptionValue">
 				<var name="valuePriority" value="${valuePriority}" />
-				<var name="valueTitle" value="${optionValues}" />
+				<var name="valueName" value="${optionValues}" />
 			</execute>
 
 			<execute function="Click" locator1="CommerceEntry#MODAL_SAVE" />
@@ -34,7 +34,7 @@
 
 	<command name="moveProductsToRecycleBinViaCheckbox">
 		<execute function="Click" locator1="CommerceNavigation#SINGLE_ENTRY_CHECKBOX">
-			<var name="key_entryTitle" value="${productTitle}" />
+			<var name="key_entryName" value="${productName}" />
 		</execute>
 
 		<execute function="Click" locator1="Button#RECYCLE_BIN" />
@@ -46,7 +46,7 @@
 		<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 	</command>
 
-	<command name="newOptionTemplatesEntry">
+	<command name="newOptionsEntry">
 		<if>
 			<condition function="IsElementPresent" locator1="Button#DELETE" />
 			<then>
@@ -57,7 +57,7 @@
 		<execute macro="CommerceOptions#addEntry">
 			<var name="optionDescription" value="${optionDescription}" />
 			<var name="optionFieldType" value="${optionFieldType}" />
-			<var name="optionTitle" value="${optionTitle}" />
+			<var name="optionName" value="${optionName}" />
 		</execute>
 
 		<execute macro="Button#clickSave" />
@@ -65,7 +65,7 @@
 		<execute macro="CommerceEntry#viewOptionsEntry">
 			<var name="optionDescription" value="${optionDescription}" />
 			<var name="optionFieldType" value="${optionFieldType}" />
-			<var name="optionTitle" value="${optionTitle}" />
+			<var name="optionName" value="${optionName}" />
 		</execute>
 
 		<if>
@@ -76,7 +76,7 @@
 			</or>
 			<then>
 				<execute macro="CPCommerceCatalog#addOptionValues">
-					<var name="optionEntryTitle" value="${optionTitle}" />
+					<var name="optionEntryName" value="${optionName}" />
 					<var name="optionValues" value="${optionValues}" />
 					<var name="optionValuesList" value="${optionValuesList}" />
 					<var name="valuePriority" value="${valuePriority}" />
@@ -87,9 +87,9 @@
 
 	<command name="newProductsEntry">
 		<execute macro="CommerceProducts#addEntry">
-			<var name="productFullDescription" value="${productTitle} Full Description" />
-			<var name="productShortDescription" value="${productTitle} Short Description" />
-			<var name="productTitle" value="${productTitle}" />
+			<var name="productFullDescription" value="${productName} Full Description" />
+			<var name="productShortDescription" value="${productName} Short Description" />
+			<var name="productName" value="${productName}" />
 			<var name="productType" value="${productType}" />
 		</execute>
 

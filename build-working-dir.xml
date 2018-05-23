@@ -19,7 +19,7 @@
 
 		<sequential>
 			<fetch-portal
-				fetch.portal.local.branch.name="git-branch-private-apps-portal"
+				fetch.portal.local.branch.name="git-branch-portal-private-apps"
 				fetch.portal.remote.branch.name="@{checkout.private.apps.sha}"
 				fetch.portal.repository.name="liferay-portal-ee"
 			/>
@@ -29,15 +29,15 @@
 			<exec executable="git" failonerror="false" resultproperty="return.code">
 				<arg value="tag" />
 				<arg value="--force" />
-				<arg value="git-tag-private-apps-portal" />
-				<arg value="git-branch-private-apps-portal" />
+				<arg value="git-tag-portal-private-apps" />
+				<arg value="git-branch-portal-private-apps" />
 			</exec>
 
 			<exec executable="git">
 				<arg value="branch" />
 				<arg value="--delete" />
 				<arg value="--force" />
-				<arg value="git-branch-private-apps-portal" />
+				<arg value="git-branch-portal-private-apps" />
 			</exec>
 
 			<fail message="Please fetch the private branch from upstream before using this command.">
@@ -60,11 +60,11 @@
 				]]>
 			</script>
 
-			<echo>git checkout refs/tags/git-private-apps-portal -- ${checkout.private.apps.dirs.git}</echo>
+			<echo>git checkout refs/tags/git-tag-portal-private-apps -- ${checkout.private.apps.dirs.git}</echo>
 
 			<exec executable="git" failonerror="true">
 				<arg value="checkout" />
-				<arg value="refs/tags/git-tag-private-apps-portal" />
+				<arg value="refs/tags/git-tag-portal-private-apps" />
 				<arg value="--" />
 				<arg line="${checkout.private.apps.dirs.git}" />
 			</exec>
@@ -78,7 +78,7 @@
 			<exec executable="git">
 				<arg value="tag" />
 				<arg value="--delete" />
-				<arg value="git-tag-private-apps-portal" />
+				<arg value="git-tag-portal-private-apps" />
 			</exec>
 		</sequential>
 	</macrodef>

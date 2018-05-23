@@ -89,7 +89,9 @@ class AsahClient {
 	send(analytics, userId) {
 		const request = this._getAsahRequest(analytics, userId);
 
-		return fetch(this.uri, request).then(this._validateResponse);
+		return fetch(this.uri, request)
+			.then(this._validateResponse)
+			.catch(() => Promise.resolve());
 	}
 
 	/**

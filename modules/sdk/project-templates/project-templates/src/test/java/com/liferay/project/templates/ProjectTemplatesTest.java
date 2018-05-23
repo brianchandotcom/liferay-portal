@@ -64,6 +64,14 @@ import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -87,6 +95,9 @@ import org.junit.rules.TemporaryFolder;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 
 /**
  * @author Lawrence Lee
@@ -2779,15 +2790,68 @@ public class ProjectTemplatesTest {
 
 		Path buildFilePath = buildFile.toPath();
 
+		String lineSeparator = System.lineSeparator();
+
 		String executeNpmTaskScript =
-			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask" +
-				System.lineSeparator() +
-					"tasks.withType(ExecuteNpmTask) {registry = '" +
-						_NODEJS_NPM_CI_REGISTRY + "'}" + System.lineSeparator();
+			lineSeparator +
+				"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask" +
+					lineSeparator +
+						"tasks.withType(ExecuteNpmTask) {registry = '" +
+							_NODEJS_NPM_CI_REGISTRY + "'}" + lineSeparator;
 
 		Files.write(
 			buildFilePath, executeNpmTaskScript.getBytes(),
 			StandardOpenOption.APPEND);
+	}
+
+	private static void _updateNpmConfiguration(File projectDir)
+		throws Exception {
+
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		File pomXml = new File(projectDir, "pom.xml");
+
+		Document document = documentBuilder.parse(pomXml);
+
+		XPathFactory xPathFactory = XPathFactory.newInstance();
+
+		XPath xPath = xPathFactory.newXPath();
+
+		XPathExpression xPathExpression = xPath.compile(
+			"//id[contains(text(),'npm-install')]/parent::*");
+
+		NodeList nodeList = (NodeList)xPathExpression.evaluate(
+			document, XPathConstants.NODESET);
+
+		Node execution = nodeList.item(0);
+
+		Element configuration = document.createElement("configuration");
+
+		execution.appendChild(configuration);
+
+		Element arguments = document.createElement("arguments");
+
+		configuration.appendChild(arguments);
+
+		Text text = document.createTextNode(
+			"install --registry=" + _NODEJS_NPM_CI_REGISTRY);
+
+		arguments.appendChild(text);
+
+		TransformerFactory transformerFactory =
+			TransformerFactory.newInstance();
+
+		Transformer transformer = transformerFactory.newTransformer();
+
+		DOMSource source = new DOMSource(document);
+
+		StreamResult result = new StreamResult(pomXml);
+
+		transformer.transform(source, result);
 	}
 
 	private static void _writeServiceClass(File projectDir) throws IOException {
@@ -2944,6 +3008,7 @@ public class ProjectTemplatesTest {
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
 			_updateExecuteNpmTask(gradleProjectDir);
+			_updateNpmConfiguration(mavenProjectDir);
 		}
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);

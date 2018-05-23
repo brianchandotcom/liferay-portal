@@ -57,7 +57,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CPDefinitionVirtualSettingServiceHttp {
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 		HttpPrincipal httpPrincipal, long cpDefinitionId, long fileEntryId,
-		String url, String activationStatus, long duration, int maxUsages,
+		String url, int activationStatus, long duration, int maxUsages,
 		boolean useSample, long sampleFileEntryId, String sampleUrl,
 		boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
@@ -132,7 +132,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		HttpPrincipal httpPrincipal, long cpDefinitionVirtualSettingId,
-		long fileEntryId, String url, String activationStatus, long duration,
+		long fileEntryId, String url, int activationStatus, long duration,
 		int maxUsages, boolean useSample, long sampleFileEntryId,
 		String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
@@ -176,7 +176,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CPDefinitionVirtualSettingServiceHttp.class);
 	private static final Class<?>[] _addCPDefinitionVirtualSettingParameterTypes0 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, long.class,
+			long.class, long.class, String.class, int.class, long.class,
 			int.class, boolean.class, long.class, String.class, boolean.class,
 			java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
@@ -185,7 +185,7 @@ public class CPDefinitionVirtualSettingServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _updateCPDefinitionVirtualSettingParameterTypes2 =
 		new Class[] {
-			long.class, long.class, String.class, String.class, long.class,
+			long.class, long.class, String.class, int.class, long.class,
 			int.class, boolean.class, long.class, String.class, boolean.class,
 			java.util.Map.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

@@ -163,13 +163,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 			cpDefinitionVirtualSettingImpl.setUrl(url);
 		}
 
-		if (activationStatus == null) {
-			cpDefinitionVirtualSettingImpl.setActivationStatus("");
-		}
-		else {
-			cpDefinitionVirtualSettingImpl.setActivationStatus(activationStatus);
-		}
-
+		cpDefinitionVirtualSettingImpl.setActivationStatus(activationStatus);
 		cpDefinitionVirtualSettingImpl.setDuration(duration);
 		cpDefinitionVirtualSettingImpl.setMaxUsages(maxUsages);
 		cpDefinitionVirtualSettingImpl.setUseSample(useSample);
@@ -225,7 +219,8 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 
 		fileEntryId = objectInput.readLong();
 		url = objectInput.readUTF();
-		activationStatus = objectInput.readUTF();
+
+		activationStatus = objectInput.readInt();
 
 		duration = objectInput.readLong();
 
@@ -282,12 +277,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 			objectOutput.writeUTF(url);
 		}
 
-		if (activationStatus == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(activationStatus);
-		}
+		objectOutput.writeInt(activationStatus);
 
 		objectOutput.writeLong(duration);
 
@@ -328,7 +318,7 @@ public class CPDefinitionVirtualSettingCacheModel implements CacheModel<CPDefini
 	public long CPDefinitionId;
 	public long fileEntryId;
 	public String url;
-	public String activationStatus;
+	public int activationStatus;
 	public long duration;
 	public int maxUsages;
 	public boolean useSample;

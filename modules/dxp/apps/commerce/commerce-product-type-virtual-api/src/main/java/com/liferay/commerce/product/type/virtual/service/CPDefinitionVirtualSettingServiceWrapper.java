@@ -37,9 +37,8 @@ public class CPDefinitionVirtualSettingServiceWrapper
 	@Override
 	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 		long cpDefinitionId, long fileEntryId, String url,
-		String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, String sampleUrl,
-		boolean termsOfUseRequired,
+		int activationStatus, long duration, int maxUsages, boolean useSample,
+		long sampleFileEntryId, String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -71,9 +70,8 @@ public class CPDefinitionVirtualSettingServiceWrapper
 	@Override
 	public com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
-		String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, String sampleUrl,
-		boolean termsOfUseRequired,
+		int activationStatus, long duration, int maxUsages, boolean useSample,
+		long sampleFileEntryId, String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

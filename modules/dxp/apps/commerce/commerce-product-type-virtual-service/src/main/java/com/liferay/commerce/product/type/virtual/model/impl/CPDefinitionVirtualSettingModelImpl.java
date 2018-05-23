@@ -91,7 +91,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "fileEntryId", Types.BIGINT },
 			{ "url", Types.VARCHAR },
-			{ "activationStatus", Types.VARCHAR },
+			{ "activationStatus", Types.INTEGER },
 			{ "duration", Types.BIGINT },
 			{ "maxUsages", Types.INTEGER },
 			{ "useSample", Types.BOOLEAN },
@@ -116,7 +116,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("activationStatus", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("activationStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("duration", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("maxUsages", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("useSample", Types.BOOLEAN);
@@ -128,7 +128,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinitionVirtualSetting (uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus VARCHAR(75) null,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinitionVirtualSetting (uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionVirtualSetting";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinitionVirtualSetting.CPDefinitionVirtualSettingId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinitionVirtualSetting.CPDefinitionVirtualSettingId ASC";
@@ -349,7 +349,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 			setUrl(url);
 		}
 
-		String activationStatus = (String)attributes.get("activationStatus");
+		Integer activationStatus = (Integer)attributes.get("activationStatus");
 
 		if (activationStatus != null) {
 			setActivationStatus(activationStatus);
@@ -617,17 +617,12 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 
 	@JSON
 	@Override
-	public String getActivationStatus() {
-		if (_activationStatus == null) {
-			return "";
-		}
-		else {
-			return _activationStatus;
-		}
+	public int getActivationStatus() {
+		return _activationStatus;
 	}
 
 	@Override
-	public void setActivationStatus(String activationStatus) {
+	public void setActivationStatus(int activationStatus) {
 		_activationStatus = activationStatus;
 	}
 
@@ -1107,12 +1102,6 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 
 		cpDefinitionVirtualSettingCacheModel.activationStatus = getActivationStatus();
 
-		String activationStatus = cpDefinitionVirtualSettingCacheModel.activationStatus;
-
-		if ((activationStatus != null) && (activationStatus.length() == 0)) {
-			cpDefinitionVirtualSettingCacheModel.activationStatus = null;
-		}
-
 		cpDefinitionVirtualSettingCacheModel.duration = getDuration();
 
 		cpDefinitionVirtualSettingCacheModel.maxUsages = getMaxUsages();
@@ -1326,7 +1315,7 @@ public class CPDefinitionVirtualSettingModelImpl extends BaseModelImpl<CPDefinit
 	private boolean _setOriginalCPDefinitionId;
 	private long _fileEntryId;
 	private String _url;
-	private String _activationStatus;
+	private int _activationStatus;
 	private long _duration;
 	private int _maxUsages;
 	private boolean _useSample;

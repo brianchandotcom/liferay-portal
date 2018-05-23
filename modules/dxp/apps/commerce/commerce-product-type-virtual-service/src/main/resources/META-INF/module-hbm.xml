@@ -17,7 +17,7 @@
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="activationStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="activationStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="duration" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="maxUsages" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="useSample" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />

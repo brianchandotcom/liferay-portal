@@ -71,9 +71,9 @@ import java.util.Map;
 public class CPDefinitionVirtualSettingServiceSoap {
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap addCPDefinitionVirtualSetting(
 		long cpDefinitionId, long fileEntryId, String url,
-		String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, String sampleUrl,
-		boolean termsOfUseRequired, String[] termsOfUseContentMapLanguageIds,
+		int activationStatus, long duration, int maxUsages, boolean useSample,
+		long sampleFileEntryId, String sampleUrl, boolean termsOfUseRequired,
+		String[] termsOfUseContentMapLanguageIds,
 		String[] termsOfUseContentMapValues,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -115,9 +115,9 @@ public class CPDefinitionVirtualSettingServiceSoap {
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettingSoap updateCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
-		String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, String sampleUrl,
-		boolean termsOfUseRequired, String[] termsOfUseContentMapLanguageIds,
+		int activationStatus, long duration, int maxUsages, boolean useSample,
+		long sampleFileEntryId, String sampleUrl, boolean termsOfUseRequired,
+		String[] termsOfUseContentMapLanguageIds,
 		String[] termsOfUseContentMapValues,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

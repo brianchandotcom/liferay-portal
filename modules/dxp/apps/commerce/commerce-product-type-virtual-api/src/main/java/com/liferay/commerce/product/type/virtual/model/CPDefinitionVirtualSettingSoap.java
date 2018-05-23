@@ -200,11 +200,11 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 		_url = url;
 	}
 
-	public String getActivationStatus() {
+	public int getActivationStatus() {
 		return _activationStatus;
 	}
 
-	public void setActivationStatus(String activationStatus) {
+	public void setActivationStatus(int activationStatus) {
 		_activationStatus = activationStatus;
 	}
 
@@ -300,7 +300,7 @@ public class CPDefinitionVirtualSettingSoap implements Serializable {
 	private long _CPDefinitionId;
 	private long _fileEntryId;
 	private String _url;
-	private String _activationStatus;
+	private int _activationStatus;
 	private long _duration;
 	private int _maxUsages;
 	private boolean _useSample;

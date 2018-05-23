@@ -10,7 +10,7 @@ create table CPDefinitionVirtualSetting (
 	CPDefinitionId LONG,
 	fileEntryId LONG,
 	url VARCHAR(75) null,
-	activationStatus VARCHAR(75) null,
+	activationStatus INTEGER,
 	duration LONG,
 	maxUsages INTEGER,
 	useSample BOOLEAN,

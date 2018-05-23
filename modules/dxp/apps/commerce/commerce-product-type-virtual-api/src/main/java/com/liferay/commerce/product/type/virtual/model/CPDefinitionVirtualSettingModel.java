@@ -262,15 +262,14 @@ public interface CPDefinitionVirtualSettingModel extends BaseModel<CPDefinitionV
 	 *
 	 * @return the activation status of this cp definition virtual setting
 	 */
-	@AutoEscape
-	public String getActivationStatus();
+	public int getActivationStatus();
 
 	/**
 	 * Sets the activation status of this cp definition virtual setting.
 	 *
 	 * @param activationStatus the activation status of this cp definition virtual setting
 	 */
-	public void setActivationStatus(String activationStatus);
+	public void setActivationStatus(int activationStatus);
 
 	/**
 	 * Returns the duration of this cp definition virtual setting.

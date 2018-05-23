@@ -158,7 +158,7 @@ public class CPDefinitionVirtualSettingWrapper
 			setUrl(url);
 		}
 
-		String activationStatus = (String)attributes.get("activationStatus");
+		Integer activationStatus = (Integer)attributes.get("activationStatus");
 
 		if (activationStatus != null) {
 			setActivationStatus(activationStatus);
@@ -237,7 +237,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @return the activation status of this cp definition virtual setting
 	*/
 	@Override
-	public String getActivationStatus() {
+	public int getActivationStatus() {
 		return _cpDefinitionVirtualSetting.getActivationStatus();
 	}
 
@@ -653,7 +653,7 @@ public class CPDefinitionVirtualSettingWrapper
 	* @param activationStatus the activation status of this cp definition virtual setting
 	*/
 	@Override
-	public void setActivationStatus(String activationStatus) {
+	public void setActivationStatus(int activationStatus) {
 		_cpDefinitionVirtualSetting.setActivationStatus(activationStatus);
 	}
 

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem">
+		<field name="uuid" type="String" />
+		<field name="commerceVirtualOrderItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceOrderItemId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="url" type="String" />
+		<field name="activationStatus" type="int" />
+		<field name="duration" type="long" />
+		<field name="usages" type="int" />
+		<field name="maxUsages" type="int" />
+		<field name="active" type="boolean" />
+		<field name="startDate" type="Date" />
+		<field name="endDate" type="Date" />
+	</model>
+</model-hints>

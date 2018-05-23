@@ -79,9 +79,9 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 		long cpDefinitionId, long fileEntryId, String url,
-		String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, String sampleUrl,
-		boolean termsOfUseRequired, Map<Locale, String> termsOfUseContentMap,
+		int activationStatus, long duration, int maxUsages, boolean useSample,
+		long sampleFileEntryId, String sampleUrl, boolean termsOfUseRequired,
+		Map<Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -218,6 +218,10 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting(
 		long CPDefinitionVirtualSettingId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPDefinitionVirtualSetting getCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId) throws PortalException;
+
 	/**
 	* Returns the cp definition virtual setting matching the UUID and group.
 	*
@@ -310,9 +314,9 @@ public interface CPDefinitionVirtualSettingLocalService extends BaseLocalService
 
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
-		String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, String sampleUrl,
-		boolean termsOfUseRequired, Map<Locale, String> termsOfUseContentMap,
+		int activationStatus, long duration, int maxUsages, boolean useSample,
+		long sampleFileEntryId, String sampleUrl, boolean termsOfUseRequired,
+		Map<Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		ServiceContext serviceContext) throws PortalException;
 }

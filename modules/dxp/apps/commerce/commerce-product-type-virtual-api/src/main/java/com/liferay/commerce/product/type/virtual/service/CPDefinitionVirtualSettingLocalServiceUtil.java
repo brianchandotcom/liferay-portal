@@ -57,9 +57,8 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 		long cpDefinitionId, long fileEntryId, String url,
-		String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, String sampleUrl,
-		boolean termsOfUseRequired,
+		int activationStatus, long duration, int maxUsages, boolean useSample,
+		long sampleFileEntryId, String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -247,6 +246,13 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 				   .getCPDefinitionVirtualSetting(CPDefinitionVirtualSettingId);
 	}
 
+	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting getCPDefinitionVirtualSettingByCPDefinitionId(
+		long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
+	}
+
 	/**
 	* Returns the cp definition virtual setting matching the UUID and group.
 	*
@@ -357,9 +363,8 @@ public class CPDefinitionVirtualSettingLocalServiceUtil {
 
 	public static com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 		long cpDefinitionVirtualSettingId, long fileEntryId, String url,
-		String activationStatus, long duration, int maxUsages,
-		boolean useSample, long sampleFileEntryId, String sampleUrl,
-		boolean termsOfUseRequired,
+		int activationStatus, long duration, int maxUsages, boolean useSample,
+		long sampleFileEntryId, String sampleUrl, boolean termsOfUseRequired,
 		java.util.Map<java.util.Locale, String> termsOfUseContentMap,
 		long termsOfUseJournalArticleResourcePrimKey,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

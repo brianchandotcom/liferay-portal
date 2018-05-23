@@ -144,7 +144,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 
 		newCPDefinitionVirtualSetting.setUrl(RandomTestUtil.randomString());
 
-		newCPDefinitionVirtualSetting.setActivationStatus(RandomTestUtil.randomString());
+		newCPDefinitionVirtualSetting.setActivationStatus(RandomTestUtil.nextInt());
 
 		newCPDefinitionVirtualSetting.setDuration(RandomTestUtil.nextLong());
 
@@ -550,7 +550,7 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 
 		cpDefinitionVirtualSetting.setUrl(RandomTestUtil.randomString());
 
-		cpDefinitionVirtualSetting.setActivationStatus(RandomTestUtil.randomString());
+		cpDefinitionVirtualSetting.setActivationStatus(RandomTestUtil.nextInt());
 
 		cpDefinitionVirtualSetting.setDuration(RandomTestUtil.nextLong());
 

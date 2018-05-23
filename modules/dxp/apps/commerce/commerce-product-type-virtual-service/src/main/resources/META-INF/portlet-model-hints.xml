@@ -15,7 +15,7 @@
 		<field name="url" type="String">
 			<validator name="url" />
 		</field>
-		<field name="activationStatus" type="String" />
+		<field name="activationStatus" type="int" />
 		<field name="duration" type="long" />
 		<field name="maxUsages" type="int">
 			<validator name="number" />

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-directory",
-		"com.liferay.portlet.display-category=category.community",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.icon=/icons/directory.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",

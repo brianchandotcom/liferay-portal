@@ -53,7 +53,7 @@ public class FolderNestedCollectionRouter
 			this::_getPageItems
 		).addCreator(
 			this::_addFolder,
-			_hasPermission.forAddingIn(FolderIdentifier.class)::apply,
+			_hasPermission.forAddingIn(FolderIdentifier.class),
 			FolderForm::buildForm
 		).build();
 	}

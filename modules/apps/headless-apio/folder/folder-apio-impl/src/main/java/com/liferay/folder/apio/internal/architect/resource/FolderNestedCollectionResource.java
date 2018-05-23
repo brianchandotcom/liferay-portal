@@ -55,7 +55,7 @@ public class FolderNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addFolder,
-			_hasPermission.forAddingIn(RootFolderIdentifier.class)::apply,
+			_hasPermission.forAddingIn(RootFolderIdentifier.class),
 			FolderForm::buildForm
 		).build();
 	}

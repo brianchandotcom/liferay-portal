@@ -127,7 +127,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
-		CreationMenu creationMenu = new CreationMenu();
+		CreationMenu creationMenu = null;
 
 		MBCategory category = (MBCategory)_request.getAttribute(
 			WebKeys.MESSAGE_BOARDS_CATEGORY);
@@ -141,6 +141,10 @@ public class MBEntriesManagementToolbarDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), categoryId,
 				ActionKeys.ADD_CATEGORY)) {
+
+			if (creationMenu == null) {
+				creationMenu = new CreationMenu();
+			}
 
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
@@ -166,6 +170,10 @@ public class MBEntriesManagementToolbarDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), categoryId,
 				ActionKeys.ADD_MESSAGE)) {
+
+			if (creationMenu == null) {
+				creationMenu = new CreationMenu();
+			}
 
 			creationMenu.addDropdownItem(
 				dropdownItem -> {

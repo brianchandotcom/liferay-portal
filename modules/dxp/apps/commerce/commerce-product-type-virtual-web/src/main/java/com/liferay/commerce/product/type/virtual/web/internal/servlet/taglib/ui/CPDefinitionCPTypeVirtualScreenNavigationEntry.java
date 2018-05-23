@@ -117,7 +117,7 @@ public class CPDefinitionCPTypeVirtualScreenNavigationEntry
 		}
 
 		_jspRenderer.renderJSP(
-			_setServletContext, httpServletRequest, httpServletResponse,
+			_servletContext, httpServletRequest, httpServletResponse,
 			"/edit_definition_virtual_setting.jsp");
 	}
 
@@ -146,6 +146,6 @@ public class CPDefinitionCPTypeVirtualScreenNavigationEntry
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
 	)
-	private ServletContext _setServletContext;
+	private ServletContext _servletContext;
 
 }

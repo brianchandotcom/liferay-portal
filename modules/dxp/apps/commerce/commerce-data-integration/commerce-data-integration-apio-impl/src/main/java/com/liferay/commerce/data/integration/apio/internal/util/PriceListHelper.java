@@ -45,71 +45,6 @@ public class PriceListHelper {
 		);
 	}
 
-	public CommercePriceList addCommercePriceList(
-			long groupId, String currency, String name, Double priority,
-			Boolean neverExpire, Date displayDate, Date expirationDate,
-			String externalReferenceCode)
-		throws PortalException {
-
-		long commerceCurrencyId = _getCommerceCurrencyId(groupId, currency);
-
-		if (neverExpire == null) {
-			neverExpire = Boolean.TRUE;
-		}
-
-		if (priority == null) {
-			priority = 0D;
-		}
-
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId);
-
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		if (displayDate != null) {
-			displayCalendar = _convertDateToCalendar(displayDate);
-		}
-
-		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
-		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
-		int displayDateYear = displayCalendar.get(Calendar.YEAR);
-		int displayDateHour = displayCalendar.get(Calendar.HOUR);
-		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
-		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
-
-		if (displayDateAmPm == Calendar.PM) {
-			displayDateHour += 12;
-		}
-
-		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		expirationCalendar.add(Calendar.MONTH, 1);
-
-		if (expirationDate != null) {
-			expirationCalendar = _convertDateToCalendar(expirationDate);
-		}
-
-		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
-		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
-		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
-		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
-		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
-		int expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
-
-		if (expirationDateAmPm == Calendar.PM) {
-			expirationDateHour += 12;
-		}
-
-		return _commercePriceListService.addCommercePriceList(
-			commerceCurrencyId, name, priority, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, externalReferenceCode,
-			neverExpire, serviceContext);
-	}
-
 	public CommercePriceList getCommercePriceList(Long commercePriceListId)
 		throws PortalException {
 
@@ -184,6 +119,85 @@ public class PriceListHelper {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
+	}
+
+	public CommercePriceList upsertCommercePriceList(
+			long groupId, String currency, String name, Double priority,
+			Boolean neverExpire, Date displayDate, Date expirationDate,
+			String externalReferenceCode)
+		throws PortalException {
+
+		long commerceCurrencyId = _getCommerceCurrencyId(groupId, currency);
+
+		if (neverExpire == null) {
+			neverExpire = Boolean.TRUE;
+		}
+
+		if (priority == null) {
+			priority = 0D;
+		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			groupId);
+
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		if (displayDate != null) {
+			displayCalendar = _convertDateToCalendar(displayDate);
+		}
+
+		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
+		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = displayCalendar.get(Calendar.YEAR);
+		int displayDateHour = displayCalendar.get(Calendar.HOUR);
+		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
+		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+			serviceContext.getTimeZone());
+
+		expirationCalendar.add(Calendar.MONTH, 1);
+
+		if (expirationDate != null) {
+			expirationCalendar = _convertDateToCalendar(expirationDate);
+		}
+
+		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
+		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
+		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
+		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
+		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
+		int expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
+
+		if (expirationDateAmPm == Calendar.PM) {
+			expirationDateHour += 12;
+		}
+
+		CommercePriceList commercePriceList =
+			_commercePriceListService.fetchByExternalReferenceCode(
+				externalReferenceCode);
+
+		if (commercePriceList != null) {
+			return _commercePriceListService.updateCommercePriceList(
+				commercePriceList.getCommercePriceListId(), commerceCurrencyId,
+				name, priority, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
+		}
+
+		return _commercePriceListService.addCommercePriceList(
+			commerceCurrencyId, name, priority, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, externalReferenceCode,
 			neverExpire, serviceContext);
 	}
 

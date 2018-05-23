@@ -122,7 +122,7 @@ public class PriceListNestedCollectionResource
 		throws PortalException {
 
 		try {
-			return _priceListHelper.addCommercePriceList(
+			return _priceListHelper.upsertCommercePriceList(
 				groupId, priceListForm.getCurrency(), priceListForm.getName(),
 				priceListForm.getPriority(), priceListForm.isNeverExpire(),
 				priceListForm.getDisplayDate(),

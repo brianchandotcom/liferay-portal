@@ -47,30 +47,6 @@ public class PriceEntryHelper {
 		);
 	}
 
-	public CommercePriceEntry addCommercePriceEntry(
-			Long skuID, Long commercePriceListId, String externalReferenceCode,
-			Double price, Double promoPrice)
-		throws PortalException {
-
-		CommercePriceList commercePriceList =
-			_priceListHelper.getCommercePriceList(commercePriceListId);
-
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commercePriceList.getGroupId());
-
-		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(skuID);
-
-		if (cpInstance == null) {
-			throw new NotFoundException(
-				"Unable to find Product Instance with ID: " + skuID);
-		}
-
-		return _commercePriceEntryService.addCommercePriceEntry(
-			skuID, commercePriceListId, externalReferenceCode,
-			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
-			serviceContext);
-	}
-
 	public CommercePriceEntry getCommercePriceEntry(Long commercePriceEntryId) {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.fetchCommercePriceEntry(
@@ -97,6 +73,41 @@ public class PriceEntryHelper {
 		return _commercePriceEntryService.updateCommercePriceEntry(
 			commercePriceEntryId, BigDecimal.valueOf(price),
 			BigDecimal.valueOf(promoPrice), serviceContext);
+	}
+
+	public CommercePriceEntry upsertCommercePriceEntry(
+			Long skuID, Long commercePriceListId, String externalReferenceCode,
+			Double price, Double promoPrice)
+		throws PortalException {
+
+		CommercePriceList commercePriceList =
+			_priceListHelper.getCommercePriceList(commercePriceListId);
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commercePriceList.getGroupId());
+
+		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(skuID);
+
+		if (cpInstance == null) {
+			throw new NotFoundException(
+				"Unable to find Product Instance with ID: " + skuID);
+		}
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryService.fetchByExternalReferenceCode(
+				externalReferenceCode);
+
+		if (commercePriceEntry != null) {
+			return _commercePriceEntryService.updateCommercePriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(),
+				BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
+				serviceContext);
+		}
+
+		return _commercePriceEntryService.addCommercePriceEntry(
+			skuID, commercePriceListId, externalReferenceCode,
+			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
+			serviceContext);
 	}
 
 	private static CPInstance _getCPInstance(

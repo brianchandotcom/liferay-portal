@@ -146,17 +146,20 @@ public class FjordSiteInitializer implements SiteInitializer {
 			_addLayout(
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Home", fragmentEntriesHome, serviceContext);
+				"Home", fragmentEntriesHome, _PATH + "/fragments/home",
+				serviceContext);
 
 			_addLayout(
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Features", fragmentEntriesFeatures, serviceContext);
+				"Features", fragmentEntriesFeatures,
+				_PATH + "/fragments/features", serviceContext);
 
 			_addLayout(
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Download", fragmentEntriesDownload, serviceContext);
+				"Download", fragmentEntriesDownload,
+				_PATH + "/fragments/download", serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -253,12 +256,13 @@ public class FjordSiteInitializer implements SiteInitializer {
 
 	private void _addLayout(
 			long layoutPageTemplateCollectionId, String name,
-			List<FragmentEntry> fragmentEntries, ServiceContext serviceContext)
-		throws PortalException {
+			List<FragmentEntry> fragmentEntries, String path,
+			ServiceContext serviceContext)
+		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_addLayoutPageTemplateEntry(
-				layoutPageTemplateCollectionId, name, serviceContext);
+				layoutPageTemplateCollectionId, name, path, serviceContext);
 
 		long[] fragmentEntryIds = ListUtil.toLongArray(
 			fragmentEntries, FragmentEntryModel::getFragmentEntryId);
@@ -297,15 +301,20 @@ public class FjordSiteInitializer implements SiteInitializer {
 	}
 
 	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
-			long layoutPageTemplateCollectionId, String name,
+			long layoutPageTemplateCollectionId, String name, String path,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
+
+		long previewFileEntryId = _getPreviewFileEntryId(
+			path, StringUtil.toLowerCase(name) + "_thumbnail.jpg",
+			serviceContext);
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			layoutPageTemplateCollectionId, name,
-			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+			previewFileEntryId, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 	}
 
 	private ServiceContext _createServiceContext(long groupId)

@@ -178,56 +178,6 @@ if (user2 != null) {
 		)
 	);
 
-	<%
-	String privateMessagingPortletId = PortletProviderUtil.getPortletId("com.liferay.social.privatemessaging.model.UserThread", PortletProvider.Action.EDIT);
-	%>
-
-	<c:if test="<%= Validator.isNotNull(privateMessagingPortletId) && ((user2 == null) || (user2.getUserId() != themeDisplay.getUserId())) %>">
-		contactsToolbarChildren.push(
-			{
-				icon: 'icon-envelope',
-				id: '<portlet:namespace />sendMessageButton',
-				label: '<%= UnicodeLanguageUtil.get(request, "message") %>',
-				on: {
-					click: function(event) {
-						<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />
-
-						var uri = '<liferay-portlet:renderURL portletName="<%= privateMessagingPortletId %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
-
-						<c:choose>
-							<c:when test="<%= user2 != null %>">
-								var userIds = [<%= user2.getUserId() %>];
-							</c:when>
-							<c:otherwise>
-								var userIds = A.all('.lfr-contact-grid-item input').val();
-							</c:otherwise>
-						</c:choose>
-
-						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(privateMessagingPortletId) %>userIds=' + userIds.join(), uri) || uri;
-
-						Liferay.Util.openWindow(
-							{
-								dialog: {
-									centered: true,
-									constrain: true,
-									cssClass: 'private-messaging-portlet',
-									destroyOnHide: true,
-									height: 600,
-									modal: true,
-									plugins: [Liferay.WidgetZIndex],
-									width: 600
-								},
-								id: '<%= PortalUtil.getPortletNamespace(privateMessagingPortletId) %>Dialog',
-								title: '<%= UnicodeLanguageUtil.get(request, "new-message") %>',
-								uri: uri
-							}
-						);
-					}
-				}
-			}
-		);
-	</c:if>
-
 	contactsToolbarChildren.push(
 		new A.Button(
 			{

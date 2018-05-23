@@ -116,166 +116,169 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<liferay-frontend:info-bar-sidenav-toggler-button
 				icon="info-circle"
 				label="info"
+				typeMobile="relative"
 			/>
 		</liferay-frontend:info-bar-buttons>
 	</liferay-frontend:info-bar>
 </c:if>
 
-<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= workflowDefinition != null %>">
-		<div class="lfr-portal-workflow-sidenav sidenav-menu-slider">
-			<div class="sidebar sidebar-light sidenav-menu">
-				<div class="sidebar-header">
-					<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
-
-					<h4>
-						<%= HtmlUtil.escape(workflowDefinition.getTitle(LanguageUtil.getLanguageId(request))) %>
-					</h4>
+		<div class="sidenav-menu-slider sidenav-visible-xs">
+			<div class="sidebar sidebar-light">
+				<div class="tbar-visible-xs">
+					<nav class="component-tbar tbar">
+						<div class="container-fluid">
+							<ul class="tbar-nav">
+								<li class="tbar-item">
+									<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+								</li>
+							</ul>
+						</div>
+					</nav>
 				</div>
 
-				<liferay-ui:tabs
-					cssClass="navbar-no-collapse panel panel-default"
-					names="details,revision-history"
-					refresh="<%= false %>"
-					type="tabs nav-tabs-default "
-				>
-					<liferay-ui:section>
-						<div class="sidebar-list">
-
-							<%
-							String creatorUserName = workflowDefinitionDisplayContext.getCreatorUserName(workflowDefinition);
-							%>
-
-							<div class="card-row-padded created-date">
-								<div>
-									<span class="info-title">
-										<liferay-ui:message key="created" />
-									</span>
-								</div>
-
-								<span class="info-content lfr-card-modified-by-text">
-									<c:choose>
-										<c:when test="<%= creatorUserName == null %>">
-											<%= dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)) %>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)), HtmlUtil.escape(creatorUserName)} %>" key="x-by-x" translateArguments="<%= false %>" />
-										</c:otherwise>
-									</c:choose>
+				<div class="sidebar-header">
+					<div class="autofit-row sidebar-section">
+						<div class="autofit-col autofit-col-expand">
+							<h4 class="component-title">
+								<span class="text-truncate-inline">
+									<span class="text-truncate"><%= HtmlUtil.escape(workflowDefinition.getTitle(LanguageUtil.getLanguageId(request))) %></span>
 								</span>
-							</div>
-
-							<%
-							String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
-							%>
-
-							<div class="card-row-padded last-modified">
-								<div>
-									<span class="info-title">
-										<liferay-ui:message key="last-modified" />
-									</span>
-								</div>
-
-								<span class="info-content lfr-card-modified-by-text">
-									<c:choose>
-										<c:when test="<%= userName == null %>">
-											<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), HtmlUtil.escape(userName)} %>" key="x-by-x" translateArguments="<%= false %>" />
-										</c:otherwise>
-									</c:choose>
-								</span>
-							</div>
-
-							<div class="card-row-padded">
-								<div>
-									<span class="info-title">
-										<liferay-ui:message key="total-modifications" />
-									</span>
-								</div>
-
-								<span class="info-content lfr-card-modified-by-text">
-									<liferay-ui:message arguments='<%= new String[] {workflowDefinitionDisplayContext.getWorkflowDefinitionCount(workflowDefinition) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
-								</span>
-							</div>
+							</h4>
 						</div>
-					</liferay-ui:section>
+					</div>
+				</div>
 
-					<liferay-ui:section>
-						<div class="sidebar-body workflow-definition-sidebar">
+				<div class="sidebar-body">
+					<liferay-ui:tabs
+						cssClass="navigation-bar component-navigation-bar navbar-no-collapse"
+						names="details,revision-history"
+						refresh="<%= false %>"
+						type="tabs nav-tabs-default "
+					>
+						<liferay-ui:section>
+							<div style="margin-top:1.5rem;">
+
+								<%
+								String creatorUserName = workflowDefinitionDisplayContext.getCreatorUserName(workflowDefinition);
+								String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
+								%>
+
+								<dl class="sidebar-dl sidebar-section">
+									<dt class="sidebar-dt">
+										<liferay-ui:message key="created" />
+									</dt>
+									<dd class="sidebar-dd">
+										<c:choose>
+											<c:when test="<%= creatorUserName == null %>">
+												<%= dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)) %>
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)), creatorUserName} %>" key="x-by-x" translateArguments="<%= false %>" />
+											</c:otherwise>
+										</c:choose>
+									</dd>
+									<dt class="sidebar-dt">
+										<liferay-ui:message key="last-modified" />
+									</dt>
+									<dd class="sidebar-dd">
+										<c:choose>
+											<c:when test="<%= userName == null %>">
+												<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+											</c:otherwise>
+										</c:choose>
+									</dd>
+									<dt class="sidebar-dt">
+										<liferay-ui:message key="total-modifications" />
+									</dt>
+									<dd class="sidebar-dd">
+										<liferay-ui:message arguments='<%= new String[] {workflowDefinitionDisplayContext.getWorkflowDefinitionCount(workflowDefinition) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
+									</dd>
+									<dt class="sidebar-dt"></dt>
+									<dd class="sidebar-dd"></dd>
+								</dl>
+							</div>
+						</liferay-ui:section>
+
+						<liferay-ui:section>
 							<liferay-util:include page="/definition/view_workflow_definition_history.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="redirect" value="<%= redirect %>" />
 							</liferay-util:include>
-						</div>
-					</liferay-ui:section>
-				</liferay-ui:tabs>
+						</liferay-ui:section>
+					</liferay-ui:tabs>
+				</div>
 			</div>
 		</div>
 	</c:if>
 
-	<div class="sidenav-content">
-		<aui:form method="post" name="fm">
-			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-			<aui:input name="name" type="hidden" value="<%= name %>" />
-			<aui:input name="version" type="hidden" value="<%= version %>" />
-			<aui:input name="content" type="hidden" value="<%= content %>" />
-			<aui:input name="successMessage" type="hidden" value='<%= active ? LanguageUtil.get(request, "workflow-updated-successfully") : LanguageUtil.get(request, "workflow-published-successfully") %>' />
+	<div class="container-fluid-1280">
+		<div class="sidenav-content">
+			<aui:form method="post" name="fm">
+				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+				<aui:input name="name" type="hidden" value="<%= name %>" />
+				<aui:input name="version" type="hidden" value="<%= version %>" />
+				<aui:input name="content" type="hidden" value="<%= content %>" />
+				<aui:input name="successMessage" type="hidden" value='<%= active ? LanguageUtil.get(request, "workflow-updated-successfully") : LanguageUtil.get(request, "workflow-published-successfully") %>' />
 
-			<div class="card-horizontal main-content-card">
-				<div class="card-row-padded">
-					<liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="please-name-your-workflow-before-publishing" />
+				<div class="card-horizontal main-content-card">
+					<div class="card-row-padded">
+						<liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="please-name-your-workflow-before-publishing" />
 
-					<aui:fieldset cssClass="workflow-definition-content">
-						<aui:col>
-							<aui:field-wrapper label="title">
-								<liferay-ui:input-localized
-									name="title"
-									placeholder="untitled-workflow"
-									xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>'
-								/>
-							</aui:field-wrapper>
-						</aui:col>
+						<aui:fieldset cssClass="workflow-definition-content">
+							<aui:col>
+								<aui:field-wrapper label="title">
+									<liferay-ui:input-localized
+										name="title"
+										placeholder="untitled-workflow"
+										xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>'
+									/>
+								</aui:field-wrapper>
+							</aui:col>
 
-						<aui:col cssClass="workflow-definition-upload">
-							<liferay-util:buffer
-								var="importFileMark"
-							>
-								<aui:a href="#" id="uploadLink">
-									<%= StringUtil.toLowerCase(LanguageUtil.get(request, "import-a-file")) %>
-								</aui:a>
-							</liferay-util:buffer>
+							<aui:col cssClass="workflow-definition-upload">
+								<liferay-util:buffer
+									var="importFileMark"
+								>
+									<aui:a href="#" id="uploadLink">
+										<%= StringUtil.toLowerCase(LanguageUtil.get(request, "import-a-file")) %>
+									</aui:a>
+								</liferay-util:buffer>
 
-							<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
 
-							<input accept="application/xml" class="workflow-definition-upload-source" id="<portlet:namespace />upload" type="file" />
-						</aui:col>
+								<input accept="application/xml" class="workflow-definition-upload-source" id="<portlet:namespace />upload" type="file" />
+							</aui:col>
 
-						<aui:col cssClass="workflow-definition-content-source-wrapper" id="contentSourceWrapper">
-							<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
-						</aui:col>
-					</aui:fieldset>
+							<aui:col cssClass="workflow-definition-content-source-wrapper" id="contentSourceWrapper">
+								<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
+							</aui:col>
+						</aui:fieldset>
+					</div>
 				</div>
-			</div>
 
-			<aui:button-row>
-
-				<%
-				String taglibUpdateOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "publishDefinition');";
-				%>
-
-				<aui:button onClick="<%= taglibUpdateOnClick %>" primary="<%= true %>" value='<%= (workflowDefinition == null || !active) ? "publish" : "update" %>' />
-
-				<c:if test="<%= (workflowDefinition == null) || !active %>">
+				<aui:button-row>
 
 					<%
-					String taglibSaveOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveDefinition');";
+					String taglibUpdateOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "publishDefinition');";
 					%>
 
-					<aui:button onClick="<%= taglibSaveOnClick %>" value="save" />
-				</c:if>
-			</aui:button-row>
-		</aui:form>
+					<aui:button onClick="<%= taglibUpdateOnClick %>" primary="<%= true %>" value='<%= (workflowDefinition == null || !active) ? "publish" : "update" %>' />
+
+					<c:if test="<%= (workflowDefinition == null) || !active %>">
+
+						<%
+						String taglibSaveOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveDefinition');";
+						%>
+
+						<aui:button onClick="<%= taglibSaveOnClick %>" value="save" />
+					</c:if>
+				</aui:button-row>
+			</aui:form>
+		</div>
 	</div>
 </div>
 
@@ -440,6 +443,15 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			if (keycode == '13') {
 				event.preventDefault();
 			}
+		}
+	);
+
+	var sidenavSlider = $('#<portlet:namespace />infoPanelId');
+
+	sidenavSlider.on(
+		'open.lexicon.sidenav',
+		function(event) {
+			$(document).trigger('screenChange.lexicon.sidenav');
 		}
 	);
 </aui:script>

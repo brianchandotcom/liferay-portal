@@ -50,7 +50,7 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 </c:if>
 
 <aui:script use="liferay-marketplace-messenger">
-	var frame = A.one('#<portlet:namespace />frame');
+	var frame = document.getElementById('<portlet:namespace />frame');
 
 	Liferay.MarketplaceMessenger.init(
 		{
@@ -68,11 +68,11 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 			if ((response.cmd == 'resize') || (response.cmd == 'init')) {
 				if (response.height) {
-					frame.height(response.height + 50);
+					frame.style.height = response.height + 50 + 'px';
 				}
 
 				if (response.width) {
-					frame.width(response.width);
+					frame.style.width = response.width + 'px';
 				}
 			}
 
@@ -100,6 +100,8 @@ viewURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 				window.location = url;
 			}
 		},
-		A.Lang.emptyFnTrue
+		function() {
+			return true;
+		}
 	);
 </aui:script>

@@ -35,12 +35,12 @@
 		<echo message="Creating new Option complete with Values..." />
 
 		<execute macro="CommerceNavigator#gotoCommercePortletNavItem">
-			<var name="navItem" value="Option Templates" />
+			<var name="navItem" value="Options" />
 		</execute>
 
 		<execute function="Pause" locator1="2000" />
 
-		<execute macro="CPCommerceCatalog#newOptionTemplatesEntry">
+		<execute macro="CPCommerceCatalog#newOptionsEntry">
 			<var name="optionDescription" value="Option Description" />
 			<var name="optionFieldType" value="Select" />
 			<var name="optionTitle" value="Color" />

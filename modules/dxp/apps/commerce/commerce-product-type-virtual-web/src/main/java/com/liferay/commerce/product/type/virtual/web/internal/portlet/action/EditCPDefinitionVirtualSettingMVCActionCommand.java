@@ -36,10 +36,10 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Time;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -117,7 +117,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 		String url = ParamUtil.getString(actionRequest, "url");
-		String activationStatus = ParamUtil.getString(
+		int activationStatus = ParamUtil.getInteger(
 			actionRequest, "activationStatus");
 		long durationDays = ParamUtil.getLong(actionRequest, "durationDays");
 		int maxUsages = ParamUtil.getInteger(actionRequest, "maxUsages");
@@ -133,7 +133,7 @@ public class EditCPDefinitionVirtualSettingMVCActionCommand
 		long termsOfUseJournalArticleResourcePrimKey = ParamUtil.getLong(
 			actionRequest, "termsOfUseJournalArticleResourcePrimKey");
 
-		long duration = durationDays * Time.DAY;
+		long duration = TimeUnit.DAYS.toMillis(durationDays);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionVirtualSetting.class.getName(), actionRequest);

@@ -27,7 +27,7 @@
 		<column name="CPDefinitionId" type="long" />
 		<column name="fileEntryId" type="long" />
 		<column name="url" type="String" />
-		<column name="activationStatus" type="String" />
+		<column name="activationStatus" type="int" />
 		<column name="duration" type="long" />
 		<column name="maxUsages" type="int" />
 		<column name="useSample" type="boolean" />

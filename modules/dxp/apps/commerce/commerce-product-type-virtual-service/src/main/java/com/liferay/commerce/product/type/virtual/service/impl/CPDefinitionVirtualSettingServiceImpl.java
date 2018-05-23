@@ -35,7 +35,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 	@Override
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 			long cpDefinitionId, long fileEntryId, String url,
-			String activationStatus, long duration, int maxUsages,
+			int activationStatus, long duration, int maxUsages,
 			boolean useSample, long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
@@ -67,7 +67,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			CPDefinitionPermission.check(
 				getPermissionChecker(),
 				cpDefinitionVirtualSetting.getCPDefinitionId(),
-				ActionKeys.UPDATE);
+				ActionKeys.VIEW);
 		}
 
 		return cpDefinitionVirtualSetting;
@@ -76,7 +76,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 	@Override
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 			long cpDefinitionVirtualSettingId, long fileEntryId, String url,
-			String activationStatus, long duration, int maxUsages,
+			int activationStatus, long duration, int maxUsages,
 			boolean useSample, long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,

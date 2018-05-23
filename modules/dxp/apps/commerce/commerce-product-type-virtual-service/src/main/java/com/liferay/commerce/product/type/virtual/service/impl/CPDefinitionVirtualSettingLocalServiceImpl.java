@@ -47,7 +47,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 	@Override
 	public CPDefinitionVirtualSetting addCPDefinitionVirtualSetting(
 			long cpDefinitionId, long fileEntryId, String url,
-			String activationStatus, long duration, int maxUsages,
+			int activationStatus, long duration, int maxUsages,
 			boolean useSample, long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,
@@ -154,9 +154,18 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinitionVirtualSetting
+			getCPDefinitionVirtualSettingByCPDefinitionId(long cpDefinitionId)
+		throws PortalException {
+
+		return cpDefinitionVirtualSettingPersistence.findByCPDefinitionId(
+			cpDefinitionId);
+	}
+
+	@Override
 	public CPDefinitionVirtualSetting updateCPDefinitionVirtualSetting(
 			long cpDefinitionVirtualSettingId, long fileEntryId, String url,
-			String activationStatus, long duration, int maxUsages,
+			int activationStatus, long duration, int maxUsages,
 			boolean useSample, long sampleFileEntryId, String sampleUrl,
 			boolean termsOfUseRequired,
 			Map<Locale, String> termsOfUseContentMap,

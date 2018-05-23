@@ -69,7 +69,7 @@ public class VirtualCPTypeTestUtil {
 
 		return CPDefinitionVirtualSettingLocalServiceUtil.
 			addCPDefinitionVirtualSetting(
-				cpDefinitionId, fileEntryId, url, RandomTestUtil.randomString(),
+				cpDefinitionId, fileEntryId, url, RandomTestUtil.randomInt(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(), true,
 				sampleFileEntryId, sampleUrl, true, termsOfUseContentMap,
 				termsOfUseJournalArticleResourcePrimKey, serviceContext);

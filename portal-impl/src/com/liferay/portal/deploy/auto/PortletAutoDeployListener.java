@@ -79,7 +79,9 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			new PluginAutoDeployListenerHelper(file);
 
 		if (pluginAutoDeployListenerHelper.isMatchingFile(
-				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD)) {
+				"WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_STANDARD) ||
+			pluginAutoDeployListenerHelper.isMatchingFile(
+				"WEB-INF/beans.xml")) {
 
 			_portletDeployer = true;
 

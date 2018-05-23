@@ -108,6 +108,8 @@ public class PriceEntryNestedCollectionResource
 		).addDate(
 			"dateModified", CommercePriceEntry::getModifiedDate
 		).addNumber(
+			"id", CommercePriceEntry::getCommercePriceEntryId
+		).addNumber(
 			"price", CommercePriceEntry::getPrice
 		).addNumber(
 			"promoPrice", CommercePriceEntry::getPromoPrice

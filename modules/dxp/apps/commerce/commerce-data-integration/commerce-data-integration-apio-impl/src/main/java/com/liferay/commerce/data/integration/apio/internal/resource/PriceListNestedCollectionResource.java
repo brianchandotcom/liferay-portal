@@ -109,6 +109,8 @@ public class PriceListNestedCollectionResource
 		).addDate(
 			"expirationDate", CommercePriceList::getExpirationDate
 		).addNumber(
+			"id", CommercePriceList::getCommercePriceListId
+		).addNumber(
 			"priority", CommercePriceList::getPriority
 		).addString(
 			"currency", PriceListHelper::getCurrencyCode

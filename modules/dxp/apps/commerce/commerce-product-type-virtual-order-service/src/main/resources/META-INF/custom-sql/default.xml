@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemFinder.findByG_O_A">
+		<![CDATA[
+			SELECT
+				CommerceVirtualOrderItem.*
+			FROM
+				CommerceVirtualOrderItem
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceVirtualOrderItem.commerceOrderItemId
+			INNER JOIN
+				CommerceOrder ON
+					CommerceOrder.CommerceOrderId = CommerceOrderItem.CommerceOrderId
+			WHERE
+				(CommerceOrder.siteGroupId = ?) AND
+				(CommerceOrder.orderOrganizationId = ?) AND
+				(CommerceVirtualOrderItem.active_ = true)
+			ORDER BY
+				CommerceVirtualOrderItem.createDate
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemFinder.findByG_U_A">
+		<![CDATA[
+			SELECT
+				CommerceVirtualOrderItem.*
+			FROM
+				CommerceVirtualOrderItem
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceVirtualOrderItem.commerceOrderItemId
+			INNER JOIN
+				CommerceOrder ON
+					CommerceOrder.CommerceOrderId = CommerceOrderItem.CommerceOrderId
+			WHERE
+				(CommerceOrder.siteGroupId = ?) AND
+				(CommerceOrder.orderUserId = ?) AND
+				(CommerceVirtualOrderItem.active_ = true)
+			ORDER BY
+				CommerceVirtualOrderItem.createDate
+		]]>
+	</sql>
+</custom-sql>

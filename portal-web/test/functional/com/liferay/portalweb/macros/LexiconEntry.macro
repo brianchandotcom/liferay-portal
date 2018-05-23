@@ -31,7 +31,7 @@
 				</if>
 			</then>
 			<else>
-				<execute macro="Alert#waitForSuccessMessageHide" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</else>
 		</if>
 	</command>

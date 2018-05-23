@@ -1,0 +1,32 @@
+let alertContainer = document.getElementById('alertContainer');
+
+if (!alertContainer) {
+    alertContainer = document.createElement('div');
+    alertContainer.id = 'alertContainer';
+
+    dom.addClasses(alertContainer, 'alert-notifications alert-notifications-fixed');
+    dom.enterDocument(alertContainer);
+}
+else {
+    dom.removeChildren(alertContainer);
+}
+
+const clayToast = new ClayToast.default(
+    {
+        autoClose: true,
+        destroyOnHide: true,
+        message: '$message$',
+        spritemap: '$pathThemeImages$/lexicon/icons.svg',
+        style: 'success',
+        title: '$title$'
+    },
+    alertContainer
+);
+
+dom.removeClasses(clayToast.element, 'show');
+
+requestAnimationFrame(
+    function() {
+        dom.addClasses(clayToast.element, 'show');
+    }
+);

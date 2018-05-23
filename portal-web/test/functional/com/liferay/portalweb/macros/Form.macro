@@ -328,7 +328,7 @@
 	<command name="saveElementSet">
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="saveLocalized">

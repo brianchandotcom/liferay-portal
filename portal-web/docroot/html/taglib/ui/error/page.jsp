@@ -17,83 +17,62 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String key = (String)request.getAttribute("liferay-ui:error:key");
-String message = (String)request.getAttribute("liferay-ui:error:message");
+String alertMessage = (String)request.getAttribute("liferay-ui:error:alertMessage");
+String alertIcon = (String)request.getAttribute("liferay-ui:error:alertIcon");
+String alertStyle = (String)request.getAttribute("liferay-ui:error:alertStyle");
+String alertTitle = (String)request.getAttribute("liferay-ui:error:alertTitle");
+boolean embed = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:error:embed"));
 String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
-String targetNode = GetterUtil.getString((String)request.getAttribute("liferay-ui:error:targetNode"));
-boolean translateMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:error:translateMessage"));
-
-String bodyContentString = StringPool.BLANK;
-
-Object bodyContent = request.getAttribute("liferay-ui:error:bodyContent");
-
-if (bodyContent != null) {
-	bodyContentString = bodyContent.toString();
-}
 %>
 
 <c:choose>
-	<c:when test="<%= (key != null) && Validator.isNull(message) %>">
-		<c:if test="<%= SessionErrors.contains(portletRequest, key) %>">
-			<c:if test="<%= Validator.isNotNull(bodyContentString) %>">
-				<liferay-ui:alert
-					icon="exclamation-full"
-					message="<%= bodyContentString %>"
-					targetNode="<%= targetNode %>"
-					timeout="<%= 0 %>"
-					type="danger"
-				/>
+	<c:when test="<%= embed %>">
+		<div class="alert alert-<%= alertStyle %>" role="alert">
+			<span class="alert-indicator">
+				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-<%= alertIcon %>">
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#<%= alertIcon %>"></use>
+				</svg>
+			</span>
 
-				<%= rowBreak %>
-			</c:if>
-		</c:if>
-	</c:when>
-	<c:when test='<%= SessionErrors.contains(portletRequest, "warning") %>'>
-		<liferay-util:buffer
-			var="alertMessage"
-		>
-			<c:choose>
-				<c:when test="<%= message != null %>">
-					<liferay-ui:message key="<%= message %>" localizeKey="<%= translateMessage %>" />
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:message key='<%= (String)SessionErrors.get(portletRequest, "warning") %>' localizeKey="<%= translateMessage %>" />
-				</c:otherwise>
-			</c:choose>
-		</liferay-util:buffer>
-
-		<liferay-ui:alert
-			icon="exclamation-full"
-			message="<%= alertMessage %>"
-			targetNode="<%= targetNode %>"
-			timeout="<%= 0 %>"
-			type="warning"
-		/>
-
-		<%= rowBreak %>
-	</c:when>
-	<c:when test="<%= key == null %>">
-		<liferay-ui:alert
-			icon="exclamation-full"
-			message='<%= LanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>'
-			targetNode="<%= targetNode %>"
-			timeout="<%= 0 %>"
-			type="danger"
-		/>
+			<strong class="lead"><%= alertTitle %>:</strong><%= alertMessage %>
+		</div>
 
 		<%= rowBreak %>
 	</c:when>
 	<c:otherwise>
-		<c:if test="<%= SessionErrors.contains(portletRequest, key) %>">
-			<liferay-ui:alert
-				icon="exclamation-full"
-				message="<%= translateMessage ? LanguageUtil.get(resourceBundle, message) : message %>"
-				targetNode="<%= targetNode %>"
-				timeout="<%= 0 %>"
-				type="danger"
-			/>
+		<aui:script require="metal-dom/src/all/dom as dom,clay-alert@2.0.2/lib/ClayToast as ClayToast">
+			let alertContainer = document.getElementById('alertContainer');
 
-			<%= rowBreak %>
-		</c:if>
+			if (!alertContainer) {
+				alertContainer = document.createElement('div');
+				alertContainer.id = 'alertContainer';
+
+				dom.addClasses(alertContainer, 'alert-notifications alert-notifications-fixed');
+				dom.enterDocument(alertContainer);
+			}
+			else {
+				dom.removeChildren(alertContainer);
+			}
+
+			const clayToast = new ClayToast.default(
+				{
+					autoClose: true,
+					destroyOnHide: true,
+					message: '<%= alertMessage %>',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+					style: '<%= alertStyle %>',
+					title: '<%= alertTitle %>'
+				},
+				alertContainer
+			);
+
+			dom.removeClasses(clayToast.element, 'show');
+
+			requestAnimationFrame(
+				function() {
+					dom.addClasses(clayToast.element, 'show');
+				}
+			);
+		</aui:script>
 	</c:otherwise>
 </c:choose>

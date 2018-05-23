@@ -7,7 +7,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="gotoViaNotification">

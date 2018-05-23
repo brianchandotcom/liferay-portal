@@ -1168,7 +1168,7 @@
 
 		<execute macro="Button#clickSaveAsDraft" />
 
-		<execute macro="Alert#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />

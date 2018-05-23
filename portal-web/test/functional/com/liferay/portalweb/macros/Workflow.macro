@@ -190,7 +190,7 @@
 
 		<execute macro="Button#clickDone" />
 
-		<execute macro="Workflow#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="assignToMeTaskByActions">

@@ -1693,7 +1693,7 @@
 
 		<execute macro="CalendarEvent#delete" />
 
-		<execute macro="Alert#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="tearDownOnBusyDayInCurrentMonth">

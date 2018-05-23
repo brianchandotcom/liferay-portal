@@ -255,6 +255,15 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						resizable: false,
 						'toolbars.footer': [
 							{
+								cssClass: 'btn-link',
+								label: '<liferay-ui:message key="cancel" />',
+								on: {
+									click: function() {
+										Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
+									}
+								}
+							},
+							{
 								cssClass: 'btn-primary',
 								label: '<liferay-ui:message key="done" />',
 								on: {
@@ -268,15 +277,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 												}
 											}
 										);
-									}
-								}
-							},
-							{
-								cssClass: 'btn-link',
-								label: '<liferay-ui:message key="cancel" />',
-								on: {
-									click: function() {
-										Liferay.Util.getWindow('<portlet:namespace />settingsModal').hide();
 									}
 								}
 							}

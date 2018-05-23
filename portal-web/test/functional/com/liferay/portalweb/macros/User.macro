@@ -352,9 +352,9 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The email address you requested is reserved." />
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="The email address you requested is reserved." />
+		</execute>
 	</command>
 
 	<command name="addReservedScreenNameCP">
@@ -382,9 +382,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The screen name cannot contain only numeric values." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The screen name cannot contain only numeric values." />
 	</command>
 
 	<command name="addSMSViaMyAccount">
@@ -1692,7 +1690,9 @@
 
 		<execute function="Click" locator1="Button#SIGN_IN" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="Authentication failed. Please try again." />
+		</execute>
 
 		<if>
 			<equals arg1="${loginAttempts}" arg2="${maximumFailure}" />

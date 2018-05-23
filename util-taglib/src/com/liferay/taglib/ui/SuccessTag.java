@@ -14,22 +14,28 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTag;
 
 /**
@@ -81,31 +87,51 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 			bodyContentString = bodyContent.toString();
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
+			request, themeDisplay.getLocale());
+
 		if (Validator.isNotNull(bodyContentString)) {
 			message = bodyContentString;
 		}
 		else if (_translateMessage) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle =
-				TagResourceBundleUtil.getResourceBundle(
-					request, themeDisplay.getLocale());
-
 			message = LanguageUtil.get(resourceBundle, message);
 		}
 
-		AlertTag alertTag = new AlertTag();
+		Map<String, String> values = new HashMap<>();
 
-		alertTag.setIcon("check");
-		alertTag.setMessage(message);
-		alertTag.setTargetNode(_targetNode);
-		alertTag.setTimeout(_timeout);
-		alertTag.setType("success");
+		values.put("message", message);
+		values.put("pathThemeImages", themeDisplay.getPathThemeImages());
+		values.put("title", LanguageUtil.get(resourceBundle, "success"));
 
-		alertTag.doTag(pageContext);
+		if (_embed) {
+			String result = StringUtil.replace(
+				_EMBED_TMPL_CONTENT, StringPool.DOLLAR, StringPool.DOLLAR,
+				values);
+
+			JspWriter jspWriter = pageContext.getOut();
+
+			jspWriter.write(result);
+		}
+		else {
+			String result = StringUtil.replace(
+				_TOAST_TMPL_CONTENT, StringPool.DOLLAR, StringPool.DOLLAR,
+				values);
+
+			ScriptTag.doTag(
+				null,
+				"metal-dom/src/all/dom as dom,clay-alert@2.0.2/lib/ClayToast " +
+					"as ClayToast",
+				null, result, getBodyContent(), pageContext);
+		}
 
 		return EVAL_PAGE;
+	}
+
+	public void setEmbed(boolean embed) {
+		_embed = embed;
 	}
 
 	public void setKey(String key) {
@@ -132,6 +158,7 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_embed = true;
 		_hasMessage = false;
 		_key = null;
 		_message = null;
@@ -163,8 +190,15 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
+	private static final String _EMBED_TMPL_CONTENT = StringUtil.read(
+		SuccessTag.class, "success/embed.tmpl");
+
 	private static final String _PAGE = "/html/taglib/ui/success/page.jsp";
 
+	private static final String _TOAST_TMPL_CONTENT = StringUtil.read(
+		SuccessTag.class, "success/toast.tmpl");
+
+	private boolean _embed = true;
 	private boolean _hasMessage;
 	private String _key;
 	private String _message;

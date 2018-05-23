@@ -420,7 +420,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

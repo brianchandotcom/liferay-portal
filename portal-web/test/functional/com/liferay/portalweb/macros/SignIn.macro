@@ -142,7 +142,7 @@
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-				<execute macro="Alert#waitForSuccessMessageHide" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</while>
 
@@ -159,7 +159,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Alert#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Navigator#openURL" />
 	</command>

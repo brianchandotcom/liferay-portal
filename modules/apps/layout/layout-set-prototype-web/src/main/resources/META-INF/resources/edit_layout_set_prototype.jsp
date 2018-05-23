@@ -64,7 +64,7 @@ request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", layoutS
 request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 %>
 
-<liferay-ui:success key='<%= LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
+<liferay-ui:success embed="<%= false %>" key='<%= LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
 
 <liferay-util:include page="/merge_alert.jsp" servletContext="<%= application %>" />
 

@@ -91,12 +91,12 @@ else if (group.isStagingGroup()) {
 		</c:if>
 	</liferay-util:buffer>
 
-	<liferay-ui:success key="requestProcessed" message="<%= successHtml %>" />
+	<liferay-ui:success embed="<%= false %>" key="requestProcessed" message="<%= successHtml %>" />
 </c:if>
 
-<liferay-ui:success key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION %>" message="you-have-successfully-updated-the-setup" />
-<liferay-ui:success key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES %>" message="you-have-successfully-updated-your-preferences" />
+<liferay-ui:success embed="<%= false %>" key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION %>" message="you-have-successfully-updated-the-setup" />
+<liferay-ui:success embed="<%= false %>" key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES %>" message="you-have-successfully-updated-your-preferences" />
 
 <c:if test="<%= !MultiSessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE) %>">
-	<liferay-ui:error />
+	<liferay-ui:error embed="<%= false %>" />
 </c:if>

@@ -176,6 +176,14 @@ AUI.add(
 										modal: true,
 										'toolbars.footer': [
 											{
+												label: strings.cancel,
+												on: {
+													click: function() {
+														fullScreenDialog.hide();
+													}
+												}
+											},
+											{
 												cssClass: 'btn-primary',
 												label: strings.done,
 												on: {
@@ -186,14 +194,6 @@ AUI.add(
 																content: fullScreenEditor.get('value')
 															}
 														);
-													}
-												}
-											},
-											{
-												label: strings.cancel,
-												on: {
-													click: function() {
-														fullScreenDialog.hide();
 													}
 												}
 											}

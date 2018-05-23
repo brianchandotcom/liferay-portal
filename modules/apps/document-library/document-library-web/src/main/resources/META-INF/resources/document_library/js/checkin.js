@@ -11,19 +11,19 @@ AUI.add(
 							height: 400,
 							'toolbars.footer': [
 								{
-									cssClass: 'btn-primary',
-									label: saveButton.label,
-									on: {
-										click: saveButton.callback
-									}
-								},
-								{
 									cssClass: 'btn-link',
 									label: cancelLabel,
 									on: {
 										click: function() {
 											Liferay.Util.getWindow(contentId + 'Dialog').destroy();
 										}
+									}
+								},
+								{
+									cssClass: 'btn-primary',
+									label: saveButton.label,
+									on: {
+										click: saveButton.callback
 									}
 								}
 							],

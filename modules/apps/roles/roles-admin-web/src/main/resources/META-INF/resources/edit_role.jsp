@@ -45,10 +45,10 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 <c:if test="<%= role != null %>">
 	<c:choose>
 		<c:when test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
-			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions-and-assign-users", roleName) %>' />
+			<liferay-ui:success embed="<%= false %>" key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions-and-assign-users", roleName) %>' />
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions", roleName) %>' />
+			<liferay-ui:success embed="<%= false %>" key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions", roleName) %>' />
 		</c:otherwise>
 	</c:choose>
 </c:if>

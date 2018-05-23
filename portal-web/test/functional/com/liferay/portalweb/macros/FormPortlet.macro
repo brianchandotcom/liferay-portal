@@ -71,7 +71,9 @@
 	<command name="submitWithError">
 		<execute macro="FormPortlet#submit" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="${errorMessage}" />
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="${errorMessage}" />
+		</execute>
 	</command>
 
 	<command name="submitWithValidationError">

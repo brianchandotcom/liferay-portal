@@ -78,6 +78,16 @@ AUI.add(
 									},
 									'toolbars.footer': [
 										{
+											cssClass: 'btn-link close-modal',
+											id: 'cancelButton',
+											label: strings.cancel,
+											on: {
+												click: function() {
+													instance.close();
+												}
+											}
+										},
+										{
 											cssClass: 'btn-primary',
 											disabled: true,
 											id: 'addButton',
@@ -85,16 +95,6 @@ AUI.add(
 											on: {
 												click: function() {
 													instance._selectedItem = instance._currentItem;
-													instance.close();
-												}
-											}
-										},
-										{
-											cssClass: 'btn-link close-modal',
-											id: 'cancelButton',
-											label: strings.cancel,
-											on: {
-												click: function() {
 													instance.close();
 												}
 											}

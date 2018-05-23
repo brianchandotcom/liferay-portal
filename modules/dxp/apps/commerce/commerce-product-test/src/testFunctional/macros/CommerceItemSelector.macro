@@ -15,7 +15,7 @@
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
 
 		<execute function="Click" locator1="CommerceNavigation#SINGLE_ENTRY_CHECKBOX">
-			<var name="key_entryTitle" value="${entryTitle}" />
+			<var name="key_entryName" value="${entryName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_MODAL_FOOTER" />

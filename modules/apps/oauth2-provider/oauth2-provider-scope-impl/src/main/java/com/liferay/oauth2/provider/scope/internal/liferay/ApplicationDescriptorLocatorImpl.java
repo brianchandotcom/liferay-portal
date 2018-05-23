@@ -17,9 +17,9 @@ package com.liferay.oauth2.provider.scope.internal.liferay;
 import com.liferay.oauth2.provider.scope.internal.constants.OAuth2ProviderScopeConstants;
 import com.liferay.oauth2.provider.scope.liferay.ApplicationDescriptorLocator;
 import com.liferay.oauth2.provider.scope.spi.application.descriptor.ApplicationDescriptor;
-import com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -61,13 +61,12 @@ public class ApplicationDescriptorLocatorImpl
 		_applicationDescriptorServiceTrackerMap.close();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		target = "(default=true)"
-	)
-	private ApplicationDescriptor _defaultApplicationDescriptor;
-
 	private ServiceTrackerMap<String, ApplicationDescriptor>
 		_applicationDescriptorServiceTrackerMap;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL, target = "(default=true)"
+	)
+	private ApplicationDescriptor _defaultApplicationDescriptor;
 
 }

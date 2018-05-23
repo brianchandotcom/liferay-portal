@@ -1127,7 +1127,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Fragment_MultipleEditables.html" />
+			<var name="fileName" value="fragment_multipleeditables.html" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">

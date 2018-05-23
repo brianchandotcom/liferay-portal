@@ -61,7 +61,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -102,9 +101,7 @@ public class DDLViewRecordsDisplayContext {
 		User user = PortalUtil.getUser(liferayPortletRequest);
 
 		if (user == null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = _ddlRequestHelper.getThemeDisplay();
 
 			user = themeDisplay.getDefaultUser();
 		}

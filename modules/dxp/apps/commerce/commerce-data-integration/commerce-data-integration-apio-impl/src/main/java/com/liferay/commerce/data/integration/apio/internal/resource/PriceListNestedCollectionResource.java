@@ -56,8 +56,10 @@ public class PriceListNestedCollectionResource
 			PriceListIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<CommercePriceList, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<CommercePriceList, Long, Long> builder) {
+	public NestedCollectionRoutes<CommercePriceList, Long, Long>
+		collectionRoutes(
+			NestedCollectionRoutes.Builder<CommercePriceList, Long, Long>
+				builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -124,7 +126,8 @@ public class PriceListNestedCollectionResource
 				groupId, priceListForm.getCurrency(), priceListForm.getName(),
 				priceListForm.getPriority(), priceListForm.isNeverExpire(),
 				priceListForm.getDisplayDate(),
-				priceListForm.getExpirationDate());
+				priceListForm.getExpirationDate(),
+				priceListForm.getExternalReferenceCode());
 		}
 		catch (NoSuchCurrencyException nsce) {
 			throw new NotFoundException(

@@ -48,8 +48,8 @@ public class PriceEntryHelper {
 	}
 
 	public CommercePriceEntry addCommercePriceEntry(
-			Long skuID, Long commercePriceListId, Double price,
-			Double promoPrice)
+			Long skuID, Long commercePriceListId, String externalReferenceCode,
+			Double price, Double promoPrice)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
@@ -66,8 +66,9 @@ public class PriceEntryHelper {
 		}
 
 		return _commercePriceEntryService.addCommercePriceEntry(
-			skuID, commercePriceListId, BigDecimal.valueOf(price),
-			BigDecimal.valueOf(promoPrice), serviceContext);
+			skuID, commercePriceListId, externalReferenceCode,
+			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
+			serviceContext);
 	}
 
 	public CommercePriceEntry getCommercePriceEntry(Long commercePriceEntryId) {

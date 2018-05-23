@@ -57,8 +57,10 @@ public class PriceEntryNestedCollectionResource
 			PriceEntryIdentifier, Long, PriceListIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<CommercePriceEntry, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<CommercePriceEntry, Long, Long> builder) {
+	public NestedCollectionRoutes<CommercePriceEntry, Long, Long>
+		collectionRoutes(
+			NestedCollectionRoutes.Builder<CommercePriceEntry, Long, Long>
+				builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -122,6 +124,7 @@ public class PriceEntryNestedCollectionResource
 		try {
 			return _priceEntryHelper.addCommercePriceEntry(
 				priceEntryCreatorForm.getSkuID(), commercePriceListId,
+				priceEntryCreatorForm.getExternalReferenceCode(),
 				priceEntryCreatorForm.getPrice(),
 				priceEntryCreatorForm.getPromoPrice());
 		}

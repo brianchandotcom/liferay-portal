@@ -48,6 +48,8 @@ public class PriceListForm {
 			"displayDate", PriceListForm::_setDisplayDate
 		).addOptionalDate(
 			"expirationDate", PriceListForm::_setExpirationDate
+		).addOptionalString(
+			"externalReferenceCode", PriceListForm::_setExternalReferenceCode
 		).addRequiredBoolean(
 			"neverExpire", PriceListForm::_setNeverExpire
 		).addRequiredDouble(
@@ -69,6 +71,10 @@ public class PriceListForm {
 
 	public Date getExpirationDate() {
 		return _expirationDate;
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
 	}
 
 	public String getName() {
@@ -95,6 +101,10 @@ public class PriceListForm {
 		_expirationDate = expirationDate;
 	}
 
+	private void _setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	private void _setName(String name) {
 		_name = name;
 	}
@@ -110,6 +120,7 @@ public class PriceListForm {
 	private String _currency;
 	private Date _displayDate;
 	private Date _expirationDate;
+	private String _externalReferenceCode;
 	private String _name;
 	private Boolean _neverExpire;
 	private Double _priority;

@@ -51,6 +51,10 @@ public class PriceEntryCreatorForm {
 		).build();
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
 	public Double getPrice() {
 		return _price;
 	}
@@ -61,6 +65,10 @@ public class PriceEntryCreatorForm {
 
 	public Long getSkuID() {
 		return _skuID;
+	}
+
+	private void _setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
 	}
 
 	private void _setPrice(Double price) {
@@ -75,6 +83,7 @@ public class PriceEntryCreatorForm {
 		_skuID = skuID;
 	}
 
+	private String _externalReferenceCode;
 	private Double _price;
 	private Double _promoPrice;
 	private Long _skuID;

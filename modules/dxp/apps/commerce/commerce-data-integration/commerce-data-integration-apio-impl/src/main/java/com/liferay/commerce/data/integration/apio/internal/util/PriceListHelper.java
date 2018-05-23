@@ -47,7 +47,8 @@ public class PriceListHelper {
 
 	public CommercePriceList addCommercePriceList(
 			long groupId, String currency, String name, Double priority,
-			Boolean neverExpire, Date displayDate, Date expirationDate)
+			Boolean neverExpire, Date displayDate, Date expirationDate,
+			String externalReferenceCode)
 		throws PortalException {
 
 		long commerceCurrencyId = _getCommerceCurrencyId(groupId, currency);
@@ -105,8 +106,8 @@ public class PriceListHelper {
 			commerceCurrencyId, name, priority, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			expirationDateHour, expirationDateMinute, externalReferenceCode,
+			neverExpire, serviceContext);
 	}
 
 	public CommercePriceList getCommercePriceList(Long commercePriceListId)

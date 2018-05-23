@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=microblogs-portlet",
-		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.footer-portlet-javascript=/microblogs/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/microblogs/css/main.css",
 		"com.liferay.portlet.icon=/microblogs/icons/microblogs.png",

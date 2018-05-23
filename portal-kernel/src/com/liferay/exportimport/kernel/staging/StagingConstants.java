@@ -28,6 +28,9 @@ public class StagingConstants {
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		PropsUtil.get("lock.expiration.time." + Staging.class.getName()));
 
+	public static final String RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME =
+		"STAGING_RANGE_FROM_LAST_PUBLISH_DATE";
+
 	public static final String STAGED_PORTLET = "staged-portlet_";
 
 	public static final String STAGED_PREFIX = "staged--";

@@ -1,5 +1,0 @@
-dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	testIntegrationCompile project(":apps:social-networking:social-networking-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

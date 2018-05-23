@@ -108,6 +108,7 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 		'rowToggled',
 		function(event) {
 			var allSelectedElements = event.elements.allSelectedElements;
+
 			var arr = [];
 
 			allSelectedElements.each(
@@ -116,15 +117,20 @@ PortletURL portletURL = organizationItemSelectorViewDisplayContext.getPortletURL
 
 					var data = row.getDOM().dataset;
 
-					arr.push({id: data.id, name: data.name});
+					arr.push(
+						{
+							id: data.id,
+							name: data.name
+						}
+					);
 				}
 			);
 
-				Liferay.Util.getOpener().Liferay.fire(
-					'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-					{
-						data: arr
-					}
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
+				{
+					data: arr
+				}
 			);
 		}
 	);

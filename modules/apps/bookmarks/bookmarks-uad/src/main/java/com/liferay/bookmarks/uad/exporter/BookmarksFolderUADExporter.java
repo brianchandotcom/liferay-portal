@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.bookmarks.uad.constants;
+package com.liferay.bookmarks.uad.exporter;
+
+import com.liferay.user.associated.data.exporter.UADExporter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-public class BookmarksUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_BOOKMARKS_FOLDER = {
-			"userId", "statusByUserId"
-		};
+@Component(immediate = true, service = UADExporter.class)
+public class BookmarksFolderUADExporter extends BaseBookmarksFolderUADExporter {
 }

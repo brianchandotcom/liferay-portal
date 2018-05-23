@@ -43,7 +43,7 @@
 		<execute macro="CPCommerceCatalog#newOptionsEntry">
 			<var name="optionDescription" value="Option Description" />
 			<var name="optionFieldType" value="Select" />
-			<var name="optionTitle" value="Color" />
+			<var name="optionName" value="Color" />
 			<var name="optionValuesList" value="Black,Blue,White" />
 			<var name="valuePriority" value="1" />
 		</execute>
@@ -55,18 +55,18 @@
 		</execute>
 
 		<execute macro="CPCommerceCatalog#newProductsEntry">
-			<var name="productTitle" value="Simple T-Shirt" />
+			<var name="productName" value="Simple T-Shirt" />
 			<var name="productType" value="Simple" />
 		</execute>
 
 		<echo message="Associating the Option to the Product..." />
 
 		<execute macro="CommerceEntry#gotoMenuTab">
-			<var name="menuTab" value="Option Templates" />
+			<var name="menuTab" value="Options" />
 		</execute>
 
 		<execute macro="CommerceOptionsRel#assignOptionToProductsEntry">
-			<var name="optionTitle" value="Color" />
+			<var name="optionName" value="Color" />
 		</execute>
 
 		<echo message="Creating SKUs..." />
@@ -92,12 +92,12 @@
 		<echo message="Asserting all the attributes are correctly shown in Front Store..." />
 
 		<execute macro="CommerceNavigator#gotoFrontStoreProductPage">
-			<var name="productTitle" value="Simple T-Shirt" />
+			<var name="productName" value="Simple T-Shirt" />
 		</execute>
 
 		<execute macro="FrontStore#viewProductDetail">
 			<var name="FSOptionValuesList" value="Black:10.0,Blue:20.0,White:30.0" />
-			<var name="FSProductTitle" value="Simple T-Shirt" />
+			<var name="FSProductName" value="Simple T-Shirt" />
 		</execute>
 	</command>
 </definition>

@@ -79,7 +79,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		testRules.add(_deleteAfterTestRunTestRule);
 		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(_injectTestRule);
-		testRules.add(_connectionPoolLeakTestRule);
 
 		return testRules.toArray(new TestRule[testRules.size()]);
 	}

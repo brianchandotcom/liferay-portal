@@ -25,4 +25,17 @@
 		top: 0.5em;
 		z-index: 10;
 	}
+
+	&__fixed-text {
+		background-color: #FFF;
+		border-bottom: solid thin #F0F0F0;
+		border-left: 5ch solid #F0F0F0;
+		font-size: 0.85rem;
+		line-height: 1.5rem;
+		padding: 0 0 0 0.5ch;
+
+		&__help {
+			margin-right: 0.55rem;
+		}
+	}
 }

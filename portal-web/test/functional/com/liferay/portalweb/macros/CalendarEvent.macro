@@ -1732,7 +1732,7 @@
 	</command>
 
 	<command name="viewAllDay">
-		<for list="${viewType}" param="Day,Week,Month">
+		<for list="Day,Week,Month" param="viewType">
 			<execute macro="CalendarNavigator#gotoView">
 				<var name="viewType" value="${viewType}" />
 			</execute>
@@ -1936,7 +1936,7 @@
 	</command>
 
 	<command name="viewEventNotToday">
-		<for list="${viewType}" param="Day,Week,Month">
+		<for list="Day,Week,Month" param="viewType">
 			<execute macro="CalendarNavigator#gotoView">
 				<var name="viewType" value="${viewType}" />
 			</execute>
@@ -2275,7 +2275,7 @@
 	</command>
 
 	<command name="viewYearly">
-		<for list="${viewType}" param="Day,Week,Month">
+		<for list="Day,Week,Month" param="viewType">
 			<execute macro="CalendarNavigator#gotoView">
 				<var name="viewType" value="${viewType}" />
 			</execute>

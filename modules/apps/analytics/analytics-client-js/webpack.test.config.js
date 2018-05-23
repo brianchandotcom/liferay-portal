@@ -1,13 +1,27 @@
 module.exports = {
 	devtool: 'inline-source-map',
+	mode: 'development',
 	module: {
-		loaders: [
-			{ test: /\.js$/, loader: 'babel-loader' },
+		rules: [
 			{
-				loader: 'istanbul-instrumenter-loader',
-				exclude: /(test|node_modules|bower_components)\//,
 				test: /\.js$/,
-				enforce: 'post',
+				exclude: /(node_modules)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						compact: false,
+					},
+				},
+			},
+			{
+				test: /\.js$/,
+				exclude: /(test|node_modules)/,
+				use: {
+					loader: 'istanbul-instrumenter-loader',
+					query: {
+						esModules: true
+					}
+				},
 			}
 		]
 	}

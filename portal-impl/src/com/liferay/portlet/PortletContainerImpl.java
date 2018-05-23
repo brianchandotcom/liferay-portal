@@ -852,10 +852,9 @@ public class PortletContainerImpl implements PortletContainer {
 		int portletSpecMajorVersion = PortletAppUtil.getSpecMajorVersion(
 			portletApp);
 
-		if (PortletAppUtil.isPortletSpec3(portletApp)) {
+		if (portletSpecMajorVersion == 3) {
 			WindowState requestWindowState = WindowStateFactory.getWindowState(
-				ParamUtil.getString(request, "p_p_state"),
-				portletSpecMajorVersion);
+				ParamUtil.getString(request, "p_p_state"), 3);
 
 			if (WindowState.UNDEFINED.equals(requestWindowState)) {
 				windowState = requestWindowState;

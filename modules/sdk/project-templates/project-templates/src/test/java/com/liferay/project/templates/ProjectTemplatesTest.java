@@ -2795,13 +2795,16 @@ public class ProjectTemplatesTest {
 
 		Path buildFilePath = buildFile.toPath();
 
+		String executeNpmTaskImport =
+			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask";
 		String executeNpmTaskScript =
-			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask\n" +
-				"tasks.withType(ExecuteNpmTask) {\n" + "registry = '" +
-					_NODEJS_NPM_CI_REGISTRY + "'}";
+			"tasks.withType(ExecuteNpmTask) {registry = '" +
+				_NODEJS_NPM_CI_REGISTRY + "'}";
 
 		Files.write(
-			buildFilePath, executeNpmTaskScript.getBytes(),
+			buildFilePath,
+			(System.lineSeparator() + executeNpmTaskImport +
+				System.lineSeparator() + executeNpmTaskScript).getBytes(),
 			StandardOpenOption.APPEND);
 	}
 

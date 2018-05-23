@@ -279,18 +279,18 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	public void setType(int type);
 
 	/**
-	 * Returns the html preview entry ID of this layout page template entry.
+	 * Returns the preview file entry ID of this layout page template entry.
 	 *
-	 * @return the html preview entry ID of this layout page template entry
+	 * @return the preview file entry ID of this layout page template entry
 	 */
-	public long getHtmlPreviewEntryId();
+	public long getPreviewFileEntryId();
 
 	/**
-	 * Sets the html preview entry ID of this layout page template entry.
+	 * Sets the preview file entry ID of this layout page template entry.
 	 *
-	 * @param htmlPreviewEntryId the html preview entry ID of this layout page template entry
+	 * @param previewFileEntryId the preview file entry ID of this layout page template entry
 	 */
-	public void setHtmlPreviewEntryId(long htmlPreviewEntryId);
+	public void setPreviewFileEntryId(long previewFileEntryId);
 
 	/**
 	 * Returns the default template of this layout page template entry.

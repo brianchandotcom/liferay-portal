@@ -14,13 +14,16 @@
 
 package com.liferay.fragment.model.impl;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
-import com.liferay.html.preview.model.HtmlPreviewEntry;
-import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
@@ -36,19 +39,25 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
-		if (getHtmlPreviewEntryId() <= 0) {
+		if (getPreviewFileEntryId() <= 0) {
 			return StringPool.BLANK;
 		}
 
-		HtmlPreviewEntry htmlPreviewEntry =
-			HtmlPreviewEntryLocalServiceUtil.fetchHtmlPreviewEntry(
-				getHtmlPreviewEntryId());
+		try {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				getPreviewFileEntryId());
 
-		if (htmlPreviewEntry == null) {
-			return StringPool.BLANK;
+			if (fileEntry == null) {
+				return StringPool.BLANK;
+			}
+
+			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error("Unable to get preview entry image URL", e);
 		}
 
-		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -76,5 +85,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		zipWriter.addEntry(path + "/src/index.js", getJs());
 		zipWriter.addEntry(path + "/src/index.html", getHtml());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryImpl.class);
 
 }

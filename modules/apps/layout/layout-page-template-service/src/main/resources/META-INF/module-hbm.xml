@@ -32,7 +32,7 @@
 		<property name="classTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="htmlPreviewEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="previewFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="defaultTemplate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="layoutPrototypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />

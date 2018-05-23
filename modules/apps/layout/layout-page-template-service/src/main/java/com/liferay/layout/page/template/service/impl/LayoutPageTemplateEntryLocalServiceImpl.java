@@ -60,6 +60,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addLayoutPageTemplateEntry(
+			userId, groupId, layoutPageTemplateCollectionId, name, type,
+			layoutPrototypeId, 0, status, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			long userId, long groupId, long layoutPageTemplateCollectionId,
+			String name, int type, long layoutPrototypeId,
+			long previewFileEntryId, int status, ServiceContext serviceContext)
+		throws PortalException {
+
 		// Layout page template entry
 
 		User user = userLocalService.getUser(userId);
@@ -84,7 +96,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setName(name);
 		layoutPageTemplateEntry.setType(type);
-		layoutPageTemplateEntry.setHtmlPreviewEntryId(0);
+		layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
 		layoutPageTemplateEntry.setDefaultTemplate(false);
 		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 		layoutPageTemplateEntry.setStatus(status);

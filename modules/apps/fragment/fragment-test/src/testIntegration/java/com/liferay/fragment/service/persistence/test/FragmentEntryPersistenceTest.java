@@ -148,7 +148,7 @@ public class FragmentEntryPersistenceTest {
 
 		newFragmentEntry.setJs(RandomTestUtil.randomString());
 
-		newFragmentEntry.setHtmlPreviewEntryId(RandomTestUtil.nextLong());
+		newFragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
 		newFragmentEntry.setStatus(RandomTestUtil.nextInt());
 
@@ -190,8 +190,8 @@ public class FragmentEntryPersistenceTest {
 			newFragmentEntry.getHtml());
 		Assert.assertEquals(existingFragmentEntry.getJs(),
 			newFragmentEntry.getJs());
-		Assert.assertEquals(existingFragmentEntry.getHtmlPreviewEntryId(),
-			newFragmentEntry.getHtmlPreviewEntryId());
+		Assert.assertEquals(existingFragmentEntry.getPreviewFileEntryId(),
+			newFragmentEntry.getPreviewFileEntryId());
 		Assert.assertEquals(existingFragmentEntry.getStatus(),
 			newFragmentEntry.getStatus());
 		Assert.assertEquals(existingFragmentEntry.getStatusByUserId(),
@@ -296,7 +296,7 @@ public class FragmentEntryPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
 			"fragmentEntryKey", true, "name", true, "css", true, "html", true,
-			"js", true, "htmlPreviewEntryId", true, "status", true,
+			"js", true, "previewFileEntryId", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
@@ -540,7 +540,7 @@ public class FragmentEntryPersistenceTest {
 
 		fragmentEntry.setJs(RandomTestUtil.randomString());
 
-		fragmentEntry.setHtmlPreviewEntryId(RandomTestUtil.nextLong());
+		fragmentEntry.setPreviewFileEntryId(RandomTestUtil.nextLong());
 
 		fragmentEntry.setStatus(RandomTestUtil.nextInt());
 

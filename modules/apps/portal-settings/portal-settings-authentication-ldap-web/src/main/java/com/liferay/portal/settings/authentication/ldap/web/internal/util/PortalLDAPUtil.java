@@ -280,7 +280,6 @@ public class PortalLDAPUtil {
 	}
 
 	protected void unsetPortalLDAP(PortalLDAP portalLDAP) {
-		_portalLDAP = null;
 	}
 
 	private static PortalLDAP _portalLDAP;

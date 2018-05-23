@@ -41,9 +41,13 @@ public abstract class BaseRegexStringContentTransformer
 
 		Matcher matcher = pattern.matcher(content);
 
-		StringBuffer sb = new StringBuffer(content.length());
+		StringBuffer sb = null;
 
 		while (matcher.find()) {
+			if (sb == null) {
+				sb = new StringBuffer(content.length());
+			}
+
 			FileEntry fileEntry = getFileEntry(matcher);
 
 			String replacement = getReplacement(matcher.group(0), fileEntry);
@@ -52,9 +56,13 @@ public abstract class BaseRegexStringContentTransformer
 				sb, Matcher.quoteReplacement(replacement));
 		}
 
-		matcher.appendTail(sb);
+		if (sb != null) {
+			matcher.appendTail(sb);
 
-		return sb.toString();
+			return sb.toString();
+		}
+
+		return content;
 	}
 
 	protected abstract FileEntry getFileEntry(Matcher matcher)

@@ -594,7 +594,7 @@
 		<execute macro="Alert#closePortalLocalizationWarning" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
+			<var name="category" value="Compilación" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Páginas del sitio web" />
 		</execute>
@@ -619,7 +619,7 @@
 		<execute macro="Alert#closePortalLocalizationWarning" />
 
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
+			<var name="category" value="Compilación" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Páginas del sitio web" />
 		</execute>
@@ -652,7 +652,9 @@
 			<var name="miscellaneousTranslation" value="Varios" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
+		<execute macro="ProductMenu#gotoLocalizedSite">
+			<var name="displayStyle" value="tabla" />
+			<var name="navItem" value="Mis Sitios" />
 			<var name="site" value="Site Name" />
 		</execute>
 
@@ -663,9 +665,11 @@
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
-			<var name="currentSiteLanguages" value="Spanish (Spain),German (Germany)" />
+			<var name="currentSiteLanguages" value="español (España),alemán (Alemania)" />
 			<var name="displaySettings" value="Display Settings" />
-			<var name="localizedSuccessMessage" value="Your request completed successfully." />
+			<var name="localizedLanguageTab" value="Idiomas" />
+			<var name="localizedSaveButton" value="Guardar" />
+			<var name="localizedSuccessMessage" value="Su petición ha terminado con éxito." />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -683,14 +687,15 @@
 			<var name="webContentContent" value="Web Content1 Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoLocalizedEditPGViaWCD">
-			<var name="localizedPortletName" value="Visor de contenido web" />
-			<var name="localizedPortletOption" value="Editar contenido web" />
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD">
+			<var name="menuItem" value="Editar contenido web" />
+			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
 		<execute macro="WebContent#viewAvailableLanguagesPGViaWCD">
-			<var name="webContentTranslationLanguage1" value="German (Germany)" />
-			<var name="webContentTranslationLanguage2" value="English (United States)" />
+			<var name="fieldName" value="Título" />
+			<var name="locale1" value="de-DE" />
+			<var name="locale2" value="en-US" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -705,9 +710,11 @@
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
-			<var name="currentSiteLanguages" value="Spanish (Spain),German (Germany),English (United States)" />
+			<var name="currentSiteLanguages" value="español (España),alemán (Alemania),inglés (Estados Unidos)" />
 			<var name="displaySettings" value="Display Settings" />
-			<var name="localizedSuccessMessage" value="Your request completed successfully." />
+			<var name="localizedLanguageTab" value="Idiomas" />
+			<var name="localizedSaveButton" value="Guardar" />
+			<var name="localizedSuccessMessage" value="Su petición ha terminado con éxito." />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

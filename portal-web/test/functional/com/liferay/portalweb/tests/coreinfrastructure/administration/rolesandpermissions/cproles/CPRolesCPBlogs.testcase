@@ -151,8 +151,8 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="list" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="table" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryTable">

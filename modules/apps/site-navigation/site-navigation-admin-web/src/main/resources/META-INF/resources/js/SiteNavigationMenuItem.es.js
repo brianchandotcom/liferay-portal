@@ -1,8 +1,16 @@
-import {addClasses, closest, hasClass, next, removeClasses, toElement} from 'metal-dom';
+import {
+	addClasses,
+	closest,
+	contains,
+	hasClass,
+	next,
+	removeClasses,
+	toElement
+} from 'metal-dom';
+
+const MENU_CONTAINER_CLASSNAME = 'site-navigation-menu-container';
 
 const MENU_ITEM_CLASSNAME = 'site-navigation-menu-item';
-
-const MENU_ITEM_CONTENT_CLASSNAME = `${MENU_ITEM_CLASSNAME}__content`;
 
 const MENU_ITEM_DRAGGING_CLASSNAME = `${MENU_ITEM_CLASSNAME}--dragging`;
 
@@ -19,6 +27,19 @@ const MENU_ITEM_SELECTED_CLASSNAME = `${MENU_ITEM_CLASSNAME}--selected`;
  */
 
 const SiteNavigationMenuItem = {
+
+	/**
+	 * Returns an array with the menuItem children of the given menuItem.
+	 * @param {HTMLElement} menuItem
+	 * @return {Array<HTMLElement>}
+	 * @review
+	 */
+
+	getChildren: function(menuItem) {
+		return Array.prototype
+			.slice.call(menuItem.children)
+			.filter(child => hasClass(child, MENU_ITEM_CLASSNAME));
+	},
 
 	/**
 	 * Returns a menuItem element, parent of a given menuItemContent.
@@ -71,14 +92,33 @@ const SiteNavigationMenuItem = {
 	 */
 
 	getParent: function(menuItem) {
-		const parentElement = menuItem.parentElement;
 		let parentMenuItem = null;
 
-		if (parentElement && hasClass(parentElement, MENU_ITEM_CLASSNAME)) {
-			parentMenuItem = parentElement;
+		if (SiteNavigationMenuItem.isNested(menuItem)) {
+			let previousMenuItem = menuItem;
+
+			while (previousMenuItem && SiteNavigationMenuItem.isNested(previousMenuItem)) {
+				previousMenuItem = previousMenuItem.previousElementSibling;
+			}
+
+			if (previousMenuItem && !SiteNavigationMenuItem.isNested(previousMenuItem)) {
+				parentMenuItem = previousMenuItem;
+			}
 		}
-		else if (parentElement) {
-			parentMenuItem = closest(parentElement, `.${MENU_ITEM_CLASSNAME}`);
+
+		if (!parentMenuItem) {
+			const parentElement = menuItem.parentElement;
+
+			if (parentElement && hasClass(parentElement, MENU_ITEM_CLASSNAME)) {
+				parentMenuItem = parentElement;
+			}
+			else if (parentElement) {
+				parentMenuItem = closest(parentElement, `.${MENU_ITEM_CLASSNAME}`);
+			}
+		}
+
+		if (!parentMenuItem) {
+			parentMenuItem = toElement(`.${MENU_CONTAINER_CLASSNAME}`);
 		}
 
 		return parentMenuItem;
@@ -96,12 +136,23 @@ const SiteNavigationMenuItem = {
 		let siblings = [];
 
 		if (parentElement) {
-			siblings = Array
-				.slice.call(parentElement.children)
-				.filter(child => hasClass(child, MENU_ITEM_CLASSNAME));
+			siblings = SiteNavigationMenuItem.getChildren(
+				parentElement
+			);
 		}
 
 		return siblings;
+	},
+
+	/**
+	 * Returns true if the given menuItem is child of the given parentMenuItem
+	 * @param {HTMLElement} menuItem
+	 * @param {HTMLElement} parentMenuItem
+	 * @return {boolean}
+	 */
+
+	isChildOf: function(menuItem, parentMenuItem) {
+		return contains(parentMenuItem, menuItem);
 	},
 
 	/**
@@ -112,6 +163,16 @@ const SiteNavigationMenuItem = {
 
 	isMenuItem: function(htmlElement) {
 		return hasClass(htmlElement, MENU_ITEM_CLASSNAME);
+	},
+
+	/**
+	 * Returns true if the given menuItem element is nested, false otherwise
+	 * @param {HTMLElement} menuItem
+	 * @return {boolean}
+	 */
+
+	isNested: function(menuItem) {
+		return hasClass(menuItem, MENU_ITEM_NESTED_CLASSNAME);
 	},
 
 	/**
@@ -182,7 +243,6 @@ const SiteNavigationMenuItem = {
 
 export {
 	MENU_ITEM_CLASSNAME,
-	MENU_ITEM_CONTENT_CLASSNAME,
 	MENU_ITEM_DRAG_ICON_CLASSNAME,
 	SiteNavigationMenuItem
 };

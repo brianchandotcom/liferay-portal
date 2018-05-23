@@ -56,8 +56,19 @@ public class FragmentEntryLocalServiceImpl
 		throws PortalException {
 
 		return addFragmentEntry(
-			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, 0,
 			status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId, String name,
+			long previewFileEntryId, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name,
+			previewFileEntryId, status, serviceContext);
 	}
 
 	@Override
@@ -65,6 +76,18 @@ public class FragmentEntryLocalServiceImpl
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, int status,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, 0,
+			status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, long previewFileEntryId,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -96,6 +119,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
 		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
 		fragmentEntry.setName(name);
+		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());
@@ -124,9 +148,34 @@ public class FragmentEntryLocalServiceImpl
 
 	@Override
 	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId, String name,
+			String css, String html, String js, long previewFileEntryId,
+			int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, StringPool.BLANK, name, css,
+			html, js, previewFileEntryId, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId,
 			String fragmentEntryKey, String name, String css, String html,
 			String js, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, css,
+			html, js, 0, status, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, long previewFileEntryId, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -167,6 +216,7 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
+		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntry.setStatus(status);
 		fragmentEntry.setStatusByUserId(userId);
 		fragmentEntry.setStatusByUserName(user.getFullName());
@@ -285,6 +335,22 @@ public class FragmentEntryLocalServiceImpl
 		throws PortalException {
 
 		return TempFileEntryUtil.getTempFileNames(groupId, userId, folderName);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
+			long fragmentEntryId, long previewFileEntryId)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryId);
+
+		fragmentEntry.setModifiedDate(new Date());
+		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+
+		fragmentEntryPersistence.update(fragmentEntry);
+
+		return fragmentEntry;
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.person.apio.internal.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,32 +32,20 @@ public class UserHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
 	public Boolean forAdding(Credentials credentials) {
-		return Try.fromFallible(
-			() -> PortalPermissionUtil.contains(
-				(PermissionChecker)credentials.get(), ActionKeys.ADD_USER)
-		).orElse(
-			false
-		);
+		return PortalPermissionUtil.contains(
+			(PermissionChecker)credentials.get(), ActionKeys.ADD_USER);
 	}
 
 	@Override
 	public Boolean forDeleting(Credentials credentials, Long userId) {
-		return Try.fromFallible(
-			() -> _userPermission.contains(
-				(PermissionChecker)credentials.get(), userId, ActionKeys.DELETE)
-		).orElse(
-			false
-		);
+		return _userPermission.contains(
+			(PermissionChecker)credentials.get(), userId, ActionKeys.DELETE);
 	}
 
 	@Override
 	public Boolean forUpdating(Credentials credentials, Long userId) {
-		return Try.fromFallible(
-			() -> _userPermission.contains(
-				(PermissionChecker)credentials.get(), userId, ActionKeys.UPDATE)
-		).orElse(
-			false
-		);
+		return _userPermission.contains(
+			(PermissionChecker)credentials.get(), userId, ActionKeys.UPDATE);
 	}
 
 	@Reference

@@ -15,16 +15,15 @@
 package com.liferay.web.page.element.apio.internal.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-
-import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,43 +37,36 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalArticleHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public <S> BiFunction<Credentials, S, Boolean> forAddingIn(
+	public <S> ThrowableBiFunction<Credentials, S, Boolean> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(WebSiteIdentifier.class)) {
-			return (credentials, groupId) -> Try.fromFallible(
-				() -> ModelResourcePermissionHelper.contains(
+			return (credentials, groupId) ->
+				ModelResourcePermissionHelper.contains(
 					_modelResourcePermission,
 					(PermissionChecker)credentials.get(), (Long)groupId, 0,
-					ActionKeys.ADD_FOLDER)
-			).orElse(
-				false
-			);
+					ActionKeys.ADD_FOLDER);
 		}
 
 		return (credentials, s) -> false;
 	}
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long journalArticleId) {
-		return Try.fromFallible(
-			() -> _modelResourcePermission.contains(
-				(PermissionChecker)credentials.get(), journalArticleId,
-				ActionKeys.DELETE)
-		).orElse(
-			false
-		);
+	public Boolean forDeleting(Credentials credentials, Long journalArticleId)
+		throws PortalException {
+
+		return _modelResourcePermission.contains(
+			(PermissionChecker)credentials.get(), journalArticleId,
+			ActionKeys.DELETE);
 	}
 
 	@Override
-	public Boolean forUpdating(Credentials credentials, Long journalArticleId) {
-		return Try.fromFallible(
-			() -> _modelResourcePermission.contains(
-				(PermissionChecker)credentials.get(), journalArticleId,
-				ActionKeys.UPDATE)
-		).orElse(
-			false
-		);
+	public Boolean forUpdating(Credentials credentials, Long journalArticleId)
+		throws PortalException {
+
+		return _modelResourcePermission.contains(
+			(PermissionChecker)credentials.get(), journalArticleId,
+			ActionKeys.UPDATE);
 	}
 
 	@Reference(

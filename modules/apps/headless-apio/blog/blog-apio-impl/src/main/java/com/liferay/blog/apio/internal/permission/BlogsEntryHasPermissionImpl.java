@@ -15,17 +15,16 @@
 package com.liferay.blog.apio.internal.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-
-import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,42 +36,33 @@ import org.osgi.service.component.annotations.Reference;
 public class BlogsEntryHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public <S> BiFunction<Credentials, S, Boolean> forAddingIn(
+	public <S> ThrowableBiFunction<Credentials, S, Boolean> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(WebSiteIdentifier.class)) {
-			return (credentials, groupId) -> Try.fromFallible(
-				() -> _portletResourcePermission.contains(
+			return (credentials, groupId) ->
+				_portletResourcePermission.contains(
 					(PermissionChecker)credentials.get(), (Long)groupId,
-					ActionKeys.ADD_ENTRY)
-			).orElse(
-				false
-			);
+					ActionKeys.ADD_ENTRY);
 		}
 
 		return (credentials, s) -> false;
 	}
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long entryId) {
-		return Try.fromFallible(
-			() -> _modelResourcePermission.contains(
-				(PermissionChecker)credentials.get(), entryId,
-				ActionKeys.DELETE)
-		).orElse(
-			false
-		);
+	public Boolean forDeleting(Credentials credentials, Long entryId)
+		throws PortalException {
+
+		return _modelResourcePermission.contains(
+			(PermissionChecker)credentials.get(), entryId, ActionKeys.DELETE);
 	}
 
 	@Override
-	public Boolean forUpdating(Credentials credentials, Long entryId) {
-		return Try.fromFallible(
-			() -> _modelResourcePermission.contains(
-				(PermissionChecker)credentials.get(), entryId,
-				ActionKeys.UPDATE)
-		).orElse(
-			false
-		);
+	public Boolean forUpdating(Credentials credentials, Long entryId)
+		throws PortalException {
+
+		return _modelResourcePermission.contains(
+			(PermissionChecker)credentials.get(), entryId, ActionKeys.UPDATE);
 	}
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")

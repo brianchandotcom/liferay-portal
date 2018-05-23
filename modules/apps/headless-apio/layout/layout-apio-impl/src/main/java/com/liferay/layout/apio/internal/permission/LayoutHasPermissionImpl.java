@@ -15,8 +15,8 @@
 package com.liferay.layout.apio.internal.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -30,13 +30,11 @@ import org.osgi.service.component.annotations.Component;
 public class LayoutHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long plid) {
-		return Try.fromFallible(
-			() -> LayoutPermissionUtil.contains(
-				(PermissionChecker)credentials.get(), plid, ActionKeys.DELETE)
-		).orElse(
-			false
-		);
+	public Boolean forDeleting(Credentials credentials, Long plid)
+		throws PortalException {
+
+		return LayoutPermissionUtil.contains(
+			(PermissionChecker)credentials.get(), plid, ActionKeys.DELETE);
 	}
 
 }

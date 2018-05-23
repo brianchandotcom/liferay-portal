@@ -15,17 +15,16 @@
 package com.liferay.folder.apio.internal.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
-
-import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,53 +38,40 @@ import org.osgi.service.component.annotations.Reference;
 public class FolderHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public <S> BiFunction<Credentials, S, Boolean> forAddingIn(
+	public <S> ThrowableBiFunction<Credentials, S, Boolean> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(RootFolderIdentifier.class)) {
-			return (credentials, groupId) -> Try.fromFallible(
-				() -> ModelResourcePermissionHelper.contains(
+			return (credentials, groupId) ->
+				ModelResourcePermissionHelper.contains(
 					_modelResourcePermission,
 					(PermissionChecker)credentials.get(), (Long)groupId, 0,
-					ActionKeys.ADD_FOLDER)
-			).orElse(
-				false
-			);
+					ActionKeys.ADD_FOLDER);
 		}
 
 		if (identifierClass.equals(FolderIdentifier.class)) {
-			return (credentials, folderId) -> Try.fromFallible(
-				() -> _modelResourcePermission.contains(
-					(PermissionChecker)credentials.get(), (Long)folderId,
-					ActionKeys.ADD_FOLDER)
-			).orElse(
-				false
-			);
+			return (credentials, folderId) -> _modelResourcePermission.contains(
+				(PermissionChecker)credentials.get(), (Long)folderId,
+				ActionKeys.ADD_FOLDER);
 		}
 
 		return (credentials, s) -> false;
 	}
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long folderId) {
-		return Try.fromFallible(
-			() -> _modelResourcePermission.contains(
-				(PermissionChecker)credentials.get(), folderId,
-				ActionKeys.DELETE)
-		).orElse(
-			false
-		);
+	public Boolean forDeleting(Credentials credentials, Long folderId)
+		throws PortalException {
+
+		return _modelResourcePermission.contains(
+			(PermissionChecker)credentials.get(), folderId, ActionKeys.DELETE);
 	}
 
 	@Override
-	public Boolean forUpdating(Credentials credentials, Long folderId) {
-		return Try.fromFallible(
-			() -> _modelResourcePermission.contains(
-				(PermissionChecker)credentials.get(), folderId,
-				ActionKeys.UPDATE)
-		).orElse(
-			false
-		);
+	public Boolean forUpdating(Credentials credentials, Long folderId)
+		throws PortalException {
+
+		return _modelResourcePermission.contains(
+			(PermissionChecker)credentials.get(), folderId, ActionKeys.UPDATE);
 	}
 
 	@Reference(

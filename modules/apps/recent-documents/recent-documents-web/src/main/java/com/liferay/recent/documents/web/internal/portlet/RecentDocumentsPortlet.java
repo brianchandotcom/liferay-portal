@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-recent-documents",
-		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.icon=/icons/recent_documents.png",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",

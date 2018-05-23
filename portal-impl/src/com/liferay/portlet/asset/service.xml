@@ -53,6 +53,10 @@
 		<finder name="VocabularyId" return-type="Collection">
 			<finder-column name="vocabularyId" />
 		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentCategoryId" />
+		</finder>
 		<finder name="G_V" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="vocabularyId" />

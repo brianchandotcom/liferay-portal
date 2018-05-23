@@ -17,35 +17,76 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
+BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), BlogsPortletKeys.BLOGS));
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
-
-String entryTitle = BlogsEntryUtil.getDisplayTitle(resourceBundle, entry);
-
-Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
-
-String coverImageURL = entry.getCoverImageURL(themeDisplay);
 %>
 
-<liferay-util:html-top
-	outputKey="blogs_common_main_css"
->
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
-</liferay-util:html-top>
+<div class="widget-mode-simple">
+	<div class="widget-mode-simple-entry">
+		<div class="autofit-row widget-metadata">
+			<div class="autofit-col inline-item-before">
 
-<c:if test="<%= entry.isSmallImage() && Validator.isNull(coverImageURL) %>">
-	<div class="asset-small-image">
-		<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escape(entry.getSmallImageURL(themeDisplay)) %>" width="150" />
-	</div>
-</c:if>
+				<%
+				User entryUser = UserLocalServiceUtil.fetchUser(entry.getUserId());
 
-<div class="portlet-blogs">
-	<div class="entry-body" data-analytics-asset-id="<%= String.valueOf(entry.getEntryId()) %>" data-analytics-asset-title="<%= HtmlUtil.escapeAttribute(entryTitle) %>" data-analytics-asset-type="blog">
-		<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
-			<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
-		</c:if>
+				String entryUserURL = StringPool.BLANK;
 
-		<%= assetRenderer.getSummary(renderRequest, renderResponse) %>
+				if ((entryUser != null) && !entryUser.isDefaultUser()) {
+					entryUserURL = entryUser.getDisplayURL(themeDisplay);
+				}
+				%>
+
+				<liferay-ui:user-portrait
+					cssClass="user-icon-lg"
+					user="<%= entryUser %>"
+				/>
+			</div>
+
+			<div class="autofit-col autofit-col-expand">
+				<div class="autofit-row">
+					<div class="autofit-col autofit-col-expand">
+						<a class="username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
+
+						<div>
+							<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+
+							<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
+								- <liferay-reading-time:reading-time displayStyle="descriptive" model="<%= entry %>" />
+							</c:if>
+
+							<c:if test="<%= blogsPortletInstanceConfiguration.enableViewCount() %>">
+
+								<%
+								AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
+								%>
+
+								- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= assetEntry.getViewCount() == 1 ? "x-view" : "x-views" %>' />
+							</c:if>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="widget-content" id="<portlet:namespace /><%= entry.getEntryId() %>">
+
+			<%
+			String coverImageURL = entry.getCoverImageURL(themeDisplay);
+			%>
+
+			<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
+				<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image" style="background-image: url(<%= coverImageURL %>)"></div>
+			</c:if>
+
+			<p>
+
+				<%
+				AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
+				%>
+
+				<%= assetRenderer.getSummary(renderRequest, renderResponse) %>
+			</p>
+		</div>
 	</div>
 </div>

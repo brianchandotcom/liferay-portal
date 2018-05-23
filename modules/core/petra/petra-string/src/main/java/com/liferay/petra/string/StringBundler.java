@@ -38,12 +38,7 @@ public class StringBundler implements Serializable {
 		String[] strings = new String[objects.length];
 
 		for (int i = 0; i < objects.length; i++) {
-			if (objects[i] == null) {
-				strings[i] = StringPool.NULL;
-			}
-			else {
-				strings[i] = String.valueOf(objects[i]);
-			}
+			strings[i] = String.valueOf(objects[i]);
 		}
 
 		return _toString(strings, strings.length);

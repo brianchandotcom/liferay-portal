@@ -313,6 +313,11 @@ public class CommerceForecastValueWrapper implements CommerceForecastValue,
 	}
 
 	@Override
+	public boolean isForecast() {
+		return _commerceForecastValue.isForecast();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _commerceForecastValue.isNew();
 	}

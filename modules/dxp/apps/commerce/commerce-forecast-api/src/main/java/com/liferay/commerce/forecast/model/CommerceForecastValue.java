@@ -55,4 +55,6 @@ public interface CommerceForecastValue extends CommerceForecastValueModel,
 				return CommerceForecastValue.class;
 			}
 		};
+
+	public boolean isForecast();
 }

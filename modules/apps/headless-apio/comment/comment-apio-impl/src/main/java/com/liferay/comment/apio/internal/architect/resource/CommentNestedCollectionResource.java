@@ -58,7 +58,7 @@ public class CommentNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "comments";
+		return "comment";
 	}
 
 	@Override

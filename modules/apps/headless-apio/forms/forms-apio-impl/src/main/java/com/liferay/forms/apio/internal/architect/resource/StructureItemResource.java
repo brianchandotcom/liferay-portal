@@ -42,7 +42,7 @@ public class StructureItemResource
 
 	@Override
 	public String getName() {
-		return "structures";
+		return "structure";
 	}
 
 	@Override

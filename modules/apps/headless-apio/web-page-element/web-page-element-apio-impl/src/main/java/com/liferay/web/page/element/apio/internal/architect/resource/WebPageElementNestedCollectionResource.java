@@ -67,7 +67,7 @@ public class WebPageElementNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "web-page-elements";
+		return "web-page-element";
 	}
 
 	@Override

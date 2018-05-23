@@ -62,7 +62,7 @@ public class FolderNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "folders";
+		return "folder";
 	}
 
 	@Override

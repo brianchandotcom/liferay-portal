@@ -67,7 +67,7 @@ public class MediaObjectNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "media-objects";
+		return "media-object";
 	}
 
 	@Override

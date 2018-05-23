@@ -71,7 +71,7 @@ public class BlogPostingNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "blog-postings";
+		return "blog-posting";
 	}
 
 	@Override

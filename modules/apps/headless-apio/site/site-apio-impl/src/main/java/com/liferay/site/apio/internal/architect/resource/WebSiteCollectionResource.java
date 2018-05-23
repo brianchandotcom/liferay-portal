@@ -59,7 +59,7 @@ public class WebSiteCollectionResource
 
 	@Override
 	public String getName() {
-		return "web-sites";
+		return "web-site";
 	}
 
 	@Override

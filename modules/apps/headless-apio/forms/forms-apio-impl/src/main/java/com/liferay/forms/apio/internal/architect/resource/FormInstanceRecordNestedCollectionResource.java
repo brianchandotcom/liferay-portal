@@ -74,7 +74,7 @@ public class FormInstanceRecordNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "form-instance-records";
+		return "form-instance-record";
 	}
 
 	@Override

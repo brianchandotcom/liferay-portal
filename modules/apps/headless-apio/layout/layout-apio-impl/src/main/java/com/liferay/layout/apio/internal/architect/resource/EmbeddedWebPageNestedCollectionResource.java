@@ -55,7 +55,7 @@ public class EmbeddedWebPageNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "embedded-web-pages";
+		return "embedded-web-page";
 	}
 
 	@Override

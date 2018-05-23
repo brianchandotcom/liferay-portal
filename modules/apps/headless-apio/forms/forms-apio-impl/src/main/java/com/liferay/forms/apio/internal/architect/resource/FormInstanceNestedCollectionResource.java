@@ -79,7 +79,7 @@ public class FormInstanceNestedCollectionResource
 
 	@Override
 	public String getName() {
-		return "form-instances";
+		return "form-instance";
 	}
 
 	@Override

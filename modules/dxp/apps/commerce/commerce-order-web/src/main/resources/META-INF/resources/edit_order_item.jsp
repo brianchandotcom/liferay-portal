@@ -19,67 +19,22 @@
 <%
 CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrderEditDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerceOrderItem();
 
-CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
+String title = LanguageUtil.format(request, "edit-x", commerceOrderItem.getName(locale), false);
 
-renderResponse.setTitle(commerceOrderItem.getName(locale));
+renderResponse.setTitle(title);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderItemsPortletURL()));
 %>
 
-<portlet:actionURL name="editCommerceOrderItem" var="editCommerceOrderItemActionURL" />
-
-<aui:form action="<%= editCommerceOrderItemActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
-
-	<div class="lfr-form-content sheet">
-		<aui:model-context bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" />
-
-		<aui:input name="quantity" />
-
-		<c:if test="<%= !commerceOrder.isOpen() %>">
-			<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrderItem.getPrice()) %>" />
-		</c:if>
-	</div>
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= true %>" value="save" />
-
-		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
-	</aui:button-row>
-</aui:form>
-
-<aui:script use="aui-base,aui-io-request">
-	A.one('#<portlet:namespace/>saveButton').on(
-		'click',
-		function(event) {
-			var A = AUI();
-
-			var url = '<%= editCommerceOrderItemActionURL.toString() %>';
-
-			A.io.request(
-				url,
-				{
-					form: {
-						id: '<portlet:namespace/>fm'
-					},
-					method: 'POST',
-					on: {
-						success: function() {
-							Liferay.Util.getOpener().refreshPortlet();
-							Liferay.Util.getOpener().closePopup('<portlet:namespace/>editOrderItemDialog');
-						}
-					}
-				}
-			);
-		}
-	);
-
-	A.one('#<portlet:namespace/>cancelButton').on(
-		'click',
-		function(event) {
-			Liferay.Util.getOpener().closePopup('<portlet:namespace/>editOrderItemDialog');
-		}
-	);
-</aui:script>
+<div id="<portlet:namespace />editOrderItemContainer">
+	<liferay-frontend:screen-navigation
+		containerCssClass="col-md-10"
+		key="<%= CommerceOrderScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_ITEM_GENERAL %>"
+		modelBean="<%= commerceOrderItem %>"
+		navCssClass="col-md-2"
+		portletURL="<%= currentURLObj %>"
+	/>
+</div>

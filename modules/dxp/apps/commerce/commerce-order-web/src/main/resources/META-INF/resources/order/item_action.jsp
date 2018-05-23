@@ -32,22 +32,13 @@ CommerceOrderItem commerceOrderItem = (CommerceOrderItem)row.getObject();
 	<liferay-portlet:renderURL var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcRenderCommandName" value="editCommerceOrderItem" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderId()) %>" />
 		<portlet:param name="commerceOrderItemId" value="<%= String.valueOf(commerceOrderItem.getCommerceOrderItemId()) %>" />
 	</liferay-portlet:renderURL>
 
-	<%
-	Map<String, Object> data = new HashMap<>();
-
-	data.put("destroyOnHide", true);
-	data.put("id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editOrderItemDialog");
-	data.put("title", HtmlUtil.escape(commerceOrderItem.getName(locale)));
-	%>
-
 	<liferay-ui:icon
-		data="<%= data %>"
 		message="edit"
 		url="<%= editURL %>"
-		useDialog="<%= true %>"
 	/>
 
 	<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">

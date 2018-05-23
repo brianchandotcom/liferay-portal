@@ -16,10 +16,14 @@ package com.liferay.commerce.order.web.internal.servlet.taglib.ui;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrderScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_COMMERCE_ORDER_BILLING = "billing";
+
+	public static final String CATEGORY_KEY_COMMERCE_ORDER_ITEM_DETAIL =
+		"detail";
 
 	public static final String CATEGORY_KEY_COMMERCE_ORDER_ITEMS = "items";
 
@@ -33,5 +37,9 @@ public class CommerceOrderScreenNavigationConstants {
 
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_GENERAL =
 		"commerce.order.general";
+
+	public static final String
+		SCREEN_NAVIGATION_KEY_COMMERCE_ORDER_ITEM_GENERAL =
+			"commerce.order.item.general";
 
 }

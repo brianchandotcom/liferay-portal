@@ -95,6 +95,7 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 
 			rowURL.setParameter("mvcRenderCommandName", "editCommerceOrderItem");
 			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrderItem.getCommerceOrderId()));
 			rowURL.setParameter("commerceOrderItemId", String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
 			%>
 
@@ -134,29 +135,6 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 </div>
 
 <aui:script>
-
-	Liferay.provide(
-		window,
-		'refreshPortlet',
-		function() {
-			var curPortlet = '#p_p_id<portlet:namespace/>';
-
-			Liferay.Portlet.refresh(curPortlet);
-		},
-		['aui-dialog','aui-dialog-iframe']
-	);
-
-	Liferay.provide(
-		window,
-		'closePopup',
-		function(dialogId) {
-			var dialog = Liferay.Util.Window.getById(dialogId);
-
-			dialog.destroy();
-		},
-		['liferay-util-window']
-	);
-
 	function <portlet:namespace />deleteCommerceOrderItems() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-order-items" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);

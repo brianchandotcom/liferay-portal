@@ -65,6 +65,16 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
+		long userId, long groupId, long fragmentCollectionId, String name,
+		long previewFileEntryId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFragmentEntry(userId, groupId, fragmentCollectionId,
+			name, previewFileEntryId, status, serviceContext);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 		long userId, long groupId, long fragmentCollectionId,
 		String fragmentEntryKey, String name, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -72,6 +82,17 @@ public class FragmentEntryLocalServiceUtil {
 		return getService()
 				   .addFragmentEntry(userId, groupId, fragmentCollectionId,
 			fragmentEntryKey, name, status, serviceContext);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
+		long userId, long groupId, long fragmentCollectionId,
+		String fragmentEntryKey, String name, long previewFileEntryId,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFragmentEntry(userId, groupId, fragmentCollectionId,
+			fragmentEntryKey, name, previewFileEntryId, status, serviceContext);
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
@@ -85,6 +106,17 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
+		long userId, long groupId, long fragmentCollectionId, String name,
+		String css, String html, String js, long previewFileEntryId,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFragmentEntry(userId, groupId, fragmentCollectionId,
+			name, css, html, js, previewFileEntryId, status, serviceContext);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 		long userId, long groupId, long fragmentCollectionId,
 		String fragmentEntryKey, String name, String css, String html,
 		String js, int status,
@@ -93,6 +125,18 @@ public class FragmentEntryLocalServiceUtil {
 		return getService()
 				   .addFragmentEntry(userId, groupId, fragmentCollectionId,
 			fragmentEntryKey, name, css, html, js, status, serviceContext);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry addFragmentEntry(
+		long userId, long groupId, long fragmentCollectionId,
+		String fragmentEntryKey, String name, String css, String html,
+		String js, long previewFileEntryId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFragmentEntry(userId, groupId, fragmentCollectionId,
+			fragmentEntryKey, name, css, html, js, previewFileEntryId, status,
+			serviceContext);
 	}
 
 	/**
@@ -342,6 +386,13 @@ public class FragmentEntryLocalServiceUtil {
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		com.liferay.fragment.model.FragmentEntry fragmentEntry) {
 		return getService().updateFragmentEntry(fragmentEntry);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+		long fragmentEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFragmentEntry(fragmentEntryId, previewFileEntryId);
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(

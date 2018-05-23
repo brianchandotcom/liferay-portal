@@ -452,8 +452,6 @@
 			<var name="portletTitleName" value="Blogs" />
 		</execute>
 
-		<var name="key_assetHeader" value="${entryTitle}" />
-
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />

@@ -16,13 +16,16 @@ package com.liferay.layout.page.template.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.html.preview.model.HtmlPreviewEntry;
-import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -70,19 +73,28 @@ public class LayoutPageTemplateEntryImpl
 
 	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
-		if (getHtmlPreviewEntryId() <= 0) {
+		if (getPreviewFileEntryId() <= 0) {
 			return StringPool.BLANK;
 		}
 
-		HtmlPreviewEntry htmlPreviewEntry =
-			HtmlPreviewEntryLocalServiceUtil.fetchHtmlPreviewEntry(
-				getHtmlPreviewEntryId());
+		try {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				getPreviewFileEntryId());
 
-		if (htmlPreviewEntry == null) {
-			return StringPool.BLANK;
+			if (fileEntry == null) {
+				return StringPool.BLANK;
+			}
+
+			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error("Unable to get preview entry image URL", e);
 		}
 
-		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
+		return StringPool.BLANK;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateEntryImpl.class);
 
 }

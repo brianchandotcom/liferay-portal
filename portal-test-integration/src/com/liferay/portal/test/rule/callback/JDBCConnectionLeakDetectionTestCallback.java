@@ -49,13 +49,17 @@ public class JDBCConnectionLeakDetectionTestCallback
 			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
 				serviceReference);
 
-			int activeNumber = _connectionPoolActiveNumbers.remove(
+			int previousActiveNumber = _connectionPoolActiveNumbers.remove(
 				connectionPoolMetrics.getConnectionPoolName());
 
+			int currentActiveNumber = connectionPoolMetrics.getNumActive();
+
 			Assert.assertTrue(
-				"Active connection count differ before and after test for " +
-					connectionPoolMetrics.getConnectionPoolName(),
-				activeNumber >= connectionPoolMetrics.getNumActive());
+				"Active connection count increased after test for " +
+					connectionPoolMetrics.getConnectionPoolName() +
+						" previous active number: " + previousActiveNumber +
+							", current active number: " + currentActiveNumber,
+				previousActiveNumber >= currentActiveNumber);
 
 			_registry.ungetService(serviceReference);
 		}

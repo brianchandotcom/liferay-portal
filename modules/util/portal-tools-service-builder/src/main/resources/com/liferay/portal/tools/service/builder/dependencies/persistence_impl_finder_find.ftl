@@ -1601,7 +1601,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						<#if entityColumn.hasArrayableOperator()>
 							StringUtil.merge(${entityColumn.names}),
 						<#elseif stringUtil.equals(entityColumn.type, "Date")>
-							_getTime(${entityColumn.name})
+							_getTime(${entityColumn.name}),
 						<#else>
 							${entityColumn.name},
 						</#if>

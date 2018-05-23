@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.comparator.PortletConfigurationIconCompara
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.theme.PortletDisplayFactory;
+import com.liferay.portlet.internal.PortletAppUtil;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
@@ -845,8 +846,20 @@ public class PortletContainerImpl implements PortletContainer {
 		WindowState windowState = (WindowState)request.getAttribute(
 			WebKeys.WINDOW_STATE);
 
+		int portletSpecMajorVersion = PortletAppUtil.getSpecMajorVersion(
+			portlet.getPortletApp());
+
+		if (portletSpecMajorVersion == 3) {
+			WindowState requestWindowState = WindowStateFactory.getWindowState(
+				ParamUtil.getString(request, "p_p_state"), 3);
+
+			if (WindowState.UNDEFINED.equals(requestWindowState)) {
+				windowState = requestWindowState;
+			}
+		}
+
 		PortletMode portletMode = PortletModeFactory.getPortletMode(
-			ParamUtil.getString(request, "p_p_mode"));
+			ParamUtil.getString(request, "p_p_mode"), portletSpecMajorVersion);
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(

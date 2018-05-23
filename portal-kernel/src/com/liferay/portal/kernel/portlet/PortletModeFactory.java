@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,30 +26,24 @@ import javax.portlet.PortletMode;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
 public class PortletModeFactory {
 
 	public static PortletMode getPortletMode(String name) {
-		return _instance._getPortletMode(name);
+		return getPortletMode(name, 2);
 	}
 
-	private PortletModeFactory() {
-		_portletModes = new HashMap<>();
+	public static PortletMode getPortletMode(
+		String name, int portletMajorVersion) {
 
-		_portletModes.put(_EDIT, LiferayPortletMode.EDIT);
-		_portletModes.put(_HELP, LiferayPortletMode.HELP);
-		_portletModes.put(_VIEW, LiferayPortletMode.VIEW);
-		_portletModes.put(_ABOUT, LiferayPortletMode.ABOUT);
-		_portletModes.put(_CONFIG, LiferayPortletMode.CONFIG);
-		_portletModes.put(_EDIT_DEFAULTS, LiferayPortletMode.EDIT_DEFAULTS);
-		_portletModes.put(_EDIT_GUEST, LiferayPortletMode.EDIT_GUEST);
-		_portletModes.put(_PREVIEW, LiferayPortletMode.PREVIEW);
-		_portletModes.put(_PRINT, LiferayPortletMode.PRINT);
-	}
-
-	private PortletMode _getPortletMode(String name) {
 		if (Validator.isNull(name)) {
-			return PortletMode.VIEW;
+			if (portletMajorVersion < 3) {
+				return PortletMode.VIEW;
+			}
+			else {
+				return PortletMode.UNDEFINED;
+			}
 		}
 
 		PortletMode portletMode = _portletModes.get(name);
@@ -58,30 +55,24 @@ public class PortletModeFactory {
 		return portletMode;
 	}
 
-	private static final String _ABOUT = LiferayPortletMode.ABOUT.toString();
+	private static final Map<String, PortletMode> _portletModes =
+		new HashMap<>();
 
-	private static final String _CONFIG = LiferayPortletMode.CONFIG.toString();
+	static {
+		try {
+			for (Field field : LiferayPortletMode.class.getFields()) {
+				if (Modifier.isStatic(field.getModifiers()) &&
+					(field.getType() == PortletMode.class)) {
 
-	private static final String _EDIT = PortletMode.EDIT.toString();
+					PortletMode portletMode = (PortletMode)field.get(null);
 
-	private static final String _EDIT_DEFAULTS =
-		LiferayPortletMode.EDIT_DEFAULTS.toString();
-
-	private static final String _EDIT_GUEST =
-		LiferayPortletMode.EDIT_GUEST.toString();
-
-	private static final String _HELP = PortletMode.HELP.toString();
-
-	private static final String _PREVIEW =
-		LiferayPortletMode.PREVIEW.toString();
-
-	private static final String _PRINT = LiferayPortletMode.PRINT.toString();
-
-	private static final String _VIEW = PortletMode.VIEW.toString();
-
-	private static final PortletModeFactory _instance =
-		new PortletModeFactory();
-
-	private final Map<String, PortletMode> _portletModes;
+					_portletModes.put(portletMode.toString(), portletMode);
+				}
+			}
+		}
+		catch (IllegalAccessException iae) {
+			throw new ExceptionInInitializerError(iae);
+		}
+	}
 
 }

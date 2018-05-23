@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,22 +30,19 @@ import javax.portlet.WindowState;
 public class WindowStateFactory {
 
 	public static WindowState getWindowState(String name) {
-		return _instance._getWindowState(name);
+		return getWindowState(name, 2);
 	}
 
-	private WindowStateFactory() {
-		_windowStates = new HashMap<>();
+	public static WindowState getWindowState(
+		String name, int portletMajorVersion) {
 
-		_windowStates.put(_NORMAL, LiferayWindowState.NORMAL);
-		_windowStates.put(_MAXIMIZED, LiferayWindowState.MAXIMIZED);
-		_windowStates.put(_MINIMIZED, LiferayWindowState.MINIMIZED);
-		_windowStates.put(_EXCLUSIVE, LiferayWindowState.EXCLUSIVE);
-		_windowStates.put(_POP_UP, LiferayWindowState.POP_UP);
-	}
-
-	private WindowState _getWindowState(String name) {
 		if (Validator.isNull(name)) {
-			return WindowState.NORMAL;
+			if (portletMajorVersion < 3) {
+				return WindowState.NORMAL;
+			}
+			else {
+				return WindowState.UNDEFINED;
+			}
 		}
 
 		WindowState windowState = _windowStates.get(name);
@@ -54,20 +54,24 @@ public class WindowStateFactory {
 		return windowState;
 	}
 
-	private static final String _EXCLUSIVE =
-		LiferayWindowState.EXCLUSIVE.toString();
+	private static final Map<String, WindowState> _windowStates =
+		new HashMap<>();
 
-	private static final String _MAXIMIZED = WindowState.MAXIMIZED.toString();
+	static {
+		try {
+			for (Field field : LiferayWindowState.class.getFields()) {
+				if (Modifier.isStatic(field.getModifiers()) &&
+					(field.getType() == WindowState.class)) {
 
-	private static final String _MINIMIZED = WindowState.MINIMIZED.toString();
+					WindowState windowState = (WindowState)field.get(null);
 
-	private static final String _NORMAL = WindowState.NORMAL.toString();
-
-	private static final String _POP_UP = LiferayWindowState.POP_UP.toString();
-
-	private static final WindowStateFactory _instance =
-		new WindowStateFactory();
-
-	private final Map<String, WindowState> _windowStates;
+					_windowStates.put(windowState.toString(), windowState);
+				}
+			}
+		}
+		catch (IllegalAccessException iae) {
+			throw new ExceptionInInitializerError(iae);
+		}
+	}
 
 }

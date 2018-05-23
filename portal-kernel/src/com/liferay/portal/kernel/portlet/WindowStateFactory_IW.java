@@ -26,6 +26,11 @@ public class WindowStateFactory_IW {
 		return WindowStateFactory.getWindowState(name);
 	}
 
+	public javax.portlet.WindowState getWindowState(java.lang.String name,
+		int portletMajorVersion) {
+		return WindowStateFactory.getWindowState(name, portletMajorVersion);
+	}
+
 	private WindowStateFactory_IW() {
 	}
 

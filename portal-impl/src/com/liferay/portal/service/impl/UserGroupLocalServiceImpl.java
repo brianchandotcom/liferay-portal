@@ -45,6 +45,8 @@ import com.liferay.portal.kernel.model.UserGroupConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -434,6 +436,22 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public UserGroup fetchUserGroup(long companyId, String name) {
 		return userGroupPersistence.fetchByC_N(companyId, name);
+	}
+
+	/**
+	 * Returns the user group with the same externalReferenceCode.
+	 *
+	 * @param  companyId the primary key of the user group's company
+	 * @param  externalReferenceCode the user group's external reference code
+	 * @return the user group with the externalReferenceCode, or
+	 *         <code>null</code> if no user could be found
+	 */
+	@Override
+	public UserGroup fetchUserGroupByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return userGroupPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
 	}
 
 	@Override
@@ -1006,6 +1024,46 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			UserGroup.class);
 
 		indexer.reindex(userGroup);
+
+		return userGroup;
+	}
+
+	/**
+	 * Add or update an user group.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  companyId the primary key of the user group's company
+	 * @param  name the user group's name
+	 * @param  description the user group's description
+	 * @param  externalReferenceCode the user group's external reference code
+	 * @param  serviceContext the service context to be applied (optionally
+	 *         <code>null</code>). Can set expando bridge attributes for the
+	 *         user group.
+	 * @return the user group
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public UserGroup upsertUserGroup(
+			long userId, long companyId, String name, String description,
+			String externalReferenceCode, ServiceContext serviceContext)
+		throws PortalException {
+
+		UserGroup userGroup = userGroupPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+
+		if (Validator.isNull(userGroup)) {
+			userGroup = addUserGroup(
+				userId, companyId, name, description, serviceContext);
+
+			userGroup.setExternalReferenceCode(externalReferenceCode);
+
+			userGroup = userGroupPersistence.update(userGroup);
+		}
+		else {
+			updateUserGroup(
+				companyId, userGroup.getUserGroupId(), name, description,
+				serviceContext);
+		}
 
 		return userGroup;
 	}

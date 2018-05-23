@@ -318,7 +318,7 @@
 
 		<execute function="Click" locator1="Button#DONE" />
 
-		<execute macro="Workflow#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="deleteWorkflowDefinition">
@@ -338,7 +338,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow deleted successfully." />
 
-		<execute macro="Workflow#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="AssertElementNotPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" />
 	</command>
@@ -433,7 +433,7 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="Workflow#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Workflow#viewDefinitionPublicationStatus">
 			<var name="status" value="Published" />
@@ -457,7 +457,7 @@
 			<var name="key_menuItem" value="Publish" />
 		</execute>
 
-		<execute macro="Workflow#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="rejectTaskByActions">
@@ -691,7 +691,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow unpublished successfully." />
 
-		<execute macro="Workflow#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="updateDueDateAssignedToMeTaskByActions">
@@ -1156,10 +1156,6 @@
 		</execute>
 	</command>
 
-	<command name="waitForSuccessMessageHide">
-		<execute function="AssertNotVisible" locator1="Message#SUCCESS" />
-	</command>
-
 	<command name="withdrawTaskByActions">
 		<execute macro="Workflow#viewMySubmissions">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -1174,7 +1170,7 @@
 			<var name="menuItem" value="Withdraw Submission" />
 		</execute>
 
-		<execute macro="Workflow#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="withdrawTaskByDetails">
@@ -1202,7 +1198,7 @@
 			<var name="menuItem" value="Withdraw Submission" />
 		</execute>
 
-		<execute macro="Workflow#waitForSuccessMessageHide" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="withdrawTaskCompletedNoByDetails">

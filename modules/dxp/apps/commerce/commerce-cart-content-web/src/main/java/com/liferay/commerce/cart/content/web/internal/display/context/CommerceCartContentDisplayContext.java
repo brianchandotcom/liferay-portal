@@ -208,12 +208,22 @@ public class CommerceCartContentDisplayContext {
 		return _displayStyleGroupId;
 	}
 
-	public String getFormattedPrice(CommerceOrderItem commerceOrderItem)
+	public String getFormattedFinalPrice(CommerceOrderItem commerceOrderItem)
 		throws PortalException {
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			commerceOrderItem.getCPInstanceId(),
 			commerceOrderItem.getQuantity(), true, true, commerceContext);
+
+		return commerceMoney.toString();
+	}
+
+	public String getFormattedUnitPrice(CommerceOrderItem commerceOrderItem)
+		throws PortalException {
+
+		CommerceMoney commerceMoney = _commercePriceCalculation.getUnitPrice(
+			commerceOrderItem.getCPInstanceId(),
+			commerceOrderItem.getQuantity(), commerceContext);
 
 		return commerceMoney.toString();
 	}

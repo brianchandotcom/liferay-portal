@@ -119,7 +119,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<liferay-ui:search-container-column-text>
 					<div class="value-section">
-						<span class="commerce-value"><%= commerceCartContentMiniDisplayContext.getFormattedPrice(commerceOrderItem) %></span>
+						<span class="commerce-value"><%= commerceCartContentMiniDisplayContext.getFormattedFinalPrice(commerceOrderItem) %></span>
 					</div>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

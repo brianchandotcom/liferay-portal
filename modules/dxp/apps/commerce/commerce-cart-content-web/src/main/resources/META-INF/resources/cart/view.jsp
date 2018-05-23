@@ -142,7 +142,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 					<liferay-ui:search-container-column-text
 						name="price"
-						value="<%= commerceCartContentDisplayContext.getFormattedPrice(commerceOrderItem) %>"
+						value="<%= commerceCartContentDisplayContext.getFormattedFinalPrice(commerceOrderItem) %>"
 					/>
 
 					<liferay-ui:search-container-column-text>

@@ -18,7 +18,7 @@
 
 				name = cpDefinition.getName(themeDisplay.getLanguageId())
 
-				price = commerceCartContentMiniDisplayContext.getFormattedPrice(curCommerceOrderItem)
+				price = commerceCartContentMiniDisplayContext.getFormattedUnitPrice(curCommerceOrderItem)
 			/>
 
 			<div class="col-md-6">

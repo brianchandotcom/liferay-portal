@@ -19,7 +19,7 @@
 
 				name = cpDefinition.getName(themeDisplay.getLanguageId())
 
-				price = commerceCartContentDisplayContext.getFormattedPrice(curCommerceOrderItem)
+				price = commerceCartContentDisplayContext.getFormattedFinalPrice(curCommerceOrderItem)
 
 				deleteURL = commerceCartContentDisplayContext.getDeleteURL(curCommerceOrderItem)
 				/>

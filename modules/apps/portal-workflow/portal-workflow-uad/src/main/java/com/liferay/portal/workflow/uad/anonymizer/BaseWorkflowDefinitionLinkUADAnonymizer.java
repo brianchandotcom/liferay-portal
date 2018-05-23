@@ -25,9 +25,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the workflow definition link UAD anonymizer.
  *
@@ -57,11 +54,6 @@ public abstract class BaseWorkflowDefinitionLinkUADAnonymizer
 	public void delete(WorkflowDefinitionLink workflowDefinitionLink)
 		throws PortalException {
 		workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(workflowDefinitionLink);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override
